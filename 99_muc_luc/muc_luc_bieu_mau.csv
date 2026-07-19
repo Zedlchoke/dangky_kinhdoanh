@@ -1,0 +1,109 @@
+phu_luc,mau_so,ten_mau,nhom_goi_y
+Phu luc I,1,Giấy đề nghị đăng ký doanh nghiệp - Doanh nghiệp tư nhân,01_dang_ky_thanh_lap_doanh_nghiep; 06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn
+Phu luc I,2,Giấy đề nghị đăng ký doanh nghiệp - Công ty trách nhiệm hữu hạn một thành viên,01_dang_ky_thanh_lap_doanh_nghiep; 06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn
+Phu luc I,3,Giấy đề nghị đăng ký doanh nghiệp - Công ty trách nhiệm hữu hạn hai thành viên trở lên,01_dang_ky_thanh_lap_doanh_nghiep; 06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn
+Phu luc I,4,Giấy đề nghị đăng ký doanh nghiệp - Công ty cổ phần,01_dang_ky_thanh_lap_doanh_nghiep; 06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn
+Phu luc I,5,Giấy đề nghị đăng ký doanh nghiệp - Công ty hợp danh,01_dang_ky_thanh_lap_doanh_nghiep; 06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn
+Phu luc I,6,Danh sách thành viên công ty trách nhiệm hữu hạn hai thành viên trở lên,01_dang_ky_thanh_lap_doanh_nghiep; 06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn
+Phu luc I,7,Danh sách cổ đông sáng lập công ty cổ phần,01_dang_ky_thanh_lap_doanh_nghiep; 06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn
+Phu luc I,8,Danh sách cổ đông là nhà đầu tư nước ngoài,01_dang_ky_thanh_lap_doanh_nghiep; 06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn
+Phu luc I,9,Danh sách thành viên công ty hợp danh,01_dang_ky_thanh_lap_doanh_nghiep; 06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn
+Phu luc I,10,Danh sách chủ sở hữu hưởng lợi của doanh nghiệp,01_dang_ky_thanh_lap_doanh_nghiep; 06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn
+Phu luc I,11,Kê khai thông tin để xác định chủ sở hữu hưởng lợi của doanh nghiệp,01_dang_ky_thanh_lap_doanh_nghiep; 06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn
+Phu luc I,12,Giấy đề nghị đăng ký thay đổi nội dung Giấy chứng nhận đăng ký doanh nghiệp/Thông báo thay đổi nội dung đăng ký doanh nghiệp,02_thay_doi_thong_tin_doanh_nghiep
+Phu luc I,13,Giấy đề nghị đăng ký thay đổi người đại diện theo pháp luật,02_thay_doi_thong_tin_doanh_nghiep
+Phu luc I,14,Giấy đề nghị đăng ký thay đổi chủ doanh nghiệp tư nhân,02_thay_doi_thong_tin_doanh_nghiep
+Phu luc I,15,Giấy đề nghị đăng ký thay đổi chủ sở hữu công ty TNHH một thành viên,02_thay_doi_thong_tin_doanh_nghiep
+Phu luc I,16,Thông báo về việc cho thuê doanh nghiệp tư nhân,02_thay_doi_thong_tin_doanh_nghiep
+Phu luc I,17,Giấy đề nghị đăng ký hoạt động chi nhánh/văn phòng đại diện/Thông báo lập địa điểm kinh doanh,03_chi_nhanh_van_phong_dai_dien_dia_diem
+Phu luc I,18,Thông báo về việc lập chi nhánh/văn phòng đại diện ở nước ngoài,03_chi_nhanh_van_phong_dai_dien_dia_diem
+Phu luc I,19,Giấy đề nghị đăng ký thay đổi nội dung đăng ký hoạt động chi nhánh/văn phòng đại diện/địa điểm kinh doanh,03_chi_nhanh_van_phong_dai_dien_dia_diem
+Phu luc I,20,"Thông báo về việc phản hồi kết quả rà soát thông tin đăng ký doanh nghiệp, tình trạng pháp lý của doanh nghiệp",02_thay_doi_thong_tin_doanh_nghiep
+Phu luc I,21,Giấy đề nghị cấp đổi sang Giấy chứng nhận đăng ký doanh nghiệp đối với doanh nghiệp được cấp Giấy chứng nhận đăng ký kinh doanh hoặc Giấy chứng nhận đăng ký kinh doanh và đăng ký thuế,02_thay_doi_thong_tin_doanh_nghiep
+Phu luc I,22,"Giấy đề nghị bổ sung, cập nhật thông tin đăng ký doanh nghiệp đối với doanh nghiệp hoạt động theo Giấy phép đầu tư, Giấy chứng nhận đầu tư (đồng thời là Giấy chứng nhận đăng ký kinh doanh) hoặc các giấy tờ có giá trị pháp lý tương đương",02_thay_doi_thong_tin_doanh_nghiep
+Phu luc I,23,"Giấy đề nghị bổ sung, cập nhật thông tin đăng ký hoạt động đối với chi nhánh/văn phòng đại diện/địa điểm kinh doanh hoạt động theo Giấy phép đầu tư hoặc Giấy chứng nhận đầu tư (đồng thời là Giấy chứng nhận đăng ký kinh doanh) hoặc các giấy tờ có giá trị pháp lý tương đương hoặc Giấy chứng nhận đăng ký hoạt động chi nhánh/văn phòng đại diện do Cơ quan đăng ký đầu tư cấp",02_thay_doi_thong_tin_doanh_nghiep; 03_chi_nhanh_van_phong_dai_dien_dia_diem
+Phu luc I,24,"Giấy đề nghị bổ sung, cập nhật thông tin đăng ký doanh nghiệp đối với doanh nghiệp hoạt động theo Giấy phép thành lập và hoạt động kinh doanh chứng khoán",02_thay_doi_thong_tin_doanh_nghiep
+Phu luc I,25,"Giấy đề nghị bổ sung, cập nhật thông tin đăng ký hoạt động đối với chi nhánh/văn phòng đại diện/địa điểm kinh doanh của doanh nghiệp hoạt động theo Giấy phép thành lập và hoạt động kinh doanh chứng khoán/Chi nhánh công ty chứng khoán nước ngoài/công ty quản lý quỹ nước ngoài tại Việt Nam",02_thay_doi_thong_tin_doanh_nghiep; 03_chi_nhanh_van_phong_dai_dien_dia_diem
+Phu luc I,26,Giấy đề nghị cấp lại Giấy chứng nhận đăng ký doanh nghiệp/Giấy xác nhận thay đổi nội dung đăng ký doanh nghiệp/Giấy chứng nhận đăng ký hoạt động chi nhánh/văn phòng đại diện/Giấy chứng nhận đăng ký địa điểm kinh doanh/Giấy xác nhận thay đổi nội dung đăng ký hoạt động chi nhánh/văn phòng đại diện/địa điểm kinh doanh,02_thay_doi_thong_tin_doanh_nghiep
+Phu luc I,27,Thông báo về việc tạm ngừng kinh doanh/tiếp tục kinh doanh trước thời hạn đã thông báo của doanh nghiệp/chi nhánh /địa điểm kinh doanh/về việc tạm ngừng hoạt động/tiếp tục hoạt động trước thời hạn đã thông báo của văn phòng đại diện,04_tam_ngung_cham_dut_giai_the
+Phu luc I,28,Thông báo về việc chấm dứt hoạt động chi nhánh/văn phòng đại diện/địa điểm kinh doanh,03_chi_nhanh_van_phong_dai_dien_dia_diem; 04_tam_ngung_cham_dut_giai_the
+Phu luc I,29,Thông báo về việc chấm dứt hoạt động chi nhánh/văn phòng đại diện ở nước ngoài,03_chi_nhanh_van_phong_dai_dien_dia_diem; 04_tam_ngung_cham_dut_giai_the
+Phu luc I,30,Thông báo về việc giải thể doanh nghiệp,04_tam_ngung_cham_dut_giai_the
+Phu luc I,31,Thông báo về việc huỷ bỏ Nghị quyết/Quyết định giải thể doanh nghiệp,04_tam_ngung_cham_dut_giai_the
+Phu luc I,32,Giấy đề nghị công bố nội dung đăng ký doanh nghiệp,05_cong_bo_cung_cap_thong_tin
+Phu luc I,33,Giấy đề nghị dừng thực hiện thủ tục đăng ký doanh nghiệp,05_cong_bo_cung_cap_thong_tin
+Phu luc I,34,"Cam kết thực hiện mục tiêu xã hội, môi trường",01_dang_ky_thanh_lap_doanh_nghiep
+Phu luc I,35,"Thông báo thay đổi nội dung Cam kết thực hiện mục tiêu xã hội, môi trường",01_dang_ky_thanh_lap_doanh_nghiep
+Phu luc I,36,"Thông báo chấm dứt Cam kết thực hiện mục tiêu xã hội, môi trường",01_dang_ky_thanh_lap_doanh_nghiep
+Phu luc I,37,Giấy chứng nhận đăng ký doanh nghiệp - Doanh nghiệp tư nhân,01_dang_ky_thanh_lap_doanh_nghiep
+Phu luc I,38,Giấy chứng nhận đăng ký doanh nghiệp - Công ty trách nhiệm hữu hạn một thành viên,01_dang_ky_thanh_lap_doanh_nghiep
+Phu luc I,39,Giấy chứng nhận đăng ký doanh nghiệp - Công ty trách nhiệm hữu hạn hai thành viên trở lên,01_dang_ky_thanh_lap_doanh_nghiep
+Phu luc I,40,Giấy chứng nhận đăng ký doanh nghiệp - Công ty cổ phần,01_dang_ky_thanh_lap_doanh_nghiep
+Phu luc I,41,Giấy chứng nhận đăng ký doanh nghiệp - Công ty hợp danh,01_dang_ky_thanh_lap_doanh_nghiep
+Phu luc I,42,Giấy chứng nhận đăng ký hoạt động chi nhánh/văn phòng đại diện,03_chi_nhanh_van_phong_dai_dien_dia_diem
+Phu luc I,43,Giấy chứng nhận đăng ký địa điểm kinh doanh,03_chi_nhanh_van_phong_dai_dien_dia_diem
+Phu luc I,44,Giấy xác nhận về việc thay đổi nội dung đăng ký doanh nghiệp,02_thay_doi_thong_tin_doanh_nghiep
+Phu luc I,45,Giấy xác nhận về việc thay đổi nội dung đăng ký hoạt động chi nhánh/văn phòng đại diện/địa điểm kinh doanh,03_chi_nhanh_van_phong_dai_dien_dia_diem
+Phu luc I,46,Giấy chứng nhận …/Giấy xác nhận …,03_chi_nhanh_van_phong_dai_dien_dia_diem
+Phu luc I,47,Thông báo về cơ quan thuế quản lý trực tiếp,02_thay_doi_thong_tin_doanh_nghiep; 05_cong_bo_cung_cap_thong_tin
+Phu luc I,48,"Thông báo về việc sửa đổi, bổ sung hồ sơ đăng ký doanh nghiệp",02_thay_doi_thong_tin_doanh_nghiep; 05_cong_bo_cung_cap_thong_tin
+Phu luc I,49,Thông báo về việc dừng/từ chối dừng thực hiện thủ tục đăng ký doanh nghiệp,02_thay_doi_thong_tin_doanh_nghiep; 05_cong_bo_cung_cap_thong_tin
+Phu luc I,50,Thông báo yêu cầu doanh nghiệp báo cáo về việc tuân thủ quy định của Luật Doanh nghiệp,02_thay_doi_thong_tin_doanh_nghiep; 05_cong_bo_cung_cap_thong_tin
+Phu luc I,51,Thông báo về việc hiệu đính thông tin trong Giấy chứng nhận đăng ký doanh nghiệp/Giấy xác nhận về việc thay đổi nội dung đăng ký doanh nghiệp/Giấy chứng nhận đăng ký hoạt động chi nhánh/văn phòng đại diện/Giấy chứng nhận đăng ký địa điểm kinh doanh/Giấy xác nhận về việc thay đổi nội dung đăng ký hoạt động chi nhánh/văn phòng đại diện,02_thay_doi_thong_tin_doanh_nghiep; 05_cong_bo_cung_cap_thong_tin
+Phu luc I,52,"Thông báo về việc rà soát thông tin đăng ký doanh nghiệp, tình trạng pháp lý của doanh nghiệp",02_thay_doi_thong_tin_doanh_nghiep; 05_cong_bo_cung_cap_thong_tin
+Phu luc I,53,"Thông báo yêu cầu doanh nghiệp tạm ngừng kinh doanh ngành, nghề đầu tư kinh doanh có điều kiện",04_tam_ngung_cham_dut_giai_the
+Phu luc I,54,Giấy xác nhận về việc doanh nghiệp thông báo tạm ngừng kinh doanh,04_tam_ngung_cham_dut_giai_the
+Phu luc I,55,Giấy xác nhận về việc chi nhánh/địa điểm kinh doanh thông báo tạm ngừng kinh doanh/Về việc văn phòng đại diện thông báo tạm ngừng hoạt động,03_chi_nhanh_van_phong_dai_dien_dia_diem; 04_tam_ngung_cham_dut_giai_the
+Phu luc I,56,Giấy xác nhận về việc doanh nghiệp thông báo tiếp tục kinh doanh trước thời hạn đã thông báo,04_tam_ngung_cham_dut_giai_the
+Phu luc I,57,Giấy xác nhận chi nhánh/địa điểm kinh doanh thông báo tiếp tục kinh doanh trước thời hạn đã thông báo/Về việc văn phòng đại diện thông báo tiếp tục hoạt dộng trước thời hạn đã thông báo,03_chi_nhanh_van_phong_dai_dien_dia_diem; 04_tam_ngung_cham_dut_giai_the
+Phu luc I,58,Giấy xác nhận về việc cho thuê doanh nghiệp tư nhân,02_thay_doi_thong_tin_doanh_nghiep
+Phu luc I,59,Thông báo yêu cầu thay đổi tên doanh nghiệp/chi nhánh/văn phòng đại diện/địa điểm kinh doanh của doanh nghiệp do xâm phạm quyền sở hữu công nghiệp,02_thay_doi_thong_tin_doanh_nghiep
+Phu luc I,60,Thông báo về việc vi phạm của doanh nghiệp thuộc trường hợp thu hồi,02_thay_doi_thong_tin_doanh_nghiep
+Phu luc I,61,Quyết định về việc thu hồi Giấy chứng nhận đăng ký doanh nghiệp,02_thay_doi_thong_tin_doanh_nghiep
+Phu luc I,62,"Quyết định về việc huỷ bỏ quyết định thu hồi và khôi phục Giấy chứng nhận đăng ký doanh nghiệp/Giấy chứng nhận đăng ký hoạt động chi nhánh, văn phòng đại diện của doanh nghiệp/Giấy chứng nhận đăng ký địa điểm kinh doanh",02_thay_doi_thong_tin_doanh_nghiep
+Phu luc I,63,"Quyết định về việc thu hồi Giấy chứng nhận đăng ký hoạt động chi nhánh, văn phòng đại diện, Giấy chứng nhận đăng ký địa điểm kinh doanh",03_chi_nhanh_van_phong_dai_dien_dia_diem
+Phu luc I,64,"Quyết định về việc thu hồi Giấy chứng nhận đăng ký doanh nghiệp/Giấy chứng nhận đăng ký hoạt động chi nhánh, văn phòng đại diện, Giấy chứng nhận đăng ký địa điểm kinh doanh của lần đăng ký thay đổi/Giấy xác nhận về việc thay đổi nội dung đăng ký doanh nghiệp, đăng ký hoạt động chi nhánh, văn phòng đại diện, địa điểm kinh doanh",02_thay_doi_thong_tin_doanh_nghiep
+Phu luc I,65,"Quyết định về việc thu hồi Giấy xác nhận thông báo tạm ngừng kinh doanh, tạm ngừng hoạt động, tiếp tục kinh doanh, tiếp tục hoạt động/Thông báo doanh nghiệp đang làm thủ tục giải thể, chi nhánh, văn phòng đại diện, địa điểm kinh doanh đang làm thủ tục chấm dứt hoạt động/Thông báo về việc giải thể của doanh nghiệp, chi nhánh, văn phòng đại diện, địa điểm kinh doanh chấm dứt hoạt động",02_thay_doi_thong_tin_doanh_nghiep
+Phu luc I,66,Thông báo về việc chi nhánh/văn phòng đại diện/địa điểm kinh doanh đang làm thủ tục chấm dứt hoạt động,04_tam_ngung_cham_dut_giai_the
+Phu luc I,67,Thông báo về việc chấm dứt hoạt động chi nhánh/văn phòng đại diện/địa điểm kinh doanh,03_chi_nhanh_van_phong_dai_dien_dia_diem; 04_tam_ngung_cham_dut_giai_the
+Phu luc I,68,Thông báo về việc doanh nghiệp đang làm thủ tục giải thể,04_tam_ngung_cham_dut_giai_the
+Phu luc I,69,Thông báo về việc doanh nghiệp đã giải thể/chấm dứt tồn tại,04_tam_ngung_cham_dut_giai_the
+Phu luc I,70,Giấy tiếp nhận hồ sơ và hẹn trả kết quả hồ sơ đăng ký doanh nghiệp/chi nhánh/văn phòng đại diện/địa điểm kinh doanh,03_chi_nhanh_van_phong_dai_dien_dia_diem; 05_cong_bo_cung_cap_thong_tin
+Phu luc I,71,Giấy tiếp nhận hồ sơ và hẹn trả kết quả hồ sơ đăng ký doanh nghiệp/chi nhánh/văn phòng đại diện/địa điểm kinh doanh qua mạng thông tin điện tử,03_chi_nhanh_van_phong_dai_dien_dia_diem; 05_cong_bo_cung_cap_thong_tin
+Phu luc I,72,Công bố nội dung đăng ký thành lập doanh nghiệp,05_cong_bo_cung_cap_thong_tin
+Phu luc I,73,Công bố thay đổi nội dung đăng ký doanh nghiệp,05_cong_bo_cung_cap_thong_tin
+Phu luc I,74,Công bố nội dung đăng ký doanh nghiệp,05_cong_bo_cung_cap_thong_tin
+Phu luc I,75,"Thông báo về việc khôi phục Giấy chứng nhận đăng ký doanh nghiệp/Giấy chứng nhận đăng ký hoạt động chi nhánh, văn phòng đại diện, Giấy chứng nhận đăng ký địa điểm kinh doanh",02_thay_doi_thong_tin_doanh_nghiep; 04_tam_ngung_cham_dut_giai_the
+Phu luc I,76,Thông báo về việc cấp đăng ký doanh nghiệp,05_cong_bo_cung_cap_thong_tin
+Phu luc I,77,"Thông báo về việc Giấy chứng nhận đăng ký doanh nghiệp/Giấy chứng nhận đăng ký hoạt động chi nhánh, văn phòng đại diện, Giấy chứng nhận đăng ký địa điểm kinh doanh/Giấy xác nhận về việc thay đổi nội dung đăng ký doanh nghiệp, đăng ký hoạt động chi nhánh, văn phòng đại diện, địa điểm kinh doanh không có hiệu lực",02_thay_doi_thong_tin_doanh_nghiep
+Phu luc I,78,Giấy đề nghị cung cấp thông tin đăng ký doanh nghiệp,05_cong_bo_cung_cap_thong_tin
+Phu luc I,79,"Giấy đề nghị Cơ quan đăng ký kinh doanh yêu cầu doanh nghiệp thay đổi tên doanh nghiệp, tên chi nhánh, văn phòng đại diện, địa điểm kinh doanh",02_thay_doi_thong_tin_doanh_nghiep; 05_cong_bo_cung_cap_thong_tin
+Phu luc I,80,Giấy đề nghị thu hồi giấy tờ do kê khai trong hồ sơ đăng ký doanh nghiệp là giả mạo,02_thay_doi_thong_tin_doanh_nghiep; 05_cong_bo_cung_cap_thong_tin
+Phu luc II,1,Giấy đề nghị đăng ký hộ kinh doanh,06_ho_kinh_doanh_va_chuyen_doi/01_mau_ho_kinh_doanh
+Phu luc II,2,Giấy đề nghị đăng ký thay đổi nội dung đăng ký hộ kinh doanh,06_ho_kinh_doanh_va_chuyen_doi/01_mau_ho_kinh_doanh
+Phu luc II,3,Giấy đề nghị đăng ký tạm ngừng kinh doanh/tiếp tục kinh doanh trước thời hạn đã đăng ký của hộ kinh doanh,06_ho_kinh_doanh_va_chuyen_doi/01_mau_ho_kinh_doanh
+Phu luc II,4,Thông báo về việc chấm dứt hoạt động hộ kinh doanh,06_ho_kinh_doanh_va_chuyen_doi/01_mau_ho_kinh_doanh
+Phu luc II,5,Giấy đề nghị cấp lại Giấy chứng nhận đăng ký hộ kinh doanh,06_ho_kinh_doanh_va_chuyen_doi/01_mau_ho_kinh_doanh
+Phu luc II,6,Giấy đề nghị dừng thực hiện thủ tục đăng ký hộ kinh doanh,06_ho_kinh_doanh_va_chuyen_doi/01_mau_ho_kinh_doanh
+Phu luc II,7,Giấy chứng nhận đăng ký hộ kinh doanh,06_ho_kinh_doanh_va_chuyen_doi/01_mau_ho_kinh_doanh
+Phu luc II,8,Thông báo về cơ quan thuế quản lý trực tiếp hộ kinh doanh,06_ho_kinh_doanh_va_chuyen_doi/01_mau_ho_kinh_doanh
+Phu luc II,9,"Giấy chứng nhận đăng ký hộ kinh doanh (Dùng trong trường hợp cấp lại do mất, cháy, rách, nát hoặc bị tiêu hủy dưới hình thức khác)",06_ho_kinh_doanh_va_chuyen_doi/01_mau_ho_kinh_doanh
+Phu luc II,10,"Thông báo về việc sửa đổi, bổ sung hồ sơ đăng ký hộ kinh doanh",06_ho_kinh_doanh_va_chuyen_doi/01_mau_ho_kinh_doanh
+Phu luc II,11,Thông báo yêu cầu hộ kinh doanh báo cáo về việc tuân thủ các quy định về hộ kinh doanh,06_ho_kinh_doanh_va_chuyen_doi/01_mau_ho_kinh_doanh
+Phu luc II,12,Thông báo về việc vi phạm của hộ kinh doanh thuộc trường hợp thu hồi Giấy chứng nhận đăng ký hộ kinh doanh,06_ho_kinh_doanh_va_chuyen_doi/01_mau_ho_kinh_doanh
+Phu luc II,13,Thông báo về việc chấm dứt hoạt động hộ kinh doanh,06_ho_kinh_doanh_va_chuyen_doi/01_mau_ho_kinh_doanh
+Phu luc II,14,Quyết định về việc thu hồi Giấy chứng nhận đăng ký hộ kinh doanh,06_ho_kinh_doanh_va_chuyen_doi/01_mau_ho_kinh_doanh
+Phu luc II,15,Quyết định về việc thu hồi Giấy chứng nhận đăng ký hộ kinh doanh của lần đăng ký thay đổi,06_ho_kinh_doanh_va_chuyen_doi/01_mau_ho_kinh_doanh
+Phu luc II,16,Quyết định về việc huỷ bỏ quyết định thu hồi và khôi phục Giấy chứng nhận đăng ký hộ kinh doanh,06_ho_kinh_doanh_va_chuyen_doi/01_mau_ho_kinh_doanh
+Phu luc II,17,Giấy tiếp nhận hồ sơ và hẹn trả kết quả hồ sơ đăng ký hộ kinh doanh,06_ho_kinh_doanh_va_chuyen_doi/01_mau_ho_kinh_doanh
+Phu luc II,18,Giấy tiếp nhận hồ sơ và hẹn trả kết quả hồ sơ đăng ký hộ kinh doanh qua mạng thông tin điện tử,06_ho_kinh_doanh_va_chuyen_doi/01_mau_ho_kinh_doanh
+Phu luc II,19,"Thông báo yêu cầu hộ kinh doanh tạm ngừng kinh doanh ngành, nghề đầu tư kinh doanh có điều kiện",06_ho_kinh_doanh_va_chuyen_doi/01_mau_ho_kinh_doanh
+Phu luc II,20,Giấy xác nhận về việc hộ kinh doanh đăng ký tạm ngừng kinh doanh/tiếp tục kinh doanh trước thời hạn đã đăng ký,06_ho_kinh_doanh_va_chuyen_doi/01_mau_ho_kinh_doanh
+Phu luc II,21,Thông báo về việc Giấy chứng nhận đăng ký hộ kinh doanh không có hiệu lực,06_ho_kinh_doanh_va_chuyen_doi/01_mau_ho_kinh_doanh
+Phu luc II,22,Thông báo yêu cầu hộ kinh doanh đăng ký thay đổi thành viên không được quyền thành lập hộ kinh doanh,06_ho_kinh_doanh_va_chuyen_doi/01_mau_ho_kinh_doanh
+Phu luc II,23,"Thông báo về việc xử lý hồ sơ đăng ký hộ kinh doanh hoặc ra thông báo, quyết định không đúng quy định về hồ sơ, trình tự, thủ tục",06_ho_kinh_doanh_va_chuyen_doi/01_mau_ho_kinh_doanh
+Phu luc II,24,Thông báo về việc khôi phục Giấy chứng nhận đăng ký hộ kinh doanh,06_ho_kinh_doanh_va_chuyen_doi/01_mau_ho_kinh_doanh
+Phu luc II,25,Thông báo về việc hiệu đính nội dung trên Giấy chứng nhận đăng ký hộ kinh doanh,06_ho_kinh_doanh_va_chuyen_doi/01_mau_ho_kinh_doanh
+Phu luc II,26,Thông báo về việc dừng/từ chối dừng thực hiện thủ tục đăng ký hộ kinh doanh,06_ho_kinh_doanh_va_chuyen_doi/01_mau_ho_kinh_doanh
+Phu luc II,27,Thông báo về việc hộ kinh doanh đang làm thủ tục chấm dứt hoạt động,06_ho_kinh_doanh_va_chuyen_doi/01_mau_ho_kinh_doanh
+Phu luc II,28,Thông báo về việc rà soát thông tin đăng ký hộ kinh doanh của hộ kinh doanh,06_ho_kinh_doanh_va_chuyen_doi/01_mau_ho_kinh_doanh

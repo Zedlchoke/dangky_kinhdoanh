@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Trợ lý hồ sơ đăng ký doanh nghiệp</title>
+    <link rel="stylesheet" href="/app/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="workspace">
+        <aside class="panel controls" aria-label="Thông tin hồ sơ">
+          <div class="brand">
+            <div>
+              <p class="eyebrow">Thông tư 68/2025/TT-BTC</p>
+              <h1>Trợ lý hồ sơ đăng ký doanh nghiệp</h1>
+            </div>
+            <span class="status">Local</span>
+          </div>
+
+          <label>
+            1. Chọn việc cần làm
+            <select id="procedure"></select>
+          </label>
+
+          <label>
+            2. Chọn loại hình
+            <select id="entityType"></select>
+          </label>
+
+          <label>
+            3. Chọn nội dung
+            <select id="scenario"></select>
+          </label>
+
+          <label id="mappedFormPickerWrap" class="hidden">
+            Chọn mẫu cần điền
+            <select id="mappedFormPicker"></select>
+          </label>
+
+          <div class="switch-grid" aria-label="Điều kiện bổ sung">
+            <label class="check">
+              <input id="foreignInvestor" type="checkbox" />
+              <span>Có nhà đầu tư nước ngoài</span>
+            </label>
+            <label class="check">
+              <input id="beneficialOwner" type="checkbox" />
+              <span>Có chủ sở hữu hưởng lợi cần kê khai</span>
+            </label>
+            <label class="check">
+              <input id="orgMember" type="checkbox" />
+              <span>Có thành viên/cổ đông/chủ sở hữu là tổ chức</span>
+            </label>
+            <label class="check">
+              <input id="taxMove" type="checkbox" />
+              <span>Đổi địa chỉ làm đổi cơ quan thuế</span>
+            </label>
+            <label class="check">
+              <input id="conditionalBusiness" type="checkbox" />
+              <span>Có ngành nghề kinh doanh có điều kiện</span>
+            </label>
+            <label class="check">
+              <input id="authorizedFiler" type="checkbox" />
+              <span>Ủy quyền người khác nộp hồ sơ</span>
+            </label>
+            <label class="check">
+              <input id="onlineFiling" type="checkbox" checked />
+              <span>Nộp qua Cổng thông tin quốc gia</span>
+            </label>
+          </div>
+
+          <div class="actions">
+            <button id="copyChecklist" type="button">Sao chép checklist</button>
+            <button id="printChecklist" type="button">In / lưu PDF</button>
+          </div>
+
+          <div class="actions single">
+            <button id="generateDossier" class="primary" type="button">Xuất bộ hồ sơ Word</button>
+          </div>
+          <p id="serverNotice" class="fineprint small"></p>
+        </aside>
+
+        <section class="main-panel">
+          <div class="step-strip" aria-label="Quy trình">
+            <span class="step-chip active">Chọn hồ sơ</span>
+            <span class="step-chip">Nhập thông tin</span>
+            <span class="step-chip">Người liên quan</span>
+            <span class="step-chip">Kiểm tra</span>
+            <span class="step-chip">Xuất Word</span>
+          </div>
+          <nav class="tabs" aria-label="Chế độ xem">
+            <button class="tab active" data-tab="result" type="button">Hồ sơ cần nộp</button>
+            <button class="tab" data-tab="questions" type="button">Điểm cần chốt</button>
+            <button class="tab" data-tab="catalog" type="button">Tra mẫu</button>
+            <button class="tab" data-tab="sources" type="button">Căn cứ</button>
+          </nav>
+
+          <section id="result" class="tab-page active">
+            <div class="summary-row">
+              <div>
+                <p class="eyebrow">Kết quả đề xuất</p>
+                <h2 id="summaryTitle"></h2>
+              </div>
+              <span id="riskBadge" class="risk"></span>
+            </div>
+            <div id="formsList" class="card-list"></div>
+            <div class="two-col">
+              <div class="info-block">
+                <h3>Giấy tờ ngoài biểu mẫu</h3>
+                <ul id="docsList"></ul>
+              </div>
+              <div class="info-block">
+                <h3>Lưu ý xử lý</h3>
+                <ul id="notesList"></ul>
+              </div>
+            </div>
+            <div class="info-block wide automation">
+              <h3>Thông tin cần nhập</h3>
+              <div id="dynamicFields" class="field-grid"></div>
+              <div id="peopleSection" class="repeat-section"></div>
+              <div id="generateResult" class="generate-result"></div>
+            </div>
+          </section>
+
+          <section id="questions" class="tab-page">
+            <div class="info-block wide">
+              <h2>Câu hỏi cần chốt trước khi nộp</h2>
+              <ul id="questionsList"></ul>
+            </div>
+          </section>
+
+          <section id="catalog" class="tab-page">
+            <label class="search">
+              Tìm trong bộ mẫu
+              <input id="catalogSearch" type="search" placeholder="VD: thay đổi người đại diện, hộ kinh doanh, cổ đông..." />
+            </label>
+            <div id="catalogList" class="catalog-list"></div>
+          </section>
+
+          <section id="sources" class="tab-page">
+            <div class="info-block wide">
+              <h2>Căn cứ đã mã hoá trong app</h2>
+              <ul>
+                <li>Thông tư 68/2025/TT-BTC: ban hành biểu mẫu đăng ký doanh nghiệp, đăng ký hộ kinh doanh; hiệu lực từ 01/07/2025.</li>
+                <li>Nghị định 168/2025/NĐ-CP: hồ sơ, trình tự, thủ tục đăng ký doanh nghiệp, hộ kinh doanh, đăng ký qua mạng.</li>
+                <li>Luật Doanh nghiệp 2020, đã được sửa đổi/bổ sung, gồm Luật 76/2025/QH15 có hiệu lực từ 01/07/2025.</li>
+              </ul>
+              <div class="source-links">
+                <a href="https://vbpl.vn/botaichinh/Pages/vbpq-thuoctinh.aspx?ItemID=179097" target="_blank" rel="noreferrer">Thông tư 68 trên VBPL</a>
+                <a href="https://dangkykinhdoanh.gov.vn/vn/Pages/ChiTietVanBan.aspx?vID=27043" target="_blank" rel="noreferrer">Nghị định 168 trên Cổng ĐKKD</a>
+                <a href="https://vbpl.vn/TW/Pages/vbpq-lichsu.aspx?ItemID=142881" target="_blank" rel="noreferrer">Lịch sử Luật Doanh nghiệp</a>
+                <a href="../99_muc_luc/muc_luc_bieu_mau.csv">Mục lục 108 mẫu</a>
+              </div>
+              <p class="fineprint">App này là công cụ chuẩn bị hồ sơ nội bộ, không thay thế rà soát pháp lý cuối cùng trước khi ký/nộp.</p>
+            </div>
+          </section>
+        </section>
+      </section>
+    </main>
+    <script src="/app/data/form_maps.js"></script>
+    <script src="/app/app.js"></script>
+  </body>
+</html>

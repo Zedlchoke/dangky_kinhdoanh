@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Trợ lý hồ sơ ĐKKD</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header id="topbar">
+    <button type="button" id="btn-toggle-side" class="icon-btn" aria-expanded="true"
+      aria-controls="sidebar" title="Ẩn/hiện danh mục">☰</button>
+    <h1 class="brand">Trợ lý hồ sơ ĐKKD</h1>
+    <span id="doc-title" aria-live="polite"></span>
+    <span id="save-status" data-state="unsaved" role="status">Chưa lưu</span>
+  </header>
+
+  <div id="layout">
+
+    <!-- ============ THANH TRÁI: nhóm / case / mẫu ============ -->
+    <aside id="sidebar" aria-label="Danh mục thủ tục">
+      <label class="lbl" for="sel-nhom">Nhóm thủ tục</label>
+      <select id="sel-nhom"></select>
+
+      <label class="lbl" for="sel-case">Thủ tục</label>
+      <select id="sel-case"></select>
+
+      <div class="lbl">Mẫu biểu trong hồ sơ</div>
+      <div id="form-list"></div>
+
+      <label class="chkline"><input type="checkbox" id="chk-autosum">
+        Tự cộng tổng vốn từ các bảng lặp</label>
+
+      <button id="btn-export" class="btn btn-primary">Xuất hồ sơ (.docx)</button>
+
+      <div class="sep"></div>
+      <button id="btn-save-draft" class="btn">Lưu hồ sơ (.json)</button>
+      <button id="btn-open-draft" class="btn">Mở hồ sơ (.json)</button>
+      <button id="btn-reset" class="btn btn-danger">Nhập lại</button>
+
+      <div id="side-status"></div>
+    </aside>
+
+    <!-- ============ KHUNG GIỮA: tờ khai active duy nhất ============ -->
+    <main id="scroller" aria-label="Nội dung mẫu biểu">
+      <div id="pages"><!-- section.page-a4[data-doc-id] do app.js render --></div>
+    </main>
+
+    <!-- ============ PHẢI: hướng dẫn + lỗi kiểm tra (co/mở) ============ -->
+    <section id="rightbar" aria-label="Hướng dẫn và lỗi">
+      <button type="button" id="btn-toggle-right" class="icon-btn" aria-expanded="true"
+        aria-controls="rightbar-body" title="Thu gọn panel">»</button>
+      <div id="rightbar-body">
+        <div class="lbl">Thông tin thủ tục</div>
+        <div id="case-info"></div>
+
+        <div class="sep"></div>
+        <div class="panel-head">
+          <div class="lbl">Kiểm tra lỗi</div>
+          <label class="chkline"><input type="checkbox" id="chk-check-all">
+            Toàn bộ hồ sơ</label>
+        </div>
+        <button id="btn-check" class="btn">Kiểm tra</button>
+        <div id="err-panel">
+          <div id="err-list" role="list" aria-label="Danh sách lỗi"></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ THANH DƯỚI: tab mẫu + action chính ============ -->
+  <footer id="tabbar">
+    <div id="tabs" role="tablist" aria-label="Các mẫu biểu trong hồ sơ"></div>
+    <div id="tab-actions">
+      <button id="btn-save" class="btn" title="Lưu nháp nhanh (Ctrl+S)">Lưu</button>
+      <button id="btn-export2" class="btn btn-primary">Xuất DOCX</button>
+    </div>
+  </footer>
+
+  <!-- gợi ý VSIC + toast -->
+  <div id="vsic-pop" hidden></div>
+  <div id="toasts" aria-live="polite"></div>
+
+  <script src="form-domain.js"></script>
+  <script src="render.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

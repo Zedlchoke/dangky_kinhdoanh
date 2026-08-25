@@ -361,16 +361,22 @@ CHK_RULES = [
 # ---------------------------------------------------------------------------
 DYNAMIC_TABLES = [
     {
+        # Bảng ngành nghề PLII_M01 (Phụ lục II Mẫu 1): STT | Tên ngành |
+        # Mã ngành | Ngành, nghề kinh doanh chính. Cột STT không phải dữ liệu
+        # người dùng: gắn the engine {_stt} (stt_tag=True). Cột thứ tư theo
+        # template pháp lý là ô đánh dấu X chọn ngành chính (chú thích 3 của
+        # mẫu) -> map tag la_nganh_chinh như spec ds_nganh_vsic (PLI_M02).
         "id": "ds_nganh_nghe",
         "detect": {"stt", "ten nganh", "ma nganh"},
+        "stt_tag": True,
         "cols": [
             (r"^stt$", None),
             (r"ten nganh", "ten_nganh"),
             (r"ma nganh", "ma_nganh"),
-            (r"chinh", None),
+            (r"^nganh chinh$|nganh, nghe kinh doanh chinh", "la_nganh_chinh"),
         ],
         "loop": "ds_nganh",
-        "fields": ["ten_nganh", "ma_nganh"],
+        "fields": ["ten_nganh", "ma_nganh", "la_nganh_chinh"],
     },
     {
         # Bảng ngành nghề 5 cột dựng lại cho PLI_M02 (PLAN PHASE 3):

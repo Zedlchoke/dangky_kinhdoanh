@@ -236,6 +236,52 @@
       duplicateKeys: ['ma_nganh'],
       outputOnlyTags: [],
       autoName: { codeTag: 'ma_nganh', nameTag: 'ten_nganh' }
+    },
+    /* PLI_M12 mục 1: bổ sung ngành vào danh sách đã đăng ký. Danh sách độc
+     * lập với ds_nganh -> minRows 0, không chặn trùng mã, không bắt buộc
+     * chọn ngành chính (template cho phép đánh X tùy chọn). */
+    nganh_bo_sung: {
+      label: 'Ngành, nghề kinh doanh được bổ sung',
+      minRows: 0, maxRows: null, required: false,
+      allowAdd: true, allowDelete: true, allowReorder: true,
+      confirmDeleteNonEmpty: true, requirePrimary: false,
+      columns: [
+        { tag: 'ten_nganh', type: 'text', required: true },
+        { tag: 'ma_nganh', type: 'vsic' },
+        { tag: 'la_nganh_chinh', type: 'radio' }
+      ],
+      duplicateKeys: [],
+      outputOnlyTags: []
+    },
+    /* PLI_M12 mục 2: bỏ ngành khỏi danh sách đã đăng ký. Cột 4 theo template
+     * là Ghi chú (KHÔNG có cột ngành chính) -> ghi_chu dạng text. */
+    nganh_xoa_bo: {
+      label: 'Ngành, nghề kinh doanh được bỏ khỏi danh sách đã đăng ký',
+      minRows: 0, maxRows: null, required: false,
+      allowAdd: true, allowDelete: true, allowReorder: true,
+      confirmDeleteNonEmpty: true, requirePrimary: false,
+      columns: [
+        { tag: 'ten_nganh', type: 'text', required: true },
+        { tag: 'ma_nganh', type: 'vsic' },
+        { tag: 'ghi_chu', type: 'text' }
+      ],
+      duplicateKeys: [],
+      outputOnlyTags: []
+    },
+    /* PLI_M12 mục 3: sửa đổi chi tiết ngành đã đăng ký (tên loop do agent 2B
+     * chốt - PLAN.md chỉ định danh nganh_bo_sung/nganh_xoa_bo). */
+    nganh_sua_doi_chi_tiet: {
+      label: 'Ngành, nghề kinh doanh được sửa đổi chi tiết',
+      minRows: 0, maxRows: null, required: false,
+      allowAdd: true, allowDelete: true, allowReorder: true,
+      confirmDeleteNonEmpty: true, requirePrimary: false,
+      columns: [
+        { tag: 'ten_nganh', type: 'text', required: true },
+        { tag: 'ma_nganh', type: 'vsic' },
+        { tag: 'la_nganh_chinh', type: 'radio' }
+      ],
+      duplicateKeys: [],
+      outputOnlyTags: []
     }
   };
 

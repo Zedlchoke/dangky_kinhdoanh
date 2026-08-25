@@ -2,7 +2,7 @@
   "form_id": "PLI_M21",
   "group": "change",
   "note": "Giay de nghi cap doi sang GCN DKDN (voi DN da cap GCN DKHD truoc 01/7/2025). Luoi nganh nam ngay sau doan 'De nghi duoc cap doi...' - template KHONG co tieu de muc rieng cho bang nganh; muc sau la doan cam ket 'Doanh nghiep cam ket hoan toan chiu trach nhiem...'.",
-  "gap_nghiepvu": "Open question #2 wave1_contract_inventory: dung canonical ds_nganh hay schema rieng vi 'nganh duoc ghi lai theo nganh kinh te cap 4' - can Lead/2B doi chieu huong dan dien TT 68 truoc khi chot. Anchor muon doan 'De nghi được cấp đổi...' vi template khong co tieu de muc cho bang nganh; neu nguon goc thay doi can review lai anchor.",
+  "gap_nghiepvu": "Open question #2 wave1_contract_inventory: dung canonical ds_nganh hay schema rieng vi 'nganh duoc ghi lai theo nganh kinh te cap 4' - can Lead/2B doi chieu huong dan dien TT 68 truoc khi chot. Agent 2B da kiem template that (python-docx): bang nganh 4 cot STT|Ten nganh|Ma nganh|Nganh chinh (X) dung sau doan 'De nghi được cấp đổi...', KHONG co tieu de muc rieng -> anchor la doan 'De nghi được cấp đổi...' (da verify khop nguon that); neu nguon goc thay doi can review lai anchor.",
   "tables": [
     {
       "spec": {

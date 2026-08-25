@@ -2,7 +2,7 @@
   "form_id": "PLI_M72",
   "group": "change",
   "note": "Cong bo noi dung dang ky thanh lap doanh nghiep (nguon PL1_Mau_72 trong 05_cong_bo_cung_cap_thong_tin). Luoi nganh o muc '5.' mat khi convert; muc sau la '6. Von dau tu'.",
-  "gap_nghiepvu": null,
+  "gap_nghiepvu": "Template M72 gom 5 phien ban (DNTN/TNHH 1TV/TNHH 2TV+/CTCP/HD), MOI phien ban deu co rieng luoi '5. Nganh, nghe kinh doanh' gan giong het nhau. Generator rebuild chi cham DUOC lan xuat hien DAU TIEN cua anchor (anchor regex khong dinh vi theo thu tu) -> spec nay tai dung luoi phien ban DNTN; 4 phien ban con lai van mat luoi (paragraph tan du 'STT'/'Tên ngành'/'Mã ngành' o cac phan sau giu nguyen nhu truoc). Can Lead mo rong generator hoac tach M72 thanh 5 form_id neu muon day du 5 loai hinh.",
   "tables": [
     {
       "spec": {

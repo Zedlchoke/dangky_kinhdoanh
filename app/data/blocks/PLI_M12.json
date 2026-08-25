@@ -1134,38 +1134,70 @@
    ]
   },
   {
-   "t": "p",
-   "align": "center",
-   "runs": [
+   "t": "loop",
+   "loop": "nganh_bo_sung",
+   "headerRows": [
+    0
+   ],
+   "cols": [
     {
-     "text": "STT"
+     "col": 1,
+     "tag": "ten_nganh"
+    },
+    {
+     "col": 2,
+     "tag": "ma_nganh"
+    },
+    {
+     "col": 3,
+     "tag": "la_nganh_chinh"
     }
-   ]
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
+   ],
+   "blankRows": 4,
+   "rows": [
     {
-     "text": "Tên ngành, nghề kinh doanh được bổ sung"
-    }
-   ]
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "Mã ngành"
-    }
-   ]
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "Ngành, nghề kinh doanh chính (Trường hợp ngành, nghề kinh doanh được bổ sung là ngành, nghề kinh doanh chính thì đánh dấu X để chọn một trong các ngành, nghề đã kê khai)"
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "STT",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Tên ngành, nghề kinh doanh được bổ sung",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Mã ngành",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Ngành, nghề kinh doanh chính",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
     }
    ]
   },
@@ -1180,38 +1212,70 @@
    ]
   },
   {
-   "t": "p",
-   "align": "center",
-   "runs": [
+   "t": "loop",
+   "loop": "nganh_xoa_bo",
+   "headerRows": [
+    0
+   ],
+   "cols": [
     {
-     "text": "STT"
+     "col": 1,
+     "tag": "ten_nganh"
+    },
+    {
+     "col": 2,
+     "tag": "ma_nganh"
+    },
+    {
+     "col": 3,
+     "tag": "ghi_chu"
     }
-   ]
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
+   ],
+   "blankRows": 4,
+   "rows": [
     {
-     "text": "Tên ngành, nghề kinh doanh được bỏ khỏi danh sách đã đăng ký"
-    }
-   ]
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "Mã ngành"
-    }
-   ]
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "Ghi chú"
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "STT",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Tên ngành, nghề kinh doanh được bỏ khỏi danh sách đã đăng ký",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Mã ngành",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Ghi chú",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
     }
    ]
   },
@@ -1226,38 +1290,70 @@
    ]
   },
   {
-   "t": "p",
-   "align": "center",
-   "runs": [
+   "t": "loop",
+   "loop": "nganh_sua_doi_chi_tiet",
+   "headerRows": [
+    0
+   ],
+   "cols": [
     {
-     "text": "STT"
+     "col": 1,
+     "tag": "ten_nganh"
+    },
+    {
+     "col": 2,
+     "tag": "ma_nganh"
+    },
+    {
+     "col": 3,
+     "tag": "la_nganh_chinh"
     }
-   ]
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
+   ],
+   "blankRows": 4,
+   "rows": [
     {
-     "text": "Tên ngành, nghề kinh doanh được sửa đổi chi tiết"
-    }
-   ]
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "Mã ngành"
-    }
-   ]
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "Ngành, nghề kinh doanh chính (Trường hợp ngành, nghề kinh doanh được sửa đổi là ngành, nghề kinh doanh chính thì đánh dấu X để chọn một trong các ngành, nghề đã kê khai)"
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "STT",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Tên ngành, nghề kinh doanh được sửa đổi chi tiết",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Mã ngành",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Ngành, nghề kinh doanh chính",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
     }
    ]
   },

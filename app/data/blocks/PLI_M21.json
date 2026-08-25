@@ -164,38 +164,70 @@
    ]
   },
   {
-   "t": "p",
-   "align": "center",
-   "runs": [
+   "t": "loop",
+   "loop": "ds_nganh",
+   "headerRows": [
+    0
+   ],
+   "cols": [
     {
-     "text": "STT"
+     "col": 1,
+     "tag": "ten_nganh"
+    },
+    {
+     "col": 2,
+     "tag": "ma_nganh"
+    },
+    {
+     "col": 3,
+     "tag": "la_nganh_chinh"
     }
-   ]
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
+   ],
+   "blankRows": 4,
+   "rows": [
     {
-     "text": "Tên ngành"
-    }
-   ]
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "Mã ngành"
-    }
-   ]
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "Ngành, nghề kinh doanh chính \n(đánh dấu X để chọn một trong các ngành, nghề đã kê khai)"
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "STT",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Tên ngành",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Mã ngành",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Ngành, nghề kinh doanh chính",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
     }
    ]
   },

@@ -1,4 +1,9 @@
 {
+ "schema_forms": {
+  "ghi_chu": "Contract metadata chọn mẫu biểu (đọc bởi app_web/ui/app.js). forms[i]: pl = phụ lục ('I'/'II'), mau = số mẫu (docId = 'PL'+pl+'_M'+padStart(mau,2), vd PLI_M02), bat_buoc = true thì mẫu luôn được chọn và khóa (không bỏ được), false là tùy chọn mặc định không chọn; thiếu trường bat_buoc coi như true (tương thích dữ liệu cũ/mock). ghi_chu = mô tả trường hợp dùng mẫu.",
+  "forms_oneOf": "Tùy chọn, cấp case: mảng nhóm lựa chọn LOẠI TRỪ. Mỗi phần tử {\"ids\": [docId...], \"max\": N} nghĩa là trong cùng hồ sơ chỉ được chọn tối đa N mẫu thuộc ids (UI tự bỏ tick các mẫu khác cùng nhóm khi vượt max; export chặn nếu nhóm chưa chọn hoặc chọn quá max). Renderer KHÔNG suy đoán nhóm từ tên mẫu/id - nhóm chỉ đến từ dữ liệu này.",
+  "vi_du": "case chuyen_doi_hkd_sang_dn: forms_oneOf = [{\"ids\": [\"PLI_M01\",\"PLI_M02\",\"PLI_M03\",\"PLI_M04\"], \"max\": 1}] - bốn mẫu đề nghị đăng ký doanh nghiệp sau chuyển đổi loại trừ nhau, chỉ chọn đúng một."
+ },
  "nguon": [
   {
    "van_ban": "Nghị định 168/2025/NĐ-CP ngày 30/06/2025 của Chính phủ về đăng ký doanh nghiệp (hiệu lực 01/07/2025)",
@@ -236,15 +241,21 @@
      "bat_buoc": false,
      "ghi_chu": "Nếu chuyển đổi thành TNHH hai thành viên trở lên (kèm Mẫu 6)"
     },
-    {
-     "pl": "I",
-     "mau": 4,
-     "bat_buoc": false,
-     "ghi_chu": "Nếu chuyển đổi thành công ty cổ phần (kèm Mẫu 7)"
-    }
-   ],
-   "giay_to_kem": [
-    "Bản sao Giấy chứng nhận đăng ký hộ kinh doanh (bắt buộc)",
+     {
+      "pl": "I",
+      "mau": 4,
+      "bat_buoc": false,
+      "ghi_chu": "Nếu chuyển đổi thành công ty cổ phần (kèm Mẫu 7)"
+     }
+    ],
+    "forms_oneOf": [
+     {
+      "ids": ["PLI_M01", "PLI_M02", "PLI_M03", "PLI_M04"],
+      "max": 1
+     }
+    ],
+    "giay_to_kem": [
+     "Bản sao Giấy chứng nhận đăng ký hộ kinh doanh (bắt buộc)",
     "Các giấy tờ của hồ sơ thành lập doanh nghiệp tương ứng theo Điều 24 NĐ 168 (Điều lệ, danh sách thành viên, giấy tờ pháp lý...)",
     "Nếu có nhà đầu tư nước ngoài góp vốn/mua phần vốn góp thuộc trường hợp phải chấp thuận: bản sao văn bản chấp thuận của Cơ quan đăng ký đầu tư"
    ],

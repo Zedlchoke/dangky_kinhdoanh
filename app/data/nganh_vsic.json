@@ -1,0 +1,3980 @@
+{
+ "nguon": [
+  "https://dangkykinhdoanh.gov.vn/Images/editor/files/7_10_Bang so sanh VSIC 2018 - 2025(2).docx",
+  "https://thanhlapdoanhnghiepvn.vn/he-thong-nganh-kinh-te-cap-4-theo-qd-so-272018qd-ttg/"
+ ],
+ "cap_nhat": "2026-08-24",
+ "ghi_chu": "He thong nganh kinh te Viet Nam (VSIC 2018) theo QD 27/2018/QD-TTg; gom cap 2, 3, 4. Nganh cap 4 (ma 4 so) la muc dung de dang ky kinh doanh.",
+ "nganh": [
+  {
+   "ma": "01",
+   "ten": "Nông nghiệp và hoạt động dịch vụ có liên quan",
+   "cap": 2
+  },
+  {
+   "ma": "011",
+   "ten": "Trồng cây hàng năm",
+   "cap": 3
+  },
+  {
+   "ma": "0111",
+   "ten": "Trồng lúa",
+   "cap": 4
+  },
+  {
+   "ma": "0112",
+   "ten": "Trồng ngô và cây lương thực có hạt khác",
+   "cap": 4
+  },
+  {
+   "ma": "0113",
+   "ten": "Trồng cây lấy củ có chất bột",
+   "cap": 4
+  },
+  {
+   "ma": "0114",
+   "ten": "Trồng cây mía",
+   "cap": 4
+  },
+  {
+   "ma": "0115",
+   "ten": "Trồng cây thuốc lá, thuốc lào",
+   "cap": 4
+  },
+  {
+   "ma": "0116",
+   "ten": "Trồng cây lấy sợi",
+   "cap": 4
+  },
+  {
+   "ma": "0117",
+   "ten": "Trồng cây có hạt chứa dầu",
+   "cap": 4
+  },
+  {
+   "ma": "0118",
+   "ten": "Trồng rau, đậu các loại và trồng hoa",
+   "cap": 4
+  },
+  {
+   "ma": "0119",
+   "ten": "Trồng cây hàng năm khác",
+   "cap": 4
+  },
+  {
+   "ma": "012",
+   "ten": "Trồng cây lâu năm",
+   "cap": 3
+  },
+  {
+   "ma": "0121",
+   "ten": "Trồng cây ăn quả",
+   "cap": 4
+  },
+  {
+   "ma": "0122",
+   "ten": "Trồng cây lấy quả chứa dầu",
+   "cap": 4
+  },
+  {
+   "ma": "0123",
+   "ten": "Trồng cây điều",
+   "cap": 4
+  },
+  {
+   "ma": "0124",
+   "ten": "Trồng cây hồ tiêu",
+   "cap": 4
+  },
+  {
+   "ma": "0125",
+   "ten": "Trồng cây cao su",
+   "cap": 4
+  },
+  {
+   "ma": "0126",
+   "ten": "Trồng cây cà phê",
+   "cap": 4
+  },
+  {
+   "ma": "0127",
+   "ten": "Trồng cây chè",
+   "cap": 4
+  },
+  {
+   "ma": "0128",
+   "ten": "Trồng cây gia vị, cây dược liệu, cây hương liệu lâu năm",
+   "cap": 4
+  },
+  {
+   "ma": "0129",
+   "ten": "Trồng cây lâu năm  khác",
+   "cap": 4
+  },
+  {
+   "ma": "013",
+   "ten": "Nhân và chăm sóc cây giống nông nghiệp",
+   "cap": 3
+  },
+  {
+   "ma": "0131",
+   "ten": "Nhân và chăm sóc cây giống nông nghiệp",
+   "cap": 4
+  },
+  {
+   "ma": "0132",
+   "ten": "Nhân và chăm sóc cây giống lâu năm",
+   "cap": 4
+  },
+  {
+   "ma": "014",
+   "ten": "Chăn nuôi",
+   "cap": 3
+  },
+  {
+   "ma": "0141",
+   "ten": "Chăn nuôi trâu, bò và sản xuất giống trâu, bò",
+   "cap": 4
+  },
+  {
+   "ma": "0142",
+   "ten": "Chăn nuôi ngựa, lừa, la và sản xuất giống ngựa, lừa",
+   "cap": 4
+  },
+  {
+   "ma": "0144",
+   "ten": "Chăn nuôi dê, cừu, hươu, nai và sản xuất giống dê, cừu, hươu, nai",
+   "cap": 4
+  },
+  {
+   "ma": "0145",
+   "ten": "Chăn nuôi lợn và sản xuất giống lợn",
+   "cap": 4
+  },
+  {
+   "ma": "0146",
+   "ten": "Chăn nuôi gia cầm",
+   "cap": 4
+  },
+  {
+   "ma": "0149",
+   "ten": "Chăn nuôi khác",
+   "cap": 4
+  },
+  {
+   "ma": "015",
+   "ten": "Trồng trọt, chăn nuôi hỗn hợp",
+   "cap": 3
+  },
+  {
+   "ma": "0150",
+   "ten": "Trồng trọt, chăn nuôi hỗn hợp",
+   "cap": 4
+  },
+  {
+   "ma": "016",
+   "ten": "Hoạt động dịch vụ nông nghiệp",
+   "cap": 3
+  },
+  {
+   "ma": "0161",
+   "ten": "Hoạt động dịch vụ trồng trọt",
+   "cap": 4
+  },
+  {
+   "ma": "0162",
+   "ten": "Hoạt động dịch vụ chăn nuôi",
+   "cap": 4
+  },
+  {
+   "ma": "0163",
+   "ten": "Hoạt động dịch vụ sau thu hoạch",
+   "cap": 4
+  },
+  {
+   "ma": "0164",
+   "ten": "Xử lý hạt giống để nhân giống",
+   "cap": 4
+  },
+  {
+   "ma": "017",
+   "ten": "Săn bắt, đánh bẫy và hoạt động dịch vụ có liên quan",
+   "cap": 3
+  },
+  {
+   "ma": "0170",
+   "ten": "Săn bắt, đánh bẫy và hoạt động dịch vụ có liên quan",
+   "cap": 4
+  },
+  {
+   "ma": "02",
+   "ten": "Lâm nghiệp và hoạt động dịch vụ có liên quan",
+   "cap": 2
+  },
+  {
+   "ma": "021",
+   "ten": "Trồng rừng, chăm sóc rừng và ươm giống cây lâm nghiệp",
+   "cap": 3
+  },
+  {
+   "ma": "0210",
+   "ten": "Trồng rừng, chăm sóc rừng và ươm giống cây lâm nghiệp",
+   "cap": 4
+  },
+  {
+   "ma": "022",
+   "ten": "Khai thác gỗ",
+   "cap": 3
+  },
+  {
+   "ma": "0220",
+   "ten": "Khai thác gỗ",
+   "cap": 4
+  },
+  {
+   "ma": "023",
+   "ten": "Khai thác, thu nhặt lâm sản trừ gỗ",
+   "cap": 3
+  },
+  {
+   "ma": "0231",
+   "ten": "Khai thác lâm sản trừ gỗ",
+   "cap": 4
+  },
+  {
+   "ma": "0232",
+   "ten": "Thu nhặt lâm sản trừ gỗ",
+   "cap": 4
+  },
+  {
+   "ma": "024",
+   "ten": "Hoạt động dịch vụ lâm nghiệp",
+   "cap": 3
+  },
+  {
+   "ma": "0240",
+   "ten": "Hoạt động dịch vụ lâm nghiệp",
+   "cap": 4
+  },
+  {
+   "ma": "03",
+   "ten": "Khai thác, nuôi trồng thuỷ sản",
+   "cap": 2
+  },
+  {
+   "ma": "031",
+   "ten": "Khai thác thuỷ sản",
+   "cap": 3
+  },
+  {
+   "ma": "0311",
+   "ten": "Khai thác thuỷ sản biển",
+   "cap": 4
+  },
+  {
+   "ma": "0312",
+   "ten": "Khai thác thuỷ sản nội địa",
+   "cap": 4
+  },
+  {
+   "ma": "032",
+   "ten": "Nuôi trồng thuỷ sản",
+   "cap": 3
+  },
+  {
+   "ma": "0321",
+   "ten": "Nuôi trồng thuỷ sản biển",
+   "cap": 4
+  },
+  {
+   "ma": "0322",
+   "ten": "Nuôi trồng thuỷ sản nội địa",
+   "cap": 4
+  },
+  {
+   "ma": "05",
+   "ten": "Khai thác than cứng và than non",
+   "cap": 2
+  },
+  {
+   "ma": "051",
+   "ten": "Khai thác và thu gom than cứng",
+   "cap": 3
+  },
+  {
+   "ma": "0510",
+   "ten": "Khai thác và thu gom than cứng",
+   "cap": 4
+  },
+  {
+   "ma": "052",
+   "ten": "Khai thác và thu gom than non",
+   "cap": 3
+  },
+  {
+   "ma": "0520",
+   "ten": "Khai thác và thu gom than non",
+   "cap": 4
+  },
+  {
+   "ma": "06",
+   "ten": "Khai thác dầu thô và khí đốt tự nhiên",
+   "cap": 2
+  },
+  {
+   "ma": "061",
+   "ten": "Khai thác dầu thô",
+   "cap": 3
+  },
+  {
+   "ma": "0610",
+   "ten": "Khai thác dầu thô",
+   "cap": 4
+  },
+  {
+   "ma": "062",
+   "ten": "Khai thác khí đốt tự nhiên",
+   "cap": 3
+  },
+  {
+   "ma": "0620",
+   "ten": "Khai thác khí đốt tự nhiên",
+   "cap": 4
+  },
+  {
+   "ma": "07",
+   "ten": "Khai thác quặng kim loại",
+   "cap": 2
+  },
+  {
+   "ma": "071",
+   "ten": "Khai thác quặng sắt",
+   "cap": 3
+  },
+  {
+   "ma": "0710",
+   "ten": "Khai thác quặng sắt",
+   "cap": 4
+  },
+  {
+   "ma": "072",
+   "ten": "Khai thác quặng không chứa sắt (trừ quặng kim loại quý hiếm)",
+   "cap": 3
+  },
+  {
+   "ma": "0721",
+   "ten": "Khai thác quặng uranium và quặng thorium",
+   "cap": 4
+  },
+  {
+   "ma": "0722",
+   "ten": "Khai thác quặng kim loại khác không chứa sắt",
+   "cap": 4
+  },
+  {
+   "ma": "073",
+   "ten": "Khai thác quặng kim loại quý hiếm",
+   "cap": 3
+  },
+  {
+   "ma": "0730",
+   "ten": "Khai thác quặng kim loại quý hiếm",
+   "cap": 4
+  },
+  {
+   "ma": "08",
+   "ten": "Khai khoáng khác",
+   "cap": 2
+  },
+  {
+   "ma": "081",
+   "ten": "Khai thác đá, cát, sỏi, đất sét",
+   "cap": 3
+  },
+  {
+   "ma": "0810",
+   "ten": "Khai thác đá, cát, sỏi, đất sét",
+   "cap": 4
+  },
+  {
+   "ma": "089",
+   "ten": "Khai khoáng chưa được phân vào đâu",
+   "cap": 3
+  },
+  {
+   "ma": "0891",
+   "ten": "Khai thác khoáng hoá chất và khoáng phân bón",
+   "cap": 4
+  },
+  {
+   "ma": "0892",
+   "ten": "Khai thác và thu gom than bùn",
+   "cap": 4
+  },
+  {
+   "ma": "0893",
+   "ten": "Khai thác muối",
+   "cap": 4
+  },
+  {
+   "ma": "0899",
+   "ten": "Khai khoáng khác chưa được phân vào đâu",
+   "cap": 4
+  },
+  {
+   "ma": "09",
+   "ten": "Hoạt động dịch vụ hỗ trợ khai khoáng",
+   "cap": 2
+  },
+  {
+   "ma": "091",
+   "ten": "Hoạt động dịch vụ hỗ trợ khai thác dầu thô và khí tự nhiên",
+   "cap": 3
+  },
+  {
+   "ma": "0910",
+   "ten": "Hoạt động dịch vụ hỗ trợ khai thác dầu thô và khí tự nhiên",
+   "cap": 4
+  },
+  {
+   "ma": "099",
+   "ten": "Hoạt động dịch vụ hỗ trợ khai khoáng khác",
+   "cap": 3
+  },
+  {
+   "ma": "0990",
+   "ten": "Hoạt động dịch vụ hỗ trợ khai khoáng khác",
+   "cap": 4
+  },
+  {
+   "ma": "10",
+   "ten": "Sản xuất, chế biến thực phẩm",
+   "cap": 2
+  },
+  {
+   "ma": "101",
+   "ten": "Chế biến, bảo quản thịt và các sản phẩm từ thịt",
+   "cap": 3
+  },
+  {
+   "ma": "1010",
+   "ten": "Chế biến, bảo quản thịt và các sản phẩm từ thịt",
+   "cap": 4
+  },
+  {
+   "ma": "102",
+   "ten": "Chế biến, bảo quản thuỷ sản và các sản phẩm từ thuỷ sản",
+   "cap": 3
+  },
+  {
+   "ma": "1020",
+   "ten": "Chế biến, bảo quản thuỷ sản và các sản phẩm từ thuỷ sản",
+   "cap": 4
+  },
+  {
+   "ma": "103",
+   "ten": "Chế biến và bảo quản rau quả",
+   "cap": 3
+  },
+  {
+   "ma": "1030",
+   "ten": "Chế biến và bảo quản rau quả",
+   "cap": 4
+  },
+  {
+   "ma": "104",
+   "ten": "Sản xuất dầu, mỡ động, thực vật",
+   "cap": 3
+  },
+  {
+   "ma": "1040",
+   "ten": "Sản xuất dầu, mỡ động, thực vật",
+   "cap": 4
+  },
+  {
+   "ma": "105",
+   "ten": "Chế biến sữa và các sản phẩm từ sữa",
+   "cap": 3
+  },
+  {
+   "ma": "1050",
+   "ten": "Chế biến sữa và các sản phẩm từ sữa",
+   "cap": 4
+  },
+  {
+   "ma": "106",
+   "ten": "Xay xát và sản xuất bột",
+   "cap": 3
+  },
+  {
+   "ma": "1061",
+   "ten": "Xay xát và sản xuất bột thô",
+   "cap": 4
+  },
+  {
+   "ma": "1062",
+   "ten": "Sản xuất tinh bột và các sản phẩm từ tinh bột",
+   "cap": 4
+  },
+  {
+   "ma": "107",
+   "ten": "Sản xuất thực phẩm khác",
+   "cap": 3
+  },
+  {
+   "ma": "1071",
+   "ten": "Sản xuất các loại bánh từ bột",
+   "cap": 4
+  },
+  {
+   "ma": "1072",
+   "ten": "Sản xuất đường",
+   "cap": 4
+  },
+  {
+   "ma": "1073",
+   "ten": "Sản xuất ca cao, sôcôla và bánh kẹo",
+   "cap": 4
+  },
+  {
+   "ma": "1074",
+   "ten": "Sản xuất mì ống, mỳ sợi và sản phẩm tương tự",
+   "cap": 4
+  },
+  {
+   "ma": "1075",
+   "ten": "Sản xuất món ăn, thức ăn chế biến sẵn",
+   "cap": 4
+  },
+  {
+   "ma": "1076",
+   "ten": "Sản xuất chè",
+   "cap": 4
+  },
+  {
+   "ma": "1077",
+   "ten": "Sản xuất cà phê",
+   "cap": 4
+  },
+  {
+   "ma": "1079",
+   "ten": "Sản xuất thực phẩm khác chưa được phân vào đâu",
+   "cap": 4
+  },
+  {
+   "ma": "108",
+   "ten": "Sản xuất thức ăn gia súc, gia cầm và thuỷ sản",
+   "cap": 3
+  },
+  {
+   "ma": "1080",
+   "ten": "Sản xuất thức ăn gia súc, gia cầm và thuỷ sản",
+   "cap": 4
+  },
+  {
+   "ma": "11",
+   "ten": "Sản xuất đồ uống",
+   "cap": 2
+  },
+  {
+   "ma": "110",
+   "ten": "Sản xuất đồ uống",
+   "cap": 3
+  },
+  {
+   "ma": "1101",
+   "ten": "Chưng, tinh cất và pha chế các loại rượu mạnh",
+   "cap": 4
+  },
+  {
+   "ma": "1102",
+   "ten": "Sản xuất rượu vang",
+   "cap": 4
+  },
+  {
+   "ma": "1103",
+   "ten": "Sản xuất bia và mạch nha ủ men bia",
+   "cap": 4
+  },
+  {
+   "ma": "1104",
+   "ten": "Sản xuất đồ uống không cồn, nước khoáng",
+   "cap": 4
+  },
+  {
+   "ma": "12",
+   "ten": "Sản xuất sản phẩm thuốc lá",
+   "cap": 2
+  },
+  {
+   "ma": "120",
+   "ten": "Sản xuất sản phẩm thuốc lá",
+   "cap": 3
+  },
+  {
+   "ma": "1200",
+   "ten": "Sản xuất sản phẩm thuốc lá",
+   "cap": 4
+  },
+  {
+   "ma": "13",
+   "ten": "Dệt",
+   "cap": 2
+  },
+  {
+   "ma": "131",
+   "ten": "Sản xuất sợi, vải dệt thoi và hoàn thiện sản phẩm dệt",
+   "cap": 3
+  },
+  {
+   "ma": "1311",
+   "ten": "Sản xuất sợi",
+   "cap": 4
+  },
+  {
+   "ma": "1312",
+   "ten": "Sản xuất vải dệt thoi",
+   "cap": 4
+  },
+  {
+   "ma": "1313",
+   "ten": "Hoàn thiện sản phẩm dệt",
+   "cap": 4
+  },
+  {
+   "ma": "139",
+   "ten": "Sản xuất hàng dệt khác",
+   "cap": 3
+  },
+  {
+   "ma": "1391",
+   "ten": "Sản xuất vải dệt kim, vải đan móc và vải không dệt khác",
+   "cap": 4
+  },
+  {
+   "ma": "1392",
+   "ten": "Sản xuất hàng dệt sẵn (trừ trang phục)",
+   "cap": 4
+  },
+  {
+   "ma": "1393",
+   "ten": "Sản xuất thảm, chăn, đệm",
+   "cap": 4
+  },
+  {
+   "ma": "1394",
+   "ten": "Sản xuất các loại dây bện và lưới",
+   "cap": 4
+  },
+  {
+   "ma": "1399",
+   "ten": "Sản xuất các loại hàng dệt khác chưa được phân vào đâu",
+   "cap": 4
+  },
+  {
+   "ma": "14",
+   "ten": "Sản xuất trang phục",
+   "cap": 2
+  },
+  {
+   "ma": "141",
+   "ten": "May trang phục (trừ trang phục từ da lông thú)",
+   "cap": 3
+  },
+  {
+   "ma": "1410",
+   "ten": "May trang phục (trừ trang phục từ da lông thú)",
+   "cap": 4
+  },
+  {
+   "ma": "142",
+   "ten": "Sản xuất sản phẩm từ da lông thú",
+   "cap": 3
+  },
+  {
+   "ma": "1420",
+   "ten": "Sản xuất sản phẩm từ da lông thú",
+   "cap": 4
+  },
+  {
+   "ma": "143",
+   "ten": "Sản xuất trang phục dệt kim, đan móc",
+   "cap": 3
+  },
+  {
+   "ma": "1430",
+   "ten": "Sản xuất trang phục dệt kim, đan móc",
+   "cap": 4
+  },
+  {
+   "ma": "15",
+   "ten": "Sản xuất da và các sản phẩm có liên quan",
+   "cap": 2
+  },
+  {
+   "ma": "151",
+   "ten": "Thuộc, sơ chế da; sản xuất va li, túi xách, yên đệm; sơ chế và nhuộm da lông thú",
+   "cap": 3
+  },
+  {
+   "ma": "1511",
+   "ten": "Thuộc, sơ chế da; sơ chế và nhuộm da lông thú",
+   "cap": 4
+  },
+  {
+   "ma": "1512",
+   "ten": "Sản xuất vali, túi xách và các loại tương tự, sản xuất yên đệm",
+   "cap": 4
+  },
+  {
+   "ma": "152",
+   "ten": "Sản xuất giày, dép",
+   "cap": 3
+  },
+  {
+   "ma": "1520",
+   "ten": "Sản xuất giày, dép",
+   "cap": 4
+  },
+  {
+   "ma": "16",
+   "ten": "Chế biến gỗ và sản xuất sản phẩm từ gỗ, tre, nứa (trừ giường, tủ, bàn, ghế); sản xuất sản phẩm từ rơm, rạ và vật liệu tết bện",
+   "cap": 2
+  },
+  {
+   "ma": "161",
+   "ten": "Cưa, xẻ, bào gỗ và bảo quản gỗ",
+   "cap": 3
+  },
+  {
+   "ma": "1610",
+   "ten": "Cưa, xẻ, bào gỗ và bảo quản gỗ",
+   "cap": 4
+  },
+  {
+   "ma": "162",
+   "ten": "Sản xuất sản phẩm từ gỗ, tre, nứa (trừ giường, tủ, bàn, ghế); sản xuất sản phẩm từ rơm, rạ và vật liệu tết bện",
+   "cap": 3
+  },
+  {
+   "ma": "1621",
+   "ten": "Sản xuất gỗ dán, gỗ lạng, ván ép và ván mỏng khác",
+   "cap": 4
+  },
+  {
+   "ma": "1622",
+   "ten": "Sản xuất đồ gỗ xây dựng",
+   "cap": 4
+  },
+  {
+   "ma": "1623",
+   "ten": "Sản xuất bao bì bằng gỗ",
+   "cap": 4
+  },
+  {
+   "ma": "1629",
+   "ten": "Sản xuất sản phẩm khác từ gỗ; sản xuất sản phẩm từ tre, nứa, rơm, rạ và vật liệu tết bện",
+   "cap": 4
+  },
+  {
+   "ma": "17",
+   "ten": "Sản xuất giấy và sản phẩm từ giấy",
+   "cap": 2
+  },
+  {
+   "ma": "170",
+   "ten": "Sản xuất giấy và sản phẩm từ giấy",
+   "cap": 3
+  },
+  {
+   "ma": "1701",
+   "ten": "Sản xuất bột giấy, giấy và bìa",
+   "cap": 4
+  },
+  {
+   "ma": "1702",
+   "ten": "Sản xuất giấy nhăn, bìa nhăn, bao bì từ giấy và bìa",
+   "cap": 4
+  },
+  {
+   "ma": "1709",
+   "ten": "Sản xuất các sản phẩm khác từ giấy và bìa chưa được phân vào đâu",
+   "cap": 4
+  },
+  {
+   "ma": "18",
+   "ten": "In, sao chép bản ghi các loại",
+   "cap": 2
+  },
+  {
+   "ma": "181",
+   "ten": "In ấn và dịch vụ liên quan đến in",
+   "cap": 3
+  },
+  {
+   "ma": "1811",
+   "ten": "In ấn",
+   "cap": 4
+  },
+  {
+   "ma": "1812",
+   "ten": "Dịch vụ liên quan đến in",
+   "cap": 4
+  },
+  {
+   "ma": "182",
+   "ten": "Sao chép bản ghi các loại",
+   "cap": 3
+  },
+  {
+   "ma": "1820",
+   "ten": "Sao chép bản ghi các loại",
+   "cap": 4
+  },
+  {
+   "ma": "19",
+   "ten": "Sản xuất than cốc, sản phẩm dầu mỏ tinh chế",
+   "cap": 2
+  },
+  {
+   "ma": "191",
+   "ten": "Sản xuất than cốc",
+   "cap": 3
+  },
+  {
+   "ma": "1910",
+   "ten": "Sản xuất than cốc",
+   "cap": 4
+  },
+  {
+   "ma": "192",
+   "ten": "Sản xuất sản phẩm dầu mỏ tinh chế",
+   "cap": 3
+  },
+  {
+   "ma": "1920",
+   "ten": "Sản xuất sản phẩm dầu mỏ tinh chế",
+   "cap": 4
+  },
+  {
+   "ma": "20",
+   "ten": "Sản xuất hoá chất và sản phẩm hoá chất",
+   "cap": 2
+  },
+  {
+   "ma": "201",
+   "ten": "Sản xuất hoá chất cơ bản, phân bón và hợp chất ni tơ; sản xuất plastic và cao su tổng hợp dạng nguyên sinh",
+   "cap": 3
+  },
+  {
+   "ma": "2011",
+   "ten": "Sản xuất hoá chất cơ bản",
+   "cap": 4
+  },
+  {
+   "ma": "2012",
+   "ten": "Sản xuất phân bón và hợp chất ni tơ",
+   "cap": 4
+  },
+  {
+   "ma": "2013",
+   "ten": "Sản xuất plastic và cao su tổng hợp dạng nguyên sinh",
+   "cap": 4
+  },
+  {
+   "ma": "202",
+   "ten": "Sản xuất sản phẩm hoá chất khác",
+   "cap": 3
+  },
+  {
+   "ma": "2021",
+   "ten": "Sản xuất thuốc trừ sâu và sản phẩm hoá chất khác dùng trong nông nghiệp",
+   "cap": 4
+  },
+  {
+   "ma": "2022",
+   "ten": "Sản xuất sơn, véc ni và các chất sơn, quét tương tự; sản xuất mực in và ma tít",
+   "cap": 4
+  },
+  {
+   "ma": "2023",
+   "ten": "Sản xuất mỹ phẩm, nước hoa, xà phòng, chất tẩy rửa, làm bóng và chế phẩm vệ sinh",
+   "cap": 4
+  },
+  {
+   "ma": "2029",
+   "ten": "Sản xuất sản phẩm hoá chất khác chưa được phân vào đâu",
+   "cap": 4
+  },
+  {
+   "ma": "203",
+   "ten": "Sản xuất sợi nhân tạo",
+   "cap": 3
+  },
+  {
+   "ma": "2030",
+   "ten": "Sản xuất sợi nhân tạo",
+   "cap": 4
+  },
+  {
+   "ma": "21",
+   "ten": "Sản xuất thuốc, hoá dược và dược liệu",
+   "cap": 2
+  },
+  {
+   "ma": "210",
+   "ten": "Sản xuất thuốc, hoá dược và dược liệu",
+   "cap": 3
+  },
+  {
+   "ma": "2100",
+   "ten": "Sản xuất thuốc, hoá dược và dược liệu",
+   "cap": 4
+  },
+  {
+   "ma": "22",
+   "ten": "Sản xuất sản phẩm từ cao su và plastic",
+   "cap": 2
+  },
+  {
+   "ma": "221",
+   "ten": "Sản xuất sản phẩm từ cao su",
+   "cap": 3
+  },
+  {
+   "ma": "2211",
+   "ten": "Sản xuất săm, lốp cao su; đắp và tái chế lốp cao su",
+   "cap": 4
+  },
+  {
+   "ma": "2219",
+   "ten": "Sản xuất sản phẩm khác từ cao su",
+   "cap": 4
+  },
+  {
+   "ma": "222",
+   "ten": "Sản xuất sản phẩm từ plastic",
+   "cap": 3
+  },
+  {
+   "ma": "2220",
+   "ten": "Sản xuất sản phẩm từ plastic",
+   "cap": 4
+  },
+  {
+   "ma": "23",
+   "ten": "Sản xuất sản phẩm từ khoáng phi kim loại khác",
+   "cap": 2
+  },
+  {
+   "ma": "231",
+   "ten": "Sản xuất thuỷ tinh và sản phẩm từ thuỷ tinh",
+   "cap": 3
+  },
+  {
+   "ma": "2310",
+   "ten": "Sản xuất thuỷ tinh và sản phẩm từ thuỷ tinh",
+   "cap": 4
+  },
+  {
+   "ma": "239",
+   "ten": "Sản xuất sản phẩm từ khoáng phi kim loại chưa được phân vào đâu",
+   "cap": 3
+  },
+  {
+   "ma": "2391",
+   "ten": "Sản xuất sản phẩm chịu lửa",
+   "cap": 4
+  },
+  {
+   "ma": "2392",
+   "ten": "Sản xuất vật liệu xây dựng từ đất sét",
+   "cap": 4
+  },
+  {
+   "ma": "2393",
+   "ten": "Sản xuất sản phẩm gốm sứ khác",
+   "cap": 4
+  },
+  {
+   "ma": "2394",
+   "ten": "Sản xuất xi măng, vôi và thạch cao",
+   "cap": 4
+  },
+  {
+   "ma": "2395",
+   "ten": "Sản xuất bê tông và các sản phẩm từ bê tông, xi măng và thạch cao",
+   "cap": 4
+  },
+  {
+   "ma": "2396",
+   "ten": "Cắt, tạo dáng và hoàn thiện đá",
+   "cap": 4
+  },
+  {
+   "ma": "2399",
+   "ten": "Sản xuất sản phẩm từ chất khoáng phi kim loại khác chưa được phân vào đâu",
+   "cap": 4
+  },
+  {
+   "ma": "24",
+   "ten": "Sản xuất kim loại",
+   "cap": 2
+  },
+  {
+   "ma": "241",
+   "ten": "Sản xuất sắt, thép, gang",
+   "cap": 3
+  },
+  {
+   "ma": "2410",
+   "ten": "Sản xuất sắt, thép, gang",
+   "cap": 4
+  },
+  {
+   "ma": "242",
+   "ten": "Sản xuất kim loại quý và kim loại màu",
+   "cap": 3
+  },
+  {
+   "ma": "2420",
+   "ten": "Sản xuất kim loại quý và kim loại màu",
+   "cap": 4
+  },
+  {
+   "ma": "243",
+   "ten": "Đúc kim loại",
+   "cap": 3
+  },
+  {
+   "ma": "2431",
+   "ten": "Đúc sắt, thép",
+   "cap": 4
+  },
+  {
+   "ma": "2432",
+   "ten": "Đúc kim loại màu",
+   "cap": 4
+  },
+  {
+   "ma": "25",
+   "ten": "Sản xuất sản phẩm từ kim loại đúc sẵn (trừ máy móc, thiết bị)",
+   "cap": 2
+  },
+  {
+   "ma": "251",
+   "ten": "Sản xuất các cấu kiện kim loại, thùng, bể chứa và nồi hơi",
+   "cap": 3
+  },
+  {
+   "ma": "2511",
+   "ten": "Sản xuất các cấu kiện kim loại",
+   "cap": 4
+  },
+  {
+   "ma": "2512",
+   "ten": "Sản xuất thùng, bể chứa và dụng cụ chứa đựng bằng kim loại",
+   "cap": 4
+  },
+  {
+   "ma": "2513",
+   "ten": "Sản xuất nồi hơi (trừ nồi hơi trung tâm)",
+   "cap": 4
+  },
+  {
+   "ma": "252",
+   "ten": "Sản xuất vũ khí và đạn dược",
+   "cap": 3
+  },
+  {
+   "ma": "2520",
+   "ten": "Sản xuất vũ khí và đạn dược",
+   "cap": 4
+  },
+  {
+   "ma": "259",
+   "ten": "Sản xuất sản phẩm khác bằng kim loại; các dịch vụ xử lý, gia công kim loại",
+   "cap": 3
+  },
+  {
+   "ma": "2591",
+   "ten": "Rèn, dập, ép và cán kim loại; luyện bột kim loại",
+   "cap": 4
+  },
+  {
+   "ma": "2592",
+   "ten": "Gia công cơ khí; xử lý và tráng phủ kim loại",
+   "cap": 4
+  },
+  {
+   "ma": "2593",
+   "ten": "Sản xuất dao kéo, dụng cụ cầm tay và đồ kim loại thông dụng",
+   "cap": 4
+  },
+  {
+   "ma": "2599",
+   "ten": "Sản xuất sản phẩm khác bằng kim loại chưa được phân vào đâu",
+   "cap": 4
+  },
+  {
+   "ma": "26",
+   "ten": "Sản xuất sản phẩm điện tử, máy vi tính và sản phẩm quang học",
+   "cap": 2
+  },
+  {
+   "ma": "261",
+   "ten": "Sản xuất linh kiện điện tử",
+   "cap": 3
+  },
+  {
+   "ma": "2610",
+   "ten": "Sản xuất linh kiện điện tử",
+   "cap": 4
+  },
+  {
+   "ma": "262",
+   "ten": "Sản xuất máy vi tính và thiết bị ngoại vi của máy vi tính",
+   "cap": 3
+  },
+  {
+   "ma": "2620",
+   "ten": "Sản xuất máy vi tính và thiết bị ngoại vi của máy vi tính",
+   "cap": 4
+  },
+  {
+   "ma": "263",
+   "ten": "Sản xuất thiết bị truyền thông",
+   "cap": 3
+  },
+  {
+   "ma": "2630",
+   "ten": "Sản xuất thiết bị truyền thông",
+   "cap": 4
+  },
+  {
+   "ma": "264",
+   "ten": "Sản xuất sản phẩm điện tử dân dụng",
+   "cap": 3
+  },
+  {
+   "ma": "2640",
+   "ten": "Sản xuất sản phẩm điện tử dân dụng",
+   "cap": 4
+  },
+  {
+   "ma": "265",
+   "ten": "Sản xuất thiết bị đo lường, kiểm tra, định hướng và điều khiển; sản xuất đồng hồ",
+   "cap": 3
+  },
+  {
+   "ma": "2651",
+   "ten": "Sản xuất thiết bị đo lường, kiểm tra, định hướng và điều khiển",
+   "cap": 4
+  },
+  {
+   "ma": "2652",
+   "ten": "Sản xuất đồng hồ",
+   "cap": 4
+  },
+  {
+   "ma": "266",
+   "ten": "Sản xuất thiết bị bức xạ, thiết bị điện tử trong y học, điện liệu pháp",
+   "cap": 3
+  },
+  {
+   "ma": "2660",
+   "ten": "Sản xuất thiết bị bức xạ, thiết bị điện tử trong y học, điện liệu pháp",
+   "cap": 4
+  },
+  {
+   "ma": "267",
+   "ten": "Sản xuất thiết bị và dụng cụ quang học",
+   "cap": 3
+  },
+  {
+   "ma": "2670",
+   "ten": "Sản xuất thiết bị và dụng cụ quang học",
+   "cap": 4
+  },
+  {
+   "ma": "268",
+   "ten": "Sản xuất băng, đĩa từ tính và quang học",
+   "cap": 3
+  },
+  {
+   "ma": "2680",
+   "ten": "Sản xuất băng, đĩa từ tính và quang học",
+   "cap": 4
+  },
+  {
+   "ma": "27",
+   "ten": "Sản xuất thiết bị điện",
+   "cap": 2
+  },
+  {
+   "ma": "271",
+   "ten": "Sản xuất mô tơ, máy phát, biến thế điện, thiết bị phân phối và điều khiển điện",
+   "cap": 3
+  },
+  {
+   "ma": "2710",
+   "ten": "Sản xuất mô tơ, máy phát, biến thế điện, thiết bị phân phối và điều khiển điện",
+   "cap": 4
+  },
+  {
+   "ma": "272",
+   "ten": "Sản xuất pin và ắc quy",
+   "cap": 3
+  },
+  {
+   "ma": "2720",
+   "ten": "Sản xuất pin và ắc quy",
+   "cap": 4
+  },
+  {
+   "ma": "273",
+   "ten": "Sản xuất dây và thiết bị dây dẫn",
+   "cap": 3
+  },
+  {
+   "ma": "2731",
+   "ten": "Sản xuất dây cáp, sợi cáp quang học",
+   "cap": 4
+  },
+  {
+   "ma": "2732",
+   "ten": "Sản xuất dây, cáp điện và điện tử khác",
+   "cap": 4
+  },
+  {
+   "ma": "2733",
+   "ten": "Sản xuất thiết bị dây dẫn điện các loại",
+   "cap": 4
+  },
+  {
+   "ma": "274",
+   "ten": "Sản xuất thiết bị điện chiếu sáng",
+   "cap": 3
+  },
+  {
+   "ma": "2740",
+   "ten": "Sản xuất thiết bị điện chiếu sáng",
+   "cap": 4
+  },
+  {
+   "ma": "275",
+   "ten": "Sản xuất đồ điện dân dụng",
+   "cap": 3
+  },
+  {
+   "ma": "2750",
+   "ten": "Sản xuất đồ điện dân dụng",
+   "cap": 4
+  },
+  {
+   "ma": "279",
+   "ten": "Sản xuất thiết bị điện khác",
+   "cap": 3
+  },
+  {
+   "ma": "2790",
+   "ten": "Sản xuất thiết bị điện khác",
+   "cap": 4
+  },
+  {
+   "ma": "28",
+   "ten": "Sản xuất máy móc, thiết bị chưa được phân vào đâu",
+   "cap": 2
+  },
+  {
+   "ma": "281",
+   "ten": "Sản xuất máy thông dụng",
+   "cap": 3
+  },
+  {
+   "ma": "2811",
+   "ten": "Sản xuất động cơ, tua bin (trừ động cơ máy bay, ô tô, mô tô và xe máy)",
+   "cap": 4
+  },
+  {
+   "ma": "2812",
+   "ten": "Sản xuất thiết bị sử dụng năng lượng chiết lưu",
+   "cap": 4
+  },
+  {
+   "ma": "2813",
+   "ten": "Sản xuất máy bơm, máy nén, vòi và van khác",
+   "cap": 4
+  },
+  {
+   "ma": "2814",
+   "ten": "Sản xuất bi, bánh răng, hộp số, các bộ phận điều khiển và truyền chuyển động",
+   "cap": 4
+  },
+  {
+   "ma": "2815",
+   "ten": "Sản xuất lò nướng, lò luyện và lò nung",
+   "cap": 4
+  },
+  {
+   "ma": "2816",
+   "ten": "Sản xuất các thiết bị nâng, hạ và bốc xếp",
+   "cap": 4
+  },
+  {
+   "ma": "2817",
+   "ten": "Sản xuất máy móc và thiết bị văn phòng (trừ máy vi tính và thiết bị ngoại vi của máy vi tính)",
+   "cap": 4
+  },
+  {
+   "ma": "2818",
+   "ten": "Sản xuất dụng cụ cầm tay chạy bằng mô tơ hoặc khí nén",
+   "cap": 4
+  },
+  {
+   "ma": "2819",
+   "ten": "Sản xuất máy thông dụng khác",
+   "cap": 4
+  },
+  {
+   "ma": "282",
+   "ten": "Sản xuất máy chuyên dụng",
+   "cap": 3
+  },
+  {
+   "ma": "2821",
+   "ten": "Sản xuất máy nông nghiệp và lâm nghiệp",
+   "cap": 4
+  },
+  {
+   "ma": "2822",
+   "ten": "Sản xuất máy công cụ và máy tạo hình kim loại",
+   "cap": 4
+  },
+  {
+   "ma": "2823",
+   "ten": "Sản xuất máy luyện kim",
+   "cap": 4
+  },
+  {
+   "ma": "2824",
+   "ten": "Sản xuất máy khai thác mỏ và xây dựng",
+   "cap": 4
+  },
+  {
+   "ma": "2825",
+   "ten": "Sản xuất máy chế biến thực phẩm, đồ uống và thuốc lá",
+   "cap": 4
+  },
+  {
+   "ma": "2826",
+   "ten": "Sản xuất máy cho ngành dệt, may và da",
+   "cap": 4
+  },
+  {
+   "ma": "2829",
+   "ten": "Sản xuất máy chuyên dụng khác",
+   "cap": 4
+  },
+  {
+   "ma": "29",
+   "ten": "Sản xuất ô tô và xe có động cơ khác",
+   "cap": 2
+  },
+  {
+   "ma": "291",
+   "ten": "Sản xuất ô tô và xe có động cơ khác",
+   "cap": 3
+  },
+  {
+   "ma": "2910",
+   "ten": "Sản xuất ô tô và xe có động cơ khác",
+   "cap": 4
+  },
+  {
+   "ma": "292",
+   "ten": "Sản xuất thân xe ô tô và xe có động cơ khác, rơ moóc và bán rơ moóc",
+   "cap": 3
+  },
+  {
+   "ma": "2920",
+   "ten": "Sản xuất thân xe ô tô và xe có động cơ khác, rơ moóc và bán rơ moóc",
+   "cap": 4
+  },
+  {
+   "ma": "293",
+   "ten": "Sản xuất phụ tùng và bộ phận phụ trợ cho xe ô tô và xe có động cơ khác",
+   "cap": 3
+  },
+  {
+   "ma": "2930",
+   "ten": "Sản xuất phụ tùng và bộ phận phụ trợ cho xe ô tô và xe có động cơ khác",
+   "cap": 4
+  },
+  {
+   "ma": "30",
+   "ten": "Sản xuất phương tiện vận tải khác",
+   "cap": 2
+  },
+  {
+   "ma": "301",
+   "ten": "Đóng tàu và thuyền",
+   "cap": 3
+  },
+  {
+   "ma": "3011",
+   "ten": "Đóng tàu và cấu kiện nổi",
+   "cap": 4
+  },
+  {
+   "ma": "3012",
+   "ten": "Đóng thuyền, xuồng thể thao và giải trí",
+   "cap": 4
+  },
+  {
+   "ma": "302",
+   "ten": "Sản xuất đầu máy xe lửa, xe điện và toa xe",
+   "cap": 3
+  },
+  {
+   "ma": "3020",
+   "ten": "Sản xuất đầu máy xe lửa, xe điện và toa xe",
+   "cap": 4
+  },
+  {
+   "ma": "303",
+   "ten": "Sản xuất máy bay, tàu vũ trụ và máy móc liên quan",
+   "cap": 3
+  },
+  {
+   "ma": "3030",
+   "ten": "Sản xuất máy bay, tàu vũ trụ và máy móc liên quan",
+   "cap": 4
+  },
+  {
+   "ma": "304",
+   "ten": "Sản xuất xe cơ giới chiến đấu dùng trong quân đội",
+   "cap": 3
+  },
+  {
+   "ma": "3040",
+   "ten": "Sản xuất xe cơ giới chiến đấu dùng trong quân đội",
+   "cap": 4
+  },
+  {
+   "ma": "309",
+   "ten": "Sản xuất phương tiện và thiết bị vận tải chưa được phân vào đâu",
+   "cap": 3
+  },
+  {
+   "ma": "3091",
+   "ten": "Sản xuất mô tô, xe máy",
+   "cap": 4
+  },
+  {
+   "ma": "3092",
+   "ten": "Sản xuất xe đạp và xe cho người khuyết tật",
+   "cap": 4
+  },
+  {
+   "ma": "3099",
+   "ten": "Sản xuất phương tiện và thiết bị vận tải khác chưa được phân vào đâu",
+   "cap": 4
+  },
+  {
+   "ma": "31",
+   "ten": "Sản xuất giường, tủ, bàn, ghế",
+   "cap": 2
+  },
+  {
+   "ma": "310",
+   "ten": "Sản xuất giường, tủ, bàn, ghế",
+   "cap": 3
+  },
+  {
+   "ma": "3100",
+   "ten": "Sản xuất giường, tủ, bàn, ghế bằng gỗ",
+   "cap": 4
+  },
+  {
+   "ma": "32",
+   "ten": "Công nghiệp chế biến, chế tạo khác",
+   "cap": 2
+  },
+  {
+   "ma": "321",
+   "ten": "Sản xuất đồ kim hoàn, đồ giả kim hoàn và các chi tiết liên quan",
+   "cap": 3
+  },
+  {
+   "ma": "3211",
+   "ten": "Sản xuất đồ kim hoàn và chi tiết liên quan",
+   "cap": 4
+  },
+  {
+   "ma": "3212",
+   "ten": "Sản xuất đồ giả kim hoàn và chi tiết liên quan",
+   "cap": 4
+  },
+  {
+   "ma": "322",
+   "ten": "Sản xuất nhạc cụ",
+   "cap": 3
+  },
+  {
+   "ma": "3220",
+   "ten": "Sản xuất nhạc cụ",
+   "cap": 4
+  },
+  {
+   "ma": "323",
+   "ten": "Sản xuất dụng cụ thể dục, thể thao",
+   "cap": 3
+  },
+  {
+   "ma": "3230",
+   "ten": "Sản xuất dụng cụ thể dục, thể thao",
+   "cap": 4
+  },
+  {
+   "ma": "324",
+   "ten": "Sản xuất đồ chơi, trò chơi",
+   "cap": 3
+  },
+  {
+   "ma": "3240",
+   "ten": "Sản xuất đồ chơi, trò chơi",
+   "cap": 4
+  },
+  {
+   "ma": "325",
+   "ten": "Sản xuất thiết bị, dụng cụ y tế, nha khoa, chỉnh hình và phục hồi chức năng",
+   "cap": 3
+  },
+  {
+   "ma": "3250",
+   "ten": "Sản xuất thiết bị, dụng cụ y tế, nha khoa, chỉnh hình và phục hồi chức năng",
+   "cap": 4
+  },
+  {
+   "ma": "329",
+   "ten": "Sản xuất khác chưa được phân vào đâu",
+   "cap": 3
+  },
+  {
+   "ma": "3290",
+   "ten": "Sản xuất khác chưa được phân vào đâu",
+   "cap": 4
+  },
+  {
+   "ma": "33",
+   "ten": "Sửa chữa, bảo dưỡng và lắp đặt máy móc, thiết bị",
+   "cap": 2
+  },
+  {
+   "ma": "331",
+   "ten": "Sửa chữa và bảo dưỡng máy móc, thiết bị và sản phẩm kim loại đúc sẵn",
+   "cap": 3
+  },
+  {
+   "ma": "3311",
+   "ten": "Sửa chữa các sản phẩm kim loại đúc sẵn",
+   "cap": 4
+  },
+  {
+   "ma": "3312",
+   "ten": "Sửa chữa máy móc, thiết bị",
+   "cap": 4
+  },
+  {
+   "ma": "3313",
+   "ten": "Sửa chữa thiết bị điện tử và quang học",
+   "cap": 4
+  },
+  {
+   "ma": "3314",
+   "ten": "Sửa chữa thiết bị điện",
+   "cap": 4
+  },
+  {
+   "ma": "3315",
+   "ten": "Sửa chữa và bảo dưỡng phương tiện vận tải (trừ ô tô, mô tô, xe máy và xe có động cơ khác)",
+   "cap": 4
+  },
+  {
+   "ma": "3319",
+   "ten": "Sửa chữa thiết bị khác",
+   "cap": 4
+  },
+  {
+   "ma": "332",
+   "ten": "Lắp đặt máy móc và thiết bị công nghiệp",
+   "cap": 3
+  },
+  {
+   "ma": "3320",
+   "ten": "Lắp đặt máy móc và thiết bị công nghiệp",
+   "cap": 4
+  },
+  {
+   "ma": "35",
+   "ten": "Sản xuất và phân phối điện, khí đốt, nước nóng, hơi nước và điều hoà không khí",
+   "cap": 2
+  },
+  {
+   "ma": "351",
+   "ten": "Sản xuất, truyền tải và phân phối điện",
+   "cap": 3
+  },
+  {
+   "ma": "3511",
+   "ten": "Sản xuất điện",
+   "cap": 4
+  },
+  {
+   "ma": "3512",
+   "ten": "Truyền tải và phân phối điện",
+   "cap": 4
+  },
+  {
+   "ma": "352",
+   "ten": "Sản xuất khí đốt, phân phối nhiên liệu khí bằng đường ống",
+   "cap": 3
+  },
+  {
+   "ma": "3520",
+   "ten": "Sản xuất khí đốt, phân phối nhiên liệu khí bằng đường ống",
+   "cap": 4
+  },
+  {
+   "ma": "353",
+   "ten": "Sản xuất, phân phối hơi nước, nước nóng, điều hoà không khí và sản xuất nước đá",
+   "cap": 3
+  },
+  {
+   "ma": "3530",
+   "ten": "Sản xuất, phân phối hơi nước, nước nóng, điều hoà không khí và sản xuất nước đá",
+   "cap": 4
+  },
+  {
+   "ma": "36",
+   "ten": "Khai thác, xử lý và cung cấp nước",
+   "cap": 2
+  },
+  {
+   "ma": "360",
+   "ten": "Khai thác, xử lý và cung cấp nước",
+   "cap": 3
+  },
+  {
+   "ma": "3600",
+   "ten": "Khai thác, xử lý và cung cấp nước",
+   "cap": 4
+  },
+  {
+   "ma": "37",
+   "ten": "Thoát nước và xử lý nước thải",
+   "cap": 2
+  },
+  {
+   "ma": "370",
+   "ten": "Thoát nước và xử lý nước thải",
+   "cap": 3
+  },
+  {
+   "ma": "3700",
+   "ten": "Thoát nước và xử lý nước thải",
+   "cap": 4
+  },
+  {
+   "ma": "38",
+   "ten": "Hoạt động thu gom, xử lý và tiêu huỷ rác thải; tái chế phế liệu",
+   "cap": 2
+  },
+  {
+   "ma": "381",
+   "ten": "Thu gom rác thải",
+   "cap": 3
+  },
+  {
+   "ma": "3811",
+   "ten": "Thu gom rác thải không độc hại",
+   "cap": 4
+  },
+  {
+   "ma": "3812",
+   "ten": "Thu gom rác thải độc hại",
+   "cap": 4
+  },
+  {
+   "ma": "382",
+   "ten": "Xử lý và tiêu huỷ rác thải",
+   "cap": 3
+  },
+  {
+   "ma": "3821",
+   "ten": "Xử lý và tiêu huỷ rác thải không độc hại",
+   "cap": 4
+  },
+  {
+   "ma": "3822",
+   "ten": "Xử lý và tiêu huỷ rác thải độc hại",
+   "cap": 4
+  },
+  {
+   "ma": "383",
+   "ten": "Tái chế phế liệu",
+   "cap": 3
+  },
+  {
+   "ma": "3830",
+   "ten": "Tái chế phế liệu",
+   "cap": 4
+  },
+  {
+   "ma": "39",
+   "ten": "Xử lý ô nhiễm và hoạt động quản lý chất thải khác",
+   "cap": 2
+  },
+  {
+   "ma": "390",
+   "ten": "Xử lý ô nhiễm và hoạt động quản lý chất thải khác",
+   "cap": 3
+  },
+  {
+   "ma": "3900",
+   "ten": "Xử lý ô nhiễm và hoạt động quản lý chất thải khác",
+   "cap": 4
+  },
+  {
+   "ma": "41",
+   "ten": "Xây dựng nhà các loại",
+   "cap": 2
+  },
+  {
+   "ma": "410",
+   "ten": "Xây dựng nhà các loại",
+   "cap": 3
+  },
+  {
+   "ma": "4101",
+   "ten": "Xây dựng nhà để ở",
+   "cap": 4
+  },
+  {
+   "ma": "4102",
+   "ten": "Xây dựng nhà không để ở",
+   "cap": 4
+  },
+  {
+   "ma": "42",
+   "ten": "Xây dựng công trình kỹ thuật dân dụng",
+   "cap": 2
+  },
+  {
+   "ma": "421",
+   "ten": "Xây dựng công trình đường sắt và đường bộ",
+   "cap": 3
+  },
+  {
+   "ma": "4211",
+   "ten": "Xây dựng công trình đường sắt",
+   "cap": 4
+  },
+  {
+   "ma": "4212",
+   "ten": "Xây dựng công trình đường bộ",
+   "cap": 4
+  },
+  {
+   "ma": "422",
+   "ten": "Xây dựng công trình công ích",
+   "cap": 3
+  },
+  {
+   "ma": "4221",
+   "ten": "Xây dựng công trình điện",
+   "cap": 4
+  },
+  {
+   "ma": "4222",
+   "ten": "Xây dựng công trình cấp, thoát nước",
+   "cap": 4
+  },
+  {
+   "ma": "4223",
+   "ten": "Xây dựng công trình viễn thông, thông tin liên lạc",
+   "cap": 4
+  },
+  {
+   "ma": "4229",
+   "ten": "Xây dựng công trình công ích khác",
+   "cap": 4
+  },
+  {
+   "ma": "429",
+   "ten": "Xây dựng công trình kỹ thuật dân dụng khác",
+   "cap": 3
+  },
+  {
+   "ma": "4291",
+   "ten": "Xây dựng công trình thủy",
+   "cap": 4
+  },
+  {
+   "ma": "4292",
+   "ten": "Xây dựng công trình khai khoáng",
+   "cap": 4
+  },
+  {
+   "ma": "4293",
+   "ten": "Xây dựng công trình chế biến, chế tạo",
+   "cap": 4
+  },
+  {
+   "ma": "4299",
+   "ten": "Xây dựng công trình kỹ thuật dân dụng khác",
+   "cap": 4
+  },
+  {
+   "ma": "43",
+   "ten": "Hoạt động xây dựng chuyên dụng",
+   "cap": 2
+  },
+  {
+   "ma": "431",
+   "ten": "Phá dỡ và chuẩn bị mặt bằng",
+   "cap": 3
+  },
+  {
+   "ma": "4311",
+   "ten": "Phá dỡ",
+   "cap": 4
+  },
+  {
+   "ma": "4312",
+   "ten": "Chuẩn bị mặt bằng",
+   "cap": 4
+  },
+  {
+   "ma": "432",
+   "ten": "Lắp đặt hệ thống điện, hệ thống cấp thoát nước và lắp đặt xây dựng khác",
+   "cap": 3
+  },
+  {
+   "ma": "4321",
+   "ten": "Lắp đặt hệ thống điện",
+   "cap": 4
+  },
+  {
+   "ma": "4322",
+   "ten": "Lắp đặt hệ thống cấp, thoát nước, hệ thống sưởi và điều hoà không khí",
+   "cap": 4
+  },
+  {
+   "ma": "4329",
+   "ten": "Lắp đặt hệ thống xây dựng khác",
+   "cap": 4
+  },
+  {
+   "ma": "433",
+   "ten": "Hoàn thiện công trình xây dựng",
+   "cap": 3
+  },
+  {
+   "ma": "4330",
+   "ten": "Hoàn thiện công trình xây dựng",
+   "cap": 4
+  },
+  {
+   "ma": "439",
+   "ten": "Hoạt động xây dựng chuyên dụng khác",
+   "cap": 3
+  },
+  {
+   "ma": "4390",
+   "ten": "Hoạt động xây dựng chuyên dụng khác",
+   "cap": 4
+  },
+  {
+   "ma": "45",
+   "ten": "Bán, sửa chữa ô tô, mô tô, xe máy và xe có động cơ khác",
+   "cap": 2
+  },
+  {
+   "ma": "451",
+   "ten": "Bán ô tô và xe có động cơ khác",
+   "cap": 3
+  },
+  {
+   "ma": "4511",
+   "ten": "Bán buôn ô tô và xe có động cơ khác",
+   "cap": 4
+  },
+  {
+   "ma": "4512",
+   "ten": "Bán lẻ ô tô con (loại 9 chỗ ngồi trở xuống)",
+   "cap": 4
+  },
+  {
+   "ma": "4513",
+   "ten": "Đại lý ô tô và xe có động cơ khác",
+   "cap": 4
+  },
+  {
+   "ma": "452",
+   "ten": "Bảo dưỡng, sửa chữa ô tô và xe có động cơ khác",
+   "cap": 3
+  },
+  {
+   "ma": "4520",
+   "ten": "Bảo dưỡng, sửa chữa ô tô và xe có động cơ khác",
+   "cap": 4
+  },
+  {
+   "ma": "453",
+   "ten": "Bán phụ tùng và các bộ phận phụ trợ của ô tô và xe có động cơ khác",
+   "cap": 3
+  },
+  {
+   "ma": "4530",
+   "ten": "Bán phụ tùng và các bộ phận phụ trợ của ô tô và xe có động cơ khác",
+   "cap": 4
+  },
+  {
+   "ma": "454",
+   "ten": "Bán, bảo dưỡng và sửa chữa mô tô, xe máy, phụ tùng và các bộ phận phụ trợ của mô tô, xe máy",
+   "cap": 3
+  },
+  {
+   "ma": "4541",
+   "ten": "Bán mô tô, xe máy",
+   "cap": 4
+  },
+  {
+   "ma": "4542",
+   "ten": "Bảo dưỡng và sửa chữa mô tô, xe máy",
+   "cap": 4
+  },
+  {
+   "ma": "4543",
+   "ten": "Bán phụ tùng và các bộ phận phụ trợ của mô tô, xe máy",
+   "cap": 4
+  },
+  {
+   "ma": "46",
+   "ten": "Bán buôn (trừ ô tô, mô tô, xe máy và xe có động cơ khác)",
+   "cap": 2
+  },
+  {
+   "ma": "461",
+   "ten": "Đại lý, môi giới, đấu giá hàng hóa",
+   "cap": 3
+  },
+  {
+   "ma": "4610",
+   "ten": "Đại lý, môi giới, đấu giá hàng hóa",
+   "cap": 4
+  },
+  {
+   "ma": "462",
+   "ten": "Bán buôn nông, lâm sản nguyên liệu (trừ gỗ, tre, nứa) và động vật sống",
+   "cap": 3
+  },
+  {
+   "ma": "4620",
+   "ten": "Bán buôn nông, lâm sản nguyên liệu (trừ gỗ, tre, nứa) và động vật sống",
+   "cap": 4
+  },
+  {
+   "ma": "463",
+   "ten": "Bán buôn lương thực, thực phẩm, đồ uống và sản phẩm thuốc lá, thuốc lào",
+   "cap": 3
+  },
+  {
+   "ma": "4631",
+   "ten": "Bán buôn gạo, lúa mỳ, sản phẩm từ ngũ cốc khác, bột mỳ",
+   "cap": 4
+  },
+  {
+   "ma": "4632",
+   "ten": "Bán buôn thực phẩm",
+   "cap": 4
+  },
+  {
+   "ma": "4633",
+   "ten": "Bán buôn đồ uống",
+   "cap": 4
+  },
+  {
+   "ma": "4634",
+   "ten": "Bán buôn sản phẩm thuốc lá, thuốc lào",
+   "cap": 4
+  },
+  {
+   "ma": "464",
+   "ten": "Bán buôn đồ dùng gia đình",
+   "cap": 3
+  },
+  {
+   "ma": "4641",
+   "ten": "Bán buôn vải, hàng may mặc, giày dép",
+   "cap": 4
+  },
+  {
+   "ma": "4649",
+   "ten": "Bán buôn đồ dùng khác cho gia đình",
+   "cap": 4
+  },
+  {
+   "ma": "465",
+   "ten": "Bán buôn máy móc, thiết bị và phụ tùng máy",
+   "cap": 3
+  },
+  {
+   "ma": "4651",
+   "ten": "Bán buôn máy vi tính, thiết bị ngoại vi và phần mềm",
+   "cap": 4
+  },
+  {
+   "ma": "4652",
+   "ten": "Bán buôn thiết bị và linh kiện điện tử, viễn thông",
+   "cap": 4
+  },
+  {
+   "ma": "4653",
+   "ten": "Bán buôn máy móc, thiết bị và phụ tùng máy nông nghiệp",
+   "cap": 4
+  },
+  {
+   "ma": "4659",
+   "ten": "Bán buôn máy móc, thiết bị và phụ tùng máy khác",
+   "cap": 4
+  },
+  {
+   "ma": "466",
+   "ten": "Bán buôn chuyên doanh khác",
+   "cap": 3
+  },
+  {
+   "ma": "4661",
+   "ten": "Bán buôn nhiên liệu rắn, lỏng, khí và các sản phẩm liên quan",
+   "cap": 4
+  },
+  {
+   "ma": "4662",
+   "ten": "Bán buôn kim loại và quặng kim loại",
+   "cap": 4
+  },
+  {
+   "ma": "4663",
+   "ten": "Bán buôn vật liệu, thiết bị lắp đặt khác trong xây dựng",
+   "cap": 4
+  },
+  {
+   "ma": "4669",
+   "ten": "Bán buôn chuyên doanh khác chưa được phân vào đâu",
+   "cap": 4
+  },
+  {
+   "ma": "469",
+   "ten": "Bán buôn tổng hợp",
+   "cap": 3
+  },
+  {
+   "ma": "4690",
+   "ten": "Bán buôn tổng hợp",
+   "cap": 4
+  },
+  {
+   "ma": "47",
+   "ten": "Bán lẻ (trừ ô tô, mô tô, xe máy và xe có động cơ khác)",
+   "cap": 2
+  },
+  {
+   "ma": "471",
+   "ten": "Bán lẻ trong các cửa hàng kinh doanh tổng hợp",
+   "cap": 3
+  },
+  {
+   "ma": "4711",
+   "ten": "Bán lẻ lương thực, thực phẩm, đồ uống, thuốc lá, thuốc lào chiếm tỷ trọng lớn trong các cửa hàng kinh doanh tổng hợp",
+   "cap": 4
+  },
+  {
+   "ma": "4719",
+   "ten": "Bán lẻ khác trong các cửa hàng kinh doanh tổng hợp",
+   "cap": 4
+  },
+  {
+   "ma": "472",
+   "ten": "Bán lẻ lương thực, thực phẩm, đồ uống hoặc thuốc lá, thuốc lào trong các cửa hàng chuyên doanh",
+   "cap": 3
+  },
+  {
+   "ma": "4721",
+   "ten": "Bán lẻ lương thực trong các cửa hàng chuyên doanh",
+   "cap": 4
+  },
+  {
+   "ma": "4722",
+   "ten": "Bán lẻ thực phẩm trong các cửa hàng chuyên doanh",
+   "cap": 4
+  },
+  {
+   "ma": "4723",
+   "ten": "Bán lẻ đồ uống trong các cửa hàng chuyên doanh",
+   "cap": 4
+  },
+  {
+   "ma": "4724",
+   "ten": "Bán lẻ sản phẩm thuốc lá, thuốc lào trong các cửa hàng chuyên doanh",
+   "cap": 4
+  },
+  {
+   "ma": "473",
+   "ten": "Bán lẻ nhiên liệu động cơ trong các cửa hàng chuyên doanh",
+   "cap": 3
+  },
+  {
+   "ma": "4730",
+   "ten": "Bán lẻ nhiên liệu động cơ trong các cửa hàng chuyên doanh",
+   "cap": 4
+  },
+  {
+   "ma": "474",
+   "ten": "Bán lẻ thiết bị công nghệ thông tin liên lạc trong các cửa hàng chuyên doanh",
+   "cap": 3
+  },
+  {
+   "ma": "4741",
+   "ten": "Bán lẻ máy vi tính, thiết bị ngoại vi, phần mềm và thiết bị viễn thông trong các cửa hàng chuyên doanh",
+   "cap": 4
+  },
+  {
+   "ma": "4742",
+   "ten": "Bán lẻ thiết bị nghe nhìn trong các cửa hàng chuyên doanh",
+   "cap": 4
+  },
+  {
+   "ma": "475",
+   "ten": "Bán lẻ thiết bị gia đình khác trong các cửa hàng chuyên doanh",
+   "cap": 3
+  },
+  {
+   "ma": "4751",
+   "ten": "Bán lẻ vải, len, sợi, chỉ khâu và hàng dệt khác trong các cửa hàng chuyên doanh",
+   "cap": 4
+  },
+  {
+   "ma": "4752",
+   "ten": "Bán lẻ đồ ngũ kim, sơn, kính, vật liệu và thiết bị lắp đặt khác trong xây dựng trong các cửa hàng chuyên doanh",
+   "cap": 4
+  },
+  {
+   "ma": "4753",
+   "ten": "Bán lẻ thảm, đệm, chăn, màn, rèm, vật liệu phủ tường và sàn trong các cửa hàng chuyên doanh",
+   "cap": 4
+  },
+  {
+   "ma": "4759",
+   "ten": "Bán lẻ đồ điện gia dụng, giường, tủ, bàn, ghế và đồ nội thất tương tự, đèn và bộ đèn điện, đồ dùng gia đình khác chưa được phân vào đâu trong các cửa hàng chuyên doanh",
+   "cap": 4
+  },
+  {
+   "ma": "476",
+   "ten": "Bán lẻ hàng văn hóa, giải trí trong các cửa hàng chuyên doanh",
+   "cap": 3
+  },
+  {
+   "ma": "4761",
+   "ten": "Bán lẻ sách, báo, tạp chí, văn phòng phẩm trong các cửa hàng chuyên doanh",
+   "cap": 4
+  },
+  {
+   "ma": "4762",
+   "ten": "Bán lẻ băng đĩa âm thanh, hình ảnh (kể cả băng, đĩa trắng) trong các cửa hàng chuyên doanh",
+   "cap": 4
+  },
+  {
+   "ma": "4763",
+   "ten": "Bán lẻ thiết bị, dụng cụ thể dục, thể thao trong các cửa hàng chuyên doanh",
+   "cap": 4
+  },
+  {
+   "ma": "4764",
+   "ten": "Bán lẻ trò chơi, đồ chơi trong các cửa hàng chuyên doanh",
+   "cap": 4
+  },
+  {
+   "ma": "477",
+   "ten": "Bán lẻ hàng hóa khác trong các cửa hàng chuyên doanh",
+   "cap": 3
+  },
+  {
+   "ma": "4771",
+   "ten": "Bán lẻ hàng may mặc, giày, dép, hàng da và giả da trong các cửa hàng chuyên doanh",
+   "cap": 4
+  },
+  {
+   "ma": "4772",
+   "ten": "Bán lẻ thuốc, dụng cụ y tế, mỹ phẩm và vật phẩm vệ sinh trong các cửa hàng chuyên doanh",
+   "cap": 4
+  },
+  {
+   "ma": "4773",
+   "ten": "Bán lẻ hàng hóa khác mới trong các cửa hàng chuyên doanh",
+   "cap": 4
+  },
+  {
+   "ma": "4774",
+   "ten": "Bán lẻ hàng hóa đã qua sử dụng trong các cửa hàng chuyên doanh",
+   "cap": 4
+  },
+  {
+   "ma": "478",
+   "ten": "Bán lẻ lưu động hoặc bán tại chợ",
+   "cap": 3
+  },
+  {
+   "ma": "4781",
+   "ten": "Bán lẻ lương thực, thực phẩm, đồ uống, thuốc lá, thuốc lào lưu động hoặc tại chợ",
+   "cap": 4
+  },
+  {
+   "ma": "4782",
+   "ten": "Bán lẻ hàng dệt, may sẵn, giày, dép lưu động hoặc tại chợ",
+   "cap": 4
+  },
+  {
+   "ma": "4783",
+   "ten": "Bán lẻ thiết bị công nghệ thông tin liên lạc lưu động hoặc tại chợ",
+   "cap": 4
+  },
+  {
+   "ma": "4784",
+   "ten": "Bản lẻ thiết bị gia đình khác lưu động hoặc tại chợ",
+   "cap": 4
+  },
+  {
+   "ma": "4785",
+   "ten": "Bán lẻ hàng văn hóa, giải trí lưu động hoặc tại chợ",
+   "cap": 4
+  },
+  {
+   "ma": "4789",
+   "ten": "Bán lẻ hàng hóa khác lưu động hoặc tại chợ",
+   "cap": 4
+  },
+  {
+   "ma": "479",
+   "ten": "Bán lẻ hình thức khác (trừ bán lẻ tại cửa hàng, lưu động hoặc tại chợ)",
+   "cap": 3
+  },
+  {
+   "ma": "4791",
+   "ten": "Bán lẻ theo yêu cầu đặt hàng qua bưu điện hoặc internet",
+   "cap": 4
+  },
+  {
+   "ma": "4799",
+   "ten": "Bán lẻ hình thức khác chưa được phân vào đâu",
+   "cap": 4
+  },
+  {
+   "ma": "49",
+   "ten": "Vận tải đường sắt, đường bộ và vận tải đường ống",
+   "cap": 2
+  },
+  {
+   "ma": "491",
+   "ten": "Vận tải đường sắt",
+   "cap": 3
+  },
+  {
+   "ma": "4911",
+   "ten": "Vận tải hành khách đường sắt",
+   "cap": 4
+  },
+  {
+   "ma": "4912",
+   "ten": "Vận tải hàng hóa đường sắt",
+   "cap": 4
+  },
+  {
+   "ma": "492",
+   "ten": "Vận tải hành khách bằng xe buýt",
+   "cap": 3
+  },
+  {
+   "ma": "4921",
+   "ten": "Vận tải hành khách bằng xe buýt trong nội thành",
+   "cap": 4
+  },
+  {
+   "ma": "4922",
+   "ten": "Vận tải hành khách bằng xe buýt giữa nội thành và ngoại thành, liên tỉnh",
+   "cap": 4
+  },
+  {
+   "ma": "4929",
+   "ten": "Vận tải hành khách bằng xe buýt loại khác",
+   "cap": 4
+  },
+  {
+   "ma": "493",
+   "ten": "Vận tải đường bộ khác",
+   "cap": 3
+  },
+  {
+   "ma": "4931",
+   "ten": "Vận tải hành khách đường bộ trong nội thành, ngoại thành (trừ vận tải bằng xe buýt)",
+   "cap": 4
+  },
+  {
+   "ma": "4932",
+   "ten": "Vận tải hành khách đường bộ khác",
+   "cap": 4
+  },
+  {
+   "ma": "4933",
+   "ten": "Vận tải hàng hóa bằng đường bộ",
+   "cap": 4
+  },
+  {
+   "ma": "494",
+   "ten": "Vận tải đường ống",
+   "cap": 3
+  },
+  {
+   "ma": "4940",
+   "ten": "Vận tải đường ống",
+   "cap": 4
+  },
+  {
+   "ma": "50",
+   "ten": "Vận tải đường thủy",
+   "cap": 2
+  },
+  {
+   "ma": "501",
+   "ten": "Vận tải ven biển và viễn dương",
+   "cap": 3
+  },
+  {
+   "ma": "5011",
+   "ten": "Vận tải hành khách ven biển và viễn dương",
+   "cap": 4
+  },
+  {
+   "ma": "5012",
+   "ten": "Vận tải hàng hóa ven biển và viễn dương",
+   "cap": 4
+  },
+  {
+   "ma": "502",
+   "ten": "Vận tải đường thuỷ nội địa",
+   "cap": 3
+  },
+  {
+   "ma": "5021",
+   "ten": "Vận tải hành khách đường thuỷ nội địa",
+   "cap": 4
+  },
+  {
+   "ma": "5022",
+   "ten": "Vận tải hàng hóa đường thuỷ nội địa",
+   "cap": 4
+  },
+  {
+   "ma": "51",
+   "ten": "Vận tải hàng không",
+   "cap": 2
+  },
+  {
+   "ma": "511",
+   "ten": "Vận tải hành khách hàng không",
+   "cap": 3
+  },
+  {
+   "ma": "5110",
+   "ten": "Vận tải hành khách hàng không",
+   "cap": 4
+  },
+  {
+   "ma": "512",
+   "ten": "Vận tải hàng hóa hàng không",
+   "cap": 3
+  },
+  {
+   "ma": "5120",
+   "ten": "Vận tải hàng hóa hàng không",
+   "cap": 4
+  },
+  {
+   "ma": "52",
+   "ten": "Kho bãi và các hoạt động hỗ trợ cho vận tải",
+   "cap": 2
+  },
+  {
+   "ma": "521",
+   "ten": "Kho bãi và lưu giữ hàng hóa",
+   "cap": 3
+  },
+  {
+   "ma": "5210",
+   "ten": "Kho bãi và lưu giữ hàng hóa",
+   "cap": 4
+  },
+  {
+   "ma": "522",
+   "ten": "Hoạt động dịch vụ hỗ trợ cho vận tải",
+   "cap": 3
+  },
+  {
+   "ma": "5221",
+   "ten": "Hoạt động dịch vụ hỗ trợ trực tiếp cho vận tải đường sắt",
+   "cap": 4
+  },
+  {
+   "ma": "5222",
+   "ten": "Hoạt động dịch vụ hỗ trợ trực tiếp cho vận tải đường thủy",
+   "cap": 4
+  },
+  {
+   "ma": "5223",
+   "ten": "Hoạt động dịch vụ hỗ trợ trực tiếp cho vận tải hàng không",
+   "cap": 4
+  },
+  {
+   "ma": "5224",
+   "ten": "Bốc xếp hàng hóa",
+   "cap": 4
+  },
+  {
+   "ma": "5225",
+   "ten": "Hoạt động dịch vụ hỗ trợ trực tiếp cho vận tải đường bộ",
+   "cap": 4
+  },
+  {
+   "ma": "5229",
+   "ten": "Hoạt động dịch vụ hỗ trợ khác liên quan đến vận tải",
+   "cap": 4
+  },
+  {
+   "ma": "53",
+   "ten": "Bưu chính và chuyển phát",
+   "cap": 2
+  },
+  {
+   "ma": "531",
+   "ten": "Bưu chính",
+   "cap": 3
+  },
+  {
+   "ma": "5310",
+   "ten": "Bưu chính",
+   "cap": 4
+  },
+  {
+   "ma": "532",
+   "ten": "Chuyển phát",
+   "cap": 3
+  },
+  {
+   "ma": "5320",
+   "ten": "Chuyển phát",
+   "cap": 4
+  },
+  {
+   "ma": "55",
+   "ten": "Dịch vụ lưu trú",
+   "cap": 2
+  },
+  {
+   "ma": "551",
+   "ten": "Dịch vụ lưu trú ngắn ngày",
+   "cap": 3
+  },
+  {
+   "ma": "5510",
+   "ten": "Dịch vụ lưu trú ngắn ngày",
+   "cap": 4
+  },
+  {
+   "ma": "559",
+   "ten": "Cơ sở lưu trú khác",
+   "cap": 3
+  },
+  {
+   "ma": "5590",
+   "ten": "Cơ sở lưu trú khác",
+   "cap": 4
+  },
+  {
+   "ma": "56",
+   "ten": "Dịch vụ ăn uống",
+   "cap": 2
+  },
+  {
+   "ma": "561",
+   "ten": "Nhà hàng và các dịch vụ ăn uống phục vụ lưu động",
+   "cap": 3
+  },
+  {
+   "ma": "5610",
+   "ten": "Nhà hàng và các dịch vụ ăn uống phục vụ lưu động",
+   "cap": 4
+  },
+  {
+   "ma": "562",
+   "ten": "Cung cấp dịch vụ ăn uống theo hợp đồng không thường xuyên và dịch vụ ăn uống khác",
+   "cap": 3
+  },
+  {
+   "ma": "5621",
+   "ten": "Cung cấp dịch vụ ăn uống theo hợp đồng không thường xuyên với khách hàng",
+   "cap": 4
+  },
+  {
+   "ma": "5629",
+   "ten": "Dịch vụ ăn uống khác",
+   "cap": 4
+  },
+  {
+   "ma": "563",
+   "ten": "Dịch vụ phục vụ đồ uống",
+   "cap": 3
+  },
+  {
+   "ma": "5630",
+   "ten": "Dịch vụ phục vụ đồ uống",
+   "cap": 4
+  },
+  {
+   "ma": "58",
+   "ten": "Hoạt động xuất bản",
+   "cap": 2
+  },
+  {
+   "ma": "581",
+   "ten": "Xuất bản sách, ấn phẩm định kỳ và các hoạt động xuất bản khác",
+   "cap": 3
+  },
+  {
+   "ma": "5811",
+   "ten": "Xuất bản sách",
+   "cap": 4
+  },
+  {
+   "ma": "5812",
+   "ten": "Xuất bản các danh mục chỉ dẫn và địa chỉ",
+   "cap": 4
+  },
+  {
+   "ma": "5813",
+   "ten": "Xuất bản báo, tạp chí và các ấn phẩm định kỳ",
+   "cap": 4
+  },
+  {
+   "ma": "5819",
+   "ten": "Hoạt động xuất bản khác",
+   "cap": 4
+  },
+  {
+   "ma": "582",
+   "ten": "Xuất bản phần mềm",
+   "cap": 3
+  },
+  {
+   "ma": "5820",
+   "ten": "Xuất bản phần mềm",
+   "cap": 4
+  },
+  {
+   "ma": "59",
+   "ten": "Hoạt động điện ảnh, sản xuất chương trình truyền hình, ghi âm và xuất bản âm nhạc",
+   "cap": 2
+  },
+  {
+   "ma": "591",
+   "ten": "Hoạt động điện ảnh và sản xuất chương trình truyền hình",
+   "cap": 3
+  },
+  {
+   "ma": "5911",
+   "ten": "Hoạt động sản xuất phim điện ảnh, phim video và chương trình truyền hình",
+   "cap": 4
+  },
+  {
+   "ma": "5912",
+   "ten": "Hoạt động hậu kỳ",
+   "cap": 4
+  },
+  {
+   "ma": "5913",
+   "ten": "Hoạt động phát hành phim điện ảnh, phim video và chương trình truyền hình",
+   "cap": 4
+  },
+  {
+   "ma": "5914",
+   "ten": "Hoạt động chiếu phim",
+   "cap": 4
+  },
+  {
+   "ma": "592",
+   "ten": "Hoạt động ghi âm và xuất bản âm nhạc",
+   "cap": 3
+  },
+  {
+   "ma": "5920",
+   "ten": "Hoạt động ghi âm và xuất bản âm nhạc",
+   "cap": 4
+  },
+  {
+   "ma": "60",
+   "ten": "Hoạt động phát thanh, truyền hình",
+   "cap": 2
+  },
+  {
+   "ma": "601",
+   "ten": "Hoạt động phát thanh",
+   "cap": 3
+  },
+  {
+   "ma": "6010",
+   "ten": "Hoạt động phát thanh",
+   "cap": 4
+  },
+  {
+   "ma": "602",
+   "ten": "Hoạt động truyền hình và cung cấp chương trình thuê bao",
+   "cap": 3
+  },
+  {
+   "ma": "6021",
+   "ten": "Hoạt động truyền hình",
+   "cap": 4
+  },
+  {
+   "ma": "6022",
+   "ten": "Chương trình cáp, vệ tinh và các chương trình thuê bao khác",
+   "cap": 4
+  },
+  {
+   "ma": "61",
+   "ten": "Viễn thông",
+   "cap": 2
+  },
+  {
+   "ma": "611",
+   "ten": "Hoạt động viễn thông có dây",
+   "cap": 3
+  },
+  {
+   "ma": "6110",
+   "ten": "Hoạt động viễn thông có dây",
+   "cap": 4
+  },
+  {
+   "ma": "612",
+   "ten": "Hoạt động viễn thông không dây",
+   "cap": 3
+  },
+  {
+   "ma": "6120",
+   "ten": "Hoạt động viễn thông không dây",
+   "cap": 4
+  },
+  {
+   "ma": "613",
+   "ten": "Hoạt động viễn thông vệ tinh",
+   "cap": 3
+  },
+  {
+   "ma": "6130",
+   "ten": "Hoạt động viễn thông vệ tinh",
+   "cap": 4
+  },
+  {
+   "ma": "619",
+   "ten": "Hoạt động viễn thông khác",
+   "cap": 3
+  },
+  {
+   "ma": "6190",
+   "ten": "Hoạt động viễn thông khác",
+   "cap": 4
+  },
+  {
+   "ma": "62",
+   "ten": "Lập trình máy vi tính, dịch vụ tư vấn và các hoạt động khác liên quan đến máy vi tính",
+   "cap": 2
+  },
+  {
+   "ma": "620",
+   "ten": "Lập trình máy vi tính, dịch vụ tư vấn và các hoạt động khác liên quan đến máy vi tính",
+   "cap": 3
+  },
+  {
+   "ma": "6201",
+   "ten": "Lập trình máy vi tính",
+   "cap": 4
+  },
+  {
+   "ma": "6202",
+   "ten": "Tư vấn máy vi tính và quản trị hệ thống máy vi tính",
+   "cap": 4
+  },
+  {
+   "ma": "6209",
+   "ten": "Hoạt động dịch vụ công nghệ thông tin và dịch vụ khác liên quan đến máy vi tính",
+   "cap": 4
+  },
+  {
+   "ma": "63",
+   "ten": "Hoạt động dịch vụ thông tin",
+   "cap": 2
+  },
+  {
+   "ma": "631",
+   "ten": "Xử lý dữ liệu, cho thuê và các hoạt động liên quan; cổng thông tin",
+   "cap": 3
+  },
+  {
+   "ma": "6311",
+   "ten": "Xử lý dữ liệu, cho thuê và các hoạt động liên quan",
+   "cap": 4
+  },
+  {
+   "ma": "6312",
+   "ten": "Cổng thông tin",
+   "cap": 4
+  },
+  {
+   "ma": "639",
+   "ten": "Dịch vụ thông tin khác",
+   "cap": 3
+  },
+  {
+   "ma": "6391",
+   "ten": "Hoạt động thông tấn",
+   "cap": 4
+  },
+  {
+   "ma": "6399",
+   "ten": "Dịch vụ thông tin khác chưa được phân vào đâu",
+   "cap": 4
+  },
+  {
+   "ma": "64",
+   "ten": "Hoạt động dịch vụ tài chính (trừ bảo hiểm và bảo hiểm xã hội)",
+   "cap": 2
+  },
+  {
+   "ma": "641",
+   "ten": "Hoạt động trung gian tiền tệ",
+   "cap": 3
+  },
+  {
+   "ma": "6411",
+   "ten": "Hoạt động ngân hàng trung ương",
+   "cap": 4
+  },
+  {
+   "ma": "6419",
+   "ten": "Hoạt động trung gian tiền tệ khác",
+   "cap": 4
+  },
+  {
+   "ma": "642",
+   "ten": "Hoạt động công ty nắm giữ tài sản",
+   "cap": 3
+  },
+  {
+   "ma": "6420",
+   "ten": "Hoạt động công ty nắm giữ tài sản",
+   "cap": 4
+  },
+  {
+   "ma": "643",
+   "ten": "Hoạt động quỹ tín thác, các quỹ và các tổ chức tài chính khác",
+   "cap": 3
+  },
+  {
+   "ma": "6430",
+   "ten": "Hoạt động quỹ tín thác, các quỹ và các tổ chức tài chính khác",
+   "cap": 4
+  },
+  {
+   "ma": "649",
+   "ten": "Hoạt động dịch vụ tài chính khác (trừ bảo hiểm và bảo hiểm xã hội)",
+   "cap": 3
+  },
+  {
+   "ma": "6491",
+   "ten": "Hoạt động cho thuê tài chính",
+   "cap": 4
+  },
+  {
+   "ma": "6492",
+   "ten": "Hoạt động cấp tín dụng khác",
+   "cap": 4
+  },
+  {
+   "ma": "6499",
+   "ten": "Hoạt động dịch vụ tài chính khác chưa được phân vào đâu (trừ bảo hiểm và bảo hiểm xã hội)",
+   "cap": 4
+  },
+  {
+   "ma": "65",
+   "ten": "Bảo hiểm, tái bảo hiểm và bảo hiểm xã hội (trừ bảo đảm xã hội bắt buộc)",
+   "cap": 2
+  },
+  {
+   "ma": "651",
+   "ten": "Bảo hiểm",
+   "cap": 3
+  },
+  {
+   "ma": "6511",
+   "ten": "Bảo hiểm nhân thọ",
+   "cap": 4
+  },
+  {
+   "ma": "6512",
+   "ten": "Bảo hiểm phi nhân thọ",
+   "cap": 4
+  },
+  {
+   "ma": "6513",
+   "ten": "Bảo hiểm sức khỏe",
+   "cap": 4
+  },
+  {
+   "ma": "652",
+   "ten": "Tái bảo hiểm",
+   "cap": 3
+  },
+  {
+   "ma": "6520",
+   "ten": "Tái bảo hiểm",
+   "cap": 4
+  },
+  {
+   "ma": "653",
+   "ten": "Bảo hiểm xã hội",
+   "cap": 3
+  },
+  {
+   "ma": "6530",
+   "ten": "Bảo hiểm xã hội",
+   "cap": 4
+  },
+  {
+   "ma": "66",
+   "ten": "Hoạt động tài chính khác",
+   "cap": 2
+  },
+  {
+   "ma": "661",
+   "ten": "Hoạt động hỗ trợ dịch vụ tài chính (trừ bảo hiểm và bảo hiểm xã hội)",
+   "cap": 3
+  },
+  {
+   "ma": "6611",
+   "ten": "Quản lý thị trường tài chính",
+   "cap": 4
+  },
+  {
+   "ma": "6612",
+   "ten": "Môi giới hợp đồng hàng hoá và chứng khoán",
+   "cap": 4
+  },
+  {
+   "ma": "6619",
+   "ten": "Hoạt động hỗ trợ dịch vụ tài chính chưa được phân vào đâu",
+   "cap": 4
+  },
+  {
+   "ma": "662",
+   "ten": "Hoạt động hỗ trợ bảo hiểm và bảo hiểm xã hội",
+   "cap": 3
+  },
+  {
+   "ma": "6621",
+   "ten": "Đánh giá rủi ro và thiệt hại",
+   "cap": 4
+  },
+  {
+   "ma": "6622",
+   "ten": "Hoạt động của đại lý và môi giới bảo hiểm",
+   "cap": 4
+  },
+  {
+   "ma": "6629",
+   "ten": "Hoạt động hỗ trợ khác cho bảo hiểm và bảo hiểm xã hội",
+   "cap": 4
+  },
+  {
+   "ma": "663",
+   "ten": "Hoạt động quản lý quỹ",
+   "cap": 3
+  },
+  {
+   "ma": "6630",
+   "ten": "Hoạt động quản lý quỹ",
+   "cap": 4
+  },
+  {
+   "ma": "68",
+   "ten": "Hoạt động kinh doanh bất động sản",
+   "cap": 2
+  },
+  {
+   "ma": "681",
+   "ten": "Kinh doanh bất động sản, quyền sử dụng đất thuộc chủ sở hữu, chủ sử dụng hoặc đi thuê",
+   "cap": 3
+  },
+  {
+   "ma": "6810",
+   "ten": "Kinh doanh bất động sản, quyền sử dụng đất thuộc chủ sở hữu, chủ sử dụng hoặc đi thuê",
+   "cap": 4
+  },
+  {
+   "ma": "682",
+   "ten": "Tư vấn, môi giới, đấu giá bất động sản, đấu giá quyền sử dụng đất",
+   "cap": 3
+  },
+  {
+   "ma": "6820",
+   "ten": "Tư vấn, môi giới, đấu giá bất động sản, đấu giá quyền sử dụng đất",
+   "cap": 4
+  },
+  {
+   "ma": "69",
+   "ten": "Hoạt động pháp luật, kế toán và kiểm toán",
+   "cap": 2
+  },
+  {
+   "ma": "691",
+   "ten": "Hoạt động pháp luật",
+   "cap": 3
+  },
+  {
+   "ma": "6910",
+   "ten": "Hoạt động pháp luật",
+   "cap": 4
+  },
+  {
+   "ma": "692",
+   "ten": "Hoạt động liên quan đến kế toán, kiểm toán và tư vấn về thuế",
+   "cap": 3
+  },
+  {
+   "ma": "6920",
+   "ten": "Hoạt động liên quan đến kế toán, kiểm toán và tư vấn về thuế",
+   "cap": 4
+  },
+  {
+   "ma": "70",
+   "ten": "Hoạt động của trụ sở văn phòng; hoạt động tư vấn quản lý",
+   "cap": 2
+  },
+  {
+   "ma": "701",
+   "ten": "Hoạt động của trụ sở văn phòng",
+   "cap": 3
+  },
+  {
+   "ma": "7010",
+   "ten": "Hoạt động của trụ sở văn phòng",
+   "cap": 4
+  },
+  {
+   "ma": "702",
+   "ten": "Hoạt động tư vấn quản lý",
+   "cap": 3
+  },
+  {
+   "ma": "7020",
+   "ten": "Hoạt động tư vấn quản lý",
+   "cap": 4
+  },
+  {
+   "ma": "71",
+   "ten": "Hoạt động kiến trúc; kiểm tra và phân tích kỹ thuật",
+   "cap": 2
+  },
+  {
+   "ma": "711",
+   "ten": "Hoạt động kiến trúc và tư vấn kỹ thuật có liên quan",
+   "cap": 3
+  },
+  {
+   "ma": "7110",
+   "ten": "Hoạt động kiến trúc và tư vấn kỹ thuật có liên quan",
+   "cap": 4
+  },
+  {
+   "ma": "712",
+   "ten": "Kiểm tra và phân tích kỹ thuật",
+   "cap": 3
+  },
+  {
+   "ma": "7120",
+   "ten": "Kiểm tra và phân tích kỹ thuật",
+   "cap": 4
+  },
+  {
+   "ma": "72",
+   "ten": "Nghiên cứu khoa học và phát triển công nghệ",
+   "cap": 2
+  },
+  {
+   "ma": "721",
+   "ten": "Nghiên cứu khoa học và phát triển công nghệ trong lĩnh vực khoa học tự nhiên và kỹ thuật",
+   "cap": 3
+  },
+  {
+   "ma": "7211",
+   "ten": "Nghiên cứu khoa học và phát triển công nghệ trong lĩnh vực khoa học tự nhiên",
+   "cap": 4
+  },
+  {
+   "ma": "7212",
+   "ten": "Nghiên cứu khoa học và phát triển công nghệ trong lĩnh vực khoa học kỹ thuật và công nghệ",
+   "cap": 4
+  },
+  {
+   "ma": "7213",
+   "ten": "Nghiên cứu khoa học và phát triển công nghệ trong lĩnh vực khoa học y, dược",
+   "cap": 4
+  },
+  {
+   "ma": "7214",
+   "ten": "Nghiên cứu khoa học và phát triển công nghệ trong lĩnh vực khoa học nông nghiệp",
+   "cap": 4
+  },
+  {
+   "ma": "722",
+   "ten": "Nghiên cứu khoa học và phát triển công nghệ trong lĩnh vực khoa học xã hội và nhân văn",
+   "cap": 3
+  },
+  {
+   "ma": "7221",
+   "ten": "Nghiên cứu khoa học và phát triển công nghệ trong lĩnh vực khoa học xã hội",
+   "cap": 4
+  },
+  {
+   "ma": "7222",
+   "ten": "Nghiên cứu khoa học và phát triển công nghệ trong lĩnh vực khoa học nhân văn",
+   "cap": 4
+  },
+  {
+   "ma": "73",
+   "ten": "Quảng cáo và nghiên cứu thị trường",
+   "cap": 2
+  },
+  {
+   "ma": "731",
+   "ten": "Quảng cáo",
+   "cap": 3
+  },
+  {
+   "ma": "7310",
+   "ten": "Quảng cáo",
+   "cap": 4
+  },
+  {
+   "ma": "732",
+   "ten": "Nghiên cứu thị trường và thăm dò dư luận",
+   "cap": 3
+  },
+  {
+   "ma": "7320",
+   "ten": "Nghiên cứu thị trường và thăm dò dư luận",
+   "cap": 4
+  },
+  {
+   "ma": "74",
+   "ten": "Hoạt động chuyên môn, khoa học và công nghệ khác",
+   "cap": 2
+  },
+  {
+   "ma": "741",
+   "ten": "Hoạt động thiết kế chuyên dụng",
+   "cap": 3
+  },
+  {
+   "ma": "7410",
+   "ten": "Hoạt động thiết kế chuyên dụng",
+   "cap": 4
+  },
+  {
+   "ma": "742",
+   "ten": "Hoạt động nhiếp ảnh",
+   "cap": 3
+  },
+  {
+   "ma": "7420",
+   "ten": "Hoạt động nhiếp ảnh",
+   "cap": 4
+  },
+  {
+   "ma": "749",
+   "ten": "Hoạt động chuyên môn, khoa học và công nghệ khác chưa được phân vào đâu",
+   "cap": 3
+  },
+  {
+   "ma": "7490",
+   "ten": "Hoạt động chuyên môn, khoa học và công nghệ khác chưa được phân vào đâu",
+   "cap": 4
+  },
+  {
+   "ma": "75",
+   "ten": "Hoạt động thú y",
+   "cap": 2
+  },
+  {
+   "ma": "750",
+   "ten": "Hoạt động thú y",
+   "cap": 3
+  },
+  {
+   "ma": "7500",
+   "ten": "Hoạt động thú y",
+   "cap": 4
+  },
+  {
+   "ma": "77",
+   "ten": "Cho thuê máy móc, thiết bị (không kèm người điều khiển); cho thuê đồ dùng cá nhân và gia đình; cho thuê tài sản vô hình phi tài chính",
+   "cap": 2
+  },
+  {
+   "ma": "771",
+   "ten": "Cho thuê xe có động cơ",
+   "cap": 3
+  },
+  {
+   "ma": "7710",
+   "ten": "Cho thuê xe có động cơ",
+   "cap": 4
+  },
+  {
+   "ma": "772",
+   "ten": "Cho thuê đồ dùng cá nhân và gia đình",
+   "cap": 3
+  },
+  {
+   "ma": "7721",
+   "ten": "Cho thuê thiết bị thể thao, vui chơi giải trí",
+   "cap": 4
+  },
+  {
+   "ma": "7722",
+   "ten": "Cho thuê băng, đĩa video",
+   "cap": 4
+  },
+  {
+   "ma": "7729",
+   "ten": "Cho thuê đồ dùng cá nhân và gia đình khác",
+   "cap": 4
+  },
+  {
+   "ma": "773",
+   "ten": "Cho thuê máy móc, thiết bị và đồ dùng hữu hình khác không kèm người điều khiển",
+   "cap": 3
+  },
+  {
+   "ma": "7730",
+   "ten": "Cho thuê máy móc, thiết bị và đồ dùng hữu hình khác không kèm người điều khiển",
+   "cap": 4
+  },
+  {
+   "ma": "774",
+   "ten": "Cho thuê tài sản vô hình phi tài chính",
+   "cap": 3
+  },
+  {
+   "ma": "7740",
+   "ten": "Cho thuê tài sản vô hình phi tài chính",
+   "cap": 4
+  },
+  {
+   "ma": "78",
+   "ten": "Hoạt động dịch vụ lao động và việc làm",
+   "cap": 2
+  },
+  {
+   "ma": "781",
+   "ten": "Hoạt động của các trung tâm, đại lý tư vấn, giới thiệu và môi giới lao động, việc làm",
+   "cap": 3
+  },
+  {
+   "ma": "7810",
+   "ten": "Hoạt động của các trung tâm, đại lý tư vấn, giới thiệu và môi giới lao động, việc làm",
+   "cap": 4
+  },
+  {
+   "ma": "782",
+   "ten": "Cung ứng lao động tạm thời",
+   "cap": 3
+  },
+  {
+   "ma": "7820",
+   "ten": "Cung ứng lao động tạm thời",
+   "cap": 4
+  },
+  {
+   "ma": "783",
+   "ten": "Cung ứng và quản lý nguồn lao động",
+   "cap": 3
+  },
+  {
+   "ma": "7830",
+   "ten": "Cung ứng và quản lý nguồn lao động",
+   "cap": 4
+  },
+  {
+   "ma": "79",
+   "ten": "Hoạt động của các đại lý du lịch, kinh doanh tua du lịch và các dịch vụ hỗ trợ, liên quan đến quảng bá và tổ chức tua du lịch",
+   "cap": 2
+  },
+  {
+   "ma": "791",
+   "ten": "Hoạt động của các đại lý du lịch, kinh doanh tua du lịch",
+   "cap": 3
+  },
+  {
+   "ma": "7911",
+   "ten": "Đại lý du lịch",
+   "cap": 4
+  },
+  {
+   "ma": "7912",
+   "ten": "Điều hành tua du lịch",
+   "cap": 4
+  },
+  {
+   "ma": "799",
+   "ten": "Dịch vụ đặt chỗ và các dịch vụ hỗ trợ liên quan đến quảng bá và tổ chức tua du lịch",
+   "cap": 3
+  },
+  {
+   "ma": "7990",
+   "ten": "Dịch vụ đặt chỗ và các dịch vụ hỗ trợ liên quan đến quảng bá và tổ chức tua du lịch",
+   "cap": 4
+  },
+  {
+   "ma": "80",
+   "ten": "Hoạt động điều tra bảo đảm an toàn",
+   "cap": 2
+  },
+  {
+   "ma": "801",
+   "ten": "Hoạt động bảo vệ tư nhân",
+   "cap": 3
+  },
+  {
+   "ma": "8010",
+   "ten": "Hoạt động bảo vệ tư nhân",
+   "cap": 4
+  },
+  {
+   "ma": "802",
+   "ten": "Dịch vụ hệ thống bảo đảm an toàn",
+   "cap": 3
+  },
+  {
+   "ma": "8020",
+   "ten": "Dịch vụ hệ thống bảo đảm an toàn",
+   "cap": 4
+  },
+  {
+   "ma": "803",
+   "ten": "Dịch vụ điều tra",
+   "cap": 3
+  },
+  {
+   "ma": "8030",
+   "ten": "Dịch vụ điều tra",
+   "cap": 4
+  },
+  {
+   "ma": "81",
+   "ten": "Hoạt động dịch vụ vệ sinh nhà cửa, công trình và cảnh quan",
+   "cap": 2
+  },
+  {
+   "ma": "811",
+   "ten": "Dịch vụ hỗ trợ tổng hợp",
+   "cap": 3
+  },
+  {
+   "ma": "8110",
+   "ten": "Dịch vụ hỗ trợ tổng hợp",
+   "cap": 4
+  },
+  {
+   "ma": "812",
+   "ten": "Dịch vụ vệ sinh",
+   "cap": 3
+  },
+  {
+   "ma": "8121",
+   "ten": "Vệ sinh chung nhà cửa",
+   "cap": 4
+  },
+  {
+   "ma": "8129",
+   "ten": "Vệ sinh công nghiệp và các công trình chuyên biệt",
+   "cap": 4
+  },
+  {
+   "ma": "813",
+   "ten": "Dịch vụ chăm sóc và duy trì cảnh quan",
+   "cap": 3
+  },
+  {
+   "ma": "8130",
+   "ten": "Dịch vụ chăm sóc và duy trì cảnh quan",
+   "cap": 4
+  },
+  {
+   "ma": "82",
+   "ten": "Hoạt động hành chính, hỗ trợ văn phòng và các hoạt động hỗ trợ kinh doanh khác",
+   "cap": 2
+  },
+  {
+   "ma": "821",
+   "ten": "Hoạt động hành chính và hỗ trợ văn phòng",
+   "cap": 3
+  },
+  {
+   "ma": "8211",
+   "ten": "Dịch vụ hành chính văn phòng tổng hợp",
+   "cap": 4
+  },
+  {
+   "ma": "8219",
+   "ten": "Photo, chuẩn bị tài liệu và các hoạt động hỗ trợ văn phòng đặc biệt khác",
+   "cap": 4
+  },
+  {
+   "ma": "822",
+   "ten": "Hoạt động dịch vụ liên quan đến các cuộc gọi",
+   "cap": 3
+  },
+  {
+   "ma": "8220",
+   "ten": "Hoạt động dịch vụ liên quan đến các cuộc gọi",
+   "cap": 4
+  },
+  {
+   "ma": "823",
+   "ten": "Tổ chức giới thiệu và xúc tiến thương mại",
+   "cap": 3
+  },
+  {
+   "ma": "8230",
+   "ten": "Tổ chức giới thiệu và xúc tiến thương mại",
+   "cap": 4
+  },
+  {
+   "ma": "829",
+   "ten": "Hoạt động dịch vụ hỗ trợ kinh doanh khác chưa được phân vào đâu",
+   "cap": 3
+  },
+  {
+   "ma": "8291",
+   "ten": "Hoạt động dịch vụ hỗ trợ thanh toán, tín dụng",
+   "cap": 4
+  },
+  {
+   "ma": "8292",
+   "ten": "Dịch vụ đóng gói",
+   "cap": 4
+  },
+  {
+   "ma": "8299",
+   "ten": "Hoạt động dịch vụ hỗ trợ kinh doanh khác còn lại chưa được phân vào đâu",
+   "cap": 4
+  },
+  {
+   "ma": "84",
+   "ten": "Hoạt động của Đảng Cộng sản, tổ chức chính trị - xã hội, quản lý nhà nước, an ninh quốc phòng, đối ngoại và bảo đảm xã hội bắt buộc",
+   "cap": 2
+  },
+  {
+   "ma": "841",
+   "ten": "Hoạt động của Đảng Cộng sản, tổ chức chính trị - xã hội, quản lý nhà nước và quản lý chính sách kinh tế, xã hội",
+   "cap": 3
+  },
+  {
+   "ma": "8411",
+   "ten": "Hoạt động của Đảng Cộng sản, tổ chức chính trị - xã hội, hoạt động quản lý nhà nước nói chung và kinh tế tổng hợp",
+   "cap": 4
+  },
+  {
+   "ma": "8412",
+   "ten": "Hoạt động quản lý nhà nước trong các lĩnh vực y tế, giáo dục, văn hoá và các dịch vụ xã hội khác (trừ bảo đảm xã hội bắt buộc)",
+   "cap": 4
+  },
+  {
+   "ma": "8413",
+   "ten": "Hoạt động quản lý nhà nước trong các lĩnh vực kinh tế chuyên ngành",
+   "cap": 4
+  },
+  {
+   "ma": "842",
+   "ten": "Hoạt động phục vụ chung cho toàn đất nước",
+   "cap": 3
+  },
+  {
+   "ma": "8421",
+   "ten": "Hoạt động đối ngoại",
+   "cap": 4
+  },
+  {
+   "ma": "8422",
+   "ten": "Hoạt động quốc phòng",
+   "cap": 4
+  },
+  {
+   "ma": "8423",
+   "ten": "Hoạt động an ninh, trật tự an toàn xã hội",
+   "cap": 4
+  },
+  {
+   "ma": "843",
+   "ten": "Hoạt động bảo đảm xã hội bắt buộc",
+   "cap": 3
+  },
+  {
+   "ma": "8430",
+   "ten": "Hoạt động bảo đảm xã hội bắt buộc",
+   "cap": 4
+  },
+  {
+   "ma": "85",
+   "ten": "Giáo dục và đào tạo",
+   "cap": 2
+  },
+  {
+   "ma": "851",
+   "ten": "Giáo dục mầm non",
+   "cap": 3
+  },
+  {
+   "ma": "8511",
+   "ten": "Giáo dục nhà trẻ",
+   "cap": 4
+  },
+  {
+   "ma": "8512",
+   "ten": "Giáo dục mẫu giáo",
+   "cap": 4
+  },
+  {
+   "ma": "852",
+   "ten": "Giáo dục phổ thông",
+   "cap": 3
+  },
+  {
+   "ma": "8521",
+   "ten": "Giáo dục tiểu học",
+   "cap": 4
+  },
+  {
+   "ma": "8522",
+   "ten": "Giáo dục trung học cơ sở",
+   "cap": 4
+  },
+  {
+   "ma": "8523",
+   "ten": "Giáo dục trung học phổ thông",
+   "cap": 4
+  },
+  {
+   "ma": "853",
+   "ten": "Giáo dục nghề nghiệp",
+   "cap": 3
+  },
+  {
+   "ma": "8531",
+   "ten": "Đào tạo sơ cấp",
+   "cap": 4
+  },
+  {
+   "ma": "8532",
+   "ten": "Đào tạo trung cấp",
+   "cap": 4
+  },
+  {
+   "ma": "8533",
+   "ten": "Đào tạo cao đẳng",
+   "cap": 4
+  },
+  {
+   "ma": "854",
+   "ten": "Giáo dục đại học",
+   "cap": 3
+  },
+  {
+   "ma": "8541",
+   "ten": "Đào tạo đại học",
+   "cap": 4
+  },
+  {
+   "ma": "8542",
+   "ten": "Đào tạo thạc sỹ",
+   "cap": 4
+  },
+  {
+   "ma": "8543",
+   "ten": "Đào tạo tiến sỹ",
+   "cap": 4
+  },
+  {
+   "ma": "855",
+   "ten": "Giáo dục khác",
+   "cap": 3
+  },
+  {
+   "ma": "8551",
+   "ten": "Giáo dục thể thao và giải trí",
+   "cap": 4
+  },
+  {
+   "ma": "8552",
+   "ten": "Giáo dục văn hoá nghệ thuật",
+   "cap": 4
+  },
+  {
+   "ma": "8559",
+   "ten": "Giáo dục khác chưa được phân vào đâu",
+   "cap": 4
+  },
+  {
+   "ma": "856",
+   "ten": "Dịch vụ hỗ trợ giáo dục",
+   "cap": 3
+  },
+  {
+   "ma": "8560",
+   "ten": "Dịch vụ hỗ trợ giáo dục",
+   "cap": 4
+  },
+  {
+   "ma": "86",
+   "ten": "Hoạt động y tế",
+   "cap": 2
+  },
+  {
+   "ma": "861",
+   "ten": "Hoạt động của các bệnh viện, trạm y tế",
+   "cap": 3
+  },
+  {
+   "ma": "8610",
+   "ten": "Hoạt động của các bệnh viện, trạm y tế",
+   "cap": 4
+  },
+  {
+   "ma": "862",
+   "ten": "Hoạt động của các phòng khám đa khoa, chuyên khoa và nha khoa",
+   "cap": 3
+  },
+  {
+   "ma": "8620",
+   "ten": "Hoạt động của các phòng khám đa khoa, chuyên khoa và nha khoa",
+   "cap": 4
+  },
+  {
+   "ma": "869",
+   "ten": "Hoạt động y tế khác",
+   "cap": 3
+  },
+  {
+   "ma": "8691",
+   "ten": "Hoạt động y tế dự phòng",
+   "cap": 4
+  },
+  {
+   "ma": "8692",
+   "ten": "Hoạt động của hệ thống cơ sở chỉnh hình, phục hồi chức năng",
+   "cap": 4
+  },
+  {
+   "ma": "8699",
+   "ten": "Hoạt động y tế khác chưa được phân vào đâu",
+   "cap": 4
+  },
+  {
+   "ma": "87",
+   "ten": "Hoạt động chăm sóc, điều dưỡng tập trung",
+   "cap": 2
+  },
+  {
+   "ma": "871",
+   "ten": "Hoạt động của các cơ sở nuôi dưỡng, điều dưỡng",
+   "cap": 3
+  },
+  {
+   "ma": "8710",
+   "ten": "Hoạt động của các cơ sở nuôi dưỡng, điều dưỡng",
+   "cap": 4
+  },
+  {
+   "ma": "872",
+   "ten": "Hoạt động chăm sóc sức khoẻ người bị thiểu năng, tâm thần và người nghiện",
+   "cap": 3
+  },
+  {
+   "ma": "8720",
+   "ten": "Hoạt động chăm sóc sức khoẻ người bị thiểu năng, tâm thần và người nghiện",
+   "cap": 4
+  },
+  {
+   "ma": "873",
+   "ten": "Hoạt động chăm sóc sức khoẻ người có công, người già và người khuyết tật không có khả năng tự chăm sóc",
+   "cap": 3
+  },
+  {
+   "ma": "8730",
+   "ten": "Hoạt động chăm sóc sức khoẻ người có công, người già và người khuyết tật không có khả năng tự chăm sóc",
+   "cap": 4
+  },
+  {
+   "ma": "879",
+   "ten": "Hoạt động chăm sóc tập trung khác",
+   "cap": 3
+  },
+  {
+   "ma": "8790",
+   "ten": "Hoạt động chăm sóc tập trung khác",
+   "cap": 4
+  },
+  {
+   "ma": "88",
+   "ten": "Hoạt động trợ giúp xã hội không tập trung",
+   "cap": 2
+  },
+  {
+   "ma": "881",
+   "ten": "Hoạt động trợ giúp xã hội không tập trung đối với người có công, thương bệnh binh, người già và người khuyết tật",
+   "cap": 3
+  },
+  {
+   "ma": "8810",
+   "ten": "Hoạt động trợ giúp xã hội không tập trung đối với người có công, thương bệnh binh, người già và người khuyết tật",
+   "cap": 4
+  },
+  {
+   "ma": "889",
+   "ten": "Hoạt động trợ giúp xã hội không tập trung khác",
+   "cap": 3
+  },
+  {
+   "ma": "8890",
+   "ten": "Hoạt động trợ giúp xã hội không tập trung khác",
+   "cap": 4
+  },
+  {
+   "ma": "90",
+   "ten": "Hoạt động sáng tác, nghệ thuật và giải trí",
+   "cap": 2
+  },
+  {
+   "ma": "900",
+   "ten": "Hoạt động sáng tác, nghệ thuật và giải trí",
+   "cap": 3
+  },
+  {
+   "ma": "9000",
+   "ten": "Hoạt động sáng tác, nghệ thuật và giải trí",
+   "cap": 4
+  },
+  {
+   "ma": "91",
+   "ten": "Hoạt động của thư viện, lưu trữ, bảo tàng và các hoạt động văn hoá khác",
+   "cap": 2
+  },
+  {
+   "ma": "910",
+   "ten": "Hoạt động của thư viện, lưu trữ, bảo tàng và các hoạt động văn hoá khác",
+   "cap": 3
+  },
+  {
+   "ma": "9101",
+   "ten": "Hoạt động thư viện và lưu trữ",
+   "cap": 4
+  },
+  {
+   "ma": "9102",
+   "ten": "Hoạt động bảo tồn, bảo tàng",
+   "cap": 4
+  },
+  {
+   "ma": "9103",
+   "ten": "Hoạt động của các vườn bách thảo, bách thú và khu bảo tồn tự nhiên",
+   "cap": 4
+  },
+  {
+   "ma": "92",
+   "ten": "Hoạt động xổ số, cá cược và đánh bạc",
+   "cap": 2
+  },
+  {
+   "ma": "920",
+   "ten": "Hoạt động xổ số, cá cược và đánh bạc",
+   "cap": 3
+  },
+  {
+   "ma": "9200",
+   "ten": "Hoạt động xổ số, cá cược và đánh bạc",
+   "cap": 4
+  },
+  {
+   "ma": "93",
+   "ten": "Hoạt động thể thao, vui chơi và giải trí",
+   "cap": 2
+  },
+  {
+   "ma": "931",
+   "ten": "Hoạt động thể thao",
+   "cap": 3
+  },
+  {
+   "ma": "9311",
+   "ten": "Hoạt động của các cơ sở thể thao",
+   "cap": 4
+  },
+  {
+   "ma": "9312",
+   "ten": "Hoạt động của các câu lạc bộ thể thao",
+   "cap": 4
+  },
+  {
+   "ma": "9319",
+   "ten": "Hoạt động thể thao khác",
+   "cap": 4
+  },
+  {
+   "ma": "932",
+   "ten": "Hoạt động vui chơi giải trí khác",
+   "cap": 3
+  },
+  {
+   "ma": "9321",
+   "ten": "Hoạt động của các công viên vui chơi và công viên theo chủ đề",
+   "cap": 4
+  },
+  {
+   "ma": "9329",
+   "ten": "Hoạt động vui chơi giải trí khác chưa được phân vào đâu",
+   "cap": 4
+  },
+  {
+   "ma": "94",
+   "ten": "Hoạt động của các hiệp hội, tổ chức khác",
+   "cap": 2
+  },
+  {
+   "ma": "941",
+   "ten": "Hoạt động của các hiệp hội kinh doanh, nghiệp chủ và nghề nghiệp",
+   "cap": 3
+  },
+  {
+   "ma": "9411",
+   "ten": "Hoạt động của các hiệp hội kinh doanh và nghiệp chủ",
+   "cap": 4
+  },
+  {
+   "ma": "9412",
+   "ten": "Hoạt động của các hội nghề nghiệp",
+   "cap": 4
+  },
+  {
+   "ma": "942",
+   "ten": "Hoạt động của công đoàn",
+   "cap": 3
+  },
+  {
+   "ma": "9420",
+   "ten": "Hoạt động của công đoàn",
+   "cap": 4
+  },
+  {
+   "ma": "949",
+   "ten": "Hoạt động của các tổ chức khác",
+   "cap": 3
+  },
+  {
+   "ma": "9491",
+   "ten": "Hoạt động của các tổ chức tôn giáo",
+   "cap": 4
+  },
+  {
+   "ma": "9499",
+   "ten": "Hoạt động của các tổ chức khác chưa được phân vào đâu",
+   "cap": 4
+  },
+  {
+   "ma": "95",
+   "ten": "Sửa chữa máy vi tính, đồ dùng cá nhân và gia đình",
+   "cap": 2
+  },
+  {
+   "ma": "951",
+   "ten": "Sửa chữa máy vi tính và thiết bị liên lạc",
+   "cap": 3
+  },
+  {
+   "ma": "9511",
+   "ten": "Sửa chữa máy vi tính và thiết bị ngoại vi",
+   "cap": 4
+  },
+  {
+   "ma": "9512",
+   "ten": "Sửa chữa thiết bị liên lạc",
+   "cap": 4
+  },
+  {
+   "ma": "952",
+   "ten": "Sửa chữa đồ dùng cá nhân và gia đình",
+   "cap": 3
+  },
+  {
+   "ma": "9521",
+   "ten": "Sửa chữa thiết bị nghe nhìn điện tử gia dụng",
+   "cap": 4
+  },
+  {
+   "ma": "9522",
+   "ten": "Sửa chữa thiết bị, đồ dùng gia đình",
+   "cap": 4
+  },
+  {
+   "ma": "9523",
+   "ten": "Sửa chữa giày, dép, hàng da và giả da",
+   "cap": 4
+  },
+  {
+   "ma": "9524",
+   "ten": "Sửa chữa giường, tủ, bàn, ghế và đồ nội thất tương tự",
+   "cap": 4
+  },
+  {
+   "ma": "9529",
+   "ten": "Sửa chữa xe đạp, đồng hồ, đồ dùng cá nhân và gia đình khác chưa được phân vào đâu",
+   "cap": 4
+  },
+  {
+   "ma": "96",
+   "ten": "Hoạt động dịch vụ phục vụ cá nhân khác",
+   "cap": 2
+  },
+  {
+   "ma": "961",
+   "ten": "Dịch vụ tắm hơi, massage và các dịch vụ tăng cường sức khoẻ tương tự (trừ hoạt động thể thao)",
+   "cap": 3
+  },
+  {
+   "ma": "9610",
+   "ten": "Dịch vụ tắm hơi, massage và các dịch vụ tăng cường sức khoẻ tương tự (trừ hoạt động thể thao)",
+   "cap": 4
+  },
+  {
+   "ma": "962",
+   "ten": "Giặt là, làm sạch các sản phẩm dệt và lông thú",
+   "cap": 3
+  },
+  {
+   "ma": "9620",
+   "ten": "Giặt là, làm sạch các sản phẩm dệt và lông thú",
+   "cap": 4
+  },
+  {
+   "ma": "963",
+   "ten": "Hoạt động dịch vụ phục vụ cá nhân khác chưa được phân vào đâu",
+   "cap": 3
+  },
+  {
+   "ma": "9631",
+   "ten": "Cắt tóc, làm đầu, gội đầu",
+   "cap": 4
+  },
+  {
+   "ma": "9632",
+   "ten": "Hoạt động dịch vụ phục vụ tang lễ",
+   "cap": 4
+  },
+  {
+   "ma": "9633",
+   "ten": "Hoạt động dịch vụ phục vụ hôn lễ",
+   "cap": 4
+  },
+  {
+   "ma": "9639",
+   "ten": "Hoạt động dịch vụ phục vụ cá nhân khác còn lại chưa được phân vào đâu",
+   "cap": 4
+  },
+  {
+   "ma": "97",
+   "ten": "Hoạt động làm thuê công việc gia đình trong các hộ gia đình",
+   "cap": 2
+  },
+  {
+   "ma": "970",
+   "ten": "Hoạt động làm thuê công việc gia đình trong các hộ gia đình",
+   "cap": 3
+  },
+  {
+   "ma": "9700",
+   "ten": "Hoạt động làm thuê công việc gia đình trong các hộ gia đình",
+   "cap": 4
+  },
+  {
+   "ma": "98",
+   "ten": "Hoạt động sản xuất sản phẩm vật chất và dịch vụ tự tiêu dùng của hộ gia đình",
+   "cap": 2
+  },
+  {
+   "ma": "981",
+   "ten": "Hoạt động sản xuất các sản phẩm vật chất tự tiêu dùng của hộ gia đình",
+   "cap": 3
+  },
+  {
+   "ma": "9810",
+   "ten": "Hoạt động sản xuất các sản phẩm vật chất tự tiêu dùng của hộ gia đình",
+   "cap": 4
+  },
+  {
+   "ma": "982",
+   "ten": "Hoạt động sản xuất các sản phẩm dịch vụ tự tiêu dùng của hộ gia đình",
+   "cap": 3
+  },
+  {
+   "ma": "9820",
+   "ten": "Hoạt động sản xuất các sản phẩm dịch vụ tự tiêu dùng của hộ gia đình",
+   "cap": 4
+  },
+  {
+   "ma": "99",
+   "ten": "Hoạt động của các tổ chức và cơ quan quốc tế",
+   "cap": 2
+  },
+  {
+   "ma": "990",
+   "ten": "Hoạt động của các tổ chức và cơ quan quốc tế",
+   "cap": 3
+  },
+  {
+   "ma": "9900",
+   "ten": "Hoạt động của các tổ chức và cơ quan quốc tế",
+   "cap": 4
+  }
+ ]
+}

@@ -1,0 +1,472 @@
+{
+ "id": "PLI_M32",
+ "ten_mau": "Giấy đề nghị công bố nội dung đăng ký doanh nghiệp",
+ "blocks": [
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "PL1 - Mau so 32: Giấy đề nghị công bố nội dung đăng ký doanh nghiệp"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Mẫu số 32"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "TÊN DOANH NGHIỆP\n-------",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc\n---------------",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Số: "
+    },
+    {
+     "input": {
+      "key": "so_van_ban",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "input": {
+      "key": "dia_diem_ky",
+      "w": 12
+     }
+    },
+    {
+     "text": ", ngày",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "ngay_ky_vb",
+      "w": 12
+     }
+    },
+    {
+     "text": " tháng",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "thang_ky_vb",
+      "w": 12
+     }
+    },
+    {
+     "text": " năm ",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "nam_ky_vb",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "GIẤY ĐỀ NGHỊ",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Công bố nội dung đăng ký doanh nghiệp",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Kính gửi: (Cơ quan đăng ký kinh doanh cấp tỉnh) "
+    },
+    {
+     "input": {
+      "key": "co_quan_dkkd",
+      "w": 32
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tôi là1 (ghi họ tên bằng chữ in hoa): "
+    },
+    {
+     "input": {
+      "key": "chu_hkd.ho_ten",
+      "w": 27
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Ngày, tháng, năm sinh: "
+    },
+    {
+     "input": {
+      "key": "ngay_sinh",
+      "w": 19
+     }
+    },
+    {
+     "text": "/"
+    },
+    {
+     "input": {
+      "key": "thang_sinh",
+      "w": 12
+     }
+    },
+    {
+     "text": "/"
+    },
+    {
+     "input": {
+      "key": "nam_sinh",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Giới tính: "
+    },
+    {
+     "input": {
+      "key": "chu_hkd.gioi_tinh",
+      "w": 13
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Số định danh cá nhân: "
+    },
+    {
+     "input": {
+      "key": "chu_hkd.so_cccd",
+      "w": 19
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Điện thoại (nếu có): "
+    },
+    {
+     "input": {
+      "key": "dien_thoai_lien_he",
+      "w": 18
+     }
+    },
+    {
+     "text": " Thư điện tử (nếu có): "
+    },
+    {
+     "input": {
+      "key": "email_tru_so",
+      "w": 19
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở dữ liệu quốc gia về dân cư bị gián đoạn thì đề nghị kê khai các thông tin cá nhân dưới đây:",
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Số Hộ chiếu (đối với cá nhân Việt Nam không có số định danh cá nhân)/Số Hộ chiếu nước ngoài hoặc giấy tờ có giá trị thay thế hộ chiếu nước ngoài (đối với cá nhân là người nước ngoài): "
+    },
+    {
+     "input": {
+      "key": "chu_hkd.so_cccd",
+      "w": 60
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Ngày cấp: "
+    },
+    {
+     "input": {
+      "key": "ngay_cap",
+      "w": 13
+     }
+    },
+    {
+     "text": " Nơi cấp: "
+    },
+    {
+     "input": {
+      "key": "noi_cap",
+      "w": 13
+     }
+    },
+    {
+     "text": " \t"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Là đại diện theo pháp luật của doanh nghiệp2:"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên doanh nghiệp (ghi bằng chữ in hoa): "
+    },
+    {
+     "input": {
+      "key": "dn.ten_tieng_viet",
+      "w": 28
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Mã số doanh nghiệp: "
+    },
+    {
+     "input": {
+      "key": "dn.ma_so_dn",
+      "w": 18
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Đăng ký lần đầu ngày......./…..../…..…"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Đăng ký thay đổi lần thứ"
+    },
+    {
+     "input": {
+      "key": "dk_thay_doi_lan_thu",
+      "w": 20
+     }
+    },
+    {
+     "text": "ngày"
+    },
+    {
+     "input": {
+      "key": "dk_thay_doi_ngay",
+      "w": 12
+     }
+    },
+    {
+     "text": "/"
+    },
+    {
+     "input": {
+      "key": "dk_thay_doi_thang",
+      "w": 12
+     }
+    },
+    {
+     "text": "/"
+    },
+    {
+     "input": {
+      "key": "dk_thay_doi_nam",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Đề nghị đăng công bố nội dung đăng ký doanh nghiệp trên Cổng thông tin quốc gia về đăng ký doanh nghiệp như sau: \t"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": " Văn bản gửi kèm (chỉ kê khai nếu doanh nghiệp có văn bản gửi kèm)",
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "…………………………………………..………………………………………….."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Đề nghị Quý Cơ quan xem xét, đăng công bố nội dung đăng ký doanh nghiệp trên Cổng thông tin quốc gia về đăng ký doanh nghiệp."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT\nCỦA DOANH NGHIỆP\n(Ký và ghi họ tên)3",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "________________________________________"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "1 Trường hợp Tòa án hoặc Trọng tài chỉ định người thực hiện thủ tục đăng ký doanh nghiệp thì người được chỉ định kê khai thông tin vào phần này."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "2 Không ghi trong trường hợp đề nghị công bố nội dung đăng ký doanh nghiệp theo quyết định của Tòa án hoặc Trọng tài."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "3 Người đại diện theo pháp luật của doanh nghiệp ký trực tiếp vào phần này. "
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Trường hợp Tòa án hoặc Trọng tài chỉ định người thực hiện thủ tục đăng ký doanh nghiệp thì người được chỉ định ký trực tiếp vào phần này."
+    }
+   ]
+  }
+ ]
+}

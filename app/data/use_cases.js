@@ -1,0 +1,742 @@
+// Sinh tu dong - khong sua tay
+window.USE_CASES = {
+ "nguon": [
+  {
+   "van_ban": "Nghị định 168/2025/NĐ-CP ngày 30/06/2025 của Chính phủ về đăng ký doanh nghiệp (hiệu lực 01/07/2025)",
+   "url": "https://luatvietnam.vn/doanh-nghiep/nghi-dinh-168-2025-nd-cp-ve-dang-ky-doanh-nghiep-404361-d1.html",
+   "ngay_tra_cuu": "2026-08-24"
+  },
+  {
+   "van_ban": "Nghị định 168/2025/NĐ-CP - Cổng thông tin điện tử Chính phủ (bản PDF ký số)",
+   "url": "https://vanban.chinhphu.vn/?classid=0&docid=214334&pageid=27160",
+   "ngay_tra_cuu": "2026-08-24"
+  },
+  {
+   "van_ban": "Thông tư 68/2025/TT-BTC ngày 30/06/2025 của Bộ Tài chính ban hành biểu mẫu sử dụng trong đăng ký doanh nghiệp, đăng ký hộ kinh doanh (Phụ lục I mẫu 1-80, Phụ lục II mẫu 1-28)",
+   "url": "https://luatvietnam.vn/bieu-mau/tong-hop-bieu-mau-dang-ky-doanh-nghiep-thong-tu-68-2025-tt-btc-571-103042-article.html",
+   "ngay_tra_cuu": "2026-08-24"
+  },
+  {
+   "van_ban": "Thông tư 68/2025/TT-BTC - Cục Phát triển doanh nghiệp (dangkykinhdoanh.gov.vn)",
+   "url": "https://dangkykinhdoanh.gov.vn/vn/Pages/ChiTietVanBan.aspx?vID=27044",
+   "ngay_tra_cuu": "2026-08-24"
+  },
+  {
+   "van_ban": "Luật Doanh nghiệp 2020 được sửa đổi, bổ sung năm 2025 (được NĐ 168/2025 dẫn chiếu tại Điều 24 về hồ sơ đăng ký thành lập)",
+   "url": "https://dangkykinhdoanh.gov.vn/vn/Pages/ChiTietVanBan.aspx?vID=27043",
+   "ngay_tra_cuu": "2026-08-24"
+  },
+  {
+   "van_ban": "Nghị định 296/2026/NĐ-CP sửa đổi, bổ sung một số điều của Nghị định 168/2025/NĐ-CP (ghi nhận qua phần theo dõi sửa đổi trên luatvietnam.vn - chi tiết từng điều cần kiểm chứng lại)",
+   "url": "https://luatvietnam.vn/doanh-nghiep/nghi-dinh-168-2025-nd-cp-ve-dang-ky-doanh-nghiep-404361-d1.html",
+   "ngay_tra_cuu": "2026-08-24"
+  },
+  {
+   "van_ban": "Thông tư 121/2026/TT-BTC sửa đổi, bổ sung một số điều của Thông tư 68/2025/TT-BTC (chỉ ghi nhận sự tồn tại từ nguồn thuvienphapluat.vn - CHƯA kiểm chứng nội dung)",
+   "url": "https://thuvienphapluat.vn/phap-luat/ho-tro-phap-luat/tai-phu-luc-bieu-mau-thong-tu-682025ttbtc-file-word-pdf-ve-dang-ky-doanh-nghiep-day-du-224133.html",
+   "ngay_tra_cuu": "2026-08-24"
+  }
+ ],
+ "cases": [
+  {
+   "id": "thanh_lap_dntn",
+   "nhom": "Thành lập doanh nghiệp",
+   "ten": "Thành lập Doanh nghiệp tư nhân",
+   "mo_ta": "Dùng khi một cá nhân thành lập doanh nghiệp và làm chủ doanh nghiệp tư nhân, chịu trách nhiệm bằng toàn bộ tài sản của mình về mọi hoạt động của doanh nghiệp.",
+   "forms": [
+    {
+     "pl": "I",
+     "mau": 1,
+     "bat_buoc": true,
+     "ghi_chu": "Giấy đề nghị đăng ký doanh nghiệp - Doanh nghiệp tư nhân"
+    }
+   ],
+   "giay_to_kem": [
+    "Bản sao giấy tờ pháp lý của cá nhân đối với chủ doanh nghiệp tư nhân (CCCD/hộ chiếu). KHÔNG phải nộp nếu chủ DN kê khai số định danh cá nhân trong mẫu đề nghị (khoản 1 Điều 11 NĐ 168)"
+   ],
+   "co_so_phap_ly": [
+    "Điều 19 Luật Doanh nghiệp (được dẫn chiếu tại khoản 1 Điều 24 Nghị định 168/2025/NĐ-CP)",
+    "Khoản 1 Điều 24 Nghị định 168/2025/NĐ-CP",
+    "Điều 11 Nghị định 168/2025/NĐ-CP (kê khai số định danh cá nhân)"
+   ],
+   "luu_y": [
+    "Doanh nghiệp tư nhân không có bản Điều lệ riêng (khác công ty).",
+    "Một cá nhân chỉ được lập một DNTN; chủ DNTN không được đồng thời là chủ hộ kinh doanh, thành viên hợp danh.",
+    "Hồ sơ nộp tại Cơ quan đăng ký kinh doanh thuộc Sở Tài chính cấp tỉnh."
+   ]
+  },
+  {
+   "id": "thanh_lap_tnhh_1tv",
+   "nhom": "Thành lập doanh nghiệp",
+   "ten": "Thành lập Công ty TNHH một thành viên",
+   "mo_ta": "Dùng khi một tổ chức hoặc một cá nhân làm chủ sở hữu duy nhất của công ty TNHH một thành viên.",
+   "forms": [
+    {
+     "pl": "I",
+     "mau": 2,
+     "bat_buoc": true,
+     "ghi_chu": "Giấy đề nghị đăng ký doanh nghiệp - Công ty TNHH một thành viên"
+    }
+   ],
+   "giay_to_kem": [
+    "Bản Điều lệ công ty",
+    "Bản sao giấy tờ pháp lý của cá nhân đối với chủ sở hữu là cá nhân, người đại diện theo pháp luật (miễn nếu đã kê khai số định danh cá nhân)",
+    "Nếu chủ sở hữu là tổ chức: bản sao GCNĐKDN/giấy tờ tương đương, văn bản cử người đại diện theo pháp luật, bản sao giấy tờ pháp lý của người được cử"
+   ],
+   "co_so_phap_ly": [
+    "Điều 21 Luật Doanh nghiệp (được dẫn chiếu tại khoản 3 Điều 24 Nghị định 168/2025/NĐ-CP)",
+    "Khoản 3 Điều 24 Nghị định 168/2025/NĐ-CP"
+   ],
+   "luu_y": [
+    "Hồ sơ TNHH một thành viên KHÔNG bao gồm danh sách thành viên."
+   ]
+  },
+  {
+   "id": "thanh_lap_tnhh_2tv",
+   "nhom": "Thành lập doanh nghiệp",
+   "ten": "Thành lập Công ty TNHH hai thành viên trở lên",
+   "mo_ta": "Dùng khi có từ 02 đến 50 thành viên (tổ chức, cá nhân) cùng góp vốn thành lập công ty TNHH.",
+   "forms": [
+    {
+     "pl": "I",
+     "mau": 3,
+     "bat_buoc": true,
+     "ghi_chu": "Giấy đề nghị đăng ký doanh nghiệp - TNHH hai thành viên trở lên"
+    },
+    {
+     "pl": "I",
+     "mau": 6,
+     "bat_buoc": true,
+     "ghi_chu": "Danh sách thành viên công ty"
+    }
+   ],
+   "giay_to_kem": [
+    "Bản Điều lệ công ty",
+    "Bản sao giấy tờ pháp lý của từng thành viên là cá nhân (miễn nếu kê khai số định danh cá nhân)",
+    "Nếu thành viên là tổ chức: bản sao giấy tờ pháp lý của tổ chức, văn bản cử người đại diện theo ủy quyền, bản sao giấy tờ pháp lý cá nhân của người được cử (tổ chức nước ngoài phải hợp pháp hóa lãnh sự)"
+   ],
+   "co_so_phap_ly": [
+    "Điều 21 Luật Doanh nghiệp (được dẫn chiếu tại khoản 3 Điều 24 Nghị định 168/2025/NĐ-CP)",
+    "Khoản 3 Điều 24 Nghị định 168/2025/NĐ-CP"
+   ],
+   "luu_y": []
+  },
+  {
+   "id": "thanh_lap_ctcp",
+   "nhom": "Thành lập doanh nghiệp",
+   "ten": "Thành lập Công ty cổ phần",
+   "mo_ta": "Dùng khi thành lập công ty cổ phần (tối thiểu 03 cổ đông).",
+   "forms": [
+    {
+     "pl": "I",
+     "mau": 4,
+     "bat_buoc": true,
+     "ghi_chu": "Giấy đề nghị đăng ký doanh nghiệp - Công ty cổ phần"
+    },
+    {
+     "pl": "I",
+     "mau": 7,
+     "bat_buoc": true,
+     "ghi_chu": "Danh sách cổ đông sáng lập"
+    },
+    {
+     "pl": "I",
+     "mau": 8,
+     "bat_buoc": false,
+     "ghi_chu": "Chỉ nộp nếu có cổ đông là nhà đầu tư nước ngoài"
+    }
+   ],
+   "giay_to_kem": [
+    "Bản Điều lệ công ty",
+    "Bản sao giấy tờ pháp lý của cổ đông sáng lập là cá nhân (miễn nếu kê khai số định danh cá nhân)",
+    "Nếu cổ đông sáng lập là tổ chức: bản sao giấy tờ pháp lý của tổ chức, văn bản cử người đại diện, bản sao giấy tờ pháp lý cá nhân của người được cử"
+   ],
+   "co_so_phap_ly": [
+    "Điều 22 Luật Doanh nghiệp (được dẫn chiếu tại khoản 4 Điều 24 Nghị định 168/2025/NĐ-CP)",
+    "Khoản 4 Điều 24 Nghị định 168/2025/NĐ-CP"
+   ],
+   "luu_y": []
+  },
+  {
+   "id": "thanh_lap_hop_danh",
+   "nhom": "Thành lập doanh nghiệp",
+   "ten": "Thành lập Công ty hợp danh",
+   "mo_ta": "Dùng khi thành lập công ty hợp danh, phải có ít nhất 02 thành viên hợp danh (chịu trách nhiệm vô hạn).",
+   "forms": [
+    {
+     "pl": "I",
+     "mau": 5,
+     "bat_buoc": true,
+     "ghi_chu": "Giấy đề nghị đăng ký doanh nghiệp - Công ty hợp danh"
+    },
+    {
+     "pl": "I",
+     "mau": 9,
+     "bat_buoc": true,
+     "ghi_chu": "Danh sách thành viên công ty hợp danh"
+    }
+   ],
+   "giay_to_kem": [
+    "Bản Điều lệ công ty hợp danh",
+    "Bản sao giấy tờ pháp lý của thành viên hợp danh là cá nhân (miễn nếu kê khai số định danh cá nhân)"
+   ],
+   "co_so_phap_ly": [
+    "Điều 20 Luật Doanh nghiệp (được dẫn chiếu tại khoản 2 Điều 24 Nghị định 168/2025/NĐ-CP)",
+    "Khoản 2 Điều 24 Nghị định 168/2025/NĐ-CP"
+   ],
+   "luu_y": []
+  },
+  {
+   "id": "dang_ky_ho_kinh_doanh_lan_dau",
+   "nhom": "Hộ kinh doanh",
+   "ten": "Đăng ký hộ kinh doanh lần đầu",
+   "mo_ta": "Dùng khi cá nhân hoặc các thành viên hộ gia đình đăng ký thành lập hộ kinh doanh lần đầu. Hồ sơ nộp tại Cơ quan đăng ký kinh doanh cấp xã nơi hộ kinh doanh đặt trụ sở.",
+   "forms": [
+    {
+     "pl": "II",
+     "mau": 1,
+     "bat_buoc": true,
+     "ghi_chu": "Giấy đề nghị đăng ký hộ kinh doanh"
+    }
+   ],
+   "giay_to_kem": [
+    "Bản sao văn bản ủy quyền của các thành viên hộ gia đình cho một thành viên làm chủ hộ kinh doanh (bắt buộc CÔNG CHỨNG/CHỨNG THỰC) - chỉ áp dụng khi hộ kinh doanh do các thành viên hộ gia đình đăng ký",
+    "Người nộp hồ sơ xuất trình thẻ Căn cước/Căn cước điện tử khi nộp bản giấy (Điều 92 NĐ 168)"
+   ],
+   "co_so_phap_ly": [
+    "Điều 82 Nghị định 168/2025/NĐ-CP (quyền thành lập hộ kinh doanh)",
+    "Điều 99 Nghị định 168/2025/NĐ-CP (hồ sơ, trình tự đăng ký hộ kinh doanh)"
+   ],
+   "luu_y": [
+    "Cấp xã cấp Giấy chứng nhận đăng ký hộ kinh doanh và thông báo cơ quan thuế quản lý trực tiếp trong 03 ngày làm việc.",
+    "Hộ gia đình sản xuất nông, lâm, ngư nghiệp, làm muối; bán hàng rong, quà vặt, buôn chuyến, kinh doanh lưu động, thời vụ; dịch vụ thu nhập thấp: không phải đăng ký hộ kinh doanh, trừ ngành nghề có điều kiện (khoản 3 Điều 82).",
+    "Mã số hộ kinh doanh đồng thời là mã số thuế (Điều 91)."
+   ]
+  },
+  {
+   "id": "chuyen_doi_hkd_sang_dn",
+   "nhom": "Chuyển đổi hộ kinh doanh sang doanh nghiệp",
+   "ten": "Chuyển đổi hộ kinh doanh thành doanh nghiệp",
+   "mo_ta": "Dùng khi hộ kinh doanh chuyển đổi thành doanh nghiệp. Chọn loại hình sau chuyển đổi để xác định mẫu Giấy đề nghị đăng ký doanh nghiệp tương ứng (Mẫu 1/2/3/4 Phụ lục I).",
+   "forms": [
+    {
+     "pl": "I",
+     "mau": 1,
+     "bat_buoc": false,
+     "ghi_chu": "Nếu chuyển đổi thành doanh nghiệp tư nhân"
+    },
+    {
+     "pl": "I",
+     "mau": 2,
+     "bat_buoc": false,
+     "ghi_chu": "Nếu chuyển đổi thành công ty TNHH một thành viên"
+    },
+    {
+     "pl": "I",
+     "mau": 3,
+     "bat_buoc": false,
+     "ghi_chu": "Nếu chuyển đổi thành TNHH hai thành viên trở lên (kèm Mẫu 6)"
+    },
+    {
+     "pl": "I",
+     "mau": 4,
+     "bat_buoc": false,
+     "ghi_chu": "Nếu chuyển đổi thành công ty cổ phần (kèm Mẫu 7)"
+    }
+   ],
+   "giay_to_kem": [
+    "Bản sao Giấy chứng nhận đăng ký hộ kinh doanh (bắt buộc)",
+    "Các giấy tờ của hồ sơ thành lập doanh nghiệp tương ứng theo Điều 24 NĐ 168 (Điều lệ, danh sách thành viên, giấy tờ pháp lý...)",
+    "Nếu có nhà đầu tư nước ngoài góp vốn/mua phần vốn góp thuộc trường hợp phải chấp thuận: bản sao văn bản chấp thuận của Cơ quan đăng ký đầu tư"
+   ],
+   "co_so_phap_ly": [
+    "Điều 27 Nghị định 168/2025/NĐ-CP (đăng ký thành lập DN trên cơ sở chuyển đổi từ hộ kinh doanh)"
+   ],
+   "luu_y": [
+    "Hồ sơ chuyển đổi KHÔNG bao gồm bản sao Giấy chứng nhận đăng ký đầu tư.",
+    "Hộ kinh doanh KHÔNG được hoạt động kể từ thời điểm doanh nghiệp được cấp GCNĐKDN.",
+    "Việc chấm dứt hoạt động hộ kinh doanh cũ được liên thông tự động: cấp tỉnh gửi thông tin cho cấp xã, cấp xã thông báo cơ quan thuế; hộ KD chuyển trạng thái 'đang làm thủ tục chấm dứt hoạt động' rồi 'đã chấm dứt' khi hoàn thành nghĩa vụ thuế (khoản 3 Điều 27).",
+    "Nộp tại Cơ quan đăng ký kinh doanh cấp tỉnh nơi đặt trụ sở chính dự kiến của doanh nghiệp."
+   ]
+  },
+  {
+   "id": "thay_doi_ten_va_tru_so",
+   "nhom": "Thay đổi nội dung đăng ký doanh nghiệp",
+   "ten": "Thay đổi tên doanh nghiệp / địa chỉ trụ sở chính",
+   "mo_ta": "Dùng khi doanh nghiệp đăng ký thay đổi tên tiếng Việt, tên tiếng nước ngoài, tên viết tắt hoặc địa chỉ trụ sở chính (một hoặc cả hai nội dung).",
+   "forms": [
+    {
+     "pl": "I",
+     "mau": 12,
+     "bat_buoc": true,
+     "ghi_chu": "Giấy đề nghị đăng ký thay đổi nội dung GCDN"
+    }
+   ],
+   "giay_to_kem": [
+    "Bản sao hoặc bản chính Nghị quyết/quyết định về việc thay đổi tên/trụ sở chính: của chủ sở hữu công ty (TNHH 1TV), Hội đồng thành viên (TNHH 2TV+, hợp danh), Đại hội đồng cổ đông (CTCP)",
+    "Văn bản ủy quyền nếu người nộp hồ sơ không phải người có thẩm quyền ký (không bắt buộc công chứng nếu ủy quyền cho cá nhân - Điều 12)"
+   ],
+   "co_so_phap_ly": [
+    "Điều 41 Nghị định 168/2025/NĐ-CP (thay đổi tên doanh nghiệp)",
+    "Điều 40 Nghị định 168/2025/NĐ-CP (thay đổi địa chỉ trụ sở chính)"
+   ],
+   "luu_y": [
+    "Nếu đổi trụ sở sang địa bàn tỉnh khác (thay đổi cơ quan thuế quản lý), phải hoàn tất thủ tục chuyển địa điểm với cơ quan thuế TRƯỚC; hồ sơ nộp tại cấp tỉnh nơi đặt TRỤ SỞ MỚI (khoản 2 Điều 40).",
+    "Khi đổi tên, phải đăng ký thay đổi tên các chi nhánh/VPĐĐ/địa điểm KD trong 10 ngày kể từ ngày được cấp GCDN mới (khoản 3 Điều 41).",
+    "Thời hạn giải quyết: 03 ngày làm việc."
+   ]
+  },
+  {
+   "id": "thay_doi_nganh_nghe",
+   "nhom": "Thay đổi nội dung đăng ký doanh nghiệp",
+   "ten": "Thông báo thay đổi ngành, nghề kinh doanh",
+   "mo_ta": "Dùng khi doanh nghiệp bổ sung, thay đổi ngành nghề kinh doanh (thủ tục THÔNG BÁO).",
+   "forms": [
+    {
+     "pl": "I",
+     "mau": 12,
+     "bat_buoc": true,
+     "ghi_chu": "Dùng phần 'THÔNG BÁO thay đổi nội dung đăng ký doanh nghiệp' của Mẫu 12"
+    }
+   ],
+   "giay_to_kem": [
+    "Bản sao hoặc bản chính Nghị quyết/quyết định về việc thay đổi ngành, nghề kinh doanh (chủ sở hữu/HĐTV/ĐHĐCĐ tùy loại hình)"
+   ],
+   "co_so_phap_ly": [
+    "Điều 49 Nghị định 168/2025/NĐ-CP",
+    "Điều 7 Nghị định 168/2025/NĐ-CP (ghi ngành nghề theo ngành kinh tế cấp 4)"
+   ],
+   "luu_y": [
+    "Chỉ cấp Giấy xác nhận thay đổi nội dung đăng ký doanh nghiệp khi doanh nghiệp có nhu cầu.",
+    "Cơ quan đăng ký rà soát điều kiện tiếp cận thị trường với ngành nghề hạn chế đối với nhà đầu tư nước ngoài."
+   ]
+  },
+  {
+   "id": "thay_doi_von_dieu_le",
+   "nhom": "Thay đổi nội dung đăng ký doanh nghiệp",
+   "ten": "Đăng ký thay đổi vốn điều lệ, phần vốn góp, tỷ lệ vốn góp",
+   "mo_ta": "Dùng khi công ty tăng/giảm vốn điều lệ hoặc thay đổi tỷ lệ phần vốn góp giữa các thành viên mà không thay đổi thành viên.",
+   "forms": [
+    {
+     "pl": "I",
+     "mau": 12,
+     "bat_buoc": true,
+     "ghi_chu": "Giấy đề nghị đăng ký thay đổi nội dung GCDN"
+    }
+   ],
+   "giay_to_kem": [
+    "Nghị quyết/quyết định của chủ sở hữu công ty/HĐTV/ĐHĐCĐ về việc thay đổi vốn điều lệ",
+    "Biên bản họp HĐTV (đối với TNHH hai thành viên trở lên)",
+    "Khi TĂNG vốn: bản chính/bản sao giấy tờ chứng minh việc góp vốn, mua cổ phần đã thanh toán tương ứng phần vốn tăng",
+    "Khi GIẢM vốn: cam kết bảo đảm thanh toán đủ nợ và nghĩa vụ tài sản khác; nếu TNHH 2TV+ giảm vốn theo điểm a, b khoản 3 Điều 68 LDN thì kèm báo cáo tài chính gần nhất",
+    "Nếu chỉ thay đổi phần vốn góp/tỷ lệ góp: Danh sách thành viên (Mẫu 6) hoặc Danh sách thành viên hợp danh (Mẫu 9) có chữ ký của thành viên có phần vốn góp thay đổi; hợp đồng chuyển nhượng/tặng cho nếu có"
+   ],
+   "co_so_phap_ly": [
+    "Điều 44 Nghị định 168/2025/NĐ-CP"
+   ],
+   "luu_y": [
+    "Chào bán cổ phần nhiều đợt để tăng vốn: nộp hồ sơ sau mỗi đợt với nghị quyết ĐHĐCĐ và nghị quyết HĐQT từng đợt (khoản 3 Điều 44)."
+   ]
+  },
+  {
+   "id": "thay_doi_nguoi_dai_dien_pl",
+   "nhom": "Thay đổi nội dung đăng ký doanh nghiệp",
+   "ten": "Đăng ký thay đổi người đại diện theo pháp luật",
+   "mo_ta": "Dùng khi công ty TNHH, công ty cổ phần thay đổi người đại diện theo pháp luật (bổ nhiệm, bầu mới, thay đổi thông tin).",
+   "forms": [
+    {
+     "pl": "I",
+     "mau": 13,
+     "bat_buoc": true,
+     "ghi_chu": "Giấy đề nghị đăng ký thay đổi người đại diện theo pháp luật"
+    }
+   ],
+   "giay_to_kem": [
+    "Bản sao/bản chính nghị quyết, quyết định về việc thay đổi người đại diện theo pháp luật: chủ sở hữu công ty (TNHH 1TV), HĐTV (TNHH 2TV+), ĐHĐCĐ nếu thay đổi làm thay đổi Điều lệ; HĐQT nếu không làm thay đổi Điều lệ ngoài thông tin cá nhân, chữ ký của người đại diện",
+    "Bản sao giấy tờ pháp lý của người đại diện theo pháp luật mới (miễn nếu kê khai số định danh cá nhân)"
+   ],
+   "co_so_phap_ly": [
+    "Điều 43 Nghị định 168/2025/NĐ-CP (quy định rõ ai có thẩm quyền ký giấy đề nghị)"
+   ],
+   "luu_y": [
+    "Nếu Chủ tịch HĐTV/Chủ tịch công ty/Chủ tịch HĐQT chính là người đại diện theo pháp luật bị thay thì người ký là Chủ tịch mới.",
+    "Có quy định riêng cho trường hợp người đại diện theo pháp luật chết, mất tích, bị tạm giam... (khoản 3 Điều 43) và trường hợp Chủ tịch vắng mặt (khoản 2 Điều 43)."
+   ]
+  },
+  {
+   "id": "thay_doi_chusohuu_chudn",
+   "nhom": "Thay đổi nội dung đăng ký doanh nghiệp",
+   "ten": "Thay đổi chủ sở hữu công ty TNHH 1TV / chủ doanh nghiệp tư nhân",
+   "mo_ta": "Dùng khi chuyển nhượng, tặng cho toàn bộ phần vốn góp của TNHH một thành viên; bán/tặng cho doanh nghiệp tư nhân; hoặc thay đổi chủ do thừa kế.",
+   "forms": [
+    {
+     "pl": "I",
+     "mau": 15,
+     "bat_buoc": false,
+     "ghi_chu": "Giấy đề nghị đăng ký thay đổi chủ sở hữu công ty TNHH một thành viên"
+    },
+    {
+     "pl": "I",
+     "mau": 14,
+     "bat_buoc": false,
+     "ghi_chu": "Giấy đề nghị đăng ký thay đổi chủ doanh nghiệp tư nhân"
+    }
+   ],
+   "giay_to_kem": [
+    "Với TNHH 1TV: hợp đồng chuyển nhượng/giấy tờ chứng minh hoàn tất chuyển nhượng; hợp đồng tặng cho; hoặc bản sao văn bản xác nhận quyền thừa kế hợp pháp",
+    "Với DNTN: hợp đồng mua bán/biển bản thanh lý hợp đồng mua bán; hợp đồng tặng cho; hoặc bản sao văn bản xác nhận quyền thừa kế",
+    "Bản sao giấy tờ pháp lý của chủ mới (miễn nếu kê khai số định danh)"
+   ],
+   "co_so_phap_ly": [
+    "Điều 46 Nghị định 168/2025/NĐ-CP (thay đổi chủ sở hữu TNHH 1TV)",
+    "Điều 47 Nghị định 168/2025/NĐ-CP (thay đổi chủ doanh nghiệp tư nhân trong trường hợp bán, tặng cho doanh nghiệp, chủ DN chết)"
+   ],
+   "luu_y": []
+  },
+  {
+   "id": "lap_chi_nhanh_vpdd",
+   "nhom": "Chi nhánh, VPĐĐ, địa điểm kinh doanh",
+   "ten": "Đăng ký hoạt động chi nhánh / văn phòng đại diện",
+   "mo_ta": "Dùng khi doanh nghiệp thành lập chi nhánh hoặc văn phòng đại diện trong nước; nộp trong 10 ngày kể từ ngày ra quyết định thành lập, tại cấp tỉnh nơi đặt chi nhánh/VPĐĐ.",
+   "forms": [
+    {
+     "pl": "I",
+     "mau": 17,
+     "bat_buoc": true,
+     "ghi_chu": "Giấy đề nghị đăng ký hoạt động chi nhánh/văn phòng đại diện"
+    }
+   ],
+   "giay_to_kem": [
+    "Bản sao quyết định thành lập chi nhánh/VPĐĐ",
+    "Bản sao biên bản họp về việc thành lập: biên bản họp HĐTV (TNHH 2TV+, hợp danh), biên bản họp HĐQT (CTCP); với TNHH 1TV: bản sao quyết định của chủ sở hữu công ty",
+    "Bản sao giấy tờ pháp lý của người đứng đầu chi nhánh/VPĐĐ (miễn nếu kê khai số định danh cá nhân)"
+   ],
+   "co_so_phap_ly": [
+    "Khoản 2 Điều 45 Luật Doanh nghiệp (được dẫn chiếu tại khoản 1 Điều 30 Nghị định 168/2025/NĐ-CP)",
+    "Điều 30 Nghị định 168/2025/NĐ-CP"
+   ],
+   "luu_y": [
+    "Cấp Giấy chứng nhận đăng ký hoạt động chi nhánh/VPĐĐ (Mẫu 42 Phụ lục I) trong 03 ngày làm việc.",
+    "Phần tên riêng trong tên chi nhánh/VPĐĐ không được dùng cụm từ 'công ty', 'doanh nghiệp' (Điều 16)."
+   ]
+  },
+  {
+   "id": "lap_dia_diem_kinh_doanh",
+   "nhom": "Chi nhánh, VPĐĐ, địa điểm kinh doanh",
+   "ten": "Thông báo lập địa điểm kinh doanh",
+   "mo_ta": "Dùng khi doanh nghiệp lập địa điểm kinh doanh tại địa chỉ khác nơi đặt trụ sở chính hoặc chi nhánh; nộp trong 10 ngày kể từ ngày quyết định lập.",
+   "forms": [
+    {
+     "pl": "I",
+     "mau": 17,
+     "bat_buoc": true,
+     "ghi_chu": "Dùng phần 'THÔNG BÁO lập địa điểm kinh doanh' của Mẫu 17"
+    }
+   ],
+   "giay_to_kem": [],
+   "co_so_phap_ly": [
+    "Khoản 2 Điều 30 Nghị định 168/2025/NĐ-CP"
+   ],
+   "luu_y": [
+    "Hồ sơ chỉ gồm thông báo lập địa điểm kinh doanh (đơn giản hơn chi nhánh/VPĐĐ).",
+    "Mặc định chỉ cập nhật thông tin vào cơ sở dữ liệu; cấp Giấy chứng nhận đăng ký địa điểm kinh doanh (Mẫu 43 Phụ lục I) khi doanh nghiệp có nhu cầu (khoản 3 Điều 30)."
+   ]
+  },
+  {
+   "id": "thay_doi_noi_dung_hoat_dong_cn_vpdd",
+   "nhom": "Chi nhánh, VPĐĐ, địa điểm kinh doanh",
+   "ten": "Thay đổi nội dung đăng ký hoạt động chi nhánh/VPĐĐ/địa điểm kinh doanh",
+   "mo_ta": "Dùng khi thay đổi tên, địa chỉ, người đứng đầu, ngành nghề... của chi nhánh, VPĐĐ hoặc địa điểm kinh doanh; thực hiện trong 10 ngày kể từ ngày có thay đổi.",
+   "forms": [
+    {
+     "pl": "I",
+     "mau": 19,
+     "bat_buoc": true,
+     "ghi_chu": "Giấy đề nghị đăng ký thay đổi nội dung đăng ký hoạt động chi nhánh/VPĐĐ/địa điểm kinh doanh"
+    }
+   ],
+   "giay_to_kem": [],
+   "co_so_phap_ly": [
+    "Điều 56 Nghị định 168/2025/NĐ-CP"
+   ],
+   "luu_y": [
+    "Hồ sơ CHỈ gồm giấy đề nghị Mẫu 19 (khoản 4 Điều 56).",
+    "Nếu chuyển địa chỉ sang tỉnh khác (thay cơ quan thuế quản lý), phải làm thủ tục với cơ quan thuế trước; hồ sơ nộp tại cấp tỉnh nơi chuyển ĐẾN.",
+    "Sau chuyển đổi loại hình doanh nghiệp, các chi nhánh/VPĐĐ/địa điểm phải đăng ký thay đổi nội dung đăng ký hoạt động (khoản 6 Điều 56)."
+   ]
+  },
+  {
+   "id": "cham_dut_hoat_dong_cn_vpdd_ddkd",
+   "nhom": "Chi nhánh, VPĐĐ, địa điểm kinh doanh",
+   "ten": "Chấm dứt hoạt động chi nhánh/VPĐĐ/địa điểm kinh doanh",
+   "mo_ta": "Dùng khi doanh nghiệp quyết định chấm dứt hoạt động chi nhánh, văn phòng đại diện hoặc địa điểm kinh doanh; nộp trong 10 ngày kể từ ngày quyết định.",
+   "forms": [
+    {
+     "pl": "I",
+     "mau": 28,
+     "bat_buoc": true,
+     "ghi_chu": "Thông báo về việc chấm dứt hoạt động chi nhánh/VPĐĐ/địa điểm kinh doanh"
+    }
+   ],
+   "giay_to_kem": [
+    "Bản sao/bản chính nghị quyết, quyết định về việc chấm dứt hoạt động chi nhánh/VPĐĐ: của chủ sở hữu (TNHH 1TV), HĐTV (TNHH 2TV+, hợp danh), HĐQT (CTCP)"
+   ],
+   "co_so_phap_ly": [
+    "Điều 66 Nghị định 168/2025/NĐ-CP"
+   ],
+   "luu_y": [
+    "Phải hoàn thành nghĩa vụ nộp thuế với cơ quan thuế TRƯỚC khi nộp hồ sơ (khoản 1 Điều 66); cơ quan thuế phản hồi trong 02 ngày làm việc.",
+    "Trước khi chấm dứt hoạt động chi nhánh, phải chấm dứt hoạt động tất cả địa điểm kinh doanh trực thuộc chi nhánh đó (khoản 5 Điều 66).",
+    "Trước khi nộp hồ sơ giải thể doanh nghiệp phải chấm dứt hoạt động toàn bộ chi nhánh/VPĐĐ/địa điểm KD (khoản 4 Điều 64)."
+   ]
+  },
+  {
+   "id": "tam_ngung_tiep_tuc_kinh_doanh_dn",
+   "nhom": "Tạm ngừng, tiếp tục kinh doanh",
+   "ten": "Thông báo tạm ngừng / tiếp tục kinh doanh trước thời hạn đã thông báo (doanh nghiệp, chi nhánh, VPĐĐ, địa điểm)",
+   "mo_ta": "Dùng khi doanh nghiệp, chi nhánh, địa điểm KD tạm ngừng kinh doanh (VPĐĐ: tạm ngừng hoạt động) hoặc tiếp tục trước thời hạn đã thông báo; nộp chậm nhất 03 ngày làm việc trước ngày tạm ngừng/tiếp tục.",
+   "forms": [
+    {
+     "pl": "I",
+     "mau": 27,
+     "bat_buoc": true,
+     "ghi_chu": "Thông báo tạm ngừng kinh doanh/tiếp tục kinh doanh trước thời hạn đã thông báo"
+    }
+   ],
+   "giay_to_kem": [
+    "Khi tạm ngừng kinh doanh của DOANH NGHIỆP: bản sao/bản chính nghị quyết, quyết định về việc tạm ngừng kinh doanh (chủ sở hữu/HĐTV/HĐQT tùy loại hình). Riêng tiếp tục kinh doanh hoặc tạm ngừng của chi nhánh/VPĐĐ/địa điểm: chỉ cần Mẫu 27"
+   ],
+   "co_so_phap_ly": [
+    "Điều 60 Nghị định 168/2025/NĐ-CP (lưu ý: khoản 1, 2 Điều 60 đã bị sửa đổi bởi Nghị định 296/2026/NĐ-CP - cần kiểm chứng nội dung sửa đổi)"
+   ],
+   "luu_y": [
+    "Mỗi lần thông báo tạm ngừng KHÔNG quá 12 tháng; muốn kéo dài phải thông báo lại chậm nhất 03 ngày làm việc trước khi hết hạn.",
+    "Tình trạng pháp lý chuyển sang 'Tạm ngừng kinh doanh, hoạt động'."
+   ]
+  },
+  {
+   "id": "tam_ngung_tiep_tuc_kinh_doanh_hkd",
+   "nhom": "Tạm ngừng, tiếp tục kinh doanh",
+   "ten": "Đăng ký tạm ngừng / tiếp tục kinh doanh của hộ kinh doanh",
+   "mo_ta": "Dùng khi hộ kinh doanh tạm ngừng kinh doanh từ 15 ngày trở lên hoặc tiếp tục kinh doanh trước thời hạn đã đăng ký; nộp chậm nhất 03 ngày làm việc trước ngày tạm ngừng/tiếp tục.",
+   "forms": [
+    {
+     "pl": "II",
+     "mau": 3,
+     "bat_buoc": true,
+     "ghi_chu": "Giấy đề nghị đăng ký tạm ngừng kinh doanh/tiếp tục kinh doanh trước thời hạn đã đăng ký của hộ kinh doanh"
+    }
+   ],
+   "giay_to_kem": [],
+   "co_so_phap_ly": [
+    "Điều 103 Nghị định 168/2025/NĐ-CP"
+   ],
+   "luu_y": [
+    "Chỉ phải đăng ký khi tạm ngừng TỪ 15 NGÀY trở lên.",
+    "Mỗi lần đăng ký tạm ngừng không quá một năm.",
+    "Cấp xã cấp giấy xác nhận trong 01 ngày làm việc (Mẫu 20 Phụ lục II)."
+   ]
+  },
+  {
+   "id": "cham_dut_hoat_dong_hkd",
+   "nhom": "Hộ kinh doanh",
+   "ten": "Chấm dứt hoạt động hộ kinh doanh",
+   "mo_ta": "Dùng khi hộ kinh doanh muốn kết thúc hoạt động. Phải thanh toán đủ nợ (gồm nợ thuế và nghĩa vụ tài chính khác) trước khi nộp hồ sơ.",
+   "forms": [
+    {
+     "pl": "II",
+     "mau": 4,
+     "bat_buoc": true,
+     "ghi_chu": "Thông báo về việc chấm dứt hoạt động hộ kinh doanh"
+    }
+   ],
+   "giay_to_kem": [
+    "Nếu chủ hộ đã chết/bị Tòa án tuyên bố đã chết: kèm bản sao giấy chứng tử hoặc bản sao quyết định của Tòa án (người thừa kế/người quản lý tài sản nộp hồ sơ - khoản 4 Điều 104)"
+   ],
+   "co_so_phap_ly": [
+    "Điều 104 Nghị định 168/2025/NĐ-CP"
+   ],
+   "luu_y": [
+    "Nộp hồ sơ trong 05 ngày làm việc kể từ ngày thanh toán hết các khoản nợ.",
+    "Cấp xã gửi thông tin cho cơ quan thuế; nếu thuế xác nhận hoàn thành nghĩa vụ (hoặc không phản hồi trong 02 ngày làm việc), tình trạng chuyển sang 'đã chấm dứt hoạt động' trong 05 ngày làm việc."
+   ]
+  },
+  {
+   "id": "giai_the_doanh_nghiep",
+   "nhom": "Giải thể doanh nghiệp",
+   "ten": "Đăng ký giải thể doanh nghiệp",
+   "mo_ta": "Dùng khi doanh nghiệp giải thể theo nghị quyết/quyết định của chủ sở hữu, HĐTV, ĐHĐCĐ hoặc chủ doanh nghiệp tư nhân (điểm a, b, c khoản 1 Điều 207 Luật Doanh nghiệp).",
+   "forms": [
+    {
+     "pl": "I",
+     "mau": 30,
+     "bat_buoc": true,
+     "ghi_chu": "Thông báo về việc giải thể doanh nghiệp"
+    }
+   ],
+   "giay_to_kem": [
+    "Giai đoạn 1 (trong 07 ngày làm việc kể từ ngày thông qua giải thể): nghị quyết/quyết định giải thể; biên bản họp HĐTV/ĐHĐCĐ (TNHH 2TV+, hợp danh, CTCP); phương án giải quyết nợ (nếu có)",
+    "Giai đoạn 2 (trong 05 ngày làm việc kể từ ngày thanh toán hết nợ): hồ sơ đăng ký giải thể theo khoản 1 Điều 210 Luật Doanh nghiệp (báo cáo quyết toán thuế TNCN; xác nhận hoàn thành nghĩa vụ tài chính của cơ quan thuế; xác nhận xử lý/con dấu...)"
+   ],
+   "co_so_phap_ly": [
+    "Điều 64 Nghị định 168/2025/NĐ-CP (lưu ý: khoản 3 Điều 64 đã bị sửa đổi bởi Nghị định 296/2026/NĐ-CP)",
+    "Khoản 1 Điều 208, khoản 1 Điều 210 Luật Doanh nghiệp"
+   ],
+   "luu_y": [
+    "Quy trình 2 bước: nộp nghị quyết giải thể trước (cơ quan đăng tải trên Cổng thông tin quốc gia, chuyển trạng thái 'đang làm thủ tục giải thể'); sau khi thanh toán hết nợ mới nộp hồ sơ đăng ký giải thể.",
+    "Phải chấm dứt hoạt động toàn bộ chi nhánh/VPĐĐ/địa điểm kinh doanh TRƯỚC khi nộp hồ sơ giải thể (khoản 4 Điều 64).",
+    "Sau 180 ngày kể từ ngày nhận nghị quyết giải thể mà không có hồ sơ đăng ký giải thể và ý kiến phản đối, cơ quan đăng ký tự chuyển trạng thái sang 'đã giải thể' (khoản 6 Điều 64)."
+   ]
+  },
+  {
+   "id": "huy_quyet_dinh_giai_the",
+   "nhom": "Giải thể doanh nghiệp",
+   "ten": "Hủy bỏ nghị quyết/quyết định giải thể doanh nghiệp",
+   "mo_ta": "Dùng khi doanh nghiệp đã nộp nghị quyết giải thể (trong thời hạn 180 ngày chưa bị chuyển trạng thái 'đã giải thể') nhưng muốn dừng thủ tục giải thể để tiếp tục hoạt động.",
+   "forms": [
+    {
+     "pl": "I",
+     "mau": 31,
+     "bat_buoc": true,
+     "ghi_chu": "Thông báo về việc huỷ bỏ Nghị quyết/Quyết định giải thể doanh nghiệp"
+    }
+   ],
+   "giay_to_kem": [
+    "Nghị quyết/quyết định của chủ doanh nghiệp tư nhân/chủ sở hữu công ty/HĐTV/ĐHĐCĐ về việc hủy bỏ nghị quyết hoặc quyết định giải thể"
+   ],
+   "co_so_phap_ly": [
+    "Khoản 7 Điều 64 Nghị định 168/2025/NĐ-CP"
+   ],
+   "luu_y": [
+    "Trong 01 ngày làm việc, cơ quan đăng ký kinh doanh đăng tải thông báo hủy bỏ và khôi phục tình trạng pháp lý của doanh nghiệp.",
+    "Chỉ áp dụng trong thời hạn 180 ngày kể từ ngày nộp nghị quyết giải thể và chưa bị chuyển trạng thái đã giải thể."
+   ]
+  },
+  {
+   "id": "cong_bo_noi_dung_dkdn",
+   "nhom": "Công bố, cung cấp thông tin",
+   "ten": "Công bố nội dung đăng ký doanh nghiệp",
+   "mo_ta": "Dùng khi doanh nghiệp đề nghị công bố nội dung đăng ký doanh nghiệp trên Cổng thông tin quốc gia về đăng ký doanh nghiệp; phí công bố nộp cùng thời điểm nộp hồ sơ đăng ký.",
+   "forms": [
+    {
+     "pl": "I",
+     "mau": 32,
+     "bat_buoc": true,
+     "ghi_chu": "Giấy đề nghị công bố nội dung đăng ký doanh nghiệp"
+    }
+   ],
+   "giay_to_kem": [],
+   "co_so_phap_ly": [
+    "Điều 73 Nghị định 168/2025/NĐ-CP",
+    "Khoản 1, 2 Điều 32 Luật Doanh nghiệp (nội dung công bố)"
+   ],
+   "luu_y": [
+    "Nếu doanh nghiệp không được cấp đăng ký doanh nghiệp, phí công bố được hoàn trả (khoản 3 Điều 73)."
+   ]
+  },
+  {
+   "id": "cung_cap_thong_tin_dkdn",
+   "nhom": "Công bố, cung cấp thông tin",
+   "ten": "Đề nghị cung cấp thông tin đăng ký doanh nghiệp",
+   "mo_ta": "Dùng khi tổ chức, cá nhân cần bản sao hồ sơ/thông tin đăng ký doanh nghiệp lưu giữ trong cơ sở dữ liệu (ngoài phần thông tin công khai miễn phí).",
+   "forms": [
+    {
+     "pl": "I",
+     "mau": 78,
+     "bat_buoc": true,
+     "ghi_chu": "Giấy đề nghị cung cấp thông tin đăng ký doanh nghiệp"
+    }
+   ],
+   "giay_to_kem": [],
+   "co_so_phap_ly": [
+    "Điều 74 Nghị định 168/2025/NĐ-CP"
+   ],
+   "luu_y": [
+    "Thông tin cơ bản (tên, mã số DN, địa chỉ, ngành nghề, người đại diện theo pháp luật, tình trạng pháp lý) tra cứu MIỄN PHÍ tại https://dangkykinhdoanh.gov.vn.",
+    "Yêu cầu trả phí, chi phí theo quy định; KHÔNG cung cấp thông tin chủ sở hữu hưởng lợi cho tổ chức, cá nhân thường (chỉ cho cơ quan nhà nước có thẩm quyền phục vụ phòng chống rửa tiền).",
+    "Cơ quan nhà nước không được yêu cầu doanh nghiệp nộp bản sao GCDN khi làm thủ tục hành chính (khoản 3 Điều 74)."
+   ]
+  },
+  {
+   "id": "cap_lai_gcdn_va_giay_pham_dkkd",
+   "nhom": "Cấp lại, cấp đổi, bổ sung cập nhật thông tin",
+   "ten": "Cấp lại Giấy chứng nhận đăng ký doanh nghiệp/Giấy xác nhận thay đổi nội dung/GCN hoạt động chi nhánh, VPĐĐ, địa điểm kinh doanh",
+   "mo_ta": "Dùng khi các giấy chứng nhận/xác nhận bằng bản giấy bị mất, cháy, rách, nát hoặc tiêu hủy dưới hình thức khác.",
+   "forms": [
+    {
+     "pl": "I",
+     "mau": 26,
+     "bat_buoc": true,
+     "ghi_chu": "Giấy đề nghị cấp lại các loại giấy chứng nhận/xác nhận đăng ký"
+    }
+   ],
+   "giay_to_kem": [],
+   "co_so_phap_ly": [
+    "Điều 62 Nghị định 168/2025/NĐ-CP"
+   ],
+   "luu_y": [
+    "Cơ quan đăng ký kinh doanh cấp tỉnh xem xét cấp lại trong 01 ngày làm việc."
+   ]
+  },
+  {
+   "id": "cap_doi_gcdkkd_sang_gcdn",
+   "nhom": "Cấp lại, cấp đổi, bổ sung cập nhật thông tin",
+   "ten": "Cấp đổi sang Giấy chứng nhận đăng ký doanh nghiệp (doanh nghiệp đang dùng Giấy chứng nhận đăng ký kinh doanh cũ)",
+   "mo_ta": "Dùng cho doanh nghiệp còn giữ Giấy chứng nhận đăng ký kinh doanh hoặc GCN đăng ký kinh doanh và đăng ký thuế (cấp trước 01/7/2015) muốn đổi sang GCDN theo mẫu mới.",
+   "forms": [
+    {
+     "pl": "I",
+     "mau": 21,
+     "bat_buoc": true,
+     "ghi_chu": "Giấy đề nghị cấp đổi sang GCDN đối với DN được cấp GCN đăng ký kinh doanh"
+    }
+   ],
+   "giay_to_kem": [],
+   "co_so_phap_ly": [
+    "Điều 118-121 Nghị định 168/2025/NĐ-CP (quy định chuyển tiếp đối với giấy chứng nhận cấp trước ngày 01/07/2015 - số điều cụ thể cần kiểm chứng lại)"
+   ],
+   "luu_y": [
+    "Khi đề nghị cấp đổi, ngành nghề được ghi lại theo ngành kinh tế cấp 4 (Điều 7 NĐ 168)."
+   ]
+  },
+  {
+   "id": "bo_sung_cap_nhat_thong_tin_dkdn",
+   "nhom": "Cấp lại, cấp đổi, bổ sung cập nhật thông tin",
+   "ten": "Cập nhật, bổ sung thông tin trong hồ sơ đăng ký doanh nghiệp",
+   "mo_ta": "Dùng khi cập nhật thông tin không thuộc các trường hợp thay đổi nội dung đăng ký: số điện thoại, email, website; thay đổi địa chỉ do sắp xếp địa giới hành chính; chức danh, thông tin cá nhân người đại diện theo pháp luật... không làm thay đổi GCDN.",
+   "forms": [
+    {
+     "pl": "I",
+     "mau": 12,
+     "bat_buoc": true,
+     "ghi_chu": "Theo Điều 57 doanh nghiệp gửi 'thông báo cập nhật, bổ sung thông tin'; cách điền trên Mẫu 12 cần đối chiếu hướng dẫn điền biểu mẫu"
+    }
+   ],
+   "giay_to_kem": [],
+   "co_so_phap_ly": [
+    "Điều 57 Nghị định 168/2025/NĐ-CP"
+   ],
+   "luu_y": [
+    "Xử lý trong 01 ngày làm việc; nếu thông tin nằm trên GCDN thì được cấp giấy mới.",
+    "KHÔNG phải trả lệ phí đăng ký và phí công bố khi cập nhật: số điện thoại/fax/email/website; địa chỉ trụ sở, chi nhánh do thay đổi địa giới hành chính; thông tin không làm thay đổi nội dung GCDN (khoản 3 Điều 57).",
+    "Thay đổi địa giới hành chính KHÔNG buộc doanh nghiệp làm thủ tục thay đổi địa chỉ (khoản 2 Điều 57)."
+   ]
+  }
+ ],
+ "dong_bo": {
+  "ghi_chu": "Những điểm đáng chú ý của NĐ 168/2025 so với NĐ 01/2021 và các quy định trước đây (dựa trên nội dung đã đọc trực tiếp từ văn bản):",
+  "cac_diem": [
+   "Hộ kinh doanh được quy định chung trong NĐ 168/2025 (Chương VII, Điều 82-117); Cơ quan đăng ký kinh doanh cấp XÃ (xã, phường, đặc khu) thực hiện đăng ký hộ kinh doanh - khác mô hình trước đây (Điều 20, 22 NĐ 168).",
+   "Số hóa hồ sơ: khi cá nhân kê khai SỐ ĐỊNH DANH CÁ NHÂN (từ thẻ căn cước) và thông tin được đối chiếu với Cơ sở dữ liệu quốc gia về dân cư thì KHÔNG phải nộp bản sao CCCD/hộ chiếu (Điều 11 NĐ 168). Khi nộp hồ sơ giấy chỉ cần XUẤT TRÌNH thẻ căn cước.",
+   "Bắt buộc kê khai CHỦ SỞ HƯỞNG LỢI khi đăng ký thành lập và khi có thay đổi (Điều 17-19 NĐ 168; Mẫu 10, 11 Phụ lục I).",
+   "Văn bản ủy quyền cho cá nhân thực hiện thủ tục đăng ký doanh nghiệp KHÔNG bắt buộc công chứng, chứng thực (khoản 1 Điều 12); riêng văn bản ủy quyền của thành viên hộ gia đình cho một thành viên làm chủ hộ kinh doanh bắt buộc công chứng/chứng thực (khoản 2 Điều 99).",
+   "Liên thông chuyển đổi hộ kinh doanh -> doanh nghiệp: nộp 01 bộ hồ sơ tại cấp tỉnh kèm bản sao GCHKD; việc chấm dứt hộ kinh doanh cũ được liên thông tự động giữa cấp tỉnh - cấp xã - cơ quan thuế; hộ kinh doanh không được hoạt động kể từ khi DN được cấp GCN (Điều 27).",
+   "Tạm ngừng kinh doanh của doanh nghiệp: tối đa 12 tháng/lần thông báo (khoản 1 Điều 60); hộ kinh doanh: tối đa 01 năm/lần, chỉ đăng ký khi tạm ngừng từ 15 ngày trở lên (Điều 103).",
+   "Giải thể theo quy trình 2 bước rõ ràng (nộp nghị quyết giải thể -> thanh toán hết nợ -> nộp hồ sơ đăng ký giải thể); cơ chế tự chuyển trạng thái 'đã giải thể' sau 180 ngày (Điều 64).",
+   "Không bắt buộc đóng dấu trong văn bản đề nghị đăng ký, biên bản họp, nghị quyết trong hồ sơ đăng ký doanh nghiệp (khoản 5 Điều 4).",
+   "SỬA ĐỔI SAU NGÀY HIỆU LỰC (được ghi nhận qua phần theo dõi sửa đổi trên luatvietnam.vn, chi tiết cần kiểm chứng): (1) Nghị định 296/2026/NĐ-CP sửa đổi nhiều điều của NĐ 168, gồm khoản 3 Điều 19 (thời hạn xử lý), Điều 11 (sửa Điều 60 về tạm ngừng), Điều 13 (sửa khoản 3 Điều 64 về giải thể), Điều 16 (bổ sung khoản 5 Điều 103), khoản 8 Điều 19 (bãi bỏ cụm từ 'nơi hộ kinh doanh đăng ký trụ sở' tại Điều 99); (2) Thông tư 121/2026/TT-BTC sửa đổi một số điều của Thông tư 68/2025/TT-BTC về biểu mẫu. App nên rà soát và cập nhật theo các văn bản này.",
+   "Thông tư 68/2025/TT-BTC bãi bỏ biểu mẫu Phụ lục I của Thông tư 43/2025/TT-BTC và thay thế Thông tư 01/2021/TT-BKHĐT, Thông tư 02/2023/TT-BKHĐT (Điều 3 TT 68).",
+   "Thời hạn giải quyết phổ biến: 03 ngày làm việc cho đăng ký thành lập/thay đổi nội dung đăng ký; 01 ngày làm việc cho cập nhật thông tin, cấp lại giấy chứng nhận, xác nhận tạm ngừng/tiếp tục kinh doanh."
+  ]
+ }
+};

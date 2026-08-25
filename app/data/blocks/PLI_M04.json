@@ -1,0 +1,1693 @@
+{
+ "id": "PLI_M04",
+ "ten_mau": "Giấy đề nghị đăng ký doanh nghiệp - Công ty cổ phần",
+ "blocks": [
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "PL1 - Mau so 4: Giấy đề nghị đăng ký doanh nghiệp - Công ty cổ phần"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Mẫu số 4"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc \n---------------",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "input": {
+      "key": "dia_diem_ky",
+      "w": 12
+     }
+    },
+    {
+     "text": ", ngày ",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "ngay_ky_vb",
+      "w": 12
+     }
+    },
+    {
+     "text": "tháng ",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "thang_ky_vb",
+      "w": 12
+     }
+    },
+    {
+     "text": " năm ",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "nam_ky_vb",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "GIẤY ĐỀ NGHỊ ĐĂNG KÝ DOANH NGHIỆP\nCÔNG TY CỔ PHẦN",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Kính gửi: (Cơ quan đăng ký kinh doanh cấp tỉnh) "
+    },
+    {
+     "input": {
+      "key": "co_quan_dkkd",
+      "w": 32
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tôi là1 (ghi họ tên bằng chữ in hoa): "
+    },
+    {
+     "input": {
+      "key": "chu_hkd.ho_ten",
+      "w": 27
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Ngày, tháng, năm sinh: "
+    },
+    {
+     "input": {
+      "key": "ngay_sinh",
+      "w": 19
+     }
+    },
+    {
+     "text": "/"
+    },
+    {
+     "input": {
+      "key": "thang_sinh",
+      "w": 12
+     }
+    },
+    {
+     "text": "/"
+    },
+    {
+     "input": {
+      "key": "nam_sinh",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Giới tính: "
+    },
+    {
+     "input": {
+      "key": "chu_hkd.gioi_tinh",
+      "w": 13
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Số định danh cá nhân: "
+    },
+    {
+     "input": {
+      "key": "chu_hkd.so_cccd",
+      "w": 19
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Địa chỉ liên lạc (chỉ kê khai nếu người đăng ký doanh nghiệp là người đại diện theo pháp luật): "
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Số nhà/phòng, ngách/hẻm, ngõ/kiệt, đường/phố/đại lộ, tổ/xóm/ấp/thôn: "
+    },
+    {
+     "input": {
+      "key": "dia_chi_chi_tiet",
+      "w": 42
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Xã/Phường/Đặc khu: "
+    },
+    {
+     "input": {
+      "key": "xa_phuong",
+      "w": 17
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tỉnh/Thành phố trực thuộc trung ương: "
+    },
+    {
+     "input": {
+      "key": "tinh_thanh",
+      "w": 27
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Quốc gia: "
+    },
+    {
+     "input": {
+      "key": "ndd.quoc_gia",
+      "w": 13
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Điện thoại (nếu có): "
+    },
+    {
+     "input": {
+      "key": "ndd.dien_thoai",
+      "w": 18
+     }
+    },
+    {
+     "text": " Thư điện tử (nếu có): "
+    },
+    {
+     "input": {
+      "key": "ndd.email",
+      "w": 19
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở dữ liệu quốc gia về dân cư bị gián đoạn thì đề nghị kê khai các thông tin cá nhân dưới đây:",
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Dân tộc: "
+    },
+    {
+     "input": {
+      "key": "chu_hkd.dan_toc",
+      "w": 12
+     }
+    },
+    {
+     "text": " Quốc tịch: "
+    },
+    {
+     "input": {
+      "key": "chu_hkd.quoc_tich",
+      "w": 14
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Số Hộ chiếu (đối với cá nhân Việt Nam không có số định danh cá nhân)/Số Hộ chiếu nước ngoài hoặc giấy tờ có giá trị thay thế hộ chiếu nước ngoài (đối với cá nhân là người nước ngoài): "
+    },
+    {
+     "input": {
+      "key": "chu_hkd.so_cccd",
+      "w": 60
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Ngày cấp: "
+    },
+    {
+     "input": {
+      "key": "ngay_cap",
+      "w": 13
+     }
+    },
+    {
+     "text": " Nơi cấp: "
+    },
+    {
+     "input": {
+      "key": "noi_cap",
+      "w": 13
+     }
+    },
+    {
+     "text": " \t"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Nơi thường trú:"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Số nhà/phòng, ngách/hẻm, ngõ/kiệt, đường/phố/đại lộ, tổ/xóm/ấp/thôn: "
+    },
+    {
+     "input": {
+      "key": "dia_chi_chi_tiet",
+      "w": 42
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Xã/Phường/Đặc khu: "
+    },
+    {
+     "input": {
+      "key": "xa_phuong",
+      "w": 17
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tỉnh/Thành phố trực thuộc trung ương: "
+    },
+    {
+     "input": {
+      "key": "tinh_thanh",
+      "w": 27
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Quốc gia: "
+    },
+    {
+     "input": {
+      "key": "quoc_gia",
+      "w": 13
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Đăng ký công ty cổ phần do tôi là người đại diện theo pháp luật/Chủ tịch Hội đồng quản trị với các nội dung sau2:",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "1. Tình trạng thành lập (đánh dấu X vào ô thích hợp):",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "chk",
+   "label": "Thành lập mới",
+   "key": "chk_tt_thanh_lap_moi"
+  },
+  {
+   "t": "chk",
+   "label": "Thành lập trên cơ sở tách doanh nghiệp",
+   "key": "chk_tt_tach_dn"
+  },
+  {
+   "t": "chk",
+   "label": "Thành lập trên cơ sở chia doanh nghiệp",
+   "key": "chk_tt_chia_dn"
+  },
+  {
+   "t": "chk",
+   "label": "Thành lập trên cơ sở hợp nhất doanh nghiệp",
+   "key": "chk_tt_hop_nhat_dn"
+  },
+  {
+   "t": "chk",
+   "label": "Thành lập trên cơ sở chuyển đổi loại hình doanh nghiệp",
+   "key": "chk_tt_chuyen_doi_loai_hinh"
+  },
+  {
+   "t": "chk",
+   "label": "Thành lập trên cơ sở chuyển đổi từ hộ kinh doanh",
+   "key": "chk_tt_chuyen_doi_tu_hkd"
+  },
+  {
+   "t": "chk",
+   "label": "Thành lập trên cơ sở chuyển đổi từ cơ sở bảo trợ xã hội/quỹ xã hội/quỹ từ thiện3",
+   "key": "chk_tt_chuyen_doi_tu_csbt"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Lý do chuyển đổi loại hình doanh nghiệp: (Quyết định của …/Thành viên không góp vốn/Tiếp nhận thành viên/cổ đông mới/…) ………………………………",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Thông tin về các doanh nghiệp bị chia, bị tách, bị hợp nhất, được chuyển đổi (phải kê khai trong trường hợp thành lập công ty trên cơ sở chia, tách, hợp nhất, chuyển đổi loại hình doanh nghiệp):",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên doanh nghiệp (ghi bằng chữ in hoa): "
+    },
+    {
+     "input": {
+      "key": "dn_goc.ten_doanh_nghiep",
+      "w": 28
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Mã số doanh nghiệp/Mã số thuế: "
+    },
+    {
+     "input": {
+      "key": "dn_goc.ma_so_dn",
+      "w": 23
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Đề nghị Quý Cơ quan thực hiện chấm dứt tồn tại đối với doanh nghiệp bị chia, bị hợp nhất và các chi nhánh/văn phòng đại diện/địa điểm kinh doanh của doanh nghiệp bị chia, bị hợp nhất."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Thông tin về hộ kinh doanh được chuyển đổi (phải kê khai trong trường hợp thành lập công ty trên cơ sở chuyển đổi từ hộ kinh doanh):",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên hộ kinh doanh (ghi bằng chữ in hoa): "
+    },
+    {
+     "input": {
+      "key": "hkd_cd.ten_hkd",
+      "w": 28
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Số Giấy chứng nhận đăng ký hộ kinh doanh (nếu có): "
+    },
+    {
+     "input": {
+      "key": "hkd_cd.so_gcn",
+      "w": 33
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Ngày cấp: "
+    },
+    {
+     "input": {
+      "key": "hkd_cd.ngay_cap",
+      "w": 13
+     }
+    },
+    {
+     "text": " Nơi cấp: "
+    },
+    {
+     "input": {
+      "key": "hkd_cd.noi_cap",
+      "w": 13
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Mã số thuế của hộ kinh doanh: "
+    },
+    {
+     "input": {
+      "key": "hkd_cd.ma_so_thue",
+      "w": 23
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Địa chỉ trụ sở hộ kinh doanh: "
+    },
+    {
+     "input": {
+      "key": "hkd_cd.dia_chi",
+      "w": 23
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên chủ hộ kinh doanh: "
+    },
+    {
+     "input": {
+      "key": "hkd_cd.ten_chu_ho",
+      "w": 19
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Loại giấy tờ pháp lý của cá nhân (kê khai theo giấy tờ pháp lý của cá nhân được ghi trên Giấy chứng nhận đăng ký thuế của hộ kinh doanh):"
+    }
+   ]
+  },
+  {
+   "t": "chk",
+   "label": "Chứng minh nhân dân",
+   "key": "chk_gt_cmnd"
+  },
+  {
+   "t": "chk",
+   "label": "Căn cước công dân",
+   "key": "chk_gt_cccd"
+  },
+  {
+   "t": "chk",
+   "label": "Hộ chiếu",
+   "key": "chk_gt_ho_chieu"
+  },
+  {
+   "t": "chk",
+   "label": "Loại khác (ghi rõ):…………",
+   "key": "chk_gt_loai_khac"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Số giấy tờ pháp lý của cá nhân (kê khai theo giấy tờ pháp lý của cá nhân được ghi trên Giấy chứng nhận đăng ký thuế của hộ kinh doanh): "
+    },
+    {
+     "input": {
+      "key": "so_giay_to_ca_nhan",
+      "w": 60
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Ngày cấp: "
+    },
+    {
+     "input": {
+      "key": "ngay_cap",
+      "w": 13
+     }
+    },
+    {
+     "text": "Nơi cấp: "
+    },
+    {
+     "input": {
+      "key": "noi_cap",
+      "w": 12
+     }
+    },
+    {
+     "text": "Ngày hết hạn (nếu có): "
+    },
+    {
+     "input": {
+      "key": "ngay_het_han",
+      "w": 19
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Thông tin về cơ sở bảo trợ xã hội/quỹ xã hội/quỹ từ thiện được chuyển đổi (phải kê khai trong trường hợp thành lập doanh nghiệp xã hội trên cơ sở chuyển đổi từ cơ sở bảo trợ xã hội/quỹ xã hội/quỹ từ thiện):",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên cơ sở bảo trợ xã hội/quỹ xã hội/quỹ từ thiện (ghi bằng chữ in hoa): "
+    },
+    {
+     "input": {
+      "key": "csbt.ten",
+      "w": 44
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Số Giấy chứng nhận đăng ký thành lập (Đối với cơ sở bảo trợ xã hội)/Số Giấy phép thành lập và công nhận điều lệ quỹ (Đối với quỹ xã hội/quỹ từ thiện): "
+    },
+    {
+     "input": {
+      "key": "csbt.so_gcn",
+      "w": 60
+     }
+    },
+    {
+     "text": " Ngày cấp: … /… /"
+    },
+    {
+     "input": {
+      "key": "csbt.ngay_cap",
+      "w": 16
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Mã số thuế của cơ sở bảo trợ xã hội/quỹ xã hội/quỹ từ thiện (chỉ kê khai mã số thuế 10 số): "
+    },
+    {
+     "input": {
+      "key": "csbt.ma_so_thue",
+      "w": 54
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Địa chỉ trụ sở chính: "
+    },
+    {
+     "input": {
+      "key": "csbt.dia_chi",
+      "w": 19
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên người đại diện cơ sở bảo trợ xã hội/quỹ xã hội/quỹ từ thiện: \t"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Loại giấy tờ pháp lý của cá nhân (kê khai theo giấy tờ pháp lý của cá nhân được ghi trên Giấy chứng nhận đăng ký thuế của cơ sở bảo trợ xã hội/quỹ xã hội/quỹ từ thiện):"
+    }
+   ]
+  },
+  {
+   "t": "chk",
+   "label": "Chứng minh nhân dân",
+   "key": "chk_gt_cmnd"
+  },
+  {
+   "t": "chk",
+   "label": "Căn cước công dân",
+   "key": "chk_gt_cccd"
+  },
+  {
+   "t": "chk",
+   "label": "Hộ chiếu",
+   "key": "chk_gt_ho_chieu"
+  },
+  {
+   "t": "chk",
+   "label": "Loại khác (ghi rõ):…………",
+   "key": "chk_gt_loai_khac"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Số giấy tờ pháp lý của cá nhân (kê khai theo giấy tờ pháp lý của cá nhân được ghi trên Giấy chứng nhận đăng ký thuế của cơ sở bảo trợ xã hội/quỹ xã hội/quỹ từ thiện): "
+    },
+    {
+     "input": {
+      "key": "so_giay_to_ca_nhan",
+      "w": 60
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Ngày cấp: "
+    },
+    {
+     "input": {
+      "key": "ngay_cap",
+      "w": 13
+     }
+    },
+    {
+     "text": "Nơi cấp: "
+    },
+    {
+     "input": {
+      "key": "noi_cap",
+      "w": 12
+     }
+    },
+    {
+     "text": "Ngày hết hạn (nếu có): "
+    },
+    {
+     "input": {
+      "key": "ngay_het_han",
+      "w": 19
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Doanh nghiệp thực hiện dự án đầu tư được đăng ký đầu tư theo thủ tục đầu tư đặc biệt "
+    },
+    {
+     "input": {
+      "key": "chk_dau_tu_dac_biet",
+      "chk": true
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "input": {
+      "key": "chk_dn_xa_hoi",
+      "chk": true
+     }
+    },
+    {
+     "text": " Doanh nghiệp xã hội (Đánh dấu X vào ô vuông nếu là doanh nghiệp xã hội và kèm theo hồ sơ phải có Cam kết thực hiện mục tiêu xã hội, môi trường)",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "input": {
+      "key": "chk_ctck",
+      "chk": true
+     }
+    },
+    {
+     "text": " Công ty chứng khoán/Công ty quản lý quỹ đầu tư chứng khoán/Công ty đầu tư chứng khoán: (Đánh dấu X nếu là Công ty chứng khoán/Công ty quản lý quỹ đầu tư chứng khoán/Công ty đầu tư chứng khoán và kê khai thêm các thông tin sau đây)",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Giấy phép thành lập và hoạt động số: … do Ủy ban Chứng khoán Nhà nước cấp ngày: "
+    },
+    {
+     "input": {
+      "key": "gp_ucsn_so",
+      "w": 48
+     }
+    },
+    {
+     "text": "/…./….. (nếu có)"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "2. Tên công ty:",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên công ty viết bằng tiếng Việt (ghi bằng chữ in hoa): "
+    },
+    {
+     "input": {
+      "key": "dn.ten_tieng_viet",
+      "w": 36
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên công ty viết bằng tiếng nước ngoài (nếu có): "
+    },
+    {
+     "input": {
+      "key": "dn.ten_nuoc_ngoai",
+      "w": 32
+     }
+    },
+    {
+     "text": " "
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên công ty viết tắt (nếu có): "
+    },
+    {
+     "input": {
+      "key": "dn.ten_viet_tat",
+      "w": 23
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "3. Địa chỉ trụ sở chính:",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Số nhà/phòng, ngách/hẻm, ngõ/kiệt, đường/phố/đại lộ, tổ/xóm/ấp/thôn: "
+    },
+    {
+     "input": {
+      "key": "dia_chi_chi_tiet",
+      "w": 42
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Xã/Phường/Đặc khu: "
+    },
+    {
+     "input": {
+      "key": "xa_phuong",
+      "w": 17
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tỉnh/Thành phố trực thuộc trung ương: "
+    },
+    {
+     "input": {
+      "key": "tinh_thanh",
+      "w": 27
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Điện thoại: "
+    },
+    {
+     "input": {
+      "key": "dien_thoai_khac",
+      "w": 14
+     }
+    },
+    {
+     "text": " Số fax (nếu có): "
+    },
+    {
+     "input": {
+      "key": "fax",
+      "w": 17
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Thư điện tử (nếu có): "
+    },
+    {
+     "input": {
+      "key": "email_tru_so",
+      "w": 19
+     }
+    },
+    {
+     "text": " Website (nếu có): "
+    },
+    {
+     "input": {
+      "key": "website",
+      "w": 17
+     }
+    },
+    {
+     "text": "\t"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Doanh nghiệp nằm trong (Doanh nghiệp phải đánh dấu X vào ô vuông tương ứng với khu công nghệ cao nếu nộp hồ sơ tới Ban quản lý khu công nghệ cao):"
+    }
+   ]
+  },
+  {
+   "t": "chk",
+   "label": "Khu công nghiệp",
+   "key": "chk_khu_cong_nghiep"
+  },
+  {
+   "t": "chk",
+   "label": "Khu chế xuất",
+   "key": "chk_khu_che_xuat"
+  },
+  {
+   "t": "chk",
+   "label": "Khu kinh tế",
+   "key": "chk_khu_kinh_te"
+  },
+  {
+   "t": "chk",
+   "label": "Khu công nghệ cao",
+   "key": "chk_khu_cong_nghe_cao"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Doanh nghiệp có Giấy chứng nhận quyền sử dụng đất tại đảo và xã, phường biên giới; xã, phường ven biển; khu vực khác có ảnh hưởng đến quốc phòng, an ninh4:\nCó "
+    },
+    {
+     "input": {
+      "key": "chk_khong",
+      "chk": true
+     }
+    },
+    {
+     "text": " Không "
+    },
+    {
+     "input": {
+      "key": "chk_khong",
+      "chk": true
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "4. Ngành, nghề kinh doanh (ghi tên và mã theo ngành cấp 4 trong Hệ thống ngành kinh tế Việt Nam): ",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "STT",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Tên ngành",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Mã ngành",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Ngành, nghề kinh doanh chính (đánh dấu X để chọn một trong các ngành, nghề đã kê khai)",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "5. Vốn điều lệ:",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Vốn điều lệ (bằng số; VNĐ): "
+    },
+    {
+     "input": {
+      "key": "von_dieu_le",
+      "w": 22
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Vốn điều lệ (bằng chữ; VNĐ): "
+    },
+    {
+     "input": {
+      "key": "von_dieu_le_chu",
+      "w": 23
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Giá trị tương đương theo đơn vị tiền nước ngoài (nếu có, bằng số, loại ngoại tệ):\t"
+    },
+    {
+     "input": {
+      "key": "gia_tri_ntte",
+      "w": 49
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Có hiển thị thông tin về giá trị tương đương theo đơn vị tiền tệ nước ngoài trên Giấy chứng nhận đăng ký doanh nghiệp hay không? Có "
+    },
+    {
+     "input": {
+      "key": "chk_khong",
+      "chk": true
+     }
+    },
+    {
+     "text": " Không "
+    },
+    {
+     "input": {
+      "key": "chk_khong",
+      "chk": true
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "6. Nguồn vốn điều lệ:",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Loại nguồn vốn",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Số tiền (bằng số; VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Tỷ lệ (%)",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Vốn ngân sách nhà nước"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Vốn tư nhân"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Vốn nước ngoài"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Vốn khác"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tổng cộng"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "7. Thông tin về cổ phần:",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Mệnh giá cổ phần (VNĐ): "
+    },
+    {
+     "input": {
+      "key": "menh_gia_co_phan",
+      "w": 20
+     }
+    },
+    {
+     "text": "\t"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "STT",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Loại cổ phần",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Số lượng",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Giá trị (bằng số, VNĐ)",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Tỉ lệ so với vốn điều lệ (%)",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "1"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Cổ phần phổ thông"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "2"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Cổ phần ưu đãi biểu quyết"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "3"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Cổ phần ưu đãi cổ tức"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "4"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Cổ phần ưu đãi hoàn lại"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "5"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Các cổ phần ưu đãi khác"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tổng số"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Thông tin về cổ phần được quyền chào bán:"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "STT",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Loại cổ phần được quyền chào bán",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Số lượng",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "1"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Cổ phần phổ thông"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "2"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Cổ phần ưu đãi biểu quyết"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "3"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Cổ phần ưu đãi cổ tức"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "4"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Cổ phần ưu đãi hoàn lại"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "5"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Cổ phần ưu đãi khác"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tổng số"
+    }
+   ]
+  }
+ ]
+}

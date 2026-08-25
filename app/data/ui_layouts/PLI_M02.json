@@ -1,0 +1,16 @@
+{
+  "id": "PLI_M02",
+  "version": 1,
+  "note": "PHASE 6 field-grid pilot (PLAN.md): nhóm UI bổ sung dạng lưới HTKK. Metadata THUẦN tham chiếu canonical key tồn tại trong app/data/blocks/PLI_M02.json (von_dieu_le, von_dieu_le_chu) - không dùng chỉ số block nên generator chạy lại không mất layout. Grid chèn ngay SAU block chứa anchor; hideAnchor chỉ ẩn THỊ GIÁC block gốc bằng .dupe-anchor (block vẫn render, không đổi dữ liệu/export).",
+  "grids": [
+    {
+      "anchor": "von_dieu_le",
+      "title": "Vốn điều lệ",
+      "hideAnchor": ["von_dieu_le", "von_dieu_le_chu"],
+      "cols": [
+        { "key": "von_dieu_le", "type": "money", "label": "Vốn điều lệ (bằng số; VNĐ)", "w": 22 },
+        { "key": "von_dieu_le_chu", "type": "text", "label": "Vốn điều lệ (bằng chữ)", "w": 40 }
+      ]
+    }
+  ]
+}

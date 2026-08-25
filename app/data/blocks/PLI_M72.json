@@ -1,0 +1,2336 @@
+{
+ "id": "PLI_M72",
+ "ten_mau": "Công bố nội dung đăng ký thành lập doanh nghiệp",
+ "blocks": [
+  {
+   "t": "p",
+   "align": "right",
+   "runs": [
+    {
+     "text": "Mẫu số 72",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "CÔNG BỐ NỘI DUNG ĐĂNG KÝ THÀNH LẬP DOANH NGHIỆP",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "(TÊN DOANH NGHIỆP TƯ NHÂN)",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "CÔNG BỐ NỘI DUNG ĐĂNG KÝ THÀNH LẬP MỚI",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "1. Tên doanh nghiệp",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên doanh nghiệp viết bằng tiếng Việt: "
+    },
+    {
+     "input": {
+      "key": "dn.ten_tieng_viet",
+      "w": 27
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên doanh nghiệp viết bằng tiếng nước ngoài:"
+    },
+    {
+     "input": {
+      "key": "dn.ten_nuoc_ngoai",
+      "w": 30
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên doanh nghiệp viết tắt:"
+    },
+    {
+     "input": {
+      "key": "dn.ten_viet_tat",
+      "w": 21
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "2. Mã số doanh nghiệp: ",
+     "b": true
+    },
+    {
+     "input": {
+      "key": "dn.ma_so_dn",
+      "w": 19
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "3. Ngày được cấp Giấy chứng nhận đăng ký doanh nghiệp lần đầu: ",
+     "b": true
+    },
+    {
+     "input": {
+      "key": "ngay_cap_lan_dau",
+      "w": 39
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "4. Địa chỉ trụ sở chính: ",
+     "b": true
+    },
+    {
+     "input": {
+      "key": "dn.dia_chi_tru_so",
+      "w": 20
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Điện thoại: "
+    },
+    {
+     "input": {
+      "key": "dien_thoai_khac",
+      "w": 14
+     }
+    },
+    {
+     "text": " Số fax: "
+    },
+    {
+     "input": {
+      "key": "fax",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Thư điện tử: "
+    },
+    {
+     "input": {
+      "key": "email_khac",
+      "w": 14
+     }
+    },
+    {
+     "text": "Website: "
+    },
+    {
+     "input": {
+      "key": "website",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "5. Ngành, nghề kinh doanh",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "STT",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Tên ngành",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Mã ngành",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Ngành, nghề kinh doanh chính",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "6. Vốn đầu tư (bằng số; bằng chữ; VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có): ",
+     "b": true
+    },
+    {
+     "input": {
+      "key": "von_dau_tu_so",
+      "w": 57
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "7. Chủ doanh nghiệp",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Họ, chữ đệm và tên (ghi bằng chữ in hoa):"
+    },
+    {
+     "input": {
+      "key": "ho_ten_in_hoa",
+      "w": 28
+     }
+    },
+    {
+     "text": "Giới tính:"
+    },
+    {
+     "input": {
+      "key": "chu_hkd.gioi_tinh",
+      "w": 13
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Ngày, tháng, năm sinh: "
+    },
+    {
+     "input": {
+      "key": "ngay_sinh",
+      "w": 19
+     }
+    },
+    {
+     "text": "/"
+    },
+    {
+     "input": {
+      "key": "thang_sinh",
+      "w": 12
+     }
+    },
+    {
+     "text": "/"
+    },
+    {
+     "input": {
+      "key": "nam_sinh",
+      "w": 12
+     }
+    },
+    {
+     "text": " Quốc tịch:"
+    },
+    {
+     "input": {
+      "key": "chu_hkd.quoc_tich",
+      "w": 13
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Số định danh cá nhân: "
+    },
+    {
+     "input": {
+      "key": "chu_hkd.so_cccd",
+      "w": 19
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "(hoặc) Số Hộ chiếu, Hộ chiếu nước ngoài, giấy tờ có giá trị thay thế hộ chiếu nước ngoài (đối với chủ doanh nghiệp là người nước ngoài): ",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "so_ho_chieu",
+      "w": 60
+     }
+    },
+    {
+     "text": " Ngày cấp: … Nơi cấp: "
+    },
+    {
+     "input": {
+      "key": "ngay_cap",
+      "w": 19
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Địa chỉ liên lạc:"
+    },
+    {
+     "input": {
+      "key": "dia_chi_lien_lac",
+      "w": 16
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "8. Nơi đăng ký: (Cơ quan đăng ký kinh doanh cấp tỉnh) ",
+     "b": true
+    },
+    {
+     "input": {
+      "key": "co_quan_dkkd",
+      "w": 35
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "(TÊN CÔNG TY TNHH MỘT THÀNH VIÊN)",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "CÔNG BỐ NỘI DUNG ĐĂNG KÝ THÀNH LẬP MỚI",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "1. Tên công ty",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên công ty viết bằng tiếng Việt: "
+    },
+    {
+     "input": {
+      "key": "dn.ten_tieng_viet",
+      "w": 25
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên công ty viết bằng tiếng nước ngoài: "
+    },
+    {
+     "input": {
+      "key": "dn.ten_nuoc_ngoai",
+      "w": 28
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên công ty viết tắt: "
+    },
+    {
+     "input": {
+      "key": "dn.ten_viet_tat",
+      "w": 19
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "2. Mã số doanh nghiệp: ",
+     "b": true
+    },
+    {
+     "input": {
+      "key": "dn.ma_so_dn",
+      "w": 19
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "3. Ngày được cấp Giấy chứng nhận đăng ký doanh nghiệp lần đầu: ",
+     "b": true
+    },
+    {
+     "input": {
+      "key": "ngay_cap_lan_dau",
+      "w": 39
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "4. Địa chỉ trụ sở chính: ",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "input": {
+      "key": "dn.dia_chi_tru_so",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Điện thoại: "
+    },
+    {
+     "input": {
+      "key": "dien_thoai_khac",
+      "w": 14
+     }
+    },
+    {
+     "text": " Số fax: "
+    },
+    {
+     "input": {
+      "key": "fax",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Thư điện tử: "
+    },
+    {
+     "input": {
+      "key": "email_khac",
+      "w": 14
+     }
+    },
+    {
+     "text": " Website: "
+    },
+    {
+     "input": {
+      "key": "website",
+      "w": 13
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "5. Ngành, nghề kinh doanh",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "STT",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Tên ngành",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Mã ngành",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "6. Vốn điều lệ: ",
+     "b": true
+    },
+    {
+     "input": {
+      "key": "von_dieu_le",
+      "w": 16
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "7. Thông tin về chủ sở hữu ",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Đối với chủ sở hữu là cá nhân: ",
+     "b": true,
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Họ, chữ đệm và tên (ghi bằng chữ in hoa): "
+    },
+    {
+     "input": {
+      "key": "ho_ten_in_hoa",
+      "w": 29
+     }
+    },
+    {
+     "text": "Giới tính: "
+    },
+    {
+     "input": {
+      "key": "chu_hkd.gioi_tinh",
+      "w": 13
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Ngày, tháng, năm sinh: "
+    },
+    {
+     "input": {
+      "key": "ngay_sinh",
+      "w": 19
+     }
+    },
+    {
+     "text": "/"
+    },
+    {
+     "input": {
+      "key": "thang_sinh",
+      "w": 12
+     }
+    },
+    {
+     "text": "/"
+    },
+    {
+     "input": {
+      "key": "nam_sinh",
+      "w": 12
+     }
+    },
+    {
+     "text": " Quốc tịch:"
+    },
+    {
+     "input": {
+      "key": "chu_hkd.quoc_tich",
+      "w": 13
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Số định danh cá nhân: "
+    },
+    {
+     "input": {
+      "key": "chu_hkd.so_cccd",
+      "w": 19
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "(hoặc) Số Hộ chiếu, Hộ chiếu nước ngoài, giấy tờ có giá trị thay thế hộ chiếu nước ngoài (đối với chủ sở hữu là người nước ngoài): ",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "so_ho_chieu",
+      "w": 60
+     }
+    },
+    {
+     "text": " Ngày cấp: … Nơi cấp: "
+    },
+    {
+     "input": {
+      "key": "ngay_cap",
+      "w": 19
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Địa chỉ liên lạc: "
+    },
+    {
+     "input": {
+      "key": "dia_chi_lien_lac",
+      "w": 17
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Đối với chủ sở hữu là tổ chức:",
+     "b": true,
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên tổ chức (ghi bằng chữ in hoa): "
+    },
+    {
+     "input": {
+      "key": "to_chuc.ten",
+      "w": 25
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Mã số doanh nghiệp/Quyết định thành lập số: "
+    },
+    {
+     "input": {
+      "key": "dn.ma_so_dn",
+      "w": 30
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Ngày cấp: "
+    },
+    {
+     "input": {
+      "key": "ngay_cap",
+      "w": 13
+     }
+    },
+    {
+     "text": " Nơi cấp: "
+    },
+    {
+     "input": {
+      "key": "noi_cap",
+      "w": 13
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Địa chỉ trụ sở chính: "
+    },
+    {
+     "input": {
+      "key": "dn.dia_chi_tru_so",
+      "w": 19
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "8. Người đại diện theo pháp luật của công ty1:",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Họ, chữ đệm và tên (ghi bằng chữ in hoa): "
+    },
+    {
+     "input": {
+      "key": "ndd.ho_ten",
+      "w": 30
+     }
+    },
+    {
+     "text": " Giới tính:"
+    },
+    {
+     "input": {
+      "key": "ndd.gioi_tinh",
+      "w": 13
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Ngày, tháng, năm sinh: "
+    },
+    {
+     "input": {
+      "key": "ndd.ngay_sinh",
+      "w": 19
+     }
+    },
+    {
+     "text": "/"
+    },
+    {
+     "input": {
+      "key": "ndd.thang_sinh",
+      "w": 12
+     }
+    },
+    {
+     "text": "/"
+    },
+    {
+     "input": {
+      "key": "ndd.nam_sinh",
+      "w": 12
+     }
+    },
+    {
+     "text": " Quốc tịch: "
+    },
+    {
+     "input": {
+      "key": "chu_hkd.quoc_tich",
+      "w": 14
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Số định danh cá nhân: "
+    },
+    {
+     "input": {
+      "key": "ndd.so_cccd",
+      "w": 19
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "(hoặc) Số Hộ chiếu, Hộ chiếu nước ngoài, giấy tờ có giá trị thay thế hộ chiếu nước ngoài (đối với người đại diện là người nước ngoài): ",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "ndd.so_ho_chieu",
+      "w": 60
+     }
+    },
+    {
+     "text": " Ngày cấp: … Nơi cấp: "
+    },
+    {
+     "input": {
+      "key": "ndd.ngay_cap",
+      "w": 19
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Chức danh: "
+    },
+    {
+     "input": {
+      "key": "ndd.chuc_vu",
+      "w": 13
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Địa chỉ liên lạc: "
+    },
+    {
+     "input": {
+      "key": "dia_chi_lien_lac",
+      "w": 17
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "9. Nơi đăng ký: (Cơ quan đăng ký kinh doanh cấp tỉnh)",
+     "b": true
+    },
+    {
+     "input": {
+      "key": "co_quan_dkkd",
+      "w": 34
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "(TÊN CÔNG TY TNHH HAI THÀNH VIÊN)",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "CÔNG BỐ NỘI DUNG ĐĂNG KÝ THÀNH LẬP MỚI",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "1. Tên công ty",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên công ty viết bằng tiếng Việt: "
+    },
+    {
+     "input": {
+      "key": "dn.ten_tieng_viet",
+      "w": 25
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên công ty viết bằng tiếng nước ngoài: "
+    },
+    {
+     "input": {
+      "key": "dn.ten_nuoc_ngoai",
+      "w": 28
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên công ty viết tắt: "
+    },
+    {
+     "input": {
+      "key": "dn.ten_viet_tat",
+      "w": 19
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "2. Mã số doanh nghiệp: ",
+     "b": true
+    },
+    {
+     "input": {
+      "key": "dn.ma_so_dn",
+      "w": 19
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "3. Ngày được cấp Giấy chứng nhận đăng ký doanh nghiệp lần đầu: ",
+     "b": true
+    },
+    {
+     "input": {
+      "key": "ngay_cap_lan_dau",
+      "w": 39
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "4. Địa chỉ trụ sở chính: ",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "input": {
+      "key": "dn.dia_chi_tru_so",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Điện thoại: "
+    },
+    {
+     "input": {
+      "key": "dien_thoai_khac",
+      "w": 14
+     }
+    },
+    {
+     "text": " Số fax: "
+    },
+    {
+     "input": {
+      "key": "fax",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Thư điện tử: "
+    },
+    {
+     "input": {
+      "key": "email_khac",
+      "w": 14
+     }
+    },
+    {
+     "text": " Website: "
+    },
+    {
+     "input": {
+      "key": "website",
+      "w": 13
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "5. Ngành, nghề kinh doanh",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "STT"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Tên ngành"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Mã ngành"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "6. Vốn điều lệ: ",
+     "b": true
+    },
+    {
+     "input": {
+      "key": "von_dieu_le",
+      "w": 16
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "7. Danh sách thành viên:",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "STT"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Tên thành viên"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Quốc tịch"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Số Giấy tờ pháp lý của cá nhân/tổ chức"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Địa chỉ liên lạc đối với cá nhân; địa chỉ trụ sở chính đối với tổ chức"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Phần vốn góp"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "(VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Tỷ lệ (%)"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Ghi chú (nếu có)"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "8. Người đại diện theo pháp luật của công ty2:",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Họ, chữ đệm và tên (ghi bằng chữ in hoa):"
+    },
+    {
+     "input": {
+      "key": "ndd.ho_ten",
+      "w": 29
+     }
+    },
+    {
+     "text": " Giới tính:"
+    },
+    {
+     "input": {
+      "key": "ndd.gioi_tinh",
+      "w": 13
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Ngày, tháng, năm sinh:"
+    },
+    {
+     "input": {
+      "key": "ndd.ngay_sinh",
+      "w": 19
+     }
+    },
+    {
+     "text": "/"
+    },
+    {
+     "input": {
+      "key": "ndd.thang_sinh",
+      "w": 12
+     }
+    },
+    {
+     "text": "/"
+    },
+    {
+     "input": {
+      "key": "ndd.nam_sinh",
+      "w": 12
+     }
+    },
+    {
+     "text": " Quốc tịch:"
+    },
+    {
+     "input": {
+      "key": "chu_hkd.quoc_tich",
+      "w": 13
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Số định danh cá nhân: "
+    },
+    {
+     "input": {
+      "key": "ndd.so_cccd",
+      "w": 19
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "(hoặc) Số Hộ chiếu, Hộ chiếu nước ngoài, giấy tờ có giá trị thay thế hộ chiếu nước ngoài (đối với người đại diện là người nước ngoài): ",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "ndd.so_ho_chieu",
+      "w": 60
+     }
+    },
+    {
+     "text": " Ngày cấp: … Nơi cấp: "
+    },
+    {
+     "input": {
+      "key": "ndd.ngay_cap",
+      "w": 19
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Chức danh: "
+    },
+    {
+     "input": {
+      "key": "ndd.chuc_vu",
+      "w": 13
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Địa chỉ liên lạc: "
+    },
+    {
+     "input": {
+      "key": "dia_chi_lien_lac",
+      "w": 17
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "9. Nơi đăng ký: (Cơ quan đăng ký kinh doanh cấp tỉnh) ",
+     "b": true
+    },
+    {
+     "input": {
+      "key": "co_quan_dkkd",
+      "w": 35
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "(TÊN CÔNG TY CỔ PHẦN)",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "CÔNG BỐ NỘI DUNG ĐĂNG KÝ THÀNH LẬP MỚI",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "1. Tên công ty",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên công ty viết bằng tiếng Việt:"
+    },
+    {
+     "input": {
+      "key": "dn.ten_tieng_viet",
+      "w": 24
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên công ty viết bằng tiếng nước ngoài:"
+    },
+    {
+     "input": {
+      "key": "dn.ten_nuoc_ngoai",
+      "w": 27
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên công ty viết tắt:"
+    },
+    {
+     "input": {
+      "key": "dn.ten_viet_tat",
+      "w": 18
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "2. Mã số doanh nghiệp: ",
+     "b": true
+    },
+    {
+     "input": {
+      "key": "dn.ma_so_dn",
+      "w": 19
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "3. Ngày được cấp Giấy chứng nhận đăng ký doanh nghiệp lần đầu: ",
+     "b": true
+    },
+    {
+     "input": {
+      "key": "ngay_cap_lan_dau",
+      "w": 39
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "4. Địa chỉ trụ sở chính: ",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "input": {
+      "key": "dn.dia_chi_tru_so",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Điện thoại: "
+    },
+    {
+     "input": {
+      "key": "dien_thoai_khac",
+      "w": 14
+     }
+    },
+    {
+     "text": " Số fax: "
+    },
+    {
+     "input": {
+      "key": "fax",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Thư điện tử: "
+    },
+    {
+     "input": {
+      "key": "email_khac",
+      "w": 14
+     }
+    },
+    {
+     "text": " Website: "
+    },
+    {
+     "input": {
+      "key": "website",
+      "w": 13
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "5. Ngành, nghề kinh doanh",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "STT"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Tên ngành"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Mã ngành"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "6. Vốn điều lệ (bằng số; VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có): ",
+     "b": true
+    },
+    {
+     "input": {
+      "key": "von_dieu_le",
+      "w": 53
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Mệnh giá cổ phần: "
+    },
+    {
+     "input": {
+      "key": "menh_gia_co_phan",
+      "w": 17
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tổng số cổ phần: "
+    },
+    {
+     "input": {
+      "key": "tong_so_co_phan",
+      "w": 16
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "7. Cổ đông sáng lập:",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "STTTên cổ đôngQuốc tịchSố Giấy tờ pháp lý của cá nhân/tổ chứcĐịa chỉ liên lạc đối với cá nhân; địa chỉ trụ sở chính đối với tổ chứcLoại cổ phầnSố cổ phầnGiá trị cổ phần"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "(VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)Tỷ lệ (%)Ghi chú (nếu có)8. Cổ đông là nhà đầu tư nước ngoài: "
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "STTTên cổ đôngQuốc tịchSố Giấy tờ pháp lý của cá nhân/tổ chứcĐịa chỉ liên lạc đối với cá nhân; địa chỉ trụ sở chính đối với tổ chứcLoại cổ phầnSố cổ phầnGiá trị cổ phần"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "(VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)Tỷ lệ (%)Ghi chú (nếu có)9. Người đại diện theo pháp luật của công ty3:"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Họ, chữ đệm và tên (ghi bằng chữ in hoa):"
+    },
+    {
+     "input": {
+      "key": "ndd.ho_ten",
+      "w": 29
+     }
+    },
+    {
+     "text": "Giới tính:"
+    },
+    {
+     "input": {
+      "key": "ndd.gioi_tinh",
+      "w": 13
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Ngày, tháng, năm sinh: "
+    },
+    {
+     "input": {
+      "key": "ndd.ngay_sinh",
+      "w": 19
+     }
+    },
+    {
+     "text": "/"
+    },
+    {
+     "input": {
+      "key": "ndd.thang_sinh",
+      "w": 12
+     }
+    },
+    {
+     "text": "/"
+    },
+    {
+     "input": {
+      "key": "ndd.nam_sinh",
+      "w": 12
+     }
+    },
+    {
+     "text": " Quốc tịch:"
+    },
+    {
+     "input": {
+      "key": "chu_hkd.quoc_tich",
+      "w": 13
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Số định danh cá nhân: "
+    },
+    {
+     "input": {
+      "key": "ndd.so_cccd",
+      "w": 19
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "(hoặc) Số Hộ chiếu, Hộ chiếu nước ngoài, giấy tờ có giá trị thay thế hộ chiếu nước ngoài (đối với người đại diện là người nước ngoài): ",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "ndd.so_ho_chieu",
+      "w": 60
+     }
+    },
+    {
+     "text": " Ngày cấp: … Nơi cấp: "
+    },
+    {
+     "input": {
+      "key": "ndd.ngay_cap",
+      "w": 19
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Chức danh: "
+    },
+    {
+     "input": {
+      "key": "ndd.chuc_vu",
+      "w": 13
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Địa chỉ liên lạc: "
+    },
+    {
+     "input": {
+      "key": "dia_chi_lien_lac",
+      "w": 17
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "10. Nơi đăng ký: (Cơ quan đăng ký kinh doanh cấp tỉnh)",
+     "b": true
+    },
+    {
+     "input": {
+      "key": "co_quan_dkkd",
+      "w": 35
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "(TÊN CÔNG TY HỢP DANH)",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "CÔNG BỐ NỘI DUNG ĐĂNG KÝ THÀNH LẬP MỚI",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "1. Tên công ty",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên công ty viết bằng tiếng Việt:"
+    },
+    {
+     "input": {
+      "key": "dn.ten_tieng_viet",
+      "w": 24
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên công ty viết bằng tiếng nước ngoài:"
+    },
+    {
+     "input": {
+      "key": "dn.ten_nuoc_ngoai",
+      "w": 27
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên công ty viết tắt:"
+    },
+    {
+     "input": {
+      "key": "dn.ten_viet_tat",
+      "w": 18
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "2. Mã số doanh nghiệp: ",
+     "b": true
+    },
+    {
+     "input": {
+      "key": "dn.ma_so_dn",
+      "w": 19
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "3. Ngày được cấp Giấy chứng nhận đăng ký doanh nghiệp lần đầu: ",
+     "b": true
+    },
+    {
+     "input": {
+      "key": "ngay_cap_lan_dau",
+      "w": 39
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "4. Địa chỉ trụ sở chính: ",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "input": {
+      "key": "dn.dia_chi_tru_so",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Điện thoại: "
+    },
+    {
+     "input": {
+      "key": "dien_thoai_khac",
+      "w": 14
+     }
+    },
+    {
+     "text": " Số fax: "
+    },
+    {
+     "input": {
+      "key": "fax",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Thư điện tử: "
+    },
+    {
+     "input": {
+      "key": "email_khac",
+      "w": 14
+     }
+    },
+    {
+     "text": "Website: "
+    },
+    {
+     "input": {
+      "key": "website",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "5. Ngành, nghề kinh doanh",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "STT"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Tên ngành"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Mã ngành"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "6. Vốn điều lệ: ",
+     "b": true
+    },
+    {
+     "input": {
+      "key": "von_dieu_le",
+      "w": 16
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "7. Danh sách thành viên hợp danh:",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "STT"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Tên thành viên hợp danh"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Quốc tịch"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Số định danh cá nhân/Số Hộ chiếu/Hộ chiếu nước ngoài hoặc giấy tờ có giá trị thay thế hộ chiếu nước ngoài"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Địa chỉ liên lạc"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Phần vốn góp"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "(VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Tỷ lệ (%)"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "8. Nơi đăng ký: (Cơ quan đăng ký kinh doanh cấp tỉnh) ",
+     "b": true
+    },
+    {
+     "input": {
+      "key": "co_quan_dkkd",
+      "w": 35
+     }
+    },
+    {
+     "text": "\t",
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "_______________________________________"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": " Ghi tên của tất cả người đại diện theo pháp luật trong trường hợp công ty có nhiều hơn 01 người đại diện theo pháp luật."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "2 Ghi tên của tất cả người đại diện theo pháp luật trong trường hợp công ty có nhiều hơn 01 người đại diện theo pháp luật."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "3 Ghi tên của tất cả người đại diện theo pháp luật trong trường hợp công ty có nhiều hơn 01 người đại diện theo pháp luật."
+    }
+   ]
+  }
+ ]
+}

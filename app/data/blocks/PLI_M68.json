@@ -1,0 +1,394 @@
+{
+ "id": "PLI_M68",
+ "ten_mau": "Thông báo về việc doanh nghiệp đang làm thủ tục giải thể",
+ "blocks": [
+  {
+   "t": "p",
+   "align": "right",
+   "runs": [
+    {
+     "text": "Mẫu số 68",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH\nCẤP TỈNH\n-------",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc\n---------------",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Số: "
+    },
+    {
+     "input": {
+      "key": "so_van_ban",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "right",
+   "runs": [
+    {
+     "input": {
+      "key": "dia_diem_ky",
+      "w": 12
+     }
+    },
+    {
+     "text": ", ngày ",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "ngay_ky_vb",
+      "w": 12
+     }
+    },
+    {
+     "text": " tháng ",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "thang_ky_vb",
+      "w": 12
+     }
+    },
+    {
+     "text": " năm ",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "nam_ky_vb",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "THÔNG BÁO",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Về việc doanh nghiệp đang làm thủ tục giải thể1",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp tỉnh) thông báo doanh nghiệp sau đang làm thủ tục giải thể:",
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên doanh nghiệp:"
+    },
+    {
+     "input": {
+      "key": "dn.ten_tieng_viet",
+      "w": 16
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Mã số doanh nghiệp: "
+    },
+    {
+     "input": {
+      "key": "dn.ma_so_dn",
+      "w": 18
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Số Giấy chứng nhận đăng ký kinh doanh (chỉ kê khai nếu không có mã số doanh nghiệp/mã số thuế): "
+    },
+    {
+     "input": {
+      "key": "so_gcn_dkkd",
+      "w": 56
+     }
+    },
+    {
+     "text": " Ngày cấp "
+    },
+    {
+     "input": {
+      "key": "ngay_cap",
+      "w": 13
+     }
+    },
+    {
+     "text": " "
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Địa chỉ trụ sở chính: "
+    },
+    {
+     "input": {
+      "key": "dn.dia_chi_tru_so",
+      "w": 19
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Do2:"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Ông/Bà: "
+    },
+    {
+     "input": {
+      "key": "ong_ba",
+      "w": 13
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Số định danh cá nhân: "
+    },
+    {
+     "input": {
+      "key": "chu_hkd.so_cccd",
+      "w": 19
+     }
+    },
+    {
+     "text": "/Số Hộ chiếu, Hộ chiếu nước ngoài hoặc giấy tờ có giá trị thay thế hộ chiếu nước ngoài (đối với người đại diện là người nước ngoài): "
+    },
+    {
+     "input": {
+      "key": "so_ho_chieu",
+      "w": 60
+     }
+    },
+    {
+     "text": " Ngày cấp: … Nơi cấp: "
+    },
+    {
+     "input": {
+      "key": "ngay_cap",
+      "w": 19
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Là người đại diện theo pháp luật."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Các chi nhánh, văn phòng đại diện, địa điểm kinh doanh sau của doanh nghiệp đang làm thủ tục chấm dứt hoạt động:"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh:"
+    },
+    {
+     "input": {
+      "key": "cn.ten_tieng_viet",
+      "w": 34
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Mã số chi nhánh/văn phòng đại diện/địa điểm kinh doanh hoặc mã số thuế của chi nhánh/văn phòng đại diện: "
+    },
+    {
+     "input": {
+      "key": "cn.ma_so",
+      "w": 60
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Trường hợp giải thể doanh nghiệp theo quy định tại Điều 208 Luật Doanh nghiệp thì ghi:",
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp tỉnh) đăng tải thông báo này, nghị quyết hoặc quyết định về việc giải thể của doanh nghiệp và phương án giải quyết nợ (nếu có) trên Cổng thông tin quốc gia về đăng ký doanh nghiệp.",
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Trường hợp giải thể doanh nghiệp theo quy định tại Điều 209 Luật Doanh nghiệp (trừ trường hợp doanh nghiệp bị thu hồi Giấy chứng nhận đăng ký doanh nghiệp để thực hiện biện pháp cưỡng chế theo đề nghị của Cơ quan quản lý thuế) thì ghi:",
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp tỉnh) đăng tải thông báo này và quyết định thu hồi Giấy chứng nhận đăng ký doanh nghiệp/quyết định của Tòa án trên Cổng thông tin quốc gia về đăng ký doanh nghiệp.",
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Nơi nhận: \n- Tên, địa chỉ doanh nghiệp;\n- Cơ quan quản lý thuế tỉnh, thành phố …\n(để biết);\n- Cơ quan hải quan tỉnh, thành phố … (để biết);\n- Cơ quan thi hành án dân sự tỉnh, thành phố … (để biết);\n- Cơ quan bảo hiểm xã hội tỉnh, thành phố …\n(để biết);\n- Lưu: ",
+     "b": true,
+     "i": true
+    },
+    {
+     "input": {
+      "key": "noi_nhan",
+      "w": 60
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "TRƯỞNG ĐƠN VỊ\n(Ký, ghi họ tên và đóng dấu)",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "_______________________________________"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "1 Trừ trường hợp doanh nghiệp bị thu hồi Giấy chứng nhận đăng ký doanh nghiệp để thực hiện biện pháp cưỡng chế nợ thuế theo đề nghị của Cơ quan quản lý thuế."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "2 Ghi tên của tất cả người đại diện theo pháp luật trong trường hợp công ty có nhiều hơn 01 người đại diện theo pháp luật."
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,251 @@
+{
+ "id": "PLI_M11",
+ "ten_mau": "Kê khai thông tin để xác định chủ sở hữu hưởng lợi của doanh nghiệp",
+ "blocks": [
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "PL1 - Mau so 11: Kê khai thông tin để xác định chủ sở hữu hưởng lợi của doanh nghiệp"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Mẫu số 11"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "DANH SÁCH ĐỂ XÁC ĐỊNH CHỦ SỞ HỮU HƯỞNG LỢI CỦA DOANH NGHIỆP",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "(Dành cho Công ty cổ phần kê khai cổ đông là tổ chức sở hữu từ 25% tổng số cổ phần có quyền biểu quyết trở lên)",
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "loop",
+   "loop": "ds_cshhl",
+   "headerRows": [
+    0
+   ],
+   "cols": [
+    {
+     "col": 1,
+     "tag": "ten_to_chuc"
+    },
+    {
+     "col": 2,
+     "tag": "ma_so_dn"
+    },
+    {
+     "col": 3,
+     "tag": "ngay_cap"
+    },
+    {
+     "col": 4,
+     "tag": "noi_cap"
+    },
+    {
+     "col": 5,
+     "tag": "dia_chi"
+    },
+    {
+     "col": 6,
+     "tag": "ty_le"
+    },
+    {
+     "col": 7,
+     "tag": "ghi_chu"
+    }
+   ],
+   "blankRows": 4,
+   "rows": [
+    {
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "STT",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Tên tổ chức",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Mã số doanh nghiệp/số QĐ thành lập",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Ngày cấp",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Nơi cấp",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Địa chỉ trụ sở chính",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Tỷ lệ sở hữu cổ phần có quyền biểu quyết (%)",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Ghi chú",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "input": {
+      "key": "dia_diem_ky",
+      "w": 12
+     }
+    },
+    {
+     "text": ", ngày",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "ngay_ky_vb",
+      "w": 12
+     }
+    },
+    {
+     "text": "tháng",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "thang_ky_vb",
+      "w": 12
+     }
+    },
+    {
+     "text": "năm",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "nam_ky_vb",
+      "w": 12
+     }
+    },
+    {
+     "text": "\nNGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT/\nCHỦ TỊCH HỘI ĐỒNG QUẢN TRỊ CỦA CÔNG TY\n(Ký và ghi họ tên)2",
+     "b": true,
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "__________________"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "1 Tỷ lệ sở hữu cổ phần có quyền biểu quyết = Số cổ phần có quyền biểu quyết của tổ chức/tổng số cổ phần có quyền biểu quyết của công ty cổ phần."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "2 - Người đại diện theo pháp luật của doanh nghiệp ký trực tiếp vào phần này. "
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Trường hợp đăng ký chuyển đổi loại hình doanh nghiệp đồng thời đăng ký thay đổi người đại diện theo pháp luật thì Chủ tịch Hội đồng quản trị của công ty sau chuyển đổi ký trực tiếp vào phần này. "
+    }
+   ]
+  }
+ ]
+}

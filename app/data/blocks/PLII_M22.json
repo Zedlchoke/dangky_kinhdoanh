@@ -1,0 +1,307 @@
+{
+ "id": "PLII_M22",
+ "ten_mau": "Thông báo yêu cầu hộ kinh doanh đăng ký thay đổi thành viên không được quyền thành lập hộ kinh doanh",
+ "blocks": [
+  {
+   "t": "p",
+   "align": "right",
+   "runs": [
+    {
+     "text": "Mẫu số 22",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH\nCẤP XÃ\n-----------",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc\n------------------",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Số: "
+    },
+    {
+     "input": {
+      "key": "so_van_ban",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "right",
+   "runs": [
+    {
+     "input": {
+      "key": "dia_diem_ky",
+      "w": 12
+     }
+    },
+    {
+     "text": ", ngày",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "ngay_ky_vb",
+      "w": 12
+     }
+    },
+    {
+     "text": "tháng",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "thang_ky_vb",
+      "w": 12
+     }
+    },
+    {
+     "text": "năm",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "nam_ky_vb",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "THÔNG BÁO",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Yêu cầu hộ kinh doanh đăng ký thay đổi thành viên không được quyền thành lập hộ kinh doanh",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Kính gửi:"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "(Tên hộ kinh doanh)",
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Trụ sở của hộ kinh doanh:"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Mã số hộ kinh doanh:"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp xã) "
+    },
+    {
+     "input": {
+      "key": "co_quan_dkkd",
+      "w": 26
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Địa chỉ trụ sở:"
+    },
+    {
+     "input": {
+      "key": "dn.dia_chi_tru_so",
+      "w": 15
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Điện thoại: "
+    },
+    {
+     "input": {
+      "key": "dien_thoai_khac",
+      "w": 14
+     }
+    },
+    {
+     "text": " Fax: "
+    },
+    {
+     "input": {
+      "key": "fax",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Thư điện tử: "
+    },
+    {
+     "input": {
+      "key": "email_khac",
+      "w": 14
+     }
+    },
+    {
+     "text": "Website:"
+    },
+    {
+     "input": {
+      "key": "website",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Căn cứ:"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Kết luận/biên bản làm việc ...................................................................................;"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- "
+    },
+    {
+     "input": {
+      "key": "can_cu",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp xã) yêu cầu hộ kinh doanh đăng ký thay đổi thành viên không được quyền thành lập hộ kinh doanh theo quy định tại khoản 2 Điều 82 Nghị định số 168/2025/NĐ-CP trong thời hạn 15 ngày kể từ ngày ra thông báo. Nếu quá thời hạn trên mà hộ kinh doanh không đăng ký thay đổi thì (Cơ quan đăng ký kinh doanh cấp xã) sẽ ra thông báo về hành vi vi phạm và ra quyết định thu hồi Giấy chứng nhận đăng ký hộ kinh doanh theo quy định tại điểm b khoản 2 Điều 107 Nghị định số 168/2025/NĐ-CP. ",
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Nơi nhận:\n- Như trên;\n- ",
+     "b": true,
+     "i": true
+    },
+    {
+     "input": {
+      "key": "noi_nhan",
+      "w": 20
+     }
+    },
+    {
+     "text": ";\n- Lưu: "
+    },
+    {
+     "input": {
+      "key": "luu_vb",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "TRƯỞNG PHÒNG\n(Ký, ghi họ tên và đóng dấu)",
+     "b": true
+    }
+   ]
+  }
+ ]
+}

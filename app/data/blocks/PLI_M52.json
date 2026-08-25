@@ -1,0 +1,640 @@
+{
+ "id": "PLI_M52",
+ "ten_mau": "Thông báo về việc rà soát thông tin đăng ký doanh nghiệp, tình trạng pháp lý của doanh nghiệp",
+ "blocks": [
+  {
+   "t": "p",
+   "align": "right",
+   "runs": [
+    {
+     "text": "Mẫu số 52",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH\nCẤP TỈNH\n-------",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc\n---------------",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Số: "
+    },
+    {
+     "input": {
+      "key": "so_van_ban",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "input": {
+      "key": "dia_diem_ky",
+      "w": 12
+     }
+    },
+    {
+     "text": ", ngày ",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "ngay_ky_vb",
+      "w": 12
+     }
+    },
+    {
+     "text": " tháng ",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "thang_ky_vb",
+      "w": 12
+     }
+    },
+    {
+     "text": " năm ",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "nam_ky_vb",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "THÔNG BÁO",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Về việc rà soát thông tin đăng ký doanh nghiệp, tình trạng pháp lý của doanh nghiệp",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "right",
+   "runs": [
+    {
+     "text": "Kính gửi:"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "(Tên doanh nghiệp)\nĐịa chỉ: (Địa chỉ trụ sở chính)\nMã số: (Mã số doanh nghiệp/Số Giấy chứng nhận đăng ký kinh doanh)"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Căn cứ quy định tại khoản 2 Điều 76 Nghị định số 168/2025/NĐ-CP ngày 30/6/2025 của Chính phủ về đăng ký doanh nghiệp, "
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Để đảm bảo quyền lợi chính đáng của doanh nghiệp về sự đầy đủ và chính xác của các thông tin đăng ký doanh nghiệp,"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp tỉnh): ",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "co_quan_dkkd",
+      "w": 27
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Địa chỉ trụ sở: "
+    },
+    {
+     "input": {
+      "key": "dn.dia_chi_tru_so",
+      "w": 16
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Điện thoại: "
+    },
+    {
+     "input": {
+      "key": "dien_thoai_khac",
+      "w": 14
+     }
+    },
+    {
+     "text": " Số fax: "
+    },
+    {
+     "input": {
+      "key": "fax",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Thư điện tử: "
+    },
+    {
+     "input": {
+      "key": "email_khac",
+      "w": 14
+     }
+    },
+    {
+     "text": " Website: "
+    },
+    {
+     "input": {
+      "key": "website",
+      "w": 13
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Đề nghị doanh nghiệp rà soát, kiểm tra đối chiếu và bổ sung, cập nhật thông tin đăng ký doanh nghiệp, tình trạng pháp lý của doanh nghiệp đã đăng ký như sau:"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "1. Đối với doanh nghiệp:",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Tên doanh nghiệp: "
+    },
+    {
+     "input": {
+      "key": "dn.ten_tieng_viet",
+      "w": 18
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Mã số: "
+    },
+    {
+     "input": {
+      "key": "ma_so_van_ban",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Địa chỉ trụ sở: "
+    },
+    {
+     "input": {
+      "key": "dn.dia_chi_tru_so",
+      "w": 17
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Điện thoại: "
+    },
+    {
+     "input": {
+      "key": "dien_thoai_khac",
+      "w": 15
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Người đại diện theo pháp luật: ……………………………………………….."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Tình trạng pháp lý: "
+    },
+    {
+     "input": {
+      "key": "tinh_trang_phap_ly",
+      "w": 19
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "2. Đối với chi nhánh:",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Tên chi nhánh: "
+    },
+    {
+     "input": {
+      "key": "cn.ten_tieng_viet",
+      "w": 16
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Mã số: "
+    },
+    {
+     "input": {
+      "key": "ma_so_van_ban",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Địa chỉ: "
+    },
+    {
+     "input": {
+      "key": "dia_chi_khac",
+      "w": 13
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Người đứng đầu: "
+    },
+    {
+     "input": {
+      "key": "nguoi_dung_dau.ten",
+      "w": 17
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Tình trạng hoạt động: "
+    },
+    {
+     "input": {
+      "key": "tinh_trang_hoat_dong",
+      "w": 20
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "3. Đối với văn phòng đại diện: ",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Tên văn phòng đại diện: … "
+    },
+    {
+     "input": {
+      "key": "cn.ten_tieng_viet",
+      "w": 22
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Mã số: "
+    },
+    {
+     "input": {
+      "key": "ma_so_van_ban",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Địa chỉ: "
+    },
+    {
+     "input": {
+      "key": "dia_chi_khac",
+      "w": 13
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Người đứng đầu: "
+    },
+    {
+     "input": {
+      "key": "nguoi_dung_dau.ten",
+      "w": 17
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Tình trạng hoạt động: "
+    },
+    {
+     "input": {
+      "key": "tinh_trang_hoat_dong",
+      "w": 20
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "4. Đối với địa điểm kinh doanh:",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Tên địa điểm kinh doanh: "
+    },
+    {
+     "input": {
+      "key": "cn.ten_tieng_viet",
+      "w": 21
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Mã số: "
+    },
+    {
+     "input": {
+      "key": "ma_so_van_ban",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Đơn vị chủ quản: ..……………………………………………………………"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Địa chỉ: "
+    },
+    {
+     "input": {
+      "key": "dia_chi_khac",
+      "w": 13
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Người đứng đầu: "
+    },
+    {
+     "input": {
+      "key": "nguoi_dung_dau.ten",
+      "w": 17
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Tình trạng hoạt động: "
+    },
+    {
+     "input": {
+      "key": "tinh_trang_hoat_dong",
+      "w": 20
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Sau khi rà soát, đề nghị doanh nghiệp gửi Thông báo phản hồi theo mẫu quy định tại Mẫu số 20 Phụ lục I ban hành kèm theo Thông tư số 68/2025/TT-BTC tới (Cơ quan đăng ký kinh doanh cấp tỉnh) trong thời hạn 90 ngày, kể từ ngày gửi Thông báo này."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Trường hợp quá thời hạn 90 ngày mà doanh nghiệp không gửi Thông báo phản hồi theo mẫu quy định tới (Cơ quan đăng ký kinh doanh cấp tỉnh) thì được hiểu là doanh nghiệp đã đồng ý xác nhận các thông tin đăng ký doanh nghiệp và tình trạng pháp lý của doanh nghiệp tại Thông báo này là đầy đủ, chính xác."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "\nNơi nhận:\n- Như trên;\n- …;\n- Lưu: ",
+     "b": true,
+     "i": true
+    },
+    {
+     "input": {
+      "key": "noi_nhan",
+      "w": 25
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "TRƯỞNG ĐƠN VỊ\n(Ký, ghi họ tên và đóng dấu)",
+     "b": true
+    }
+   ]
+  }
+ ]
+}

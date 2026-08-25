@@ -1,0 +1,394 @@
+{
+ "id": "PLII_M12",
+ "ten_mau": "Thông báo về việc vi phạm của hộ kinh doanh thuộc trường hợp thu hồi Giấy chứng nhận đăng ký hộ kinh doanh",
+ "blocks": [
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "PL2 - Mau so 12: Thông báo về việc vi phạm của hộ kinh doanh thuộc trường hợp thu hồi Giấy chứng nhận đăng ký hộ kinh doanh"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Mẫu số 12"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH\nCẤP XÃ\n-----------",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc\n------------------",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Số: "
+    },
+    {
+     "input": {
+      "key": "so_van_ban",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "right",
+   "runs": [
+    {
+     "input": {
+      "key": "dia_diem_ky",
+      "w": 12
+     }
+    },
+    {
+     "text": ", ngày",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "ngay_ky_vb",
+      "w": 12
+     }
+    },
+    {
+     "text": "tháng",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "thang_ky_vb",
+      "w": 12
+     }
+    },
+    {
+     "text": "năm",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "nam_ky_vb",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "THÔNG BÁO",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Về việc vi phạm của hộ kinh doanh thuộc trường hợp thu hồi Giấy chứng nhận đăng ký hộ kinh doanh",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Kính gửi:"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "(Tên hộ kinh doanh)",
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Trụ sở của hộ kinh doanh:"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Mã số hộ kinh doanh:"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp xã) "
+    },
+    {
+     "input": {
+      "key": "co_quan_dkkd",
+      "w": 26
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Địa chỉ trụ sở:"
+    },
+    {
+     "input": {
+      "key": "dn.dia_chi_tru_so",
+      "w": 15
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Điện thoại: "
+    },
+    {
+     "input": {
+      "key": "dien_thoai_khac",
+      "w": 14
+     }
+    },
+    {
+     "text": "Fax:"
+    },
+    {
+     "input": {
+      "key": "fax",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Thư điện tử:"
+    },
+    {
+     "input": {
+      "key": "email_khac",
+      "w": 14
+     }
+    },
+    {
+     "text": "Website:"
+    },
+    {
+     "input": {
+      "key": "website",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Căn cứ kết luận/biên bản làm việc số"
+    },
+    {
+     "input": {
+      "key": "can_cu",
+      "w": 26
+     }
+    },
+    {
+     "text": "ngày "
+    },
+    {
+     "input": {
+      "key": "ngay_ky_vb",
+      "w": 12
+     }
+    },
+    {
+     "text": "/........./.......... của....................................................về việc: "
+    },
+    {
+     "input": {
+      "key": "ve_viec",
+      "w": 51
+     }
+    },
+    {
+     "text": " (nếu có);"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Căn cứ Thông báo số … ngày "
+    },
+    {
+     "input": {
+      "key": "can_cu",
+      "w": 21
+     }
+    },
+    {
+     "text": " của (Cơ quan đăng ký kinh doanh cấp xã) về việc yêu cầu hộ kinh doanh báo cáo về việc tuân thủ các quy định về hộ kinh doanh (nếu có);"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Căn cứ Thông báo số … ngày "
+    },
+    {
+     "input": {
+      "key": "can_cu",
+      "w": 21
+     }
+    },
+    {
+     "text": " của (Cơ quan đăng ký kinh doanh cấp xã) về việc yêu cầu hộ kinh doanh đăng ký thay đổi thành viên không được quyền thành lập hộ kinh doanh (nếu có);"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Căn cứ Thông báo số … ngày "
+    },
+    {
+     "input": {
+      "key": "can_cu",
+      "w": 21
+     }
+    },
+    {
+     "text": " của (Cơ quan đăng ký kinh doanh cấp xã) về việc hộ kinh doanh ngừng hoạt động kinh doanh tại địa chỉ đăng ký quá 06 tháng mà không thông báo với Cơ quan đăng ký kinh doanh cấp xã (nếu có);"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Căn cứ văn bản số … ngày "
+    },
+    {
+     "input": {
+      "key": "can_cu",
+      "w": 20
+     }
+    },
+    {
+     "text": " của … về việc đề nghị thu hồi Giấy chứng nhận đăng ký hộ kinh doanh (trường hợp thực hiện theo đề nghị của cơ quan có thẩm quyền theo quy định của luật, nếu có)."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "(Ghi cụ thể nội dung vi phạm của hộ kinh doanh tương ứng theo các trường hợp thu hồi theo quy định).",
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp xã) đăng tải thông báo vi phạm của hộ kinh doanh trên Cổng thông tin quốc gia về đăng ký doanh nghiệp.",
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Nơi nhận:\n- Như trên;\n- Cơ quan quản lý thuế",
+     "b": true,
+     "i": true
+    },
+    {
+     "input": {
+      "key": "noi_nhan",
+      "w": 30
+     }
+    },
+    {
+     "text": " (xã, phường, đặc khu nơi hộ kinh doanh đăng ký trụ sở của HKD);\n- Cơ quan có thẩm quyền khác:…… (nếu có);\n- Lưu: ……"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "TRƯỞNG PHÒNG\n(Ký, ghi họ tên và đóng dấu)",
+     "b": true
+    }
+   ]
+  }
+ ]
+}

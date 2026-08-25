@@ -1,0 +1,866 @@
+{
+ "id": "PLI_M27",
+ "ten_mau": "Thông báo về việc tạm ngừng kinh doanh/tiếp tục kinh doanh trước thời hạn đã thông báo của doanh nghiệp/chi nhánh /địa điểm kinh doanh/về việc tạm ngừng hoạt động/tiếp tục hoạt động trước thời hạn đã thông báo của văn phòng đại diện",
+ "blocks": [
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "PL1 - Mau so 27: Thông báo về việc tạm ngừng kinh doanh/tiếp tục kinh doanh trước thời hạn đã thông báo của doanh nghiệp/chi nhánh /địa điểm kinh doanh/về việc tạm ngừng hoạt động/tiếp tục hoạt động trước thời hạn đã thông báo của văn phòng đại diện"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Mẫu số 27"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "TÊN DOANH NGHIỆP\n-------",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc\n---------------",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Số: "
+    },
+    {
+     "input": {
+      "key": "so_van_ban",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "input": {
+      "key": "dia_diem_ky",
+      "w": 12
+     }
+    },
+    {
+     "text": ", ngày",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "ngay_ky_vb",
+      "w": 12
+     }
+    },
+    {
+     "text": " tháng",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "thang_ky_vb",
+      "w": 12
+     }
+    },
+    {
+     "text": " năm ",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "nam_ky_vb",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "THÔNG BÁO",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Về việc tạm ngừng kinh doanh/tiếp tục kinh doanh trước thời hạn đã thông báo của doanh nghiệp/chi nhánh/địa điểm kinh doanh/\nVề việc tạm ngừng hoạt động/tiếp tục hoạt động trước thời hạn đã thông báo của văn phòng đại diện",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Kính gửi: (Cơ quan đăng ký kinh doanh cấp tỉnh) "
+    },
+    {
+     "input": {
+      "key": "co_quan_dkkd",
+      "w": 32
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên doanh nghiệp (ghi bằng chữ in hoa): "
+    },
+    {
+     "input": {
+      "key": "dn.ten_tieng_viet",
+      "w": 28
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Mã số doanh nghiệp/Mã số thuế: "
+    },
+    {
+     "input": {
+      "key": "dn.ma_so_dn",
+      "w": 23
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "1. Trường hợp tạm ngừng kinh doanh/hoạt động1:",
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "a) Đối với doanh nghiệp:",
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Thông báo tạm ngừng kinh doanh kể từ ngày"
+    },
+    {
+     "input": {
+      "key": "tu_ngay",
+      "w": 28
+     }
+    },
+    {
+     "text": " đến hết ngày"
+    },
+    {
+     "input": {
+      "key": "den_ngay",
+      "w": 14
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Lý do tạm ngừng: "
+    },
+    {
+     "input": {
+      "key": "ly_do_tam_ngung",
+      "w": 16
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Sau khi doanh nghiệp tạm ngừng kinh doanh, đề nghị Quý Cơ quan chuyển tình trạng của tất cả các chi nhánh/văn phòng đại diện/địa điểm kinh doanh của doanh nghiệp trong Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp sang tình trạng “Tạm ngừng kinh doanh, hoạt động”."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Thông tin người đại diện theo pháp luật của doanh nghiệp2:"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "1. Họ, chữ đệm và tên: "
+    },
+    {
+     "input": {
+      "key": "ho_ten_in_hoa_2",
+      "w": 19
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Ngày, tháng, năm sinh: "
+    },
+    {
+     "input": {
+      "key": "ndd.ngay_sinh",
+      "w": 19
+     }
+    },
+    {
+     "text": "/"
+    },
+    {
+     "input": {
+      "key": "ndd.thang_sinh",
+      "w": 12
+     }
+    },
+    {
+     "text": "/"
+    },
+    {
+     "input": {
+      "key": "ndd.nam_sinh",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Giới tính: "
+    },
+    {
+     "input": {
+      "key": "ndd.gioi_tinh",
+      "w": 13
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Số định danh cá nhân: "
+    },
+    {
+     "input": {
+      "key": "ndd.so_cccd",
+      "w": 19
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Số điện thoại3: "
+    },
+    {
+     "input": {
+      "key": "dien_thoai_khac",
+      "w": 16
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Địa chỉ liên hệ: "
+    },
+    {
+     "input": {
+      "key": "dia_chi_lien_he",
+      "w": 16
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "2. Họ, chữ đệm và tên: "
+    },
+    {
+     "input": {
+      "key": "ho_ten_in_hoa_2",
+      "w": 19
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "…"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "b) Đối với chi nhánh/địa điểm kinh doanh:",
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Thông báo tạm ngừng kinh doanh kể từ ngày … tháng … năm … đến hết ngày … tháng … năm … đối với chi nhánh/địa điểm kinh doanh sau:"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên chi nhánh/địa điểm kinh doanh (ghi bằng chữ in hoa) "
+    },
+    {
+     "input": {
+      "key": "cn.ten_tieng_viet",
+      "w": 36
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Mã số chi nhánh/địa điểm kinh doanh hoặc mã số thuế chi nhánh: "
+    },
+    {
+     "input": {
+      "key": "cn.ma_so",
+      "w": 39
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Chi nhánh chủ quản (chỉ kê khai đối với trường hợp thông báo tạm ngừng kinh doanh địa điểm kinh doanh trực thuộc chi nhánh):"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên chi nhánh: "
+    },
+    {
+     "input": {
+      "key": "cn.ten_tieng_viet",
+      "w": 15
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Mã số chi nhánh/Mã số thuế của chi nhánh: "
+    },
+    {
+     "input": {
+      "key": "cn.ma_so",
+      "w": 29
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Lý do tạm ngừng: "
+    },
+    {
+     "input": {
+      "key": "ly_do_tam_ngung",
+      "w": 16
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "c) Đối với văn phòng đại diện:"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Thông báo tạm ngừng hoạt động kể từ ngày … tháng … năm … đến hết ngày … tháng … năm … đối với văn phòng đại diện sau:"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên văn phòng đại diện (ghi bằng chữ in hoa) "
+    },
+    {
+     "input": {
+      "key": "cn.ten_tieng_viet",
+      "w": 30
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Mã số văn phòng đại diện/Mã số thuế của văn phòng đại diện: "
+    },
+    {
+     "input": {
+      "key": "cn.ma_so",
+      "w": 38
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Lý do tạm ngừng: "
+    },
+    {
+     "input": {
+      "key": "ly_do_tam_ngung",
+      "w": 16
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "2. Trường hợp tiếp tục kinh doanh/hoạt động trước thời hạn đã thông báo4:",
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "a) Đối với doanh nghiệp:",
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Thông báo tiếp tục kinh doanh kể từ ngày"
+    },
+    {
+     "input": {
+      "key": "tu_ngay",
+      "w": 28
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Lý do tiếp tục kinh doanh: "
+    },
+    {
+     "input": {
+      "key": "ly_do_tiep_tuc",
+      "w": 21
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "b) Đối với chi nhánh/văn phòng đại diện/địa điểm kinh doanh:",
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Thông báo tiếp tục kinh doanh kể từ ngày"
+    },
+    {
+     "input": {
+      "key": "tu_ngay",
+      "w": 28
+     }
+    },
+    {
+     "text": " đối với chi nhánh/địa điểm kinh doanh sau:"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên chi nhánh/địa điểm kinh doanh (ghi bằng chữ in hoa): "
+    },
+    {
+     "input": {
+      "key": "cn.ten_tieng_viet",
+      "w": 36
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Mã số chi nhánh/địa điểm kinh doanh/Mã số thuế của chi nhánh: "
+    },
+    {
+     "input": {
+      "key": "cn.ma_so",
+      "w": 39
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Chi nhánh chủ quản (chỉ kê khai đối với trường hợp thông báo tiếp tục kinh doanh trước thời hạn đã thông báo của địa điểm kinh doanh trực thuộc chi nhánh):"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên chi nhánh: "
+    },
+    {
+     "input": {
+      "key": "cn.ten_tieng_viet",
+      "w": 15
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Mã số chi nhánh/Mã số thuế của chi nhánh: "
+    },
+    {
+     "input": {
+      "key": "cn.ma_so",
+      "w": 29
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Lý do tiếp tục kinh doanh: "
+    },
+    {
+     "input": {
+      "key": "ly_do_tiep_tuc",
+      "w": 21
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "c) Đối với văn phòng đại diện:"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Thông báo tiếp tục hoạt động kể từ ngày … tháng … năm … đối với văn phòng đại diện sau:"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên văn phòng đại diện (ghi bằng chữ in hoa) "
+    },
+    {
+     "input": {
+      "key": "cn.ten_tieng_viet",
+      "w": 30
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Mã số văn phòng đại diện/Mã số thuế của văn phòng đại diện: "
+    },
+    {
+     "input": {
+      "key": "cn.ma_so",
+      "w": 38
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Lý do tiếp tục hoạt động: "
+    },
+    {
+     "input": {
+      "key": "ly_do_tiep_tuc",
+      "w": 21
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Doanh nghiệp cam kết hoàn toàn chịu trách nhiệm trước pháp luật về tính hợp pháp, chính xác và trung thực của nội dung Thông báo này."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Người ký tại Thông báo này cam kết là người có quyền và nghĩa vụ thực hiện thủ tục đăng ký doanh nghiệp theo quy định của pháp luật và Điều lệ công ty."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT\nCỦA DOANH NGHIỆP/ NGƯỜI ĐỨNG ĐẦU CHI NHÁNH\n(Ký và ghi họ tên)5",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "________________________________________"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "1 Doanh nghiệp gửi thông báo đến Cơ quan đăng ký kinh doanh cấp tỉnh nơi doanh nghiệp, chi nhánh/văn phòng đại diện/địa điểm kinh doanh đã đăng ký chậm nhất 03 ngày làm việc trước khi tạm ngừng kinh doanh/hoạt động."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "2 Kê khai thông tin của tất cả người đại diện theo pháp luật của doanh nghiệp."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "3 Số điện thoại của người đại diện theo pháp luật phải trùng với số điện thoại đã kê khai trong Cơ sở dữ liệu quốc gia về dân cư."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "4 Doanh nghiệp gửi thông báo đến Cơ quan đăng ký kinh doanh cấp tỉnh nơi doanh nghiệp, chi nhánh/văn phòng đại diện/địa điểm kinh doanh đã đăng ký chậm nhất 03 ngày làm việc trước khi tiếp tục kinh doanh/hoạt động trước thời hạn đã thông báo."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "5 - Trường hợp tạm ngừng kinh doanh/tiếp tục kinh doanh trước thời hạn đã thông báo đối với doanh nghiệp, chi nhánh/văn phòng đại diện/địa điểm kinh doanh trực thuộc doanh nghiệp, người đại diện theo pháp luật của doanh nghiệp ký trực tiếp vào phần này."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Trường hợp tạm ngừng kinh doanh/Tiếp tục kinh doanh trước thời hạn đã thông báo đối với địa điểm kinh doanh trực thuộc chi nhánh, người đại diện theo pháp luật của doanh nghiệp hoặc người đứng đầu chi nhánh ký trực tiếp vào phần này."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Trường hợp Tòa án hoặc Trọng tài chỉ định người thực hiện thủ tục đăng ký doanh nghiệp thì người được chỉ định ký trực tiếp vào phần này."
+    }
+   ]
+  }
+ ]
+}

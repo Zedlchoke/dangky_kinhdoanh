@@ -1,0 +1,208 @@
+{
+ "id": "PLI_M10",
+ "ten_mau": "Danh sách chủ sở hữu hưởng lợi của doanh nghiệp",
+ "blocks": [
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "PL1 - Mau so 10: Danh sách chủ sở hữu hưởng lợi của doanh nghiệp"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Mẫu số 10"
+    }
+   ]
+  },
+  {
+   "t": "loop",
+   "loop": "ds_cshhl",
+   "headerRows": [
+    0
+   ],
+   "cols": [
+    {
+     "col": 1,
+     "tag": "ho_ten"
+    },
+    {
+     "col": 2,
+     "tag": "ngay_sinh"
+    },
+    {
+     "col": 3,
+     "tag": "gioi_tinh"
+    },
+    {
+     "col": 4,
+     "tag": "quoc_tich"
+    },
+    {
+     "col": 5,
+     "tag": "dan_toc"
+    },
+    {
+     "col": 6,
+     "tag": "dia_chi"
+    },
+    {
+     "col": 7,
+     "tag": "so_giay_to"
+    },
+    {
+     "col": 8,
+     "tag": "ty_le"
+    },
+    {
+     "col": 9,
+     "tag": "ty_le_co_phan"
+    },
+    {
+     "col": 10,
+     "tag": "ghi_chu"
+    }
+   ],
+   "blankRows": 4,
+   "rows": [
+    {
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "STT",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Họ và tên",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Ngày, tháng, năm sinh",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Giới tính",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Quốc tịch",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Dân tộc",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Địa chỉ liên lạc",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Giấy tờ pháp lý của cá nhân",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Tỷ lệ sở hữu vốn điều lệ (%)",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Tỷ lệ sở hữu cổ phần có quyền biểu quyết (%)",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Ghi chú",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "15 - Người đại diện theo pháp luật của doanh nghiệp ký trực tiếp vào phần này. "
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Trường hợp đăng ký chuyển đổi loại hình doanh nghiệp đồng thời đăng ký thay đổi người đại diện theo pháp luật thì Chủ tịch công ty/Chủ tịch Hội đồng thành viên của công ty sau chuyển đổi ký trực tiếp vào phần này."
+    }
+   ]
+  }
+ ]
+}

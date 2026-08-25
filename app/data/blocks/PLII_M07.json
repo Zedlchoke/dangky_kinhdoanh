@@ -1,0 +1,553 @@
+{
+ "id": "PLII_M07",
+ "ten_mau": "Giấy chứng nhận đăng ký hộ kinh doanh",
+ "blocks": [
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "PL2 - Mau so 7: Giấy chứng nhận đăng ký hộ kinh doanh"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Mẫu số 7"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH\nCẤP XÃ\n-----------",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc\n-----------------",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "GIẤY CHỨNG NHẬN ĐĂNG KÝ HỘ KINH DOANH",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Mã số hộ kinh doanh: "
+    },
+    {
+     "input": {
+      "key": "hkd_ma_so",
+      "w": 18
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Đăng ký lần đầu, ngày",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "dk_lan_dau_ngay",
+      "w": 18
+     }
+    },
+    {
+     "text": "tháng",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "dk_lan_dau_thang",
+      "w": 12
+     }
+    },
+    {
+     "text": "năm",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "dk_lan_dau_nam",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Đăng ký thay đổi lần thứ: ",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "dk_thay_doi_lan_thu",
+      "w": 21
+     }
+    },
+    {
+     "text": ", ngày",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "dk_thay_doi_ngay",
+      "w": 12
+     }
+    },
+    {
+     "text": "tháng",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "dk_thay_doi_thang",
+      "w": 12
+     }
+    },
+    {
+     "text": "năm",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "dk_thay_doi_nam",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "1. Tên hộ kinh doanh:",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên hộ kinh doanh viết bằng tiếng Việt (ghi bằng chữ in hoa):"
+    },
+    {
+     "input": {
+      "key": "hkd_ten_tieng_viet",
+      "w": 38
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên hộ kinh doanh viết bằng tiếng nước ngoài (nếu có):"
+    },
+    {
+     "input": {
+      "key": "hkd_ten_tieng_nuoc",
+      "w": 35
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên hộ kinh doanh viết tắt (nếu có):"
+    },
+    {
+     "input": {
+      "key": "hkd_ten_viet_tat",
+      "w": 26
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "2. Trụ sở của hộ kinh doanh:",
+     "b": true
+    },
+    {
+     "input": {
+      "key": "hkd_tru_so",
+      "w": 22
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Điện thoại: "
+    },
+    {
+     "input": {
+      "key": "dien_thoai_khac",
+      "w": 14
+     }
+    },
+    {
+     "text": "Fax:"
+    },
+    {
+     "input": {
+      "key": "fax",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Thư điện tử: "
+    },
+    {
+     "input": {
+      "key": "email_khac",
+      "w": 14
+     }
+    },
+    {
+     "text": "Website:"
+    },
+    {
+     "input": {
+      "key": "website",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "3. Ngành, nghề kinh doanh: ",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "STT",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Tên ngành",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Mã ngành",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Ngành, nghề kinh doanh chính",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "4. Vốn kinh doanh:.........................................................................................................",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "5. Chủ thể thành lập hộ kinh doanh (ghi một trong các chủ thể sau): Cá nhân/ Các thành viên hộ gia đình ",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "6. Thông tin về chủ hộ kinh doanh:",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Họ và tên (ghi bằng chữ in hoa):............................................................................................"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Giới tính:"
+    },
+    {
+     "input": {
+      "key": "chu_hkd.gioi_tinh",
+      "w": 13
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Sinh ngày: "
+    },
+    {
+     "input": {
+      "key": "ngay_sinh",
+      "w": 13
+     }
+    },
+    {
+     "text": "/"
+    },
+    {
+     "input": {
+      "key": "thang_sinh",
+      "w": 12
+     }
+    },
+    {
+     "text": "/"
+    },
+    {
+     "input": {
+      "key": "nam_sinh",
+      "w": 12
+     }
+    },
+    {
+     "text": " Dân tộc: "
+    },
+    {
+     "input": {
+      "key": "chu_hkd.dan_toc",
+      "w": 13
+     }
+    },
+    {
+     "text": " Quốc tịch: "
+    },
+    {
+     "input": {
+      "key": "chu_hkd.quoc_tich",
+      "w": 14
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Số định danh cá nhân: "
+    },
+    {
+     "input": {
+      "key": "chu_hkd.so_cccd",
+      "w": 19
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Nơi thường trú: "
+    },
+    {
+     "input": {
+      "key": "noi_thuong_tru",
+      "w": 16
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Nơi ở hiện tại: "
+    },
+    {
+     "input": {
+      "key": "noi_o_hien_tai",
+      "w": 16
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "7. Danh sách thành viên hộ gia đình đăng ký thành lập hộ kinh doanh (chỉ ghi trong trường hợp các thành viên hộ gia đình đăng ký thành lập hộ kinh doanh):",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "STT"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Tên thành viên"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Quốc tịch"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Nơi ở hiện tại"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Nơi thường trú"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Số định danh cá nhân"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Ghi chú"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "TRƯỞNG PHÒNG\n(Ký, ghi họ tên và đóng dấu)",
+     "b": true
+    }
+   ]
+  }
+ ]
+}

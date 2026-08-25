@@ -1,0 +1,303 @@
+{
+ "id": "PLI_M76",
+ "ten_mau": "Thông báo về việc cấp đăng ký doanh nghiệp",
+ "blocks": [
+  {
+   "t": "p",
+   "align": "right",
+   "runs": [
+    {
+     "text": "Mẫu số 76",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH\nCẤP TỈNH\n-------",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc\n---------------",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Số: "
+    },
+    {
+     "input": {
+      "key": "so_van_ban",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "right",
+   "runs": [
+    {
+     "input": {
+      "key": "dia_diem_ky",
+      "w": 12
+     }
+    },
+    {
+     "text": ", ngày ",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "ngay_ky_vb",
+      "w": 12
+     }
+    },
+    {
+     "text": " tháng ",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "thang_ky_vb",
+      "w": 12
+     }
+    },
+    {
+     "text": " năm ",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "nam_ky_vb",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "THÔNG BÁO",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Về việc cấp đăng ký doanh nghiệp",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "(Áp dụng cho đăng ký doanh nghiệp qua mạng thông tin điện tử)",
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Kính gửi:"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "(Tên doanh nghiệp)"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Địa chỉ: (Địa chỉ trụ sở chính)"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Mã số: (Mã số doanh nghiệp)"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp tỉnh):",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "co_quan_dkkd",
+      "w": 27
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Địa chỉ trụ sở: "
+    },
+    {
+     "input": {
+      "key": "dn.dia_chi_tru_so",
+      "w": 16
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Điện thoại:"
+    },
+    {
+     "input": {
+      "key": "dien_thoai_khac",
+      "w": 13
+     }
+    },
+    {
+     "text": "Số fax:"
+    },
+    {
+     "input": {
+      "key": "fax",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Thư điện tử:"
+    },
+    {
+     "input": {
+      "key": "email_khac",
+      "w": 14
+     }
+    },
+    {
+     "text": "Website:"
+    },
+    {
+     "input": {
+      "key": "website",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Sau khi xem xét hồ sơ đăng ký doanh nghiệp qua mạng thông tin điện tử của doanh nghiệp, số Giấy tiếp nhận hồ sơ và hẹn trả kết quả: ............ đã nhận ngày "
+    },
+    {
+     "input": {
+      "key": "da_nhan_ngay",
+      "w": 60
+     }
+    },
+    {
+     "text": " về việc "
+    },
+    {
+     "input": {
+      "key": "ve_viec",
+      "w": 12
+     }
+    },
+    {
+     "text": ", (Cơ quan đăng ký kinh doanh cấp tỉnh) thông báo hồ sơ đăng ký doanh nghiệp của Ông/Bà đã được chấp thuận."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Trường hợp Cơ quan đăng ký kinh doanh cấp tỉnh chỉ cập nhật, bổ sung thông tin đăng ký doanh nghiệp trong Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp thì ghi:",
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Thông tin đăng ký doanh nghiệp của doanh nghiệp sẽ được cập nhật trong Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp/đăng tải trên Cổng thông tin quốc gia về đăng ký doanh nghiệp."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Trường hợp Cơ quan đăng ký kinh doanh cấp tỉnh trả kết quả là giấy chứng nhận/giấy xác nhận/thông báo cho doanh nghiệp thì ghi:",
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Đề nghị Ông/Bà liên hệ (Cơ quan đăng ký kinh doanh cấp tỉnh) để nhận kết quả."
+    }
+   ]
+  }
+ ]
+}

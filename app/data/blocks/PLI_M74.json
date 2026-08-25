@@ -1,0 +1,205 @@
+{
+ "id": "PLI_M74",
+ "ten_mau": "Công bố nội dung đăng ký doanh nghiệp",
+ "blocks": [
+  {
+   "t": "p",
+   "align": "right",
+   "runs": [
+    {
+     "text": "Mẫu số 74",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "CÔNG BỐ NỘI DUNG ĐĂNG KÝ DOANH NGHIỆP",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "(Áp dụng trong các trường hợp công bố nội dung đăng ký doanh nghiệp khác ngoài các nội dung Mẫu số 72, 73 Phụ lục I Thông tư này)"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "(CƠ QUAN ĐĂNG KÝ KINH DOANH CẤP TỈNH) ",
+     "b": true,
+     "i": true
+    },
+    {
+     "input": {
+      "key": "co_quan_dkkd",
+      "w": 27
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "1. Tên doanh nghiệp:",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên doanh nghiệp viết bằng tiếng Việt:"
+    },
+    {
+     "input": {
+      "key": "dn.ten_tieng_viet",
+      "w": 27
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên doanh nghiệp viết bằng tiếng nước ngoài:"
+    },
+    {
+     "input": {
+      "key": "dn.ten_nuoc_ngoai",
+      "w": 30
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên doanh nghiệp viết tắt:"
+    },
+    {
+     "input": {
+      "key": "dn.ten_viet_tat",
+      "w": 21
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "2. Mã số doanh nghiệp: ",
+     "b": true
+    },
+    {
+     "input": {
+      "key": "dn.ma_so_dn",
+      "w": 19
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "3. Ngày được cấp Giấy chứng nhận đăng ký doanh nghiệp lần đầu: ",
+     "b": true
+    },
+    {
+     "input": {
+      "key": "ngay_cap_lan_dau",
+      "w": 39
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "4. Địa chỉ trụ sở chính: ",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "input": {
+      "key": "dn.dia_chi_tru_so",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "5. Nơi đăng ký: (Cơ quan đăng ký kinh doanh cấp tỉnh)",
+     "b": true
+    },
+    {
+     "input": {
+      "key": "co_quan_dkkd",
+      "w": 34
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "6. Nội dung thông báo: ",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "……………………………………………………………………………………………..................."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "………………………………………………………………………….........................................."
+    }
+   ]
+  }
+ ]
+}

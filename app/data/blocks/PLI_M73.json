@@ -1,0 +1,195 @@
+{
+ "id": "PLI_M73",
+ "ten_mau": "Công bố thay đổi nội dung đăng ký doanh nghiệp",
+ "blocks": [
+  {
+   "t": "p",
+   "align": "right",
+   "runs": [
+    {
+     "text": "Mẫu số 73",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "CÔNG BỐ THAY ĐỔI NỘI DUNG ĐĂNG KÝ DOANH NGHIỆP",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "1. Tên doanh nghiệp: (ghi thông tin mới nhất của doanh nghiệp)",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên doanh nghiệp viết bằng tiếng Việt:"
+    },
+    {
+     "input": {
+      "key": "dn.ten_tieng_viet",
+      "w": 27
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên doanh nghiệp viết bằng tiếng nước ngoài:"
+    },
+    {
+     "input": {
+      "key": "dn.ten_nuoc_ngoai",
+      "w": 30
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên doanh nghiệp viết tắt:"
+    },
+    {
+     "input": {
+      "key": "dn.ten_viet_tat",
+      "w": 21
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "2. Mã số doanh nghiệp: ",
+     "b": true
+    },
+    {
+     "input": {
+      "key": "dn.ma_so_dn",
+      "w": 19
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "3. Nội dung thay đổi",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Khối thông tin cũ: ",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "…………………………………………………………………………………………"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "………………………………………………………………………………..............."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Khối thông tin mới:",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "……………………………………………………………………………………………"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "…………………………………………………………………………….........................."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "4. Ngày cấp đăng ký thay đổi: ",
+     "b": true
+    },
+    {
+     "input": {
+      "key": "ngay_cap",
+      "w": 23
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "5. Nơi đăng ký: (Cơ quan đăng ký kinh doanh cấp tỉnh) ",
+     "b": true
+    },
+    {
+     "input": {
+      "key": "co_quan_dkkd",
+      "w": 35
+     }
+    }
+   ]
+  }
+ ]
+}

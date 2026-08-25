@@ -1,0 +1,253 @@
+{
+ "case_id": "thanh_lap_ctcp",
+ "forms": [
+  "PLI_M04",
+  "PLI_M07",
+  "PLI_M08"
+ ],
+ "shared": {
+  "so_van_ban": "",
+  "dia_diem_ky": "",
+  "ngay_ky_vb": "24",
+  "thang_ky_vb": "8",
+  "nam_ky_vb": "2026",
+  "co_quan_dkkd": "",
+  "dn.ten_tieng_viet": "",
+  "dn.ma_so_dn": "",
+  "cn.ten_tieng_viet": "",
+  "cn.ten_viet_tat": "",
+  "vppd_noi_dung": "",
+  "ho_ten_in_hoa": "",
+  "chu_hkd.gioi_tinh": "",
+  "chu_hkd.so_cccd": "",
+  "chu_hkd.dan_toc": "",
+  "chu_hkd.quoc_tich": "",
+  "cn.ma_so": "",
+  "cn.dia_chi": "",
+  "cn.ten_nuoc_ngoai": "",
+  "hs_nop_ngay": "",
+  "so_gcn_dkkd": "",
+  "hkd_cd.ten_hkd": "",
+  "hkd_cd.so_gcn": "",
+  "hkd_cd.ngay_cap": "",
+  "hkd_cd.noi_cap": "",
+  "hkd_cd.ma_so_thue": "",
+  "hkd_cd.dia_chi": "",
+  "hkd_cd.ten_chu_ho": "",
+  "csbt.ten_nguoi_dai_dien": "",
+  "dn.ten_nuoc_ngoai": "",
+  "dn.ten_viet_tat": "",
+  "von_dau_tu_so": "",
+  "von_dau_tu_chu": "",
+  "ly_do_de_nghi": "",
+  "chu_hkd.ho_ten": "",
+  "dk_thay_doi_lan_thu": "",
+  "dk_thay_doi_ngay": "",
+  "dk_thay_doi_thang": "",
+  "dk_thay_doi_nam": "",
+  "thoi_diem_thay_doi_von": "",
+  "hinh_thuc_tang_giam_von": "",
+  "chk_tt_sap_nhap_dn": "",
+  "chk_doi_dia_chi_tb_thue": "",
+  "chk_de_nghi_cap_gcn": "",
+  "tu_ngay": "",
+  "den_ngay": "",
+  "ly_do_tam_ngung": "",
+  "ho_ten_in_hoa_2": "",
+  "dia_chi_lien_he": "",
+  "ly_do_tiep_tuc": ""
+ },
+ "private": {
+  "PLI_M04": {
+   "dia_chi_chi_tiet": "",
+   "xa_phuong": "",
+   "tinh_thanh": "",
+   "fax": "",
+   "email_tru_so": "",
+   "website": "",
+   "ngay_sinh": "",
+   "thang_sinh": "",
+   "nam_sinh": "",
+   "quoc_gia": "",
+   "ngay_cap": "",
+   "noi_cap": "",
+   "gp_ucsn_so": "",
+   "chk_khu_cong_nghiep": "",
+   "chk_khu_che_xuat": "",
+   "chk_khu_kinh_te": "",
+   "chk_khu_cong_nghe_cao": "",
+   "chk_khong": "",
+   "chk_ctck": "",
+   "so_giay_to_ca_nhan": "",
+   "ngay_het_han": "",
+   "csbt.ten": "",
+   "csbt.so_gcn": "",
+   "csbt.ngay_cap": "",
+   "csbt.ma_so_thue": "",
+   "csbt.dia_chi": "",
+   "dien_thoai_khac": "",
+   "gia_tri_ntte": "",
+   "chk_tt_thanh_lap_moi": "",
+   "chk_tt_chuyen_doi_tu_hkd": "",
+   "chk_tt_chuyen_doi_tu_csbt": "",
+   "chk_gt_cmnd": "",
+   "chk_gt_cccd": "",
+   "chk_gt_ho_chieu": "",
+   "chk_gt_loai_khac": "",
+   "chk_dau_tu_dac_biet": "",
+   "chk_dn_xa_hoi": "",
+   "dn_goc.ten_doanh_nghiep": "",
+   "dn_goc.ma_so_dn": "",
+   "von_dieu_le_chu": "",
+   "menh_gia_co_phan": "",
+   "chk_tt_tach_dn": "",
+   "ndd.quoc_gia": "",
+   "ndd.dien_thoai": "",
+   "ndd.email": "",
+   "von_dieu_le": "",
+   "chk_tt_chia_dn": "",
+   "chk_tt_hop_nhat_dn": "",
+   "chk_tt_chuyen_doi_loai_hinh": ""
+  },
+  "PLI_M08": {
+   "dien_thoai_lien_he": "",
+   "kt.ho_ten": "",
+   "kt.ngay_sinh": "",
+   "kt.thang_sinh": "",
+   "kt.nam_sinh": "",
+   "kt.gioi_tinh": "",
+   "kt.so_cccd": "",
+   "kt.dien_thoai": "",
+   "ngay_bd": "",
+   "thang_bd": "",
+   "nam_bd": "",
+   "ap_dung_tu": "",
+   "so_lao_dong": "",
+   "chk_ht_doc_lap": "",
+   "chk_ht_hop_nhat": "",
+   "chk_ht_phu_thuoc": "",
+   "chk_co": "",
+   "chk_gtgt_khoan_tru": "",
+   "chk_gtgt_truc_tiep_tren_gtgt": "",
+   "chk_gtgt_truc_tiep_doanh_so": "",
+   "chk_gtgt_khong_phai_nop": "",
+   "chk_bc_hang_thang": "",
+   "chk_bc_03_thang": "",
+   "chk_bc_06_thang": "",
+   "gd.ho_ten": "",
+   "gd.ngay_sinh": "",
+   "gd.thang_sinh": "",
+   "gd.nam_sinh": "",
+   "gd.gioi_tinh": "",
+   "gd.so_cccd": "",
+   "gd.dien_thoai": "",
+   "ndd.ngay_sinh": "",
+   "ndd.thang_sinh": "",
+   "ndd.nam_sinh": "",
+   "ndd.gioi_tinh": "",
+   "ndd.so_cccd": "",
+   "ndd.ho_ten": "",
+   "ndd.chuc_vu": "",
+   "ds_co_dong_nn.ten_cd": "",
+   "ds_co_dong_nn.ma_so": "",
+   "ds_co_dong_nn.quoc_gia": "",
+   "ds_co_dong_nn.dia_chi": "",
+   "ds_co_dong_nn.so_co_phan": "",
+   "ds_co_dong_nn.ty_le": "",
+   "ma_so_du_an": "",
+   "co_quan_cap": ""
+  },
+  "PLI_M07": {
+   "ds_co_dong_sang_lap.ho_ten": "",
+   "ds_co_dong_sang_lap.so_cccd": "",
+   "ds_co_dong_sang_lap.ngay_sinh": "",
+   "ds_co_dong_sang_lap.quoc_tich": "",
+   "ds_co_dong_sang_lap.dia_chi": "",
+   "ds_co_dong_sang_lap.so_co_phan": "",
+   "ds_co_dong_sang_lap.ty_le": ""
+  }
+ },
+ "chk": {
+  "0": {
+   "chk_tt_thanh_lap_moi": "",
+   "chk_tt_tach_dn": "",
+   "chk_tt_chia_dn": "",
+   "chk_tt_hop_nhat_dn": "",
+   "chk_tt_chuyen_doi_loai_hinh": "",
+   "chk_tt_chuyen_doi_tu_hkd": "",
+   "chk_tt_chuyen_doi_tu_csbt": ""
+  },
+  "1": {
+   "chk_gt_cmnd": "",
+   "chk_gt_cccd": "",
+   "chk_gt_ho_chieu": "",
+   "chk_gt_loai_khac": ""
+  },
+  "2": {
+   "chk_dau_tu_dac_biet": ""
+  },
+  "3": {
+   "chk_dn_xa_hoi": ""
+  },
+  "4": {
+   "chk_ctck": ""
+  },
+  "5": {
+   "chk_khu_cong_nghiep": "",
+   "chk_khu_che_xuat": "",
+   "chk_khu_kinh_te": "",
+   "chk_khu_cong_nghe_cao": ""
+  },
+  "6": {
+   "chk_khong": ""
+  },
+  "7": {
+   "chk_ht_doc_lap": "",
+   "chk_ht_hop_nhat": "",
+   "chk_ht_phu_thuoc": ""
+  },
+  "8": {
+   "chk_co": ""
+  },
+  "9": {
+   "chk_khong": ""
+  },
+  "10": {
+   "chk_gtgt_khoan_tru": "",
+   "chk_gtgt_truc_tiep_tren_gtgt": "",
+   "chk_gtgt_truc_tiep_doanh_so": "",
+   "chk_gtgt_khong_phai_nop": ""
+  },
+  "11": {
+   "chk_bc_hang_thang": "",
+   "chk_bc_03_thang": "",
+   "chk_bc_06_thang": ""
+  }
+ },
+ "tables": {
+  "PLI_M07|ds_co_dong_sang_lap": [
+   {
+    "ho_ten": "",
+    "ngay_sinh": "",
+    "gioi_tinh": "",
+    "so_cccd": "",
+    "quoc_tich": "",
+    "dia_chi": "",
+    "so_co_phan": "",
+    "ty_le": "",
+    "chu_ky": ""
+   }
+  ],
+  "PLI_M08|ds_co_dong_nn": [
+   {
+    "ten_cd": "",
+    "quoc_gia": "",
+    "ma_so": "",
+    "dia_chi": "",
+    "so_co_phan": "",
+    "ty_le": "",
+    "chu_ky": ""
+   }
+  ]
+ }
+}

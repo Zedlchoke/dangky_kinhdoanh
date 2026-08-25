@@ -1,0 +1,110 @@
+{
+ "case_id": "lap_chi_nhanh_vpdd",
+ "forms": [
+  "PLI_M17"
+ ],
+ "shared": {
+  "dia_diem_ky": "",
+  "ngay_ky_vb": "24",
+  "thang_ky_vb": "8",
+  "nam_ky_vb": "2026",
+  "co_quan_dkkd": "",
+  "dn.ten_tieng_viet": "",
+  "dn.ma_so_dn": "",
+  "cn.ten_tieng_viet": "",
+  "cn.ten_viet_tat": "",
+  "chu_hkd.gioi_tinh": "",
+  "chu_hkd.so_cccd": "",
+  "chu_hkd.dan_toc": "",
+  "chu_hkd.quoc_tich": "",
+  "cn.ma_so": "",
+  "cn.dia_chi": "",
+  "cn.ten_nuoc_ngoai": "",
+  "hs_nop_ngay": "",
+  "so_gcn_dkkd": ""
+ },
+ "private": {
+  "PLI_M17": {
+   "so_van_ban": "",
+   "dia_chi_chi_tiet": "",
+   "xa_phuong": "",
+   "tinh_thanh": "",
+   "dien_thoai_lien_he": "",
+   "fax": "",
+   "email_tru_so": "",
+   "website": "",
+   "vppd_noi_dung": "",
+   "ho_ten_in_hoa": "",
+   "ngay_sinh": "",
+   "thang_sinh": "",
+   "nam_sinh": "",
+   "quoc_gia": "",
+   "ngay_cap": "",
+   "noi_cap": "",
+   "kt.ho_ten": "",
+   "kt.ngay_sinh": "",
+   "kt.thang_sinh": "",
+   "kt.nam_sinh": "",
+   "kt.gioi_tinh": "",
+   "kt.so_cccd": "",
+   "kt.dien_thoai": "",
+   "ngay_bd": "",
+   "thang_bd": "",
+   "nam_bd": "",
+   "ap_dung_tu": "",
+   "so_lao_dong": "",
+   "gp_ucsn_so": "",
+   "chk_khu_cong_nghiep": "",
+   "chk_khu_che_xuat": "",
+   "chk_khu_kinh_te": "",
+   "chk_khu_cong_nghe_cao": "",
+   "chk_ht_doc_lap": "",
+   "chk_ht_hop_nhat": "",
+   "chk_ht_phu_thuoc": "",
+   "chk_co": "",
+   "chk_khong": "",
+   "chk_gtgt_khoan_tru": "",
+   "chk_gtgt_truc_tiep_tren_gtgt": "",
+   "chk_gtgt_truc_tiep_doanh_so": "",
+   "chk_gtgt_khong_phai_nop": "",
+   "chk_bc_hang_thang": "",
+   "chk_bc_03_thang": "",
+   "chk_bc_06_thang": "",
+   "chk_ctck": ""
+  }
+ },
+ "chk": {
+  "0": {
+   "chk_khu_cong_nghiep": "",
+   "chk_khu_che_xuat": "",
+   "chk_khu_kinh_te": "",
+   "chk_khu_cong_nghe_cao": ""
+  },
+  "1": {
+   "chk_ht_doc_lap": "",
+   "chk_ht_hop_nhat": "",
+   "chk_ht_phu_thuoc": ""
+  },
+  "2": {
+   "chk_co": ""
+  },
+  "3": {
+   "chk_khong": ""
+  },
+  "4": {
+   "chk_gtgt_khoan_tru": "",
+   "chk_gtgt_truc_tiep_tren_gtgt": "",
+   "chk_gtgt_truc_tiep_doanh_so": "",
+   "chk_gtgt_khong_phai_nop": ""
+  },
+  "5": {
+   "chk_bc_hang_thang": "",
+   "chk_bc_03_thang": "",
+   "chk_bc_06_thang": ""
+  },
+  "6": {
+   "chk_ctck": ""
+  }
+ },
+ "tables": {}
+}

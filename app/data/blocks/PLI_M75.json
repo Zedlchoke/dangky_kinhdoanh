@@ -1,0 +1,781 @@
+{
+ "id": "PLI_M75",
+ "ten_mau": "Thông báo về việc khôi phục Giấy chứng nhận đăng ký doanh nghiệp/Giấy chứng nhận đăng ký hoạt động chi nhánh, văn phòng đại diện, Giấy chứng nhận đăng ký địa điểm kinh doanh",
+ "blocks": [
+  {
+   "t": "p",
+   "align": "right",
+   "runs": [
+    {
+     "text": "Mẫu số 75",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH\nCẤP TỈNH\n-------",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc\n---------------",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Số: "
+    },
+    {
+     "input": {
+      "key": "so_van_ban",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "right",
+   "runs": [
+    {
+     "input": {
+      "key": "dia_diem_ky",
+      "w": 12
+     }
+    },
+    {
+     "text": ", ngày ",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "ngay_ky_vb",
+      "w": 12
+     }
+    },
+    {
+     "text": " tháng ",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "thang_ky_vb",
+      "w": 12
+     }
+    },
+    {
+     "text": " năm ",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "nam_ky_vb",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "THÔNG BÁO",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Về việc khôi phục Giấy chứng nhận đăng ký doanh nghiệp/Giấy chứng nhận đăng ký hoạt động chi nhánh, văn phòng đại diện, Giấy chứng nhận đăng ký địa điểm kinh doanh",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Căn cứ Nghị định số 168/2025/NĐ-CP ngày 30/6/2025 của Chính phủ về đăng ký doanh nghiệp, "
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Căn cứ Quyết định số "
+    },
+    {
+     "input": {
+      "key": "can_cu",
+      "w": 18
+     }
+    },
+    {
+     "text": " ngày "
+    },
+    {
+     "input": {
+      "key": "ngay_ky_vb",
+      "w": 12
+     }
+    },
+    {
+     "text": " tháng "
+    },
+    {
+     "input": {
+      "key": "thang_ky_vb",
+      "w": 12
+     }
+    },
+    {
+     "text": " năm "
+    },
+    {
+     "input": {
+      "key": "nam_ky_vb",
+      "w": 12
+     }
+    },
+    {
+     "text": " về việc huỷ bỏ Quyết định thu hồi Giấy chứng nhận đăng ký doanh nghiệp/Giấy chứng nhận đăng ký hoạt động chi nhánh, văn phòng đại diện, Giấy chứng nhận đăng ký địa điểm kinh doanh."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp tỉnh) thông báo về việc khôi phục Giấy chứng nhận đăng ký doanh nghiệp/Giấy chứng nhận đăng ký hoạt động chi nhánh, văn phòng đại diện, Giấy chứng nhận đăng ký địa điểm kinh doanh đối với doanh nghiệp như sau:",
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "● Đối với doanh nghiệp thì ghi:",
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên doanh nghiệp (ghi bằng chữ in hoa):"
+    },
+    {
+     "input": {
+      "key": "dn.ten_tieng_viet",
+      "w": 27
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Mã số doanh nghiệp/Mã số thuế:"
+    },
+    {
+     "input": {
+      "key": "dn.ma_so_dn",
+      "w": 23
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Đăng ký lần đầu, ngày"
+    },
+    {
+     "input": {
+      "key": "dk_lan_dau_ngay",
+      "w": 18
+     }
+    },
+    {
+     "text": "tháng"
+    },
+    {
+     "input": {
+      "key": "dk_lan_dau_thang",
+      "w": 12
+     }
+    },
+    {
+     "text": "năm"
+    },
+    {
+     "input": {
+      "key": "dk_lan_dau_nam",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Đăng ký thay đổi lần thứ: "
+    },
+    {
+     "input": {
+      "key": "dk_thay_doi_lan_thu",
+      "w": 21
+     }
+    },
+    {
+     "text": ", ngày"
+    },
+    {
+     "input": {
+      "key": "dk_thay_doi_ngay",
+      "w": 12
+     }
+    },
+    {
+     "text": "tháng"
+    },
+    {
+     "input": {
+      "key": "dk_thay_doi_thang",
+      "w": 12
+     }
+    },
+    {
+     "text": "năm"
+    },
+    {
+     "input": {
+      "key": "dk_thay_doi_nam",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Nơi cấp:"
+    },
+    {
+     "input": {
+      "key": "noi_cap",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Số Giấy chứng nhận đăng ký kinh doanh (đối với trường hợp không có mã số doanh nghiệp/mã số thuế): "
+    },
+    {
+     "input": {
+      "key": "so_gcn_dkkd",
+      "w": 57
+     }
+    },
+    {
+     "text": " Ngày cấp "
+    },
+    {
+     "input": {
+      "key": "ngay_cap",
+      "w": 13
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tình trạng pháp lý: "
+    },
+    {
+     "input": {
+      "key": "tinh_trang_phap_ly",
+      "w": 18
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Địa chỉ trụ sở chính:"
+    },
+    {
+     "input": {
+      "key": "dn.dia_chi_tru_so",
+      "w": 18
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Điện thoại: "
+    },
+    {
+     "input": {
+      "key": "dien_thoai_khac",
+      "w": 14
+     }
+    },
+    {
+     "text": "Số fax:"
+    },
+    {
+     "input": {
+      "key": "fax",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Thư điện tử: "
+    },
+    {
+     "input": {
+      "key": "email_khac",
+      "w": 14
+     }
+    },
+    {
+     "text": "Website:"
+    },
+    {
+     "input": {
+      "key": "website",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Có các chi nhánh/văn phòng đại diện/địa điểm kinh doanh:"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên, mã số, địa chỉ, tình trạng pháp lý chi nhánh:............................................................."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên, mã số, địa chỉ, tình trạng pháp lý văn phòng đại diện:.............................................."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên, mã số, địa chỉ, tình trạng pháp lý địa điểm kinh doanh:............................................."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "● Đối với chi nhánh/văn phòng đại diện/địa điểm kinh doanh thì ghi:",
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh (ghi bằng chữ in hoa): "
+    },
+    {
+     "input": {
+      "key": "cn.ten_tieng_viet",
+      "w": 46
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Mã số/mã số thuế của chi nhánh/văn phòng đại diện/mã số địa điểm kinh doanh:"
+    },
+    {
+     "input": {
+      "key": "cn.ma_so_2",
+      "w": 46
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Đăng ký lần đầu, ngày"
+    },
+    {
+     "input": {
+      "key": "dk_lan_dau_ngay",
+      "w": 18
+     }
+    },
+    {
+     "text": "tháng"
+    },
+    {
+     "input": {
+      "key": "dk_lan_dau_thang",
+      "w": 12
+     }
+    },
+    {
+     "text": "năm"
+    },
+    {
+     "input": {
+      "key": "dk_lan_dau_nam",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Đăng ký thay đổi lần thứ: "
+    },
+    {
+     "input": {
+      "key": "dk_thay_doi_lan_thu",
+      "w": 21
+     }
+    },
+    {
+     "text": ", ngày"
+    },
+    {
+     "input": {
+      "key": "dk_thay_doi_ngay",
+      "w": 12
+     }
+    },
+    {
+     "text": "tháng"
+    },
+    {
+     "input": {
+      "key": "dk_thay_doi_thang",
+      "w": 12
+     }
+    },
+    {
+     "text": "năm"
+    },
+    {
+     "input": {
+      "key": "dk_thay_doi_nam",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Nơi cấp:"
+    },
+    {
+     "input": {
+      "key": "noi_cap",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Số Giấy chứng nhận đăng ký hoạt động (trường hợp không có mã số/mã số thuế của chi nhánh/văn phòng đại diện):"
+    },
+    {
+     "input": {
+      "key": "so_gcn_hoat_dong",
+      "w": 60
+     }
+    },
+    {
+     "text": " Ngày cấp: "
+    },
+    {
+     "input": {
+      "key": "ngay_cap",
+      "w": 13
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tình trạng pháp lý: "
+    },
+    {
+     "input": {
+      "key": "tinh_trang_phap_ly",
+      "w": 18
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Có các địa điểm kinh doanh trực thuộc chi nhánh:"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên, mã số, địa chỉ, tình trạng pháp lý địa điểm kinh doanh:........................................"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Là chi nhánh/văn phòng đại diện/địa điểm kinh doanh của doanh nghiệp sau:"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên doanh nghiệp (ghi bằng chữ in hoa):"
+    },
+    {
+     "input": {
+      "key": "dn.ten_tieng_viet",
+      "w": 27
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Mã số doanh nghiệp/Mã số thuế:"
+    },
+    {
+     "input": {
+      "key": "dn.ma_so_dn",
+      "w": 23
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Địa chỉ trụ sở chính:"
+    },
+    {
+     "input": {
+      "key": "dn.dia_chi_tru_so",
+      "w": 18
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Điện thoại:"
+    },
+    {
+     "input": {
+      "key": "dien_thoai_khac",
+      "w": 13
+     }
+    },
+    {
+     "text": "Số fax:"
+    },
+    {
+     "input": {
+      "key": "fax",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Thư điện tử:"
+    },
+    {
+     "input": {
+      "key": "email_khac",
+      "w": 14
+     }
+    },
+    {
+     "text": "Website:"
+    },
+    {
+     "input": {
+      "key": "website",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp tỉnh) gửi thông báo tới (Tên Cơ quan quản lý thuế ",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "co_quan_dkkd",
+      "w": 49
+     }
+    },
+    {
+     "text": ") để phối hợp quản lý.",
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Nơi nhận:\n- Cơ quan quản lý thuế (tỉnh, thành phố nơi doanh nghiệp đăng ký trụ sở);\n- Lưu: ",
+     "b": true,
+     "i": true
+    },
+    {
+     "input": {
+      "key": "noi_nhan",
+      "w": 53
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "TRƯỞNG ĐƠN VỊ\n(Ký, ghi họ tên và đóng dấu)",
+     "b": true
+    }
+   ]
+  }
+ ]
+}

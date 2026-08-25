@@ -1,0 +1,346 @@
+{
+ "id": "PLI_M67",
+ "ten_mau": "Thông báo về việc chấm dứt hoạt động chi nhánh/văn phòng đại diện/địa điểm kinh doanh",
+ "blocks": [
+  {
+   "t": "p",
+   "align": "right",
+   "runs": [
+    {
+     "text": "Mẫu số 67",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH\nCẤP TỈNH\n-------",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc\n---------------",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Số: "
+    },
+    {
+     "input": {
+      "key": "so_van_ban",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "right",
+   "runs": [
+    {
+     "input": {
+      "key": "dia_diem_ky",
+      "w": 12
+     }
+    },
+    {
+     "text": ", ngày ",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "ngay_ky_vb",
+      "w": 12
+     }
+    },
+    {
+     "text": " tháng ",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "thang_ky_vb",
+      "w": 12
+     }
+    },
+    {
+     "text": " năm ",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "nam_ky_vb",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "THÔNG BÁO",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Về việc chấm dứt hoạt động chi nhánh/ văn phòng đại diện/địa điểm kinh doanh",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp tỉnh) thông báo (các) chi nhánh/văn phòng đại diện/địa điểm kinh doanh sau đây của doanh nghiệp: (tên doanh nghiệp) ",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "co_quan_dkkd",
+      "w": 60
+     }
+    },
+    {
+     "text": ", mã số doanh nghiệp: .........................................., địa chỉ trụ sở chính: ",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "dn.dia_chi_tru_so",
+      "w": 52
+     }
+    },
+    {
+     "text": ", do Ông/Bà1: .............................. là người đại diện theo pháp luật, đã chấm dứt hoạt động:"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "1. Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh (ghi bằng chữ in hoa): ",
+     "b": true
+    },
+    {
+     "input": {
+      "key": "cn.ten_tieng_viet",
+      "w": 47
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Mã số chi nhánh/văn phòng đại diện/địa điểm kinh doanh hoặc mã số thuế của chi nhánh/văn phòng đại diện: "
+    },
+    {
+     "input": {
+      "key": "cn.ma_so",
+      "w": 60
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "2. Địa chỉ chi nhánh/văn phòng đại diện/địa điểm kinh doanh:",
+     "b": true
+    },
+    {
+     "input": {
+      "key": "cn.dia_chi",
+      "w": 38
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Điện thoại (nếu có): "
+    },
+    {
+     "input": {
+      "key": "dien_thoai_lien_he",
+      "w": 18
+     }
+    },
+    {
+     "text": "Fax (nếu có): "
+    },
+    {
+     "input": {
+      "key": "fax",
+      "w": 15
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Thư điện tử (nếu có): "
+    },
+    {
+     "input": {
+      "key": "email_tru_so",
+      "w": 19
+     }
+    },
+    {
+     "text": "Website (nếu có): "
+    },
+    {
+     "input": {
+      "key": "website",
+      "w": 17
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "3. Thông tin về chi nhánh chủ quản (đối với trường hợp chấm dứt hoạt động của địa điểm kinh doanh trực thuộc chi nhánh):",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên chi nhánh:"
+    },
+    {
+     "input": {
+      "key": "cn.ten_tieng_viet",
+      "w": 15
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Địa chỉ chi nhánh:"
+    },
+    {
+     "input": {
+      "key": "cn.dia_chi",
+      "w": 17
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Mã số chi nhánh/Mã số thuế của chi nhánh:"
+    },
+    {
+     "input": {
+      "key": "cn.ma_so",
+      "w": 28
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Nơi nhận: \n- Tên, địa chỉ doanh nghiệp;\n- Cơ quan hải quan … (tỉnh, thành phố nơi doanh nghiệp đặt trụ sở chính) (để biết);\n- Cơ quan quản lý thị trường ",
+     "b": true,
+     "i": true
+    },
+    {
+     "input": {
+      "key": "noi_nhan",
+      "w": 60
+     }
+    },
+    {
+     "text": " (tỉnh, thành phố nơi doanh nghiệp đặt trụ sở chính) (để biết);\n- ……….;\n- Lưu: "
+    },
+    {
+     "input": {
+      "key": "luu_vb",
+      "w": 47
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "TRƯỞNG ĐƠN VỊ\n(Ký, ghi họ tên và đóng dấu)",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "_______________________________________"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": " Ghi tên của tất cả người đại diện theo pháp luật trong trường hợp công ty có nhiều hơn 01 người đại diện theo pháp luật."
+    }
+   ]
+  }
+ ]
+}

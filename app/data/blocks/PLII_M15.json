@@ -1,0 +1,423 @@
+{
+ "id": "PLII_M15",
+ "ten_mau": "Quyết định về việc thu hồi Giấy chứng nhận đăng ký hộ kinh doanh của lần đăng ký thay đổi",
+ "blocks": [
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "PL2 - Mau so 15: Quyết định về việc thu hồi Giấy chứng nhận đăng ký hộ kinh doanh của lần đăng ký thay đổi"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Mẫu số 15"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH\nCẤP XÃ\n-----------",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc\n------------------",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Số: "
+    },
+    {
+     "input": {
+      "key": "so_van_ban",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "right",
+   "runs": [
+    {
+     "input": {
+      "key": "dia_diem_ky",
+      "w": 12
+     }
+    },
+    {
+     "text": ", ngày",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "ngay_ky_vb",
+      "w": 12
+     }
+    },
+    {
+     "text": "tháng",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "thang_ky_vb",
+      "w": 12
+     }
+    },
+    {
+     "text": "năm",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "nam_ky_vb",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "QUYẾT ĐỊNH",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Về việc thu hồi Giấy chứng nhận đăng ký hộ kinh doanh của lần đăng ký thay đổi",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "TRƯỞNG PHÒNG ...",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Căn cứ Nghị định số 168/2025/NĐ-CP ngày 30/6/2025 của Chính phủ về đăng ký doanh nghiệp;"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Căn cứ Thông báo số "
+    },
+    {
+     "input": {
+      "key": "can_cu",
+      "w": 18
+     }
+    },
+    {
+     "text": " ngày "
+    },
+    {
+     "input": {
+      "key": "ngay_ky_vb",
+      "w": 12
+     }
+    },
+    {
+     "text": "/…./….. của (Cơ quan đăng ký kinh doanh cấp xã) về việc vi phạm của hộ kinh doanh; "
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Căn cứ "
+    },
+    {
+     "input": {
+      "key": "can_cu",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "QUYẾT ĐỊNH:",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Điều 1. Thu hồi Giấy chứng nhận đăng ký hộ kinh doanh của lần đăng ký thay đổi như sau:",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên hộ kinh doanh (ghi bằng chữ in hoa): "
+    },
+    {
+     "input": {
+      "key": "hkd_ten_tieng_viet_2",
+      "w": 28
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Mã số hộ kinh doanh: "
+    },
+    {
+     "input": {
+      "key": "hkd_ma_so",
+      "w": 18
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Trụ sở của hộ kinh doanh: "
+    },
+    {
+     "input": {
+      "key": "hkd_tru_so",
+      "w": 21
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Đăng ký thay đổi lần thứ: "
+    },
+    {
+     "input": {
+      "key": "dk_thay_doi_lan_thu",
+      "w": 21
+     }
+    },
+    {
+     "text": ", ngày"
+    },
+    {
+     "input": {
+      "key": "dk_thay_doi_ngay",
+      "w": 12
+     }
+    },
+    {
+     "text": "tháng"
+    },
+    {
+     "input": {
+      "key": "dk_thay_doi_thang",
+      "w": 12
+     }
+    },
+    {
+     "text": "năm"
+    },
+    {
+     "input": {
+      "key": "dk_thay_doi_nam",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Nơi cấp:"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "* Trường hợp thực hiện thu hồi theo quyết định của Tòa án thì ghi cụ thể nội dung thu hồi theo quyết định của Tòa án.",
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Điều 2. Cấp Giấy chứng nhận đăng ký hộ kinh doanh trên cơ sở hồ sơ hợp lệ của lần thay đổi thứ…../đăng ký lần đầu:",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Ngày cấp: "
+    },
+    {
+     "input": {
+      "key": "ngay_cap",
+      "w": 13
+     }
+    },
+    {
+     "text": "Nơi cấp: "
+    },
+    {
+     "input": {
+      "key": "noi_cap",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Trụ sở của hộ kinh doanh: "
+    },
+    {
+     "input": {
+      "key": "hkd_tru_so",
+      "w": 21
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "* Trường hợp thực hiện theo quyết định của Tòa án thì ghi cụ thể nội dung theo quyết định của Tòa án.",
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Điều 3. (Cơ quan đăng ký kinh doanh cấp xã) đăng tải quyết định thu hồi này trên Cổng thông tin quốc gia về đăng ký doanh nghiệp.",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Điều 4. Quyết định này có hiệu lực từ ngày ký.",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Nơi nhận:\n- Tên, trụ sở của hộ kinh doanh bị thu hồi Giấy chứng nhận đăng ký hộ kinh doanh;\n- Cơ quan quản lý thuế … (xã, phường, đặc khu nơi hộ kinh doanh đăng ký trụ sở của HKD);\n- ",
+     "b": true,
+     "i": true
+    },
+    {
+     "input": {
+      "key": "noi_nhan",
+      "w": 60
+     }
+    },
+    {
+     "text": ";\n- Lưu: "
+    },
+    {
+     "input": {
+      "key": "luu_vb",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "TRƯỞNG PHÒNG\n(Ký, ghi họ tên và đóng dấu)",
+     "b": true
+    }
+   ]
+  }
+ ]
+}

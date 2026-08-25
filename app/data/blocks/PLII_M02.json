@@ -1,0 +1,1953 @@
+{
+ "id": "PLII_M02",
+ "ten_mau": "Giấy đề nghị đăng ký thay đổi nội dung đăng ký hộ kinh doanh",
+ "blocks": [
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "PL2 - Mau so 2: Giấy đề nghị đăng ký thay đổi nội dung đăng ký hộ kinh doanh"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Mẫu số 2"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "TÊN HỘ KINH DOANH\n-------",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc\n---------------",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Số: "
+    },
+    {
+     "input": {
+      "key": "so_van_ban",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "right",
+   "runs": [
+    {
+     "input": {
+      "key": "dia_diem_ky",
+      "w": 12
+     }
+    },
+    {
+     "text": ", ngày",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "ngay_ky_vb",
+      "w": 12
+     }
+    },
+    {
+     "text": " tháng",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "thang_ky_vb",
+      "w": 12
+     }
+    },
+    {
+     "text": " năm ",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "nam_ky_vb",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "GIẤY ĐỀ NGHỊ",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Đăng ký thay đổi nội dung đăng ký hộ kinh doanh",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": " (Dùng trong trường hợp đăng ký thay đổi nội dung đăng ký hộ kinh doanh, đăng ký cập nhật, bổ sung, hiệu đính thông tin đăng ký hộ kinh doanh, đăng ký cấp đổi Giấy chứng nhận đăng ký hộ kinh doanh)",
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Kính gửi: (Cơ quan đăng ký kinh doanh cấp xã) "
+    },
+    {
+     "input": {
+      "key": "co_quan_dkkd",
+      "w": 31
+     }
+    },
+    {
+     "text": " 1"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên hộ kinh doanh (ghi bằng chữ in hoa): "
+    },
+    {
+     "input": {
+      "key": "hkd_ten_tieng_viet_2",
+      "w": 28
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Mã số hộ kinh doanh/Mã số đăng ký hộ kinh doanh/Mã số thuế: "
+    },
+    {
+     "input": {
+      "key": "hkd_ma_so",
+      "w": 38
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "A. ĐĂNG KÝ THAY ĐỔI NỘI DUNG ĐĂNG KÝ HỘ KINH DOANH",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Hộ kinh doanh đăng ký thay đổi nội dung đăng ký hộ kinh doanh như sau:",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Lưu ý:",
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Hộ kinh doanh chọn và kê khai vào trang tương ứng với nội dung đăng ký thay đổi tại Mục này.",
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Trường hợp hộ kinh doanh được cấp giấy chứng nhận đăng ký kinh doanh hoặc giấy chứng nhận đăng ký hộ kinh doanh trước ngày Nghị định số 168/2025/NĐ-CP ngày 30/6/2025 của Chính phủ về đăng ký doanh nghiệp có hiệu lực thi hành thì chọn và kê khai vào trang tương ứng với nội dung đăng ký thay đổi tại Mục này và kê khai đầy đủ thông tin tại Mục C của Mẫu này.",
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "ĐĂNG KÝ THAY ĐỔI TÊN HỘ KINH DOANH"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên hộ kinh doanh viết bằng tiếng Việt sau khi thay đổi (ghi bằng chữ in hoa): "
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "input": {
+      "key": "hkd_ten_tieng_viet",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên hộ kinh doanh viết bằng tiếng nước ngoài sau khi thay đổi (nếu có):"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "input": {
+      "key": "hkd_ten_tieng_nuoc",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên hộ kinh doanh viết tắt sau khi thay đổi (nếu có):"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "input": {
+      "key": "hkd_ten_viet_tat",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "ĐĂNG KÝ THAY ĐỔI TRỤ SỞ CỦA HỘ KINH DOANH"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Trụ sở của hộ kinh doanh sau khi thay đổi:",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Số nhà/phòng, ngách/hẻm, ngõ/kiệt, đường/phố/đại lộ, tổ/xóm/ấp/thôn:"
+    },
+    {
+     "input": {
+      "key": "dia_chi_chi_tiet",
+      "w": 42
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Xã/Phường/Đặc khu:"
+    },
+    {
+     "input": {
+      "key": "xa_phuong",
+      "w": 17
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tỉnh/Thành phố trực thuộc trung ương:"
+    },
+    {
+     "input": {
+      "key": "tinh_thanh",
+      "w": 26
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Điện thoại:"
+    },
+    {
+     "input": {
+      "key": "dien_thoai_khac",
+      "w": 13
+     }
+    },
+    {
+     "text": "Fax (nếu có):"
+    },
+    {
+     "input": {
+      "key": "fax",
+      "w": 14
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Thư điện tử (nếu có):"
+    },
+    {
+     "input": {
+      "key": "email_tru_so",
+      "w": 18
+     }
+    },
+    {
+     "text": "Website (nếu có):"
+    },
+    {
+     "input": {
+      "key": "website",
+      "w": 16
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "input": {
+      "key": "chk_khong_kd_tai_tru_so",
+      "chk": true
+     }
+    },
+    {
+     "text": " Không kinh doanh tại trụ sở (đánh dấu X vào ô này nếu hộ kinh doanh không có địa điểm kinh doanh cố định)"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Hộ kinh doanh cam kết trụ sở của hộ kinh doanh thuộc quyền sử dụng hợp pháp của hộ kinh doanh và được sử dụng đúng mục đích theo quy định của pháp luật (hộ kinh doanh chỉ cam kết trong trường hợp kinh doanh tại trụ sở)."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "ĐĂNG KÝ THAY ĐỔI CHỦ HỘ KINH DOANH"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Thay đổi chủ hộ kinh doanh do (đánh dấu X vào ô thích hợp):"
+    }
+   ]
+  },
+  {
+   "t": "chk",
+   "label": "Thành viên hộ gia đình uỷ quyền cho thành viên khác làm chủ hộ kinh doanh",
+   "key": "chk_ct_ho_gia_dinh"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Chủ hộ kinh doanh chết hoặc bị Tòa án tuyên bố đã chết, mất tích, bị hạn chế hoặc mất năng lực hành vi dân sự, có khó khăn trong nhận thức, làm chủ hành vi"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "☐"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "1. Chủ hộ kinh doanh trước khi thay đổi:",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Họ và tên (ghi họ tên bằng chữ in hoa):"
+    },
+    {
+     "input": {
+      "key": "chu_hkd.ho_ten",
+      "w": 27
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Sinh ngày: "
+    },
+    {
+     "input": {
+      "key": "ngay_sinh",
+      "w": 13
+     }
+    },
+    {
+     "text": "/"
+    },
+    {
+     "input": {
+      "key": "thang_sinh",
+      "w": 12
+     }
+    },
+    {
+     "text": "/"
+    },
+    {
+     "input": {
+      "key": "nam_sinh",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Giới tính: "
+    },
+    {
+     "input": {
+      "key": "chu_hkd.gioi_tinh",
+      "w": 13
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Số định danh cá nhân (nếu có): "
+    },
+    {
+     "input": {
+      "key": "chu_hkd.so_cccd",
+      "w": 23
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Điện thoại (nếu có): "
+    },
+    {
+     "input": {
+      "key": "dien_thoai_lien_he",
+      "w": 18
+     }
+    },
+    {
+     "text": " Thư điện tử (nếu có): "
+    },
+    {
+     "input": {
+      "key": "email_tru_so",
+      "w": 19
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu về đăng ký hộ kinh doanh với Cơ sở dữ liệu quốc gia về dân cư bị gián đoạn thì đề nghị kê khai thêm các thông tin cá nhân dưới đây:",
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Dân tộc: "
+    },
+    {
+     "input": {
+      "key": "chu_hkd.dan_toc",
+      "w": 12
+     }
+    },
+    {
+     "text": " Quốc tịch: "
+    },
+    {
+     "input": {
+      "key": "chu_hkd.quoc_tich",
+      "w": 14
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Nơi thường trú:"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Số nhà/phòng, ngách/hẻm, ngõ/kiệt, đường/phố/đại lộ, tổ/xóm/ấp/thôn: "
+    },
+    {
+     "input": {
+      "key": "dia_chi_chi_tiet",
+      "w": 42
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Xã/Phường/Đặc khu: "
+    },
+    {
+     "input": {
+      "key": "xa_phuong",
+      "w": 17
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tỉnh/Thành phố trực thuộc trung ương: "
+    },
+    {
+     "input": {
+      "key": "tinh_thanh",
+      "w": 27
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Nơi ở hiện tại:"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Số nhà/phòng, ngách/hẻm, ngõ/kiệt, đường/phố/đại lộ, tổ/xóm/ấp/thôn: "
+    },
+    {
+     "input": {
+      "key": "dia_chi_chi_tiet",
+      "w": 42
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Xã/Phường/Đặc khu: "
+    },
+    {
+     "input": {
+      "key": "xa_phuong",
+      "w": 17
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tỉnh/Thành phố trực thuộc trung ương: "
+    },
+    {
+     "input": {
+      "key": "tinh_thanh",
+      "w": 27
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "2. Chủ hộ kinh doanh sau khi thay đổi:",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Họ và tên (ghi họ tên bằng chữ in hoa): "
+    },
+    {
+     "input": {
+      "key": "chu_hkd.ho_ten",
+      "w": 28
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Sinh ngày: "
+    },
+    {
+     "input": {
+      "key": "ngay_sinh",
+      "w": 13
+     }
+    },
+    {
+     "text": "/"
+    },
+    {
+     "input": {
+      "key": "thang_sinh",
+      "w": 12
+     }
+    },
+    {
+     "text": "/"
+    },
+    {
+     "input": {
+      "key": "nam_sinh",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Giới tính: "
+    },
+    {
+     "input": {
+      "key": "chu_hkd.gioi_tinh",
+      "w": 13
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Số định danh cá nhân (nếu có): "
+    },
+    {
+     "input": {
+      "key": "chu_hkd.so_cccd",
+      "w": 23
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Điện thoại (nếu có): "
+    },
+    {
+     "input": {
+      "key": "dien_thoai_lien_he",
+      "w": 18
+     }
+    },
+    {
+     "text": " Thư điện tử (nếu có): "
+    },
+    {
+     "input": {
+      "key": "email_tru_so",
+      "w": 19
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Trường hợp việc kết nối giữa Cơ sở dữ liệu về đăng ký hộ kinh doanh với Cơ sở dữ liệu quốc gia về dân cư bị gián đoạn thì đề nghị kê khai thêm các thông tin cá nhân dưới đây:",
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Dân tộc: "
+    },
+    {
+     "input": {
+      "key": "chu_hkd.dan_toc",
+      "w": 12
+     }
+    },
+    {
+     "text": " Quốc tịch: "
+    },
+    {
+     "input": {
+      "key": "chu_hkd.quoc_tich",
+      "w": 14
+     }
+    },
+    {
+     "text": " "
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Nơi thường trú:"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Số nhà/phòng, ngách/hẻm, ngõ/kiệt, đường/phố/đại lộ, tổ/xóm/ấp/thôn: "
+    },
+    {
+     "input": {
+      "key": "dia_chi_chi_tiet",
+      "w": 42
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Xã/Phường/Đặc khu: "
+    },
+    {
+     "input": {
+      "key": "xa_phuong",
+      "w": 17
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tỉnh/Thành phố trực thuộc trung ương: "
+    },
+    {
+     "input": {
+      "key": "tinh_thanh",
+      "w": 27
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Nơi ở hiện tại:"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Số nhà/phòng, ngách/hẻm, ngõ/kiệt, đường/phố/đại lộ, tổ/xóm/ấp/thôn: "
+    },
+    {
+     "input": {
+      "key": "dia_chi_chi_tiet",
+      "w": 42
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Xã/Phường/Đặc khu: "
+    },
+    {
+     "input": {
+      "key": "xa_phuong",
+      "w": 17
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tỉnh/Thành phố trực thuộc trung ương: "
+    },
+    {
+     "input": {
+      "key": "tinh_thanh",
+      "w": 27
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "ĐĂNG KÝ THAY ĐỔI THÀNH VIÊN HỘ GIA ĐÌNH ĐĂNG KÝ HỘ KINH DOANH"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Danh sách các thành viên hộ gia đình đăng ký hộ kinh doanh sau khi thay đổi2:"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "STTHọ tênNgày, tháng, năm sinhSố định danh cá nhânGiới tínhQuốc tịchDân tộcNơi thường trúNơi ở hiện tạiChữ ký12345678910"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "ĐĂNG KÝ THAY ĐỔI VỐN KINH DOANH"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Vốn kinh doanh sau khi thay đổi (bằng số, bằng chữ, VNĐ): "
+    },
+    {
+     "input": {
+      "key": "von_kd_moi",
+      "w": 37
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Thời điểm thay đổi vốn: "
+    },
+    {
+     "input": {
+      "key": "thoi_diem_thay_doi_von",
+      "w": 20
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Hình thức tăng, giảm vốn:"
+    },
+    {
+     "input": {
+      "key": "hinh_thuc_tang_giam_von",
+      "w": 20
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "ĐĂNG KÝ THAY ĐỔI NGÀNH, NGHỀ KINH DOANH3"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "1. Bổ sung ngành, nghề kinh doanh sau (kê khai trong trường hợp hộ kinh doanh đăng ký bổ sung ngành, nghề kinh doanh vào danh sách ngành, nghề kinh doanh đã đăng ký với cơ quan đăng ký kinh doanh):",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "STT"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Tên ngành, nghề kinh doanh được bổ sung"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Mã ngành4"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Ngành, nghề kinh doanh chính (Trường hợp một trong các ngành, nghề kinh doanh được bổ sung là ngành, nghề kinh doanh chính thì đánh dấu X vào ô này)"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "2. Bỏ ngành, nghề kinh doanh sau (kê khai trong trường hợp hộ kinh doanh đăng ký bỏ ngành, nghề kinh doanh khỏi danh sách ngành, nghề kinh doanh đã đăng ký với cơ quan đăng ký kinh doanh):",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "STT"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Tên ngành, nghề kinh doanh được bỏ khỏi danh sách đã đăng ký"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Mã ngành5"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Ngành, nghề kinh doanh chính (Trường hợp ngành, nghề kinh doanh được bỏ là ngành, nghề kinh doanh chính thì đánh dấu X vào ô này)"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "3. Sửa đổi ngành, nghề kinh doanh chính6 (kê khai trong trường hợp hộ kinh doanh chọn một trong các ngành, nghề kinh doanh đã đăng ký với cơ quan đăng ký kinh doanh làm ngành, nghề kinh doanh chính và trong trường hợp đăng ký thay đổi nội dung chi tiết của ngành, nghề kinh doanh chính):",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "STT"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Tên ngành, nghề kinh doanh"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Mã ngành"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Lưu ý: Trường hợp hộ kinh doanh thay đổi ngành, nghề kinh doanh từ ngành này sang ngành khác, hộ kinh doanh kê khai đồng thời tại Mục 1, 2 nêu trên, cụ thể như sau: kê khai ngành, nghề kinh doanh được bổ sung tại Mục 1; kê khai ngành, nghề kinh doanh được bỏ tại Mục 2.",
+     "b": true,
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "ĐĂNG KÝ THAY ĐỔI NỘI DUNG ĐĂNG KÝ THUẾ"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Đăng ký bổ sung, thay đổi các chỉ tiêu đăng ký thuế như sau:"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Chỉ tiêu"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Thông tin đăng ký cũ"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Thông tin đăng ký mới"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Chỉ tiêu 5.1: Địa chỉ nhận thông báo thuế"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "-….."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "B. ĐĂNG KÝ CẬP NHẬT, BỔ SUNG, HIỆU ĐÍNH THÔNG TIN ĐĂNG KÝ HỘ KINH DOANH",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Hộ kinh doanh đăng ký cập nhật, bổ sung, hiệu đính thông tin đăng ký hộ kinh doanh như sau:"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "..............................................................................................................................................."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "..............................................................................................................................................."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "..............................................................................................................................................."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "..............................................................................................................................................."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "..............................................................................................................................................."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "..............................................................................................................................................."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "C. ĐĂNG KÝ CẤP ĐỔI SANG GIẤY CHỨNG NHẬN ĐĂNG KÝ HỘ KINH DOANH",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Trường hợp hộ kinh doanh được cấp giấy chứng nhận đăng ký kinh doanh hoặc giấy chứng nhận đăng ký hộ kinh doanh trước ngày Nghị định số 168/2025/NĐ-CP ngày 30/6/2025 của Chính phủ về đăng ký doanh nghiệp có hiệu lực thi hành thực hiện quy định tại Điều 123 Nghị định số 168/2025/NĐ-CP thì kê khai thông tin theo giấy chứng nhận đăng ký kinh doanh hoặc giấy chứng nhận đăng ký hộ kinh doanh và giấy chứng nhận đăng ký thuế đã được cấp tại Mục này.",
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "1. Tên hộ kinh doanh (ghi bằng chữ in hoa):",
+     "b": true
+    },
+    {
+     "input": {
+      "key": "hkd_ten_tieng_viet_2",
+      "w": 29
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "2. Trụ sở của hộ kinh doanh:",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Số nhà/phòng, ngách/hẻm, ngõ/kiệt, đường/phố/đại lộ, tổ/xóm/ấp/thôn:"
+    },
+    {
+     "input": {
+      "key": "dia_chi_chi_tiet",
+      "w": 42
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Xã/Phường/Đặc khu: "
+    },
+    {
+     "input": {
+      "key": "xa_phuong",
+      "w": 17
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tỉnh/Thành phố trực thuộc trung ương:"
+    },
+    {
+     "input": {
+      "key": "tinh_thanh",
+      "w": 26
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Điện thoại:"
+    },
+    {
+     "input": {
+      "key": "dien_thoai_khac",
+      "w": 13
+     }
+    },
+    {
+     "text": "Fax (nếu có): "
+    },
+    {
+     "input": {
+      "key": "fax",
+      "w": 15
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Thư điện tử (nếu có): "
+    },
+    {
+     "input": {
+      "key": "email_tru_so",
+      "w": 19
+     }
+    },
+    {
+     "text": "Website (nếu có): "
+    },
+    {
+     "input": {
+      "key": "website",
+      "w": 17
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "3. Ngành, nghề kinh doanh7: ",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "STT",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Tên ngành",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Mã ngành8",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Ngành, nghề kinh doanh chính9",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "4. Vốn kinh doanh: ",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tổng số (bằng số, bằng chữ, VNĐ): "
+    },
+    {
+     "input": {
+      "key": "von_kinh_doanh",
+      "w": 25
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "5. Thông tin đăng ký thuế:",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "STT"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Các chỉ tiêu thông tin đăng ký thuế"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "5.1"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Địa chỉ nhận thông báo thuế (chỉ kê khai nếu địa chỉ nhận thông báo thuế khác địa chỉ trụ sở):"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Số nhà/phòng, ngách/hẻm, ngõ/kiệt, đường/phố/đại lộ, tổ/xóm/ấp/thôn: "
+    },
+    {
+     "input": {
+      "key": "dia_chi_chi_tiet",
+      "w": 42
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Xã/Phường/Đặc khu: "
+    },
+    {
+     "input": {
+      "key": "xa_phuong",
+      "w": 17
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tỉnh/Thành phố trực thuộc trung ương: "
+    },
+    {
+     "input": {
+      "key": "tinh_thanh",
+      "w": 27
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Điện thoại (nếu có): "
+    },
+    {
+     "input": {
+      "key": "dien_thoai_lien_he",
+      "w": 18
+     }
+    },
+    {
+     "text": "Fax (nếu có): "
+    },
+    {
+     "input": {
+      "key": "fax",
+      "w": 15
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Thư điện tử (nếu có): "
+    },
+    {
+     "input": {
+      "key": "email_tru_so",
+      "w": 19
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "5.2"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tổng số lao động: "
+    },
+    {
+     "input": {
+      "key": "so_lao_dong",
+      "w": 17
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "6. Chủ thể thành lập hộ kinh doanh (đánh dấu X vào ô thích hợp):",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "chk",
+   "label": "Cá nhân",
+   "key": "chk_ct_ca_nhan"
+  },
+  {
+   "t": "chk",
+   "label": "Các thành viên hộ gia đình",
+   "key": "chk_ct_ho_gia_dinh"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "7. Thông tin về các thành viên hộ gia đình đăng ký hộ kinh doanh9:",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "STTHọ tênNgày, tháng, năm sinhSố định danh cá nhânGiới tínhQuốc tịchDân tộcNơi thường trúNơi ở hiện tạiChữ ký12345678910Hộ kinh doanh cam kết về tính hợp pháp, chính xác, trung thực và hoàn toàn chịu trách nhiệm trước pháp luật về nội dung của Giấy đề nghị này."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Trường hợp thay đổi danh sách thành viên hộ gia đình đăng ký hộ kinh doanh mà chủ hộ kinh doanh và các thành viên hộ gia đình đăng ký hộ kinh doanh kê khai số định danh cá nhân và đồng ý cho Cơ quan quản lý nhà nước về đăng ký kinh doanh và Cơ quan đăng ký kinh doanh khai thác, sử dụng, lưu giữ và cung cấp thông tin dữ liệu cá nhân lưu giữ trong Cơ sở dữ liệu quốc gia về dân cư để phục vụ công tác đăng ký hộ kinh doanh và các công tác khác theo quy định thì ghi thêm: ",
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Chủ hộ kinh doanh và các thành viên hộ gia đình đăng ký hộ kinh doanh cam kết đồng ý cho Cơ quan quản lý nhà nước về đăng ký kinh doanh và Cơ quan đăng ký kinh doanh khai thác, sử dụng, lưu giữ và cung cấp thông tin dữ liệu cá nhân lưu giữ trong Cơ sở dữ liệu quốc gia về dân cư để phục vụ công tác đăng ký hộ kinh doanh và các công tác khác theo quy định."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "CHỦ HỘ KINH DOANH\n(Ký và ghi họ tên)10",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "_______________________________________"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "1 Trường hợp hộ kinh doanh đăng ký thay đổi trụ sở của hộ kinh doanh thì ghi tên Cơ quan đăng ký kinh doanh cấp xã nơi hộ kinh doanh dự định đặt trụ sở mới. Các trường hợp đăng ký thay đổi nội dung đăng ký hộ kinh doanh khác thì ghi tên Cơ quan đăng ký kinh doanh cấp xã nơi hộ kinh doanh đã đăng ký."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "2 - Kê khai cả thông tin của chủ hộ tại Bảng này;"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Trường hợp chủ hộ kinh doanh và các thành viên hộ gia đình đăng ký hộ kinh doanh kê khai số định danh cá nhân thì chỉ kê khai các cột số 1, 2, 3, 4, 5, 10, không phải kê khai các cột số 6, 7, 8, 9 của Bảng này, trừ trường hợp việc kết nối giữa Cơ sở dữ liệu về đăng ký hộ kinh doanh với Cơ sở dữ liệu quốc gia về dân cư bị gián đoạn."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "3 - Hộ kinh doanh đăng ký thay đổi ngành, nghề kinh doanh trong trường hợp có thay đổi về ngành, nghề kinh doanh đã đăng ký với cơ quan đăng ký kinh doanh."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Đối với ngành, nghề kinh doanh chính, hộ kinh doanh ghi tên ngành và mã ngành cấp bốn trong Hệ thống ngành kinh tế Việt Nam;"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Đối với ngành, nghề đầu tư kinh doanh có điều kiện được quy định tại các văn bản quy phạm pháp luật khác thì ngành, nghề kinh doanh được ghi theo ngành, nghề quy định tại các văn bản quy phạm pháp luật đó."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "4, 5 Ghi tên ngành và mã ngành cấp bốn trong Hệ thống ngành kinh tế Việt Nam đối với ngành, nghề kinh doanh chính. Đối với các ngành, nghề kinh doanh khác, hộ kinh doanh được ghi tự do và không cần ghi mã ngành cấp bốn. "
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "6 Ghi tên ngành và mã ngành cấp bốn trong Hệ thống ngành kinh tế Việt Nam."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "7 - Hộ kinh doanh có quyền tự do kinh doanh trong những ngành, nghề mà luật không cấm;"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Các ngành, nghề cấm đầu tư kinh doanh quy định tại Điều 6 Luật Đầu tư; "
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Đối với những ngành, nghề đầu tư kinh doanh có điều kiện được quy định tại các văn bản quy phạm pháp luật khác, ngành, nghề kinh doanh được ghi theo ngành, nghề quy định tại các văn bản quy phạm pháp luật đó. Hộ kinh doanh chỉ được kinh doanh khi có đủ điều kiện theo quy định."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "8 Ghi tên ngành và mã ngành cấp bốn trong Hệ thống ngành kinh tế Việt Nam đối với ngành, nghề kinh doanh chính. Đối với các ngành, nghề kinh doanh khác, hộ kinh doanh được ghi tự do và không cần ghi mã ngành cấp bốn."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "9 Đánh dấu X để chọn một trong các ngành, nghề đã kê khai làm ngành, nghề kinh doanh chính."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "9 - Chỉ kê khai trong trường hợp chủ thể thành lập hộ kinh doanh là các thành viên hộ gia đình và kê khai cả thông tin của chủ hộ tại Bảng này;"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Trường hợp chủ hộ kinh doanh và các thành viên hộ gia đình đăng ký hộ kinh doanh kê khai số định danh cá nhân thì chỉ kê khai các cột số 1, 2, 3, 4, 5, 10, không phải kê khai các cột số 6, 7, 8, 9 của Bảng này, trừ trường hợp việc kết nối giữa Cơ sở dữ liệu về đăng ký hộ kinh doanh với Cơ sở dữ liệu quốc gia về dân cư bị gián đoạn"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "10 Chủ hộ kinh doanh ký trực tiếp vào phần này."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Trường hợp thay đổi chủ hộ kinh doanh thì chủ hộ kinh doanh mới ký trực tiếp vào phần này."
+    }
+   ]
+  }
+ ]
+}

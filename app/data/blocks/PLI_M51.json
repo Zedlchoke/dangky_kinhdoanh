@@ -1,0 +1,283 @@
+{
+ "id": "PLI_M51",
+ "ten_mau": "Thông báo về việc hiệu đính thông tin trong Giấy chứng nhận đăng ký doanh nghiệp/Giấy xác nhận về việc thay đổi nội dung đăng ký doanh nghiệp/Giấy chứng nhận đăng ký hoạt động chi nhánh/văn phòng đại diện/Giấy chứng nhận đăng ký địa điểm kinh doanh/Giấy xác nhận về việc thay đổi nội dung đăng ký hoạt động chi nhánh/văn phòng đại diện",
+ "blocks": [
+  {
+   "t": "p",
+   "align": "right",
+   "runs": [
+    {
+     "text": "Mẫu số 51",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH\nCẤP TỈNH\n-------",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc\n---------------",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Số: "
+    },
+    {
+     "input": {
+      "key": "so_van_ban",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "input": {
+      "key": "dia_diem_ky",
+      "w": 12
+     }
+    },
+    {
+     "text": ", ngày ",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "ngay_ky_vb",
+      "w": 12
+     }
+    },
+    {
+     "text": " tháng ",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "thang_ky_vb",
+      "w": 12
+     }
+    },
+    {
+     "text": " năm ",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "nam_ky_vb",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "THÔNG BÁO",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Về việc hiệu đính thông tin trong Giấy chứng nhận đăng ký doanh nghiệp/Giấy xác nhận về việc thay đổi nội dung đăng ký doanh nghiệp/Giấy chứng nhận đăng ký hoạt động chi nhánh/văn phòng đại diện/Giấy chứng nhận đăng ký địa điểm kinh doanh/Giấy xác nhận về việc thay đổi nội dung đăng ký hoạt động chi nhánh/văn phòng đại diện",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "right",
+   "runs": [
+    {
+     "text": "Kính gửi: "
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "(Tên doanh nghiệp)\nĐịa chỉ: (Địa chỉ trụ sở chính)\nMã số: (Mã số doanh nghiệp/Số Giấy chứng nhận đăng ký kinh doanh)"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": " (Cơ quan đăng ký kinh doanh cấp tỉnh): ",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "co_quan_dkkd",
+      "w": 28
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Địa chỉ trụ sở: "
+    },
+    {
+     "input": {
+      "key": "dn.dia_chi_tru_so",
+      "w": 16
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Điện thoại: "
+    },
+    {
+     "input": {
+      "key": "dien_thoai_khac",
+      "w": 14
+     }
+    },
+    {
+     "text": " Số fax: "
+    },
+    {
+     "input": {
+      "key": "fax",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Thư điện tử: "
+    },
+    {
+     "input": {
+      "key": "email_khac",
+      "w": 14
+     }
+    },
+    {
+     "text": "Website: "
+    },
+    {
+     "input": {
+      "key": "website",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Sau khi xem xét lại hồ sơ đăng ký doanh nghiệp của Ông/Bà: "
+    },
+    {
+     "input": {
+      "key": "ong_ba_nhan_hs",
+      "w": 37
+     }
+    },
+    {
+     "text": "là người đại diện theo pháp luật."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp tỉnh) phát hiện nội dung trong Giấy chứng nhận đăng ký doanh nghiệp/Giấy xác nhận về việc thay đổi nội dung đăng ký doanh nghiệp/Giấy chứng nhận đăng ký hoạt động chi nhánh/văn phòng đại diện/Giấy chứng nhận đăng ký địa điểm kinh doanh/Giấy xác nhận về việc thay đổi nội dung đăng ký hoạt động chi nhánh/văn phòng đại diện chưa chính xác so với nội dung hồ sơ đăng ký doanh nghiệp. ",
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Do vậy, trong thời hạn 03 ngày làm việc kể từ ngày gửi Thông báo này, (Cơ quan đăng ký kinh doanh cấp tỉnh) sẽ tiến hành cấp lại Giấy chứng nhận đăng ký doanh nghiệp/Giấy xác nhận về việc thay đổi nội dung đăng ký doanh nghiệp/Giấy chứng nhận đăng ký hoạt động chi nhánh/văn phòng đại diện/Giấy chứng nhận đăng ký địa điểm kinh doanh/Giấy xác nhận về việc thay đổi nội dung đăng ký hoạt động chi nhánh/văn phòng đại diện thay thế cho giấy tờ đã cấp có nội dung chưa chính xác so với nội dung trong hồ sơ đăng ký doanh nghiệp."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "\nNơi nhận:\n- Như trên;\n- ",
+     "b": true,
+     "i": true
+    },
+    {
+     "input": {
+      "key": "noi_nhan",
+      "w": 20
+     }
+    },
+    {
+     "text": ";\n- Lưu: "
+    },
+    {
+     "input": {
+      "key": "luu_vb",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "TRƯỞNG ĐƠN VỊ\n(Ký, ghi họ tên và đóng dấu)",
+     "b": true
+    }
+   ]
+  }
+ ]
+}

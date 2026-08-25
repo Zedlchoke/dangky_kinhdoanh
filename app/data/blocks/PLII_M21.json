@@ -1,0 +1,397 @@
+{
+ "id": "PLII_M21",
+ "ten_mau": "Thông báo về việc Giấy chứng nhận đăng ký hộ kinh doanh không có hiệu lực",
+ "blocks": [
+  {
+   "t": "p",
+   "align": "right",
+   "runs": [
+    {
+     "text": "Mẫu số 21",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH\nCẤP XÃ\n-----------",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc\n------------------",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Số: "
+    },
+    {
+     "input": {
+      "key": "so_van_ban",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "right",
+   "runs": [
+    {
+     "input": {
+      "key": "dia_diem_ky",
+      "w": 12
+     }
+    },
+    {
+     "text": ", ngày",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "ngay_ky_vb",
+      "w": 12
+     }
+    },
+    {
+     "text": "tháng",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "thang_ky_vb",
+      "w": 12
+     }
+    },
+    {
+     "text": "năm",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "nam_ky_vb",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "THÔNG BÁO",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Về việc Giấy chứng nhận đăng ký hộ kinh doanh không có hiệu lực",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Kính gửi:"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "(Tên hộ kinh doanh)",
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Trụ sở của hộ kinh doanh:"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Mã số hộ kinh doanh:"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp xã) "
+    },
+    {
+     "input": {
+      "key": "co_quan_dkkd",
+      "w": 26
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Địa chỉ trụ sở: "
+    },
+    {
+     "input": {
+      "key": "dn.dia_chi_tru_so",
+      "w": 16
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Điện thoại: "
+    },
+    {
+     "input": {
+      "key": "dien_thoai_khac",
+      "w": 14
+     }
+    },
+    {
+     "text": "Fax:"
+    },
+    {
+     "input": {
+      "key": "fax",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Thư điện tử: "
+    },
+    {
+     "input": {
+      "key": "email_khac",
+      "w": 14
+     }
+    },
+    {
+     "text": "Website:"
+    },
+    {
+     "input": {
+      "key": "website",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Căn cứ:"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Kết luận/biên bản làm việc .......................................................................................;"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- "
+    },
+    {
+     "input": {
+      "key": "can_cu",
+      "w": 12
+     }
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Nội dung của Thông báo được ghi tương ứng với từng loại như sau:",
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "1. Đối với trường hợp thuộc điểm a khoản 2 Điều 109 Nghị định số 168/2025/NĐ-CP thì ghi:",
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp xã) thông báo Giấy chứng nhận đăng ký hộ kinh doanh (Mã số hộ kinh doanh ",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "co_quan_dkkd",
+      "w": 60
+     }
+    },
+    {
+     "text": " cấp ngày "
+    },
+    {
+     "input": {
+      "key": "cap_ngay_vv",
+      "w": 13
+     }
+    },
+    {
+     "text": "… tại (Cơ quan đăng ký kinh doanh cấp xã)) là không có hiệu lực do được cấp trên cơ sở hồ sơ đăng ký có thông tin kê khai không trung thực, không chính xác."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp xã) yêu cầu hộ kinh doanh nộp hồ sơ mới thay cho hồ sơ đăng ký thành lập kê khai không trung thực, không chính xác theo quy định trong thời hạn 30 ngày kể từ ngày gửi thông báo để được xem xét cấp Giấy chứng nhận đăng ký hộ kinh doanh. Hộ kinh doanh có thể gộp các nội dung thay đổi hợp pháp của các lần đăng ký thay đổi trong một bộ hồ sơ để được cấp một lần đăng ký thay đổi mới. ",
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "2. Đối với trường hợp thuộc điểm b khoản 2 Điều 109 Nghị định số 168/2025/NĐ-CP thì ghi:",
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp xã) thông báo Giấy chứng nhận đăng ký hộ kinh doanh (Mã số hộ kinh doanh ",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "co_quan_dkkd",
+      "w": 60
+     }
+    },
+    {
+     "text": " cấp ngày "
+    },
+    {
+     "input": {
+      "key": "cap_ngay_vv",
+      "w": 13
+     }
+    },
+    {
+     "text": "… tại (Cơ quan đăng ký kinh doanh cấp xã)) là không có hiệu lực do được cấp trên cơ sở hồ sơ đăng ký có thông tin kê khai không trung thực, không chính xác. Đồng thời, (Cơ quan đăng ký kinh doanh cấp xã) sẽ thực hiện cấp Giấy chứng nhận đăng ký hộ kinh doanh trên cơ sở hồ sơ hợp lệ liền kề trước của hồ sơ kê khai không trung thực, không chính xác. "
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Hộ kinh doanh có thể nộp hồ sơ mới để được xem xét cấp Giấy chứng nhận đăng ký hộ kinh doanh. Hộ kinh doanh có thể gộp các nội dung thay đổi hợp pháp của các lần đăng ký thay đổi liền kề sau hồ sơ kê khai không trung thực, không chính xác trong một bộ hồ sơ để được cấp một lần đăng ký thay đổi mới."
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Nơi nhận:\n- Như trên;\n- Cơ quan quản lý thuế",
+     "b": true,
+     "i": true
+    },
+    {
+     "input": {
+      "key": "noi_nhan",
+      "w": 30
+     }
+    },
+    {
+     "text": "(xã, phường, đặc khu nơi hộ kinh doanh đăng ký trụ sở của HKD);\n- Cơ quan có thẩm quyền khác:…… (nếu có);\n- Lưu: ……",
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "TRƯỞNG PHÒNG\n(Ký, ghi họ tên và đóng dấu)",
+     "b": true
+    }
+   ]
+  }
+ ]
+}

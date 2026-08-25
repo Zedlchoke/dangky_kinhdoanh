@@ -1,0 +1,186 @@
+{
+ "id": "PLI_M07",
+ "ten_mau": "Danh sách cổ đông sáng lập công ty cổ phần",
+ "blocks": [
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "PL1 - Mau so 7: Danh sách cổ đông sáng lập công ty cổ phần"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Mẫu số 7"
+    }
+   ]
+  },
+  {
+   "t": "loop",
+   "loop": "ds_co_dong_sang_lap",
+   "headerRows": [
+    0
+   ],
+   "cols": [
+    {
+     "col": 1,
+     "tag": "ho_ten"
+    },
+    {
+     "col": 2,
+     "tag": "ngay_sinh"
+    },
+    {
+     "col": 3,
+     "tag": "gioi_tinh"
+    },
+    {
+     "col": 4,
+     "tag": "so_cccd"
+    },
+    {
+     "col": 5,
+     "tag": "quoc_tich"
+    },
+    {
+     "col": 7,
+     "tag": "dia_chi"
+    },
+    {
+     "col": 8,
+     "tag": "so_co_phan"
+    },
+    {
+     "col": 9,
+     "tag": "ty_le"
+    },
+    {
+     "col": 10,
+     "tag": "chu_ky"
+    }
+   ],
+   "blankRows": 4,
+   "rows": [
+    {
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "STT",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Tên cổ đông sáng lập",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Ngày, tháng, năm sinh",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Giới tính",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Số định danh cá nhân/Giấy tờ pháp lý",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Quốc tịch",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Dân tộc",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Địa chỉ liên lạc",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Tổng số cổ phần",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Tỷ lệ (%)",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Chữ ký",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

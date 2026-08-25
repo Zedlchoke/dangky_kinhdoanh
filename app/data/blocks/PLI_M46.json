@@ -1,0 +1,122 @@
+{
+ "id": "PLI_M46",
+ "ten_mau": "Giấy chứng nhận …/Giấy xác nhận …",
+ "blocks": [
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "PL1 - Mau so 46: Giấy chứng nhận …/Giấy xác nhận …"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Mẫu số 46"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH\nCẤP TỈNH\n-------",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc\n---------------",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "GIẤY CHỨNG NHẬN …/GIẤY XÁC NHẬN …",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "(Dùng trong trường hợp cấp lại Giấy chứng nhận đăng ký doanh nghiệp/Giấy xác nhận thay đổi nội dung đăng ký doanh nghiệp/Giấy chứng nhận đăng ký hoạt động chi nhánh/văn phòng đại diện/Giấy chứng nhận đăng ký địa điểm kinh doanh/Giấy xác nhận thay đổi nội dung đăng ký hoạt động chi nhánh/văn phòng đại diện/địa điểm kinh doanh do mất, cháy, rách, nát hoặc bị tiêu hủy dưới hình thức khác)",
+     "i": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "(Nội dung cấp lại)",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "TRƯỞNG ĐƠN VỊ1\n(Đã ký)\n",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
+     "text": "Ghi chú: Được cấp lại ngày ",
+     "b": true
+    },
+    {
+     "input": {
+      "key": "cap_lai_ngay",
+      "w": 21
+     }
+    },
+    {
+     "text": "…\nTRƯỞNG ĐƠN VỊ\n(Ký, ghi họ tên và đóng dấu)",
+     "b": true
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "________________________________________"
+    }
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "1 Không có chữ ký, con dấu tại mục này."
+    }
+   ]
+  }
+ ]
+}

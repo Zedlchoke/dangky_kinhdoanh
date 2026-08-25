@@ -1,8 +1,8 @@
 {
   "form_id": "PLII_M07",
   "group": "household",
-  "note": "Giay chung nhan dang ky ho kinh doanh. Luoi nganh mat khi convert: STT / Ten nganh / Ma nganh / Nganh, nghe KD chinh + hang trang; muc sau la '4. Von kinh doanh:....' (co slot).",
-  "gap_nghiepvu": "Template co cot 'Ngành, nghề kinh doanh chính' -> da map {la_nganh_chinh}. Nguong bat requirePrimary cho PLII_M02/M07 de Lead quyet (open question #4 wave1_contract_inventory). drop_until khop '4. Vốn kinh doanh:...' ke ca phan slot dau cham dang sau.",
+  "note": "Giay chung nhan dang ky ho kinh doanh. Luoi nganh mat khi convert: STT / Ten nganh / Ma nganh / Nganh, nghe KD chinh + hang trang; muc sau la '4. Von kinh doanh:....' (co slot). DA XAC MINH bang python-docx tren nguon 06_ho_kinh_doanh_va_chuyen_doi/01_mau_ho_kinh_doanh/PL2_Mau_07_*.docx: o header muc 3 van ban nguyen goc la 'Ngành, nghề kinh doanh chính' (không kèm số chú thích ở mẫu này) ngay trước mục '4. Vốn kinh doanh:…' -> cot nganh chinh CO THAT, giu tag {la_nganh_chinh}. Lead da chot giu requirePrimary=true toan cuc (ca 13 template deu co cot nganh chinh).",
+  "gap_nghiepvu": null,
   "tables": [
     {
       "spec": {

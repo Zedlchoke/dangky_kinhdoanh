@@ -2,7 +2,7 @@
   "form_id": "PLI_M19",
   "group": "change",
   "note": "Giay de nghi dang ky thay doi noi dung DK hoat dong chi nhanh/VPDD/dia diem. Luoi nganh trong trang 'DANG KY THAY DOI NGANH, NGHE KINH DOANH/NOI DUNG HOAT DONG': anchor la doan 'Nganh, nghe kinh doanh sau khi thay doi...'; muc sau la 'Noi dung hoat dong sau khi thay doi'.",
-  "gap_nghiepvu": "Day la nganh cua chi nhanh/VPDD SAU khi thay doi -> dung canonical ds_nganh. Neu Wave 2B can phan biet 'nganh_truoc_thay_doi' (open question #3 wave1_contract_inventory: nguon du lieu chua dinh nghia) thi them entry/spec rieng, KHONG map de vao ds_nganh.",
+  "gap_nghiepvu": "Da kiem template that (python-docx, PLAN q#3): M19 CHI co luoi 'Nganh, nghe kinh doanh SAU khi thay doi' (anchor 'Ngành, nghề kinh doanh sau khi thay đổi...'), KHONG ton tai luoi 'truoc khi thay doi' -> khong the tao loop nganh_truoc_thay_doi, ghi gap thay vi suy dien. Luoi hien co la nganh cua chi nhanh/VPDD SAU khi thay doi -> dung canonical ds_nganh.",
   "tables": [
     {
       "spec": {

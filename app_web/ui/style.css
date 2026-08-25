@@ -138,6 +138,16 @@ select, .btn {
   cursor: pointer;
 }
 #form-list label:hover { background: #eaf2ff; }
+/* trạng thái chọn mẫu: bắt buộc (khóa tick) / tùy chọn */
+#form-list .form-tag {
+  float: right;
+  margin-left: 6px;
+  font-size: 11px;
+  color: #5a6b80;
+}
+#form-list label.form-req { color: #24568f; cursor: default; }
+#form-list label.form-req:hover { background: transparent; }
+#form-list .form-tick:disabled { cursor: not-allowed; }
 #side-status { margin-top: 8px; color: #556; font-size: 12px; }
 
 /* ------------------------------------------------ khung giữa: trang A4 */

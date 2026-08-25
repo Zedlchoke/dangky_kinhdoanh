@@ -10,6 +10,11 @@
  * - Dirty/save machine: Chưa lưu / Đang lưu / Đã lưu / Lỗi lưu; Ctrl+S lưu
  *   nhanh localStorage; Ctrl+PgUp/PgDn đổi tab; VSIC hỗ trợ bàn phím.
  * - Draft v2 (docs/htkk-ui-contract.md mục 4) + migration v1 qua migrateDraft.
+ * - Chọn mẫu biểu: metadata từng form (bat_buoc, nhóm oneOf) từ use_cases.json
+ *   giữ trong state.formMeta; bắt buộc checked+disabled, tùy chọn mặc định bỏ;
+ *   nhóm oneOf tự loại trừ. Gate export kiểm lựa chọn mẫu bằng hàm thuần
+ *   checkFormSelection (Helpers.FormFlow). Race đổi case chặn bằng
+ *   RequestToken; autosave thành công mới đặt dirty=false (saveOutcome).
  */
 (function () {
   'use strict';
@@ -29,6 +34,8 @@
     groups: [],
     caseId: null,
     docs: [],            // [{id, ten_mau, blocks}] đã nạp của case hiện tại
+    formMeta: {},        // docId -> metadata form {bat_buoc, ghi_chu, oneOf}
+    checkedForms: {},    // docId -> bool: nguồn chân lý lựa chọn mẫu (DOM chỉ phản chiếu)
     store: R.newStore(),
     autoSum: false,
     activeDocId: null,   // mẫu DUY NHẤT đang hiển thị
@@ -214,13 +221,192 @@
   };
 
 
+  // --------------------------- FormFlow: helpers thuần chọn mẫu biểu/race
+  /* Các hàm THUẦN (không DOM) cho nghiệp vụ chọn mẫu theo PLAN.md Agent 1B:
+   * metadata bat_buoc + nhóm loại trừ oneOf ĐỀU nằm trong dữ liệu
+   * use_cases.json (schema_forms ở đầu file) - renderer/controller KHÔNG suy
+   * đoán nhóm từ tên mẫu/id. Node-test trực tiếp qua Helpers.FormFlow. */
+
+  /* blocks/form_maps dùng ID zero-pad 2 chữ số: PLI_M02, PLII_M01... */
+  function formIdOf(f) {
+    return 'PL' + f.pl + '_M' + String(f.mau).padStart(2, '0');
+  }
+
+  function formIds(cs) {
+    return ((cs && cs.forms) || []).map(formIdOf);
+  }
+
+  /* Map case.forms (+ case.forms_oneOf) -> metadata theo docId.
+   * bat_buoc thiếu trường coi như true (tương thích dữ liệu cũ/mock).
+   * oneOf = {gid, ids, max} gắn vào từng form thuộc nhóm; max mặc định 1. */
+  function buildFormMeta(cs) {
+    var meta = {};
+    ((cs && cs.forms) || []).forEach(function (f) {
+      meta[formIdOf(f)] = { bat_buoc: f.bat_buoc !== false, ghi_chu: f.ghi_chu || '', oneOf: null };
+    });
+    ((cs && cs.forms_oneOf) || []).forEach(function (g, gi) {
+      if (!g || !Array.isArray(g.ids)) return;
+      var max = (g.max == null || g.max < 1) ? 1 : g.max;
+      var gid = 'oneof_' + gi;
+      g.ids.forEach(function (id) {
+        if (!meta[id]) meta[id] = { bat_buoc: false, ghi_chu: '', oneOf: null };
+        meta[id].oneOf = { gid: gid, ids: g.ids.slice(), max: max };
+      });
+    });
+    return meta;
+  }
+
+  /* Tick/bỏ tick docId rồi TỰ LOẠI TRỪ trong nhóm oneOf để không vượt max
+   * (max=1: tick một mẫu -> bỏ tick mọi mẫu khác cùng nhóm). Trả map MỚI,
+   * không mutate map đầu vào; mẫu vừa tick luôn giữ nguyên trạng thái on. */
+  function applyOneOfExclusive(meta, checkedMap, changedId) {
+    var out = Object.assign({}, checkedMap);
+    var g = (meta[changedId] || {}).oneOf;
+    if (!g || !out[changedId]) return out;
+    var over = g.ids.filter(function (id) { return out[id]; }).length - g.max;
+    for (var i = 0; over > 0 && i < g.ids.length; i++) {
+      var id = g.ids[i];
+      if (id !== changedId && out[id]) { out[id] = false; over--; }
+    }
+    return out;
+  }
+
+  /* GATE EXPORT THUẦN: kiểm LỰA CHỌN MẪU trước khi gọi Bridge.export.
+   * Trả error[] cùng shape contract (docs mục 2):
+   *  - thiếu mẫu bắt buộc            -> FORM_REQUIRED_MISSING (blocking)
+   *  - nhóm oneOf chưa chọn mẫu nào  -> FORM_ONEOF_EMPTY     (blocking)
+   *  - nhóm oneOf vượt max (dữ liệu) -> FORM_ONEOF_EXCEED    (blocking)
+   * titles (tùy chọn): {docId: ten_mau} để thông điệp dễ đọc hơn. */
+  function checkFormSelection(meta, checkedIds, titles) {
+    var errs = [];
+    var checked = {};
+    (checkedIds || []).forEach(function (id) { checked[id] = true; });
+    function nameOf(id) {
+      return (titles && titles[id]) ? (titles[id] + ' (' + id + ')') : id;
+    }
+    Object.keys(meta).forEach(function (id) {
+      if (meta[id].bat_buoc && !checked[id]) {
+        errs.push({
+          key: '@forms:' + id, docId: id, code: 'FORM_REQUIRED_MISSING',
+          severity: 'blocking',
+          message: 'Mẫu bắt buộc chưa được chọn: ' + nameOf(id)
+        });
+      }
+    });
+    var groups = {};
+    Object.keys(meta).forEach(function (id) {
+      var g = meta[id].oneOf;
+      if (!g) return;
+      var gr = groups[g.gid] = groups[g.gid] ||
+        { ids: g.ids.slice(), max: g.max, picked: [] };
+      if (checked[id] && gr.picked.indexOf(id) < 0) gr.picked.push(id);
+    });
+    Object.keys(groups).forEach(function (gid) {
+      var gr = groups[gid];
+      if (!gr.picked.length) {
+        errs.push({
+          key: '@forms:oneof:' + gid, docId: gr.ids[0], code: 'FORM_ONEOF_EMPTY',
+          severity: 'blocking',
+          message: 'Phải chọn đúng một mẫu trong nhóm loại trừ: ' +
+            gr.ids.map(nameOf).join(', ')
+        });
+      } else if (gr.picked.length > gr.max) {
+        errs.push({
+          key: '@forms:oneof:' + gid, docId: gr.picked[0], code: 'FORM_ONEOF_EXCEED',
+          severity: 'blocking',
+          message: 'Chỉ được chọn tối đa ' + gr.max + ' mẫu trong nhóm loại trừ: ' +
+            gr.ids.map(nameOf).join(', ') +
+            ' (đang chọn: ' + gr.picked.map(nameOf).join(', ') + ')'
+        });
+      }
+    });
+    return errs;
+  }
+
+  /* Khôi phục lựa chọn mẫu từ draft (thuần): bắt buộc LUÔN tick kể cả draft
+   * cũ thiếu; tùy chọn chỉ tick khi draft.checkedForms có; nhóm oneOf nếu
+   * vượt max thì giữ mẫu được chọn SAU CÙNG theo draft.checkedForms (khớp
+   * hành vi UI "tick sau thắng"; form bắt buộc - nếu dữ liệu cấu hình lệch -
+   * luôn được giữ trước); activeDocId chỉ chấp nhận doc HỢP LỆ và đang được
+   * chọn, nếu không fallback về mẫu được chọn đầu tiên. */
+  function restoreSelection(meta, docs, draft) {
+    var list = docs || [];
+    var want = {};
+    ((draft && draft.checkedForms) || []).forEach(function (id) { want[id] = true; });
+    var cf = {};
+    list.forEach(function (d) {
+      cf[d.id] = !!((meta[d.id] || {}).bat_buoc) || !!want[d.id];
+    });
+    // oneOf: nhóm nào vượt max thì bỏ ưu tiên thấp nhất trước
+    var groups = {};
+    list.forEach(function (d) {
+      var g = (meta[d.id] || {}).oneOf;
+      if (g) groups[g.gid] = g;
+    });
+    Object.keys(groups).forEach(function (gid) {
+      var g = groups[gid];
+      // xếp hạng giữ: draft muộn nhất đầu tiên, rồi tới bắt buộc, rồi còn lại
+      var ranked = ((draft && draft.checkedForms) || [])
+        .filter(function (id) { return g.ids.indexOf(id) >= 0 && cf[id]; })
+        .reverse();
+      list.forEach(function (d) {
+        var id = d.id;
+        if (g.ids.indexOf(id) >= 0 && cf[id] && ranked.indexOf(id) < 0) {
+          if (meta[id].bat_buoc) ranked.unshift(id);
+          else ranked.push(id);
+        }
+      });
+      while (ranked.length > g.max) cf[ranked.pop()] = false;
+    });
+    var active = (draft && draft.activeDocId && cf[draft.activeDocId] &&
+      list.some(function (x) { return x.id === draft.activeDocId; }))
+      ? draft.activeDocId : null;
+    if (!active) {
+      var vis = list.filter(function (x) { return cf[x.id]; });
+      active = vis.length ? vis[0].id : null;
+    }
+    return { checkedForms: cf, activeDocId: active };
+  }
+
+  /* HTML danh sách mẫu (thuần): bắt buộc checked+disabled kèm nhãn
+   * "(Bắt buộc)"; tùy chọn unchecked trừ khi checkedMap có, nhãn "(Tùy chọn)". */
+  function formListHtml(docs, meta, checkedMap) {
+    return (docs || []).map(function (d) {
+      var m = meta[d.id] || {};
+      var req = !!m.bat_buoc;
+      var on = req || !!checkedMap[d.id];
+      return '<label class="' + (req ? 'form-req' : 'form-opt') + '">' +
+        '<input type="checkbox" class="form-tick" value="' + esc(d.id) + '"' +
+        (on ? ' checked' : '') + (req ? ' disabled aria-disabled="true"' : '') +
+        '> ' + esc(d.ten_mau || d.id) +
+        ' <span class="form-tag">' + (req ? '(Bắt buộc)' : '(Tùy chọn)') +
+        '</span></label>';
+    }).join('');
+  }
+
+  /* Token chuỗi request chống race onCaseChange/restore draft: kết quả async
+   * của request CŨ resolve muộn không được ghi state khi user đã đổi case.
+   * Thuần để node-test mô phỏng Promise cũ resolve sau một cách tất định. */
+  var RequestToken = {
+    _seq: 0,
+    next: function () { return ++RequestToken._seq; },
+    fresh: function (seq) { return seq === RequestToken._seq; }
+  };
+
+  /* Kết quả trạng thái sau MỘT lần lưu (autosave lẫn quickSave): chỉ thành
+   * công mới xóa cờ dirty; thất bại giữ dirty=true và saveState='error'. */
+  function saveOutcome(ok) {
+    return ok ? { dirty: false, saveState: 'saved' }
+              : { dirty: true, saveState: 'error' };
+  }
+
   /* Case dùng khi chạy ?mock=1 (không đọc use_cases.json thật). */
   var MOCK_CASES = [
     {
       id: 'pilot_ui_m02_m06', nhom: 'Thành lập doanh nghiệp',
       ten: '(PILOT UI) Đồng bộ M02 + M06',
       mo_ta: '(MOCK) Case kiểm thử pilot: điền tên ở M02, sang M06 vẫn thấy giá trị.',
-      forms: [{ pl: 'I', mau: 2 }, { pl: 'I', mau: 6 }],
+      forms: [{ pl: 'I', mau: 2, bat_buoc: true }, { pl: 'I', mau: 6, bat_buoc: true }],
       giay_to_kem: [],
       luu_y: ['Đây là case PILOT cho giao diện mới - không phải thủ tục thật.']
     },
@@ -228,7 +414,7 @@
       id: 'thanh_lap_tnhh_1tv', nhom: 'Thành lập doanh nghiệp',
       ten: 'Thành lập Công ty TNHH một thành viên',
       mo_ta: '(MOCK) Lập công ty TNHH một thành viên.',
-      forms: [{ pl: 'I', mau: 2 }],
+      forms: [{ pl: 'I', mau: 2, bat_buoc: true }],
       giay_to_kem: ['Bản Điều lệ công ty (MOCK)'],
       luu_y: ['Đây là chế độ mock - xuất hồ sơ cần Bridge Python.']
     },
@@ -236,7 +422,7 @@
       id: 'thanh_lap_tnhh_2tv', nhom: 'Thành lập doanh nghiệp',
       ten: 'Thành lập Công ty TNHH hai thành viên trở lên',
       mo_ta: '(MOCK) Lập công ty TNHH hai thành viên trở lên.',
-      forms: [{ pl: 'I', mau: 6 }],
+      forms: [{ pl: 'I', mau: 6, bat_buoc: true }],
       giay_to_kem: ['Bản Điều lệ công ty (MOCK)'],
       luu_y: ['Danh sách thành viên tự cộng tổng vốn góp.']
     },
@@ -244,7 +430,7 @@
       id: 'dang_ky_ho_kinh_doanh_lan_dau', nhom: 'Hộ kinh doanh',
       ten: 'Đăng ký hộ kinh doanh lần đầu',
       mo_ta: '(MOCK) Đăng ký hộ kinh doanh lần đầu.',
-      forms: [{ pl: 'II', mau: 1 }],
+      forms: [{ pl: 'II', mau: 1, bat_buoc: true }],
       giay_to_kem: [],
       luu_y: []
     }
@@ -291,8 +477,10 @@
     clearTimeout(state.autosaveTimer);
     state.autosaveTimer = setTimeout(function () {
       setSaveState('saving');
-      if (persistLocal()) setSaveState('saved');
-      else setSaveState('error');
+      // thành công mới dirty=false; thất bại giữ dirty=true + báo lỗi lưu
+      var oc = saveOutcome(persistLocal());
+      state.dirty = oc.dirty;
+      setSaveState(oc.saveState);
     }, 800);
   }
 
@@ -300,12 +488,9 @@
   function quickSave() {
     clearTimeout(state.autosaveTimer);
     setSaveState('saving');
-    if (persistLocal()) {
-      state.dirty = false;
-      setSaveState('saved');
-    } else {
-      setSaveState('error');
-    }
+    var oc = saveOutcome(persistLocal());
+    state.dirty = oc.dirty;
+    setSaveState(oc.saveState);
   }
 
   // ------------------------------------------------------------ nạp dữ liệu
@@ -414,34 +599,35 @@
       return;
     }
     state.caseId = id;
+    // race guard: kết quả getBlocks của request CŨ resolve muộn thì bỏ qua
+    var seq = RequestToken.next();
     var cs = currentCase();
     renderCaseInfo(cs);
     updateDocTitle();
     var wanted = formIds(cs);
     getBlocks(wanted).then(function (results) {
+      if (!RequestToken.fresh(seq)) return; // case cũ muộn: KHÔNG ghi state
       state.docs = [];
       results.forEach(function (r) {
         if (r.doc) state.docs.push(r.doc);
         else toast('Không nạp được mẫu: ' + esc(r.error), 'err');
       });
+      // giữ metadata từng form (bat_buoc/nhóm oneOf) vào state theo docId
+      state.formMeta = buildFormMeta(cs);
       // PHASE 6: nạp ui_layouts (nếu có) trước khi render; thiếu -> bỏ qua
       Promise.all(state.docs.map(function (d) { return loadUiLayout(d.id); }))
         .then(function () {
+          if (!RequestToken.fresh(seq)) return; // vẫn chặn sau các await
           if (state.pendingDraft) { finishApplyDraft(); return; }
-          state.activeDocId = state.docs.length ? state.docs[0].id : null;
+          var sel = restoreSelection(state.formMeta, state.docs, null);
+          state.checkedForms = sel.checkedForms;
+          state.activeDocId = sel.activeDocId;
           state.errors = [];
           state.selectedLoopRow = {};
           state.selRowId = {};
           state.multiSel = {};
           renderAllPages();
         });
-    });
-  }
-
-  function formIds(cs) {
-    // blocks/form_maps dùng ID zero-pad 2 chữ số: PLI_M02, PLII_M01...
-    return (cs.forms || []).map(function (f) {
-      return 'PL' + f.pl + '_M' + String(f.mau).padStart(2, '0');
     });
   }
 
@@ -475,19 +661,14 @@
   }
 
   function renderFormList() {
-    var el = $('#form-list');
-    el.innerHTML = state.docs.map(function (d) {
-      return '<label><input type="checkbox" class="form-tick" value="' + esc(d.id) +
-        '" checked> ' + esc(d.ten_mau || d.id) + '</label>';
-    }).join('');
+    // DOM chỉ phản chiếu state.checkedForms (nguồn chân lý); bắt buộc luôn
+    // checked+disabled, tùy chọn unchecked trừ khi draft/user đã chọn
+    $('#form-list').innerHTML =
+      formListHtml(state.docs, state.formMeta, state.checkedForms);
   }
 
   function visibleDocs() {
-    var ticks = {};
-    document.querySelectorAll('.form-tick').forEach(function (t) {
-      if (t.checked) ticks[t.value] = true;
-    });
-    return state.docs.filter(function (d) { return ticks[d.id]; });
+    return state.docs.filter(function (d) { return !!state.checkedForms[d.id]; });
   }
 
   function activeDoc() {
@@ -1201,15 +1382,12 @@
     };
     state.viewState = draft.viewState || {};
     GridCtl.ensureIds(state.store); // _row_id ổn định sau draft round-trip
-    if (draft.checkedForms && draft.checkedForms.length) {
-      document.querySelectorAll('.form-tick').forEach(function (t) {
-        t.checked = draft.checkedForms.indexOf(t.value) >= 0;
-      });
-    }
-    state.activeDocId = (draft.activeDocId &&
-      state.docs.some(function (d) { return d.id === draft.activeDocId; }))
-      ? draft.activeDocId
-      : (visibleDocs()[0] ? visibleDocs()[0].id : null);
+    // khôi phục lựa chọn mẫu từ draft: bắt buộc luôn tick, tùy chọn theo
+    // draft.checkedForms, oneOf loại trừ; activeDocId chỉ nhận doc hợp lệ
+    // (renderFormList sẽ phản chiếu state.checkedForms ra checkbox)
+    var sel = restoreSelection(state.formMeta, state.docs, draft);
+    state.checkedForms = sel.checkedForms;
+    state.activeDocId = sel.activeDocId;
     runAutoFills();
     renderAllPages();
     var vs = state.viewState[state.activeDocId];
@@ -1245,8 +1423,14 @@
       toast('Chưa chọn mẫu biểu nào để xuất.', 'err');
       return;
     }
-    // CHÍNH SÁCH CHẶN EXPORT: còn lỗi blocking thì không gọi Bridge.export
-    var errs = FD.validateDossier(visibleDocs(), state.store, ctxValidate());
+    // CHÍNH SÁCH CHẶN EXPORT: còn lỗi blocking (của field LẪN LỰA CHỌN MẪU)
+    // thì không gọi Bridge.export. Gate chọn mẫu là hàm thuần
+    // checkFormSelection(): thiếu bắt buộc / oneOf chưa chọn hoặc quá max.
+    var selectedIds = visibleDocs().map(function (d) { return d.id; });
+    var titles = {};
+    visibleDocs().forEach(function (d) { titles[d.id] = d.ten_mau || d.id; });
+    var errs = FD.validateDossier(visibleDocs(), state.store, ctxValidate())
+      .concat(checkFormSelection(state.formMeta, selectedIds, titles));
     var blocking = errs.filter(function (e) { return e.severity === 'blocking'; });
     if (blocking.length) {
       state.errors = errs;
@@ -1352,8 +1536,16 @@
 
   // ------------------------------------------------------------- sự kiện
   function wireEvents() {
-    $('#sel-nhom').addEventListener('change', onGroupChange);
-    $('#sel-case').addEventListener('change', function () { onCaseChange(false); });
+    // user TỰ đổi nhóm/case: hủy draft đang chờ khôi phục của case khác
+    // (draft nạp qua applyDraft không đi qua listener này nên không bị hủy)
+    $('#sel-nhom').addEventListener('change', function () {
+      state.pendingDraft = null;
+      onGroupChange();
+    });
+    $('#sel-case').addEventListener('change', function () {
+      state.pendingDraft = null;
+      onCaseChange(false);
+    });
 
     var pages = $('#pages');
 
@@ -1471,12 +1663,15 @@
       navigateToError(btn.getAttribute('data-doc-id'), btn.getAttribute('data-key'));
     });
 
-    // tick/bỏ tick mẫu
+    // tick/bỏ tick mẫu: cập nhật state.checkedForms rồi tự loại trừ oneOf;
+    // render lại để DOM khớp state (các mẫu bị loại trừ được bỏ tick)
     $('#form-list').addEventListener('change', function (e) {
-      if (e.target.classList.contains('form-tick')) {
-        renderAllPages({ keepScroll: true });
-        scheduleAutosave();
-      }
+      if (!e.target.classList.contains('form-tick')) return;
+      var cf = Object.assign({}, state.checkedForms);
+      cf[e.target.value] = e.target.checked;
+      state.checkedForms = applyOneOfExclusive(state.formMeta, cf, e.target.value);
+      renderAllPages({ keepScroll: true });
+      scheduleAutosave();
     });
 
     $('#chk-autosum').addEventListener('change', function (e) {
@@ -1541,8 +1736,24 @@
 
   /* Helpers thuần phục vụ test node (không DOM): GridCtl là controller
    * editable-grid generic (add/delete/reorder/duplicate/clear/export/radio/
-   * vsicResolve), groupErrorsByDoc nhóm lỗi theo mẫu. */
-  var Helpers = { groupErrorsByDoc: groupErrorsByDoc, GridCtl: GridCtl };
+   * vsicResolve), groupErrorsByDoc nhóm lỗi theo mẫu, FormFlow gom nghiệp vụ
+   * chọn mẫu (bat_buoc/oneOf/gate export/draft restore), RequestToken chống
+   * race đổi case, saveOutcome đồng bộ dirty/saveState. */
+  var Helpers = {
+    groupErrorsByDoc: groupErrorsByDoc,
+    GridCtl: GridCtl,
+    FormFlow: {
+      formIdOf: formIdOf,
+      formIds: formIds,
+      buildFormMeta: buildFormMeta,
+      applyOneOfExclusive: applyOneOfExclusive,
+      checkFormSelection: checkFormSelection,
+      restoreSelection: restoreSelection,
+      formListHtml: formListHtml,
+      RequestToken: RequestToken,
+      saveOutcome: saveOutcome
+    }
+  };
   if (typeof module !== 'undefined' && module.exports) module.exports = Helpers;
   if (!IS_NODE) window.ControllerHelpers = Helpers;
 

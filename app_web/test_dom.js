@@ -103,11 +103,13 @@ const m21 = loadMock('blocks_PLII_M01.json');
     html2.indexOf('<input type="checkbox" class="chk-box" data-key="chk_tt_thanh_lap_moi" checked>') >= 0
   );
 
-  // dong bo giua cac mau: M06 cung co input key dn.ten_tieng_viet
+  // dong bo giua cac mau: key dung chung ton tai tren CA M02 va M06 production
+  // (email_tru_so co trong ca hai; dn.ten_tieng_viet chi co tren M02)
+  store.values['email_tru_so'] = 'vanban@congty.vn';
   const htmlM06 = R.renderBlocks(m06, store);
   check(
-    'dong bo key giua mau: PLI_M06 cung nhan gia tri dn.ten_tieng_viet',
-    countMatches(htmlM06, /value="CONG TY TEST MOT THANH VIEN"/g) === 1
+    'dong bo key giua mau: PLI_M06 cung nhan gia tri email_tru_so',
+    countMatches(htmlM06, /value="vanban@congty\.vn"/g) >= 1
   );
 }
 
@@ -123,7 +125,8 @@ const m21 = loadMock('blocks_PLII_M01.json');
       loop: 'ds_test',
       headerRows: [0],
       rows: [{ cells: [{ runs: [{ text: 'STT' }] }, { runs: [{ text: 'A' }] }] }],
-      cols: [{ col: 2, tag: 'gia_tri' }],
+      // col ZERO-BASED: col0 = STT (không tag), gia_tri nằm dưới tiêu đề "A"
+      cols: [{ col: 1, tag: 'gia_tri' }],
       blankRows: 0
     }]
   };
@@ -298,14 +301,17 @@ const D = require('./ui/form-domain.js');
 
 // ============================ 9. PILOT: key chung dong bo giua hai mau
 {
+  // key dùng chung phải TỒN TẠI trên cả hai mẫu production: dn.ten_tieng_viet
+  // chỉ có trên M02, nên cặp M02<->M06 kiểm qua email_tru_so.
   const store = R.newStore();
   store.values['dn.ten_tieng_viet'] = 'CONG TY TNHH DEMO PILOT';
+  store.values['email_tru_so'] = 'demo@pilot.vn';
   const h02 = R.renderBlocks(m02, store);
   const h06 = R.renderBlocks(m06, store);
   check('dien o M02 -> M02 thay gia tri',
     countMatches(h02, /value="CONG TY TNHH DEMO PILOT"/g) >= 1);
-  check('cung store -> M06 thay gia tri (khong alias, exact key)',
-    countMatches(h06, /value="CONG TY TNHH DEMO PILOT"/g) >= 1);
+  check('cung store -> M06 thay gia tri key dung chung (khong alias, exact key)',
+    countMatches(h06, /value="demo@pilot\.vn"/g) >= 1);
 }
 
 // ========================= 10. PILOT: doi tab KHONG mat du lieu/scroll/focus
@@ -334,7 +340,9 @@ const D = require('./ui/form-domain.js');
     autoSum: true,
     viewState: { PLI_M06: { scrollTop: 88, focusKey: null } },
     store: {
-      values: { 'dn.ten_tieng_viet': 'CONG TY RELOAD' },
+      // email_tru_so: key tồn tại trên M06 production để kiểm render lại;
+      // dn.ten_tieng_viet chỉ có trên M02 (vẫn giữ trong payload).
+      values: { 'dn.ten_tieng_viet': 'CONG TY RELOAD', 'email_tru_so': 'reload@pilot.vn' },
       checks: { chk_ht_doc_lap: true },
       loops: {
         ds_thanh_vien: [
@@ -357,7 +365,7 @@ const D = require('./ui/form-domain.js');
   // reload xong render lại từ store: dữ liệu xuất hiện đúng mẫu
   const reloaded = R.renderBlocks(m06, mig.store);
   check('sau reload, M06 hien thi lai gia tri + hang loop (ho_ten hang 0 = A)',
-    countMatches(reloaded, /value="CONG TY RELOAD"/g) >= 1 &&
+    countMatches(reloaded, /value="reload@pilot\.vn"/g) >= 1 &&
       countMatches(reloaded, /value="A"/g) >= 1);
   // draft v1 cu (truoc pilot) van duoc nang cap khong mat du lieu
   const v1 = JSON.parse(JSON.stringify({
@@ -398,12 +406,16 @@ const D = require('./ui/form-domain.js');
 // =================================== 13. PILOT: export gate theo severity
 {
   // Chính sách mục 7 contract: còn blocking -> chặn; chỉ warning -> cho xuất.
+  // Production mới: M02 có ds_nganh bắt buộc -> hồ sơ phải có ngành chính
+  // hợp lệ thì mới còn đúng MỘT warning tỷ lệ vốn để kiểm chính sách gate.
   const empty = D.validateDossier([m02, m06], R.newStore(), {});
   const hasBlocking = empty.some(e => e.severity === 'blocking');
   check('ho so trong co blocking -> doExport PHAI bi chan', hasBlocking);
 
   const warnStore = R.newStore();
   warnStore.values['dn.ten_tieng_viet'] = 'CONG TY GATE';
+  warnStore.loops.ds_nganh = [
+    { ma_nganh: '0111', ten_nganh: 'Trồng lúa', la_nganh_chinh: 'X' }];
   warnStore.loops.ds_thanh_vien = [
     { ho_ten: 'A', von_dong_gop: '600.000.000', ty_le_von: '60' },
     { ho_ten: 'B', von_dong_gop: '400.000.000', ty_le_von: '30' } // tổng 90%
@@ -412,7 +424,8 @@ const D = require('./ui/form-domain.js');
   const onlyWarning = warns.length > 0 &&
     warns.every(e => e.severity === 'warning');
   check('chi warning (tong ty le 90%) -> khong chan export',
-    onlyWarning && warns.some(e => e.code === 'PERCENT_SUM'));
+    onlyWarning && warns.some(e => e.code === 'PERCENT_SUM'),
+    JSON.stringify(warns));
 }
 
 // ================================ 14. PILOT: VSIC bang chuot va ban phim
@@ -461,13 +474,13 @@ const D = require('./ui/form-domain.js');
   if (emptyRows.length) emptyRows.splice(0, 1);
   check('xoa khi khong con dong -> no-op (khong am)', emptyRows.length === 0);
 
-  // render lại sau splice: STT và vị trí đúng
+  // render lại sau splice: STT và vị trí đúng (col ZERO-BASED: ho_ten ở col1)
   const miniDoc = {
     id: 'T15', ten_mau: 't',
     blocks: [{
       t: 'loop', loop: 'ds_thanh_vien', headerRows: [0],
       rows: [{ cells: [{ runs: [{ text: 'STT' }] }, { runs: [{ text: 'Ten' }] }] }],
-      cols: [{ col: 2, tag: 'ho_ten' }], blankRows: 0
+      cols: [{ col: 1, tag: 'ho_ten' }], blankRows: 0
     }]
   };
   const st = R.newStore();

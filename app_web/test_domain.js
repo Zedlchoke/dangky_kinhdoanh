@@ -6,6 +6,14 @@
  *   parseMoney, formatMoney, getFieldMeta, getLoopMeta, collectKeys,
  *   validateField, validateDocument, validateDossier, isValidMaNganh,
  *   migrateDraft (v1 -> v2).
+ *
+ * GHI CHÚ CONTRACT MỚI (sync_mock_blocks sau khi production PLI_M02/M06 đổi):
+ *  - PLI_M02 có bảng lặp thật "ds_nganh" (ma_nganh/ten_nganh/chi_tiet/
+ *    la_nganh_chinh); tên cũ ds_nganh_kinh_doanh chỉ còn trong draft v1 và
+ *    được migrateDraft đổi sang ds_nganh.
+ *  - dn.ten_tieng_viet chỉ còn ở PLI_M02; PLI_M06 không còn field bắt buộc
+ *    nào (các test REQUIRED tương ứng chuyển sang mẫu M02 - giữ nguyên ý định
+ *    "mẫu trống chứa field bắt buộc -> lỗi blocking đúng key/docId").
  */
 'use strict';
 
@@ -73,15 +81,22 @@ const m06 = loadMock('blocks_PLI_M06.json');
   const k02 = D.collectKeys(m02.blocks);
   const k06 = D.collectKeys(m06.blocks);
   check('collectKeys M02 có dn.ten_tieng_viet', k02.keys.indexOf('dn.ten_tieng_viet') >= 0);
-  check('collectKeys M06 có dn.ten_tieng_viet', k06.keys.indexOf('dn.ten_tieng_viet') >= 0);
+  // production mới: tên công ty chỉ kê ở M02; M06 dùng key meta khác thật sự
+  check('collectKeys M06 có ndd.ho_ten (key meta thay dn.ten_tieng_viet)',
+    k06.keys.indexOf('ndd.ho_ten') >= 0 &&
+      k06.keys.indexOf('dn.ten_tieng_viet') < 0);
   check('collectKeys M02 không trùng lặp key', new Set(k02.keys).size === k02.keys.length);
   check('collectKeys M06 loops.ds_thanh_vien có ho_ten',
     k06.loops.ds_thanh_vien && k06.loops.ds_thanh_vien.indexOf('ho_ten') >= 0);
   check('collectKeys M06 loops.ds_thanh_vien có von_dong_gop, ty_le_von',
     k06.loops.ds_thanh_vien.indexOf('von_dong_gop') >= 0 &&
     k06.loops.ds_thanh_vien.indexOf('ty_le_von') >= 0);
-  check('collectKeys M02 loops.ds_nganh_kinh_doanh có ma_nganh (VSIC)',
-    k02.loops.ds_nganh_kinh_doanh && k02.loops.ds_nganh_kinh_doanh.indexOf('ma_nganh') >= 0);
+  // contract mới: loop ngành canonical là ds_nganh (tên cũ đã migrate)
+  check('collectKeys M02 loops.ds_nganh có ma_nganh, ten_nganh, la_nganh_chinh (VSIC)',
+    !!k02.loops.ds_nganh &&
+    ['ma_nganh', 'ten_nganh', 'la_nganh_chinh'].every(t =>
+      k02.loops.ds_nganh.indexOf(t) >= 0) &&
+    !k02.loops.ds_nganh_kinh_doanh);
 }
 
 // ------------------------------------------------------------ 4. validateField
@@ -133,14 +148,18 @@ const m06 = loadMock('blocks_PLI_M06.json');
 
 // ------------------------------------------------------- 5. validateDocument
 {
-  // M06 trống: chỉ REQUIRED tên công ty; bảng trống chưa kích hoạt MIN_ROWS
-  let errs = D.validateDocument('PLI_M06', m06.blocks, R.newStore(), {});
+  // Ý định giữ nguyên: mẫu trống chứa field bắt buộc -> REQUIRED blocking đúng
+  // key/docId. Production mới: dn.ten_tieng_viet chỉ còn ở M02 (xem ghi chú
+  // đầu file), nên assertion chuyển sang M02; M06 trống giờ sạch hoàn toàn.
+  let errs = D.validateDocument('PLI_M02', m02.blocks, R.newStore(), {});
   let req = errs.find(e => e.code === 'REQUIRED');
-  check('M06 trống -> có REQUIRED dn.ten_tieng_viet blocking',
+  check('M02 trống -> có REQUIRED dn.ten_tieng_viet blocking',
     !!req && req.key === 'dn.ten_tieng_viet' && req.severity === 'blocking' &&
-    req.docId === 'PLI_M06');
+    req.docId === 'PLI_M02');
   check('M06 trống -> KHÔNG MIN_ROWS (bảng chưa điền)',
-    !errs.some(e => e.code === 'MIN_ROWS'));
+    !errs.some(e => e.code === 'MIN_ROWS') &&
+    !D.validateDocument('PLI_M06', m06.blocks, R.newStore(), {})
+      .some(e => e.code === 'MIN_ROWS'));
 
   // 1 thành viên -> MIN_ROWS
   const s1 = R.newStore();
@@ -199,7 +218,13 @@ const m06 = loadMock('blocks_PLI_M06.json');
 
 // -------------------------------------------------------- 6. validateDossier
 {
-  const store = R.newStore(); // trống hoàn toàn
+  // Cả hai mẫu phải góp lỗi: M02 lỗi ds_nganh bắt buộc (INDUSTRY_REQUIRED),
+  // M06 lỗi MIN_ROWS (1/2 thành viên) - tên công ty đã điền nên không còn
+  // REQUIRED che các lỗi kia.
+  const store = R.newStore();
+  store.values['dn.ten_tieng_viet'] = 'CONG TY CO LOI O HAI MAU';
+  store.loops.ds_thanh_vien = [
+    { ho_ten: 'NGUYEN VAN A', von_dong_gop: '500.000.000', ty_le_von: '100' }];
   const errs = D.validateDossier([m02, m06], store, {});
   const byDoc = {};
   errs.forEach(e => { byDoc[e.docId] = (byDoc[e.docId] || 0) + 1; });
@@ -208,15 +233,18 @@ const m06 = loadMock('blocks_PLI_M06.json');
   const blockingCount = errs.filter(e => e.severity === 'blocking').length;
   check('hồ sơ trống có ít nhất 1 lỗi blocking (chặn export)', blockingCount >= 1);
 
-  // hồ sơ hợp lệ: M02 đủ tên + M06 2 thành viên
+  // hồ sơ hợp lệ: M02 đủ tên + ds_nganh có ngành chính; M06 2 thành viên 70/30
   const ok = R.newStore();
   ok.values['dn.ten_tieng_viet'] = 'CONG TY TNHH DEMO';
+  ok.loops.ds_nganh = [
+    { ma_nganh: '6201', ten_nganh: 'Lập trình máy vi tính', la_nganh_chinh: 'X' }];
   ok.loops.ds_thanh_vien = [
     { ho_ten: 'NGUYEN VAN A', von_dong_gop: '700.000.000', ty_le_von: '70' },
     { ho_ten: 'TRAN THI B', von_dong_gop: '300.000.000', ty_le_von: '30' }
   ];
   check('hồ sơ demo hợp lệ -> 0 lỗi',
-    D.validateDossier([m02, m06], ok, {}).length === 0);
+    D.validateDossier([m02, m06], ok, {}).length === 0,
+    JSON.stringify(D.validateDossier([m02, m06], ok, {})));
 }
 
 // ------------------------------------------------------------ 7. migrateDraft

@@ -105,6 +105,42 @@ window.FORM_MAPS = {
     "label": "Mệnh giá cổ phần:"
    },
    {
+    "key": "nganh_bo_sung.ten_nganh",
+    "label": "ten_nganh"
+   },
+   {
+    "key": "nganh_bo_sung.ma_nganh",
+    "label": "ma_nganh"
+   },
+   {
+    "key": "nganh_bo_sung.la_nganh_chinh",
+    "label": "la_nganh_chinh"
+   },
+   {
+    "key": "nganh_xoa_bo.ten_nganh",
+    "label": "ten_nganh"
+   },
+   {
+    "key": "nganh_xoa_bo.ma_nganh",
+    "label": "ma_nganh"
+   },
+   {
+    "key": "nganh_xoa_bo.ghi_chu",
+    "label": "ghi_chu"
+   },
+   {
+    "key": "nganh_sua_doi_chi_tiet.ten_nganh",
+    "label": "ten_nganh"
+   },
+   {
+    "key": "nganh_sua_doi_chi_tiet.ma_nganh",
+    "label": "ma_nganh"
+   },
+   {
+    "key": "nganh_sua_doi_chi_tiet.la_nganh_chinh",
+    "label": "la_nganh_chinh"
+   },
+   {
     "key": "von_dau_tu_so",
     "label": "Vốn đầu tư đã đăng ký (bằng số; bằng chữ; VNĐ):"
    },
@@ -276,6 +312,80 @@ window.FORM_MAPS = {
     "key": "chk_de_nghi_cap_gcn",
     "label": "Đề nghị Quý Cơ quan cấp Giấy xác nhận thay đổi nội dung đăng ký doanh nghiệp cho doanh nghiệp đối với các thông tin thay",
     "type": "chk"
+   }
+  ],
+  "dynamic_tables": [
+   {
+    "id": "nganh_bo_sung",
+    "table_index": 0,
+    "header_row": 0,
+    "template_row": 5,
+    "loop": "nganh_bo_sung",
+    "columns": [
+     {
+      "col": 1,
+      "header": "Tên ngành, nghề kinh doanh được bổ sung",
+      "tag": "ten_nganh"
+     },
+     {
+      "col": 2,
+      "header": "Mã ngành",
+      "tag": "ma_nganh"
+     },
+     {
+      "col": 3,
+      "header": "Ngành, nghề kinh doanh chính",
+      "tag": "la_nganh_chinh"
+     }
+    ]
+   },
+   {
+    "id": "nganh_xoa_bo",
+    "table_index": 1,
+    "header_row": 0,
+    "template_row": 5,
+    "loop": "nganh_xoa_bo",
+    "columns": [
+     {
+      "col": 1,
+      "header": "Tên ngành, nghề kinh doanh được bỏ khỏi danh sách đã đăng ký",
+      "tag": "ten_nganh"
+     },
+     {
+      "col": 2,
+      "header": "Mã ngành",
+      "tag": "ma_nganh"
+     },
+     {
+      "col": 3,
+      "header": "Ghi chú",
+      "tag": "ghi_chu"
+     }
+    ]
+   },
+   {
+    "id": "nganh_sua_doi_chi_tiet",
+    "table_index": 2,
+    "header_row": 0,
+    "template_row": 5,
+    "loop": "nganh_sua_doi_chi_tiet",
+    "columns": [
+     {
+      "col": 1,
+      "header": "Tên ngành, nghề kinh doanh được sửa đổi chi tiết",
+      "tag": "ten_nganh"
+     },
+     {
+      "col": 2,
+      "header": "Mã ngành",
+      "tag": "ma_nganh"
+     },
+     {
+      "col": 3,
+      "header": "Ngành, nghề kinh doanh chính",
+      "tag": "la_nganh_chinh"
+     }
+    ]
    }
   ]
  },
@@ -672,6 +782,44 @@ window.FORM_MAPS = {
    {
     "key": "dn.ma_so_dn",
     "label": "Mã số doanh nghiệp/Mã số thuế:"
+   },
+   {
+    "key": "ds_nganh.ten_nganh",
+    "label": "ten_nganh"
+   },
+   {
+    "key": "ds_nganh.ma_nganh",
+    "label": "ma_nganh"
+   },
+   {
+    "key": "ds_nganh.la_nganh_chinh",
+    "label": "la_nganh_chinh"
+   }
+  ],
+  "dynamic_tables": [
+   {
+    "id": "ds_nganh",
+    "table_index": 0,
+    "header_row": 0,
+    "template_row": 5,
+    "loop": "ds_nganh",
+    "columns": [
+     {
+      "col": 1,
+      "header": "Tên ngành",
+      "tag": "ten_nganh"
+     },
+     {
+      "col": 2,
+      "header": "Mã ngành",
+      "tag": "ma_nganh"
+     },
+     {
+      "col": 3,
+      "header": "Ngành, nghề kinh doanh chính",
+      "tag": "la_nganh_chinh"
+     }
+    ]
    }
   ]
  },
@@ -804,6 +952,18 @@ window.FORM_MAPS = {
    {
     "key": "website",
     "label": "Website (nếu có):"
+   },
+   {
+    "key": "ds_nganh.ten_nganh",
+    "label": "ten_nganh"
+   },
+   {
+    "key": "ds_nganh.ma_nganh",
+    "label": "ma_nganh"
+   },
+   {
+    "key": "ds_nganh.la_nganh_chinh",
+    "label": "la_nganh_chinh"
    },
    {
     "key": "vppd_noi_dung",
@@ -993,6 +1153,32 @@ window.FORM_MAPS = {
     "key": "chk_ctck",
     "label": "Đánh dấu X nếu là chi nhánh công ty chứng khoán nước ngoài/chi nhánh công ty quản lý quỹ nước ngoài tại Việt Nam và kê k",
     "type": "chk"
+   }
+  ],
+  "dynamic_tables": [
+   {
+    "id": "ds_nganh",
+    "table_index": 0,
+    "header_row": 0,
+    "template_row": 5,
+    "loop": "ds_nganh",
+    "columns": [
+     {
+      "col": 1,
+      "header": "Tên ngành",
+      "tag": "ten_nganh"
+     },
+     {
+      "col": 2,
+      "header": "Mã ngành",
+      "tag": "ma_nganh"
+     },
+     {
+      "col": 3,
+      "header": "Ngành, nghề kinh doanh chính",
+      "tag": "la_nganh_chinh"
+     }
+    ]
    }
   ]
  },
@@ -1215,6 +1401,18 @@ window.FORM_MAPS = {
     "label": "Website (nếu có):"
    },
    {
+    "key": "ds_nganh.ten_nganh",
+    "label": "ten_nganh"
+   },
+   {
+    "key": "ds_nganh.ma_nganh",
+    "label": "ma_nganh"
+   },
+   {
+    "key": "ds_nganh.la_nganh_chinh",
+    "label": "la_nganh_chinh"
+   },
+   {
     "key": "vppd_noi_dung",
     "label": ""
    },
@@ -1359,6 +1557,32 @@ window.FORM_MAPS = {
     "label": "Không",
     "type": "chk"
    }
+  ],
+  "dynamic_tables": [
+   {
+    "id": "ds_nganh",
+    "table_index": 0,
+    "header_row": 0,
+    "template_row": 5,
+    "loop": "ds_nganh",
+    "columns": [
+     {
+      "col": 1,
+      "header": "Tên ngành",
+      "tag": "ten_nganh"
+     },
+     {
+      "col": 2,
+      "header": "Mã ngành",
+      "tag": "ma_nganh"
+     },
+     {
+      "col": 3,
+      "header": "Ngành, nghề kinh doanh chính",
+      "tag": "la_nganh_chinh"
+     }
+    ]
+   }
   ]
  },
  "PLI_M23": {
@@ -1458,6 +1682,18 @@ window.FORM_MAPS = {
     "label": "Website (nếu có):"
    },
    {
+    "key": "ds_nganh.ten_nganh",
+    "label": "ten_nganh"
+   },
+   {
+    "key": "ds_nganh.ma_nganh",
+    "label": "ma_nganh"
+   },
+   {
+    "key": "ds_nganh.la_nganh_chinh",
+    "label": "la_nganh_chinh"
+   },
+   {
     "key": "vppd_noi_dung",
     "label": "b) Nội dung hoạt động (chỉ kê khai đối với văn phòng đại diện):"
    },
@@ -1555,6 +1791,32 @@ window.FORM_MAPS = {
     "label": "Đề nghị Quý Cơ quan cấp Giấy chứng nhận đăng ký hoạt động chi nhánh/văn phòng đại diện, Giấy chứng nhận đăng ký địa điểm",
     "type": "chk"
    }
+  ],
+  "dynamic_tables": [
+   {
+    "id": "ds_nganh",
+    "table_index": 0,
+    "header_row": 0,
+    "template_row": 5,
+    "loop": "ds_nganh",
+    "columns": [
+     {
+      "col": 1,
+      "header": "Tên ngành",
+      "tag": "ten_nganh"
+     },
+     {
+      "col": 2,
+      "header": "Mã ngành",
+      "tag": "ma_nganh"
+     },
+     {
+      "col": 3,
+      "header": "Ngành, nghề kinh doanh chính",
+      "tag": "la_nganh_chinh"
+     }
+    ]
+   }
   ]
  },
  "PLI_M25": {
@@ -1644,6 +1906,18 @@ window.FORM_MAPS = {
    {
     "key": "website",
     "label": "Website (nếu có):"
+   },
+   {
+    "key": "ds_nganh.ten_nganh",
+    "label": "ten_nganh"
+   },
+   {
+    "key": "ds_nganh.ma_nganh",
+    "label": "ma_nganh"
+   },
+   {
+    "key": "ds_nganh.la_nganh_chinh",
+    "label": "la_nganh_chinh"
    },
    {
     "key": "vppd_noi_dung",
@@ -1754,6 +2028,32 @@ window.FORM_MAPS = {
     "key": "chk_de_nghi_cap_gcn",
     "label": "Đề nghị Quý Cơ quan cấp Giấy chứng nhận đăng ký hoạt động chi nhánh/văn phòng đại diện, Giấy chứng nhận đăng ký địa điểm",
     "type": "chk"
+   }
+  ],
+  "dynamic_tables": [
+   {
+    "id": "ds_nganh",
+    "table_index": 0,
+    "header_row": 0,
+    "template_row": 5,
+    "loop": "ds_nganh",
+    "columns": [
+     {
+      "col": 1,
+      "header": "Tên ngành",
+      "tag": "ten_nganh"
+     },
+     {
+      "col": 2,
+      "header": "Mã ngành",
+      "tag": "ma_nganh"
+     },
+     {
+      "col": 3,
+      "header": "Ngành, nghề kinh doanh chính",
+      "tag": "la_nganh_chinh"
+     }
+    ]
    }
   ]
  },
@@ -4330,6 +4630,18 @@ window.FORM_MAPS = {
     "label": "Website:"
    },
    {
+    "key": "ds_nganh.ten_nganh",
+    "label": "ten_nganh"
+   },
+   {
+    "key": "ds_nganh.ma_nganh",
+    "label": "ma_nganh"
+   },
+   {
+    "key": "ds_nganh.la_nganh_chinh",
+    "label": "la_nganh_chinh"
+   },
+   {
     "key": "von_dau_tu_so",
     "label": "6. Vốn đầu tư (bằng số; bằng chữ; VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có):"
    },
@@ -4432,6 +4744,32 @@ window.FORM_MAPS = {
    {
     "key": "tong_so_co_phan",
     "label": "Tổng số cổ phần:"
+   }
+  ],
+  "dynamic_tables": [
+   {
+    "id": "ds_nganh",
+    "table_index": 0,
+    "header_row": 0,
+    "template_row": 5,
+    "loop": "ds_nganh",
+    "columns": [
+     {
+      "col": 1,
+      "header": "Tên ngành",
+      "tag": "ten_nganh"
+     },
+     {
+      "col": 2,
+      "header": "Mã ngành",
+      "tag": "ma_nganh"
+     },
+     {
+      "col": 3,
+      "header": "Ngành, nghề kinh doanh chính",
+      "tag": "la_nganh_chinh"
+     }
+    ]
    }
   ]
  },
@@ -5259,6 +5597,18 @@ window.FORM_MAPS = {
     "label": "Hình thức tăng, giảm vốn:"
    },
    {
+    "key": "ds_nganh.ten_nganh",
+    "label": "ten_nganh"
+   },
+   {
+    "key": "ds_nganh.ma_nganh",
+    "label": "ma_nganh"
+   },
+   {
+    "key": "ds_nganh.la_nganh_chinh",
+    "label": "la_nganh_chinh"
+   },
+   {
     "key": "von_kinh_doanh",
     "label": "Tổng số (bằng số, bằng chữ, VNĐ):"
    },
@@ -5280,6 +5630,32 @@ window.FORM_MAPS = {
     "key": "chk_ct_ca_nhan",
     "label": "Cá nhân",
     "type": "chk"
+   }
+  ],
+  "dynamic_tables": [
+   {
+    "id": "ds_nganh",
+    "table_index": 0,
+    "header_row": 0,
+    "template_row": 5,
+    "loop": "ds_nganh",
+    "columns": [
+     {
+      "col": 1,
+      "header": "Tên ngành",
+      "tag": "ten_nganh"
+     },
+     {
+      "col": 2,
+      "header": "Mã ngành",
+      "tag": "ma_nganh"
+     },
+     {
+      "col": 3,
+      "header": "Ngành, nghề kinh doanh chính",
+      "tag": "la_nganh_chinh"
+     }
+    ]
    }
   ]
  },
@@ -5596,6 +5972,18 @@ window.FORM_MAPS = {
     "label": "Website:"
    },
    {
+    "key": "ds_nganh.ten_nganh",
+    "label": "ten_nganh"
+   },
+   {
+    "key": "ds_nganh.ma_nganh",
+    "label": "ma_nganh"
+   },
+   {
+    "key": "ds_nganh.la_nganh_chinh",
+    "label": "la_nganh_chinh"
+   },
+   {
     "key": "chu_hkd.gioi_tinh",
     "label": "Giới tính:"
    },
@@ -5630,6 +6018,32 @@ window.FORM_MAPS = {
    {
     "key": "noi_o_hien_tai",
     "label": "Nơi ở hiện tại:"
+   }
+  ],
+  "dynamic_tables": [
+   {
+    "id": "ds_nganh",
+    "table_index": 0,
+    "header_row": 0,
+    "template_row": 5,
+    "loop": "ds_nganh",
+    "columns": [
+     {
+      "col": 1,
+      "header": "Tên ngành",
+      "tag": "ten_nganh"
+     },
+     {
+      "col": 2,
+      "header": "Mã ngành",
+      "tag": "ma_nganh"
+     },
+     {
+      "col": 3,
+      "header": "Ngành, nghề kinh doanh chính",
+      "tag": "la_nganh_chinh"
+     }
+    ]
    }
   ]
  },
@@ -7304,6 +7718,18 @@ window.FORM_MAPS = {
     "label": "Website (nếu có):"
    },
    {
+    "key": "ds_nganh.ten_nganh",
+    "label": "ten_nganh"
+   },
+   {
+    "key": "ds_nganh.ma_nganh",
+    "label": "ma_nganh"
+   },
+   {
+    "key": "ds_nganh.la_nganh_chinh",
+    "label": "la_nganh_chinh"
+   },
+   {
     "key": "von_dau_tu_so",
     "label": "Vốn đầu tư (bằng số; VNĐ):"
    },
@@ -7510,6 +7936,32 @@ window.FORM_MAPS = {
     "key": "chk_bc_06_thang",
     "label": "06 tháng một lần",
     "type": "chk"
+   }
+  ],
+  "dynamic_tables": [
+   {
+    "id": "ds_nganh",
+    "table_index": 0,
+    "header_row": 0,
+    "template_row": 5,
+    "loop": "ds_nganh",
+    "columns": [
+     {
+      "col": 1,
+      "header": "Tên ngành",
+      "tag": "ten_nganh"
+     },
+     {
+      "col": 2,
+      "header": "Mã ngành",
+      "tag": "ma_nganh"
+     },
+     {
+      "col": 3,
+      "header": "Ngành, nghề kinh doanh chính",
+      "tag": "la_nganh_chinh"
+     }
+    ]
    }
   ]
  },
@@ -8245,6 +8697,18 @@ window.FORM_MAPS = {
     "label": "Website (nếu có):"
    },
    {
+    "key": "ds_nganh.ten_nganh",
+    "label": "ten_nganh"
+   },
+   {
+    "key": "ds_nganh.ma_nganh",
+    "label": "ma_nganh"
+   },
+   {
+    "key": "ds_nganh.la_nganh_chinh",
+    "label": "la_nganh_chinh"
+   },
+   {
     "key": "von_dieu_le",
     "label": "Vốn điều lệ (bằng số; VNĐ):"
    },
@@ -8350,6 +8814,32 @@ window.FORM_MAPS = {
     "key": "chk_khong",
     "label": "Không",
     "type": "chk"
+   }
+  ],
+  "dynamic_tables": [
+   {
+    "id": "ds_nganh",
+    "table_index": 0,
+    "header_row": 0,
+    "template_row": 5,
+    "loop": "ds_nganh",
+    "columns": [
+     {
+      "col": 1,
+      "header": "Tên ngành",
+      "tag": "ten_nganh"
+     },
+     {
+      "col": 2,
+      "header": "Mã ngành",
+      "tag": "ma_nganh"
+     },
+     {
+      "col": 3,
+      "header": "Ngành, nghề kinh doanh chính",
+      "tag": "la_nganh_chinh"
+     }
+    ]
    }
   ]
  },
@@ -8546,6 +9036,18 @@ window.FORM_MAPS = {
     "label": "Website (nếu có):"
    },
    {
+    "key": "ds_nganh.ten_nganh",
+    "label": "ten_nganh"
+   },
+   {
+    "key": "ds_nganh.ma_nganh",
+    "label": "ma_nganh"
+   },
+   {
+    "key": "ds_nganh.la_nganh_chinh",
+    "label": "la_nganh_chinh"
+   },
+   {
     "key": "von_dieu_le",
     "label": "Vốn điều lệ (bằng số; VNĐ):"
    },
@@ -8655,6 +9157,32 @@ window.FORM_MAPS = {
     "key": "chk_khong",
     "label": "Không",
     "type": "chk"
+   }
+  ],
+  "dynamic_tables": [
+   {
+    "id": "ds_nganh",
+    "table_index": 0,
+    "header_row": 0,
+    "template_row": 5,
+    "loop": "ds_nganh",
+    "columns": [
+     {
+      "col": 1,
+      "header": "Tên ngành",
+      "tag": "ten_nganh"
+     },
+     {
+      "col": 2,
+      "header": "Mã ngành",
+      "tag": "ma_nganh"
+     },
+     {
+      "col": 3,
+      "header": "Ngành, nghề kinh doanh chính",
+      "tag": "la_nganh_chinh"
+     }
+    ]
    }
   ]
  },
@@ -8795,6 +9323,18 @@ window.FORM_MAPS = {
     "label": "Website (nếu có):"
    },
    {
+    "key": "ds_nganh.ten_nganh",
+    "label": "ten_nganh"
+   },
+   {
+    "key": "ds_nganh.ma_nganh",
+    "label": "ma_nganh"
+   },
+   {
+    "key": "ds_nganh.la_nganh_chinh",
+    "label": "la_nganh_chinh"
+   },
+   {
     "key": "von_dieu_le",
     "label": "Vốn điều lệ (bằng số; VNĐ):"
    },
@@ -8885,6 +9425,32 @@ window.FORM_MAPS = {
     "key": "chk_khong",
     "label": "Không",
     "type": "chk"
+   }
+  ],
+  "dynamic_tables": [
+   {
+    "id": "ds_nganh",
+    "table_index": 0,
+    "header_row": 0,
+    "template_row": 5,
+    "loop": "ds_nganh",
+    "columns": [
+     {
+      "col": 1,
+      "header": "Tên ngành",
+      "tag": "ten_nganh"
+     },
+     {
+      "col": 2,
+      "header": "Mã ngành",
+      "tag": "ma_nganh"
+     },
+     {
+      "col": 3,
+      "header": "Ngành, nghề kinh doanh chính",
+      "tag": "la_nganh_chinh"
+     }
+    ]
    }
   ]
  },

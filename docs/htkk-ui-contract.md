@@ -117,6 +117,11 @@ state.viewState   : { [docId]: { scrollTop, focusKey } } // phục hồi khi đ�
   tự block không đổi.
 - Accessible name: `aria-label` = fieldMeta.label nếu có, fallback là text run
   tĩnh liền trước trong cùng đoạn/ô (renderer tự trích, tối đa ~90 ký tự).
+- Checkbox: GIỮ NGUYÊN chuỗi attribute cũ (`type/class/data-key/checked`) vì
+  test legacy phụ thuộc literal; accessible name đến từ `<label>` bao ngoài
+  (block chk) hoặc text liền kề. Không gắn aria-required cho checkbox pilot.
+- ID mẫu biểu zero-pad 2 chữ số (`PLI_M02`): mọi chỗ ghép id từ `{pl, mau}`
+  phải dùng `String(mau).padStart(2,'0')`.
 
 ## 6. Action IDs
 

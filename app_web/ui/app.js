@@ -251,7 +251,10 @@
   }
 
   function formIds(cs) {
-    return (cs.forms || []).map(function (f) { return 'PL' + f.pl + '_M' + f.mau; });
+    // blocks/form_maps dùng ID zero-pad 2 chữ số: PLI_M02, PLII_M01...
+    return (cs.forms || []).map(function (f) {
+      return 'PL' + f.pl + '_M' + String(f.mau).padStart(2, '0');
+    });
   }
 
   function renderCaseInfo(cs) {

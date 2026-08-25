@@ -18,6 +18,11 @@ Nguyen ly:
     duoc TAI DUNG bang REBUILD_TABLES: xoa paragraph tan du cua luoi cu roi chen
     bang moi (hang tieu de in dam + 5 hang trang, hang mau cuoi gan san the loop)
     vao ban sao trong bo nho truoc khi gắn the.
+  - Cau hinh bang tai dung co the dat thanh FILE SPEC RIENG
+    tools/form_specs/<nhom>/<FORM_ID>.json (nhom: formation | change | household |
+    core). Generator uu tien doc file spec theo form_id; khong co file thi
+    fallback ve khai bao inline REBUILD_TABLES nhu cu. Schema JSON: ghi chu o
+    tools/form_specs/README.md.
 """
 import csv
 import json
@@ -523,19 +528,9 @@ HEADER_STT = {"stt", "số tt", "stt*"}
 # keep_from (trên text gốc, chưa fold); drop = regex (đã fold) xóa cả paragraph.
 # ---------------------------------------------------------------------------
 REBUILD_TABLES = {
-    "PLI_M02": [
-        {"spec": "ds_nganh_vsic", "pos": "after",
-         "anchor": r"^4\. nganh, nghe kinh doanh",
-         # drop chỉ trong vùng ngành (trước mục 5) để không đụng các lưới
-         # khác cũng có ô "STT" rời (mục 8 tài sản góp, mục 10 thuế...);
-         # tàn dư lưới cũ của mẫu này giữ nguyên ngoài vùng đó.
-         "no_default_drops": True,
-         "drop_until": r"^5\. chu so huu",
-         "drop": [r"^stt$", r"^ten nganh$", r"^ma nganh\d*$",
-                  r"^nganh, nghe kinh doanh chinh\b"],
-         "headers": ["STT", "Mã ngành", "Tên ngành theo VSIC",
-                     "Chi tiết hoạt động", "Ngành chính"]},
-    ],
+    # PLI_M02 & PLII_M01 đã chuyển sang tools/form_specs/core/ (PLI_M02.json,
+    # PLII_M01.json). Các mẫu còn lại dưới đây là fallback inline — chuyển dần
+    # sang file spec khi chạm tới.
     "PLI_M06": [
         {"spec": "ds_thanh_vien_tnhh", "pos": "before",
          "anchor": r"thong tin ve giay chung nhan dang ky dau tu",
@@ -582,20 +577,6 @@ REBUILD_TABLES = {
                      "Ngày cấp", "Nơi cấp", "Địa chỉ trụ sở chính",
                      "Tỷ lệ sở hữu cổ phần có quyền biểu quyết (%)", "Ghi chú"]},
     ],
-    "PLII_M01": [
-        {"spec": "ds_nganh_nghe", "pos": "after",
-         "anchor": r"^3\. nganh, nghe kinh doanh",
-         "drop": [r"^stt$", r"^ten nganh$", r"^ma nganh\d*$",
-                  r"^nganh, nghe kinh doanh chinh\d*$"],
-         "headers": ["STT", "Tên ngành", "Mã ngành", "Ngành, nghề kinh doanh chính"]},
-        {"spec": "ds_tv_ho_gia_dinh", "pos": "after",
-         "anchor": r"^7\. thong tin ve cac thanh vien ho gia dinh",
-         "trim": [r"^sttho ten"],
-         "keep_from": r"Tôi xin cam kết",
-         "headers": ["STT", "Họ tên", "Ngày, tháng, năm sinh", "Số định danh cá nhân",
-                     "Giới tính", "Quốc tịch", "Dân tộc", "Nơi thường trú",
-                     "Nơi ở hiện tại", "Chữ ký"]},
-    ],
 }
 
 # Tàn dư lưới cũ: đoạn chữ nối dài bắt đầu bằng "STT..." hoặc chuỗi số hàng "12345678910..."
@@ -603,6 +584,75 @@ REBUILD_DROP_DEFAULT = [r"^stt.{40,}", r"^\d{5,}$"]
 REBUILD_BLANK_ROWS = 5
 
 _SPEC_BY_ID = {s["id"]: s for s in DYNAMIC_TABLES}
+
+# ---------------------------------------------------------------------------
+# Spec bảng rebuild dạng FILE JSON: tools/form_specs/<nhóm>/<FORM_ID>.json
+# Ưu tiên cao hơn REBUILD_TABLES inline; JSON thuần, không chạy code.
+# Root: {"form_id", "group", "note"?, "gap_nghiepvu"?, "tables": [entry...]}.
+# entry = một bảng tái dựng: {"spec": {...}, "pos"?, "anchor", "headers",
+#          "drop"?, "drop_until"?, "no_default_drops"?, "trim"?, "keep_from"?}
+# spec  = {"id", "detect": [token_fold...], "stt_tag"?, "cols": [[regex, tag]...],
+#          "loop", "fields": [tag...]} — tag null = cột không gắn the.
+# ---------------------------------------------------------------------------
+FORM_SPECS_DIR = ROOT / "tools" / "form_specs"
+_form_spec_cache = {}
+
+
+def _json_spec(raw_spec):
+    """JSON spec -> dict spec cùng hình dạng phần tử DYNAMIC_TABLES."""
+    return {
+        "id": raw_spec["id"],
+        "detect": set(raw_spec.get("detect") or []),
+        "stt_tag": bool(raw_spec.get("stt_tag")),
+        "cols": [(pat, tag) for pat, tag in raw_spec.get("cols") or []],
+        "loop": raw_spec["loop"],
+        "fields": list(raw_spec.get("fields") or []),
+    }
+
+
+def load_form_spec(form_id):
+    """Đọc tools/form_specs/*/<form_id>.json nếu có.
+
+    Trả về None khi không có file spec (mẫu dùng REBUILD_TABLES inline);
+    ngược lại {"entries": [entry...], "specs_by_id": {spec_id: spec}} với
+    entry là dict giống phần tử REBUILD_TABLES (trừ "spec" đã tách ra).
+    Kết quả cache theo form_id trong tiến trình.
+    """
+    if form_id in _form_spec_cache:
+        return _form_spec_cache[form_id]
+    raw = None
+    path_used = None
+    if FORM_SPECS_DIR.is_dir():
+        for path in sorted(FORM_SPECS_DIR.glob("*/%s.json" % form_id)):
+            raw = json.loads(path.read_text(encoding="utf-8"))
+            path_used = path
+            break
+    result = None
+    if raw is not None:
+        if form_id in REBUILD_TABLES:
+            print("[form_specs] %s co ca file JSON (%s) va khai bao inline "
+                  "REBUILD_TABLES -> dung file JSON" % (form_id, path_used.name))
+        if raw.get("gap_nghiepvu"):
+            print("[form_specs] %s GAP NGHIEPVU: %s" % (form_id, raw["gap_nghiepvu"]))
+        specs_by_id = {}
+        entries = []
+        for e in raw.get("tables") or []:
+            s = _json_spec(e["spec"])
+            specs_by_id[s["id"]] = s
+            ent = {k: v for k, v in e.items() if k != "spec"}
+            ent["spec"] = s["id"]  # giữ hình dạng entry như REBUILD_TABLES inline
+            entries.append(ent)
+        result = {"entries": entries, "specs_by_id": specs_by_id}
+    _form_spec_cache[form_id] = result
+    return result
+
+
+def resolve_rebuild_spec(spec_id, ext):
+    """Spec của một entry rebuild: ưu tiên spec từ file JSON (ext), sau đó đến
+    DYNAMIC_TABLES inline."""
+    if ext and spec_id in ext["specs_by_id"]:
+        return ext["specs_by_id"][spec_id]
+    return _SPEC_BY_ID[spec_id]
 
 
 def _body_paragraphs(doc):
@@ -679,10 +729,11 @@ def _build_list_table(doc, headers, spec):
     return tbl
 
 
-def rebuild_list_tables(doc, form_id):
+def rebuild_list_tables(doc, form_id, ext=None):
     """Xoa paragraph tan du cua luoi cu va chen bang danh sach moi vao ban sao
-    trong bo nho (khong ghi đè file nguồn). Chạy TRƯỚC khi gắn the."""
-    entries = REBUILD_TABLES.get(form_id)
+    trong bo nho (khong ghi đè file nguồn). Chạy TRƯỚC khi gắn the.
+    ext = load_form_spec(form_id); None -> dùng khai báo inline REBUILD_TABLES."""
+    entries = ext["entries"] if ext else REBUILD_TABLES.get(form_id)
     if not entries:
         return
     # Lưu ý proxy lxml/python-docx: id(element) không ổn định giữa hai lần
@@ -744,7 +795,7 @@ def rebuild_list_tables(doc, form_id):
             para._p.getparent().remove(para._p)
     # 3) chèn bảng mới tại điểm neo
     for e in entries:
-        spec = _SPEC_BY_ID[e["spec"]]
+        spec = resolve_rebuild_spec(e["spec"], ext)
         anchor_p = None
         for para in _body_paragraphs(doc):
             if re.search(e["anchor"], _para_folded(para)):
@@ -762,7 +813,10 @@ def rebuild_list_tables(doc, form_id):
         tbl._tbl.addnext(spacer)
 
 
-def detect_dynamic(table):
+def detect_dynamic(table, extra_specs=()):
+    """Nhận diện bảng động. extra_specs: spec nạp từ tools/form_specs/ của
+    mẫu đang xử lý — xét TRƯỚC DYNAMIC_TABLES để bảng vừa tái dựng từ file
+    JSON khớp đúng spec nguồn gốc của nó."""
     if not table.rows:
         return None
     hdr_texts = []
@@ -774,7 +828,7 @@ def detect_dynamic(table):
         for cell in table.rows[hdr_row].cells:
             texts.append(fold(re.sub(r"\s+", " ", cell.text)).strip())
         joined = set(t for t in texts if t)
-        for spec in DYNAMIC_TABLES:
+        for spec in list(extra_specs) + list(DYNAMIC_TABLES):
             if spec["detect"] <= joined:
                 return (spec, hdr_row)
     return None
@@ -918,8 +972,10 @@ def process_form(path, titles, coverage):
     form_id, pl, mau = parse_form_id(path)
     rel = path.relative_to(ROOT).as_posix()
     doc = Document(str(path))
-    # tái dựng bảng danh sách đã mất khi convert (chỉ với các mẫu khai báo)
-    rebuild_list_tables(doc, form_id)
+    # tái dựng bảng danh sách đã mất khi convert (spec từ tools/form_specs/ hoặc
+    # fallback khai báo inline REBUILD_TABLES)
+    ext = load_form_spec(form_id)
+    rebuild_list_tables(doc, form_id, ext)
     fields = []          # [{key,label,(type)}]
     dyn_tables = []
     unmatched = []
@@ -1013,7 +1069,8 @@ def process_form(path, titles, coverage):
             tbl_idx += 1
             from docx.table import Table
             table = Table(child, doc)
-            det = detect_dynamic(table)
+            det = detect_dynamic(
+                table, tuple(ext["specs_by_id"].values()) if ext else ())
             if det:
                 spec, hdr_row = det
                 cols = []

@@ -1,0 +1,32 @@
+{
+  "form_id": "PLI_M02",
+  "group": "core",
+  "note": "Chuyen tu khai bao inline REBUILD_TABLES['PLI_M02'] nguyen van (Wave2 spec-split). Bang 5 cot VSIC; drop chi trong vung nganh (truoc muc 5 chu so huu) vi mau co cac luoi khac cung co o STT roi (muc 8 tai san, muc 10 thue).",
+  "gap_nghiepvu": null,
+  "tables": [
+    {
+      "spec": {
+        "id": "ds_nganh_vsic",
+        "detect": ["stt", "ma nganh", "ten nganh theo vsic"],
+        "stt_tag": true,
+        "cols": [
+          ["^stt$", null],
+          ["^ma nganh", "ma_nganh"],
+          ["ten nganh", "ten_nganh"],
+          ["chi tiet hoat dong|^chi tiet$", "chi_tiet"],
+          ["^nganh chinh$|nganh, nghe kinh doanh chinh", "la_nganh_chinh"]
+        ],
+        "loop": "ds_nganh",
+        "fields": ["ma_nganh", "ten_nganh", "chi_tiet", "la_nganh_chinh"]
+      },
+      "pos": "after",
+      "anchor": "^4\\. nganh, nghe kinh doanh",
+      "no_default_drops": true,
+      "drop_until": "^5\\. chu so huu",
+      "drop": ["^stt$", "^ten nganh$", "^ma nganh\\d*$",
+               "^nganh, nghe kinh doanh chinh\\b"],
+      "headers": ["STT", "Mã ngành", "Tên ngành theo VSIC",
+                  "Chi tiết hoạt động", "Ngành chính"]
+    }
+  ]
+}

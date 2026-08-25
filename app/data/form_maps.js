@@ -4968,6 +4968,10 @@ window.FORM_MAPS = {
     "label": "ma_nganh"
    },
    {
+    "key": "ds_nganh.la_nganh_chinh",
+    "label": "la_nganh_chinh"
+   },
+   {
     "key": "von_kinh_doanh",
     "label": "Tổng số (bằng số, bằng chữ, VNĐ):"
    },
@@ -5062,6 +5066,11 @@ window.FORM_MAPS = {
       "col": 2,
       "header": "Mã ngành",
       "tag": "ma_nganh"
+     },
+     {
+      "col": 3,
+      "header": "Ngành, nghề kinh doanh chính",
+      "tag": "la_nganh_chinh"
      }
     ]
    },

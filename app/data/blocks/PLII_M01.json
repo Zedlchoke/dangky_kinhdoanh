@@ -563,6 +563,10 @@
     {
      "col": 2,
      "tag": "ma_nganh"
+    },
+    {
+     "col": 3,
+     "tag": "la_nganh_chinh"
     }
    ],
    "blankRows": 4,

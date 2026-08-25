@@ -8,13 +8,13 @@ Phạm vi:
    - giữ nguyên hàng tiêu đề (STT | Tên ngành | Mã ngành | Ngành, nghề kinh
      doanh chính);
    - nhân đúng số dòng dữ liệu ở CUỐI bảng (sau các hàng trắng để in);
-   - mỗi giá trị nằm đúng ô cột (so text từng cell);
+   - mỗi giá trị nằm đúng ô cột (so text từng cell):
+     * cột STT tự sinh 1/2/3 theo {_stt};
+     * cột "Ngành, nghề kinh doanh chính" có ĐÚNG MỘT ô 'X' tại dòng ngành
+       chính, các dòng còn lại rỗng;
+     * mã/tên ngành đúng giá trị từng dòng;
    - KHÔNG còn sót token loop/cột ({#ds_nganh}, {/ds_nganh}, {ten_nganh},
-     {ma_nganh}, {_stt}) trong word/document.xml.
-
-Ghi chú: template PLII_M01 hiện chưa đặt {_stt}/{la_nganh_chinh} trong hàng
-khuôn (khác PLI_M02) nên ô STT/ngành chính để trống là hành vi đúng của
-engine; test khóa lại để nếu sau này thêm tag thì số dòng/cột vẫn đúng.
+     {ma_nganh}, {la_nganh_chinh}, {_stt}) trong word/document.xml.
 
 File thuần Python, exit code 0 = PASS / 1 = FAIL.
 Được gọi độc lập HOẶC từ app_web/test_acceptance.js (mục AC13).
@@ -132,14 +132,18 @@ def t_rows_and_columns():
             "Tên ngành dòng %d = %r != %r" % (i, row[1], want["ten_nganh"])
         assert row[2] == want["ma_nganh"], \
             "Mã ngành dòng %d = %r != %r" % (i, row[2], want["ma_nganh"])
-        # Template PLII_M01 chưa có tag {_stt}/{la_nganh_chinh}: ô đó phải
-        # TRỐNG (engine không được nhảy giá trị sang cột kế bên).
-        assert row[0] == "", \
-            "ô STT dòng %d = %r (template chưa có {_stt}, kỳ vọng trống)" % (
-                i, row[0])
-        assert row[3] == "", \
-            "ô Ngành chính dòng %d = %r (chưa map tag, kỳ vọng trống)" % (
-                i, row[3])
+        # Cột STT: engine {_stt} phải sinh đúng số thứ tự 1-based từng dòng.
+        assert row[0] == str(i + 1), \
+            "ô STT dòng %d = %r != %r" % (i, row[0], str(i + 1))
+        # Cột Ngành chính: ĐÚNG MỘT ô 'X' tại dòng ngành chính (dòng 0),
+        # mọi dòng khác phải rỗng — không chấp nhận rỗng toàn cột.
+        assert row[3] == want["la_nganh_chinh"], \
+            "ô Ngành chính dòng %d = %r != %r" % (
+                i, row[3], want["la_nganh_chinh"] or "(trống)")
+    x_marks = [t[3] for t in data_texts]
+    assert x_marks.count("X") == 1 and x_marks[0] == "X", \
+        "cột Ngành chính phải có đúng một 'X' ở dòng ngành chính, thấy %r" % (
+            x_marks,)
     # Các hàng giữa header và khối dữ liệu là hàng trắng để in (không mang
     # giá trị của dòng dữ liệu đầu tiên - kiểm tra không trượt hàng).
     mid = texts[1:-n_data] if len(texts) > 1 + n_data else []
@@ -156,7 +160,7 @@ def t_no_leftover_tokens():
     with zipfile.ZipFile(out_path) as z:
         xml = z.read("word/document.xml").decode("utf-8")
     for tok in ("{#%s}" % LOOP_NAME, "{/%s}" % LOOP_NAME,
-                "{ten_nganh}", "{ma_nganh}", "{_stt}"):
+                "{ten_nganh}", "{ma_nganh}", "{la_nganh_chinh}", "{_stt}"):
         assert tok not in xml, "còn sót token %r trong document.xml" % tok
 
 

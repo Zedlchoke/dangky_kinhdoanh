@@ -200,8 +200,9 @@
    *   loop:<loop>:<idx>:<tag>) | 'radio' (name="loop:<loop>:<tag>",
    *   browser tự chọn-1-trong-cột) | 'readonly' | 'outputOnly' (ô rỗng).
    * - opts.gridMeta (từ FormDomain.GRID_META): override type THEO TAG và bổ
-   *   sung tag cho cột vật lý chưa map (mc.col) - vd la_nganh_chinh ở
-   *   PLII_M01. Không truyền -> hành vi thuần theo blocks như bản cũ.
+   *   sung tag cho cột vật lý chưa có trong cols[] (vd cột ngành chính của
+   *   các mẫu cũ trước khi generator sinh đủ cols). Không truyền -> hành vi
+   *   thuần theo blocks như bản cũ.
    * - Số hàng hiển thị = max(số dòng dữ liệu, blankRows; grid có meta và cho
    *   thêm dòng thì tối thiểu 1 dòng). Mỗi tr dữ liệu mang data-row-index +
    *   data-row-id (=_row_id ổn định của row trong store) + data-loop để

@@ -57,10 +57,11 @@ GROUP_OF = {
 }
 CANONICAL_LOOP = "ds_nganh"
 
-# Các cách đặt tên metadata oneOf được chấp nhận khi Agent 1B bổ sung
-# (case-level: danh sách nhóm; form-level: tên nhóm trên từng form).
-ONEOF_CASE_KEYS = ("one_of", "oneOf", "form_groups", "nhom_loai_tru")
-ONEOF_FORM_KEYS = ("one_of", "one_of_group", "oneOfGroup", "nhom_loai_tru")
+# Tên metadata oneOf CHÍNH THỨC (chốt tại Integrate 1): `forms_oneOf` cấp case
+# theo schema Agent 1B đã triển khai + test (app_web/test_form_flow.js);
+# các tên cũ vẫn được nhận diện để tương thích ngược, không nới ngữ nghĩa.
+ONEOF_CASE_KEYS = ("forms_oneOf", "one_of", "oneOf", "form_groups", "nhom_loai_tru")
+ONEOF_FORM_KEYS = ("forms_oneOf", "one_of", "one_of_group", "oneOfGroup", "nhom_loai_tru")
 
 _results: list[tuple[bool, str]] = []
 
@@ -195,20 +196,36 @@ def zipfile_safe_read(path: Path) -> str:
         return z.read("word/document.xml").decode("utf-8")
 
 
+def _doc_id_to_ref(s: str):
+    """'PLII_M01' -> ('II', 1); trả None nếu không khớp mẫu PL<pl>_M<mau>."""
+    m = re.fullmatch(r"PL([IVX]+)_M(\d+)", str(s or "").strip())
+    if not m:
+        return None
+    return (m.group(1), int(m.group(2)))
+
+
 def oneof_groups_of_case(case: dict) -> list[list[tuple[int, int]]]:
     """Trả danh sách nhóm oneOf của case theo metadata (nếu đã khai).
-    Hỗ trợ: case-level list nhóm; form-level tên nhóm gom lại."""
+    Hỗ trợ: case-level list nhóm; form-level tên nhóm gom lại.
+    Contract chính thức (Integrate 1): forms_oneOf = [{ids:['PL.._M..',...], max:N}]."""
     for k in ONEOF_CASE_KEYS:
         v = case.get(k)
         if isinstance(v, list) and v:
             groups = []
             for g in v:
                 refs = []
-                for item in (g if isinstance(g, list) else [g]):
-                    if isinstance(item, dict) and "pl" in item and "mau" in item:
-                        refs.append((item["pl"], item["mau"]))
-                    elif isinstance(item, list) and len(item) >= 2:
-                        refs.append((item[0], item[1]))
+                if isinstance(g, dict) and isinstance(g.get("ids"), list):
+                    # shape chính thức của Agent 1B: {ids:[doc_id...], max}
+                    for s in g["ids"]:
+                        ref = _doc_id_to_ref(s)
+                        if ref:
+                            refs.append(ref)
+                else:
+                    for item in (g if isinstance(g, list) else [g]):
+                        if isinstance(item, dict) and "pl" in item and "mau" in item:
+                            refs.append((item["pl"], item["mau"]))
+                        elif isinstance(item, list) and len(item) >= 2:
+                            refs.append((item[0], item[1]))
                 if refs:
                     groups.append(refs)
             if groups:

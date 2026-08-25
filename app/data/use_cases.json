@@ -241,21 +241,21 @@
      "bat_buoc": false,
      "ghi_chu": "Nếu chuyển đổi thành TNHH hai thành viên trở lên (kèm Mẫu 6)"
     },
-     {
-      "pl": "I",
-      "mau": 4,
-      "bat_buoc": false,
-      "ghi_chu": "Nếu chuyển đổi thành công ty cổ phần (kèm Mẫu 7)"
-     }
-    ],
-    "forms_oneOf": [
-     {
-      "ids": ["PLI_M01", "PLI_M02", "PLI_M03", "PLI_M04"],
-      "max": 1
-     }
-    ],
-    "giay_to_kem": [
-     "Bản sao Giấy chứng nhận đăng ký hộ kinh doanh (bắt buộc)",
+    {
+     "pl": "I",
+     "mau": 4,
+     "bat_buoc": false,
+     "ghi_chu": "Nếu chuyển đổi thành công ty cổ phần (kèm Mẫu 7)"
+    }
+   ],
+   "forms_oneOf": [
+    {
+     "ids": ["PLI_M01", "PLI_M02", "PLI_M03", "PLI_M04"],
+     "max": 1
+    }
+   ],
+   "giay_to_kem": [
+    "Bản sao Giấy chứng nhận đăng ký hộ kinh doanh (bắt buộc)",
     "Các giấy tờ của hồ sơ thành lập doanh nghiệp tương ứng theo Điều 24 NĐ 168 (Điều lệ, danh sách thành viên, giấy tờ pháp lý...)",
     "Nếu có nhà đầu tư nước ngoài góp vốn/mua phần vốn góp thuộc trường hợp phải chấp thuận: bản sao văn bản chấp thuận của Cơ quan đăng ký đầu tư"
    ],

@@ -6,6 +6,8 @@
  *  - validateField / validateDocument / validateDossier -> error[]
  *    error = { key, docId, code, message, severity: 'blocking'|'warning' }
  *  - collectKeys(blocks), migrateDraft(draft) (v1 -> v2)
+ *  - GRID_META / getGridMeta: metadata editable-grid dùng chung;
+ *    makeRowId/normalizeStoreLoops: _row_id ổn định + migration ds_nganh.
  */
 (function (root) {
   'use strict';
@@ -90,7 +92,8 @@
 
   /* Rule bảng lặp. minRowsFilled: số dòng CÓ DỮ LIỆU tối thiểu (0 = bỏ qua);
    * moneyTags phải là tiền hợp lệ; percentTags tổng ~100 (warning);
-   * vsicTags phải có trong danh mục VSIC khi ctx.vsicList được cung cấp. */
+   * vsicTags phải có trong danh mục VSIC khi ctx.vsicList được cung cấp.
+   * LOOP_META giữ cho tương thích ngược; metadata mới nằm ở GRID_META. */
   var LOOP_META = {
     ds_thanh_vien: {
       label: 'Danh sách thành viên', minRowsFilled: 2,
@@ -102,12 +105,179 @@
     }
   };
 
+  /* Metadata editable-grid dùng chung (PLAN.md mục "editable-grid").
+   * - minRows/maxRows: số dòng CÓ DỮ LIỆU tối thiểu/tối đa; vi phạm KHÔNG khóa
+   *   thao tác, chỉ validator chặn trước export.
+   * - required: bảng bắt buộc phải có ít nhất 1 dòng dữ liệu (ngược lại 0 dòng
+   *   là hợp lệ) -> lỗi INDUSTRY_REQUIRED khi required && 0 dòng.
+   * - allowAdd/allowDelete/allowReorder: ẩn nút action tương ứng trên UI.
+   * - confirmDeleteNonEmpty: xác nhận trước khi xóa dòng có dữ liệu.
+   * - columns[]: {tag, type, required?, col?}; type: text|money|percent|
+   *   checkbox|radio|readonly|vsic|outputOnly. col dùng khi template có cột
+   *   vật lý chưa được map tag trong blocks.cols (vd la_nganh_chinh ở PLII_M01).
+   * - duplicateKeys: field định danh/khóa -> bị bỏ khi nhân bản dòng và được
+   *   check trùng lặp; riêng ds_nganh.ma_nganh sinh lỗi DUPLICATE_INDUSTRY.
+   * - outputOnlyTags: cột chỉ dùng cho bản in, không nhập trên UI.
+   * - requirePrimary: phải chọn đúng MỘT dòng la_nganh_chinh (radio).
+   * - autoName: {codeTag, nameTag} - tự điền tên từ danh mục theo mã (VSIC). */
+  var GRID_META = {
+    ds_thanh_vien: {
+      label: 'Danh sách thành viên',
+      minRows: 2, maxRows: null, required: false,
+      allowAdd: true, allowDelete: true, allowReorder: true,
+      confirmDeleteNonEmpty: true, requirePrimary: false,
+      columns: [
+        { tag: 'ho_ten', type: 'text', required: true },
+        { tag: 'ngay_sinh', type: 'text' },
+        { tag: 'gioi_tinh', type: 'text' },
+        { tag: 'so_cccd', type: 'text' },
+        { tag: 'quoc_tich', type: 'text' },
+        { tag: 'dan_toc', type: 'text' },
+        { tag: 'dia_chi', type: 'text' },
+        { tag: 'von_dong_gop', type: 'money' },
+        { tag: 'ty_le_von', type: 'percent' },
+        { tag: 'chu_ky', type: 'outputOnly' }
+      ],
+      duplicateKeys: ['so_cccd'],
+      outputOnlyTags: ['chu_ky']
+    },
+    ds_co_dong_sang_lap: {
+      label: 'Danh sách cổ đông sáng lập',
+      minRows: 1, maxRows: null, required: false,
+      allowAdd: true, allowDelete: true, allowReorder: true,
+      confirmDeleteNonEmpty: true, requirePrimary: false,
+      columns: [
+        { tag: 'ho_ten', type: 'text', required: true },
+        { tag: 'ngay_sinh', type: 'text' },
+        { tag: 'gioi_tinh', type: 'text' },
+        { tag: 'so_cccd', type: 'text' },
+        { tag: 'quoc_tich', type: 'text' },
+        { tag: 'dia_chi', type: 'text' },
+        { tag: 'so_co_phan', type: 'money' },
+        { tag: 'ty_le', type: 'percent' },
+        { tag: 'chu_ky', type: 'outputOnly' }
+      ],
+      duplicateKeys: ['so_cccd'],
+      outputOnlyTags: ['chu_ky']
+    },
+    ds_co_dong_nn: {
+      label: 'Danh sách cổ đông là nhà đầu tư nước ngoài',
+      minRows: 0, maxRows: null, required: false,
+      allowAdd: true, allowDelete: true, allowReorder: true,
+      confirmDeleteNonEmpty: true, requirePrimary: false,
+      columns: [
+        { tag: 'ten_cd', type: 'text', required: true },
+        { tag: 'quoc_gia', type: 'text' },
+        { tag: 'ma_so', type: 'text' },
+        { tag: 'dia_chi', type: 'text' },
+        { tag: 'so_co_phan', type: 'money' },
+        { tag: 'ty_le', type: 'percent' },
+        { tag: 'chu_ky', type: 'outputOnly' }
+      ],
+      duplicateKeys: [],
+      outputOnlyTags: ['chu_ky']
+    },
+    ds_cshhl: {
+      label: 'Chủ sở hữu hưởng lợi',
+      minRows: 0, maxRows: null, required: false,
+      allowAdd: true, allowDelete: true, allowReorder: true,
+      confirmDeleteNonEmpty: true, requirePrimary: false,
+      // hợp nhất 2 biến thể production (PLI_M10 cá nhân, PLI_M11 tổ chức):
+      // row cá nhân có ho_ten..., row tổ chức có ten_to_chuc...
+      columns: [
+        { tag: 'ho_ten', type: 'text' },
+        { tag: 'ten_to_chuc', type: 'text' },
+        { tag: 'ma_so_dn', type: 'text' },
+        { tag: 'ngay_cap', type: 'text' },
+        { tag: 'noi_cap', type: 'text' },
+        { tag: 'ngay_sinh', type: 'text' },
+        { tag: 'gioi_tinh', type: 'text' },
+        { tag: 'quoc_tich', type: 'text' },
+        { tag: 'dan_toc', type: 'text' },
+        { tag: 'dia_chi', type: 'text' },
+        { tag: 'so_giay_to', type: 'text' },
+        { tag: 'ty_le', type: 'percent' },
+        { tag: 'ty_le_co_phan', type: 'percent' },
+        { tag: 'ghi_chu', type: 'text' }
+      ],
+      duplicateKeys: ['so_giay_to', 'ma_so_dn'],
+      outputOnlyTags: []
+    },
+    ds_tv_ho_gia_dinh: {
+      label: 'Các thành viên hộ gia đình',
+      minRows: 0, maxRows: null, required: false,
+      allowAdd: true, allowDelete: true, allowReorder: true,
+      confirmDeleteNonEmpty: true, requirePrimary: false,
+      columns: [
+        { tag: 'ho_ten', type: 'text', required: true },
+        { tag: 'ngay_sinh', type: 'text' },
+        { tag: 'so_cccd', type: 'text' },
+        { tag: 'gioi_tinh', type: 'text' },
+        { tag: 'quoc_tich', type: 'text' },
+        { tag: 'dan_toc', type: 'text' },
+        { tag: 'noi_thuong_tru', type: 'text' },
+        { tag: 'noi_o_hien_tai', type: 'text' },
+        { tag: 'chu_ky', type: 'outputOnly' }
+      ],
+      duplicateKeys: ['so_cccd'],
+      outputOnlyTags: ['chu_ky']
+    },
+    ds_nganh: {
+      label: 'Danh sách ngành nghề kinh doanh',
+      minRows: 1, maxRows: null, required: true,
+      allowAdd: true, allowDelete: true, allowReorder: true,
+      confirmDeleteNonEmpty: true, requirePrimary: true,
+      columns: [
+        { tag: 'ten_nganh', type: 'readonly', required: true },
+        { tag: 'ma_nganh', type: 'vsic', required: true },
+        { tag: 'chi_tiet', type: 'text' },
+        { tag: 'la_nganh_chinh', type: 'radio', col: 3 }
+      ],
+      duplicateKeys: ['ma_nganh'],
+      outputOnlyTags: [],
+      autoName: { codeTag: 'ma_nganh', nameTag: 'ten_nganh' }
+    }
+  };
+
   function getFieldMeta(key) {
     return FIELD_META[key] || null;
   }
 
   function getLoopMeta(name) {
     return LOOP_META[name] || null;
+  }
+
+  function getGridMeta(name) {
+    return GRID_META[name] || null;
+  }
+
+  // ------------------------------------------------------- stable row ids
+
+  var _idSeq = 0;
+  /* '_row_id' ổn định trong phiên: 'r'<seq tăng dần>+'_'+random suffix.
+   * Sinh khi tạo row, giữ qua draft save/load; loại khỏi payload export. */
+  function makeRowId() {
+    _idSeq += 1;
+    return 'r' + _idSeq + '_' + Math.random().toString(36).slice(2, 8);
+  }
+
+  /* Đảm bảo mọi row trong store.loops có _row_id (mutate tại chỗ).
+   * Đồng thời migration canonical: ds_nganh_kinh_doanh -> ds_nganh khi chưa
+   * có ds_nganh (giữ nguyên dữ liệu); KHÔNG đụng nganh_bo_sung/nganh_xoa_bo/
+   * nganh_truoc_thay_doi. */
+  function normalizeStoreLoops(store) {
+    if (!store || typeof store !== 'object') return store;
+    var loops = store.loops = store.loops || {};
+    if (loops.ds_nganh_kinh_doanh && !loops.ds_nganh) {
+      loops.ds_nganh = loops.ds_nganh_kinh_doanh;
+      delete loops.ds_nganh_kinh_doanh;
+    }
+    Object.keys(loops).forEach(function (name) {
+      (loops[name] || []).forEach(function (r) {
+        if (r && typeof r === 'object' && !r._row_id) r._row_id = makeRowId();
+      });
+    });
+    return store;
   }
 
   // ------------------------------------------------------------- block walker
@@ -210,7 +380,269 @@
     return (list || []).some(function (x) { return String(x.ma) === v; });
   }
 
-  /* Validate một mẫu biểu. store = {values, checks, loops}. Trả error[]. */
+  // ------------------------------------------------- helpers editable-grid
+
+  function colsByType(g, type) {
+    return (g.columns || []).filter(function (c) { return c && c.type === type; })
+      .map(function (c) { return c.tag; });
+  }
+
+  /* Cột tính là "dữ liệu" khi xét dòng trống/có dữ liệu: loại trừ
+   * checkbox/radio/outputOnly (ô tick và cột chỉ dùng để in). */
+  function dataTagsOf(g) {
+    return (g.columns || []).filter(function (c) {
+      return c && c.type !== 'outputOnly' && c.type !== 'radio' && c.type !== 'checkbox';
+    }).map(function (c) { return c.tag; });
+  }
+
+  function requiredTagsOf(g) {
+    return (g.columns || []).filter(function (c) { return c && c.required; })
+      .map(function (c) { return c.tag; });
+  }
+
+  function cellStr(r, tag) {
+    return String((r || {})[tag] == null ? '' : r[tag]).trim();
+  }
+
+  function rowFilledOn(r, tags) {
+    return tags.some(function (t) { return cellStr(r, t) !== ''; });
+  }
+
+  /* Validate một bảng lặp CÓ GRID_META. Lỗi row-level mang key
+   * "loop:<name>:<row_id>:<tag>" nên reorder/xóa dòng không làm lỗi trỏ sai
+   * dòng. Tự sửa tên-lệch TRƯỚC khi báo lỗi nếu tìm thấy trong danh mục
+   * (mutate store tại chỗ); chỉ báo NAME_MISMATCH khi không tìm thấy tên. */
+  function validateGridLoop(docId, name, g, tags, st, ctx, push) {
+    var label = g.label || name;
+    var rows = st.loops[name] || [];
+    var lm = getLoopMeta(name) || {};
+
+    rows.forEach(function (r) {
+      if (r && typeof r === 'object' && !r._row_id) r._row_id = makeRowId();
+    });
+
+    function errAt(r, tag, code, msg) {
+      push({
+        key: 'loop:' + name + ':' + r._row_id + (tag ? ':' + tag : ''),
+        docId: docId, code: code, message: msg, severity: 'blocking'
+      });
+    }
+    function dispIdx(r) { return rows.indexOf(r) + 1; }
+
+    var dTags = dataTagsOf(g);
+    var reqTags = requiredTagsOf(g);
+    var moneyTags = lm.moneyTags || colsByType(g, 'money');
+    var percentTags = lm.percentTags || colsByType(g, 'percent');
+    var vsicTags = (lm.vsicTags && lm.vsicTags.length) ? lm.vsicTags : colsByType(g, 'vsic');
+
+    var filled = rows.filter(function (r) { return rowFilledOn(r, dTags); });
+
+    // Bảng bắt buộc mà 0 dòng dữ liệu (vd ds_nganh ở thủ tục bắt buộc kê khai)
+    if (g.required && filled.length === 0) {
+      push({
+        key: 'loop:' + name, docId: docId, code: 'INDUSTRY_REQUIRED',
+        message: label + ': bắt buộc kê khai ít nhất một dòng dữ liệu',
+        severity: 'blocking'
+      });
+    }
+    // Vi phạm minRows KHÔNG khóa thao tác - chỉ chặn trước export
+    var minReq = (lm.minRowsFilled != null) ? lm.minRowsFilled : (g.minRows || 0);
+    if (minReq > 0 && filled.length > 0 && filled.length < minReq) {
+      push({
+        // bảng có rule legacy (LOOP_META.minRowsFilled) giữ nguyên key cũ để
+        // tương thích ngược; bảng mới dùng key "loop:<name>"
+        key: (lm.minRowsFilled != null) ? name : 'loop:' + name,
+        docId: docId, code: 'MIN_ROWS',
+        message: label + ': cần tối thiểu ' + minReq +
+          ' dòng có dữ liệu (đang có ' + filled.length + ')',
+        severity: 'blocking'
+      });
+    }
+    // maxRows: chỉ cảnh báo (UI chặn thêm dòng; draft cũ có thể vượt)
+    if (g.maxRows != null && rows.length > g.maxRows) {
+      push({
+        key: 'loop:' + name, docId: docId, code: 'MAX_ROWS',
+        message: label + ': vượt quá tối đa ' + g.maxRows + ' dòng (đang có ' + rows.length + ')',
+        severity: 'warning'
+      });
+    }
+
+    // ROW_INCOMPLETE: dòng có một phần dữ liệu nhưng thiếu column required
+    rows.forEach(function (r) {
+      if (!r || !rowFilledOn(r, dTags)) return;
+      var missing = reqTags.filter(function (t) { return cellStr(r, t) === ''; });
+      if (missing.length) {
+        errAt(r, missing[0], 'ROW_INCOMPLETE',
+          label + ' dòng ' + dispIdx(r) + ': thiếu thông tin bắt buộc: ' + missing.join(', '));
+      }
+    });
+
+    // VSIC_INVALID + tự sửa ten_nganh lệch danh mục trước khi báo lỗi
+    var autoName = g.autoName || null;
+    if (ctx.vsicList) {
+      rows.forEach(function (r) {
+        if (!r) return;
+        vsicTags.forEach(function (tag) {
+          var raw = cellStr(r, tag);
+          if (!raw) return;
+          var entry = null;
+          for (var i = 0; i < ctx.vsicList.length; i++) {
+            if (String(ctx.vsicList[i].ma) === raw) { entry = ctx.vsicList[i]; break; }
+          }
+          if (!entry) {
+            errAt(r, tag, 'VSIC_INVALID',
+              label + ' dòng ' + dispIdx(r) + ': mã ngành không có trong danh mục VSIC: ' + raw);
+            return;
+          }
+          if (autoName && autoName.codeTag === tag &&
+              (g.columns || []).some(function (c) { return c.tag === autoName.nameTag; })) {
+            var cur = cellStr(r, autoName.nameTag);
+            var official = entry.ten == null ? '' : String(entry.ten);
+            if (official && cur !== official) {
+              r[autoName.nameTag] = official; // tự sửa lại tên theo danh mục
+            } else if (!official && cur) {
+              errAt(r, autoName.nameTag, 'NAME_MISMATCH',
+                label + ' dòng ' + dispIdx(r) +
+                ': không tìm thấy tên chính thức trong danh mục VSIC cho mã: ' + raw);
+            }
+          }
+        });
+      });
+    }
+
+    // Trùng khóa: ds_nganh.ma_nganh -> DUPLICATE_INDUSTRY blocking trỏ CẢ HAI
+    // dòng; bảng khác -> DUPLICATE_ROWS warning.
+    (g.duplicateKeys || []).forEach(function (k) {
+      if ((tags || []).indexOf(k) < 0) return; // cột không nằm trong mẫu này
+      var seen = {};
+      rows.forEach(function (r, ix) {
+        var v = cellStr(r, k);
+        if (!v) return;
+        if (seen[v] != null) {
+          var industry = !!g.requirePrimary || name === 'ds_nganh';
+          [seen[v], ix].forEach(function (rix) {
+            push({
+              key: 'loop:' + name + ':' + rows[rix]._row_id + ':' + k,
+              docId: docId,
+              code: industry ? 'DUPLICATE_INDUSTRY' : 'DUPLICATE_ROWS',
+              message: label + ' dòng ' + (rix + 1) + ': giá trị trùng "' + v + '" (cột ' + k + ')',
+              severity: industry ? 'blocking' : 'warning'
+            });
+          });
+        } else {
+          seen[v] = ix;
+        }
+      });
+    });
+
+    // Ngành chính: có >=1 dòng dữ liệu nhưng chưa đánh dấu ngành nào
+    if (g.requirePrimary && filled.length > 0) {
+      var hasPrimary = rows.some(function (r) {
+        return r && (r.la_nganh_chinh === 'X' || r.la_nganh_chinh === true);
+      });
+      if (!hasPrimary) {
+        push({
+          key: 'loop:' + name + ':' + (filled[0]._row_id || ''),
+          docId: docId, code: 'PRIMARY_INDUSTRY_REQUIRED',
+          message: label + ': hãy đánh dấu X chọn MỘT ngành, nghề kinh doanh chính',
+          severity: 'blocking'
+        });
+      }
+    }
+
+    // money/percent kế thừa hành vi cũ nhưng key theo row_id
+    moneyTags.forEach(function (tag) {
+      if ((tags || []).indexOf(tag) < 0) return;
+      rows.forEach(function (r) {
+        var raw = cellStr(r, tag);
+        if (!raw) return;
+        if (parseMoney(raw) == null) {
+          errAt(r, tag, 'MONEY',
+            label + ' dòng ' + dispIdx(r) + ': giá trị tiền không hợp lệ: ' + raw);
+        }
+      });
+    });
+    percentTags.forEach(function (tag) {
+      if ((tags || []).indexOf(tag) < 0) return;
+      var sum = 0, hasVal = false;
+      rows.forEach(function (r) {
+        var n = parseMoney((r || {})[tag]);
+        if (n != null) { sum += n; hasVal = true; }
+      });
+      if (hasVal && Math.round(sum) !== 100) {
+        push({
+          key: name + '.' + tag, docId: docId, code: 'PERCENT_SUM',
+          message: label + ': tổng tỷ lệ ' + tag + ' = ' + sum + '% (cần đúng 100%)',
+          severity: 'warning'
+        });
+      }
+    });
+  }
+
+  /* Path legacy cho loop KHÔNG có GRID_META (vd ds_nganh_kinh_doanh cũ). */
+  function validateLegacyLoop(docId, name, tags, st, ctx, push) {
+    var lm = getLoopMeta(name);
+    if (!lm) return;
+    var rows = st.loops[name] || [];
+    var filled = rows.filter(function (r) {
+      return tags.some(function (t) { return cellStr(r, t) !== ''; });
+    });
+    if (lm.minRowsFilled > 0 && filled.length > 0 && filled.length < lm.minRowsFilled) {
+      push({
+        key: name, docId: docId, code: 'MIN_ROWS',
+        message: lm.label + ': cần tối thiểu ' + lm.minRowsFilled +
+          ' dòng có dữ liệu (đang có ' + filled.length + ')',
+        severity: 'blocking'
+      });
+    }
+    lm.moneyTags.forEach(function (tag) {
+      for (var i = 0; i < rows.length; i++) {
+        var raw = cellStr(rows[i], tag);
+        if (!raw) continue;
+        if (parseMoney(raw) == null) {
+          push({
+            key: name + '.' + tag, docId: docId, code: 'MONEY',
+            message: lm.label + ' dòng ' + (i + 1) + ': giá trị tiền không hợp lệ: ' + raw,
+            severity: 'blocking'
+          });
+          return;
+        }
+      }
+    });
+    lm.percentTags.forEach(function (tag) {
+      var sum = 0, hasVal = false;
+      rows.forEach(function (r) {
+        var n = parseMoney((r || {})[tag]);
+        if (n != null) { sum += n; hasVal = true; }
+      });
+      if (hasVal && Math.round(sum) !== 100) {
+        push({
+          key: name + '.' + tag, docId: docId, code: 'PERCENT_SUM',
+          message: lm.label + ': tổng tỷ lệ ' + tag + ' = ' + sum + '% (cần đúng 100%)',
+          severity: 'warning'
+        });
+      }
+    });
+    (lm.vsicTags || []).forEach(function (tag) {
+      if (!ctx.vsicList) return;
+      for (var i = 0; i < rows.length; i++) {
+        var raw2 = cellStr(rows[i], tag);
+        if (!raw2) continue;
+        if (!isValidMaNganh(ctx.vsicList, raw2)) {
+          push({
+            key: name + '.' + tag, docId: docId, code: 'VSIC',
+            message: lm.label + ' dòng ' + (i + 1) + ': mã ngành không hợp lệ: ' + raw2,
+            severity: 'blocking'
+          });
+          return;
+        }
+      }
+    });
+  }
+
+  /* Validate một mẫu biểu. store = {values, checks, loops}. Trả error[].
+   * Loop có GRID_META -> validate editable-grid với lỗi key theo _row_id:
+   * "loop:<name>:<row_id>[:<tag>]"; loop khác giữ hành vi legacy. */
   function validateDocument(docId, blocks, store, ctx) {
     ctx = ctx || {};
     var st = store || {};
@@ -237,64 +669,9 @@
     });
 
     Object.keys(info.loops).forEach(function (name) {
-      var lm = getLoopMeta(name);
-      if (!lm) return;
-      var tags = info.loops[name];
-      var rows = st.loops[name] || [];
-      var filled = rows.filter(function (r) {
-        return tags.some(function (t) { return String((r || {})[t] == null ? '' : r[t]).trim() !== ''; });
-      });
-      if (lm.minRowsFilled > 0 && filled.length > 0 && filled.length < lm.minRowsFilled) {
-        push({
-          key: name, docId: docId, code: 'MIN_ROWS',
-          message: lm.label + ': cần tối thiểu ' + lm.minRowsFilled +
-            ' dòng có dữ liệu (đang có ' + filled.length + ')',
-          severity: 'blocking'
-        });
-      }
-      lm.moneyTags.forEach(function (tag) {
-        for (var i = 0; i < rows.length; i++) {
-          var raw = String((rows[i] || {})[tag] == null ? '' : rows[i][tag]).trim();
-          if (!raw) continue;
-          if (parseMoney(raw) == null) {
-            push({
-              key: name + '.' + tag, docId: docId, code: 'MONEY',
-              message: lm.label + ' dòng ' + (i + 1) + ': giá trị tiền không hợp lệ: ' + raw,
-              severity: 'blocking'
-            });
-            return;
-          }
-        }
-      });
-      lm.percentTags.forEach(function (tag) {
-        var sum = 0, hasVal = false;
-        rows.forEach(function (r) {
-          var n = parseMoney((r || {})[tag]);
-          if (n != null) { sum += n; hasVal = true; }
-        });
-        if (hasVal && Math.round(sum) !== 100) {
-          push({
-            key: name + '.' + tag, docId: docId, code: 'PERCENT_SUM',
-            message: lm.label + ': tổng tỷ lệ ' + tag + ' = ' + sum + '% (cần đúng 100%)',
-            severity: 'warning'
-          });
-        }
-      });
-      (lm.vsicTags || []).forEach(function (tag) {
-        if (!ctx.vsicList) return;
-        for (var i = 0; i < rows.length; i++) {
-          var raw = String((rows[i] || {})[tag] == null ? '' : rows[i][tag]).trim();
-          if (!raw) continue;
-          if (!isValidMaNganh(ctx.vsicList, raw)) {
-            push({
-              key: name + '.' + tag, docId: docId, code: 'VSIC',
-              message: lm.label + ' dòng ' + (i + 1) + ': mã ngành không hợp lệ: ' + raw,
-              severity: 'blocking'
-            });
-            return;
-          }
-        }
-      });
+      var g = getGridMeta(name);
+      if (g) validateGridLoop(docId, name, g, info.loops[name], st, ctx, push);
+      else validateLegacyLoop(docId, name, info.loops[name], st, ctx, push);
     });
 
     return errors;
@@ -311,12 +688,18 @@
 
   // ----------------------------------------------------------- draft migration
 
-  /* v2 = v1 + activeDocId/viewState/savedAt. Draft cũ v1 giữ nguyên dữ liệu. */
+  /* v2 = v1 + activeDocId/viewState/savedAt. Draft cũ v1 giữ nguyên dữ liệu.
+   * Cả v1 lẫn v2 đều được chuẩn hoá tại chỗ: gán _row_id cho row còn thiếu
+   * và migration ds_nganh_kinh_doanh -> ds_nganh (khi chưa có ds_nganh).
+   * Draft v2 được trả về CHÍNH OBJECT GỐC (chỉ mutate bên trong). */
   function migrateDraft(draft) {
     if (!draft || typeof draft !== 'object') return null;
-    if (Number(draft.v) >= 2) return draft;
+    if (Number(draft.v) >= 2) {
+      normalizeStoreLoops(draft.store);
+      return draft;
+    }
     if (!draft.store) return null; // draft không hiểu -> bỏ qua
-    return {
+    var up = {
       v: 2,
       caseId: draft.caseId != null ? draft.caseId : null,
       checkedForms: Array.isArray(draft.checkedForms) ? draft.checkedForms.slice() : [],
@@ -330,6 +713,8 @@
       },
       savedAt: null
     };
+    normalizeStoreLoops(up.store);
+    return up;
   }
 
   // ----------------------------------------------------------------- exports
@@ -338,8 +723,12 @@
   root.formatMoney = formatMoney;
   root.FIELD_META = FIELD_META;
   root.LOOP_META = LOOP_META;
+  root.GRID_META = GRID_META;
   root.getFieldMeta = getFieldMeta;
   root.getLoopMeta = getLoopMeta;
+  root.getGridMeta = getGridMeta;
+  root.makeRowId = makeRowId;
+  root.normalizeStoreLoops = normalizeStoreLoops;
   root.collectKeys = collectKeys;
   root.validateField = validateField;
   root.validateDocument = validateDocument;

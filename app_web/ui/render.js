@@ -186,96 +186,342 @@
     return '<table class="btable"><tbody>' + body + '</tbody></table>';
   }
 
-  /* Bảng lặp: các hàng có chỉ số nằm trong headerRows là hàng tiêu đề tĩnh,
-   * sau đó sinh hàng dữ liệu động theo cols (cột 1 không có tag nào phủ ->
-   * tự đánh số STT), số hàng hiển thị = max(số dòng dữ liệu, blankRows).
-   * Mỗi tr dữ liệu mang data-row-index + data-loop để controller chọn dòng;
-   * bảng bọc trong .btable-wrap để cuộn ngang màn hình nhỏ. */
+  /* Bảng lặp - CONTRACT:
+   * - cols[].col là CHỈ SỐ CỘT GRID ZERO-BASED (khớp tools/docx_to_blocks.py).
+   * - Tổng số cột vật lý N tính từ HEADER GRID: duyệt b.headerRows, cộng dồn
+   *   occupancy qua colspan/rowspan giữa các hàng tiêu đề. KHÔNG suy từ
+   *   max(cols[].col). Thiếu headerRows thì mới fallback theo cols.
+   * - <th> giữ nguyên colspan/rowspan từ cell schema.
+   * - Cột 0 không có tag VÀ tiêu đề tương ứng chứa "stt" (so normText trên
+   *   text đã bỏ thẻ) -> td class="stt" tự đánh số i+1; cột không tag khác
+   *   -> td rỗng đúng vị trí (field không trượt cột).
+   * - type cho từng cols[] entry: 'text' mặc định | 'money' | 'percent' |
+   *   'checkbox' (checked khi row[tag]==='X', data-key vẫn
+   *   loop:<loop>:<idx>:<tag>) | 'radio' (name="loop:<loop>:<tag>",
+   *   browser tự chọn-1-trong-cột) | 'readonly' | 'outputOnly' (ô rỗng).
+   * - opts.gridMeta (từ FormDomain.GRID_META): override type THEO TAG và bổ
+   *   sung tag cho cột vật lý chưa map (mc.col) - vd la_nganh_chinh ở
+   *   PLII_M01. Không truyền -> hành vi thuần theo blocks như bản cũ.
+   * - Số hàng hiển thị = max(số dòng dữ liệu, blankRows; grid có meta và cho
+   *   thêm dòng thì tối thiểu 1 dòng). Mỗi tr dữ liệu mang data-row-index +
+   *   data-row-id (=_row_id ổn định của row trong store) + data-loop để
+   *   controller chọn dòng; bảng bọc trong .btable-wrap để cuộn ngang.
+   * - Nút action (.loop-btns): có gridMeta -> đầy đủ Thêm/Xóa/Lên/Xuống/
+   *   Nhân bản/Xóa tất cả theo allowAdd/allowDelete/allowReorder, mỗi nút
+   *   mang data-act + data-loop; không gridMeta -> giữ cụm legacy Thêm/Xóa. */
+
+  /* Duyệt header grid: trả { nCols, title } với title[col] là text ô đầu tiên
+   * phủ cột đó (đã chuẩn hoá khoảng trắng). */
+  function loopHeaderGrid(b) {
+    var headerIdx = b.headerRows || [];
+    var occ = {};    // "row:col" -> true: ô bị chiếm bởi colspan/rowspan
+    var title = {};
+    var nCols = 0;
+    (b.rows || []).forEach(function (row, ri) {
+      if (headerIdx.indexOf(ri) < 0) return;
+      var col = 0;
+      (row.cells || []).forEach(function (c) {
+        while (occ[ri + ':' + col]) col++; // nhảy qua ô span từ hàng trên
+        var cs = Math.max(1, c.colspan | 0 || 1);
+        var rs = Math.max(1, c.rowspan | 0 || 1);
+        var txt = (c.runs || []).map(function (r) {
+          return (r && r.text != null) ? String(r.text) : '';
+        }).join(' ').replace(/\s+/g, ' ').trim();
+        for (var dr = 0; dr < rs; dr++) {
+          for (var dc = 0; dc < cs; dc++) {
+            occ[(ri + dr) + ':' + (col + dc)] = true;
+            if (!title[col + dc] && txt) title[col + dc] = txt;
+          }
+        }
+        col += cs;
+      });
+      var w = 0;
+      while (occ[ri + ':' + w]) w++;
+      if (w > nCols) nCols = w;
+    });
+    return { nCols: nCols, title: title };
+  }
+
   function renderLoop(b, ac, rctx) {
     rctx = rctx || { fieldMeta: null, docId: '', ids: {} };
     var rows = ac.storeRef.loops[b.loop] || [];
     var headerIdx = b.headerRows || [];
-    var allRows = b.rows || [];
-    var colTitle = {};
-    allRows
-      .map(function (r, i) { return { r: r, i: i }; })
-      .filter(function (x) { return headerIdx.indexOf(x.i) >= 0; })
-      .forEach(function (x) {
-        (x.r.cells || []).forEach(function (c, ci) {
-          var no = ci + 1; // tiêu đề theo vị trí cột hiển thị
-          var txt = (c.runs || []).map(function (r) {
-            return (r && r.text != null) ? String(r.text) : '';
-          }).join(' ').replace(/\s+/g, ' ').trim();
-          if (!colTitle[no] && txt) colTitle[no] = txt;
-        });
-      });
-    var headHtml = allRows
+    var grid = loopHeaderGrid(b);
+    var colTitle = grid.title;
+    var nCols = grid.nCols;
+    var gm = rctx.gridMeta ? (rctx.gridMeta[b.loop] || null) : null;
+
+    var headHtml = (b.rows || [])
       .map(function (r, i) { return { r: r, i: i }; })
       .filter(function (x) { return headerIdx.indexOf(x.i) >= 0; })
       .map(function (x) {
         var cells = (x.r.cells || []).map(function (c) {
-          return '<th>' + renderRuns(c.runs, ac, rctx) + '</th>';
+          var attrs = '';
+          if ((c.colspan || 1) > 1) attrs += ' colspan="' + (c.colspan | 0) + '"';
+          if ((c.rowspan || 1) > 1) attrs += ' rowspan="' + (c.rowspan | 0) + '"';
+          return '<th' + attrs + '>' + renderRuns(c.runs, ac, rctx) + '</th>';
         }).join('');
         return '<tr>' + cells + '</tr>';
       }).join('');
 
-    var colByNo = {};
-    var maxCol = 0;
+    var tagByCol = {};
+    var typeByCol = {};
     (b.cols || []).forEach(function (c) {
-      colByNo[c.col] = c.tag;
-      if (c.col > maxCol) maxCol = c.col;
+      tagByCol[c.col] = c.tag;
+      typeByCol[c.col] = c.type || 'text';
+      if (!nCols && c.col + 1 > nCols) nCols = c.col + 1; // fallback khi không có header
     });
-    // cột 1 không có tag nào phủ -> dùng làm cột STT tự đánh số
-    var hasStt = !colByNo[1];
-    var nCols = hasStt ? Math.max(maxCol + 1, 2) : Math.max(maxCol, 1);
+    // gridMeta: override type theo tag đã map + bổ sung tag cho cột vật lý
+    // chưa được blocks.cols map (chỉ khi cột đó nằm trong header grid).
+    if (gm && gm.columns) {
+      gm.columns.forEach(function (mc) {
+        if (!mc || !mc.tag) return;
+        var foundCol = -1;
+        (b.cols || []).forEach(function (c) { if (c.tag === mc.tag) foundCol = c.col; });
+        if (foundCol >= 0) {
+          if (mc.type) typeByCol[foundCol] = mc.type;
+        } else if (mc.col != null && mc.col >= 0 &&
+                   !tagByCol[mc.col] && nCols && mc.col < nCols) {
+          tagByCol[mc.col] = mc.tag;
+          typeByCol[mc.col] = mc.type || 'text';
+        }
+      });
+    }
+    // cột 0 không tag + tiêu đề chứa "stt" -> dùng làm cột STT tự đánh số
+    var hasStt = !tagByCol[0] &&
+      normText(colTitle[0] || '').indexOf('stt') >= 0;
 
-    var nRows = Math.max(rows.length, b.blankRows || 0);
+    // luôn còn ít nhất 1 dòng trống trên UI khi bảng cho thêm dòng
+    var minUiRows = (gm && gm.allowAdd !== false) ? 1 : 0;
+    var nRows = Math.max(rows.length, b.blankRows || 0, minUiRows);
     var body = '';
     for (var i = 0; i < nRows; i++) {
       var tds = '';
-      for (var col = 1; col <= nCols; col++) {
-        if (col === 1 && hasStt) {
-          tds += '<td class="stt">' + (i + 1) + '</td>';
+      for (var col = 0; col < nCols; col++) {
+        var tag = tagByCol[col];
+        if (!tag) {
+          tds += (col === 0 && hasStt)
+            ? '<td class="stt">' + (i + 1) + '</td>'
+            : '<td></td>';
           continue;
         }
-        var tag = colByNo[col];
-        if (!tag) { tds += '<td></td>'; continue; }
+        var type = typeByCol[col];
         var key = 'loop:' + b.loop + ':' + i + ':' + tag;
+        if (type === 'outputOnly') { tds += '<td></td>'; continue; }
         var fa = fieldAriaAttrs(key, rctx, [], -1,
           (b.label ? b.label + ' - ' : '') +
           (colTitle[col] || tag) + ' - dòng ' + (i + 1));
+        var common = ' data-key="' + escapeHtml(key) +
+          '" data-tag="' + escapeHtml(tag) +
+          '" data-loop="' + escapeHtml(b.loop) +
+          '" data-row="' + i + '"' + fa.attrs;
+        if (type === 'checkbox') {
+          tds += '<td><input type="checkbox" class="chk-box loop-chk"' + common +
+            (String(ac.getVal(key)) === 'X' ? ' checked' : '') + '></td>';
+          continue;
+        }
+        if (type === 'radio') {
+          tds += '<td><input type="radio" class="chk-box loop-radio"' + common +
+            ' name="loop:' + escapeHtml(b.loop) + ':' + escapeHtml(tag) +
+            '" value="X"' + (String(ac.getVal(key)) === 'X' ? ' checked' : '') + '></td>';
+          continue;
+        }
         var cls = 'fld loop-fld' + fa.extraCls;
+        if (type === 'money' || type === 'percent') cls += ' num';
         if (/^(ma_nganh|ten_nganh)$/.test(tag)) cls += ' vsic-fld';
         if (/^von_/.test(tag)) cls += ' num';
         tds += '<td><input type="text" class="' + cls + '" data-key="' + escapeHtml(key) +
           '" data-tag="' + escapeHtml(tag) + '" data-loop="' + escapeHtml(b.loop) +
-          '" data-row="' + i + '"' + fa.attrs +
+          '" data-row="' + i + '"' + (type === 'readonly' ? ' readonly' : '') + fa.attrs +
           ' value="' + escapeHtml(ac.getVal(key)) + '"></td>';
       }
-      body += '<tr data-row-index="' + i + '" data-loop="' + escapeHtml(b.loop) + '">' + tds + '</tr>';
+      var rowId = i < rows.length && rows[i] && rows[i]._row_id
+        ? String(rows[i]._row_id) : '';
+      body += '<tr data-row-index="' + i + '"' +
+        (rowId ? ' data-row-id="' + escapeHtml(rowId) + '"' : '') +
+        ' data-loop="' + escapeHtml(b.loop) + '">' + tds + '</tr>';
     }
-    var btns = '<div class="loop-btns" data-loop="' + escapeHtml(b.loop) + '">' +
-      '<button type="button" class="btn-row-add" data-loop="' + escapeHtml(b.loop) +
-      '">[+ Thêm dòng]</button>' +
-      '<button type="button" class="btn-row-del" data-loop="' + escapeHtml(b.loop) +
-      '">[- Xóa dòng]</button>' +
-      '</div>';
+    var btns;
+    if (gm) {
+      btns = '<div class="loop-btns" data-loop="' + escapeHtml(b.loop) + '">' +
+        (gm.allowAdd !== false
+          ? '<button type="button" class="btn-row-add" data-act="add" data-loop="' +
+            escapeHtml(b.loop) + '" title="Thêm dòng trống">[+ Thêm dòng]</button>' +
+            '<button type="button" class="btn-row-dup" data-act="dup" data-loop="' +
+            escapeHtml(b.loop) + '" title="Nhân bản dòng đang chọn (bỏ field định danh)">[⧉ Nhân bản]</button>'
+          : '') +
+        (gm.allowDelete !== false
+          ? '<button type="button" class="btn-row-del" data-act="del" data-loop="' +
+            escapeHtml(b.loop) + '" title="Xóa dòng đang chọn (Ctrl+click để chọn nhiều)">[- Xóa dòng]</button>' +
+            '<button type="button" class="btn-row-clear btn-danger-row" data-act="clear" data-loop="' +
+            escapeHtml(b.loop) + '" title="Xóa dữ liệu TẤT CẢ các dòng">[× Xóa tất cả]</button>'
+          : '') +
+        (gm.allowReorder !== false
+          ? '<button type="button" class="btn-row-up" data-act="up" data-loop="' +
+            escapeHtml(b.loop) + '" title="Chuyển dòng đang chọn lên trên">[↑ Lên]</button>' +
+            '<button type="button" class="btn-row-down" data-act="down" data-loop="' +
+            escapeHtml(b.loop) + '" title="Chuyển dòng đang chọn xuống dưới">[↓ Xuống]</button>'
+          : '') +
+        '</div>';
+    } else {
+      btns = '<div class="loop-btns" data-loop="' + escapeHtml(b.loop) + '">' +
+        '<button type="button" class="btn-row-add" data-act="add" data-loop="' + escapeHtml(b.loop) +
+        '">[+ Thêm dòng]</button>' +
+        '<button type="button" class="btn-row-del" data-act="del" data-loop="' + escapeHtml(b.loop) +
+        '">[- Xóa dòng]</button>' +
+        '</div>';
+    }
     return '<div class="loop-wrap"><div class="btable-wrap"><table class="btable loop-table" data-loop="' +
       escapeHtml(b.loop) + '"><thead>' + headHtml +
       '</thead><tbody>' + body + '</tbody></table></div>' + btns + '</div>';
   }
 
+  // ------------------------------------------------- PHASE 6: field-grid
+
+  /* Các canonical key input xuất hiện trong MỘT block (để tìm anchor). */
+  function blockInputKeys(b) {
+    var keys = [];
+    function walkRuns(runs) {
+      (runs || []).forEach(function (r) {
+        if (r && r.input && r.input.key && keys.indexOf(r.input.key) < 0) {
+          keys.push(r.input.key);
+        }
+      });
+    }
+    if (!b) return keys;
+    if (b.t === 'p') walkRuns(b.runs);
+    else if (b.t === 'chk') { if (b.key) keys.push(b.key); }
+    else if (b.t === 'table' || b.t === 'loop') {
+      (b.rows || []).forEach(function (row) {
+        (row.cells || []).forEach(function (c) { walkRuns(c.runs); });
+      });
+    }
+    return keys;
+  }
+
+  /* CONTRACT uiLayout (app/data/ui_layouts/<id>.json - metadata UI THUẦN):
+   * { id: '<PLI_Mxx>',
+   *   grids: [{
+   *     anchor|afterKey: '<canonical_key>',  // chèn ngay SAU block chứa ô
+   *                                          // input có key này (không dùng
+   *                                          // chỉ số block -> generator chạy
+   *                                          // lại không vỡ layout)
+   *     title: 'Vốn điều lệ',
+   *     hideAnchor: true | ['key',...],      // ẩn THỊ GIÁC block gốc chứa key
+   *                                          // bằng wrapper .dupe-anchor
+   *                                          // (display:none qua CSS) - block
+   *                                          // vẫn render, dữ liệu/export
+   *                                          // không đổi; true = ẩn block
+   *                                          // chứa chính anchor
+   *     cols: [{key,type,label,w}]           // key = canonical key (đồng bộ
+   *                                          // store tự chạy nhờ data-key);
+   *                                          // type: text|money|readonly|
+   *                                          // computed (computed/readonly:
+   *                                          // attr readonly + nền xám nhạt
+   *                                          // class .calc sẵn có)
+   *   }] }
+   * Grid là NHÓM UI BỔ SUNG: không xóa/thay đổi block gốc. Anchor không tìm
+   * thấy trong blocks -> bỏ qua grid đó (fallback an toàn). */
+
+  function fieldGridHtml(grid, ac, rctx) {
+    var anchor = grid.anchor || grid.afterKey || '';
+    var gid = sanitizeFieldId(anchor + '_' + (grid.title || 'grid'));
+    var html = '<div class="field-grid" data-grid="' + escapeHtml(gid) +
+      '" data-anchor="' + escapeHtml(anchor) + '">';
+    if (grid.title) {
+      html += '<div class="fg-title">' + escapeHtml(grid.title) + '</div>';
+    }
+    (grid.cols || []).forEach(function (c) {
+      if (!c || !c.key) return;
+      var type = c.type || 'text';
+      var fid = nextFieldId(rctx, c.key);
+      var label = c.label ||
+        ((rctx.fieldMeta && rctx.fieldMeta[c.key] &&
+          rctx.fieldMeta[c.key].label) || c.key);
+      var cls = 'fld fg-fld';
+      var attrs = '';
+      if (type === 'money' || type === 'number') {
+        attrs += ' inputmode="numeric"';
+        cls += ' num';
+      } else if (type === 'email') {
+        attrs += ' inputmode="email"';
+      }
+      if (type === 'readonly' || type === 'computed') {
+        attrs += ' readonly';
+        cls += ' calc';
+      } else if (AUTO_KEYS[c.key] === 'calc') {
+        cls += ' calc'; // ô tự cộng (tổng vốn, ngày ký): nền xanh dương nhạt
+      }
+      html += '<label class="fg-label" for="' + escapeHtml(fid) + '">' +
+        escapeHtml(label) + '</label>' +
+        '<span class="fg-cell"><input type="text" id="' + escapeHtml(fid) +
+        '" class="' + cls + '" data-key="' + escapeHtml(c.key) +
+        '" style="width:' + (c.w ? (+c.w) + 'ch' : '100%') + '"' + attrs +
+        ' aria-label="' + escapeHtml(label) +
+        '" value="' + escapeHtml(ac.getVal(c.key)) + '"></span>';
+    });
+    return html + '</div>';
+  }
+
+  /* Chèn grid sau block anchor + bọc .dupe-anchor các block cần ẩn thị giác.
+   * parts: [{b, html}] theo thứ tự blocks. Trả mảng html đã xử lý. */
+  function applyUiLayout(parts, uiLayout, ac, rctx) {
+    var grids = (uiLayout && uiLayout.grids) || [];
+    var insertAt = {}; // index gốc -> [html grid]
+    var wrapped = {};
+    grids.forEach(function (g) {
+      if (!g) return;
+      var anchor = g.anchor || g.afterKey;
+      if (!anchor) return;
+      var at = -1;
+      for (var i = 0; i < parts.length; i++) {
+        if (blockInputKeys(parts[i].b).indexOf(anchor) >= 0) { at = i; break; }
+      }
+      if (at < 0) return; // anchor không tồn tại -> bỏ qua grid này
+      (insertAt[at + 1] = insertAt[at + 1] || []).push(fieldGridHtml(g, ac, rctx));
+      var hide = g.hideAnchor === true ? [anchor]
+        : (Array.isArray(g.hideAnchor) ? g.hideAnchor : []);
+      hide.forEach(function (hk) {
+        if (wrapped[hk]) return;
+        for (var j = 0; j < parts.length; j++) {
+          if (parts[j].hidden) continue;
+          if (blockInputKeys(parts[j].b).indexOf(hk) >= 0) {
+            parts[j].html =
+              '<div class="dupe-anchor">' + parts[j].html + '</div>';
+            parts[j].hidden = true;
+            wrapped[hk] = true;
+            break; // chỉ ẩn block ĐẦU TIÊN chứa key
+          }
+        }
+      });
+    });
+    var out = [];
+    parts.forEach(function (p, i) {
+      out.push(p.html);
+      (insertAt[i] || []).forEach(function (h) { out.push(h); });
+    });
+    return out;
+  }
+
   /* Render toàn bộ một mẫu biểu thành HTML string.
-   * opts tuỳ chọn: { fieldMeta: {key: meta}, docId } — không truyền thì
-   * tương thích ngược hoàn toàn với bản cũ. */
+   * opts tuỳ chọn: { fieldMeta: {key: meta}, gridMeta: {loop: meta},
+   * uiLayout: {grids:[...]}, docId }
+   * — không truyền thì tương thích ngược hoàn toàn với bản cũ. */
   function renderBlocks(doc, store, opts) {
     var ac = makeAccessors(store || newStore());
     var rctx = {
       fieldMeta: (opts && opts.fieldMeta) || null,
+      gridMeta: (opts && opts.gridMeta) || null,
       docId: (opts && opts.docId) || (doc && doc.id) || '',
       ids: {}
     };
-    return (doc.blocks || []).map(function (b) { return renderBlock(b, ac, rctx); }).join('\n');
+    var parts = (doc.blocks || []).map(function (b) {
+      return { b: b, html: renderBlock(b, ac, rctx) };
+    });
+    var seq = (opts && opts.uiLayout)
+      ? applyUiLayout(parts, opts.uiLayout, ac, rctx)
+      : parts.map(function (p) { return p.html; });
+    return seq.join('\n');
   }
 
   /* HTML cho tablist đáy (controller gắn sự kiện qua [data-doc-id]). */

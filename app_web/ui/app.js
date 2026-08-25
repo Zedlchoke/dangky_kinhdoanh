@@ -36,9 +36,12 @@
     saveState: 'unsaved',
     autosaveTimer: null,
     errors: [],          // kết quả Kiểm tra gần nhất
-    selectedLoopRow: {}, // loopName -> rowIndex đang chọn
+    selectedLoopRow: {}, // loopName -> rowIndex đang chọn (tương thích cũ)
+    selRowId: {},        // loopName -> _row_id đang chọn
+    multiSel: {},        // loopName -> { _row_id: true } chọn nhiều (Ctrl+click)
     viewState: {},       // docId -> {scrollTop, focusKey}
     pendingDraft: null,  // draft chờ docs nạp xong để khôi phục
+    uiLayouts: {},       // docId -> ui_layouts JSON (PHASE 6) | null nếu 404
     vsicItems: [],
     vsicIndex: 0
   };
@@ -51,6 +54,165 @@
   function cssEsc(s) {
     return (window.CSS && CSS.escape) ? CSS.escape(s) : String(s).replace(/"/g, '\\"');
   }
+
+  // ------------------------------------------- GridCtl: editable-grid thuần
+  /* Controller GENERIC cho mọi bảng lặp (PLAN.md PHASE 1B/5): add/delete/
+   * reorder/duplicate/clear trên store {loops}. Toàn bộ hàm THUẦN (không DOM,
+   * nhận store làm tham số) để node-test trực tiếp; wrapper UI bên dưới chỉ
+   * lo confirm/focus/rerender. Metadata từng bảng đọc từ FormDomain.GRID_META.
+   * Mỗi row mang _row_id ổn định ('r<seq>_<rand>') giữ qua draft round-trip
+   * và bị LOẠI khỏi payload export. STT không lưu - luôn suy từ thứ tự mảng. */
+  var _rowIdSeq = 0;
+  var GridCtl = {
+    nextId: function () {
+      _rowIdSeq += 1;
+      return 'r' + _rowIdSeq + '_' + Math.random().toString(36).slice(2, 8);
+    },
+
+    meta: function (loop) { return FD.getGridMeta(loop); },
+
+    rows: function (store, loop) {
+      return store.loops[loop] = store.loops[loop] || [];
+    },
+
+    findRowIndex: function (rows, rowId) {
+      for (var i = 0; i < rows.length; i++) {
+        if (rows[i] && rows[i]._row_id === rowId) return i;
+      }
+      return -1;
+    },
+
+    /* Gán _row_id cho mọi row còn thiếu (mutate tại chỗ, idempotent). */
+    ensureIds: function (store) {
+      Object.keys(store.loops || {}).forEach(function (name) {
+        GridCtl.rows(store, name).forEach(function (r) {
+          if (r && typeof r === 'object' && !r._row_id) r._row_id = GridCtl.nextId();
+        });
+      });
+      return store;
+    },
+
+    /* Thêm dòng trống sau afterRowId (nếu có và còn tồn tại), nếu không thì
+     * ở cuối. Trả về vị trí + id dòng mới. KHÔNG tự chặn maxRows ở mức data:
+     * UI chặn trước khi gọi; vi phạm metadata chỉ là lỗi validator. */
+    addRow: function (store, loop, afterRowId) {
+      var rows = GridCtl.rows(store, loop);
+      var row = { _row_id: GridCtl.nextId() };
+      var at = (afterRowId != null) ? GridCtl.findRowIndex(rows, afterRowId) : -1;
+      if (at >= 0) rows.splice(at + 1, 0, row);
+      else rows.push(row);
+      return { index: rows.indexOf(row), id: row._row_id };
+    },
+
+    /* Xóa nhiều dòng theo _row_id (bỏ qua id lạ). Trả số dòng đã xóa. */
+    deleteRows: function (store, loop, rowIds) {
+      var rows = GridCtl.rows(store, loop);
+      var kill = {};
+      (rowIds || []).forEach(function (id) { kill[id] = true; });
+      var kept = rows.filter(function (r) { return !(r && kill[r._row_id]); });
+      var removed = rows.length - kept.length;
+      if (removed) store.loops[loop] = kept;
+      return removed;
+    },
+
+    /* Xóa dữ liệu toàn bộ bảng. UI vẫn render ít nhất 1 dòng trống. */
+    clearRows: function (store, loop) {
+      var n = GridCtl.rows(store, loop).length;
+      store.loops[loop] = [];
+      return n;
+    },
+
+    /* Đổi thứ tự: dir=-1 lên, +1 xuống. Trả index mới hoặc -1 nếu không đổi. */
+    moveRow: function (store, loop, rowId, dir) {
+      var rows = GridCtl.rows(store, loop);
+      var i = GridCtl.findRowIndex(rows, rowId);
+      var j = i + (dir < 0 ? -1 : 1);
+      if (i < 0 || j < 0 || j >= rows.length) return -1;
+      var t = rows[i]; rows[i] = rows[j]; rows[j] = t;
+      return j;
+    },
+
+    /* Nhân bản dòng rowId ngay sau chính nó, BỎ các field định danh/khóa theo
+     * metadata duplicateKeys (vd so_cccd, ma_nganh) và _row_id cũ.
+     * Trả {_row_id mới, index} hoặc null khi không tìm thấy dòng nguồn. */
+    duplicateRow: function (store, loop, rowId) {
+      var rows = GridCtl.rows(store, loop);
+      var i = GridCtl.findRowIndex(rows, rowId);
+      if (i < 0) return null;
+      var gm = GridCtl.meta(loop) || {};
+      var clone = Object.assign({}, rows[i]);
+      delete clone._row_id;
+      (gm.duplicateKeys || []).forEach(function (k) { delete clone[k]; });
+      clone._row_id = GridCtl.nextId();
+      rows.splice(i + 1, 0, clone);
+      return { id: clone._row_id, index: i + 1 };
+    },
+
+    /* Radio một-lựa-chọn trong cột tag của loop: đặt 'X' cho dòng rowId,
+     * gỡ ('') mọi dòng khác cùng cột (dùng chung bởi handler change UI). */
+    setExclusiveRadio: function (store, loop, rowId, tag, checked) {
+      var rows = GridCtl.rows(store, loop);
+      rows.forEach(function (r) {
+        if (!r) return;
+        if (checked && r._row_id === rowId) r[tag] = 'X';
+        else r[tag] = '';
+      });
+    },
+
+    /* Bản sao loops SẠCH để payload DOCX (Bridge.export): bỏ mọi field nội bộ
+     * (_row_id...) và map la_nganh_chinh -> 'X'/'' đúng the trong template pháp
+     * lý (ô {la_nganh_chinh} phải in dấu X, không in chữ True/False). Store/
+     * draft giữ nguyên 'X'/'' như radio; đây là CHỐ ĐƠN NHẤT trên đường export
+     * (buildExportData cũng đi qua hàm này nên không bị lệch hai nơi). */
+    exportLoops: function (store) {
+      var out = {};
+      Object.keys(store.loops || {}).forEach(function (name) {
+        var gm = FD.getGridMeta(name);
+        out[name] = (store.loops[name] || []).map(function (row) {
+          var clean = {};
+          Object.keys(row || {}).forEach(function (k) {
+            if (k.charAt(0) === '_') return; // _row_id và field nội bộ khác
+            clean[k] = row[k];
+          });
+          if (Object.prototype.hasOwnProperty.call(clean, 'la_nganh_chinh')) {
+            clean.la_nganh_chinh =
+              (clean.la_nganh_chinh === 'X' || clean.la_nganh_chinh === true)
+                ? 'X' : '';
+          } else if (gm && gm.requirePrimary) {
+            clean.la_nganh_chinh = '';
+          }
+          return clean;
+        });
+      });
+      return out;
+    },
+
+    /* Phân loại trạng thái ô mã ngành theo PLAN.md PHASE 4 (thuần, offline):
+     *  ''             -> { st:'empty' }   : xóa ten cùng dòng, gỡ invalid
+     *  mã khớp danh mục -> { st:'exact', item }  : tự điền ten chính thức
+     *  chữ (tên có/không dấu) có kết quả -> { st:'typing', items }: gợi ý,
+     *                     KHÔNG báo blocking (tìm ngược bằng tên)
+     *  1-3 chữ số     -> { st:'typing', items }  : mở gợi ý, chưa blocking
+     *  còn lại        -> { st:'invalid' } : viền đỏ VSIC_INVALID, giữ giá trị
+     *                  người nhập, KHÔNG tự chế tên */
+    vsicResolve: function (list, raw) {
+      var v = String(raw == null ? '' : raw).trim();
+      if (!v) return { st: 'empty', items: [] };
+      for (var i = 0; i < (list || []).length; i++) {
+        if (String(list[i].ma) === v) return { st: 'exact', item: list[i], items: [list[i]] };
+      }
+      if (!/^\d+$/.test(v)) {
+        // tìm ngược bằng tên ngành (có dấu/không dấu)
+        var byName = R.searchVsic(list || [], v, 12);
+        return byName.length ? { st: 'typing', items: byName } : { st: 'invalid', items: [] };
+      }
+      if (/^\d{1,3}$/.test(v)) {
+        return { st: 'typing', items: R.searchVsic(list || [], v, 12) };
+      }
+      return { st: 'invalid', items: [] };
+    }
+  };
+
 
   /* Case dùng khi chạy ?mock=1 (không đọc use_cases.json thật). */
   var MOCK_CASES = [
@@ -176,6 +338,26 @@
     });
   }
 
+  /* PHASE 6: nạp metadata field-grid cho một mẫu (app/data/ui_layouts/<id>.json).
+   * Thử đường canonical '../app/data/ui_layouts/' trước; fallback bản sao local
+   * 'ui_layouts/<id>.json' (chế độ mock/gói độc lập); 404/lỗi -> cache null và
+   * render như cũ (bỏ qua layout, không bao giờ chặn việc nạp mẫu). */
+  function loadUiLayout(id) {
+    if (Object.prototype.hasOwnProperty.call(state.uiLayouts, id)) {
+      return Promise.resolve(state.uiLayouts[id]);
+    }
+    var read = function (url) {
+      return fetch(url).then(function (r) {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.json();
+      });
+    };
+    return read('../app/data/ui_layouts/' + id + '.json')
+      .catch(function () { return read('ui_layouts/' + id + '.json'); })
+      .then(function (j) { state.uiLayouts[id] = j || null; return j || null; })
+      .catch(function () { state.uiLayouts[id] = null; return null; });
+  }
+
   function loadCases() {
     if (state.mock) {
       state.cases = MOCK_CASES.slice();
@@ -242,11 +424,17 @@
         if (r.doc) state.docs.push(r.doc);
         else toast('Không nạp được mẫu: ' + esc(r.error), 'err');
       });
-      if (state.pendingDraft) { finishApplyDraft(); return; }
-      state.activeDocId = state.docs.length ? state.docs[0].id : null;
-      state.errors = [];
-      state.selectedLoopRow = {};
-      renderAllPages();
+      // PHASE 6: nạp ui_layouts (nếu có) trước khi render; thiếu -> bỏ qua
+      Promise.all(state.docs.map(function (d) { return loadUiLayout(d.id); }))
+        .then(function () {
+          if (state.pendingDraft) { finishApplyDraft(); return; }
+          state.activeDocId = state.docs.length ? state.docs[0].id : null;
+          state.errors = [];
+          state.selectedLoopRow = {};
+          state.selRowId = {};
+          state.multiSel = {};
+          renderAllPages();
+        });
     });
   }
 
@@ -330,7 +518,10 @@
     }
     pages.innerHTML = '<section class="page-a4" id="doc_' + esc(d.id) +
       '" data-doc="' + esc(d.id) + '" tabindex="-1">' +
-      R.renderBlocks(d, state.store, { docId: d.id, fieldMeta: FD.FIELD_META }) +
+      R.renderBlocks(d, state.store, {
+        docId: d.id, fieldMeta: FD.FIELD_META, gridMeta: FD.GRID_META,
+        uiLayout: state.uiLayouts[d.id] || null
+      }) +
       '</section>';
     applyReadonlyTotals();
     patchErrorsDom();
@@ -449,47 +640,192 @@
   }
 
   // ------------------------------------------------------------- bảng lặp
-  function selectRow(tr) {
+  function rowHasData(r) {
+    return Object.keys(r || {}).some(function (k) {
+      if (k.charAt(0) === '_') return false; // _row_id không tính là dữ liệu
+      return String(r[k] == null ? '' : r[k]).trim() !== '';
+    });
+  }
+
+  /* Chọn dòng: click thường -> chọn 1 (reset multi); Ctrl+click -> toggle
+   * chọn nhiều để Xóa nhiều dòng confirm MỘT lần. */
+  function selectRow(tr, e) {
     var table = tr.closest('.loop-table');
     var loop = tr.getAttribute('data-loop');
+    var id = tr.getAttribute('data-row-id') || null;
     var idx = +tr.getAttribute('data-row-index');
+    var multi = state.multiSel[loop] = state.multiSel[loop] || {};
+    if (!id) { // dòng blank ngoài store: chỉ highlight, không vào selection
+      table.querySelectorAll('tbody tr').forEach(function (r) {
+        r.classList.remove('row-sel', 'row-sel-multi');
+        r.setAttribute('aria-selected', 'false');
+      });
+      tr.classList.add('row-sel');
+      tr.setAttribute('aria-selected', 'true');
+      state.selRowId[loop] = null;
+      state.selectedLoopRow[loop] = idx;
+      return;
+    }
+    if (e && e.ctrlKey) {
+      if (multi[id]) {
+        delete multi[id];
+        tr.classList.remove('row-sel-multi');
+        if (state.selRowId[loop] === id) state.selRowId[loop] = null;
+      } else {
+        multi[id] = true;
+        tr.classList.add('row-sel-multi');
+        state.selRowId[loop] = id;
+        state.selectedLoopRow[loop] = idx;
+      }
+      return;
+    }
+    // click thường: chọn 1
+    Object.keys(multi).forEach(function (k) { delete multi[k]; });
     table.querySelectorAll('tbody tr').forEach(function (r) {
       var sel = r === tr;
       r.classList.toggle('row-sel', sel);
+      r.classList.remove('row-sel-multi');
       r.setAttribute('aria-selected', sel ? 'true' : 'false');
     });
+    state.selRowId[loop] = id;
     state.selectedLoopRow[loop] = idx;
   }
 
-  function addLoopRow(loop) {
-    var rows = state.store.loops[loop] = state.store.loops[loop] || [];
-    var at = state.selectedLoopRow[loop];
-    if (at != null && at < rows.length) rows.splice(at + 1, 0, {});
-    else rows.push({});
+  function clearLoopSelection(loop) {
+    state.selRowId[loop] = null;
+    delete state.selectedLoopRow[loop];
+    state.multiSel[loop] = {};
+  }
+
+  /* Dòng đích cho del/up/down/dup khi chưa chọn: dòng dữ liệu CUỐI. */
+  function targetRowId(loop) {
+    var id = state.selRowId[loop];
+    var rows = state.store.loops[loop] || [];
+    if (id && GridCtl.findRowIndex(rows, id) >= 0) return id;
+    var last = rows[rows.length - 1];
+    return last ? last._row_id : null;
+  }
+
+  function focusNewRow(loop, rowId, idx) {
+    var tbl = document.querySelector('.loop-table[data-loop="' + cssEsc(loop) + '"]');
+    if (!tbl) return;
+    var tr = (rowId && tbl.querySelector('tr[data-row-id="' + cssEsc(rowId) + '"]')) ||
+      tbl.querySelectorAll('tbody tr')[idx];
+    if (!tr) return;
+    var el = loop === 'ds_nganh'
+      ? tr.querySelector('[data-tag="ma_nganh"]')
+      : tr.querySelector('input.loop-fld');
+    if (el) { el.focus(); el.scrollIntoView({ block: 'nearest' }); }
+  }
+
+  function uiAddRow(loop) {
+    var gm = GridCtl.meta(loop);
+    if (gm && gm.allowAdd === false) return;
+    var rows = state.store.loops[loop] || [];
+    var gmMax = gm && gm.maxRows != null ? gm.maxRows : null;
+    if (gmMax != null && rows.length >= gmMax) {
+      toast('Bảng "' + ((gm && gm.label) || loop) + '" tối đa ' + gmMax + ' dòng.', 'err');
+      return;
+    }
+    var res = GridCtl.addRow(state.store, loop,
+      targetRowId(loop)); // thêm sau dòng đang chọn / cuối nếu chưa chọn
+    clearLoopSelection(loop);
+    state.selRowId[loop] = res.id;
+    markDirty();
+    rerenderKeepView();
+    // riêng ds_nganh: focus ô ma_nganh của dòng vừa thêm (PLAN.md PHASE 5)
+    focusNewRow(loop, res.id, res.index);
+  }
+
+  function uiDeleteRows(loop) {
+    var gm = GridCtl.meta(loop);
+    if (gm && gm.allowDelete === false) return;
+    var rows = state.store.loops[loop] || [];
+    if (!rows.length) return;
+    var label = (gm && gm.label) || loop;
+    var multi = Object.keys(state.multiSel[loop] || {}).filter(function (id) {
+      return GridCtl.findRowIndex(rows, id) >= 0;
+    });
+    var ids = multi.length > 1 ? multi : [targetRowId(loop)].filter(Boolean);
+    if (!ids.length) ids = [rows[rows.length - 1]._row_id];
+    if (!ids.length) return;
+    if (ids.length > 1) {
+      // xóa nhiều dòng: xác nhận MỘT lần kèm số dòng
+      if (!confirm('Xóa ' + ids.length + ' dòng đã chọn của bảng "' + label +
+          '"?\nThao tác này không thể hoàn tác.')) return;
+    } else {
+      var ix = GridCtl.findRowIndex(rows, ids[0]);
+      var hasData = rowHasData(rows[ix]);
+      var needConfirm = !gm || gm.confirmDeleteNonEmpty !== false;
+      if (hasData && needConfirm &&
+          !confirm('Dòng ' + (ix + 1) + ' của "' + label + '" đang có dữ liệu.\n' +
+            (loop === 'ds_nganh'
+              ? ('Ngành sắp xóa: ' +
+                 [rows[ix].ma_nganh, rows[ix].ten_nganh].filter(Boolean).join(' - ') + '.\n')
+              : '') +
+            'Xóa dòng này?')) {
+        return; // cancel -> không mất dữ liệu
+      }
+    }
+    GridCtl.deleteRows(state.store, loop, ids);
+    clearLoopSelection(loop);
     markDirty();
     rerenderKeepView();
   }
 
-  function deleteLoopRow(loop) {
-    var rows = state.store.loops[loop] = state.store.loops[loop] || [];
+  function uiClearRows(loop) {
+    var gm = GridCtl.meta(loop);
+    if (gm && gm.allowDelete === false) return;
+    var rows = state.store.loops[loop] || [];
     if (!rows.length) return;
-    var wrap = document.querySelector('.loop-table[data-loop="' + cssEsc(loop) + '"]');
-    var shown = wrap ? wrap.querySelectorAll('tbody tr').length : rows.length;
-    var idx = state.selectedLoopRow[loop];
-    if (idx == null || idx >= shown || idx >= rows.length) idx = Math.min(rows.length - 1, shown - 1);
-    if (idx < 0) idx = 0;
-    var row = rows[idx] || {};
-    var hasData = Object.keys(row).some(function (k) {
-      return String(row[k] == null ? '' : row[k]).trim() !== '';
-    });
-    if (hasData &&
-        !confirm('Dòng ' + (idx + 1) + ' của "' + loop + '" đang có dữ liệu.\nXóa dòng này?')) {
-      return;
-    }
-    rows.splice(idx, 1);
-    delete state.selectedLoopRow[loop];
+    var label = (gm && gm.label) || loop;
+    // xác nhận rõ phạm vi trước khi xóa tất cả
+    if (!confirm('Xóa TẤT CẢ dữ liệu (' + rows.length + ' dòng) của bảng "' + label +
+        '"?\nChỉ xóa dữ liệu kê khai, bảng vẫn giữ lại dòng trống trên giao diện.')) return;
+    GridCtl.clearRows(state.store, loop);
+    clearLoopSelection(loop);
     markDirty();
     rerenderKeepView();
+  }
+
+  function uiMoveRow(loop, dir) {
+    var gm = GridCtl.meta(loop);
+    if (gm && gm.allowReorder === false) return;
+    var id = targetRowId(loop);
+    if (!id) return;
+    var at = GridCtl.moveRow(state.store, loop, id, dir);
+    if (at < 0) return;
+    state.selectedLoopRow[loop] = at; // _row_id giữ nguyên -> lỗi vẫn đúng dòng
+    markDirty();
+    rerenderKeepView();
+  }
+
+  function uiDuplicateRow(loop) {
+    var gm = GridCtl.meta(loop);
+    if (gm && gm.allowAdd === false) return;
+    var id = targetRowId(loop);
+    if (!id) return;
+    var res = GridCtl.duplicateRow(state.store, loop, id);
+    if (!res) return;
+    clearLoopSelection(loop);
+    state.selRowId[loop] = res.id;
+    state.selectedLoopRow[loop] = res.index;
+    markDirty();
+    rerenderKeepView();
+    focusNewRow(loop, res.id, res.index);
+  }
+
+  function handleLoopAction(btn) {
+    var act = btn.getAttribute('data-act');
+    var loop = btn.getAttribute('data-loop') ||
+      (btn.closest('.loop-btns') && btn.closest('.loop-btns').getAttribute('data-loop'));
+    if (!loop) return;
+    if (act === 'add') uiAddRow(loop);
+    else if (act === 'del') uiDeleteRows(loop);
+    else if (act === 'clear') uiClearRows(loop);
+    else if (act === 'up') uiMoveRow(loop, -1);
+    else if (act === 'down') uiMoveRow(loop, 1);
+    else if (act === 'dup') uiDuplicateRow(loop);
   }
 
   /* Rerender tờ khai active giữ nguyên scroll (thêm/xóa dòng). */
@@ -551,29 +887,90 @@
 
   function isNganhTag(tag) { return tag === 'ma_nganh' || tag === 'ten_nganh'; }
 
-  function handleVsicInput(inp) {
-    var tag = inp.getAttribute('data-tag');
-    if (!isNganhTag(tag)) return;
-    var lk = parseLoopKey(inp.getAttribute('data-key'));
-    if (!lk) return;
-    showVsic(inp, inp.value, function (item) {
-      // điền cả mã + tên vào CÙNG hàng
-      ['ma_nganh', 'ten_nganh'].forEach(function (t) {
-        setKeyValue('loop:' + lk.loop + ':' + lk.idx + ':' + t, item[t]);
-        var el = document.querySelector(
-          '#pages [data-key="' + cssEsc('loop:' + lk.loop + ':' + lk.idx + ':' + t) + '"]');
-        if (el) el.value = item[t];
-      });
-      validateAllMaNganh();
-      markDirty();
+  function loopCellDom(key, val, exceptEl) {
+    document.querySelectorAll('#pages [data-key="' + cssEsc(key) + '"]').forEach(function (el) {
+      if (el === exceptEl) return;
+      el.value = val;
     });
+  }
+
+  /* Chọn 1 kết quả từ popup (chuột hoặc Enter): điền CẢ mã + tên vào cùng
+   * dòng, gỡ đỏ, đóng popup. */
+  function applyVsicPick(inp, item) {
+    var lk = parseLoopKey(inp.getAttribute('data-key'));
+    if (!lk || !item) return;
+    ['ma_nganh', 'ten_nganh'].forEach(function (t) {
+      var key = 'loop:' + lk.loop + ':' + lk.idx + ':' + t;
+      setKeyValue(key, item[t]);
+      loopCellDom(key, item[t], t === 'ma_nganh' ? inp : null);
+    });
+    inp.classList.remove('invalid');
+    inp.removeAttribute('aria-invalid');
+    hideVsic();
+    validateAllMaNganh();
+    markDirty();
+  }
+
+  /* Luồng nhập MÃ ngành (PLAN.md PHASE 4):
+   *  - rỗng        -> xóa ten_nganh cùng dòng + gỡ invalid;
+   *  - đủ mã khớp  -> tự điền ten chính thức ngay, đóng popup, gỡ đỏ;
+   *  - 1-3 chữ số  -> mở gợi ý nhưng KHÔNG báo blocking;
+   *  - sai/không có-> giữ giá trị, viền đỏ (VSIC_INVALID), KHÔNG tự chế tên,
+   *                  xóa tên cũ của mã khác (đổi mã thì tên phải cập nhật). */
+  function handleMaNganhInput(inp, fromFocus) {
+    if (inp.getAttribute('data-tag') !== 'ma_nganh') return false;
+    var lk = parseLoopKey(inp.getAttribute('data-key'));
+    if (!lk) return false;
+    var tenKey = 'loop:' + lk.loop + ':' + lk.idx + ':ten_nganh';
+    var res = GridCtl.vsicResolve(state.vsic, inp.value);
+    if (res.st === 'empty') {
+      setKeyValue(tenKey, '');
+      loopCellDom(tenKey, '', inp);
+      inp.classList.remove('invalid');
+      inp.removeAttribute('aria-invalid');
+      hideVsic();
+      return true;
+    }
+    if (res.st === 'exact') {
+      setKeyValue(tenKey, res.item.ten);
+      loopCellDom(tenKey, res.item.ten, inp);
+      inp.classList.remove('invalid');
+      inp.removeAttribute('aria-invalid');
+      hideVsic();
+      markDirty();
+      return true;
+    }
+    if (res.st === 'typing') {
+      // đang gõ chưa đủ: chỉ gợi ý, không đánh lỗi
+      inp.classList.remove('invalid');
+      inp.removeAttribute('aria-invalid');
+      showVsic(inp, inp.value, function (item) { applyVsicPick(inp, item); });
+      return true;
+    }
+    // invalid: giữ giá trị để người dùng sửa; không giữ tên cũ
+    setKeyValue(tenKey, '');
+    loopCellDom(tenKey, '', inp);
+    inp.classList.add('invalid');
+    inp.setAttribute('aria-invalid', 'true');
+    if (!fromFocus && res.items.length) {
+      // vẫn gợi ý theo tiền tố/tên để đỡ gõ lại; chọn sẽ sửa cả mã
+      showVsic(inp, inp.value, function (item) { applyVsicPick(inp, item); });
+    } else {
+      hideVsic();
+    }
+    markDirty();
+    return true;
   }
 
   function handleVsicKeydown(e) {
     var inp = e.target;
     if (!inp.classList || !inp.classList.contains('vsic-fld')) return false;
     if (!pop || pop.hidden) {
-      if (e.key === 'ArrowDown') { handleVsicInput(inp); return true; }
+      if (e.key === 'ArrowDown' && String(inp.value || '').trim()) {
+        handleMaNganhInput(inp, true) ||
+          showVsic(inp, inp.value, function (item) { applyVsicPick(inp, item); });
+        return true;
+      }
       return false;
     }
     var n = pop.querySelectorAll('.vsic-item').length;
@@ -586,29 +983,12 @@
       case 'Enter':
         e.preventDefault();
         var item = (state.vsicItems || [])[state.vsicIndex];
-        if (item) {
-          var lk = parseLoopKey(inp.getAttribute('data-key'));
-          ['ma_nganh', 'ten_nganh'].forEach(function (t) {
-            setKeyValue('loop:' + lk.loop + ':' + lk.idx + ':' + t, item[t]);
-            var el = document.querySelector(
-              '#pages [data-key="' + cssEsc('loop:' + lk.loop + ':' + lk.idx + ':' + t) + '"]');
-            if (el) el.value = item[t];
-          });
-          hideVsic();
-          validateAllMaNganh();
-          markDirty();
-        }
+        if (item) applyVsicPick(inp, item);
         return true;
       case 'Escape':
         e.preventDefault(); hideVsic(); return true;
     }
     return false;
-  }
-
-  function handleMaNganhValidation(inp) {
-    if (inp.getAttribute('data-tag') !== 'ma_nganh') return;
-    var ok = R.isValidMaNganh(state.vsic, inp.value);
-    inp.classList.toggle('invalid', !ok);
   }
 
   // ------------------------------------------------------------- validation
@@ -713,17 +1093,50 @@
     });
   }
 
+  /* Key lỗi dạng:
+   *  - loop:<loop>:<row_id>:<tag> : ô cụ thể của dòng theo STABLE ID -> resolve
+   *    qua [data-row-id], nên reorder/xóa không làm lỗi trỏ sai dòng;
+   *  - loop:<loop>:<row_id>       : input đầu tiên của dòng đó;
+   *  - loop:<loop>                : bảng lỗi -> ô nhập đầu tiên của tbody;
+   *  - loop:<loop>:<idx>:<tag> (idx số) : key legacy theo chỉ số hàng,
+   *    resolve qua [data-key] như cũ;
+   *  - <loop>.<tag>               : tổng hợp legacy -> ô đầu của tag. */
   function findErrorField(e) {
-    if (e.key.indexOf('loop:') === 0) {
-      return document.querySelector('#pages [data-key="' + cssEsc(e.key) + '"]');
+    var key = e.key || '';
+    if (key.indexOf('loop:') === 0) {
+      var p = key.split(':');
+      var tbl0 = document.querySelector(
+        '#pages .loop-table[data-loop="' + cssEsc(p[1] || '') + '"]');
+      if (!tbl0) return null;
+      if (p.length >= 4 && /^\d+$/.test(p[2])) { // key legacy theo chỉ số
+        return document.querySelector('#pages [data-key="' + cssEsc(key) + '"]') ||
+          tbl0.querySelector('tbody tr [data-tag="' + cssEsc(p[3]) + '"]');
+      }
+      if (p.length >= 4) {
+        var tr4 = tbl0.querySelector('tr[data-row-id="' + cssEsc(p[2]) + '"]');
+        if (!tr4) return null;
+        return tr4.querySelector('[data-tag="' + cssEsc(p[3]) + '"]') ||
+          tr4.querySelector('input');
+      }
+      if (p.length === 3) {
+        var tr3 = tbl0.querySelector('tr[data-row-id="' + cssEsc(p[2]) + '"]');
+        return tr3 ? tr3.querySelector('input') : null;
+      }
+      return tbl0.querySelector('tbody tr input');
     }
-    if (e.key.indexOf('.') > 0 && e.key.split('.')[0] in (state.store.loops || {})) {
+    if (key.indexOf('.') > 0 && key.split('.')[0] in (state.store.loops || {})) {
       // key tổng hợp dạng <loop>.<tag>: trỏ tới ô đầu tiên của tag đó
-      var parts = e.key.split('.');
+      var parts = key.split('.');
       var tbl = document.querySelector('#pages .loop-table[data-loop="' + cssEsc(parts[0]) + '"]');
       return tbl ? tbl.querySelector('[data-tag="' + cssEsc(parts[1]) + '"]') : null;
     }
-    return document.querySelector('#pages [data-key="' + cssEsc(e.key) + '"]');
+    // field-grid (PHASE 6): cùng key có thể có ô gốc bị ẩn .dupe-anchor ->
+    // ưu tiên ô HIỂN THỊ đầu tiên để scroll/focus có tác dụng
+    var cands = document.querySelectorAll('#pages [data-key="' + cssEsc(key) + '"]');
+    for (var ci = 0; ci < cands.length; ci++) {
+      if (!(cands[ci].closest && cands[ci].closest('.dupe-anchor'))) return cands[ci];
+    }
+    return cands.length ? cands[0] : null;
   }
 
   function navigateToError(docId, key) {
@@ -787,6 +1200,7 @@
       loops: st.loops || {}
     };
     state.viewState = draft.viewState || {};
+    GridCtl.ensureIds(state.store); // _row_id ổn định sau draft round-trip
     if (draft.checkedForms && draft.checkedForms.length) {
       document.querySelectorAll('.form-tick').forEach(function (t) {
         t.checked = draft.checkedForms.indexOf(t.value) >= 0;
@@ -813,10 +1227,11 @@
     Object.keys(state.store.checks).forEach(function (k) {
       data[k] = state.store.checks[k] ? 'X' : '';
     });
-    Object.keys(state.store.loops).forEach(function (name) {
-      data[name] = state.store.loops[name].map(function (row) {
-        return Object.assign({}, row);
-      });
+    // loops: bỏ _row_id/field nội bộ; la_nganh_chinh map 'X'/'' cho template
+    // (đi qua GridCtl.exportLoops - chỗ duy nhất quyết định định dạng payload)
+    var loops = GridCtl.exportLoops(state.store);
+    Object.keys(loops).forEach(function (name) {
+      data[name] = loops[name];
     });
     return data;
   }
@@ -904,6 +1319,8 @@
     state.store = R.newStore();
     state.errors = [];
     state.selectedLoopRow = {};
+    state.selRowId = {};
+    state.multiSel = {};
     runAutoFills();       // tự điền ngày ký hôm nay
     renderAllPages();
     markDirty();
@@ -946,8 +1363,10 @@
       if (!key || t.type === 'checkbox') return;
       setKeyValue(key, t.value);
       mirrorKey(key, t);
-      handleMaNganhValidation(t);
-      handleVsicInput(t);
+      if (t.classList.contains('vsic-fld') &&
+          t.getAttribute('data-tag') === 'ma_nganh') {
+        handleMaNganhInput(t); // VSIC flow: tự điền tên / gợi ý / viền đỏ
+      }
       runAutoFills();
       markDirty();
     });
@@ -956,32 +1375,53 @@
       var t = e.target;
       if (!t.classList || !t.classList.contains('chk-box')) return;
       var key = t.getAttribute('data-key');
-      state.store.checks[key] = t.checked;
-      var val = t.checked;
-      document.querySelectorAll('#pages [data-key="' + cssEsc(key) + '"]').forEach(function (el) {
-        if (el !== t) el.checked = val;
-      });
+      var lk = parseLoopKey(key);
+      if (lk) {
+        // checkbox/radio trong bảng lặp: giá trị lưu vào hàng của loop ('X'/'')
+        var rows = state.store.loops[lk.loop] = state.store.loops[lk.loop] || [];
+        while (rows.length <= lk.idx) rows.push({});
+        GridCtl.ensureIds(state.store); // hàng sinh muộn vẫn có _row_id
+        var rowId = rows[lk.idx]._row_id;
+        var gm = FD.getGridMeta(lk.loop);
+        var colMeta = gm ? (gm.columns || []).filter(function (c) {
+          return c.tag === lk.tag;
+        })[0] : null;
+        if (colMeta && colMeta.type === 'radio') {
+          // la_nganh_chinh: chọn một dòng -> 'X', mọi dòng khác cùng cột -> ''
+          GridCtl.setExclusiveRadio(state.store, lk.loop, rowId, lk.tag, t.checked);
+        } else {
+          rows[lk.idx][lk.tag] = t.checked ? 'X' : '';
+        }
+      } else {
+        state.store.checks[key] = t.checked;
+        var val = t.checked;
+        document.querySelectorAll('#pages [data-key="' + cssEsc(key) + '"]').forEach(function (el) {
+          if (el !== t) el.checked = val;
+        });
+      }
       markDirty();
     });
 
     pages.addEventListener('click', function (e) {
-      var add = e.target.closest('.btn-row-add');
-      var del = e.target.closest('.btn-row-del');
-      if (add || del) {
-        var loop = (add || del).getAttribute('data-loop') ||
-          (add || del).closest('.loop-btns').getAttribute('data-loop');
-        if (add) addLoopRow(loop); else deleteLoopRow(loop);
+      var actBtn = e.target.closest('.loop-btns button[data-act]');
+      if (actBtn) {
+        handleLoopAction(actBtn);
         return;
       }
       var tr = e.target.closest('tr[data-row-index]');
-      if (tr) selectRow(tr);
+      if (tr) selectRow(tr, e);
     });
 
     pages.addEventListener('focusin', function (e) {
       var t = e.target;
       if (t.classList && t.classList.contains('vsic-fld')) {
         var key = t.getAttribute('data-key');
-        if (parseLoopKey(key)) handleVsicInput(t);
+        if (!parseLoopKey(key)) return;
+        if (t.getAttribute('data-tag') === 'ma_nganh') {
+          handleMaNganhInput(t, true); // fromFocus: không xóa dữ liệu, chỉ gợi ý
+        } else if (String(t.value || '').trim()) {
+          showVsic(t, t.value, function (item) { applyVsicPick(t, item); });
+        }
       }
     });
 
@@ -1099,8 +1539,10 @@
     }
   }
 
-  /* Helpers thuần phục vụ test node (không DOM). */
-  var Helpers = { groupErrorsByDoc: groupErrorsByDoc };
+  /* Helpers thuần phục vụ test node (không DOM): GridCtl là controller
+   * editable-grid generic (add/delete/reorder/duplicate/clear/export/radio/
+   * vsicResolve), groupErrorsByDoc nhóm lỗi theo mẫu. */
+  var Helpers = { groupErrorsByDoc: groupErrorsByDoc, GridCtl: GridCtl };
   if (typeof module !== 'undefined' && module.exports) module.exports = Helpers;
   if (!IS_NODE) window.ControllerHelpers = Helpers;
 

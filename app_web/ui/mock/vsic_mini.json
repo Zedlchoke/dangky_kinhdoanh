@@ -1,0 +1,19 @@
+{
+  "nganh": [
+    { "ma": "01", "ten": "Nông nghiệp và hoạt động dịch vụ có liên quan", "cap": 2 },
+    { "ma": "011", "ten": "Trồng trọt và chăn nuôi", "cap": 3 },
+    { "ma": "0111", "ten": "Trồng lúa", "cap": 4 },
+    { "ma": "0112", "ten": "Trồng ngô", "cap": 4 },
+    { "ma": "0113", "ten": "Trồng cây lấy sợi", "cap": 4 },
+    { "ma": "0114", "ten": "Trồng cây có chứa chất kích thích", "cap": 4 },
+    { "ma": "012", "ten": "Chăn nuôi", "cap": 3 },
+    { "ma": "0121", "ten": "Chăn nuôi bò sữa", "cap": 4 },
+    { "ma": "4711", "ten": "Bán lẻ ở các cửa hàng chuyên doanh chủ yếu thực phẩm và đồ uống", "cap": 4 },
+    { "ma": "5610", "ten": "Nhà hàng và dịch vụ ăn uống lưu động", "cap": 4 },
+    { "ma": "6201", "ten": "Lập trình máy vi tính", "cap": 4 },
+    { "ma": "6810", "ten": "Kinh doanh bất động sản, quyền sử dụng đất thuộc chủ sở hữu, người sử dụng hoặc đi thuê", "cap": 4 },
+    { "ma": "8561", "ten": "Giáo dục mầm non", "cap": 4 },
+    { "ma": "8690", "ten": "Hoạt động chăm sóc sức khỏe khác", "cap": 4 },
+    { "ma": "G", "ten": "Thương bán buôn, bán lẻ (phân cấp)", "cap": 2 }
+  ]
+}

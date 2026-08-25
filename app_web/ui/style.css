@@ -232,9 +232,75 @@ select, .btn {
 }
 td.stt { text-align: center; min-width: 26px; }
 
+/* bảng lặp: ô tick trong cột (cols[].type = checkbox/radio) */
+.loop-chk, .loop-radio { accent-color: #2f6fbf; cursor: pointer; vertical-align: middle; }
+/* bảng lặp: ô chỉ đọc (cols[].type = readonly) */
+.loop-fld[readonly] { background: #f2f2f2; color: #555; }
+
 /* dòng bảng lặp đang chọn */
 tr.row-sel td { background: #eaf2ff; }
 tr.row-sel td.stt { box-shadow: inset 3px 0 0 #2f6fbf; }
+
+/* ------------------------------------------------ field-grid (PHASE 6):
+   nhóm trường kiểu HTKK từ app/data/ui_layouts/<id>.json - chèn sau block
+   anchor; lưới 2 cột nhãn/ô, viền tối 1px như bảng giấy, giá trị xanh */
+.field-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  width: 100%;
+  margin: 8pt 0;
+  border: 1px solid #1a1a1a;
+  background: #fff;
+}
+.field-grid .fg-title {
+  grid-column: 1 / -1;
+  padding: 2pt 8pt;
+  font-weight: bold;
+  background: #eef2f7;
+  border-bottom: 1px solid #1a1a1a;
+}
+.field-grid .fg-label {
+  display: flex;
+  align-items: center;
+  padding: 2pt 8pt;
+  white-space: nowrap;
+  font-family: "Times New Roman", serif;
+  font-size: 13pt;
+  color: #33415c;
+  border-top: 1px solid #1a1a1a;
+}
+.field-grid .fg-cell {
+  display: flex;
+  align-items: center;
+  padding: 2pt 4pt;
+  border-top: 1px solid #1a1a1a;
+  border-left: 1px solid #1a1a1a;
+}
+.field-grid .fg-title ~ .fg-label,
+.field-grid .fg-title ~ .fg-cell { border-top: none; }
+.field-grid .fg-label:first-of-type,
+.field-grid .fg-label:first-of-type + .fg-cell { border-top: none; }
+.field-grid .fg-fld {
+  flex: 1;
+  min-width: 60px;
+  font-family: "Times New Roman", serif;
+  font-size: 13pt;
+  border: none;
+  border-bottom: 1px dashed #b9c6d6;
+  background: transparent;
+  color: #00379b;
+}
+.field-grid .fg-fld:focus {
+  outline: none;
+  background: #eaf2ff;
+  border-bottom: 1px solid #2f6fbf;
+}
+/* ô computed/readonly: nền xám nhạt nhờ class .calc sẵn có (#dce6f1),
+   không cần rule riêng -> một nguồn định nghĩa duy nhất */
+
+/* block gốc chứa anchor bị layout đánh dấu trùng lặp thị giác:
+   vẫn render (đủ dữ liệu/export trên DOM) nhưng không hiển thị */
+.dupe-anchor { display: none; }
 
 .loop-btns { margin: -2pt 0 8pt; }
 .loop-btns button {
@@ -248,6 +314,17 @@ tr.row-sel td.stt { box-shadow: inset 3px 0 0 #2f6fbf; }
   cursor: pointer;
 }
 .loop-btns button:hover { background: #eaf2ff; }
+.loop-btns .btn-danger-row {
+  border-color: #d8a0a0;
+  color: #8c2020;
+}
+.loop-btns .btn-danger-row:hover { background: #fbeaea; }
+
+/* nhiều dòng được đánh dấu xóa (Ctrl+click) */
+tr.row-sel-multi td { background: #fdf0f0; }
+tr.row-sel-multi td.stt { box-shadow: inset 3px 0 0 #c62828; }
+/* ô ngành tự điền từ danh mục (readonly) vẫn phân biệt với ô người dùng gõ */
+.loop-fld[readonly].vsic-fld { color: #1f4e79; }
 
 /* ------------------------------------------------ thanh phải (co/mở) */
 #rightbar {

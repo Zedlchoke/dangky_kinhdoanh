@@ -94,6 +94,378 @@ python -m tools.e2e_case_test
 python app_web/main.py --mock
 ```
 
+---
+
+## Kế hoạch hoàn thiện sau audit độc lập (cập nhật 2026-08-25)
+
+### Trạng thái hiện tại và định nghĩa “hoàn thành”
+
+Phần pilot `PLI_M02` và nền `editable-grid` đã đạt phần lớn mục tiêu kỹ thuật:
+9 loop production hiện có render đúng grid, thao tác dòng dùng controller chung,
+VSIC tự điền tên ngành, draft migration và DOCX `PLI_M02` đã có test. Tuy nhiên,
+toàn dự án **chưa hoàn thành** cho tới khi đóng đủ các gap sau:
+
+1. DOCX `PLII_M01` phải xuất STT và dấu `X` ở cột ngành chính. Test hiện tại
+   đang chấp nhận hai ô này rỗng, trái với contract export.
+2. Mẫu bắt buộc/tùy chọn phải dùng metadata `bat_buoc`; không được tick tất cả.
+   Các nhóm loại hình loại trừ nhau phải hỗ trợ `oneOf`.
+3. Chặn race khi đổi thủ tục/restore draft; autosave thành công phải đồng bộ
+   `dirty=false` và trạng thái hiển thị.
+4. Rollout `ds_nganh` còn thiếu cho 13 mẫu:
+   `PLI_M01`, `PLI_M03`, `PLI_M04`, `PLI_M05`, `PLI_M12`, `PLI_M17`,
+   `PLI_M19`, `PLI_M21`, `PLI_M23`, `PLI_M25`, `PLI_M72`, `PLII_M02`,
+   `PLII_M07`.
+5. Có manual smoke WebView2 và visual QA DOCX/PDF ở độ phân giải release.
+6. Worktree tích hợp sạch, không để dependency cache, output test hoặc file sinh
+   tạm lọt vào commit; mọi generated artifact phải tái tạo được từ generator.
+
+Release chỉ được gọi là DONE khi tất cả gate ở cuối chương này PASS. Không được
+đổi test để hợp thức hóa output thiếu dữ liệu.
+
+### Nguyên tắc chia việc cho subagent
+
+- Một **Lead/Integrator Agent** giữ worktree chính, lập baseline, giao việc,
+  review và merge. Lead không sửa cùng file khi subagent đang sở hữu file đó.
+- Mỗi subagent làm trong một Git worktree và một branch riêng; không cho nhiều
+  agent dùng chung thư mục làm việc.
+- Chia theo quyền sở hữu file. Nếu hai nhiệm vụ cùng sửa `app_web/ui/app.js` hoặc
+  `tools/build_form_maps.py`, gộp vào một agent hoặc chạy theo wave tuần tự.
+- Subagent phải đọc `PLAN.md`, `git status --short`, test liên quan và source
+  production trước khi sửa. Không reset/revert thay đổi của người khác.
+- Mỗi branch có commit nhỏ, message rõ, kèm báo cáo test. Không merge branch có
+  file untracked không giải thích được.
+- File generated dùng chung như `app/data/form_maps.json`, `form_maps.js` và
+  nhiều `blocks/*.json` chỉ được regenerate **một lần trong worktree tích hợp**
+  sau khi merge source/spec. Subagent chỉ commit generated file thuộc đúng mẫu
+  mình sở hữu khi Lead xác nhận không gây diff ngoài phạm vi.
+- Không chạy song song các agent có quan hệ phụ thuộc. Chỉ các task ghi file
+  tách biệt mới được parallel.
+
+### Chuẩn bị baseline trước khi tạo worktree
+
+Worktree hiện tại có nhiều file modified/untracked. Không tạo worktree từ `HEAD`
+cũ vì subagent sẽ không nhìn thấy implementation mới. Lead phải review danh sách,
+loại cache/output khỏi phạm vi, rồi tạo một baseline commit có thể quay lại.
+
+PowerShell tham khảo, chạy tại repo chính:
+
+```powershell
+git status --short
+git diff --check
+git add -A
+git status --short
+git commit -m "chore: checkpoint editable grid and PLI_M02 pilot"
+```
+
+Chỉ `git add -A` sau khi Lead xác nhận các file xóa/untracked đều có chủ đích.
+Không commit `.webview_deps/`, `__pycache__/`, hồ sơ sinh thử hoặc output test;
+bổ sung `.gitignore` trước nếu cần. Baseline phải chạy lại được các test hiện có.
+
+Tạo thư mục worktree nằm cạnh repo, không nằm bên trong repo:
+
+```powershell
+$Repo = (Resolve-Path '.').Path
+$WtRoot = Join-Path (Split-Path $Repo -Parent) 'dangky_kinhdoanh-worktrees'
+New-Item -ItemType Directory -Force -Path $WtRoot | Out-Null
+
+git worktree add -b agent/docx-plii-m01 "$WtRoot\docx-plii-m01" HEAD
+git worktree add -b agent/form-flow-state "$WtRoot\form-flow-state" HEAD
+git worktree add -b agent/qa-contract "$WtRoot\qa-contract" HEAD
+```
+
+Sau Wave 1 được merge và có baseline mới, tạo worktree rollout từ commit mới,
+không tạo trước từ baseline cũ:
+
+```powershell
+git worktree add -b agent/industry-formation "$WtRoot\industry-formation" HEAD
+git worktree add -b agent/industry-change "$WtRoot\industry-change" HEAD
+git worktree add -b agent/industry-household "$WtRoot\industry-household" HEAD
+```
+
+Mỗi coding agent phải được khởi chạy với `cwd` trỏ đúng worktree của mình. Khi
+branch đã merge, kiểm tra worktree sạch trước khi gỡ:
+
+```powershell
+git -C "$WtRoot\docx-plii-m01" status --short
+git worktree remove "$WtRoot\docx-plii-m01"
+git branch -d agent/docx-plii-m01
+git worktree prune
+```
+
+Không remove worktree còn thay đổi chưa commit hoặc chưa bàn giao.
+
+### Sơ đồ wave và phụ thuộc
+
+```text
+Baseline sạch
+   |
+   +-- Wave 1A: PLII_M01 DOCX ----------+
+   +-- Wave 1B: chọn mẫu + state --------+--> Integrate 1 + full regression
+   +-- Wave 1C: QA contract/read-only ---+
+                                             |
+                                             v
+                              Generator/spec contract ổn định
+                                             |
+   +-- Wave 2A: nhóm thành lập ----------+
+   +-- Wave 2B: nhóm thay đổi ------------+--> Regenerate tập trung + Integrate 2
+   +-- Wave 2C: nhóm hộ kinh doanh -------+
+                                             |
+                                             v
+                           Wave 3: E2E, visual QA, package/release
+```
+
+### Wave 1 — đóng lỗi nền và test xanh giả
+
+#### Agent 1A — `docx-plii-m01`
+
+Phạm vi sở hữu:
+
+- `tools/build_form_maps.py` phần spec `PLII_M01`.
+- `app/templates/PLII_M01.docx` và generated artifacts chỉ của `PLII_M01`.
+- `tools/test_acceptance_docx.py` và test DOCX liên quan.
+
+Nhiệm vụ:
+
+1. Thêm `stt_tag=True` cho bảng ngành `PLII_M01` và map
+   `la_nganh_chinh` vào cột ngành chính.
+2. Bảo đảm template hàng loop có `{_stt}`, `{ten_nganh}`, `{ma_nganh}`,
+   `{la_nganh_chinh}` và marker mở/đóng đúng.
+3. Sửa acceptance test: ba dòng phải có STT `1/2/3`, đúng một dấu `X`, đúng
+   mã/tên từng ô; không được assert hai cột này rỗng.
+4. Regenerate theo pipeline, xác nhận không còn loop tag trong XML và không làm
+   thay đổi mẫu khác ngoài dự kiến.
+
+Gate branch:
+
+- `python -X utf8 -m tools.test_acceptance_docx`
+- `python -X utf8 -m tools.audit_blocks_check`
+- `python -X utf8 -m tools.audit_engine_test`
+
+#### Agent 1B — `form-flow-state`
+
+Phạm vi sở hữu:
+
+- `app_web/ui/app.js`, DTO/API trả use-case metadata nếu cần.
+- Test riêng cho chọn mẫu, race và autosave.
+
+Nhiệm vụ:
+
+1. Giữ metadata từng form khi map `case.forms -> docs` thay vì chỉ giữ ID.
+2. Render form bắt buộc ở trạng thái checked + disabled; form tùy chọn mặc định
+   unchecked, trừ khi draft đã chọn.
+3. Khai metadata và UI cho nhóm `oneOf`; tối thiểu case
+   `chuyen_doi_hkd_sang_dn` chỉ cho chọn đúng một loại hình. Không suy đoán nhóm
+   từ tên mẫu trong renderer; nhóm phải nằm trong dữ liệu use-case/schema.
+4. Validation trước export: thiếu mẫu bắt buộc hoặc nhóm `oneOf` chưa/chọn quá
+   một phải blocking.
+5. Thêm request sequence/token cho `onCaseChange()`: kết quả async cũ không được
+   ghi vào state nếu user đã chuyển case.
+6. Autosave local thành công đặt `dirty=false`; autosave lỗi giữ dirty và báo lỗi.
+7. Draft restore giữ đúng lựa chọn bắt buộc/tùy chọn/oneOf và active form hợp lệ.
+
+Gate branch:
+
+- Test case có form bắt buộc + optional.
+- Test case bốn form `oneOf` không thể xuất cả bốn.
+- Test Promise case cũ resolve sau case mới không ghi đè `state.docs`.
+- Test autosave thành công/thất bại và cảnh báo đổi case.
+- Toàn bộ `test_dom.js`, `test_domain.js`, `test_grid.js` vẫn PASS.
+
+#### Agent 1C — `qa-contract` (không sửa production trùng Agent 1A/1B)
+
+Phạm vi sở hữu ban đầu: test/audit/docs độc lập. Agent này không sửa
+`app.js`, `render.js`, `form-domain.js`, `build_form_maps.py` hoặc template.
+
+Nhiệm vụ:
+
+1. Viết/siết contract test phát hiện STT/ngành chính rỗng trong DOCX.
+2. Thêm test xác nhận mọi `bat_buoc=false` không bị tick mặc định và các case
+   loại trừ nhau có metadata rõ.
+3. Lập inventory 13 mẫu thiếu `ds_nganh`, phân loại schema mong đợi:
+   đăng ký mới, thay đổi/bổ sung/xóa bỏ, hộ kinh doanh. Không tự động đồng bộ
+   các loop khác nghĩa với canonical `ds_nganh`.
+4. Báo cáo gap; chỉ commit test không xung đột. Test mới có thể đỏ trước khi
+   merge Agent 1A/1B nhưng phải xanh sau Integrate 1.
+
+### Integrate 1 — Lead Agent
+
+1. Fetch/review từng branch; kiểm tra `git diff --check` và phạm vi file.
+2. Merge/cherry-pick Agent 1A và 1B, giải quyết generated artifacts tại Lead.
+3. Merge test của 1C; không nới assertion để lấy màu xanh.
+4. Regenerate `form_maps`, templates/blocks theo pipeline một lần.
+5. Chạy full regression và tạo commit baseline `integration/wave-1`.
+6. Chỉ sau đó mới tạo worktree Wave 2 từ commit này.
+
+### Wave 2 — rollout bảng ngành nghề còn thiếu
+
+Trước khi chạy song song, Lead nên tách cấu hình bảng theo mẫu ra file spec riêng
+(ví dụ `tools/form_specs/industry/*.json` hoặc module nhỏ theo nhóm) để ba agent
+không cùng sửa một dictionary lớn trong `build_form_maps.py`. Generator trung tâm
+đọc các spec và Lead là nơi duy nhất regenerate toàn bộ output dùng chung.
+
+#### Agent 2A — `industry-formation`
+
+- Mẫu: `PLI_M01`, `PLI_M03`, `PLI_M04`, `PLI_M05`.
+- Tạo spec bảng theo đúng template pháp lý của từng mẫu.
+- Dùng canonical `ds_nganh` khi dữ liệu có cùng ý nghĩa đăng ký ngành hiện tại.
+- Mỗi mẫu có fixture + structural DOCX test riêng.
+
+#### Agent 2B — `industry-change`
+
+- Mẫu: `PLI_M12`, `PLI_M17`, `PLI_M19`, `PLI_M21`, `PLI_M23`, `PLI_M25`,
+  `PLI_M72`.
+- Trước khi map, phân biệt rõ danh sách hiện tại với `nganh_bo_sung`,
+  `nganh_xoa_bo`, `nganh_truoc_thay_doi`; không gộp chỉ vì cùng có mã ngành.
+- Nếu nghiệp vụ chưa đủ căn cứ, ghi gap và để mẫu đó blocked thay vì tự suy diễn.
+- Mỗi semantic loop có row contract, validation và test export độc lập.
+
+#### Agent 2C — `industry-household`
+
+- Mẫu: `PLII_M02`, `PLII_M07`.
+- Kiểm tra yêu cầu ngành chính của từng mẫu trước khi bật `requirePrimary`.
+- Dùng VSIC lookup chung nhưng metadata loop theo đúng nghiệp vụ hộ kinh doanh.
+- Thêm test draft, shared data (chỉ khi canonical semantics trùng) và DOCX.
+
+Quy tắc Wave 2:
+
+- Subagent commit source spec, fixture và test của nhóm mình.
+- Không commit global regenerated `form_maps.json/js` nếu thay đổi mẫu ngoài nhóm.
+- Lead merge cả ba spec, regenerate một lần, review diff theo danh sách allowlist.
+- Mỗi mẫu phải có test production block + DOCX structure; không chỉ test mock.
+
+### Wave 3 — hardening, visual QA và release desktop
+
+#### Agent 3A — E2E WebView2
+
+- Chạy app thật, không dùng `?mock=1`.
+- Test 1280×800 và 1366×768: tab, scroll, focus lỗi, popup VSIC, bảng rộng,
+  thêm/xóa/reorder/duplicate, draft/reload và export.
+- Chụp ảnh các màn hình trọng yếu, ghi pass/fail theo case và mẫu.
+
+#### Agent 3B — DOCX/PDF visual QA
+
+- Dùng LibreOffice/Word render DOCX đại diện thành PDF/PNG.
+- Kiểm tra header, border, row height, wrap tiếng Việt, dấu `X`, page break,
+  clipping và 1/3/100 dòng.
+- Ít nhất: `PLI_M02`, `PLI_M03`, `PLI_M06`, `PLII_M01`, một mẫu thay đổi và
+  một mẫu hộ kinh doanh.
+
+#### Agent 3C — packaging/release hygiene
+
+- Xác minh chạy bằng `.exe` local, không cần server Internet; WebView2 runtime
+  và asset local được đóng gói đúng.
+- Test đường dẫn có dấu/khoảng trắng, máy không có Python và hồ sơ export lớn.
+- Không đóng gói `.webview_deps` hoặc output test theo cách làm repo phình; dùng
+  dependency/build pipeline rõ ràng.
+- Tạo release checklist, version và hướng dẫn backup/restore draft.
+
+### Bộ lệnh regression bắt buộc tại worktree tích hợp
+
+```powershell
+node app_web/test_dom.js
+node app_web/test_domain.js
+node app_web/test_grid.js
+node app_web/test_loop_prod.js
+node app_web/test_acceptance.js
+python -X utf8 -m tools.smoke_web_assets
+python -X utf8 -m tools.audit_blocks_check
+python -X utf8 -m tools.audit_content_check
+python -X utf8 -m tools.audit_engine_test
+python -X utf8 -m tools.test_pli_m02_industry
+python -X utf8 -m tools.test_acceptance_docx
+python -X utf8 -m compileall -q app_web tools
+```
+
+Thêm test mới vào suite/gate tương ứng. Một test bị skip vì thiếu browser,
+LibreOffice, Tcl/Tk hoặc WebView2 không được báo là PASS; phải ghi `NOT RUN`, lý
+do và owner chạy bù trên môi trường release.
+
+### Release gates cuối cùng
+
+1. Không còn test xanh giả: `PLII_M01` có STT và đúng một dấu `X` trong DOCX.
+2. 9 loop cũ và mọi loop mới có header/body cùng grid, mapping đúng cột.
+3. 13 mẫu rollout có production block, template loop và DOCX test tương ứng;
+   mẫu bị blocked nghiệp vụ phải được nêu rõ, không tính DONE.
+4. Mẫu bắt buộc không thể bỏ; optional không tự tick; `oneOf` chọn đúng một.
+5. Đổi case nhanh, restore draft và autosave vượt qua race/reload tests.
+6. VSIC, duplicate, ngành chính, stable row id và validation navigation PASS.
+7. Full regression không lỗi; repo/worktree tích hợp sạch sau commit.
+8. Manual WebView2 và visual DOCX QA có bằng chứng, không còn clipping/vỡ bảng.
+9. Bản `.exe` chạy local trên máy test sạch và xuất hồ sơ mở được bằng Word.
+
+## Prompt tổng để Lead Agent implement kế hoạch bằng subagent/worktree
+
+```text
+Bạn là Lead/Integrator Coding Agent của repo Windows:
+C:\Users\Tuyen PC\orca\dangky_kinhdoanh
+
+MỤC TIÊU
+Hoàn thiện toàn bộ phần “Kế hoạch hoàn thiện sau audit độc lập” trong PLAN.md.
+Không chỉ làm test xanh; output UI/DOCX production phải đúng nghiệp vụ và đúng
+release gates. Hãy dùng subagent chạy song song trong Git worktree riêng để rút
+ngắn tiến độ, nhưng không cho hai agent sửa cùng file trong cùng wave.
+
+BẮT BUỘC TRƯỚC KHI CODE
+1. Đọc toàn bộ PLAN.md và AGENTS.md nếu có.
+2. Kiểm tra git status/diff. Repo hiện có thể đang dirty: không reset/revert/xóa
+   thay đổi của người dùng. Review và tạo baseline commit sạch trước khi tạo
+   worktree; không tạo worktree từ HEAD cũ làm mất implementation hiện tại.
+3. Không commit .webview_deps, __pycache__, generated_ho_so test hoặc cache.
+4. Chạy bộ regression hiện tại để ghi baseline pass/fail.
+5. Lập plan có owner, branch, worktree, file ownership, dependency và gate.
+
+TỔ CHỨC AGENT
+- Lead giữ worktree tích hợp, chỉ review/merge/regenerate/test khi subagent chạy.
+- Wave 1 chạy song song tối đa 3 subagent:
+  A. docx-plii-m01: sửa STT + la_nganh_chinh và test DOCX PLII_M01.
+  B. form-flow-state: bat_buoc/optional/oneOf, async case token, autosave dirty.
+  C. qa-contract: test độc lập + inventory 13 mẫu, không sửa production trùng A/B.
+- Merge Wave 1, regenerate tập trung và full regression.
+- Sau Wave 1, tách industry specs theo file/nhóm nếu cần, rồi chạy Wave 2:
+  D. industry-formation: PLI_M01/M03/M04/M05.
+  E. industry-change: PLI_M12/M17/M19/M21/M23/M25/M72; không gộp loop khác nghĩa.
+  F. industry-household: PLII_M02/PLII_M07.
+- Lead merge spec, regenerate global artifacts đúng một lần và chạy full test.
+- Wave 3 giao E2E WebView2, visual DOCX/PDF và packaging cho các agent tách biệt
+  nếu môi trường có đủ runtime.
+
+QUY TẮC THỰC THI
+- Mỗi agent có branch agent/<task> và worktree riêng nằm ngoài repo chính.
+- Gửi cho từng agent: mục tiêu, file được sở hữu, file cấm sửa, test gate và format
+  báo cáo. Agent phải commit trước khi bàn giao hash cho Lead.
+- Không chạy parallel task cùng sửa app_web/ui/app.js, tools/build_form_maps.py,
+  form_maps.json/js hoặc cùng template. Nếu ownership chồng nhau, chạy tuần tự.
+- Generated artifacts toàn cục do Lead tạo sau merge source/spec.
+- Không sửa test để chấp nhận dữ liệu thiếu. Đặc biệt PLII_M01 phải assert STT
+  1/2/3 và dấu X đúng cột.
+- Không suy diễn nghiệp vụ giữa ds_nganh và nganh_bo_sung/nganh_xoa_bo/
+  nganh_truoc_thay_doi. Nếu thiếu căn cứ, đánh dấu blocked kèm bằng chứng.
+- Dùng UTF-8; giữ canonical keys và migration tương thích draft cũ.
+- Sau mỗi merge: git diff --check, test liên quan, rồi full regression theo PLAN.
+
+YÊU CẦU CHẤT LƯỢNG
+- Test production blocks/templates, không chỉ mock hoặc helper mô phỏng.
+- Có test failure trước fix cho các bug audit nếu khả thi.
+- DOCX test phải kiểm tra từng cell, số dòng, STT, dấu X và leftover tokens.
+- Browser/LibreOffice test không chạy được phải ghi NOT RUN, không gọi PASS.
+- Đảm bảo add/delete/clear/reorder/duplicate áp dụng generic cho mọi editable-grid.
+- Mẫu bắt buộc/optional/oneOf phải đúng cả UI, draft, validation và export.
+- Race case load và autosave phải có deterministic test.
+
+BÁO CÁO SAU MỖI WAVE
+1. Agent/branch/worktree và commit hash.
+2. File đã sửa, contract/migration thay đổi.
+3. Test command + kết quả PASS/FAIL/NOT RUN.
+4. Generated diff ngoài dự kiến, conflict và cách giải quyết.
+5. Gap nghiệp vụ hoặc rủi ro còn lại.
+
+ĐIỀU KIỆN DỪNG
+Chỉ báo DONE khi toàn bộ release gates trong PLAN.md đạt. Nếu còn mẫu chưa rollout,
+PLII_M01 thiếu STT/X, optional/oneOf sai, visual QA chưa chạy hoặc .exe chưa smoke
+trên máy sạch, hãy báo PARTIAL/NOT RUN tương ứng và tiếp tục phần còn an toàn.
+Không tự ý reset repo, xóa worktree chưa sạch, hay che lỗi bằng cách nới test.
+```
+
 ## Prompt triển khai cho agent lead
 
 ```text

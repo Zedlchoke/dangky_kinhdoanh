@@ -1,8 +1,8 @@
 {
   "form_id": "PLII_M02",
   "group": "household",
-  "note": "Giay de nghi dang ky thay doi noi dung DK ho kinh doanh. Luoi nganh mat khi convert: STT / Ten nganh / Ma nganh8 (so chu thich) / Nganh, nghe KD chinh9 + hang trang; muc sau la '4. Von kinh doanh'.",
-  "gap_nghiepvu": "Template co cot 'Ngành, nghề kinh doanh chính' (chu thich 9: danh dau X chon nganh chinh) -> da map {la_nganh_chinh}. Nguong bat requirePrimary cho PLII_M02/M07 de Lead quyet (open question #4 wave1_contract_inventory).",
+  "note": "Giay de nghi dang ky thay doi noi dung DK ho kinh doanh. Luoi nganh mat khi convert: STT / Ten nganh / Ma nganh8 (so chu thich) / Nganh, nghe KD chinh9 + hang trang; muc sau la '4. Von kinh doanh'. DA XAC MINH bang python-docx tren nguon 06_ho_kinh_doanh_va_chuyen_doi/01_mau_ho_kinh_doanh/PL2_Mau_02_*.docx: o header muc C.3 van ban nguyen goc la 'Ngành, nghề kinh doanh chính9' va chu thich cuoi van ban: '9 Đánh dấu X để chọn một trong các ngành, nghề đã kê khai làm ngành, nghề kinh doanh chính.' -> cot nganh chinh CO THAT, giu tag {la_nganh_chinh}. Lead da chot giu requirePrimary=true toan cuc (ca 13 template deu co cot nganh chinh).",
+  "gap_nghiepvu": null,
   "tables": [
     {
       "spec": {

@@ -946,3 +946,476 @@ BÁO CÁO CUỐI
 - Các mẫu còn lại chưa rollout.
 - Rủi ro/migration còn lại.
 ```
+
+---
+
+## Chương trình hoàn thiện toàn bộ bảng trong 87 biểu mẫu
+
+> Phần này mở rộng và **thay thế phạm vi rollout bảng hẹp trước đây**. Mục tiêu
+> không còn là chỉ hoàn thiện `ds_nganh`, mà là phát hiện, dựng lại, nhập liệu,
+> kiểm tra và xuất DOCX đúng cho **mọi vùng có bản chất là bảng** trong toàn bộ
+> 87 biểu mẫu. Không được báo DONE chỉ vì các bảng đã biết trước đã xanh.
+
+### Định nghĩa DONE cho phạm vi bảng
+
+Một biểu mẫu chỉ được đánh dấu `TABLE_COMPLETE` khi:
+
+1. Tất cả bảng trong bản mẫu pháp lý đã được ghi vào inventory có bằng chứng
+   nguồn, kể cả bảng bị converter làm mất lưới và chỉ còn paragraph nối tiếp.
+2. Bảng nhiều dòng dùng `editable-grid`; bảng có dòng cố định dùng
+   `fixed-matrix`; bảng chỉ hiển thị kết quả dùng `output-table`. Không biến tất
+   cả thành loop một cách máy móc.
+3. Mọi cột/ô nhập có canonical key hoặc lý do `outputOnly`; không còn cột pháp
+   lý bị bỏ trống do chưa map.
+4. UI giữ đúng hàng/cột, border, colspan/rowspan, STT, loại input, đơn vị và
+   computed totals; thao tác bàn phím/focus/error hoạt động.
+5. Draft, migration, đồng bộ liên mẫu và export giữ đúng số dòng, thứ tự và
+   semantic data.
+6. DOCX structural test kiểm tra từng cell, số hàng, tổng, dấu `X` và không còn
+   token; visual QA xác nhận không vỡ bảng/ngắt trang/clipping.
+7. Mỗi một trong 87 mẫu có trạng thái cuối cùng trong manifest:
+   `NO_TABLE`, `TABLE_COMPLETE`, hoặc `BLOCKED_LEGAL_REVIEW`. Không có trạng
+   thái trống/`TODO`; mẫu blocked không được tính là DONE.
+
+### Bằng chứng baseline hiện tại
+
+Quét `app/data/blocks/*.json` tại thời điểm lập kế hoạch:
+
+- 87 file production blocks.
+- 3.913 paragraph blocks, 226 checkbox blocks.
+- Chỉ có 9 loop blocks thuộc 8 mẫu (`PLII_M01`, `PLI_M02`, `PLI_M06`–`M11`).
+- Có ít nhất 45 vùng bắt đầu bằng paragraph `STT` nhưng chưa phải bảng schema.
+- Điều này chứng minh các bảng mất lưới không giới hạn ở ngành nghề; test 9 loop
+  hiện tại không phải bằng chứng toàn bộ biểu mẫu đã có bảng.
+
+Số liệu 45 là detector ban đầu, không phải inventory cuối cùng. Một số bảng
+không có `STT` (nguồn vốn, bảng lựa chọn cố định, danh sách đơn vị trực thuộc)
+và một số header bị nối thành một paragraph. Phase T0 phải quét cả XML/DOCX,
+paragraph và nguồn mẫu pháp lý để không bỏ sót.
+
+### Taxonomy component bảng
+
+#### 1. `editable-grid` — danh sách số dòng thay đổi
+
+Dùng khi người dùng có thể thêm/xóa/sắp xếp dòng, ví dụ:
+
+- Ngành nghề.
+- Thành viên, cổ đông, chủ sở hữu hưởng lợi.
+- Thành viên hộ gia đình.
+- Người đại diện theo ủy quyền khi có nhiều người.
+- Chi nhánh, văn phòng đại diện, địa điểm kinh doanh được liệt kê.
+- Sản phẩm/tài liệu yêu cầu cung cấp.
+- Chi tiết “tài sản khác” nếu có nhiều tài sản.
+
+Phải dùng controller chung hiện có: add/delete/clear/reorder/duplicate, stable
+`_row_id`, confirm xóa, validation theo row ID và loại `_row_id` khỏi export.
+
+#### 2. `fixed-matrix` — bảng có tập dòng pháp lý cố định
+
+Dùng khi tên dòng do biểu mẫu quy định và người dùng chỉ điền giá trị:
+
+- Nguồn vốn điều lệ: vốn ngân sách nhà nước, vốn tư nhân, vốn nước ngoài,
+  loại nguồn vốn khác và tổng cộng theo đúng mẫu.
+- Tài sản góp vốn: Đồng Việt Nam, ngoại tệ, vàng, quyền sử dụng đất, quyền sở
+  hữu trí tuệ, tài sản khác và tổng số.
+- Cơ cấu loại cổ phần và cổ phần được quyền chào bán.
+- Các bảng chỉ tiêu đăng ký thuế đánh số cố định.
+
+Không cho người dùng xóa dòng pháp lý cố định. Có thể cho mở sub-grid chi tiết
+ở dòng “Tài sản khác”. Tổng và tỷ lệ phải tính từ numeric canonical values.
+
+#### 3. `nested-grid` — bảng nhiều tầng/cột nhóm
+
+Dùng cho bảng thành viên/cổ đông phức tạp có cá nhân/tổ chức, phần vốn/cổ phần,
+loại tài sản và người đại diện theo ủy quyền. Renderer/generator phải bảo toàn
+header nhiều hàng, `colspan`, `rowspan`; không làm phẳng khiến mất cột.
+
+#### 4. `output-table`
+
+Dùng cho bảng do cơ quan/engine tạo hoặc ô chỉ đọc. Vẫn phải giữ grid khi xuất,
+nhưng không tạo ô nhập nếu người dùng không phải chủ thể kê khai.
+
+### Manifest bắt buộc
+
+Tạo source-of-truth, khuyến nghị:
+
+```text
+app/data/table_specs/
+├── manifest.json
+├── industry/
+├── capital_assets/
+├── people_ownership/
+├── tax/
+├── branches_locations/
+└── administrative/
+```
+
+Mỗi entry của `manifest.json` tối thiểu:
+
+```json
+{
+  "form_id": "PLI_M02",
+  "section_id": "tai_san_gop_von",
+  "title": "Tài sản góp vốn",
+  "source_evidence": {
+    "template": "app/templates/PLI_M02.docx",
+    "heading": "8. Tài sản góp vốn",
+    "page_or_anchor": "paragraph:150"
+  },
+  "kind": "fixed-matrix",
+  "semantic_key": "co_cau_tai_san_gop_von",
+  "required_columns": ["loai_tai_san", "gia_tri_vnd", "ty_le"],
+  "status": "planned",
+  "owner": "capital-assets",
+  "tests": []
+}
+```
+
+Manifest phải được generator/audit đọc được; không chỉ là tài liệu mô tả. Audit
+phải fail nếu form có signature bảng nhưng chưa có entry, entry `planned` còn
+tồn tại lúc release, hoặc spec khai cột nhưng template/blocks/export thiếu cột.
+
+## Inventory nghiệp vụ ban đầu cần hoàn thiện
+
+Danh sách dưới đây là minimum bắt buộc từ dữ liệu hiện có. Phase T0 có quyền
+bổ sung thêm, không được xóa mục nếu chưa có bằng chứng mẫu đó thật sự không cần
+bảng.
+
+### A. Ngành nghề kinh doanh
+
+#### Đăng ký/ngành hiện tại
+
+- Đã có: `PLI_M02`, `PLII_M01` (vẫn phải test đầy đủ STT/ngành chính).
+- Cần dựng: `PLI_M01`, `PLI_M03`, `PLI_M04`, `PLI_M05`, `PLI_M17`,
+  `PLI_M19`, `PLI_M21`, `PLI_M23`, `PLI_M25`, `PLI_M72`, `PLII_M07`.
+- `PLI_M72` chứa nhiều phần theo loại hình doanh nghiệp; từng phần phải map đúng
+  bảng ngành tương ứng nhưng chỉ render phần được chọn, không nhân bản dữ liệu
+  thành nhiều nguồn chân lý.
+
+#### Thay đổi ngành
+
+- `PLI_M12`: ba bảng semantic riêng:
+  `nganh_bo_sung`, `nganh_xoa_bo`, `nganh_sua_chi_tiet`.
+- `PLII_M02`: tối thiểu các bảng ngành bổ sung, ngành bỏ, sửa ngành chính và
+  bảng ngành trong phần đăng ký lại/thông tin hiện tại theo đúng section được
+  người dùng chọn.
+- Không đồng bộ tự động giữa các loop khác nghĩa. VSIC lookup được dùng chung,
+  nhưng row contract/validation/export tách riêng.
+
+### B. Nguồn vốn, tài sản góp vốn và cổ phần
+
+#### Nguồn vốn
+
+Cần `fixed-matrix` tại:
+
+- `PLI_M02`, `PLI_M03`, `PLI_M04`, `PLI_M05` — nguồn vốn điều lệ.
+- `PLI_M12` — nguồn vốn điều lệ sau thay đổi.
+
+Tối thiểu map tên loại nguồn vốn, giá trị, tỷ lệ (nếu mẫu có), tổng cộng. Tổng
+nguồn vốn phải đối chiếu vốn điều lệ; chênh lệch là blocking hoặc warning theo
+contract nghiệp vụ được duyệt.
+
+#### Tài sản góp vốn
+
+Cần `fixed-matrix` tại:
+
+- `PLI_M01` — tài sản trong vốn đầu tư.
+- `PLI_M02` — tài sản trong vốn điều lệ.
+- `PLI_M12` — hai ngữ cảnh riêng: sau thay đổi vốn điều lệ và sau thay đổi vốn
+  đầu tư; không dùng chung data nếu hai section cùng xuất hiện.
+
+Các dòng pháp lý: Đồng Việt Nam, ngoại tệ tự do chuyển đổi, vàng, quyền sử dụng
+đất, quyền sở hữu trí tuệ, tài sản khác, tổng số. Các cột tối thiểu: giá trị VNĐ
+và tỷ lệ; ngoại tệ/tài sản khác phải có chi tiết theo yêu cầu mẫu. Validation:
+
+- Tổng giá trị tài sản = vốn đầu tư/vốn điều lệ liên quan.
+- Tổng tỷ lệ = 100% khi có kê khai.
+- Giá trị không âm; ngoại tệ có loại tiền; tài sản khác có mô tả.
+- Tổng là computed/outputOnly, không lưu hai nguồn số liệu mâu thuẫn.
+
+#### Cơ cấu cổ phần
+
+- `PLI_M04`: bảng loại cổ phần và bảng cổ phần được quyền chào bán.
+- `PLI_M12`: bảng loại cổ phần sau thay đổi.
+- `PLI_M72`: phần công ty cổ phần gồm mệnh giá, tổng số và các danh sách cổ
+  đông; phải kiểm tra có bảng loại cổ phần/cơ cấu cần dựng thêm từ mẫu gốc.
+
+Các bảng fixed rows giữ các loại cổ phần theo mẫu. Tính giá trị = số lượng ×
+mệnh giá nếu applicable, tổng số lượng/giá trị/tỷ lệ và đối chiếu vốn điều lệ.
+
+### C. Thành viên, cổ đông, vốn góp và chủ sở hữu hưởng lợi
+
+#### Các bảng hiện có nhưng phải audit lại đủ cột
+
+- `PLI_M06`: thành viên TNHH.
+- `PLI_M07`: cổ đông sáng lập.
+- `PLI_M08`: cổ đông là nhà đầu tư nước ngoài.
+- `PLI_M09`: thành viên hợp danh.
+- `PLI_M10`, `PLI_M11`: chủ sở hữu hưởng lợi.
+- `PLII_M01`: thành viên hộ gia đình.
+
+Không được coi là hoàn chỉnh chỉ vì loop tồn tại. Phải so với header mẫu gốc để
+bổ sung các cột đang bị đơn giản hóa, đặc biệt:
+
+- Thời hạn góp vốn.
+- Loại cổ phần, số lượng, giá trị và tỷ lệ.
+- Loại tài sản, số lượng, giá trị tài sản góp vốn.
+- Dữ liệu cá nhân/tổ chức khác nhau.
+- Người đại diện theo pháp luật/ủy quyền và tỷ lệ phần vốn được đại diện.
+- Chữ ký là `outputOnly`, không phải text input thông thường.
+
+`PLI_M09` hiện có dấu hiệu chứa nhiều phần danh sách nối tiếp từ quá trình tách
+nguồn; phải audit boundary/source trước khi sửa, tránh map nhầm bảng M06/M07/M08
+vào mẫu M09.
+
+#### Các bảng còn thiếu rõ ràng
+
+- `PLII_M02`: danh sách thành viên hộ gia đình sau thay đổi và bảng thành viên
+  trong phần thông tin đăng ký lại nếu mẫu yêu cầu.
+- `PLII_M07`: danh sách thành viên hộ gia đình.
+- `PLI_M72`: danh sách thành viên TNHH, cổ đông sáng lập, cổ đông nước ngoài và
+  thành viên hợp danh trong các section loại hình khác nhau.
+- `PLI_M12`: người đại diện theo ủy quyền sau thay đổi nếu section cho phép nhiều
+  người; audit xem cần editable/nested grid thay vì field đơn.
+
+### D. Bảng thông tin đăng ký thuế
+
+Các section `STT | Các chỉ tiêu thông tin đăng ký thuế` hiện đang là paragraph
+rời ở tối thiểu:
+
+- `PLI_M01`, `PLI_M02`, `PLI_M06`, `PLI_M08`, `PLI_M09`, `PLI_M12`,
+  `PLI_M17`, `PLI_M19`, `PLI_M23`, `PLI_M25`, `PLII_M02`.
+
+Đây chủ yếu là `fixed-matrix`/section-grid, không phải danh sách người dùng tự
+thêm dòng. Giữ mã chỉ tiêu (6.1, 6.2…), nhãn, ô nhập nhiều cột cũ/mới nếu mẫu
+có, checkbox và nhóm địa chỉ. Canonical key dùng chung giữa mẫu chỉ khi ý nghĩa
+giống hoàn toàn; không map chỉ dựa vào số thứ tự chỉ tiêu.
+
+### E. Chi nhánh, văn phòng đại diện và địa điểm kinh doanh
+
+Audit và dựng `editable-grid` cho các section có từ “liệt kê/các ... sau”:
+
+- `PLI_M54`: các chi nhánh/văn phòng đại diện/địa điểm cùng tạm ngừng hoặc tiếp
+  tục kinh doanh nếu section cho phép nhiều đơn vị.
+- `PLI_M63`: địa điểm kinh doanh trực thuộc chi nhánh.
+- `PLI_M66`: danh sách đơn vị và địa điểm trực thuộc đang làm thủ tục chấm dứt.
+- `PLI_M68`: các chi nhánh/văn phòng đại diện/địa điểm đang chấm dứt.
+- `PLI_M75`: các đơn vị/địa điểm trực thuộc cần khôi phục.
+
+Row contract tối thiểu tùy mẫu: loại đơn vị, tên, mã số/mã số thuế, địa chỉ,
+tình trạng pháp lý, ngày hiệu lực và ghi chú. Không ép các section khác nghiệp
+vụ dùng chung loop nếu việc đồng bộ có thể làm sai hồ sơ.
+
+### F. Sản phẩm/dịch vụ cung cấp thông tin
+
+- `PLI_M78`: bảng `STT | Tên sản phẩm | Số lượng sản phẩm`, gồm các dòng sản
+  phẩm quy định và “Sản phẩm khác”. Audit mẫu gốc để quyết định fixed rows hay
+  hybrid fixed + editable details; số lượng phải là integer không âm.
+
+### G. Các bảng hành chính/output-only và bảng không có STT
+
+Phase T0 phải quét thêm:
+
+- Header bị nối dạng `STTTên...` trong một paragraph.
+- Các đoạn “Danh sách…”, “Liệt kê…”, “Các … sau” không có STT riêng.
+- Bảng quyết định/thông báo do cơ quan đăng ký kinh doanh tạo.
+- Bảng có đường kẻ nhưng chỉ chứa output hoặc chữ ký.
+
+Nếu không cần nhập, khai `output-table`; không được bỏ grid khỏi DOCX chỉ vì UI
+không nhập liệu.
+
+## Kiến trúc generator và schema mới
+
+1. Tách table specs khỏi dictionary tập trung trong `build_form_maps.py` để các
+   nhóm có thể làm song song, ví dụ một JSON/module mỗi form hoặc mỗi domain.
+2. Generator đọc manifest/spec, tìm anchor theo section + heading + context;
+   không dùng mỗi regex `STT` vì một mẫu có nhiều bảng.
+3. Mỗi spec khai:
+   - `kind`, `loop/semanticKey`, `headers`, `columns`, `headerRows`.
+   - `fixedRows` hoặc `minRows/maxRows`.
+   - `stt`, `colspan/rowspan`, `inputType`, `required`, `outputOnly`.
+   - totals/formulas, duplicate keys, cross-field rules.
+   - source anchor và stop boundary để không xóa paragraph của bảng kế tiếp.
+4. Pipeline duy nhất:
+   source/spec → template tagged → `form_maps` → blocks → mock fixture → tests.
+   Không chỉnh generated JSON thủ công.
+5. Generator phải idempotent: chạy hai lần không nhân đôi bảng, không đổi file
+   ngoài allowlist và tạo cùng output byte/semantic-equivalent.
+6. Giữ backward-compatible canonical keys/draft migration; thay đổi loop name
+   phải có version + migration + test.
+
+## Kế hoạch thực hiện bằng worktree/subagent
+
+### Wave T0 — census toàn bộ 87 mẫu (song song, chỉ đọc production)
+
+- Agent T0-A: `PLI_M01–PLI_M12` — ngành, vốn, tài sản, cổ phần, danh sách.
+- Agent T0-B: `PLI_M13–PLI_M80` — chi nhánh/địa điểm, hành chính, sản phẩm và
+  các bảng bị nối header.
+- Agent T0-C: `PLII_M01–PLII_M28` — hộ kinh doanh, thành viên, ngành, thuế.
+
+Mỗi agent ghi một fragment manifest riêng để tránh conflict. Với mỗi form:
+
+- Đối chiếu blocks, tagged template, XML table/header và nguồn pháp lý.
+- Chụp/ghi bằng chứng heading + cột + loại bảng.
+- Đánh dấu `already_complete`, `missing_grid`, `partial_columns`, `output_only`
+  hoặc `no_table`.
+- Không sửa generator/template trong Wave T0.
+
+Lead merge fragments, audit đủ 87/87 mẫu và khóa `table-manifest-v1` trước khi
+coding rollout. Mọi mục mới phát hiện trở thành scope bắt buộc.
+
+### Wave T1 — nền component và generator (tuần tự theo dependency)
+
+- Agent T1-A: schema manifest/spec + audit detector + idempotency tests.
+- Agent T1-B: renderer `fixed-matrix`, `nested-grid`, `output-table`, formula và
+  accessibility; không hard-code form ID.
+- Agent T1-C: generator modular, anchor/boundary an toàn, tag totals/STT và
+  production block contract.
+- Agent T1-D: domain validation/totals/migration; chạy sau khi contract T1-A ổn.
+
+Integrate T1 rồi chạy full regression; chỉ sau đó mới tạo worktree rollout.
+
+### Wave T2 — rollout theo domain (song song qua spec file tách biệt)
+
+- Agent T2-A `industry-all`: toàn bộ bảng ngành hiện tại/bổ sung/xóa/sửa.
+- Agent T2-B `capital-assets`: nguồn vốn, tài sản góp vốn, loại cổ phần, cổ
+  phần chào bán và đối chiếu totals.
+- Agent T2-C `people-ownership`: thành viên, cổ đông, chủ sở hữu hưởng lợi,
+  người đại diện, thành viên hộ gia đình; audit/nâng cấp cả loop cũ.
+- Agent T2-D `tax-grids`: toàn bộ bảng chỉ tiêu đăng ký thuế.
+- Agent T2-E `branches-products-admin`: đơn vị trực thuộc, sản phẩm và bảng
+  hành chính/output-only.
+
+Subagent chỉ commit spec/source/test thuộc domain mình. Lead merge spec và là
+người duy nhất regenerate global `form_maps.json/js`, templates và blocks.
+
+### Wave T3 — integration theo batch
+
+Không merge một lần 87 mẫu. Chia batch:
+
+1. Thành lập doanh nghiệp: `PLI_M01–M11`.
+2. Thay đổi doanh nghiệp: `PLI_M12–M26`.
+3. Đơn vị trực thuộc, trạng thái và hành chính: các mẫu `PLI` còn lại.
+4. Hộ kinh doanh: `PLII_M01–M28`.
+
+Mỗi batch phải pass structural DOCX và visual sample trước batch kế tiếp. Nếu
+generated diff ngoài allowlist, dừng và sửa generator trước khi tiếp tục.
+
+### Wave T4 — E2E và visual release QA
+
+- Test UI thật cho mỗi loại component: editable, fixed, nested, output.
+- Test 0/1/min/max/100 rows, Unicode, text dài, tiền lớn, tỷ lệ thập phân.
+- Test draft/save/reload/reorder/export và đồng bộ liên mẫu.
+- Render DOCX → PDF/PNG bằng LibreOffice/Word; kiểm tra toàn bộ bảng ở ít nhất
+  một file mỗi domain và mọi mẫu có nested grid.
+- Máy release phải smoke `.exe` local, không có Python, đường dẫn có dấu/khoảng
+  trắng và WebView2 runtime theo chiến lược đóng gói.
+
+## Acceptance gates cho chương trình toàn bộ bảng
+
+1. Manifest có 87/87 form, không entry `planned/unknown`.
+2. Detector paragraph `STT`, `STTTên`, “Danh sách”, “Liệt kê”, “Các … sau”
+   không còn phát hiện vùng bảng chưa được classify.
+3. Mọi entry `TABLE_COMPLETE` có spec, production blocks và ít nhất một test.
+4. Không còn bảng pháp lý chỉ là chuỗi paragraph header/value rời nếu bảng đó
+   cần nhập hoặc cần giữ lưới khi xuất.
+5. Các bảng ngành, nguồn vốn, tài sản, cổ phần, thành viên/cổ đông, thuế,
+   chi nhánh/địa điểm và sản phẩm đều đạt contract ở trên.
+6. Loop cũ PLI_M06–M11 được audit đủ cột, không chỉ giữ trạng thái hiện tại.
+7. Totals tài sản/nguồn vốn/cổ phần đối chiếu đúng vốn liên quan; tỷ lệ đúng
+   policy và lỗi blocking trước export.
+8. DOCX không còn tag, không lệch cột/STT/dấu X, không mất rowspan/colspan.
+9. Full regression hiện có và test mới đều PASS; NOT RUN không tính PASS.
+10. Visual QA và `.exe` smoke có bằng chứng. Chỉ khi đó mới báo TABLES DONE.
+
+## Prompt implement toàn bộ phần cần kẻ bảng
+
+```text
+Bạn là Lead/Integrator Agent của repo:
+C:\Users\Tuyen PC\orca\dangky_kinhdoanh
+
+Hãy đọc toàn bộ PLAN.md, ưu tiên chương:
+“Chương trình hoàn thiện toàn bộ bảng trong 87 biểu mẫu”.
+
+MỤC TIÊU
+Dứt điểm mọi phần có bản chất là bảng trong toàn bộ 87 biểu mẫu: phát hiện đủ,
+phân loại đúng, dựng UI có lưới, nhập liệu, validation, draft, đồng bộ và xuất
+DOCX đúng. Không giới hạn ở ngành nghề hoặc 9 loop đang có. Chỉ báo DONE khi
+10 Acceptance Gates của chương này đều đạt.
+
+NGUYÊN TẮC AN TOÀN
+1. Kiểm tra git status/diff và tạo baseline sạch; không reset/revert thay đổi
+   của người dùng. Không commit cache/output test.
+2. Mỗi subagent dùng branch + Git worktree riêng ngoài repo chính.
+3. Không cho hai agent sửa cùng file. Trước rollout phải tách specs theo
+   form/domain; Lead là người duy nhất regenerate global artifacts.
+4. Không chỉnh generated JSON thủ công. Pipeline phải idempotent.
+5. Không gọi test mock là bằng chứng production; không nới test để hợp thức hóa
+   ô/cột rỗng.
+6. Không tự gộp loop khác nghĩa. Thiếu căn cứ pháp lý thì ghi
+   BLOCKED_LEGAL_REVIEW kèm bằng chứng, không suy diễn.
+
+WAVE T0 — CENSUS TRƯỚC KHI CODE
+Spawn tối đa 3 subagent song song:
+- T0-A audit PLI_M01–M12.
+- T0-B audit PLI_M13–M80.
+- T0-C audit PLII_M01–M28.
+
+Mỗi agent chỉ đọc production và ghi manifest fragment riêng. Phải xem blocks,
+DOCX/XML, form_maps và mẫu nguồn; nhận diện cả STT rời, header nối “STTTên…”,
+“Danh sách”, “Liệt kê”, “Các … sau” và bảng không có STT. Mỗi form bắt buộc có
+NO_TABLE/TABLE_COMPLETE/BLOCKED_LEGAL_REVIEW và evidence. Lead merge đủ 87/87,
+chạy detector và commit table-manifest-v1. Không bắt đầu rollout khi census chưa
+đủ.
+
+WAVE T1 — PLATFORM
+Thực hiện theo dependency trong PLAN:
+- schema/audit manifest;
+- renderer fixed-matrix/nested-grid/output-table;
+- modular generator + anchor/boundary + idempotency;
+- validation/totals/migration.
+Integrate và full regression trước Wave T2.
+
+WAVE T2 — DOMAIN ROLLOUT
+Spawn các agent có spec folder riêng:
+- industry-all;
+- capital-assets;
+- people-ownership;
+- tax-grids;
+- branches-products-admin.
+
+Phạm vi tối thiểu chính là inventory A–G trong PLAN. Đặc biệt phải làm:
+- PLI_M01/M02/M12 tài sản góp vốn;
+- PLI_M02/M03/M04/M05/M12 nguồn vốn;
+- PLI_M04/M12 cơ cấu cổ phần;
+- các bảng ngành hiện tại và thay đổi;
+- audit/nâng cấp đủ cột PLI_M06–M11;
+- bảng thuế ở mọi mẫu được liệt kê;
+- PLII_M02/M07 và PLI_M72 các danh sách thành viên/cổ đông;
+- các đơn vị trực thuộc PLI_M54/M63/M66/M68/M75;
+- sản phẩm PLI_M78.
+
+Lead merge source/spec, regenerate tập trung và review allowlist. Chia integration
+theo bốn batch trong PLAN; không merge 87 mẫu một lần.
+
+YÊU CẦU TEST MỖI BẢNG
+- Contract header/body/colspan/rowspan và đúng loại component.
+- Add/delete/reorder/duplicate cho editable; fixed rows không được xóa.
+- Input type, required/outputOnly, stable row ID và error navigation.
+- Formula/totals và cross-check vốn/tỷ lệ.
+- Draft round-trip và migration.
+- DOCX từng cell, STT, dấu X, totals, số hàng, leftover tokens.
+- Visual PDF/PNG cho bảng phức tạp; không chạy được phải báo NOT RUN.
+
+BÁO CÁO MỖI WAVE
+- Agent, worktree, branch, commit hash, ownership.
+- Inventory/spec/file thay đổi.
+- Test command và PASS/FAIL/NOT RUN.
+- Generated diff ngoài allowlist.
+- Mẫu BLOCKED_LEGAL_REVIEW và bằng chứng cần người dùng quyết định.
+- Tỷ lệ TABLE_COMPLETE trên 87 mẫu và số table sections hoàn tất/tổng số.
+
+Không báo DONE theo phần trăm ước lượng. Chỉ báo TABLES DONE khi manifest 87/87,
+không còn signature bảng chưa classify, mọi table entry có production test,
+full regression + visual QA + .exe smoke đạt đủ Acceptance Gates trong PLAN.
+```

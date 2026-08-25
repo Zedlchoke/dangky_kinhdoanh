@@ -624,7 +624,8 @@ def load_form_spec(form_id):
     path_used = None
     if FORM_SPECS_DIR.is_dir():
         for path in sorted(FORM_SPECS_DIR.glob("*/%s.json" % form_id)):
-            raw = json.loads(path.read_text(encoding="utf-8"))
+            # utf-8-sig: chịu được file lưu kèm BOM (notepad/PowerShell)
+            raw = json.loads(path.read_text(encoding="utf-8-sig"))
             path_used = path
             break
     result = None

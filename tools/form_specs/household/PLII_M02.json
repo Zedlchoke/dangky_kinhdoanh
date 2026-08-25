@@ -1,0 +1,30 @@
+{
+  "form_id": "PLII_M02",
+  "group": "household",
+  "note": "Giay de nghi dang ky thay doi noi dung DK ho kinh doanh. Luoi nganh mat khi convert: STT / Ten nganh / Ma nganh8 (so chu thich) / Nganh, nghe KD chinh9 + hang trang; muc sau la '4. Von kinh doanh'.",
+  "gap_nghiepvu": "Template co cot 'Ngành, nghề kinh doanh chính' (chu thich 9: danh dau X chon nganh chinh) -> da map {la_nganh_chinh}. Nguong bat requirePrimary cho PLII_M02/M07 de Lead quyet (open question #4 wave1_contract_inventory).",
+  "tables": [
+    {
+      "spec": {
+        "id": "ds_nganh",
+        "detect": ["stt", "ten nganh", "ma nganh"],
+        "stt_tag": true,
+        "cols": [
+          ["^stt$", null],
+          ["ten nganh", "ten_nganh"],
+          ["ma nganh", "ma_nganh"],
+          ["^nganh chinh$|nganh, nghe kinh doanh chinh", "la_nganh_chinh"]
+        ],
+        "loop": "ds_nganh",
+        "fields": ["ten_nganh", "ma_nganh", "la_nganh_chinh"]
+      },
+      "pos": "after",
+      "anchor": "^3\\. nganh, nghe kinh doanh",
+      "no_default_drops": true,
+      "drop_until": "^4\\. von kinh doanh",
+      "drop": ["^stt$", "^ten nganh\\b", "^ma nganh\\d*$",
+               "^nganh, nghe kinh doanh chinh"],
+      "headers": ["STT", "Tên ngành", "Mã ngành", "Ngành, nghề kinh doanh chính"]
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "form_id": "PLI_M21",
+  "group": "change",
+  "note": "Giay de nghi cap doi sang GCN DKDN (voi DN da cap GCN DKHD truoc 01/7/2025). Luoi nganh nam ngay sau doan 'De nghi duoc cap doi...' - template KHONG co tieu de muc rieng cho bang nganh; muc sau la doan cam ket 'Doanh nghiep cam ket hoan toan chiu trach nhiem...'.",
+  "gap_nghiepvu": "Open question #2 wave1_contract_inventory: dung canonical ds_nganh hay schema rieng vi 'nganh duoc ghi lai theo nganh kinh te cap 4' - can Lead/2B doi chieu huong dan dien TT 68 truoc khi chot. Anchor muon doan 'De nghi được cấp đổi...' vi template khong co tieu de muc cho bang nganh; neu nguon goc thay doi can review lai anchor.",
+  "tables": [
+    {
+      "spec": {
+        "id": "ds_nganh",
+        "detect": ["stt", "ten nganh", "ma nganh"],
+        "stt_tag": true,
+        "cols": [
+          ["^stt$", null],
+          ["ten nganh", "ten_nganh"],
+          ["ma nganh", "ma_nganh"],
+          ["^nganh chinh$|nganh, nghe kinh doanh chinh", "la_nganh_chinh"]
+        ],
+        "loop": "ds_nganh",
+        "fields": ["ten_nganh", "ma_nganh", "la_nganh_chinh"]
+      },
+      "pos": "after",
+      "anchor": "de nghi duoc cap doi sang giay chung nhan dang ky doanh nghiep",
+      "no_default_drops": true,
+      "drop_until": "doanh nghiep cam ket hoan toan chiu trach nhiem",
+      "drop": ["^stt$", "^ten nganh\\b", "^ma nganh\\d*$",
+               "^nganh, nghe kinh doanh chinh"],
+      "headers": ["STT", "Tên ngành", "Mã ngành", "Ngành, nghề kinh doanh chính"]
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "form_id": "PLII_M01",
+  "group": "core",
+  "note": "Chuyen tu khai bao inline REBUILD_TABLES['PLII_M01'] nguyen van (Wave2 spec-split). Hai bang: ds_nganh (4 cot) va ds_tv_ho_gia_dinh (co trim/keep_from cat giu chu ky cam ket).",
+  "gap_nghiepvu": null,
+  "tables": [
+    {
+      "spec": {
+        "id": "ds_nganh_nghe",
+        "detect": ["stt", "ten nganh", "ma nganh"],
+        "stt_tag": true,
+        "cols": [
+          ["^stt$", null],
+          ["ten nganh", "ten_nganh"],
+          ["ma nganh", "ma_nganh"],
+          ["^nganh chinh$|nganh, nghe kinh doanh chinh", "la_nganh_chinh"]
+        ],
+        "loop": "ds_nganh",
+        "fields": ["ten_nganh", "ma_nganh", "la_nganh_chinh"]
+      },
+      "pos": "after",
+      "anchor": "^3\\. nganh, nghe kinh doanh",
+      "drop": ["^stt$", "^ten nganh$", "^ma nganh\\d*$",
+               "^nganh, nghe kinh doanh chinh\\d*$"],
+      "headers": ["STT", "Tên ngành", "Mã ngành", "Ngành, nghề kinh doanh chính"]
+    },
+    {
+      "spec": {
+        "id": "ds_tv_ho_gia_dinh",
+        "detect": ["stt", "ho ten", "chu ky", "quoc tich"],
+        "stt_tag": false,
+        "cols": [
+          ["^stt$", null],
+          ["ho ten", "ho_ten"],
+          ["sinh|nam sinh", "ngay_sinh"],
+          ["dinh danh|cccd", "so_cccd"],
+          ["gioi tinh", "gioi_tinh"],
+          ["quoc tich", "quoc_tich"],
+          ["dan toc", "dan_toc"],
+          ["thuong tru", "noi_thuong_tru"],
+          ["noi o hien tai|hien tai", "noi_o_hien_tai"],
+          ["ky ten|chu ky", "chu_ky"]
+        ],
+        "loop": "ds_tv_ho_gia_dinh",
+        "fields": ["ho_ten", "ngay_sinh", "so_cccd", "gioi_tinh", "quoc_tich",
+                   "dan_toc", "noi_thuong_tru", "noi_o_hien_tai"]
+      },
+      "pos": "after",
+      "anchor": "^7\\. thong tin ve cac thanh vien ho gia dinh",
+      "trim": ["^sttho ten"],
+      "keep_from": "Tôi xin cam kết",
+      "headers": ["STT", "Họ tên", "Ngày, tháng, năm sinh", "Số định danh cá nhân",
+                  "Giới tính", "Quốc tịch", "Dân tộc", "Nơi thường trú",
+                  "Nơi ở hiện tại", "Chữ ký"]
+    }
+  ]
+}

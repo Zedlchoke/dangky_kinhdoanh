@@ -1,0 +1,30 @@
+{
+  "form_id": "PLI_M19",
+  "group": "change",
+  "note": "Giay de nghi dang ky thay doi noi dung DK hoat dong chi nhanh/VPDD/dia diem. Luoi nganh trong trang 'DANG KY THAY DOI NGANH, NGHE KINH DOANH/NOI DUNG HOAT DONG': anchor la doan 'Nganh, nghe kinh doanh sau khi thay doi...'; muc sau la 'Noi dung hoat dong sau khi thay doi'.",
+  "gap_nghiepvu": "Day la nganh cua chi nhanh/VPDD SAU khi thay doi -> dung canonical ds_nganh. Neu Wave 2B can phan biet 'nganh_truoc_thay_doi' (open question #3 wave1_contract_inventory: nguon du lieu chua dinh nghia) thi them entry/spec rieng, KHONG map de vao ds_nganh.",
+  "tables": [
+    {
+      "spec": {
+        "id": "ds_nganh",
+        "detect": ["stt", "ten nganh", "ma nganh"],
+        "stt_tag": true,
+        "cols": [
+          ["^stt$", null],
+          ["ten nganh", "ten_nganh"],
+          ["ma nganh", "ma_nganh"],
+          ["^nganh chinh$|nganh, nghe kinh doanh chinh", "la_nganh_chinh"]
+        ],
+        "loop": "ds_nganh",
+        "fields": ["ten_nganh", "ma_nganh", "la_nganh_chinh"]
+      },
+      "pos": "after",
+      "anchor": "^nganh, nghe kinh doanh sau khi thay doi",
+      "no_default_drops": true,
+      "drop_until": "^noi dung hoat dong sau khi thay doi",
+      "drop": ["^stt$", "^ten nganh\\b", "^ma nganh\\d*$",
+               "^nganh, nghe kinh doanh chinh"],
+      "headers": ["STT", "Tên ngành", "Mã ngành", "Ngành, nghề kinh doanh chính"]
+    }
+  ]
+}

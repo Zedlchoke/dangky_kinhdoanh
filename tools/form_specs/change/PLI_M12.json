@@ -1,0 +1,77 @@
+{
+  "form_id": "PLI_M12",
+  "group": "change",
+  "note": "Thong bao thay doi nganh, nghe kinh doanh - template co BA luoi nganh ke nhau (muc 1 bo sung / muc 2 bo khoi danh sach / muc 3 sua doi chi tiet), deu mat khi convert. Theo wave1_contract_inventory muc 2: loop khac nghia KHONG duoc gop vao ds_nganh -> moi luoi mot loop rieng.",
+  "gap_nghiepvu": "(1) Ten loop nganh_bo_sung/nganh_xoa_bo/nganh_sua_doi_chi_tiet theo dinh huong PLAN.md (nganh_bo_sung, nganh_xoa_bo); grid 'sua doi chi tiet' chua co ten trong PLAN.md - agent 2B chot ten + row contract/validation rieng cho tung loop. (2) PLAN.md dua lieu loop 'nganh_truoc_thay_doi' nhung template M12 KHONG co luoi nay - khong tao spec, can Lead quyet nguon du lieu neu van can. (3) Grid muc 2 (bo nganh) khong co cot nganh chinh tren template - cot thu 4 la 'Ghi chu' -> da map {ghi_chu}; requirePrimary khong ap dung cho grid nay.",
+  "tables": [
+    {
+      "spec": {
+        "id": "nganh_bo_sung",
+        "detect": ["stt", "ten nganh, nghe kinh doanh duoc bo sung", "ma nganh"],
+        "stt_tag": true,
+        "cols": [
+          ["^stt$", null],
+          ["ten nganh", "ten_nganh"],
+          ["^ma nganh", "ma_nganh"],
+          ["^nganh chinh$|nganh, nghe kinh doanh chinh", "la_nganh_chinh"]
+        ],
+        "loop": "nganh_bo_sung",
+        "fields": ["ten_nganh", "ma_nganh", "la_nganh_chinh"]
+      },
+      "pos": "after",
+      "anchor": "^1\\. bo sung nganh",
+      "no_default_drops": true,
+      "drop_until": "^2\\. bo nganh",
+      "drop": ["^stt$", "^ten nganh\\b", "^ma nganh\\d*$",
+               "^nganh, nghe kinh doanh chinh"],
+      "headers": ["STT", "Tên ngành, nghề kinh doanh được bổ sung", "Mã ngành",
+                  "Ngành, nghề kinh doanh chính"]
+    },
+    {
+      "spec": {
+        "id": "nganh_xoa_bo",
+        "detect": ["stt", "ten nganh, nghe kinh doanh duoc bo khoi danh sach da dang ky",
+                   "ma nganh"],
+        "stt_tag": true,
+        "cols": [
+          ["^stt$", null],
+          ["ten nganh", "ten_nganh"],
+          ["^ma nganh", "ma_nganh"],
+          ["^ghi chu$", "ghi_chu"]
+        ],
+        "loop": "nganh_xoa_bo",
+        "fields": ["ten_nganh", "ma_nganh", "ghi_chu"]
+      },
+      "pos": "after",
+      "anchor": "^2\\. bo nganh",
+      "no_default_drops": true,
+      "drop_until": "^3\\. sua doi chi tiet",
+      "drop": ["^stt$", "^ten nganh\\b", "^ma nganh\\d*$", "^ghi chu$"],
+      "headers": ["STT", "Tên ngành, nghề kinh doanh được bỏ khỏi danh sách đã đăng ký",
+                  "Mã ngành", "Ghi chú"]
+    },
+    {
+      "spec": {
+        "id": "nganh_sua_doi_chi_tiet",
+        "detect": ["stt", "ten nganh, nghe kinh doanh duoc sua doi chi tiet", "ma nganh"],
+        "stt_tag": true,
+        "cols": [
+          ["^stt$", null],
+          ["ten nganh", "ten_nganh"],
+          ["^ma nganh", "ma_nganh"],
+          ["^nganh chinh$|nganh, nghe kinh doanh chinh", "la_nganh_chinh"]
+        ],
+        "loop": "nganh_sua_doi_chi_tiet",
+        "fields": ["ten_nganh", "ma_nganh", "la_nganh_chinh"]
+      },
+      "pos": "after",
+      "anchor": "^3\\. sua doi chi tiet",
+      "no_default_drops": true,
+      "drop_until": "doanh nghiep cam ket dap ung dieu kien tiep can thi truong",
+      "drop": ["^stt$", "^ten nganh\\b", "^ma nganh\\d*$",
+               "^nganh, nghe kinh doanh chinh"],
+      "headers": ["STT", "Tên ngành, nghề kinh doanh được sửa đổi chi tiết", "Mã ngành",
+                  "Ngành, nghề kinh doanh chính"]
+    }
+  ]
+}

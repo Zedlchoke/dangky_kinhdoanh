@@ -1,0 +1,59 @@
+{
+  "form_id": "PLI_M04",
+  "group": "formation",
+  "note": "Mau thanh lap (TNHH 2TV+ / CTCP). Luoi nganh mat khi convert, cau truc giong PLI_M01.",
+  "gap_nghiepvu": "Template con lai 4 cot (khong co 'Chi tiet hoat dong') -> spec 4 cot khop template that. Nguon that cua mau nay trong repo la file chuyen doi 06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn/DN_PL1_Mau_04_*.docx (form_maps.file xac nhan) - anchor/drop da kiem ca tren nguon va tren template.  Chua bat requirePrimary cho la_nganh_chinh - agent 2A xac nhan voi Lead truoc khi bat.",
+  "tables": [
+    {
+      "spec": {
+        "id": "ds_nganh",
+        "detect": [
+          "stt",
+          "ten nganh",
+          "ma nganh"
+        ],
+        "stt_tag": true,
+        "cols": [
+          [
+            "^stt$",
+            null
+          ],
+          [
+            "ten nganh",
+            "ten_nganh"
+          ],
+          [
+            "ma nganh",
+            "ma_nganh"
+          ],
+          [
+            "^nganh chinh$|nganh, nghe kinh doanh chinh",
+            "la_nganh_chinh"
+          ]
+        ],
+        "loop": "ds_nganh",
+        "fields": [
+          "ten_nganh",
+          "ma_nganh",
+          "la_nganh_chinh"
+        ]
+      },
+      "pos": "after",
+      "anchor": "^4\\. nganh, nghe kinh doanh",
+      "no_default_drops": true,
+      "drop_until": "^5\\. von dieu le",
+      "drop": [
+        "^stt$",
+        "^ten nganh\\b",
+        "^ma nganh\\d*$",
+        "^nganh, nghe kinh doanh chinh"
+      ],
+      "headers": [
+        "STT",
+        "Tên ngành",
+        "Mã ngành",
+        "Ngành, nghề kinh doanh chính"
+      ]
+    }
+  ]
+}

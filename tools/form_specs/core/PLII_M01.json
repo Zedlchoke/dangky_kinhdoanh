@@ -28,7 +28,7 @@
       "spec": {
         "id": "ds_tv_ho_gia_dinh",
         "detect": ["stt", "ho ten", "chu ky", "quoc tich"],
-        "stt_tag": false,
+        "stt_tag": true,
         "cols": [
           ["^stt$", null],
           ["ho ten", "ho_ten"],

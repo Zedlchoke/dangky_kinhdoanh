@@ -495,8 +495,7 @@ def assert_m72_five_loop_contract(blocks: dict, form_maps: dict) -> None:
                     "PLI_M72: thiếu field %s.%s trong form_maps" % (name, tag)
 
 
-@check("M72 blocks+form_maps: 5 loop occurrence, moi loop 4 cot "
-       "[EXPECTED-FAIL-PRE-INTEGRATION]")
+@check("M72 blocks+form_maps: 5 loop occurrence, moi loop 4 cot")
 def t_m72_five_grids_contract():
     form_maps = json.loads(FORM_MAPS_PATH.read_text(encoding="utf-8"))
     assert "PLI_M72" in form_maps, "thiếu PLI_M72 trong form_maps"
@@ -519,7 +518,7 @@ def industry_tables_in(doc):
 
 
 @check("M72 render DOCX: dung 5 bang nganh theo loai hinh, STT 1..n, "
-       "moi bang dung mot X [EXPECTED-FAIL-PRE-INTEGRATION]")
+       "moi bang dung mot X")
 def t_m72_five_grids_render():
     out_path = OUT_DIR / "PLI_M72_nam_loai_hinh.docx"
     write_rendered(TEMPLATES_DIR / "PLI_M72.docx", dict(M72_RENDER_DATASETS),

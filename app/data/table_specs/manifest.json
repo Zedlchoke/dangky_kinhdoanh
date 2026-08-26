@@ -111,15 +111,7 @@
     }
    ],
    "legal_questions": [],
-   "defects": [
-    {
-     "form_id": "PLII_M01",
-     "id": "plii_m01_stt_thieu_tag_ho_gia_dinh",
-     "detail": "Template w:tbl[1] (thành viên hộ gia đình) thiếu tag {_stt} ở ô r5c0 -> DOCX render cột STT trống, vi phạm DONE #8.",
-     "evidence": "app/data/table_specs/fragments/review_t0_c.md",
-     "queue": "P1"
-    }
-   ],
+   "defects": [],
    "summary_counts_fragment": {
     "p": 63,
     "chk": 4,

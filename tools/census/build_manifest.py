@@ -85,13 +85,8 @@ GLUED_STT_RE = re.compile(r"^STT[A-ZÀ-Ỹ]")
 LIST_HINT_RE = re.compile(r"\b(Danh sách|Liệt kê|Các)\b.{0,60}(sau|dưới đây)", re.I)
 
 DEFECTS = [
-    {
-        "form_id": "PLII_M01",
-        "id": "plii_m01_stt_thieu_tag_ho_gia_dinh",
-        "detail": "Template w:tbl[1] (thành viên hộ gia đình) thiếu tag {_stt} ở ô r5c0 -> DOCX render cột STT trống, vi phạm DONE #8.",
-        "evidence": "app/data/table_specs/fragments/review_t0_c.md",
-        "queue": "P1",
-    },
+    # (đã gỡ plii_m01_stt_thieu_tag_ho_gia_dinh: stt_tag=true cho
+    #  ds_tv_ho_gia_dinh đã integrate + test_plii_m01_member_stt PASS 5/5)
     {
         "form_id": "PLI_M23",
         "id": "pli_m23_heading_numbering",

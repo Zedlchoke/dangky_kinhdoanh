@@ -31,6 +31,48 @@ REVIEWS = {
 
 VALID_STATUS = ("NO_TABLE", "TABLE_COMPLETE", "BLOCKED_LEGAL_REVIEW")
 
+TABLE_KINDS = ("editable-grid", "fixed-matrix", "nested-grid", "output-table")
+NON_TABLE_KINDS = ("prose-block", "scalar-fields", "source-contamination")
+SECTION_KINDS = TABLE_KINDS + NON_TABLE_KINDS
+SECTION_STATUSES = (
+    "missing_grid", "partial_columns", "partial", "already_complete",
+    "output_only", "no_table", "contaminated",
+)
+NO_TABLE_SECTION_KINDS = ("prose-block", "scalar-fields")
+
+RECLASSIFICATIONS = {
+    ("PLII_M17", "ho_so_bao_gom"): {
+        "kind": "prose-block", "status": "no_table",
+        "reason": "Blocks b016-b019 la 3 dong cham tay '1....2....3....' khong input; co quan cap xa viet tay, trung thanh mau."},
+    ("PLII_M18", "ho_so_bao_gom"): {
+        "kind": "prose-block", "status": "no_table",
+        "reason": "Giong PLII_M17 (ban nop online): dong cham tay khong input, khong luoi."},
+    ("PLI_M09", "vung_nhiem_mau_6789_10"): {
+        "kind": "source-contamination", "status": "contaminated",
+        "reason": "Template chua nguyen van Mau 6/7/8/9(lan 2)/10 sau chan trang Mau 9 that (#p103-p222); can quyet dinh nguon/pham vi phap ly truoc khi lam bat cu grid nao."},
+    ("PLI_M27", "don_vi_tam_ngung_tiep_tuc"): {
+        "kind": "editable-grid", "status": "missing_grid",
+        "reason": "6 khoi don vi (tam ngung/tiep tuc x CN/VPDD/DDKD) moi khoi 1 bo cn.*; ban chat danh sach don vi -> editable-grid du kien, cho quyet dinh 1-nhieu."},
+    ("PLI_M28", "don_vi_cham_dut_hoat_dong"): {
+        "kind": "scalar-fields", "status": "no_table",
+        "reason": "Cau truc danh so 1..4 la thong tin MOT don vi/giay; blocks map du cn.dia_chi/cn.ma_so; khong dong lap, khong STT."},
+    ("PLI_M50", "noi_dung_yeu_cau_bao_cao"): {
+        "kind": "prose-block", "status": "no_table",
+        "reason": "Blocks b016-b018 la dong cham '......' khong input cho co quan dien noi dung; khong phai output-table."},
+    ("PLI_M54", "xac_nhan_tam_ngung_toan_bo_don_vi"): {
+        "kind": "scalar-fields", "status": "no_table",
+        "reason": "Mot cau xac nhan ap dung TOAN BO don vi, da map tu_ngay/den_ngay; census bac bo du doan danh sach cua PLAN muc E."},
+    ("PLI_M55", "don_vi_tam_ngung_xac_nhan"): {
+        "kind": "scalar-fields", "status": "no_table",
+        "reason": "'sau:' so it, mot giay = mot don vi; blocks map tu_ngay/den_ngay; khong dong lap."},
+    ("PLI_M57", "don_vi_tiep_tuc_xac_nhan"): {
+        "kind": "scalar-fields", "status": "no_table",
+        "reason": "So it, mot giay = mot don vi; blocks map truong ngay thang; khong dong lap."},
+    ("PLI_M67", "don_vi_cham_dut_sau_day"): {
+        "kind": "editable-grid", "status": "missing_grid",
+        "reason": "'(Cac) chi nhanh/VPDD/DDKD sau day' -> ban chat editable-grid du kien; blocks hien chi 1 bo ten/mso/dia_chi; cho quyet dinh 1-nhieu."},
+}
+
 STT_RE = re.compile(r"^\s*STT\b")
 GLUED_STT_RE = re.compile(r"^STT[A-ZÀ-Ỹ]")
 LIST_HINT_RE = re.compile(r"\b(Danh sách|Liệt kê|Các)\b.{0,60}(sau|dưới đây)", re.I)
@@ -76,8 +118,6 @@ SIGNATURE_CLASSIFICATIONS = {
                  "reason": "'Yeu cầu doanh nghiệp báo cáo về các nội dung sau' la dau muc van ban; vung tuong ung da duoc ghi section noi_dung_yeu_cau_bao_cao (output-table/no_table)."}],
 }
 
-NO_TABLE_SECTION_KINDS = ("unknown", "output-table")
-
 CAVEATS = [
     "~34 anchor trong t0_b viết tắt '...docx#pN' không resolve được bằng máy (đã review xác minh tay); chuẩn hóa khi sinh spec.",
     "PLI_M72: chỉ occurrence 1 có loop ds_nganh (Wave 2B); 4 vùng còn lại missing_grid -> P1 occurrence identity.",
@@ -98,11 +138,17 @@ def load_fragments():
     return forms
 
 
-def normalize_section(sec):
+def normalize_section(fid, sec):
     out = dict(sec)
     sk = out.pop("semantic_key_suggestion", None)
     if sk is not None:
         out["semantic_key"] = sk
+    rc = RECLASSIFICATIONS.get((fid, out.get("section_id")))
+    if rc is not None:
+        out["kind"] = rc["kind"]
+        if "status" in rc:
+            out["status"] = rc["status"]
+        out["lead_reclassification"] = {"reason": rc["reason"]}
     return out
 
 
@@ -170,7 +216,7 @@ def build(forms):
             "form_status": f["form_status"],
             "source_fragment": f["_source_fragment"],
             "source_commit": f["_source_commit"],
-            "sections": [normalize_section(s) for s in f.get("sections", [])],
+            "sections": [normalize_section(fid, s) for s in f.get("sections", [])],
             "legal_questions": f.get("legal_questions", []),
             "defects": [d for d in DEFECTS if d["form_id"] == fid],
             "summary_counts_fragment": frag_counts,
@@ -227,6 +273,16 @@ def validate(manifest, deep):
                 stale.append("%s#b%03d" % (fid, blk))
             if st == "NO_TABLE" and not c["verdict"].startswith("FALSE_POSITIVE"):
                 errors.append("%s: NO_TABLE nhung classification %s khong phai false positive" % (fid, c["verdict"]))
+        for s in f["sections"]:
+            kind = s.get("kind")
+            stat = s.get("status")
+            sid = s.get("section_id")
+            if kind not in SECTION_KINDS:
+                errors.append("%s/%s: section kind '%s' KHONG HOP LE (unknown/planned bi cam)" % (fid, sid, kind))
+            if stat not in SECTION_STATUSES:
+                errors.append("%s/%s: section status '%s' khong hop le (planned/TODO bi cam)" % (fid, sid, stat))
+            if kind == "source-contamination" and st != "BLOCKED_LEGAL_REVIEW":
+                errors.append("%s/%s: source-contamination chi cho phep tren form BLOCKED_LEGAL_REVIEW" % (fid, sid))
         if st == "NO_TABLE":
             if uncovered:
                 tot_sig += len(uncovered)
@@ -237,12 +293,11 @@ def validate(manifest, deep):
                 if not (s.get("kind") in NO_TABLE_SECTION_KINDS and s.get("status") == "no_table")
             ]
             if bad_secs:
-                errors.append("%s: NO_TABLE nhung co section khong phai nhan thuc tin: %s" % (
+                errors.append("%s: NO_TABLE nhung co section khong phai prose/scalar thuan thong tin: %s" % (
                     fid, [(s.get("section_id"), s.get("kind"), s.get("status")) for s in bad_secs]))
-        else:
-            if not f["sections"]:
-                errors.append("%s: %s phai co it nhat 1 section entry" % (fid, st))
-        for kind in ("editable-grid", "fixed-matrix", "nested-grid", "output-table"):
+        elif not f["sections"]:
+            errors.append("%s: %s phai co it nhat 1 section entry" % (fid, st))
+        for kind in SECTION_KINDS:
             tot_sections[kind] = tot_sections.get(kind, 0) + sum(
                 1 for s in f["sections"] if s.get("kind") == kind
             )
@@ -253,9 +308,14 @@ def validate(manifest, deep):
                 errors.append("%s: NO_TABLE nhung template co %d w:tbl" % (fid, ntbl))
     if stale:
         print("WARNING: classification stale (khong con hit): %s" % ", ".join(stale))
+    total_secs = sum(len(f["sections"]) for f in manifest["forms"])
+    kind_sum = sum(tot_sections.values())
+    if total_secs != kind_sum:
+        errors.append("tong so section (%d) khac tong sections_by_kind (%d)" % (total_secs, kind_sum))
     manifest["totals"] = {
         "forms": len(manifest["forms"]),
         "by_form_status": tot_status,
+        "sections_total": total_secs,
         "sections_by_kind": tot_sections,
         "unclassified_signatures": tot_sig,
     }

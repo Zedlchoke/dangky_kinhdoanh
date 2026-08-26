@@ -44,11 +44,15 @@
    "BLOCKED_LEGAL_REVIEW": 33,
    "NO_TABLE": 50
   },
+  "sections_total": 111,
   "sections_by_kind": {
-   "editable-grid": 41,
+   "editable-grid": 43,
    "fixed-matrix": 47,
    "nested-grid": 7,
-   "output-table": 7
+   "output-table": 6,
+   "prose-block": 3,
+   "scalar-fields": 4,
+   "source-contamination": 1
   },
   "unclassified_signatures": 0
  },
@@ -886,7 +890,7 @@
     {
      "section_id": "ho_so_bao_gom",
      "title": "Hồ sơ bao gồm:",
-     "kind": "unknown",
+     "kind": "prose-block",
      "required_columns": [],
      "status": "no_table",
      "source_evidence": {
@@ -895,7 +899,10 @@
       "anchor": "blocks B016-B019: heading + 3 dòng chấm '1./2./3. ……' không có STT/cột; template không có w:tbl"
      },
      "notes": "Vùng 'Danh sách' theo PLAN G nhưng mẫu gốc chỉ là 3 dòng gạch đầu dòng viết tay tên giấy tờ; render multi-line/free-text là trung thành mẫu, không cần grid.",
-     "semantic_key": "danh_sach_tai_lieu_hs_nop"
+     "semantic_key": "danh_sach_tai_lieu_hs_nop",
+     "lead_reclassification": {
+      "reason": "Blocks b016-b019 la 3 dong cham tay '1....2....3....' khong input; co quan cap xa viet tay, trung thanh mau."
+     }
     }
    ],
    "legal_questions": [],
@@ -929,7 +936,7 @@
     {
      "section_id": "ho_so_bao_gom",
      "title": "Hồ sơ bao gồm:",
-     "kind": "unknown",
+     "kind": "prose-block",
      "required_columns": [],
      "status": "no_table",
      "source_evidence": {
@@ -938,7 +945,10 @@
       "anchor": "blocks quanh B017: heading + các dòng chấm đánh số, không STT/cột; template không có w:tbl"
      },
      "notes": "Tương tự PLII_M17, bản nộp online; giữ free-text, không cần grid.",
-     "semantic_key": "danh_sach_tai_lieu_hs_nop_online"
+     "semantic_key": "danh_sach_tai_lieu_hs_nop_online",
+     "lead_reclassification": {
+      "reason": "Giong PLII_M17 (ban nop online): dong cham tay khong input, khong luoi."
+     }
     }
    ],
    "legal_questions": [],
@@ -2735,9 +2745,9 @@
     {
      "section_id": "vung_nhiem_mau_6789_10",
      "title": "Vùng nghi nhiễm: bản copy Mẫu số 6, 7, 8, Mẫu 9 (lần 2) và Mẫu số 10 nằm trong template PLI_M09.docx",
-     "kind": "unknown",
+     "kind": "source-contamination",
      "required_columns": [],
-     "status": "missing_grid",
+     "status": "contaminated",
      "source_evidence": {
       "template": "app/templates/PLI_M09.docx",
       "heading": "- Trường hợp Tòa án hoặc Trọng tài chỉ định người thực hiện thủ tục đăng ký doanh nghiệp thì người được chỉ định ký trực tiếp vào phần này.Mẫu số 6",
@@ -2747,7 +2757,10 @@
        null
       ]
      },
-     "notes": "Sau chân trang của Mẫu 9 thật, template chứa tiếp toàn văn 'DANH SÁCH THÀNH VIÊN CÔNG TY TNHH HAI THÀNH VIÊN TRỞ LÊN' (Mẫu 6), 'DANH SÁCH CỔ ĐÔNG SÁNG LẬP' (Mẫu 7), 'DANH SÁCH CỔ ĐÔNG LÀ NHÀ ĐẦU TƯ NƯỚC NGOÀI' (Mẫu 8), một bản 'DANH SÁCH THÀNH VIÊN CÔNG TY HỢP DANH' thứ hai (header đầy đủ 14 cột dạng paragraph + glued 'STTTên thành viênSố, ngày cấp, nơi cấp...') và 'DANH SÁCH CHỦ SỞ HỮU HƯỞNG LỢI' (Mẫu 10) - tất cả là paragraph rời, không w:tbl. File nguồn DN_PL1_Mau_09... cũng nhiễm đúng cấu trúc này → lỗi tách từ file full, KHÔNG phải nội dung của Mẫu 9."
+     "notes": "Sau chân trang của Mẫu 9 thật, template chứa tiếp toàn văn 'DANH SÁCH THÀNH VIÊN CÔNG TY TNHH HAI THÀNH VIÊN TRỞ LÊN' (Mẫu 6), 'DANH SÁCH CỔ ĐÔNG SÁNG LẬP' (Mẫu 7), 'DANH SÁCH CỔ ĐÔNG LÀ NHÀ ĐẦU TƯ NƯỚC NGOÀI' (Mẫu 8), một bản 'DANH SÁCH THÀNH VIÊN CÔNG TY HỢP DANH' thứ hai (header đầy đủ 14 cột dạng paragraph + glued 'STTTên thành viênSố, ngày cấp, nơi cấp...') và 'DANH SÁCH CHỦ SỞ HỮU HƯỞNG LỢI' (Mẫu 10) - tất cả là paragraph rời, không w:tbl. File nguồn DN_PL1_Mau_09... cũng nhiễm đúng cấu trúc này → lỗi tách từ file full, KHÔNG phải nội dung của Mẫu 9.",
+     "lead_reclassification": {
+      "reason": "Template chua nguyen van Mau 6/7/8/9(lan 2)/10 sau chan trang Mau 9 that (#p103-p222); can quyet dinh nguon/pham vi phap ly truoc khi lam bat cu grid nao."
+     }
     }
    ],
    "legal_questions": [
@@ -4050,7 +4063,7 @@
     {
      "section_id": "don_vi_tam_ngung_tiep_tuc",
      "title": "Các khối 'đối với chi nhánh/địa điểm kinh doanh/văn phòng đại diện sau:' (tạm ngừng + tiếp tục)",
-     "kind": "unknown",
+     "kind": "editable-grid",
      "required_columns": [
       "loai_don_vi",
       "ten_don_vi",
@@ -4066,7 +4079,10 @@
       "anchor": "04_tam_ngung_cham_dut_giai_the/PL1_Mau_27_....docx#p26-p55"
      },
      "notes": "6 khối đơn vị (tạm ngừng CN/ĐĐKD, VPĐD; tiếp tục CN/VPĐD/ĐĐKD), mỗi khối chỉ 1 bộ tên+mã số trong blocks. Cần quyết định 1 đơn vị/giấy hay cho phép nhiều dòng.",
-     "semantic_key": "don_vi_truc_thuoc_tam_ngung_tiep_tuc"
+     "semantic_key": "don_vi_truc_thuoc_tam_ngung_tiep_tuc",
+     "lead_reclassification": {
+      "reason": "6 khoi don vi (tam ngung/tiep tuc x CN/VPDD/DDKD) moi khoi 1 bo cn.*; ban chat danh sach don vi -> editable-grid du kien, cho quyet dinh 1-nhieu."
+     }
     }
    ],
    "legal_questions": [
@@ -4103,7 +4119,7 @@
     {
      "section_id": "don_vi_cham_dut_hoat_dong",
      "title": "Thông báo chấm dứt hoạt động chi nhánh/VPĐD/địa điểm KD sau: (1. Tên, 2. Địa chỉ, 3. Chi nhánh chủ quản, 4. Lý do)",
-     "kind": "unknown",
+     "kind": "scalar-fields",
      "required_columns": [],
      "status": "no_table",
      "source_evidence": {
@@ -4112,7 +4128,10 @@
       "anchor": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_28_....docx#p13"
      },
      "notes": "Audit từ khóa 'sau:': cấu trúc đánh số 1..4 là thông tin của MỘT đơn vị/giấy (không có dòng lặp, không STT); blocks đã map đủ cn.*. File nguồn trùng tại 04_tam_ngung... (bản 03 thắng theo find_source).",
-     "semantic_key": "don_vi_cham_dut_hoat_dong"
+     "semantic_key": "don_vi_cham_dut_hoat_dong",
+     "lead_reclassification": {
+      "reason": "Cau truc danh so 1..4 la thong tin MOT don vi/giay; blocks map du cn.dia_chi/cn.ma_so; khong dong lap, khong STT."
+     }
     }
    ],
    "legal_questions": [],
@@ -4508,7 +4527,7 @@
     {
      "section_id": "noi_dung_yeu_cau_bao_cao",
      "title": "Yêu cầu doanh nghiệp báo cáo về các nội dung sau: (3 dòng chấm)",
-     "kind": "output-table",
+     "kind": "prose-block",
      "required_columns": [],
      "status": "no_table",
      "source_evidence": {
@@ -4517,7 +4536,10 @@
       "anchor": "05_cong_bo_cung_cap_thong_tin/PL1_Mau_50_....docx#p16-p19"
      },
      "notes": "Vùng điền tự do do CQĐKKD viết tay khi phát hành, không có cấu trúc cột/hàng; audit từ khóa 'các nội dung sau' → kết luận không phải lưới.",
-     "semantic_key": "noi_dung_yeu_cau_bao_cao"
+     "semantic_key": "noi_dung_yeu_cau_bao_cao",
+     "lead_reclassification": {
+      "reason": "Blocks b016-b018 la dong cham '......' khong input cho co quan dien noi dung; khong phai output-table."
+     }
     }
    ],
    "legal_questions": [],
@@ -4674,7 +4696,7 @@
     {
      "section_id": "xac_nhan_tam_ngung_toan_bo_don_vi",
      "title": "Xác nhận: doanh nghiệp VÀ TẤT CẢ các chi nhánh/VPĐD/địa điểm KD tạm ngừng kể từ ngày… đến hết ngày…",
-     "kind": "unknown",
+     "kind": "scalar-fields",
      "required_columns": [],
      "status": "no_table",
      "source_evidence": {
@@ -4683,7 +4705,10 @@
       "anchor": "04_tam_ngung_cham_dut_giai_the/PL1_Mau_54_....docx#p15"
      },
      "notes": "PLAN mục E dự đoán M54 có danh sách đơn vị — census bác bỏ: mẫu gốc chỉ có MỘT câu xác nhận áp dụng cho toàn bộ đơn vị (đã map tu_ngay/den_ngay), không có dòng liệt kê, không STT.",
-     "semantic_key": "xac_nhan_tam_ngung_toan_dn"
+     "semantic_key": "xac_nhan_tam_ngung_toan_dn",
+     "lead_reclassification": {
+      "reason": "Mot cau xac nhan ap dung TOAN BO don vi, da map tu_ngay/den_ngay; census bac bo du doan danh sach cua PLAN muc E."
+     }
     }
    ],
    "legal_questions": [],
@@ -4717,7 +4742,7 @@
     {
      "section_id": "don_vi_tam_ngung_xac_nhan",
      "title": "Xác nhận tạm ngừng đối với chi nhánh/địa điểm KD hoặc VPĐD sau: (Tên + Mã số)",
-     "kind": "unknown",
+     "kind": "scalar-fields",
      "required_columns": [],
      "status": "no_table",
      "source_evidence": {
@@ -4726,7 +4751,10 @@
       "anchor": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_55_....docx#p16"
      },
      "notes": "'sau:' ở số ít, một giấy = một đơn vị (không dòng lặp). Blocks map đủ. File nguồn trùng tại 04_tam_ngung... (bản 03 thắng).",
-     "semantic_key": "don_vi_tam_ngung_xac_nhan"
+     "semantic_key": "don_vi_tam_ngung_xac_nhan",
+     "lead_reclassification": {
+      "reason": "'sau:' so it, mot giay = mot don vi; blocks map tu_ngay/den_ngay; khong dong lap."
+     }
     }
    ],
    "legal_questions": [],
@@ -4808,7 +4836,7 @@
     {
      "section_id": "don_vi_tiep_tuc_xac_nhan",
      "title": "Đăng ký tiếp tục kể từ ngày… đối với chi nhánh/địa điểm KD hoặc VPĐD sau: (Tên + Mã số)",
-     "kind": "unknown",
+     "kind": "scalar-fields",
      "required_columns": [],
      "status": "no_table",
      "source_evidence": {
@@ -4817,7 +4845,10 @@
       "anchor": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_57_....docx#p16"
      },
      "notes": "Số ít, một giấy = một đơn vị; không có dòng lặp. Blocks map đủ. File nguồn trùng tại 04_tam_ngung... (bản 03 thắng).",
-     "semantic_key": "don_vi_tiep_tuc_xac_nhan"
+     "semantic_key": "don_vi_tiep_tuc_xac_nhan",
+     "lead_reclassification": {
+      "reason": "So it, mot giay = mot don vi; blocks map truong ngay thang; khong dong lap."
+     }
     }
    ],
    "legal_questions": [],
@@ -5013,7 +5044,7 @@
     {
      "section_id": "don_vi_cham_dut_sau_day",
      "title": "(Các) chi nhánh/VPĐD/địa điểm KD sau đây của doanh nghiệp: 1. Tên+MS, 2. Địa chỉ, 3. Chi nhánh chủ quản",
-     "kind": "unknown",
+     "kind": "editable-grid",
      "required_columns": [
       "ten_don_vi",
       "ma_so",
@@ -5027,7 +5058,10 @@
       "anchor": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_67_....docx#p8"
      },
      "notes": "Từ '(các)' gợi ý nhiều đơn vị trong 1 thông báo nhưng blocks chỉ có 1 bộ tên/mã/địa chỉ (lặp 2 lần trong blocks). Cần chốt 1-nhiều. File nguồn trùng tại 04_tam_ngung... (bản 03 thắng).",
-     "semantic_key": "don_vi_cham_dut_m67"
+     "semantic_key": "don_vi_cham_dut_m67",
+     "lead_reclassification": {
+      "reason": "'(Cac) chi nhanh/VPDD/DDKD sau day' -> ban chat editable-grid du kien; blocks hien chi 1 bo ten/mso/dia_chi; cho quyet dinh 1-nhieu."
+     }
     }
    ],
    "legal_questions": [

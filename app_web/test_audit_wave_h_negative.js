@@ -560,7 +560,8 @@ function mkRow(tags, j) {
 //               tools/tag_m72_sections.py, tools/audit_blocks_check.py,
 //               tools/form_specs/change/PLI_M72.json,
 //               app/templates/PLI_M72.docx, app/data/blocks/PLI_M72.json
-//   Lane A P1.2: test_form_grid_meta.js, test_acceptance.js, 
+//   Lane A P1.2: ui/render.js (condAllows + selectorHtml),
+//               test_form_grid_meta.js, test_acceptance.js,
 //               test_p12_m72_selector.js (test mới theo hợp đồng selector)
 // File generated/doc dưới app/templates/ + app/data/ ĐƯỢC PHÉP duy nhất là:
 //   - app/data/layout_specs/layout_manifest.json (Lead, commit 6047c1d)
@@ -615,6 +616,7 @@ function mkRow(tags, j) {
     'app_web/test_p20_hardening.js',
     'app_web/ui/app.js',
     'app_web/ui/form-domain.js',
+    'app_web/ui/render.js',
     'docs/legal_review_backlog.md',
     'docs/m72_activation_proposal.md',
     'docs/p2_component_contracts.md',

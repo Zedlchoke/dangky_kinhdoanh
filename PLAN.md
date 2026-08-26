@@ -1419,3 +1419,240 @@ Không báo DONE theo phần trăm ước lượng. Chỉ báo TABLES DONE khi m
 không còn signature bảng chưa classify, mọi table entry có production test,
 full regression + visual QA + .exe smoke đạt đủ Acceptance Gates trong PLAN.
 ```
+
+---
+
+## Checkpoint sau kiểm tra độc lập — 2026-08-26
+
+Phần này là trạng thái mới nhất và **thay thế các nhận định tiến độ cũ** nếu có
+mâu thuẫn. Các contract, inventory A–G và Acceptance Gates ở trên vẫn giữ nguyên.
+
+### Baseline đã xác nhận
+
+- Nhánh chính tại commit `47ddaf3` (`integrate2: regenerate form_maps 13 mau
+  rollout + audit ky vong 24 loop`); worktree chính sạch tại thời điểm audit.
+- Wave 1 đã hoàn tất: sửa DOCX `PLII_M01` (STT + dấu X ngành chính), metadata
+  `bat_buoc`/`forms_oneOf`, export gate, request token chống race khi đổi case,
+  autosave đồng bộ `dirty=false` và phục hồi lựa chọn từ draft.
+- Wave 2 đã thêm bảng ngành cho 13 mẫu: `PLI_M01`, `PLI_M03`, `PLI_M04`,
+  `PLI_M05`, `PLI_M12`, `PLI_M17`, `PLI_M19`, `PLI_M21`, `PLI_M23`, `PLI_M25`,
+  `PLI_M72`, `PLII_M02`, `PLII_M07`.
+- Production hiện có khoảng 3.853 paragraph blocks, 226 checkbox blocks và 24
+  loop trên 21 mẫu. Form specs đã được tách theo domain trong `tools/form_specs/`.
+- Các suite DOM, domain, grid, loop production, acceptance, form flow, household,
+  contract release, industry formation/change/household, smoke web assets,
+  block/content/engine audit và compile/import đều PASS trong lần audit. Kết quả
+  xanh này chưa thay thế visual QA hoặc clean-machine `.exe` smoke.
+
+### Mức hoàn thành thực tế
+
+| Hạng mục | Trạng thái | Nhận định |
+| --- | --- | --- |
+| Luồng chọn mẫu, state, autosave, draft | DONE | Có regression test |
+| Nền editable-grid/loop | STABLE BASELINE | Chưa bao phủ fixed/nested/output |
+| Bảng ngành nghề | PARTIAL | Đã rollout rộng nhưng còn điểm mù M72 và PLII_M02 |
+| Census 87 mẫu | PARTIAL | Có fragment 75/87 ở worktree, chưa có manifest hợp nhất |
+| Vốn, tài sản, cổ phần | NOT ROLLED OUT | Là ưu tiên domain kế tiếp |
+| Thành viên/cổ đông/người đại diện | PARTIAL | Loop cũ cần audit đủ cột; còn bảng thiếu |
+| Bảng thuế/fixed matrix | NOT ROLLED OUT | Cần component chung trước |
+| Nested/output table | NOT IMPLEMENTED | Chưa có renderer/schema đầy đủ |
+| Visual DOCX và `.exe` | NOT RUN/NOT READY | Chưa đủ bằng chứng release |
+
+Ước lượng để quản trị tiến độ, không dùng làm gate: lõi MVP khoảng 70%; riêng mục
+tiêu “dứt điểm toàn bộ bảng” khoảng 30–35%. Chỉ Acceptance Gates mới quyết định
+`TABLES DONE`.
+
+### Hai điểm mù phải sửa trước rollout domain mới
+
+1. **`PLI_M72`:** mẫu có năm section loại hình với năm lưới ngành riêng. Generator
+   hiện chỉ dựng occurrence đầu tiên; bốn lưới còn lại có nguy cơ vẫn là paragraph.
+   Spec đã ghi `gap_nghiepvu`, nhưng test hiện chỉ đòi một loop nên xanh giả về độ
+   đầy đủ. Phải hỗ trợ anchor occurrence/section identity và test đủ cả năm section.
+2. **`PLII_M02`:** không được gộp toàn bộ nghiệp vụ vào một `ds_nganh`. Phải audit
+   và tạo semantic loop riêng cho ngành bổ sung, xóa bỏ, sửa đổi và danh sách hiện
+   tại/đăng ký lại theo đúng section thực tế. Mỗi section có test độc lập.
+
+Detector còn khoảng 30 signature paragraph `STT` chưa thành table block. Đây là
+queue để phân loại, không mặc định cả 30 đều là lỗi. Mỗi signature phải kết thúc
+ở một trong các trạng thái: có table spec, xác nhận `NO_TABLE`, `OUTPUT_ONLY`, hoặc
+`BLOCKED_LEGAL_REVIEW` kèm evidence.
+
+### Trạng thái census/worktree
+
+- `T0-B` đã kiểm kê 47 mẫu: 20 `BLOCKED_LEGAL_REVIEW`, 2 `TABLE_COMPLETE`,
+  25 `NO_TABLE`; fragment chưa merge vào `main`.
+- `T0-C` đã kiểm kê 28 mẫu: 2 `BLOCKED`, 1 `TABLE_COMPLETE`, 25 `NO_TABLE`;
+  fragment chưa merge vào `main`.
+- `T0-A` chưa có census commit được xác nhận. Vì vậy mới có dữ liệu sơ bộ 75/87,
+  chưa có `app/data/table_specs/manifest.json` chuẩn và chưa đạt gate T0.
+- Không merge mù hai fragment: Lead phải review schema/evidence, chuẩn hóa status,
+  hoàn tất T0-A rồi mới sinh manifest 87/87.
+
+### Rủi ro tích hợp và desktop release
+
+- `main` local đang đi trước `origin/main` 36 commit và đi sau 2 commit tại thời
+  điểm audit. Hai commit remote có dấu hiệu là upload mã cũ/cache; không chạy
+  `git pull` mù. Tạo nhánh backup, inspect diff rồi cherry-pick/merge có chọn lọc.
+- `.webview_deps` đã bỏ khỏi Git nhưng `app_web/main.py` còn đường dẫn vendored.
+  Import local thành công có thể do môi trường đã cài `pywebview`; chưa chứng minh
+  chạy được trên máy sạch.
+- Chưa có build spec/pipeline `.exe` được xác nhận. Release gate bắt buộc build
+  tái lập được, khai báo dependency và smoke trên Windows không có Python.
+
+## Kế hoạch tiếp theo từ checkpoint 2026-08-26
+
+### P0 — Khóa baseline và hoàn tất T0 (blocking)
+
+1. Tạo backup branch/tag tại `47ddaf3`; inspect hai commit remote, không pull mù.
+2. Review fragment T0-B/T0-C read-only; chuẩn hóa schema và status.
+3. Chạy lại T0-A cho `PLI_M01–PLI_M12` trong worktree riêng.
+4. Lead hợp nhất thành `app/data/table_specs/manifest.json`, chứng minh đủ 87/87.
+5. Chạy detector; mọi signature phải được classify. Commit `table-manifest-v1`.
+
+Có thể chạy song song ba lane không ghi trùng file: agent T0-A census, agent review
+T0-B và agent review T0-C. Lead là người duy nhất tạo manifest hợp nhất.
+
+### P1 — Dứt điểm domain ngành nghề (blocking trước domain mới)
+
+1. Mở rộng generator để định danh nhiều occurrence bằng section/anchor/boundary.
+2. Dựng đủ năm lưới ngành của `PLI_M72`; test số section, semantic key và DOCX.
+3. Tách đầy đủ các loop ngành của `PLII_M02`; thêm test từng nghiệp vụ.
+4. Thêm negative audit: không còn signature ngành chưa classify.
+5. Regenerate tập trung, review allowlist, chạy full regression.
+
+P1 generator và spec có quan hệ phụ thuộc; không cho hai agent cùng sửa generator.
+Một agent sở hữu generator/contract, các agent spec/test chỉ bắt đầu sau khi contract
+được tích hợp hoặc làm trên file tách biệt không chạm generated artifacts.
+
+### P2 — Hoàn thiện nền table component
+
+1. Chốt schema cho `fixed-matrix`, `nested-grid`, `output-table` và editable-grid.
+2. Triển khai renderer/controller dùng chung: add/delete/insert/reorder khi policy
+   cho phép; fixed row không được xóa; stable row ID, keyboard và accessibility.
+3. Thêm formula/totals, cross-field validation, draft migration và export gate.
+4. Nâng generator với boundary an toàn, rowspan/colspan, totals/STT và idempotency.
+5. Có contract test + production fixture cho từng loại component trước rollout.
+
+### P3 — Rollout domain theo thứ tự ưu tiên
+
+Sau P2, chạy song song qua spec folder/file ownership tách biệt:
+
+1. `capital-assets`: tài sản góp vốn, nguồn vốn, vốn điều lệ, cơ cấu cổ phần.
+2. `people-ownership`: thành viên, cổ đông, chủ sở hữu hưởng lợi, người đại diện;
+   audit/nâng cấp toàn bộ loop cũ `PLI_M06–M11`.
+3. `tax-grids`: mọi bảng chỉ tiêu đăng ký thuế/fixed matrix trong manifest.
+4. `branches-products-admin`: đơn vị trực thuộc, sản phẩm, bảng hành chính/output.
+
+Lead merge spec theo từng batch T3 và là người duy nhất regenerate global artifacts.
+Không merge toàn bộ 87 mẫu trong một lần.
+
+### P4 — Release gate
+
+1. Full structural regression cho 87/87 mẫu và mọi table entry.
+2. Visual QA DOCX → PDF/PNG theo domain và cho mọi nested grid.
+3. Test dữ liệu biên: 0/1/max/100 dòng, Unicode, text dài, tiền/tỷ lệ lớn.
+4. Chốt dependency/build spec, build `.exe` tái lập và smoke máy Windows sạch.
+5. Chỉ báo `TABLES DONE` khi đủ 10 Acceptance Gates; `NOT RUN` không tính PASS.
+
+## Prompt bàn giao cho agent có context mới (dùng từ checkpoint 2026-08-26)
+
+```text
+Bạn là Lead/Integrator Agent tiếp quản repo:
+C:\Users\Tuyen PC\orca\dangky_kinhdoanh
+
+MỤC TIÊU CUỐI
+Hoàn thiện dứt điểm mọi phần có bản chất là bảng trong toàn bộ 87 biểu mẫu đăng ký
+kinh doanh: UI nhập trực tiếp kiểu HTKK, thêm/xóa/sắp xếp dòng theo policy, tự đồng
+bộ dữ liệu chung, validation/totals, draft và xuất DOCX đúng lưới pháp lý. Sau đó
+đóng gói app desktop `.exe` chạy local. Không giới hạn scope ở bảng ngành nghề.
+
+ĐỌC TRƯỚC KHI LÀM
+1. Đọc toàn bộ PLAN.md, ưu tiên:
+   - “Chương trình hoàn thiện toàn bộ bảng trong 87 biểu mẫu”;
+   - “Checkpoint sau kiểm tra độc lập — 2026-08-26”;
+   - “Kế hoạch tiếp theo từ checkpoint 2026-08-26”;
+   - 10 Acceptance Gates.
+2. Kiểm tra `git status --short`, `git log --oneline --decorate -20`, worktree và
+   branch hiện hữu. Không giả định trạng thái vẫn giống checkpoint.
+3. Baseline audit là commit `47ddaf3`, nhưng hãy xác minh HEAD hiện tại trước khi
+   tạo branch/worktree.
+
+CONTEXT ĐÃ BIẾT
+- Wave 1 đã xong: PLII_M01 STT/X, bat_buoc/forms_oneOf, export gate, chống race,
+  autosave dirty=false và draft restore.
+- Wave 2 đã rollout ngành cho 13 mẫu; production có 24 loop trên 21 mẫu.
+- Test hiện có đều PASS tại checkpoint, nhưng đó chưa phải bằng chứng toàn bộ bảng.
+- PLI_M72 còn điểm mù: cần đủ 5 lưới ngành theo 5 section loại hình; test cũ chỉ
+  yêu cầu 1 loop.
+- PLII_M02 cần các semantic loop ngành riêng (bổ sung/xóa/sửa/hiện tại), không được
+  coi một ds_nganh là hoàn tất.
+- T0-B có census 47 mẫu và T0-C có 28 mẫu ở worktree/branch riêng, chưa merge.
+  T0-A chưa được xác nhận; main chưa có manifest 87/87.
+- Còn khoảng 30 signature STT cần classify. Fixed-matrix, nested-grid và
+  output-table chưa hoàn thiện. Vốn/tài sản/cổ phần/thuế còn phần lớn chưa rollout.
+- Local main từng ahead origin 36 và behind 2; không `git pull` mù.
+- `.exe`/clean-machine packaging chưa được chứng minh.
+
+NGUYÊN TẮC LÀM VIỆC
+- Bảo toàn mọi thay đổi của người dùng; không reset/revert/overwrite ngoài scope.
+- Dùng subagent song song chỉ cho task độc lập. Mỗi agent có branch + Git worktree
+  riêng ngoài repo và ownership file không chồng lấn.
+- Lead không sửa file agent đang sở hữu. Không cho nhiều agent cùng sửa generator,
+  `app.js`, renderer hoặc generated global artifacts.
+- Agent chỉ commit source/spec/test thuộc scope. Lead là người duy nhất regenerate
+  `form_maps.json/js`, templates và blocks toàn cục sau khi merge specs.
+- Không sửa generated JSON thủ công; generator phải idempotent và diff nằm trong
+  allowlist. Không nới test để hợp thức hóa thiếu bảng/cột.
+- Không tự suy diễn pháp lý. Ghi `BLOCKED_LEGAL_REVIEW` kèm heading, cột, source và
+  câu hỏi cụ thể khi thiếu căn cứ.
+- Mỗi wave báo command test và PASS/FAIL/NOT RUN. NOT RUN không được gọi là PASS.
+
+THỨ TỰ THỰC HIỆN BẮT BUỘC
+
+P0 — BASELINE + CENSUS
+1. Xác minh HEAD/worktree/remote divergence; tạo backup branch/tag an toàn.
+2. Inspect hai commit remote, không pull/merge mù.
+3. Spawn tối đa 3 agent độc lập: hoàn tất T0-A; review T0-B; review T0-C.
+4. Mỗi agent chỉ ghi fragment/evidence riêng. Lead chuẩn hóa và hợp nhất manifest.
+5. Gate: `app/data/table_specs/manifest.json` đủ 87/87, mọi signature được classify,
+   rồi commit `table-manifest-v1`. Chưa đạt thì không rollout domain mới.
+
+P1 — CLOSE INDUSTRY BLIND SPOTS
+1. Nâng generator hỗ trợ occurrence/section identity và boundary an toàn.
+2. Hoàn thiện đủ 5 lưới ngành PLI_M72.
+3. Tách đủ semantic loops ngành PLII_M02.
+4. Thêm structural/DOCX test từng section và detector negative.
+5. Regenerate tập trung, review allowlist, full regression.
+
+P2 — TABLE PLATFORM
+Triển khai contract/schema/renderer/controller/generator/test cho editable-grid,
+fixed-matrix, nested-grid và output-table; gồm policy thêm/xóa/reorder, fixed rows,
+stable ID, formulas/totals, validation, draft migration, accessibility và export.
+
+P3 — DOMAIN ROLLOUT
+Sau khi P2 xanh, giao các worktree tách biệt cho:
+- capital-assets;
+- people-ownership;
+- tax-grids;
+- branches-products-admin.
+Tích hợp theo bốn batch trong PLAN, không merge 87 mẫu cùng lúc.
+
+P4 — RELEASE
+Full structural regression 87/87, visual DOCX/PDF/PNG, dữ liệu biên, build `.exe`
+tái lập và smoke trên Windows sạch không có Python.
+
+BÁO CÁO SAU MỖI WAVE
+- Agent/worktree/branch/commit/ownership.
+- Manifest entries và table sections hoàn tất/tổng số.
+- File/spec/generated diff trong và ngoài allowlist.
+- Tất cả lệnh test cùng PASS/FAIL/NOT RUN.
+- BLOCKED_LEGAL_REVIEW cùng evidence và quyết định cần người dùng.
+- Rủi ro còn lại và gate tiếp theo.
+
+Không báo DONE theo phần trăm. Chỉ báo TABLES DONE khi đủ manifest 87/87, không còn
+signature chưa classify, mọi table entry có production test, full regression và
+visual QA đều PASS, đồng thời `.exe` smoke đạt đủ 10 Acceptance Gates trong PLAN.md.
+
+Hãy bắt đầu bằng audit read-only và trình bày baseline thực tế. Sau đó tạo worktree
+và điều phối P0; không nhảy thẳng vào sửa bảng vốn/tài sản trước khi gate T0 đạt.
+```

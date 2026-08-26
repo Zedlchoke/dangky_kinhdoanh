@@ -291,12 +291,31 @@
     }
   };
 
-  /* Tạo meta grid mới từ base dùng chung: clone SÂU mức-1 để mỗi loop có
-   * mảng columns RIÊNG (không chia sẻ tham chiếu giữa các loop/mẫu - mutate
-   * một chỗ không lan sang chỗ khác). */
+  /* Clone giá trị metadata (P2.0 hardening): object/array -> bản sao ĐỆ QUY
+   * mọi mức, scalar (string/number/bool/null/undefined) giữ nguyên.
+   * Không dependency - chỉ dùng cho metadata JSON-thuần của grid. */
+  function deepCloneVal(v) {
+    if (v == null || typeof v !== 'object') return v;
+    if (Array.isArray(v)) return v.map(deepCloneVal);
+    var o = {};
+    Object.keys(v).forEach(function (k) { o[k] = deepCloneVal(v[k]); });
+    return o;
+  }
+
+  /* Tạo meta grid mới từ base dùng chung: CLONE SÂU toàn bộ field để meta
+   * trả về KHÔNG chia sẻ bất kỳ tham chiếu nào với GRID_META gốc hay giữa
+   * các loop/mẫu - mutate một chỗ không bao giờ lan sang chỗ khác:
+   *  - columns[]          : mảng mới + từng column object mới;
+   *  - autoName           : object mới {codeTag, nameTag};
+   *  - duplicateKeys,
+   *    outputOnlyTags     : mảng copy;
+   *  - activeWhen         : object mới (kể cả valueOf bên trong);
+   *  - label/syncGroup/
+   *    semanticKey...     : string gán thẳng là đủ (immutable theo giá trị). */
   function mkGrid(base, extra) {
-    var m = Object.assign({}, base, extra || {});
-    m.columns = (base.columns || []).map(function (c) { return Object.assign({}, c); });
+    var merged = Object.assign({}, base, extra || {});
+    var m = {};
+    Object.keys(merged).forEach(function (k) { m[k] = deepCloneVal(merged[k]); });
     return m;
   }
 

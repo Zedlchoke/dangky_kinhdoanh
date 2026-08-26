@@ -394,7 +394,21 @@ function vsicOf(ma) {
 // ===================== N9. Allowlist file generated trong diff ==============
 
 (function n9() {
-  const ALLOW = ['app/templates/PLII_M01.docx', 'app/data/table_specs/manifest.json'];
+  // Allowlist: file generated DUOC PHEP xuat hien trong diff 6eaf4ee..HEAD.
+  //  - 2 entry dau: allowlist gốc thời điểm viết test (P1 audit).
+  //  - layout_specs/fragments/*: census layout L0-A/L0-B/L0-C được merge
+  //    chính thức lên main (5ef9cad, 52de102, a5f30a7) - artifact đọc-only
+  //    của công đoạn census, không phải đụng generated bởi agent sau.
+  const ALLOW = [
+    'app/templates/PLII_M01.docx',
+    'app/data/table_specs/manifest.json',
+    'app/data/layout_specs/fragments/l0_a.md',
+    'app/data/layout_specs/fragments/l0_a_evidence.json',
+    'app/data/layout_specs/fragments/l0_b.md',
+    'app/data/layout_specs/fragments/l0_b_evidence.json',
+    'app/data/layout_specs/fragments/l0_c.md',
+    'app/data/layout_specs/fragments/l0_c_evidence.json'
+  ];
   let files = [];
   try {
     files = execSync('git diff --name-only 6eaf4ee..HEAD',

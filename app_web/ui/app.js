@@ -59,7 +59,8 @@
   }
   function esc(s) { return R.escapeHtml(s); }
   function cssEsc(s) {
-    return (window.CSS && CSS.escape) ? CSS.escape(s) : String(s).replace(/"/g, '\\"');
+    return (typeof window !== 'undefined' && window.CSS && CSS.escape)
+      ? CSS.escape(s) : String(s).replace(/"/g, '\\"');
   }
 
   // ------------------------------------------- GridCtl: editable-grid thuần
@@ -185,10 +186,40 @@
      * nào vào payload (section không áp dụng phải rỗng trong văn bản).
      * Grid inactive vì INTERIM minFilledRows vốn không có dòng có dữ liệu ->
      * KHÔNG filter để payload giữ nguyên 100% hành vi cũ; grid KHÔNG có
-     * activeWhen cũng không bị đụng tới. */
+     * activeWhen cũng không bị đụng tới.
+     *
+     * P2.0 EXPORT CONFLICT GUARD (chống 'first-doc-wins' ÂM THẦM): loop cùng
+     * tên có thể được resolve sang metadata có contract khác nhau tùy mẫu
+     * (vd nganh_bo_sung của PLI_M12 rơi về GRID_META toàn cục cols
+     * [ten_nganh,...] trong khi PLII_M02 tự khai form-scoped cols
+     * [ten_nganh_bo_sung,...]) trong khi payload là MỘT mảng duy nhất theo
+     * tên loop - không thể phục vụ hai contract cùng lúc. Khi resolve meta
+     * cho một loop, guard chạy theo MỘT chỗ duy nhất này với hai bước:
+     *  1. Với TỪNG docId được truyền, resolve meta ĐÚNG NHƯ CŨ (form-scoped
+     *     FORM_GRID_META[docId].loops trước, fallback GRID_META toàn cục)
+     *     rồi thu thập sides = các {docId, metaRef} KHÁC NHAU VỀ REFERENCE.
+     *     SHORT-CIRCUIT chống false-positive: nếu mọi sample trỏ CÙNG MỘT
+     *     object (trường hợp phổ biến nhất - nhiều mẫu cùng fallback về
+     *     GRID_META[name], hoặc chỉ 1 mẫu có meta) -> tương đương TUYỆT ĐỐI,
+     *     không so signature, không flag.
+     *  2. Có >=2 reference khác nhau -> so signature 'export contract':
+     *     requirePrimary, autoName{codeTag,nameTag}, tập tag cột
+     *     (columns[].tag sort), chế độ activation (activationModeOf).
+     *     Signature BẰNG vẫn coi là tương đương (vd PLII_M02.ds_nganh là
+     *     clone mkGrid của GRID_META.ds_nganh nhưng cùng requirePrimary/
+     *     autoName/colTags/actMode -> dossier ghép mẫu KHÔNG bị flag).
+     *     Khác nhau -> ghi vào report GridCtl.lastExportConflicts (reset
+     *     mỗi lần gọi); đường export THẬT phải gọi GridCtl.exportLoopsStrict
+     *     - chỗ DUY NHẤT ném lỗi có cấu trúc để FAIL LOUD, không xuất
+     *     payload nửa vời. Payload do HÀM NÀY trả luôn giữ nguyên hành vi
+     *     first-doc-wins cũ 100% (tương thích ngược cho caller cũ/test). */
+    lastExportConflicts: [],
     exportLoops: function (store, docIds) {
       var out = {};
+      var conflicts = [];
       Object.keys(store.loops || {}).forEach(function (name) {
+        var cf = GridCtl.loopContractConflict(name, docIds);
+        if (cf) conflicts.push(cf);
         var gm = null;
         (docIds || []).some(function (id) {
           gm = FD.getGridMeta({ docId: id, loop: name });
@@ -216,7 +247,144 @@
           return clean;
         });
       });
+      GridCtl.lastExportConflicts = conflicts;
       return out;
+    },
+
+    /* -------------------------------------- P2.0: export contract guard */
+    /* Signature 'export contract' của một grid meta - mọi field ảnh hưởng
+     * trực tiếp đến PAYLOAD export của loop:
+     *  - requirePrimary       : có điền '' cho la_nganh_chinh thiếu hay không
+     *  - autoName code/nameTag: cặp tag mã->tên mà template mong đợi
+     *  - colTags              : tập tag cột (sort) template mong đợi
+     *  - actMode              : activationModeOf - null | 'selector' |
+     *                           'interim-filled-data' (quyết định việc lọc
+     *                           section inactive khỏi payload)
+     * Hai meta tương đương <=> JSON signature bằng. */
+    exportContractSig: function (gm) {
+      var tags = ((gm && gm.columns) || [])
+        .map(function (c) { return c && c.tag; })
+        .filter(Boolean).slice().sort();
+      return {
+        requirePrimary: !!(gm && gm.requirePrimary),
+        autoNameCodeTag: (gm && gm.autoName && gm.autoName.codeTag) || null,
+        autoNameNameTag: (gm && gm.autoName && gm.autoName.nameTag) || null,
+        colTags: tags.join('|'),
+        actMode: FD.activationModeOf(gm)
+      };
+    },
+
+    /* Lý do hai signature khác nhau (đưa vào message lỗi/report). */
+    exportSigDiff: function (sa, sb) {
+      var reasons = [];
+      if (sa.requirePrimary !== sb.requirePrimary)
+        reasons.push('requirePrimary: ' + sa.requirePrimary + ' != ' + sb.requirePrimary);
+      if (sa.autoNameCodeTag !== sb.autoNameCodeTag ||
+          sa.autoNameNameTag !== sb.autoNameNameTag)
+        reasons.push('autoName: [' + sa.autoNameCodeTag + ' -> ' + sa.autoNameNameTag +
+          '] != [' + sb.autoNameCodeTag + ' -> ' + sb.autoNameNameTag + ']');
+      if (sa.colTags !== sb.colTags)
+        reasons.push('tap tag cot: [' + sa.colTags + '] != [' + sb.colTags + ']');
+      if (sa.actMode !== sb.actMode)
+        reasons.push('che do activation (activationModeOf): ' + sa.actMode +
+          ' != ' + sb.actMode);
+      return reasons;
+    },
+
+    /* Thu thập sides của MỘT loop theo ĐÚNG resolver cũ cho TỪNG docId
+     * (form-scoped trước, fallback GRID_META toàn cục - getGridMeta).
+     * Trả các side {docId, semanticKey, metaRef} KHÁC NHAU VỀ REFERENCE,
+     * giữ thứ tự docIds (side đầu = winner của payload first-wins); docId
+     * không resolve được meta hoặc trùng reference side trước thì bỏ. */
+    collectLoopSides: function (name, docIds) {
+      var seenRef = [];
+      var out = [];
+      (docIds || []).forEach(function (id) {
+        var gm = FD.getGridMeta({ docId: id, loop: name });
+        if (!gm || seenRef.indexOf(gm) >= 0) return;
+        seenRef.push(gm);
+        out.push({
+          docId: id,
+          semanticKey: gm.semanticKey || null,
+          metaRef: gm
+        });
+      });
+      return out;
+    },
+
+    /* Đối chiếu contract các meta của MỘT loop theo tên:
+     *  1. <2 side khác reference -> null (SHORT-CIRCUIT tương đương tuyệt
+     *     đối - mọi mẫu cùng fallback chung một object là trường hợp điển hình).
+     *  2. >=2 reference -> so signature; mọi signature BẰNG -> null (vd
+     *     clone mkGrid vs bản global cùng contract); LỆCH -> conflict có cấu
+     *     trúc {code, loop, winner, sides[], reasons[], message} - winner là
+     *     meta đầu tiên theo thứ tự docIds (đúng first-doc-wins cũ, chỉ BÁO
+     *     thay vì im lặng). */
+    loopContractConflict: function (name, docIds) {
+      var sides = GridCtl.collectLoopSides(name, docIds);
+      if (sides.length < 2) return null;
+      var sigs = sides.map(function (s) {
+        return { side: s, sig: GridCtl.exportContractSig(s.metaRef) };
+      });
+      var first = sigs[0];
+      var reasons = [];
+      for (var i = 1; i < sigs.length; i++) {
+        GridCtl.exportSigDiff(first.sig, sigs[i].sig).forEach(function (r) {
+          function tag(s) {
+            return s.docId + (s.semanticKey ? '(' + s.semanticKey + ')' : '');
+          }
+          var msg = tag(first.side) + ' khac ' + tag(sigs[i].side) + ' - ' + r;
+          if (reasons.indexOf(msg) < 0) reasons.push(msg);
+        });
+      }
+      if (!reasons.length) return null; // signature THỰC SỰ tương đương
+      return {
+        code: 'EXPORT_LOOP_CONTRACT_CONFLICT',
+        loop: name,
+        winner: {
+          docId: first.side.docId,
+          semanticKey: first.side.semanticKey,
+          signature: first.sig
+        },
+        sides: sigs.map(function (x) {
+          return {
+            docId: x.side.docId,
+            semanticKey: x.side.semanticKey,
+            signature: x.sig
+          };
+        }),
+        reasons: reasons,
+        message: 'Loop "' + name + '" co nhieu contract export khac nhau giua cac mau (' +
+          sides.map(function (s) { return s.docId; }).join(', ') +
+          '). Khong duoc am tham chon meta cua mau dau tien. Ly do khac: ' +
+          reasons.join('; ')
+      };
+    },
+
+    /* Quét TẤT CẢ loop đang có dữ liệu trong store, trả danh sách conflict. */
+    detectExportConflicts: function (store, docIds) {
+      var found = [];
+      Object.keys((store && store.loops) || {}).forEach(function (name) {
+        var cf = GridCtl.loopContractConflict(name, docIds);
+        if (cf) found.push(cf);
+      });
+      return found;
+    },
+
+    /* CHỐ DUY NHẤT cho đường export thật (buildExportData/UI export):
+     * giống exportLoops nhưng NÉM lỗi có cấu trúc khi phát hiện xung đột
+     * contract (err.code='EXPORT_LOOP_CONTRACT_CONFLICT', err.conflicts=
+     * report đầy đủ) -> export FAIL LOUD, không payload nửa vời. Caller
+     * bắt lỗi này phải chặn toàn bộ phần loops, không xuất cục bộ. */
+    exportLoopsStrict: function (store, docIds) {
+      var conflicts = GridCtl.detectExportConflicts(store, docIds);
+      if (conflicts.length) {
+        var e = new Error(conflicts.map(function (c) { return c.message; }).join(' | '));
+        e.code = 'EXPORT_LOOP_CONTRACT_CONFLICT';
+        e.conflicts = conflicts;
+        throw e;
+      }
+      return GridCtl.exportLoops(store, docIds);
     },
 
     /* Phân loại trạng thái ô mã ngành theo PLAN.md PHASE 4 (thuần, offline):
@@ -922,16 +1090,87 @@
     return last ? last._row_id : null;
   }
 
-  function focusNewRow(loop, rowId, idx) {
-    var tbl = document.querySelector('.loop-table[data-loop="' + cssEsc(loop) + '"]');
-    if (!tbl) return;
-    var tr = (rowId && tbl.querySelector('tr[data-row-id="' + cssEsc(rowId) + '"]')) ||
-      tbl.querySelectorAll('tbody tr')[idx];
-    if (!tr) return;
-    // bảng ngành (mọi loop có cột ma_nganh): focus ô mã; bảng khác: ô đầu
-    var el = tr.querySelector('[data-tag="ma_nganh"]') ||
-      tr.querySelector('input.loop-fld');
-    if (el) { el.focus(); el.scrollIntoView({ block: 'nearest' }); }
+  // ------------------------------------- focus sau row operation (P2.0)
+  /* [PURE] Tag ô đích focus sau ADD/DUPLICATE, suy từ metadata bảng:
+   *  - grid có cột ma_nganh -> 'ma_nganh' (ô mã ngành của dòng mới, ưu tiên
+   *    cao nhất bất kể vị trí cột - vd nganh_bo_sung có ten_nganh editable
+   *    đứng trước vẫn focus mã ngành);
+   *  - ngược lại -> tag EDITABLE ĐẦU TIÊN theo meta columns (bỏ qua loại
+   *    readonly/outputOnly/radio/checkbox - không phải ô gõ được);
+   *  - không suy được (meta thiếu/rỗng) -> null, caller fallback DOM. */
+  function focusTagOfGrid(gm) {
+    var cols = (gm && gm.columns) || [];
+    for (var i = 0; i < cols.length; i++) {
+      if (cols[i] && cols[i].tag === 'ma_nganh') return 'ma_nganh';
+    }
+    for (var j = 0; j < cols.length; j++) {
+      var c = cols[j];
+      if (!c || !c.tag) continue;
+      var t = c.type || 'text';
+      if (t === 'readonly' || t === 'outputOnly' ||
+          t === 'radio' || t === 'checkbox') continue;
+      return c.tag;
+    }
+    return null;
+  }
+
+  /* [PURE] _row_id cần GIỮ selection/focus sau DELETE:
+   *  - id đang chọn còn tồn tại trong rowsAfter -> giữ nguyên;
+   *  - bị xóa (hoặc chưa chọn) -> dòng KỀ theo index cũ trong rowsBefore,
+   *    clamp về cuối để không trỏ ra ngoài;
+   *  - bảng rỗng sau xóa -> null. Không bao giờ ném exception. */
+  function nextSelAfterDelete(rowsBefore, rowsAfter, prevRowId) {
+    function idx(rows, id) {
+      for (var i = 0; i < rows.length; i++) {
+        if (rows[i] && rows[i]._row_id === id) return i;
+      }
+      return -1;
+    }
+    if (!rowsAfter || !rowsAfter.length) return null;
+    if (prevRowId && idx(rowsAfter, prevRowId) >= 0) return prevRowId;
+    var at = prevRowId ? idx(rowsBefore || [], prevRowId) : -1;
+    if (at < 0) at = (rowsBefore || []).length - 1;
+    if (at < 0) at = 0;
+    var row = rowsAfter[Math.min(at, rowsAfter.length - 1)];
+    return (row && row._row_id) ? row._row_id : null;
+  }
+
+  /* Focus một dòng của bảng lặp sau row-op (DOM): tìm tr theo _row_id
+   * (fallback theo index khi row vừa render chưa kịp mang id), rồi chọn ô:
+   *  1. [data-tag=tag] nếu caller chỉ định tag (focusTagOfGrid);
+   *  2. input.loop-fld KHÔNG readonly đầu tiên của dòng (ten_nganh readonly
+   *     của bảng ngành không bao giờ bị focus nhầm);
+   *  3. input bất kỳ đầu dòng.
+   * Trả true nếu đã focus; KHÔNG BAO GIỜ ném exception khi bảng rỗng/dòng
+   * không tồn tại/DOM lạ - thao tác row-op phải luôn thành công kể cả khi
+   * focus thất bại. */
+  function focusGridRow(loop, opts) {
+    try {
+      opts = opts || {};
+      var tbl = document.querySelector(
+        '.loop-table[data-loop="' + cssEsc(loop) + '"]');
+      if (!tbl) return false;
+      var tr = ((opts.rowId != null) &&
+        tbl.querySelector('tr[data-row-id="' + cssEsc(opts.rowId) + '"]')) ||
+        tbl.querySelectorAll('tbody tr')[opts.idx] || null;
+      if (!tr) return false;
+      var el = opts.tag ?
+        tr.querySelector('[data-tag="' + cssEsc(opts.tag) + '"]') : null;
+      if (!el) {
+        var flds = tr.querySelectorAll('input.loop-fld');
+        for (var i = 0; i < flds.length; i++) {
+          // attr boolean: có mặt -> ''/giá trị nào đó; vắng -> null
+          if (flds[i].getAttribute('readonly') == null) { el = flds[i]; break; }
+        }
+      }
+      if (!el) el = tr.querySelector('input');
+      if (!el) return false;
+      if (typeof el.focus === 'function') el.focus();
+      if (el.scrollIntoView) el.scrollIntoView({ block: 'nearest' });
+      return true;
+    } catch (e) {
+      return false; // DOM lạ/bảng rỗng: bỏ qua, không chặn thao tác dữ liệu
+    }
   }
 
   function uiAddRow(loop) {
@@ -949,8 +1188,9 @@
     state.selRowId[loop] = res.id;
     markDirty();
     rerenderKeepView();
-    // riêng ds_nganh: focus ô ma_nganh của dòng vừa thêm (PLAN.md PHASE 5)
-    focusNewRow(loop, res.id, res.index);
+    // P2.0: grid có ma_nganh -> focus ô mã ngành dòng mới; không có -> ô
+    // editable đầu theo meta (fallback input.loop-fld đầu dòng trong DOM)
+    focusGridRow(loop, { rowId: res.id, idx: res.index, tag: focusTagOfGrid(gm) });
   }
 
   function uiDeleteRows(loop) {
@@ -959,6 +1199,9 @@
     var rows = state.store.loops[loop] || [];
     if (!rows.length) return;
     var label = (gm && gm.label) || loop;
+    // P2.0: chụp selection TRƯỚC khi xóa để focus/selection bám _row_id
+    var beforeRows = rows.slice();
+    var prevId = targetRowId(loop);
     var multi = Object.keys(state.multiSel[loop] || {}).filter(function (id) {
       return GridCtl.findRowIndex(rows, id) >= 0;
     });
@@ -984,9 +1227,22 @@
       }
     }
     GridCtl.deleteRows(state.store, loop, ids);
+    // P2.0: selection/focus bám _row_id - id đang chọn còn sống thì giữ,
+    // bị xóa thì dòng kề theo index an toàn (clamp cuối); bảng rỗng -> bỏ
+    var afterRows = state.store.loops[loop] || [];
+    var nid = nextSelAfterDelete(beforeRows, afterRows, prevId);
     clearLoopSelection(loop);
+    if (nid) {
+      state.selRowId[loop] = nid;
+      state.selectedLoopRow[loop] = GridCtl.findRowIndex(afterRows, nid);
+    }
     markDirty();
     rerenderKeepView();
+    focusGridRow(loop, {
+      rowId: nid,
+      idx: nid != null ? state.selectedLoopRow[loop] : 0,
+      tag: focusTagOfGrid(gm)
+    });
   }
 
   function uiClearRows(loop) {
@@ -1011,9 +1267,13 @@
     if (!id) return;
     var at = GridCtl.moveRow(state.store, loop, id, dir);
     if (at < 0) return;
+    state.selRowId[loop] = id; // P2.0: selection bám _row_id, không theo index
     state.selectedLoopRow[loop] = at; // _row_id giữ nguyên -> lỗi vẫn đúng dòng
     markDirty();
     rerenderKeepView();
+    // P2.0: focus đi CÙNG dòng vừa di chuyển (tra cứu lại theo _row_id sau
+    // rerender nên không bao giờ trỏ sai row khi thứ tự đã đổi)
+    focusGridRow(loop, { rowId: id, idx: at, tag: focusTagOfGrid(gm) });
   }
 
   function uiDuplicateRow(loop) {
@@ -1028,7 +1288,7 @@
     state.selectedLoopRow[loop] = res.index;
     markDirty();
     rerenderKeepView();
-    focusNewRow(loop, res.id, res.index);
+    focusGridRow(loop, { rowId: res.id, idx: res.index, tag: focusTagOfGrid(gm) });
   }
 
   function handleLoopAction(btn) {
@@ -1438,6 +1698,10 @@
   }
 
   // ------------------------------------------------------------- export
+  /* buildExportData đi qua GridCtl.exportLoopsStrict - CHỐ DUY NHẤT của
+   * đường export (P2.0): phát hiện xung đột contract export giữa các mẫu
+   * (loop cùng tên, form-scoped meta khác nhau) -> ném lỗi có cấu trúc,
+   * doExport bắt và chặn export LOUD thay vì âm thầm dùng meta mẫu đầu. */
   function buildExportData() {
     var data = {};
     Object.keys(state.store.values).forEach(function (k) {
@@ -1447,9 +1711,10 @@
       data[k] = state.store.checks[k] ? 'X' : '';
     });
     // loops: bỏ _row_id/field nội bộ; la_nganh_chinh map 'X'/'' cho template
-    // (đi qua GridCtl.exportLoops - chỗ duy nhất quyết định định dạng payload;
-    // resolve meta form-scoped theo các mẫu đang chọn)
-    var loops = GridCtl.exportLoops(state.store,
+    // (đi qua GridCtl.exportLoopsStrict - chỗ duy nhất quyết định định dạng
+    // payload + guard xung đột contract; resolve meta form-scoped theo các
+    // mẫu đang chọn)
+    var loops = GridCtl.exportLoopsStrict(state.store,
       visibleDocs().map(function (d) { return d.id; }));
     Object.keys(loops).forEach(function (name) {
       data[name] = loops[name];
@@ -1486,11 +1751,34 @@
       return;
     }
     var btnBox = toast('Đang xuất hồ sơ…', '', true);
-    var payload = {
-      case_id: state.caseId,
-      forms: visibleDocs().map(function (d) { return { id: d.id }; }),
-      data: buildExportData()
-    };
+    var payload;
+    try {
+      payload = {
+        case_id: state.caseId,
+        forms: visibleDocs().map(function (d) { return { id: d.id }; }),
+        data: buildExportData() // exportLoopsStrict: ném lỗi nếu conflict
+      };
+    } catch (ex) {
+      btnBox.remove();
+      // P2.0: xung đột contract export giữa các mẫu -> chặn LOUD kèm chi tiết
+      if (ex && ex.code === 'EXPORT_LOOP_CONTRACT_CONFLICT') {
+        state.errors = (ex.conflicts || []).map(function (c) {
+          return {
+            key: '@export-conflict:' + c.loop, docId: c.winner && c.winner.docId,
+            code: 'EXPORT_LOOP_CONTRACT_CONFLICT', severity: 'blocking',
+            message: c.message
+          };
+        });
+        renderErrorPanel();
+        patchErrorsDom();
+        openRightPanel();
+        toast('<b>Không thể xuất hồ sơ: xung đột contract export.</b><br>' +
+          esc((ex.conflicts || []).map(function (c) { return c.message; })
+            .join('<br>')), 'err', true);
+        return;
+      }
+      throw ex; // lỗi lạ không nuốt im lặng
+    }
     Promise.resolve(api().export(payload)).then(function (res) {
       if (typeof res === 'string') res = JSON.parse(res);
       btnBox.remove();
@@ -1780,13 +2068,21 @@
   /* Helpers thuần phục vụ test node (không DOM): GridCtl là controller
    * editable-grid generic (add/delete/reorder/duplicate/clear/export/radio/
    * vsicResolve), groupErrorsByDoc nhóm lỗi theo mẫu, gridMetaForDoc build
-   * map {loop: meta} form-scoped cho renderer, FormFlow gom nghiệp vụ
-   * chọn mẫu (bat_buoc/oneOf/gate export/draft restore), RequestToken chống
-   * race đổi case, saveOutcome đồng bộ dirty/saveState. */
+   * map {loop: meta} form-scoped cho renderer, GridFocus gom focus sau row
+   * operation (focusTagOfGrid/nextSelAfterDelete thuần + focusGridRow DOM -
+   * uiAddRow/uiDuplicateRow/uiMoveRow/uiDeleteRows đều đi qua đây),
+   * FormFlow gom nghiệp vụ chọn mẫu (bat_buoc/oneOf/gate export/draft
+   * restore), RequestToken chống race đổi case, saveOutcome đồng bộ
+   * dirty/saveState. */
   var Helpers = {
     groupErrorsByDoc: groupErrorsByDoc,
     GridCtl: GridCtl,
     gridMetaForDoc: gridMetaForDoc,
+    GridFocus: {
+      focusTagOfGrid: focusTagOfGrid,
+      nextSelAfterDelete: nextSelAfterDelete,
+      focusGridRow: focusGridRow
+    },
     FormFlow: {
       formIdOf: formIdOf,
       formIds: formIds,

@@ -1,0 +1,1801 @@
+{
+ "version": "layout-manifest-v1",
+ "generated_by": "lead/tools/census/build_layout_manifest.py",
+ "sources": [
+  {
+   "fragment": "l0_a",
+   "range": "PLI_M01-M12",
+   "evidence": "app/data/layout_specs/fragments/l0_a_evidence.json",
+   "census_md": "app/data/layout_specs/fragments/l0_a.md"
+  },
+  {
+   "fragment": "l0_b",
+   "range": "PLI_M13-M80",
+   "evidence": "app/data/layout_specs/fragments/l0_b_evidence.json",
+   "census_md": "app/data/layout_specs/fragments/l0_b.md"
+  },
+  {
+   "fragment": "l0_c",
+   "range": "PLII_M01-M28",
+   "evidence": "app/data/layout_specs/fragments/l0_c_evidence.json",
+   "census_md": "app/data/layout_specs/fragments/l0_c.md"
+  }
+ ],
+ "notes": [
+  "Census L0 chi doc production; screenshot UI NOT RUN (moi truong khong browser backend) - bu bang evidence text/OOXML nguyen van.",
+  "Marker ky thuat vs 'Mau so N' hop le phan loai trong fragment; role/style cu the de Wave L1 extractor chot.",
+  "p1_b_verify_m72.py FAIL san tai HEAD la known-issue tien-integrate, khong thuoc gate layout."
+ ],
+ "totals": {
+  "forms": 87,
+  "by_fragment": {
+   "l0_c": 28,
+   "l0_a": 12,
+   "l0_b": 47
+  },
+  "forms_with_source_indicator": 46,
+  "forms_with_newline_collapse": 83,
+  "forms_with_digit_glue": 47,
+  "total_source_indicator_blocks": 46,
+  "total_newline_blocks": 336,
+  "total_digit_glue_candidates": 142,
+  "unclassified_markers": 0
+ },
+ "forms": [
+  {
+   "fragment": "l0_c",
+   "ten_mau": "Giấy đề nghị đăng ký hộ kinh doanh",
+   "block_count": 69,
+   "source_indicator_count": 1,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 2,
+   "digit_glue_candidates": 4,
+   "footnote_body_blocks": 4,
+   "superscript_runs_docx": 11,
+   "landmarks": {
+    "title": 1,
+    "salutation": 1,
+    "date_line": 3,
+    "signature": 6
+   },
+   "flattened_table_header_blocks": 0,
+   "form_id": "PLII_M01",
+   "range": "PLII_M01-M28"
+  },
+  {
+   "fragment": "l0_c",
+   "ten_mau": "Giấy đề nghị đăng ký thay đổi nội dung đăng ký hộ kinh doanh",
+   "block_count": 151,
+   "source_indicator_count": 1,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 3,
+   "digit_glue_candidates": 8,
+   "footnote_body_blocks": 4,
+   "superscript_runs_docx": 18,
+   "landmarks": {
+    "title": 1,
+    "salutation": 1,
+    "date_line": 3,
+    "signature": 14
+   },
+   "flattened_table_header_blocks": 2,
+   "form_id": "PLII_M02",
+   "range": "PLII_M01-M28"
+  },
+  {
+   "fragment": "l0_c",
+   "ten_mau": "Giấy đề nghị đăng ký tạm ngừng kinh doanh/tiếp tục kinh doanh trước thời hạn đã đăng ký của hộ kinh doanh",
+   "block_count": 22,
+   "source_indicator_count": 1,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 3,
+   "digit_glue_candidates": 1,
+   "footnote_body_blocks": 0,
+   "superscript_runs_docx": 2,
+   "landmarks": {
+    "title": 1,
+    "salutation": 1,
+    "date_line": 3,
+    "signature": 2
+   },
+   "flattened_table_header_blocks": 0,
+   "form_id": "PLII_M03",
+   "range": "PLII_M01-M28"
+  },
+  {
+   "fragment": "l0_c",
+   "ten_mau": "Thông báo về việc chấm dứt hoạt động hộ kinh doanh",
+   "block_count": 16,
+   "source_indicator_count": 1,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 3,
+   "digit_glue_candidates": 1,
+   "footnote_body_blocks": 0,
+   "superscript_runs_docx": 2,
+   "landmarks": {
+    "title": 1,
+    "salutation": 1,
+    "date_line": 1,
+    "signature": 2
+   },
+   "flattened_table_header_blocks": 0,
+   "form_id": "PLII_M04",
+   "range": "PLII_M01-M28"
+  },
+  {
+   "fragment": "l0_c",
+   "ten_mau": "Giấy đề nghị cấp lại Giấy chứng nhận đăng ký hộ kinh doanh",
+   "block_count": 17,
+   "source_indicator_count": 1,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 3,
+   "digit_glue_candidates": 1,
+   "footnote_body_blocks": 1,
+   "superscript_runs_docx": 5,
+   "landmarks": {
+    "title": 1,
+    "salutation": 1,
+    "date_line": 1,
+    "signature": 2
+   },
+   "flattened_table_header_blocks": 0,
+   "form_id": "PLII_M05",
+   "range": "PLII_M01-M28"
+  },
+  {
+   "fragment": "l0_c",
+   "ten_mau": "Giấy đề nghị dừng thực hiện thủ tục đăng ký hộ kinh doanh",
+   "block_count": 32,
+   "source_indicator_count": 1,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 3,
+   "digit_glue_candidates": 2,
+   "footnote_body_blocks": 2,
+   "superscript_runs_docx": 6,
+   "landmarks": {
+    "title": 1,
+    "salutation": 1,
+    "date_line": 3,
+    "signature": 4
+   },
+   "flattened_table_header_blocks": 0,
+   "form_id": "PLII_M06",
+   "range": "PLII_M01-M28"
+  },
+  {
+   "fragment": "l0_c",
+   "ten_mau": "Giấy chứng nhận đăng ký hộ kinh doanh",
+   "block_count": 35,
+   "source_indicator_count": 1,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 3,
+   "digit_glue_candidates": 0,
+   "footnote_body_blocks": 0,
+   "superscript_runs_docx": 2,
+   "landmarks": {
+    "title": 1,
+    "salutation": 0,
+    "date_line": 3,
+    "signature": 2
+   },
+   "flattened_table_header_blocks": 0,
+   "form_id": "PLII_M07",
+   "range": "PLII_M01-M28"
+  },
+  {
+   "fragment": "l0_c",
+   "ten_mau": "Thông báo về cơ quan thuế quản lý trực tiếp hộ kinh doanh",
+   "block_count": 21,
+   "source_indicator_count": 1,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 4,
+   "digit_glue_candidates": 0,
+   "footnote_body_blocks": 0,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "title": 1,
+    "salutation": 1,
+    "date_line": 1,
+    "signature": 1
+   },
+   "flattened_table_header_blocks": 0,
+   "form_id": "PLII_M08",
+   "range": "PLII_M01-M28"
+  },
+  {
+   "fragment": "l0_c",
+   "ten_mau": "Giấy chứng nhận đăng ký hộ kinh doanh (Dùng trong trường hợp cấp lại do mất, cháy, rách, nát hoặc bị tiêu hủy dưới hình thức khác)",
+   "block_count": 11,
+   "source_indicator_count": 1,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 4,
+   "digit_glue_candidates": 1,
+   "footnote_body_blocks": 0,
+   "superscript_runs_docx": 4,
+   "landmarks": {
+    "title": 1,
+    "salutation": 0,
+    "date_line": 1,
+    "signature": 2
+   },
+   "flattened_table_header_blocks": 0,
+   "form_id": "PLII_M09",
+   "range": "PLII_M01-M28"
+  },
+  {
+   "fragment": "l0_c",
+   "ten_mau": "Thông báo về việc sửa đổi, bổ sung hồ sơ đăng ký hộ kinh doanh",
+   "block_count": 23,
+   "source_indicator_count": 1,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 4,
+   "digit_glue_candidates": 0,
+   "footnote_body_blocks": 0,
+   "superscript_runs_docx": 1,
+   "landmarks": {
+    "title": 1,
+    "salutation": 1,
+    "date_line": 2,
+    "signature": 1
+   },
+   "flattened_table_header_blocks": 0,
+   "form_id": "PLII_M10",
+   "range": "PLII_M01-M28"
+  },
+  {
+   "fragment": "l0_c",
+   "ten_mau": "Thông báo yêu cầu hộ kinh doanh báo cáo về việc tuân thủ các quy định về hộ kinh doanh",
+   "block_count": 26,
+   "source_indicator_count": 1,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 4,
+   "digit_glue_candidates": 0,
+   "footnote_body_blocks": 0,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "title": 1,
+    "salutation": 1,
+    "date_line": 1,
+    "signature": 1
+   },
+   "flattened_table_header_blocks": 0,
+   "form_id": "PLII_M11",
+   "range": "PLII_M01-M28"
+  },
+  {
+   "fragment": "l0_c",
+   "ten_mau": "Thông báo về việc vi phạm của hộ kinh doanh thuộc trường hợp thu hồi Giấy chứng nhận đăng ký hộ kinh doanh",
+   "block_count": 25,
+   "source_indicator_count": 1,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 4,
+   "digit_glue_candidates": 0,
+   "footnote_body_blocks": 0,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "title": 1,
+    "salutation": 1,
+    "date_line": 6,
+    "signature": 1
+   },
+   "flattened_table_header_blocks": 0,
+   "form_id": "PLII_M12",
+   "range": "PLII_M01-M28"
+  },
+  {
+   "fragment": "l0_c",
+   "ten_mau": "Thông báo về việc chấm dứt hoạt động hộ kinh doanh",
+   "block_count": 23,
+   "source_indicator_count": 1,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 4,
+   "digit_glue_candidates": 0,
+   "footnote_body_blocks": 0,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "title": 1,
+    "salutation": 0,
+    "date_line": 2,
+    "signature": 2
+   },
+   "flattened_table_header_blocks": 0,
+   "form_id": "PLII_M13",
+   "range": "PLII_M01-M28"
+  },
+  {
+   "fragment": "l0_c",
+   "ten_mau": "Quyết định về việc thu hồi Giấy chứng nhận đăng ký hộ kinh doanh",
+   "block_count": 30,
+   "source_indicator_count": 1,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 4,
+   "digit_glue_candidates": 0,
+   "footnote_body_blocks": 0,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "title": 2,
+    "salutation": 0,
+    "date_line": 2,
+    "signature": 2
+   },
+   "flattened_table_header_blocks": 0,
+   "form_id": "PLII_M14",
+   "range": "PLII_M01-M28"
+  },
+  {
+   "fragment": "l0_c",
+   "ten_mau": "Quyết định về việc thu hồi Giấy chứng nhận đăng ký hộ kinh doanh của lần đăng ký thay đổi",
+   "block_count": 28,
+   "source_indicator_count": 1,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 4,
+   "digit_glue_candidates": 0,
+   "footnote_body_blocks": 0,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "title": 2,
+    "salutation": 0,
+    "date_line": 3,
+    "signature": 2
+   },
+   "flattened_table_header_blocks": 0,
+   "form_id": "PLII_M15",
+   "range": "PLII_M01-M28"
+  },
+  {
+   "fragment": "l0_c",
+   "ten_mau": "Quyết định về việc huỷ bỏ quyết định thu hồi và khôi phục Giấy chứng nhận đăng ký hộ kinh doanh",
+   "block_count": 24,
+   "source_indicator_count": 1,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 4,
+   "digit_glue_candidates": 0,
+   "footnote_body_blocks": 0,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "title": 2,
+    "salutation": 0,
+    "date_line": 2,
+    "signature": 2
+   },
+   "flattened_table_header_blocks": 0,
+   "form_id": "PLII_M16",
+   "range": "PLII_M01-M28"
+  },
+  {
+   "fragment": "l0_c",
+   "ten_mau": "Giấy tiếp nhận hồ sơ và hẹn trả kết quả hồ sơ đăng ký hộ kinh doanh",
+   "block_count": 25,
+   "source_indicator_count": 1,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 4,
+   "digit_glue_candidates": 0,
+   "footnote_body_blocks": 0,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "title": 1,
+    "salutation": 0,
+    "date_line": 1,
+    "signature": 2
+   },
+   "flattened_table_header_blocks": 0,
+   "form_id": "PLII_M17",
+   "range": "PLII_M01-M28"
+  },
+  {
+   "fragment": "l0_c",
+   "ten_mau": "Giấy tiếp nhận hồ sơ và hẹn trả kết quả hồ sơ đăng ký hộ kinh doanh qua mạng thông tin điện tử",
+   "block_count": 27,
+   "source_indicator_count": 1,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 2,
+   "digit_glue_candidates": 1,
+   "footnote_body_blocks": 1,
+   "superscript_runs_docx": 3,
+   "landmarks": {
+    "title": 1,
+    "salutation": 0,
+    "date_line": 1,
+    "signature": 0
+   },
+   "flattened_table_header_blocks": 0,
+   "form_id": "PLII_M18",
+   "range": "PLII_M01-M28"
+  },
+  {
+   "fragment": "l0_c",
+   "ten_mau": "Thông báo yêu cầu hộ kinh doanh tạm ngừng kinh doanh ngành, nghề đầu tư kinh doanh có điều kiện",
+   "block_count": 23,
+   "source_indicator_count": 1,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 4,
+   "digit_glue_candidates": 0,
+   "footnote_body_blocks": 0,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "title": 1,
+    "salutation": 1,
+    "date_line": 1,
+    "signature": 1
+   },
+   "flattened_table_header_blocks": 0,
+   "form_id": "PLII_M19",
+   "range": "PLII_M01-M28"
+  },
+  {
+   "fragment": "l0_c",
+   "ten_mau": "Giấy xác nhận về việc hộ kinh doanh đăng ký tạm ngừng kinh doanh/tiếp tục kinh doanh trước thời hạn đã đăng ký",
+   "block_count": 22,
+   "source_indicator_count": 0,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 4,
+   "digit_glue_candidates": 0,
+   "footnote_body_blocks": 0,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "title": 0,
+    "salutation": 0,
+    "date_line": 2,
+    "signature": 1
+   },
+   "flattened_table_header_blocks": 0,
+   "form_id": "PLII_M20",
+   "range": "PLII_M01-M28"
+  },
+  {
+   "fragment": "l0_c",
+   "ten_mau": "Thông báo về việc Giấy chứng nhận đăng ký hộ kinh doanh không có hiệu lực",
+   "block_count": 27,
+   "source_indicator_count": 0,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 4,
+   "digit_glue_candidates": 0,
+   "footnote_body_blocks": 0,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "title": 1,
+    "salutation": 1,
+    "date_line": 3,
+    "signature": 1
+   },
+   "flattened_table_header_blocks": 0,
+   "form_id": "PLII_M21",
+   "range": "PLII_M01-M28"
+  },
+  {
+   "fragment": "l0_c",
+   "ten_mau": "Thông báo yêu cầu hộ kinh doanh đăng ký thay đổi thành viên không được quyền thành lập hộ kinh doanh",
+   "block_count": 21,
+   "source_indicator_count": 0,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 4,
+   "digit_glue_candidates": 0,
+   "footnote_body_blocks": 0,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "title": 1,
+    "salutation": 1,
+    "date_line": 1,
+    "signature": 1
+   },
+   "flattened_table_header_blocks": 0,
+   "form_id": "PLII_M22",
+   "range": "PLII_M01-M28"
+  },
+  {
+   "fragment": "l0_c",
+   "ten_mau": "Thông báo về việc xử lý hồ sơ đăng ký hộ kinh doanh hoặc ra thông báo, quyết định không đúng quy định về hồ sơ, trình tự, thủ tục",
+   "block_count": 22,
+   "source_indicator_count": 0,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 4,
+   "digit_glue_candidates": 0,
+   "footnote_body_blocks": 0,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "title": 1,
+    "salutation": 1,
+    "date_line": 1,
+    "signature": 1
+   },
+   "flattened_table_header_blocks": 0,
+   "form_id": "PLII_M23",
+   "range": "PLII_M01-M28"
+  },
+  {
+   "fragment": "l0_c",
+   "ten_mau": "Thông báo về việc khôi phục Giấy chứng nhận đăng ký hộ kinh doanh",
+   "block_count": 16,
+   "source_indicator_count": 0,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 4,
+   "digit_glue_candidates": 0,
+   "footnote_body_blocks": 0,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "title": 1,
+    "salutation": 0,
+    "date_line": 2,
+    "signature": 1
+   },
+   "flattened_table_header_blocks": 0,
+   "form_id": "PLII_M24",
+   "range": "PLII_M01-M28"
+  },
+  {
+   "fragment": "l0_c",
+   "ten_mau": "Thông báo về việc hiệu đính nội dung trên Giấy chứng nhận đăng ký hộ kinh doanh",
+   "block_count": 19,
+   "source_indicator_count": 0,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 4,
+   "digit_glue_candidates": 0,
+   "footnote_body_blocks": 0,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "title": 1,
+    "salutation": 1,
+    "date_line": 1,
+    "signature": 2
+   },
+   "flattened_table_header_blocks": 0,
+   "form_id": "PLII_M25",
+   "range": "PLII_M01-M28"
+  },
+  {
+   "fragment": "l0_c",
+   "ten_mau": "Thông báo về việc dừng/từ chối dừng thực hiện thủ tục đăng ký hộ kinh doanh",
+   "block_count": 25,
+   "source_indicator_count": 0,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 4,
+   "digit_glue_candidates": 0,
+   "footnote_body_blocks": 0,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "title": 1,
+    "salutation": 1,
+    "date_line": 2,
+    "signature": 1
+   },
+   "flattened_table_header_blocks": 0,
+   "form_id": "PLII_M26",
+   "range": "PLII_M01-M28"
+  },
+  {
+   "fragment": "l0_c",
+   "ten_mau": "Thông báo về việc hộ kinh doanh đang làm thủ tục chấm dứt hoạt động",
+   "block_count": 23,
+   "source_indicator_count": 0,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 3,
+   "digit_glue_candidates": 0,
+   "footnote_body_blocks": 0,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "title": 1,
+    "salutation": 0,
+    "date_line": 2,
+    "signature": 2
+   },
+   "flattened_table_header_blocks": 0,
+   "form_id": "PLII_M27",
+   "range": "PLII_M01-M28"
+  },
+  {
+   "fragment": "l0_c",
+   "ten_mau": "Thông báo về việc rà soát thông tin đăng ký hộ kinh doanh của hộ kinh doanh",
+   "block_count": 32,
+   "source_indicator_count": 0,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 3,
+   "digit_glue_candidates": 0,
+   "footnote_body_blocks": 0,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "title": 1,
+    "salutation": 1,
+    "date_line": 1,
+    "signature": 2
+   },
+   "flattened_table_header_blocks": 0,
+   "form_id": "PLII_M28",
+   "range": "PLII_M01-M28"
+  },
+  {
+   "fragment": "l0_a",
+   "ten_mau": "Giấy đề nghị đăng ký doanh nghiệp - Doanh nghiệp tư nhân",
+   "block_count": 170,
+   "source_indicator_count": 1,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 4,
+   "digit_glue_candidates": 6,
+   "footnote_body_blocks": null,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "date_lines": [
+     {
+      "idx": 3,
+      "align": "center"
+     }
+    ],
+    "salutations": [
+     {
+      "idx": 5,
+      "align": "center"
+     }
+    ],
+    "titles": [
+     {
+      "idx": 4,
+      "bold": true,
+      "text": "GIẤY ĐỀ NGHỊ ĐĂNG KÝ DOANH NGHIỆP\nDOANH NGHIỆP TƯ NHÂN"
+     }
+    ],
+    "signatures": [
+     {
+      "idx": 158,
+      "align": "center",
+      "text": "CHỦ DOANH NGHIỆP TƯ NHÂN\n(Ký và ghi họ tên)7"
+     }
+    ]
+   },
+   "form_id": "PLI_M01",
+   "range": "PLI_M01-M12"
+  },
+  {
+   "fragment": "l0_a",
+   "ten_mau": "Giấy đề nghị đăng ký doanh nghiệp - Công ty trách nhiệm hữu hạn một thành viên",
+   "block_count": 270,
+   "source_indicator_count": 1,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 3,
+   "digit_glue_candidates": 14,
+   "footnote_body_blocks": null,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "date_lines": [
+     {
+      "idx": 3,
+      "align": "center"
+     }
+    ],
+    "salutations": [
+     {
+      "idx": 5,
+      "align": "center"
+     }
+    ],
+    "titles": [
+     {
+      "idx": 4,
+      "bold": true,
+      "text": "GIẤY ĐỀ NGHỊ ĐĂNG KÝ DOANH NGHIỆP\nCÔNG TY TRÁCH NHIỆM HỮU HẠN MỘT THÀNH VIÊN"
+     }
+    ],
+    "signatures": [
+     {
+      "idx": 253,
+      "align": "center",
+      "text": "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT/\nCHỦ TỊCH CÔNG TY/CHỦ TỊCH HỘI ĐỒNG \nTHÀNH VIÊN CỦA CÔNG TY\n"
+     }
+    ]
+   },
+   "form_id": "PLI_M02",
+   "range": "PLI_M01-M12"
+  },
+  {
+   "fragment": "l0_a",
+   "ten_mau": "Giấy đề nghị đăng ký doanh nghiệp - Công ty trách nhiệm hữu hạn hai thành viên trở lên",
+   "block_count": 102,
+   "source_indicator_count": 1,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 2,
+   "digit_glue_candidates": 5,
+   "footnote_body_blocks": null,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "date_lines": [
+     {
+      "idx": 3,
+      "align": "center"
+     }
+    ],
+    "salutations": [
+     {
+      "idx": 5,
+      "align": "center"
+     }
+    ],
+    "titles": [
+     {
+      "idx": 4,
+      "bold": true,
+      "text": "GIẤY ĐỀ NGHỊ ĐĂNG KÝ DOANH NGHIỆP\nCÔNG TY TRÁCH NHIỆM HỮU HẠN HAI THÀNH VIÊN TRỞ"
+     }
+    ],
+    "signatures": []
+   },
+   "form_id": "PLI_M03",
+   "range": "PLI_M01-M12"
+  },
+  {
+   "fragment": "l0_a",
+   "ten_mau": "Giấy đề nghị đăng ký doanh nghiệp - Công ty cổ phần",
+   "block_count": 135,
+   "source_indicator_count": 1,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 3,
+   "digit_glue_candidates": 5,
+   "footnote_body_blocks": null,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "date_lines": [
+     {
+      "idx": 3,
+      "align": "center"
+     }
+    ],
+    "salutations": [
+     {
+      "idx": 5,
+      "align": "center"
+     }
+    ],
+    "titles": [
+     {
+      "idx": 4,
+      "bold": true,
+      "text": "GIẤY ĐỀ NGHỊ ĐĂNG KÝ DOANH NGHIỆP\nCÔNG TY CỔ PHẦN"
+     }
+    ],
+    "signatures": []
+   },
+   "form_id": "PLI_M04",
+   "range": "PLI_M01-M12"
+  },
+  {
+   "fragment": "l0_a",
+   "ten_mau": "Giấy đề nghị đăng ký doanh nghiệp - Công ty hợp danh",
+   "block_count": 81,
+   "source_indicator_count": 1,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 3,
+   "digit_glue_candidates": 4,
+   "footnote_body_blocks": null,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "date_lines": [
+     {
+      "idx": 3,
+      "align": "center"
+     }
+    ],
+    "salutations": [
+     {
+      "idx": 5,
+      "align": "center"
+     }
+    ],
+    "titles": [
+     {
+      "idx": 4,
+      "bold": true,
+      "text": "GIẤY ĐỀ NGHỊ ĐĂNG KÝ DOANH NGHIỆP\nCÔNG TY HỢP DANH"
+     }
+    ],
+    "signatures": []
+   },
+   "form_id": "PLI_M05",
+   "range": "PLI_M01-M12"
+  },
+  {
+   "fragment": "l0_a",
+   "ten_mau": "Danh sách thành viên công ty trách nhiệm hữu hạn hai thành viên trở lên",
+   "block_count": 107,
+   "source_indicator_count": 1,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 1,
+   "digit_glue_candidates": 5,
+   "footnote_body_blocks": null,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "date_lines": [],
+    "salutations": [],
+    "titles": [],
+    "signatures": [
+     {
+      "idx": 91,
+      "align": "center",
+      "text": "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT/\nCHỦ TỊCH HỘI ĐỒNG THÀNH VIÊN CỦA CÔNG TY\n(Ký và ghi họ tên)"
+     }
+    ]
+   },
+   "form_id": "PLI_M06",
+   "range": "PLI_M01-M12"
+  },
+  {
+   "fragment": "l0_a",
+   "ten_mau": "Danh sách cổ đông sáng lập công ty cổ phần",
+   "block_count": 3,
+   "source_indicator_count": 1,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 0,
+   "digit_glue_candidates": 1,
+   "footnote_body_blocks": null,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "date_lines": [],
+    "salutations": [],
+    "titles": [],
+    "signatures": []
+   },
+   "form_id": "PLI_M07",
+   "range": "PLI_M01-M12"
+  },
+  {
+   "fragment": "l0_a",
+   "ten_mau": "Danh sách cổ đông là nhà đầu tư nước ngoài",
+   "block_count": 107,
+   "source_indicator_count": 1,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 1,
+   "digit_glue_candidates": 5,
+   "footnote_body_blocks": null,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "date_lines": [],
+    "salutations": [],
+    "titles": [],
+    "signatures": [
+     {
+      "idx": 91,
+      "align": "center",
+      "text": "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT/\nCHỦ TỊCH HỘI ĐỒNG QUẢN TRỊ CỦA CÔNG TY\n(Ký và ghi họ tên)11"
+     }
+    ]
+   },
+   "form_id": "PLI_M08",
+   "range": "PLI_M01-M12"
+  },
+  {
+   "fragment": "l0_a",
+   "ten_mau": "Danh sách thành viên công ty hợp danh",
+   "block_count": 193,
+   "source_indicator_count": 1,
+   "form_number_lines": 5,
+   "newline_collapse_blocks": 5,
+   "digit_glue_candidates": 14,
+   "footnote_body_blocks": null,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "date_lines": [],
+    "salutations": [],
+    "titles": [],
+    "signatures": [
+     {
+      "idx": 70,
+      "align": "center",
+      "text": "CÁC THÀNH VIÊN HỢP DANH\n(Ký và ghi họ tên từng thành viên)9"
+     }
+    ]
+   },
+   "form_id": "PLI_M09",
+   "range": "PLI_M01-M12"
+  },
+  {
+   "fragment": "l0_a",
+   "ten_mau": "Danh sách chủ sở hữu hưởng lợi của doanh nghiệp",
+   "block_count": 5,
+   "source_indicator_count": 1,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 0,
+   "digit_glue_candidates": 1,
+   "footnote_body_blocks": null,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "date_lines": [],
+    "salutations": [],
+    "titles": [],
+    "signatures": []
+   },
+   "form_id": "PLI_M10",
+   "range": "PLI_M01-M12"
+  },
+  {
+   "fragment": "l0_a",
+   "ten_mau": "Kê khai thông tin để xác định chủ sở hữu hưởng lợi của doanh nghiệp",
+   "block_count": 10,
+   "source_indicator_count": 1,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 1,
+   "digit_glue_candidates": 1,
+   "footnote_body_blocks": null,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "date_lines": [
+     {
+      "idx": 5,
+      "align": "center"
+     }
+    ],
+    "salutations": [],
+    "titles": [
+     {
+      "idx": 2,
+      "bold": true,
+      "text": "DANH SÁCH ĐỂ XÁC ĐỊNH CHỦ SỞ HỮU HƯỞNG LỢI CỦA DOANH NGHIỆP"
+     }
+    ],
+    "signatures": []
+   },
+   "form_id": "PLI_M11",
+   "range": "PLI_M01-M12"
+  },
+  {
+   "fragment": "l0_a",
+   "ten_mau": "Giấy đề nghị đăng ký thay đổi nội dung Giấy chứng nhận đăng ký doanh nghiệp/Thông báo thay đổi nội dung đăng ký doanh nghiệp",
+   "block_count": 236,
+   "source_indicator_count": 0,
+   "form_number_lines": 0,
+   "newline_collapse_blocks": 6,
+   "digit_glue_candidates": 12,
+   "footnote_body_blocks": null,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "date_lines": [
+     {
+      "idx": 2,
+      "align": "right"
+     }
+    ],
+    "salutations": [
+     {
+      "idx": 6,
+      "align": "center"
+     }
+    ],
+    "titles": [
+     {
+      "idx": 3,
+      "bold": true,
+      "text": "GIẤY ĐỀ NGHỊ"
+     }
+    ],
+    "signatures": [
+     {
+      "idx": 232,
+      "align": "center",
+      "text": "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT/\nCHỦ TỊCH CÔNG TY/CHỦ TỊCH HỘI ĐỒNG THÀNH VIÊN/CHỦ TỊCH HỘI "
+     }
+    ]
+   },
+   "form_id": "PLI_M12",
+   "range": "PLI_M01-M12"
+  },
+  {
+   "fragment": "l0_b",
+   "ten_mau": "Giấy đề nghị đăng ký thay đổi người đại diện theo pháp luật",
+   "block_count": 40,
+   "source_indicator_count": 0,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 6,
+   "digit_glue_candidates": 2,
+   "footnote_body_blocks": 3,
+   "superscript_runs_docx": 2,
+   "landmarks": {
+    "date-line": 1,
+    "form-title": 1,
+    "signature": 2,
+    "salutation": 1
+   },
+   "form_id": "PLI_M13",
+   "range": "PLI_M13-M80"
+  },
+  {
+   "fragment": "l0_b",
+   "ten_mau": "Giấy đề nghị đăng ký thay đổi chủ doanh nghiệp tư nhân",
+   "block_count": 58,
+   "source_indicator_count": 0,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 7,
+   "digit_glue_candidates": 0,
+   "footnote_body_blocks": 2,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "date-line": 1,
+    "form-title": 1,
+    "salutation": 1,
+    "signature": 2
+   },
+   "form_id": "PLI_M14",
+   "range": "PLI_M13-M80"
+  },
+  {
+   "fragment": "l0_b",
+   "ten_mau": "Giấy đề nghị đăng ký thay đổi chủ sở hữu công ty TNHH một thành viên",
+   "block_count": 63,
+   "source_indicator_count": 0,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 11,
+   "digit_glue_candidates": 6,
+   "footnote_body_blocks": 7,
+   "superscript_runs_docx": 1,
+   "landmarks": {
+    "date-line": 1,
+    "form-title": 2,
+    "signature": 5,
+    "salutation": 1
+   },
+   "form_id": "PLI_M15",
+   "range": "PLI_M13-M80"
+  },
+  {
+   "fragment": "l0_b",
+   "ten_mau": "Giấy đề nghị đăng ký hoạt động chi nhánh/văn phòng đại diện/Thông báo lập địa điểm kinh doanh",
+   "block_count": 117,
+   "source_indicator_count": 1,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 6,
+   "digit_glue_candidates": 2,
+   "footnote_body_blocks": 4,
+   "superscript_runs_docx": 1,
+   "landmarks": {
+    "date-line": 1,
+    "form-title": 3,
+    "signature": 3,
+    "salutation": 1
+   },
+   "form_id": "PLI_M17",
+   "range": "PLI_M13-M80"
+  },
+  {
+   "fragment": "l0_b",
+   "ten_mau": "Thông báo về việc lập chi nhánh/văn phòng đại diện ở nước ngoài",
+   "block_count": 50,
+   "source_indicator_count": 0,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 8,
+   "digit_glue_candidates": 0,
+   "footnote_body_blocks": 0,
+   "superscript_runs_docx": 1,
+   "landmarks": {
+    "form-title": 2,
+    "signature": 3,
+    "salutation": 1
+   },
+   "form_id": "PLI_M18",
+   "range": "PLI_M13-M80"
+  },
+  {
+   "fragment": "l0_b",
+   "ten_mau": "Giấy đề nghị đăng ký thay đổi nội dung đăng ký hoạt động chi nhánh/văn phòng đại diện/địa điểm kinh doanh",
+   "block_count": 122,
+   "source_indicator_count": 0,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 8,
+   "digit_glue_candidates": 2,
+   "footnote_body_blocks": 5,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "form-title": 3,
+    "signature": 5,
+    "salutation": 1
+   },
+   "form_id": "PLI_M19",
+   "range": "PLI_M13-M80"
+  },
+  {
+   "fragment": "l0_b",
+   "ten_mau": "Giấy đề nghị cấp đổi sang Giấy chứng nhận đăng ký doanh nghiệp đối với doanh nghiệp được cấp Giấy chứng nhận đăng ký kinh doanh hoặc Giấy chứng nhận đăng ký kinh doanh và đăng ký thuế",
+   "block_count": 21,
+   "source_indicator_count": 0,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 4,
+   "digit_glue_candidates": 1,
+   "footnote_body_blocks": 2,
+   "superscript_runs_docx": 1,
+   "landmarks": {
+    "form-title": 2,
+    "salutation": 1,
+    "signature": 1
+   },
+   "form_id": "PLI_M21",
+   "range": "PLI_M13-M80"
+  },
+  {
+   "fragment": "l0_b",
+   "ten_mau": "Giấy đề nghị bổ sung, cập nhật thông tin đăng ký hoạt động đối với chi nhánh/văn phòng đại diện/địa điểm kinh doanh hoạt động theo Giấy phép đầu tư hoặc Giấy chứng nhận đầu tư (đồng thời là Giấy chứng nhận đăng ký kinh doanh) hoặc các giấy tờ có giá trị pháp lý tương đương hoặc Giấy chứng nhận đăng ký hoạt động chi nhánh/văn phòng đại diện do Cơ quan đăng ký đầu tư cấp",
+   "block_count": 90,
+   "source_indicator_count": 1,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 5,
+   "digit_glue_candidates": 1,
+   "footnote_body_blocks": 2,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "form-title": 2,
+    "signature": 2,
+    "salutation": 1
+   },
+   "form_id": "PLI_M23",
+   "range": "PLI_M13-M80"
+  },
+  {
+   "fragment": "l0_b",
+   "ten_mau": "Giấy đề nghị bổ sung, cập nhật thông tin đăng ký hoạt động đối với chi nhánh/văn phòng đại diện/địa điểm kinh doanh của doanh nghiệp hoạt động theo Giấy phép thành lập và hoạt động kinh doanh chứng khoán/Chi nhánh công ty chứng khoán nước ngoài/công ty quản lý quỹ nước ngoài tại Việt Nam",
+   "block_count": 88,
+   "source_indicator_count": 1,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 4,
+   "digit_glue_candidates": 1,
+   "footnote_body_blocks": 2,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "form-title": 1,
+    "signature": 2,
+    "salutation": 1
+   },
+   "form_id": "PLI_M25",
+   "range": "PLI_M13-M80"
+  },
+  {
+   "fragment": "l0_b",
+   "ten_mau": "Giấy đề nghị cấp lại Giấy chứng nhận đăng ký doanh nghiệp/Giấy xác nhận thay đổi nội dung đăng ký doanh nghiệp/Giấy chứng nhận đăng ký hoạt động chi nhánh/văn phòng đại diện/Giấy chứng nhận đăng ký địa điểm kinh doanh/Giấy xác nhận thay đổi nội dung đăng ký hoạt động chi nhánh/văn phòng đại diện/địa điểm kinh doanh",
+   "block_count": 23,
+   "source_indicator_count": 0,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 3,
+   "digit_glue_candidates": 0,
+   "footnote_body_blocks": 1,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "form-title": 2,
+    "signature": 2,
+    "salutation": 1
+   },
+   "form_id": "PLI_M26",
+   "range": "PLI_M13-M80"
+  },
+  {
+   "fragment": "l0_b",
+   "ten_mau": "Thông báo về việc tạm ngừng kinh doanh/tiếp tục kinh doanh trước thời hạn đã thông báo của doanh nghiệp/chi nhánh /địa điểm kinh doanh/về việc tạm ngừng hoạt động/tiếp tục hoạt động trước thời hạn đã thông báo của văn phòng đại diện",
+   "block_count": 66,
+   "source_indicator_count": 1,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 4,
+   "digit_glue_candidates": 5,
+   "footnote_body_blocks": 5,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "form-title": 2,
+    "signature": 2,
+    "salutation": 1
+   },
+   "form_id": "PLI_M27",
+   "range": "PLI_M13-M80"
+  },
+  {
+   "fragment": "l0_b",
+   "ten_mau": "Thông báo về việc chấm dứt hoạt động chi nhánh/văn phòng đại diện/địa điểm kinh doanh",
+   "block_count": 35,
+   "source_indicator_count": 1,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 5,
+   "digit_glue_candidates": 1,
+   "footnote_body_blocks": 1,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "date-line": 1,
+    "form-title": 2,
+    "signature": 3,
+    "salutation": 1
+   },
+   "form_id": "PLI_M28",
+   "range": "PLI_M13-M80"
+  },
+  {
+   "fragment": "l0_b",
+   "ten_mau": "Thông báo về việc chấm dứt hoạt động chi nhánh/văn phòng đại diện ở nước ngoài",
+   "block_count": 28,
+   "source_indicator_count": 1,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 3,
+   "digit_glue_candidates": 1,
+   "footnote_body_blocks": 1,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "form-title": 1,
+    "signature": 2,
+    "salutation": 1
+   },
+   "form_id": "PLI_M29",
+   "range": "PLI_M13-M80"
+  },
+  {
+   "fragment": "l0_b",
+   "ten_mau": "Thông báo về việc giải thể doanh nghiệp",
+   "block_count": 20,
+   "source_indicator_count": 1,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 3,
+   "digit_glue_candidates": 1,
+   "footnote_body_blocks": 1,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "form-title": 2,
+    "salutation": 1,
+    "signature": 1
+   },
+   "form_id": "PLI_M30",
+   "range": "PLI_M13-M80"
+  },
+  {
+   "fragment": "l0_b",
+   "ten_mau": "Thông báo về việc huỷ bỏ Nghị quyết/Quyết định giải thể doanh nghiệp",
+   "block_count": 21,
+   "source_indicator_count": 1,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 3,
+   "digit_glue_candidates": 1,
+   "footnote_body_blocks": 1,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "form-title": 1,
+    "salutation": 1,
+    "signature": 1
+   },
+   "form_id": "PLI_M31",
+   "range": "PLI_M13-M80"
+  },
+  {
+   "fragment": "l0_b",
+   "ten_mau": "Giấy đề nghị công bố nội dung đăng ký doanh nghiệp",
+   "block_count": 32,
+   "source_indicator_count": 1,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 5,
+   "digit_glue_candidates": 3,
+   "footnote_body_blocks": 3,
+   "superscript_runs_docx": 1,
+   "landmarks": {
+    "form-title": 2,
+    "salutation": 1,
+    "signature": 1
+   },
+   "form_id": "PLI_M32",
+   "range": "PLI_M13-M80"
+  },
+  {
+   "fragment": "l0_b",
+   "ten_mau": "Giấy đề nghị dừng thực hiện thủ tục đăng ký doanh nghiệp",
+   "block_count": 38,
+   "source_indicator_count": 1,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 3,
+   "digit_glue_candidates": 2,
+   "footnote_body_blocks": 3,
+   "superscript_runs_docx": 1,
+   "landmarks": {
+    "form-title": 2,
+    "salutation": 1,
+    "signature": 1
+   },
+   "form_id": "PLI_M33",
+   "range": "PLI_M13-M80"
+  },
+  {
+   "fragment": "l0_b",
+   "ten_mau": "Giấy chứng nhận đăng ký hoạt động chi nhánh/văn phòng đại diện",
+   "block_count": 25,
+   "source_indicator_count": 1,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 4,
+   "digit_glue_candidates": 1,
+   "footnote_body_blocks": 0,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "form-title": 1,
+    "signature": 2
+   },
+   "form_id": "PLI_M42",
+   "range": "PLI_M13-M80"
+  },
+  {
+   "fragment": "l0_b",
+   "ten_mau": "Giấy chứng nhận đăng ký địa điểm kinh doanh",
+   "block_count": 25,
+   "source_indicator_count": 1,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 3,
+   "digit_glue_candidates": 1,
+   "footnote_body_blocks": 0,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "form-title": 1
+   },
+   "form_id": "PLI_M43",
+   "range": "PLI_M13-M80"
+  },
+  {
+   "fragment": "l0_b",
+   "ten_mau": "Giấy xác nhận về việc thay đổi nội dung đăng ký hoạt động chi nhánh/văn phòng đại diện/địa điểm kinh doanh",
+   "block_count": 20,
+   "source_indicator_count": 1,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 7,
+   "digit_glue_candidates": 1,
+   "footnote_body_blocks": 0,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "signature": 1
+   },
+   "form_id": "PLI_M45",
+   "range": "PLI_M13-M80"
+  },
+  {
+   "fragment": "l0_b",
+   "ten_mau": "Giấy chứng nhận …/Giấy xác nhận …",
+   "block_count": 11,
+   "source_indicator_count": 1,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 4,
+   "digit_glue_candidates": 2,
+   "footnote_body_blocks": 1,
+   "superscript_runs_docx": 1,
+   "landmarks": {
+    "form-title": 2,
+    "signature": 1
+   },
+   "form_id": "PLI_M46",
+   "range": "PLI_M13-M80"
+  },
+  {
+   "fragment": "l0_b",
+   "ten_mau": "Thông báo về cơ quan thuế quản lý trực tiếp",
+   "block_count": 19,
+   "source_indicator_count": 1,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 5,
+   "digit_glue_candidates": 1,
+   "footnote_body_blocks": 0,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "form-title": 1,
+    "salutation": 1
+   },
+   "form_id": "PLI_M47",
+   "range": "PLI_M13-M80"
+  },
+  {
+   "fragment": "l0_b",
+   "ten_mau": "Thông báo về việc sửa đổi, bổ sung hồ sơ đăng ký doanh nghiệp",
+   "block_count": 23,
+   "source_indicator_count": 1,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 5,
+   "digit_glue_candidates": 1,
+   "footnote_body_blocks": 0,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "form-title": 2,
+    "salutation": 1
+   },
+   "form_id": "PLI_M48",
+   "range": "PLI_M13-M80"
+  },
+  {
+   "fragment": "l0_b",
+   "ten_mau": "Thông báo về việc dừng/từ chối dừng thực hiện thủ tục đăng ký doanh nghiệp",
+   "block_count": 18,
+   "source_indicator_count": 0,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 5,
+   "digit_glue_candidates": 0,
+   "footnote_body_blocks": 0,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "form-title": 1,
+    "salutation": 1
+   },
+   "form_id": "PLI_M49",
+   "range": "PLI_M13-M80"
+  },
+  {
+   "fragment": "l0_b",
+   "ten_mau": "Thông báo yêu cầu doanh nghiệp báo cáo về việc tuân thủ quy định của Luật Doanh nghiệp",
+   "block_count": 23,
+   "source_indicator_count": 0,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 5,
+   "digit_glue_candidates": 0,
+   "footnote_body_blocks": 0,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "form-title": 1,
+    "salutation": 1
+   },
+   "form_id": "PLI_M50",
+   "range": "PLI_M13-M80"
+  },
+  {
+   "fragment": "l0_b",
+   "ten_mau": "Thông báo về việc hiệu đính thông tin trong Giấy chứng nhận đăng ký doanh nghiệp/Giấy xác nhận về việc thay đổi nội dung đăng ký doanh nghiệp/Giấy chứng nhận đăng ký hoạt động chi nhánh/văn phòng đại diện/Giấy chứng nhận đăng ký địa điểm kinh doanh/Giấy xác nhận về việc thay đổi nội dung đăng ký hoạt động chi nhánh/văn phòng đại diện",
+   "block_count": 18,
+   "source_indicator_count": 0,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 5,
+   "digit_glue_candidates": 0,
+   "footnote_body_blocks": 0,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "form-title": 2,
+    "signature": 1,
+    "salutation": 1
+   },
+   "form_id": "PLI_M51",
+   "range": "PLI_M13-M80"
+  },
+  {
+   "fragment": "l0_b",
+   "ten_mau": "Thông báo về việc rà soát thông tin đăng ký doanh nghiệp, tình trạng pháp lý của doanh nghiệp",
+   "block_count": 46,
+   "source_indicator_count": 0,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 5,
+   "digit_glue_candidates": 0,
+   "footnote_body_blocks": 0,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "form-title": 1,
+    "salutation": 1
+   },
+   "form_id": "PLI_M52",
+   "range": "PLI_M13-M80"
+  },
+  {
+   "fragment": "l0_b",
+   "ten_mau": "Thông báo yêu cầu doanh nghiệp tạm ngừng kinh doanh ngành, nghề đầu tư kinh doanh có điều kiện",
+   "block_count": 21,
+   "source_indicator_count": 0,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 5,
+   "digit_glue_candidates": 0,
+   "footnote_body_blocks": 0,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "form-title": 1,
+    "salutation": 1
+   },
+   "form_id": "PLI_M53",
+   "range": "PLI_M13-M80"
+  },
+  {
+   "fragment": "l0_b",
+   "ten_mau": "Giấy xác nhận về việc doanh nghiệp thông báo tạm ngừng kinh doanh",
+   "block_count": 18,
+   "source_indicator_count": 0,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 4,
+   "digit_glue_candidates": 0,
+   "footnote_body_blocks": 0,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "form-title": 1
+   },
+   "form_id": "PLI_M54",
+   "range": "PLI_M13-M80"
+  },
+  {
+   "fragment": "l0_b",
+   "ten_mau": "Giấy xác nhận về việc chi nhánh/địa điểm kinh doanh thông báo tạm ngừng kinh doanh/Về việc văn phòng đại diện thông báo tạm ngừng hoạt động",
+   "block_count": 30,
+   "source_indicator_count": 0,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 5,
+   "digit_glue_candidates": 0,
+   "footnote_body_blocks": 0,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "form-title": 1,
+    "signature": 1
+   },
+   "form_id": "PLI_M55",
+   "range": "PLI_M13-M80"
+  },
+  {
+   "fragment": "l0_b",
+   "ten_mau": "Giấy xác nhận về việc doanh nghiệp thông báo tiếp tục kinh doanh trước thời hạn đã thông báo",
+   "block_count": 25,
+   "source_indicator_count": 0,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 4,
+   "digit_glue_candidates": 0,
+   "footnote_body_blocks": 0,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "form-title": 1
+   },
+   "form_id": "PLI_M56",
+   "range": "PLI_M13-M80"
+  },
+  {
+   "fragment": "l0_b",
+   "ten_mau": "Giấy xác nhận chi nhánh/địa điểm kinh doanh thông báo tiếp tục kinh doanh trước thời hạn đã thông báo/Về việc văn phòng đại diện thông báo tiếp tục hoạt dộng trước thời hạn đã thông báo",
+   "block_count": 27,
+   "source_indicator_count": 0,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 4,
+   "digit_glue_candidates": 0,
+   "footnote_body_blocks": 0,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "form-title": 1,
+    "signature": 1
+   },
+   "form_id": "PLI_M57",
+   "range": "PLI_M13-M80"
+  },
+  {
+   "fragment": "l0_b",
+   "ten_mau": "Quyết định về việc thu hồi Giấy chứng nhận đăng ký hoạt động chi nhánh, văn phòng đại diện, Giấy chứng nhận đăng ký địa điểm kinh doanh",
+   "block_count": 51,
+   "source_indicator_count": 0,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 4,
+   "digit_glue_candidates": 0,
+   "footnote_body_blocks": 0,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "date-line": 1,
+    "form-title": 1,
+    "signature": 1
+   },
+   "form_id": "PLI_M63",
+   "range": "PLI_M13-M80"
+  },
+  {
+   "fragment": "l0_b",
+   "ten_mau": "Thông báo về việc chi nhánh/văn phòng đại diện/địa điểm kinh doanh đang làm thủ tục chấm dứt hoạt động",
+   "block_count": 34,
+   "source_indicator_count": 0,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 4,
+   "digit_glue_candidates": 3,
+   "footnote_body_blocks": 3,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "date-line": 1,
+    "form-title": 1,
+    "signature": 1
+   },
+   "form_id": "PLI_M66",
+   "range": "PLI_M13-M80"
+  },
+  {
+   "fragment": "l0_b",
+   "ten_mau": "Thông báo về việc chấm dứt hoạt động chi nhánh/văn phòng đại diện/địa điểm kinh doanh",
+   "block_count": 21,
+   "source_indicator_count": 0,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 4,
+   "digit_glue_candidates": 1,
+   "footnote_body_blocks": 0,
+   "superscript_runs_docx": 1,
+   "landmarks": {
+    "date-line": 1,
+    "form-title": 1,
+    "signature": 1
+   },
+   "form_id": "PLI_M67",
+   "range": "PLI_M13-M80"
+  },
+  {
+   "fragment": "l0_b",
+   "ten_mau": "Thông báo về việc doanh nghiệp đang làm thủ tục giải thể",
+   "block_count": 28,
+   "source_indicator_count": 0,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 4,
+   "digit_glue_candidates": 2,
+   "footnote_body_blocks": 2,
+   "superscript_runs_docx": 1,
+   "landmarks": {
+    "date-line": 1,
+    "form-title": 1
+   },
+   "form_id": "PLI_M68",
+   "range": "PLI_M13-M80"
+  },
+  {
+   "fragment": "l0_b",
+   "ten_mau": "Thông báo về việc doanh nghiệp đã giải thể/chấm dứt tồn tại",
+   "block_count": 25,
+   "source_indicator_count": 0,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 4,
+   "digit_glue_candidates": 1,
+   "footnote_body_blocks": 0,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "date-line": 1,
+    "form-title": 1
+   },
+   "form_id": "PLI_M69",
+   "range": "PLI_M13-M80"
+  },
+  {
+   "fragment": "l0_b",
+   "ten_mau": "Giấy tiếp nhận hồ sơ và hẹn trả kết quả hồ sơ đăng ký doanh nghiệp/chi nhánh/văn phòng đại diện/địa điểm kinh doanh",
+   "block_count": 23,
+   "source_indicator_count": 0,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 5,
+   "digit_glue_candidates": 0,
+   "footnote_body_blocks": 0,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "form-title": 3,
+    "date-line": 1,
+    "signature": 3
+   },
+   "form_id": "PLI_M70",
+   "range": "PLI_M13-M80"
+  },
+  {
+   "fragment": "l0_b",
+   "ten_mau": "Giấy tiếp nhận hồ sơ và hẹn trả kết quả hồ sơ đăng ký doanh nghiệp/chi nhánh/văn phòng đại diện/địa điểm kinh doanh qua mạng thông tin điện tử",
+   "block_count": 25,
+   "source_indicator_count": 0,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 3,
+   "digit_glue_candidates": 0,
+   "footnote_body_blocks": 1,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "date-line": 1,
+    "form-title": 2,
+    "signature": 1
+   },
+   "form_id": "PLI_M71",
+   "range": "PLI_M13-M80"
+  },
+  {
+   "fragment": "l0_b",
+   "ten_mau": "Công bố nội dung đăng ký thành lập doanh nghiệp",
+   "block_count": 149,
+   "source_indicator_count": 0,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 1,
+   "digit_glue_candidates": 3,
+   "footnote_body_blocks": 2,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "form-title": 5,
+    "signature": 6
+   },
+   "form_id": "PLI_M72",
+   "range": "PLI_M13-M80"
+  },
+  {
+   "fragment": "l0_b",
+   "ten_mau": "Công bố thay đổi nội dung đăng ký doanh nghiệp",
+   "block_count": 16,
+   "source_indicator_count": 0,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 0,
+   "digit_glue_candidates": 0,
+   "footnote_body_blocks": 0,
+   "superscript_runs_docx": 0,
+   "landmarks": {},
+   "form_id": "PLI_M73",
+   "range": "PLI_M13-M80"
+  },
+  {
+   "fragment": "l0_b",
+   "ten_mau": "Công bố nội dung đăng ký doanh nghiệp",
+   "block_count": 16,
+   "source_indicator_count": 0,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 0,
+   "digit_glue_candidates": 0,
+   "footnote_body_blocks": 0,
+   "superscript_runs_docx": 0,
+   "landmarks": {},
+   "form_id": "PLI_M74",
+   "range": "PLI_M13-M80"
+  },
+  {
+   "fragment": "l0_b",
+   "ten_mau": "Thông báo về việc khôi phục Giấy chứng nhận đăng ký doanh nghiệp/Giấy chứng nhận đăng ký hoạt động chi nhánh, văn phòng đại diện, Giấy chứng nhận đăng ký địa điểm kinh doanh",
+   "block_count": 44,
+   "source_indicator_count": 0,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 4,
+   "digit_glue_candidates": 0,
+   "footnote_body_blocks": 0,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "date-line": 1,
+    "form-title": 2,
+    "signature": 1
+   },
+   "form_id": "PLI_M75",
+   "range": "PLI_M13-M80"
+  },
+  {
+   "fragment": "l0_b",
+   "ten_mau": "Thông báo về việc cấp đăng ký doanh nghiệp",
+   "block_count": 21,
+   "source_indicator_count": 0,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 2,
+   "digit_glue_candidates": 0,
+   "footnote_body_blocks": 0,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "date-line": 1,
+    "form-title": 1,
+    "salutation": 1
+   },
+   "form_id": "PLI_M76",
+   "range": "PLI_M13-M80"
+  },
+  {
+   "fragment": "l0_b",
+   "ten_mau": "Giấy đề nghị cung cấp thông tin đăng ký doanh nghiệp",
+   "block_count": 35,
+   "source_indicator_count": 0,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 3,
+   "digit_glue_candidates": 0,
+   "footnote_body_blocks": 0,
+   "superscript_runs_docx": 0,
+   "landmarks": {
+    "form-title": 2,
+    "salutation": 1,
+    "signature": 1
+   },
+   "form_id": "PLI_M78",
+   "range": "PLI_M13-M80"
+  },
+  {
+   "fragment": "l0_b",
+   "ten_mau": "Giấy đề nghị Cơ quan đăng ký kinh doanh yêu cầu doanh nghiệp thay đổi tên doanh nghiệp, tên chi nhánh, văn phòng đại diện, địa điểm kinh doanh",
+   "block_count": 42,
+   "source_indicator_count": 0,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 6,
+   "digit_glue_candidates": 2,
+   "footnote_body_blocks": 3,
+   "superscript_runs_docx": 2,
+   "landmarks": {
+    "date-line": 1,
+    "form-title": 2,
+    "signature": 2,
+    "salutation": 1
+   },
+   "form_id": "PLI_M79",
+   "range": "PLI_M13-M80"
+  },
+  {
+   "fragment": "l0_b",
+   "ten_mau": "Giấy đề nghị thu hồi giấy tờ do kê khai trong hồ sơ đăng ký doanh nghiệp là giả mạo",
+   "block_count": 42,
+   "source_indicator_count": 0,
+   "form_number_lines": 1,
+   "newline_collapse_blocks": 5,
+   "digit_glue_candidates": 2,
+   "footnote_body_blocks": 3,
+   "superscript_runs_docx": 2,
+   "landmarks": {
+    "date-line": 1,
+    "form-title": 3,
+    "salutation": 1,
+    "signature": 1
+   },
+   "form_id": "PLI_M80",
+   "range": "PLI_M13-M80"
+  }
+ ]
+}

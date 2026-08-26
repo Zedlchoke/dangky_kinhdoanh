@@ -418,46 +418,35 @@ function vsicOf(ma) {
 // ===================== N9. Allowlist file generated trong diff ==============
 
 (function n9() {
-  // Allowlist: file generated DUOC PHEP xuat hien trong diff 6eaf4ee..HEAD.
-  //  - 2 entry dau: allowlist gốc thời điểm viết test (P1 audit).
-  //  - layout_specs/fragments/*: census layout L0-A/L0-B/L0-C được merge
-  //    chính thức lên main (5ef9cad, 52de102, a5f30a7) - artifact đọc-only
-  //    của công đoạn census, không phải đụng generated bởi agent sau.
-  const ALLOW = [
-    'app/templates/PLII_M01.docx',
-    'app/data/table_specs/manifest.json',
-    'app/data/layout_specs/fragments/l0_a.md',
-    'app/data/layout_specs/fragments/l0_a_evidence.json',
-    'app/data/layout_specs/fragments/l0_b.md',
-    'app/data/layout_specs/fragments/l0_b_evidence.json',
-    'app/data/layout_specs/fragments/l0_c.md',
-    'app/data/layout_specs/fragments/l0_c_evidence.json',
-    // layout-manifest-v1: hop nhat 3 fragment L0 do Lead sinh qua
-    // tools/census/build_layout_manifest.py (commit 6047c1d) - artifact
-    // census co chu dich, khong phai generated drift.
-    'app/data/layout_specs/layout_manifest.json',
-    // P1.2 Lead (commit 5c75238): engine vung dieu kien {?flag}/{/flag} +
-    // converter cond blocks + tagger idempotent M72 - artifact generated
-    // co chu dich (template + blocks regen theo spec change PLI_M72).
-    'app/templates/PLI_M72.docx',
-    'app/data/blocks/PLI_M72.json'
-  ];
-  let files = [];
+  // Allowlist: file generated DUOC PHEP xuat hien trong diff ke tu checkpoint
+  // audit cuoi (tag baseline/p1.2-d882793). R1 Lead: trước đây dùng range
+  // 6eaf4ee..HEAD với mảng tĩnh — gãy ở mọi lần regen hợp lệ. Chuyển sang đọc
+  // chung manifest tools/audit_expected_diff_files.txt (Lead cập nhật có chủ
+  // đích mỗi integrate). Độ cứng giữ nguyên: file generated nào ngoài
+  // manifest -> FAIL.
+  const MANIFEST = 'tools/audit_expected_diff_files.txt';
+  let diffFiles = [];
+  let manifest = [];
   try {
-    files = execSync('git diff --name-only 6eaf4ee..HEAD',
+    diffFiles = execSync('git diff --name-only baseline/p1.2-d882793..HEAD',
       { cwd: path.join(__dirname, '..'), maxBuffer: 32 * 1024 * 1024 })
       .toString('utf8').split(/\r?\n/).filter(Boolean);
+    manifest = fs.readFileSync(path.join(__dirname, '..', MANIFEST), 'utf8')
+      .split(/\r?\n/)
+      .map(l => l.replace(/#.*$/, '').trim())
+      .filter(Boolean);
   } catch (e) {
-    check('N9a. liet ke diff 6eaf4ee..HEAD', false, String(e.message || e));
+    check('N9a. doc diff/manifest tu baseline/p1.2-d882793', false,
+      String(e.message || e));
     return;
   }
   const GEN_PREFIX = ['app/templates/', 'app/data/'];
-  const unexpected = files.filter(function (f) {
+  const unexpected = diffFiles.filter(function (f) {
     return GEN_PREFIX.some(function (p) { return f.indexOf(p) === 0; }) &&
-      ALLOW.indexOf(f) < 0;
+      manifest.indexOf(f) < 0;
   });
-  check('N9a. moi file generated thay doi thuoc allowlist (' +
-    files.length + ' file trong diff)', unexpected.length === 0,
+  check('N9a. moi file generated thay doi thuoc manifest (' +
+    diffFiles.length + ' file trong diff)', unexpected.length === 0,
     'file la: ' + JSON.stringify(unexpected));
 })();
 

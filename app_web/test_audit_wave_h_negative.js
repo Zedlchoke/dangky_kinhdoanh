@@ -17,7 +17,7 @@
  *  H6 focus sau row-op: focusTagOfGrid ưu tiên ma_nganh -> editable đầu
  *     (bỏ readonly/outputOnly/radio/checkbox); nextSelAfterDelete theo _row_id;
  *     focusGridRow an toàn trên DOM giả, bảng rỗng không exception.
- *  H7 allowlist ĐỘC LẬP: tự chạy git diff --name-only 220d968..HEAD, đối chiếu
+ *  H7 allowlist ĐỘC LẬP: tự chạy git diff --name-only baseline/p1.2-d882793..HEAD, đối chiếu
  *     tập file với danh sách auditor TỰ LẬP từ ownership check (không dùng
  *     mảng ALLOW của test_audit_p1_negative).
  *
@@ -541,7 +541,7 @@ function mkRow(tags, j) {
 // =====================================================================
 //
 // Danh sách auditor tự lập từ ownership check Giai đoạn 1
-// (git log/diff 220d968..HEAD), KHÔNG đọc mảng ALLOW của test cũ:
+// (git log/diff baseline/p1.2-d882793..HEAD), KHÔNG đọc mảng ALLOW của test cũ:
 //   A  (P1.1): app_web/ui/form-domain.js, app_web/ui/app.js,
 //              app_web/test_m72_activation.js, docs/m72_activation_proposal.md
 //   B  (P2.0): app_web/ui/form-domain.js, app_web/ui/app.js,
@@ -574,11 +574,11 @@ function mkRow(tags, j) {
   const path = require('path');
   let files = [];
   try {
-    files = cp.execSync('git diff --name-only 220d968..HEAD',
+    files = cp.execSync('git diff --name-only baseline/p1.2-d882793..HEAD',
       { cwd: path.join(__dirname, '..'), maxBuffer: 32 * 1024 * 1024 })
       .toString('utf8').split(/\r?\n/).filter(Boolean);
   } catch (e) {
-    check('H7.0 chay duoc git diff 220d968..HEAD', false, String(e.message || e));
+    check('H7.0 chay duoc git diff baseline/p1.2-d882793..HEAD', false, String(e.message || e));
     return;
   }
 

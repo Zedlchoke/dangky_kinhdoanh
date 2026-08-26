@@ -66,7 +66,8 @@
   /* Controller GENERIC cho mọi bảng lặp (PLAN.md PHASE 1B/5): add/delete/
    * reorder/duplicate/clear trên store {loops}. Toàn bộ hàm THUẦN (không DOM,
    * nhận store làm tham số) để node-test trực tiếp; wrapper UI bên dưới chỉ
-   * lo confirm/focus/rerender. Metadata từng bảng đọc từ FormDomain.GRID_META.
+   * lo confirm/focus/rerender. Metadata từng bảng resolve qua
+ * FormDomain.getGridMeta (form-scoped FORM_GRID_META trước, rồi GRID_META).
    * Mỗi row mang _row_id ổn định ('r<seq>_<rand>') giữ qua draft round-trip
    * và bị LOẠI khỏi payload export. STT không lưu - luôn suy từ thứ tự mảng. */
   var _rowIdSeq = 0;
@@ -76,7 +77,12 @@
       return 'r' + _rowIdSeq + '_' + Math.random().toString(36).slice(2, 8);
     },
 
-    meta: function (loop) { return FD.getGridMeta(loop); },
+    /* Metadata bảng: resolve form-scoped trước (FORM_GRID_META[docId]) rồi
+     * mới tới GRID_META toàn cục. Không truyền docId -> hành vi cũ (toàn cục). */
+    meta: function (loop, docId) {
+      return docId ? FD.getGridMeta({ docId: docId, loop: loop })
+                   : FD.getGridMeta(loop);
+    },
 
     rows: function (store, loop) {
       return store.loops[loop] = store.loops[loop] || [];
@@ -141,12 +147,13 @@
 
     /* Nhân bản dòng rowId ngay sau chính nó, BỎ các field định danh/khóa theo
      * metadata duplicateKeys (vd so_cccd, ma_nganh) và _row_id cũ.
+     * docId tùy chọn để resolve metadata form-scoped.
      * Trả {_row_id mới, index} hoặc null khi không tìm thấy dòng nguồn. */
-    duplicateRow: function (store, loop, rowId) {
+    duplicateRow: function (store, loop, rowId, docId) {
       var rows = GridCtl.rows(store, loop);
       var i = GridCtl.findRowIndex(rows, rowId);
       if (i < 0) return null;
-      var gm = GridCtl.meta(loop) || {};
+      var gm = GridCtl.meta(loop, docId) || {};
       var clone = Object.assign({}, rows[i]);
       delete clone._row_id;
       (gm.duplicateKeys || []).forEach(function (k) { delete clone[k]; });
@@ -170,11 +177,18 @@
      * (_row_id...) và map la_nganh_chinh -> 'X'/'' đúng the trong template pháp
      * lý (ô {la_nganh_chinh} phải in dấu X, không in chữ True/False). Store/
      * draft giữ nguyên 'X'/'' như radio; đây là CHỐ ĐƠN NHẤT trên đường export
-     * (buildExportData cũng đi qua hàm này nên không bị lệch hai nơi). */
-    exportLoops: function (store) {
+     * (buildExportData cũng đi qua hàm này nên không bị lệch hai nơi).
+     * docIds tùy chọn (các mẫu đang chọn trong hồ sơ): resolve metadata
+     * form-scoped trước khi fallback toàn cục. */
+    exportLoops: function (store, docIds) {
       var out = {};
       Object.keys(store.loops || {}).forEach(function (name) {
-        var gm = FD.getGridMeta(name);
+        var gm = null;
+        (docIds || []).some(function (id) {
+          gm = FD.getGridMeta({ docId: id, loop: name });
+          return !!gm;
+        });
+        if (!gm) gm = FD.getGridMeta(name);
         out[name] = (store.loops[name] || []).map(function (row) {
           var clean = {};
           Object.keys(row || {}).forEach(function (k) {
@@ -689,6 +703,16 @@
     state.viewState[state.activeDocId] = { scrollTop: scroller.scrollTop, focusKey: fk || null };
   }
 
+  /* Map gridMeta cho MỘT mẫu: GRID_META toàn cục + overlay form-scoped
+   * (FD.FORM_GRID_META[docId].loops - resolve theo docId). Renderer vẫn
+   * GENERIC: chỉ đọc map {loop: meta} này, không biết gì về form ID. */
+  function gridMetaForDoc(docId) {
+    var m = Object.assign({}, FD.GRID_META);
+    var fm = FD.FORM_GRID_META && FD.FORM_GRID_META[docId];
+    if (fm && fm.loops) Object.assign(m, fm.loops);
+    return m;
+  }
+
   function renderActiveDoc() {
     var d = activeDoc();
     var pages = $('#pages');
@@ -700,7 +724,7 @@
     pages.innerHTML = '<section class="page-a4" id="doc_' + esc(d.id) +
       '" data-doc="' + esc(d.id) + '" tabindex="-1">' +
       R.renderBlocks(d, state.store, {
-        docId: d.id, fieldMeta: FD.FIELD_META, gridMeta: FD.GRID_META,
+        docId: d.id, fieldMeta: FD.FIELD_META, gridMeta: gridMetaForDoc(d.id),
         uiLayout: state.uiLayouts[d.id] || null
       }) +
       '</section>';
@@ -893,14 +917,14 @@
     var tr = (rowId && tbl.querySelector('tr[data-row-id="' + cssEsc(rowId) + '"]')) ||
       tbl.querySelectorAll('tbody tr')[idx];
     if (!tr) return;
-    var el = loop === 'ds_nganh'
-      ? tr.querySelector('[data-tag="ma_nganh"]')
-      : tr.querySelector('input.loop-fld');
+    // bảng ngành (mọi loop có cột ma_nganh): focus ô mã; bảng khác: ô đầu
+    var el = tr.querySelector('[data-tag="ma_nganh"]') ||
+      tr.querySelector('input.loop-fld');
     if (el) { el.focus(); el.scrollIntoView({ block: 'nearest' }); }
   }
 
   function uiAddRow(loop) {
-    var gm = GridCtl.meta(loop);
+    var gm = GridCtl.meta(loop, state.activeDocId);
     if (gm && gm.allowAdd === false) return;
     var rows = state.store.loops[loop] || [];
     var gmMax = gm && gm.maxRows != null ? gm.maxRows : null;
@@ -919,7 +943,7 @@
   }
 
   function uiDeleteRows(loop) {
-    var gm = GridCtl.meta(loop);
+    var gm = GridCtl.meta(loop, state.activeDocId);
     if (gm && gm.allowDelete === false) return;
     var rows = state.store.loops[loop] || [];
     if (!rows.length) return;
@@ -955,7 +979,7 @@
   }
 
   function uiClearRows(loop) {
-    var gm = GridCtl.meta(loop);
+    var gm = GridCtl.meta(loop, state.activeDocId);
     if (gm && gm.allowDelete === false) return;
     var rows = state.store.loops[loop] || [];
     if (!rows.length) return;
@@ -970,7 +994,7 @@
   }
 
   function uiMoveRow(loop, dir) {
-    var gm = GridCtl.meta(loop);
+    var gm = GridCtl.meta(loop, state.activeDocId);
     if (gm && gm.allowReorder === false) return;
     var id = targetRowId(loop);
     if (!id) return;
@@ -982,11 +1006,11 @@
   }
 
   function uiDuplicateRow(loop) {
-    var gm = GridCtl.meta(loop);
+    var gm = GridCtl.meta(loop, state.activeDocId);
     if (gm && gm.allowAdd === false) return;
     var id = targetRowId(loop);
     if (!id) return;
-    var res = GridCtl.duplicateRow(state.store, loop, id);
+    var res = GridCtl.duplicateRow(state.store, loop, id, state.activeDocId);
     if (!res) return;
     clearLoopSelection(loop);
     state.selRowId[loop] = res.id;
@@ -1076,11 +1100,14 @@
   }
 
   /* Chọn 1 kết quả từ popup (chuột hoặc Enter): điền CẢ mã + tên vào cùng
-   * dòng, gỡ đỏ, đóng popup. */
+   * dòng, gỡ đỏ, đóng popup. Tên ghi đúng tag của loop theo metadata
+   * autoName.nameTag (vd PLII_M02: ten_nganh_bo_sung/ten_nganh_bo). */
   function applyVsicPick(inp, item) {
     var lk = parseLoopKey(inp.getAttribute('data-key'));
     if (!lk || !item) return;
-    ['ma_nganh', 'ten_nganh'].forEach(function (t) {
+    var gm = GridCtl.meta(lk.loop, state.activeDocId);
+    var nameTag = (gm && gm.autoName && gm.autoName.nameTag) || 'ten_nganh';
+    ['ma_nganh', nameTag].forEach(function (t) {
       var key = 'loop:' + lk.loop + ':' + lk.idx + ':' + t;
       setKeyValue(key, item[t]);
       loopCellDom(key, item[t], t === 'ma_nganh' ? inp : null);
@@ -1102,7 +1129,10 @@
     if (inp.getAttribute('data-tag') !== 'ma_nganh') return false;
     var lk = parseLoopKey(inp.getAttribute('data-key'));
     if (!lk) return false;
-    var tenKey = 'loop:' + lk.loop + ':' + lk.idx + ':ten_nganh';
+    // tên điền cùng dòng theo đúng tag của loop (autoName trong metadata)
+    var gm = GridCtl.meta(lk.loop, state.activeDocId);
+    var nameTag = (gm && gm.autoName && gm.autoName.nameTag) || 'ten_nganh';
+    var tenKey = 'loop:' + lk.loop + ':' + lk.idx + ':' + nameTag;
     var res = GridCtl.vsicResolve(state.vsic, inp.value);
     if (res.st === 'empty') {
       setKeyValue(tenKey, '');
@@ -1406,8 +1436,10 @@
       data[k] = state.store.checks[k] ? 'X' : '';
     });
     // loops: bỏ _row_id/field nội bộ; la_nganh_chinh map 'X'/'' cho template
-    // (đi qua GridCtl.exportLoops - chỗ duy nhất quyết định định dạng payload)
-    var loops = GridCtl.exportLoops(state.store);
+    // (đi qua GridCtl.exportLoops - chỗ duy nhất quyết định định dạng payload;
+    // resolve meta form-scoped theo các mẫu đang chọn)
+    var loops = GridCtl.exportLoops(state.store,
+      visibleDocs().map(function (d) { return d.id; }));
     Object.keys(loops).forEach(function (name) {
       data[name] = loops[name];
     });
@@ -1574,7 +1606,7 @@
         while (rows.length <= lk.idx) rows.push({});
         GridCtl.ensureIds(state.store); // hàng sinh muộn vẫn có _row_id
         var rowId = rows[lk.idx]._row_id;
-        var gm = FD.getGridMeta(lk.loop);
+        var gm = FD.getGridMeta({ docId: state.activeDocId, loop: lk.loop });
         var colMeta = gm ? (gm.columns || []).filter(function (c) {
           return c.tag === lk.tag;
         })[0] : null;
@@ -1736,12 +1768,14 @@
 
   /* Helpers thuần phục vụ test node (không DOM): GridCtl là controller
    * editable-grid generic (add/delete/reorder/duplicate/clear/export/radio/
-   * vsicResolve), groupErrorsByDoc nhóm lỗi theo mẫu, FormFlow gom nghiệp vụ
+   * vsicResolve), groupErrorsByDoc nhóm lỗi theo mẫu, gridMetaForDoc build
+   * map {loop: meta} form-scoped cho renderer, FormFlow gom nghiệp vụ
    * chọn mẫu (bat_buoc/oneOf/gate export/draft restore), RequestToken chống
    * race đổi case, saveOutcome đồng bộ dirty/saveState. */
   var Helpers = {
     groupErrorsByDoc: groupErrorsByDoc,
     GridCtl: GridCtl,
+    gridMetaForDoc: gridMetaForDoc,
     FormFlow: {
       formIdOf: formIdOf,
       formIds: formIds,

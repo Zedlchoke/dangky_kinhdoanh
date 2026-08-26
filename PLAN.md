@@ -1656,3 +1656,354 @@ visual QA đều PASS, đồng thời `.exe` smoke đạt đủ 10 Acceptance Ga
 Hãy bắt đầu bằng audit read-only và trình bày baseline thực tế. Sau đó tạo worktree
 và điều phối P0; không nhảy thẳng vào sửa bảng vốn/tài sản trước khi gate T0 đạt.
 ```
+
+---
+
+## Wave P1-LAYOUT — chuẩn hóa hình thức và độ trung thành biểu mẫu
+
+### Lý do bổ sung
+
+Visual audit trên giao diện web phát hiện các lỗi không được các structural test
+hiện tại bắt:
+
+1. Toàn bộ biểu mẫu trên UI đang có hiện tượng hiển thị marker/descriptor kỹ thuật
+   ở đầu tờ khai (ví dụ `PL1 - Mau so 1: ...`, `PL2 - Mau so ...`), dù đây không
+   phải nội dung người dùng cần nhập. Pattern tĩnh hiện thấy trực tiếp trong nhiều
+   block; các mẫu còn lại vẫn phải audit cả block, wrapper/title do app sinh và
+   source, không được thu hẹp scope theo số pattern grep được.
+2. Quốc hiệu, tiêu ngữ và đường kẻ nằm trong một run có `\n`, nhưng HTML làm phẳng
+   whitespace nên ba dòng bị dồn thành một dòng và nhìn như canh lề sai.
+3. Số chú thích chân trang bị làm phẳng vào chữ, ví dụ `Tôi là1` thay vì footnote
+   superscript/tooltip hoặc nhãn sạch `Tôi là`.
+4. Block schema mới giữ chủ yếu `align=left|center|right`, chưa giữ đủ first-line
+   indent, left/right indent, tab stop, spacing before/after, line spacing,
+   keep-with-next và run superscript/subscript từ DOCX.
+5. Các tiêu đề, dòng ngày tháng, `Kính gửi`, ghi chú và footnote chưa có semantic
+   role; CSS phải đoán từ text hoặc áp cùng một style cho mọi paragraph.
+
+Không sửa riêng `PLI_M01` bằng CSS selector theo form ID. Mục tiêu là pipeline
+trích xuất và render trung thành cho toàn bộ 87 mẫu, với override tường minh chỉ
+khi source thật sự đặc biệt.
+
+### Vị trí trong roadmap
+
+P1-LAYOUT chạy sau khi P1-UI contract ổn định và phải PASS trước khi rollout P3
+hàng loạt. Có thể chuẩn bị census/layout contract song song với P1-UI nếu ownership
+file tách biệt, nhưng không cho hai agent cùng sửa `render.js`, `style.css` hoặc
+`docx_to_blocks.py`.
+
+Visual fidelity của UI và visual fidelity của DOCX là hai gate riêng:
+
+- **UI preview:** dễ đọc, đúng dòng/căn lề, không lộ marker kỹ thuật, footnote rõ.
+- **DOCX output:** không được làm mất nội dung pháp lý, footnote, numbering, bảng,
+  placeholder hoặc style cần thiết của file xuất.
+
+### Contract semantic role
+
+Mỗi paragraph có thể có `role` tường minh, tối thiểu:
+
+```text
+source-indicator
+form-number
+national-header
+national-motto
+national-separator
+date-line
+form-title
+form-subtitle
+salutation
+body
+section-heading
+note
+footnote
+signature
+```
+
+`role` phải được sinh từ source/generator bằng rule có test và có thể override qua
+metadata riêng. Renderer không tự regex lại toàn bộ văn bản ở mỗi lần render.
+
+#### Source indicator
+
+- Các dòng kiểu `PL1 - Mau so 1: ...`, `PL2 - Mau so ...`, tên file, nhãn
+  import/scrape hoặc descriptor
+  kỹ thuật phải được đánh dấu `role=source-indicator`, `uiHidden=true`.
+- Không nhầm với dòng pháp lý `Mẫu số 1`, `Mẫu số 72`… Dòng form-number hợp lệ vẫn
+  hiển thị và phải giữ đúng căn lề từ mẫu nguồn.
+- Không xóa marker khỏi source hoặc generated data một cách im lặng. Giữ evidence
+  và detector report để audit; UI có thể ẩn theo role.
+- DOCX output phải có test riêng xác nhận marker có/không thuộc mẫu pháp lý trước
+  khi quyết định loại khỏi bản xuất.
+
+#### Quốc hiệu, tiêu ngữ và tiêu đề
+
+- Bảo toàn hard line break trong run/paragraph. `\n` trong text phải render thành
+  line break an toàn, không bị browser collapse thành space.
+- Không dùng `white-space: pre` toàn trang gây tràn ngang. Có thể chuyển newline
+  đã escape thành `<br>` hoặc dùng `pre-line` tại đúng run/block contract.
+- Quốc hiệu, tiêu ngữ, đường kẻ và tiêu đề nhiều dòng phải giữ từng dòng riêng,
+  căn giữa/căn phải theo source, không nối chữ.
+- Dòng `Mẫu số ...`, ngày tháng, `Kính gửi`, chữ ký và tiêu đề có style/spacing
+  riêng, không áp một margin chung cho mọi `.bp`.
+
+#### Footnote và chuỗi `Tôi là1`
+
+- Không dùng regex xóa mọi chữ số đứng sau chữ; có thể phá số điều, mã mẫu, ngày
+  và dữ liệu hợp pháp.
+- Converter phải nhận biết run superscript, `w:vertAlign`, footnote reference hoặc
+  cấu trúc OOXML tương đương.
+- UI mặc định hiển thị `Tôi là¹` bằng `<sup>` có tooltip/link tới chú thích nếu
+  footnote tồn tại. Nếu product owner chọn nhãn nhập sạch, UI có thể ẩn marker
+  nhưng phần help/footnote vẫn phải truy cập được.
+- DOCX output giữ footnote đúng source pháp lý. Không xóa footnote khỏi template
+  chỉ để ảnh UI đẹp hơn.
+- Acceptance detector: không còn chuỗi baseline `Tôi là1`, `Tôi là2`... trong DOM;
+  chữ số phải là run footnote semantic hoặc không hiển thị theo policy đã chốt.
+
+### Mở rộng block schema tối thiểu
+
+Không bắt buộc mọi thuộc tính đều có trên mọi block; chỉ emit khi source có giá trị
+khác mặc định. Contract dự kiến:
+
+```json
+{
+  "t": "p",
+  "role": "national-header",
+  "align": "center",
+  "format": {
+    "leftIndentPt": 0,
+    "rightIndentPt": 0,
+    "firstLineIndentPt": 0,
+    "spaceBeforePt": 0,
+    "spaceAfterPt": 0,
+    "lineSpacing": 1.15,
+    "keepWithNext": true
+  },
+  "runs": [
+    {"text": "...", "b": true},
+    {"text": "1", "vertAlign": "superscript", "role": "footnote-ref"}
+  ]
+}
+```
+
+Nếu dùng đơn vị khác phải thống nhất và ghi trong contract. Không đưa raw OOXML
+hoặc style object không ổn định thẳng vào UI schema.
+
+Các tab stop không thể biểu diễn ổn định trong responsive HTML phải được chuyển
+thành layout semantic phù hợp, ví dụ `date-line` dùng inline layout/flex/grid có
+wrap an toàn. Không chèn hàng loạt `&nbsp;` để giả tab.
+
+### Wave L0 — census hình thức 87 mẫu (read-only, song song)
+
+Chia ba agent theo form range như census bảng:
+
+- L0-A: `PLI_M01–PLI_M12`.
+- L0-B: `PLI_M13–PLI_M80`.
+- L0-C: `PLII_M01–PLII_M28`.
+
+Mỗi agent ghi fragment riêng, không sửa production. Với mỗi mẫu kiểm tra:
+
+- Source indicator/filename marker ở mọi nguồn có thể hiển thị: paragraph block,
+  document wrapper/title, tab caption và metadata do app ghép thêm.
+- Form number và vị trí/căn lề.
+- Quốc hiệu, tiêu ngữ, separator.
+- Hard line break bị collapse.
+- Tiêu đề chính/phụ và `Kính gửi`.
+- Date line, tab/indent, signature.
+- Footnote/superscript/subscript và chuỗi digit dính chữ.
+- Paragraph có indent/spacing đặc biệt.
+- UI screenshot trang đầu ở viewport chuẩn.
+- DOCX source/tagged/output có khác nhau về layout hay không.
+
+Lead merge thành `app/data/layout_specs/manifest.json` hoặc artifact tương đương,
+đủ 87/87. Mọi issue có `form_id`, block index/source paragraph, category, evidence,
+expected role/style và status.
+
+### Wave L1 — extractor/schema contract
+
+Một agent sở hữu duy nhất `tools/docx_to_blocks.py` và test extractor:
+
+1. Trích xuất newline/hard break đúng nghĩa.
+2. Trích xuất superscript/subscript/footnote reference.
+3. Trích xuất paragraph indents/spacing/line spacing/keep-with-next cần thiết.
+4. Gán semantic role qua rule/module tách biệt và override manifest.
+5. Phân biệt `source-indicator` với `form-number` hợp lệ.
+6. Backward compatible với block cũ thiếu `role/format/vertAlign`.
+7. Generator idempotent; chạy hai lần cho semantic-equivalent output.
+
+Không regenerate 87 mẫu trong worktree subagent. Lead tích hợp extractor/contract
+trước, sau đó regenerate tập trung và review allowlist.
+
+### Wave L2 — renderer/CSS
+
+Một agent khác chỉ bắt đầu sửa renderer sau khi L1 contract được khóa, sở hữu:
+
+- `app_web/ui/render.js`.
+- `app_web/ui/style.css`.
+- DOM/layout tests liên quan.
+
+Yêu cầu:
+
+- Escape text trước rồi mới chuyển hard break hợp lệ thành `<br>`.
+- Render `superscript/subscript` bằng semantic HTML.
+- Ẩn `source-indicator` theo role, không theo substring ngẫu nhiên.
+- Áp paragraph format qua class/CSS custom property có allowlist; không đưa chuỗi
+  style tùy ý từ JSON vào HTML.
+- Có style riêng cho form-number, national header/motto/separator, date line,
+  title, salutation, note, footnote và signature.
+- Giữ responsive behavior; ở 1280×800 không tràn ngang ngoài bảng được phép scroll.
+- 100%, 125%, 150% và 200% zoom vẫn đọc được, input không đè chữ.
+- Không làm thay đổi canonical keys, store, validation hoặc export payload.
+
+### Wave L3 — rollout và visual QA
+
+Lead regenerate theo batch, không một lần mù 87 mẫu:
+
+1. Pilot: `PLI_M01`, `PLI_M02`, `PLII_M01`, `PLI_M72`.
+2. Formation: `PLI_M01–M11`.
+3. Change: `PLI_M12–M26`.
+4. Các mẫu PLI còn lại.
+5. Household: `PLII_M01–M28`.
+
+Mỗi batch phải có:
+
+- Generated diff allowlist.
+- Detector technical marker/footnote/newline.
+- DOM snapshot/contract tests.
+- Screenshot trang đầu của mọi mẫu trong batch tại viewport chuẩn.
+- Screenshot các trang/section đặc biệt đối với mẫu dài.
+- So sánh side-by-side source DOCX, UI và output DOCX/PDF cho mẫu đại diện.
+- Báo rõ PASS/FAIL/NOT RUN; không dùng cảm nhận “trông ổn”.
+
+### Test bắt buộc
+
+1. Cả 87/87 biểu mẫu không render marker kỹ thuật `PL1/PL2 - Mau so ...`, tên file
+   hoặc descriptor import ở bên trong tờ khai UI; `PLI_M01` là regression sample,
+   không phải toàn bộ scope.
+2. Các dòng `Mẫu số ...` hợp lệ vẫn còn và có alignment theo source/approved override.
+3. Quốc hiệu, tiêu ngữ và separator là ba visual line riêng.
+4. Tiêu đề hai dòng không bị nối thành một dòng.
+5. `Tôi là1` không xuất hiện dưới dạng baseline text; footnote là `<sup>` hoặc được
+   ẩn theo policy kèm help có thể truy cập.
+6. Detector chạy đủ 87 block files và không còn marker chưa classify.
+7. Không xóa nhầm số điều, số mẫu, mã ngành, ngày tháng hoặc số định danh.
+8. Input canonical và checkbox vẫn render/focus/validate như trước.
+9. Grid/table tests, draft và export regression vẫn PASS.
+10. DOCX output không mất footnote, placeholder, table tag hoặc paragraph pháp lý.
+11. Visual QA có evidence; `NOT RUN` không tính PASS.
+
+### Acceptance Gate P1-LAYOUT
+
+Chỉ báo `LAYOUT_DONE` khi:
+
+1. Layout manifest đủ 87/87.
+2. 87/87 mẫu không còn source indicator chưa classify hoặc còn hiển thị trong vùng
+   tờ khai UI; detector phải kiểm cả blocks và wrapper/title do app sinh.
+3. Hard breaks và semantic footnotes render đúng.
+4. Các header/title/date/salutation/signature giữ alignment/spacing đã duyệt.
+5. Không còn known defect dạng `Tôi là1` baseline.
+6. Pilot và mọi batch rollout đều có screenshot evidence.
+7. Structural table, domain, draft, export và DOCX tests không hồi quy.
+8. Independent visual auditor không tham gia implementation xác nhận PASS.
+
+## Prompt implement Wave P1-LAYOUT cho agent có context mới
+
+```text
+Bạn là Lead/Integrator Agent tiếp quản repo:
+C:\Users\Tuyen PC\orca\dangky_kinhdoanh
+
+MỤC TIÊU
+Thực hiện Wave P1-LAYOUT trong PLAN.md: sửa tận gốc độ trung thành hình thức của
+87 biểu mẫu trên UI và bảo toàn DOCX. Owner xác nhận marker kỹ thuật đầu mẫu là
+lỗi trên toàn bộ biểu mẫu, không chỉ PLI_M01. Các lỗi đã thấy còn gồm
+quốc hiệu/tiêu ngữ bị dồn dòng, alignment/indent/spacing sai và footnote bị dính
+vào nhãn như “Tôi là1”. Không hard-code riêng PLI_M01 và không xóa chữ số bằng
+regex mù.
+
+TRƯỚC KHI SỬA
+1. Đọc toàn bộ PLAN.md, ưu tiên “Wave P1-LAYOUT — chuẩn hóa hình thức và độ trung
+   thành biểu mẫu”, cùng Acceptance Gates hiện hành.
+2. Đọc PLAN_excel.md nhưng KHÔNG triển khai Excel; EXCEL_START_GATE vẫn NOT_READY.
+3. Chạy git status/log/worktree/diff. Bảo toàn mọi file modified/untracked của
+   owner. Đặc biệt không đụng profile draft và không xóa PLAN_excel.md.
+4. Xác minh HEAD thực tế; baseline từng được xác nhận là 6eaf4ee nhưng có thể đã
+   thay đổi. Không reset/revert và không pull origin mù.
+5. Chạy baseline Node/Python/audit tests và ghi PASS/FAIL/NOT RUN.
+
+ROOT CAUSE ĐÃ BIẾT
+- Nhiều block có paragraph đầu dạng “PL1/PL2 - Mau so ...”; owner xác nhận toàn bộ
+  UI biểu mẫu đều bị marker kỹ thuật. Phải audit cả 87 blocks và document
+  wrapper/title do app sinh, không coi số grep tĩnh là tổng scope.
+- Quốc hiệu/tiêu ngữ/separator nằm trong một run có newline; renderRuns hiện không
+  bảo toàn hard break nên browser collapse thành space.
+- PLI_M01/M02/M03/M04/M32/M33 có text dạng “Tôi là1”; phải đọc OOXML/source để
+  xác định footnote reference, không tự xóa số.
+- Block schema hiện chủ yếu có align, thiếu paragraph format và run vertAlign.
+
+ĐIỀU PHỐI WORKTREE
+Không cho hai agent sửa cùng file. Dùng tối đa 3 subagent song song ở L0:
+- L0-A census PLI_M01–M12;
+- L0-B census PLI_M13–M80;
+- L0-C census PLII_M01–M28.
+Mỗi agent chỉ ghi layout manifest fragment/evidence riêng, không sửa production.
+
+Lead merge census đủ 87/87 và khóa layout contract. Sau đó chạy tuần tự:
+- L1 extractor/schema agent sở hữu tools/docx_to_blocks.py + extractor tests;
+- tích hợp L1;
+- L2 renderer agent sở hữu render.js/style.css + DOM/layout tests;
+- tích hợp L2;
+- L3 Lead regenerate theo batch và visual QA.
+
+Không chạy L1 và L2 song song trước khi contract role/format/vertAlign được khóa.
+Lead là người duy nhất regenerate blocks/templates/form_maps toàn cục.
+
+CONTRACT BẮT BUỘC
+- Semantic paragraph roles: source-indicator, form-number, national-header,
+  national-motto, national-separator, date-line, form-title, form-subtitle,
+  salutation, body, section-heading, note, footnote, signature.
+- Paragraph format cần thiết: indent, spacing, line spacing, keep-with-next.
+- Run metadata: superscript/subscript/footnote-ref và hard break.
+- Backward compatible khi block cũ không có metadata mới.
+- UI ẩn source-indicator theo role nhưng vẫn giữ evidence; không ẩn “Mẫu số ...”.
+- Text phải escape an toàn trước khi chuyển newline thành <br>.
+- Không dùng &nbsp; hàng loạt hoặc inline style tùy ý từ JSON.
+
+PILOT BẮT BUỘC
+PLI_M01, PLI_M02, PLII_M01, PLI_M72.
+
+ACCEPTANCE BẮT BUỘC
+Pilot chứng minh cơ chế trên bốn mẫu, nhưng detector marker phải chạy toàn bộ 87
+mẫu ngay trong wave này; không được chờ rollout mới phát hiện marker còn sót.
+
+1. Cả 87/87 mẫu không còn dòng kỹ thuật “PL1/PL2 - Mau so ...”, filename hoặc
+   descriptor import trong vùng tờ khai UI; detector có danh sách form-level.
+2. Các dòng “Mẫu số ...” hợp lệ vẫn còn và đúng vị trí.
+3. Quốc hiệu, tiêu ngữ, separator là ba dòng riêng.
+4. Tiêu đề nhiều dòng giữ line break.
+5. Không còn baseline “Tôi là1”; số 1 là footnote semantic/superscript hoặc ẩn
+   theo policy có help, trong khi DOCX vẫn giữ footnote pháp lý.
+6. Input, checkbox, GRID_META, draft và export không hồi quy.
+7. Screenshot 1280x800 ở 100% và 200% zoom có evidence.
+
+ROLLOUT
+Sau pilot PASS, regenerate/integrate theo batch formation, change, PLI còn lại,
+household. Mỗi batch có detector, allowlist, test và screenshot trang đầu mọi mẫu.
+Không báo LAYOUT_DONE nếu chỉ sửa bốn mẫu pilot.
+
+INDEPENDENT AUDIT
+Sau rollout, tạo auditor agent hoàn toàn mới, không dùng agent vừa code. Auditor
+bắt đầu read-only, tự chạy detector/test, so source/UI/output, kiểm screenshot và
+không sửa production. Nếu FAIL, trả reproduction cho coding agent sửa rồi audit
+lại. NOT RUN không tính PASS.
+
+BÁO CÁO
+- Agent/worktree/branch/commit/ownership.
+- Layout manifest coverage 87/87.
+- Marker/newline/footnote/format findings trước và sau.
+- Generated diff trong/ngoài allowlist.
+- Test command PASS/FAIL/NOT RUN.
+- Screenshot/visual evidence.
+- Independent audit verdict.
+
+Chỉ báo LAYOUT_DONE khi đủ 8 Acceptance Gates P1-LAYOUT trong PLAN.md. Không triển
+khai PLAN_excel.md và không gọi toàn dự án TABLES DONE ở wave này.
+```

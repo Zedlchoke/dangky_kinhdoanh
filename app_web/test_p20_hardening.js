@@ -9,10 +9,13 @@
  *      mkGrid) được chứng minh ranh giới: isolate với form/global KHÁC,
  *      còn chính nó là object sống (cùng contract với fixture N9 của
  *      test_m72_activation - getGridMeta trả đúng reference).
- *  S2. EXPORT CONFLICT GUARD: loop cùng tên do >=2 mẫu tự khai form-scoped
- *      meta với contract export KHÁC nhau -> exportLoops ghi report rõ ràng,
- *      exportLoopsStrict NÉM lỗi có cấu trúc (FAIL LOUD, payload không nửa
- *      vời); contract THỰC SỰ tương đương -> xuất bình thường như cũ.
+ *  S2. EXPORT CONFLICT GUARD: resolve meta theo resolver cũ cho TỪNG docId
+ *      (form-scoped trước, fallback global); mọi side CÙNG MỘT object
+ *      reference -> tương đương tuyệt đối (không flag); >=2 reference khác
+ *      nhau -> so signature export contract, LỆCH thì exportLoops ghi report
+ *      rõ ràng còn exportLoopsStrict NÉM lỗi có cấu trúc (FAIL LOUD, payload
+ *      không nửa vời); signature BẰNG (kể cả clone mkGrid vs bản global)
+ *      -> xuất bình thường như cũ.
  *  S3. FOCUS SAU ROW OPERATION: focusTagOfGrid/nextSelAfterDelete thuần +
  *      focusGridRow trên DOM giả thủ công (add/duplicate/move/delete/bảng
  *      rỗng), selection bám _row_id.
@@ -205,11 +208,11 @@ function eqJson(a, b) { return JSON.stringify(a) === JSON.stringify(b); }
     cfs.length === 1 && cfs[0].code === 'EXPORT_LOOP_CONTRACT_CONFLICT' &&
       cfs[0].loop === 'nganh_bo_sung',
     JSON.stringify(cfs.map(c => c.loop)));
-  check('S2a.2 conflict liet ke ca hai ben: formId + semanticKey',
+  check('S2a.2 conflict liet ke ca hai ben: docId + semanticKey',
     cfs.length === 1 &&
-      cfs[0].sides.map(s => s.formId).join(',') === FIX_C1 + ',' + FIX_C2 &&
+      cfs[0].sides.map(s => s.docId).join(',') === FIX_C1 + ',' + FIX_C2 &&
       cfs[0].sides.every(s => s.semanticKey === 'nganh_bo_sung') &&
-      cfs[0].winner.formId === FIX_C1);
+      cfs[0].winner.docId === FIX_C1);
   check('S2a.3 reasons neu du 4 loai khac biet (tag set/autoName/requirePrimary/actMode)',
     cfs.length === 1 &&
       cfs[0].reasons.some(r => r.indexOf('tap tag cot') >= 0) &&
@@ -275,25 +278,88 @@ function eqJson(a, b) { return JSON.stringify(a) === JSON.stringify(b); }
       exEqStrict.nganh_xoa_bo.length === 1 &&
       exEqStrict.nganh_xoa_bo[0].ten_nganh === 'GT-ten_nganh-0');
 
-  // --- S2e. một scoped đơn độc + mẫu khác fallback global -> KHÔNG flag -
-  // Thiết kế: chỉ meta TỰ KHAI form-scoped mới đối chiếu; fallback toàn cục
-  // là contract dùng chung legacy (cùng object nên luôn tương đương) ->
-  // tránh false positive cho dossier ghép mẫu bình thường.
-  const cfSingle = G.detectExportConflicts(stConflict, [FIX_C2, 'PLI_M06']);
-  check('S2e.1 mot scoped duy nhat (ben con lai fallback global) -> khong conflict',
-    cfSingle.length === 0, JSON.stringify(cfSingle.map(c => c.message)));
-
-  // --- S2f. combo production thật: mỗi loop scoped ở TỐI ĐA một mẫu ----
-  // (dossier điển hình chọn 1 trong M12/M02 -> không bao giờ conflict)
-  const stProd = { values: {}, checks: {}, loops: {
-    nganh_bo_sung: [mkRow(['ten_nganh_bo_sung', 'ma_nganh', 'la_nganh_chinh'], 0)],
-    ds_nganh_ctcp: [mkRow(['ten_nganh', 'ma_nganh', 'la_nganh_chinh'], 0)]
+  // --- S2e. REVISION: scoped-vs-GLOBAL khác signature BỊ BẮT ------------
+  // Mô phỏng đúng combo thật PLI_M12 (nganh_bo_sung rơi về GRID_META toàn
+  // cục cols [ten_nganh,...]) + PLII_M02 (form-scoped cols
+  // [ten_nganh_bo_sung,...]): hai OBJECT REFERENCE khác nhau, signature lệch
+  // -> không được âm thầm first-doc-wins nữa.
+  const stReal = { values: {}, checks: {}, loops: {
+    nganh_bo_sung: [
+      mkRow(['ten_nganh_bo_sung', 'ma_nganh', 'la_nganh_chinh'], 0)
+    ]
   } };
-  const outProd = G.exportLoops(stProd, ['PLII_M02', 'PLI_M72']);
-  check('S2f.1 combo PLII_M02+PLI_M72 (loop khong giao nhau scoped) -> khong conflict, payload cu',
-    G.lastExportConflicts.length === 0 &&
-      outProd.ds_nganh_ctcp[0].la_nganh_chinh === 'X' &&
-      outProd.nganh_bo_sung[0].la_nganh_chinh === 'X');
+  const cfReal = G.detectExportConflicts(stReal, ['PLI_M12', 'PLII_M02']);
+  check('S2e.1 PLI_M12(global)+PLII_M02(scoped) khac signature -> dung 1 conflict',
+    cfReal.length === 1 &&
+      cfReal[0].code === 'EXPORT_LOOP_CONTRACT_CONFLICT' &&
+      cfReal[0].loop === 'nganh_bo_sung',
+    JSON.stringify(cfReal.map(c => c.message)));
+  check('S2e.2 sides la 2 reference khac nhau: PLI_M12 truoc (winner), roi PLII_M02',
+    cfReal.length === 1 &&
+      cfReal[0].sides.length === 2 &&
+      cfReal[0].sides[0].docId === 'PLI_M12' &&
+      cfReal[0].sides[0].signature.colTags.split('|').indexOf('ten_nganh') >= 0 &&
+      cfReal[0].sides[1].docId === 'PLII_M02' &&
+      cfReal[0].sides[1].signature.colTags.split('|')
+        .indexOf('ten_nganh_bo_sung') >= 0 &&
+      cfReal[0].winner.docId === 'PLI_M12');
+  check('S2e.3 reasons chi ro lech tap tag cot + autoName.nameTag',
+    cfReal.length === 1 &&
+      cfReal[0].reasons.some(r => r.indexOf('tap tag cot') >= 0) &&
+      cfReal[0].reasons.some(r => r.indexOf('autoName') >= 0 &&
+        r.indexOf('ten_nganh_bo_sung') >= 0),
+    JSON.stringify(cfReal.length && cfReal[0].reasons));
+  // Plain exportLoops: ghi report + payload VAN first-doc-wins nhu cu
+  const exRealBoth = G.exportLoops(stReal, ['PLI_M12', 'PLII_M02']);
+  const realReport = G.lastExportConflicts.slice();
+  const exRealFirst = G.exportLoops(stReal, ['PLI_M12']);
+  check('S2e.4 plain: report duoc ghi, payload byte-equal voi chi mau dau',
+    realReport.length === 1 && eqJson(exRealBoth, exRealFirst));
+  let threwReal = null;
+  try { G.exportLoopsStrict(stReal, ['PLI_M12', 'PLII_M02']); }
+  catch (e) { threwReal = e; }
+  check('S2e.5 strict nem EXPORT_LOOP_CONTRACT_CONFLICT cho combo that M12+M02',
+    !!threwReal && threwReal.code === 'EXPORT_LOOP_CONTRACT_CONFLICT' &&
+      threwReal.conflicts[0].loop === 'nganh_bo_sung');
+
+  // --- S2f. ANTI-FALSE-POSITIVE: clone mkGrid vs global CUNG signature ---
+  // PLII_M02.ds_nganh la CLONE cua GRID_META.ds_nganh (chi override
+  // required/minRows + them semanticKey - khong nam trong signature):
+  // dossier ghep PLII_M02 voi bat ky mau nao dung ds_nganh global
+  // (vd PLI_M02/PLI_M06/...) PHAI van xuat binh thuong, khong flag.
+  const stClone = { values: {}, checks: {}, loops: {
+    ds_nganh: [
+      mkRow(['ten_nganh', 'ma_nganh', 'la_nganh_chinh'], 0),
+      mkRow(['ten_nganh', 'ma_nganh', 'la_nganh_chinh'], 1)
+    ],
+    ds_thanh_vien: [mkRow(['ho_ten', 'von_dong_gop'], 0)]
+  } };
+  const cloneDocIds = ['PLII_M02', 'PLI_M02', 'PLI_M06'];
+  const cfClone = G.detectExportConflicts(stClone, cloneDocIds);
+  check('S2f.1 ds_nganh clone-vs-global tuong duong (requirePrimary/autoName/tag set/actMode bang) -> KHONG flag',
+    cfClone.length === 0,
+    JSON.stringify(cfClone.map(c => c.message)));
+  // Short-circuit cung reference: ba mau deu fallback GRID_META.ds_thanh_vien
+  // -> collapse con DUNG 1 side, khong doi chieu signature.
+  check('S2f.2 ba mau cung fallback global -> 1 side (cung reference)',
+    G.collectLoopSides('ds_thanh_vien', cloneDocIds).length === 1);
+  const exCloneStrict = G.exportLoopsStrict(stClone, cloneDocIds);
+  const exClonePlain = G.exportLoops(stClone, cloneDocIds);
+  check('S2f.3 dossier ghep clone+global: strict xuat thanh cong bang plain, payload nguyen',
+    eqJson(exCloneStrict, exClonePlain) &&
+      exClonePlain.ds_nganh[0].la_nganh_chinh === 'X' &&
+      exClonePlain.ds_nganh[1].la_nganh_chinh === '' &&
+      G.lastExportConflicts.length === 0);
+
+  // --- S2i. SHORT-CIRCUIT tuyệt đối: mọi mẫu cùng một reference ----------
+  const stTv = { values: {}, checks: {}, loops: {
+    ds_thanh_vien: [mkRow(['ho_ten', 'von_dong_gop'], 0)]
+  } };
+  const tvSides = G.collectLoopSides('ds_thanh_vien',
+    ['PLI_M02', 'PLI_M03', 'PLI_M06']);
+  const cfTv = G.detectExportConflicts(stTv, ['PLI_M02', 'PLI_M03', 'PLI_M06']);
+  check('S2i.1 ba mau khong co scoped entry -> cung 1 metaRef global -> khong conflict',
+    tvSides.length === 1 && cfTv.length === 0);
 
   // --- S2g. khác CHỈ activeWhen mode cũng bị bắt (report, không đổi payload)
   const FIX_M = 'FIX_P20_MODE';

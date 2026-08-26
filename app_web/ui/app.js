@@ -189,23 +189,30 @@
      * activeWhen cũng không bị đụng tới.
      *
      * P2.0 EXPORT CONFLICT GUARD (chống 'first-doc-wins' ÂM THẦM): loop cùng
-     * tên có thể được >=2 mẫu TỰ khai form-scoped meta với contract khác
-     * nhau (vd nganh_bo_sung của PLI_M12 cols [ten_nganh,...] vs PLII_M02
-     * cols [ten_nganh_bo_sung,...]) trong khi payload là MỘT mảng duy nhất
-     * theo tên loop - không thể phục vụ hai contract cùng lúc. Khi resolve
-     * meta cho một loop, guard thu thập meta từ TẤT CẢ docIds CÓ loop đó
-     * (chỉ các meta FORM-SCOPED khai trong FORM_GRID_META[docId].loops -
-     * meta rơi về GRID_META toàn cục là contract dùng chung legacy, nhiều
-     * mẫu fallback về cùng object nên luôn tương đương, không đối chiếu).
-     * 'Export contract' = signature so sánh được: requirePrimary,
-     * autoName{codeTag,nameTag}, tập tag cột (columns[].tag sort), chế độ
-     * activation (activationModeOf). Hai meta TƯƠNG ĐƯƠNG khi signature
-     * bằng -> xuất bình thường như cũ, KHÔNG lỗi. Khác nhau -> ghi vào
-     * report GridCtl.lastExportConflicts (reset mỗi lần gọi); đường export
-     * THẬT phải gọi GridCtl.exportLoopsStrict - chỗ DUY NHẤT ném lỗi có cấu
-     * trúc để FAIL LOUD, không xuất payload nửa vời. Payload do HÀM NÀY trả
-     * luôn giữ nguyên hành vi first-doc-wins cũ 100% (tương thích ngược cho
-     * caller cũ/test). */
+     * tên có thể được resolve sang metadata có contract khác nhau tùy mẫu
+     * (vd nganh_bo_sung của PLI_M12 rơi về GRID_META toàn cục cols
+     * [ten_nganh,...] trong khi PLII_M02 tự khai form-scoped cols
+     * [ten_nganh_bo_sung,...]) trong khi payload là MỘT mảng duy nhất theo
+     * tên loop - không thể phục vụ hai contract cùng lúc. Khi resolve meta
+     * cho một loop, guard chạy theo MỘT chỗ duy nhất này với hai bước:
+     *  1. Với TỪNG docId được truyền, resolve meta ĐÚNG NHƯ CŨ (form-scoped
+     *     FORM_GRID_META[docId].loops trước, fallback GRID_META toàn cục)
+     *     rồi thu thập sides = các {docId, metaRef} KHÁC NHAU VỀ REFERENCE.
+     *     SHORT-CIRCUIT chống false-positive: nếu mọi sample trỏ CÙNG MỘT
+     *     object (trường hợp phổ biến nhất - nhiều mẫu cùng fallback về
+     *     GRID_META[name], hoặc chỉ 1 mẫu có meta) -> tương đương TUYỆT ĐỐI,
+     *     không so signature, không flag.
+     *  2. Có >=2 reference khác nhau -> so signature 'export contract':
+     *     requirePrimary, autoName{codeTag,nameTag}, tập tag cột
+     *     (columns[].tag sort), chế độ activation (activationModeOf).
+     *     Signature BẰNG vẫn coi là tương đương (vd PLII_M02.ds_nganh là
+     *     clone mkGrid của GRID_META.ds_nganh nhưng cùng requirePrimary/
+     *     autoName/colTags/actMode -> dossier ghép mẫu KHÔNG bị flag).
+     *     Khác nhau -> ghi vào report GridCtl.lastExportConflicts (reset
+     *     mỗi lần gọi); đường export THẬT phải gọi GridCtl.exportLoopsStrict
+     *     - chỗ DUY NHẤT ném lỗi có cấu trúc để FAIL LOUD, không xuất
+     *     payload nửa vời. Payload do HÀM NÀY trả luôn giữ nguyên hành vi
+     *     first-doc-wins cũ 100% (tương thích ngược cho caller cũ/test). */
     lastExportConflicts: [],
     exportLoops: function (store, docIds) {
       var out = {};
@@ -284,66 +291,71 @@
       return reasons;
     },
 
-    /* Thu thập meta FORM-SCOPED của một loop từ TẤT CẢ docIds (theo thứ tự),
-     * dedupe cùng reference (hai mẫu fallback chung không tạo side). */
-    collectScopedLoopMetas: function (name, docIds) {
-      var seen = [];
+    /* Thu thập sides của MỘT loop theo ĐÚNG resolver cũ cho TỪNG docId
+     * (form-scoped trước, fallback GRID_META toàn cục - getGridMeta).
+     * Trả các side {docId, semanticKey, metaRef} KHÁC NHAU VỀ REFERENCE,
+     * giữ thứ tự docIds (side đầu = winner của payload first-wins); docId
+     * không resolve được meta hoặc trùng reference side trước thì bỏ. */
+    collectLoopSides: function (name, docIds) {
+      var seenRef = [];
       var out = [];
       (docIds || []).forEach(function (id) {
-        var fm = FD.FORM_GRID_META ? FD.FORM_GRID_META[id] : null;
-        var gm = (fm && fm.loops) ? (fm.loops[name] || null) : null;
-        if (!gm || seen.indexOf(gm) >= 0) return;
-        seen.push(gm);
+        var gm = FD.getGridMeta({ docId: id, loop: name });
+        if (!gm || seenRef.indexOf(gm) >= 0) return;
+        seenRef.push(gm);
         out.push({
-          formId: id,
+          docId: id,
           semanticKey: gm.semanticKey || null,
-          meta: gm
+          metaRef: gm
         });
       });
       return out;
     },
 
-    /* Đối chiếu contract các meta form-scoped của MỘT loop:
-     *  - <2 side hoặc mọi signature bằng -> null (xuất bình thường);
-     *  - ngược lại -> conflict có cấu trúc {code, loop, winner, sides[],
-     *    reasons[], message} - winner là meta đầu tiên theo thứ tự docIds
-     *    (đúng first-doc-wins cũ, chỉ BÁO thay vì im lặng). */
+    /* Đối chiếu contract các meta của MỘT loop theo tên:
+     *  1. <2 side khác reference -> null (SHORT-CIRCUIT tương đương tuyệt
+     *     đối - mọi mẫu cùng fallback chung một object là trường hợp điển hình).
+     *  2. >=2 reference -> so signature; mọi signature BẰNG -> null (vd
+     *     clone mkGrid vs bản global cùng contract); LỆCH -> conflict có cấu
+     *     trúc {code, loop, winner, sides[], reasons[], message} - winner là
+     *     meta đầu tiên theo thứ tự docIds (đúng first-doc-wins cũ, chỉ BÁO
+     *     thay vì im lặng). */
     loopContractConflict: function (name, docIds) {
-      var sides = GridCtl.collectScopedLoopMetas(name, docIds);
+      var sides = GridCtl.collectLoopSides(name, docIds);
       if (sides.length < 2) return null;
       var sigs = sides.map(function (s) {
-        return { side: s, sig: GridCtl.exportContractSig(s.meta) };
+        return { side: s, sig: GridCtl.exportContractSig(s.metaRef) };
       });
       var first = sigs[0];
       var reasons = [];
       for (var i = 1; i < sigs.length; i++) {
         GridCtl.exportSigDiff(first.sig, sigs[i].sig).forEach(function (r) {
           function tag(s) {
-            return s.formId + (s.semanticKey ? '(' + s.semanticKey + ')' : '');
+            return s.docId + (s.semanticKey ? '(' + s.semanticKey + ')' : '');
           }
           var msg = tag(first.side) + ' khac ' + tag(sigs[i].side) + ' - ' + r;
           if (reasons.indexOf(msg) < 0) reasons.push(msg);
         });
       }
-      if (!reasons.length) return null; // contract THỰC SỰ tương đương
+      if (!reasons.length) return null; // signature THỰC SỰ tương đương
       return {
         code: 'EXPORT_LOOP_CONTRACT_CONFLICT',
         loop: name,
         winner: {
-          formId: first.side.formId,
+          docId: first.side.docId,
           semanticKey: first.side.semanticKey,
           signature: first.sig
         },
         sides: sigs.map(function (x) {
           return {
-            formId: x.side.formId,
+            docId: x.side.docId,
             semanticKey: x.side.semanticKey,
             signature: x.sig
           };
         }),
         reasons: reasons,
         message: 'Loop "' + name + '" co nhieu contract export khac nhau giua cac mau (' +
-          sides.map(function (s) { return s.formId; }).join(', ') +
+          sides.map(function (s) { return s.docId; }).join(', ') +
           '). Khong duoc am tham chon meta cua mau dau tien. Ly do khac: ' +
           reasons.join('; ')
       };
@@ -1752,7 +1764,7 @@
       if (ex && ex.code === 'EXPORT_LOOP_CONTRACT_CONFLICT') {
         state.errors = (ex.conflicts || []).map(function (c) {
           return {
-            key: '@export-conflict:' + c.loop, docId: c.winner && c.winner.formId,
+            key: '@export-conflict:' + c.loop, docId: c.winner && c.winner.docId,
             code: 'EXPORT_LOOP_CONTRACT_CONFLICT', severity: 'blocking',
             message: c.message
           };

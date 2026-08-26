@@ -23,14 +23,12 @@ Phạm vi từng mẫu:
 3. P1-B (lane p1/b-pli-m72) — M72 5 occurrence theo loại hình: spec
    tools/form_specs/change/PLI_M72.json khai báo occurrences contract
    (ds_nganh_dntn/tnhh_1tv/tnhh_2tv/ctcp/dhdn, sync_group=ds_nganh_pli_m72).
-   Test kỳ vọng SAU KHI INTEGRATE generator sẽ dựng đủ 5 lưới:
-   - t_m72_spec_occurrences: hợp đồng spec — PASS NGAY BÂY GIỜ;
-   - t_m72_five_grids_contract / t_m72_five_grids_render:
-     EXPECTED-FAIL-PRE-INTEGRATION — fail-hữu-ích trên production hiện tại
-     (blocks/template M72 mới chỉ có 1 loop ds_nganh vùng DNTN); KHÔNG nới
-     lỏng để pass giả. Khi Lead integrate generator xong, hai test này phải
-     chuyển xanh và EXPECTED_CONTRACTS["PLI_M72"] cần đổi sang
-     M72_OCCURRENCE_LOOPS.
+   ĐÃ integrate đủ 5 lưới; từ P1.2 Option D template bọc từng biến thể bằng
+   marker điều kiện {?loai_hinh_*} — dữ liệu render M72 phải bật ĐỦ 5 flag
+   (M72_SECTION_FLAGS) để giữ cả 5 bảng như trước khi có vùng điều kiện.
+   Isolation từng biến thể (chỉ xuất 1 loại hình) được cover riêng bởi
+   tools/test_m72_conditional_export.py; verifier cấu trúc template:
+   tools/census/p1_b_verify_m72.py.
 
 File test thuần Python, exit code 0 = PASS / 1 = FAIL.
 
@@ -109,6 +107,11 @@ M72_OCCURRENCE_IDS = ["ds_nganh_dntn", "ds_nganh_tnhh_1tv", "ds_nganh_tnhh_2tv",
                       "ds_nganh_ctcp", "ds_nganh_dhdn"]
 M72_SYNC_GROUP = "ds_nganh_pli_m72"
 M72_MATCH_HEADING = "5. Ngành, nghề kinh doanh"
+# P1.2 Option D: 5 flag điều kiện bọc 5 biến thể loại hình trên template
+# (section_cond trong spec M72). Bật đủ 'X' khi render để giữ cả 5 bảng.
+M72_SECTION_FLAGS = ["loai_hinh_dntn", "loai_hinh_tnhh_1tv",
+                     "loai_hinh_tnhh_2tv", "loai_hinh_ctcp",
+                     "loai_hinh_dhdn"]
 HDR_NGANH = ["STT", "Tên ngành", "Mã ngành", "Ngành, nghề kinh doanh chính"]
 M72_OCCURRENCE_LOOPS = [(oid, CONTRACT_DS_NGANH, HDR_NGANH)
                         for oid in M72_OCCURRENCE_IDS]
@@ -521,8 +524,11 @@ def industry_tables_in(doc):
        "moi bang dung mot X")
 def t_m72_five_grids_render():
     out_path = OUT_DIR / "PLI_M72_nam_loai_hinh.docx"
-    write_rendered(TEMPLATES_DIR / "PLI_M72.docx", dict(M72_RENDER_DATASETS),
-                   out_path)
+    # P1.2 Option D: bật đủ 5 flag loai_hinh_* để giữ cả 5 bảng (như cũ);
+    # assertion số bảng/STT/X KHÔNG đổi.
+    data = dict(M72_RENDER_DATASETS)
+    data.update({flag: "X" for flag in M72_SECTION_FLAGS})
+    write_rendered(TEMPLATES_DIR / "PLI_M72.docx", data, out_path)
     with zipfile.ZipFile(out_path) as z:
         xml = z.read("word/document.xml").decode("utf-8")
 

@@ -407,7 +407,11 @@ function vsicOf(ma) {
     'app/data/layout_specs/fragments/l0_b.md',
     'app/data/layout_specs/fragments/l0_b_evidence.json',
     'app/data/layout_specs/fragments/l0_c.md',
-    'app/data/layout_specs/fragments/l0_c_evidence.json'
+    'app/data/layout_specs/fragments/l0_c_evidence.json',
+    // layout-manifest-v1: hop nhat 3 fragment L0 do Lead sinh qua
+    // tools/census/build_layout_manifest.py (commit 6047c1d) - artifact
+    // census co chu dich, khong phai generated drift.
+    'app/data/layout_specs/layout_manifest.json'
   ];
   let files = [];
   try {

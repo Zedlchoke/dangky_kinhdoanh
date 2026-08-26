@@ -1,0 +1,279 @@
+{
+ "generated_by": "t0-c",
+ "range": "PLII_M01-M28",
+ "method": {
+  "sources": [
+   "app/data/blocks/PLII_M01..M28.json (block types p/chk/table/loop, input keys, glued-STT paragraphs)",
+   "app/templates/PLII_M01..M28.docx (python-docx body walk + raw OOXML w:tbl count incl. header/footer parts)",
+   "app/data/form_maps.json (fields/loop tags per form)"
+  ],
+  "script": "tools/census/t0_c_census.py"
+ },
+ "forms": [
+  {
+   "form_id": "PLII_M01",
+   "form_status": "TABLE_COMPLETE",
+   "sections": [
+    {
+     "section_id": "m3_nganh_kinh_doanh",
+     "title": "3. Ngành, nghề kinh doanh",
+     "kind": "editable-grid",
+     "semantic_key_suggestion": "ds_nganh",
+     "required_columns": ["stt", "ten_nganh", "ma_nganh", "la_nganh_chinh"],
+     "status": "already_complete",
+     "source_evidence": {
+      "template": "app/templates/PLII_M01.docx",
+      "heading": "3. Ngành, nghề kinh doanh1:",
+      "anchor": "w:tbl[0] 6r x 4c header 'STT|Tên ngành|Mã ngành|Ngành, nghề kinh doanh chính' tags #ds_nganh; blocks B034 loop ds_nganh; form_maps ds_nganh.*"
+     },
+     "notes": "Loop/template/form_maps khớp 4 cột; la_nganh_chinh là ô đánh dấu X; blankRows=4."
+    },
+    {
+     "section_id": "m7_thanh_vien_ho_gia_dinh",
+     "title": "7. Thông tin về các thành viên hộ gia đình đăng ký hộ kinh doanh",
+     "kind": "editable-grid",
+     "semantic_key_suggestion": "ds_tv_ho_gia_dinh",
+     "required_columns": ["stt", "ho_ten", "ngay_sinh", "so_cccd", "gioi_tinh", "quoc_tich", "dan_toc", "noi_thuong_tru", "noi_o_hien_tai", "chu_ky"],
+     "status": "already_complete",
+     "source_evidence": {
+      "template": "app/templates/PLII_M01.docx",
+      "heading": "7. Thông tin về các thành viên hộ gia đình đăng ký hộ kinh doanh5:",
+      "anchor": "w:tbl[1] 6r x 10c header 'STT|Họ tên|Ngày, tháng, năm sinh|Số định danh cá nhân|Giới tính|Quốc tịch|Dân tộc|Nơi thường trú|Nơi ở hiện tại|Chữ ký' tags #ds_tv_ho_gia_dinh; blocks B052"
+     },
+     "notes": "Chú thích chân trang: khi kê khai số định danh cá nhân thì chỉ kê khai cột 1-5 và 10 -> validation có điều kiện; chu_ky outputOnly."
+    }
+   ],
+   "summary_counts": {"p": 63, "chk": 4, "table": 0, "loop": 2},
+   "legal_questions": []
+  },
+  {
+   "form_id": "PLII_M02",
+   "form_status": "BLOCKED_LEGAL_REVIEW",
+   "sections": [
+    {
+     "section_id": "a4_tv_hgd_sau_thay_doi",
+     "title": "A. Thay đổi thành viên hộ gia đình — Danh sách thành viên hộ gia đình đăng ký hộ kinh doanh sau khi thay đổi",
+     "kind": "editable-grid",
+     "semantic_key_suggestion": "tv_hgd_sau_thay_doi",
+     "required_columns": ["stt", "ho_ten", "ngay_sinh", "so_cccd", "gioi_tinh", "quoc_tich", "dan_toc", "noi_thuong_tru", "noi_o_hien_tai", "chu_ky"],
+     "status": "missing_grid",
+     "source_evidence": {
+      "template": "app/templates/PLII_M02.docx",
+      "heading": "Danh sách các thành viên hộ gia đình đăng ký hộ kinh doanh sau khi thay đổi2:",
+      "anchor": "paragraph dính 'STTHọ tênNgày,…Chữ ký12345678910' (blocks B072); converter mất lưới, 10 dòng trống đánh số 1-10"
+     },
+     "notes": "Cùng tập cột ds_tv_ho_gia_dinh của M01 nhưng ngữ cảnh khác -> key riêng, không auto-sync (PLAN A)."
+    },
+    {
+     "section_id": "a6_1_nganh_bo_sung",
+     "title": "A. Thay đổi ngành nghề — 1. Bổ sung ngành, nghề kinh doanh sau",
+     "kind": "editable-grid",
+     "semantic_key_suggestion": "nganh_bo_sung",
+     "required_columns": ["stt", "ten_nganh_bo_sung", "ma_nganh", "la_nganh_chinh"],
+     "status": "missing_grid",
+     "source_evidence": {
+      "template": "app/templates/PLII_M02.docx",
+      "heading": "1. Bổ sung ngành, nghề kinh doanh sau…",
+      "anchor": "4 paragraph rời 'STT'|'Tên ngành, nghề kinh doanh được bổ sung'|'Mã ngành4'|'Ngành, nghề kinh doanh chính (đánh dấu X…)' (blocks B079-B082)"
+     },
+     "notes": "Header bị tách thành chuỗi paragraph rời; cột cuối là checkbox chọn ngành chính trong số ngành bổ sung."
+    },
+    {
+     "section_id": "a6_2_nganh_bo",
+     "title": "A. Thay đổi ngành nghề — 2. Bỏ ngành, nghề kinh doanh sau",
+     "kind": "editable-grid",
+     "semantic_key_suggestion": "nganh_bo",
+     "required_columns": ["stt", "ten_nganh_bo", "ma_nganh", "la_nganh_chinh"],
+     "status": "missing_grid",
+     "source_evidence": {
+      "template": "app/templates/PLII_M02.docx",
+      "heading": "2. Bỏ ngành, nghề kinh doanh sau…",
+      "anchor": "4 paragraph rời 'STT'|'Tên ngành, nghề kinh doanh được bỏ khỏi danh sách đã đăng ký'|'Mã ngành5'|'Ngành, nghề kinh doanh chính (đánh dấu X…)' (blocks B084-B087)"
+     },
+     "notes": "Row contract riêng theo PLAN A 'Thay đổi ngành'; không đồng bộ với nganh_bo_sung."
+    },
+    {
+     "section_id": "a6_3_nganh_sua_chinh",
+     "title": "A. Thay đổi ngành nghề — 3. Sửa đổi ngành, nghề kinh doanh chính",
+     "kind": "editable-grid",
+     "semantic_key_suggestion": "nganh_sua_chi_tiet",
+     "required_columns": ["stt", "ten_nganh", "ma_nganh"],
+     "status": "missing_grid",
+     "source_evidence": {
+      "template": "app/templates/PLII_M02.docx",
+      "heading": "3. Sửa đổi ngành, nghề kinh doanh chính6…",
+      "anchor": "3 paragraph rời 'STT'|'Tên ngành, nghề kinh doanh'|'Mã ngành' (blocks B089-B091)"
+     },
+     "notes": "Chỉ 3 cột (không có cột chọn ngành chính); ghi chú 6 của mẫu: đổi sang ngành khác phải kê khai đồng thời mục 1 và 2."
+    },
+    {
+     "section_id": "a7_thue_chi_tieu_cu_moi",
+     "title": "A. Đăng ký thay đổi nội dung đăng ký thuế — bảng chỉ tiêu cũ/mới",
+     "kind": "fixed-matrix",
+     "semantic_key_suggestion": "thue_chi_tieu_cu_moi",
+     "required_columns": ["chi_tieu", "thong_tin_dang_ky_cu", "thong_tin_dang_ky_moi"],
+     "status": "missing_grid",
+     "source_evidence": {
+      "template": "app/templates/PLII_M02.docx",
+      "heading": "Đăng ký bổ sung, thay đổi các chỉ tiêu đăng ký thuế như sau:",
+      "anchor": "3 paragraph rời 'Chỉ tiêu'|'Thông tin đăng ký cũ'|'Thông tin đăng ký mới' (blocks B095-B097); dòng mẫu '- Chỉ tiêu 5.1: Địa chỉ nhận thông báo thuế' (B098), '-…..' (B099)"
+     },
+     "notes": "Phát hiện cấu trúc cũ/mới 3 cột chưa có trong inventory PLAN D; dòng '-….' cho phép thêm chỉ tiêu khác."
+    },
+    {
+     "section_id": "c3_nganh_cap_doi",
+     "title": "C. Đăng ký cấp đổi sang GCN ĐKHKD — 3. Ngành, nghề kinh doanh",
+     "kind": "editable-grid",
+     "semantic_key_suggestion": "ds_nganh",
+     "required_columns": ["stt", "ten_nganh", "ma_nganh", "la_nganh_chinh"],
+     "status": "already_complete",
+     "source_evidence": {
+      "template": "app/templates/PLII_M02.docx",
+      "heading": "C. Đăng ký cấp đổi… → 3. Ngành, nghề kinh doanh7:",
+      "anchor": "w:tbl[0] 6r x 4c tagged #ds_nganh (duy nhất w:tbl của file); blocks B118 loop ds_nganh"
+     },
+     "notes": "Bảng ngành trong phần cấp đổi/đăng ký lại theo PLAN A; rollout gần nhất đúng."
+    },
+    {
+     "section_id": "c5_thue_chi_tieu_cap_doi",
+     "title": "C. Đăng ký cấp đổi — 5. Thông tin đăng ký thuế",
+     "kind": "fixed-matrix",
+     "semantic_key_suggestion": "thue_chi_tieu_cap_doi",
+     "required_columns": ["stt", "chi_tieu_5_1_dia_chi_nhan_thong_bao_thue", "chi_tieu_5_2_tong_so_lao_dong"],
+     "status": "missing_grid",
+     "source_evidence": {
+      "template": "app/templates/PLII_M02.docx",
+      "heading": "5. Thông tin đăng ký thuế:",
+      "anchor": "paragraph rời 'STT'(B122)+'Các chỉ tiêu thông tin đăng ký thuế'(B123); hàng 5.1 địa chỉ nhận thông báo thuế kèm nhóm địa chỉ/điện thoại/email (B124-B130); hàng 5.2 tổng số lao động {so_lao_dong} (B131-B132)"
+     },
+     "notes": "Section 'STT|Các chỉ tiêu đăng ký thuế' PLAN D đã liệt kê cho PLII_M02; nằm trong phần cấp đổi, khác ngữ cảnh với a7."
+    },
+    {
+     "section_id": "c7_tv_hgd_cap_doi",
+     "title": "C. Đăng ký cấp đổi — 7. Thông tin về các thành viên hộ gia đình đăng ký hộ kinh doanh",
+     "kind": "editable-grid",
+     "semantic_key_suggestion": "tv_hgd_cap_doi",
+     "required_columns": ["stt", "ho_ten", "ngay_sinh", "so_cccd", "gioi_tinh", "quoc_tich", "dan_toc", "noi_thuong_tru", "noi_o_hien_tai", "chu_ky"],
+     "status": "missing_grid",
+     "source_evidence": {
+      "template": "app/templates/PLII_M02.docx",
+      "heading": "7. Thông tin về các thành viên hộ gia đình đăng ký hộ kinh doanh9:",
+      "anchor": "paragraph dính thứ hai 'STTHọ tên…Chữ ký12345678910Hộ kinh doanh cam kết về tính…' (blocks B137); 10 dòng trống đánh số"
+     },
+     "notes": "Thành viên trong phần đăng ký lại/cấp đổi theo PLAN C; chu_ky outputOnly."
+    }
+   ],
+   "summary_counts": {"p": 155, "chk": 3, "table": 0, "loop": 1},
+   "legal_questions": [
+    "Ba bảng ngành Mục A (bổ sung/bỏ/sửa) xác nhận dùng row contract ds_nganh với semantic key riêng như PLAN mục A, và bảng 'sửa ngành chính' chỉ 3 cột không thêm cột?",
+    "Bảng chỉ tiêu thuế cũ/mới Mục A: mẫu chỉ in sẵn '- Chỉ tiêu 5.1: Địa chỉ nhận thông báo thuế' + '-….' — tập chỉ tiêu cố định bắt buộc gồm những gì (có 5.2 tổng số lao động hay chỉ tiêu khác)?",
+    "Dữ liệu Mục C (cấp đổi): ngành/thành viên/thuế kê khai độc lập hay đồng bộ từ đăng ký hiện tại của hộ?"
+   ]
+  },
+  {"form_id": "PLII_M03", "form_status": "NO_TABLE", "sections": [], "summary_counts": {"p": 22, "chk": 0, "table": 0, "loop": 0}, "legal_questions": []},
+  {"form_id": "PLII_M04", "form_status": "NO_TABLE", "sections": [], "summary_counts": {"p": 16, "chk": 0, "table": 0, "loop": 0}, "legal_questions": []},
+  {"form_id": "PLII_M05", "form_status": "NO_TABLE", "sections": [], "summary_counts": {"p": 17, "chk": 0, "table": 0, "loop": 0}, "legal_questions": []},
+  {"form_id": "PLII_M06", "form_status": "NO_TABLE", "sections": [], "summary_counts": {"p": 32, "chk": 0, "table": 0, "loop": 0}, "legal_questions": []},
+  {
+   "form_id": "PLII_M07",
+   "form_status": "BLOCKED_LEGAL_REVIEW",
+   "sections": [
+    {
+     "section_id": "m3_nganh_kinh_doanh",
+     "title": "3. Ngành, nghề kinh doanh",
+     "kind": "editable-grid",
+     "semantic_key_suggestion": "ds_nganh",
+     "required_columns": ["stt", "ten_nganh", "ma_nganh", "la_nganh_chinh"],
+     "status": "already_complete",
+     "source_evidence": {
+      "template": "app/templates/PLII_M07.docx",
+      "heading": "3. Ngành, nghề kinh doanh:",
+      "anchor": "w:tbl[0] 6r x 4c tagged #ds_nganh; blocks B016 loop ds_nganh; form_maps ds_nganh.*"
+     },
+     "notes": "Vừa rollout xong; GCN hiển thị ngành đã đăng ký."
+    },
+    {
+     "section_id": "m7_danh_sach_thanh_vien_hgd",
+     "title": "7. Danh sách thành viên hộ gia đình đăng ký thành lập hộ kinh doanh",
+     "kind": "editable-grid",
+     "semantic_key_suggestion": "ds_thanh_vien_hkd_gcn",
+     "required_columns": ["stt", "ten_thanh_vien", "quoc_tich", "noi_o_hien_tai", "noi_thuong_tru", "so_cccd", "ghi_chu"],
+     "status": "missing_grid",
+     "source_evidence": {
+      "template": "app/templates/PLII_M07.docx",
+      "heading": "7. Danh sách thành viên hộ gia đình đăng ký thành lập hộ kinh doanh (chỉ ghi trong trường hợp các thành viên hộ gia đình đăng ký thành lập hộ kinh doanh):",
+      "anchor": "7 paragraph header rời sau heading: 'STT'|'Tên thành viên'|'Quốc tịch'|'Nơi ở hiện tại'|'Nơi thường trú'|'Số định danh cá nhân'|'Ghi chú' (blocks B027-B033); template không có w:tbl tương ứng"
+     },
+     "notes": "Header bị converter làm mất lưới. Tập cột KHÁC ds_tv_ho_gia_dinh của M01/M02: 'Tên thành viên', Quốc tịch/Nơi ở đứng trước Nơi thường trú, thêm Ghi chú, không có ngày sinh/giới tính/dân tộc/chữ ký."
+    }
+   ],
+   "summary_counts": {"p": 34, "chk": 0, "table": 0, "loop": 1},
+   "legal_questions": [
+    "Bảng thành viên tại GCN (Mẫu 7) khác contract ds_tv_ho_gia_dinh của M01 (7 cột, có Ghi chú) — dựng loop/semantic key riêng hay map subset từ contract chung?"
+   ]
+  },
+  {"form_id": "PLII_M08", "form_status": "NO_TABLE", "sections": [], "summary_counts": {"p": 21, "chk": 0, "table": 0, "loop": 0}, "legal_questions": []},
+  {"form_id": "PLII_M09", "form_status": "NO_TABLE", "sections": [], "summary_counts": {"p": 11, "chk": 0, "table": 0, "loop": 0}, "legal_questions": []},
+  {"form_id": "PLII_M10", "form_status": "NO_TABLE", "sections": [], "summary_counts": {"p": 23, "chk": 0, "table": 0, "loop": 0}, "legal_questions": []},
+  {"form_id": "PLII_M11", "form_status": "NO_TABLE", "sections": [], "summary_counts": {"p": 26, "chk": 0, "table": 0, "loop": 0}, "legal_questions": []},
+  {"form_id": "PLII_M12", "form_status": "NO_TABLE", "sections": [], "summary_counts": {"p": 25, "chk": 0, "table": 0, "loop": 0}, "legal_questions": []},
+  {"form_id": "PLII_M13", "form_status": "NO_TABLE", "sections": [], "summary_counts": {"p": 23, "chk": 0, "table": 0, "loop": 0}, "legal_questions": []},
+  {"form_id": "PLII_M14", "form_status": "NO_TABLE", "sections": [], "summary_counts": {"p": 30, "chk": 0, "table": 0, "loop": 0}, "legal_questions": []},
+  {"form_id": "PLII_M15", "form_status": "NO_TABLE", "sections": [], "summary_counts": {"p": 28, "chk": 0, "table": 0, "loop": 0}, "legal_questions": []},
+  {"form_id": "PLII_M16", "form_status": "NO_TABLE", "sections": [], "summary_counts": {"p": 24, "chk": 0, "table": 0, "loop": 0}, "legal_questions": []},
+  {
+   "form_id": "PLII_M17",
+   "form_status": "NO_TABLE",
+   "sections": [
+    {
+     "section_id": "ho_so_bao_gom",
+     "title": "Hồ sơ bao gồm:",
+     "kind": "unknown",
+     "semantic_key_suggestion": "danh_sach_tai_lieu_hs_nop",
+     "required_columns": [],
+     "status": "no_table",
+     "source_evidence": {
+      "template": "app/templates/PLII_M17.docx",
+      "heading": "Hồ sơ bao gồm:",
+      "anchor": "blocks B016-B019: heading + 3 dòng chấm '1./2./3. ……' không có STT/cột; template không có w:tbl"
+     },
+     "notes": "Vùng 'Danh sách' theo PLAN G nhưng mẫu gốc chỉ là 3 dòng gạch đầu dòng viết tay tên giấy tờ; render multi-line/free-text là trung thành mẫu, không cần grid."
+    }
+   ],
+   "summary_counts": {"p": 25, "chk": 0, "table": 0, "loop": 0},
+   "legal_questions": []
+  },
+  {
+   "form_id": "PLII_M18",
+   "form_status": "NO_TABLE",
+   "sections": [
+    {
+     "section_id": "ho_so_bao_gom",
+     "title": "Hồ sơ bao gồm:",
+     "kind": "unknown",
+     "semantic_key_suggestion": "danh_sach_tai_lieu_hs_nop_online",
+     "required_columns": [],
+     "status": "no_table",
+     "source_evidence": {
+      "template": "app/templates/PLII_M18.docx",
+      "heading": "Hồ sơ bao gồm:",
+      "anchor": "blocks quanh B017: heading + các dòng chấm đánh số, không STT/cột; template không có w:tbl"
+     },
+     "notes": "Tương tự PLII_M17, bản nộp online; giữ free-text, không cần grid."
+    }
+   ],
+   "summary_counts": {"p": 27, "chk": 0, "table": 0, "loop": 0},
+   "legal_questions": []
+  },
+  {"form_id": "PLII_M19", "form_status": "NO_TABLE", "sections": [], "summary_counts": {"p": 23, "chk": 0, "table": 0, "loop": 0}, "legal_questions": []},
+  {"form_id": "PLII_M20", "form_status": "NO_TABLE", "sections": [], "summary_counts": {"p": 22, "chk": 0, "table": 0, "loop": 0}, "legal_questions": []},
+  {"form_id": "PLII_M21", "form_status": "NO_TABLE", "sections": [], "summary_counts": {"p": 27, "chk": 0, "table": 0, "loop": 0}, "legal_questions": []},
+  {"form_id": "PLII_M22", "form_status": "NO_TABLE", "sections": [], "summary_counts": {"p": 21, "chk": 0, "table": 0, "loop": 0}, "legal_questions": []},
+  {"form_id": "PLII_M23", "form_status": "NO_TABLE", "sections": [], "summary_counts": {"p": 22, "chk": 0, "table": 0, "loop": 0}, "legal_questions": []},
+  {"form_id": "PLII_M24", "form_status": "NO_TABLE", "sections": [], "summary_counts": {"p": 16, "chk": 0, "table": 0, "loop": 0}, "legal_questions": []},
+  {"form_id": "PLII_M25", "form_status": "NO_TABLE", "sections": [], "summary_counts": {"p": 19, "chk": 0, "table": 0, "loop": 0}, "legal_questions": []},
+  {"form_id": "PLII_M26", "form_status": "NO_TABLE", "sections": [], "summary_counts": {"p": 25, "chk": 0, "table": 0, "loop": 0}, "legal_questions": []},
+  {"form_id": "PLII_M27", "form_status": "NO_TABLE", "sections": [], "summary_counts": {"p": 23, "chk": 0, "table": 0, "loop": 0}, "legal_questions": []},
+  {"form_id": "PLII_M28", "form_status": "NO_TABLE", "sections": [], "summary_counts": {"p": 32, "chk": 0, "table": 0, "loop": 0}, "legal_questions": []}
+ ]
+}

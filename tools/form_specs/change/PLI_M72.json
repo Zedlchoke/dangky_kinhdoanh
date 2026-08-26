@@ -1,8 +1,8 @@
 {
   "form_id": "PLI_M72",
   "group": "change",
-  "note": "Cong bo noi dung dang ky thanh lap doanh nghiep (nguon PL1_Mau_72 trong 05_cong_bo_cung_cap_thong_tin). Luoi nganh o muc '5.' mat khi convert; muc sau la '6. Von dau tu'.",
-  "gap_nghiepvu": "Template M72 gom 5 phien ban (DNTN/TNHH 1TV/TNHH 2TV+/CTCP/HD), MOI phien ban deu co rieng luoi '5. Nganh, nghe kinh doanh' gan giong het nhau. Generator rebuild chi cham DUOC lan xuat hien DAU TIEN cua anchor (anchor regex khong dinh vi theo thu tu) -> spec nay tai dung luoi phien ban DNTN; 4 phien ban con lai van mat luoi (paragraph tan du 'STT'/'Tên ngành'/'Mã ngành' o cac phan sau giu nguyen nhu truoc). Can Lead mo rong generator hoac tach M72 thanh 5 form_id neu muon day du 5 loai hinh.",
+  "note": "Cong bo noi dung dang ky thanh lap doanh nghiep (nguon PL1_Mau_72 trong 05_cong_bo_cung_cap_thong_tin). Mau gom 5 phan theo loai hinh DN, MOI phan co mot luoi nganh '5. Nganh, nghe kinh doanh' gan giong het nhau.",
+  "gap_nghiepvu": "Spec da khai bao DU 5 occurrence (contract P1: ds_nganh_dntn / tnhh_1tv / tnhh_2tv / ctcp / dhdn, sync_group=ds_nganh_pli_m72). Generator hien tai CHUA ho tro 'occurrences' (build_form_maps.py chi cham anchor lan dau) nen khi chua integrate chi occurrence 1 duoc rebuild thanh bang loop; 4 vung con lai van la paragraph tan du STT/Ten nganh/Ma nganh. Cac heading 5 vung GIONG HET text nhau ('5. Nganh, nghe kinh doanh') -> nth=1..5 la dinh danh duy nhat; end marker chung '^6\\. von' vi muc '6.' moi phan deu bat dau bang 'Von' (dau tu/dieu le). Khoang trang giua heading va muc '6.' o cac vung 2-5 chi con 3 paragraph tieu de cot (cot thu 4 mat ca o nguon); rieng vung 1 (DNTN) con du 4 paragraph tieu de ke ca 'Nganh, nghe kinh doanh chinh'. Cac luoi thanh vien/co dong nested-grid BLOCKED khong nam trong occurrences nay - giu nguyen.",
   "tables": [
     {
       "spec": {
@@ -21,10 +21,47 @@
       "pos": "after",
       "anchor": "^5\\. nganh, nghe kinh doanh",
       "no_default_drops": true,
-      "drop_until": "^6\\. von dau tu",
+      "drop_until": "^6\\. von",
       "drop": ["^stt$", "^ten nganh\\b", "^ma nganh\\d*$",
                "^nganh, nghe kinh doanh chinh"],
-      "headers": ["STT", "Tên ngành", "Mã ngành", "Ngành, nghề kinh doanh chính"]
+      "headers": ["STT", "Tên ngành", "Mã ngành", "Ngành, nghề kinh doanh chính"],
+      "occurrences": [
+        {
+          "occurrence_id": "ds_nganh_dntn",
+          "match_heading": "5. Ngành, nghề kinh doanh",
+          "nth": 1,
+          "sync_group": "ds_nganh_pli_m72",
+          "end_markers": ["^6\\. von"]
+        },
+        {
+          "occurrence_id": "ds_nganh_tnhh_1tv",
+          "match_heading": "5. Ngành, nghề kinh doanh",
+          "nth": 2,
+          "sync_group": "ds_nganh_pli_m72",
+          "end_markers": ["^6\\. von"]
+        },
+        {
+          "occurrence_id": "ds_nganh_tnhh_2tv",
+          "match_heading": "5. Ngành, nghề kinh doanh",
+          "nth": 3,
+          "sync_group": "ds_nganh_pli_m72",
+          "end_markers": ["^6\\. von"]
+        },
+        {
+          "occurrence_id": "ds_nganh_ctcp",
+          "match_heading": "5. Ngành, nghề kinh doanh",
+          "nth": 4,
+          "sync_group": "ds_nganh_pli_m72",
+          "end_markers": ["^6\\. von"]
+        },
+        {
+          "occurrence_id": "ds_nganh_dhdn",
+          "match_heading": "5. Ngành, nghề kinh doanh",
+          "nth": 5,
+          "sync_group": "ds_nganh_pli_m72",
+          "end_markers": ["^6\\. von"]
+        }
+      ]
     }
   ]
 }

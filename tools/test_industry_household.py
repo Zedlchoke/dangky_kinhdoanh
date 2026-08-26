@@ -72,22 +72,23 @@ EXPECTED_HEADERS = ["STT", "Tên ngành", "Mã ngành",
 EXPECTED_COLS = [(1, "ten_nganh"), (2, "ma_nganh"), (3, "la_nganh_chinh")]
 
 # P1-C: 4 vùng ngành của PLII_M02 (template anchor -> block hiện trạng).
-# region 4 (nganh_hien_tai) = bảng C.3 cấp đổi/đăng ký lại, w:tbl DUY NHẤT
-# của file, đã có loop ds_nganh; 3 vùng Mục A còn paragraph rơi (MISSING).
+# region 4 (nganh_hien_tai) = bảng C.3 cấp đổi/đăng ký lại — SAU integration
+# giữ tên loop canonical ds_nganh (dùng chung PLI_M02/PLII_M07) kèm metadata
+# occurrence_id=nganh_hien_tai; match_heading là literal prefix sau fold.
 SPEC_PATH = ROOT / "tools" / "form_specs" / "household" / "PLII_M02.json"
 M02_OCCURRENCES = [
-    ("nganh_bo_sung", "^1\\. bo sung nganh, nghe kinh doanh",
+    ("nganh_bo_sung", "1. bo sung nganh, nghe kinh doanh",
      ["^2\\. bo nganh, nghe kinh doanh"],
      ["STT", "Tên ngành, nghề kinh doanh được bổ sung", "Mã ngành",
       "Ngành, nghề kinh doanh chính"]),
-    ("nganh_xoa_bo", "^2\\. bo nganh, nghe kinh doanh",
+    ("nganh_xoa_bo", "2. bo nganh, nghe kinh doanh",
      ["^3\\. sua doi nganh, nghe kinh doanh"],
      ["STT", "Tên ngành, nghề kinh doanh được bỏ khỏi danh sách đã đăng ký",
       "Mã ngành", "Ngành, nghề kinh doanh chính"]),
-    ("nganh_sua_doi_chi_tiet", "^3\\. sua doi nganh, nghe kinh doanh",
+    ("nganh_sua_doi_chi_tiet", "3. sua doi nganh, nghe kinh doanh",
      ["^luu y: truong hop ho kinh doanh thay doi nganh"],
      ["STT", "Tên ngành, nghề kinh doanh", "Mã ngành"]),
-    ("nganh_hien_tai", "^3\\. nganh, nghe kinh doanh",
+    ("nganh_hien_tai", "3. nganh, nghe kinh doanh",
      ["^4\\. von kinh doanh"], EXPECTED_HEADERS),
 ]
 

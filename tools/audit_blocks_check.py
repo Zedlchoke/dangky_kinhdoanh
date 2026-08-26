@@ -529,17 +529,18 @@ def audit_section3(form_maps: dict, loaded: dict) -> None:
                         SEV_CHAN,
                     )
 
-    # Kỳ vọng 24: 9 loop cũ (PLI_M06..M11, PLII_M01×2, ds_nganh PLI_M02)
-    # + rollout Wave 2: ds_nganh 12 mẫu (PLI_M01/03/04/05/17/19/21/23/25/72,
-    # PLII_M02/M07) + 3 loop semantic thay đổi ngành PLI_M12
-    # (nganh_bo_sung/nganh_xoa_bo/nganh_sua_doi_chi_tiet).
-    EXPECT_TOTAL_LOOPS = 24
+    # Kỳ vọng tổng loop KHÔNG còn là con số cứng: derive từ form_maps
+    # (dynamic_tables do generator sinh từ spec — nguồn sự thật). Điều này
+    # tự thích ứng khi rollout P1/P3 thêm bảng, đồng thời vẫn bắt lệch
+    # giữa blocks và form_maps (mục 3 đã so từng bảng riêng lẻ).
+    EXPECT_TOTAL_LOOPS = sum(
+        len(m.get("dynamic_tables", [])) for m in form_maps.values()
+    )
     if total_loop_blocks != EXPECT_TOTAL_LOOPS:
         add(
             "3",
             "*",
-            "tổng số block loop=%d, kỳ vọng %d "
-            "(9 cũ + Wave2: ds_nganh 13 mẫu + 3 loop PLI_M12)"
+            "tổng số block loop=%d, kỳ vọng %d theo dynamic_tables form_maps"
             % (total_loop_blocks, EXPECT_TOTAL_LOOPS),
             SEV_CHAN,
         )

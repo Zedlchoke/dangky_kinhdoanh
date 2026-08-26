@@ -96,11 +96,9 @@ EXPECTED_CONTRACTS = {
                  ["STT", "Tên ngành", "Mã ngành", "Ngành, nghề kinh doanh chính"])],
     "PLI_M25": [("ds_nganh", CONTRACT_DS_NGANH,
                  ["STT", "Tên ngành", "Mã ngành", "Ngành, nghề kinh doanh chính"])],
-    # P1-B: TRƯỚC integration M72 chỉ có 1 loop ds_nganh (vùng DNTN) —
-    # expectation này mô tả production hiện tại. SAU integration đổi sang
-    # M72_OCCURRENCE_LOOPS (5 occurrence theo loại hình).
-    "PLI_M72": [("ds_nganh", CONTRACT_DS_NGANH,
-                 ["STT", "Tên ngành", "Mã ngành", "Ngành, nghề kinh doanh chính"])],
+    # P1-B: SAU integration M72 có đủ 5 loop occurrence theo loại hình —
+    # gán sau khi M72_OCCURRENCE_LOOPS được định nghĩa (xem dưới).
+    "PLI_M72": None,
 }
 
 # ---------------------------------------------------------------------------
@@ -114,6 +112,7 @@ M72_MATCH_HEADING = "5. Ngành, nghề kinh doanh"
 HDR_NGANH = ["STT", "Tên ngành", "Mã ngành", "Ngành, nghề kinh doanh chính"]
 M72_OCCURRENCE_LOOPS = [(oid, CONTRACT_DS_NGANH, HDR_NGANH)
                         for oid in M72_OCCURRENCE_IDS]
+EXPECTED_CONTRACTS["PLI_M72"] = M72_OCCURRENCE_LOOPS
 
 # Dữ liệu render RIÊNG BIỆT từng occurrence (số dòng + vị trí X khác nhau)
 # để phát hiện dữ liệu trượt sang bảng của loại hình khác:
@@ -309,9 +308,12 @@ def assert_render_ds_nganh(fid: str) -> None:
         assert tok not in xml, "%s: còn sót token %r trong document.xml" % (fid, tok)
 
 
-@check("render DOCX ds_nganh 3 dong (STT 1/2/3 + dung mot dau X) cho 6 mau")
+@check("render DOCX ds_nganh 3 dong (STT 1/2/3 + dung mot dau X) cho 5 mau")
 def t_render_ds_nganh_forms():
-    for fid in ["PLI_M17", "PLI_M19", "PLI_M21", "PLI_M23", "PLI_M25", "PLI_M72"]:
+    # PLI_M72 khong con loop ds_nganh don nhat sau P1: render cua no duoc
+    # cover SAT HON boi t_m72_five_grids_render (5 occurrence, dataset rieng,
+    # kiem tra tron du lieu giua cac loai hinh).
+    for fid in ["PLI_M17", "PLI_M19", "PLI_M21", "PLI_M23", "PLI_M25"]:
         assert_render_ds_nganh(fid)
 
 

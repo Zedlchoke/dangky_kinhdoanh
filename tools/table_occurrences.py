@@ -65,6 +65,7 @@ def validate_occurrences(raw_list, existing_loop_names=(), form_id="?"):
     (truoc khi sua document). Unknown key duoc bo qua (forward-compat).
     """
     seen = set()
+    seen_eff = set()
     loop_names = set(existing_loop_names or ())
     out = []
     for i, raw in enumerate(raw_list or []):
@@ -89,6 +90,14 @@ def validate_occurrences(raw_list, existing_loop_names=(), form_id="?"):
             raise ValueError(
                 "%s: occurrences[%d] (%s) thieu match_heading"
                 % (form_id, i, oid))
+        # match_heading la VAN BAN prefix (duoc fold 2 phia truoc khi so
+        # sanh), KHONG PHAI regex -> chan som ky tu regex de tranh SKIP
+        # nguoc doi (bai hoc PLII_M02 P1).
+        if heading.strip().startswith("^") or "\\" in heading:
+            raise ValueError(
+                "%s: occurrences[%d] (%s) match_heading phai la van ban "
+                "thuong (co giu dau, khong regex): %r"
+                % (form_id, i, oid, heading))
         nth = raw.get("nth", 1)
         if not isinstance(nth, int) or isinstance(nth, bool) or nth < 1:
             raise ValueError(
@@ -105,6 +114,25 @@ def validate_occurrences(raw_list, existing_loop_names=(), form_id="?"):
             raise ValueError(
                 "%s: occurrences[%d] (%s) sync_group phai la string hoac null"
                 % (form_id, i, oid))
+        # Loop name tuyen minh (tuy chon): bao toan canonical key khi vung
+        # du lieu do la danh dung chung (vd ds_nganh PLII_M02 vung C.3).
+        loop = raw.get("loop")
+        if loop is not None:
+            if not isinstance(loop, str) or not OCC_ID_RE.match(loop):
+                raise ValueError(
+                    "%s: occurrences[%d] (%s) loop khong hop le: %r "
+                    "(phai khop [A-Za-z0-9_]+)" % (form_id, i, oid, loop))
+            if loop in seen_eff or (loop in loop_names and loop != oid):
+                raise ValueError(
+                    "%s: occurrence '%s' dat loop '%s' trung ten loop khac "
+                    "-> semantic_key phai duy nhat trong form" % (
+                        form_id, oid, loop))
+        eff_loop = loop or oid
+        if eff_loop in seen_eff or (eff_loop in loop_names and eff_loop != oid):
+            raise ValueError(
+                "%s: occurrence_id '%s' trung ten loop cua spec khac "
+                "-> semantic_key phai duy nhat trong form" % (form_id, oid))
+        seen_eff.add(eff_loop)
         seen.add(oid)
         out.append({
             "occurrence_id": oid,
@@ -112,6 +140,7 @@ def validate_occurrences(raw_list, existing_loop_names=(), form_id="?"):
             "nth": nth,
             "sync_group": sync_group,
             "end_markers": list(end_markers),
+            "loop": loop,
         })
     return out
 

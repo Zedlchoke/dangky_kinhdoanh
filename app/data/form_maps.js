@@ -4630,15 +4630,15 @@ window.FORM_MAPS = {
     "label": "Website:"
    },
    {
-    "key": "ds_nganh.ten_nganh",
+    "key": "ds_nganh_dntn.ten_nganh",
     "label": "ten_nganh"
    },
    {
-    "key": "ds_nganh.ma_nganh",
+    "key": "ds_nganh_dntn.ma_nganh",
     "label": "ma_nganh"
    },
    {
-    "key": "ds_nganh.la_nganh_chinh",
+    "key": "ds_nganh_dntn.la_nganh_chinh",
     "label": "la_nganh_chinh"
    },
    {
@@ -4690,6 +4690,18 @@ window.FORM_MAPS = {
     "label": "8. Nơi đăng ký: (Cơ quan đăng ký kinh doanh cấp tỉnh)"
    },
    {
+    "key": "ds_nganh_tnhh_1tv.ten_nganh",
+    "label": "ten_nganh"
+   },
+   {
+    "key": "ds_nganh_tnhh_1tv.ma_nganh",
+    "label": "ma_nganh"
+   },
+   {
+    "key": "ds_nganh_tnhh_1tv.la_nganh_chinh",
+    "label": "la_nganh_chinh"
+   },
+   {
     "key": "von_dieu_le",
     "label": "6. Vốn điều lệ:"
    },
@@ -4738,12 +4750,48 @@ window.FORM_MAPS = {
     "label": "Chức danh:"
    },
    {
+    "key": "ds_nganh_tnhh_2tv.ten_nganh",
+    "label": "ten_nganh"
+   },
+   {
+    "key": "ds_nganh_tnhh_2tv.ma_nganh",
+    "label": "ma_nganh"
+   },
+   {
+    "key": "ds_nganh_tnhh_2tv.la_nganh_chinh",
+    "label": "la_nganh_chinh"
+   },
+   {
+    "key": "ds_nganh_ctcp.ten_nganh",
+    "label": "ten_nganh"
+   },
+   {
+    "key": "ds_nganh_ctcp.ma_nganh",
+    "label": "ma_nganh"
+   },
+   {
+    "key": "ds_nganh_ctcp.la_nganh_chinh",
+    "label": "la_nganh_chinh"
+   },
+   {
     "key": "menh_gia_co_phan",
     "label": "Mệnh giá cổ phần:"
    },
    {
     "key": "tong_so_co_phan",
     "label": "Tổng số cổ phần:"
+   },
+   {
+    "key": "ds_nganh_dhdn.ten_nganh",
+    "label": "ten_nganh"
+   },
+   {
+    "key": "ds_nganh_dhdn.ma_nganh",
+    "label": "ma_nganh"
+   },
+   {
+    "key": "ds_nganh_dhdn.la_nganh_chinh",
+    "label": "la_nganh_chinh"
    }
   ],
   "dynamic_tables": [
@@ -4752,7 +4800,7 @@ window.FORM_MAPS = {
     "table_index": 0,
     "header_row": 0,
     "template_row": 5,
-    "loop": "ds_nganh",
+    "loop": "ds_nganh_dntn",
     "columns": [
      {
       "col": 1,
@@ -4769,7 +4817,118 @@ window.FORM_MAPS = {
       "header": "Ngành, nghề kinh doanh chính",
       "tag": "la_nganh_chinh"
      }
-    ]
+    ],
+    "semantic_key": "ds_nganh_dntn",
+    "occurrence_id": "ds_nganh_dntn",
+    "sync_group": "ds_nganh_pli_m72"
+   },
+   {
+    "id": "ds_nganh",
+    "table_index": 1,
+    "header_row": 0,
+    "template_row": 5,
+    "loop": "ds_nganh_tnhh_1tv",
+    "columns": [
+     {
+      "col": 1,
+      "header": "Tên ngành",
+      "tag": "ten_nganh"
+     },
+     {
+      "col": 2,
+      "header": "Mã ngành",
+      "tag": "ma_nganh"
+     },
+     {
+      "col": 3,
+      "header": "Ngành, nghề kinh doanh chính",
+      "tag": "la_nganh_chinh"
+     }
+    ],
+    "semantic_key": "ds_nganh_tnhh_1tv",
+    "occurrence_id": "ds_nganh_tnhh_1tv",
+    "sync_group": "ds_nganh_pli_m72"
+   },
+   {
+    "id": "ds_nganh",
+    "table_index": 2,
+    "header_row": 0,
+    "template_row": 5,
+    "loop": "ds_nganh_tnhh_2tv",
+    "columns": [
+     {
+      "col": 1,
+      "header": "Tên ngành",
+      "tag": "ten_nganh"
+     },
+     {
+      "col": 2,
+      "header": "Mã ngành",
+      "tag": "ma_nganh"
+     },
+     {
+      "col": 3,
+      "header": "Ngành, nghề kinh doanh chính",
+      "tag": "la_nganh_chinh"
+     }
+    ],
+    "semantic_key": "ds_nganh_tnhh_2tv",
+    "occurrence_id": "ds_nganh_tnhh_2tv",
+    "sync_group": "ds_nganh_pli_m72"
+   },
+   {
+    "id": "ds_nganh",
+    "table_index": 3,
+    "header_row": 0,
+    "template_row": 5,
+    "loop": "ds_nganh_ctcp",
+    "columns": [
+     {
+      "col": 1,
+      "header": "Tên ngành",
+      "tag": "ten_nganh"
+     },
+     {
+      "col": 2,
+      "header": "Mã ngành",
+      "tag": "ma_nganh"
+     },
+     {
+      "col": 3,
+      "header": "Ngành, nghề kinh doanh chính",
+      "tag": "la_nganh_chinh"
+     }
+    ],
+    "semantic_key": "ds_nganh_ctcp",
+    "occurrence_id": "ds_nganh_ctcp",
+    "sync_group": "ds_nganh_pli_m72"
+   },
+   {
+    "id": "ds_nganh",
+    "table_index": 4,
+    "header_row": 0,
+    "template_row": 5,
+    "loop": "ds_nganh_dhdn",
+    "columns": [
+     {
+      "col": 1,
+      "header": "Tên ngành",
+      "tag": "ten_nganh"
+     },
+     {
+      "col": 2,
+      "header": "Mã ngành",
+      "tag": "ma_nganh"
+     },
+     {
+      "col": 3,
+      "header": "Ngành, nghề kinh doanh chính",
+      "tag": "la_nganh_chinh"
+     }
+    ],
+    "semantic_key": "ds_nganh_dhdn",
+    "occurrence_id": "ds_nganh_dhdn",
+    "sync_group": "ds_nganh_pli_m72"
    }
   ]
  },
@@ -5597,6 +5756,38 @@ window.FORM_MAPS = {
     "label": "Hình thức tăng, giảm vốn:"
    },
    {
+    "key": "nganh_bo_sung.ten_nganh_bo_sung",
+    "label": "ten_nganh_bo_sung"
+   },
+   {
+    "key": "nganh_bo_sung.ma_nganh",
+    "label": "ma_nganh"
+   },
+   {
+    "key": "nganh_bo_sung.la_nganh_chinh",
+    "label": "la_nganh_chinh"
+   },
+   {
+    "key": "nganh_xoa_bo.ten_nganh_bo",
+    "label": "ten_nganh_bo"
+   },
+   {
+    "key": "nganh_xoa_bo.ma_nganh",
+    "label": "ma_nganh"
+   },
+   {
+    "key": "nganh_xoa_bo.la_nganh_chinh",
+    "label": "la_nganh_chinh"
+   },
+   {
+    "key": "nganh_sua_doi_chi_tiet.ten_nganh",
+    "label": "ten_nganh"
+   },
+   {
+    "key": "nganh_sua_doi_chi_tiet.ma_nganh",
+    "label": "ma_nganh"
+   },
+   {
     "key": "ds_nganh.ten_nganh",
     "label": "ten_nganh"
    },
@@ -5634,8 +5825,81 @@ window.FORM_MAPS = {
   ],
   "dynamic_tables": [
    {
-    "id": "ds_nganh",
+    "id": "ds_nganh_bo_sung",
     "table_index": 0,
+    "header_row": 0,
+    "template_row": 5,
+    "loop": "nganh_bo_sung",
+    "columns": [
+     {
+      "col": 1,
+      "header": "Tên ngành, nghề kinh doanh được bổ sung",
+      "tag": "ten_nganh_bo_sung"
+     },
+     {
+      "col": 2,
+      "header": "Mã ngành",
+      "tag": "ma_nganh"
+     },
+     {
+      "col": 3,
+      "header": "Ngành, nghề kinh doanh chính",
+      "tag": "la_nganh_chinh"
+     }
+    ],
+    "semantic_key": "nganh_bo_sung",
+    "occurrence_id": "nganh_bo_sung"
+   },
+   {
+    "id": "ds_nganh_xoa_bo",
+    "table_index": 1,
+    "header_row": 0,
+    "template_row": 5,
+    "loop": "nganh_xoa_bo",
+    "columns": [
+     {
+      "col": 1,
+      "header": "Tên ngành, nghề kinh doanh được bỏ khỏi danh sách đã đăng ký",
+      "tag": "ten_nganh_bo"
+     },
+     {
+      "col": 2,
+      "header": "Mã ngành",
+      "tag": "ma_nganh"
+     },
+     {
+      "col": 3,
+      "header": "Ngành, nghề kinh doanh chính",
+      "tag": "la_nganh_chinh"
+     }
+    ],
+    "semantic_key": "nganh_xoa_bo",
+    "occurrence_id": "nganh_xoa_bo"
+   },
+   {
+    "id": "ds_nganh_sua_chi_tiet",
+    "table_index": 2,
+    "header_row": 0,
+    "template_row": 5,
+    "loop": "nganh_sua_doi_chi_tiet",
+    "columns": [
+     {
+      "col": 1,
+      "header": "Tên ngành, nghề kinh doanh",
+      "tag": "ten_nganh"
+     },
+     {
+      "col": 2,
+      "header": "Mã ngành",
+      "tag": "ma_nganh"
+     }
+    ],
+    "semantic_key": "nganh_sua_doi_chi_tiet",
+    "occurrence_id": "nganh_sua_doi_chi_tiet"
+   },
+   {
+    "id": "ds_nganh",
+    "table_index": 3,
     "header_row": 0,
     "template_row": 5,
     "loop": "ds_nganh",
@@ -5655,7 +5919,9 @@ window.FORM_MAPS = {
       "header": "Ngành, nghề kinh doanh chính",
       "tag": "la_nganh_chinh"
      }
-    ]
+    ],
+    "semantic_key": "nganh_hien_tai",
+    "occurrence_id": "nganh_hien_tai"
    }
   ]
  },

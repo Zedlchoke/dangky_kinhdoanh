@@ -691,8 +691,12 @@ def load_form_spec(form_id):
         all_loops = {s["loop"] for s in specs_by_id.values()}
         for ent in entries:
             if ent.get("occurrences"):
+                # occurrence_id duoc phep trung voi loop cua CHINH entry do
+                # (occ_spec["loop"] bi ghi de bang occurrence_id khi rebuild);
+                # chi cam trung ten loop cua entry/spec khac trong cung form.
+                own_loop = specs_by_id.get(ent.get("spec"), {}).get("loop")
                 ent["_occurrences"] = table_occurrences.validate_occurrences(
-                    ent["occurrences"], all_loops, form_id)
+                    ent["occurrences"], all_loops - {own_loop}, form_id)
         result = {"entries": entries, "specs_by_id": specs_by_id}
     _form_spec_cache[form_id] = result
     return result
@@ -900,12 +904,17 @@ def rebuild_list_tables(doc, form_id, ext=None):
         spec = resolve_rebuild_spec(e["spec"], ext)
         cfg = reg["cfg"]
         occ_spec = dict(spec)
-        occ_spec["loop"] = cfg["occurrence_id"]
+        # Loop name mac dinh = occurrence_id; cho phep ghi de bang cfg["loop"]
+        # de BAO TOAN canonical key (vd ds_nganh PLII_M02 vung C.3 giu ten
+        # loop dung chung giua cac mau) trong khi semantic_key van rieng.
+        occ_spec["loop"] = cfg.get("loop") or cfg["occurrence_id"]
         tbl = _build_list_table(doc, e["headers"], occ_spec)
         _mark_table_occurrence(tbl._tbl, {
             "occurrence_id": cfg["occurrence_id"],
             "sync_group": cfg.get("sync_group"),
             "spec_id": spec["id"],
+            # bao toan canonical loop name (vd ds_nganh) neu co khai bao
+            "loop": cfg.get("loop"),
         })
         head_para = paras[reg["head"]]
         if e.get("pos", "after") == "before":
@@ -1204,8 +1213,11 @@ def process_form(path, titles, coverage):
                       % (form_id, occ_info["occurrence_id"]))
             if det:
                 spec, hdr_row = det
-                # loop hieu luc: occurrence_id khi la bang occurrence
-                loop_name = (occ_info["occurrence_id"] if occ_info
+                # loop hieu luc: occurrence_id khi la bang occurrence; neu
+                # occurrence khai bao "loop" rieng thi uu tien de bao toan
+                # canonical key (semantic_key van = occurrence_id).
+                loop_name = ((occ_info.get("loop")
+                              or occ_info["occurrence_id"]) if occ_info
                              else spec["loop"])
                 cols = []
                 row_cells = tr_cells(table, hdr_row)

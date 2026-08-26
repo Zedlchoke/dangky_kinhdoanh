@@ -205,7 +205,7 @@
   },
   {
    "t": "loop",
-   "loop": "ds_nganh",
+   "loop": "ds_nganh_dntn",
    "headerRows": [
     0
    ],
@@ -622,32 +622,70 @@
    ]
   },
   {
-   "t": "p",
-   "align": "center",
-   "runs": [
+   "t": "loop",
+   "loop": "ds_nganh_tnhh_1tv",
+   "headerRows": [
+    0
+   ],
+   "cols": [
     {
-     "text": "STT",
-     "b": true
+     "col": 1,
+     "tag": "ten_nganh"
+    },
+    {
+     "col": 2,
+     "tag": "ma_nganh"
+    },
+    {
+     "col": 3,
+     "tag": "la_nganh_chinh"
     }
-   ]
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
+   ],
+   "blankRows": 4,
+   "rows": [
     {
-     "text": "Tên ngành",
-     "b": true
-    }
-   ]
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "Mã ngành",
-     "b": true
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "STT",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Tên ngành",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Mã ngành",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Ngành, nghề kinh doanh chính",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
     }
    ]
   },
@@ -1239,29 +1277,70 @@
    ]
   },
   {
-   "t": "p",
-   "align": "center",
-   "runs": [
+   "t": "loop",
+   "loop": "ds_nganh_tnhh_2tv",
+   "headerRows": [
+    0
+   ],
+   "cols": [
     {
-     "text": "STT"
+     "col": 1,
+     "tag": "ten_nganh"
+    },
+    {
+     "col": 2,
+     "tag": "ma_nganh"
+    },
+    {
+     "col": 3,
+     "tag": "la_nganh_chinh"
     }
-   ]
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
+   ],
+   "blankRows": 4,
+   "rows": [
     {
-     "text": "Tên ngành"
-    }
-   ]
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "Mã ngành"
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "STT",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Tên ngành",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Mã ngành",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Ngành, nghề kinh doanh chính",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
     }
    ]
   },
@@ -1722,29 +1801,70 @@
    ]
   },
   {
-   "t": "p",
-   "align": "center",
-   "runs": [
+   "t": "loop",
+   "loop": "ds_nganh_ctcp",
+   "headerRows": [
+    0
+   ],
+   "cols": [
     {
-     "text": "STT"
+     "col": 1,
+     "tag": "ten_nganh"
+    },
+    {
+     "col": 2,
+     "tag": "ma_nganh"
+    },
+    {
+     "col": 3,
+     "tag": "la_nganh_chinh"
     }
-   ]
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
+   ],
+   "blankRows": 4,
+   "rows": [
     {
-     "text": "Tên ngành"
-    }
-   ]
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "Mã ngành"
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "STT",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Tên ngành",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Mã ngành",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Ngành, nghề kinh doanh chính",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
     }
    ]
   },
@@ -2180,29 +2300,70 @@
    ]
   },
   {
-   "t": "p",
-   "align": "center",
-   "runs": [
+   "t": "loop",
+   "loop": "ds_nganh_dhdn",
+   "headerRows": [
+    0
+   ],
+   "cols": [
     {
-     "text": "STT"
+     "col": 1,
+     "tag": "ten_nganh"
+    },
+    {
+     "col": 2,
+     "tag": "ma_nganh"
+    },
+    {
+     "col": 3,
+     "tag": "la_nganh_chinh"
     }
-   ]
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
+   ],
+   "blankRows": 4,
+   "rows": [
     {
-     "text": "Tên ngành"
-    }
-   ]
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "Mã ngành"
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "STT",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Tên ngành",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Mã ngành",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Ngành, nghề kinh doanh chính",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
     }
    ]
   },

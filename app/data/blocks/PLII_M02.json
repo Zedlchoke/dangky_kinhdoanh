@@ -1086,38 +1086,70 @@
    ]
   },
   {
-   "t": "p",
-   "align": "center",
-   "runs": [
+   "t": "loop",
+   "loop": "nganh_bo_sung",
+   "headerRows": [
+    0
+   ],
+   "cols": [
     {
-     "text": "STT"
+     "col": 1,
+     "tag": "ten_nganh_bo_sung"
+    },
+    {
+     "col": 2,
+     "tag": "ma_nganh"
+    },
+    {
+     "col": 3,
+     "tag": "la_nganh_chinh"
     }
-   ]
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
+   ],
+   "blankRows": 4,
+   "rows": [
     {
-     "text": "Tên ngành, nghề kinh doanh được bổ sung"
-    }
-   ]
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "Mã ngành4"
-    }
-   ]
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "Ngành, nghề kinh doanh chính (Trường hợp một trong các ngành, nghề kinh doanh được bổ sung là ngành, nghề kinh doanh chính thì đánh dấu X vào ô này)"
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "STT",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Tên ngành, nghề kinh doanh được bổ sung",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Mã ngành",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Ngành, nghề kinh doanh chính",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
     }
    ]
   },
@@ -1132,38 +1164,70 @@
    ]
   },
   {
-   "t": "p",
-   "align": "center",
-   "runs": [
+   "t": "loop",
+   "loop": "nganh_xoa_bo",
+   "headerRows": [
+    0
+   ],
+   "cols": [
     {
-     "text": "STT"
+     "col": 1,
+     "tag": "ten_nganh_bo"
+    },
+    {
+     "col": 2,
+     "tag": "ma_nganh"
+    },
+    {
+     "col": 3,
+     "tag": "la_nganh_chinh"
     }
-   ]
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
+   ],
+   "blankRows": 4,
+   "rows": [
     {
-     "text": "Tên ngành, nghề kinh doanh được bỏ khỏi danh sách đã đăng ký"
-    }
-   ]
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "Mã ngành5"
-    }
-   ]
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "Ngành, nghề kinh doanh chính (Trường hợp ngành, nghề kinh doanh được bỏ là ngành, nghề kinh doanh chính thì đánh dấu X vào ô này)"
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "STT",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Tên ngành, nghề kinh doanh được bỏ khỏi danh sách đã đăng ký",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Mã ngành",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Ngành, nghề kinh doanh chính",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
     }
    ]
   },
@@ -1178,29 +1242,56 @@
    ]
   },
   {
-   "t": "p",
-   "align": "center",
-   "runs": [
+   "t": "loop",
+   "loop": "nganh_sua_doi_chi_tiet",
+   "headerRows": [
+    0
+   ],
+   "cols": [
     {
-     "text": "STT"
+     "col": 1,
+     "tag": "ten_nganh"
+    },
+    {
+     "col": 2,
+     "tag": "ma_nganh"
     }
-   ]
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
+   ],
+   "blankRows": 4,
+   "rows": [
     {
-     "text": "Tên ngành, nghề kinh doanh"
-    }
-   ]
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "Mã ngành"
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "STT",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Tên ngành, nghề kinh doanh",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Mã ngành",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
     }
    ]
   },

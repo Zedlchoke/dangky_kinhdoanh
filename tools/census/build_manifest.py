@@ -31,6 +31,13 @@ REVIEWS = {
 
 VALID_STATUS = ("NO_TABLE", "TABLE_COMPLETE", "BLOCKED_LEGAL_REVIEW")
 
+# Form da chu dong tien hoa SAU census qua wave P1 (regenerate lam thay doi
+# p/loop counts). Khong phai drift ro rang; moi dong la mot quyet dinh integrate.
+EVOLVED_FORMS = {
+    "PLI_M72": "P1: 1 loop -> 5 occurrence ds_nganh_*",
+    "PLII_M02": "P1: them 3 loop Muc A (bo_sung/xoa_bo/sua_doi)",
+}
+
 TABLE_KINDS = ("editable-grid", "fixed-matrix", "nested-grid", "output-table")
 NON_TABLE_KINDS = ("prose-block", "scalar-fields", "source-contamination")
 SECTION_KINDS = TABLE_KINDS + NON_TABLE_KINDS
@@ -118,9 +125,34 @@ SIGNATURE_CLASSIFICATIONS = {
                  "reason": "'Yeu cầu doanh nghiệp báo cáo về các nội dung sau' la dau muc van ban; vung tuong ung da duoc ghi section noi_dung_yeu_cau_bao_cao (output-table/no_table)."}],
 }
 
+LEAD_STATUS_OVERRIDES = {
+    ("PLI_M72", "nganh_nghe_5_loai_hinh"): {
+        "status": "already_complete",
+        "evidence": "P1 integrate: generator occurrence identity + spec 5 occurrence "
+                    "(ds_nganh_dntn/tnhh_1tv/tnhh_2tv/ctcp/dhdn) rebuild du 5 bang; "
+                    "tools/test_industry_change.py 6 PASS (spec+blocks+render tung loai hinh, khong tron du lieu).",
+    },
+    ("PLII_M02", "a6_1_nganh_bo_sung"): {
+        "status": "already_complete",
+        "evidence": "P1 integrate: loop rieng nganh_bo_sung (4 cot) qua occurrence contract; "
+                    "tools/test_industry_household.py 13 PASS incl. render isolation.",
+    },
+    ("PLII_M02", "a6_2_nganh_bo"): {
+        "status": "already_complete",
+        "evidence": "P1 integrate: loop rieng nganh_xoa_bo; suite household 13 PASS.",
+    },
+    ("PLII_M02", "a6_3_nganh_sua_chinh"): {
+        "status": "already_complete",
+        "evidence": "P1 integrate: loop rieng nganh_sua_doi_chi_tiet (3 cot, khong co nganh chinh theo template); "
+                    "suite household 13 PASS.",
+    },
+}
+
 CAVEATS = [
     "~34 anchor trong t0_b viết tắt '...docx#pN' không resolve được bằng máy (đã review xác minh tay); chuẩn hóa khi sinh spec.",
-    "PLI_M72: chỉ occurrence 1 có loop ds_nganh (Wave 2B); 4 vùng còn lại missing_grid -> P1 occurrence identity.",
+    "PLI_M72: P1 đã integrate đủ 5 lưới ngành theo occurrence contract (anchor nguồn thật p13/42/85/134/168); 4 lưới nested-grid thành viên/cổ đông vẫn BLOCKED chờ legal + people-ownership.",
+    "PLII_M02: vùng C.3 giữ tên loop canonical ds_nganh (dùng chung PLI_M02/M07) kèm metadata occurrence_id=nganh_hien_tai.",
+    "GRID_META phía app hiện là map phẳng theo tên loop: các loop mới PLI_M72 (5) và PLII_M02 (3 loop Mục A) tạm chạy legacy path, chưa có VSIC/primary validation riêng — queue P1-UI/P2 form-scoped meta.",
     "Form BLOCKED_LEGAL_REVIEW không tính TABLE_COMPLETE; cần quyết định người dùng trước khi rollout tương ứng.",
 ]
 
@@ -225,6 +257,11 @@ def build(forms):
                          "hits": hits,
                          "classifications": SIGNATURE_CLASSIFICATIONS.get(fid, [])},
         }
+        for s in entry["sections"]:
+            ov = LEAD_STATUS_OVERRIDES.get((fid, s.get("section_id")))
+            if ov is not None:
+                s["status"] = ov["status"]
+                s["lead_status_override"] = {"evidence": ov["evidence"]}
         out_forms.append(entry)
     return {
         "version": "table-manifest-v1",
@@ -263,7 +300,11 @@ def validate(manifest, deep):
         fc = f.get("summary_counts_fragment", {})
         for k in ("p", "chk", "table", "loop"):
             if fc and fc.get(k, -1) != rc[k]:
-                errors.append("%s: summary_counts.%s fragment=%s recount=%s" % (fid, k, fc.get(k), rc[k]))
+                if fid in EVOLVED_FORMS:
+                    print("INFO %s: %s fragment=%s recount=%s (%s)" % (
+                        fid, k, fc.get(k), rc[k], EVOLVED_FORMS[fid]))
+                else:
+                    errors.append("%s: summary_counts.%s fragment=%s recount=%s" % (fid, k, fc.get(k), rc[k]))
         det = f["detector"]
         hits = det.get("hits", [])
         cls_by_block = {c["block"]: c for c in det.get("classifications", [])}

@@ -19,6 +19,12 @@ tools/form_specs/household/PLII_M02.json: đủ 4 occurrence_id ngữ nghĩa
 match_heading khớp đúng nth lần trong template, end_markers tồn tại,
 sync_group=null (PLAN mục A cấm auto-sync giữa các loop khác nghĩa).
 
+Lưu ý R0 triage (2026-08-26): match_heading trong spec lưu TEXT THƯỜNG
+(vd '1. bo sung nganh, nghe kinh doanh') trong khi bảng REGIONS ở đây dùng
+pattern regex có anchor '^'. So sánh phải theo HÀNH VI (hai pattern chọn
+cùng một tập đoạn trong template), không so chuỗi strict equality — quy ước
+giống p1_b_verify_m72.py (match_heading == HEADING_TEXT plain).
+
 Kết luận câu hỏi của Lead: template M02 CÓ vùng thứ 4 "ngành hiện tại/
 đăng ký lại" — chính là bảng ngành Mục C.3 (cấp đổi GCN ĐKHKD); đây là
 w:tbl duy nhất của mẫu sau rebuild, đã có loop ds_nganh từ Wave 2C.
@@ -89,6 +95,30 @@ def fold(text: str) -> str:
     nfkd = unicodedata.normalize("NFD", text.lower())
     out = "".join(c for c in nfkd if unicodedata.category(c) != "Mn")
     return re.sub(r"\s+", " ", out.replace("đ", "d")).strip()
+
+
+def same_region(paras: list[str], pattern_audit: str, pattern_spec: str) -> bool:
+    """Spec match_heading phải chọn ĐÚNG tập đoạn như pattern chuẩn audit.
+
+    So theo hành vi trên danh sách paragraph (đã fold), không so chuỗi
+    pattern — spec lưu plain text, REGIONS dùng regex có anchor.
+    """
+    hits_a = [t for t in paras if re.search(pattern_audit, t)]
+    hits_s = [t for t in paras if re.search(pattern_spec, t)]
+    return hits_a == hits_s
+
+
+def selftest_same_region() -> None:
+    """Negative selftest cho same_region — chạy mọi lần, fail nhanh nếu sai."""
+    paras = ["3. nganh, nghe kinh doanh", "nganh khac", "4. von kinh doanh"]
+    assert same_region(paras, r"^3\. nganh", "3. nganh, nghe kinh doanh"), \
+        "anchor-less tương đương phải PASS"
+    assert not same_region(paras, r"^3\. nganh", "3. sua doi nganh"), \
+        "heading sai nội dung phải FAIL"
+    assert not same_region(paras, r"^3\. nganh", "nganh"), \
+        "pattern khớp nhiều hơn chuẩn audit phải FAIL"
+    assert not same_region(paras, r"^3\. nganh", ""), \
+        "match_heading rỗng phải FAIL"
 
 
 def body_seq(doc):
@@ -327,7 +357,7 @@ def audit_spec_contract() -> None:
              if child.tag == qn("w:p")]
     for oid, heading, ends, _hdrs, lp in REGIONS:
         occ = seen[oid]["occurrences"][0]
-        if occ.get("match_heading") != heading:
+        if not same_region(paras, heading, occ.get("match_heading") or ""):
             fail("%s: match_heading lệch chuẩn audit" % oid)
         if occ.get("nth") != 1:
             fail("%s: nth != 1" % oid)
@@ -346,6 +376,8 @@ def audit_spec_contract() -> None:
 
 def main() -> int:
     print("P1-C VERIFY PLII_M02 — worktree %s" % ROOT)
+    selftest_same_region()
+    ok("selftest same_region (negative mutations) PASS")
     audit_source_template()
     audit_working_template_and_maps()
     results = audit_blocks()

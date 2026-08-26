@@ -6,8 +6,10 @@
  *  - validateField / validateDocument / validateDossier -> error[]
  *    error = { key, docId, code, message, severity: 'blocking'|'warning' }
  *  - collectKeys(blocks), migrateDraft(draft) (v1 -> v2)
- *  - GRID_META / getGridMeta: metadata editable-grid dùng chung;
- *    makeRowId/normalizeStoreLoops: _row_id ổn định + migration ds_nganh.
+ *  - GRID_META / FORM_GRID_META / getGridMeta: metadata editable-grid dùng
+ *    chung + metadata theo mẫu (resolver docId+semanticKey -> docId+loop ->
+ *    toàn cục -> null); makeRowId/normalizeStoreLoops: _row_id ổn định +
+ *    migration ds_nganh.
  */
 (function (root) {
   'use strict';
@@ -285,6 +287,15 @@
     }
   };
 
+  /* Tạo meta grid mới từ base dùng chung: clone SÂU mức-1 để mỗi loop có
+   * mảng columns RIÊNG (không chia sẻ tham chiếu giữa các loop/mẫu - mutate
+   * một chỗ không lan sang chỗ khác). */
+  function mkGrid(base, extra) {
+    var m = Object.assign({}, base, extra || {});
+    m.columns = (base.columns || []).map(function (c) { return Object.assign({}, c); });
+    return m;
+  }
+
   function getFieldMeta(key) {
     return FIELD_META[key] || null;
   }
@@ -293,8 +304,151 @@
     return LOOP_META[name] || null;
   }
 
-  function getGridMeta(name) {
-    return GRID_META[name] || null;
+  /* ------------------------------------------- form-scoped grid metadata
+   * Metadata editable-grid THEO MẪU (PLAN.md mục "editable-grid" + đặc tả
+   * bảng ngành): cùng tên loop ở hai mẫu khác nhau có thể có cột/rule khác
+   * nhau (vd nganh_bo_sung của PLII_M02 dùng tag ten_nganh_bo_sung, khác
+   * PLI_M12) -> KHÔNG kế thừa mù qua GRID_META toàn cục.
+   * - Shape mỗi entry: như GRID_META + semanticKey (khớp
+   *   app/data/form_maps.json dynamic_tables.semantic_key), syncGroup
+   *   (chỉ ghi nhận, CHƯA auto-sync - P2), activeWhen (điều kiện kích hoạt
+   *   rule khai báo trong dữ liệu - xem evalActiveWhen).
+   * - Resolver getGridMeta(): (a) docId+semanticKey -> (b) docId+loop ->
+   *   (c) GRID_META[loop] -> (d) null. */
+  var FORM_GRID_META = {
+    /* PLI_M72: mẫu gồm 5 phần theo loại hình DN, người dùng chỉ điền phần
+     * áp dụng; blocks KHÔNG có ô chọn loại hình -> grid chỉ active khi
+     * CÓ >=1 dòng dữ liệu (activeWhen.minFilledRows, eval thuần trên
+     * store). Grid trống không sinh lỗi blocking nào; grid có dữ liệu
+     * chịu đủ rule ngành (required cột/primary/VSIC/trùng mã). */
+    'PLI_M72': {
+      loops: {
+        ds_nganh_dntn: mkGrid(GRID_META.ds_nganh, {
+          label: 'Danh sách ngành nghề kinh doanh (Doanh nghiệp tư nhân)',
+          required: false, minRows: 0,
+          activeWhen: { minFilledRows: 1 },
+          semanticKey: 'ds_nganh_dntn', syncGroup: 'ds_nganh_pli_m72'
+        }),
+        ds_nganh_tnhh_1tv: mkGrid(GRID_META.ds_nganh, {
+          label: 'Danh sách ngành nghề kinh doanh (Công ty TNHH một thành viên)',
+          required: false, minRows: 0,
+          activeWhen: { minFilledRows: 1 },
+          semanticKey: 'ds_nganh_tnhh_1tv', syncGroup: 'ds_nganh_pli_m72'
+        }),
+        ds_nganh_tnhh_2tv: mkGrid(GRID_META.ds_nganh, {
+          label: 'Danh sách ngành nghề kinh doanh (Công ty TNHH hai thành viên trở lên)',
+          required: false, minRows: 0,
+          activeWhen: { minFilledRows: 1 },
+          semanticKey: 'ds_nganh_tnhh_2tv', syncGroup: 'ds_nganh_pli_m72'
+        }),
+        ds_nganh_ctcp: mkGrid(GRID_META.ds_nganh, {
+          label: 'Danh sách ngành nghề kinh doanh (Công ty cổ phần)',
+          required: false, minRows: 0,
+          activeWhen: { minFilledRows: 1 },
+          semanticKey: 'ds_nganh_ctcp', syncGroup: 'ds_nganh_pli_m72'
+        }),
+        ds_nganh_dhdn: mkGrid(GRID_META.ds_nganh, {
+          label: 'Danh sách ngành nghề kinh doanh (Công ty hợp danh)',
+          required: false, minRows: 0,
+          activeWhen: { minFilledRows: 1 },
+          semanticKey: 'ds_nganh_dhdn', syncGroup: 'ds_nganh_pli_m72'
+        })
+      }
+    },
+    /* PLII_M02: 4 vùng ngành ĐỘC LẬP (điền vùng này không đổi vùng kia;
+     * mỗi loop store key riêng, không copy dữ liệu vì trùng tên cột).
+     * Cột ten-tag THẬT theo blocks/form_maps từng vùng. Vùng C.3 giữ loop
+     * canonical ds_nganh với semanticKey=nganh_hien_tai và requirePrimary
+     * cho RIÊNG mẫu này; required=false/minRows=0 để điền một vùng khác
+     * không bị chặn oan bởi danh sách hiện tại (tính độc lập vùng). */
+    'PLII_M02': {
+      loops: {
+        nganh_bo_sung: {
+          label: 'Ngành, nghề kinh doanh được bổ sung',
+          minRows: 0, maxRows: null, required: false,
+          allowAdd: true, allowDelete: true, allowReorder: true,
+          confirmDeleteNonEmpty: true, requirePrimary: false,
+          columns: [
+            { tag: 'ten_nganh_bo_sung', type: 'text', required: true },
+            { tag: 'ma_nganh', type: 'vsic' },
+            { tag: 'la_nganh_chinh', type: 'radio' }
+          ],
+          duplicateKeys: [],
+          outputOnlyTags: [],
+          autoName: { codeTag: 'ma_nganh', nameTag: 'ten_nganh_bo_sung' },
+          semanticKey: 'nganh_bo_sung'
+        },
+        nganh_xoa_bo: {
+          label: 'Ngành, nghề kinh doanh được bỏ khỏi danh sách đã đăng ký',
+          minRows: 0, maxRows: null, required: false,
+          allowAdd: true, allowDelete: true, allowReorder: true,
+          confirmDeleteNonEmpty: true, requirePrimary: false,
+          columns: [
+            { tag: 'ten_nganh_bo', type: 'text', required: true },
+            { tag: 'ma_nganh', type: 'vsic' },
+            { tag: 'la_nganh_chinh', type: 'radio' }
+          ],
+          duplicateKeys: [],
+          outputOnlyTags: [],
+          autoName: { codeTag: 'ma_nganh', nameTag: 'ten_nganh_bo' },
+          semanticKey: 'nganh_xoa_bo'
+        },
+        nganh_sua_doi_chi_tiet: {
+          label: 'Ngành, nghề kinh doanh được sửa đổi chi tiết',
+          minRows: 0, maxRows: null, required: false,
+          allowAdd: true, allowDelete: true, allowReorder: true,
+          confirmDeleteNonEmpty: true, requirePrimary: false,
+          columns: [
+            { tag: 'ten_nganh', type: 'text', required: true },
+            { tag: 'ma_nganh', type: 'vsic' }
+          ],
+          duplicateKeys: [],
+          outputOnlyTags: [],
+          autoName: { codeTag: 'ma_nganh', nameTag: 'ten_nganh' },
+          semanticKey: 'nganh_sua_doi_chi_tiet'
+        },
+        ds_nganh: mkGrid(GRID_META.ds_nganh, {
+          required: false, minRows: 0,
+          semanticKey: 'nganh_hien_tai'
+        })
+      }
+    }
+  };
+
+  /* Gắn chỉ mục tra cứu theo semanticKey + trace info cho từng entry.
+   * Entry nào do mkGrid sinh ra là object RIÊNG (columns đã clone) nên mutate
+   * an toàn; entry khai literal cũng là object riêng của mẫu đó. */
+  Object.keys(FORM_GRID_META).forEach(function (fid) {
+    var fm = FORM_GRID_META[fid];
+    fm.formId = fid;
+    fm.loops = fm.loops || {};
+    fm.bySemanticKey = {};
+    Object.keys(fm.loops).forEach(function (ln) {
+      var m = fm.loops[ln];
+      m.loop = ln;
+      m.formId = fid;
+      if (m.semanticKey) fm.bySemanticKey[m.semanticKey] = m;
+    });
+  });
+
+  /* Resolver metadata editable-grid. Tham số:
+   *  - getGridMeta('<loop>')            : BACKWARD COMPAT - đúng như cũ,
+   *                                       trả GRID_META[name] || null.
+   *  - getGridMeta({docId, loop, semanticKey}) : resolve theo thứ tự
+   *      (a) docId + semanticKey  (b) docId + loop
+   *      (c) GRID_META[loop] toàn cục (contract dùng chung cũ)
+   *      (d) null. */
+  function getGridMeta(nameOrQuery) {
+    if (typeof nameOrQuery === 'string') return GRID_META[nameOrQuery] || null;
+    if (!nameOrQuery || typeof nameOrQuery !== 'object') return null;
+    var fm = nameOrQuery.docId ? FORM_GRID_META[nameOrQuery.docId] : null;
+    if (fm) {
+      if (nameOrQuery.semanticKey && fm.bySemanticKey[nameOrQuery.semanticKey])
+        return fm.bySemanticKey[nameOrQuery.semanticKey];
+      if (nameOrQuery.loop && fm.loops[nameOrQuery.loop])
+        return fm.loops[nameOrQuery.loop];
+    }
+    return nameOrQuery.loop ? (GRID_META[nameOrQuery.loop] || null) : null;
   }
 
   // ------------------------------------------------------- stable row ids
@@ -454,7 +608,23 @@
     return tags.some(function (t) { return cellStr(r, t) !== ''; });
   }
 
-  /* Validate một bảng lặp CÓ GRID_META. Lỗi row-level mang key
+  /* Điều kiện kích hoạt rule của grid - KHAI BÁO trong metadata (dữ liệu),
+   * đánh giá THUẦN trên store: không DOM, không hard-code form ID.
+   *  - minFilledRows: bảng này phải có >= N dòng CÓ DỮ LIỆU
+   *    (vd PLI_M72: blocks không có ô chọn loại hình DN nên grid chỉ
+   *    "active" khi người dùng đã tự nhập; grid trống không sinh lỗi).
+   *  - checkedKey: store.checks[key] đúng (dùng cho mẫu có ô chọn phần áp
+   *    dụng - chưa dùng, giữ để mở rộng khai báo).
+   * Không khai báo activeWhen -> luôn active (hành vi cũ 100%). */
+  function evalActiveWhen(aw, filledCount, st) {
+    if (!aw) return true;
+    if (aw.minFilledRows != null && filledCount < aw.minFilledRows) return false;
+    if (aw.checkedKey != null && !((st.checks || {})[aw.checkedKey])) return false;
+    return true;
+  }
+
+  /* Validate một bảng lặp CÓ grid meta (toàn cục hoặc form-scoped). Lỗi
+   * row-level mang key
    * "loop:<name>:<row_id>:<tag>" nên reorder/xóa dòng không làm lỗi trỏ sai
    * dòng. Tự sửa tên-lệch TRƯỚC khi báo lỗi nếu tìm thấy trong danh mục
    * (mutate store tại chỗ); chỉ báo NAME_MISMATCH khi không tìm thấy tên. */
@@ -482,6 +652,11 @@
     var vsicTags = (lm.vsicTags && lm.vsicTags.length) ? lm.vsicTags : colsByType(g, 'vsic');
 
     var filled = rows.filter(function (r) { return rowFilledOn(r, dTags); });
+
+    // activeWhen khai báo trong metadata: grid không active -> KHÔNG sinh
+    // lỗi nào (cả blocking lẫn warning). vd PLI_M72: 5 phần loại hình, phần
+    // người dùng không điền phải im hoàn toàn.
+    if (!evalActiveWhen(g.activeWhen, filled.length, st)) return;
 
     // Bảng bắt buộc mà 0 dòng dữ liệu (vd ds_nganh ở thủ tục bắt buộc kê khai)
     if (g.required && filled.length === 0) {
@@ -687,7 +862,8 @@
   }
 
   /* Validate một mẫu biểu. store = {values, checks, loops}. Trả error[].
-   * Loop có GRID_META -> validate editable-grid với lỗi key theo _row_id:
+   * Loop có grid meta (resolve theo docId: form-scoped trước, rồi toàn cục)
+   * -> validate editable-grid với lỗi key theo _row_id:
    * "loop:<name>:<row_id>[:<tag>]"; loop khác giữ hành vi legacy. */
   function validateDocument(docId, blocks, store, ctx) {
     ctx = ctx || {};
@@ -715,7 +891,7 @@
     });
 
     Object.keys(info.loops).forEach(function (name) {
-      var g = getGridMeta(name);
+      var g = getGridMeta({ docId: docId, loop: name });
       if (g) validateGridLoop(docId, name, g, info.loops[name], st, ctx, push);
       else validateLegacyLoop(docId, name, info.loops[name], st, ctx, push);
     });
@@ -770,6 +946,7 @@
   root.FIELD_META = FIELD_META;
   root.LOOP_META = LOOP_META;
   root.GRID_META = GRID_META;
+  root.FORM_GRID_META = FORM_GRID_META;
   root.getFieldMeta = getFieldMeta;
   root.getLoopMeta = getLoopMeta;
   root.getGridMeta = getGridMeta;

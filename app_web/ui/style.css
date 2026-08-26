@@ -173,13 +173,97 @@ select, .btn {
 .page-a4:focus { outline: none; }
 
 /* đoạn văn theo căn lề của mẫu */
-.bp { margin: 2pt 0; }
+.bp {
+  margin: var(--pt-space-before, 2pt) 0 var(--pt-space-after, 2pt);
+  margin-left: var(--pt-left-indent, 0);
+  margin-right: var(--pt-right-indent, 0);
+  text-indent: var(--pt-first-line-indent, 0);
+  line-height: var(--pt-line-spacing, var(--pt-line-spacing-pt, inherit));
+  break-after: var(--pt-keep-with-next, auto);
+}
 .bp-center { text-align: center; }
 .bp-left { text-align: left; }
 .bp-right { text-align: right; }
 .rn-b { font-weight: bold; }
 .rn-i { font-style: italic; }
 .rn-u { text-decoration: underline; }
+
+/* ------------------------------------------- Wave L2: role classes (blocks-v3)
+ * Mỗi block p mang bp-role-<role>; align vẫn theo bp-<align> của dữ liệu
+ * (form-number phải giữ đúng căn lề từ mẫu nguồn). Đơn vị em/rem để co giãn
+ * theo font-size ở zoom 200% và media query nhỏ. */
+
+/* quốc hiệu + tiêu ngữ: đậm, đã center từ align; chừa khoảng dưới */
+.bp-role-national-header,
+.bp-role-national-motto {
+  font-weight: bold;
+  margin-bottom: .4em;
+}
+/* đường kẻ ngang giữa quốc hiệu và nội dung: mảnh, mờ, không chiếm chỗ */
+.bp-role-national-separator {
+  color: #555;
+  letter-spacing: .15em;
+  line-height: 1;
+}
+/* dòng pháp lý "Mẫu số N": chỉ nhấn typography, KHÔNG đổi align */
+.bp-role-form-number { font-weight: 600; }
+/* date-line không chứa input (renderer thêm bp-flex): flex wrap an toàn
+   thay cho giả tab bằng &nbsp;; có input thì giữ layout block như cũ */
+.bp-flex {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  column-gap: 1em;
+}
+/* span thay ký tự tab (\t trong run): bề rộng hợp lý, co được */
+.tb {
+  display: inline-block;
+  width: 4ch;
+  min-width: 2em;
+}
+/* tiêu đề chính/phụ */
+.bp-role-form-title {
+  font-weight: bold;
+  font-size: 1.15em;
+  margin: .6em 0 .4em;
+}
+.bp-role-form-subtitle {
+  font-weight: 600;
+  font-size: 1.05em;
+  margin-bottom: .5em;
+}
+.bp-role-salutation { margin-top: .6em; }
+/* đề mục 1./a./I.: đậm + spacing trên tách khối */
+.bp-role-section-heading {
+  font-weight: bold;
+  margin-top: .8em;
+}
+/* ghi chú/chú thích chân trang: nhỏ, nghiêng, xám */
+.bp-role-note,
+.bp-role-footnote {
+  font-size: .85em;
+  font-style: italic;
+  color: #444;
+}
+/* chữ ký: đè nhẹ khoảng trên, giữ hành vi input chữ ký nếu có */
+.bp-role-signature { margin-top: 1.2em; }
+.bp-role-signature .fld { min-width: 12ch; }
+
+/* footnote reference: <sup> semantic; focus ring dùng :focus-visible chung.
+   Không phá baseline/dòng kẻ - chỉ cỡ nhỏ hơn chút và có cursor gợi ý. */
+.fn-ref {
+  cursor: pointer;
+  padding: 0 .1em;
+  font-style: normal;
+}
+.fn-list {
+  font-size: .85em;
+  color: #555;
+  border-top: 1px solid #999;
+  margin: 8pt 0 4pt;
+  padding-left: 1.4em;
+}
+.fn-list li:focus { outline: none; background: #fffbea; }
 
 /* ô điền liệu phong cách HTKK */
 .fld {
@@ -513,4 +597,28 @@ tr.row-sel-multi td.stt { box-shadow: inset 3px 0 0 #c62828; }
     min-width: 210mm;      /* giữ hình học A4, cuộn ngang xem */
     margin: 10px;
   }
+}
+
+/* ------------------------------------------------ Wave L2: màn hình nhỏ hơn
+ * ≤768: co nhẹ font/padding, date-line đã wrap qua .bp-flex, bảng vẫn cuộn
+ * ngang trong .btable-wrap. Không đổi hình học A4 (đã xử lý ở media trên). */
+@media (max-width: 768px) {
+  .page-a4 {
+    padding: 12mm 8mm;
+    font-size: 12.5pt;
+  }
+  .fld, .loop-fld { font-size: 12pt; }
+  .field-grid { grid-template-columns: 1fr; }
+  .field-grid .fg-label { white-space: normal; }
+}
+
+@media (max-width: 420px) {
+  .page-a4 {
+    padding: 8mm 5mm;
+    font-size: 11.5pt;
+  }
+  .fld, .loop-fld { font-size: 11.5pt; }
+  /* input không đè chữ: ô rộng theo ch có thể vượt khung -> giới hạn */
+  .fld { max-width: 100%; }
+  .bp-flex { column-gap: .4em; }
 }

@@ -45,6 +45,124 @@
 
   function pad2(n) { return (n < 10 ? '0' : '') + n; }
 
+  // ------------------------------------------------- L2: layout contract v3
+
+  /* Wave L2 (blocks-v3, docs/layout_l1_contract.md): CHỈ các key format này
+   * được map sang CSS custom property. Giá trị lạ/không hợp lệ bị BỎ (fail-soft)
+   * - không bao giờ đưa chuỗi style tự do từ JSON vào HTML. */
+  var FORMAT_ALLOWLIST = {
+    leftIndentPt:      '--pt-left-indent',
+    rightIndentPt:     '--pt-right-indent',
+    firstLineIndentPt: '--pt-first-line-indent',
+    spaceBeforePt:     '--pt-space-before',
+    spaceAfterPt:      '--pt-space-after',
+    lineSpacing:       '--pt-line-spacing',
+    lineSpacingPt:     '--pt-line-spacing-pt',
+    keepWithNext:      '--pt-keep-with-next'
+  };
+
+  var ROLES_L2 = ['source-indicator', 'form-number', 'national-header',
+    'national-motto', 'national-separator', 'date-line', 'form-title',
+    'form-subtitle', 'salutation', 'body', 'section-heading', 'note',
+    'footnote', 'signature'];
+
+  /* Chỉ cho phép ký tự an toàn trong class/attr sinh từ dữ liệu. */
+  function safeToken(s) {
+    return String(s == null ? '' : s).replace(/[^A-Za-z0-9_-]/g, '');
+  }
+
+  /* Số pt hợp lệ (hỗ trợ âm - hanging indent) -> "6" | "-9.5" | null. */
+  function safeNum(v) {
+    if (typeof v !== 'number' || !isFinite(v)) return null;
+    var s = String(Math.round(v * 100) / 100);
+    return /^-?\d+(\.\d+)?$/.test(s) ? s : null;
+  }
+
+  /* format JSON -> attr style chỉ chứa custom property đã khai allowlist.
+   * Đơn vị gắn tại đây: pt cho khoảng cách, lineSpacing giữ không đơn vị
+   * (multiple của line-height), keepWithNext=true -> "avoid". */
+  function formatStyleAttr(format) {
+    if (!format || typeof format !== 'object') return '';
+    var out = '';
+    Object.keys(FORMAT_ALLOWLIST).forEach(function (k) {
+      if (!(k in format)) return;
+      var v = format[k];
+      if (k === 'keepWithNext') {
+        if (v === true) out += FORMAT_ALLOWLIST[k] + ':avoid;';
+        return;
+      }
+      if (k === 'lineSpacing') { // multiple, không đơn vị
+        if (safeNum(v) != null && v > 0) {
+          out += FORMAT_ALLOWLIST[k] + ':' + safeNum(v) + ';';
+        }
+        return;
+      }
+      var n = safeNum(v);
+      if (n != null) out += FORMAT_ALLOWLIST[k] + ':' + n + 'pt;';
+    });
+    return out ? ' style="' + escapeHtml(out) + '"' : '';
+  }
+
+  /* Role -> class bổ sung cho block p. Role lạ/rỗng => rỗng (block cũ v2). */
+  function roleClassOf(role) {
+    if (!role || ROLES_L2.indexOf(role) < 0) return '';
+    return ' bp-role-' + safeToken(role);
+  }
+
+  /* Escape TRƯỚC, sau đó mới chuyển break hợp lệ: \n -> <br>,
+   * \t -> span tab có bề rộng (không dùng &nbsp; hàng loạt). */
+  function textToHtml(s) {
+    return escapeHtml(s)
+      .split('\t').join('<span class="tb" aria-hidden="true"></span>')
+      .split('\n').join('<br>');
+  }
+
+  /* Run footnote-ref -> <sup class="fn-ref">; id chỉ nhận token an toàn.
+   * Block không có footnotes vẫn hiện số (fail-soft theo contract L1 mục 4). */
+  function footnoteRefHtml(run) {
+    var id = safeToken(run.footnoteId);
+    if (!id) return '';
+    return '<sup class="fn-ref" data-fn="' + id + '" tabindex="0">' + id + '</sup>';
+  }
+
+  /* Vùng chú thích cuối block p có b.footnotes (map id_string -> text). */
+  function footnotesListHtml(footnotes) {
+    if (!footnotes || typeof footnotes !== 'object') return '';
+    var lis = '';
+    Object.keys(footnotes).forEach(function (idStr) {
+      var id = safeToken(idStr);
+      if (!id) return;
+      lis += '<li id="fn-' + id + '">' + textToHtml(footnotes[idStr]) + '</li>';
+    });
+    return lis ? '<ol class="fn-list">' + lis + '</ol>' : '';
+  }
+
+  /* Progressive enhancement cho .fn-ref (click/focus scroll tới li#fn-*).
+   * Thuần tùy chọn: không gọi thì số chú thích vẫn hiển thị bình thường. */
+  function bindFootnoteRefs(rootEl) {
+    if (!rootEl || typeof rootEl.addEventListener !== 'function') return null;
+    function go(e) {
+      var t = e.target;
+      while (t && t !== rootEl && !(t.classList && t.classList.contains('fn-ref'))) {
+        t = t.parentNode;
+      }
+      if (!t || t === rootEl || !t.getAttribute) return;
+      var li = document.getElementById('fn-' + t.getAttribute('data-fn'));
+      if (!li) return;
+      e.preventDefault();
+      li.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      if (li.setAttribute) {
+        li.setAttribute('tabindex', '-1');
+        li.focus({ preventScroll: true });
+      }
+    }
+    rootEl.addEventListener('click', go);
+    rootEl.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') go(e);
+    });
+    return rootEl;
+  }
+
   // ------------------------------------------------------------------ store
 
   function newStore() {
@@ -144,8 +262,13 @@
         ' value="' + escapeHtml(ac.getVal(inp.key)) + '">';
     }
     if (!run) return '';
+    if (run.role === 'footnote-ref') return footnoteRefHtml(run);
+    /* L2: sup/sub SEMANTIC (blocks-v3 run.vertAlign); \n/\t bảo toàn qua
+     * textToHtml (escape trước). Run không đổi nghĩa với blocks cũ. */
+    var tag = run.vertAlign === 'superscript' ? 'sup'
+      : (run.vertAlign === 'subscript' ? 'sub' : 'span');
     var cn = 'rn' + (run.b ? ' rn-b' : '') + (run.i ? ' rn-i' : '') + (run.u ? ' rn-u' : '');
-    return '<span class="' + cn + '">' + escapeHtml(run.text) + '</span>';
+    return '<' + tag + ' class="' + cn + '">' + textToHtml(run.text) + '</' + tag + '>';
   }
 
   function renderRuns(runs, ac, rctx) {
@@ -156,10 +279,36 @@
 
   // ----------------------------------------------------------- render blocks
 
+  /* Wave L2 (contract blocks-v3):
+   * - role=source-indicator: BỎ khỏi DOM hoàn toàn (marker kỹ thuật), đếm
+   *   vào rctx.siSkipped để renderBlocks log console.debug đúng 1 lần/form.
+   *   KHÔNG bao giờ ẩn role=form-number (dòng pháp lý "Mẫu số N" phải hiện,
+   *   giữ align từ dữ liệu).
+   * - class: bp + bp-<align> + bp-role-<role> (14 role L1).
+   * - format -> inline CSS custom property qua FORMAT_ALLOWLIST (mục trên).
+   * - b.footnotes -> <ol class="fn-list"> ngay sau đoạn chứa ref.
+   * - date-line KHÔNG chứa input -> thêm bp-flex (flex wrap an toàn thay
+   *   giả tab bằng &nbsp;; có input thì giữ block layout thường). */
+  function renderBlockP(b, ac, rctx) {
+    rctx = rctx || { fieldMeta: null, docId: '', ids: {}, siSkipped: [] };
+    if (!rctx.siSkipped) rctx.siSkipped = [];
+    if (b.role === 'source-indicator') {
+      rctx.siSkipped.push(b);
+      return '';
+    }
+    var cls = 'bp bp-' + (b.align || 'left') + roleClassOf(b.role);
+    if (b.role === 'date-line' && !(b.runs || []).some(function (r) {
+      return r && r.input;
+    })) cls += ' bp-flex';
+    var html = '<p class="' + cls + '"' + formatStyleAttr(b.format) + '>' +
+      renderRuns(b.runs, ac, rctx) + '</p>' + footnotesListHtml(b.footnotes);
+    return html;
+  }
+
   function renderBlock(b, ac, rctx) {
     switch (b.t) {
       case 'p':
-        return '<p class="bp bp-' + (b.align || 'left') + '">' + renderRuns(b.runs, ac, rctx) + '</p>';
+        return renderBlockP(b, ac, rctx);
       case 'chk':
         return '<label class="bchk"><input type="checkbox" class="chk-box" data-key="' +
           escapeHtml(b.key) + '"' + (ac.getChk(b.key) ? ' checked' : '') +
@@ -566,11 +715,20 @@
       fieldMeta: (opts && opts.fieldMeta) || null,
       gridMeta: (opts && opts.gridMeta) || null,
       docId: (opts && opts.docId) || (doc && doc.id) || '',
-      ids: {}
+      ids: {},
+      siSkipped: []
     };
     var parts = (doc.blocks || [])
       .filter(function (b) { return condAllows(b, opts && opts.flags); })
       .map(function (b) { return { b: b, html: renderBlock(b, ac, rctx) }; });
+    /* Audit L2: marker kỹ thuật bị ẩn -> log ĐÚNG 1 LẦN/form (không render
+     * vào DOM; giữ evidence cho detector/gate LAYOUT_DONE). */
+    if (rctx.siSkipped.length && typeof console !== 'undefined' &&
+        typeof console.debug === 'function') {
+      console.debug('[layout-l2] an ' + rctx.siSkipped.length +
+        ' block role=source-indicator khoi DOM (' +
+        (rctx.docId || '?') + ')');
+    }
     var seq = (opts && opts.uiLayout)
       ? applyUiLayout(parts, opts.uiLayout, ac, rctx)
       : parts.map(function (p) { return p.html; });
@@ -699,5 +857,12 @@
   root.applyAutoFills = applyAutoFills;
   root.searchVsic = searchVsic;
   root.isValidMaNganh = isValidMaNganh;
+  /* L2 layout (blocks-v3) */
+  root.FORMAT_ALLOWLIST = FORMAT_ALLOWLIST;
+  root.ROLES_L2 = ROLES_L2;
+  root.textToHtml = textToHtml;
+  root.formatStyleAttr = formatStyleAttr;
+  root.roleClassOf = roleClassOf;
+  root.bindFootnoteRefs = bindFootnoteRefs;
 
 })(typeof module !== 'undefined' && module.exports ? module.exports : (window.Render = window.Render || {}));

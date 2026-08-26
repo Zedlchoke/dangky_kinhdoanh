@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<!-- snapshot.html - DEV HARNESS ONLY (Wave L2, cho R5 visual QA sau này).
+     KHÔNG dùng trong production; index.html/app.js không bị ảnh hưởng.
+     Serve từ ROOT repo:  python3 -m http.server 8000
+     Mở: http://localhost:8000/app_web/dev/snapshot.html?doc=PLI_M02
+         &values=%7B%22dn.ten_tieng_viet%22%3A%22CONG%20TY%20DEMO%22%7D
+         &flag_dn_loai_hinh=DNTN
+     Tham số:
+       doc        : id mẫu (mặc định PLI_M02) - fetch /app/data/blocks/<doc>.json
+       values     : urlencoded JSON -> store.values
+       checks     : urlencoded JSON -> store.checks (tùy chọn)
+       sel        : giá trị selector 'dn.loai_hinh' (vd dntn) - qua FormDomain
+       flag_<name>=<v> : v rỗng/1/true/X -> flags[name]=true;
+                         v khác -> flags[name_v]=true (+ bỏ tiền tố dn_ nếu có,
+                         phủ trường hợp flag_dn_loai_hinh=DNTN -> loai_hinh_dntn)
+-->
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>L2 snapshot harness</title>
+<link rel="stylesheet" href="/app_web/ui/style.css">
+<style>
+  /* khung tối thiểu riêng của harness - không đụng style production */
+  body { background: #6f7d8c; }
+  #snap-bar {
+    position: sticky; top: 0; z-index: 30;
+    background: #1f4e79; color: #fff;
+    font: 12px/1.6 "Segoe UI", sans-serif;
+    padding: 4px 10px;
+  }
+  #snap-err { color: #ffd479; white-space: pre-wrap; }
+  main { padding-bottom: 40px; }
+</style>
+</head>
+<body>
+<div id="snap-bar">L2 snapshot — <span id="snap-doc">…</span>
+  <span id="snap-flags"></span><span id="snap-err"></span></div>
+<main id="pages"></main>
+
+<script src="/app_web/ui/render.js"></script>
+<script src="/app_web/ui/form-domain.js"></script>
+<script>
+(function () {
+  'use strict';
+  var R = window.Render, FD = window.FormDomain;
+
+  function qs(name) {
+    var m = new RegExp('[?&]' + name + '=([^&]*)').exec(location.search);
+    return m ? decodeURIComponent(m[1]) : '';
+  }
+  function parseJsonParam(name) {
+    var s = qs(name);
+    if (!s) return {};
+    try { return JSON.parse(s) || {}; }
+    catch (e) { err('Tham số ' + name + ' không phải JSON hợp lệ: ' + e.message); return {}; }
+  }
+  function err(msg) {
+    var el = document.getElementById('snap-err');
+    el.textContent += (el.textContent ? '\n' : '') + msg;
+  }
+
+  var docId = qs('doc') || 'PLI_M02';
+
+  /* store tối thiểu {values, checks, loops} */
+  var store = R.newStore();
+  Object.assign(store.values, parseJsonParam('values'));
+  Object.assign(store.checks, parseJsonParam('checks'));
+  /* sel=<loai> -> value selector chuẩn của M72 (dn.loai_hinh) */
+  if (qs('sel')) store.values['dn.loai_hinh'] = String(qs('sel')).toUpperCase();
+
+  /* flags điều kiện cond blocks: nguồn selector trước (như app.js),
+   * query ghi đè/bổ sung phía trên. */
+  var flags = {};
+  if (FD && typeof FD.selectorFlagsOf === 'function') {
+    Object.assign(flags, FD.selectorFlagsOf(docId, store));
+  }
+  var TYPE_HINT = /^(1|true|x|yes|)$/i;
+  location.search.replace(/^\?/, '').split('&').forEach(function (kv) {
+    if (!kv) return;
+    var p = kv.split('='), k = decodeURIComponent(p[0]), v = p.length > 1
+      ? decodeURIComponent(p[1] || '') : '';
+    if (k.indexOf('flag_') !== 0) {
+      if (k === 'loai_hinh' && v) flags['loai_hinh_' + v.toLowerCase()] = true;
+      return;
+    }
+    var name = k.slice(5);
+    if (TYPE_HINT.test(v)) { flags[name] = true; return; }
+    var low = String(v).toLowerCase();
+    flags[name + '_' + low] = true;
+    if (name.indexOf('dn_') === 0) flags[name.slice(3) + '_' + low] = true;
+  });
+
+  function gridMetaForDoc(id) {
+    var m = Object.assign({}, (FD && FD.GRID_META) || {});
+    var fm = FD && FD.FORM_GRID_META && FD.FORM_GRID_META[id];
+    if (fm && fm.loops) Object.assign(m, fm.loops);
+    return m;
+  }
+
+  function show(doc, fieldMeta) {
+    var selMeta = FD && FD.getFormSelector ? FD.getFormSelector(docId) : null;
+    var selHtml = selMeta
+      ? R.selectorHtml(selMeta, R.makeAccessors(store)) : '';
+    var section = document.createElement('section');
+    section.className = 'page-a4';
+    section.setAttribute('data-doc', docId);
+    section.innerHTML = R.renderBlocks(doc, store, {
+      docId: docId,
+      fieldMeta: fieldMeta || null,
+      gridMeta: gridMetaForDoc(docId),
+      flags: flags,
+      selectorHtml: selHtml
+    });
+    var pages = document.getElementById('pages');
+    pages.innerHTML = '';
+    pages.appendChild(section);
+    R.bindFootnoteRefs(section); /* click/focus .fn-ref -> li#fn-* */
+    document.getElementById('snap-doc').textContent =
+      docId + ' — ' + (doc.ten_mau || '');
+    document.getElementById('snap-flags').textContent =
+      ' flags: ' + JSON.stringify(flags);
+  }
+
+  Promise.all([
+    fetch('/app/data/blocks/' + encodeURIComponent(docId) + '.json')
+      .then(function (r) {
+        if (!r.ok) throw new Error('blocks ' + docId + ': HTTP ' + r.status);
+        return r.json();
+      }),
+    fetch('/app/data/form_maps.json')
+      .then(function (r) { return r.ok ? r.json() : {}; })
+      .catch(function () { return {}; })
+  ]).then(function (res) {
+    var doc = res[0], maps = res[1] || {};
+    var fm = maps[docId] || {};
+    var fieldMeta = {};
+    (fm.fields || []).forEach(function (f) {
+      if (f && f.key) fieldMeta[f.key] = f;
+    });
+    show(doc, fieldMeta);
+  }).catch(function (e) { err(String(e.message || e)); });
+})();
+</script>
+</body>
+</html>

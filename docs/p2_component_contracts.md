@@ -6,6 +6,18 @@ theo taxonomy PLAN.md, hiện trạng UI (`app_web/ui/form-domain.js`, `render.j
 `app.js`) và census `app/data/table_specs/manifest.json` (`table-manifest-v1`).
 Chỉ khi Lead duyệt mới trở thành baseline implement P2.
 
+> **REBASE 2026-08-26 theo HEAD `bdc2d03`** — mục 1 (`editable-grid`) đã được
+> cập nhật theo code thực tế sau merge P1-UI/P1.1/P2.0: metadata **form-scoped**
+> (`FORM_GRID_META` + resolver `getGridMeta`), **activeWhen** (selector
+> `checkedKey`/`valueOf` là nguồn chính, `minFilledRows` chỉ INTERIM),
+> `mkGrid` **deep clone** toàn bộ metadata, **export conflict guard**
+> (`exportLoopsStrict` fail-loud) và **focus sau row-op** ĐÃ CÓ trong code.
+> Các mục 2–4 (`fixed-matrix`/`nested-grid`/`output-table`) vẫn là DRAFT đề
+> xuất chưa implement. Số liệu kiểm chứng tại HEAD: 31 dynamic tables = 31
+> loop blocks; 9/9 loop mới (5 PLI_M72 + 4 PLII_M02) có meta form-scoped;
+> suite Node gồm 11 file (thêm `test_m72_activation.js` 45 PASS,
+> `test_p20_hardening.js` 56 PASS).
+
 Phân bố hiện có (manifest, 111 section): editable-grid 43 · fixed-matrix 47 ·
 nested-grid 7 · output-table 6 · (ngoài phạm vi P2: prose-block 3,
 scalar-fields 4, source-contamination 1).
@@ -41,27 +53,97 @@ hữu hưởng lợi, thành viên hộ gia đình, người đại diện ủy 
 
 | Thành phần | Vị trí | Nội dung |
 |---|---|---|
-| `GridCtl` | `app.js:73` | Thuần, không DOM: `addRow/deleteRows/clearRows/moveRow/duplicateRow/setExclusiveRadio/exportLoops/vsicResolve`; thao tác theo `_row_id`, duplicate bỏ `duplicateKeys` |
-| `GRID_META` | `form-domain.js:123` | `{label, minRows, maxRows, required, allowAdd/allowDelete/allowReorder, confirmDeleteNonEmpty, requirePrimary, columns[{tag,type,required,col}], duplicateKeys, outputOnlyTags, autoName}` |
-| Stable row id | `form-domain.js:305` (`makeRowId`, `normalizeStoreLoops`) | `'r<seq>_<rand>'`, gán idempotent khi nạp draft |
-| Validation | `validateGridLoop` `form-domain.js:461` | Lỗi key `"loop:<name>:<row_id>[:<tag]"`; code `INDUSTRY_REQUIRED/MIN_ROWS/MAX_ROWS/ROW_INCOMPLETE/VSIC_INVALID/DUPLICATE_*/PRIMARY_INDUSTRY_REQUIRED/MONEY/PERCENT_SUM` |
+| `GridCtl` | `app.js:75` | Thuần, không DOM: `addRow/deleteRows/clearRows/moveRow/duplicateRow/setExclusiveRadio/exportLoops/exportLoopsStrict/vsicResolve`; thao tác theo `_row_id`, duplicate bỏ `duplicateKeys` |
+| `GRID_META` | `form-domain.js:129` | `{label, minRows, maxRows, required, allowAdd/allowDelete/allowReorder, confirmDeleteNonEmpty, requirePrimary, columns[{tag,type,required,col}], duplicateKeys, outputOnlyTags, autoName}` — giờ là **fallback toàn cục** của resolver, không còn map duy nhất |
+| `FORM_GRID_META` | `form-domain.js:341` | Metadata **form-scoped theo mẫu**: `PLI_M72` (5 loop ngành loại hình) + `PLII_M02` (4 vùng ngành độc lập) — mỗi entry có `semanticKey` khớp `dynamic_tables.semantic_key` trong `app/data/form_maps.json`; resolver `getGridMeta({docId, loop, semanticKey})` (`form-domain.js:488`) theo thứ tự docId+semanticKey → docId+loop → `GRID_META` global → null; string-call `getGridMeta('<loop>')` giữ backward compat; `registerFormGridMeta(formId, fm)` (`form-domain.js:476`) nạp meta lúc runtime |
+| ActiveWhen | `evalActiveWhen/activationModeOf/isActiveGrid` `form-domain.js:677/705/714` | Selector `checkedKey`/`valueOf{key,equals}` là nguồn chính; `minFilledRows` chỉ INTERIM chờ owner (PLI_M72); inactive → 0 lỗi validation |
+| Deep clone | `deepCloneVal/mkGrid` `form-domain.js:297/315` | Meta trả về clone SÂU `columns/autoName/duplicateKeys/outputOnlyTags/activeWhen` — mutate một chỗ không lan sang `GRID_META` gốc hay loop/mẫu khác (negative test trong `test_p20_hardening`) |
+| Stable row id | `makeRowId/normalizeStoreLoops` `form-domain.js:506/515` | `'r<seq>_<rand>'`, gán idempotent khi nạp draft |
+| Validation | `validateGridLoop` `form-domain.js:726` | Lỗi key `"loop:<name>:<row_id>[:<tag]"`; code `INDUSTRY_REQUIRED/MIN_ROWS/MAX_ROWS/ROW_INCOMPLETE/VSIC_INVALID/DUPLICATE_*/PRIMARY_INDUSTRY_REQUIRED/MONEY/PERCENT_SUM` |
 | Renderer | `render.js` render loop | `.loop-table[data-loop]`, `tr[data-row-id]`, cụm `.loop-btns[data-act=add|dup|del|clear|up|down]`, blankRows, `.btable-wrap` cuộn ngang |
-| Export | `exportLoops` `app.js:174` | Bỏ field nội bộ `_*`, map `la_nganh_chinh` → `'X'/''` |
+| Export | `exportLoops/exportLoopsStrict` `app.js:217/379` | Bỏ field nội bộ `_*`, map `la_nganh_chinh` → `'X'/''`; conflict guard + lọc grid inactive-theo-selector (xem 1.4) |
+| Focus sau row-op | `focusTagOfGrid/nextSelAfterDelete/focusGridRow` `app.js:1101/1122/1147` | Add/duplicate focus ô mã ngành (hoặc editable đầu theo meta); delete giữ selection bám `_row_id`; không bao giờ ném exception |
 
-### 1.3 Gap cần chốt ở P2
+### 1.3 Trạng thái sau rebase (HEAD `bdc2d03`)
 
-- `GRID_META` đang là **map phẳng theo tên loop**: loop mới của PLI_M72
-  (5 occurrence) và PLII_M02 dùng chung tên/legacy path (caveat manifest).
-  Cần metadata **form-scoped**: `getGridMeta(formId, loop)` với fallback map
-  cũ, tránh key đè nhau giữa các mẫu.
-- `activeWhen`: điều kiện hiện bảng theo lựa chọn khác (vd chỉ render phần
-  loại hình đã chọn ở PLI_M72). Chưa có trong meta hiện tại.
+**ĐÃ CÓ trong code** (không còn là gap):
+
+- **Metadata form-scoped**: `getGridMeta({docId, loop, semanticKey})` resolve
+  theo thứ tự docId+semanticKey → docId+loop → `GRID_META[loop]` global →
+  null; string-call `getGridMeta('<loop>')` giữ nguyên hành vi cũ; runtime có
+  `registerFormGridMeta`. Cùng tên loop ở hai mẫu khác nhau không còn đè key:
+  PLI_M72 (5 loop) và PLII_M02 (4 loop, trong đó vùng C.3 dùng canonical
+  `ds_nganh` với `semanticKey: 'nganh_hien_tai'`) đều tự khai cột riêng.
+- **ActiveWhen**: selector (`checkedKey` / `valueOf{key,equals}`) là NGUỒN
+  CHÍNH quyết định grid active; khi KHÔNG khai selector, `minFilledRows` chỉ
+  là cơ chế **INTERIM chờ owner chốt loại hình PLI_M72** (trạng thái BLOCKED,
+  khuyến nghị Option B — xem `docs/m72_activation_proposal.md`). Helper audit:
+  `activationModeOf(meta)` → `null | 'selector' | 'interim-filled-data'`,
+  `isActiveGrid(meta, rows, store)` thuần dùng chung cho validator + export
+  guard. Grid inactive → 0 lỗi validation.
+- **Deep clone metadata**: `mkGrid` clone SÂU toàn bộ field qua
+  `deepCloneVal` — mutation isolation có negative test.
+
+**VẪN LÀ GAP**:
+
 - Cross-field rules liên dòng/liên bảng (tổng vốn, % được đại diện) chưa có
   slot khai báo; đang hard-code qua `moneyTags/percentTags`.
 - Keyboard di chuyển giữa ô/dòng và a11y lưới (arrow key, `aria-rowcount`)
-  mới dừng ở mức focus dòng vừa thêm (`focusNewRow`).
+  mới dừng ở mức focus sau row-op theo meta/`_row_id`.
 
-### 1.4 Shape JSON đề xuất xuất từ spec
+### 1.4 Activation & export guard (P1.1 + P2.0 hardening)
+
+Shape `activeWhen` khai báo trong meta (đánh giá thuần trên store, không
+hard-code form ID):
+
+```jsonc
+{
+  "activeWhen": {
+    "checkedKey": "chk_lh_tnhh_2tv",              // selector checkbox (store.checks)
+    // hoặc valueOf: { "key": "dn.loai_hinh", "equals": ["CTCP","DHDN"] }  // selector giá trị (store.values)
+    "minFilledRows": 1                            // CHỈ khi không có selector -> INTERIM
+  }
+}
+```
+
+- `checkedKey` + `valueOf` cùng khai → AND (cả hai thoả); so giá trị sau trim,
+  phân biệt hoa/thường; có selector thì `minFilledRows` bị BỎ QUA.
+- **Export guard** trong `exportLoops` (`app.js:217`): grid inactive-theo-
+  **selector** → bỏ toàn bộ rows khỏi payload DOCX; grid INTERIM vốn không có
+  dòng dữ liệu → payload giữ nguyên hành vi cũ 100%.
+- **Conflict guard** chống "first-doc-wins âm thầm": `collectLoopSides`
+  (`app.js:299`) resolve meta ĐÚNG resolver cũ cho từng docId rồi gom các side
+  {docId, semanticKey, metaRef} khác nhau về REFERENCE. Short-circuit: mọi mẫu
+  trỏ cùng một object (điển hình là cùng fallback global) → tương đương tuyệt
+  đối, không flag. Có ≥2 reference khác nhau mới so signature export contract
+  `{requirePrimary, autoNameCodeTag/autoNameNameTag, colTags (sort),
+  activationModeOf}`; signature BẰNG coi là tương đương (vd clone `mkGrid`
+  của `PLII_M02.ds_nganh` vs bản global); LỆCH → conflict có cấu trúc:
+
+```jsonc
+{
+  "code": "EXPORT_LOOP_CONTRACT_CONFLICT",
+  "loop": "nganh_bo_sung",
+  "winner": {"docId": "PLI_M12", "semanticKey": null, "signature": {/*…*/}},
+  "sides": [{"docId": "PLI_M12", "semanticKey": null, "signature": {/*…*/}},
+            {"docId": "PLII_M02", "semanticKey": "nganh_bo_sung", "signature": {/*…*/}}],
+  "reasons": ["tap tag cot: [ma_nganh|ten_nganh] != [ma_nganh|ten_nganh_bo_sung]"]
+}
+```
+
+  Combo thật PLI_M12 (global) + PLII_M02 (scoped) bị chặn loud; clone-vs-global
+  cùng signature xuất bình thường. `exportLoops` ghi report vào
+  `GridCtl.lastExportConflicts`, payload giữ first-wins (tương thích caller
+  cũ); đường export THẬT đi qua **`exportLoopsStrict` (`app.js:379`) — chỗ
+  duy nhất** ném lỗi `EXPORT_LOOP_CONTRACT_CONFLICT`; `buildExportData`/
+  `doExport` đã wire qua đúng một chỗ này.
+- **Focus sau row-op** (`focusTagOfGrid/nextSelAfterDelete/focusGridRow`
+  `app.js:1101/1122/1147`): add/duplicate focus ô mã ngành nếu grid có cột
+  `ma_nganh`, ngược lại ô editable đầu tiên theo meta columns; delete giữ
+  selection bám `_row_id` (dòng kề theo index, clamp cuối); thao tác row-op
+  luôn thành công kể cả khi focus thất bại.
+
+### 1.5 Shape JSON đề xuất xuất từ spec
 
 ```jsonc
 {
@@ -81,8 +163,8 @@ hữu hưởng lợi, thành viên hộ gia đình, người đại diện ủy 
   "duplicate_keys": ["so_cccd"],
   "totals": [],                            // thường rỗng; xem fixed-matrix
   "cross_field_rules": [],
-  "active_when": []                        // vd ["loai_hinh==tnhh_2tv"]
-}
+  "active_when": []                        // shape spec-side CHƯA khóa; cơ chế runtime đã có:
+}                                          // activeWhen{checkedKey|valueOf|minFilledRows} xem 1.4
 ```
 
 `inputType` hợp nhất type hiện có của `GRID_META` (`text|money|percent|
@@ -90,25 +172,30 @@ checkbox|radio|readonly|vsic|outputOnly`). `min_rows/max_rows` đếm dòng CÓ
 dữ liệu, vi phạm không khóa thao tác, chỉ validator chặn trước export (giữ
 đúng chính sách hiện tại).
 
-### 1.5 Renderer/controller/generator/validation
+### 1.6 Renderer/controller/generator/validation
 
-- Renderer sinh bảng từ blocks loop + meta form-scoped; ẩn nút theo `policy`;
-  giữ hành vi confirm-xóa-dòng-có-dữ-liệu.
-- Controller mở rộng GridCtl bằng wrapper đọc meta form-scoped; KHÔNG đổi
-  semantics hàm thuần đã test.
+- Renderer sinh bảng từ blocks loop + meta form-scoped (đã đọc qua
+  `getGridMeta({docId, loop, semanticKey})`); ẩn nút theo `policy`; giữ hành
+  vi confirm-xóa-dòng-có-dữ-liệu.
+- Controller đã mở rộng GridCtl bằng wrapper đọc meta form-scoped + focus sau
+  row-op; KHÔNG đổi semantics hàm thuần đã test. Phần còn lại của P2 chỉ thêm
+  slot cross-field, không đụng semantics cũ.
 - Generator: anchor/boundary quanh heading section (như spec PLII_M02:
   `anchor` + `drop_until` + `occurrences[nth]`), gắn `{_stt}` khi `stt.mode =
   generated`, bảo toàn tag `la_nganh_chinh` dạng ô đánh dấu X.
-- Validation: tái sử dụng `validateGridLoop`; rule mới (cross-field) đăng ký
-  qua slot `cross_field_rules` thay vì hard-code.
+- Validation: tái sử dụng `validateGridLoop` (đã hiểu activeWhen); rule mới
+  (cross-field) đăng ký qua slot `cross_field_rules` thay vì hard-code.
 
-### 1.6 Draft migration & export gate
+### 1.7 Draft migration & export gate
 
 - Draft v2 giữ nguyên; migration chỉ thêm: gán `_row_id` thiếu (idempotent),
   đổi tên loop legacy → canonical khi có mapping (tiền lệ
   `ds_nganh_kinh_doanh → ds_nganh`).
-- Export gate: chạy `exportLoops` (bỏ `_row_id`), chặn khi còn lỗi
-  `blocking` của bất kỳ bảng nào trong hồ sơ.
+- Export gate hai lớp: (1) conflict guard — đường export thật đi qua
+  `exportLoopsStrict`, ném lỗi `EXPORT_LOOP_CONTRACT_CONFLICT` khi các mẫu
+  resolve cùng loop sang contract khác nhau (xem 1.4); (2) validation gate —
+  chặn khi còn lỗi `blocking` của bất kỳ bảng nào trong hồ sơ. Payload bỏ
+  `_row_id` và lọc grid inactive-theo-selector.
 
 ---
 
@@ -279,7 +366,7 @@ báo CQB (PLI_M66/M68/M75), khối chữ ký (PLI_M70/M71). 6 section, tất c�
 
 | Component | Đã có | Gap P2 |
 |---|---|---|
-| editable-grid | GridCtl, GRID_META, `_row_id`, validateGridLoop, renderer loop, exportLoops | meta form-scoped, `active_when`, `cross_field_rules`, keyboard/a11y lưới |
+| editable-grid | GridCtl, GRID_META + FORM_GRID_META (`getGridMeta` form-scoped), activeWhen selector/INTERIM, mkGrid deep clone, conflict guard `exportLoopsStrict`, focus sau row-op, `_row_id`, validateGridLoop, renderer loop, exportLoops | slot `cross_field_rules`, keyboard/a11y lưới; owner chốt selector M72 để bỏ INTERIM |
 | fixed-matrix | — (chưa renderer riêng) | schema `fixed_rows`, computed totals, cross-check vốn, renderer readonly |
 | nested-grid | — (NOT IMPLEMENTED) | `header_rows`, `row_groups`, rowspan/colspan, discriminator |
 | output-table | — | schema tối giản, audit `output_only`, render có điều kiện |

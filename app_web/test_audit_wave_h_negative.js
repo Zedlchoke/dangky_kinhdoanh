@@ -607,6 +607,10 @@ function mkRow(tags, j) {
     'tools/docx_to_blocks.py',
     'tools/form_specs/change/PLI_M72.json',
     'tools/tag_m72_sections.py',
+    // Lane B P1.2 (merge e88315a): verifier cấu trúc thật + export isolation
+    'tools/census/p1_b_verify_m72.py',
+    'tools/test_industry_change.py',
+    'tools/test_m72_conditional_export.py',
     ...MY_ALLOW_TPL,
     'app_web/test_audit_p1_negative.js',
     'app_web/test_acceptance.js',

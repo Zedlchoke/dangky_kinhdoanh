@@ -2,6 +2,17 @@
   "form_id": "PLI_M72",
   "group": "change",
   "note": "Cong bo noi dung dang ky thanh lap doanh nghiep (nguon PL1_Mau_72 trong 05_cong_bo_cung_cap_thong_tin). Mau gom 5 phan theo loai hinh DN, MOI phan co mot luoi nganh '5. Nganh, nghe kinh doanh' gan giong het nhau.",
+  "section_cond": {
+    "contract": "P1.2 Option D - selector 'Loại hình doanh nghiệp' (metadata hồ sơ, KHÔNG in vào DOCX). Engine tools/docx_render.py chỉ xuất nội dung biến thể có flag truthy; converter docx_to_blocks.py gắn cond vào blocks cho UI. Marker do tools/tag_m72_sections.py gắn idempotent.",
+    "value_key": "dn.loai_hinh",
+    "options": [
+      {"occurrence_id": "ds_nganh_dntn", "value": "DNTN", "flag": "loai_hinh_dntn"},
+      {"occurrence_id": "ds_nganh_tnhh_1tv", "value": "TNHH_1TV", "flag": "loai_hinh_tnhh_1tv"},
+      {"occurrence_id": "ds_nganh_tnhh_2tv", "value": "TNHH_2TV", "flag": "loai_hinh_tnhh_2tv"},
+      {"occurrence_id": "ds_nganh_ctcp", "value": "CTCP", "flag": "loai_hinh_ctcp"},
+      {"occurrence_id": "ds_nganh_dhdn", "value": "DHDN", "flag": "loai_hinh_dhdn"}
+    ]
+  },
   "gap_nghiepvu": "Spec da khai bao DU 5 occurrence (contract P1: ds_nganh_dntn / tnhh_1tv / tnhh_2tv / ctcp / dhdn, sync_group=ds_nganh_pli_m72). Generator hien tai CHUA ho tro 'occurrences' (build_form_maps.py chi cham anchor lan dau) nen khi chua integrate chi occurrence 1 duoc rebuild thanh bang loop; 4 vung con lai van la paragraph tan du STT/Ten nganh/Ma nganh. Cac heading 5 vung GIONG HET text nhau ('5. Nganh, nghe kinh doanh') -> nth=1..5 la dinh danh duy nhat; end marker chung '^6\\. von' vi muc '6.' moi phan deu bat dau bang 'Von' (dau tu/dieu le). Khoang trang giua heading va muc '6.' o cac vung 2-5 chi con 3 paragraph tieu de cot (cot thu 4 mat ca o nguon); rieng vung 1 (DNTN) con du 4 paragraph tieu de ke ca 'Nganh, nghe kinh doanh chinh'. Cac luoi thanh vien/co dong nested-grid BLOCKED khong nam trong occurrences nay - giu nguyen.",
   "tables": [
     {

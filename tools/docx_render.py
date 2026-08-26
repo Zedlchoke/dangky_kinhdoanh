@@ -28,6 +28,15 @@ from xml.sax.saxutils import escape
 TAG_RE = re.compile(r"\{([A-Za-z0-9_][A-Za-z0-9_.]*)\}")
 # Tag mở/đóng bảng lặp
 LOOP_OPEN_RE = re.compile(r"\{#([A-Za-z0-9_]+)\}")
+# Vùng điều kiện body-level (P1.2 M72 Option D): paragraph chỉ chứa
+# {?ten_flag} mở vùng và {/ten_flag} đóng vùng. Khi data[ten_flag] truthy
+# (chuỗi không rỗng, vd 'X') -> giữ nội dung, bỏ 2 paragraph marker; khi
+# falsy -> bỏ TOÀN BỘ nội dung giữa cặp marker (kể cả bảng). Marker phải
+# nằm ở con trực tiếp của <w:body>; lồng nhau được hỗ trợ qua stack.
+COND_OPEN_RE = re.compile(r"^\{\?([A-Za-z0-9_]+)\}$")
+COND_CLOSE_RE = re.compile(r"^\{/([A-Za-z0-9_]+)\}$")
+_BODY_RE = re.compile(r"(<w:body>)(.*)(</w:body>)", re.S)
+_ELEM_OPEN_RE = re.compile(r"<w:(p|tbl|sectPr)(?=[ >/])")
 # Một hàng <w:tr> ... </w:tr> (tag nằm trọn trong một w:t nên regex là đủ)
 ROW_RE = re.compile(r"<w:tr(?:\s[^>]*)?>.*?</w:tr>", re.S)
 
@@ -35,8 +44,8 @@ ROW_RE = re.compile(r"<w:tr(?:\s[^>]*)?>.*?</w:tr>", re.S)
 _RENDER_PART_RE = re.compile(r"^word/(document\.xml|header\d*\.xml|footer\d*\.xml)$")
 
 # Chuỗi sót lại cần phát hiện khi kiểm tra: {từ} / {a.b} / {#loop} / {/loop}
-# (kể cả biến engine {_stt} — nếu sót là lỗi render)
-LEFTOVER_RE = re.compile(r"\{[/#]?[A-Za-z_][A-Za-z0-9_.#/]*\}")
+# / {?flag} — (kể cả biến engine {_stt} — nếu sót là lỗi render)
+LEFTOVER_RE = re.compile(r"\{[/#?]?[A-Za-z_][A-Za-z0-9_.#/?]*\}")
 
 
 def _lookup(data: dict, key: str):
@@ -110,6 +119,131 @@ def _expand_loops(xml: str, data: dict) -> str:
     return "".join(out)
 
 
+def _truthy(val) -> bool:
+    """Giá trị điều kiện vùng: chuỗi không rỗng (vd 'X') là truthy; None/rỗng
+    (flag chưa được chọn) là falsy -> nội dung vùng bị loại khỏi output."""
+    if val is None:
+        return False
+    return str(val).strip() != ""
+
+
+def _para_marker(elem_xml: str):
+    """Paragraph con trực tiếp của body có phải marker điều kiện không?
+    Trả ('open'|'close', tên) hoặc None. Text = nối mọi <w:t> rồi strip."""
+    texts = re.findall(r"<w:t[^>]*>([^<]*)</w:t>", elem_xml)
+    s = "".join(texts).strip()
+    m = COND_OPEN_RE.match(s)
+    if m:
+        return ("open", m.group(1))
+    m = COND_CLOSE_RE.match(s)
+    if m:
+        return ("close", m.group(1))
+    return None
+
+
+def _split_body_children(body: str):
+    """Tách body XML thành list span (start, end) các CON TRỰC TIẾP của
+    <w:body>. w:p không lồng nhau (đủ một cặp mở/đóng); w:tbl đếm depth;
+    phần tử khác/whitespace giữa các span được giữ nguyên khi dựng lại."""
+    spans = []
+    pos = 0
+    n = len(body)
+    while pos < n:
+        m = _ELEM_OPEN_RE.search(body, pos)
+        if not m:
+            break
+        tag = m.group(1)
+        start = m.start()
+        if tag == "p":
+            # <w:p> có thể tự đóng (<w:p .../>) với đoạn rỗng
+            gt = body.index(">", m.end())
+            if body[gt - 1] == "/":
+                start, pos, end = start, gt + 1, gt + 1
+            else:
+                end = body.index("</w:p>", gt) + len("</w:p>")
+                pos = end
+        elif tag == "tbl":
+            depth = 1
+            scan = m.end()
+            while depth:
+                mm = re.search(r"<w:tbl[ >]|</w:tbl>", body[scan:])
+                if not mm:
+                    raise ValueError("w:tbl khong dong trong body template")
+                tok = mm.group(0)
+                depth += -1 if tok.startswith("</") else 1
+                scan += mm.end()
+            end = scan
+            pos = end
+        else:  # sectPr: có thể tự đóng hoặc có cặp đóng
+            close = body.index(">", m.end())
+            if body[close - 1] == "/":
+                pos = close + 1
+                end = close + 1
+            else:
+                end = body.index("</w:sectPr>", close) + len("</w:sectPr>")
+                pos = end
+        spans.append((start, end))
+    return spans
+
+
+class CondTagError(ValueError):
+    """Marker điều kiện sai cú pháp/lồng nhau — fail loud, không render nửa vời."""
+
+
+def _apply_conditions(xml: str, data: dict) -> str:
+    """Xử lý vùng điều kiện {?flag}...{/flag} ở con trực tiếp của <w:body>.
+    - Cặp marker khớp, flag truthy  -> bỏ 2 paragraph marker, giữ nội dung.
+    - Cặp marker khớp, flag falsy   -> bỏ cả vùng (marker + toàn bộ nội dung).
+    - Sai cú pháp (đóng không mở, mở không đóng, tên lệch, lồng chéo)
+      -> raise CondTagError (template lỗi phải bị phát hiện ngay).
+    Chỉ chạy cho word/document.xml (marker không nằm trong header/footer)."""
+    bm = _BODY_RE.search(xml)
+    if not bm:
+        return xml
+    body = bm.group(2)
+    spans = _split_body_children(body)
+    if not spans:
+        return xml
+    # Gắn trạng thái stack theo từng span; markers luôn bị loại.
+    drop = [False] * len(spans)
+    stack = []  # [(name, truthy)]
+    events = []
+    for si, (s, e) in enumerate(spans):
+        seg = body[s:e]
+        mk = _para_marker(seg) if seg.startswith("<w:p") else None
+        if mk:
+            events.append((si, mk))
+    for si, (kind, name) in events:
+        if kind == "open":
+            stack.append((name, si, _truthy(data.get(name))))
+        else:
+            if not stack:
+                raise CondTagError(
+                    "{/%s} không có {?} mở tương ứng" % name)
+            oname, osi, otruthy = stack.pop()
+            if oname != name:
+                raise CondTagError(
+                    "{?%s} bị đóng bởi {/%s} sai cặp (lồng chéo)" % (oname, name))
+            # Vùng [osi..si]: marker luôn loại; nội dung chỉ giữ khi truthy
+            # và mọi cha đang mở cũng truthy.
+            parents_truthy = all(t for _n, _osi, t in stack)
+            keep = otruthy and parents_truthy
+            for j in range(osi, si + 1):
+                drop[j] = drop[j] or (not keep) or j in (osi, si)
+    if stack:
+        raise CondTagError(
+            "{?%s} không được đóng trước hết body" % stack[-1][0])
+    out = []
+    pos = 0
+    for (s, e), d in zip(spans, drop):
+        out.append(body[pos:s])
+        if not d:
+            out.append(body[s:e])
+        pos = e
+    out.append(body[pos:])
+    return xml[:bm.start(2)] + "".join(out) + xml[bm.end(2):]
+
+
 def render(template_path: str | os.PathLike, data: dict) -> bytes:
     """Render template thành nội dung file .docx mới (bytes).
 
@@ -124,6 +258,7 @@ def render(template_path: str | os.PathLike, data: dict) -> bytes:
                 name = info.filename.replace("\\", "/")
                 if _RENDER_PART_RE.match(name):
                     xml = raw.decode("utf-8")
+                    xml = _apply_conditions(xml, data)
                     xml = _expand_loops(xml, data)
                     xml = _subst_vars(xml, data)
                     raw = xml.encode("utf-8")

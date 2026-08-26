@@ -49,8 +49,9 @@ RENDER_OUT_DIR = ROOT / "generated_ho_so" / "_audit_blocks_render"
 
 # The biến thường: {key} hoặc {a.b.c}
 TAG_RE = re.compile(r"\{([A-Za-z0-9_][A-Za-z0-9_.]*)\}")
-# Mọi dạng the: {key} / {#loop} / {/loop} / {_stt} (biến engine gạch dưới đầu)
-ANY_TAG_RE = re.compile(r"\{[/#]?[A-Za-z_][A-Za-z0-9_.#/]*\}")
+# Mọi dạng the: {key} / {#loop} / {/loop} / {?flag} / {/flag} (P1.2 M72
+# vùng điều kiện) / {_stt} (biến engine gạch dưới đầu)
+ANY_TAG_RE = re.compile(r"\{[/#?]?[A-Za-z_][A-Za-z0-9_.#/?]*\}")
 # Mọi khoảng trắng (kể cả \n, \t, NBSP) — dùng để chuẩn hóa so text
 WS_RE = re.compile(r"\s+")
 CHK_PREFIX = "chk"
@@ -694,11 +695,13 @@ def audit_section4(form_maps: dict, loaded: dict) -> None:
 # ---------------------------------------------------------------------------
 
 ALLOWED_TOP_KEYS = {"id", "ten_mau", "blocks"}
+# "cond" (P1.2 M72 Option D): danh sách flag điều kiện vùng - block chỉ
+# render/xuất khi mọi flag truthy; converter sinh từ marker {?flag}/{/flag}.
 ALLOWED_BLOCK_KEYS = {
-    "p": {"t", "align", "runs"},
-    "chk": {"t", "key", "label"},
-    "table": {"t", "widths", "rows"},
-    "loop": {"t", "loop", "headerRows", "cols", "blankRows", "rows"},
+    "p": {"t", "align", "runs", "cond"},
+    "chk": {"t", "key", "label", "cond"},
+    "table": {"t", "widths", "rows", "cond"},
+    "loop": {"t", "loop", "headerRows", "cols", "blankRows", "rows", "cond"},
 }
 ALLOWED_RUN_KEYS_TEXT = {"text", "b", "i", "u"}
 ALLOWED_COL_KEYS = {"col", "tag"}

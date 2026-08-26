@@ -30,6 +30,9 @@
      "text": "(TÊN DOANH NGHIỆP TƯ NHÂN)",
      "b": true
     }
+   ],
+   "cond": [
+    "loai_hinh_dntn"
    ]
   },
   {
@@ -40,6 +43,9 @@
      "text": "CÔNG BỐ NỘI DUNG ĐĂNG KÝ THÀNH LẬP MỚI",
      "b": true
     }
+   ],
+   "cond": [
+    "loai_hinh_dntn"
    ]
   },
   {
@@ -50,6 +56,9 @@
      "text": "1. Tên doanh nghiệp",
      "b": true
     }
+   ],
+   "cond": [
+    "loai_hinh_dntn"
    ]
   },
   {
@@ -65,6 +74,9 @@
       "w": 27
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_dntn"
    ]
   },
   {
@@ -80,6 +92,9 @@
       "w": 30
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_dntn"
    ]
   },
   {
@@ -95,6 +110,9 @@
       "w": 21
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_dntn"
    ]
   },
   {
@@ -111,6 +129,9 @@
       "w": 19
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_dntn"
    ]
   },
   {
@@ -127,6 +148,9 @@
       "w": 39
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_dntn"
    ]
   },
   {
@@ -143,6 +167,9 @@
       "w": 20
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_dntn"
    ]
   },
   {
@@ -167,6 +194,9 @@
       "w": 12
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_dntn"
    ]
   },
   {
@@ -191,6 +221,9 @@
       "w": 12
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_dntn"
    ]
   },
   {
@@ -201,6 +234,9 @@
      "text": "5. Ngành, nghề kinh doanh",
      "b": true
     }
+   ],
+   "cond": [
+    "loai_hinh_dntn"
    ]
   },
   {
@@ -269,6 +305,9 @@
       }
      ]
     }
+   ],
+   "cond": [
+    "loai_hinh_dntn"
    ]
   },
   {
@@ -285,6 +324,9 @@
       "w": 57
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_dntn"
    ]
   },
   {
@@ -295,6 +337,9 @@
      "text": "7. Chủ doanh nghiệp",
      "b": true
     }
+   ],
+   "cond": [
+    "loai_hinh_dntn"
    ]
   },
   {
@@ -319,6 +364,9 @@
       "w": 13
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_dntn"
    ]
   },
   {
@@ -361,6 +409,9 @@
       "w": 13
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_dntn"
    ]
   },
   {
@@ -376,6 +427,9 @@
       "w": 19
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_dntn"
    ]
   },
   {
@@ -401,6 +455,9 @@
       "w": 19
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_dntn"
    ]
   },
   {
@@ -416,6 +473,9 @@
       "w": 16
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_dntn"
    ]
   },
   {
@@ -432,6 +492,9 @@
       "w": 35
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_dntn"
    ]
   },
   {
@@ -442,6 +505,9 @@
      "text": "(TÊN CÔNG TY TNHH MỘT THÀNH VIÊN)",
      "b": true
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_1tv"
    ]
   },
   {
@@ -452,6 +518,9 @@
      "text": "CÔNG BỐ NỘI DUNG ĐĂNG KÝ THÀNH LẬP MỚI",
      "b": true
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_1tv"
    ]
   },
   {
@@ -462,6 +531,9 @@
      "text": "1. Tên công ty",
      "b": true
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_1tv"
    ]
   },
   {
@@ -477,6 +549,9 @@
       "w": 25
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_1tv"
    ]
   },
   {
@@ -492,6 +567,9 @@
       "w": 28
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_1tv"
    ]
   },
   {
@@ -507,6 +585,9 @@
       "w": 19
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_1tv"
    ]
   },
   {
@@ -523,6 +604,9 @@
       "w": 19
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_1tv"
    ]
   },
   {
@@ -539,6 +623,9 @@
       "w": 39
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_1tv"
    ]
   },
   {
@@ -549,6 +636,9 @@
      "text": "4. Địa chỉ trụ sở chính: ",
      "b": true
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_1tv"
    ]
   },
   {
@@ -561,6 +651,9 @@
       "w": 12
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_1tv"
    ]
   },
   {
@@ -585,6 +678,9 @@
       "w": 12
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_1tv"
    ]
   },
   {
@@ -609,6 +705,9 @@
       "w": 13
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_1tv"
    ]
   },
   {
@@ -619,6 +718,9 @@
      "text": "5. Ngành, nghề kinh doanh",
      "b": true
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_1tv"
    ]
   },
   {
@@ -687,6 +789,9 @@
       }
      ]
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_1tv"
    ]
   },
   {
@@ -703,6 +808,9 @@
       "w": 16
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_1tv"
    ]
   },
   {
@@ -713,6 +821,9 @@
      "text": "7. Thông tin về chủ sở hữu ",
      "b": true
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_1tv"
    ]
   },
   {
@@ -724,6 +835,9 @@
      "b": true,
      "i": true
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_1tv"
    ]
   },
   {
@@ -748,6 +862,9 @@
       "w": 13
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_1tv"
    ]
   },
   {
@@ -790,6 +907,9 @@
       "w": 13
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_1tv"
    ]
   },
   {
@@ -805,6 +925,9 @@
       "w": 19
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_1tv"
    ]
   },
   {
@@ -830,6 +953,9 @@
       "w": 19
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_1tv"
    ]
   },
   {
@@ -845,6 +971,9 @@
       "w": 17
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_1tv"
    ]
   },
   {
@@ -856,6 +985,9 @@
      "b": true,
      "i": true
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_1tv"
    ]
   },
   {
@@ -871,6 +1003,9 @@
       "w": 25
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_1tv"
    ]
   },
   {
@@ -886,6 +1021,9 @@
       "w": 30
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_1tv"
    ]
   },
   {
@@ -910,6 +1048,9 @@
       "w": 13
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_1tv"
    ]
   },
   {
@@ -925,6 +1066,9 @@
       "w": 19
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_1tv"
    ]
   },
   {
@@ -935,6 +1079,9 @@
      "text": "8. Người đại diện theo pháp luật của công ty1:",
      "b": true
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_1tv"
    ]
   },
   {
@@ -959,6 +1106,9 @@
       "w": 13
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_1tv"
    ]
   },
   {
@@ -1001,6 +1151,9 @@
       "w": 14
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_1tv"
    ]
   },
   {
@@ -1016,6 +1169,9 @@
       "w": 19
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_1tv"
    ]
   },
   {
@@ -1041,6 +1197,9 @@
       "w": 19
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_1tv"
    ]
   },
   {
@@ -1056,6 +1215,9 @@
       "w": 13
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_1tv"
    ]
   },
   {
@@ -1071,6 +1233,9 @@
       "w": 17
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_1tv"
    ]
   },
   {
@@ -1087,6 +1252,9 @@
       "w": 34
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_1tv"
    ]
   },
   {
@@ -1097,6 +1265,9 @@
      "text": "(TÊN CÔNG TY TNHH HAI THÀNH VIÊN)",
      "b": true
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_2tv"
    ]
   },
   {
@@ -1107,6 +1278,9 @@
      "text": "CÔNG BỐ NỘI DUNG ĐĂNG KÝ THÀNH LẬP MỚI",
      "b": true
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_2tv"
    ]
   },
   {
@@ -1117,6 +1291,9 @@
      "text": "1. Tên công ty",
      "b": true
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_2tv"
    ]
   },
   {
@@ -1132,6 +1309,9 @@
       "w": 25
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_2tv"
    ]
   },
   {
@@ -1147,6 +1327,9 @@
       "w": 28
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_2tv"
    ]
   },
   {
@@ -1162,6 +1345,9 @@
       "w": 19
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_2tv"
    ]
   },
   {
@@ -1178,6 +1364,9 @@
       "w": 19
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_2tv"
    ]
   },
   {
@@ -1194,6 +1383,9 @@
       "w": 39
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_2tv"
    ]
   },
   {
@@ -1204,6 +1396,9 @@
      "text": "4. Địa chỉ trụ sở chính: ",
      "b": true
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_2tv"
    ]
   },
   {
@@ -1216,6 +1411,9 @@
       "w": 12
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_2tv"
    ]
   },
   {
@@ -1240,6 +1438,9 @@
       "w": 12
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_2tv"
    ]
   },
   {
@@ -1264,6 +1465,9 @@
       "w": 13
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_2tv"
    ]
   },
   {
@@ -1274,6 +1478,9 @@
      "text": "5. Ngành, nghề kinh doanh",
      "b": true
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_2tv"
    ]
   },
   {
@@ -1342,6 +1549,9 @@
       }
      ]
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_2tv"
    ]
   },
   {
@@ -1358,6 +1568,9 @@
       "w": 16
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_2tv"
    ]
   },
   {
@@ -1368,6 +1581,9 @@
      "text": "7. Danh sách thành viên:",
      "b": true
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_2tv"
    ]
   },
   {
@@ -1377,6 +1593,9 @@
     {
      "text": "STT"
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_2tv"
    ]
   },
   {
@@ -1386,6 +1605,9 @@
     {
      "text": "Tên thành viên"
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_2tv"
    ]
   },
   {
@@ -1395,6 +1617,9 @@
     {
      "text": "Quốc tịch"
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_2tv"
    ]
   },
   {
@@ -1404,6 +1629,9 @@
     {
      "text": "Số Giấy tờ pháp lý của cá nhân/tổ chức"
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_2tv"
    ]
   },
   {
@@ -1413,6 +1641,9 @@
     {
      "text": "Địa chỉ liên lạc đối với cá nhân; địa chỉ trụ sở chính đối với tổ chức"
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_2tv"
    ]
   },
   {
@@ -1422,6 +1653,9 @@
     {
      "text": "Phần vốn góp"
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_2tv"
    ]
   },
   {
@@ -1431,6 +1665,9 @@
     {
      "text": "(VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)"
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_2tv"
    ]
   },
   {
@@ -1440,6 +1677,9 @@
     {
      "text": "Tỷ lệ (%)"
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_2tv"
    ]
   },
   {
@@ -1449,6 +1689,9 @@
     {
      "text": "Ghi chú (nếu có)"
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_2tv"
    ]
   },
   {
@@ -1459,6 +1702,9 @@
      "text": "8. Người đại diện theo pháp luật của công ty2:",
      "b": true
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_2tv"
    ]
   },
   {
@@ -1483,6 +1729,9 @@
       "w": 13
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_2tv"
    ]
   },
   {
@@ -1525,6 +1774,9 @@
       "w": 13
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_2tv"
    ]
   },
   {
@@ -1540,6 +1792,9 @@
       "w": 19
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_2tv"
    ]
   },
   {
@@ -1565,6 +1820,9 @@
       "w": 19
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_2tv"
    ]
   },
   {
@@ -1580,6 +1838,9 @@
       "w": 13
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_2tv"
    ]
   },
   {
@@ -1595,6 +1856,9 @@
       "w": 17
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_2tv"
    ]
   },
   {
@@ -1611,6 +1875,9 @@
       "w": 35
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_2tv"
    ]
   },
   {
@@ -1621,6 +1888,9 @@
      "text": "(TÊN CÔNG TY CỔ PHẦN)",
      "b": true
     }
+   ],
+   "cond": [
+    "loai_hinh_ctcp"
    ]
   },
   {
@@ -1631,6 +1901,9 @@
      "text": "CÔNG BỐ NỘI DUNG ĐĂNG KÝ THÀNH LẬP MỚI",
      "b": true
     }
+   ],
+   "cond": [
+    "loai_hinh_ctcp"
    ]
   },
   {
@@ -1641,6 +1914,9 @@
      "text": "1. Tên công ty",
      "b": true
     }
+   ],
+   "cond": [
+    "loai_hinh_ctcp"
    ]
   },
   {
@@ -1656,6 +1932,9 @@
       "w": 24
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_ctcp"
    ]
   },
   {
@@ -1671,6 +1950,9 @@
       "w": 27
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_ctcp"
    ]
   },
   {
@@ -1686,6 +1968,9 @@
       "w": 18
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_ctcp"
    ]
   },
   {
@@ -1702,6 +1987,9 @@
       "w": 19
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_ctcp"
    ]
   },
   {
@@ -1718,6 +2006,9 @@
       "w": 39
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_ctcp"
    ]
   },
   {
@@ -1728,6 +2019,9 @@
      "text": "4. Địa chỉ trụ sở chính: ",
      "b": true
     }
+   ],
+   "cond": [
+    "loai_hinh_ctcp"
    ]
   },
   {
@@ -1740,6 +2034,9 @@
       "w": 12
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_ctcp"
    ]
   },
   {
@@ -1764,6 +2061,9 @@
       "w": 12
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_ctcp"
    ]
   },
   {
@@ -1788,6 +2088,9 @@
       "w": 13
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_ctcp"
    ]
   },
   {
@@ -1798,6 +2101,9 @@
      "text": "5. Ngành, nghề kinh doanh",
      "b": true
     }
+   ],
+   "cond": [
+    "loai_hinh_ctcp"
    ]
   },
   {
@@ -1866,6 +2172,9 @@
       }
      ]
     }
+   ],
+   "cond": [
+    "loai_hinh_ctcp"
    ]
   },
   {
@@ -1882,6 +2191,9 @@
       "w": 53
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_ctcp"
    ]
   },
   {
@@ -1897,6 +2209,9 @@
       "w": 17
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_ctcp"
    ]
   },
   {
@@ -1912,6 +2227,9 @@
       "w": 16
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_ctcp"
    ]
   },
   {
@@ -1922,6 +2240,9 @@
      "text": "7. Cổ đông sáng lập:",
      "b": true
     }
+   ],
+   "cond": [
+    "loai_hinh_ctcp"
    ]
   },
   {
@@ -1931,6 +2252,9 @@
     {
      "text": "STTTên cổ đôngQuốc tịchSố Giấy tờ pháp lý của cá nhân/tổ chứcĐịa chỉ liên lạc đối với cá nhân; địa chỉ trụ sở chính đối với tổ chứcLoại cổ phầnSố cổ phầnGiá trị cổ phần"
     }
+   ],
+   "cond": [
+    "loai_hinh_ctcp"
    ]
   },
   {
@@ -1940,6 +2264,9 @@
     {
      "text": "(VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)Tỷ lệ (%)Ghi chú (nếu có)8. Cổ đông là nhà đầu tư nước ngoài: "
     }
+   ],
+   "cond": [
+    "loai_hinh_ctcp"
    ]
   },
   {
@@ -1949,6 +2276,9 @@
     {
      "text": "STTTên cổ đôngQuốc tịchSố Giấy tờ pháp lý của cá nhân/tổ chứcĐịa chỉ liên lạc đối với cá nhân; địa chỉ trụ sở chính đối với tổ chứcLoại cổ phầnSố cổ phầnGiá trị cổ phần"
     }
+   ],
+   "cond": [
+    "loai_hinh_ctcp"
    ]
   },
   {
@@ -1958,6 +2288,9 @@
     {
      "text": "(VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)Tỷ lệ (%)Ghi chú (nếu có)9. Người đại diện theo pháp luật của công ty3:"
     }
+   ],
+   "cond": [
+    "loai_hinh_ctcp"
    ]
   },
   {
@@ -1982,6 +2315,9 @@
       "w": 13
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_ctcp"
    ]
   },
   {
@@ -2024,6 +2360,9 @@
       "w": 13
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_ctcp"
    ]
   },
   {
@@ -2039,6 +2378,9 @@
       "w": 19
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_ctcp"
    ]
   },
   {
@@ -2064,6 +2406,9 @@
       "w": 19
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_ctcp"
    ]
   },
   {
@@ -2079,6 +2424,9 @@
       "w": 13
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_ctcp"
    ]
   },
   {
@@ -2094,6 +2442,9 @@
       "w": 17
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_ctcp"
    ]
   },
   {
@@ -2110,6 +2461,9 @@
       "w": 35
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_ctcp"
    ]
   },
   {
@@ -2120,6 +2474,9 @@
      "text": "(TÊN CÔNG TY HỢP DANH)",
      "b": true
     }
+   ],
+   "cond": [
+    "loai_hinh_dhdn"
    ]
   },
   {
@@ -2130,6 +2487,9 @@
      "text": "CÔNG BỐ NỘI DUNG ĐĂNG KÝ THÀNH LẬP MỚI",
      "b": true
     }
+   ],
+   "cond": [
+    "loai_hinh_dhdn"
    ]
   },
   {
@@ -2140,6 +2500,9 @@
      "text": "1. Tên công ty",
      "b": true
     }
+   ],
+   "cond": [
+    "loai_hinh_dhdn"
    ]
   },
   {
@@ -2155,6 +2518,9 @@
       "w": 24
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_dhdn"
    ]
   },
   {
@@ -2170,6 +2536,9 @@
       "w": 27
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_dhdn"
    ]
   },
   {
@@ -2185,6 +2554,9 @@
       "w": 18
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_dhdn"
    ]
   },
   {
@@ -2201,6 +2573,9 @@
       "w": 19
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_dhdn"
    ]
   },
   {
@@ -2217,6 +2592,9 @@
       "w": 39
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_dhdn"
    ]
   },
   {
@@ -2227,6 +2605,9 @@
      "text": "4. Địa chỉ trụ sở chính: ",
      "b": true
     }
+   ],
+   "cond": [
+    "loai_hinh_dhdn"
    ]
   },
   {
@@ -2239,6 +2620,9 @@
       "w": 12
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_dhdn"
    ]
   },
   {
@@ -2263,6 +2647,9 @@
       "w": 12
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_dhdn"
    ]
   },
   {
@@ -2287,6 +2674,9 @@
       "w": 12
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_dhdn"
    ]
   },
   {
@@ -2297,6 +2687,9 @@
      "text": "5. Ngành, nghề kinh doanh",
      "b": true
     }
+   ],
+   "cond": [
+    "loai_hinh_dhdn"
    ]
   },
   {
@@ -2365,6 +2758,9 @@
       }
      ]
     }
+   ],
+   "cond": [
+    "loai_hinh_dhdn"
    ]
   },
   {
@@ -2381,6 +2777,9 @@
       "w": 16
      }
     }
+   ],
+   "cond": [
+    "loai_hinh_dhdn"
    ]
   },
   {
@@ -2391,6 +2790,9 @@
      "text": "7. Danh sách thành viên hợp danh:",
      "b": true
     }
+   ],
+   "cond": [
+    "loai_hinh_dhdn"
    ]
   },
   {
@@ -2400,6 +2802,9 @@
     {
      "text": "STT"
     }
+   ],
+   "cond": [
+    "loai_hinh_dhdn"
    ]
   },
   {
@@ -2409,6 +2814,9 @@
     {
      "text": "Tên thành viên hợp danh"
     }
+   ],
+   "cond": [
+    "loai_hinh_dhdn"
    ]
   },
   {
@@ -2418,6 +2826,9 @@
     {
      "text": "Quốc tịch"
     }
+   ],
+   "cond": [
+    "loai_hinh_dhdn"
    ]
   },
   {
@@ -2427,6 +2838,9 @@
     {
      "text": "Số định danh cá nhân/Số Hộ chiếu/Hộ chiếu nước ngoài hoặc giấy tờ có giá trị thay thế hộ chiếu nước ngoài"
     }
+   ],
+   "cond": [
+    "loai_hinh_dhdn"
    ]
   },
   {
@@ -2436,6 +2850,9 @@
     {
      "text": "Địa chỉ liên lạc"
     }
+   ],
+   "cond": [
+    "loai_hinh_dhdn"
    ]
   },
   {
@@ -2445,6 +2862,9 @@
     {
      "text": "Phần vốn góp"
     }
+   ],
+   "cond": [
+    "loai_hinh_dhdn"
    ]
   },
   {
@@ -2454,6 +2874,9 @@
     {
      "text": "(VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)"
     }
+   ],
+   "cond": [
+    "loai_hinh_dhdn"
    ]
   },
   {
@@ -2463,6 +2886,9 @@
     {
      "text": "Tỷ lệ (%)"
     }
+   ],
+   "cond": [
+    "loai_hinh_dhdn"
    ]
   },
   {
@@ -2483,6 +2909,9 @@
      "text": "\t",
      "i": true
     }
+   ],
+   "cond": [
+    "loai_hinh_dhdn"
    ]
   },
   {
@@ -2501,6 +2930,9 @@
     {
      "text": " Ghi tên của tất cả người đại diện theo pháp luật trong trường hợp công ty có nhiều hơn 01 người đại diện theo pháp luật."
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_1tv"
    ]
   },
   {
@@ -2510,6 +2942,9 @@
     {
      "text": "2 Ghi tên của tất cả người đại diện theo pháp luật trong trường hợp công ty có nhiều hơn 01 người đại diện theo pháp luật."
     }
+   ],
+   "cond": [
+    "loai_hinh_tnhh_2tv"
    ]
   },
   {
@@ -2519,6 +2954,9 @@
     {
      "text": "3 Ghi tên của tất cả người đại diện theo pháp luật trong trường hợp công ty có nhiều hơn 01 người đại diện theo pháp luật."
     }
+   ],
+   "cond": [
+    "loai_hinh_ctcp"
    ]
   }
  ]

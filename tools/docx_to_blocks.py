@@ -55,6 +55,12 @@ OUT_DIR = ROOT / "app" / "data" / "blocks"
 # Tag biến: {key} hoặc {a.b.c}; không khớp {#loop}/{/loop}
 TAG_RE = re.compile(r"\{([A-Za-z0-9_][A-Za-z0-9_.]*)\}")
 LOOP_OPEN_RE = re.compile(r"\{#([A-Za-z0-9_]+)\}")
+# Marker vùng điều kiện P1.2 M72 Option D: {?flag} mở / {/flag} đóng.
+# Paragraph CHỈ chứa marker không sinh block; mọi block nằm trong vùng
+# được gắn "cond": [flag, ...] (renderer UI lọc theo flag, engine DOCX
+# tự loại vùng theo cùng flag - xem tools/docx_render.py).
+COND_OPEN_FULL_RE = re.compile(r"^\{\?([A-Za-z0-9_]+)\}$")
+COND_CLOSE_FULL_RE = re.compile(r"^\{/([A-Za-z0-9_]+)\}$")
 CHK_PREFIX = "chk"
 
 
@@ -390,10 +396,31 @@ def convert(fid: str, form_maps: dict) -> dict:
 
     blocks: list[dict] = []
     prev_ref = {"block": None, "consumed": False, "emitted": blocks}
+    cond_stack: list[str] = []  # flag đang mở theo thứ tự (lồng nhau = AND)
+
+    def _attach_cond(b: dict) -> dict:
+        if cond_stack:
+            b["cond"] = list(cond_stack)
+        return b
+
     for kind, obj in iter_blocks(doc):
         if kind == "p":
+            full = _para_full_text(obj).strip()
+            mo = COND_OPEN_FULL_RE.match(full)
+            mc = COND_CLOSE_FULL_RE.match(full)
+            if mo:
+                cond_stack.append(mo.group(1))
+                continue
+            if mc:
+                name = mc.group(1)
+                if not cond_stack or cond_stack[-1] != name:
+                    raise ValueError(
+                        "%s: marker {/%s} sai cặp (đang mở: %s)"
+                        % (fid, name, cond_stack))
+                cond_stack.pop()
+                continue
             new_blocks = para_block(obj, prev_ref)
-            blocks.extend(new_blocks)
+            blocks.extend(_attach_cond(b) for b in new_blocks)
             prev_ref["block"] = new_blocks[-1] if new_blocks else prev_ref["block"]
             if not new_blocks:
                 # paragraph rỗng: không reset trạng thái consumed
@@ -401,9 +428,15 @@ def convert(fid: str, form_maps: dict) -> dict:
             else:
                 prev_ref["consumed"] = False
         else:
-            blocks.append(table_block(obj))
+            blk = table_block(obj)
+            _attach_cond(blk)
+            blocks.append(blk)
             prev_ref["block"] = None
             prev_ref["consumed"] = False
+
+    if cond_stack:
+        raise ValueError(
+            "%s: marker {?%s} không được đóng trong template" % (fid, cond_stack[-1]))
 
     return {"id": fid, "ten_mau": ten_mau, "blocks": blocks}
 
@@ -454,7 +487,7 @@ def collect_json_tags(data: dict) -> int:
     return n
 
 
-ANY_TAG_RE = re.compile(r"\{[/#]?[A-Za-z_][A-Za-z0-9_.#/]*\}")
+ANY_TAG_RE = re.compile(r"\{[/#?]?[A-Za-z_][A-Za-z0-9_.#/?]*\}")
 
 
 def collect_docx_text(path: Path) -> str:

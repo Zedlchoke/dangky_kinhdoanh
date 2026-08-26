@@ -199,7 +199,9 @@
    *   'checkbox' (checked khi row[tag]==='X', data-key vẫn
    *   loop:<loop>:<idx>:<tag>) | 'radio' (name="loop:<loop>:<tag>",
    *   browser tự chọn-1-trong-cột) | 'readonly' | 'outputOnly' (ô rỗng).
-   * - opts.gridMeta (từ FormDomain.GRID_META): override type THEO TAG và bổ
+   * - opts.gridMeta: map {loop: meta} cho bảng lặp - controller build theo
+ *   mẫu (GRID_META toàn cục + overlay form-scoped FORM_GRID_META[docId],
+ *   vd app.js gridMetaForDoc): override type THEO TAG và bổ
    *   sung tag cho cột vật lý chưa có trong cols[] (vd cột ngành chính của
    *   các mẫu cũ trước khi generator sinh đủ cols). Không truyền -> hành vi
    *   thuần theo blocks như bản cũ.

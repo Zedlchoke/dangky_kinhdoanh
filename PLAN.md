@@ -96,6 +96,443 @@ python app_web/main.py --mock
 
 ---
 
+## Master execution plan — hoàn thiện toàn bộ ứng dụng từ checkpoint `d882793`
+
+### Phạm vi và nguồn sự thật
+
+Kế hoạch này bắt đầu tại `main` commit `d882793` sau Wave P1.2 M72 và **thay thế
+các prompt/checkpoint cũ** có giả định P0/P1/L0 chưa hoàn thành. Không chạy lại
+P0/P1 từ đầu trừ khi regression chứng minh có lỗi thật.
+
+Phạm vi release của ứng dụng hiện tại:
+
+- UI desktop chính: `app_web/ui/*`, chạy qua `app_web/main.py` + pywebview.
+- Draft JSON, chọn thủ tục/mẫu, validation, VSIC, bảng và đồng bộ canonical key.
+- Pipeline source/spec → template DOCX → `form_maps` → blocks → UI/export.
+- Toàn bộ 87 biểu mẫu trong table/layout manifest và mọi use case đang công bố.
+- Xuất DOCX/ZIP, visual fidelity UI/DOCX, accessibility và package Windows `.exe`.
+- `app_tk` chỉ giữ compatibility với engine dùng chung; không mở rộng UI Tk trừ
+  khi owner xác nhận đây vẫn là một sản phẩm phải phát hành.
+
+`PLAN_excel.md` không tồn tại trong checkout tại checkpoint này. Excel **không
+được tự suy diễn là scope release**. Nếu owner muốn thêm Excel, phải cung cấp lại
+contract/file kế hoạch rồi mở một roadmap riêng; không để Excel âm thầm chặn bản
+desktop web/DOCX hiện tại.
+
+### Baseline đã khóa
+
+- P0 table manifest: 87/87 form, 111 section, 0 signature chưa classify.
+- L0 layout manifest: 87/87 form.
+- P1 industry: PLI_M72 đủ 5 occurrence; PLII_M02 có 4 semantic loop riêng.
+- P1.2 M72 Option D: selector `dn.loai_hinh`, chỉ một variant UI/DOCX được xuất;
+  verifier cấu trúc và conditional export đã PASS tại checkpoint.
+- Editable-grid foundation/P2.0: form-scoped meta, selector activation, stable
+  row ID, deep clone, export conflict guard và focus sau row-op đã có.
+- Chưa hoàn thành: L1/L2/L3 layout, ba table component mới, P3 domain rollout,
+  33 `BLOCKED_LEGAL_REVIEW`, visual QA đầy đủ và Windows clean-machine release.
+- `tools/census/p1_c_verify_plii_m02.py` có FAIL baseline đã biết; phải triage và
+  sửa gate theo contract thật trước khi dùng full regression làm release gate.
+
+### Định nghĩa `APP_DONE`
+
+Chỉ được báo `APP_DONE` khi đồng thời đạt tất cả điều kiện sau:
+
+1. Layout pipeline và rollout 87/87 đạt Acceptance Gate P1-LAYOUT.
+2. Bốn component `editable-grid`, `fixed-matrix`, `nested-grid`, `output-table`
+   có contract khóa, production fixture và test pass.
+3. Mọi table entry trong manifest có implementation hoặc classification cuối;
+   không còn `missing_grid`, `partial_columns`, `source-contamination` hay
+   `BLOCKED_LEGAL_REVIEW` chưa được owner quyết định.
+4. Toàn bộ use case chọn đúng required/optional/oneOf forms, draft round-trip,
+   validation và export không mất dữ liệu.
+5. 87/87 blocks/templates/form maps qua structural/content/DOCX regression;
+   không còn placeholder/tag điều kiện/loop tag ngoài ý muốn trong output.
+6. UI keyboard-only, accessibility và các viewport release đạt gate.
+7. Visual UI và DOCX/PDF có evidence; mọi nested-grid đều được kiểm trực quan.
+8. Package Windows `.exe` được build tái lập, chạy offline trên máy sạch không
+   có Python, mở/lưu/export được và không phụ thuộc cache dev.
+9. Repo sạch, dependency/build instructions/version/release checklist đầy đủ.
+10. Independent auditor read-only xác nhận PASS; các gate release không còn
+    `NOT RUN`. Push/tag/release chỉ thực hiện khi owner yêu cầu rõ.
+
+Không dùng phần trăm hoặc số test pass lớn để thay thế các điều kiện trên.
+
+### Quy tắc điều phối xuyên suốt
+
+- Lead giữ worktree tích hợp. Mỗi coding lane dùng branch + worktree riêng nằm
+  ngoài repo; không cho hai lane sửa cùng file trong cùng thời điểm.
+- Lead không sửa file lane đang sở hữu. `app.js`, `form-domain.js`, `render.js`,
+  `style.css`, `docx_to_blocks.py`, `build_form_maps.py` và engine DOCX là các
+  ownership độc quyền theo wave.
+- Subagent commit source/spec/test trong scope. Lead là người duy nhất regenerate
+  global templates, `form_maps.json/js` và blocks sau khi merge source/spec.
+- Không chỉnh generated artifact bằng tay. Chạy generator hai lần; lần hai không
+  được tạo thêm diff. Review allowlist trước mọi commit generated.
+- Không reset/revert/git clean/pull mù. Không commit cache, output test, draft cá
+  nhân hoặc file ngoài allowlist. Không push khi chưa được owner yêu cầu.
+- Không tự suy diễn pháp lý. Mọi câu hỏi phải có form/section/evidence, lựa chọn
+  hữu hạn, phương án khuyến nghị và tác động migration/export.
+- Mỗi wave báo commit, ownership, diff allowlist, commands và
+  `PASS | FAIL | NOT RUN`. `NOT RUN` không bao giờ được gọi là PASS.
+- Một wave chỉ được merge khi branch sạch, `git diff --check` pass và test liên
+  quan pass. Sau mỗi integrate chạy regression chung trước khi mở wave phụ thuộc.
+
+## R0 — Release baseline, scope registry và decision queue
+
+### R0.1 Baseline kỹ thuật
+
+1. Xác minh `HEAD`, worktree, worktree list, divergence với origin và các file
+   owner đang sửa. Tạo backup tag/branch tại `d882793`; không push tự động.
+2. Chạy lại toàn bộ Node/Python regression đã báo ở Wave P1.2.
+3. Triage `p1_c_verify_plii_m02.py`: sửa verifier/test nếu kỳ vọng cũ mâu thuẫn
+   contract đã tích hợp; không sửa production chỉ để chiều test.
+4. Khóa một test manifest runner duy nhất liệt kê mọi suite release, exit code và
+   dependency. Test thiếu dependency phải trả `NOT RUN` có lý do.
+5. Tạo dependency contract reproducible cho dev/test/build; không dựa vào package
+   cài ngẫu nhiên trong máy (`python-docx`, pywebview, test/render tools).
+
+Gate R0: worktree sạch; baseline report tái lập; mọi FAIL được phân loại thành
+regression phải sửa hoặc baseline-gate lỗi thời có evidence; không còn FAIL mơ hồ.
+
+### R0.2 Product scope registry
+
+Lead lập bảng mọi surface phải ship: use cases, 87 forms, draft versions, bridge
+APIs, DOCX/ZIP export, VSIC, table kinds, layout roles, Windows package và tài
+liệu người dùng. Với `app_tk`, owner chọn `legacy-supported` hoặc `deprecated`;
+không để trạng thái lưng chừng tới release.
+
+### R0.3 Owner decision sprint — blocking cho P3, không chặn L1/P2 nền
+
+Chuyển `docs/legal_review_backlog.md` thành decision packets theo policy dùng
+chung, thay vì hỏi rời rạc 33 form:
+
+1. Capital/formula: totals outputOnly, tỷ lệ computed, đối chiếu vốn, tài sản
+   khác có sub-grid hay mô tả text.
+2. People/nested rows: cá nhân/tổ chức/NĐDPL/người được ủy quyền, discriminator,
+   cột chữ ký outputOnly, min/max rows.
+3. Source integrity: PLI_M03/M04/M05 có bị cắt; PLI_M09 vùng nhiễm được loại bỏ;
+   lấy lại nguồn pháp lý nếu thiếu.
+4. Canonical sharing: loop/field nào độc lập, loop nào cho phép copy tường minh;
+   không auto-sync chỉ vì nhãn giống.
+5. Tax fixed rows: danh sách chỉ tiêu, checkbox group/radio và policy cũ/mới.
+6. Branch/admin/output: chủ thể nhập, outputOnly vs editable, số dòng cố định hay
+   biến thiên, upload chỉ metadata hay cần attachment thực.
+7. M72 còn lại: phần dùng chung cuối tài liệu, footnote bị mất ở nguồn, min ngành,
+   và 4 nested-grid thành viên/cổ đông.
+
+Mỗi quyết định được ghi vào một decision registry có `decision_id`, status,
+owner, forms/sections bị ảnh hưởng, lựa chọn, quyết định cuối và migration impact.
+Không bắt đầu rollout của section còn `OPEN`; các section độc lập đã `DECIDED`
+vẫn được làm tiếp.
+
+## R1 — Hoàn tất P1-LAYOUT (L1 → L2 → L3)
+
+### R1.1 L1 extractor/schema contract
+
+Một lane sở hữu `tools/docx_to_blocks.py`, semantic-role/override module và test:
+
+- Bảo toàn hard break/newline theo run.
+- Trích xuất superscript/subscript/footnote reference.
+- Trích xuất indent, spacing, line spacing và keep-with-next cần thiết.
+- Phân loại role tối thiểu đã định nghĩa trong P1-LAYOUT.
+- Tách `source-indicator` khỏi `form-number` hợp lệ.
+- Backward compatible với blocks thiếu metadata mới.
+- Detector/test phủ 87/87 source/blocks; không regenerate toàn cục ở lane.
+
+Gate L1: contract khóa bằng commit; fixture extractor gồm newline, footnote,
+marker/form-number và paragraph format; generator semantic-idempotent.
+
+### R1.2 L2 renderer/CSS
+
+Sau L1 integrate, một lane sở hữu `render.js`, `style.css` và DOM/layout tests:
+
+- Escape text trước khi render hard break.
+- Render semantic `<sup>/<sub>`, role và format qua allowlist CSS.
+- Ẩn source-indicator theo metadata, không regex mù và không xóa form-number.
+- Header/motto/separator, title, date, salutation, note, footnote, signature đúng
+  semantic layout; không dùng `&nbsp;` hàng loạt.
+- Giữ input/canonical keys/grid/draft/export nguyên contract.
+- Keyboard focus và responsive ở 375, 768, 1280x800; zoom 100–200%.
+
+Gate L2: pilot `PLI_M01`, `PLI_M02`, `PLII_M01`, `PLI_M72` có DOM test và visual
+evidence; không hồi quy M72 conditional variant.
+
+### R1.3 L3 rollout 87/87
+
+Lead regenerate theo batch: pilot → PLI_M01–M11 → PLI_M12–M26 → PLI còn lại →
+PLII_M01–M28. Mỗi batch có detector, generated allowlist, regression và screenshot
+trang đầu; mẫu dài có screenshot section đặc biệt.
+
+Gate R1: đủ 8 Acceptance Gates P1-LAYOUT; independent visual auditor PASS.
+
+## R2 — P2 table platform
+
+### R2.1 Khóa contract và module boundaries
+
+Review/khóa `docs/p2_component_contracts.md`, dependency graph và fixture list.
+Chốt schema/version/migration cho cả bốn kinds trước khi code. Editable-grid cũ
+giữ backward compatibility; component mới không hard-code form ID.
+
+### R2.2 Implement theo dependency
+
+1. Editable-grid remainder: `cross_field_rules`, keyboard cell/row navigation,
+   `aria-rowcount/rowindex/colindex`, policy insert/add/delete/reorder/duplicate.
+2. Output-table: render không input, condition-aware, không đi vào draft như data.
+3. Fixed-matrix: fixed rows không xóa, outputOnly totals, formula engine khai báo,
+   money/percent validation và export recompute.
+4. Nested-grid: multi-row headers, rowspan/colspan, row groups/discriminator,
+   stable row IDs, group-specific required fields và physical column integrity.
+5. Draft migration additive/idempotent; không mất unknown legacy fields.
+6. Export gate: blocking errors, totals recompute, inactive section removal,
+   conflict fail-loud; payload không chứa field nội bộ.
+7. Generator: anchor/boundary, occurrence, totals/STT, rowspan/colspan, conditional
+   region và idempotency; không xóa paragraph/table kế bên.
+
+Có thể dùng lane tách module, nhưng integration phải theo thứ tự trên. Không cho
+renderer/controller và generator cùng regenerate global artifacts.
+
+### R2.3 Production fixture gate
+
+Tối thiểu trước P3:
+
+- Editable-grid: PLII_M01 `ds_nganh` + `ds_tv_ho_gia_dinh` và một grid mới nhỏ.
+- Fixed-matrix: F1 hiện hữu + F2/F3/F4 sau quyết định owner tương ứng.
+- Nested-grid: N1 PLI_M02 hoặc fixture production khác đã được owner khóa contract.
+- Output-table: O1 PLI_M70 và O2 PLI_M71 sau khi xác định input/output ownership.
+
+Nếu fixture ứng viên còn legal-blocked, owner phải quyết định hoặc chọn fixture
+production khác có cùng đặc tính; không dùng mock để thay gate.
+
+Gate R2: bốn component có fixture production + contract test PASS, generator hai
+lần sạch, full regression PASS và không còn P2 contract ở trạng thái DRAFT.
+
+## R3 — P3 domain rollout
+
+Chỉ section có decision `DECIDED` mới được triển khai. Spec/test lanes có thể chạy
+song song khi file ownership tách biệt; Lead integrate/regenerate từng batch.
+
+### R3.1 Capital-assets
+
+Forms trọng tâm: PLI_M01–M05, PLI_M12 và các section vốn/tài sản/cổ phần liên
+quan. Triển khai fixed matrices, totals/formulas, cross-check vốn, tài sản khác,
+canonical keys và migration. Test 0/1/all rows, tiền lớn, tỷ lệ và mismatch.
+
+### R3.2 People-ownership
+
+PLII_M02/M07, PLI_M06–M10, M13, M15, M72. Nâng loop partial, dựng nested grids,
+row discriminator, outputOnly signatures, decontaminate PLI_M09 theo quyết định,
+và bảo đảm variant isolation M72 cho cả văn bản lẫn nested tables.
+
+### R3.3 Tax grids
+
+PLI_M17/M19/M23/M25 và các tax sections trong PLII_M02. Khóa fixed row catalog,
+old/new semantics, checkbox/radio groups, required rules và DOCX mapping.
+
+### R3.4 Branches, products và administration/output
+
+PLI_M27/M52/M56/M63/M66/M67/M68/M70/M71/M75/M78/M79/M80. Dựng grid danh sách,
+output tables, conditional sections và attachment metadata đúng decision registry.
+
+### Gate cho từng form/section
+
+Không đánh dấu complete nếu thiếu bất kỳ mục nào:
+
+- spec source + legal decision reference;
+- template tags/conditions;
+- form map + production blocks;
+- UI render/operation/validation/draft test;
+- DOCX cell/row/condition/leftover-token test;
+- generated allowlist + idempotency;
+- visual evidence nếu là nested/complex/conditional.
+
+Gate R3: manifest được cập nhật về trạng thái cuối, 111/111 section có evidence;
+0 `BLOCKED_LEGAL_REVIEW`, 0 missing/partial/source-contamination chưa xử lý.
+
+## R4 — Hồ sơ end-to-end và chất lượng sản phẩm
+
+### R4.1 Use-case regression
+
+Với mọi use case trong `use_cases.json`:
+
+- required/optional/oneOf đúng metadata;
+- đổi case nhanh không race;
+- shared exact canonical keys mirror đúng, khác nghĩa không tự đồng bộ;
+- fill → validate → focus error → save → reload → edit → export;
+- draft v1/v2/current migration và unknown-field preservation;
+- 0/1/max/100 rows, duplicate, reorder, delete, Unicode, text dài, giá trị biên;
+- export nhiều form, ZIP, đường dẫn có dấu/khoảng trắng và lỗi I/O có thông báo.
+
+### R4.2 Accessibility/security/resilience
+
+- Keyboard-only core flow; focus visible; labels/ARIA/error association; dialog
+  focus trap/Escape; grid semantics; contrast và zoom.
+- Escape HTML, không đưa raw style/schema vào DOM, sanitize filename/path, không
+  cho form ID/path từ UI thoát khỏi allowlist dữ liệu ứng dụng.
+- Save/export atomic khi khả thi; lỗi không làm mất draft; file output tạm được
+  quản lý và không lọt vào Git/package.
+- Hiệu năng: không rerender toàn form trên mỗi keystroke; hồ sơ 100-row vẫn dùng
+  được tại cấu hình release.
+
+Gate R4: automated E2E PASS trên browser engine phù hợp và manual WebView2 smoke
+PASS; critical accessibility issue = 0.
+
+## R5 — Visual QA toàn diện
+
+1. UI screenshots 87/87 ở viewport chuẩn; pilot/complex forms thêm 200% zoom và
+   viewport hẹp. So source → UI bằng checklist semantic, không chỉ cảm quan.
+2. DOCX → PDF/PNG cho đại diện mỗi domain và **mọi nested-grid/conditional form**;
+   kiểm header, borders, wrap tiếng Việt, footnote, page break, clipping, STT/X,
+   0/1/3/100 rows và phần inactive không xuất.
+3. Independent visual auditor không tham gia implementation review evidence và
+   tự chọn mẫu ngẫu nhiên để kiểm lại.
+
+Gate R5: mọi issue visual severity critical/high được sửa và re-audit; không còn
+visual step `NOT RUN`. Cần môi trường có Word/LibreOffice hoặc renderer được owner
+chấp thuận; structural XML test không thay thế visual gate.
+
+## R6 — Windows packaging và clean-machine release
+
+### R6.1 Build contract
+
+- Khóa Python version và dependencies; bổ sung build manifest/spec/script có thể
+  chạy lại từ checkout sạch.
+- Package pywebview assets, blocks, templates, form maps và VSIC local; không phụ
+  thuộc `.webview_deps` dev hoặc Internet khi chạy.
+- Chọn policy WebView2 runtime (system requirement hoặc bundled bootstrapper) và
+  ghi rõ trong installer/release notes.
+- Version, app metadata/icon, output directory, logs và crash message rõ ràng.
+
+### R6.2 Test matrix Windows sạch
+
+- Máy không có Python; user path có dấu/khoảng trắng; standard user không admin.
+- Mở app offline, chọn case, nhập VSIC/grid, save/load draft, export nhiều DOCX,
+  mở ZIP/DOCX bằng Word và thử hồ sơ lớn.
+- Upgrade từ bản trước không mất draft; uninstall không xóa hồ sơ người dùng.
+- Kiểm kích thước/package contents, malware/signing/notarization tương ứng Windows;
+  mục chưa thực hiện phải ghi rõ, không ngầm coi là PASS.
+
+Gate R6: `.exe`/installer build tái lập và clean-machine smoke PASS; artifact có
+hash, version, exact path và hướng dẫn cài/backup/restore.
+
+## R7 — Independent final audit và bàn giao
+
+Auditor mới bắt đầu read-only, không dùng agent vừa code:
+
+1. Đối chiếu 10 điều kiện `APP_DONE` với evidence, không tin báo cáo phần trăm.
+2. Chạy release test runner từ checkout sạch và kiểm repo/package hygiene.
+3. Sampling source/UI/DOCX cộng toàn bộ nested/conditional forms.
+4. Kiểm decision registry: không còn decision mở ảnh hưởng release.
+5. Kiểm mọi `NOT RUN`; release-critical `NOT RUN` làm verdict FAIL.
+6. Nếu FAIL, trả reproduction cho lane đúng ownership; sửa, integrate và audit lại.
+
+Khi PASS: tạo release report, changelog, known limitations không critical, hướng
+dẫn sử dụng/backup/restore, artifact hashes và commit/tag đề xuất. Chỉ push/tag/
+publish sau khi owner ra lệnh rõ ràng.
+
+## Ma trận wave và khả năng song song
+
+```text
+R0 baseline --------+--------------------------+
+                    |                          |
+                    +-- owner decisions -------+----------------------+
+                    |                                                 |
+                    +-- R1 LAYOUT: L1 -> L2 -> L3                     |
+                                      |                               |
+                                      +-- R2 contract/platform -------+
+                                                         |
+                       decisions DECIDED -----------------+
+                                                         v
+                 R3A capital   R3B people   R3C tax   R3D admin
+                       \            |          |          /
+                        +------ Lead integrate batches ---+
+                                           |
+                                  R4 E2E/a11y/resilience
+                                           |
+                                      R5 visual QA
+                                           |
+                                  R6 Windows packaging
+                                           |
+                                  R7 independent audit
+                                           |
+                                       APP_DONE
+```
+
+R3 lanes chỉ chạy song song khi spec/template ownership không chồng; mọi generated
+global artifact vẫn do Lead tạo tuần tự. R4–R7 không được chạy như thủ tục hình
+thức trước khi upstream gate pass.
+
+## Bộ regression release tối thiểu
+
+Lead tạo một runner chính thức bao phủ ít nhất:
+
+```text
+node app_web/test_dom.js
+node app_web/test_domain.js
+node app_web/test_grid.js
+node app_web/test_loop_prod.js
+node app_web/test_acceptance.js
+node app_web/test_form_flow.js
+node app_web/test_household_shared.js
+node app_web/test_form_grid_meta.js
+node app_web/test_audit_p1_negative.js
+node app_web/test_m72_activation.js
+node app_web/test_p12_m72_selector.js
+node app_web/test_p20_hardening.js
+node app_web/test_audit_wave_h_negative.js
+python -X utf8 -m tools.census.p1_b_verify_m72
+python -X utf8 -m tools.census.p1_c_verify_plii_m02
+python -X utf8 -m tools.test_m72_conditional_export
+python -X utf8 -m tools.test_industry_formation
+python -X utf8 -m tools.test_industry_change
+python -X utf8 -m tools.test_industry_household
+python -X utf8 -m tools.test_contract_release
+python -X utf8 -m tools.test_acceptance_docx
+python -X utf8 -m tools.test_audit_p1_docx_negative
+python -X utf8 -m tools.audit_blocks_check
+python -X utf8 -m tools.audit_content_check
+python -X utf8 -m tools.audit_engine_test
+python -X utf8 -m tools.smoke_web_assets
+python -X utf8 -m tools.census.build_manifest --deep
+python -X utf8 -m tools.census.build_layout_manifest
+python -X utf8 -m compileall -q app_web app_tk tools
+```
+
+Danh sách phải được mở rộng khi thêm component/domain test. Generator idempotency
+phải chạy hai lần và so hash/diff; một lần dry-run manifest không đủ chứng minh.
+
+## Prompt tổng cho Lead Agent chạy tới hoàn tất
+
+```text
+Bạn là Lead/Integrator Agent của repo dangky_kinhdoanh, bắt đầu từ checkpoint
+d882793. Đọc toàn bộ phần “Master execution plan — hoàn thiện toàn bộ ứng dụng từ
+checkpoint d882793” trong PLAN.md và thực thi tuần tự R0 -> R7.
+
+Mục tiêu là APP_DONE theo đúng 10 điều kiện, không chỉ test xanh hoặc hoàn thành
+table code. Dùng subagent/worktree riêng cho task độc lập, ownership file không
+chồng. Lead giữ worktree tích hợp, merge tuần tự và là người duy nhất regenerate
+global artifacts. Không reset/revert/pull mù, không commit cache/draft/output,
+không push/tag/publish khi owner chưa yêu cầu.
+
+Ngay đầu tiên:
+1. Audit read-only HEAD/status/divergence/dependencies và tái lập baseline P1.2.
+2. Triage FAIL baseline p1_c_verify_plii_m02.
+3. Tạo release test runner và product scope registry.
+4. Tạo consolidated decision packets từ 33 BLOCKED_LEGAL_REVIEW và gửi owner.
+5. Trong lúc chờ quyết định, tiếp tục phần không bị chặn: L1/L2/L3 layout và P2
+   contract/platform theo dependency, không rollout section pháp lý còn OPEN.
+
+Sau mỗi wave báo commit/branch/worktree/ownership, diff allowlist, test
+PASS/FAIL/NOT RUN, decisions/blockers và gate tiếp theo. Nếu cần owner quyết định,
+dừng đúng section bị chặn nhưng tiếp tục các lane độc lập an toàn.
+
+Không báo APP_DONE khi còn legal decision mở, missing/partial table, visual QA hay
+WebView2/Windows clean-machine smoke chưa chạy. Independent auditor phải PASS cuối
+cùng. Khi đạt APP_DONE, chuẩn bị release report/artifact/hash nhưng chờ lệnh rõ
+của owner trước khi push/tag/publish.
+```
+
+---
+
 ## Kế hoạch hoàn thiện sau audit độc lập (cập nhật 2026-08-25)
 
 ### Trạng thái hiện tại và định nghĩa “hoàn thành”

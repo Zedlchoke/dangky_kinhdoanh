@@ -20,6 +20,17 @@ Phạm vi từng mẫu:
    - riêng PLI_M12: render thêm cả BA loop bo_sung/xoa_bo/sua_doi -> assert
      mỗi giá trị nằm vào ĐÚNG bảng/ô cột tương ứng (so text từng ô), không
      sót token {#loop}/{tag}/{_stt} trong document.xml.
+3. P1-B (lane p1/b-pli-m72) — M72 5 occurrence theo loại hình: spec
+   tools/form_specs/change/PLI_M72.json khai báo occurrences contract
+   (ds_nganh_dntn/tnhh_1tv/tnhh_2tv/ctcp/dhdn, sync_group=ds_nganh_pli_m72).
+   Test kỳ vọng SAU KHI INTEGRATE generator sẽ dựng đủ 5 lưới:
+   - t_m72_spec_occurrences: hợp đồng spec — PASS NGAY BÂY GIỜ;
+   - t_m72_five_grids_contract / t_m72_five_grids_render:
+     EXPECTED-FAIL-PRE-INTEGRATION — fail-hữu-ích trên production hiện tại
+     (blocks/template M72 mới chỉ có 1 loop ds_nganh vùng DNTN); KHÔNG nới
+     lỏng để pass giả. Khi Lead integrate generator xong, hai test này phải
+     chuyển xanh và EXPECTED_CONTRACTS["PLI_M72"] cần đổi sang
+     M72_OCCURRENCE_LOOPS.
 
 File test thuần Python, exit code 0 = PASS / 1 = FAIL.
 
@@ -85,8 +96,43 @@ EXPECTED_CONTRACTS = {
                  ["STT", "Tên ngành", "Mã ngành", "Ngành, nghề kinh doanh chính"])],
     "PLI_M25": [("ds_nganh", CONTRACT_DS_NGANH,
                  ["STT", "Tên ngành", "Mã ngành", "Ngành, nghề kinh doanh chính"])],
+    # P1-B: TRƯỚC integration M72 chỉ có 1 loop ds_nganh (vùng DNTN) —
+    # expectation này mô tả production hiện tại. SAU integration đổi sang
+    # M72_OCCURRENCE_LOOPS (5 occurrence theo loại hình).
     "PLI_M72": [("ds_nganh", CONTRACT_DS_NGANH,
                  ["STT", "Tên ngành", "Mã ngành", "Ngành, nghề kinh doanh chính"])],
+}
+
+# ---------------------------------------------------------------------------
+# P1-B: contract 5 occurrence PLI_M72 (spec tools/form_specs/change/PLI_M72.json)
+# ---------------------------------------------------------------------------
+M72_SPEC_PATH = ROOT / "tools" / "form_specs" / "change" / "PLI_M72.json"
+M72_OCCURRENCE_IDS = ["ds_nganh_dntn", "ds_nganh_tnhh_1tv", "ds_nganh_tnhh_2tv",
+                      "ds_nganh_ctcp", "ds_nganh_dhdn"]
+M72_SYNC_GROUP = "ds_nganh_pli_m72"
+M72_MATCH_HEADING = "5. Ngành, nghề kinh doanh"
+HDR_NGANH = ["STT", "Tên ngành", "Mã ngành", "Ngành, nghề kinh doanh chính"]
+M72_OCCURRENCE_LOOPS = [(oid, CONTRACT_DS_NGANH, HDR_NGANH)
+                        for oid in M72_OCCURRENCE_IDS]
+
+# Dữ liệu render RIÊNG BIỆT từng occurrence (số dòng + vị trí X khác nhau)
+# để phát hiện dữ liệu trượt sang bảng của loại hình khác:
+M72_RENDER_DATASETS = {
+    # DNTN: 3 dòng, X ở dòng 1
+    "ds_nganh_dntn": [dict(r, la_nganh_chinh="X" if i == 0 else "")
+                      for i, r in enumerate(VSIC_ROWS)],
+    # TNHH 1TV: 2 dòng, X ở dòng cuối
+    "ds_nganh_tnhh_1tv": [dict(VSIC_ROWS[1], la_nganh_chinh=""),
+                          dict(VSIC_ROWS[2], la_nganh_chinh="X")],
+    # TNHH 2TV+: 1 dòng duy nhất, có X
+    "ds_nganh_tnhh_2tv": [dict(VSIC_ROWS[2], la_nganh_chinh="X")],
+    # CTCP: 2 dòng đảo thứ tự VSIC, X ở dòng 2
+    "ds_nganh_ctcp": [dict(VSIC_ROWS[2], la_nganh_chinh=""),
+                      dict(VSIC_ROWS[0], la_nganh_chinh="X")],
+    # DHDN: 3 dòng trộn, X ở dòng giữa
+    "ds_nganh_dhdn": [dict(VSIC_ROWS[1], la_nganh_chinh=""),
+                      dict(VSIC_ROWS[0], la_nganh_chinh="X"),
+                      dict(VSIC_ROWS[2], la_nganh_chinh="")],
 }
 
 # Dữ liệu render mẫu
@@ -360,11 +406,174 @@ def t_render_m12_three_loops():
         assert tok not in xml, "PLI_M12: còn sót token %r trong document.xml" % tok
 
 
+@check("M72 spec: khai bao dung 5 occurrence (id/nth/sync_group/end_markers)")
+def t_m72_spec_occurrences():
+    """Hợp đồng occurrences P1 trong spec M72 — PASS ngay trước integration."""
+    spec = json.loads(M72_SPEC_PATH.read_text(encoding="utf-8-sig"))
+    entries = spec.get("tables") or []
+    assert len(entries) == 1, "M72 spec: kỳ vọng 1 table entry, thấy %d" % len(entries)
+    entry = entries[0]
+    occs = entry.get("occurrences") or []
+    assert len(occs) == 5, "M72 spec: kỳ vọng 5 occurrences, thấy %d" % len(occs)
+    assert [o["occurrence_id"] for o in occs] == M72_OCCURRENCE_IDS, \
+        "M72 spec: occurrence_id sai: %s" % [o.get("occurrence_id") for o in occs]
+    for k, occ in enumerate(occs, 1):
+        assert occ["nth"] == k, \
+            "%s: nth=%r != %d (thứ tự tài liệu)" % (occ["occurrence_id"],
+                                                    occ["nth"], k)
+        assert occ["match_heading"] == M72_MATCH_HEADING, \
+            "%s: match_heading %r != text đã verify %r" % (
+                occ["occurrence_id"], occ["match_heading"], M72_MATCH_HEADING)
+        assert occ["sync_group"] == M72_SYNC_GROUP, \
+            "%s: sync_group %r != %r" % (occ["occurrence_id"],
+                                         occ["sync_group"], M72_SYNC_GROUP)
+        assert isinstance(occ.get("end_markers"), list) and occ["end_markers"], \
+            "%s: thiếu end_markers" % occ["occurrence_id"]
+        for pat in occ["end_markers"]:
+            re.compile(pat)  # regex hợp lệ
+    # cấu hình bảng gốc phải được giữ nguyên qua lần chuyển sang occurrences
+    assert entry["spec"]["loop"] == "ds_nganh"
+    assert entry["pos"] == "after" and entry["no_default_drops"] is True
+    assert entry["headers"] == HDR_NGANH
+    col_tags = [c[1] for c in entry["spec"]["cols"]]
+    assert sorted(t for t in col_tags if t) == \
+        ["la_nganh_chinh", "ma_nganh", "ten_nganh"], \
+        "M72 spec: cols sai tag %r" % col_tags
+    assert col_tags.count(None) == 1, \
+        "M72 spec: cần đúng 1 cột không tag (STT), thấy %d" % col_tags.count(None)
+
+
+def assert_m72_five_loop_contract(blocks: dict, form_maps: dict) -> None:
+    """Contract SAU INTEGRATE: blocks+form_maps PLI_M72 có đủ 5 loop occurrence,
+    mỗi loop 4 cột STT|ten_nganh|ma_nganh|la_nganh_chinh."""
+    loops = {b["loop"]: b for b in blocks["blocks"] if b.get("t") == "loop"}
+    assert sorted(loops) == sorted(M72_OCCURRENCE_IDS), \
+        "PLI_M72: kỳ vọng đúng 5 loop occurrence %s, thấy %d loop %s — " \
+        "generator chưa dựng đủ 5 vùng loại hình" % (
+            M72_OCCURRENCE_IDS, len(loops), sorted(loops))
+    fm_dts = {t["loop"]: t for t in (form_maps["PLI_M72"].get("dynamic_tables")
+                                     or [])}
+    doc = Document(str(TEMPLATES_DIR / "PLI_M72.docx"))
+    tables = body_tables(doc)
+    seen_indexes = set()
+    for name, cols_want, headers_want in M72_OCCURRENCE_LOOPS:
+        blk = loops[name]
+        got_cols = sorted((c["col"], c["tag"]) for c in blk["cols"])
+        want_cols = sorted((c, t) for c, t in cols_want if t is not None)
+        assert got_cols == want_cols, \
+            "PLI_M72/%s cols %r != %r" % (name, got_cols, want_cols)
+        assert all(c["col"] != 0 for c in blk["cols"]), \
+            "PLI_M72/%s: cột 0 (STT {_stt}) không được gắn tag" % name
+        hdr_cells = blk["rows"][blk["headerRows"][0]]["cells"]
+        got_hdr = [cell_runs_text(c).strip() for c in hdr_cells]
+        assert got_hdr == headers_want, \
+            "PLI_M72/%s header %r != %r" % (name, got_hdr, headers_want)
+        for ri, row in enumerate(blk["rows"]):
+            assert len(row["cells"]) == 4, \
+                "PLI_M72/%s rows[%d] có %d ô != 4" % (name, ri, len(row["cells"]))
+        assert blk["blankRows"] >= 1, \
+            "PLI_M72/%s: cần >=1 hàng trắng để in" % name
+        dt = fm_dts.get(name)
+        assert dt is not None, \
+            "PLI_M72: dynamic_tables thiếu khai báo cho loop %r" % name
+        ti = dt["table_index"]
+        assert ti not in seen_indexes, \
+            "PLI_M72/%s: table_index %d bị trùng giữa các occurrence" % (name, ti)
+        seen_indexes.add(ti)
+        tbl = tables[ti]
+        total = len(blk["rows"]) + blk["blankRows"] + 1
+        assert total == len(tbl._tbl.tr_lst), \
+            "PLI_M72/%s rows(%d)+blank(%d)+khuôn(1)=%d != %d hàng template" % (
+                name, len(blk["rows"]), blk["blankRows"], total,
+                len(tbl._tbl.tr_lst))
+        fld_keys = {f["key"] for f in form_maps["PLI_M72"].get("fields", [])}
+        for _, tag in cols_want:
+            if tag is not None:
+                assert ("%s.%s" % (name, tag)) in fld_keys, \
+                    "PLI_M72: thiếu field %s.%s trong form_maps" % (name, tag)
+
+
+@check("M72 blocks+form_maps: 5 loop occurrence, moi loop 4 cot "
+       "[EXPECTED-FAIL-PRE-INTEGRATION]")
+def t_m72_five_grids_contract():
+    form_maps = json.loads(FORM_MAPS_PATH.read_text(encoding="utf-8"))
+    assert "PLI_M72" in form_maps, "thiếu PLI_M72 trong form_maps"
+    data = json.loads((BLOCKS_DIR / "PLI_M72.json").read_text(encoding="utf-8"))
+    assert_m72_five_loop_contract(data, form_maps)
+
+
+def industry_tables_in(doc):
+    """Các bảng ngành (đúng hàng tiêu đề STT|Tên ngành|Mã ngành|Ngành chính),
+    theo thứ tự xuất hiện trong body."""
+    want = fold(" ".join(HDR_NGANH))
+    out = []
+    for tbl in body_tables(doc):
+        for ri in range(min(3, len(tbl.rows))):
+            cells = tr_cell_texts(tbl, ri)
+            if cells and fold(" ".join(cells)) == want:
+                out.append(tbl)
+                break
+    return out
+
+
+@check("M72 render DOCX: dung 5 bang nganh theo loai hinh, STT 1..n, "
+       "moi bang dung mot X [EXPECTED-FAIL-PRE-INTEGRATION]")
+def t_m72_five_grids_render():
+    out_path = OUT_DIR / "PLI_M72_nam_loai_hinh.docx"
+    write_rendered(TEMPLATES_DIR / "PLI_M72.docx", dict(M72_RENDER_DATASETS),
+                   out_path)
+    with zipfile.ZipFile(out_path) as z:
+        xml = z.read("word/document.xml").decode("utf-8")
+
+    doc = Document(str(out_path))
+    tables = industry_tables_in(doc)
+    assert len(tables) == 5, \
+        "PLI_M72 render: kỳ vọng 5 bảng ngành (DNTN/TNHH1TV/TNHH2TV/CTCP/DHDN), " \
+        "thấy %d — generator chưa dựng đủ 5 vùng loại hình" % len(tables)
+
+    for k, (name, _cols, _hdr) in enumerate(M72_OCCURRENCE_LOOPS):
+        dataset = M72_RENDER_DATASETS[name]
+        texts = [tr_cell_texts(tables[k], ri)
+                 for ri in range(len(tables[k].rows))]
+        data_texts = texts[-len(dataset):]
+        assert len(data_texts) == len(dataset), \
+            "PLI_M72/%s: bảng %d chỉ đọc được %d hàng dữ liệu != %d" % (
+                name, k, len(data_texts), len(dataset))
+        for i, row in enumerate(data_texts):
+            want = dataset[i]
+            assert len(row) == 4, \
+                "PLI_M72/%s: hàng %d có %d ô != 4" % (name, i, len(row))
+            assert row[0] == str(i + 1), \
+                "PLI_M72/%s: STT dòng %d = %r, kỳ vọng %d" % (
+                    name, i, row[0], i + 1)
+            assert row[1] == want["ten_nganh"], \
+                "PLI_M72/%s: Tên ngành dòng %d = %r != %r" % (
+                    name, i, row[1], want["ten_nganh"])
+            assert row[2] == want["ma_nganh"], \
+                "PLI_M72/%s: Mã ngành dòng %d = %r != %r" % (
+                    name, i, row[2], want["ma_nganh"])
+            assert row[3] == want["la_nganh_chinh"], \
+                "PLI_M72/%s: Ngành chính dòng %d = %r != %r" % (
+                    name, i, row[3], want["la_nganh_chinh"])
+        n_x = sum(1 for r in data_texts if r[3] == "X")
+        assert n_x == 1, \
+            "PLI_M72/%s: kỳ vọng đúng 1 X ngành chính, thấy %d" % (name, n_x)
+
+    for tok in ["{#%s}" % n for n in M72_OCCURRENCE_IDS] + \
+               ["{/%s}" % n for n in M72_OCCURRENCE_IDS] + \
+               ["{ten_nganh}", "{ma_nganh}", "{la_nganh_chinh}", "{_stt}"]:
+        assert tok not in xml, \
+            "PLI_M72: còn sót token %r trong document.xml sau render" % tok
+
+
 def main() -> int:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     t_all_contracts()
     t_render_ds_nganh_forms()
     t_render_m12_three_loops()
+    t_m72_spec_occurrences()
+    t_m72_five_grids_contract()
+    t_m72_five_grids_render()
     passed = sum(1 for ok, _ in _results if ok)
     failed = len(_results) - passed
     print("-" * 60)

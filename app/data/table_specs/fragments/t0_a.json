@@ -1,0 +1,1770 @@
+{
+ "generated_by": "t0-a",
+ "range": "PLI_M01-M12",
+ "method": {
+  "blocks": "app/data/blocks/<FORM_ID>.json (block types p/chk/table/loop, input keys)",
+  "template": "app/templates/<FORM_ID>.docx (python-docx body walk + raw OOXML w:tbl incl header/footer)",
+  "form_maps": "app/data/form_maps.json (fields + dynamic_tables)",
+  "legal_source": "thư mục số 02..06, luật find_source: folder đầu tiên thắng (M01-M11: 06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn, M12: 02_thay_doi_thong_tin_doanh_nghiep)",
+  "classification": "curated per-form audit + automated guards (counts, loop-vs-template column audit, absent/present key checks, marker coverage)",
+  "idempotent": true,
+  "write_scope": [
+   "--out fragment only"
+  ]
+ },
+ "forms": [
+  {
+   "form_id": "PLI_M01",
+   "ten_mau": "Giấy đề nghị đăng ký doanh nghiệp - Doanh nghiệp tư nhân",
+   "form_status": "BLOCKED_LEGAL_REVIEW",
+   "summary_counts": {
+    "p": 143,
+    "chk": 26,
+    "table": 0,
+    "loop": 1
+   },
+   "template_evidence": {
+    "w_tbl_body_python_docx": 1,
+    "raw_ooxml_w_tbl_incl_headers_footers": 1,
+    "paragraph_count": 216
+   },
+   "source_docx": "06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn/DN_PL1_Mau_01_giay_de_nghi_dang_ky_doanh_nghiep_doanh_nghiep_tu_nhan.docx",
+   "sections": [
+    {
+     "section_id": "ds_nganh_dntn",
+     "title": "4. Ngành, nghề kinh doanh",
+     "kind": "editable-grid",
+     "semantic_key_suggestion": "ds_nganh",
+     "required_columns": [
+      "stt",
+      "ten_nganh",
+      "ma_nganh",
+      "la_nganh_chinh"
+     ],
+     "status": "already_complete",
+     "source_evidence": {
+      "template": "app/templates/PLI_M01.docx",
+      "heading": "4. Ngành, nghề kinh doanh (ghi tên và mã theo ngành cấp 4 trong Hệ thống ngành kinh tế của Việt Nam):",
+      "anchor": "app/templates/PLI_M01.docx#p80-p86",
+      "para_range": [
+       80,
+       86
+      ]
+     },
+     "notes": "Bảng w:tbl 6x4 rebuild Wave 2A: STT | Tên ngành | Mã ngành | Ngành chính khớp loop ds_nganh (cols 1,2,3 + _stt) và dynamic_tables.",
+     "loop_audit": {
+      "table_index": 0,
+      "loop": "ds_nganh",
+      "tagged_cols": [
+       1,
+       2,
+       3
+      ],
+      "missing_cols": []
+     }
+    },
+    {
+     "section_id": "lua_chon_khu_san_xuat",
+     "title": "Doanh nghiệp nằm trong (KCNC/KCX/KT/KCNC cao)",
+     "kind": "fixed-matrix",
+     "semantic_key_suggestion": "lua_chon_khu_san_xuat",
+     "required_columns": [
+      "khu_cong_nghiep",
+      "khu_che_xuat",
+      "khu_kinh_te",
+      "khu_cong_nghe_cao"
+     ],
+     "status": "already_complete",
+     "source_evidence": {
+      "template": "app/templates/PLI_M01.docx",
+      "heading": "- Doanh nghiệp nằm trong (Doanh nghiệp phải đánh dấu X vào ô vuông tương ứng với khu công nghệ cao nếu nộp hồ sơ tới Ban quản lý khu công nghệ cao):",
+      "anchor": "app/templates/PLI_M01.docx#p71-p80",
+      "para_range": [
+       71,
+       80
+      ]
+     },
+     "notes": "4 ô lựa chọn cố định không STT đã map đủ 4 chk_khu_*."
+    },
+    {
+     "section_id": "tai_san_gop_von_von_dau_tu",
+     "title": "Tài sản góp vốn (trong vốn đầu tư)",
+     "kind": "fixed-matrix",
+     "semantic_key_suggestion": "co_cau_tai_san_gop_von_dau_tu",
+     "required_columns": [
+      "stt",
+      "loai_tai_san",
+      "chi_tiet_ngoai_te_tai_san_khac",
+      "gia_tri_vnd",
+      "ty_le"
+     ],
+     "status": "missing_grid",
+     "source_evidence": {
+      "template": "app/templates/PLI_M01.docx",
+      "heading": "Tài sản góp vốn:",
+      "anchor": "app/templates/PLI_M01.docx#p91-p123",
+      "para_range": [
+       91,
+       123
+      ]
+     },
+     "notes": "Toàn bộ là chuỗi paragraph rời (STT/Tên/Giá trị/Tỷ lệ + 6 dòng cố định: Đồng Việt Nam, ngoại tệ tự do chuyển đổi, vàng, QSDĐ, QSHTT, các tài sản khác + Tổng số); không có w:tbl, blocks không có bất kỳ input nào cho vùng này. Dòng 'Các tài sản khác' mẫu cho phép lập danh mục riêng → candidate sub-grid."
+    },
+    {
+     "section_id": "thue_chi_tieu_6_1_6_9",
+     "title": "6. Thông tin đăng ký thuế (6.1-6.9)",
+     "kind": "fixed-matrix",
+     "semantic_key_suggestion": "chi_tieu_thue_dntn",
+     "required_columns": [
+      "stt",
+      "chi_tieu",
+      "noi_dung"
+     ],
+     "status": "already_complete",
+     "source_evidence": {
+      "template": "app/templates/PLI_M01.docx",
+      "heading": "6. Thông tin đăng ký thuế:",
+      "anchor": "app/templates/PLI_M01.docx#p123-p188",
+      "para_range": [
+       123,
+       188
+      ]
+     },
+     "notes": "9 chỉ tiêu cố định map đủ: gd.*, kt.*, địa chỉ TB thuế, ngày BD hoạt động, chk hạch toán (độc lập/hợp nhất/phụ thuộc), ap_dung_tu, so_lao_dong, chk BOT (co/khong), 4 chk GTGT. Lưu ý defect: cặp ô Có/Không 'hiển thị giá trị tương đương ngoại tệ' cùng trỏ key chk_khong."
+    },
+    {
+     "section_id": "bhxh_phuong_thuc_dong",
+     "title": "7. Thông tin về việc đóng bảo hiểm xã hội (phương thức đóng)",
+     "kind": "fixed-matrix",
+     "semantic_key_suggestion": "phuong_thuc_dong_bhxh_dntn",
+     "required_columns": [
+      "hang_thang",
+      "ba_thang_mot_lan",
+      "sau_thang_mot_lan"
+     ],
+     "status": "partial",
+     "source_evidence": {
+      "template": "app/templates/PLI_M01.docx",
+      "heading": "7. Thông tin về việc đóng bảo hiểm xã hội6:",
+      "anchor": "app/templates/PLI_M01.docx#p188-p193",
+      "para_range": [
+       188,
+       193
+      ]
+     },
+     "notes": "3 phương thức cố định nhưng ô '□ 3 tháng một lần' là ký tự □ literal KHÔNG có token (blocks không có chk_bc_03_thang, trong khi M02/M06/M08/M09 đều có). Cần bổ sung binding."
+    }
+   ],
+   "legal_questions": [
+    "Ô '3 tháng một lần' (mục 7 BHXH) thiếu hoàn toàn checkbox token trong template/blocks - xác nhận dùng chung key chk_bc_03_thang như các mẫu khác?",
+    "'Các tài sản khác' trong Tài sản góp vốn: mẫu cho phép 'lập thành danh mục riêng kèm theo hồ sơ' - có cần sub-grid danh mục tài sản con không?",
+    "Cặp ô Có/Không dùng chung key chk_khong (hiển thị ngoại tệ trên GCN; QSDĐ đảo/biên giới): tách key riêng để tránh liên động?"
+   ]
+  },
+  {
+   "form_id": "PLI_M02",
+   "ten_mau": "Giấy đề nghị đăng ký doanh nghiệp - Công ty trách nhiệm hữu hạn một thành viên",
+   "form_status": "BLOCKED_LEGAL_REVIEW",
+   "summary_counts": {
+    "p": 234,
+    "chk": 35,
+    "table": 0,
+    "loop": 1
+   },
+   "template_evidence": {
+    "w_tbl_body_python_docx": 1,
+    "raw_ooxml_w_tbl_incl_headers_footers": 1,
+    "paragraph_count": 328
+   },
+   "source_docx": "06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn/DN_PL1_Mau_02_giay_de_nghi_dang_ky_doanh_nghiep_cong_ty_trach_nhiem_huu_han_mot_thanh_vien.docx",
+   "sections": [
+    {
+     "section_id": "ds_nganh_tnmv",
+     "title": "4. Ngành, nghề kinh doanh",
+     "kind": "editable-grid",
+     "semantic_key_suggestion": "ds_nganh",
+     "required_columns": [
+      "stt",
+      "ma_nganh",
+      "ten_nganh_vsic",
+      "chi_tiet_hoat_dong",
+      "la_nganh_chinh"
+     ],
+     "status": "already_complete",
+     "source_evidence": {
+      "template": "app/templates/PLI_M02.docx",
+      "heading": "4. Ngành, nghề kinh doanh (ghi tên và mã theo ngành cấp 4 trong Hệ thống ngành kinh tế của Việt Nam):",
+      "anchor": "app/templates/PLI_M02.docx#p97-p103",
+      "para_range": [
+       97,
+       103
+      ]
+     },
+     "notes": "Bảng w:tbl 6x5 (duy nhất trong range có cột 'Chi tiết hoạt động') khớp loop ds_nganh cols 1-4.",
+     "loop_audit": {
+      "table_index": 0,
+      "loop": "ds_nganh",
+      "tagged_cols": [
+       1,
+       2,
+       3,
+       4
+      ],
+      "missing_cols": []
+     }
+    },
+    {
+     "section_id": "lua_chon_khu_san_xuat",
+     "title": "Doanh nghiệp nằm trong (KCNC/KCX/KT/KCNC cao)",
+     "kind": "fixed-matrix",
+     "semantic_key_suggestion": "lua_chon_khu_san_xuat",
+     "required_columns": [
+      "khu_cong_nghiep",
+      "khu_che_xuat",
+      "khu_kinh_te",
+      "khu_cong_nghe_cao"
+     ],
+     "status": "already_complete",
+     "source_evidence": {
+      "template": "app/templates/PLI_M02.docx",
+      "heading": "- Doanh nghiệp nằm trong (Doanh nghiệp phải đánh dấu X vào ô vuông tương ứng với khu công nghệ cao nếu nộp hồ sơ tới Ban quản lý khu công nghệ cao):",
+      "anchor": "app/templates/PLI_M02.docx#p87-p97",
+      "para_range": [
+       87,
+       97
+      ]
+     },
+     "notes": "Đủ 4 chk_khu_*. Cặp Có/Không QSDĐ đảo-biên giới ngay sau vẫn dùng chung chk_khong (ghi nhận defect)."
+    },
+    {
+     "section_id": "nddpl_uy_quyen_chu_so_huu",
+     "title": "- Thông tin về người đại diện theo pháp luật/người đại diện theo ủy quyền của chủ sở hữu (header nối dính)",
+     "kind": "nested-grid",
+     "semantic_key_suggestion": "ds_nddpl_uy_quyen_chu_so_huu",
+     "required_columns": [
+      "stt",
+      "ten_ndd_pl_or_uy_quyen",
+      "ngay_thang_nam_sinh",
+      "gioi_tinh",
+      "so_ngay_cap_co_quan_cap_gtpl",
+      "quoc_tich",
+      "dan_toc",
+      "dia_chi_lien_lac",
+      "von_duoc_uy_quyen",
+      "chu_ky_output_only",
+      "ghi_chu",
+      "tong_gia_tri_von_du_dai_dien",
+      "ty_le",
+      "thoi_diem_dai_dien_phan_von"
+     ],
+     "status": "missing_grid",
+     "source_evidence": {
+      "template": "app/templates/PLI_M02.docx",
+      "heading": "- Thông tin về người đại diện theo pháp luật/người đại diện theo ủy quyền của chủ sở hữu:",
+      "anchor": "app/templates/PLI_M02.docx#p140-p144",
+      "para_range": [
+       140,
+       144
+      ]
+     },
+     "notes": "Header bị nối thành 1 paragraph 'STTTên người đại diện...Thời điểm đại diện phần vốn' (13 cột). Blocks chỉ có 1 bộ field ndd.* đơn (không thêm/xóa dòng, không đủ cột vốn được ủy quyền/tổng giá trị được đại diện/thời điểm đại diện). Chân trang 5/6/7/8 quy định cột điều kiện."
+    },
+    {
+     "section_id": "mo_hinh_to_chuc_cong_ty",
+     "title": "- Mô hình tổ chức công ty (HĐTV-GĐ/TGĐ vs Chủ tịch công ty-GĐ/TGĐ)",
+     "kind": "fixed-matrix",
+     "semantic_key_suggestion": "mo_hinh_to_chuc_cty_tnmv",
+     "required_columns": [
+      "hd_tv_giam_doc",
+      "chu_tich_cong_ty_giam_doc"
+     ],
+     "status": "missing_grid",
+     "source_evidence": {
+      "template": "app/templates/PLI_M02.docx",
+      "heading": "- Mô hình tổ chức công ty:",
+      "anchor": "app/templates/PLI_M02.docx#p144-p149",
+      "para_range": [
+       144,
+       149
+      ]
+     },
+     "notes": "2 lựa chọn cố định dạng ô □ literal, không có token/chk key nào trong blocks."
+    },
+    {
+     "section_id": "nguon_von_dieule",
+     "title": "7. Nguồn vốn điều lệ",
+     "kind": "fixed-matrix",
+     "semantic_key_suggestion": "nguon_von_dieu_le",
+     "required_columns": [
+      "loai_nguon_von",
+      "so_tien_vnd_va_tuong_duong",
+      "ty_le"
+     ],
+     "status": "missing_grid",
+     "source_evidence": {
+      "template": "app/templates/PLI_M02.docx",
+      "heading": "7. Nguồn vốn điều lệ:",
+      "anchor": "app/templates/PLI_M02.docx#p155-p174",
+      "para_range": [
+       155,
+       174
+      ]
+     },
+     "notes": "5 dòng pháp lý cố định (vốn NSNN/tư nhân/nước ngoài/khác/tổng cộng) hiện là paragraph rời, không w:tbl, không input.",
+     "fixed_rows": [
+      "von_ngan_sach_nha_nuoc",
+      "von_tu_nhan",
+      "von_nuoc_ngoai",
+      "von_khac",
+      "tong_cong"
+     ]
+    },
+    {
+     "section_id": "tai_san_gop_von_von_dieu_le",
+     "title": "8. Tài sản góp vốn (trong vốn điều lệ)",
+     "kind": "fixed-matrix",
+     "semantic_key_suggestion": "co_cau_tai_san_gop_von_dieu_le",
+     "required_columns": [
+      "stt",
+      "loai_tai_san",
+      "chi_tiet_ngoai_te_tai_san_khac",
+      "gia_tri_vnd",
+      "ty_le"
+     ],
+     "status": "missing_grid",
+     "source_evidence": {
+      "template": "app/templates/PLI_M02.docx",
+      "heading": "8. Tài sản góp vốn:",
+      "anchor": "app/templates/PLI_M02.docx#p174-p206",
+      "para_range": [
+       174,
+       206
+      ]
+     },
+     "notes": "6 dòng cố định + Tổng số, paragraph rời như M01, chưa có input."
+    },
+    {
+     "section_id": "thue_chi_tieu_10_1_10_9",
+     "title": "10. Thông tin đăng ký thuế (10.1-10.9)",
+     "kind": "fixed-matrix",
+     "semantic_key_suggestion": "chi_tieu_thue_tnmv",
+     "required_columns": [
+      "stt",
+      "chi_tieu",
+      "noi_dung"
+     ],
+     "status": "already_complete",
+     "source_evidence": {
+      "template": "app/templates/PLI_M02.docx",
+      "heading": "10. Thông tin đăng ký thuế:",
+      "anchor": "app/templates/PLI_M02.docx#p227-p292",
+      "para_range": [
+       227,
+       292
+      ]
+     },
+     "notes": "Map đủ 9 chỉ tiêu (gd/kt/địa chỉ TB thuế/ngày BD/hạch toán/năm TC/lao động/BOT/GTGT)."
+    },
+    {
+     "section_id": "bhxh_phuong_thuc_dong",
+     "title": "11. Thông tin về việc đóng bảo hiểm xã hội (phương thức đóng)",
+     "kind": "fixed-matrix",
+     "semantic_key_suggestion": "phuong_thuc_dong_bhxh_tnmv",
+     "required_columns": [
+      "hang_thang",
+      "ba_thang_mot_lan",
+      "sau_thang_mot_lan"
+     ],
+     "status": "already_complete",
+     "source_evidence": {
+      "template": "app/templates/PLI_M02.docx",
+      "heading": "11. Thông tin về việc đóng bảo hiểm xã hội13:",
+      "anchor": "app/templates/PLI_M02.docx#p292-p300",
+      "para_range": [
+       292,
+       300
+      ]
+     },
+     "notes": "Đủ 3 chk_bc_hang_thang/03/06."
+    },
+    {
+     "section_id": "lua_chon_co_cshhl",
+     "title": "12. Doanh nghiệp có chủ sở hữu hưởng lợi không?",
+     "kind": "fixed-matrix",
+     "semantic_key_suggestion": "co_cshhl",
+     "required_columns": [
+      "co",
+      "khong"
+     ],
+     "status": "already_complete",
+     "source_evidence": {
+      "template": "app/templates/PLI_M02.docx",
+      "heading": "12. Thông tin về chủ sở hữu hưởng lợi của doanh nghiệp14:",
+      "anchor": "app/templates/PLI_M02.docx#p300-p304",
+      "para_range": [
+       300,
+       304
+      ]
+     },
+     "notes": "Cặp chk_co/chk_khong riêng biệt, map đúng."
+    }
+   ],
+   "legal_questions": [
+    "Row contract danh sách NĐDPL/người đại diện theo ủy quyền: NĐDPL không kê khai vốn được ủy quyền (chân trang 6) còn người ủy quyền có tỷ lệ % (chân trang 7) - phân biệt kiểu dòng thế nào?",
+    "Nguồn vốn điều lệ: tỷ lệ (%) và Tổng cộng có phải computed/outputOnly, tổng phải đối chiếu vốn điều lệ?",
+    "Mô hình tổ chức công ty: dựng fixed-matrix radio chọn-1 hay giữ 2 chk độc lập?"
+   ]
+  },
+  {
+   "form_id": "PLI_M03",
+   "ten_mau": "Giấy đề nghị đăng ký doanh nghiệp - Công ty trách nhiệm hữu hạn hai thành viên trở lên",
+   "form_status": "BLOCKED_LEGAL_REVIEW",
+   "summary_counts": {
+    "p": 82,
+    "chk": 19,
+    "table": 0,
+    "loop": 1
+   },
+   "template_evidence": {
+    "w_tbl_body_python_docx": 1,
+    "raw_ooxml_w_tbl_incl_headers_footers": 1,
+    "paragraph_count": 127
+   },
+   "source_docx": "06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn/DN_PL1_Mau_03_giay_de_nghi_dang_ky_doanh_nghiep_cong_ty_trach_nhiem_huu_han_hai_thanh_vien_tro_len.docx",
+   "sections": [
+    {
+     "section_id": "ds_nganh_tnhh2tv",
+     "title": "4. Ngành, nghề kinh doanh",
+     "kind": "editable-grid",
+     "semantic_key_suggestion": "ds_nganh",
+     "required_columns": [
+      "stt",
+      "ten_nganh",
+      "ma_nganh",
+      "la_nganh_chinh"
+     ],
+     "status": "already_complete",
+     "source_evidence": {
+      "template": "app/templates/PLI_M03.docx",
+      "heading": "4. Ngành, nghề kinh doanh (ghi tên và mã theo ngành cấp 4 trong Hệ thống ngành kinh tế của Việt Nam):",
+      "anchor": "app/templates/PLI_M03.docx#p97-p103",
+      "para_range": [
+       97,
+       103
+      ]
+     },
+     "notes": "Bảng w:tbl 6x4 rebuild Wave 2A khớp loop.",
+     "loop_audit": {
+      "table_index": 0,
+      "loop": "ds_nganh",
+      "tagged_cols": [
+       1,
+       2,
+       3
+      ],
+      "missing_cols": []
+     }
+    },
+    {
+     "section_id": "lua_chon_khu_san_xuat",
+     "title": "Doanh nghiệp nằm trong (KCNC/KCX/KT/KCNC cao)",
+     "kind": "fixed-matrix",
+     "semantic_key_suggestion": "lua_chon_khu_san_xuat",
+     "required_columns": [
+      "khu_cong_nghiep",
+      "khu_che_xuat",
+      "khu_kinh_te",
+      "khu_cong_nghe_cao"
+     ],
+     "status": "already_complete",
+     "source_evidence": {
+      "template": "app/templates/PLI_M03.docx",
+      "heading": "- Doanh nghiệp nằm trong (Doanh nghiệp phải đánh dấu X vào ô vuông tương ứng với khu công nghệ cao nếu nộp hồ sơ tới Ban quản lý khu công nghệ cao):",
+      "anchor": "app/templates/PLI_M03.docx#p87-p97",
+      "para_range": [
+       87,
+       97
+      ]
+     },
+     "notes": "Đủ 4 chk_khu_*."
+    },
+    {
+     "section_id": "nguon_von_dieule",
+     "title": "6. Nguồn vốn điều lệ",
+     "kind": "fixed-matrix",
+     "semantic_key_suggestion": "nguon_von_dieu_le",
+     "required_columns": [
+      "loai_nguon_von",
+      "so_tien_vnd_va_tuong_duong",
+      "ty_le"
+     ],
+     "status": "missing_grid",
+     "source_evidence": {
+      "template": "app/templates/PLI_M03.docx",
+      "heading": "6. Nguồn vốn điều lệ:",
+      "anchor": "app/templates/PLI_M03.docx#p108-p127",
+      "para_range": [
+       108,
+       null
+      ]
+     },
+     "notes": "5 dòng cố định paragraph rời, không input. Template NGUỒN kết thúc ngay sau 'Tổng cộng' (file DN_PL1_Mau_03..., mục cuối cùng là 6. Nguồn vốn điều lệ) - không có mục thuế/BHXH/CSHHL như Mẫu 2.",
+     "fixed_rows": [
+      "von_ngan_sach_nha_nuoc",
+      "von_tu_nhan",
+      "von_nuoc_ngoai",
+      "von_khac",
+      "tong_cong"
+     ]
+    }
+   ],
+   "legal_questions": [
+    "Template/nguồn PLI_M03 kết thúc ngay sau mục 6 Nguồn vốn điều lệ (không có thông tin đăng ký thuế/BHXH/CSHHL như Mẫu 2): đây là đầy đủ nội dung biểu mẫu hay file nguồn bị cắt khi tách từ file full? Cần đối chiếu bản gốc."
+   ]
+  },
+  {
+   "form_id": "PLI_M04",
+   "ten_mau": "Giấy đề nghị đăng ký doanh nghiệp - Công ty cổ phần",
+   "form_status": "BLOCKED_LEGAL_REVIEW",
+   "summary_counts": {
+    "p": 115,
+    "chk": 19,
+    "table": 0,
+    "loop": 1
+   },
+   "template_evidence": {
+    "w_tbl_body_python_docx": 1,
+    "raw_ooxml_w_tbl_incl_headers_footers": 1,
+    "paragraph_count": 184
+   },
+   "source_docx": "06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn/DN_PL1_Mau_04_giay_de_nghi_dang_ky_doanh_nghiep_cong_ty_co_phan.docx",
+   "sections": [
+    {
+     "section_id": "ds_nganh_ctcp",
+     "title": "4. Ngành, nghề kinh doanh",
+     "kind": "editable-grid",
+     "semantic_key_suggestion": "ds_nganh",
+     "required_columns": [
+      "stt",
+      "ten_nganh",
+      "ma_nganh",
+      "la_nganh_chinh"
+     ],
+     "status": "already_complete",
+     "source_evidence": {
+      "template": "app/templates/PLI_M04.docx",
+      "heading": "4. Ngành, nghề kinh doanh (ghi tên và mã theo ngành cấp 4 trong Hệ thống ngành kinh tế Việt Nam):",
+      "anchor": "app/templates/PLI_M04.docx#p97-p103",
+      "para_range": [
+       97,
+       103
+      ]
+     },
+     "notes": "Bảng w:tbl 6x4 rebuild Wave 2A khớp loop.",
+     "loop_audit": {
+      "table_index": 0,
+      "loop": "ds_nganh",
+      "tagged_cols": [
+       1,
+       2,
+       3
+      ],
+      "missing_cols": []
+     }
+    },
+    {
+     "section_id": "lua_chon_khu_san_xuat",
+     "title": "Doanh nghiệp nằm trong (KCNC/KCX/KT/KCNC cao)",
+     "kind": "fixed-matrix",
+     "semantic_key_suggestion": "lua_chon_khu_san_xuat",
+     "required_columns": [
+      "khu_cong_nghiep",
+      "khu_che_xuat",
+      "khu_kinh_te",
+      "khu_cong_nghe_cao"
+     ],
+     "status": "already_complete",
+     "source_evidence": {
+      "template": "app/templates/PLI_M04.docx",
+      "heading": "- Doanh nghiệp nằm trong (Doanh nghiệp phải đánh dấu X vào ô vuông tương ứng với khu công nghệ cao nếu nộp hồ sơ tới Ban quản lý khu công nghệ cao):",
+      "anchor": "app/templates/PLI_M04.docx#p87-p97",
+      "para_range": [
+       87,
+       97
+      ]
+     },
+     "notes": "Đủ 4 chk_khu_*."
+    },
+    {
+     "section_id": "nguon_von_dieule",
+     "title": "6. Nguồn vốn điều lệ",
+     "kind": "fixed-matrix",
+     "semantic_key_suggestion": "nguon_von_dieu_le",
+     "required_columns": [
+      "loai_nguon_von",
+      "so_tien_vnd_va_tuong_duong",
+      "ty_le"
+     ],
+     "status": "missing_grid",
+     "source_evidence": {
+      "template": "app/templates/PLI_M04.docx",
+      "heading": "6. Nguồn vốn điều lệ:",
+      "anchor": "app/templates/PLI_M04.docx#p108-p127",
+      "para_range": [
+       108,
+       127
+      ]
+     },
+     "notes": "5 dòng cố định paragraph rời, không input.",
+     "fixed_rows": [
+      "von_ngan_sach_nha_nuoc",
+      "von_tu_nhan",
+      "von_nuoc_ngoai",
+      "von_khac",
+      "tong_cong"
+     ]
+    },
+    {
+     "section_id": "co_cau_loai_co_phan",
+     "title": "7. Thông tin về cổ phần (mệnh giá + loại cổ phần)",
+     "kind": "fixed-matrix",
+     "semantic_key_suggestion": "co_cau_loai_co_phan",
+     "required_columns": [
+      "menh_gia_co_phan",
+      "stt",
+      "loai_co_phan",
+      "so_luong",
+      "gia_tri_vnd",
+      "ty_le_so_von_dieule"
+     ],
+     "status": "missing_grid",
+     "source_evidence": {
+      "template": "app/templates/PLI_M04.docx",
+      "heading": "7. Thông tin về cổ phần:",
+      "anchor": "app/templates/PLI_M04.docx#p127-p163",
+      "para_range": [
+       127,
+       163
+      ]
+     },
+     "notes": "menh_gia_co_phan đã map; bảng 5 loại cổ phần + Tổng số (Số lượng | Giá trị VNĐ | Tỷ lệ so VĐL%) vẫn là paragraph rời, không input.",
+     "fixed_rows": [
+      "co_phan_pho_thong",
+      "cp_uu_dai_bieu_quyet",
+      "cp_uu_dai_co_tuc",
+      "cp_uu_dai_hoan_lai",
+      "cp_uu_dai_khac",
+      "tong_so"
+     ]
+    },
+    {
+     "section_id": "co_phan_duoc_quyen_chao_ban",
+     "title": "Thông tin về cổ phần được quyền chào bán",
+     "kind": "fixed-matrix",
+     "semantic_key_suggestion": "co_phan_duoc_quyen_chao_ban",
+     "required_columns": [
+      "stt",
+      "loai_co_phan_chao_ban",
+      "so_luong"
+     ],
+     "status": "missing_grid",
+     "source_evidence": {
+      "template": "app/templates/PLI_M04.docx",
+      "heading": "Thông tin về cổ phần được quyền chào bán:",
+      "anchor": "app/templates/PLI_M04.docx#p163-p184",
+      "para_range": [
+       163,
+       null
+      ]
+     },
+     "notes": "5 loại + Tổng số, paragraph rời, không input. Template kết thúc sau 'Tổng số' này (nguồn tương tự) - không có mục thuế/BHXH như Mẫu 2.",
+     "fixed_rows": [
+      "co_phan_pho_thong",
+      "cp_uu_dai_bieu_quyet",
+      "cp_uu_dai_co_tuc",
+      "cp_uu_dai_hoan_lai",
+      "cp_uu_dai_khac",
+      "tong_so"
+     ]
+    }
+   ],
+   "legal_questions": [
+    "Giá trị loại cổ phần = số lượng × mệnh giá, Tổng số đối chiếu vốn điều lệ: xác nhận formula/computed policy trước khi dựng fixed-matrix?",
+    "Template/nguồn PLI_M04 kết thúc tại mục 7 (cổ phần được quyền chào bán) mà không có mục thuế/BHXH/CSHHL như Mẫu 2: đủ nội dung pháp lý hay file nguồn bị cắt?"
+   ]
+  },
+  {
+   "form_id": "PLI_M05",
+   "ten_mau": "Giấy đề nghị đăng ký doanh nghiệp - Công ty hợp danh",
+   "form_status": "BLOCKED_LEGAL_REVIEW",
+   "summary_counts": {
+    "p": 63,
+    "chk": 17,
+    "table": 0,
+    "loop": 1
+   },
+   "template_evidence": {
+    "w_tbl_body_python_docx": 1,
+    "raw_ooxml_w_tbl_incl_headers_footers": 1,
+    "paragraph_count": 104
+   },
+   "source_docx": "06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn/DN_PL1_Mau_05_giay_de_nghi_dang_ky_doanh_nghiep_cong_ty_hop_danh.docx",
+   "sections": [
+    {
+     "section_id": "ds_nganh_hop_danh",
+     "title": "4. Ngành, nghề kinh doanh",
+     "kind": "editable-grid",
+     "semantic_key_suggestion": "ds_nganh",
+     "required_columns": [
+      "stt",
+      "ten_nganh",
+      "ma_nganh",
+      "la_nganh_chinh"
+     ],
+     "status": "already_complete",
+     "source_evidence": {
+      "template": "app/templates/PLI_M05.docx",
+      "heading": "4. Ngành, nghề kinh doanh (ghi tên và mã theo ngành cấp 4 trong Hệ thống ngành kinh tế của Việt Nam):",
+      "anchor": "app/templates/PLI_M05.docx#p74-p80",
+      "para_range": [
+       74,
+       80
+      ]
+     },
+     "notes": "Bảng w:tbl 6x4 rebuild Wave 2A khớp loop.",
+     "loop_audit": {
+      "table_index": 0,
+      "loop": "ds_nganh",
+      "tagged_cols": [
+       1,
+       2,
+       3
+      ],
+      "missing_cols": []
+     }
+    },
+    {
+     "section_id": "lua_chon_khu_san_xuat",
+     "title": "Doanh nghiệp nằm trong (KCNC/KCX/KT/KCNC cao)",
+     "kind": "fixed-matrix",
+     "semantic_key_suggestion": "lua_chon_khu_san_xuat",
+     "required_columns": [
+      "khu_cong_nghiep",
+      "khu_che_xuat",
+      "khu_kinh_te",
+      "khu_cong_nghe_cao"
+     ],
+     "status": "already_complete",
+     "source_evidence": {
+      "template": "app/templates/PLI_M05.docx",
+      "heading": "- Doanh nghiệp nằm trong (Doanh nghiệp phải đánh dấu X vào ô vuông tương ứng với khu công nghệ cao nếu nộp hồ sơ tới Ban quản lý khu công nghệ cao):",
+      "anchor": "app/templates/PLI_M05.docx#p64-p74",
+      "para_range": [
+       64,
+       74
+      ]
+     },
+     "notes": "Đủ 4 chk_khu_*."
+    },
+    {
+     "section_id": "nguon_von_dieule",
+     "title": "6. Nguồn vốn điều lệ",
+     "kind": "fixed-matrix",
+     "semantic_key_suggestion": "nguon_von_dieu_le",
+     "required_columns": [
+      "loai_nguon_von",
+      "so_tien_vnd_va_tuong_duong",
+      "ty_le"
+     ],
+     "status": "missing_grid",
+     "source_evidence": {
+      "template": "app/templates/PLI_M05.docx",
+      "heading": "6. Nguồn vốn điều lệ:",
+      "anchor": "app/templates/PLI_M05.docx#p85-p104",
+      "para_range": [
+       85,
+       null
+      ]
+     },
+     "notes": "5 dòng cố định paragraph rời, không input. Template NGUỒN kết thúc ngay sau 'Tổng cộng' (giống M03). Lưu ý thêm: Mẫu 5 không có bảng thành viên hợp danh trong mẫu (theo Mẫu 9 gửi kèm) nhưng template cũng chưa có phần danh sách thành viên hợp danh nào.",
+     "fixed_rows": [
+      "von_ngan_sach_nha_nuoc",
+      "von_tu_nhan",
+      "von_nuoc_ngoai",
+      "von_khac",
+      "tong_cong"
+     ]
+    }
+   ],
+   "legal_questions": [
+    "Template/nguồn PLI_M05 kết thúc ngay sau mục 6 Nguồn vốn điều lệ: đủ nội dung biểu mẫu hay file nguồn bị cắt khi tách? Thành viên hợp danh kê khai theo Mẫu 9 gửi kèm - xác nhận M05 không cần lưới thành viên inline?"
+   ]
+  },
+  {
+   "form_id": "PLI_M06",
+   "ten_mau": "Danh sách thành viên công ty trách nhiệm hữu hạn hai thành viên trở lên",
+   "form_status": "BLOCKED_LEGAL_REVIEW",
+   "summary_counts": {
+    "p": 92,
+    "chk": 14,
+    "table": 0,
+    "loop": 1
+   },
+   "template_evidence": {
+    "w_tbl_body_python_docx": 1,
+    "raw_ooxml_w_tbl_incl_headers_footers": 1,
+    "paragraph_count": 130
+   },
+   "source_docx": "06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn/DN_PL1_Mau_06_danh_sach_thanh_vien_cong_ty_trach_nhiem_huu_han_hai_thanh_vien_tro_len.docx",
+   "sections": [
+    {
+     "section_id": "ds_thanh_vien_tnhh",
+     "title": "Danh sách thành viên công ty TNHH hai thành viên trở lên",
+     "kind": "editable-grid",
+     "semantic_key_suggestion": "ds_thanh_vien_tnhh",
+     "required_columns": [
+      "stt",
+      "ho_ten",
+      "ngay_thang_nam_sinh",
+      "gioi_tinh",
+      "so_gtpl",
+      "quoc_tich",
+      "dan_toc",
+      "dia_chi_lien_lac",
+      "phan_von_gop",
+      "ty_le_von_gop",
+      "thoi_han_gop_von",
+      "chu_ky_output_only"
+     ],
+     "status": "partial_columns",
+     "source_evidence": {
+      "template": "app/templates/PLI_M06.docx",
+      "heading": "PL1 - Mau so 6: Danh sách thành viên công ty trách nhiệm hữu hạn hai thành viên trở lên",
+      "anchor": "app/templates/PLI_M06.docx#p0-p3",
+      "para_range": [
+       0,
+       3
+      ]
+     },
+     "notes": "Loop cũ tồn tại nhưng THIẾU cột 10 'Thời hạn góp vốn' (template có cột, ô loop rỗng không tag). So với header mẫu gốc (14 cột, glued trong nguồn M09): thiếu cột Ghi chú và nhóm cột 'Loại tài sản, số lượng, giá trị tài sản góp vốn' dưới nhóm Vốn góp; mẫu gốc có cấu trúc I.a cá nhân/I.b tổ chức + mục 'Thông tin người đại diện theo pháp luật/ủy quyền' (Vốn được ủy quyền, Tổng giá trị vốn được đại diện, Tỷ lệ, Thời điểm đại diện phần vốn) chưa có trong template phẳng hiện tại. Chữ ký là outputOnly ({chu_ky}).",
+     "loop_audit": {
+      "table_index": 0,
+      "loop": "ds_thanh_vien",
+      "tagged_cols": [
+       1,
+       2,
+       3,
+       4,
+       5,
+       6,
+       7,
+       8,
+       9,
+       11
+      ],
+      "missing_cols": [
+       {
+        "col": 10,
+        "header": "Thời hạn góp vốn"
+       }
+      ]
+     }
+    },
+    {
+     "section_id": "thue_chi_tieu_9_1_9_9",
+     "title": "9. Thông tin đăng ký thuế (9.1-9.9)",
+     "kind": "fixed-matrix",
+     "semantic_key_suggestion": "chi_tieu_thue_tnhh2tv",
+     "required_columns": [
+      "stt",
+      "chi_tieu",
+      "noi_dung"
+     ],
+     "status": "already_complete",
+     "source_evidence": {
+      "template": "app/templates/PLI_M06.docx",
+      "heading": "9. Thông tin đăng ký thuế:",
+      "anchor": "app/templates/PLI_M06.docx#p27-p94",
+      "para_range": [
+       27,
+       94
+      ]
+     },
+     "notes": "Map đủ 9 chỉ tiêu."
+    },
+    {
+     "section_id": "bhxh_phuong_thuc_dong",
+     "title": "10. Thông tin về việc đóng bảo hiểm xã hội",
+     "kind": "fixed-matrix",
+     "semantic_key_suggestion": "phuong_thuc_dong_bhxh_tnhh2tv",
+     "required_columns": [
+      "hang_thang",
+      "ba_thang_mot_lan",
+      "sau_thang_mot_lan"
+     ],
+     "status": "already_complete",
+     "source_evidence": {
+      "template": "app/templates/PLI_M06.docx",
+      "heading": "10. Thông tin về việc đóng bảo hiểm xã hội9:",
+      "anchor": "app/templates/PLI_M06.docx#p94-p102",
+      "para_range": [
+       94,
+       102
+      ]
+     },
+     "notes": "Đủ 3 chk_bc_*."
+    },
+    {
+     "section_id": "lua_chon_co_cshhl",
+     "title": "11. Doanh nghiệp có chủ sở hữu hưởng lợi không?",
+     "kind": "fixed-matrix",
+     "semantic_key_suggestion": "co_cshhl",
+     "required_columns": [
+      "co",
+      "khong"
+     ],
+     "status": "already_complete",
+     "source_evidence": {
+      "template": "app/templates/PLI_M06.docx",
+      "heading": "11. Thông tin về chủ sở hữu hưởng lợi của doanh nghiệp10:",
+      "anchor": "app/templates/PLI_M06.docx#p102-p106",
+      "para_range": [
+       102,
+       106
+      ]
+     },
+     "notes": "Cặp chk_co/chk_khong map đúng."
+    }
+   ],
+   "legal_questions": [
+    "Thành viên TNHH: giữ editable-grid phẳng đủ cột (bổ sung Thời hạn góp vốn/Ghi chú/Loại tài sản...) hay dựng nested-grid đúng mẫu gốc (cá nhân/tổ chức/người đại diện theo ủy quyền với tổng giá trị vốn được đại diện)?",
+    "Cột Chữ ký xác nhận là outputOnly (không phải text input)?"
+   ]
+  },
+  {
+   "form_id": "PLI_M07",
+   "ten_mau": "Danh sách cổ đông sáng lập công ty cổ phần",
+   "form_status": "BLOCKED_LEGAL_REVIEW",
+   "summary_counts": {
+    "p": 2,
+    "chk": 0,
+    "table": 0,
+    "loop": 1
+   },
+   "template_evidence": {
+    "w_tbl_body_python_docx": 1,
+    "raw_ooxml_w_tbl_incl_headers_footers": 1,
+    "paragraph_count": 3
+   },
+   "source_docx": "06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn/DN_PL1_Mau_07_danh_sach_co_dong_sang_lap_cong_ty_co_phan.docx",
+   "sections": [
+    {
+     "section_id": "ds_co_dong_sang_lap",
+     "title": "Danh sách cổ đông sáng lập công ty cổ phần",
+     "kind": "editable-grid",
+     "semantic_key_suggestion": "ds_co_dong_sang_lap",
+     "required_columns": [
+      "stt",
+      "ho_ten",
+      "ngay_thang_nam_sinh",
+      "gioi_tinh",
+      "so_gtpl",
+      "quoc_tich",
+      "dan_toc",
+      "dia_chi_lien_lac",
+      "tong_so_co_phan",
+      "ty_le",
+      "chu_ky_output_only"
+     ],
+     "status": "partial_columns",
+     "source_evidence": {
+      "template": "app/templates/PLI_M07.docx",
+      "heading": "PL1 - Mau so 7: Danh sách cổ đông sáng lập công ty cổ phần",
+      "anchor": "app/templates/PLI_M07.docx#p0-p3",
+      "para_range": [
+       0,
+       null
+      ]
+     },
+     "notes": "Loop cũ THIẾU cột 6 'Dân tộc' (template có cột, ô loop rỗng). So với header mẫu gốc (19 cột, glued trong nguồn M09): thiếu Loại cổ phần, nhóm 'Loại tài sản, số lượng, giá trị tài sản góp vốn', Vốn góp, Thời hạn góp vốn, Ghi chú; mẫu gốc có cấu trúc cá nhân/tổ chức + mục người đại diện theo ủy quyền chưa có trong template phẳng. Toàn form chỉ gồm tiêu đề + bảng (blocks p=2).",
+     "loop_audit": {
+      "table_index": 0,
+      "loop": "ds_co_dong_sang_lap",
+      "tagged_cols": [
+       1,
+       2,
+       3,
+       4,
+       5,
+       7,
+       8,
+       9,
+       10
+      ],
+      "missing_cols": [
+       {
+        "col": 6,
+        "header": "Dân tộc"
+       }
+      ]
+     }
+    }
+   ],
+   "legal_questions": [
+    "Cổ đông sáng lập: nâng cấp lên nested-grid đúng mẫu gốc (19 cột, cá nhân/tổ chức/NĐD ủy quyền) hay giữ bảng phẳng và chỉ bổ sung cột Dân tộc? Cần quyết định trước khi rollout."
+   ]
+  },
+  {
+   "form_id": "PLI_M08",
+   "ten_mau": "Danh sách cổ đông là nhà đầu tư nước ngoài",
+   "form_status": "BLOCKED_LEGAL_REVIEW",
+   "summary_counts": {
+    "p": 92,
+    "chk": 14,
+    "table": 0,
+    "loop": 1
+   },
+   "template_evidence": {
+    "w_tbl_body_python_docx": 1,
+    "raw_ooxml_w_tbl_incl_headers_footers": 1,
+    "paragraph_count": 128
+   },
+   "source_docx": "06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn/DN_PL1_Mau_08_danh_sach_co_dong_la_nha_dau_tu_nuoc_ngoai.docx",
+   "sections": [
+    {
+     "section_id": "ds_co_dong_nn",
+     "title": "Danh sách cổ đông là nhà đầu tư nước ngoài",
+     "kind": "editable-grid",
+     "semantic_key_suggestion": "ds_co_dong_nn",
+     "required_columns": [
+      "stt",
+      "ten_co_dong",
+      "quoc_gia",
+      "ma_so_dn_gtpl",
+      "dia_chi",
+      "tong_so_co_phan",
+      "ty_le",
+      "chu_ky_output_only"
+     ],
+     "status": "partial_columns",
+     "source_evidence": {
+      "template": "app/templates/PLI_M08.docx",
+      "heading": "PL1 - Mau so 8: Danh sách cổ đông là nhà đầu tư nước ngoài",
+      "anchor": "app/templates/PLI_M08.docx#p0-p3",
+      "para_range": [
+       0,
+       3
+      ]
+     },
+     "notes": "Khớp 8/8 cột template production HIỆN TẠI (loop đủ tag) nên không thiếu so với template; nhưng so với header mẫu gốc (18 cột cá nhân + biến thể tổ chức + mục NĐD ủy quyền, glued trong nguồn M09): bị đơn giản hóa mất Vốn góp, Thời hạn góp vốn, Ghi chú, Loại cổ phần, nhóm 'Loại tài sản, số lượng, giá trị tài sản góp vốn'. Đánh partial theo chuẩn audit-so-với-mẫu-gốc của PLAN.",
+     "loop_audit": {
+      "table_index": 0,
+      "loop": "ds_co_dong_nn",
+      "tagged_cols": [
+       1,
+       2,
+       3,
+       4,
+       5,
+       6,
+       7
+      ],
+      "missing_cols": []
+     }
+    },
+    {
+     "section_id": "thue_chi_tieu_11_1_11_9",
+     "title": "11. Thông tin đăng ký thuế (11.1-11.9)",
+     "kind": "fixed-matrix",
+     "semantic_key_suggestion": "chi_tieu_thue_cdnn",
+     "required_columns": [
+      "stt",
+      "chi_tieu",
+      "noi_dung"
+     ],
+     "status": "already_complete",
+     "source_evidence": {
+      "template": "app/templates/PLI_M08.docx",
+      "heading": "11. Thông tin đăng ký thuế:",
+      "anchor": "app/templates/PLI_M08.docx#p27-p92",
+      "para_range": [
+       27,
+       92
+      ]
+     },
+     "notes": "Map đủ 9 chỉ tiêu."
+    },
+    {
+     "section_id": "bhxh_phuong_thuc_dong",
+     "title": "12. Thông tin về việc đóng bảo hiểm xã hội",
+     "kind": "fixed-matrix",
+     "semantic_key_suggestion": "phuong_thuc_dong_bhxh_cdnn",
+     "required_columns": [
+      "hang_thang",
+      "ba_thang_mot_lan",
+      "sau_thang_mot_lan"
+     ],
+     "status": "already_complete",
+     "source_evidence": {
+      "template": "app/templates/PLI_M08.docx",
+      "heading": "12. Thông tin về việc đóng bảo hiểm xã hội9:",
+      "anchor": "app/templates/PLI_M08.docx#p92-p100",
+      "para_range": [
+       92,
+       100
+      ]
+     },
+     "notes": "Đủ 3 chk_bc_*."
+    },
+    {
+     "section_id": "lua_chon_co_cshhl",
+     "title": "13. Doanh nghiệp có chủ sở hữu hưởng lợi không?",
+     "kind": "fixed-matrix",
+     "semantic_key_suggestion": "co_cshhl",
+     "required_columns": [
+      "co",
+      "khong"
+     ],
+     "status": "already_complete",
+     "source_evidence": {
+      "template": "app/templates/PLI_M08.docx",
+      "heading": "13. Thông tin về chủ sở hữu hưởng lợi của doanh nghiệp10:",
+      "anchor": "app/templates/PLI_M08.docx#p100-p104",
+      "para_range": [
+       100,
+       104
+      ]
+     },
+     "notes": "Cặp chk_co/chk_khong map đúng."
+    }
+   ],
+   "legal_questions": [
+    "Cổ đông NĐT nước ngoài: giữ bản phẳng 8 cột hiện tại hay dựng nested-grid đúng mẫu gốc (cá nhân/tổ chức, vốn góp, loại cổ phần, loại tài sản góp vốn)?"
+   ]
+  },
+  {
+   "form_id": "PLI_M09",
+   "ten_mau": "Danh sách thành viên công ty hợp danh",
+   "form_status": "BLOCKED_LEGAL_REVIEW",
+   "summary_counts": {
+    "p": 178,
+    "chk": 14,
+    "table": 0,
+    "loop": 1
+   },
+   "template_evidence": {
+    "w_tbl_body_python_docx": 1,
+    "raw_ooxml_w_tbl_incl_headers_footers": 1,
+    "paragraph_count": 222
+   },
+   "source_docx": "06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn/DN_PL1_Mau_09_danh_sach_thanh_vien_cong_ty_hop_danh.docx",
+   "sections": [
+    {
+     "section_id": "ds_thanh_vien_hop_danh",
+     "title": "Mẫu 9 (bảng chính): Danh sách thành viên công ty hợp danh",
+     "kind": "editable-grid",
+     "semantic_key_suggestion": "ds_thanh_vien_hop_danh",
+     "required_columns": [
+      "stt",
+      "ho_ten",
+      "ngay_thang_nam_sinh",
+      "gioi_tinh",
+      "so_gtpl",
+      "quoc_tich",
+      "dan_toc",
+      "dia_chi_lien_lac",
+      "phan_von_gop",
+      "ty_le_von_gop",
+      "thoi_han_gop_von",
+      "chu_ky_output_only"
+     ],
+     "status": "partial_columns",
+     "source_evidence": {
+      "template": "app/templates/PLI_M09.docx",
+      "heading": "PL1 - Mau so 9: Danh sách thành viên công ty hợp danh",
+      "anchor": "app/templates/PLI_M09.docx#p0-p3",
+      "para_range": [
+       0,
+       3
+      ]
+     },
+     "notes": "TBL[0] 6x12 giống M06: loop THIẾU cột 10 'Thời hạn góp vốn'; so mẫu gốc còn thiếu Ghi chú/nhóm loại tài sản góp vốn và cấu trúc A.Thành viên hợp danh/B.Thành viên góp vốn/II.tổ chức/NĐD ủy quyền.",
+     "loop_audit": {
+      "table_index": 0,
+      "loop": "ds_thanh_vien",
+      "tagged_cols": [
+       1,
+       2,
+       3,
+       4,
+       5,
+       6,
+       7,
+       8,
+       9,
+       11
+      ],
+      "missing_cols": [
+       {
+        "col": 10,
+        "header": "Thời hạn góp vốn"
+       }
+      ]
+     }
+    },
+    {
+     "section_id": "thue_chi_tieu_8_1_8_9",
+     "title": "8. Thông tin đăng ký thuế (8.1-8.9)",
+     "kind": "fixed-matrix",
+     "semantic_key_suggestion": "chi_tieu_thue_hop_danh",
+     "required_columns": [
+      "stt",
+      "chi_tieu",
+      "noi_dung"
+     ],
+     "status": "already_complete",
+     "source_evidence": {
+      "template": "app/templates/PLI_M09.docx",
+      "heading": "8. Thông tin đăng ký thuế:",
+      "anchor": "app/templates/PLI_M09.docx#p6-p71",
+      "para_range": [
+       6,
+       71
+      ]
+     },
+     "notes": "Map đủ 9 chỉ tiêu."
+    },
+    {
+     "section_id": "bhxh_phuong_thuc_dong",
+     "title": "9. Thông tin về việc đóng bảo hiểm xã hội",
+     "kind": "fixed-matrix",
+     "semantic_key_suggestion": "phuong_thuc_dong_bhxh_hop_danh",
+     "required_columns": [
+      "hang_thang",
+      "ba_thang_mot_lan",
+      "sau_thang_mot_lan"
+     ],
+     "status": "already_complete",
+     "source_evidence": {
+      "template": "app/templates/PLI_M09.docx",
+      "heading": "9. Thông tin về việc đóng bảo hiểm xã hội7:",
+      "anchor": "app/templates/PLI_M09.docx#p71-p79",
+      "para_range": [
+       71,
+       79
+      ]
+     },
+     "notes": "Đủ 3 chk_bc_*."
+    },
+    {
+     "section_id": "lua_chon_co_cshhl",
+     "title": "10. Doanh nghiệp có chủ sở hữu hưởng lợi không?",
+     "kind": "fixed-matrix",
+     "semantic_key_suggestion": "co_cshhl",
+     "required_columns": [
+      "co",
+      "khong"
+     ],
+     "status": "already_complete",
+     "source_evidence": {
+      "template": "app/templates/PLI_M09.docx",
+      "heading": "10. Thông tin về chủ sở hữu hưởng lợi của doanh nghiệp8:",
+      "anchor": "app/templates/PLI_M09.docx#p79-p84",
+      "para_range": [
+       79,
+       84
+      ]
+     },
+     "notes": "Cặp chk_co/chk_khong map đúng."
+    },
+    {
+     "section_id": "vung_nhiem_mau_6789_10",
+     "title": "Vùng nghi nhiễm: bản copy Mẫu số 6, 7, 8, Mẫu 9 (lần 2) và Mẫu số 10 nằm trong template PLI_M09.docx",
+     "kind": "unknown",
+     "semantic_key_suggestion": null,
+     "required_columns": [],
+     "status": "missing_grid",
+     "source_evidence": {
+      "template": "app/templates/PLI_M09.docx",
+      "heading": "- Trường hợp Tòa án hoặc Trọng tài chỉ định người thực hiện thủ tục đăng ký doanh nghiệp thì người được chỉ định ký trực tiếp vào phần này.Mẫu số 6",
+      "anchor": "app/templates/PLI_M09.docx#p103-p222",
+      "para_range": [
+       103,
+       null
+      ]
+     },
+     "notes": "Sau chân trang của Mẫu 9 thật, template chứa tiếp toàn văn 'DANH SÁCH THÀNH VIÊN CÔNG TY TNHH HAI THÀNH VIÊN TRỞ LÊN' (Mẫu 6), 'DANH SÁCH CỔ ĐÔNG SÁNG LẬP' (Mẫu 7), 'DANH SÁCH CỔ ĐÔNG LÀ NHÀ ĐẦU TƯ NƯỚC NGOÀI' (Mẫu 8), một bản 'DANH SÁCH THÀNH VIÊN CÔNG TY HỢP DANH' thứ hai (header đầy đủ 14 cột dạng paragraph + glued 'STTTên thành viênSố, ngày cấp, nơi cấp...') và 'DANH SÁCH CHỦ SỞ HỮU HƯỞNG LỢI' (Mẫu 10) - tất cả là paragraph rời, không w:tbl. File nguồn DN_PL1_Mau_09... cũng nhiễm đúng cấu trúc này → lỗi tách từ file full, KHÔNG phải nội dung của Mẫu 9."
+    }
+   ],
+   "legal_questions": [
+    "Xác định phạm vi pháp lý thật của Mẫu 9: vùng Mẫu 6/7/8/9(lần 2)/10 trong template+nguồn PLI_M09 là dư thừa do tách nguồn sai - được phép loại khỏi template khi rebuild?",
+    "Nếu bản Mẫu 9 thứ hai (header 14 cột đầy đủ) mới là cấu trúc đúng: chọn nó thay TBL[0] phẳng hiện tại hay giữ phẳng?"
+   ]
+  },
+  {
+   "form_id": "PLI_M10",
+   "ten_mau": "Danh sách chủ sở hữu hưởng lợi của doanh nghiệp",
+   "form_status": "BLOCKED_LEGAL_REVIEW",
+   "summary_counts": {
+    "p": 4,
+    "chk": 0,
+    "table": 0,
+    "loop": 1
+   },
+   "template_evidence": {
+    "w_tbl_body_python_docx": 1,
+    "raw_ooxml_w_tbl_incl_headers_footers": 1,
+    "paragraph_count": 6
+   },
+   "source_docx": "06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn/DN_PL1_Mau_10_danh_sach_chu_so_huu_huong_loi_cua_doanh_nghiep.docx",
+   "sections": [
+    {
+     "section_id": "ds_cshhl_doanh_nghiep",
+     "title": "Danh sách chủ sở hữu hưởng lợi của doanh nghiệp",
+     "kind": "editable-grid",
+     "semantic_key_suggestion": "ds_cshhl",
+     "required_columns": [
+      "stt",
+      "ho_ten",
+      "ngay_thang_nam_sinh",
+      "gioi_tinh",
+      "so_ngay_cap_co_quan_cap_gtpl",
+      "quoc_tich",
+      "dan_toc",
+      "dia_chi_lien_lac",
+      "ty_le_so_huu_von_dieule",
+      "ty_le_co_phan_bieu_quyet",
+      "quyen_chi_phoi",
+      "ghi_chu"
+     ],
+     "status": "partial_columns",
+     "source_evidence": {
+      "template": "app/templates/PLI_M10.docx",
+      "heading": "PL1 - Mau so 10: Danh sách chủ sở hữu hưởng lợi của doanh nghiệp",
+      "anchor": "app/templates/PLI_M10.docx#p0-p3",
+      "para_range": [
+       0,
+       3
+      ]
+     },
+     "notes": "Loop đủ tag 10/10 cột dữ liệu của template production hiện tại (11 cột kể STT) - khớp template. Nhưng so với header mẫu gốc 12 cột (glued trong nguồn M09): nhóm 'Chủ sở hữu hưởng lợi của doanh nghiệp được xác định...' có 3 cột con: Tỷ lệ sở hữu vốn điều lệ | Tỷ lệ sở hữu cổ phần có quyền biểu quyết | QUYỀN CHI PHỐI - template hiện tại thiếu cột Quyền chi phối (chân trang 4 NĐ 168/2025 yêu cầu ghi rõ quyền chi phối; hiện không có chỗ kê khai riêng).",
+     "loop_audit": {
+      "table_index": 0,
+      "loop": "ds_cshhl",
+      "tagged_cols": [
+       1,
+       2,
+       3,
+       4,
+       5,
+       6,
+       7,
+       8,
+       9,
+       10
+      ],
+      "missing_cols": []
+     }
+    }
+   ],
+   "legal_questions": [
+    "Quyền chi phối của CSHHL (điểm b khoản 1 Điều 17 NĐ 168/2025, chân trang 4 mẫu): là cột riêng trong bảng hay ghi vào cột Ghi chú?"
+   ]
+  },
+  {
+   "form_id": "PLI_M11",
+   "ten_mau": "Kê khai thông tin để xác định chủ sở hữu hưởng lợi của doanh nghiệp",
+   "form_status": "TABLE_COMPLETE",
+   "summary_counts": {
+    "p": 9,
+    "chk": 0,
+    "table": 0,
+    "loop": 1
+   },
+   "template_evidence": {
+    "w_tbl_body_python_docx": 1,
+    "raw_ooxml_w_tbl_incl_headers_footers": 1,
+    "paragraph_count": 11
+   },
+   "source_docx": "06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn/DN_PL1_Mau_11_ke_khai_thong_tin_de_xac_dinh_chu_so_huu_huong_loi_cua_doanh_nghiep.docx",
+   "sections": [
+    {
+     "section_id": "ds_to_chuc_xd_cshhl",
+     "title": "Danh sách để xác định chủ sở hữu hưởng lợi (cổ đông tổ chức ≥25%)",
+     "kind": "editable-grid",
+     "semantic_key_suggestion": "ds_to_chuc_xac_dinh_cshhl",
+     "required_columns": [
+      "stt",
+      "ten_to_chuc",
+      "ma_so_dn_qd_thanh_lap",
+      "ngay_cap",
+      "noi_cap",
+      "dia_chi_tru_so_chinh",
+      "ty_le_cp_bieu_quyet",
+      "ghi_chu"
+     ],
+     "status": "already_complete",
+     "source_evidence": {
+      "template": "app/templates/PLI_M11.docx",
+      "heading": "PL1 - Mau so 11: Kê khai thông tin để xác định chủ sở hữu hưởng lợi của doanh nghiệp",
+      "anchor": "app/templates/PLI_M11.docx#p0-p6",
+      "para_range": [
+       0,
+       6
+      ]
+     },
+     "notes": "8 cột template khớp TỪNG CỘT với header mẫu gốc (glued nguồn: STT|Tên tổ chức|Mã số DN/số QĐ thành lập|Ngày cấp|Nơi cấp|Địa chỉ trụ sở chính|Tỷ lệ sở hữu CP có quyền biểu quyết|Ghi chú (nếu có)); loop đủ tag 7/7 cột dữ liệu. Không còn vùng bảng khác trong mẫu.",
+     "loop_audit": {
+      "table_index": 0,
+      "loop": "ds_cshhl",
+      "tagged_cols": [
+       1,
+       2,
+       3,
+       4,
+       5,
+       6,
+       7
+      ],
+      "missing_cols": []
+     }
+    }
+   ],
+   "legal_questions": []
+  },
+  {
+   "form_id": "PLI_M12",
+   "ten_mau": "Giấy đề nghị đăng ký thay đổi nội dung Giấy chứng nhận đăng ký doanh nghiệp/Thông báo thay đổi nội dung đăng ký doanh nghiệp",
+   "form_status": "BLOCKED_LEGAL_REVIEW",
+   "summary_counts": {
+    "p": 218,
+    "chk": 15,
+    "table": 0,
+    "loop": 3
+   },
+   "template_evidence": {
+    "w_tbl_body_python_docx": 3,
+    "raw_ooxml_w_tbl_incl_headers_footers": 3,
+    "paragraph_count": 337
+   },
+   "source_docx": "02_thay_doi_thong_tin_doanh_nghiep/PL1_Mau_12_tach_tu_file_full.docx",
+   "sections": [
+    {
+     "section_id": "nganh_bo_sung",
+     "title": "THÔNG BÁO THAY ĐỔI NGÀNH, NGHỀ KINH DOANH - 1. Bổ sung ngành nghề",
+     "kind": "editable-grid",
+     "semantic_key_suggestion": "nganh_bo_sung",
+     "required_columns": [
+      "stt",
+      "ten_nganh_bo_sung",
+      "ma_nganh",
+      "la_nganh_chinh"
+     ],
+     "status": "already_complete",
+     "source_evidence": {
+      "template": "app/templates/PLI_M12.docx",
+      "heading": "1. Bổ sung ngành, nghề kinh doanh sau (kê khai trong trường hợp doanh nghiệp thông báo bổ sung ngành, nghề kinh doanh vào danh sách ngành, nghề kinh doanh đã đăng ký với cơ quan đă",
+      "anchor": "app/templates/PLI_M12.docx#p152-p158",
+      "para_range": [
+       152,
+       158
+      ]
+     },
+     "notes": "Rebuild Wave 2B: w:tbl 6x4 khớp loop semantic.",
+     "loop_audit": {
+      "table_index": 0,
+      "loop": "nganh_bo_sung",
+      "tagged_cols": [
+       1,
+       2,
+       3
+      ],
+      "missing_cols": []
+     }
+    },
+    {
+     "section_id": "nganh_xoa_bo",
+     "title": "2. Bỏ ngành, nghề kinh doanh",
+     "kind": "editable-grid",
+     "semantic_key_suggestion": "nganh_xoa_bo",
+     "required_columns": [
+      "stt",
+      "ten_nganh_xoa_bo",
+      "ma_nganh",
+      "ghi_chu"
+     ],
+     "status": "already_complete",
+     "source_evidence": {
+      "template": "app/templates/PLI_M12.docx",
+      "heading": "2. Bỏ ngành, nghề kinh doanh sau (kê khai trong trường hợp doanh nghiệp thông báo bỏ ngành, nghề kinh doanh khỏi danh sách ngành, nghề kinh doanh đã đăng ký với cơ quan đăng ký kin",
+      "anchor": "app/templates/PLI_M12.docx#p158-p164",
+      "para_range": [
+       158,
+       164
+      ]
+     },
+     "notes": "Rebuild Wave 2B: cột Ghi chú thay Ngành chính, khớp loop semantic.",
+     "loop_audit": {
+      "table_index": 1,
+      "loop": "nganh_xoa_bo",
+      "tagged_cols": [
+       1,
+       2,
+       3
+      ],
+      "missing_cols": []
+     }
+    },
+    {
+     "section_id": "nganh_sua_doi_chi_tiet",
+     "title": "3. Sửa đổi chi tiết ngành, nghề kinh doanh",
+     "kind": "editable-grid",
+     "semantic_key_suggestion": "nganh_sua_doi_chi_tiet",
+     "required_columns": [
+      "stt",
+      "ten_nganh_sua_doi",
+      "ma_nganh",
+      "la_nganh_chinh"
+     ],
+     "status": "already_complete",
+     "source_evidence": {
+      "template": "app/templates/PLI_M12.docx",
+      "heading": "3. Sửa đổi chi tiết ngành, nghề kinh doanh sau (kê khai trong trường hợp doanh nghiệp thông báo thay đổi nội dung chi tiết của ngành, nghề kinh doanh đã đăng ký với cơ quan đăng ký",
+      "anchor": "app/templates/PLI_M12.docx#p164-p170",
+      "para_range": [
+       164,
+       170
+      ]
+     },
+     "notes": "Rebuild Wave 2B: khớp loop semantic.",
+     "loop_audit": {
+      "table_index": 2,
+      "loop": "nganh_sua_doi_chi_tiet",
+      "tagged_cols": [
+       1,
+       2,
+       3
+      ],
+      "missing_cols": []
+     }
+    },
+    {
+     "section_id": "lua_chon_khu_san_xuat",
+     "title": "Doanh nghiệp nằm trong (mục thay đổi địa chỉ trụ sở)",
+     "kind": "fixed-matrix",
+     "semantic_key_suggestion": "lua_chon_khu_san_xuat",
+     "required_columns": [
+      "khu_cong_nghiep",
+      "khu_che_xuat",
+      "khu_kinh_te",
+      "khu_cong_nghe_cao"
+     ],
+     "status": "already_complete",
+     "source_evidence": {
+      "template": "app/templates/PLI_M12.docx",
+      "heading": "- Doanh nghiệp nằm trong (Doanh nghiệp phải đánh dấu X vào ô vuông tương ứng với khu công nghệ cao nếu nộp hồ sơ tới Ban quản lý khu công nghệ cao):",
+      "anchor": "app/templates/PLI_M12.docx#p39-p48",
+      "para_range": [
+       39,
+       48
+      ]
+     },
+     "notes": "Đủ 4 chk_khu_*."
+    },
+    {
+     "section_id": "nguon_von_dieule_sau_thay_doi",
+     "title": "Nguồn vốn điều lệ sau khi thay đổi vốn điều lệ",
+     "kind": "fixed-matrix",
+     "semantic_key_suggestion": "nguon_von_dieu_le_sau_thay_doi",
+     "required_columns": [
+      "loai_nguon_von",
+      "so_tien_vnd_va_tuong_duong",
+      "ty_le"
+     ],
+     "status": "missing_grid",
+     "source_evidence": {
+      "template": "app/templates/PLI_M12.docx",
+      "heading": "Nguồn vốn điều lệ sau khi thay đổi vốn điều lệ:",
+      "anchor": "app/templates/PLI_M12.docx#p60-p79",
+      "para_range": [
+       60,
+       79
+      ]
+     },
+     "notes": "5 dòng cố định paragraph rời, không input. Ngữ cảnh riêng của M12 (sau thay đổi), không dùng chung data với mẫu thành lập.",
+     "fixed_rows": [
+      "von_ngan_sach_nha_nuoc",
+      "von_tu_nhan",
+      "von_nuoc_ngoai",
+      "von_khac",
+      "tong_cong"
+     ]
+    },
+    {
+     "section_id": "tai_san_gop_von_sau_thay_doi_vdl",
+     "title": "Tài sản góp vốn sau khi thay đổi vốn điều lệ",
+     "kind": "fixed-matrix",
+     "semantic_key_suggestion": "co_cau_tai_san_gop_von_sau_thay_doi_vdl",
+     "required_columns": [
+      "stt",
+      "loai_tai_san",
+      "chi_tiet_ngoai_te_tai_san_khac",
+      "gia_tri_vnd",
+      "ty_le"
+     ],
+     "status": "missing_grid",
+     "source_evidence": {
+      "template": "app/templates/PLI_M12.docx",
+      "heading": "Tài sản góp vốn sau khi thay đổi vốn điều lệ:",
+      "anchor": "app/templates/PLI_M12.docx#p79-p111",
+      "para_range": [
+       79,
+       111
+      ]
+     },
+     "notes": "6 dòng cố định + Tổng số, paragraph rời, không input."
+    },
+    {
+     "section_id": "co_cau_loai_co_phan_sau_thay_doi",
+     "title": "Thông tin về cổ phần (chỉ kê khai đối với công ty cổ phần)",
+     "kind": "fixed-matrix",
+     "semantic_key_suggestion": "co_cau_loai_co_phan_sau_thay_doi",
+     "required_columns": [
+      "menh_gia_co_phan",
+      "stt",
+      "loai_co_phan",
+      "so_luong",
+      "gia_tri_vnd",
+      "ty_le_so_von_dieule"
+     ],
+     "status": "missing_grid",
+     "source_evidence": {
+      "template": "app/templates/PLI_M12.docx",
+      "heading": "Thông tin về cổ phần (chỉ kê khai đối với công ty cổ phần):",
+      "anchor": "app/templates/PLI_M12.docx#p111-p147",
+      "para_range": [
+       111,
+       147
+      ]
+     },
+     "notes": "menh_gia_co_phan đã map; bảng 5 loại cổ phần + Tổng số paragraph rời, không input.",
+     "fixed_rows": [
+      "co_phan_pho_thong",
+      "cp_uu_dai_bieu_quyet",
+      "cp_uu_dai_co_tuc",
+      "cp_uu_dai_hoan_lai",
+      "cp_uu_dai_khac",
+      "tong_so"
+     ]
+    },
+    {
+     "section_id": "tai_san_gop_von_sau_thay_doi_von_dau_tu",
+     "title": "Tài sản góp vốn sau khi thay đổi vốn đầu tư (chủ DNTN)",
+     "kind": "fixed-matrix",
+     "semantic_key_suggestion": "co_cau_tai_san_gop_von_sau_thay_doi_vdt",
+     "required_columns": [
+      "stt",
+      "loai_tai_san",
+      "chi_tiet_ngoai_te_tai_san_khac",
+      "gia_tri_vnd",
+      "ty_le"
+     ],
+     "status": "missing_grid",
+     "source_evidence": {
+      "template": "app/templates/PLI_M12.docx",
+      "heading": "Tài sản góp vốn sau khi thay đổi vốn đầu tư:",
+      "anchor": "app/templates/PLI_M12.docx#p186-p219",
+      "para_range": [
+       186,
+       219
+      ]
+     },
+     "notes": "Ngữ cảnh vốn đầu tư RIÊNG (DNTN) - PLAN yêu cầu không dùng chung data với ngữ cảnh vốn điều lệ. Paragraph rời, không input."
+    },
+    {
+     "section_id": "ndd_uy_quyen_sau_thay_doi",
+     "title": "THÔNG BÁO THAY ĐỔI NGƯỜI ĐẠI DIỆN THEO ỦY QUYỀN (header nối dính)",
+     "kind": "nested-grid",
+     "semantic_key_suggestion": "ds_ndd_uy_quyen_sau_thay_doi",
+     "required_columns": [
+      "stt",
+      "chu_so_huu_tvtnhh_cdnn_to_chuc",
+      "ten_ndd_uy_quyen",
+      "ngay_thang_nam_sinh",
+      "gioi_tinh",
+      "so_ngay_cap_co_quan_cap_gtpl",
+      "quoc_tich",
+      "dan_toc",
+      "dia_chi_lien_lac",
+      "von_duoc_uy_quyen",
+      "chu_ky_output_only",
+      "ghi_chu",
+      "tong_gia_tri_von_du_dai_dien",
+      "ty_le",
+      "thoi_diem_dai_dien_phan_von"
+     ],
+     "status": "missing_grid",
+     "source_evidence": {
+      "template": "app/templates/PLI_M12.docx",
+      "heading": "THÔNG BÁO THAY ĐỔI NGƯỜI ĐẠI DIỆN THEO ỦY QUYỀN CỦA CHỦ SỞ HỮU/THÀNH VIÊN CÔNG TY TRÁCH NHIỆM HỮU HẠN LÀ TỔ CHỨC/CỔ ĐÔNG LÀ TỔ CHỨC NƯỚC NGOÀI1",
+      "anchor": "app/templates/PLI_M12.docx#p219-p227",
+      "para_range": [
+       219,
+       227
+      ]
+     },
+     "notes": "Header nối dính 14 cột ('STTChủ sở hữu/Thành viên công ty TNHH...Thời điểm đại diện phần vốn'). Blocks không có input/loop cho vùng này; PLAN yêu cầu audit dựng editable/nested grid thay vì field đơn."
+    },
+    {
+     "section_id": "thue_thay_doi_1_9",
+     "title": "THÔNG BÁO THAY ĐỔI THÔNG TIN ĐĂNG KÝ THUẾ (chỉ tiêu 1-9)",
+     "kind": "fixed-matrix",
+     "semantic_key_suggestion": "chi_tieu_thue_thay_doi",
+     "required_columns": [
+      "stt",
+      "chi_tieu",
+      "noi_dung"
+     ],
+     "status": "already_complete",
+     "source_evidence": {
+      "template": "app/templates/PLI_M12.docx",
+      "heading": "THÔNG BÁO THAY ĐỔI THÔNG TIN ĐĂNG KÝ THUẾ",
+      "anchor": "app/templates/PLI_M12.docx#p233-p308",
+      "para_range": [
+       233,
+       308
+      ]
+     },
+     "notes": "9 chỉ tiêu map đủ (gd/kt/địa chỉ TB thuế/ngày BD/hạch toán/năm TC/lao động/BOT/GTGT)."
+    }
+   ],
+   "legal_questions": [
+    "Người đại diện theo ủy quyền sau thay đổi: dựng nested-grid 14 cột đúng header nối hay editable-grid phẳng? Row contract theo loại chủ sở hữu (TNHH/CTCP tổ chức nước ngoài)?",
+    "Hai ngữ cảnh tài sản góp vốn (sau thay đổi vốn điều lệ vs vốn đầu tư): xác nhận tách semantic key + draft riêng, không đồng bộ data?",
+    "Nguồn vốn điều lệ sau thay đổi: Tổng cộng/Tỷ lệ computed và đối chiếu vốn điều lệ sau thay đổi?"
+   ]
+  }
+ ],
+ "unclassified_signatures": [],
+ "counts": {
+  "forms": 12,
+  "by_form_status": {
+   "BLOCKED_LEGAL_REVIEW": 11,
+   "TABLE_COMPLETE": 1
+  },
+  "sections_total": 51,
+  "sections_by_kind": {
+   "editable-grid": 14,
+   "fixed-matrix": 34,
+   "nested-grid": 2,
+   "unknown": 1
+  },
+  "sections_by_status": {
+   "already_complete": 29,
+   "missing_grid": 16,
+   "partial": 1,
+   "partial_columns": 5
+  },
+  "legal_questions_total": 20
+ }
+}

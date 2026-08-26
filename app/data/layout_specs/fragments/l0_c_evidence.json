@@ -1,0 +1,3779 @@
+{
+ "PLII_M01": {
+  "ten_mau": "Giấy đề nghị đăng ký hộ kinh doanh",
+  "n_blocks": 69,
+  "block_schema_keys": [
+   "align",
+   "blankRows",
+   "cols",
+   "headerRows",
+   "key",
+   "label",
+   "loop",
+   "rows",
+   "runs",
+   "t"
+  ],
+  "source_indicator": [
+   {
+    "idx": 0,
+    "align": "left",
+    "text": "PL2 - Mau so 1: Giấy đề nghị đăng ký hộ kinh doanh"
+   }
+  ],
+  "form_number": [
+   {
+    "idx": 1,
+    "align": "left",
+    "text": "Mẫu số 1"
+   }
+  ],
+  "newline_blocks": [
+   {
+    "idx": 2,
+    "align": "center",
+    "lines": 3,
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM ⏎ Độc lập - Tự do - Hạnh phúc ⏎ -----------------"
+   },
+   {
+    "idx": 58,
+    "align": "center",
+    "lines": 2,
+    "text": "CHỦ HỘ KINH DOANH ⏎ (Ký và ghi họ tên)6"
+   }
+  ],
+  "docx_br_paras": [
+   {
+    "i": 2,
+    "br": 2,
+    "jc": "center",
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc-----------------"
+   },
+   {
+    "i": 148,
+    "br": 1,
+    "jc": "center",
+    "text": "CHỦ HỘ KINH DOANH(Ký và ghi họ tên)6"
+   }
+  ],
+  "glue_footnote_refs": [
+   {
+    "idx": 33,
+    "match": "h1",
+    "ctx": "3. Ngành, nghề kinh doanh1:"
+   },
+   {
+    "idx": 43,
+    "match": "g4",
+    "ctx": "5.2. Ngày bắt đầu hoạt động4 (trường hợp hộ "
+   },
+   {
+    "idx": 51,
+    "match": "h5",
+    "ctx": "hộ gia đình đăng ký hộ kinh doanh5:"
+   },
+   {
+    "idx": 58,
+    "match": ")6",
+    "ctx": " HỘ KINH DOANH (Ký và ghi họ tên)6"
+   }
+  ],
+  "footnote_body_blocks": [
+   {
+    "idx": 63,
+    "text": "2 Ghi tên ngành và mã ngành cấp bốn trong Hệ thống ngành kinh tế Việt Nam đối với ngành, nghề kinh doanh chính. Đối với các ngành, nghề kinh"
+   },
+   {
+    "idx": 64,
+    "text": "3 Đánh dấu X để chọn một trong các ngành, nghề đã kê khai làm ngành, nghề kinh doanh chính."
+   },
+   {
+    "idx": 65,
+    "text": "4 Trường hợp hộ kinh doanh được cấp Giấy chứng nhận đăng ký hộ kinh doanh sau ngày bắt đầu hoạt động đã kê khai thì ngày bắt đầu hoạt động l"
+   },
+   {
+    "idx": 68,
+    "text": "6 Chủ hộ kinh doanh ký trực tiếp vào phần này."
+   }
+  ],
+  "docx_superscript_runs": [
+   {
+    "p_idx": 33,
+    "va": "superscript",
+    "text": "1"
+   },
+   {
+    "p_idx": 71,
+    "va": "superscript",
+    "text": "4"
+   },
+   {
+    "p_idx": 79,
+    "va": "superscript",
+    "text": "5"
+   },
+   {
+    "p_idx": 148,
+    "va": "superscript",
+    "text": "6"
+   },
+   {
+    "p_idx": 149,
+    "va": "superscript",
+    "text": "_______________________________________"
+   },
+   {
+    "p_idx": 150,
+    "va": "superscript",
+    "text": "1"
+   },
+   {
+    "p_idx": 153,
+    "va": "superscript",
+    "text": "2"
+   },
+   {
+    "p_idx": 154,
+    "va": "superscript",
+    "text": "3"
+   },
+   {
+    "p_idx": 155,
+    "va": "superscript",
+    "text": "4"
+   },
+   {
+    "p_idx": 156,
+    "va": "superscript",
+    "text": "5"
+   },
+   {
+    "p_idx": 158,
+    "va": "superscript",
+    "text": "6"
+   }
+  ],
+  "docx_separator_as_superscript": [
+   {
+    "p_idx": 149,
+    "va": "superscript",
+    "text": "_______________________________________"
+   }
+  ],
+  "docx_empty_superscript": [],
+  "docx_footnote_reference_count": 0,
+  "docx_has_footnotes_xml": false,
+  "title": [
+   {
+    "idx": 4,
+    "align": "center",
+    "text": "GIẤY ĐỀ NGHỊ ĐĂNG KÝ HỘ KINH DOANH"
+   }
+  ],
+  "salutation": [
+   {
+    "idx": 5,
+    "align": "center",
+    "text": "Kính gửi: (Cơ quan đăng ký kinh doanh cấp xã) <input:co_quan_dkkd>"
+   }
+  ],
+  "date_line": [
+   {
+    "idx": 3,
+    "align": "right",
+    "text": "<input:dia_diem_ky>, ngày <input:ngay_ky_vb>tháng <input:thang_ky_vb> năm <input:nam_ky_vb>"
+   },
+   {
+    "idx": 7,
+    "align": "left",
+    "text": "Sinh ngày: <input:ngay_sinh>/<input:thang_sinh>/<input:nam_sinh>\t"
+   },
+   {
+    "idx": 43,
+    "align": "left",
+    "text": "5.2. Ngày bắt đầu hoạt động4 (trường hợp hộ kinh doanh dự kiến bắt đầu hoạt động kể từ ngày được cấp Giấy chứn"
+   }
+  ],
+  "signature": [
+   {
+    "idx": 21,
+    "align": "left",
+    "text": "Đăng ký hộ kinh doanh do tôi là chủ hộ với các nội dung sau:"
+   },
+   {
+    "idx": 55,
+    "align": "left",
+    "text": "- Bản thân (trường hợp hộ kinh doanh do một cá nhân đăng ký thành lập)/Bản thân và các thà"
+   },
+   {
+    "idx": 58,
+    "align": "center",
+    "text": "CHỦ HỘ KINH DOANH (Ký và ghi họ tên)6"
+   },
+   {
+    "idx": 66,
+    "align": "left",
+    "text": "5 - Chỉ kê khai trong trường hợp chủ thể thành lập hộ kinh doanh là các thành viên hộ gia "
+   },
+   {
+    "idx": 67,
+    "align": "left",
+    "text": "- Trường hợp chủ hộ kinh doanh và các thành viên hộ gia đình đăng ký hộ kinh doanh kê khai"
+   },
+   {
+    "idx": 68,
+    "align": "left",
+    "text": "6 Chủ hộ kinh doanh ký trực tiếp vào phần này."
+   }
+  ],
+  "tables_docx": 2,
+  "flattened_table_header_blocks": [],
+  "special_ind_docx": [],
+  "spacing_para_count_docx": 72
+ },
+ "PLII_M02": {
+  "ten_mau": "Giấy đề nghị đăng ký thay đổi nội dung đăng ký hộ kinh doanh",
+  "n_blocks": 151,
+  "block_schema_keys": [
+   "align",
+   "blankRows",
+   "cols",
+   "headerRows",
+   "key",
+   "label",
+   "loop",
+   "rows",
+   "runs",
+   "t"
+  ],
+  "source_indicator": [
+   {
+    "idx": 0,
+    "align": "left",
+    "text": "PL2 - Mau so 2: Giấy đề nghị đăng ký thay đổi nội dung đăng ký hộ kinh doanh"
+   }
+  ],
+  "form_number": [
+   {
+    "idx": 1,
+    "align": "left",
+    "text": "Mẫu số 2"
+   }
+  ],
+  "newline_blocks": [
+   {
+    "idx": 2,
+    "align": "center",
+    "lines": 2,
+    "text": "TÊN HỘ KINH DOANH ⏎ -------"
+   },
+   {
+    "idx": 3,
+    "align": "center",
+    "lines": 3,
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM ⏎ Độc lập - Tự do - Hạnh phúc ⏎ ---------------"
+   },
+   {
+    "idx": 132,
+    "align": "center",
+    "lines": 2,
+    "text": "CHỦ HỘ KINH DOANH ⏎ (Ký và ghi họ tên)10"
+   }
+  ],
+  "docx_br_paras": [
+   {
+    "i": 2,
+    "br": 1,
+    "jc": "center",
+    "text": "TÊN HỘ KINH DOANH-------"
+   },
+   {
+    "i": 3,
+    "br": 2,
+    "jc": "center",
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc---------------"
+   },
+   {
+    "i": 254,
+    "br": 1,
+    "jc": "center",
+    "text": "CHỦ HỘ KINH DOANH(Ký và ghi họ tên)10"
+   }
+  ],
+  "glue_footnote_refs": [
+   {
+    "idx": 71,
+    "match": "i2",
+    "ctx": "ký hộ kinh doanh sau khi thay đổi2:"
+   },
+   {
+    "idx": 72,
+    "match": "ý12",
+    "ctx": "ơi thường trúNơi ở hiện tạiChữ ký12345678910"
+   },
+   {
+    "idx": 77,
+    "match": "H3",
+    "ctx": "Ý THAY ĐỔI NGÀNH, NGHỀ KINH DOANH3"
+   },
+   {
+    "idx": 82,
+    "match": "h6",
+    "ctx": " đổi ngành, nghề kinh doanh chính6 (kê khai trong "
+   },
+   {
+    "idx": 109,
+    "match": "h7",
+    "ctx": "3. Ngành, nghề kinh doanh7: "
+   },
+   {
+    "idx": 128,
+    "match": "h9",
+    "ctx": "hộ gia đình đăng ký hộ kinh doanh9:"
+   },
+   {
+    "idx": 129,
+    "match": "ý12",
+    "ctx": "ơi thường trúNơi ở hiện tạiChữ ký12345678910Hộ kinh"
+   },
+   {
+    "idx": 132,
+    "match": ")10",
+    "ctx": " HỘ KINH DOANH (Ký và ghi họ tên)10"
+   }
+  ],
+  "footnote_body_blocks": [
+   {
+    "idx": 134,
+    "text": "1 Trường hợp hộ kinh doanh đăng ký thay đổi trụ sở của hộ kinh doanh thì ghi tên Cơ quan đăng ký kinh doanh cấp xã nơi hộ kinh doanh dự định"
+   },
+   {
+    "idx": 141,
+    "text": "6 Ghi tên ngành và mã ngành cấp bốn trong Hệ thống ngành kinh tế Việt Nam."
+   },
+   {
+    "idx": 145,
+    "text": "8 Ghi tên ngành và mã ngành cấp bốn trong Hệ thống ngành kinh tế Việt Nam đối với ngành, nghề kinh doanh chính. Đối với các ngành, nghề kinh"
+   },
+   {
+    "idx": 146,
+    "text": "9 Đánh dấu X để chọn một trong các ngành, nghề đã kê khai làm ngành, nghề kinh doanh chính."
+   }
+  ],
+  "docx_superscript_runs": [
+   {
+    "p_idx": 10,
+    "va": "superscript",
+    "text": "1"
+   },
+   {
+    "p_idx": 78,
+    "va": "superscript",
+    "text": "2"
+   },
+   {
+    "p_idx": 84,
+    "va": "superscript",
+    "text": "3"
+   },
+   {
+    "p_idx": 145,
+    "va": "superscript",
+    "text": "6"
+   },
+   {
+    "p_idx": 201,
+    "va": "superscript",
+    "text": "7"
+   },
+   {
+    "p_idx": 248,
+    "va": "superscript",
+    "text": "9"
+   },
+   {
+    "p_idx": 254,
+    "va": "superscript",
+    "text": "10"
+   },
+   {
+    "p_idx": 255,
+    "va": "superscript",
+    "text": "_______________________________________"
+   },
+   {
+    "p_idx": 256,
+    "va": "superscript",
+    "text": "1"
+   },
+   {
+    "p_idx": 257,
+    "va": "superscript",
+    "text": "2"
+   },
+   {
+    "p_idx": 259,
+    "va": "superscript",
+    "text": "3"
+   },
+   {
+    "p_idx": 262,
+    "va": "superscript",
+    "text": "4, 5 "
+   },
+   {
+    "p_idx": 263,
+    "va": "superscript",
+    "text": "6"
+   },
+   {
+    "p_idx": 264,
+    "va": "superscript",
+    "text": "7"
+   },
+   {
+    "p_idx": 267,
+    "va": "superscript",
+    "text": "8"
+   },
+   {
+    "p_idx": 268,
+    "va": "superscript",
+    "text": "9"
+   },
+   {
+    "p_idx": 269,
+    "va": "superscript",
+    "text": "9"
+   },
+   {
+    "p_idx": 271,
+    "va": "superscript",
+    "text": "10"
+   }
+  ],
+  "docx_separator_as_superscript": [
+   {
+    "p_idx": 255,
+    "va": "superscript",
+    "text": "_______________________________________"
+   }
+  ],
+  "docx_empty_superscript": [],
+  "docx_footnote_reference_count": 0,
+  "docx_has_footnotes_xml": false,
+  "title": [
+   {
+    "idx": 6,
+    "align": "center",
+    "text": "GIẤY ĐỀ NGHỊ"
+   }
+  ],
+  "salutation": [
+   {
+    "idx": 9,
+    "align": "center",
+    "text": "Kính gửi: (Cơ quan đăng ký kinh doanh cấp xã) <input:co_quan_dkkd> 1"
+   }
+  ],
+  "date_line": [
+   {
+    "idx": 5,
+    "align": "right",
+    "text": "<input:dia_diem_ky>, ngày<input:ngay_ky_vb> tháng<input:thang_ky_vb> năm <input:nam_ky_vb>"
+   },
+   {
+    "idx": 40,
+    "align": "left",
+    "text": "Sinh ngày: <input:ngay_sinh>/<input:thang_sinh>/<input:nam_sinh>"
+   },
+   {
+    "idx": 56,
+    "align": "left",
+    "text": "Sinh ngày: <input:ngay_sinh>/<input:thang_sinh>/<input:nam_sinh>"
+   }
+  ],
+  "signature": [
+   {
+    "idx": 33,
+    "align": "center",
+    "text": "ĐĂNG KÝ THAY ĐỔI CHỦ HỘ KINH DOANH"
+   },
+   {
+    "idx": 34,
+    "align": "left",
+    "text": "Thay đổi chủ hộ kinh doanh do (đánh dấu X vào ô thích hợp):"
+   },
+   {
+    "idx": 36,
+    "align": "left",
+    "text": "Chủ hộ kinh doanh chết hoặc bị Tòa án tuyên bố đã chết, mất tích, bị hạn chế hoặc mất năng"
+   },
+   {
+    "idx": 38,
+    "align": "left",
+    "text": "1. Chủ hộ kinh doanh trước khi thay đổi:"
+   },
+   {
+    "idx": 54,
+    "align": "left",
+    "text": "2. Chủ hộ kinh doanh sau khi thay đổi:"
+   },
+   {
+    "idx": 130,
+    "align": "left",
+    "text": "Trường hợp thay đổi danh sách thành viên hộ gia đình đăng ký hộ kinh doanh mà chủ hộ kinh "
+   },
+   {
+    "idx": 131,
+    "align": "left",
+    "text": "Chủ hộ kinh doanh và các thành viên hộ gia đình đăng ký hộ kinh doanh cam kết đồng ý cho C"
+   },
+   {
+    "idx": 132,
+    "align": "center",
+    "text": "CHỦ HỘ KINH DOANH (Ký và ghi họ tên)10"
+   },
+   {
+    "idx": 135,
+    "align": "left",
+    "text": "2 - Kê khai cả thông tin của chủ hộ tại Bảng này;"
+   },
+   {
+    "idx": 136,
+    "align": "left",
+    "text": "- Trường hợp chủ hộ kinh doanh và các thành viên hộ gia đình đăng ký hộ kinh doanh kê khai"
+   },
+   {
+    "idx": 147,
+    "align": "left",
+    "text": "9 - Chỉ kê khai trong trường hợp chủ thể thành lập hộ kinh doanh là các thành viên hộ gia "
+   },
+   {
+    "idx": 148,
+    "align": "left",
+    "text": "- Trường hợp chủ hộ kinh doanh và các thành viên hộ gia đình đăng ký hộ kinh doanh kê khai"
+   },
+   {
+    "idx": 149,
+    "align": "left",
+    "text": "10 Chủ hộ kinh doanh ký trực tiếp vào phần này."
+   },
+   {
+    "idx": 150,
+    "align": "left",
+    "text": "Trường hợp thay đổi chủ hộ kinh doanh thì chủ hộ kinh doanh mới ký trực tiếp vào phần này."
+   }
+  ],
+  "tables_docx": 4,
+  "flattened_table_header_blocks": [
+   {
+    "idx": 72,
+    "text": "STTHọ tênNgày, tháng, năm sinhSố định danh cá nhânGiới tínhQuốc tịchDân tộcNơi thường trúNơi ở hiện tạiChữ ký12345678910"
+   },
+   {
+    "idx": 129,
+    "text": "STTHọ tênNgày, tháng, năm sinhSố định danh cá nhânGiới tínhQuốc tịchDân tộcNơi thường trúNơi ở hiện tạiChữ ký12345678910Hộ kinh do"
+   }
+  ],
+  "special_ind_docx": [],
+  "spacing_para_count_docx": 178
+ },
+ "PLII_M03": {
+  "ten_mau": "Giấy đề nghị đăng ký tạm ngừng kinh doanh/tiếp tục kinh doanh trước thời hạn đã đăng ký của hộ kinh doanh",
+  "n_blocks": 22,
+  "block_schema_keys": [
+   "align",
+   "runs",
+   "t"
+  ],
+  "source_indicator": [
+   {
+    "idx": 0,
+    "align": "left",
+    "text": "PL2 - Mau so 3: Giấy đề nghị đăng ký tạm ngừng kinh doanh/tiếp tục kinh doanh trước thời hạn đã đăng ký của hộ kinh doan"
+   }
+  ],
+  "form_number": [
+   {
+    "idx": 1,
+    "align": "left",
+    "text": "Mẫu số 3"
+   }
+  ],
+  "newline_blocks": [
+   {
+    "idx": 2,
+    "align": "center",
+    "lines": 2,
+    "text": "TÊN HỘ KINH DOANH ⏎ -------"
+   },
+   {
+    "idx": 3,
+    "align": "center",
+    "lines": 3,
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM ⏎ Độc lập - Tự do - Hạnh phúc ⏎ ---------------"
+   },
+   {
+    "idx": 19,
+    "align": "center",
+    "lines": 2,
+    "text": "CHỦ HỘ KINH DOANH ⏎ (Ký và ghi họ tên)1"
+   }
+  ],
+  "docx_br_paras": [
+   {
+    "i": 2,
+    "br": 1,
+    "jc": "center",
+    "text": "TÊN HỘ KINH DOANH-------"
+   },
+   {
+    "i": 3,
+    "br": 2,
+    "jc": "center",
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc---------------"
+   },
+   {
+    "i": 22,
+    "br": 1,
+    "jc": "center",
+    "text": "CHỦ HỘ KINH DOANH(Ký và ghi họ tên)1"
+   }
+  ],
+  "glue_footnote_refs": [
+   {
+    "idx": 19,
+    "match": ")1",
+    "ctx": " HỘ KINH DOANH (Ký và ghi họ tên)1"
+   }
+  ],
+  "footnote_body_blocks": [],
+  "docx_superscript_runs": [
+   {
+    "p_idx": 22,
+    "va": "superscript",
+    "text": "1"
+   },
+   {
+    "p_idx": 23,
+    "va": "superscript",
+    "text": "_______________________________________"
+   }
+  ],
+  "docx_separator_as_superscript": [
+   {
+    "p_idx": 23,
+    "va": "superscript",
+    "text": "_______________________________________"
+   }
+  ],
+  "docx_empty_superscript": [],
+  "docx_footnote_reference_count": 0,
+  "docx_has_footnotes_xml": false,
+  "title": [
+   {
+    "idx": 6,
+    "align": "center",
+    "text": "GIẤY ĐỀ NGHỊ"
+   }
+  ],
+  "salutation": [
+   {
+    "idx": 8,
+    "align": "center",
+    "text": "Kính gửi: (Cơ quan đăng ký kinh doanh cấp xã) <input:co_quan_dkkd>"
+   }
+  ],
+  "date_line": [
+   {
+    "idx": 5,
+    "align": "right",
+    "text": "<input:dia_diem_ky>, ngày<input:ngay_ky_vb> tháng<input:thang_ky_vb> năm <input:nam_ky_vb>"
+   },
+   {
+    "idx": 13,
+    "align": "left",
+    "text": "Thời gian tạm ngừng kinh doanh: kể từ ngày <input:tu_ngay> đến hết ngày <input:den_ngay>"
+   },
+   {
+    "idx": 16,
+    "align": "left",
+    "text": "Thời gian tiếp tục kinh doanh: kể từ ngày <input:tu_ngay>"
+   }
+  ],
+  "signature": [
+   {
+    "idx": 19,
+    "align": "center",
+    "text": "CHỦ HỘ KINH DOANH (Ký và ghi họ tên)1"
+   },
+   {
+    "idx": 21,
+    "align": "left",
+    "text": " Chủ hộ kinh doanh ký trực tiếp vào phần này."
+   }
+  ],
+  "tables_docx": 0,
+  "flattened_table_header_blocks": [],
+  "special_ind_docx": [],
+  "spacing_para_count_docx": 24
+ },
+ "PLII_M04": {
+  "ten_mau": "Thông báo về việc chấm dứt hoạt động hộ kinh doanh",
+  "n_blocks": 16,
+  "block_schema_keys": [
+   "align",
+   "runs",
+   "t"
+  ],
+  "source_indicator": [
+   {
+    "idx": 0,
+    "align": "left",
+    "text": "PL2 - Mau so 4: Thông báo về việc chấm dứt hoạt động hộ kinh doanh"
+   }
+  ],
+  "form_number": [
+   {
+    "idx": 1,
+    "align": "left",
+    "text": "Mẫu số 4"
+   }
+  ],
+  "newline_blocks": [
+   {
+    "idx": 2,
+    "align": "center",
+    "lines": 2,
+    "text": "TÊN HỘ KINH DOANH ⏎ -------"
+   },
+   {
+    "idx": 3,
+    "align": "center",
+    "lines": 3,
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM ⏎ Độc lập - Tự do - Hạnh phúc ⏎ ---------------"
+   },
+   {
+    "idx": 13,
+    "align": "center",
+    "lines": 2,
+    "text": "CHỦ HỘ KINH DOANH/NGƯỜI THỪA KẾ ⏎ (Ký và ghi họ tên)1"
+   }
+  ],
+  "docx_br_paras": [
+   {
+    "i": 2,
+    "br": 1,
+    "jc": "center",
+    "text": "TÊN HỘ KINH DOANH-------"
+   },
+   {
+    "i": 3,
+    "br": 2,
+    "jc": "center",
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc---------------"
+   },
+   {
+    "i": 16,
+    "br": 1,
+    "jc": "center",
+    "text": "CHỦ HỘ KINH DOANH/NGƯỜI THỪA KẾ(Ký và ghi họ tên)1"
+   }
+  ],
+  "glue_footnote_refs": [
+   {
+    "idx": 13,
+    "match": ")1",
+    "ctx": "/NGƯỜI THỪA KẾ (Ký và ghi họ tên)1"
+   }
+  ],
+  "footnote_body_blocks": [],
+  "docx_superscript_runs": [
+   {
+    "p_idx": 16,
+    "va": "superscript",
+    "text": "1"
+   },
+   {
+    "p_idx": 17,
+    "va": "superscript",
+    "text": "_______________________________________"
+   }
+  ],
+  "docx_separator_as_superscript": [
+   {
+    "p_idx": 17,
+    "va": "superscript",
+    "text": "_______________________________________"
+   }
+  ],
+  "docx_empty_superscript": [],
+  "docx_footnote_reference_count": 0,
+  "docx_has_footnotes_xml": false,
+  "title": [
+   {
+    "idx": 6,
+    "align": "center",
+    "text": "THÔNG BÁO"
+   }
+  ],
+  "salutation": [
+   {
+    "idx": 8,
+    "align": "center",
+    "text": "Kính gửi: (Cơ quan đăng ký kinh doanh cấp xã) <input:co_quan_dkkd>"
+   }
+  ],
+  "date_line": [
+   {
+    "idx": 5,
+    "align": "right",
+    "text": "<input:dia_diem_ky>, ngày<input:ngay_ky_vb> tháng<input:thang_ky_vb> năm <input:nam_ky_vb>"
+   }
+  ],
+  "signature": [
+   {
+    "idx": 13,
+    "align": "center",
+    "text": "CHỦ HỘ KINH DOANH/NGƯỜI THỪA KẾ (Ký và ghi họ tên)1"
+   },
+   {
+    "idx": 15,
+    "align": "left",
+    "text": " Chủ hộ kinh doanh hoặc người thừa kế/người quản lý tài sản của chủ hộ kinh doanh ký trực "
+   }
+  ],
+  "tables_docx": 0,
+  "flattened_table_header_blocks": [],
+  "special_ind_docx": [],
+  "spacing_para_count_docx": 18
+ },
+ "PLII_M05": {
+  "ten_mau": "Giấy đề nghị cấp lại Giấy chứng nhận đăng ký hộ kinh doanh",
+  "n_blocks": 17,
+  "block_schema_keys": [
+   "align",
+   "runs",
+   "t"
+  ],
+  "source_indicator": [
+   {
+    "idx": 0,
+    "align": "left",
+    "text": "PL2 - Mau so 5: Giấy đề nghị cấp lại Giấy chứng nhận đăng ký hộ kinh doanh"
+   }
+  ],
+  "form_number": [
+   {
+    "idx": 1,
+    "align": "left",
+    "text": "Mẫu số 5"
+   }
+  ],
+  "newline_blocks": [
+   {
+    "idx": 2,
+    "align": "center",
+    "lines": 2,
+    "text": "TÊN HỘ KINH DOANH ⏎ --------------"
+   },
+   {
+    "idx": 3,
+    "align": "center",
+    "lines": 3,
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM ⏎ Độc lập - Tự do - Hạnh phúc ⏎ ----------------"
+   },
+   {
+    "idx": 14,
+    "align": "center",
+    "lines": 2,
+    "text": "CHỦ HỘ KINH DOANH ⏎ (Ký và ghi họ tên)1"
+   }
+  ],
+  "docx_br_paras": [
+   {
+    "i": 2,
+    "br": 1,
+    "jc": "center",
+    "text": "TÊN HỘ KINH DOANH--------------"
+   },
+   {
+    "i": 3,
+    "br": 2,
+    "jc": "center",
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc----------------"
+   },
+   {
+    "i": 17,
+    "br": 1,
+    "jc": "center",
+    "text": "CHỦ HỘ KINH DOANH(Ký và ghi họ tên)1"
+   }
+  ],
+  "glue_footnote_refs": [
+   {
+    "idx": 14,
+    "match": ")1",
+    "ctx": " HỘ KINH DOANH (Ký và ghi họ tên)1"
+   }
+  ],
+  "footnote_body_blocks": [
+   {
+    "idx": 16,
+    "text": "1 Chủ hộ kinh doanh ký trực tiếp vào phần này."
+   }
+  ],
+  "docx_superscript_runs": [
+   {
+    "p_idx": 2,
+    "va": "superscript",
+    "text": ""
+   },
+   {
+    "p_idx": 3,
+    "va": "superscript",
+    "text": ""
+   },
+   {
+    "p_idx": 17,
+    "va": "superscript",
+    "text": "1"
+   },
+   {
+    "p_idx": 18,
+    "va": "superscript",
+    "text": "_______________________________________"
+   },
+   {
+    "p_idx": 19,
+    "va": "superscript",
+    "text": "1"
+   }
+  ],
+  "docx_separator_as_superscript": [
+   {
+    "p_idx": 18,
+    "va": "superscript",
+    "text": "_______________________________________"
+   }
+  ],
+  "docx_empty_superscript": [
+   {
+    "p_idx": 2
+   },
+   {
+    "p_idx": 3
+   }
+  ],
+  "docx_footnote_reference_count": 0,
+  "docx_has_footnotes_xml": false,
+  "title": [
+   {
+    "idx": 6,
+    "align": "center",
+    "text": "GIẤY ĐỀ NGHỊ"
+   }
+  ],
+  "salutation": [
+   {
+    "idx": 8,
+    "align": "center",
+    "text": "Kính gửi: (Cơ quan đăng ký kinh doanh cấp xã) <input:co_quan_dkkd>"
+   }
+  ],
+  "date_line": [
+   {
+    "idx": 5,
+    "align": "right",
+    "text": "<input:dia_diem_ky>, ngày<input:ngay_ky_vb> tháng<input:thang_ky_vb> năm <input:nam_ky_vb>"
+   }
+  ],
+  "signature": [
+   {
+    "idx": 14,
+    "align": "center",
+    "text": "CHỦ HỘ KINH DOANH (Ký và ghi họ tên)1"
+   },
+   {
+    "idx": 16,
+    "align": "left",
+    "text": "1 Chủ hộ kinh doanh ký trực tiếp vào phần này."
+   }
+  ],
+  "tables_docx": 0,
+  "flattened_table_header_blocks": [],
+  "special_ind_docx": [],
+  "spacing_para_count_docx": 19
+ },
+ "PLII_M06": {
+  "ten_mau": "Giấy đề nghị dừng thực hiện thủ tục đăng ký hộ kinh doanh",
+  "n_blocks": 32,
+  "block_schema_keys": [
+   "align",
+   "runs",
+   "t"
+  ],
+  "source_indicator": [
+   {
+    "idx": 0,
+    "align": "left",
+    "text": "PL2 - Mau so 6: Giấy đề nghị dừng thực hiện thủ tục đăng ký hộ kinh doanh"
+   }
+  ],
+  "form_number": [
+   {
+    "idx": 1,
+    "align": "left",
+    "text": "Mẫu số 6"
+   }
+  ],
+  "newline_blocks": [
+   {
+    "idx": 2,
+    "align": "center",
+    "lines": 2,
+    "text": "TÊN HỘ KINH DOANH ⏎ -------------"
+   },
+   {
+    "idx": 3,
+    "align": "center",
+    "lines": 3,
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM ⏎ Độc lập - Tự do - Hạnh phúc ⏎ -------------------"
+   },
+   {
+    "idx": 28,
+    "align": "center",
+    "lines": 2,
+    "text": "CHỦ HỘ KINH DOANH ⏎ (Ký và ghi họ tên)1"
+   }
+  ],
+  "docx_br_paras": [
+   {
+    "i": 2,
+    "br": 1,
+    "jc": "center",
+    "text": "TÊN HỘ KINH DOANH-------------"
+   },
+   {
+    "i": 3,
+    "br": 2,
+    "jc": "center",
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc-------------------"
+   },
+   {
+    "i": 31,
+    "br": 1,
+    "jc": "center",
+    "text": "CHỦ HỘ KINH DOANH(Ký và ghi họ tên)1"
+   }
+  ],
+  "glue_footnote_refs": [
+   {
+    "idx": 24,
+    "match": "h1",
+    "ctx": "Là chủ hộ kinh doanh1 (Tên hộ kinh do"
+   },
+   {
+    "idx": 28,
+    "match": ")1",
+    "ctx": " HỘ KINH DOANH (Ký và ghi họ tên)1"
+   }
+  ],
+  "footnote_body_blocks": [
+   {
+    "idx": 30,
+    "text": "1 Trường hợp chủ hộ kinh doanh là người mới được các thành viên hộ gia đình đăng ký hộ kinh doanh ủy quyền làm chủ hộ kinh doanh thì phải kè"
+   },
+   {
+    "idx": 31,
+    "text": "1 Chủ hộ kinh doanh ký trực tiếp vào phần này."
+   }
+  ],
+  "docx_superscript_runs": [
+   {
+    "p_idx": 3,
+    "va": "superscript",
+    "text": ""
+   },
+   {
+    "p_idx": 25,
+    "va": "superscript",
+    "text": "1"
+   },
+   {
+    "p_idx": 31,
+    "va": "superscript",
+    "text": "1"
+   },
+   {
+    "p_idx": 32,
+    "va": "superscript",
+    "text": "_______________________________________"
+   },
+   {
+    "p_idx": 33,
+    "va": "superscript",
+    "text": "1"
+   },
+   {
+    "p_idx": 34,
+    "va": "superscript",
+    "text": "1"
+   }
+  ],
+  "docx_separator_as_superscript": [
+   {
+    "p_idx": 32,
+    "va": "superscript",
+    "text": "_______________________________________"
+   }
+  ],
+  "docx_empty_superscript": [
+   {
+    "p_idx": 3
+   }
+  ],
+  "docx_footnote_reference_count": 0,
+  "docx_has_footnotes_xml": false,
+  "title": [
+   {
+    "idx": 6,
+    "align": "center",
+    "text": "GIẤY ĐỀ NGHỊ"
+   }
+  ],
+  "salutation": [
+   {
+    "idx": 8,
+    "align": "center",
+    "text": "Kính gửi: (Cơ quan đăng ký kinh doanh cấp xã) <input:co_quan_dkkd>"
+   }
+  ],
+  "date_line": [
+   {
+    "idx": 5,
+    "align": "right",
+    "text": "<input:dia_diem_ky>, ngày<input:ngay_ky_vb> tháng<input:thang_ky_vb> năm <input:nam_ky_vb>"
+   },
+   {
+    "idx": 10,
+    "align": "left",
+    "text": "Sinh ngày: <input:ngay_sinh>/<input:thang_sinh>/<input:nam_sinh>"
+   },
+   {
+    "idx": 25,
+    "align": "left",
+    "text": "Tôi đề nghị (Cơ quan đăng ký kinh doanh cấp xã) <input:co_quan_dkkd> dừng thực hiện thủ tục đăng ký hộ kinh do"
+   }
+  ],
+  "signature": [
+   {
+    "idx": 24,
+    "align": "left",
+    "text": "Là chủ hộ kinh doanh1 (Tên hộ kinh doanh) .............................................."
+   },
+   {
+    "idx": 28,
+    "align": "center",
+    "text": "CHỦ HỘ KINH DOANH (Ký và ghi họ tên)1"
+   },
+   {
+    "idx": 30,
+    "align": "left",
+    "text": "1 Trường hợp chủ hộ kinh doanh là người mới được các thành viên hộ gia đình đăng ký hộ kin"
+   },
+   {
+    "idx": 31,
+    "align": "left",
+    "text": "1 Chủ hộ kinh doanh ký trực tiếp vào phần này."
+   }
+  ],
+  "tables_docx": 0,
+  "flattened_table_header_blocks": [],
+  "special_ind_docx": [],
+  "spacing_para_count_docx": 34
+ },
+ "PLII_M07": {
+  "ten_mau": "Giấy chứng nhận đăng ký hộ kinh doanh",
+  "n_blocks": 35,
+  "block_schema_keys": [
+   "align",
+   "blankRows",
+   "cols",
+   "headerRows",
+   "loop",
+   "rows",
+   "runs",
+   "t"
+  ],
+  "source_indicator": [
+   {
+    "idx": 0,
+    "align": "left",
+    "text": "PL2 - Mau so 7: Giấy chứng nhận đăng ký hộ kinh doanh"
+   }
+  ],
+  "form_number": [
+   {
+    "idx": 1,
+    "align": "left",
+    "text": "Mẫu số 7"
+   }
+  ],
+  "newline_blocks": [
+   {
+    "idx": 2,
+    "align": "center",
+    "lines": 3,
+    "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH ⏎ CẤP XÃ ⏎ -----------"
+   },
+   {
+    "idx": 3,
+    "align": "center",
+    "lines": 3,
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM ⏎ Độc lập - Tự do - Hạnh phúc ⏎ -----------------"
+   },
+   {
+    "idx": 34,
+    "align": "center",
+    "lines": 2,
+    "text": "TRƯỞNG PHÒNG ⏎ (Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "docx_br_paras": [
+   {
+    "i": 2,
+    "br": 2,
+    "jc": "center",
+    "text": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP XÃ-----------"
+   },
+   {
+    "i": 3,
+    "br": 2,
+    "jc": "center",
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc-----------------"
+   },
+   {
+    "i": 72,
+    "br": 1,
+    "jc": "center",
+    "text": "TRƯỞNG PHÒNG(Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "glue_footnote_refs": [],
+  "footnote_body_blocks": [],
+  "docx_superscript_runs": [
+   {
+    "p_idx": 2,
+    "va": "superscript",
+    "text": ""
+   },
+   {
+    "p_idx": 3,
+    "va": "superscript",
+    "text": ""
+   }
+  ],
+  "docx_separator_as_superscript": [],
+  "docx_empty_superscript": [
+   {
+    "p_idx": 2
+   },
+   {
+    "p_idx": 3
+   }
+  ],
+  "docx_footnote_reference_count": 0,
+  "docx_has_footnotes_xml": false,
+  "title": [
+   {
+    "idx": 4,
+    "align": "center",
+    "text": "GIẤY CHỨNG NHẬN ĐĂNG KÝ HỘ KINH DOANH"
+   }
+  ],
+  "salutation": [],
+  "date_line": [
+   {
+    "idx": 6,
+    "align": "center",
+    "text": "Đăng ký lần đầu, ngày<input:dk_lan_dau_ngay>tháng<input:dk_lan_dau_thang>năm<input:dk_lan_dau_nam>"
+   },
+   {
+    "idx": 7,
+    "align": "center",
+    "text": "Đăng ký thay đổi lần thứ: <input:dk_thay_doi_lan_thu>, ngày<input:dk_thay_doi_ngay>tháng<input:dk_thay_doi_tha"
+   },
+   {
+    "idx": 22,
+    "align": "left",
+    "text": "Sinh ngày: <input:ngay_sinh>/<input:thang_sinh>/<input:nam_sinh> Dân tộc: <input:chu_hkd.dan_toc> Quốc tịch: <"
+   }
+  ],
+  "signature": [
+   {
+    "idx": 19,
+    "align": "left",
+    "text": "6. Thông tin về chủ hộ kinh doanh:"
+   },
+   {
+    "idx": 34,
+    "align": "center",
+    "text": "TRƯỞNG PHÒNG (Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "tables_docx": 1,
+  "flattened_table_header_blocks": [],
+  "special_ind_docx": [],
+  "spacing_para_count_docx": 47
+ },
+ "PLII_M08": {
+  "ten_mau": "Thông báo về cơ quan thuế quản lý trực tiếp hộ kinh doanh",
+  "n_blocks": 21,
+  "block_schema_keys": [
+   "align",
+   "runs",
+   "t"
+  ],
+  "source_indicator": [
+   {
+    "idx": 0,
+    "align": "left",
+    "text": "PL2 - Mau so 8: Thông báo về cơ quan thuế quản lý trực tiếp hộ kinh doanh"
+   }
+  ],
+  "form_number": [
+   {
+    "idx": 1,
+    "align": "left",
+    "text": "Mẫu số 8"
+   }
+  ],
+  "newline_blocks": [
+   {
+    "idx": 2,
+    "align": "center",
+    "lines": 3,
+    "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH ⏎ CẤP XÃ ⏎ ----------"
+   },
+   {
+    "idx": 3,
+    "align": "center",
+    "lines": 3,
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM ⏎ Độc lập - Tự do - Hạnh phúc ⏎ -----------------"
+   },
+   {
+    "idx": 19,
+    "align": "left",
+    "lines": 5,
+    "text": " ⏎ Nơi nhận: ⏎ - Như trên; ⏎ - <input:noi_nhan>; ⏎ - Lưu:<input:luu_vb>"
+   },
+   {
+    "idx": 20,
+    "align": "center",
+    "lines": 2,
+    "text": "TRƯỞNG PHÒNG ⏎ (Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "docx_br_paras": [
+   {
+    "i": 2,
+    "br": 2,
+    "jc": "center",
+    "text": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP XÃ----------"
+   },
+   {
+    "i": 3,
+    "br": 2,
+    "jc": "center",
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc-----------------"
+   },
+   {
+    "i": 21,
+    "br": 4,
+    "jc": null,
+    "text": "Nơi nhận:- Như trên;- {noi_nhan};- Lưu:{luu_vb}"
+   },
+   {
+    "i": 22,
+    "br": 1,
+    "jc": "center",
+    "text": "TRƯỞNG PHÒNG(Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "glue_footnote_refs": [],
+  "footnote_body_blocks": [],
+  "docx_superscript_runs": [],
+  "docx_separator_as_superscript": [],
+  "docx_empty_superscript": [],
+  "docx_footnote_reference_count": 0,
+  "docx_has_footnotes_xml": false,
+  "title": [
+   {
+    "idx": 6,
+    "align": "center",
+    "text": "THÔNG BÁO"
+   }
+  ],
+  "salutation": [
+   {
+    "idx": 8,
+    "align": "left",
+    "text": "Kính gửi:"
+   }
+  ],
+  "date_line": [
+   {
+    "idx": 5,
+    "align": "right",
+    "text": "<input:dia_diem_ky>, ngày<input:ngay_ky_vb>tháng<input:thang_ky_vb>năm<input:nam_ky_vb>"
+   }
+  ],
+  "signature": [
+   {
+    "idx": 20,
+    "align": "center",
+    "text": "TRƯỞNG PHÒNG (Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "tables_docx": 0,
+  "flattened_table_header_blocks": [],
+  "special_ind_docx": [],
+  "spacing_para_count_docx": 22
+ },
+ "PLII_M09": {
+  "ten_mau": "Giấy chứng nhận đăng ký hộ kinh doanh (Dùng trong trường hợp cấp lại do mất, cháy, rách, nát hoặc bị tiêu hủy dưới hình thức khác)",
+  "n_blocks": 11,
+  "block_schema_keys": [
+   "align",
+   "runs",
+   "t"
+  ],
+  "source_indicator": [
+   {
+    "idx": 0,
+    "align": "left",
+    "text": "PL2 - Mau so 9: Giấy chứng nhận đăng ký hộ kinh doanh (Dùng trong trường hợp cấp lại do mất, cháy, rách, nát hoặc bị tiê"
+   }
+  ],
+  "form_number": [
+   {
+    "idx": 1,
+    "align": "left",
+    "text": "Mẫu số 9"
+   }
+  ],
+  "newline_blocks": [
+   {
+    "idx": 2,
+    "align": "center",
+    "lines": 2,
+    "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH ⏎ ----------------"
+   },
+   {
+    "idx": 3,
+    "align": "center",
+    "lines": 3,
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM ⏎ Độc lập - Tự do - Hạnh phúc ⏎ -----------------"
+   },
+   {
+    "idx": 7,
+    "align": "center",
+    "lines": 2,
+    "text": "TRƯỞNG PHÒNG1 ⏎ (Đã ký)"
+   },
+   {
+    "idx": 8,
+    "align": "center",
+    "lines": 3,
+    "text": "Ghi chú: Được cấp lại ngày <input:cap_lai_ngay>… ⏎ TRƯỞNG PHÒNG ⏎ (Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "docx_br_paras": [
+   {
+    "i": 2,
+    "br": 1,
+    "jc": "center",
+    "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH----------------"
+   },
+   {
+    "i": 3,
+    "br": 2,
+    "jc": "center",
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc-----------------"
+   },
+   {
+    "i": 11,
+    "br": 1,
+    "jc": "center",
+    "text": "TRƯỞNG PHÒNG1(Đã ký)"
+   },
+   {
+    "i": 14,
+    "br": 2,
+    "jc": "center",
+    "text": "Ghi chú: Được cấp lại ngày {cap_lai_ngay}…TRƯỞNG PHÒNG(Ký, ghi họ tên và đóng dấ"
+   }
+  ],
+  "glue_footnote_refs": [
+   {
+    "idx": 7,
+    "match": "G1",
+    "ctx": "TRƯỞNG PHÒNG1 (Đã ký)"
+   }
+  ],
+  "footnote_body_blocks": [],
+  "docx_superscript_runs": [
+   {
+    "p_idx": 2,
+    "va": "superscript",
+    "text": ""
+   },
+   {
+    "p_idx": 3,
+    "va": "superscript",
+    "text": ""
+   },
+   {
+    "p_idx": 11,
+    "va": "superscript",
+    "text": "1"
+   },
+   {
+    "p_idx": 16,
+    "va": "superscript",
+    "text": "_______________________________________"
+   }
+  ],
+  "docx_separator_as_superscript": [
+   {
+    "p_idx": 16,
+    "va": "superscript",
+    "text": "_______________________________________"
+   }
+  ],
+  "docx_empty_superscript": [
+   {
+    "p_idx": 2
+   },
+   {
+    "p_idx": 3
+   }
+  ],
+  "docx_footnote_reference_count": 0,
+  "docx_has_footnotes_xml": false,
+  "title": [
+   {
+    "idx": 4,
+    "align": "center",
+    "text": "GIẤY CHỨNG NHẬN ĐĂNG KÝ HỘ KINH DOANH"
+   }
+  ],
+  "salutation": [],
+  "date_line": [
+   {
+    "idx": 8,
+    "align": "center",
+    "text": "Ghi chú: Được cấp lại ngày <input:cap_lai_ngay>… TRƯỞNG PHÒNG (Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "signature": [
+   {
+    "idx": 7,
+    "align": "center",
+    "text": "TRƯỞNG PHÒNG1 (Đã ký)"
+   },
+   {
+    "idx": 8,
+    "align": "center",
+    "text": "Ghi chú: Được cấp lại ngày <input:cap_lai_ngay>… TRƯỞNG PHÒNG (Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "tables_docx": 0,
+  "flattened_table_header_blocks": [],
+  "special_ind_docx": [],
+  "spacing_para_count_docx": 17
+ },
+ "PLII_M10": {
+  "ten_mau": "Thông báo về việc sửa đổi, bổ sung hồ sơ đăng ký hộ kinh doanh",
+  "n_blocks": 23,
+  "block_schema_keys": [
+   "align",
+   "runs",
+   "t"
+  ],
+  "source_indicator": [
+   {
+    "idx": 0,
+    "align": "left",
+    "text": "PL2 - Mau so 10: Thông báo về việc sửa đổi, bổ sung hồ sơ đăng ký hộ kinh doanh"
+   }
+  ],
+  "form_number": [
+   {
+    "idx": 1,
+    "align": "left",
+    "text": "Mẫu số 10"
+   }
+  ],
+  "newline_blocks": [
+   {
+    "idx": 2,
+    "align": "center",
+    "lines": 3,
+    "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH ⏎ CẤP XÃ ⏎ ----------"
+   },
+   {
+    "idx": 3,
+    "align": "center",
+    "lines": 3,
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM ⏎ Độc lập - Tự do - Hạnh phúc ⏎ -----------------"
+   },
+   {
+    "idx": 21,
+    "align": "left",
+    "lines": 4,
+    "text": "Nơi nhận: ⏎ - Như trên; ⏎ - <input:noi_nhan>; ⏎ - Lưu: <input:luu_vb>"
+   },
+   {
+    "idx": 22,
+    "align": "center",
+    "lines": 2,
+    "text": "TRƯỞNG PHÒNG ⏎ (Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "docx_br_paras": [
+   {
+    "i": 2,
+    "br": 2,
+    "jc": "center",
+    "text": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP XÃ----------"
+   },
+   {
+    "i": 3,
+    "br": 2,
+    "jc": "center",
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc-----------------"
+   },
+   {
+    "i": 24,
+    "br": 3,
+    "jc": null,
+    "text": "Nơi nhận:- Như trên;- {noi_nhan};- Lưu: {luu_vb}"
+   },
+   {
+    "i": 25,
+    "br": 1,
+    "jc": "center",
+    "text": "TRƯỞNG PHÒNG(Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "glue_footnote_refs": [],
+  "footnote_body_blocks": [],
+  "docx_superscript_runs": [
+   {
+    "p_idx": 9,
+    "va": "superscript",
+    "text": ""
+   }
+  ],
+  "docx_separator_as_superscript": [],
+  "docx_empty_superscript": [
+   {
+    "p_idx": 9
+   }
+  ],
+  "docx_footnote_reference_count": 0,
+  "docx_has_footnotes_xml": false,
+  "title": [
+   {
+    "idx": 6,
+    "align": "center",
+    "text": "THÔNG BÁO"
+   }
+  ],
+  "salutation": [
+   {
+    "idx": 8,
+    "align": "left",
+    "text": "Kính gửi:"
+   }
+  ],
+  "date_line": [
+   {
+    "idx": 5,
+    "align": "right",
+    "text": "<input:dia_diem_ky>, ngày<input:ngay_ky_vb>tháng<input:thang_ky_vb>năm<input:nam_ky_vb>"
+   },
+   {
+    "idx": 16,
+    "align": "left",
+    "text": "Sau khi xem xét hồ sơ đã nhận ngày <input:da_nhan_ngay> của Ông/Bà: <input:ong_ba_nhan_hs> là ................"
+   }
+  ],
+  "signature": [
+   {
+    "idx": 22,
+    "align": "center",
+    "text": "TRƯỞNG PHÒNG (Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "tables_docx": 0,
+  "flattened_table_header_blocks": [],
+  "special_ind_docx": [],
+  "spacing_para_count_docx": 25
+ },
+ "PLII_M11": {
+  "ten_mau": "Thông báo yêu cầu hộ kinh doanh báo cáo về việc tuân thủ các quy định về hộ kinh doanh",
+  "n_blocks": 26,
+  "block_schema_keys": [
+   "align",
+   "runs",
+   "t"
+  ],
+  "source_indicator": [
+   {
+    "idx": 0,
+    "align": "left",
+    "text": "PL2 - Mau so 11: Thông báo yêu cầu hộ kinh doanh báo cáo về việc tuân thủ các quy định về hộ kinh doanh"
+   }
+  ],
+  "form_number": [
+   {
+    "idx": 1,
+    "align": "left",
+    "text": "Mẫu số 11"
+   }
+  ],
+  "newline_blocks": [
+   {
+    "idx": 2,
+    "align": "center",
+    "lines": 3,
+    "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH ⏎ CẤP XÃ ⏎ -----------"
+   },
+   {
+    "idx": 3,
+    "align": "center",
+    "lines": 3,
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM ⏎ Độc lập - Tự do - Hạnh phúc ⏎ ------------------"
+   },
+   {
+    "idx": 24,
+    "align": "left",
+    "lines": 4,
+    "text": "Nơi nhận: ⏎ - Như trên; ⏎ - <input:noi_nhan>; ⏎ - Lưu: <input:luu_vb>"
+   },
+   {
+    "idx": 25,
+    "align": "center",
+    "lines": 2,
+    "text": "TRƯỞNG PHÒNG ⏎ (Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "docx_br_paras": [
+   {
+    "i": 2,
+    "br": 2,
+    "jc": "center",
+    "text": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP XÃ-----------"
+   },
+   {
+    "i": 3,
+    "br": 2,
+    "jc": "center",
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc------------------"
+   },
+   {
+    "i": 27,
+    "br": 3,
+    "jc": null,
+    "text": "Nơi nhận:- Như trên;- {noi_nhan};- Lưu: {luu_vb}"
+   },
+   {
+    "i": 28,
+    "br": 1,
+    "jc": "center",
+    "text": "TRƯỞNG PHÒNG(Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "glue_footnote_refs": [],
+  "footnote_body_blocks": [],
+  "docx_superscript_runs": [],
+  "docx_separator_as_superscript": [],
+  "docx_empty_superscript": [],
+  "docx_footnote_reference_count": 0,
+  "docx_has_footnotes_xml": false,
+  "title": [
+   {
+    "idx": 6,
+    "align": "center",
+    "text": "THÔNG BÁO"
+   }
+  ],
+  "salutation": [
+   {
+    "idx": 8,
+    "align": "left",
+    "text": "Kính gửi:"
+   }
+  ],
+  "date_line": [
+   {
+    "idx": 5,
+    "align": "right",
+    "text": "<input:dia_diem_ky>, ngày<input:ngay_ky_vb>tháng<input:thang_ky_vb>năm<input:nam_ky_vb>"
+   }
+  ],
+  "signature": [
+   {
+    "idx": 25,
+    "align": "center",
+    "text": "TRƯỞNG PHÒNG (Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "tables_docx": 0,
+  "flattened_table_header_blocks": [],
+  "special_ind_docx": [],
+  "spacing_para_count_docx": 28
+ },
+ "PLII_M12": {
+  "ten_mau": "Thông báo về việc vi phạm của hộ kinh doanh thuộc trường hợp thu hồi Giấy chứng nhận đăng ký hộ kinh doanh",
+  "n_blocks": 25,
+  "block_schema_keys": [
+   "align",
+   "runs",
+   "t"
+  ],
+  "source_indicator": [
+   {
+    "idx": 0,
+    "align": "left",
+    "text": "PL2 - Mau so 12: Thông báo về việc vi phạm của hộ kinh doanh thuộc trường hợp thu hồi Giấy chứng nhận đăng ký hộ kinh do"
+   }
+  ],
+  "form_number": [
+   {
+    "idx": 1,
+    "align": "left",
+    "text": "Mẫu số 12"
+   }
+  ],
+  "newline_blocks": [
+   {
+    "idx": 2,
+    "align": "center",
+    "lines": 3,
+    "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH ⏎ CẤP XÃ ⏎ -----------"
+   },
+   {
+    "idx": 3,
+    "align": "center",
+    "lines": 3,
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM ⏎ Độc lập - Tự do - Hạnh phúc ⏎ ------------------"
+   },
+   {
+    "idx": 23,
+    "align": "left",
+    "lines": 5,
+    "text": "Nơi nhận: ⏎ - Như trên; ⏎ - Cơ quan quản lý thuế<input:noi_nhan> (xã, phường, đặc khu nơi hộ kinh doanh đăng ký trụ sở của HKD); ⏎ - Cơ quan có thẩm q"
+   },
+   {
+    "idx": 24,
+    "align": "center",
+    "lines": 2,
+    "text": "TRƯỞNG PHÒNG ⏎ (Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "docx_br_paras": [
+   {
+    "i": 2,
+    "br": 2,
+    "jc": "center",
+    "text": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP XÃ-----------"
+   },
+   {
+    "i": 3,
+    "br": 2,
+    "jc": "center",
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc------------------"
+   },
+   {
+    "i": 25,
+    "br": 4,
+    "jc": null,
+    "text": "Nơi nhận:- Như trên;- Cơ quan quản lý thuế{noi_nhan} (xã, phường, đặc khu nơi hộ"
+   },
+   {
+    "i": 26,
+    "br": 1,
+    "jc": "center",
+    "text": "TRƯỞNG PHÒNG(Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "glue_footnote_refs": [],
+  "footnote_body_blocks": [],
+  "docx_superscript_runs": [],
+  "docx_separator_as_superscript": [],
+  "docx_empty_superscript": [],
+  "docx_footnote_reference_count": 0,
+  "docx_has_footnotes_xml": false,
+  "title": [
+   {
+    "idx": 6,
+    "align": "center",
+    "text": "THÔNG BÁO"
+   }
+  ],
+  "salutation": [
+   {
+    "idx": 8,
+    "align": "left",
+    "text": "Kính gửi:"
+   }
+  ],
+  "date_line": [
+   {
+    "idx": 5,
+    "align": "right",
+    "text": "<input:dia_diem_ky>, ngày<input:ngay_ky_vb>tháng<input:thang_ky_vb>năm<input:nam_ky_vb>"
+   },
+   {
+    "idx": 16,
+    "align": "left",
+    "text": "Căn cứ kết luận/biên bản làm việc số<input:can_cu>ngày <input:ngay_ky_vb>/........./.......... của............"
+   },
+   {
+    "idx": 17,
+    "align": "left",
+    "text": "Căn cứ Thông báo số … ngày <input:can_cu> của (Cơ quan đăng ký kinh doanh cấp xã) về việc yêu cầu hộ kinh doan"
+   },
+   {
+    "idx": 18,
+    "align": "left",
+    "text": "Căn cứ Thông báo số … ngày <input:can_cu> của (Cơ quan đăng ký kinh doanh cấp xã) về việc yêu cầu hộ kinh doan"
+   },
+   {
+    "idx": 19,
+    "align": "left",
+    "text": "Căn cứ Thông báo số … ngày <input:can_cu> của (Cơ quan đăng ký kinh doanh cấp xã) về việc hộ kinh doanh ngừng "
+   },
+   {
+    "idx": 20,
+    "align": "left",
+    "text": "Căn cứ văn bản số … ngày <input:can_cu> của … về việc đề nghị thu hồi Giấy chứng nhận đăng ký hộ kinh doanh (t"
+   }
+  ],
+  "signature": [
+   {
+    "idx": 24,
+    "align": "center",
+    "text": "TRƯỞNG PHÒNG (Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "tables_docx": 0,
+  "flattened_table_header_blocks": [],
+  "special_ind_docx": [],
+  "spacing_para_count_docx": 26
+ },
+ "PLII_M13": {
+  "ten_mau": "Thông báo về việc chấm dứt hoạt động hộ kinh doanh",
+  "n_blocks": 23,
+  "block_schema_keys": [
+   "align",
+   "runs",
+   "t"
+  ],
+  "source_indicator": [
+   {
+    "idx": 0,
+    "align": "left",
+    "text": "PL2 - Mau so 13: Thông báo về việc chấm dứt hoạt động hộ kinh doanh"
+   }
+  ],
+  "form_number": [
+   {
+    "idx": 1,
+    "align": "left",
+    "text": "Mẫu số 13"
+   }
+  ],
+  "newline_blocks": [
+   {
+    "idx": 2,
+    "align": "center",
+    "lines": 3,
+    "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH ⏎ CẤP XÃ ⏎ -----------"
+   },
+   {
+    "idx": 3,
+    "align": "center",
+    "lines": 3,
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM ⏎ Độc lập - Tự do - Hạnh phúc ⏎ ------------------"
+   },
+   {
+    "idx": 21,
+    "align": "left",
+    "lines": 4,
+    "text": "Nơi nhận:  ⏎ - Tên, trụ sở của hộ kinh doanh; ⏎ - <input:noi_nhan>; ⏎ - Lưu: <input:luu_vb>"
+   },
+   {
+    "idx": 22,
+    "align": "center",
+    "lines": 2,
+    "text": "TRƯỞNG PHÒNG ⏎ (Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "docx_br_paras": [
+   {
+    "i": 2,
+    "br": 2,
+    "jc": "center",
+    "text": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP XÃ-----------"
+   },
+   {
+    "i": 3,
+    "br": 2,
+    "jc": "center",
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc------------------"
+   },
+   {
+    "i": 23,
+    "br": 3,
+    "jc": null,
+    "text": "Nơi nhận: - Tên, trụ sở của hộ kinh doanh;- {noi_nhan};- Lưu: {luu_vb}"
+   },
+   {
+    "i": 24,
+    "br": 1,
+    "jc": "center",
+    "text": "TRƯỞNG PHÒNG(Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "glue_footnote_refs": [],
+  "footnote_body_blocks": [],
+  "docx_superscript_runs": [],
+  "docx_separator_as_superscript": [],
+  "docx_empty_superscript": [],
+  "docx_footnote_reference_count": 0,
+  "docx_has_footnotes_xml": false,
+  "title": [
+   {
+    "idx": 6,
+    "align": "center",
+    "text": "THÔNG BÁO"
+   }
+  ],
+  "salutation": [],
+  "date_line": [
+   {
+    "idx": 5,
+    "align": "right",
+    "text": "<input:dia_diem_ky>, ngày<input:ngay_ky_vb>tháng<input:thang_ky_vb>năm<input:nam_ky_vb>"
+   },
+   {
+    "idx": 14,
+    "align": "left",
+    "text": "Sinh ngày: <input:ngay_sinh>/<input:thang_sinh>/<input:nam_sinh>Dân tộc:<input:chu_hkd.dan_toc> Quốc tịch: <in"
+   }
+  ],
+  "signature": [
+   {
+    "idx": 19,
+    "align": "left",
+    "text": "Là chủ hộ kinh doanh."
+   },
+   {
+    "idx": 22,
+    "align": "center",
+    "text": "TRƯỞNG PHÒNG (Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "tables_docx": 0,
+  "flattened_table_header_blocks": [],
+  "special_ind_docx": [],
+  "spacing_para_count_docx": 24
+ },
+ "PLII_M14": {
+  "ten_mau": "Quyết định về việc thu hồi Giấy chứng nhận đăng ký hộ kinh doanh",
+  "n_blocks": 30,
+  "block_schema_keys": [
+   "align",
+   "runs",
+   "t"
+  ],
+  "source_indicator": [
+   {
+    "idx": 0,
+    "align": "left",
+    "text": "PL2 - Mau so 14: Quyết định về việc thu hồi Giấy chứng nhận đăng ký hộ kinh doanh"
+   }
+  ],
+  "form_number": [
+   {
+    "idx": 1,
+    "align": "left",
+    "text": "Mẫu số 14"
+   }
+  ],
+  "newline_blocks": [
+   {
+    "idx": 2,
+    "align": "center",
+    "lines": 3,
+    "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH ⏎ CẤP XÃ ⏎ -----------"
+   },
+   {
+    "idx": 3,
+    "align": "center",
+    "lines": 3,
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM ⏎ Độc lập - Tự do - Hạnh phúc ⏎ ------------------"
+   },
+   {
+    "idx": 28,
+    "align": "left",
+    "lines": 5,
+    "text": "Nơi nhận: ⏎ - Tên, trụ sở của hộ kinh doanh bị thu hồi GCNĐKHKD; ⏎ - Cơ quan quản lý thuế … (xã, phường, đặc khu nơi hộ kinh doanh đăng ký trụ sở của "
+   },
+   {
+    "idx": 29,
+    "align": "center",
+    "lines": 2,
+    "text": "TRƯỞNG PHÒNG ⏎ (Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "docx_br_paras": [
+   {
+    "i": 2,
+    "br": 2,
+    "jc": "center",
+    "text": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP XÃ-----------"
+   },
+   {
+    "i": 3,
+    "br": 2,
+    "jc": "center",
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc------------------"
+   },
+   {
+    "i": 30,
+    "br": 4,
+    "jc": null,
+    "text": "Nơi nhận:- Tên, trụ sở của hộ kinh doanh bị thu hồi GCNĐKHKD;- Cơ quan quản lý t"
+   },
+   {
+    "i": 31,
+    "br": 1,
+    "jc": "center",
+    "text": "TRƯỞNG PHÒNG(Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "glue_footnote_refs": [],
+  "footnote_body_blocks": [],
+  "docx_superscript_runs": [],
+  "docx_separator_as_superscript": [],
+  "docx_empty_superscript": [],
+  "docx_footnote_reference_count": 0,
+  "docx_has_footnotes_xml": false,
+  "title": [
+   {
+    "idx": 6,
+    "align": "center",
+    "text": "QUYẾT ĐỊNH"
+   },
+   {
+    "idx": 13,
+    "align": "center",
+    "text": "QUYẾT ĐỊNH:"
+   }
+  ],
+  "salutation": [],
+  "date_line": [
+   {
+    "idx": 5,
+    "align": "right",
+    "text": "<input:dia_diem_ky>, ngày<input:ngay_ky_vb>tháng<input:thang_ky_vb>năm<input:nam_ky_vb>"
+   },
+   {
+    "idx": 10,
+    "align": "left",
+    "text": "Căn cứ Thông báo số <input:can_cu> ngày <input:ngay_ky_vb>/…../….. của (Cơ quan đăng ký kinh doanh cấp xã) về "
+   }
+  ],
+  "signature": [
+   {
+    "idx": 8,
+    "align": "center",
+    "text": "TRƯỞNG PHÒNG ..."
+   },
+   {
+    "idx": 29,
+    "align": "center",
+    "text": "TRƯỞNG PHÒNG (Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "tables_docx": 0,
+  "flattened_table_header_blocks": [],
+  "special_ind_docx": [],
+  "spacing_para_count_docx": 31
+ },
+ "PLII_M15": {
+  "ten_mau": "Quyết định về việc thu hồi Giấy chứng nhận đăng ký hộ kinh doanh của lần đăng ký thay đổi",
+  "n_blocks": 28,
+  "block_schema_keys": [
+   "align",
+   "runs",
+   "t"
+  ],
+  "source_indicator": [
+   {
+    "idx": 0,
+    "align": "left",
+    "text": "PL2 - Mau so 15: Quyết định về việc thu hồi Giấy chứng nhận đăng ký hộ kinh doanh của lần đăng ký thay đổi"
+   }
+  ],
+  "form_number": [
+   {
+    "idx": 1,
+    "align": "left",
+    "text": "Mẫu số 15"
+   }
+  ],
+  "newline_blocks": [
+   {
+    "idx": 2,
+    "align": "center",
+    "lines": 3,
+    "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH ⏎ CẤP XÃ ⏎ -----------"
+   },
+   {
+    "idx": 3,
+    "align": "center",
+    "lines": 3,
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM ⏎ Độc lập - Tự do - Hạnh phúc ⏎ ------------------"
+   },
+   {
+    "idx": 26,
+    "align": "left",
+    "lines": 5,
+    "text": "Nơi nhận: ⏎ - Tên, trụ sở của hộ kinh doanh bị thu hồi Giấy chứng nhận đăng ký hộ kinh doanh; ⏎ - Cơ quan quản lý thuế … (xã, phường, đặc khu nơi hộ k"
+   },
+   {
+    "idx": 27,
+    "align": "center",
+    "lines": 2,
+    "text": "TRƯỞNG PHÒNG ⏎ (Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "docx_br_paras": [
+   {
+    "i": 2,
+    "br": 2,
+    "jc": "center",
+    "text": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP XÃ-----------"
+   },
+   {
+    "i": 3,
+    "br": 2,
+    "jc": "center",
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc------------------"
+   },
+   {
+    "i": 28,
+    "br": 4,
+    "jc": null,
+    "text": "Nơi nhận:- Tên, trụ sở của hộ kinh doanh bị thu hồi Giấy chứng nhận đăng ký hộ k"
+   },
+   {
+    "i": 29,
+    "br": 1,
+    "jc": "center",
+    "text": "TRƯỞNG PHÒNG(Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "glue_footnote_refs": [],
+  "footnote_body_blocks": [],
+  "docx_superscript_runs": [],
+  "docx_separator_as_superscript": [],
+  "docx_empty_superscript": [],
+  "docx_footnote_reference_count": 0,
+  "docx_has_footnotes_xml": false,
+  "title": [
+   {
+    "idx": 6,
+    "align": "center",
+    "text": "QUYẾT ĐỊNH"
+   },
+   {
+    "idx": 12,
+    "align": "center",
+    "text": "QUYẾT ĐỊNH:"
+   }
+  ],
+  "salutation": [],
+  "date_line": [
+   {
+    "idx": 5,
+    "align": "right",
+    "text": "<input:dia_diem_ky>, ngày<input:ngay_ky_vb>tháng<input:thang_ky_vb>năm<input:nam_ky_vb>"
+   },
+   {
+    "idx": 10,
+    "align": "left",
+    "text": "Căn cứ Thông báo số <input:can_cu> ngày <input:ngay_ky_vb>/…./….. của (Cơ quan đăng ký kinh doanh cấp xã) về v"
+   },
+   {
+    "idx": 17,
+    "align": "left",
+    "text": "Đăng ký thay đổi lần thứ: <input:dk_thay_doi_lan_thu>, ngày<input:dk_thay_doi_ngay>tháng<input:dk_thay_doi_tha"
+   }
+  ],
+  "signature": [
+   {
+    "idx": 8,
+    "align": "center",
+    "text": "TRƯỞNG PHÒNG ..."
+   },
+   {
+    "idx": 27,
+    "align": "center",
+    "text": "TRƯỞNG PHÒNG (Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "tables_docx": 0,
+  "flattened_table_header_blocks": [],
+  "special_ind_docx": [],
+  "spacing_para_count_docx": 29
+ },
+ "PLII_M16": {
+  "ten_mau": "Quyết định về việc huỷ bỏ quyết định thu hồi và khôi phục Giấy chứng nhận đăng ký hộ kinh doanh",
+  "n_blocks": 24,
+  "block_schema_keys": [
+   "align",
+   "runs",
+   "t"
+  ],
+  "source_indicator": [
+   {
+    "idx": 0,
+    "align": "left",
+    "text": "PL2 - Mau so 16: Quyết định về việc huỷ bỏ quyết định thu hồi và khôi phục Giấy chứng nhận đăng ký hộ kinh doanh"
+   }
+  ],
+  "form_number": [
+   {
+    "idx": 1,
+    "align": "left",
+    "text": "Mẫu số 16"
+   }
+  ],
+  "newline_blocks": [
+   {
+    "idx": 2,
+    "align": "center",
+    "lines": 3,
+    "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH ⏎ CẤP XÃ ⏎ -----------"
+   },
+   {
+    "idx": 3,
+    "align": "center",
+    "lines": 3,
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM ⏎ Độc lập - Tự do - Hạnh phúc ⏎ ------------------"
+   },
+   {
+    "idx": 22,
+    "align": "left",
+    "lines": 5,
+    "text": " Nơi nhận: ⏎ - Tên, trụ sở của hộ kinh doanh bị thu hồi GCNĐKHKD; ⏎ - Cơ quan quản lý thuế … (xã, phường, đặc khu nơi hộ kinh doanh đăng ký trụ sở của"
+   },
+   {
+    "idx": 23,
+    "align": "center",
+    "lines": 2,
+    "text": "TRƯỞNG PHÒNG ⏎ (Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "docx_br_paras": [
+   {
+    "i": 2,
+    "br": 2,
+    "jc": "center",
+    "text": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP XÃ-----------"
+   },
+   {
+    "i": 3,
+    "br": 2,
+    "jc": "center",
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc------------------"
+   },
+   {
+    "i": 24,
+    "br": 4,
+    "jc": null,
+    "text": " Nơi nhận:- Tên, trụ sở của hộ kinh doanh bị thu hồi GCNĐKHKD;- Cơ quan quản lý "
+   },
+   {
+    "i": 25,
+    "br": 1,
+    "jc": "center",
+    "text": "TRƯỞNG PHÒNG(Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "glue_footnote_refs": [],
+  "footnote_body_blocks": [],
+  "docx_superscript_runs": [],
+  "docx_separator_as_superscript": [],
+  "docx_empty_superscript": [],
+  "docx_footnote_reference_count": 0,
+  "docx_has_footnotes_xml": false,
+  "title": [
+   {
+    "idx": 6,
+    "align": "center",
+    "text": "QUYẾT ĐỊNH"
+   },
+   {
+    "idx": 13,
+    "align": "center",
+    "text": "QUYẾT ĐỊNH:"
+   }
+  ],
+  "salutation": [],
+  "date_line": [
+   {
+    "idx": 5,
+    "align": "right",
+    "text": "<input:dia_diem_ky>, ngày<input:ngay_ky_vb>tháng<input:thang_ky_vb>năm<input:nam_ky_vb>"
+   },
+   {
+    "idx": 12,
+    "align": "left",
+    "text": "Trên cơ sở đề nghị của ...... (tên cơ quan quản lý thuế) tại Văn bản số .... ngày <input:ngay_ky_vb> về việc <"
+   }
+  ],
+  "signature": [
+   {
+    "idx": 8,
+    "align": "center",
+    "text": "TRƯỞNG PHÒNG ..."
+   },
+   {
+    "idx": 23,
+    "align": "center",
+    "text": "TRƯỞNG PHÒNG (Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "tables_docx": 0,
+  "flattened_table_header_blocks": [],
+  "special_ind_docx": [],
+  "spacing_para_count_docx": 25
+ },
+ "PLII_M17": {
+  "ten_mau": "Giấy tiếp nhận hồ sơ và hẹn trả kết quả hồ sơ đăng ký hộ kinh doanh",
+  "n_blocks": 25,
+  "block_schema_keys": [
+   "align",
+   "runs",
+   "t"
+  ],
+  "source_indicator": [
+   {
+    "idx": 0,
+    "align": "left",
+    "text": "PL2 - Mau so 17: Giấy tiếp nhận hồ sơ và hẹn trả kết quả hồ sơ đăng ký hộ kinh doanh"
+   }
+  ],
+  "form_number": [
+   {
+    "idx": 1,
+    "align": "left",
+    "text": "Mẫu số 17"
+   }
+  ],
+  "newline_blocks": [
+   {
+    "idx": 2,
+    "align": "center",
+    "lines": 3,
+    "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH ⏎ CẤP XÃ ⏎ -----------"
+   },
+   {
+    "idx": 3,
+    "align": "center",
+    "lines": 3,
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM ⏎ Độc lập - Tự do - Hạnh phúc ⏎ ------------------"
+   },
+   {
+    "idx": 23,
+    "align": "center",
+    "lines": 2,
+    "text": "NGƯỜI NỘP ⏎ (Ký và ghi họ tên)"
+   },
+   {
+    "idx": 24,
+    "align": "center",
+    "lines": 2,
+    "text": "NGƯỜI NHẬN ⏎ (Ký và ghi họ tên)"
+   }
+  ],
+  "docx_br_paras": [
+   {
+    "i": 2,
+    "br": 2,
+    "jc": "center",
+    "text": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP XÃ-----------"
+   },
+   {
+    "i": 3,
+    "br": 2,
+    "jc": "center",
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc------------------"
+   },
+   {
+    "i": 25,
+    "br": 1,
+    "jc": "center",
+    "text": "NGƯỜI NỘP(Ký và ghi họ tên)"
+   },
+   {
+    "i": 26,
+    "br": 1,
+    "jc": "center",
+    "text": "NGƯỜI NHẬN(Ký và ghi họ tên)"
+   }
+  ],
+  "glue_footnote_refs": [],
+  "footnote_body_blocks": [],
+  "docx_superscript_runs": [],
+  "docx_separator_as_superscript": [],
+  "docx_empty_superscript": [],
+  "docx_footnote_reference_count": 0,
+  "docx_has_footnotes_xml": false,
+  "title": [
+   {
+    "idx": 6,
+    "align": "center",
+    "text": "GIẤY TIẾP NHẬN HỒ SƠ VÀ HẸN TRẢ KẾT QUẢ"
+   }
+  ],
+  "salutation": [],
+  "date_line": [
+   {
+    "idx": 5,
+    "align": "right",
+    "text": "<input:dia_diem_ky>, ngày<input:ngay_ky_vb>tháng<input:thang_ky_vb>năm<input:nam_ky_vb>"
+   }
+  ],
+  "signature": [
+   {
+    "idx": 23,
+    "align": "center",
+    "text": "NGƯỜI NỘP (Ký và ghi họ tên)"
+   },
+   {
+    "idx": 24,
+    "align": "center",
+    "text": "NGƯỜI NHẬN (Ký và ghi họ tên)"
+   }
+  ],
+  "tables_docx": 0,
+  "flattened_table_header_blocks": [],
+  "special_ind_docx": [],
+  "spacing_para_count_docx": 26
+ },
+ "PLII_M18": {
+  "ten_mau": "Giấy tiếp nhận hồ sơ và hẹn trả kết quả hồ sơ đăng ký hộ kinh doanh qua mạng thông tin điện tử",
+  "n_blocks": 27,
+  "block_schema_keys": [
+   "align",
+   "runs",
+   "t"
+  ],
+  "source_indicator": [
+   {
+    "idx": 0,
+    "align": "left",
+    "text": "PL2 - Mau so 18: Giấy tiếp nhận hồ sơ và hẹn trả kết quả hồ sơ đăng ký hộ kinh doanh qua mạng thông tin điện tử"
+   }
+  ],
+  "form_number": [
+   {
+    "idx": 1,
+    "align": "left",
+    "text": "Mẫu số 18"
+   }
+  ],
+  "newline_blocks": [
+   {
+    "idx": 2,
+    "align": "center",
+    "lines": 3,
+    "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH ⏎ CẤP XÃ ⏎ -----------"
+   },
+   {
+    "idx": 3,
+    "align": "center",
+    "lines": 3,
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM ⏎ Độc lập - Tự do - Hạnh phúc ⏎ ------------------"
+   }
+  ],
+  "docx_br_paras": [
+   {
+    "i": 2,
+    "br": 2,
+    "jc": "center",
+    "text": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP XÃ-----------"
+   },
+   {
+    "i": 3,
+    "br": 2,
+    "jc": "center",
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc------------------"
+   }
+  ],
+  "glue_footnote_refs": [
+   {
+    "idx": 21,
+    "match": "…1",
+    "ctx": "quyết hồ sơ: ngày … tháng … năm …1"
+   }
+  ],
+  "footnote_body_blocks": [
+   {
+    "idx": 26,
+    "text": "1 Trường hợp hồ sơ được tiếp nhận trên Hệ thống thông tin về đăng ký hộ kinh doanh sau giờ hành chính hoặc vào ngày nghỉ, ngày lễ, Tết theo "
+   }
+  ],
+  "docx_superscript_runs": [
+   {
+    "p_idx": 22,
+    "va": "superscript",
+    "text": "1"
+   },
+   {
+    "p_idx": 28,
+    "va": "superscript",
+    "text": "_______________________________________"
+   },
+   {
+    "p_idx": 29,
+    "va": "superscript",
+    "text": "1"
+   }
+  ],
+  "docx_separator_as_superscript": [
+   {
+    "p_idx": 28,
+    "va": "superscript",
+    "text": "_______________________________________"
+   }
+  ],
+  "docx_empty_superscript": [],
+  "docx_footnote_reference_count": 0,
+  "docx_has_footnotes_xml": false,
+  "title": [
+   {
+    "idx": 6,
+    "align": "center",
+    "text": "GIẤY TIẾP NHẬN HỒ SƠ VÀ HẸN TRẢ KẾT QUẢ"
+   }
+  ],
+  "salutation": [],
+  "date_line": [
+   {
+    "idx": 5,
+    "align": "right",
+    "text": "<input:dia_diem_ky>, ngày<input:ngay_ky_vb>tháng<input:thang_ky_vb>năm<input:nam_ky_vb>"
+   }
+  ],
+  "signature": [],
+  "tables_docx": 0,
+  "flattened_table_header_blocks": [],
+  "special_ind_docx": [],
+  "spacing_para_count_docx": 29
+ },
+ "PLII_M19": {
+  "ten_mau": "Thông báo yêu cầu hộ kinh doanh tạm ngừng kinh doanh ngành, nghề đầu tư kinh doanh có điều kiện",
+  "n_blocks": 23,
+  "block_schema_keys": [
+   "align",
+   "runs",
+   "t"
+  ],
+  "source_indicator": [
+   {
+    "idx": 0,
+    "align": "left",
+    "text": "PL2 - Mau so 19: Thông báo yêu cầu hộ kinh doanh tạm ngừng kinh doanh ngành, nghề đầu tư kinh doanh có điều kiện"
+   }
+  ],
+  "form_number": [
+   {
+    "idx": 1,
+    "align": "left",
+    "text": "Mẫu số 19"
+   }
+  ],
+  "newline_blocks": [
+   {
+    "idx": 2,
+    "align": "center",
+    "lines": 3,
+    "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH ⏎ CẤP XÃ ⏎ -----------"
+   },
+   {
+    "idx": 3,
+    "align": "center",
+    "lines": 3,
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM ⏎ Độc lập - Tự do - Hạnh phúc ⏎ ------------------"
+   },
+   {
+    "idx": 21,
+    "align": "left",
+    "lines": 5,
+    "text": "Nơi nhận: ⏎ - Như trên; ⏎ - <input:noi_nhan>(Cơ quan quản lý chuyên ngành); ⏎ - …………; ⏎ - Lưu: <input:luu_vb>"
+   },
+   {
+    "idx": 22,
+    "align": "center",
+    "lines": 2,
+    "text": "TRƯỞNG PHÒNG ⏎ (Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "docx_br_paras": [
+   {
+    "i": 2,
+    "br": 2,
+    "jc": "center",
+    "text": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP XÃ-----------"
+   },
+   {
+    "i": 3,
+    "br": 2,
+    "jc": "center",
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc------------------"
+   },
+   {
+    "i": 23,
+    "br": 4,
+    "jc": null,
+    "text": "Nơi nhận:- Như trên;- {noi_nhan}(Cơ quan quản lý chuyên ngành);- …………;- Lưu: {lu"
+   },
+   {
+    "i": 24,
+    "br": 1,
+    "jc": "center",
+    "text": "TRƯỞNG PHÒNG(Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "glue_footnote_refs": [],
+  "footnote_body_blocks": [],
+  "docx_superscript_runs": [],
+  "docx_separator_as_superscript": [],
+  "docx_empty_superscript": [],
+  "docx_footnote_reference_count": 0,
+  "docx_has_footnotes_xml": false,
+  "title": [
+   {
+    "idx": 6,
+    "align": "center",
+    "text": "THÔNG BÁO"
+   }
+  ],
+  "salutation": [
+   {
+    "idx": 8,
+    "align": "left",
+    "text": "Kính gửi:"
+   }
+  ],
+  "date_line": [
+   {
+    "idx": 5,
+    "align": "right",
+    "text": "<input:dia_diem_ky>, ngày<input:ngay_ky_vb>tháng<input:thang_ky_vb>năm<input:nam_ky_vb>"
+   }
+  ],
+  "signature": [
+   {
+    "idx": 22,
+    "align": "center",
+    "text": "TRƯỞNG PHÒNG (Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "tables_docx": 0,
+  "flattened_table_header_blocks": [],
+  "special_ind_docx": [],
+  "spacing_para_count_docx": 24
+ },
+ "PLII_M20": {
+  "ten_mau": "Giấy xác nhận về việc hộ kinh doanh đăng ký tạm ngừng kinh doanh/tiếp tục kinh doanh trước thời hạn đã đăng ký",
+  "n_blocks": 22,
+  "block_schema_keys": [
+   "align",
+   "runs",
+   "t"
+  ],
+  "source_indicator": [],
+  "form_number": [
+   {
+    "idx": 0,
+    "align": "right",
+    "text": "Mẫu số 20"
+   }
+  ],
+  "newline_blocks": [
+   {
+    "idx": 1,
+    "align": "center",
+    "lines": 3,
+    "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH ⏎ CẤP XÃ ⏎ -----------"
+   },
+   {
+    "idx": 2,
+    "align": "center",
+    "lines": 3,
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM ⏎ Độc lập - Tự do - Hạnh phúc ⏎ ------------------"
+   },
+   {
+    "idx": 20,
+    "align": "left",
+    "lines": 4,
+    "text": "Nơi nhận: ⏎ - Tên, trụ sở của hộ kinh doanh; ⏎ - <input:noi_nhan>; ⏎ - Lưu: <input:luu_vb>"
+   },
+   {
+    "idx": 21,
+    "align": "center",
+    "lines": 2,
+    "text": "TRƯỞNG PHÒNG ⏎ (Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "docx_br_paras": [
+   {
+    "i": 1,
+    "br": 2,
+    "jc": "center",
+    "text": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP XÃ-----------"
+   },
+   {
+    "i": 2,
+    "br": 2,
+    "jc": "center",
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc------------------"
+   },
+   {
+    "i": 22,
+    "br": 3,
+    "jc": null,
+    "text": "Nơi nhận:- Tên, trụ sở của hộ kinh doanh;- {noi_nhan};- Lưu: {luu_vb}"
+   },
+   {
+    "i": 23,
+    "br": 1,
+    "jc": "center",
+    "text": "TRƯỞNG PHÒNG(Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "glue_footnote_refs": [],
+  "footnote_body_blocks": [],
+  "docx_superscript_runs": [],
+  "docx_separator_as_superscript": [],
+  "docx_empty_superscript": [],
+  "docx_footnote_reference_count": 0,
+  "docx_has_footnotes_xml": false,
+  "title": [],
+  "salutation": [],
+  "date_line": [
+   {
+    "idx": 4,
+    "align": "right",
+    "text": "<input:dia_diem_ky>, ngày<input:ngay_ky_vb>tháng<input:thang_ky_vb>năm<input:nam_ky_vb>"
+   },
+   {
+    "idx": 15,
+    "align": "left",
+    "text": "Đăng ký tạm ngừng kinh doanh kể từ ngày<input:tu_ngay> đến hết ngày<input:den_ngay>"
+   }
+  ],
+  "signature": [
+   {
+    "idx": 21,
+    "align": "center",
+    "text": "TRƯỞNG PHÒNG (Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "tables_docx": 0,
+  "flattened_table_header_blocks": [],
+  "special_ind_docx": [],
+  "spacing_para_count_docx": 25
+ },
+ "PLII_M21": {
+  "ten_mau": "Thông báo về việc Giấy chứng nhận đăng ký hộ kinh doanh không có hiệu lực",
+  "n_blocks": 27,
+  "block_schema_keys": [
+   "align",
+   "runs",
+   "t"
+  ],
+  "source_indicator": [],
+  "form_number": [
+   {
+    "idx": 0,
+    "align": "right",
+    "text": "Mẫu số 21"
+   }
+  ],
+  "newline_blocks": [
+   {
+    "idx": 1,
+    "align": "center",
+    "lines": 3,
+    "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH ⏎ CẤP XÃ ⏎ -----------"
+   },
+   {
+    "idx": 2,
+    "align": "center",
+    "lines": 3,
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM ⏎ Độc lập - Tự do - Hạnh phúc ⏎ ------------------"
+   },
+   {
+    "idx": 25,
+    "align": "left",
+    "lines": 5,
+    "text": "Nơi nhận: ⏎ - Như trên; ⏎ - Cơ quan quản lý thuế<input:noi_nhan>(xã, phường, đặc khu nơi hộ kinh doanh đăng ký trụ sở của HKD); ⏎ - Cơ quan có thẩm qu"
+   },
+   {
+    "idx": 26,
+    "align": "center",
+    "lines": 2,
+    "text": "TRƯỞNG PHÒNG ⏎ (Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "docx_br_paras": [
+   {
+    "i": 1,
+    "br": 2,
+    "jc": "center",
+    "text": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP XÃ-----------"
+   },
+   {
+    "i": 2,
+    "br": 2,
+    "jc": "center",
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc------------------"
+   },
+   {
+    "i": 27,
+    "br": 4,
+    "jc": null,
+    "text": "Nơi nhận:- Như trên;- Cơ quan quản lý thuế{noi_nhan}(xã, phường, đặc khu nơi hộ "
+   },
+   {
+    "i": 28,
+    "br": 1,
+    "jc": "center",
+    "text": "TRƯỞNG PHÒNG(Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "glue_footnote_refs": [],
+  "footnote_body_blocks": [],
+  "docx_superscript_runs": [],
+  "docx_separator_as_superscript": [],
+  "docx_empty_superscript": [],
+  "docx_footnote_reference_count": 0,
+  "docx_has_footnotes_xml": false,
+  "title": [
+   {
+    "idx": 5,
+    "align": "center",
+    "text": "THÔNG BÁO"
+   }
+  ],
+  "salutation": [
+   {
+    "idx": 7,
+    "align": "left",
+    "text": "Kính gửi:"
+   }
+  ],
+  "date_line": [
+   {
+    "idx": 4,
+    "align": "right",
+    "text": "<input:dia_diem_ky>, ngày<input:ngay_ky_vb>tháng<input:thang_ky_vb>năm<input:nam_ky_vb>"
+   },
+   {
+    "idx": 20,
+    "align": "left",
+    "text": "(Cơ quan đăng ký kinh doanh cấp xã) thông báo Giấy chứng nhận đăng ký hộ kinh doanh (Mã số hộ kinh doanh <inpu"
+   },
+   {
+    "idx": 23,
+    "align": "left",
+    "text": "(Cơ quan đăng ký kinh doanh cấp xã) thông báo Giấy chứng nhận đăng ký hộ kinh doanh (Mã số hộ kinh doanh <inpu"
+   }
+  ],
+  "signature": [
+   {
+    "idx": 26,
+    "align": "center",
+    "text": "TRƯỞNG PHÒNG (Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "tables_docx": 0,
+  "flattened_table_header_blocks": [],
+  "special_ind_docx": [],
+  "spacing_para_count_docx": 30
+ },
+ "PLII_M22": {
+  "ten_mau": "Thông báo yêu cầu hộ kinh doanh đăng ký thay đổi thành viên không được quyền thành lập hộ kinh doanh",
+  "n_blocks": 21,
+  "block_schema_keys": [
+   "align",
+   "runs",
+   "t"
+  ],
+  "source_indicator": [],
+  "form_number": [
+   {
+    "idx": 0,
+    "align": "right",
+    "text": "Mẫu số 22"
+   }
+  ],
+  "newline_blocks": [
+   {
+    "idx": 1,
+    "align": "center",
+    "lines": 3,
+    "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH ⏎ CẤP XÃ ⏎ -----------"
+   },
+   {
+    "idx": 2,
+    "align": "center",
+    "lines": 3,
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM ⏎ Độc lập - Tự do - Hạnh phúc ⏎ ------------------"
+   },
+   {
+    "idx": 19,
+    "align": "left",
+    "lines": 4,
+    "text": "Nơi nhận: ⏎ - Như trên; ⏎ - <input:noi_nhan>; ⏎ - Lưu: <input:luu_vb>"
+   },
+   {
+    "idx": 20,
+    "align": "center",
+    "lines": 2,
+    "text": "TRƯỞNG PHÒNG ⏎ (Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "docx_br_paras": [
+   {
+    "i": 1,
+    "br": 2,
+    "jc": "center",
+    "text": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP XÃ-----------"
+   },
+   {
+    "i": 2,
+    "br": 2,
+    "jc": "center",
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc------------------"
+   },
+   {
+    "i": 21,
+    "br": 3,
+    "jc": null,
+    "text": "Nơi nhận:- Như trên;- {noi_nhan};- Lưu: {luu_vb}"
+   },
+   {
+    "i": 22,
+    "br": 1,
+    "jc": "center",
+    "text": "TRƯỞNG PHÒNG(Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "glue_footnote_refs": [],
+  "footnote_body_blocks": [],
+  "docx_superscript_runs": [],
+  "docx_separator_as_superscript": [],
+  "docx_empty_superscript": [],
+  "docx_footnote_reference_count": 0,
+  "docx_has_footnotes_xml": false,
+  "title": [
+   {
+    "idx": 5,
+    "align": "center",
+    "text": "THÔNG BÁO"
+   }
+  ],
+  "salutation": [
+   {
+    "idx": 7,
+    "align": "left",
+    "text": "Kính gửi:"
+   }
+  ],
+  "date_line": [
+   {
+    "idx": 4,
+    "align": "right",
+    "text": "<input:dia_diem_ky>, ngày<input:ngay_ky_vb>tháng<input:thang_ky_vb>năm<input:nam_ky_vb>"
+   }
+  ],
+  "signature": [
+   {
+    "idx": 20,
+    "align": "center",
+    "text": "TRƯỞNG PHÒNG (Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "tables_docx": 0,
+  "flattened_table_header_blocks": [],
+  "special_ind_docx": [],
+  "spacing_para_count_docx": 24
+ },
+ "PLII_M23": {
+  "ten_mau": "Thông báo về việc xử lý hồ sơ đăng ký hộ kinh doanh hoặc ra thông báo, quyết định không đúng quy định về hồ sơ, trình tự, thủ tục",
+  "n_blocks": 22,
+  "block_schema_keys": [
+   "align",
+   "runs",
+   "t"
+  ],
+  "source_indicator": [],
+  "form_number": [
+   {
+    "idx": 0,
+    "align": "right",
+    "text": "Mẫu số 23"
+   }
+  ],
+  "newline_blocks": [
+   {
+    "idx": 1,
+    "align": "center",
+    "lines": 3,
+    "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH ⏎ CẤP XÃ ⏎ -----------"
+   },
+   {
+    "idx": 2,
+    "align": "center",
+    "lines": 3,
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM ⏎ Độc lập - Tự do - Hạnh phúc ⏎ ------------------"
+   },
+   {
+    "idx": 20,
+    "align": "left",
+    "lines": 4,
+    "text": "Nơi nhận: ⏎ - Như trên; ⏎ - <input:noi_nhan>; ⏎ - Lưu: <input:luu_vb>"
+   },
+   {
+    "idx": 21,
+    "align": "center",
+    "lines": 2,
+    "text": "TRƯỞNG PHÒNG ⏎ (Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "docx_br_paras": [
+   {
+    "i": 1,
+    "br": 2,
+    "jc": "center",
+    "text": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP XÃ-----------"
+   },
+   {
+    "i": 2,
+    "br": 2,
+    "jc": "center",
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc------------------"
+   },
+   {
+    "i": 22,
+    "br": 3,
+    "jc": null,
+    "text": "Nơi nhận:- Như trên;- {noi_nhan};- Lưu: {luu_vb}"
+   },
+   {
+    "i": 23,
+    "br": 1,
+    "jc": "center",
+    "text": "TRƯỞNG PHÒNG(Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "glue_footnote_refs": [],
+  "footnote_body_blocks": [],
+  "docx_superscript_runs": [],
+  "docx_separator_as_superscript": [],
+  "docx_empty_superscript": [],
+  "docx_footnote_reference_count": 0,
+  "docx_has_footnotes_xml": false,
+  "title": [
+   {
+    "idx": 5,
+    "align": "center",
+    "text": "THÔNG BÁO"
+   }
+  ],
+  "salutation": [
+   {
+    "idx": 7,
+    "align": "left",
+    "text": "Kính gửi:"
+   }
+  ],
+  "date_line": [
+   {
+    "idx": 4,
+    "align": "right",
+    "text": "<input:dia_diem_ky>, ngày<input:ngay_ky_vb>tháng<input:thang_ky_vb>năm<input:nam_ky_vb>"
+   }
+  ],
+  "signature": [
+   {
+    "idx": 21,
+    "align": "center",
+    "text": "TRƯỞNG PHÒNG (Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "tables_docx": 0,
+  "flattened_table_header_blocks": [],
+  "special_ind_docx": [],
+  "spacing_para_count_docx": 25
+ },
+ "PLII_M24": {
+  "ten_mau": "Thông báo về việc khôi phục Giấy chứng nhận đăng ký hộ kinh doanh",
+  "n_blocks": 16,
+  "block_schema_keys": [
+   "align",
+   "runs",
+   "t"
+  ],
+  "source_indicator": [],
+  "form_number": [
+   {
+    "idx": 0,
+    "align": "right",
+    "text": "Mẫu số 24"
+   }
+  ],
+  "newline_blocks": [
+   {
+    "idx": 1,
+    "align": "center",
+    "lines": 3,
+    "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH ⏎ CẤP XÃ ⏎ -----------"
+   },
+   {
+    "idx": 2,
+    "align": "center",
+    "lines": 3,
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM ⏎ Độc lập - Tự do - Hạnh phúc ⏎ ------------------"
+   },
+   {
+    "idx": 14,
+    "align": "left",
+    "lines": 6,
+    "text": "Nơi nhận:  ⏎ - Tên, trụ sở của hộ kinh doanh; ⏎ - Cơ quan quản lý thuế<input:noi_nhan> (xã, phường, đặc khu nơi hộ kinh doanh đăng ký trụ sở của HKD);"
+   },
+   {
+    "idx": 15,
+    "align": "center",
+    "lines": 2,
+    "text": "TRƯỞNG PHÒNG ⏎ (Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "docx_br_paras": [
+   {
+    "i": 1,
+    "br": 2,
+    "jc": "center",
+    "text": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP XÃ-----------"
+   },
+   {
+    "i": 2,
+    "br": 2,
+    "jc": "center",
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc------------------"
+   },
+   {
+    "i": 16,
+    "br": 5,
+    "jc": null,
+    "text": "Nơi nhận: - Tên, trụ sở của hộ kinh doanh;- Cơ quan quản lý thuế{noi_nhan} (xã, "
+   },
+   {
+    "i": 17,
+    "br": 1,
+    "jc": "center",
+    "text": "TRƯỞNG PHÒNG(Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "glue_footnote_refs": [],
+  "footnote_body_blocks": [],
+  "docx_superscript_runs": [],
+  "docx_separator_as_superscript": [],
+  "docx_empty_superscript": [],
+  "docx_footnote_reference_count": 0,
+  "docx_has_footnotes_xml": false,
+  "title": [
+   {
+    "idx": 5,
+    "align": "center",
+    "text": "THÔNG BÁO"
+   }
+  ],
+  "salutation": [],
+  "date_line": [
+   {
+    "idx": 4,
+    "align": "right",
+    "text": "<input:dia_diem_ky>, ngày<input:ngay_ky_vb>tháng<input:thang_ky_vb>năm<input:nam_ky_vb>"
+   },
+   {
+    "idx": 8,
+    "align": "left",
+    "text": "Căn cứ Quyết định số<input:can_cu> ngày<input:ngay_ky_vb> tháng<input:thang_ky_vb> năm<input:nam_ky_vb> về việ"
+   }
+  ],
+  "signature": [
+   {
+    "idx": 15,
+    "align": "center",
+    "text": "TRƯỞNG PHÒNG (Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "tables_docx": 0,
+  "flattened_table_header_blocks": [],
+  "special_ind_docx": [],
+  "spacing_para_count_docx": 19
+ },
+ "PLII_M25": {
+  "ten_mau": "Thông báo về việc hiệu đính nội dung trên Giấy chứng nhận đăng ký hộ kinh doanh",
+  "n_blocks": 19,
+  "block_schema_keys": [
+   "align",
+   "runs",
+   "t"
+  ],
+  "source_indicator": [],
+  "form_number": [
+   {
+    "idx": 0,
+    "align": "right",
+    "text": "Mẫu số 25"
+   }
+  ],
+  "newline_blocks": [
+   {
+    "idx": 1,
+    "align": "center",
+    "lines": 3,
+    "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH ⏎ CẤP XÃ ⏎ -----------"
+   },
+   {
+    "idx": 2,
+    "align": "center",
+    "lines": 3,
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM ⏎ Độc lập - Tự do - Hạnh phúc ⏎ ------------------"
+   },
+   {
+    "idx": 17,
+    "align": "left",
+    "lines": 4,
+    "text": "Nơi nhận: ⏎ - Như trên; ⏎ - <input:noi_nhan>; ⏎ - Lưu:<input:luu_vb>"
+   },
+   {
+    "idx": 18,
+    "align": "center",
+    "lines": 2,
+    "text": "TRƯỞNG PHÒNG ⏎ (Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "docx_br_paras": [
+   {
+    "i": 1,
+    "br": 2,
+    "jc": "center",
+    "text": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP XÃ-----------"
+   },
+   {
+    "i": 2,
+    "br": 2,
+    "jc": "center",
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc------------------"
+   },
+   {
+    "i": 19,
+    "br": 3,
+    "jc": null,
+    "text": "Nơi nhận:- Như trên;- {noi_nhan};- Lưu:{luu_vb}"
+   },
+   {
+    "i": 20,
+    "br": 1,
+    "jc": "center",
+    "text": "TRƯỞNG PHÒNG(Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "glue_footnote_refs": [],
+  "footnote_body_blocks": [],
+  "docx_superscript_runs": [],
+  "docx_separator_as_superscript": [],
+  "docx_empty_superscript": [],
+  "docx_footnote_reference_count": 0,
+  "docx_has_footnotes_xml": false,
+  "title": [
+   {
+    "idx": 5,
+    "align": "center",
+    "text": "THÔNG BÁO"
+   }
+  ],
+  "salutation": [
+   {
+    "idx": 7,
+    "align": "left",
+    "text": "Kính gửi:"
+   }
+  ],
+  "date_line": [
+   {
+    "idx": 4,
+    "align": "right",
+    "text": "<input:dia_diem_ky>, ngày<input:ngay_ky_vb>tháng<input:thang_ky_vb>năm<input:nam_ky_vb>"
+   }
+  ],
+  "signature": [
+   {
+    "idx": 15,
+    "align": "left",
+    "text": "Sau khi xem xét lại hồ sơ đăng ký hộ kinh doanh của Ông/Bà: <input:ong_ba_nhan_hs> là chủ "
+   },
+   {
+    "idx": 18,
+    "align": "center",
+    "text": "TRƯỞNG PHÒNG (Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "tables_docx": 0,
+  "flattened_table_header_blocks": [],
+  "special_ind_docx": [],
+  "spacing_para_count_docx": 22
+ },
+ "PLII_M26": {
+  "ten_mau": "Thông báo về việc dừng/từ chối dừng thực hiện thủ tục đăng ký hộ kinh doanh",
+  "n_blocks": 25,
+  "block_schema_keys": [
+   "align",
+   "runs",
+   "t"
+  ],
+  "source_indicator": [],
+  "form_number": [
+   {
+    "idx": 0,
+    "align": "right",
+    "text": "Mẫu số 26"
+   }
+  ],
+  "newline_blocks": [
+   {
+    "idx": 1,
+    "align": "center",
+    "lines": 3,
+    "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH ⏎ CẤP XÃ ⏎ -----------"
+   },
+   {
+    "idx": 2,
+    "align": "center",
+    "lines": 3,
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM ⏎ Độc lập - Tự do - Hạnh phúc ⏎ ------------------"
+   },
+   {
+    "idx": 23,
+    "align": "left",
+    "lines": 4,
+    "text": "Nơi nhận: ⏎ - Như trên; ⏎ - <input:noi_nhan>; ⏎ - Lưu: <input:luu_vb>"
+   },
+   {
+    "idx": 24,
+    "align": "center",
+    "lines": 2,
+    "text": "TRƯỞNG PHÒNG ⏎ (Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "docx_br_paras": [
+   {
+    "i": 1,
+    "br": 2,
+    "jc": "center",
+    "text": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP XÃ-----------"
+   },
+   {
+    "i": 2,
+    "br": 2,
+    "jc": "center",
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc------------------"
+   },
+   {
+    "i": 25,
+    "br": 3,
+    "jc": null,
+    "text": "Nơi nhận:- Như trên;- {noi_nhan};- Lưu: {luu_vb}"
+   },
+   {
+    "i": 26,
+    "br": 1,
+    "jc": "center",
+    "text": "TRƯỞNG PHÒNG(Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "glue_footnote_refs": [],
+  "footnote_body_blocks": [],
+  "docx_superscript_runs": [],
+  "docx_separator_as_superscript": [],
+  "docx_empty_superscript": [],
+  "docx_footnote_reference_count": 0,
+  "docx_has_footnotes_xml": false,
+  "title": [
+   {
+    "idx": 5,
+    "align": "center",
+    "text": "THÔNG BÁO"
+   }
+  ],
+  "salutation": [
+   {
+    "idx": 7,
+    "align": "left",
+    "text": "Kính gửi:"
+   }
+  ],
+  "date_line": [
+   {
+    "idx": 4,
+    "align": "right",
+    "text": "<input:dia_diem_ky>, ngày<input:ngay_ky_vb>tháng<input:thang_ky_vb>năm<input:nam_ky_vb>"
+   },
+   {
+    "idx": 20,
+    "align": "left",
+    "text": "Sau khi xem xét Giấy đề nghị dừng thực hiện thủ tục đăng ký hộ kinh doanh đã nhận ngày… tháng … năm … của Ông/"
+   }
+  ],
+  "signature": [
+   {
+    "idx": 24,
+    "align": "center",
+    "text": "TRƯỞNG PHÒNG (Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "tables_docx": 0,
+  "flattened_table_header_blocks": [],
+  "special_ind_docx": [],
+  "spacing_para_count_docx": 28
+ },
+ "PLII_M27": {
+  "ten_mau": "Thông báo về việc hộ kinh doanh đang làm thủ tục chấm dứt hoạt động",
+  "n_blocks": 23,
+  "block_schema_keys": [
+   "align",
+   "runs",
+   "t"
+  ],
+  "source_indicator": [],
+  "form_number": [
+   {
+    "idx": 0,
+    "align": "right",
+    "text": "Mẫu số 27"
+   }
+  ],
+  "newline_blocks": [
+   {
+    "idx": 1,
+    "align": "center",
+    "lines": 3,
+    "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH ⏎ CẤP XÃ ⏎ -----------"
+   },
+   {
+    "idx": 2,
+    "align": "center",
+    "lines": 3,
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM ⏎ Độc lập - Tự do - Hạnh phúc ⏎ ------------------"
+   },
+   {
+    "idx": 22,
+    "align": "center",
+    "lines": 2,
+    "text": "TRƯỞNG PHÒNG ⏎ (Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "docx_br_paras": [
+   {
+    "i": 1,
+    "br": 2,
+    "jc": "center",
+    "text": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP XÃ-----------"
+   },
+   {
+    "i": 2,
+    "br": 2,
+    "jc": "center",
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc------------------"
+   },
+   {
+    "i": 25,
+    "br": 1,
+    "jc": "center",
+    "text": "TRƯỞNG PHÒNG(Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "glue_footnote_refs": [],
+  "footnote_body_blocks": [],
+  "docx_superscript_runs": [],
+  "docx_separator_as_superscript": [],
+  "docx_empty_superscript": [],
+  "docx_footnote_reference_count": 0,
+  "docx_has_footnotes_xml": false,
+  "title": [
+   {
+    "idx": 5,
+    "align": "center",
+    "text": "THÔNG BÁO"
+   }
+  ],
+  "salutation": [],
+  "date_line": [
+   {
+    "idx": 4,
+    "align": "right",
+    "text": "<input:dia_diem_ky>, ngày<input:ngay_ky_vb>tháng<input:thang_ky_vb>năm<input:nam_ky_vb>"
+   },
+   {
+    "idx": 14,
+    "align": "left",
+    "text": "Sinh ngày: <input:ngay_sinh>/<input:thang_sinh>/<input:nam_sinh>Dân tộc: <input:chu_hkd.dan_toc> Quốc tịch: <i"
+   }
+  ],
+  "signature": [
+   {
+    "idx": 19,
+    "align": "left",
+    "text": "Là chủ hộ kinh doanh."
+   },
+   {
+    "idx": 22,
+    "align": "center",
+    "text": "TRƯỞNG PHÒNG (Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "tables_docx": 0,
+  "flattened_table_header_blocks": [],
+  "special_ind_docx": [],
+  "spacing_para_count_docx": 27
+ },
+ "PLII_M28": {
+  "ten_mau": "Thông báo về việc rà soát thông tin đăng ký hộ kinh doanh của hộ kinh doanh",
+  "n_blocks": 32,
+  "block_schema_keys": [
+   "align",
+   "runs",
+   "t"
+  ],
+  "source_indicator": [],
+  "form_number": [
+   {
+    "idx": 0,
+    "align": "right",
+    "text": "Mẫu số 28"
+   }
+  ],
+  "newline_blocks": [
+   {
+    "idx": 1,
+    "align": "center",
+    "lines": 3,
+    "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH ⏎ CẤP XÃ ⏎ -----------"
+   },
+   {
+    "idx": 2,
+    "align": "center",
+    "lines": 3,
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM ⏎ Độc lập - Tự do - Hạnh phúc ⏎ ------------------"
+   },
+   {
+    "idx": 30,
+    "align": "center",
+    "lines": 2,
+    "text": "TRƯỞNG PHÒNG ⏎ (Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "docx_br_paras": [
+   {
+    "i": 1,
+    "br": 2,
+    "jc": "center",
+    "text": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP XÃ-----------"
+   },
+   {
+    "i": 2,
+    "br": 2,
+    "jc": "center",
+    "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc------------------"
+   },
+   {
+    "i": 33,
+    "br": 1,
+    "jc": "center",
+    "text": "TRƯỞNG PHÒNG(Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "glue_footnote_refs": [],
+  "footnote_body_blocks": [],
+  "docx_superscript_runs": [],
+  "docx_separator_as_superscript": [],
+  "docx_empty_superscript": [],
+  "docx_footnote_reference_count": 0,
+  "docx_has_footnotes_xml": false,
+  "title": [
+   {
+    "idx": 5,
+    "align": "center",
+    "text": "THÔNG BÁO"
+   }
+  ],
+  "salutation": [
+   {
+    "idx": 7,
+    "align": "left",
+    "text": "Kính gửi:"
+   }
+  ],
+  "date_line": [
+   {
+    "idx": 4,
+    "align": "right",
+    "text": "<input:dia_diem_ky>, ngày<input:ngay_ky_vb>tháng<input:thang_ky_vb>năm<input:nam_ky_vb>"
+   }
+  ],
+  "signature": [
+   {
+    "idx": 22,
+    "align": "left",
+    "text": "- Chủ hộ kinh doanh:………….……………………………………………….."
+   },
+   {
+    "idx": 30,
+    "align": "center",
+    "text": "TRƯỞNG PHÒNG (Ký, ghi họ tên và đóng dấu)"
+   }
+  ],
+  "tables_docx": 0,
+  "flattened_table_header_blocks": [],
+  "special_ind_docx": [],
+  "spacing_para_count_docx": 48
+ }
+}

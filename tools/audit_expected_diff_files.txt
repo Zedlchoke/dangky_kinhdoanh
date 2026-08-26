@@ -93,7 +93,6 @@ docs/layout_l1_contract.md
 docs/product_scope_registry.md
 requirements-dev.txt
 tools/audit_blocks_check.py
-tools/audit_expected_diff_files.txt
 tools/census/check_layout_l1.py
 tools/census/p1_c_verify_plii_m02.py
 tools/docx_to_blocks.py

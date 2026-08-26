@@ -590,6 +590,9 @@ function mkRow(tags, j) {
   // vào manifest — không phải nới lỏng, chỉ tách dữ liệu khỏi code.
   const SELF = 'app_web/test_audit_wave_h_negative.js';
   const MANIFEST = 'tools/audit_expected_diff_files.txt';
+  // Bộ máy của chính các gate: loại khỏi exact-set để tránh tự tham chiếu
+  // (manifest không thể list chính nó trong cùng commit tạo ra nó).
+  const MACHINERY = new Set([SELF, MANIFEST, 'app_web/test_audit_p1_negative.js']);
   let expected;
   try {
     expected = fs.readFileSync(path.join(__dirname, '..', MANIFEST), 'utf8')
@@ -601,7 +604,7 @@ function mkRow(tags, j) {
     return;
   }
 
-  const rest = files.filter(f => f !== SELF);
+  const rest = files.filter(f => !MACHINERY.has(f));
   const genTouched = files.filter(f =>
     f.indexOf('app/templates/') === 0 || f.indexOf('app/data/') === 0);
   const expGen = expected.filter(f =>
@@ -619,7 +622,7 @@ function mkRow(tags, j) {
 
   check('H7.3 manifest KHONG co entry "ma" (moi entry co mat trong diff)',
     expected.every(f => files.indexOf(f) >= 0 || f === SELF),
-    JSON.stringify(expected.filter(f => files.indexOf(f) < 0 && f !== SELF)));
+    JSON.stringify(expected.filter(f => files.indexOf(f) < 0 && !MACHINERY.has(f))));
 
   check('H7.4 diff (tru file test nay) dung bang tap manifest (' +
       rest.length + ' file trong diff)',

@@ -186,19 +186,32 @@ function blockingOf(errs, code) {
   return errs.filter(e => e.code === code && e.severity === 'blocking');
 }
 
-/* Chạy script python phụ (AC13); trả {code, out}. */
+/* Chạy script python phụ (AC13); trả {code, out}.
+ * Tương thích môi trường: một số máy chỉ có 'python3' (không có alias
+ * 'python') - thử 'python' trước, lỗi 127/ENOENT (thiếu interpreter, KHÔNG
+ * phải script fail) thì thử lại với 'python3'. Assertion vẫn yêu cầu exit 0. */
 function runPy(scriptRel) {
-  try {
-    const out = execSync('python -X utf8 "' + scriptRel + '"', {
-      cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe']
-    });
-    return { code: 0, out: String(out) };
-  } catch (e) {
-    return {
-      code: (e && e.status != null) ? e.status : 1,
-      out: String((e && e.stdout) || '') + String((e && e.stderr) || '')
-    };
+  const INTERPS = ['python -X utf8', 'python3 -X utf8'];
+  let last = null;
+  for (let i = 0; i < INTERPS.length; i++) {
+    try {
+      const out = execSync(INTERPS[i] + ' "' + scriptRel + '"', {
+        cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe']
+      });
+      return { code: 0, out: String(out) };
+    } catch (e) {
+      last = e;
+      const status = (e && e.status != null) ? e.status : 1;
+      const noInterp = status === 127 || (e && e.code === 'ENOENT');
+      if (!noInterp || i === INTERPS.length - 1) {
+        return {
+          code: status,
+          out: String((e && e.stdout) || '') + String((e && e.stderr) || '')
+        };
+      }
+    }
   }
+  return { code: 1, out: String(last) };
 }
 
 // ======================================================================

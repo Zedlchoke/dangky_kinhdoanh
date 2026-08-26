@@ -362,24 +362,32 @@ function eqJson(a, b) { return JSON.stringify(a) === JSON.stringify(b); }
     tvSides.length === 1 && cfTv.length === 0);
 
   // --- S2g. khác CHỈ activeWhen mode cũng bị bắt (report, không đổi payload)
-  const FIX_M = 'FIX_P20_MODE';
-  const m72Sel = cloneMeta(
-    FD.getGridMeta({ docId: 'PLI_M72', loop: 'ds_nganh_dntn' }),
-    { activeWhen: { checkedKey: 'chk_loai_hinh_fixture' }, semanticKey: 'ds_nganh_dntn' });
-  FD.registerFormGridMeta(FIX_M, { loops: { ds_nganh_dntn: m72Sel } });
+  // P1.2 Option D: production PLI_M72 giờ là SELECTOR (valueOf dn.loai_hinh)
+  // nên phía đối chứng actMode là FIXTURE INTERIM đăng ký runtime
+  // (minFilledRows - KHÔNG đụng production meta).
+  const FIX_MI = 'FIX_P20_INTERIM';
+  FD.registerFormGridMeta(FIX_MI, {
+    loops: {
+      ds_nganh_dntn: cloneMeta(
+        FD.getGridMeta({ docId: 'PLI_M72', loop: 'ds_nganh_dntn' }),
+        { activeWhen: { minFilledRows: 1 }, semanticKey: 'ds_nganh_dntn' })
+    }
+  });
   const stMode = { values: {}, checks: {}, loops: {
     ds_nganh_dntn: [mkRow(['ten_nganh', 'ma_nganh'], 0)]
   } };
-  const cfMode = G.detectExportConflicts(stMode, ['PLI_M72', FIX_M]);
-  check('S2g.1 interim vs selector (activationModeOf khac) -> bat duoc conflict',
+  // Fixture interim đứng TRƯỚC -> winner payload giữ hành vi interim
+  // (interim không lọc payload; production selector thì có lọc).
+  const cfMode = G.detectExportConflicts(stMode, [FIX_MI, 'PLI_M72']);
+  check('S2g.1 interim-fixture vs selector-production (activationModeOf khac) -> bat duoc conflict',
     cfMode.length === 1 &&
       cfMode[0].reasons.some(r => r.indexOf('interim-filled-data') >= 0 &&
         r.indexOf('selector') >= 0),
     JSON.stringify(cfMode.map(c => c.reasons)));
-  const exMode = G.exportLoops(stMode, ['PLI_M72', FIX_M]);
+  const exMode = G.exportLoops(stMode, [FIX_MI, 'PLI_M72']);
   const modeReport = G.lastExportConflicts.slice(); // chup TRUOC call ke tiep
-  const exModeFirst = G.exportLoops(stMode, ['PLI_M72']);
-  check('S2g.2 report mode giu nguyen hop dong first-wins cua test_m72 muc 5',
+  const exModeFirst = G.exportLoops(stMode, [FIX_MI]);
+  check('S2g.2 report mode giu nguyen hop dong first-wins (payload theo meta dau)',
     eqJson(exMode, exModeFirst) && exMode.ds_nganh_dntn.length === 1 &&
       modeReport.length === 1);
 

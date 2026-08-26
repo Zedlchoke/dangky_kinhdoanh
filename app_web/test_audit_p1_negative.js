@@ -85,41 +85,59 @@ function vsicOf(ma) {
   check('N1g. resolver uu tien form-scoped hon global', again === m02 && again !== gGlobal);
 })();
 
-// ===================== N2. PLI_M72 grid inactive im lang ====================
+// ===================== N2. PLI_M72 selector gate: chua chon -> im lang ======
 
 (function n2() {
   const vA = vsicOf('0111');
 
-  // Truong hop 1: chi 1/5 grid co du lieu, chua chon nganh chinh
-  const st1 = R.newStore();
-  st1.loops.ds_nganh_tnhh_1tv = [mkRow({
-    ten_nganh: vA.ten, ma_nganh: vA.ma, la_nganh_chinh: '' }, 'fx-a1')];
-  const e1 = errsOf('PLI_M72', M72.blocks, st1);
+  function dirtyTnhh1() {
+    const st = R.newStore();
+    st.loops.ds_nganh_tnhh_1tv = [mkRow({
+      ten_nganh: vA.ten, ma_nganh: vA.ma, la_nganh_chinh: '' }, 'fx-a1')];
+    return st;
+  }
 
-  const prim = e1.filter(function (e) { return e.code === 'PRIMARY_INDUSTRY_REQUIRED'; });
-  check('N2a. dung 1 loi PRIMARY_INDUSTRY_REQUIRED',
+  // Truong hop 1: KHONG chon loai hinh -> grid co du lieu ban cung IM LANG
+  const e1 = errsOf('PLI_M72', M72.blocks, dirtyTnhh1());
+  check('N2a. chua chon loai hinh -> du grid co du lieu ban cung 0 loi loop',
+    M72_LOOPS.every(function (l) { return errsOfLoop(e1, l).length === 0; }),
+    JSON.stringify(M72_LOOPS.reduce(function (acc, l) {
+      return acc.concat(errsOfLoop(e1, l).map(function (e) { return l + '|' + e.code; }));
+    }, [])));
+  const selReq = e1.filter(function (e) { return e.code === 'SELECTOR_REQUIRED'; });
+  check('N2b. dung 1 loi SELECTOR_REQUIRED blocking @selector:dn.loai_hinh',
+    selReq.length === 1 && selReq[0].severity === 'blocking' &&
+      selReq[0].key === '@selector:dn.loai_hinh' &&
+      e1.every(function (e) { return e.key !== '@selector:dn.loai_hinh' || e === selReq[0]; }),
+    JSON.stringify(e1.map(function (e) { return e.code + '@' + e.key; })));
+
+  // Truong hop 2: CHON TNHH_1TV -> PRIMARY_INDUSTRY_REQUIRED CHI o tnhh_1tv
+  const stOn = dirtyTnhh1();
+  stOn.values['dn.loai_hinh'] = 'TNHH_1TV';
+  const eOn = errsOf('PLI_M72', M72.blocks, stOn);
+  const prim = eOn.filter(function (e) { return e.code === 'PRIMARY_INDUSTRY_REQUIRED'; });
+  check('N2c. TNHH_1TV: dung 1 loi PRIMARY_INDUSTRY_REQUIRED',
     prim.length === 1, JSON.stringify(prim.map(function (e) { return e.key; })));
-  check('N2b. loi primary tro DUNG grid co du lieu (tnhh_1tv), blocking',
+  check('N2d. loi primary tro DUNG grid co du lieu (tnhh_1tv), blocking',
     prim.length === 1 && prim[0].key.indexOf('loop:ds_nganh_tnhh_1tv:') === 0 &&
-    prim[0].severity === 'blocking');
-
+      prim[0].severity === 'blocking');
   const noise = [];
   M72_LOOPS.forEach(function (l) {
     if (l === 'ds_nganh_tnhh_1tv') return;
-    errsOfLoop(e1, l).forEach(function (e) { noise.push(l + '|' + e.code); });
+    errsOfLoop(eOn, l).forEach(function (e) { noise.push(l + '|' + e.code); });
   });
-  check('N2c. 4 grid TRONG khong sinh bat ky error nao', noise.length === 0,
-    JSON.stringify(noise));
+  check('N2e. 4 grid khong duoc chon van im lang (khong sinh bat ky loi loop nao)',
+    noise.length === 0, JSON.stringify(noise));
 
-  // Truong hop 2: ca 5 grid trong -> 0 error tu 5 grid nay
+  // Truong hop 3: ca 5 grid trong + chua chon -> 0 error tu 5 grid nay
   const st2 = R.newStore();
   M72_LOOPS.forEach(function (l) { st2.loops[l] = []; });
-  const e2 = errsOf('PLI_M72', M72.blocks, st2);
+  const e3 = errsOf('PLI_M72', M72.blocks, st2);
   const from5 = [];
   M72_LOOPS.forEach(function (l) {
-    errsOfLoop(e2, l).forEach(function (e) { from5.push(l + '|' + e.code); });
+    errsOfLoop(e3, l).forEach(function (e) { from5.push(l + '|' + e.code); });
   });
-  check('N2d. ca 5 grid trong -> 0 error (moi severity) tu 5 grid',
+  check('N2f. ca 5 grid trong -> 0 error loop (moi severity)',
     from5.length === 0, JSON.stringify(from5));
 })();
 
@@ -135,7 +153,9 @@ function vsicOf(ma) {
   }
 
   // VSIC sai: dung grid do blocking VSIC_INVALID, khong lan grid khac
+  // (P1.2: phải CHỌN CTCP thì grid ds_nganh_ctcp mới active và được phét lỗi)
   const st1 = R.newStore();
+  st1.values['dn.loai_hinh'] = 'CTCP';
   st1.loops.ds_nganh_ctcp = [mkRow({
     ten_nganh: 'Ten tu nhap', ma_nganh: '999999', la_nganh_chinh: '' }, 'fx-b1')];
   const inv = errsOf('PLI_M72', M72.blocks, st1)
@@ -146,7 +166,9 @@ function vsicOf(ma) {
     JSON.stringify(inv.map(function (e) { return e.key; })));
 
   // Trung ma: DUPLICATE_INDUSTRY blocking tro CA HAI row dung vi tri
+  // (P1.2: chọn DHDN để grid ds_nganh_dhdn active)
   const st2 = R.newStore();
+  st2.values['dn.loai_hinh'] = 'DHDN';
   st2.loops.ds_nganh_dhdn = [
     mkRow({ ten_nganh: vB.ten, ma_nganh: vB.ma, la_nganh_chinh: '' }, 'fx-c1'),
     mkRow({ ten_nganh: vC.ten, ma_nganh: vB.ma, la_nganh_chinh: '' }, 'fx-c2')
@@ -307,6 +329,8 @@ function vsicOf(ma) {
     mkRow({ ten_nganh: 'CT1', ma_nganh: '0111', la_nganh_chinh: true }, 'ex-5'),
     mkRow({ ten_nganh: 'CT2', ma_nganh: '0111' }, 'ex-6')
   ];
+  // P1.2 selector gate: chọn CTCP thì grid ds_nganh_ctcp mới được xuất payload
+  st.values['dn.loai_hinh'] = 'CTCP';
 
   const out = G.exportLoops(st, ['PLII_M02', 'PLI_M72']);
   check('N7a. payload khong con _row_id',
@@ -411,7 +435,12 @@ function vsicOf(ma) {
     // layout-manifest-v1: hop nhat 3 fragment L0 do Lead sinh qua
     // tools/census/build_layout_manifest.py (commit 6047c1d) - artifact
     // census co chu dich, khong phai generated drift.
-    'app/data/layout_specs/layout_manifest.json'
+    'app/data/layout_specs/layout_manifest.json',
+    // P1.2 Lead (commit 5c75238): engine vung dieu kien {?flag}/{/flag} +
+    // converter cond blocks + tagger idempotent M72 - artifact generated
+    // co chu dich (template + blocks regen theo spec change PLI_M72).
+    'app/templates/PLI_M72.docx',
+    'app/data/blocks/PLI_M72.json'
   ];
   let files = [];
   try {

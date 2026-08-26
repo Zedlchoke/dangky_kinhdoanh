@@ -1,25 +1,27 @@
-/* test_m72_activation.js - P1.1 "M72 ACTIVATION CONTRACT" (mechanism only).
+/* test_m72_activation.js - P1.1/P1.2 "M72 ACTIVATION CONTRACT".
  *
- * PLI_M72 CHƯA có contract owner cho selector loại hình DN (audit:
- * docs/m72_activation_proposal.md) -> production giữ activation INTERIM
- * (minFilledRows). File này chứng minh CƠ CHẾ data-driven đã sẵn sàng bằng
- * METADATA GIẢ ĐỊNH chỉ tồn tại trong fixture (registerFormGridMeta),
- * KHÔNG đụng FORM_GRID_META production và KHÔNG tự chế mapping pháp lý:
+ * P1.2 Option D ĐÃ LANDING: production PLI_M72 dùng SELECTOR metadata hồ sơ
+ * 'dn.loai_hinh' (FORM_SELECTOR_META) - activeWhen valueOf trên từng loop;
+ * KHÔNG còn cơ chế INTERIM minFilledRows. File này kiểm contract production
+ * mới VÀ giữ các fixture giả định (registerFormGridMeta) để chứng minh cơ chế
+ * data-driven tổng quát, không đụng FORM_GRID_META production:
  *  1. Đúng MỘT section M72 active khi selector chọn đúng 1 loại hình.
  *  2. Section active TRỐNG + required -> blocking (INDUSTRY_REQUIRED).
  *  3. Các section inactive KHÔNG sinh lỗi nào (kể cả khi đang chứa dữ liệu).
  *  4. Section active có ngành nhưng thiếu ngành chính -> PRIMARY_INDUSTRY_REQUIRED.
  *  5. Dữ liệu ở section inactive KHÔNG vào payload export (exportLoops lọc);
- *     grid INTERIM (production M72) giữ nguyên payload hành vi cũ.
+ *     production M72 (selector) cũng bị lọc khi chưa chọn loại hình, giữ
+ *     dữ liệu + map X khi chọn đúng biến thể; thứ tự docIds quyết định meta.
  *  6. Đổi loại hình (đổi selector) không làm lẫn dữ liệu giữa các loop
  *     (store key riêng, chỉ trạng thái active đổi).
  *  7. Draft migrateDraft round-trip giữ dữ liệu đúng section kèm _row_id;
  *     checks trong draft lái lại trạng thái active.
  *  8. PLI_M72 không hồi quy structural: blocks vẫn 5 loop + 144 paragraph,
- *     KHÔNG có ô chọn loại hình; artifact (app/data, tools) nguyên vẹn theo
- *     git (structural DOCX 5 occurrence thuộc gate Lead: test_industry_change).
+ *     mỗi loop mang cond đúng flag loai_hinh_*; KHÔNG có ô chọn loại hình
+ *     trong văn bản; artifact (app/data, tools) nguyên vẹn theo git.
  *  N9 (negative). Mutate meta form-scoped (fixture) KHÔNG lan sang GRID_META
- *     gốc hay meta production khác (mkGrid clone isolation 2 chiều).
+ *     gốc hay meta production khác (mkGrid clone isolation 2 chiều); meta
+ *     production giữ nguyên activeWhen.valueOf ['DNTN'] mode selector.
  * Thêm: unit evalActiveWhen - thứ tự ưu tiên selector > interim; valueOf
  * membership; activationModeOf audit; đăng ký runtime qua
  * registerFormGridMeta index đúng bySemanticKey.
@@ -152,10 +154,10 @@ function activeMap(docId, loops, st) {
 
 // ==== S0. activationModeOf audit + đăng ký runtime ==========================
 
-check('S0. production PLI_M72: activation INTERIM (minFilledRows, chua co selector)',
+check('S0. production PLI_M72: activation SELECTOR (P1.2 Option D, valueOf dn.loai_hinh)',
   M72_LOOPS.every(ln =>
     FD.activationModeOf(FD.getGridMeta({ docId: 'PLI_M72', loop: ln })) ===
-      'interim-filled-data'));
+      'selector'));
 check('S0. GRID_META.ds_nganh khong activeWhen -> activationModeOf null (luon active)',
   FD.activationModeOf(FD.GRID_META.ds_nganh) === null);
 check('S0. fixture checkedKey/valueOf deu duoc nhan dien la selector',
@@ -274,21 +276,28 @@ check('S0. fixture KHONG anh huong resolver production (isolation)',
     ex.ds_nganh_dntn.length === 0 && ex.ds_nganh_ctcp.length === 0,
     JSON.stringify({ dntn: ex.ds_nganh_dntn.length, ctcp: ex.ds_nganh_ctcp.length }));
 
-  // REGRESSION INTERIM: production M72 (minFilledRows) - grid inactive vốn
-  // không có dòng CÓ DỮ LIỆU -> payload PHẢI GIỮ NGUYÊN 100% hành vi cũ
-  // (kể cả dòng trống chỉ có _row_id vẫn được xuất như trước khi có guard).
-  const stInterim = mkStore({
+  // REGRESSION SELECTOR (P1.2 Option D): production M72 giờ là selector-mode
+  // (valueOf dn.loai_hinh). Chưa chọn loại hình -> MỌI biến thể inactive ->
+  // payload RỖNG dù store còn dữ liệu (kể cả dòng trống người dùng lỡ bấm).
+  const stSel = mkStore({
     ds_nganh_dntn: withRowId([{}]), // dòng trống người dùng lỡ bấm thêm
     ds_nganh_ctcp: withRowId([{ ma_nganh: '0111', ten_nganh: 'T', la_nganh_chinh: 'X' }])
   });
-  const exInterim = G.exportLoops(stInterim, ['PLI_M72']);
-  check('5. regression INTERIM: grid trong-van-co-dong-trong duoc xuat nhu cu',
-    exInterim.ds_nganh_dntn.length === 1 &&
-      JSON.stringify(exInterim.ds_nganh_dntn[0]) === '{"la_nganh_chinh":""}',
-    JSON.stringify(exInterim.ds_nganh_dntn));
-  check('5. regression INTERIM: grid co du lieu van xuat day du + map X',
-    exInterim.ds_nganh_ctcp.length === 1 &&
-      exInterim.ds_nganh_ctcp[0].la_nganh_chinh === 'X');
+  const exSelNone = G.exportLoops(stSel, ['PLI_M72']);
+  check('5. regression selector: CHUA chon loai hinh -> payload rong moi bien the',
+    exSelNone.ds_nganh_dntn.length === 0 && exSelNone.ds_nganh_ctcp.length === 0,
+    JSON.stringify({ dntn: exSelNone.ds_nganh_dntn.length,
+      ctcp: exSelNone.ds_nganh_ctcp.length }));
+  // Chọn đúng một biến thể: giữ nguyên dữ liệu + map X; biến thể khác vẫn rỗng
+  stSel.values['dn.loai_hinh'] = 'CTCP';
+  const exSelCtcp = G.exportLoops(stSel, ['PLI_M72']);
+  check('5. regression selector: CTCP duoc chon -> giu du lieu + map X',
+    exSelCtcp.ds_nganh_ctcp.length === 1 &&
+      exSelCtcp.ds_nganh_ctcp[0].ma_nganh === '0111' &&
+      exSelCtcp.ds_nganh_ctcp[0].la_nganh_chinh === 'X');
+  check('5. regression selector: bien the KHAC van bi loa khoi payload',
+    exSelCtcp.ds_nganh_dntn.length === 0 &&
+      (exSelCtcp.ds_nganh_tnhh_1tv || []).length === 0);
 
   // Grid KHÔNG có activeWhen (vd ds_thanh_vien toàn cục) không bị guard đụng
   const stTv = mkStore({ ds_thanh_vien: withRowId([{ ho_ten: 'Nguyen Van A' }]) });
@@ -296,13 +305,22 @@ check('S0. fixture KHONG anh huong resolver production (isolation)',
   check('5. grid khong co activeWhen khong bi loc (hanh vi cu nguyen ven)',
     exTv.ds_thanh_vien.length === 1 && exTv.ds_thanh_vien[0].ho_ten === 'Nguyen Van A');
 
-  // Ghi nhận hợp đồng resolve theo THỨ TỰ docIds: meta đầu tiên thắng
-  // (PLI_M72 interim đứng trước fixture selector -> không filter). Owner cần
-  /// biết điều này khi wiring production (xem proposal, mục rủi ro).
-  const exOrder = G.exportLoops(st, ['PLI_M72', FIX_A]);
-  check('5. thu tu docIds quyet dinh meta: PLI_M72 (interim) truoc -> khong filter',
-    exOrder.ds_nganh_dntn.length === 1,
-    'len=' + exOrder.ds_nganh_dntn.length);
+  // Hợp đồng resolve theo THỨ TỰ docIds: meta của mẫu ĐẦU TIÊN quyết định
+  // guard export. ['PLI_M72', FIX_A]: meta PLI_M72 (valueOf dn.loai_hinh)
+  // thắng -> chưa chọn loại hình thì payload bị LỌC SẠCH dù fixture checkedKey
+  // đang bật; đảo thứ tự thì fixture checkedKey thắng -> giữ nguyên dữ liệu.
+  const stOrd = mkStore({
+    ds_nganh_dntn: withRowId([{ ma_nganh: '0111', ten_nganh: 'Trồng lúa' }])
+  });
+  stOrd.checks[SEL_KEYS.ds_nganh_dntn] = true; // fixture FIX_A coi như active
+  const exProdFirst = G.exportLoops(stOrd, ['PLI_M72', FIX_A]);
+  check('5. thu tu docIds quyet dinh meta: PLI_M72 (selector) truoc -> loc theo valueOf',
+    exProdFirst.ds_nganh_dntn.length === 0,
+    'len=' + exProdFirst.ds_nganh_dntn.length);
+  const exFixFirst = G.exportLoops(stOrd, [FIX_A, 'PLI_M72']);
+  check('5. thu tu docIds quyet dinh meta: FIX_A truoc -> loc theo checkedKey (giu du lieu)',
+    exFixFirst.ds_nganh_dntn.length === 1,
+    'len=' + exFixFirst.ds_nganh_dntn.length);
 }
 
 // ==== 5b. valueOf membership ================================================
@@ -433,6 +451,19 @@ check('S0. fixture KHONG anh huong resolver production (isolation)',
   check('8. blocks PLI_M72: dung 5 loop dung ten (structural khong doi)',
     JSON.stringify(loopNames.slice().sort()) ===
       JSON.stringify(M72_LOOPS.slice().sort()));
+  // P1.2 Option D: moi loop block phai mang cond dung flag bien te cua no
+  // (converter gan tu marker {?flag}/{/flag}), khop FORM_SELECTOR_META.
+  const flagByValue8 = {};
+  (((FD.getFormSelector('PLI_M72') || {}).options) || []).forEach(o => {
+    flagByValue8[o.value] = o.flag;
+  });
+  check('8. moi loop block mang cond dung flag loai_hinh cua bien the',
+    M72_LOOPS.every(ln => {
+      const lb = (M72.blocks || []).filter(b => b.t === 'loop' && b.loop === ln)[0];
+      const want = flagByValue8[ln.replace(/^ds_nganh_/, '').toUpperCase()];
+      return !!lb && !!want && Array.isArray(lb.cond) && lb.cond.length === 1 &&
+        lb.cond[0] === want;
+    }));
   check('8. blocks PLI_M72: 144 paragraph nhu evidence audit',
     counts.p === 144, 'p=' + counts.p);
   check('8. blocks PLI_M72: VAN khong co o chon loai hinh (0 chk, 0 key loai_hinh)',
@@ -473,7 +504,10 @@ check('S0. fixture KHONG anh huong resolver production (isolation)',
   const prodG = FD.FORM_GRID_META.PLI_M72.loops.ds_nganh_dntn;
   check('N9. meta production PLI_M72 khong bi lan mutation tu fixture',
     prodG.columns.length === 4 && prodG.required === false &&
-      prodG.activeWhen.minFilledRows === 1 && !prodG.columns.some(c => c.tag === 'hack_col'));
+      prodG.activeWhen.valueOf.key === 'dn.loai_hinh' &&
+      JSON.stringify(prodG.activeWhen.valueOf.equals) === '["DNTN"]' &&
+      FD.activationModeOf(prodG) === 'selector' &&
+      !prodG.columns.some(c => c.tag === 'hack_col'));
 
   // chiều ngược lại: meta production là bản clone mkGrid, không chia sẻ cột với gốc
   check('N9. meta form-scoped production la clone RIENG (khong share mang columns)',

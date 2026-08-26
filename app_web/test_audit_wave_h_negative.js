@@ -6,7 +6,8 @@
  *     chỉ INTERIM và bị BỎ QUA khi có selector.
  *  H2 valueOf: so giá trị sau TRIM, phân biệt HOA-THƯỜNG, equals nhiều phần tử.
  *  H3 export guard theo selector: grid inactive-theo-selector -> payload rỗng
- *     dù store còn rows; grid INTERIM inactive -> payload giữ nguyên.
+ *     dù store còn rows (production PLI_M72 giờ là selector P1.2 Option D);
+ *     grid không activeWhen -> payload giữ nguyên hành vi cũ.
  *  H4 conflict matrix: same-ref short-circuit / clone-vs-global tương đương /
  *     combo thật PLI_M12(global)+PLII_M02(scoped) / strict throw có cấu trúc,
  *     plain ghi lastExportConflicts + payload first-wins byte-nguyên.
@@ -188,22 +189,28 @@ function mkRow(tags, j) {
       exOn.ds_nganh_dntn[0].la_nganh_chinh === 'X' &&
       exOn.ds_nganh_dntn[1].la_nganh_chinh === '');
 
-  // INTERIM inactive (grid trống/không có dòng dữ liệu): KHÔNG bị lọc -
-  // payload giữ nguyên hành vi cũ 100% (production PLI_M72 là interim).
+  // P1.2 Option D: production PLI_M72 là SELECTOR (valueOf dn.loai_hinh),
+  // KHÔNG còn INTERIM. Chưa chọn loại hình -> grid inactive -> payload RỖNG
+  // (dòng trống cũng không sot vào payload nữa).
   const stBlank = { values: {}, checks: {}, loops: {
     ds_nganh_dntn: [{ _row_id: FD.makeRowId(),
       ten_nganh: '', ma_nganh: '', la_nganh_chinh: '' }]
   } };
-  check('H3.4 production M72 la interim (chua co selector)',
-    FD.getGridMeta({ docId: 'PLI_M72', loop: 'ds_nganh_dntn' })
-      .activeWhen != null &&
-      FD.activationModeOf(
-        FD.getGridMeta({ docId: 'PLI_M72', loop: 'ds_nganh_dntn' })) ===
-        'interim-filled-data');
-  const exInterim = G.exportLoops(stBlank, ['PLI_M72']);
-  check('H3.5 interim inactive (trong) -> payload NGUYEN row (khong bi loc)',
-    exInterim.ds_nganh_dntn.length === 1,
-    JSON.stringify(exInterim.ds_nganh_dntn));
+  const prodM72 = FD.getGridMeta({ docId: 'PLI_M72', loop: 'ds_nganh_dntn' });
+  check('H3.4 production M72 la selector (valueOf dn.loai_hinh)',
+    prodM72.activeWhen != null &&
+      FD.activationModeOf(prodM72) === 'selector' &&
+      prodM72.activeWhen.valueOf.key === 'dn.loai_hinh');
+  const exSelNone = G.exportLoops(stBlank, ['PLI_M72']);
+  check('H3.5 selector inactive (chua chon loai hinh) -> payload rong (khong sot token)',
+    exSelNone.ds_nganh_dntn.length === 0,
+    JSON.stringify(exSelNone.ds_nganh_dntn));
+  // Chọn đúng biến thể -> giữ nguyên dòng (hành vi active-theo-selector)
+  const stOnDntn = { values: { 'dn.loai_hinh': 'DNTN' }, checks: {},
+    loops: { ds_nganh_dntn: [{ _row_id: FD.makeRowId(),
+      ten_nganh: '', ma_nganh: '', la_nganh_chinh: '' }] } };
+  check('H3.5b selector DNTN -> payload giu nguyen dong',
+    G.exportLoops(stOnDntn, ['PLI_M72']).ds_nganh_dntn.length === 1);
 
   // Grid không có activeWhen: không bao giờ bị lọc
   const stOld = { values: {}, checks: {}, loops: { ds_thanh_vien:
@@ -547,10 +554,19 @@ function mkRow(tags, j) {
 //               app/data/layout_specs/layout_manifest.json,
 //               app_web/test_audit_p1_negative.js (thêm path manifest)
 //   L0 census: 6 file fragment md+evidence.json (merge L0-A/B/C)
+//   Lead P1.2 (commit 5c75238): engine vung dieu kien {?flag}/{/flag} +
+//               converter cond blocks + tagger idempotent M72 ->
+//               tools/docx_render.py, tools/docx_to_blocks.py,
+//               tools/tag_m72_sections.py, tools/audit_blocks_check.py,
+//               tools/form_specs/change/PLI_M72.json,
+//               app/templates/PLI_M72.docx, app/data/blocks/PLI_M72.json
+//   Lane A P1.2: test_form_grid_meta.js, test_acceptance.js, 
+//               test_p12_m72_selector.js (test mới theo hợp đồng selector)
 // File generated/doc dưới app/templates/ + app/data/ ĐƯỢC PHÉP duy nhất là:
 //   - app/data/layout_specs/layout_manifest.json (Lead, commit 6047c1d)
 //   - 6 fragment layout_specs (census L0-A/B/C)
-// KHÔNG file nào thuộc app/templates/.
+//   - app/templates/PLI_M72.docx + app/data/blocks/PLI_M72.json
+//     (Lead P1.2, commit 5c75238 - regen theo spec change PLI_M72)
 (function h7() {
   const cp = require('child_process');
   const path = require('path');
@@ -573,15 +589,29 @@ function mkRow(tags, j) {
     'app/data/layout_specs/fragments/l0_b.md',
     'app/data/layout_specs/fragments/l0_b_evidence.json',
     'app/data/layout_specs/fragments/l0_c.md',
-    'app/data/layout_specs/fragments/l0_c_evidence.json'
+    'app/data/layout_specs/fragments/l0_c_evidence.json',
+    // Lead P1.2 (5c75238): blocks regen theo selector Option D
+    'app/data/blocks/PLI_M72.json'
   ];
+  // Duy nhất file template được phép trong wave: PLI_M72.docx (Lead P1.2)
+  const MY_ALLOW_TPL = ['app/templates/PLI_M72.docx'];
   const SELF = 'app_web/test_audit_wave_h_negative.js';
   const EXPECTED_REST = [
     'PLAN.md',
     'tools/census/build_layout_manifest.py',
     ...MY_ALLOW_GEN,
+    // Lead P1.2 (commit 5c75238): engine + converter + tagger + spec/template
+    'tools/audit_blocks_check.py',
+    'tools/docx_render.py',
+    'tools/docx_to_blocks.py',
+    'tools/form_specs/change/PLI_M72.json',
+    'tools/tag_m72_sections.py',
+    ...MY_ALLOW_TPL,
     'app_web/test_audit_p1_negative.js',
+    'app_web/test_acceptance.js',
+    'app_web/test_form_grid_meta.js',
     'app_web/test_m72_activation.js',
+    'app_web/test_p12_m72_selector.js',
     'app_web/test_p20_hardening.js',
     'app_web/ui/app.js',
     'app_web/ui/form-domain.js',
@@ -596,12 +626,15 @@ function mkRow(tags, j) {
     f.indexOf('app/templates/') === 0 || f.indexOf('app/data/') === 0);
 
   check('H7.1 moi file app/templates|app/data trong diff thuoc allowlist tu lap',
-    genTouched.every(f => MY_ALLOW_GEN.indexOf(f) >= 0),
-    JSON.stringify(genTouched.filter(f => MY_ALLOW_GEN.indexOf(f) < 0)));
+    genTouched.every(f => MY_ALLOW_GEN.concat(MY_ALLOW_TPL).indexOf(f) >= 0),
+    JSON.stringify(genTouched.filter(
+      f => MY_ALLOW_GEN.concat(MY_ALLOW_TPL).indexOf(f) < 0)));
 
-  check('H7.2 KHONG bat ky file nao thuoc app/templates trong diff wave',
-    files.every(f => f.indexOf('app/templates/') !== 0),
-    JSON.stringify(files.filter(f => f.indexOf('app/templates/') === 0)));
+  check('H7.2 file thuoc app/templates trong diff chi la PLI_M72.docx (Lead P1.2)',
+    files.every(f => f.indexOf('app/templates/') !== 0 ||
+      MY_ALLOW_TPL.indexOf(f) >= 0),
+    JSON.stringify(files.filter(f =>
+      f.indexOf('app/templates/') === 0 && MY_ALLOW_TPL.indexOf(f) < 0)));
 
   check('H7.3 allowlist tu lap KHONG co entry "ma" (moi entry co mat trong diff)',
     MY_ALLOW_GEN.concat(EXPECTED_REST.filter(f => MY_ALLOW_GEN.indexOf(f) < 0))

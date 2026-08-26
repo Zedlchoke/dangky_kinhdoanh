@@ -185,10 +185,33 @@
      * nào vào payload (section không áp dụng phải rỗng trong văn bản).
      * Grid inactive vì INTERIM minFilledRows vốn không có dòng có dữ liệu ->
      * KHÔNG filter để payload giữ nguyên 100% hành vi cũ; grid KHÔNG có
-     * activeWhen cũng không bị đụng tới. */
+     * activeWhen cũng không bị đụng tới.
+     *
+     * P2.0 EXPORT CONFLICT GUARD (chống 'first-doc-wins' ÂM THẦM): loop cùng
+     * tên có thể được >=2 mẫu TỰ khai form-scoped meta với contract khác
+     * nhau (vd nganh_bo_sung của PLI_M12 cols [ten_nganh,...] vs PLII_M02
+     * cols [ten_nganh_bo_sung,...]) trong khi payload là MỘT mảng duy nhất
+     * theo tên loop - không thể phục vụ hai contract cùng lúc. Khi resolve
+     * meta cho một loop, guard thu thập meta từ TẤT CẢ docIds CÓ loop đó
+     * (chỉ các meta FORM-SCOPED khai trong FORM_GRID_META[docId].loops -
+     * meta rơi về GRID_META toàn cục là contract dùng chung legacy, nhiều
+     * mẫu fallback về cùng object nên luôn tương đương, không đối chiếu).
+     * 'Export contract' = signature so sánh được: requirePrimary,
+     * autoName{codeTag,nameTag}, tập tag cột (columns[].tag sort), chế độ
+     * activation (activationModeOf). Hai meta TƯƠNG ĐƯƠNG khi signature
+     * bằng -> xuất bình thường như cũ, KHÔNG lỗi. Khác nhau -> ghi vào
+     * report GridCtl.lastExportConflicts (reset mỗi lần gọi); đường export
+     * THẬT phải gọi GridCtl.exportLoopsStrict - chỗ DUY NHẤT ném lỗi có cấu
+     * trúc để FAIL LOUD, không xuất payload nửa vời. Payload do HÀM NÀY trả
+     * luôn giữ nguyên hành vi first-doc-wins cũ 100% (tương thích ngược cho
+     * caller cũ/test). */
+    lastExportConflicts: [],
     exportLoops: function (store, docIds) {
       var out = {};
+      var conflicts = [];
       Object.keys(store.loops || {}).forEach(function (name) {
+        var cf = GridCtl.loopContractConflict(name, docIds);
+        if (cf) conflicts.push(cf);
         var gm = null;
         (docIds || []).some(function (id) {
           gm = FD.getGridMeta({ docId: id, loop: name });
@@ -216,7 +239,139 @@
           return clean;
         });
       });
+      GridCtl.lastExportConflicts = conflicts;
       return out;
+    },
+
+    /* -------------------------------------- P2.0: export contract guard */
+    /* Signature 'export contract' của một grid meta - mọi field ảnh hưởng
+     * trực tiếp đến PAYLOAD export của loop:
+     *  - requirePrimary       : có điền '' cho la_nganh_chinh thiếu hay không
+     *  - autoName code/nameTag: cặp tag mã->tên mà template mong đợi
+     *  - colTags              : tập tag cột (sort) template mong đợi
+     *  - actMode              : activationModeOf - null | 'selector' |
+     *                           'interim-filled-data' (quyết định việc lọc
+     *                           section inactive khỏi payload)
+     * Hai meta tương đương <=> JSON signature bằng. */
+    exportContractSig: function (gm) {
+      var tags = ((gm && gm.columns) || [])
+        .map(function (c) { return c && c.tag; })
+        .filter(Boolean).slice().sort();
+      return {
+        requirePrimary: !!(gm && gm.requirePrimary),
+        autoNameCodeTag: (gm && gm.autoName && gm.autoName.codeTag) || null,
+        autoNameNameTag: (gm && gm.autoName && gm.autoName.nameTag) || null,
+        colTags: tags.join('|'),
+        actMode: FD.activationModeOf(gm)
+      };
+    },
+
+    /* Lý do hai signature khác nhau (đưa vào message lỗi/report). */
+    exportSigDiff: function (sa, sb) {
+      var reasons = [];
+      if (sa.requirePrimary !== sb.requirePrimary)
+        reasons.push('requirePrimary: ' + sa.requirePrimary + ' != ' + sb.requirePrimary);
+      if (sa.autoNameCodeTag !== sb.autoNameCodeTag ||
+          sa.autoNameNameTag !== sb.autoNameNameTag)
+        reasons.push('autoName: [' + sa.autoNameCodeTag + ' -> ' + sa.autoNameNameTag +
+          '] != [' + sb.autoNameCodeTag + ' -> ' + sb.autoNameNameTag + ']');
+      if (sa.colTags !== sb.colTags)
+        reasons.push('tap tag cot: [' + sa.colTags + '] != [' + sb.colTags + ']');
+      if (sa.actMode !== sb.actMode)
+        reasons.push('che do activation (activationModeOf): ' + sa.actMode +
+          ' != ' + sb.actMode);
+      return reasons;
+    },
+
+    /* Thu thập meta FORM-SCOPED của một loop từ TẤT CẢ docIds (theo thứ tự),
+     * dedupe cùng reference (hai mẫu fallback chung không tạo side). */
+    collectScopedLoopMetas: function (name, docIds) {
+      var seen = [];
+      var out = [];
+      (docIds || []).forEach(function (id) {
+        var fm = FD.FORM_GRID_META ? FD.FORM_GRID_META[id] : null;
+        var gm = (fm && fm.loops) ? (fm.loops[name] || null) : null;
+        if (!gm || seen.indexOf(gm) >= 0) return;
+        seen.push(gm);
+        out.push({
+          formId: id,
+          semanticKey: gm.semanticKey || null,
+          meta: gm
+        });
+      });
+      return out;
+    },
+
+    /* Đối chiếu contract các meta form-scoped của MỘT loop:
+     *  - <2 side hoặc mọi signature bằng -> null (xuất bình thường);
+     *  - ngược lại -> conflict có cấu trúc {code, loop, winner, sides[],
+     *    reasons[], message} - winner là meta đầu tiên theo thứ tự docIds
+     *    (đúng first-doc-wins cũ, chỉ BÁO thay vì im lặng). */
+    loopContractConflict: function (name, docIds) {
+      var sides = GridCtl.collectScopedLoopMetas(name, docIds);
+      if (sides.length < 2) return null;
+      var sigs = sides.map(function (s) {
+        return { side: s, sig: GridCtl.exportContractSig(s.meta) };
+      });
+      var first = sigs[0];
+      var reasons = [];
+      for (var i = 1; i < sigs.length; i++) {
+        GridCtl.exportSigDiff(first.sig, sigs[i].sig).forEach(function (r) {
+          function tag(s) {
+            return s.formId + (s.semanticKey ? '(' + s.semanticKey + ')' : '');
+          }
+          var msg = tag(first.side) + ' khac ' + tag(sigs[i].side) + ' - ' + r;
+          if (reasons.indexOf(msg) < 0) reasons.push(msg);
+        });
+      }
+      if (!reasons.length) return null; // contract THỰC SỰ tương đương
+      return {
+        code: 'EXPORT_LOOP_CONTRACT_CONFLICT',
+        loop: name,
+        winner: {
+          formId: first.side.formId,
+          semanticKey: first.side.semanticKey,
+          signature: first.sig
+        },
+        sides: sigs.map(function (x) {
+          return {
+            formId: x.side.formId,
+            semanticKey: x.side.semanticKey,
+            signature: x.sig
+          };
+        }),
+        reasons: reasons,
+        message: 'Loop "' + name + '" co nhieu contract export khac nhau giua cac mau (' +
+          sides.map(function (s) { return s.formId; }).join(', ') +
+          '). Khong duoc am tham chon meta cua mau dau tien. Ly do khac: ' +
+          reasons.join('; ')
+      };
+    },
+
+    /* Quét TẤT CẢ loop đang có dữ liệu trong store, trả danh sách conflict. */
+    detectExportConflicts: function (store, docIds) {
+      var found = [];
+      Object.keys((store && store.loops) || {}).forEach(function (name) {
+        var cf = GridCtl.loopContractConflict(name, docIds);
+        if (cf) found.push(cf);
+      });
+      return found;
+    },
+
+    /* CHỐ DUY NHẤT cho đường export thật (buildExportData/UI export):
+     * giống exportLoops nhưng NÉM lỗi có cấu trúc khi phát hiện xung đột
+     * contract (err.code='EXPORT_LOOP_CONTRACT_CONFLICT', err.conflicts=
+     * report đầy đủ) -> export FAIL LOUD, không payload nửa vời. Caller
+     * bắt lỗi này phải chặn toàn bộ phần loops, không xuất cục bộ. */
+    exportLoopsStrict: function (store, docIds) {
+      var conflicts = GridCtl.detectExportConflicts(store, docIds);
+      if (conflicts.length) {
+        var e = new Error(conflicts.map(function (c) { return c.message; }).join(' | '));
+        e.code = 'EXPORT_LOOP_CONTRACT_CONFLICT';
+        e.conflicts = conflicts;
+        throw e;
+      }
+      return GridCtl.exportLoops(store, docIds);
     },
 
     /* Phân loại trạng thái ô mã ngành theo PLAN.md PHASE 4 (thuần, offline):
@@ -1438,6 +1593,10 @@
   }
 
   // ------------------------------------------------------------- export
+  /* buildExportData đi qua GridCtl.exportLoopsStrict - CHỐ DUY NHẤT của
+   * đường export (P2.0): phát hiện xung đột contract export giữa các mẫu
+   * (loop cùng tên, form-scoped meta khác nhau) -> ném lỗi có cấu trúc,
+   * doExport bắt và chặn export LOUD thay vì âm thầm dùng meta mẫu đầu. */
   function buildExportData() {
     var data = {};
     Object.keys(state.store.values).forEach(function (k) {
@@ -1447,9 +1606,10 @@
       data[k] = state.store.checks[k] ? 'X' : '';
     });
     // loops: bỏ _row_id/field nội bộ; la_nganh_chinh map 'X'/'' cho template
-    // (đi qua GridCtl.exportLoops - chỗ duy nhất quyết định định dạng payload;
-    // resolve meta form-scoped theo các mẫu đang chọn)
-    var loops = GridCtl.exportLoops(state.store,
+    // (đi qua GridCtl.exportLoopsStrict - chỗ duy nhất quyết định định dạng
+    // payload + guard xung đột contract; resolve meta form-scoped theo các
+    // mẫu đang chọn)
+    var loops = GridCtl.exportLoopsStrict(state.store,
       visibleDocs().map(function (d) { return d.id; }));
     Object.keys(loops).forEach(function (name) {
       data[name] = loops[name];
@@ -1486,11 +1646,34 @@
       return;
     }
     var btnBox = toast('Đang xuất hồ sơ…', '', true);
-    var payload = {
-      case_id: state.caseId,
-      forms: visibleDocs().map(function (d) { return { id: d.id }; }),
-      data: buildExportData()
-    };
+    var payload;
+    try {
+      payload = {
+        case_id: state.caseId,
+        forms: visibleDocs().map(function (d) { return { id: d.id }; }),
+        data: buildExportData() // exportLoopsStrict: ném lỗi nếu conflict
+      };
+    } catch (ex) {
+      btnBox.remove();
+      // P2.0: xung đột contract export giữa các mẫu -> chặn LOUD kèm chi tiết
+      if (ex && ex.code === 'EXPORT_LOOP_CONTRACT_CONFLICT') {
+        state.errors = (ex.conflicts || []).map(function (c) {
+          return {
+            key: '@export-conflict:' + c.loop, docId: c.winner && c.winner.formId,
+            code: 'EXPORT_LOOP_CONTRACT_CONFLICT', severity: 'blocking',
+            message: c.message
+          };
+        });
+        renderErrorPanel();
+        patchErrorsDom();
+        openRightPanel();
+        toast('<b>Không thể xuất hồ sơ: xung đột contract export.</b><br>' +
+          esc((ex.conflicts || []).map(function (c) { return c.message; })
+            .join('<br>')), 'err', true);
+        return;
+      }
+      throw ex; // lỗi lạ không nuốt im lặng
+    }
     Promise.resolve(api().export(payload)).then(function (res) {
       if (typeof res === 'string') res = JSON.parse(res);
       btnBox.remove();

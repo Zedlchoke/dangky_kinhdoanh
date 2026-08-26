@@ -125,8 +125,8 @@ hard-code form ID):
   "code": "EXPORT_LOOP_CONTRACT_CONFLICT",
   "loop": "nganh_bo_sung",
   "winner": {"docId": "PLI_M12", "semanticKey": null, "signature": {/*…*/}},
-  "sides": [{"formId": "PLI_M12", "semanticKey": null, "signature": {/*…*/}},
-            {"formId": "PLII_M02", "semanticKey": "nganh_bo_sung", "signature": {/*…*/}}],
+  "sides": [{"docId": "PLI_M12", "semanticKey": null, "signature": {/*…*/}},
+            {"docId": "PLII_M02", "semanticKey": "nganh_bo_sung", "signature": {/*…*/}}],
   "reasons": ["tap tag cot: [ma_nganh|ten_nganh] != [ma_nganh|ten_nganh_bo_sung]"]
 }
 ```

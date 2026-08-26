@@ -624,7 +624,12 @@ function mkRow(tags, j) {
     'docs/legal_review_backlog.md',
     'docs/m72_activation_proposal.md',
     'docs/p2_component_contracts.md',
-    'docs/p2_dependency_graph.md'
+    'docs/p2_dependency_graph.md',
+    // Lead R0 (2026-08-26): master plan docs + triage verifier PLII_M02 +
+    // release runner chinh thuc + dependency contract
+    'tools/census/p1_c_verify_plii_m02.py',
+    'tools/release_runner.py',
+    'requirements-dev.txt'
   ];
 
   const rest = files.filter(f => f !== SELF);

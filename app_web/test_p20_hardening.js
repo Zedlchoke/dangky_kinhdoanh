@@ -326,6 +326,282 @@ function eqJson(a, b) { return JSON.stringify(a) === JSON.stringify(b); }
       sv.requirePrimary === false && sv.actMode === null);
 })();
 
+// =====================================================================
+// S3. FOCUS SAU ROW OPERATION (thuần + DOM giả thủ công)
+// =====================================================================
+
+(function s3() {
+  const GF = App.GridFocus;
+  check('S3.0 seam GridFocus duoc export (thuan + DOM)',
+    typeof GF.focusTagOfGrid === 'function' &&
+      typeof GF.nextSelAfterDelete === 'function' &&
+      typeof GF.focusGridRow === 'function');
+
+  // --- S3a. [PURE] focusTagOfGrid --------------------------------------
+  check('S3a.1 ds_nganh (toan cuc) -> ma_nganh',
+    GF.focusTagOfGrid(FD.GRID_META.ds_nganh) === 'ma_nganh');
+  check('S3a.2 ds_tv_ho_gia_dinh (khong co ma_nganh) -> editable dau = ho_ten',
+    GF.focusTagOfGrid(FD.GRID_META.ds_tv_ho_gia_dinh) === 'ho_ten');
+  check('S3a.3 form-scoped: M02.ds_nganh va M02.nganh_bo_sung deu uu tien ma_nganh',
+    GF.focusTagOfGrid(FD.getGridMeta({ docId: 'PLII_M02', loop: 'ds_nganh' })) ===
+      'ma_nganh' &&
+      GF.focusTagOfGrid(
+        FD.getGridMeta({ docId: 'PLII_M02', loop: 'nganh_bo_sung' })) === 'ma_nganh');
+  check('S3a.4 meta null/rong -> null',
+    GF.focusTagOfGrid(null) === null && GF.focusTagOfGrid({}) === null);
+  check('S3a.5 chi co cot khong goc duoc (readonly/outputOnly/radio/checkbox) -> null',
+    GF.focusTagOfGrid({ columns: [
+      { tag: 'a', type: 'readonly' }, { tag: 'b', type: 'outputOnly' },
+      { tag: 'c', type: 'radio' }, { tag: 'd', type: 'checkbox' }
+    ] }) === null);
+
+  // --- S3b. [PURE] nextSelAfterDelete ----------------------------------
+  function ridRows(ids) {
+    return ids.map(id => ({ _row_id: id }));
+  }
+  check('S3b.1 id dang chon con song -> giu nguyen',
+    GF.nextSelAfterDelete(ridRows(['r1', 'r2', 'r3']), ridRows(['r1', 'r2', 'r3']),
+      'r2') === 'r2');
+  check('S3b.2 xoa dong giua -> dong ke theo index (row thay cho vi tri cu)',
+    GF.nextSelAfterDelete(ridRows(['r1', 'r2', 'r3']), ridRows(['r1', 'r3']),
+      'r2') === 'r3');
+  check('S3b.3 xoa dong CUOI -> lui ve dong truoc (clamp cuoi)',
+    GF.nextSelAfterDelete(ridRows(['r1', 'r2', 'r3']), ridRows(['r1', 'r2']),
+      'r3') === 'r2');
+  check('S3b.4 xoa dong DAU -> lay dong tai index 0 sau xoa',
+    GF.nextSelAfterDelete(ridRows(['r1', 'r2']), ridRows(['r2']), 'r1') === 'r2');
+  check('S3b.5 chua chon gi (null) -> dong cuoi truoc khi xoa',
+    GF.nextSelAfterDelete(ridRows(['a', 'b', 'c']), ridRows(['a', 'c']),
+      null) === 'c');
+  check('S3b.6 bang rong sau xoa -> null (khong exception)',
+    GF.nextSelAfterDelete(ridRows(['a']), [], 'a') === null);
+
+  // --- S3c. DOM giả thủ công (mô phỏng markup của render.renderLoop) ----
+  let __focusLog = [];
+  let __scrollLog = [];
+  const fakeDoc = { activeElement: null };
+  // focusGridRow đọc global `document` tại thời điểm gọi -> gắn DOM giả vào
+  // global để node-test chạy đúng đường code browser.
+  global.document = fakeDoc;
+
+  class FEl {
+    constructor(tag, attrs, children) {
+      this.tag = String(tag).toLowerCase();
+      this.attrs = attrs || {};
+      this.children = [];
+      this.parent = null;
+      (children || []).forEach(c => this.append(c));
+    }
+    append(c) { c.parent = this; this.children.push(c); return c; }
+    getAttribute(k) {
+      return Object.prototype.hasOwnProperty.call(this.attrs, k)
+        ? this.attrs[k] : null;
+    }
+    classes() { return String(this.attrs['class'] || '').split(/\s+/).filter(Boolean); }
+    focus() { fakeDoc.activeElement = this; __focusLog.push(this); }
+    scrollIntoView(o) { __scrollLog.push(o); }
+    querySelector(sel) { return qsa(this, selToToks(sel))[0] || null; }
+    querySelectorAll(sel) { return qsa(this, selToToks(sel)); }
+  }
+
+  function parseTok(tok) {
+    const t = { tag: null, cls: [], attrs: [] };
+    const m = tok.match(/^([a-zA-Z][\w-]*)/);
+    if (m) { t.tag = m[1].toLowerCase(); tok = tok.slice(m[1].length); }
+    let mm;
+    const reCls = /\.([\w-]+)/g;
+    while ((mm = reCls.exec(tok))) t.cls.push(mm[1]);
+    const reAttr = /\[([^\]=]+)="([^"]*)"\]/g;
+    while ((mm = reAttr.exec(tok))) t.attrs.push([mm[1], mm[2]]);
+    return t;
+  }
+  function matchTok(el, tk) {
+    if (tk.tag && el.tag !== tk.tag) return false;
+    const cs = el.classes();
+    for (let i = 0; i < tk.cls.length; i++) {
+      if (cs.indexOf(tk.cls[i]) < 0) return false;
+    }
+    for (let j = 0; j < tk.attrs.length; j++) {
+      if (String(el.getAttribute(tk.attrs[j][0])) !== tk.attrs[j][1]) return false;
+    }
+    return true;
+  }
+  /* Descendant combinator thuần: mọi node khớp chuỗi token với các bước
+   * trung gian lồng đúng (khớp browser cho tập selector hẹp ta dùng). */
+  function qsa(el, toks, ti, out) {
+    ti = ti || 0; out = out || [];
+    if (ti >= toks.length) return out; // hết chuỗi token: dừng đệ quy
+    el.children.forEach(function (ch) {
+      if (matchTok(ch, toks[ti])) {
+        if (ti === toks.length - 1) out.push(ch);
+        qsa(ch, toks, ti + 1, out);
+      }
+      qsa(ch, toks, ti, out);
+    });
+    return out;
+  }
+  function selToToks(sel) { return sel.trim().split(/\s+/).map(parseTok); }
+  fakeDoc.querySelector = function (sel) { return qsa(fakeDoc, selToToks(sel))[0] || null; };
+  fakeDoc.querySelectorAll = function (sel) { return qsa(fakeDoc, selToToks(sel)); };
+
+  /* Ô input như renderLoop xuất (P2.0 chỉ cần: class/data-tag/readonly). */
+  function fld(tag, opts) {
+    opts = opts || {};
+    return new FEl('input', {
+      type: opts.radio ? 'radio' : 'text',
+      'class': opts.radio ? 'chk-box loop-radio'
+        : 'fld loop-fld' + (opts.vsic ? ' vsic-fld' : ''),
+      'data-tag': tag,
+      'data-key': 'loop:L:0:' + tag,
+      readonly: opts.readonly ? '' : null
+    });
+  }
+  function trOf(rowId, inputs) {
+    return new FEl('tr', {
+      'data-row-index': '0',
+      'data-row-id': rowId || null,
+      'data-loop': 'L'
+    }, [new FEl('td', {}, inputs)]);
+  }
+  function tableOf(loop, trs) {
+    return new FEl('table',
+      { 'class': 'btable loop-table', 'data-loop': loop },
+      [new FEl('tbody', {}, trs)]);
+  }
+  function installDoc(tables) {
+    fakeDoc.children = tables.slice();
+  }
+  function resetLogs() { __focusLog = []; __scrollLog = []; fakeDoc.activeElement = null; }
+
+  // Bảng ngành (ds_nganh): ten_nganh readonly, ma_nganh, chi_tiet, radio
+  const nganhMeta = FD.GRID_META.ds_nganh;
+  installDoc([
+    tableOf('ds_nganh', [
+      trOf('ra', [fld('ten_nganh', { readonly: true, vsic: true }),
+        fld('ma_nganh', { vsic: true }), fld('chi_tiet'),
+        fld('la_nganh_chinh', { radio: true })]),
+      trOf('rb', [fld('ten_nganh', { readonly: true, vsic: true }),
+        fld('ma_nganh', { vsic: true }), fld('chi_tiet'),
+        fld('la_nganh_chinh', { radio: true })]),
+      trOf('rc', [fld('ten_nganh', { readonly: true, vsic: true }),
+        fld('ma_nganh', { vsic: true }), fld('chi_tiet'),
+        fld('la_nganh_chinh', { radio: true })])
+    ]),
+    // Bảng hộ gia đình: ho_ten đầu tiên, chu_ky outputOnly (KHÔNG có input)
+    tableOf('ds_tv_ho_gia_dinh', [
+      trOf('ha', [fld('ho_ten'), fld('ngay_sinh'), fld('so_cccd')]),
+      trOf('hb', [fld('ho_ten'), fld('ngay_sinh'), fld('so_cccd')])
+    ])
+  ]);
+
+  // ADD trên bảng ngành: focus ô mã ngành dòng mới
+  resetLogs();
+  let okAdd = GF.focusGridRow('ds_nganh', {
+    rowId: 'rb', idx: 1,
+    tag: GF.focusTagOfGrid(nganhMeta)
+  });
+  check('S3c.1 add ds_nganh -> focus o ma_nganh DONG MOI (khong phai ten_nganh readonly)',
+    okAdd && __focusLog.length === 1 &&
+      __focusLog[0].getAttribute('data-tag') === 'ma_nganh' &&
+      __focusLog[0].getAttribute('readonly') === null &&
+      __focusLog[0].parent.parent.getAttribute('data-row-id') === 'rb');
+
+  // ADD trên bảng hộ gia đình: focus editable đầu = ho_ten
+  resetLogs();
+  let okHgd = GF.focusGridRow('ds_tv_ho_gia_dinh', {
+    rowId: 'hb', idx: 1,
+    tag: GF.focusTagOfGrid(FD.GRID_META.ds_tv_ho_gia_dinh)
+  });
+  check('S3c.2 add ds_tv_ho_gia_dinh -> focus editable dau = ho_ten',
+    okHgd && __focusLog.length === 1 &&
+      __focusLog[0].getAttribute('data-tag') === 'ho_ten' &&
+      __scrollLog.length === 1);
+
+  // REORDER: selection/focus bám _row_id dù index đổi
+  // mô phỏng uiMoveRow: GridCtl.moveRow rồi focus theo id + index mới
+  const stMove = { values: {}, checks: {}, loops: {} };
+  stMove.loops.L = ridRows(['ra', 'rb', 'rc']);
+  installDoc([tableOf('L', [
+    trOf('ra', [fld('chi_tiet')]), trOf('rb', [fld('chi_tiet')]),
+    trOf('rc', [fld('chi_tiet')]) ]) ]);
+  let atDown = G.moveRow(stMove, 'L', 'rc', -1);   // rc: 2 -> 1
+  resetLogs();
+  GF.focusGridRow('L', { rowId: 'rc', idx: atDown, tag: null });
+  const fMove1 = __focusLog[0];
+  let atUp = G.moveRow(stMove, 'L', 'ra', 1);       // ra: 0 -> 1
+  resetLogs();
+  GF.focusGridRow('L', { rowId: 'ra', idx: atUp, tag: null });
+  const fMove2 = __focusLog[0];
+  check('S3c.3 move down/up: focus dung ROW theo _row_id sau khi thu tu doi',
+    atDown === 1 && atUp === 1 &&
+      fMove1 && fMove1.parent.parent.getAttribute('data-row-id') === 'rc' &&
+      fMove2 && fMove2.parent.parent.getAttribute('data-row-id') === 'ra' &&
+      JSON.stringify(stMove.loops.L.map(r => r._row_id)) === '["rc","ra","rb"]');
+
+  // DELETE: dòng đang chọn bị xóa -> focus dòng kề theo index an toàn
+  const stDel = { values: {}, checks: {}, loops: {} };
+  stDel.loops.ds_nganh = ridRows(['r1', 'r2', 'r3']);
+  installDoc([tableOf('ds_nganh', [
+    trOf('r1', [fld('ma_nganh', { vsic: true })]),
+    trOf('r2', [fld('ma_nganh', { vsic: true })]),
+    trOf('r3', [fld('ma_nganh', { vsic: true })]) ]) ]);
+  const beforeRows = stDel.loops.ds_nganh.slice();
+  G.deleteRows(stDel, 'ds_nganh', ['r2']);
+  const nid = GF.nextSelAfterDelete(beforeRows, stDel.loops.ds_nganh, 'r2');
+  resetLogs();
+  GF.focusGridRow('ds_nganh', {
+    rowId: nid, idx: G.findRowIndex(stDel.loops.ds_nganh, nid),
+    tag: GF.focusTagOfGrid(nganhMeta)
+  });
+  check('S3d.1 delete dong giua -> selection + focus chuyen sang row ke (r3)',
+    nid === 'r3' && __focusLog.length === 1 &&
+      __focusLog[0].parent.parent.getAttribute('data-row-id') === 'r3');
+
+  // DELETE dòng cuối -> focus lùi về dòng trước
+  const stDel2 = { values: {}, checks: {}, loops: {} };
+  stDel2.loops.ds_nganh = ridRows(['r1', 'r2']);
+  installDoc([tableOf('ds_nganh', [
+    trOf('r1', [fld('ma_nganh', { vsic: true })]),
+    trOf('r2', [fld('ma_nganh', { vsic: true })]) ]) ]);
+  const b2 = stDel2.loops.ds_nganh.slice();
+  G.deleteRows(stDel2, 'ds_nganh', ['r2']);
+  const nid2 = GF.nextSelAfterDelete(b2, stDel2.loops.ds_nganh, 'r2');
+  resetLogs();
+  GF.focusGridRow('ds_nganh', { rowId: nid2, idx: 0, tag: 'ma_nganh' });
+  check('S3d.2 delete dong CUOI duoc chon -> focus ve row truoc (r1)',
+    nid2 === 'r1' &&
+      __focusLog[0].parent.parent.getAttribute('data-row-id') === 'r1');
+
+  // Bảng rỗng / row không tồn tại / bảng vắng mặt: false, KHÔNG exception
+  resetLogs();
+  installDoc([tableOf('empty_loop', [])]);
+  let threwEmpty = null;
+  try {
+    const r1e = GF.focusGridRow('empty_loop', { rowId: 'x', idx: 0, tag: 'y' });
+    const r2e = GF.focusGridRow('missing_loop', { rowId: 'x', idx: 0, tag: 'y' });
+    const r3e = GF.focusGridRow('empty_loop', {});
+    threwEmpty = (r1e === false && r2e === false && r3e === false);
+  } catch (e) { threwEmpty = false; }
+  check('S3e.1 bang rong/bang mat/idx le -> tra false, khong exception, khong focus lac',
+    threwEmpty === true && __focusLog.length === 0);
+
+  // Chuỗi fallback: thiếu ô tag -> input.loop-fld không readonly đầu dòng;
+  // dòng chỉ có radio -> input bất kỳ
+  installDoc([tableOf('fx', [
+    trOf('f1', [fld('ma_nganh', { vsic: true }), fld('chi_tiet')]), // đủ
+    trOf('f2', [fld('chi_tiet'), fld('ghi_chu')]),                  // thiếu tag
+    trOf('f3', [fld('la_nganh_chinh', { radio: true })])            // chỉ radio
+  ]) ]);
+  resetLogs(); GF.focusGridRow('fx', { rowId: 'f2', idx: 1, tag: 'ma_nganh' });
+  const fb2 = __focusLog[0];
+  resetLogs(); GF.focusGridRow('fx', { rowId: 'f3', idx: 2, tag: 'ma_nganh' });
+  const fb3 = __focusLog[0];
+  check('S3e.2 fallback: thieu o tag -> loop-fld dau tien khong readonly',
+    fb2 && fb2.getAttribute('data-tag') === 'chi_tiet');
+  check('S3e.3 fallback cuoi: chi con radio -> van focus input do, khong roi',
+    fb3 && fb3.getAttribute('data-tag') === 'la_nganh_chinh');
+})();
+
 // ---------------------------------------------------------------- ket luan
 console.log('-'.repeat(60));
 console.log('test_p20_hardening: %d PASS / %d FAIL', passed, failed);

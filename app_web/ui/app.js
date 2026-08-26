@@ -59,7 +59,8 @@
   }
   function esc(s) { return R.escapeHtml(s); }
   function cssEsc(s) {
-    return (window.CSS && CSS.escape) ? CSS.escape(s) : String(s).replace(/"/g, '\\"');
+    return (typeof window !== 'undefined' && window.CSS && CSS.escape)
+      ? CSS.escape(s) : String(s).replace(/"/g, '\\"');
   }
 
   // ------------------------------------------- GridCtl: editable-grid thuần
@@ -1077,16 +1078,87 @@
     return last ? last._row_id : null;
   }
 
-  function focusNewRow(loop, rowId, idx) {
-    var tbl = document.querySelector('.loop-table[data-loop="' + cssEsc(loop) + '"]');
-    if (!tbl) return;
-    var tr = (rowId && tbl.querySelector('tr[data-row-id="' + cssEsc(rowId) + '"]')) ||
-      tbl.querySelectorAll('tbody tr')[idx];
-    if (!tr) return;
-    // bảng ngành (mọi loop có cột ma_nganh): focus ô mã; bảng khác: ô đầu
-    var el = tr.querySelector('[data-tag="ma_nganh"]') ||
-      tr.querySelector('input.loop-fld');
-    if (el) { el.focus(); el.scrollIntoView({ block: 'nearest' }); }
+  // ------------------------------------- focus sau row operation (P2.0)
+  /* [PURE] Tag ô đích focus sau ADD/DUPLICATE, suy từ metadata bảng:
+   *  - grid có cột ma_nganh -> 'ma_nganh' (ô mã ngành của dòng mới, ưu tiên
+   *    cao nhất bất kể vị trí cột - vd nganh_bo_sung có ten_nganh editable
+   *    đứng trước vẫn focus mã ngành);
+   *  - ngược lại -> tag EDITABLE ĐẦU TIÊN theo meta columns (bỏ qua loại
+   *    readonly/outputOnly/radio/checkbox - không phải ô gõ được);
+   *  - không suy được (meta thiếu/rỗng) -> null, caller fallback DOM. */
+  function focusTagOfGrid(gm) {
+    var cols = (gm && gm.columns) || [];
+    for (var i = 0; i < cols.length; i++) {
+      if (cols[i] && cols[i].tag === 'ma_nganh') return 'ma_nganh';
+    }
+    for (var j = 0; j < cols.length; j++) {
+      var c = cols[j];
+      if (!c || !c.tag) continue;
+      var t = c.type || 'text';
+      if (t === 'readonly' || t === 'outputOnly' ||
+          t === 'radio' || t === 'checkbox') continue;
+      return c.tag;
+    }
+    return null;
+  }
+
+  /* [PURE] _row_id cần GIỮ selection/focus sau DELETE:
+   *  - id đang chọn còn tồn tại trong rowsAfter -> giữ nguyên;
+   *  - bị xóa (hoặc chưa chọn) -> dòng KỀ theo index cũ trong rowsBefore,
+   *    clamp về cuối để không trỏ ra ngoài;
+   *  - bảng rỗng sau xóa -> null. Không bao giờ ném exception. */
+  function nextSelAfterDelete(rowsBefore, rowsAfter, prevRowId) {
+    function idx(rows, id) {
+      for (var i = 0; i < rows.length; i++) {
+        if (rows[i] && rows[i]._row_id === id) return i;
+      }
+      return -1;
+    }
+    if (!rowsAfter || !rowsAfter.length) return null;
+    if (prevRowId && idx(rowsAfter, prevRowId) >= 0) return prevRowId;
+    var at = prevRowId ? idx(rowsBefore || [], prevRowId) : -1;
+    if (at < 0) at = (rowsBefore || []).length - 1;
+    if (at < 0) at = 0;
+    var row = rowsAfter[Math.min(at, rowsAfter.length - 1)];
+    return (row && row._row_id) ? row._row_id : null;
+  }
+
+  /* Focus một dòng của bảng lặp sau row-op (DOM): tìm tr theo _row_id
+   * (fallback theo index khi row vừa render chưa kịp mang id), rồi chọn ô:
+   *  1. [data-tag=tag] nếu caller chỉ định tag (focusTagOfGrid);
+   *  2. input.loop-fld KHÔNG readonly đầu tiên của dòng (ten_nganh readonly
+   *     của bảng ngành không bao giờ bị focus nhầm);
+   *  3. input bất kỳ đầu dòng.
+   * Trả true nếu đã focus; KHÔNG BAO GIỜ ném exception khi bảng rỗng/dòng
+   * không tồn tại/DOM lạ - thao tác row-op phải luôn thành công kể cả khi
+   * focus thất bại. */
+  function focusGridRow(loop, opts) {
+    try {
+      opts = opts || {};
+      var tbl = document.querySelector(
+        '.loop-table[data-loop="' + cssEsc(loop) + '"]');
+      if (!tbl) return false;
+      var tr = ((opts.rowId != null) &&
+        tbl.querySelector('tr[data-row-id="' + cssEsc(opts.rowId) + '"]')) ||
+        tbl.querySelectorAll('tbody tr')[opts.idx] || null;
+      if (!tr) return false;
+      var el = opts.tag ?
+        tr.querySelector('[data-tag="' + cssEsc(opts.tag) + '"]') : null;
+      if (!el) {
+        var flds = tr.querySelectorAll('input.loop-fld');
+        for (var i = 0; i < flds.length; i++) {
+          // attr boolean: có mặt -> ''/giá trị nào đó; vắng -> null
+          if (flds[i].getAttribute('readonly') == null) { el = flds[i]; break; }
+        }
+      }
+      if (!el) el = tr.querySelector('input');
+      if (!el) return false;
+      if (typeof el.focus === 'function') el.focus();
+      if (el.scrollIntoView) el.scrollIntoView({ block: 'nearest' });
+      return true;
+    } catch (e) {
+      return false; // DOM lạ/bảng rỗng: bỏ qua, không chặn thao tác dữ liệu
+    }
   }
 
   function uiAddRow(loop) {
@@ -1104,8 +1176,9 @@
     state.selRowId[loop] = res.id;
     markDirty();
     rerenderKeepView();
-    // riêng ds_nganh: focus ô ma_nganh của dòng vừa thêm (PLAN.md PHASE 5)
-    focusNewRow(loop, res.id, res.index);
+    // P2.0: grid có ma_nganh -> focus ô mã ngành dòng mới; không có -> ô
+    // editable đầu theo meta (fallback input.loop-fld đầu dòng trong DOM)
+    focusGridRow(loop, { rowId: res.id, idx: res.index, tag: focusTagOfGrid(gm) });
   }
 
   function uiDeleteRows(loop) {
@@ -1114,6 +1187,9 @@
     var rows = state.store.loops[loop] || [];
     if (!rows.length) return;
     var label = (gm && gm.label) || loop;
+    // P2.0: chụp selection TRƯỚC khi xóa để focus/selection bám _row_id
+    var beforeRows = rows.slice();
+    var prevId = targetRowId(loop);
     var multi = Object.keys(state.multiSel[loop] || {}).filter(function (id) {
       return GridCtl.findRowIndex(rows, id) >= 0;
     });
@@ -1139,9 +1215,22 @@
       }
     }
     GridCtl.deleteRows(state.store, loop, ids);
+    // P2.0: selection/focus bám _row_id - id đang chọn còn sống thì giữ,
+    // bị xóa thì dòng kề theo index an toàn (clamp cuối); bảng rỗng -> bỏ
+    var afterRows = state.store.loops[loop] || [];
+    var nid = nextSelAfterDelete(beforeRows, afterRows, prevId);
     clearLoopSelection(loop);
+    if (nid) {
+      state.selRowId[loop] = nid;
+      state.selectedLoopRow[loop] = GridCtl.findRowIndex(afterRows, nid);
+    }
     markDirty();
     rerenderKeepView();
+    focusGridRow(loop, {
+      rowId: nid,
+      idx: nid != null ? state.selectedLoopRow[loop] : 0,
+      tag: focusTagOfGrid(gm)
+    });
   }
 
   function uiClearRows(loop) {
@@ -1166,9 +1255,13 @@
     if (!id) return;
     var at = GridCtl.moveRow(state.store, loop, id, dir);
     if (at < 0) return;
+    state.selRowId[loop] = id; // P2.0: selection bám _row_id, không theo index
     state.selectedLoopRow[loop] = at; // _row_id giữ nguyên -> lỗi vẫn đúng dòng
     markDirty();
     rerenderKeepView();
+    // P2.0: focus đi CÙNG dòng vừa di chuyển (tra cứu lại theo _row_id sau
+    // rerender nên không bao giờ trỏ sai row khi thứ tự đã đổi)
+    focusGridRow(loop, { rowId: id, idx: at, tag: focusTagOfGrid(gm) });
   }
 
   function uiDuplicateRow(loop) {
@@ -1183,7 +1276,7 @@
     state.selectedLoopRow[loop] = res.index;
     markDirty();
     rerenderKeepView();
-    focusNewRow(loop, res.id, res.index);
+    focusGridRow(loop, { rowId: res.id, idx: res.index, tag: focusTagOfGrid(gm) });
   }
 
   function handleLoopAction(btn) {
@@ -1963,13 +2056,21 @@
   /* Helpers thuần phục vụ test node (không DOM): GridCtl là controller
    * editable-grid generic (add/delete/reorder/duplicate/clear/export/radio/
    * vsicResolve), groupErrorsByDoc nhóm lỗi theo mẫu, gridMetaForDoc build
-   * map {loop: meta} form-scoped cho renderer, FormFlow gom nghiệp vụ
-   * chọn mẫu (bat_buoc/oneOf/gate export/draft restore), RequestToken chống
-   * race đổi case, saveOutcome đồng bộ dirty/saveState. */
+   * map {loop: meta} form-scoped cho renderer, GridFocus gom focus sau row
+   * operation (focusTagOfGrid/nextSelAfterDelete thuần + focusGridRow DOM -
+   * uiAddRow/uiDuplicateRow/uiMoveRow/uiDeleteRows đều đi qua đây),
+   * FormFlow gom nghiệp vụ chọn mẫu (bat_buoc/oneOf/gate export/draft
+   * restore), RequestToken chống race đổi case, saveOutcome đồng bộ
+   * dirty/saveState. */
   var Helpers = {
     groupErrorsByDoc: groupErrorsByDoc,
     GridCtl: GridCtl,
     gridMetaForDoc: gridMetaForDoc,
+    GridFocus: {
+      focusTagOfGrid: focusTagOfGrid,
+      nextSelAfterDelete: nextSelAfterDelete,
+      focusGridRow: focusGridRow
+    },
     FormFlow: {
       formIdOf: formIdOf,
       formIds: formIds,

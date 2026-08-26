@@ -1,0 +1,5690 @@
+{
+ "agent": "L0-B",
+ "range": "PLI_M13..PLI_M80",
+ "branch_commit": "0ee70d3",
+ "forms_scanned": [
+  "PLI_M13",
+  "PLI_M14",
+  "PLI_M15",
+  "PLI_M17",
+  "PLI_M18",
+  "PLI_M19",
+  "PLI_M21",
+  "PLI_M23",
+  "PLI_M25",
+  "PLI_M26",
+  "PLI_M27",
+  "PLI_M28",
+  "PLI_M29",
+  "PLI_M30",
+  "PLI_M31",
+  "PLI_M32",
+  "PLI_M33",
+  "PLI_M42",
+  "PLI_M43",
+  "PLI_M45",
+  "PLI_M46",
+  "PLI_M47",
+  "PLI_M48",
+  "PLI_M49",
+  "PLI_M50",
+  "PLI_M51",
+  "PLI_M52",
+  "PLI_M53",
+  "PLI_M54",
+  "PLI_M55",
+  "PLI_M56",
+  "PLI_M57",
+  "PLI_M63",
+  "PLI_M66",
+  "PLI_M67",
+  "PLI_M68",
+  "PLI_M69",
+  "PLI_M70",
+  "PLI_M71",
+  "PLI_M72",
+  "PLI_M73",
+  "PLI_M74",
+  "PLI_M75",
+  "PLI_M76",
+  "PLI_M78",
+  "PLI_M79",
+  "PLI_M80"
+ ],
+ "missing_form_numbers_in_range": [
+  16,
+  20,
+  22,
+  24,
+  34,
+  35,
+  36,
+  37,
+  38,
+  39,
+  40,
+  41,
+  44,
+  58,
+  59,
+  60,
+  61,
+  62,
+  64,
+  65,
+  77
+ ],
+ "counts": {
+  "forms": 47,
+  "marker_forms": 16,
+  "marker_blocks": 16,
+  "newline_forms": 44,
+  "newline_blocks": 180,
+  "national_collapse_forms": 44,
+  "digit_glue_forms": 27,
+  "digit_glue_occurrences": 50,
+  "vertalign_forms": 12,
+  "vertalign_runs": 150,
+  "footnote_reference_total": 0,
+  "footnotes_xml": false,
+  "footnote_line_forms": 23,
+  "footnote_line_total": 58,
+  "tab_forms": 13,
+  "tab_chars": 29,
+  "ind_forms": 0,
+  "spacing_variants": {
+   "w:before=120": "~2085",
+   "w:after=120": 12
+  }
+ },
+ "per_form": {
+  "PLI_M13": {
+   "ten_mau": "Giấy đề nghị đăng ký thay đổi người đại diện theo pháp luật",
+   "nblocks": 40,
+   "source_indicator": [],
+   "form_number": [
+    {
+     "block_idx": 0,
+     "align": "right",
+     "text": "Mẫu số 13"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "block_idx": 1,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "TÊN DOANH NGHIỆP",
+      "-------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 2,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM",
+      "Độc lập - Tự do - Hạnh phúc ",
+      "---------------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 5,
+     "align": "center",
+     "kind": [
+      "title"
+     ],
+     "lines": [
+      "GIẤY ĐỀ NGHỊ",
+      "Đăng ký thay đổi người đại diện theo pháp luật1"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 16,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "Chức danh: \t"
+     ],
+     "has_tab": true
+    },
+    {
+     "block_idx": 26,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "Ngày cấp:  Nơi cấp:  \t"
+     ],
+     "has_tab": true
+    },
+    {
+     "block_idx": 34,
+     "align": "center",
+     "kind": [
+      "signature"
+     ],
+     "lines": [
+      "CHỦ TỊCH CÔNG TY/CHỦ TỊCH HỘI ĐỒNG THÀNH VIÊN/CHỦ TỊCH HỘI ĐỒNG QUẢN TRỊ/NGƯỜI ĐƯỢC ỦY QUY",
+      "(Ký và ghi họ tên)3"
+     ],
+     "has_tab": false
+    }
+   ],
+   "digit_glued": [
+    {
+     "block_idx": 5,
+     "run_idx": 0,
+     "glued": "t1",
+     "context": "...i người đại diện theo pháp luật1..."
+    },
+    {
+     "block_idx": 11,
+     "run_idx": 0,
+     "glued": "i2",
+     "context": "...theo pháp luật sau khi thay đổi2:..."
+    }
+   ],
+   "footnote_like_lines": [
+    {
+     "block_idx": 36,
+     "text": "1 Dùng trong trường hợp thay đổi từ người đại diện theo pháp luật này sang người đại diện theo pháp luật khác."
+    },
+    {
+     "block_idx": 37,
+     "text": "2 Ghi thông tin của tất cả người đại diện theo pháp luật trong trường hợp sau khi thay đổi công ty có nhiều hơ"
+    },
+    {
+     "block_idx": 38,
+     "text": "3 - Chủ tịch công ty/Chủ tịch Hội đồng thành viên/Chủ tịch Hội đồng quản trị/người được ủy quyền, người đại di"
+    }
+   ],
+   "roles": {
+    "date-line": [
+     {
+      "block_idx": 4,
+      "align": "right"
+     }
+    ],
+    "form-title": [
+     {
+      "block_idx": 5,
+      "align": "center",
+      "text": "GIẤY ĐỀ NGHỊ\nĐăng ký thay đổi người đại diện theo pháp luật1"
+     }
+    ],
+    "signature": [
+     {
+      "block_idx": 5,
+      "align": "center",
+      "text": "GIẤY ĐỀ NGHỊ\nĐăng ký thay đổi người đại diện theo pháp luật1"
+     },
+     {
+      "block_idx": 34,
+      "align": "center",
+      "text": "CHỦ TỊCH CÔNG TY/CHỦ TỊCH HỘI ĐỒNG THÀNH VIÊN/CHỦ TỊCH HỘI ĐỒNG QUẢN T"
+     }
+    ],
+    "salutation": [
+     {
+      "block_idx": 6,
+      "align": "center"
+     }
+    ]
+   },
+   "tabs_in_runs": 2,
+   "ooxml_vertAlign_paras_head": [
+    {
+     "para": 5,
+     "val": "superscript",
+     "text": ""
+    },
+    {
+     "para": 6,
+     "val": "superscript",
+     "text": "GIẤY ĐỀ NGHỊĐăng ký thay đổi người đại diện theo pháp luật1"
+    }
+   ],
+   "glue_classification": [
+    {
+     "glued": "t1",
+     "block_idx": 5,
+     "class": "candidate-footnote CONFIRMED-OOXML-vertAlign"
+    },
+    {
+     "glued": "i2",
+     "block_idx": 11,
+     "class": "candidate-footnote CONFIRMED-OOXML-vertAlign"
+    }
+   ]
+  },
+  "PLI_M14": {
+   "ten_mau": "Giấy đề nghị đăng ký thay đổi chủ doanh nghiệp tư nhân",
+   "nblocks": 58,
+   "source_indicator": [],
+   "form_number": [
+    {
+     "block_idx": 0,
+     "align": "right",
+     "text": "Mẫu số 14"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "block_idx": 1,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "TÊN DOANH NGHIỆP",
+      "-------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 2,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM",
+      "Độc lập - Tự do - Hạnh phúc ",
+      "---------------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 5,
+     "align": "center",
+     "kind": [
+      "title"
+     ],
+     "lines": [
+      "GIẤY ĐỀ NGHỊ",
+      "Đăng ký thay đổi chủ doanh nghiệp tư nhân"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 33,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "Họ, chữ đệm và tên (ghi bằng chữ in hoa): \t"
+     ],
+     "has_tab": true
+    },
+    {
+     "block_idx": 34,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "Ngày, tháng, năm sinh: \t//"
+     ],
+     "has_tab": true
+    },
+    {
+     "block_idx": 52,
+     "align": "center",
+     "kind": [
+      "signature"
+     ],
+     "lines": [
+      "NGƯỜI ĐƯỢC TẶNG CHO/",
+      "NGƯỜI THỪA KẾ/NGƯỜI MUA",
+      "(Ký và ghi họ tên)1"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 53,
+     "align": "center",
+     "kind": [
+      "signature"
+     ],
+     "lines": [
+      "CHỦ DOANH NGHIỆP TƯ NHÂN",
+      "(Ký và ghi họ tên)2",
+      ""
+     ],
+     "has_tab": false
+    }
+   ],
+   "digit_glued": [],
+   "footnote_like_lines": [
+    {
+     "block_idx": 55,
+     "text": "1 Người được tặng cho/Người thừa kế/Người mua ký trực tiếp vào phần này."
+    },
+    {
+     "block_idx": 56,
+     "text": "2 Không có phần này trong trường hợp thay đổi chủ doanh nghiệp tư nhân do thừa kế. Trong các trường hợp tặng c"
+    }
+   ],
+   "roles": {
+    "date-line": [
+     {
+      "block_idx": 4,
+      "align": "right"
+     }
+    ],
+    "form-title": [
+     {
+      "block_idx": 5,
+      "align": "center",
+      "text": "GIẤY ĐỀ NGHỊ\nĐăng ký thay đổi chủ doanh nghiệp tư nhân"
+     }
+    ],
+    "salutation": [
+     {
+      "block_idx": 6,
+      "align": "center"
+     }
+    ],
+    "signature": [
+     {
+      "block_idx": 52,
+      "align": "center",
+      "text": "NGƯỜI ĐƯỢC TẶNG CHO/\nNGƯỜI THỪA KẾ/NGƯỜI MUA\n(Ký và ghi họ tên)1"
+     },
+     {
+      "block_idx": 53,
+      "align": "center",
+      "text": "CHỦ DOANH NGHIỆP TƯ NHÂN\n(Ký và ghi họ tên)2"
+     }
+    ]
+   },
+   "tabs_in_runs": 2,
+   "ooxml_vertAlign_paras_head": [],
+   "glue_classification": []
+  },
+  "PLI_M15": {
+   "ten_mau": "Giấy đề nghị đăng ký thay đổi chủ sở hữu công ty TNHH một thành viên",
+   "nblocks": 63,
+   "source_indicator": [],
+   "form_number": [
+    {
+     "block_idx": 0,
+     "align": "right",
+     "text": "Mẫu số 15"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "block_idx": 1,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "TÊN DOANH NGHIỆP",
+      "-------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 2,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM",
+      "Độc lập - Tự do - Hạnh phúc ",
+      "---------------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 5,
+     "align": "center",
+     "kind": [
+      "title"
+     ],
+     "lines": [
+      "GIẤY ĐỀ NGHỊ",
+      "Đăng ký thay đổi chủ sở hữu công ty TNHH một thành viên"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 9,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "- Doanh nghiệp có Giấy chứng nhận quyền sử dụng đất tại đảo và xã, phường biên giới; xã, p"
+     ],
+     "has_tab": true
+    },
+    {
+     "block_idx": 12,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "Họ, chữ đệm và tên chủ sở hữu (ghi bằng chữ in hoa): \t"
+     ],
+     "has_tab": true
+    },
+    {
+     "block_idx": 13,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "Ngày, tháng, năm sinh: \t//\t"
+     ],
+     "has_tab": true
+    },
+    {
+     "block_idx": 25,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "Ngày cấp:  Nơi cấp:  \t"
+     ],
+     "has_tab": true
+    },
+    {
+     "block_idx": 35,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "Ngày cấp: \t"
+     ],
+     "has_tab": true
+    },
+    {
+     "block_idx": 42,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "Thư điện tử (nếu có):  Website (nếu có): \t"
+     ],
+     "has_tab": true
+    },
+    {
+     "block_idx": 52,
+     "align": "center",
+     "kind": [
+      "signature"
+     ],
+     "lines": [
+      "CHỦ SỞ HỮU MỚI",
+      "(Ký và ghi họ tên)6"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 53,
+     "align": "center",
+     "kind": [
+      "signature"
+     ],
+     "lines": [
+      "CHỦ SỞ HỮU CŨ",
+      "(Ký và ghi họ tên)7"
+     ],
+     "has_tab": false
+    }
+   ],
+   "digit_glued": [
+    {
+     "block_idx": 9,
+     "run_idx": 0,
+     "glued": "h1",
+     "context": "...h hưởng đến quốc phòng, an ninh1: Có\t..."
+    },
+    {
+     "block_idx": 49,
+     "run_idx": 0,
+     "glued": "n2",
+     "context": "...cấp Giấy tờ pháp lý của cá nhân2Quốc tịchDân tộcĐịa ..."
+    },
+    {
+     "block_idx": 49,
+     "run_idx": 0,
+     "glued": "n3",
+     "context": "...a chỉ liên lạcVốn được ủy quyền3Chữ ký của người đại..."
+    },
+    {
+     "block_idx": 49,
+     "run_idx": 0,
+     "glued": "n5",
+     "context": "...ật/người đại diện theo ủy quyền5Ghi chú (nếu có)Tổng..."
+    },
+    {
+     "block_idx": 49,
+     "run_idx": 0,
+     "glued": "ệ4",
+     "context": "...ị tiền nước ngoài, nếu có)Tỷ lệ4 (%)Thời điểm đại di..."
+    },
+    {
+     "block_idx": 49,
+     "run_idx": 0,
+     "glued": "n12345678910111213",
+     "context": "... (%)Thời điểm đại diện phần vốn12345678910111213Trường hợp hồ sơ đăn..."
+    }
+   ],
+   "footnote_like_lines": [
+    {
+     "block_idx": 55,
+     "text": "1 Kê khai trong trường hợp có nhà đầu tư nước ngoài góp vốn, mua cổ phần, phần vốn góp vào doanh nghiệp dẫn đế"
+    },
+    {
+     "block_idx": 56,
+     "text": "2 Nếu cột số 5 kê khai Số định danh cá nhân thì không phải kê khai các cột số 6, 7."
+    },
+    {
+     "block_idx": 57,
+     "text": "3 Không phải kê khai phần này đối với trường hợp kê khai người đại diện theo pháp luật."
+    },
+    {
+     "block_idx": 58,
+     "text": "4 Tỷ lệ % của phần vốn góp được ủy quyền đại diện trên tổng số vốn góp của thành viên đó tại doanh nghiệp."
+    },
+    {
+     "block_idx": 59,
+     "text": "5 Người được kê khai thông tin ký trực tiếp vào phần này."
+    },
+    {
+     "block_idx": 60,
+     "text": "6 Nếu chủ sở hữu mới là cá nhân: cá nhân ký trực tiếp vào phần này; nếu chủ sở hữu mới là tổ chức: người đại d"
+    },
+    {
+     "block_idx": 61,
+     "text": "7 Không có phần này trong trường hợp thay đổi chủ sở hữu công ty TNHH một thành viên do thừa kế. Trong các trư"
+    }
+   ],
+   "roles": {
+    "date-line": [
+     {
+      "block_idx": 4,
+      "align": "right"
+     }
+    ],
+    "form-title": [
+     {
+      "block_idx": 5,
+      "align": "center",
+      "text": "GIẤY ĐỀ NGHỊ\nĐăng ký thay đổi chủ sở hữu công ty TNHH một thành viên"
+     },
+     {
+      "block_idx": 49,
+      "align": "center",
+      "text": "STTTên người đại diện theo pháp luật/người đại diện theo ủy quyềnNgày,"
+     }
+    ],
+    "signature": [
+     {
+      "block_idx": 5,
+      "align": "center",
+      "text": "GIẤY ĐỀ NGHỊ\nĐăng ký thay đổi chủ sở hữu công ty TNHH một thành viên"
+     },
+     {
+      "block_idx": 10,
+      "align": "center",
+      "text": "Đăng ký thay đổi chủ sở hữu công ty TNHH một thành viên với thông tin "
+     },
+     {
+      "block_idx": 49,
+      "align": "center",
+      "text": "STTTên người đại diện theo pháp luật/người đại diện theo ủy quyềnNgày,"
+     },
+     {
+      "block_idx": 52,
+      "align": "center",
+      "text": "CHỦ SỞ HỮU MỚI\n(Ký và ghi họ tên)6"
+     },
+     {
+      "block_idx": 53,
+      "align": "center",
+      "text": "CHỦ SỞ HỮU CŨ\n(Ký và ghi họ tên)7"
+     }
+    ],
+    "salutation": [
+     {
+      "block_idx": 6,
+      "align": "center"
+     }
+    ]
+   },
+   "tabs_in_runs": 7,
+   "ooxml_vertAlign_paras_head": [
+    {
+     "para": 10,
+     "val": "superscript",
+     "text": "n quốc phòng, an ninh1: Có<w:t>{chk_khong} Không {chk_khong}"
+    }
+   ],
+   "glue_classification": [
+    {
+     "glued": "h1",
+     "block_idx": 9,
+     "class": "candidate-footnote CONFIRMED-OOXML-vertAlign"
+    },
+    {
+     "glued": "n2",
+     "block_idx": 49,
+     "class": "candidate-footnote CONFIRMED-OOXML-vertAlign"
+    },
+    {
+     "glued": "n3",
+     "block_idx": 49,
+     "class": "candidate-footnote CONFIRMED-OOXML-vertAlign"
+    },
+    {
+     "glued": "n5",
+     "block_idx": 49,
+     "class": "candidate-footnote CONFIRMED-OOXML-vertAlign"
+    },
+    {
+     "glued": "ệ4",
+     "block_idx": 49,
+     "class": "candidate-footnote CONFIRMED-OOXML-vertAlign"
+    },
+    {
+     "glued": "n12345678910111213",
+     "block_idx": 49,
+     "class": "table-flatten-artifact"
+    }
+   ]
+  },
+  "PLI_M17": {
+   "ten_mau": "Giấy đề nghị đăng ký hoạt động chi nhánh/văn phòng đại diện/Thông báo lập địa điểm kinh doanh",
+   "nblocks": 117,
+   "source_indicator": [
+    {
+     "block_idx": 0,
+     "text": "PL1 - Mau so 17: Giấy đề nghị đăng ký hoạt động chi nhánh/văn phòng đại diện/Thông báo lập địa điểm kinh doanh"
+    }
+   ],
+   "form_number": [
+    {
+     "block_idx": 1,
+     "align": "left",
+     "text": "Mẫu số 17"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "block_idx": 2,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "TÊN DOANH NGHIỆP",
+      "-------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 3,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM",
+      "Độc lập - Tự do - Hạnh phúc ",
+      "---------------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 7,
+     "align": "center",
+     "kind": [],
+     "lines": [
+      "Đăng ký hoạt động chi nhánh/văn phòng đại diện/",
+      "Thông báo lập địa điểm kinh doanh"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 10,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "Mã số doanh nghiệp/Mã số thuế: \t"
+     ],
+     "has_tab": true
+    },
+    {
+     "block_idx": 11,
+     "align": "center",
+     "kind": [],
+     "lines": [
+      "Đăng ký hoạt động chi nhánh/văn phòng đại diện/",
+      "Thông báo lập địa điểm kinh doanh với các nội dung sau:"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 109,
+     "align": "center",
+     "kind": [
+      "signature"
+     ],
+     "lines": [
+      "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT CỦA DOANH NGHIỆP/NGƯỜI ĐỨNG ĐẦU CHI NHÁNH",
+      "(Ký và ghi họ tên)4"
+     ],
+     "has_tab": false
+    }
+   ],
+   "digit_glued": [
+    {
+     "block_idx": 0,
+     "run_idx": 0,
+     "glued": "L1",
+     "context": "...PL1 - Mau so 17: Giấy đ..."
+    },
+    {
+     "block_idx": 72,
+     "run_idx": 0,
+     "glued": "g2",
+     "context": "...Ngày bắt đầu hoạt động2 (trường hợp chi nhá..."
+    }
+   ],
+   "footnote_like_lines": [
+    {
+     "block_idx": 111,
+     "text": "1 Việc ghi ngành, nghề kinh doanh của chi nhánh, địa điểm kinh doanh của doanh nghiệp thực hiện theo quy định "
+    },
+    {
+     "block_idx": 112,
+     "text": "2 Trường hợp chi nhánh/văn phòng đại diện/địa điểm kinh doanh được cấp Giấy chứng nhận đăng ký hoạt động chi n"
+    },
+    {
+     "block_idx": 113,
+     "text": "3 Trường hợp niên độ kế toán theo năm dương lịch thì ghi từ ngày 01/01 đến ngày 31/12. Trường hợp niên độ kế t"
+    },
+    {
+     "block_idx": 114,
+     "text": "4 - Trường hợp đăng ký hoạt động chi nhánh/văn phòng đại diện/địa điểm kinh doanh trực thuộc doanh nghiệp, ngư"
+    }
+   ],
+   "roles": {
+    "date-line": [
+     {
+      "block_idx": 5,
+      "align": "right"
+     }
+    ],
+    "form-title": [
+     {
+      "block_idx": 6,
+      "align": "center",
+      "text": "GIẤY ĐỀ NGHỊ"
+     },
+     {
+      "block_idx": 7,
+      "align": "center",
+      "text": "Đăng ký hoạt động chi nhánh/văn phòng đại diện/\nThông báo lập địa điểm"
+     },
+     {
+      "block_idx": 11,
+      "align": "center",
+      "text": "Đăng ký hoạt động chi nhánh/văn phòng đại diện/\nThông báo lập địa điểm"
+     }
+    ],
+    "signature": [
+     {
+      "block_idx": 7,
+      "align": "center",
+      "text": "Đăng ký hoạt động chi nhánh/văn phòng đại diện/\nThông báo lập địa điểm"
+     },
+     {
+      "block_idx": 11,
+      "align": "center",
+      "text": "Đăng ký hoạt động chi nhánh/văn phòng đại diện/\nThông báo lập địa điểm"
+     },
+     {
+      "block_idx": 109,
+      "align": "center",
+      "text": "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT CỦA DOANH NGHIỆP/NGƯỜI ĐỨNG ĐẦU CHI NHÁN"
+     }
+    ],
+    "salutation": [
+     {
+      "block_idx": 8,
+      "align": "center"
+     }
+    ]
+   },
+   "tabs_in_runs": 1,
+   "ooxml_vertAlign_paras_head": [
+    {
+     "para": 6,
+     "val": "superscript",
+     "text": ""
+    }
+   ],
+   "glue_classification": [
+    {
+     "glued": "L1",
+     "block_idx": 0,
+     "class": "src-indicator-part"
+    },
+    {
+     "glued": "g2",
+     "block_idx": 72,
+     "class": "candidate-footnote CONFIRMED-OOXML-vertAlign"
+    }
+   ]
+  },
+  "PLI_M18": {
+   "ten_mau": "Thông báo về việc lập chi nhánh/văn phòng đại diện ở nước ngoài",
+   "nblocks": 50,
+   "source_indicator": [],
+   "form_number": [
+    {
+     "block_idx": 0,
+     "align": "right",
+     "text": "Mẫu số 18"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "block_idx": 1,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "TÊN DOANH NGHIỆP",
+      "-------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 2,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM",
+      "Độc lập - Tự do - Hạnh phúc",
+      "---------------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 10,
+     "align": "center",
+     "kind": [
+      "title"
+     ],
+     "lines": [
+      "Thông báo về việc lập chi nhánh/",
+      "văn phòng đại diện ở nước ngoài như sau:"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 12,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "Tên chi nhánh/văn phòng đại diện tại nước ngoài (ghi bằng chữ in hoa): \t"
+     ],
+     "has_tab": true
+    },
+    {
+     "block_idx": 25,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "Họ, chữ đệm và tên người đứng đầu (ghi bằng chữ in hoa): \t"
+     ],
+     "has_tab": true
+    },
+    {
+     "block_idx": 26,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "Ngày, tháng, năm sinh: \t//\t"
+     ],
+     "has_tab": true
+    },
+    {
+     "block_idx": 38,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "Ngày cấp:  Nơi cấp:  \t"
+     ],
+     "has_tab": true
+    },
+    {
+     "block_idx": 46,
+     "align": "center",
+     "kind": [
+      "signature"
+     ],
+     "lines": [
+      "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT",
+      "CỦA DOANH NGHIỆP",
+      "(Ký và ghi họ tên)1"
+     ],
+     "has_tab": false
+    }
+   ],
+   "digit_glued": [],
+   "footnote_like_lines": [],
+   "roles": {
+    "form-title": [
+     {
+      "block_idx": 5,
+      "align": "center",
+      "text": "THÔNG BÁO"
+     },
+     {
+      "block_idx": 10,
+      "align": "center",
+      "text": "Thông báo về việc lập chi nhánh/\nvăn phòng đại diện ở nước ngoài như s"
+     }
+    ],
+    "signature": [
+     {
+      "block_idx": 6,
+      "align": "center",
+      "text": "Về việc lập chi nhánh/văn phòng đại diện ở nước ngoài"
+     },
+     {
+      "block_idx": 10,
+      "align": "center",
+      "text": "Thông báo về việc lập chi nhánh/\nvăn phòng đại diện ở nước ngoài như s"
+     },
+     {
+      "block_idx": 46,
+      "align": "center",
+      "text": "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT\nCỦA DOANH NGHIỆP\n(Ký và ghi họ tên)1"
+     }
+    ],
+    "salutation": [
+     {
+      "block_idx": 7,
+      "align": "center"
+     }
+    ]
+   },
+   "tabs_in_runs": 5,
+   "ooxml_vertAlign_paras_head": [
+    {
+     "para": 2,
+     "val": "superscript",
+     "text": "CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc---------------"
+    }
+   ],
+   "glue_classification": []
+  },
+  "PLI_M19": {
+   "ten_mau": "Giấy đề nghị đăng ký thay đổi nội dung đăng ký hoạt động chi nhánh/văn phòng đại diện/địa điểm kinh doanh",
+   "nblocks": 122,
+   "source_indicator": [],
+   "form_number": [
+    {
+     "block_idx": 0,
+     "align": "right",
+     "text": "Mẫu số 19"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "block_idx": 1,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "TÊN DOANH NGHIỆP",
+      "-------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 2,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM",
+      "Độc lập - Tự do - Hạnh phúc",
+      "---------------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 6,
+     "align": "center",
+     "kind": [],
+     "lines": [
+      "Đăng ký thay đổi nội dung đăng ký hoạt động chi nhánh/",
+      "văn phòng đại diện/địa điểm kinh doanh"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 53,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "Dân tộc:  Quốc tịch:  \t"
+     ],
+     "has_tab": true
+    },
+    {
+     "block_idx": 55,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "Ngày cấp:  Nơi cấp:  \t"
+     ],
+     "has_tab": true
+    },
+    {
+     "block_idx": 101,
+     "align": "center",
+     "kind": [],
+     "lines": [
+      "B. BỔ SUNG, CẬP NHẬT THÔNG TIN ĐĂNG KÝ HOẠT ĐỘNG CHI NHÁNH/",
+      "VĂN PHÒNG ĐẠI DIỆN/ĐỊA ĐIỂM KINH DOANH"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 105,
+     "align": "center",
+     "kind": [
+      "title"
+     ],
+     "lines": [
+      "C. ĐỀ NGHỊ HIỆU ĐÍNH THÔNG TIN ĐĂNG KÝ HOẠT ĐỘNG",
+      "CHI NHÁNH/VĂN PHÒNG ĐẠI DIỆN/ĐỊA ĐIỂM KINH DOANH"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 113,
+     "align": "center",
+     "kind": [
+      "signature"
+     ],
+     "lines": [
+      "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT CỦA DOANH NGHIỆP/",
+      "NGƯỜI ĐỨNG ĐẦU CHI NHÁNH",
+      "(Ký và ghi họ tên)5"
+     ],
+     "has_tab": false
+    }
+   ],
+   "digit_glued": [
+    {
+     "block_idx": 40,
+     "run_idx": 0,
+     "glued": "H2",
+     "context": "...NG ĐẠI DIỆN/ĐỊA ĐIỂM KINH DOANH2..."
+    },
+    {
+     "block_idx": 85,
+     "run_idx": 0,
+     "glued": "g3",
+     "context": "...Ngày bắt đầu hoạt động3 (trường hợp chi nhá..."
+    }
+   ],
+   "footnote_like_lines": [
+    {
+     "block_idx": 115,
+     "text": "1 Việc ghi ngành, nghề kinh doanh của chi nhánh, địa điểm kinh doanh của doanh nghiệp thực hiện theo quy định "
+    },
+    {
+     "block_idx": 116,
+     "text": "2 Dùng trong trường hợp thay đổi từ người đứng đầu này sang người đứng đầu khác. Trường hợp thay đổi thông tin"
+    },
+    {
+     "block_idx": 117,
+     "text": "3 Trường hợp chi nhánh/văn phòng đại diện/địa điểm kinh doanh được cấp Giấy chứng nhận đăng ký hoạt động chi n"
+    },
+    {
+     "block_idx": 118,
+     "text": "4 Trường hợp niên độ kế toán theo năm dương lịch thì ghi từ ngày 01/01 đến ngày 31/12. Trường hợp niên độ kế t"
+    },
+    {
+     "block_idx": 119,
+     "text": "5 - Trường hợp thay đổi nội dung đăng ký hoạt động chi nhánh/văn phòng đại diện/địa điểm kinh doanh trực thuộc"
+    }
+   ],
+   "roles": {
+    "form-title": [
+     {
+      "block_idx": 5,
+      "align": "center",
+      "text": "GIẤY ĐỀ NGHỊ"
+     },
+     {
+      "block_idx": 18,
+      "align": "center",
+      "text": "(Doanh nghiệp chọn và kê khai vào trang tương ứng với nội dung thông b"
+     },
+     {
+      "block_idx": 105,
+      "align": "center",
+      "text": "C. ĐỀ NGHỊ HIỆU ĐÍNH THÔNG TIN ĐĂNG KÝ HOẠT ĐỘNG\nCHI NHÁNH/VĂN PHÒNG Đ"
+     }
+    ],
+    "signature": [
+     {
+      "block_idx": 6,
+      "align": "center",
+      "text": "Đăng ký thay đổi nội dung đăng ký hoạt động chi nhánh/\nvăn phòng đại d"
+     },
+     {
+      "block_idx": 17,
+      "align": "center",
+      "text": "A. ĐĂNG KÝ THAY ĐỔI NỘI DUNG ĐĂNG KÝ HOẠT ĐỘNG CHI NHÁNH/VĂN PHÒNG ĐẠI"
+     },
+     {
+      "block_idx": 101,
+      "align": "center",
+      "text": "B. BỔ SUNG, CẬP NHẬT THÔNG TIN ĐĂNG KÝ HOẠT ĐỘNG CHI NHÁNH/\nVĂN PHÒNG "
+     },
+     {
+      "block_idx": 105,
+      "align": "center",
+      "text": "C. ĐỀ NGHỊ HIỆU ĐÍNH THÔNG TIN ĐĂNG KÝ HOẠT ĐỘNG\nCHI NHÁNH/VĂN PHÒNG Đ"
+     },
+     {
+      "block_idx": 113,
+      "align": "center",
+      "text": "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT CỦA DOANH NGHIỆP/\nNGƯỜI ĐỨNG ĐẦU CHI NHÁ"
+     }
+    ],
+    "salutation": [
+     {
+      "block_idx": 7,
+      "align": "center"
+     }
+    ]
+   },
+   "tabs_in_runs": 2,
+   "ooxml_vertAlign_paras_head": [],
+   "glue_classification": [
+    {
+     "glued": "H2",
+     "block_idx": 40,
+     "class": "candidate-footnote CONFIRMED-OOXML-vertAlign"
+    },
+    {
+     "glued": "g3",
+     "block_idx": 85,
+     "class": "candidate-footnote CONFIRMED-OOXML-vertAlign"
+    }
+   ]
+  },
+  "PLI_M21": {
+   "ten_mau": "Giấy đề nghị cấp đổi sang Giấy chứng nhận đăng ký doanh nghiệp đối với doanh nghiệp được cấp Giấy chứng nhận đăng ký kinh doanh hoặc Giấy chứng nhận đăng ký kinh doanh và đăng ký thuế",
+   "nblocks": 21,
+   "source_indicator": [],
+   "form_number": [
+    {
+     "block_idx": 0,
+     "align": "right",
+     "text": "Mẫu số 21"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "block_idx": 1,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "TÊN DOANH NGHIỆP",
+      "-------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 2,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM",
+      "Độc lập - Tự do - Hạnh phúc",
+      "---------------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 6,
+     "align": "center",
+     "kind": [
+      "title"
+     ],
+     "lines": [
+      "Cấp đổi sang Giấy chứng nhận đăng ký doanh nghiệp đối với doanh nghiệp",
+      " được cấp Giấy chứng nhận đăng ký kinh doanh hoặc Giấy chứng nhận",
+      " đăng ký kinh doanh và đăng ký thuế"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 14,
+     "align": "center",
+     "kind": [
+      "signature"
+     ],
+     "lines": [
+      "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT",
+      "CỦA DOANH NGHIỆP",
+      "(Ký và ghi họ tên)2"
+     ],
+     "has_tab": false
+    }
+   ],
+   "digit_glued": [
+    {
+     "block_idx": 10,
+     "run_idx": 0,
+     "glued": "u1",
+     "context": "...p đã đăng ký kinh doanh như sau1: ..."
+    }
+   ],
+   "footnote_like_lines": [
+    {
+     "block_idx": 16,
+     "text": "1 - Doanh nghiệp có quyền tự do kinh doanh trong những ngành, nghề mà luật không cấm;"
+    },
+    {
+     "block_idx": 19,
+     "text": "2 Người đại diện theo pháp luật của doanh nghiệp ký trực tiếp vào phần này."
+    }
+   ],
+   "roles": {
+    "form-title": [
+     {
+      "block_idx": 5,
+      "align": "center",
+      "text": "GIẤY ĐỀ NGHỊ"
+     },
+     {
+      "block_idx": 6,
+      "align": "center",
+      "text": "Cấp đổi sang Giấy chứng nhận đăng ký doanh nghiệp đối với doanh nghiệp"
+     }
+    ],
+    "salutation": [
+     {
+      "block_idx": 7,
+      "align": "center"
+     }
+    ],
+    "signature": [
+     {
+      "block_idx": 14,
+      "align": "center",
+      "text": "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT\nCỦA DOANH NGHIỆP\n(Ký và ghi họ tên)2"
+     }
+    ]
+   },
+   "tabs_in_runs": 0,
+   "ooxml_vertAlign_paras_head": [
+    {
+     "para": 11,
+     "val": "superscript",
+     "text": "ngành, nghề mà doanh nghiệp đã đăng ký kinh doanh như sau1: "
+    }
+   ],
+   "glue_classification": [
+    {
+     "glued": "u1",
+     "block_idx": 10,
+     "class": "candidate-footnote CONFIRMED-OOXML-vertAlign"
+    }
+   ]
+  },
+  "PLI_M23": {
+   "ten_mau": "Giấy đề nghị bổ sung, cập nhật thông tin đăng ký hoạt động đối với chi nhánh/văn phòng đại diện/địa điểm kinh doanh hoạt động theo Giấy phép đầu tư hoặc Giấy chứng nhận đầu tư (đồng thời là Giấy chứng nhận đăng ký kinh doanh) hoặc các giấy tờ có giá trị pháp lý tương đương hoặc Giấy chứng nhận đăng ký hoạt động chi nhánh/văn phòng đại diện do Cơ quan đăng ký đầu tư cấp",
+   "nblocks": 90,
+   "source_indicator": [
+    {
+     "block_idx": 0,
+     "text": "PL1 - Mau so 23: Giấy đề nghị bổ sung, cập nhật thông tin đăng ký hoạt động đối với chi nhánh/văn phòng đại diện/địa điểm kinh doanh hoạt động theo Giấy phép đầ"
+    }
+   ],
+   "form_number": [
+    {
+     "block_idx": 1,
+     "align": "left",
+     "text": "Mẫu số 23"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "block_idx": 2,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "TÊN DOANH NGHIỆP",
+      "-------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 3,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM",
+      "Độc lập - Tự do - Hạnh phúc",
+      "---------------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 7,
+     "align": "center",
+     "kind": [],
+     "lines": [
+      "Bổ sung, cập nhật thông tin đăng ký hoạt động đối với chi nhánh/văn phòng đại diện/địa điể",
+      "Giấy chứng nhận đầu tư (đồng thời là Giấy chứng nhận đăng ký kinh doanh)",
+      " hoặc các giấy tờ có giá trị pháp lý tương đương hoặc Giấy chứng nhận đăng ký hoạt động ch"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 80,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "Tên chi nhánh viết bằng tiếng nước ngoài (nếu có):\t"
+     ],
+     "has_tab": true
+    },
+    {
+     "block_idx": 85,
+     "align": "center",
+     "kind": [
+      "signature"
+     ],
+     "lines": [
+      "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT",
+      "CỦA DOANH NGHIỆP/",
+      "NGƯỜI ĐỨNG ĐẦU CHI NHÁNH",
+      "(Ký và ghi họ tên)2"
+     ],
+     "has_tab": false
+    }
+   ],
+   "digit_glued": [
+    {
+     "block_idx": 0,
+     "run_idx": 0,
+     "glued": "L1",
+     "context": "...PL1 - Mau so 23: Giấy đ..."
+    }
+   ],
+   "footnote_like_lines": [
+    {
+     "block_idx": 87,
+     "text": "1 Trường hợp niên độ kế toán theo năm dương lịch thì ghi từ ngày 01/01 đến ngày 31/12. Trường hợp niên độ kế t"
+    },
+    {
+     "block_idx": 88,
+     "text": "2 Người đại diện theo pháp luật của doanh nghiệp/người đứng đầu chi nhánh ký trực tiếp vào phần này."
+    }
+   ],
+   "roles": {
+    "form-title": [
+     {
+      "block_idx": 6,
+      "align": "center",
+      "text": "GIẤY ĐỀ NGHỊ"
+     },
+     {
+      "block_idx": 7,
+      "align": "center",
+      "text": "Bổ sung, cập nhật thông tin đăng ký hoạt động đối với chi nhánh/văn ph"
+     }
+    ],
+    "signature": [
+     {
+      "block_idx": 7,
+      "align": "center",
+      "text": "Bổ sung, cập nhật thông tin đăng ký hoạt động đối với chi nhánh/văn ph"
+     },
+     {
+      "block_idx": 85,
+      "align": "center",
+      "text": "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT\nCỦA DOANH NGHIỆP/\nNGƯỜI ĐỨNG ĐẦU CHI NHÁ"
+     }
+    ],
+    "salutation": [
+     {
+      "block_idx": 8,
+      "align": "center"
+     }
+    ]
+   },
+   "tabs_in_runs": 1,
+   "ooxml_vertAlign_paras_head": [],
+   "glue_classification": [
+    {
+     "glued": "L1",
+     "block_idx": 0,
+     "class": "src-indicator-part"
+    }
+   ]
+  },
+  "PLI_M25": {
+   "ten_mau": "Giấy đề nghị bổ sung, cập nhật thông tin đăng ký hoạt động đối với chi nhánh/văn phòng đại diện/địa điểm kinh doanh của doanh nghiệp hoạt động theo Giấy phép thành lập và hoạt động kinh doanh chứng khoán/Chi nhánh công ty chứng khoán nước ngoài/công ty quản lý quỹ nước ngoài tại Việt Nam",
+   "nblocks": 88,
+   "source_indicator": [
+    {
+     "block_idx": 0,
+     "text": "PL1 - Mau so 25: Giấy đề nghị bổ sung, cập nhật thông tin đăng ký hoạt động đối với chi nhánh/văn phòng đại diện/địa điểm kinh doanh của doanh nghiệp hoạt động "
+    }
+   ],
+   "form_number": [
+    {
+     "block_idx": 1,
+     "align": "left",
+     "text": "Mẫu số 25"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "block_idx": 2,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "TÊN DOANH NGHIỆP",
+      "-------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 3,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM",
+      "Độc lập - Tự do - Hạnh phúc",
+      "---------------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 7,
+     "align": "center",
+     "kind": [],
+     "lines": [
+      "Bổ sung, cập nhật thông tin đăng ký hoạt động đối với chi nhánh/",
+      "văn phòng đại diện/địa điểm kinh doanh của doanh nghiệp hoạt động theo Giấy phép thành lập"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 83,
+     "align": "center",
+     "kind": [
+      "signature"
+     ],
+     "lines": [
+      "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT",
+      "CỦA DOANH NGHIỆP/NGƯỜI ĐỨNG ĐẦU CHI NHÁNH",
+      "(Ký và ghi họ tên)2"
+     ],
+     "has_tab": false
+    }
+   ],
+   "digit_glued": [
+    {
+     "block_idx": 0,
+     "run_idx": 0,
+     "glued": "L1",
+     "context": "...PL1 - Mau so 25: Giấy đ..."
+    }
+   ],
+   "footnote_like_lines": [
+    {
+     "block_idx": 85,
+     "text": "1 Trường hợp niên độ kế toán theo năm dương lịch thì ghi từ ngày 01/01 đến ngày 31/12. Trường hợp niên độ kế t"
+    },
+    {
+     "block_idx": 86,
+     "text": "2 Người đại diện theo pháp luật của doanh nghiệp/Người đứng đầu chi nhánh ký trực tiếp vào phần này."
+    }
+   ],
+   "roles": {
+    "form-title": [
+     {
+      "block_idx": 6,
+      "align": "center",
+      "text": "GIẤY ĐỀ NGHỊ"
+     }
+    ],
+    "signature": [
+     {
+      "block_idx": 7,
+      "align": "center",
+      "text": "Bổ sung, cập nhật thông tin đăng ký hoạt động đối với chi nhánh/\nvăn p"
+     },
+     {
+      "block_idx": 83,
+      "align": "center",
+      "text": "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT\nCỦA DOANH NGHIỆP/NGƯỜI ĐỨNG ĐẦU CHI NHÁN"
+     }
+    ],
+    "salutation": [
+     {
+      "block_idx": 8,
+      "align": "center"
+     }
+    ]
+   },
+   "tabs_in_runs": 0,
+   "ooxml_vertAlign_paras_head": [],
+   "glue_classification": [
+    {
+     "glued": "L1",
+     "block_idx": 0,
+     "class": "src-indicator-part"
+    }
+   ]
+  },
+  "PLI_M26": {
+   "ten_mau": "Giấy đề nghị cấp lại Giấy chứng nhận đăng ký doanh nghiệp/Giấy xác nhận thay đổi nội dung đăng ký doanh nghiệp/Giấy chứng nhận đăng ký hoạt động chi nhánh/văn phòng đại diện/Giấy chứng nhận đăng ký địa điểm kinh doanh/Giấy xác nhận thay đổi nội dung đăng ký hoạt động chi nhánh/văn phòng đại diện/địa điểm kinh doanh",
+   "nblocks": 23,
+   "source_indicator": [],
+   "form_number": [
+    {
+     "block_idx": 0,
+     "align": "right",
+     "text": "Mẫu số 26"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "block_idx": 1,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "TÊN DOANH NGHIỆP",
+      "-------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 2,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM",
+      "Độc lập - Tự do - Hạnh phúc",
+      "---------------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 18,
+     "align": "center",
+     "kind": [
+      "signature"
+     ],
+     "lines": [
+      "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT",
+      "CỦA DOANH NGHIỆP/ NGƯỜI ĐỨNG ĐẦU CHI NHÁNH",
+      "(Ký và ghi họ tên)1"
+     ],
+     "has_tab": false
+    }
+   ],
+   "digit_glued": [],
+   "footnote_like_lines": [
+    {
+     "block_idx": 20,
+     "text": "1 - Trường hợp đề nghị cấp lại Giấy chứng nhận đăng ký doanh nghiệp, Giấy chứng nhận đăng ký hoạt động chi nhá"
+    }
+   ],
+   "roles": {
+    "form-title": [
+     {
+      "block_idx": 5,
+      "align": "center",
+      "text": "GIẤY ĐỀ NGHỊ"
+     },
+     {
+      "block_idx": 6,
+      "align": "center",
+      "text": "Cấp lại Giấy chứng nhận đăng ký doanh nghiệp/Giấy xác nhận thay đổi nộ"
+     }
+    ],
+    "signature": [
+     {
+      "block_idx": 6,
+      "align": "center",
+      "text": "Cấp lại Giấy chứng nhận đăng ký doanh nghiệp/Giấy xác nhận thay đổi nộ"
+     },
+     {
+      "block_idx": 18,
+      "align": "center",
+      "text": "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT\nCỦA DOANH NGHIỆP/ NGƯỜI ĐỨNG ĐẦU CHI NHÁ"
+     }
+    ],
+    "salutation": [
+     {
+      "block_idx": 7,
+      "align": "center"
+     }
+    ]
+   },
+   "tabs_in_runs": 0,
+   "ooxml_vertAlign_paras_head": [],
+   "glue_classification": []
+  },
+  "PLI_M27": {
+   "ten_mau": "Thông báo về việc tạm ngừng kinh doanh/tiếp tục kinh doanh trước thời hạn đã thông báo của doanh nghiệp/chi nhánh /địa điểm kinh doanh/về việc tạm ngừng hoạt động/tiếp tục hoạt động trước thời hạn đã thông báo của văn phòng đại diện",
+   "nblocks": 66,
+   "source_indicator": [
+    {
+     "block_idx": 0,
+     "text": "PL1 - Mau so 27: Thông báo về việc tạm ngừng kinh doanh/tiếp tục kinh doanh trước thời hạn đã thông báo của doanh nghiệp/chi nhánh /địa điểm kinh doanh/về việc "
+    }
+   ],
+   "form_number": [
+    {
+     "block_idx": 1,
+     "align": "left",
+     "text": "Mẫu số 27"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "block_idx": 2,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "TÊN DOANH NGHIỆP",
+      "-------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 3,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM",
+      "Độc lập - Tự do - Hạnh phúc",
+      "---------------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 7,
+     "align": "center",
+     "kind": [
+      "title"
+     ],
+     "lines": [
+      "Về việc tạm ngừng kinh doanh/tiếp tục kinh doanh trước thời hạn đã thông báo của doanh ngh",
+      "Về việc tạm ngừng hoạt động/tiếp tục hoạt động trước thời hạn đã thông báo của văn phòng đ"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 57,
+     "align": "center",
+     "kind": [
+      "signature"
+     ],
+     "lines": [
+      "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT",
+      "CỦA DOANH NGHIỆP/ NGƯỜI ĐỨNG ĐẦU CHI NHÁNH",
+      "(Ký và ghi họ tên)5"
+     ],
+     "has_tab": false
+    }
+   ],
+   "digit_glued": [
+    {
+     "block_idx": 0,
+     "run_idx": 0,
+     "glued": "L1",
+     "context": "...PL1 - Mau so 27: Thông ..."
+    },
+    {
+     "block_idx": 11,
+     "run_idx": 0,
+     "glued": "g1",
+     "context": "... tạm ngừng kinh doanh/hoạt động1:..."
+    },
+    {
+     "block_idx": 16,
+     "run_idx": 0,
+     "glued": "p2",
+     "context": "...theo pháp luật của doanh nghiệp2:..."
+    },
+    {
+     "block_idx": 21,
+     "run_idx": 0,
+     "glued": "i3",
+     "context": "...Số điện thoại3: ..."
+    },
+    {
+     "block_idx": 38,
+     "run_idx": 0,
+     "glued": "o4",
+     "context": "...ộng trước thời hạn đã thông báo4:..."
+    }
+   ],
+   "footnote_like_lines": [
+    {
+     "block_idx": 59,
+     "text": "1 Doanh nghiệp gửi thông báo đến Cơ quan đăng ký kinh doanh cấp tỉnh nơi doanh nghiệp, chi nhánh/văn phòng đại"
+    },
+    {
+     "block_idx": 60,
+     "text": "2 Kê khai thông tin của tất cả người đại diện theo pháp luật của doanh nghiệp."
+    },
+    {
+     "block_idx": 61,
+     "text": "3 Số điện thoại của người đại diện theo pháp luật phải trùng với số điện thoại đã kê khai trong Cơ sở dữ liệu "
+    },
+    {
+     "block_idx": 62,
+     "text": "4 Doanh nghiệp gửi thông báo đến Cơ quan đăng ký kinh doanh cấp tỉnh nơi doanh nghiệp, chi nhánh/văn phòng đại"
+    },
+    {
+     "block_idx": 63,
+     "text": "5 - Trường hợp tạm ngừng kinh doanh/tiếp tục kinh doanh trước thời hạn đã thông báo đối với doanh nghiệp, chi "
+    }
+   ],
+   "roles": {
+    "form-title": [
+     {
+      "block_idx": 6,
+      "align": "center",
+      "text": "THÔNG BÁO"
+     },
+     {
+      "block_idx": 7,
+      "align": "center",
+      "text": "Về việc tạm ngừng kinh doanh/tiếp tục kinh doanh trước thời hạn đã thô"
+     }
+    ],
+    "signature": [
+     {
+      "block_idx": 7,
+      "align": "center",
+      "text": "Về việc tạm ngừng kinh doanh/tiếp tục kinh doanh trước thời hạn đã thô"
+     },
+     {
+      "block_idx": 57,
+      "align": "center",
+      "text": "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT\nCỦA DOANH NGHIỆP/ NGƯỜI ĐỨNG ĐẦU CHI NHÁ"
+     }
+    ],
+    "salutation": [
+     {
+      "block_idx": 8,
+      "align": "center"
+     }
+    ]
+   },
+   "tabs_in_runs": 0,
+   "ooxml_vertAlign_paras_head": [],
+   "glue_classification": [
+    {
+     "glued": "L1",
+     "block_idx": 0,
+     "class": "src-indicator-part"
+    },
+    {
+     "glued": "g1",
+     "block_idx": 11,
+     "class": "candidate-footnote CONFIRMED-OOXML-vertAlign"
+    },
+    {
+     "glued": "p2",
+     "block_idx": 16,
+     "class": "candidate-footnote CONFIRMED-OOXML-vertAlign"
+    },
+    {
+     "glued": "i3",
+     "block_idx": 21,
+     "class": "candidate-footnote CONFIRMED-OOXML-vertAlign"
+    },
+    {
+     "glued": "o4",
+     "block_idx": 38,
+     "class": "candidate-footnote CONFIRMED-OOXML-vertAlign"
+    }
+   ]
+  },
+  "PLI_M28": {
+   "ten_mau": "Thông báo về việc chấm dứt hoạt động chi nhánh/văn phòng đại diện/địa điểm kinh doanh",
+   "nblocks": 35,
+   "source_indicator": [
+    {
+     "block_idx": 0,
+     "text": "PL1 - Mau so 28: Thông báo về việc chấm dứt hoạt động chi nhánh/văn phòng đại diện/địa điểm kinh doanh"
+    }
+   ],
+   "form_number": [
+    {
+     "block_idx": 1,
+     "align": "left",
+     "text": "Mẫu số 28"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "block_idx": 2,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "TÊN DOANH NGHIỆP",
+      "-------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 3,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM",
+      "Độc lập - Tự do - Hạnh phúc",
+      "---------------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 7,
+     "align": "center",
+     "kind": [],
+     "lines": [
+      "Về việc chấm dứt hoạt động chi nhánh/văn phòng đại diện/",
+      "địa điểm kinh doanh"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 25,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "4. Lý do chấm dứt hoạt động:\t"
+     ],
+     "has_tab": true
+    },
+    {
+     "block_idx": 30,
+     "align": "center",
+     "kind": [
+      "signature"
+     ],
+     "lines": [
+      "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT",
+      "CỦA DOANH NGHIỆP/",
+      "NGƯỜI ĐỨNG ĐẦU CHI NHÁNH",
+      "(Ký và ghi họ tên)1"
+     ],
+     "has_tab": false
+    }
+   ],
+   "digit_glued": [
+    {
+     "block_idx": 0,
+     "run_idx": 0,
+     "glued": "L1",
+     "context": "...PL1 - Mau so 28: Thông ..."
+    }
+   ],
+   "footnote_like_lines": [
+    {
+     "block_idx": 32,
+     "text": "1 - Trường hợp chấm dứt hoạt động chi nhánh/văn phòng đại diện/địa điểm kinh doanh trực thuộc doanh nghiệp, ng"
+    }
+   ],
+   "roles": {
+    "date-line": [
+     {
+      "block_idx": 5,
+      "align": "right"
+     }
+    ],
+    "form-title": [
+     {
+      "block_idx": 6,
+      "align": "center",
+      "text": "THÔNG BÁO"
+     },
+     {
+      "block_idx": 12,
+      "align": "center",
+      "text": "Thông báo chấm dứt hoạt động chi nhánh/văn phòng đại diện/ địa điểm ki"
+     }
+    ],
+    "signature": [
+     {
+      "block_idx": 7,
+      "align": "center",
+      "text": "Về việc chấm dứt hoạt động chi nhánh/văn phòng đại diện/\nđịa điểm kinh"
+     },
+     {
+      "block_idx": 12,
+      "align": "center",
+      "text": "Thông báo chấm dứt hoạt động chi nhánh/văn phòng đại diện/ địa điểm ki"
+     },
+     {
+      "block_idx": 30,
+      "align": "center",
+      "text": "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT\nCỦA DOANH NGHIỆP/\nNGƯỜI ĐỨNG ĐẦU CHI NHÁ"
+     }
+    ],
+    "salutation": [
+     {
+      "block_idx": 8,
+      "align": "center"
+     }
+    ]
+   },
+   "tabs_in_runs": 1,
+   "ooxml_vertAlign_paras_head": [],
+   "glue_classification": [
+    {
+     "glued": "L1",
+     "block_idx": 0,
+     "class": "src-indicator-part"
+    }
+   ]
+  },
+  "PLI_M29": {
+   "ten_mau": "Thông báo về việc chấm dứt hoạt động chi nhánh/văn phòng đại diện ở nước ngoài",
+   "nblocks": 28,
+   "source_indicator": [
+    {
+     "block_idx": 0,
+     "text": "PL1 - Mau so 29: Thông báo về việc chấm dứt hoạt động chi nhánh/văn phòng đại diện ở nước ngoài"
+    }
+   ],
+   "form_number": [
+    {
+     "block_idx": 1,
+     "align": "left",
+     "text": "Mẫu số 29"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "block_idx": 2,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "TÊN DOANH NGHIỆP",
+      "-------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 3,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM",
+      "Độc lập - Tự do - Hạnh phúc",
+      "---------------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 24,
+     "align": "center",
+     "kind": [
+      "signature"
+     ],
+     "lines": [
+      "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT",
+      "CỦA DOANH NGHIỆP",
+      "(Ký và ghi họ tên)1"
+     ],
+     "has_tab": false
+    }
+   ],
+   "digit_glued": [
+    {
+     "block_idx": 0,
+     "run_idx": 0,
+     "glued": "L1",
+     "context": "...PL1 - Mau so 29: Thông ..."
+    }
+   ],
+   "footnote_like_lines": [
+    {
+     "block_idx": 26,
+     "text": "1 Người đại diện theo pháp luật của doanh nghiệp ký trực tiếp vào phần này."
+    }
+   ],
+   "roles": {
+    "form-title": [
+     {
+      "block_idx": 6,
+      "align": "center",
+      "text": "THÔNG BÁO"
+     }
+    ],
+    "signature": [
+     {
+      "block_idx": 7,
+      "align": "center",
+      "text": "Về việc chấm dứt hoạt động chi nhánh/văn phòng đại diện ở nước ngoài"
+     },
+     {
+      "block_idx": 24,
+      "align": "center",
+      "text": "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT\nCỦA DOANH NGHIỆP\n(Ký và ghi họ tên)1"
+     }
+    ],
+    "salutation": [
+     {
+      "block_idx": 8,
+      "align": "center"
+     }
+    ]
+   },
+   "tabs_in_runs": 0,
+   "ooxml_vertAlign_paras_head": [],
+   "glue_classification": [
+    {
+     "glued": "L1",
+     "block_idx": 0,
+     "class": "src-indicator-part"
+    }
+   ]
+  },
+  "PLI_M30": {
+   "ten_mau": "Thông báo về việc giải thể doanh nghiệp",
+   "nblocks": 20,
+   "source_indicator": [
+    {
+     "block_idx": 0,
+     "text": "PL1 - Mau so 30: Thông báo về việc giải thể doanh nghiệp"
+    }
+   ],
+   "form_number": [
+    {
+     "block_idx": 1,
+     "align": "left",
+     "text": "Mẫu số 30"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "block_idx": 2,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "TÊN DOANH NGHIỆP",
+      "-------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 3,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM",
+      "Độc lập - Tự do - Hạnh phúc",
+      "---------------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 16,
+     "align": "center",
+     "kind": [
+      "signature"
+     ],
+     "lines": [
+      "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT",
+      "CỦA DOANH NGHIỆP",
+      "(Ký và ghi họ tên)1"
+     ],
+     "has_tab": false
+    }
+   ],
+   "digit_glued": [
+    {
+     "block_idx": 0,
+     "run_idx": 0,
+     "glued": "L1",
+     "context": "...PL1 - Mau so 30: Thông ..."
+    }
+   ],
+   "footnote_like_lines": [
+    {
+     "block_idx": 18,
+     "text": "1 Người đại diện theo pháp luật của doanh nghiệp ký trực tiếp vào phần này."
+    }
+   ],
+   "roles": {
+    "form-title": [
+     {
+      "block_idx": 6,
+      "align": "center",
+      "text": "THÔNG BÁO"
+     },
+     {
+      "block_idx": 12,
+      "align": "center",
+      "text": "Thông báo về việc giải thể doanh nghiệp như sau:"
+     }
+    ],
+    "salutation": [
+     {
+      "block_idx": 8,
+      "align": "center"
+     }
+    ],
+    "signature": [
+     {
+      "block_idx": 16,
+      "align": "center",
+      "text": "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT\nCỦA DOANH NGHIỆP\n(Ký và ghi họ tên)1"
+     }
+    ]
+   },
+   "tabs_in_runs": 0,
+   "ooxml_vertAlign_paras_head": [],
+   "glue_classification": [
+    {
+     "glued": "L1",
+     "block_idx": 0,
+     "class": "src-indicator-part"
+    }
+   ]
+  },
+  "PLI_M31": {
+   "ten_mau": "Thông báo về việc huỷ bỏ Nghị quyết/Quyết định giải thể doanh nghiệp",
+   "nblocks": 21,
+   "source_indicator": [
+    {
+     "block_idx": 0,
+     "text": "PL1 - Mau so 31: Thông báo về việc huỷ bỏ Nghị quyết/Quyết định giải thể doanh nghiệp"
+    }
+   ],
+   "form_number": [
+    {
+     "block_idx": 1,
+     "align": "left",
+     "text": "Mẫu số 31"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "block_idx": 2,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "TÊN DOANH NGHIỆP",
+      "-------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 3,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM",
+      "Độc lập - Tự do - Hạnh phúc",
+      "---------------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 17,
+     "align": "center",
+     "kind": [
+      "signature"
+     ],
+     "lines": [
+      "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT",
+      "CỦA DOANH NGHIỆP",
+      "(Ký và ghi họ tên)1"
+     ],
+     "has_tab": false
+    }
+   ],
+   "digit_glued": [
+    {
+     "block_idx": 0,
+     "run_idx": 0,
+     "glued": "L1",
+     "context": "...PL1 - Mau so 31: Thông ..."
+    }
+   ],
+   "footnote_like_lines": [
+    {
+     "block_idx": 19,
+     "text": "1 Người đại diện theo pháp luật của doanh nghiệp ký trực tiếp vào phần này."
+    }
+   ],
+   "roles": {
+    "form-title": [
+     {
+      "block_idx": 6,
+      "align": "center",
+      "text": "THÔNG BÁO"
+     }
+    ],
+    "salutation": [
+     {
+      "block_idx": 8,
+      "align": "left"
+     }
+    ],
+    "signature": [
+     {
+      "block_idx": 17,
+      "align": "center",
+      "text": "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT\nCỦA DOANH NGHIỆP\n(Ký và ghi họ tên)1"
+     }
+    ]
+   },
+   "tabs_in_runs": 0,
+   "ooxml_vertAlign_paras_head": [],
+   "glue_classification": [
+    {
+     "glued": "L1",
+     "block_idx": 0,
+     "class": "src-indicator-part"
+    }
+   ]
+  },
+  "PLI_M32": {
+   "ten_mau": "Giấy đề nghị công bố nội dung đăng ký doanh nghiệp",
+   "nblocks": 32,
+   "source_indicator": [
+    {
+     "block_idx": 0,
+     "text": "PL1 - Mau so 32: Giấy đề nghị công bố nội dung đăng ký doanh nghiệp"
+    }
+   ],
+   "form_number": [
+    {
+     "block_idx": 1,
+     "align": "left",
+     "text": "Mẫu số 32"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "block_idx": 2,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "TÊN DOANH NGHIỆP",
+      "-------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 3,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM",
+      "Độc lập - Tự do - Hạnh phúc",
+      "---------------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 16,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "Ngày cấp:  Nơi cấp:  \t"
+     ],
+     "has_tab": true
+    },
+    {
+     "block_idx": 22,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "Đề nghị đăng công bố nội dung đăng ký doanh nghiệp trên Cổng thông tin quốc gia về đăng ký"
+     ],
+     "has_tab": true
+    },
+    {
+     "block_idx": 26,
+     "align": "center",
+     "kind": [
+      "signature"
+     ],
+     "lines": [
+      "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT",
+      "CỦA DOANH NGHIỆP",
+      "(Ký và ghi họ tên)3"
+     ],
+     "has_tab": false
+    }
+   ],
+   "digit_glued": [
+    {
+     "block_idx": 0,
+     "run_idx": 0,
+     "glued": "L1",
+     "context": "...PL1 - Mau so 32: Giấy đ..."
+    },
+    {
+     "block_idx": 9,
+     "run_idx": 0,
+     "glued": "à1",
+     "context": "...Tôi là1 (ghi họ tên bằng ch..."
+    },
+    {
+     "block_idx": 17,
+     "run_idx": 0,
+     "glued": "p2",
+     "context": "...theo pháp luật của doanh nghiệp2:..."
+    }
+   ],
+   "footnote_like_lines": [
+    {
+     "block_idx": 28,
+     "text": "1 Trường hợp Tòa án hoặc Trọng tài chỉ định người thực hiện thủ tục đăng ký doanh nghiệp thì người được chỉ đị"
+    },
+    {
+     "block_idx": 29,
+     "text": "2 Không ghi trong trường hợp đề nghị công bố nội dung đăng ký doanh nghiệp theo quyết định của Tòa án hoặc Trọ"
+    },
+    {
+     "block_idx": 30,
+     "text": "3 Người đại diện theo pháp luật của doanh nghiệp ký trực tiếp vào phần này."
+    }
+   ],
+   "roles": {
+    "form-title": [
+     {
+      "block_idx": 6,
+      "align": "center",
+      "text": "GIẤY ĐỀ NGHỊ"
+     },
+     {
+      "block_idx": 7,
+      "align": "center",
+      "text": "Công bố nội dung đăng ký doanh nghiệp"
+     }
+    ],
+    "salutation": [
+     {
+      "block_idx": 8,
+      "align": "center"
+     }
+    ],
+    "signature": [
+     {
+      "block_idx": 26,
+      "align": "center",
+      "text": "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT\nCỦA DOANH NGHIỆP\n(Ký và ghi họ tên)3"
+     }
+    ]
+   },
+   "tabs_in_runs": 2,
+   "ooxml_vertAlign_paras_head": [
+    {
+     "para": 10,
+     "val": "superscript",
+     "text": "Tôi là1 (ghi họ tên bằng chữ in hoa): {chu_hkd.ho_ten}"
+    }
+   ],
+   "glue_classification": [
+    {
+     "glued": "L1",
+     "block_idx": 0,
+     "class": "src-indicator-part"
+    },
+    {
+     "glued": "à1",
+     "block_idx": 9,
+     "class": "candidate-footnote CONFIRMED-OOXML-vertAlign"
+    },
+    {
+     "glued": "p2",
+     "block_idx": 17,
+     "class": "candidate-footnote CONFIRMED-OOXML-vertAlign"
+    }
+   ]
+  },
+  "PLI_M33": {
+   "ten_mau": "Giấy đề nghị dừng thực hiện thủ tục đăng ký doanh nghiệp",
+   "nblocks": 38,
+   "source_indicator": [
+    {
+     "block_idx": 0,
+     "text": "PL1 - Mau so 33: Giấy đề nghị dừng thực hiện thủ tục đăng ký doanh nghiệp"
+    }
+   ],
+   "form_number": [
+    {
+     "block_idx": 1,
+     "align": "left",
+     "text": "Mẫu số 33"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "block_idx": 2,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "TÊN DOANH NGHIỆP",
+      "-------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 3,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM",
+      "Độc lập - Tự do - Hạnh phúc",
+      "---------------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 32,
+     "align": "center",
+     "kind": [
+      "signature"
+     ],
+     "lines": [
+      "NGƯỜI ĐỀ NGHỊ",
+      "(Ký và ghi họ tên)3"
+     ],
+     "has_tab": false
+    }
+   ],
+   "digit_glued": [
+    {
+     "block_idx": 0,
+     "run_idx": 0,
+     "glued": "L1",
+     "context": "...PL1 - Mau so 33: Giấy đ..."
+    },
+    {
+     "block_idx": 9,
+     "run_idx": 0,
+     "glued": "à1",
+     "context": "...Tôi là1 (ghi họ tên bằng ch..."
+    }
+   ],
+   "footnote_like_lines": [
+    {
+     "block_idx": 34,
+     "text": "1 Trường hợp Tòa án hoặc Trọng tài chỉ định người thực hiện thủ tục đăng ký doanh nghiệp thì người được chỉ đị"
+    },
+    {
+     "block_idx": 35,
+     "text": "2 Không ghi trong trường hợp đề nghị dừng thực hiện thủ tục đăng ký doanh nghiệp theo quyết định của Tòa án ho"
+    },
+    {
+     "block_idx": 36,
+     "text": "3 Người đã ký tại hồ sơ đăng ký doanh nghiệp được đề nghị dừng thực hiện ký trực tiếp vào phần này."
+    }
+   ],
+   "roles": {
+    "form-title": [
+     {
+      "block_idx": 6,
+      "align": "center",
+      "text": "GIẤY ĐỀ NGHỊ"
+     },
+     {
+      "block_idx": 32,
+      "align": "center",
+      "text": "NGƯỜI ĐỀ NGHỊ\n(Ký và ghi họ tên)3"
+     }
+    ],
+    "salutation": [
+     {
+      "block_idx": 8,
+      "align": "center"
+     }
+    ],
+    "signature": [
+     {
+      "block_idx": 32,
+      "align": "center",
+      "text": "NGƯỜI ĐỀ NGHỊ\n(Ký và ghi họ tên)3"
+     }
+    ]
+   },
+   "tabs_in_runs": 0,
+   "ooxml_vertAlign_paras_head": [
+    {
+     "para": 10,
+     "val": "superscript",
+     "text": "Tôi là1 (ghi họ tên bằng chữ in hoa): {chu_hkd.ho_ten}"
+    }
+   ],
+   "glue_classification": [
+    {
+     "glued": "L1",
+     "block_idx": 0,
+     "class": "src-indicator-part"
+    },
+    {
+     "glued": "à1",
+     "block_idx": 9,
+     "class": "candidate-footnote CONFIRMED-OOXML-vertAlign"
+    }
+   ]
+  },
+  "PLI_M42": {
+   "ten_mau": "Giấy chứng nhận đăng ký hoạt động chi nhánh/văn phòng đại diện",
+   "nblocks": 25,
+   "source_indicator": [
+    {
+     "block_idx": 0,
+     "text": "PL1 - Mau so 42: Giấy chứng nhận đăng ký hoạt động chi nhánh/văn phòng đại diện"
+    }
+   ],
+   "form_number": [
+    {
+     "block_idx": 1,
+     "align": "left",
+     "text": "Mẫu số 42"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "block_idx": 2,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CƠ QUAN ĐĂNG KÝ KINH DOANH",
+      "CẤP TỈNH",
+      "-------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 3,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM",
+      "Độc lập - Tự do - Hạnh phúc",
+      "---------------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 4,
+     "align": "center",
+     "kind": [
+      "title"
+     ],
+     "lines": [
+      "GIẤY CHỨNG NHẬN ĐĂNG KÝ HOẠT ĐỘNG",
+      "CHI NHÁNH/VĂN PHÒNG ĐẠI DIỆN"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 24,
+     "align": "center",
+     "kind": [
+      "signature"
+     ],
+     "lines": [
+      "TRƯỞNG ĐƠN VỊ",
+      "(Ký, ghi họ tên và đóng dấu)"
+     ],
+     "has_tab": false
+    }
+   ],
+   "digit_glued": [
+    {
+     "block_idx": 0,
+     "run_idx": 0,
+     "glued": "L1",
+     "context": "...PL1 - Mau so 42: Giấy c..."
+    }
+   ],
+   "footnote_like_lines": [],
+   "roles": {
+    "form-title": [
+     {
+      "block_idx": 4,
+      "align": "center",
+      "text": "GIẤY CHỨNG NHẬN ĐĂNG KÝ HOẠT ĐỘNG\nCHI NHÁNH/VĂN PHÒNG ĐẠI DIỆN"
+     }
+    ],
+    "signature": [
+     {
+      "block_idx": 4,
+      "align": "center",
+      "text": "GIẤY CHỨNG NHẬN ĐĂNG KÝ HOẠT ĐỘNG\nCHI NHÁNH/VĂN PHÒNG ĐẠI DIỆN"
+     },
+     {
+      "block_idx": 5,
+      "align": "center",
+      "text": "Mã số chi nhánh/văn phòng đại diện:"
+     }
+    ]
+   },
+   "tabs_in_runs": 0,
+   "ooxml_vertAlign_paras_head": [],
+   "glue_classification": [
+    {
+     "glued": "L1",
+     "block_idx": 0,
+     "class": "src-indicator-part"
+    }
+   ]
+  },
+  "PLI_M43": {
+   "ten_mau": "Giấy chứng nhận đăng ký địa điểm kinh doanh",
+   "nblocks": 25,
+   "source_indicator": [
+    {
+     "block_idx": 0,
+     "text": "PL1 - Mau so 43: Giấy chứng nhận đăng ký địa điểm kinh doanh"
+    }
+   ],
+   "form_number": [
+    {
+     "block_idx": 1,
+     "align": "left",
+     "text": "Mẫu số 43"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "block_idx": 2,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CƠ QUAN ĐĂNG KÝ KINH DOANH",
+      "CẤP TỈNH",
+      "-------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 3,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM",
+      "Độc lập - Tự do - Hạnh phúc",
+      "---------------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 24,
+     "align": "center",
+     "kind": [
+      "signature"
+     ],
+     "lines": [
+      "TRƯỞNG ĐƠN VỊ",
+      "(Ký, ghi họ tên và đóng dấu)"
+     ],
+     "has_tab": false
+    }
+   ],
+   "digit_glued": [
+    {
+     "block_idx": 0,
+     "run_idx": 0,
+     "glued": "L1",
+     "context": "...PL1 - Mau so 43: Giấy c..."
+    }
+   ],
+   "footnote_like_lines": [],
+   "roles": {
+    "form-title": [
+     {
+      "block_idx": 4,
+      "align": "center",
+      "text": "GIẤY CHỨNG NHẬN ĐĂNG KÝ ĐỊA ĐIỂM KINH DOANH"
+     }
+    ]
+   },
+   "tabs_in_runs": 0,
+   "ooxml_vertAlign_paras_head": [],
+   "glue_classification": [
+    {
+     "glued": "L1",
+     "block_idx": 0,
+     "class": "src-indicator-part"
+    }
+   ]
+  },
+  "PLI_M45": {
+   "ten_mau": "Giấy xác nhận về việc thay đổi nội dung đăng ký hoạt động chi nhánh/văn phòng đại diện/địa điểm kinh doanh",
+   "nblocks": 20,
+   "source_indicator": [
+    {
+     "block_idx": 0,
+     "text": "PL1 - Mau so 45: Giấy xác nhận về việc thay đổi nội dung đăng ký hoạt động chi nhánh/văn phòng đại diện/địa điểm kinh doanh"
+    }
+   ],
+   "form_number": [
+    {
+     "block_idx": 1,
+     "align": "left",
+     "text": "Mẫu số 45"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "block_idx": 2,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CƠ QUAN ĐĂNG KÝ KINH DOANH",
+      "CẤP TỈNH",
+      "-------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 3,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM",
+      "Độc lập - Tự do - Hạnh phúc",
+      "---------------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 7,
+     "align": "center",
+     "kind": [],
+     "lines": [
+      "Về việc thay đổi nội dung đăng ký hoạt động ",
+      "chi nhánh/văn phòng đại diện/địa điểm kinh doanh"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 16,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh (ghi bằng chữ in hoa): ",
+      "…………………………………………..………………………………………….."
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 17,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "Mã số chi nhánh/văn phòng đại diện/địa điểm kinh doanh hoặc Mã số thuế của chi nhánh/văn p",
+      "Thông tin thay đổi của chi nhánh/văn phòng đại diện/địa điểm kinh doanh đã được cập nhật v"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 18,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "",
+      "Nơi nhận:",
+      "- Tên, địa chỉ doanh nghiệp;",
+      "- ;",
+      "- Lưu: "
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 19,
+     "align": "center",
+     "kind": [
+      "signature"
+     ],
+     "lines": [
+      "TRƯỞNG ĐƠN VỊ",
+      "(Ký, ghi họ tên và đóng dấu)"
+     ],
+     "has_tab": false
+    }
+   ],
+   "digit_glued": [
+    {
+     "block_idx": 0,
+     "run_idx": 0,
+     "glued": "L1",
+     "context": "...PL1 - Mau so 45: Giấy x..."
+    }
+   ],
+   "footnote_like_lines": [],
+   "roles": {
+    "signature": [
+     {
+      "block_idx": 7,
+      "align": "center",
+      "text": "Về việc thay đổi nội dung đăng ký hoạt động \nchi nhánh/văn phòng đại d"
+     }
+    ]
+   },
+   "tabs_in_runs": 0,
+   "ooxml_vertAlign_paras_head": [],
+   "glue_classification": [
+    {
+     "glued": "L1",
+     "block_idx": 0,
+     "class": "src-indicator-part"
+    }
+   ]
+  },
+  "PLI_M46": {
+   "ten_mau": "Giấy chứng nhận …/Giấy xác nhận …",
+   "nblocks": 11,
+   "source_indicator": [
+    {
+     "block_idx": 0,
+     "text": "PL1 - Mau so 46: Giấy chứng nhận …/Giấy xác nhận …"
+    }
+   ],
+   "form_number": [
+    {
+     "block_idx": 1,
+     "align": "left",
+     "text": "Mẫu số 46"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "block_idx": 2,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CƠ QUAN ĐĂNG KÝ KINH DOANH",
+      "CẤP TỈNH",
+      "-------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 3,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM",
+      "Độc lập - Tự do - Hạnh phúc",
+      "---------------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 7,
+     "align": "center",
+     "kind": [],
+     "lines": [
+      "TRƯỞNG ĐƠN VỊ1",
+      "(Đã ký)",
+      ""
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 8,
+     "align": "center",
+     "kind": [
+      "signature"
+     ],
+     "lines": [
+      "Ghi chú: Được cấp lại ngày …",
+      "TRƯỞNG ĐƠN VỊ",
+      "(Ký, ghi họ tên và đóng dấu)"
+     ],
+     "has_tab": false
+    }
+   ],
+   "digit_glued": [
+    {
+     "block_idx": 0,
+     "run_idx": 0,
+     "glued": "L1",
+     "context": "...PL1 - Mau so 46: Giấy c..."
+    },
+    {
+     "block_idx": 7,
+     "run_idx": 0,
+     "glued": "Ị1",
+     "context": "...TRƯỞNG ĐƠN VỊ1\\n(Đã ký)\\n..."
+    }
+   ],
+   "footnote_like_lines": [
+    {
+     "block_idx": 10,
+     "text": "1 Không có chữ ký, con dấu tại mục này."
+    }
+   ],
+   "roles": {
+    "form-title": [
+     {
+      "block_idx": 4,
+      "align": "center",
+      "text": "GIẤY CHỨNG NHẬN …/GIẤY XÁC NHẬN …"
+     },
+     {
+      "block_idx": 5,
+      "align": "center",
+      "text": "(Dùng trong trường hợp cấp lại Giấy chứng nhận đăng ký doanh nghiệp/Gi"
+     }
+    ],
+    "signature": [
+     {
+      "block_idx": 5,
+      "align": "center",
+      "text": "(Dùng trong trường hợp cấp lại Giấy chứng nhận đăng ký doanh nghiệp/Gi"
+     }
+    ]
+   },
+   "tabs_in_runs": 0,
+   "ooxml_vertAlign_paras_head": [
+    {
+     "para": 11,
+     "val": "superscript",
+     "text": ":sz-cs w:val=\"24\"/></w:rPr><w:t xml:space=\"preserve\">(Đã ký)"
+    }
+   ],
+   "glue_classification": [
+    {
+     "glued": "L1",
+     "block_idx": 0,
+     "class": "src-indicator-part"
+    },
+    {
+     "glued": "Ị1",
+     "block_idx": 7,
+     "class": "candidate-footnote CONFIRMED-OOXML-vertAlign"
+    }
+   ]
+  },
+  "PLI_M47": {
+   "ten_mau": "Thông báo về cơ quan thuế quản lý trực tiếp",
+   "nblocks": 19,
+   "source_indicator": [
+    {
+     "block_idx": 0,
+     "text": "PL1 - Mau so 47: Thông báo về cơ quan thuế quản lý trực tiếp"
+    }
+   ],
+   "form_number": [
+    {
+     "block_idx": 1,
+     "align": "left",
+     "text": "Mẫu số 47"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "block_idx": 2,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CƠ QUAN ĐĂNG KÝ KINH DOANH",
+      "CẤP TỈNH",
+      "-------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 3,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM",
+      "Độc lập - Tự do - Hạnh phúc",
+      "---------------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 9,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "(Tên doanh nghiệp)",
+      "Địa chỉ: (Địa chỉ trụ sở chính)",
+      "Mã số: (Mã số doanh nghiệp/Số Giấy chứng nhận đăng ký kinh doanh)"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 17,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "",
+      "Nơi nhận:",
+      "- Tên, địa chỉ doanh nghiệp;",
+      "- ;",
+      "- Lưu: "
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 18,
+     "align": "center",
+     "kind": [
+      "signature"
+     ],
+     "lines": [
+      "TRƯỞNG ĐƠN VỊ",
+      "(Ký, ghi họ tên và đóng dấu)"
+     ],
+     "has_tab": false
+    }
+   ],
+   "digit_glued": [
+    {
+     "block_idx": 0,
+     "run_idx": 0,
+     "glued": "L1",
+     "context": "...PL1 - Mau so 47: Thông ..."
+    }
+   ],
+   "footnote_like_lines": [],
+   "roles": {
+    "form-title": [
+     {
+      "block_idx": 6,
+      "align": "center",
+      "text": "THÔNG BÁO"
+     }
+    ],
+    "salutation": [
+     {
+      "block_idx": 8,
+      "align": "right"
+     }
+    ]
+   },
+   "tabs_in_runs": 0,
+   "ooxml_vertAlign_paras_head": [],
+   "glue_classification": [
+    {
+     "glued": "L1",
+     "block_idx": 0,
+     "class": "src-indicator-part"
+    }
+   ]
+  },
+  "PLI_M48": {
+   "ten_mau": "Thông báo về việc sửa đổi, bổ sung hồ sơ đăng ký doanh nghiệp",
+   "nblocks": 23,
+   "source_indicator": [
+    {
+     "block_idx": 0,
+     "text": "PL1 - Mau so 48: Thông báo về việc sửa đổi, bổ sung hồ sơ đăng ký doanh nghiệp"
+    }
+   ],
+   "form_number": [
+    {
+     "block_idx": 1,
+     "align": "left",
+     "text": "Mẫu số 48"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "block_idx": 2,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CƠ QUAN ĐĂNG KÝ KINH DOANH",
+      "CẤP TỈNH",
+      "-------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 3,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM",
+      "Độc lập - Tự do - Hạnh phúc",
+      "---------------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 9,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "(Tên doanh nghiệp)",
+      "Địa chỉ: (Địa chỉ trụ sở chính)",
+      "Mã số: (Mã số doanh nghiệp/Số Giấy chứng nhận đăng ký kinh doanh)"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 21,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "",
+      "Nơi nhận:",
+      "- Như trên;",
+      "- ;",
+      "- Lưu: "
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 22,
+     "align": "center",
+     "kind": [
+      "signature"
+     ],
+     "lines": [
+      "TRƯỞNG ĐƠN VỊ",
+      "(Ký, ghi họ tên và đóng dấu)"
+     ],
+     "has_tab": false
+    }
+   ],
+   "digit_glued": [
+    {
+     "block_idx": 0,
+     "run_idx": 0,
+     "glued": "L1",
+     "context": "...PL1 - Mau so 48: Thông ..."
+    }
+   ],
+   "footnote_like_lines": [],
+   "roles": {
+    "form-title": [
+     {
+      "block_idx": 6,
+      "align": "center",
+      "text": "THÔNG BÁO"
+     },
+     {
+      "block_idx": 7,
+      "align": "center",
+      "text": "Về việc sửa đổi, bổ sung hồ sơ đăng ký doanh nghiệp"
+     }
+    ],
+    "salutation": [
+     {
+      "block_idx": 8,
+      "align": "right"
+     }
+    ]
+   },
+   "tabs_in_runs": 0,
+   "ooxml_vertAlign_paras_head": [],
+   "glue_classification": [
+    {
+     "glued": "L1",
+     "block_idx": 0,
+     "class": "src-indicator-part"
+    }
+   ]
+  },
+  "PLI_M49": {
+   "ten_mau": "Thông báo về việc dừng/từ chối dừng thực hiện thủ tục đăng ký doanh nghiệp",
+   "nblocks": 18,
+   "source_indicator": [],
+   "form_number": [
+    {
+     "block_idx": 0,
+     "align": "right",
+     "text": "Mẫu số 49"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "block_idx": 1,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CƠ QUAN ĐĂNG KÝ KINH DOANH",
+      "CẤP TỈNH",
+      "-------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 2,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM",
+      "Độc lập - Tự do - Hạnh phúc",
+      "---------------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 8,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "(Đối với hồ sơ thành lập mới doanh nghiệp)",
+      "Ông/Bà: ………………………………………………………. ",
+      "Số giấy tờ pháp lý của cá nhân: ",
+      "Địa chỉ liên lạc: ",
+      "(Đối với các trường hợp còn lại)",
+      "……….(Tên doanh nghiệp)………….."
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 16,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "",
+      "Nơi nhận:",
+      "- Như trên;",
+      "- ;",
+      "- Lưu: "
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 17,
+     "align": "center",
+     "kind": [
+      "signature"
+     ],
+     "lines": [
+      "TRƯỞNG ĐƠN VỊ",
+      "(Ký, ghi họ tên và đóng dấu)"
+     ],
+     "has_tab": false
+    }
+   ],
+   "digit_glued": [],
+   "footnote_like_lines": [],
+   "roles": {
+    "form-title": [
+     {
+      "block_idx": 5,
+      "align": "center",
+      "text": "THÔNG BÁO"
+     }
+    ],
+    "salutation": [
+     {
+      "block_idx": 7,
+      "align": "right"
+     }
+    ]
+   },
+   "tabs_in_runs": 0,
+   "ooxml_vertAlign_paras_head": [],
+   "glue_classification": []
+  },
+  "PLI_M50": {
+   "ten_mau": "Thông báo yêu cầu doanh nghiệp báo cáo về việc tuân thủ quy định của Luật Doanh nghiệp",
+   "nblocks": 23,
+   "source_indicator": [],
+   "form_number": [
+    {
+     "block_idx": 0,
+     "align": "right",
+     "text": "Mẫu số 50"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "block_idx": 1,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CƠ QUAN ĐĂNG KÝ KINH DOANH",
+      "CẤP TỈNH",
+      "-------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 2,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM",
+      "Độc lập - Tự do - Hạnh phúc",
+      "---------------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 8,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "(Tên doanh nghiệp)",
+      "Địa chỉ: (Địa chỉ trụ sở chính)",
+      "Mã số: (Mã số doanh nghiệp/Số Giấy chứng nhận đăng ký kinh doanh)"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 21,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "",
+      "Nơi nhận:",
+      "- Như trên;",
+      "- ;",
+      "- Lưu: "
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 22,
+     "align": "center",
+     "kind": [
+      "signature"
+     ],
+     "lines": [
+      "TRƯỞNG ĐƠN VỊ",
+      "(Ký, ghi họ tên và đóng dấu)"
+     ],
+     "has_tab": false
+    }
+   ],
+   "digit_glued": [],
+   "footnote_like_lines": [],
+   "roles": {
+    "form-title": [
+     {
+      "block_idx": 5,
+      "align": "center",
+      "text": "THÔNG BÁO"
+     }
+    ],
+    "salutation": [
+     {
+      "block_idx": 7,
+      "align": "right"
+     }
+    ]
+   },
+   "tabs_in_runs": 0,
+   "ooxml_vertAlign_paras_head": [],
+   "glue_classification": []
+  },
+  "PLI_M51": {
+   "ten_mau": "Thông báo về việc hiệu đính thông tin trong Giấy chứng nhận đăng ký doanh nghiệp/Giấy xác nhận về việc thay đổi nội dung đăng ký doanh nghiệp/Giấy chứng nhận đăng ký hoạt động chi nhánh/văn phòng đại diện/Giấy chứng nhận đăng ký địa điểm kinh doanh/Giấy xác nhận về việc thay đổi nội dung đăng ký hoạt động chi nhánh/văn phòng đại diện",
+   "nblocks": 18,
+   "source_indicator": [],
+   "form_number": [
+    {
+     "block_idx": 0,
+     "align": "right",
+     "text": "Mẫu số 51"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "block_idx": 1,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CƠ QUAN ĐĂNG KÝ KINH DOANH",
+      "CẤP TỈNH",
+      "-------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 2,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM",
+      "Độc lập - Tự do - Hạnh phúc",
+      "---------------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 8,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "(Tên doanh nghiệp)",
+      "Địa chỉ: (Địa chỉ trụ sở chính)",
+      "Mã số: (Mã số doanh nghiệp/Số Giấy chứng nhận đăng ký kinh doanh)"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 16,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "",
+      "Nơi nhận:",
+      "- Như trên;",
+      "- ;",
+      "- Lưu: "
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 17,
+     "align": "center",
+     "kind": [
+      "signature"
+     ],
+     "lines": [
+      "TRƯỞNG ĐƠN VỊ",
+      "(Ký, ghi họ tên và đóng dấu)"
+     ],
+     "has_tab": false
+    }
+   ],
+   "digit_glued": [],
+   "footnote_like_lines": [],
+   "roles": {
+    "form-title": [
+     {
+      "block_idx": 5,
+      "align": "center",
+      "text": "THÔNG BÁO"
+     },
+     {
+      "block_idx": 6,
+      "align": "center",
+      "text": "Về việc hiệu đính thông tin trong Giấy chứng nhận đăng ký doanh nghiệp"
+     }
+    ],
+    "signature": [
+     {
+      "block_idx": 6,
+      "align": "center",
+      "text": "Về việc hiệu đính thông tin trong Giấy chứng nhận đăng ký doanh nghiệp"
+     }
+    ],
+    "salutation": [
+     {
+      "block_idx": 7,
+      "align": "right"
+     }
+    ]
+   },
+   "tabs_in_runs": 0,
+   "ooxml_vertAlign_paras_head": [],
+   "glue_classification": []
+  },
+  "PLI_M52": {
+   "ten_mau": "Thông báo về việc rà soát thông tin đăng ký doanh nghiệp, tình trạng pháp lý của doanh nghiệp",
+   "nblocks": 46,
+   "source_indicator": [],
+   "form_number": [
+    {
+     "block_idx": 0,
+     "align": "right",
+     "text": "Mẫu số 52"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "block_idx": 1,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CƠ QUAN ĐĂNG KÝ KINH DOANH",
+      "CẤP TỈNH",
+      "-------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 2,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM",
+      "Độc lập - Tự do - Hạnh phúc",
+      "---------------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 8,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "(Tên doanh nghiệp)",
+      "Địa chỉ: (Địa chỉ trụ sở chính)",
+      "Mã số: (Mã số doanh nghiệp/Số Giấy chứng nhận đăng ký kinh doanh)"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 44,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "",
+      "Nơi nhận:",
+      "- Như trên;",
+      "- …;",
+      "- Lưu: "
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 45,
+     "align": "center",
+     "kind": [
+      "signature"
+     ],
+     "lines": [
+      "TRƯỞNG ĐƠN VỊ",
+      "(Ký, ghi họ tên và đóng dấu)"
+     ],
+     "has_tab": false
+    }
+   ],
+   "digit_glued": [],
+   "footnote_like_lines": [],
+   "roles": {
+    "form-title": [
+     {
+      "block_idx": 5,
+      "align": "center",
+      "text": "THÔNG BÁO"
+     }
+    ],
+    "salutation": [
+     {
+      "block_idx": 7,
+      "align": "right"
+     }
+    ]
+   },
+   "tabs_in_runs": 0,
+   "ooxml_vertAlign_paras_head": [],
+   "glue_classification": []
+  },
+  "PLI_M53": {
+   "ten_mau": "Thông báo yêu cầu doanh nghiệp tạm ngừng kinh doanh ngành, nghề đầu tư kinh doanh có điều kiện",
+   "nblocks": 21,
+   "source_indicator": [],
+   "form_number": [
+    {
+     "block_idx": 0,
+     "align": "right",
+     "text": "Mẫu số 53"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "block_idx": 1,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CƠ QUAN ĐĂNG KÝ KINH DOANH",
+      "CẤP TỈNH",
+      "-------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 2,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM",
+      "Độc lập - Tự do - Hạnh phúc",
+      "---------------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 8,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "(Tên doanh nghiệp)",
+      "Địa chỉ: (Địa chỉ trụ sở chính)",
+      "Mã số: (Mã số doanh nghiệp/Số Giấy chứng nhận đăng ký kinh doanh)"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 19,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "",
+      "Nơi nhận:",
+      "- Như trên;",
+      "- (Cơ quan quản lý chuyên ngành);",
+      "- ;",
+      "- Lưu: "
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 20,
+     "align": "center",
+     "kind": [
+      "signature"
+     ],
+     "lines": [
+      "TRƯỞNG ĐƠN VỊ",
+      "(Ký, ghi họ tên và đóng dấu)"
+     ],
+     "has_tab": false
+    }
+   ],
+   "digit_glued": [],
+   "footnote_like_lines": [],
+   "roles": {
+    "form-title": [
+     {
+      "block_idx": 5,
+      "align": "center",
+      "text": "THÔNG BÁO"
+     }
+    ],
+    "salutation": [
+     {
+      "block_idx": 7,
+      "align": "right"
+     }
+    ]
+   },
+   "tabs_in_runs": 0,
+   "ooxml_vertAlign_paras_head": [],
+   "glue_classification": []
+  },
+  "PLI_M54": {
+   "ten_mau": "Giấy xác nhận về việc doanh nghiệp thông báo tạm ngừng kinh doanh",
+   "nblocks": 18,
+   "source_indicator": [],
+   "form_number": [
+    {
+     "block_idx": 0,
+     "align": "right",
+     "text": "Mẫu số 54"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "block_idx": 1,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CƠ QUAN ĐĂNG KÝ KINH DOANH",
+      "CẤP TỈNH",
+      "-------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 2,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM",
+      "Độc lập - Tự do - Hạnh phúc",
+      "---------------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 16,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "",
+      "Nơi nhận:",
+      "- Tên, địa chỉ doanh nghiệp;",
+      "- ;",
+      "- Lưu: "
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 17,
+     "align": "center",
+     "kind": [
+      "signature"
+     ],
+     "lines": [
+      "TRƯỞNG ĐƠN VỊ",
+      "(Ký, ghi họ tên và đóng dấu)"
+     ],
+     "has_tab": false
+    }
+   ],
+   "digit_glued": [],
+   "footnote_like_lines": [],
+   "roles": {
+    "form-title": [
+     {
+      "block_idx": 6,
+      "align": "center",
+      "text": "Về việc doanh nghiệp thông báo tạm ngừng kinh doanh"
+     }
+    ]
+   },
+   "tabs_in_runs": 0,
+   "ooxml_vertAlign_paras_head": [],
+   "glue_classification": []
+  },
+  "PLI_M55": {
+   "ten_mau": "Giấy xác nhận về việc chi nhánh/địa điểm kinh doanh thông báo tạm ngừng kinh doanh/Về việc văn phòng đại diện thông báo tạm ngừng hoạt động",
+   "nblocks": 30,
+   "source_indicator": [],
+   "form_number": [
+    {
+     "block_idx": 0,
+     "align": "right",
+     "text": "Mẫu số 55"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "block_idx": 1,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CƠ QUAN ĐĂNG KÝ KINH DOANH",
+      "CẤP TỈNH",
+      "-------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 2,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM",
+      "Độc lập - Tự do - Hạnh phúc",
+      "---------------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 6,
+     "align": "center",
+     "kind": [
+      "title"
+     ],
+     "lines": [
+      "Về việc chi nhánh/địa điểm kinh doanh thông báo tạm ngừng kinh doanh/",
+      "Về việc văn phòng đại diện thông báo tạm ngừng hoạt động"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 28,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "",
+      "Nơi nhận:",
+      "- Tên, địa chỉ doanh nghiệp;",
+      "- ;",
+      "- Lưu: "
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 29,
+     "align": "center",
+     "kind": [
+      "signature"
+     ],
+     "lines": [
+      "TRƯỞNG ĐƠN VỊ",
+      "(Ký, ghi họ tên và đóng dấu)"
+     ],
+     "has_tab": false
+    }
+   ],
+   "digit_glued": [],
+   "footnote_like_lines": [],
+   "roles": {
+    "form-title": [
+     {
+      "block_idx": 6,
+      "align": "center",
+      "text": "Về việc chi nhánh/địa điểm kinh doanh thông báo tạm ngừng kinh doanh/\n"
+     }
+    ],
+    "signature": [
+     {
+      "block_idx": 6,
+      "align": "center",
+      "text": "Về việc chi nhánh/địa điểm kinh doanh thông báo tạm ngừng kinh doanh/\n"
+     }
+    ]
+   },
+   "tabs_in_runs": 0,
+   "ooxml_vertAlign_paras_head": [],
+   "glue_classification": []
+  },
+  "PLI_M56": {
+   "ten_mau": "Giấy xác nhận về việc doanh nghiệp thông báo tiếp tục kinh doanh trước thời hạn đã thông báo",
+   "nblocks": 25,
+   "source_indicator": [],
+   "form_number": [
+    {
+     "block_idx": 0,
+     "align": "right",
+     "text": "Mẫu số 56"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "block_idx": 1,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CƠ QUAN ĐĂNG KÝ KINH DOANH",
+      "CẤP TỈNH",
+      "-------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 2,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM",
+      "Độc lập - Tự do - Hạnh phúc",
+      "---------------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 23,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "",
+      "Nơi nhận:",
+      "- Tên, địa chỉ doanh nghiệp;",
+      "- ;",
+      "- Lưu: "
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 24,
+     "align": "center",
+     "kind": [
+      "signature"
+     ],
+     "lines": [
+      "TRƯỞNG ĐƠN VỊ",
+      "(Ký, ghi họ tên và đóng dấu)"
+     ],
+     "has_tab": false
+    }
+   ],
+   "digit_glued": [],
+   "footnote_like_lines": [],
+   "roles": {
+    "form-title": [
+     {
+      "block_idx": 6,
+      "align": "center",
+      "text": "Về việc doanh nghiệp thông báo tiếp tục kinh doanh trước thời hạn đã t"
+     }
+    ]
+   },
+   "tabs_in_runs": 0,
+   "ooxml_vertAlign_paras_head": [],
+   "glue_classification": []
+  },
+  "PLI_M57": {
+   "ten_mau": "Giấy xác nhận chi nhánh/địa điểm kinh doanh thông báo tiếp tục kinh doanh trước thời hạn đã thông báo/Về việc văn phòng đại diện thông báo tiếp tục hoạt dộng trước thời hạn đã thông báo",
+   "nblocks": 27,
+   "source_indicator": [],
+   "form_number": [
+    {
+     "block_idx": 0,
+     "align": "right",
+     "text": "Mẫu số 57"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "block_idx": 1,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CƠ QUAN ĐĂNG KÝ KINH DOANH",
+      "CẤP TỈNH",
+      "-------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 2,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM",
+      "Độc lập - Tự do - Hạnh phúc",
+      "---------------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 25,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "",
+      "Nơi nhận:",
+      "- Tên, địa chỉ doanh nghiệp;",
+      "- ;",
+      "- Lưu: "
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 26,
+     "align": "center",
+     "kind": [
+      "signature"
+     ],
+     "lines": [
+      "TRƯỞNG ĐƠN VỊ",
+      "(Ký, ghi họ tên và đóng dấu)"
+     ],
+     "has_tab": false
+    }
+   ],
+   "digit_glued": [],
+   "footnote_like_lines": [],
+   "roles": {
+    "form-title": [
+     {
+      "block_idx": 6,
+      "align": "center",
+      "text": "Về việc chi nhánh/địa điểm kinh doanh thông báo tiếp tục kinh doanh tr"
+     }
+    ],
+    "signature": [
+     {
+      "block_idx": 6,
+      "align": "center",
+      "text": "Về việc chi nhánh/địa điểm kinh doanh thông báo tiếp tục kinh doanh tr"
+     }
+    ]
+   },
+   "tabs_in_runs": 0,
+   "ooxml_vertAlign_paras_head": [],
+   "glue_classification": []
+  },
+  "PLI_M63": {
+   "ten_mau": "Quyết định về việc thu hồi Giấy chứng nhận đăng ký hoạt động chi nhánh, văn phòng đại diện, Giấy chứng nhận đăng ký địa điểm kinh doanh",
+   "nblocks": 51,
+   "source_indicator": [],
+   "form_number": [
+    {
+     "block_idx": 0,
+     "align": "right",
+     "text": "Mẫu số 63"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "block_idx": 1,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CƠ QUAN ĐĂNG KÝ KINH DOANH",
+      "CẤP TỈNH",
+      "-------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 2,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM",
+      "Độc lập - Tự do - Hạnh phúc",
+      "---------------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 49,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "Nơi nhận:",
+      "- Tên, địa chỉ doanh nghiệp bị thu hồi GCNĐKHĐ chi nhánh/văn phòng đại diện/ GCNĐK ĐĐKD;",
+      "- Cơ quan quản lý thuế (tỉnh, thành phố nơi doanh nghiệp đăng ký trụ sở);",
+      "- Cơ quan có thẩm quyền khác: (nếu có);",
+      "- Cơ quan ĐKKD các tỉnh, thành phố;",
+      "- Lưu: ….."
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 50,
+     "align": "center",
+     "kind": [
+      "signature"
+     ],
+     "lines": [
+      "TRƯỞNG ĐƠN VỊ",
+      "(Ký, ghi họ tên và đóng dấu)"
+     ],
+     "has_tab": false
+    }
+   ],
+   "digit_glued": [],
+   "footnote_like_lines": [],
+   "roles": {
+    "date-line": [
+     {
+      "block_idx": 4,
+      "align": "right"
+     }
+    ],
+    "form-title": [
+     {
+      "block_idx": 6,
+      "align": "center",
+      "text": "Về việc thu hồi Giấy chứng nhận đăng ký hoạt động chi nhánh, văn phòng"
+     }
+    ],
+    "signature": [
+     {
+      "block_idx": 6,
+      "align": "center",
+      "text": "Về việc thu hồi Giấy chứng nhận đăng ký hoạt động chi nhánh, văn phòng"
+     }
+    ]
+   },
+   "tabs_in_runs": 0,
+   "ooxml_vertAlign_paras_head": [],
+   "glue_classification": []
+  },
+  "PLI_M66": {
+   "ten_mau": "Thông báo về việc chi nhánh/văn phòng đại diện/địa điểm kinh doanh đang làm thủ tục chấm dứt hoạt động",
+   "nblocks": 34,
+   "source_indicator": [],
+   "form_number": [
+    {
+     "block_idx": 0,
+     "align": "right",
+     "text": "Mẫu số 66"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "block_idx": 1,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CƠ QUAN ĐĂNG KÝ KINH DOANH",
+      "CẤP TỈNH",
+      "-------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 2,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM",
+      "Độc lập - Tự do - Hạnh phúc",
+      "---------------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 28,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "Nơi nhận:",
+      "- Cơ quan quản lý thuế tỉnh, thành phố …",
+      "(để biết);",
+      "- Cơ quan hải quan tỉnh, thành phố … (để biết);",
+      "- Cơ quan thi hành án dân sự tỉnh, thành phố … (để biết);",
+      "- Lưu: "
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 29,
+     "align": "center",
+     "kind": [
+      "signature"
+     ],
+     "lines": [
+      "TRƯỞNG ĐƠN VỊ",
+      "(Ký, ghi họ tên và đóng dấu)"
+     ],
+     "has_tab": false
+    }
+   ],
+   "digit_glued": [
+    {
+     "block_idx": 11,
+     "run_idx": 0,
+     "glued": "o1",
+     "context": "...Do1:..."
+    },
+    {
+     "block_idx": 17,
+     "run_idx": 0,
+     "glued": "g2",
+     "context": "... làm thủ tục chấm dứt hoạt động2:..."
+    },
+    {
+     "block_idx": 23,
+     "run_idx": 0,
+     "glued": "g3",
+     "context": "... làm thủ tục chấm dứt hoạt động3: ..."
+    }
+   ],
+   "footnote_like_lines": [
+    {
+     "block_idx": 31,
+     "text": "1 Ghi tên của tất cả người đại diện theo pháp luật trong trường hợp công ty có nhiều hơn 01 người đại diện the"
+    },
+    {
+     "block_idx": 32,
+     "text": "2 Liệt kê các chi nhánh/văn phòng đại diện/địa điểm kinh doanh đang làm thủ tục chấm dứt hoạt động."
+    },
+    {
+     "block_idx": 33,
+     "text": "3 Liệt kê tất cả các địa điểm kinh doanh trực thuộc chi nhánh."
+    }
+   ],
+   "roles": {
+    "date-line": [
+     {
+      "block_idx": 4,
+      "align": "right"
+     }
+    ],
+    "form-title": [
+     {
+      "block_idx": 5,
+      "align": "center",
+      "text": "THÔNG BÁO"
+     }
+    ],
+    "signature": [
+     {
+      "block_idx": 6,
+      "align": "center",
+      "text": "Về việc chi nhánh/văn phòng đại diện/địa điểm kinh doanh đang làm thủ "
+     }
+    ]
+   },
+   "tabs_in_runs": 0,
+   "ooxml_vertAlign_paras_head": [],
+   "glue_classification": [
+    {
+     "glued": "o1",
+     "block_idx": 11,
+     "class": "candidate-footnote CONFIRMED-OOXML-vertAlign"
+    },
+    {
+     "glued": "g2",
+     "block_idx": 17,
+     "class": "candidate-footnote CONFIRMED-OOXML-vertAlign"
+    },
+    {
+     "glued": "g3",
+     "block_idx": 23,
+     "class": "candidate-footnote CONFIRMED-OOXML-vertAlign"
+    }
+   ]
+  },
+  "PLI_M67": {
+   "ten_mau": "Thông báo về việc chấm dứt hoạt động chi nhánh/văn phòng đại diện/địa điểm kinh doanh",
+   "nblocks": 21,
+   "source_indicator": [],
+   "form_number": [
+    {
+     "block_idx": 0,
+     "align": "right",
+     "text": "Mẫu số 67"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "block_idx": 1,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CƠ QUAN ĐĂNG KÝ KINH DOANH",
+      "CẤP TỈNH",
+      "-------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 2,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM",
+      "Độc lập - Tự do - Hạnh phúc",
+      "---------------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 17,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "Nơi nhận: ",
+      "- Tên, địa chỉ doanh nghiệp;",
+      "- Cơ quan hải quan … (tỉnh, thành phố nơi doanh nghiệp đặt trụ sở chính) (để biết);",
+      "- Cơ quan quản lý thị trường  (tỉnh, thành phố nơi doanh nghiệp đặt trụ sở chính) (để biết",
+      "- ……….;",
+      "- Lưu: "
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 18,
+     "align": "center",
+     "kind": [
+      "signature"
+     ],
+     "lines": [
+      "TRƯỞNG ĐƠN VỊ",
+      "(Ký, ghi họ tên và đóng dấu)"
+     ],
+     "has_tab": false
+    }
+   ],
+   "digit_glued": [
+    {
+     "block_idx": 7,
+     "run_idx": 4,
+     "glued": "à1",
+     "context": "..., do Ông/Bà1: ....................."
+    }
+   ],
+   "footnote_like_lines": [],
+   "roles": {
+    "date-line": [
+     {
+      "block_idx": 4,
+      "align": "right"
+     }
+    ],
+    "form-title": [
+     {
+      "block_idx": 5,
+      "align": "center",
+      "text": "THÔNG BÁO"
+     }
+    ],
+    "signature": [
+     {
+      "block_idx": 6,
+      "align": "center",
+      "text": "Về việc chấm dứt hoạt động chi nhánh/ văn phòng đại diện/địa điểm kinh"
+     }
+    ]
+   },
+   "tabs_in_runs": 0,
+   "ooxml_vertAlign_paras_head": [
+    {
+     "para": 8,
+     "val": "superscript",
+     "text": "... là người đại diện theo pháp luật, đã chấm dứt hoạt động:"
+    }
+   ],
+   "glue_classification": [
+    {
+     "glued": "à1",
+     "block_idx": 7,
+     "class": "candidate-footnote CONFIRMED-OOXML-vertAlign"
+    }
+   ]
+  },
+  "PLI_M68": {
+   "ten_mau": "Thông báo về việc doanh nghiệp đang làm thủ tục giải thể",
+   "nblocks": 28,
+   "source_indicator": [],
+   "form_number": [
+    {
+     "block_idx": 0,
+     "align": "right",
+     "text": "Mẫu số 68"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "block_idx": 1,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CƠ QUAN ĐĂNG KÝ KINH DOANH",
+      "CẤP TỈNH",
+      "-------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 2,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM",
+      "Độc lập - Tự do - Hạnh phúc",
+      "---------------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 23,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "Nơi nhận: ",
+      "- Tên, địa chỉ doanh nghiệp;",
+      "- Cơ quan quản lý thuế tỉnh, thành phố …",
+      "(để biết);",
+      "- Cơ quan hải quan tỉnh, thành phố … (để biết);",
+      "- Cơ quan thi hành án dân sự tỉnh, thành phố … (để biết);"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 24,
+     "align": "center",
+     "kind": [
+      "signature"
+     ],
+     "lines": [
+      "TRƯỞNG ĐƠN VỊ",
+      "(Ký, ghi họ tên và đóng dấu)"
+     ],
+     "has_tab": false
+    }
+   ],
+   "digit_glued": [
+    {
+     "block_idx": 6,
+     "run_idx": 0,
+     "glued": "ể1",
+     "context": "...ghiệp đang làm thủ tục giải thể1..."
+    },
+    {
+     "block_idx": 12,
+     "run_idx": 0,
+     "glued": "o2",
+     "context": "...Do2:..."
+    }
+   ],
+   "footnote_like_lines": [
+    {
+     "block_idx": 26,
+     "text": "1 Trừ trường hợp doanh nghiệp bị thu hồi Giấy chứng nhận đăng ký doanh nghiệp để thực hiện biện pháp cưỡng chế"
+    },
+    {
+     "block_idx": 27,
+     "text": "2 Ghi tên của tất cả người đại diện theo pháp luật trong trường hợp công ty có nhiều hơn 01 người đại diện the"
+    }
+   ],
+   "roles": {
+    "date-line": [
+     {
+      "block_idx": 4,
+      "align": "right"
+     }
+    ],
+    "form-title": [
+     {
+      "block_idx": 5,
+      "align": "center",
+      "text": "THÔNG BÁO"
+     }
+    ]
+   },
+   "tabs_in_runs": 0,
+   "ooxml_vertAlign_paras_head": [
+    {
+     "para": 7,
+     "val": "superscript",
+     "text": "Về việc doanh nghiệp đang làm thủ tục giải thể1"
+    }
+   ],
+   "glue_classification": [
+    {
+     "glued": "ể1",
+     "block_idx": 6,
+     "class": "candidate-footnote CONFIRMED-OOXML-vertAlign"
+    },
+    {
+     "glued": "o2",
+     "block_idx": 12,
+     "class": "candidate-footnote CONFIRMED-OOXML-vertAlign"
+    }
+   ]
+  },
+  "PLI_M69": {
+   "ten_mau": "Thông báo về việc doanh nghiệp đã giải thể/chấm dứt tồn tại",
+   "nblocks": 25,
+   "source_indicator": [],
+   "form_number": [
+    {
+     "block_idx": 0,
+     "align": "right",
+     "text": "Mẫu số 69"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "block_idx": 1,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CƠ QUAN ĐĂNG KÝ KINH DOANH",
+      "CẤP TỈNH",
+      "-------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 2,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM",
+      "Độc lập - Tự do - Hạnh phúc",
+      "---------------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 21,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "Nơi nhận: ",
+      "- Tên, địa chỉ doanh nghiệp;",
+      "- Cơ quan quản lý thuế tỉnh, thành phố …",
+      "(để biết);",
+      "- Cơ quan hải quan tỉnh, thành phố … (để biết);",
+      "- ;"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 22,
+     "align": "center",
+     "kind": [
+      "signature"
+     ],
+     "lines": [
+      "TRƯỞNG ĐƠN VỊ",
+      "(Ký, ghi họ tên và đóng dấu)"
+     ],
+     "has_tab": false
+    }
+   ],
+   "digit_glued": [
+    {
+     "block_idx": 12,
+     "run_idx": 0,
+     "glued": "o1",
+     "context": "...Do1:..."
+    }
+   ],
+   "footnote_like_lines": [],
+   "roles": {
+    "date-line": [
+     {
+      "block_idx": 4,
+      "align": "right"
+     }
+    ],
+    "form-title": [
+     {
+      "block_idx": 5,
+      "align": "center",
+      "text": "THÔNG BÁO"
+     }
+    ]
+   },
+   "tabs_in_runs": 0,
+   "ooxml_vertAlign_paras_head": [],
+   "glue_classification": [
+    {
+     "glued": "o1",
+     "block_idx": 12,
+     "class": "candidate-footnote CONFIRMED-OOXML-vertAlign"
+    }
+   ]
+  },
+  "PLI_M70": {
+   "ten_mau": "Giấy tiếp nhận hồ sơ và hẹn trả kết quả hồ sơ đăng ký doanh nghiệp/chi nhánh/văn phòng đại diện/địa điểm kinh doanh",
+   "nblocks": 23,
+   "source_indicator": [],
+   "form_number": [
+    {
+     "block_idx": 0,
+     "align": "right",
+     "text": "Mẫu số 70"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "block_idx": 1,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CƠ QUAN ĐĂNG KÝ KINH DOANH",
+      "CẤP TỈNH",
+      "-------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 2,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM",
+      "Độc lập - Tự do - Hạnh phúc",
+      "---------------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 3,
+     "align": "center",
+     "kind": [],
+     "lines": [
+      "Số: ",
+      "Mã hồ sơ: "
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 21,
+     "align": "center",
+     "kind": [
+      "signature"
+     ],
+     "lines": [
+      "NGƯỜI NỘP",
+      "(Ký và ghi họ tên)"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 22,
+     "align": "center",
+     "kind": [
+      "signature"
+     ],
+     "lines": [
+      "NGƯỜI NHẬN",
+      "(Ký và ghi họ tên)"
+     ],
+     "has_tab": false
+    }
+   ],
+   "digit_glued": [],
+   "footnote_like_lines": [],
+   "roles": {
+    "form-title": [
+     {
+      "block_idx": 3,
+      "align": "center",
+      "text": "Số: \nMã hồ sơ:"
+     },
+     {
+      "block_idx": 5,
+      "align": "center",
+      "text": "GIẤY TIẾP NHẬN HỒ SƠ VÀ HẸN TRẢ KẾT QUẢ"
+     },
+     {
+      "block_idx": 6,
+      "align": "center",
+      "text": "Hồ sơ đăng ký doanh nghiệp/chi nhánh/ văn phòng đại diện/địa điểm kinh"
+     }
+    ],
+    "date-line": [
+     {
+      "block_idx": 4,
+      "align": "right"
+     }
+    ],
+    "signature": [
+     {
+      "block_idx": 6,
+      "align": "center",
+      "text": "Hồ sơ đăng ký doanh nghiệp/chi nhánh/ văn phòng đại diện/địa điểm kinh"
+     },
+     {
+      "block_idx": 21,
+      "align": "center",
+      "text": "NGƯỜI NỘP\n(Ký và ghi họ tên)"
+     },
+     {
+      "block_idx": 22,
+      "align": "center",
+      "text": "NGƯỜI NHẬN\n(Ký và ghi họ tên)"
+     }
+    ]
+   },
+   "tabs_in_runs": 0,
+   "ooxml_vertAlign_paras_head": [],
+   "glue_classification": []
+  },
+  "PLI_M71": {
+   "ten_mau": "Giấy tiếp nhận hồ sơ và hẹn trả kết quả hồ sơ đăng ký doanh nghiệp/chi nhánh/văn phòng đại diện/địa điểm kinh doanh qua mạng thông tin điện tử",
+   "nblocks": 25,
+   "source_indicator": [],
+   "form_number": [
+    {
+     "block_idx": 0,
+     "align": "right",
+     "text": "Mẫu số 71"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "block_idx": 1,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CƠ QUAN ĐĂNG KÝ KINH DOANH",
+      "CẤP TỈNH",
+      "-------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 2,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM",
+      "Độc lập - Tự do - Hạnh phúc",
+      "---------------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 22,
+     "align": "center",
+     "kind": [],
+     "lines": [
+      "(TÊN CƠ QUAN ĐĂNG KÝ KINH ",
+      "DOANH CẤP TỈNH)"
+     ],
+     "has_tab": false
+    }
+   ],
+   "digit_glued": [],
+   "footnote_like_lines": [
+    {
+     "block_idx": 14,
+     "text": "01 bộ hồ sơ đăng ký doanh nghiệp/chi nhánh/văn phòng đại diện/địa điểm kinh doanh qua mạng thông tin điện tử m"
+    }
+   ],
+   "roles": {
+    "date-line": [
+     {
+      "block_idx": 4,
+      "align": "right"
+     }
+    ],
+    "form-title": [
+     {
+      "block_idx": 5,
+      "align": "center",
+      "text": "GIẤY TIẾP NHẬN HỒ SƠ VÀ HẸN TRẢ KẾT QUẢ"
+     },
+     {
+      "block_idx": 6,
+      "align": "center",
+      "text": "Hồ sơ đăng ký doanh nghiệp/chi nhánh/văn phòng đại diện/ địa điểm kinh"
+     }
+    ],
+    "signature": [
+     {
+      "block_idx": 6,
+      "align": "center",
+      "text": "Hồ sơ đăng ký doanh nghiệp/chi nhánh/văn phòng đại diện/ địa điểm kinh"
+     }
+    ]
+   },
+   "tabs_in_runs": 0,
+   "ooxml_vertAlign_paras_head": [],
+   "glue_classification": []
+  },
+  "PLI_M72": {
+   "ten_mau": "Công bố nội dung đăng ký thành lập doanh nghiệp",
+   "nblocks": 149,
+   "source_indicator": [],
+   "form_number": [
+    {
+     "block_idx": 0,
+     "align": "right",
+     "text": "Mẫu số 72"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "block_idx": 144,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "8. Nơi đăng ký: (Cơ quan đăng ký kinh doanh cấp tỉnh) \t"
+     ],
+     "has_tab": true
+    }
+   ],
+   "digit_glued": [
+    {
+     "block_idx": 50,
+     "run_idx": 0,
+     "glued": "y1",
+     "context": "...diện theo pháp luật của công ty1:..."
+    },
+    {
+     "block_idx": 83,
+     "run_idx": 0,
+     "glued": "y2",
+     "context": "...diện theo pháp luật của công ty2:..."
+    },
+    {
+     "block_idx": 112,
+     "run_idx": 0,
+     "glued": "y3",
+     "context": "...diện theo pháp luật của công ty3:..."
+    }
+   ],
+   "footnote_like_lines": [
+    {
+     "block_idx": 147,
+     "text": "2 Ghi tên của tất cả người đại diện theo pháp luật trong trường hợp công ty có nhiều hơn 01 người đại diện the"
+    },
+    {
+     "block_idx": 148,
+     "text": "3 Ghi tên của tất cả người đại diện theo pháp luật trong trường hợp công ty có nhiều hơn 01 người đại diện the"
+    }
+   ],
+   "roles": {
+    "form-title": [
+     {
+      "block_idx": 3,
+      "align": "center",
+      "text": "CÔNG BỐ NỘI DUNG ĐĂNG KÝ THÀNH LẬP MỚI"
+     },
+     {
+      "block_idx": 24,
+      "align": "center",
+      "text": "CÔNG BỐ NỘI DUNG ĐĂNG KÝ THÀNH LẬP MỚI"
+     },
+     {
+      "block_idx": 59,
+      "align": "center",
+      "text": "CÔNG BỐ NỘI DUNG ĐĂNG KÝ THÀNH LẬP MỚI"
+     },
+     {
+      "block_idx": 92,
+      "align": "center",
+      "text": "CÔNG BỐ NỘI DUNG ĐĂNG KÝ THÀNH LẬP MỚI"
+     },
+     {
+      "block_idx": 121,
+      "align": "center",
+      "text": "CÔNG BỐ NỘI DUNG ĐĂNG KÝ THÀNH LẬP MỚI"
+     }
+    ],
+    "signature": [
+     {
+      "block_idx": 23,
+      "align": "center",
+      "text": "(TÊN CÔNG TY TNHH MỘT THÀNH VIÊN)"
+     },
+     {
+      "block_idx": 58,
+      "align": "center",
+      "text": "(TÊN CÔNG TY TNHH HAI THÀNH VIÊN)"
+     },
+     {
+      "block_idx": 75,
+      "align": "center",
+      "text": "Tên thành viên"
+     },
+     {
+      "block_idx": 109,
+      "align": "center",
+      "text": "STTTên cổ đôngQuốc tịchSố Giấy tờ pháp lý của cá nhân/tổ chứcĐịa chỉ l"
+     },
+     {
+      "block_idx": 111,
+      "align": "center",
+      "text": "STTTên cổ đôngQuốc tịchSố Giấy tờ pháp lý của cá nhân/tổ chứcĐịa chỉ l"
+     },
+     {
+      "block_idx": 137,
+      "align": "center",
+      "text": "Tên thành viên hợp danh"
+     }
+    ]
+   },
+   "tabs_in_runs": 1,
+   "ooxml_vertAlign_paras_head": [],
+   "glue_classification": [
+    {
+     "glued": "y1",
+     "block_idx": 50,
+     "class": "candidate-footnote CONFIRMED-OOXML-vertAlign"
+    },
+    {
+     "glued": "y2",
+     "block_idx": 83,
+     "class": "candidate-footnote CONFIRMED-OOXML-vertAlign"
+    },
+    {
+     "glued": "y3",
+     "block_idx": 112,
+     "class": "candidate-footnote CONFIRMED-OOXML-vertAlign"
+    }
+   ]
+  },
+  "PLI_M73": {
+   "ten_mau": "Công bố thay đổi nội dung đăng ký doanh nghiệp",
+   "nblocks": 16,
+   "source_indicator": [],
+   "form_number": [
+    {
+     "block_idx": 0,
+     "align": "right",
+     "text": "Mẫu số 73"
+    }
+   ],
+   "newline_blocks": [],
+   "digit_glued": [],
+   "footnote_like_lines": [],
+   "roles": {},
+   "tabs_in_runs": 0,
+   "ooxml_vertAlign_paras_head": [],
+   "glue_classification": []
+  },
+  "PLI_M74": {
+   "ten_mau": "Công bố nội dung đăng ký doanh nghiệp",
+   "nblocks": 16,
+   "source_indicator": [],
+   "form_number": [
+    {
+     "block_idx": 0,
+     "align": "right",
+     "text": "Mẫu số 74"
+    }
+   ],
+   "newline_blocks": [],
+   "digit_glued": [],
+   "footnote_like_lines": [],
+   "roles": {},
+   "tabs_in_runs": 0,
+   "ooxml_vertAlign_paras_head": [],
+   "glue_classification": []
+  },
+  "PLI_M75": {
+   "ten_mau": "Thông báo về việc khôi phục Giấy chứng nhận đăng ký doanh nghiệp/Giấy chứng nhận đăng ký hoạt động chi nhánh, văn phòng đại diện, Giấy chứng nhận đăng ký địa điểm kinh doanh",
+   "nblocks": 44,
+   "source_indicator": [],
+   "form_number": [
+    {
+     "block_idx": 0,
+     "align": "right",
+     "text": "Mẫu số 75"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "block_idx": 1,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CƠ QUAN ĐĂNG KÝ KINH DOANH",
+      "CẤP TỈNH",
+      "-------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 2,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM",
+      "Độc lập - Tự do - Hạnh phúc",
+      "---------------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 42,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "Nơi nhận:",
+      "- Cơ quan quản lý thuế (tỉnh, thành phố nơi doanh nghiệp đăng ký trụ sở);",
+      "- Lưu: "
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 43,
+     "align": "center",
+     "kind": [
+      "signature"
+     ],
+     "lines": [
+      "TRƯỞNG ĐƠN VỊ",
+      "(Ký, ghi họ tên và đóng dấu)"
+     ],
+     "has_tab": false
+    }
+   ],
+   "digit_glued": [],
+   "footnote_like_lines": [],
+   "roles": {
+    "date-line": [
+     {
+      "block_idx": 4,
+      "align": "right"
+     }
+    ],
+    "form-title": [
+     {
+      "block_idx": 5,
+      "align": "center",
+      "text": "THÔNG BÁO"
+     },
+     {
+      "block_idx": 6,
+      "align": "center",
+      "text": "Về việc khôi phục Giấy chứng nhận đăng ký doanh nghiệp/Giấy chứng nhận"
+     }
+    ],
+    "signature": [
+     {
+      "block_idx": 6,
+      "align": "center",
+      "text": "Về việc khôi phục Giấy chứng nhận đăng ký doanh nghiệp/Giấy chứng nhận"
+     }
+    ]
+   },
+   "tabs_in_runs": 0,
+   "ooxml_vertAlign_paras_head": [],
+   "glue_classification": []
+  },
+  "PLI_M76": {
+   "ten_mau": "Thông báo về việc cấp đăng ký doanh nghiệp",
+   "nblocks": 21,
+   "source_indicator": [],
+   "form_number": [
+    {
+     "block_idx": 0,
+     "align": "right",
+     "text": "Mẫu số 76"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "block_idx": 1,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CƠ QUAN ĐĂNG KÝ KINH DOANH",
+      "CẤP TỈNH",
+      "-------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 2,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM",
+      "Độc lập - Tự do - Hạnh phúc",
+      "---------------"
+     ],
+     "has_tab": false
+    }
+   ],
+   "digit_glued": [],
+   "footnote_like_lines": [],
+   "roles": {
+    "date-line": [
+     {
+      "block_idx": 4,
+      "align": "right"
+     }
+    ],
+    "form-title": [
+     {
+      "block_idx": 5,
+      "align": "center",
+      "text": "THÔNG BÁO"
+     }
+    ],
+    "salutation": [
+     {
+      "block_idx": 8,
+      "align": "left"
+     }
+    ]
+   },
+   "tabs_in_runs": 0,
+   "ooxml_vertAlign_paras_head": [],
+   "glue_classification": []
+  },
+  "PLI_M78": {
+   "ten_mau": "Giấy đề nghị cung cấp thông tin đăng ký doanh nghiệp",
+   "nblocks": 35,
+   "source_indicator": [],
+   "form_number": [
+    {
+     "block_idx": 0,
+     "align": "right",
+     "text": "Mẫu số 78"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "block_idx": 1,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM",
+      "Độc lập - Tự do - Hạnh phúc",
+      "-----------------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 12,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "Ngày cấp:  Nơi cấp:  \t"
+     ],
+     "has_tab": true
+    },
+    {
+     "block_idx": 32,
+     "align": "center",
+     "kind": [
+      "signature"
+     ],
+     "lines": [
+      "NGƯỜI ĐỀ NGHỊ",
+      "(Ký và ghi họ tên)1"
+     ],
+     "has_tab": false
+    }
+   ],
+   "digit_glued": [],
+   "footnote_like_lines": [],
+   "roles": {
+    "form-title": [
+     {
+      "block_idx": 3,
+      "align": "center",
+      "text": "GIẤY ĐỀ NGHỊ CUNG CẤP THÔNG TIN ĐĂNG KÝ DOANH NGHIỆP"
+     },
+     {
+      "block_idx": 32,
+      "align": "center",
+      "text": "NGƯỜI ĐỀ NGHỊ\n(Ký và ghi họ tên)1"
+     }
+    ],
+    "salutation": [
+     {
+      "block_idx": 4,
+      "align": "center"
+     }
+    ],
+    "signature": [
+     {
+      "block_idx": 32,
+      "align": "center",
+      "text": "NGƯỜI ĐỀ NGHỊ\n(Ký và ghi họ tên)1"
+     }
+    ]
+   },
+   "tabs_in_runs": 1,
+   "ooxml_vertAlign_paras_head": [],
+   "glue_classification": []
+  },
+  "PLI_M79": {
+   "ten_mau": "Giấy đề nghị Cơ quan đăng ký kinh doanh yêu cầu doanh nghiệp thay đổi tên doanh nghiệp, tên chi nhánh, văn phòng đại diện, địa điểm kinh doanh",
+   "nblocks": 42,
+   "source_indicator": [],
+   "form_number": [
+    {
+     "block_idx": 0,
+     "align": "right",
+     "text": "Mẫu số 79"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "block_idx": 1,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "TÊN TỔ CHỨC1",
+      "-------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 2,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM",
+      "Độc lập - Tự do - Hạnh phúc",
+      "---------------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 10,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "Ngày, tháng, năm sinh: //\t"
+     ],
+     "has_tab": true
+    },
+    {
+     "block_idx": 15,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "Ngày cấp:  Nơi cấp:  \t"
+     ],
+     "has_tab": true
+    },
+    {
+     "block_idx": 28,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "Mã số/mã số thuế chi nhánh/văn phòng đại diện/mã số địa điểm kinh doanh: \t"
+     ],
+     "has_tab": true
+    },
+    {
+     "block_idx": 37,
+     "align": "center",
+     "kind": [
+      "signature"
+     ],
+     "lines": [
+      "NGƯỜI ĐỀ NGHỊ/NGƯỜI ĐẠI DIỆN ",
+      "(Ký và ghi họ tên và đóng dấu)3"
+     ],
+     "has_tab": false
+    }
+   ],
+   "digit_glued": [
+    {
+     "block_idx": 1,
+     "run_idx": 0,
+     "glued": "C1",
+     "context": "...TÊN TỔ CHỨC1\\n-------..."
+    },
+    {
+     "block_idx": 6,
+     "run_idx": 0,
+     "glued": "p2",
+     "context": "...kinh doanh yêu cầu doanh nghiệp2 thay đổi tên doanh ..."
+    }
+   ],
+   "footnote_like_lines": [
+    {
+     "block_idx": 39,
+     "text": "1 Chỉ kê khai tên đối với tổ chức."
+    },
+    {
+     "block_idx": 40,
+     "text": "2 Doanh nghiệp có tên doanh nghiệp, tên chi nhánh, văn phòng đại diện, địa điểm kinh doanh xâm phạm quyền sở h"
+    },
+    {
+     "block_idx": 41,
+     "text": "3 Người đề nghị ký và ghi họ tên/Người đại diện của tổ chức ký và ghi họ tên và đóng dấu vào phần này."
+    }
+   ],
+   "roles": {
+    "date-line": [
+     {
+      "block_idx": 4,
+      "align": "right"
+     }
+    ],
+    "form-title": [
+     {
+      "block_idx": 5,
+      "align": "center",
+      "text": "GIẤY ĐỀ NGHỊ"
+     },
+     {
+      "block_idx": 37,
+      "align": "center",
+      "text": "NGƯỜI ĐỀ NGHỊ/NGƯỜI ĐẠI DIỆN \n(Ký và ghi họ tên và đóng dấu)3"
+     }
+    ],
+    "signature": [
+     {
+      "block_idx": 6,
+      "align": "center",
+      "text": "Cơ quan đăng ký kinh doanh yêu cầu doanh nghiệp2 thay đổi tên doanh ng"
+     },
+     {
+      "block_idx": 37,
+      "align": "center",
+      "text": "NGƯỜI ĐỀ NGHỊ/NGƯỜI ĐẠI DIỆN \n(Ký và ghi họ tên và đóng dấu)3"
+     }
+    ],
+    "salutation": [
+     {
+      "block_idx": 7,
+      "align": "center"
+     }
+    ]
+   },
+   "tabs_in_runs": 3,
+   "ooxml_vertAlign_paras_head": [
+    {
+     "para": 1,
+     "val": "superscript",
+     "text": "TÊN TỔ CHỨC1<w:br/><w:t xml:space=\"preserve\">-------"
+    },
+    {
+     "para": 7,
+     "val": "superscript",
+     "text": "hiệp, tên chi nhánh, văn phòng đại diện, địa điểm kinh doanh"
+    }
+   ],
+   "glue_classification": [
+    {
+     "glued": "C1",
+     "block_idx": 1,
+     "class": "candidate-footnote CONFIRMED-OOXML-vertAlign"
+    },
+    {
+     "glued": "p2",
+     "block_idx": 6,
+     "class": "candidate-footnote CONFIRMED-OOXML-vertAlign"
+    }
+   ]
+  },
+  "PLI_M80": {
+   "ten_mau": "Giấy đề nghị thu hồi giấy tờ do kê khai trong hồ sơ đăng ký doanh nghiệp là giả mạo",
+   "nblocks": 42,
+   "source_indicator": [],
+   "form_number": [
+    {
+     "block_idx": 0,
+     "align": "right",
+     "text": "Mẫu số 80"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "block_idx": 1,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "TÊN TỔ CHỨC1",
+      "-------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 2,
+     "align": "center",
+     "kind": [
+      "national"
+     ],
+     "lines": [
+      "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM",
+      "Độc lập - Tự do - Hạnh phúc",
+      "---------------"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 15,
+     "align": "left",
+     "kind": [],
+     "lines": [
+      "Ngày cấp:  Nơi cấp:  \t"
+     ],
+     "has_tab": true
+    },
+    {
+     "block_idx": 35,
+     "align": "center",
+     "kind": [
+      "signature"
+     ],
+     "lines": [
+      "NGƯỜI ĐỀ NGHỊ/NGƯỜI ĐẠI DIỆN ",
+      "(Ký và ghi họ tên)3"
+     ],
+     "has_tab": false
+    },
+    {
+     "block_idx": 41,
+     "align": "center",
+     "kind": [],
+     "lines": [
+      "BIỂU MẪU SỬ DỤNG TRONG ĐĂNG KÝ HỘ KINH DOANH",
+      "(Kèm theo Thông tư số 68/2025/TT-BTC ngày 01 tháng 7 năm 2025 của Bộ trưởng Bộ Tài chính)"
+     ],
+     "has_tab": false
+    }
+   ],
+   "digit_glued": [
+    {
+     "block_idx": 1,
+     "run_idx": 0,
+     "glued": "C1",
+     "context": "...TÊN TỔ CHỨC1\\n-------..."
+    },
+    {
+     "block_idx": 6,
+     "run_idx": 0,
+     "glued": "ờ2",
+     "context": "...Thu hồi giấy tờ2 do kê khai trong hồ..."
+    }
+   ],
+   "footnote_like_lines": [
+    {
+     "block_idx": 37,
+     "text": "1 Chỉ kê khai tên đối với tổ chức."
+    },
+    {
+     "block_idx": 38,
+     "text": "2 Tên giấy tờ đề nghị thu hồi: Giấy chứng nhận đăng ký doanh nghiệp/Giấy chứng nhận đăng ký hoạt động chi nhán"
+    },
+    {
+     "block_idx": 39,
+     "text": "3 Người đề nghị ký và ghi họ tên/Người đại diện của tổ chức ký và ghi họ tên và đóng dấu vào phần này."
+    }
+   ],
+   "roles": {
+    "date-line": [
+     {
+      "block_idx": 4,
+      "align": "right"
+     }
+    ],
+    "form-title": [
+     {
+      "block_idx": 5,
+      "align": "center",
+      "text": "GIẤY ĐỀ NGHỊ"
+     },
+     {
+      "block_idx": 6,
+      "align": "center",
+      "text": "Thu hồi giấy tờ2 do kê khai trong hồ sơ đăng ký doanh nghiệp là giả mạ"
+     },
+     {
+      "block_idx": 35,
+      "align": "center",
+      "text": "NGƯỜI ĐỀ NGHỊ/NGƯỜI ĐẠI DIỆN \n(Ký và ghi họ tên)3"
+     }
+    ],
+    "salutation": [
+     {
+      "block_idx": 7,
+      "align": "center"
+     }
+    ],
+    "signature": [
+     {
+      "block_idx": 35,
+      "align": "center",
+      "text": "NGƯỜI ĐỀ NGHỊ/NGƯỜI ĐẠI DIỆN \n(Ký và ghi họ tên)3"
+     }
+    ]
+   },
+   "tabs_in_runs": 1,
+   "ooxml_vertAlign_paras_head": [
+    {
+     "para": 1,
+     "val": "superscript",
+     "text": "TÊN TỔ CHỨC1<w:br/><w:t xml:space=\"preserve\">-------"
+    },
+    {
+     "para": 7,
+     "val": "superscript",
+     "text": "y tờ2 do kê khai trong hồ sơ đăng ký doanh nghiệp là giả mạo"
+    }
+   ],
+   "glue_classification": [
+    {
+     "glued": "C1",
+     "block_idx": 1,
+     "class": "candidate-footnote CONFIRMED-OOXML-vertAlign"
+    },
+    {
+     "glued": "ờ2",
+     "block_idx": 6,
+     "class": "candidate-footnote CONFIRMED-OOXML-vertAlign"
+    }
+   ]
+  }
+ }
+}

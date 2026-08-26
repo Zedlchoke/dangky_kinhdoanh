@@ -179,7 +179,13 @@
      * draft giữ nguyên 'X'/'' như radio; đây là CHỐ ĐƠN NHẤT trên đường export
      * (buildExportData cũng đi qua hàm này nên không bị lệch hai nơi).
      * docIds tùy chọn (các mẫu đang chọn trong hồ sơ): resolve metadata
-     * form-scoped trước khi fallback toàn cục. */
+     * form-scoped trước khi fallback toàn cục.
+     * EXPORT GUARD theo activation: grid INACTIVE-THEO-SELECTOR (meta khai
+     * checkedKey/valueOf - nguồn chính khi owner chốt) không được lọt dòng
+     * nào vào payload (section không áp dụng phải rỗng trong văn bản).
+     * Grid inactive vì INTERIM minFilledRows vốn không có dòng có dữ liệu ->
+     * KHÔNG filter để payload giữ nguyên 100% hành vi cũ; grid KHÔNG có
+     * activeWhen cũng không bị đụng tới. */
     exportLoops: function (store, docIds) {
       var out = {};
       Object.keys(store.loops || {}).forEach(function (name) {
@@ -189,7 +195,12 @@
           return !!gm;
         });
         if (!gm) gm = FD.getGridMeta(name);
-        out[name] = (store.loops[name] || []).map(function (row) {
+        var rows = store.loops[name] || [];
+        if (gm && FD.activationModeOf(gm) === 'selector' &&
+            !FD.isActiveGrid(gm, rows, store)) {
+          rows = []; // selector nói section không áp dụng -> payload rỗng
+        }
+        out[name] = rows.map(function (row) {
           var clean = {};
           Object.keys(row || {}).forEach(function (k) {
             if (k.charAt(0) === '_') return; // _row_id và field nội bộ khác

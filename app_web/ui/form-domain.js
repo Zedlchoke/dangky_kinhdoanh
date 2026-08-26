@@ -10,6 +10,10 @@
  *    chung + metadata theo mẫu (resolver docId+semanticKey -> docId+loop ->
  *    toàn cục -> null); makeRowId/normalizeStoreLoops: _row_id ổn định +
  *    migration ds_nganh.
+ *  - evalActiveWhen / activationModeOf / isActiveGrid / registerFormGridMeta:
+ *    activation của grid khai báo thuần dữ liệu (activeWhen) - selector
+ *    (checkedKey/valueOf) là nguồn chính, minFilledRows chỉ INTERIM chờ
+ *    owner chốt contract loại hình (docs/m72_activation_proposal.md).
  */
 (function (root) {
   'use strict';
@@ -317,39 +321,50 @@
    *   (c) GRID_META[loop] -> (d) null. */
   var FORM_GRID_META = {
     /* PLI_M72: mẫu gồm 5 phần theo loại hình DN, người dùng chỉ điền phần
-     * áp dụng; blocks KHÔNG có ô chọn loại hình -> grid chỉ active khi
-     * CÓ >=1 dòng dữ liệu (activeWhen.minFilledRows, eval thuần trên
-     * store). Grid trống không sinh lỗi blocking nào; grid có dữ liệu
-     * chịu đủ rule ngành (required cột/primary/VSIC/trùng mã). */
+     * áp dụng; blocks KHÔNG có ô chọn loại hình (đã audit - xem
+     * docs/m72_activation_proposal.md). CHƯA có contract owner cho selector
+     * loại hình nên activation hiện tại là INTERIM:
+     *   activeWhen.minFilledRows = grid chỉ active khi CÓ >=1 dòng dữ liệu,
+     *   KHÔNG phải nguồn xác định loại hình chính thức - chỉ để grid trống
+     *   không sinh lỗi blocking. Khi owner chốt selector (checkedKey hoặc
+     *   valueOf), chỉ cần thay activeWhen bằng khai báo selector - validator/
+     *   export guard tự chuyển sang chế độ 'selector' (activationModeOf),
+     *   không phải sửa code. Grid trống không sinh lỗi blocking nào; grid
+     *   active chịu đủ rule ngành (required cột/primary/VSIC/trùng mã). */
     'PLI_M72': {
       loops: {
         ds_nganh_dntn: mkGrid(GRID_META.ds_nganh, {
           label: 'Danh sách ngành nghề kinh doanh (Doanh nghiệp tư nhân)',
           required: false, minRows: 0,
+          /* INTERIM chờ owner chốt contract loại hình (P1.1 M72) */
           activeWhen: { minFilledRows: 1 },
           semanticKey: 'ds_nganh_dntn', syncGroup: 'ds_nganh_pli_m72'
         }),
         ds_nganh_tnhh_1tv: mkGrid(GRID_META.ds_nganh, {
           label: 'Danh sách ngành nghề kinh doanh (Công ty TNHH một thành viên)',
           required: false, minRows: 0,
+          /* INTERIM chờ owner chốt contract loại hình (P1.1 M72) */
           activeWhen: { minFilledRows: 1 },
           semanticKey: 'ds_nganh_tnhh_1tv', syncGroup: 'ds_nganh_pli_m72'
         }),
         ds_nganh_tnhh_2tv: mkGrid(GRID_META.ds_nganh, {
           label: 'Danh sách ngành nghề kinh doanh (Công ty TNHH hai thành viên trở lên)',
           required: false, minRows: 0,
+          /* INTERIM chờ owner chốt contract loại hình (P1.1 M72) */
           activeWhen: { minFilledRows: 1 },
           semanticKey: 'ds_nganh_tnhh_2tv', syncGroup: 'ds_nganh_pli_m72'
         }),
         ds_nganh_ctcp: mkGrid(GRID_META.ds_nganh, {
           label: 'Danh sách ngành nghề kinh doanh (Công ty cổ phần)',
           required: false, minRows: 0,
+          /* INTERIM chờ owner chốt contract loại hình (P1.1 M72) */
           activeWhen: { minFilledRows: 1 },
           semanticKey: 'ds_nganh_ctcp', syncGroup: 'ds_nganh_pli_m72'
         }),
         ds_nganh_dhdn: mkGrid(GRID_META.ds_nganh, {
           label: 'Danh sách ngành nghề kinh doanh (Công ty hợp danh)',
           required: false, minRows: 0,
+          /* INTERIM chờ owner chốt contract loại hình (P1.1 M72) */
           activeWhen: { minFilledRows: 1 },
           semanticKey: 'ds_nganh_dhdn', syncGroup: 'ds_nganh_pli_m72'
         })
@@ -418,8 +433,7 @@
   /* Gắn chỉ mục tra cứu theo semanticKey + trace info cho từng entry.
    * Entry nào do mkGrid sinh ra là object RIÊNG (columns đã clone) nên mutate
    * an toàn; entry khai literal cũng là object riêng của mẫu đó. */
-  Object.keys(FORM_GRID_META).forEach(function (fid) {
-    var fm = FORM_GRID_META[fid];
+  function indexFormMeta(fm, fid) {
     fm.formId = fid;
     fm.loops = fm.loops || {};
     fm.bySemanticKey = {};
@@ -429,7 +443,21 @@
       m.formId = fid;
       if (m.semanticKey) fm.bySemanticKey[m.semanticKey] = m;
     });
+    return fm;
+  }
+
+  Object.keys(FORM_GRID_META).forEach(function (fid) {
+    indexFormMeta(FORM_GRID_META[fid], fid);
   });
+
+  /* Đăng ký/thay thế metadata form-scoped lúc RUNTIME và đánh chỉ mục như
+   * các entry khai sẵn. Dùng cho test fixture (metadata giả định selector
+   * loại hình - KHÔNG đưa key giả định vào production) và sau này cho dữ
+   * liệu activation owner chốt mà không phải sửa code validator. */
+  function registerFormGridMeta(fid, fm) {
+    FORM_GRID_META[fid] = fm || { loops: {} };
+    return indexFormMeta(FORM_GRID_META[fid], fid);
+  }
 
   /* Resolver metadata editable-grid. Tham số:
    *  - getGridMeta('<loop>')            : BACKWARD COMPAT - đúng như cũ,
@@ -608,19 +636,67 @@
     return tags.some(function (t) { return cellStr(r, t) !== ''; });
   }
 
+  /* activeWhen có khai SELECTOR (nguồn chính quyết định active) không?
+   * Selector = checkedKey (store.checks) hoặc valueOf {key, equals:[...]}
+   * (so store.values[key] với danh sách giá trị). KHÔNG hard-code form ID -
+   * toàn bộ nằm trong metadata của từng grid. */
+  function hasSelectorAw(aw) {
+    if (aw.checkedKey != null) return true;
+    return !!(aw.valueOf && aw.valueOf.key != null);
+  }
+
   /* Điều kiện kích hoạt rule của grid - KHAI BÁO trong metadata (dữ liệu),
    * đánh giá THUẦN trên store: không DOM, không hard-code form ID.
-   *  - minFilledRows: bảng này phải có >= N dòng CÓ DỮ LIỆU
-   *    (vd PLI_M72: blocks không có ô chọn loại hình DN nên grid chỉ
-   *    "active" khi người dùng đã tự nhập; grid trống không sinh lỗi).
-   *  - checkedKey: store.checks[key] đúng (dùng cho mẫu có ô chọn phần áp
-   *    dụng - chưa dùng, giữ để mở rộng khai báo).
+   * THỨ TỰ ƯU TIÊN RÕ RÀNG:
+   *  - activeWhen CÓ selector (checkedKey/valueOf): selector là NGUỒN CHÍNH
+   *    duy nhất quyết định active; minFilledRows bị BỎ QUA (không cộng dồn).
+   *  - activeWhen KHÔNG có selector: minFilledRows là cơ chế INTERIM chờ
+   *    owner chốt contract loại hình (vd PLI_M72) - grid chỉ active khi đã
+   *    có >= N dòng CÓ DỮ LIỆU; KHÔNG phải nguồn xác định loại hình chính.
+   *  - checkedKey + valueOf cùng khai -> cả hai phải thoả (AND).
    * Không khai báo activeWhen -> luôn active (hành vi cũ 100%). */
   function evalActiveWhen(aw, filledCount, st) {
     if (!aw) return true;
-    if (aw.minFilledRows != null && filledCount < aw.minFilledRows) return false;
+    st = st || {};
+    if (!hasSelectorAw(aw)) {
+      // INTERIM (chờ owner): chỉ dữ liệu thật kích hoạt rule
+      if (aw.minFilledRows != null && filledCount < aw.minFilledRows) return false;
+      return true;
+    }
     if (aw.checkedKey != null && !((st.checks || {})[aw.checkedKey])) return false;
+    if (aw.valueOf && aw.valueOf.key != null) {
+      var want = aw.valueOf.equals || [];
+      var cur = (st.values || {})[aw.valueOf.key];
+      cur = cur == null ? '' : String(cur).trim();
+      var hit = false;
+      for (var i = 0; i < want.length; i++) {
+        if (String(want[i]) === cur) { hit = true; break; }
+      }
+      if (!hit) return false;
+    }
     return true;
+  }
+
+  /* Chế độ activation HIỆU LỰC của một grid meta - suy từ chính activeWhen,
+   * phục vụ audit/test/export guard (meta không thể khai lệch):
+   *  - null                  : không có activeWhen -> luôn active (hành vi cũ)
+   *  - 'selector'            : checkedKey/valueOf quyết định (nguồn chính,
+   *                            dùng khi owner đã chốt contract loại hình)
+   *  - 'interim-filled-data' : chỉ minFilledRows (INTERIM tạm chờ owner) */
+  function activationModeOf(g) {
+    var aw = g && g.activeWhen;
+    if (!aw) return null;
+    return hasSelectorAw(aw) ? 'selector' : 'interim-filled-data';
+  }
+
+  /* Grid đang ACTIVE với store cho trước? Thuần, không DOM: đếm dòng CÓ DỮ
+   * LIỆU theo cột data của meta rồi gọi evalActiveWhen. Dùng chung bởi
+   * validateGridLoop và export guard. */
+  function isActiveGrid(g, rows, st) {
+    if (!g || !g.activeWhen) return true;
+    var dTags = dataTagsOf(g);
+    var filled = (rows || []).filter(function (r) { return rowFilledOn(r, dTags); });
+    return evalActiveWhen(g.activeWhen, filled.length, st);
   }
 
   /* Validate một bảng lặp CÓ grid meta (toàn cục hoặc form-scoped). Lỗi
@@ -653,9 +729,10 @@
 
     var filled = rows.filter(function (r) { return rowFilledOn(r, dTags); });
 
-    // activeWhen khai báo trong metadata: grid không active -> KHÔNG sinh
-    // lỗi nào (cả blocking lẫn warning). vd PLI_M72: 5 phần loại hình, phần
-    // người dùng không điền phải im hoàn toàn.
+    // activeWhen khai báo trong metadata (selector hoặc INTERIM minFilledRows):
+    // grid không active -> KHÔNG sinh lỗi nào (cả blocking lẫn warning).
+    // vd PLI_M72: 5 phần loại hình, phần không áp dụng phải im hoàn toàn;
+    // khi owner chốt selector thì phần KHÔNG được chọn cũng im dù có dữ liệu.
     if (!evalActiveWhen(g.activeWhen, filled.length, st)) return;
 
     // Bảng bắt buộc mà 0 dòng dữ liệu (vd ds_nganh ở thủ tục bắt buộc kê khai)
@@ -950,6 +1027,10 @@
   root.getFieldMeta = getFieldMeta;
   root.getLoopMeta = getLoopMeta;
   root.getGridMeta = getGridMeta;
+  root.registerFormGridMeta = registerFormGridMeta;
+  root.evalActiveWhen = evalActiveWhen;
+  root.activationModeOf = activationModeOf;
+  root.isActiveGrid = isActiveGrid;
   root.makeRowId = makeRowId;
   root.normalizeStoreLoops = normalizeStoreLoops;
   root.collectKeys = collectKeys;

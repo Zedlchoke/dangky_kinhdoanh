@@ -1,0 +1,256 @@
+# -*- coding: utf-8 -*-
+"""Release test runner chinh thuc cua du an (R0.4 — master plan checkpoint d882793).
+
+Liệt kê TOÀN BỘ suite Node/Python bắt buộc trong "Bộ regression release tối
+thiểu" (PLAN.md). Mỗi suite chạy đúng một lần, ghi exit code thật và phân loại:
+
+  PASS     — exit code 0.
+  FAIL     — exit code != 0.
+  NOT RUN  — bỏ qua vì thiếu dependency, kèm lý do. KHÔNG bao giờ tính là PASS.
+
+Verdict tổng:
+  PASS     — mọi suite critical đều PASS (không có critical NOT RUN).
+  FAIL     — còn ≥1 FAIL hoặc ≥1 critical NOT RUN ("release-critical NOT RUN
+             = FAIL" theo R7).
+
+Suite nào thêm về sau (component/domain mới) PHẢI đăng ký vào SUITES ở đây,
+không chạy lẻ ngoài runner khi báo cáo release.
+
+Cách dùng:
+  python3 -X utf8 -m tools.release_runner            # chạy toàn bộ
+  python3 -X utf8 -m tools.release_runner --list     # chỉ liệt kê
+  python3 -X utf8 -m tools.release_runner --json out.json
+  python3 -X utf8 -m tools.release_runner --only test_dom
+  python3 -X utf8 -m tools.release_runner --verbose  # in tail output suite FAIL
+
+Exit code runner: 0 = verdict PASS; 1 = verdict FAIL; 2 = lỗi cấu hình/môi trường.
+"""
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import shutil
+import subprocess
+import sys
+import time
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+TIMEOUT_S = int(os.environ.get("RELEASE_RUNNER_TIMEOUT", "600"))
+
+# ---------------------------------------------------------------------------
+# Danh sách suite chuẩn (khớp PLAN.md "Bộ regression release tối thiểu").
+# type: node | module | compileall
+# requires: dependency keys phải có sẵn thì mới chạy; thiếu -> NOT RUN.
+# critical: False chỉ dùng cho suite tiện ích không chặn release.
+# ---------------------------------------------------------------------------
+SUITES: list[dict] = [
+    # --- Node (app_web) ---
+    {"name": "test_dom",                  "type": "node", "target": "app_web/test_dom.js"},
+    {"name": "test_domain",               "type": "node", "target": "app_web/test_domain.js"},
+    {"name": "test_grid",                 "type": "node", "target": "app_web/test_grid.js"},
+    {"name": "test_loop_prod",            "type": "node", "target": "app_web/test_loop_prod.js"},
+    {"name": "test_acceptance",           "type": "node", "target": "app_web/test_acceptance.js"},
+    {"name": "test_form_flow",            "type": "node", "target": "app_web/test_form_flow.js"},
+    {"name": "test_household_shared",     "type": "node", "target": "app_web/test_household_shared.js"},
+    {"name": "test_form_grid_meta",       "type": "node", "target": "app_web/test_form_grid_meta.js"},
+    {"name": "test_audit_p1_negative",    "type": "node", "target": "app_web/test_audit_p1_negative.js"},
+    {"name": "test_m72_activation",       "type": "node", "target": "app_web/test_m72_activation.js"},
+    {"name": "test_p12_m72_selector",     "type": "node", "target": "app_web/test_p12_m72_selector.js"},
+    {"name": "test_p20_hardening",        "type": "node", "target": "app_web/test_p20_hardening.js"},
+    {"name": "test_audit_wave_h_negative", "type": "node", "target": "app_web/test_audit_wave_h_negative.js"},
+    # --- Python ---
+    {"name": "p1_b_verify_m72",           "type": "module", "target": "tools.census.p1_b_verify_m72",
+     "requires": ["python-docx"]},
+    {"name": "p1_c_verify_plii_m02",      "type": "module", "target": "tools.census.p1_c_verify_plii_m02",
+     "requires": ["python-docx"]},
+    {"name": "test_m72_conditional_export", "type": "module", "target": "tools.test_m72_conditional_export",
+     "requires": ["python-docx"]},
+    {"name": "test_industry_formation",   "type": "module", "target": "tools.test_industry_formation",
+     "requires": ["python-docx"]},
+    {"name": "test_industry_change",      "type": "module", "target": "tools.test_industry_change",
+     "requires": ["python-docx"]},
+    {"name": "test_industry_household",   "type": "module", "target": "tools.test_industry_household",
+     "requires": ["python-docx"]},
+    {"name": "test_contract_release",     "type": "module", "target": "tools.test_contract_release",
+     "requires": ["python-docx"]},
+    {"name": "test_acceptance_docx",      "type": "module", "target": "tools.test_acceptance_docx",
+     "requires": ["python-docx"]},
+    {"name": "test_audit_p1_docx_negative", "type": "module", "target": "tools.test_audit_p1_docx_negative",
+     "requires": ["python-docx"]},
+    {"name": "audit_blocks_check",        "type": "module", "target": "tools.audit_blocks_check",
+     "requires": ["python-docx"]},
+    {"name": "audit_content_check",       "type": "module", "target": "tools.audit_content_check",
+     "requires": ["python-docx"]},
+    {"name": "audit_engine_test",         "type": "module", "target": "tools.audit_engine_test",
+     "requires": ["python-docx"]},
+    {"name": "smoke_web_assets",          "type": "module", "target": "tools.smoke_web_assets"},
+    {"name": "build_manifest_deep",       "type": "module", "target": "tools.census.build_manifest",
+     "args": ["--deep"]},
+    {"name": "build_layout_manifest",     "type": "module", "target": "tools.census.build_layout_manifest"},
+    {"name": "compileall",                "type": "compileall", "target": "app_web app_tk tools",
+     "args": ["app_web", "app_tk", "tools"]},
+]
+
+
+def check_deps() -> tuple[dict[str, str | None], list[str]]:
+    """Trả về {dep_key: version hoặc None nếu thiếu} và danh sách lỗi môi trường."""
+    have: dict[str, str | None] = {}
+    errors: list[str] = []
+
+    node = shutil.which("node")
+    if node is None:
+        errors.append("node không có trong PATH — 13 suite Node sẽ NOT RUN")
+        have["node"] = None
+    else:
+        v = subprocess.run([node, "--version"], capture_output=True, text=True)
+        have["node"] = node
+        have["node_version"] = v.stdout.strip() or "unknown"
+
+    try:
+        import docx  # noqa: F401
+        import importlib.metadata as md
+        have["python-docx"] = md.version("python-docx")
+    except Exception:
+        have["python-docx"] = None
+        errors.append("python-docx chưa cài — các suite DOCX sẽ NOT RUN "
+                      "(cài: pip install -r requirements-dev.txt)")
+    return have, errors
+
+
+def build_cmd(suite: dict, deps: dict) -> tuple[list[str] | None, str | None]:
+    """Trả về (argv, reason_not_run)."""
+    missing = [r for r in suite.get("requires", []) if deps.get(r) is None]
+    if missing:
+        return None, "thiếu dependency: %s" % ", ".join(missing)
+    if suite["type"] == "node":
+        return [deps["node"] or "node", suite["target"]], None
+    if suite["type"] == "module":
+        argv = [sys.executable, "-X", "utf8", "-m", suite["target"]]
+        argv += suite.get("args", [])
+        return argv, None
+    if suite["type"] == "compileall":
+        return [sys.executable, "-X", "utf8", "-m", "compileall", "-q"] + suite["args"], None
+    return None, "type không hỗ trợ: %r" % suite["type"]
+
+
+def run_suite(suite: dict, deps: dict) -> dict:
+    start = time.time()
+    result = {
+        "name": suite["name"],
+        "type": suite["type"],
+        "target": suite["target"],
+        "critical": suite.get("critical", True),
+        "status": "NOT RUN",
+        "exit_code": None,
+        "seconds": None,
+        "reason": None,
+        "tail": "",
+    }
+    argv, reason = build_cmd(suite, deps)
+    if argv is None:
+        result["reason"] = reason
+        return result
+    try:
+        proc = subprocess.run(
+            argv, cwd=str(ROOT), capture_output=True, text=True,
+            encoding="utf-8", errors="replace", timeout=TIMEOUT_S,
+        )
+        result["exit_code"] = proc.returncode
+        result["status"] = "PASS" if proc.returncode == 0 else "FAIL"
+        out = (proc.stdout or "") + (proc.stderr or "")
+        if proc.returncode != 0:
+            result["tail"] = "\n".join(out.strip().splitlines()[-25:])
+        result["seconds"] = round(time.time() - start, 2)
+    except subprocess.TimeoutExpired:
+        result["status"] = "FAIL"
+        result["reason"] = "timeout sau %ss" % TIMEOUT_S
+    except FileNotFoundError as exc:
+        result["reason"] = "không chạy được %s: %s" % (argv[0], exc)
+    return result
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(description="Release test runner chính thức")
+    ap.add_argument("--list", action="store_true", help="chỉ liệt kê suite")
+    ap.add_argument("--only", metavar="SUBSTR", help="chạy suite có tên chứa SUBSTR")
+    ap.add_argument("--json", metavar="PATH", help="ghi báo cáo JSON ra PATH")
+    ap.add_argument("--verbose", action="store_true", help="in tail output suite FAIL")
+    args = ap.parse_args()
+
+    deps, env_errors = check_deps()
+
+    if args.list:
+        for s in SUITES:
+            req = ",".join(s.get("requires", [])) or "-"
+            print("%-28s %-10s requires=%s" % (s["name"], s["type"], req))
+        return 0
+
+    suites = [s for s in SUITES if not args.only or args.only in s["name"]]
+    if not suites:
+        print("Không có suite khớp --only=%r" % args.only)
+        return 2
+
+    print("=" * 78)
+    print("RELEASE TEST RUNNER — root %s" % ROOT)
+    print("deps: node=%s python-docx=%s" % (
+        deps.get("node_version") or deps.get("node") or "MISSING",
+        deps.get("python-docx") or "MISSING"))
+    for e in env_errors:
+        print("ENV-WARN: %s" % e)
+    print("=" * 78)
+
+    results = [run_suite(s, deps) for s in suites]
+
+    width = max(len(r["name"]) for r in results) + 2
+    for r in results:
+        line = "%-*s %-7s" % (width, r["name"], r["status"])
+        if r["seconds"] is not None:
+            line += " %6.1fs" % r["seconds"]
+        if r["exit_code"] is not None:
+            line += "  exit=%d" % r["exit_code"]
+        if r["reason"]:
+            line += "  (%s)" % r["reason"]
+        print(line)
+        if args.verbose and r["status"] == "FAIL" and r["tail"]:
+            print("-" * 78)
+            print(r["tail"])
+            print("-" * 78)
+
+    n_pass = sum(1 for r in results if r["status"] == "PASS")
+    n_fail = sum(1 for r in results if r["status"] == "FAIL")
+    n_nr = sum(1 for r in results if r["status"] == "NOT RUN")
+    n_nr_crit = sum(1 for r in results if r["status"] == "NOT RUN" and r["critical"])
+    crit_fail = any(r["status"] == "FAIL" and r["critical"] for r in results)
+
+    print("=" * 78)
+    print("Tổng: %d PASS / %d FAIL / %d NOT RUN (trong đó critical NOT RUN: %d)"
+          % (n_pass, n_fail, n_nr, n_nr_crit))
+    verdict = "PASS" if (n_fail == 0 and n_nr_crit == 0 and suites) else "FAIL"
+    print("VERDICT: %s%s" % (
+        verdict,
+        "" if verdict == "PASS" else "  (FAIL hoặc critical NOT RUN đều làm verdict=FAIL)"))
+    print("=" * 78)
+
+    if args.json:
+        report = {
+            "root": str(ROOT),
+            "deps": {k: v for k, v in deps.items()},
+            "env_errors": env_errors,
+            "results": results,
+            "summary": {
+                "pass": n_pass, "fail": n_fail, "not_run": n_nr,
+                "not_run_critical": n_nr_crit, "verdict": verdict,
+            },
+        }
+        Path(args.json).write_text(
+            json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
+        print("JSON report: %s" % args.json)
+
+    return 0 if verdict == "PASS" else 1
+
+
+if __name__ == "__main__":
+    sys.stdout.reconfigure(encoding="utf-8")
+    sys.exit(main())

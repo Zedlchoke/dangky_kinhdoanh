@@ -1,0 +1,15 @@
+# Dependency contract cho dev/test (reproducible).
+# Cài:  python3 -m pip install -r requirements-dev.txt
+#
+# Đã xác minh chạy được toàn bộ release runner với đúng version dưới đây
+# trên Python 3.13 / macOS arm64 (R0 baseline 2026-08-26).
+
+python-docx==1.2.0
+lxml==6.1.1
+
+# Desktop runtime — CHỈ cần khi chạy app_web/main.py hoặc build .exe (R6).
+# Không suite nào trong tools/release_runner.py bắt buộc pywebview;
+# thiếu pywebview phải được báo NOT RUN (không phải PASS ngầm).
+# Version chính xác sẽ khóa tại R6 build manifest khi owner cung cấp
+# môi trường Windows đích; hiện chưa cài ở máy dev này nên KHÔNG pin mù.
+pywebview>=5.0 ; platform_system != "Linux"

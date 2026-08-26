@@ -1,9 +1,110 @@
 {
   "form_id": "PLII_M02",
   "group": "household",
-  "note": "Giay de nghi dang ky thay doi noi dung DK ho kinh doanh. Luoi nganh mat khi convert: STT / Ten nganh / Ma nganh8 (so chu thich) / Nganh, nghe KD chinh9 + hang trang; muc sau la '4. Von kinh doanh'. DA XAC MINH bang python-docx tren nguon 06_ho_kinh_doanh_va_chuyen_doi/01_mau_ho_kinh_doanh/PL2_Mau_02_*.docx: o header muc C.3 van ban nguyen goc la 'Ngành, nghề kinh doanh chính9' va chu thich cuoi van ban: '9 Đánh dấu X để chọn một trong các ngành, nghề đã kê khai làm ngành, nghề kinh doanh chính.' -> cot nganh chinh CO THAT, giu tag {la_nganh_chinh}. Lead da chot giu requirePrimary=true toan cuc (ca 13 template deu co cot nganh chinh).",
+  "note": "Giay de nghi dang ky thay doi noi dung DK ho kinh doanh. Luoi nganh mat khi convert: STT / Ten nganh / Ma nganh8 (so chu thich) / Nganh, nghe KD chinh9 + hang trang; muc sau la '4. Von kinh doanh'. DA XAC MINH bang python-docx tren nguon 06_ho_kinh_doanh_va_chuyen_doi/01_mau_ho_kinh_doanh/PL2_Mau_02_*.docx: o header muc C.3 van ban nguyen goc la 'Ngành, nghề kinh doanh chính9' va chu thich cuoi van ban: '9 Đánh dấu X để chọn một trong các ngành, nghề đã kê khai làm ngành, nghề kinh doanh chính.' -> cot nganh chinh CO THAT, giu tag {la_nganh_chinh}. Lead da chot giu requirePrimary=true toan cuc (ca 13 template deu co cot nganh chinh). || P1-C AUDIT (2026-08-26, worktree p1/c-plii-m02, base 540a408): template CO DUNG 4 vung nganh. (1) Muc A.1 BO SUNG: heading '1. Bổ sung ngành, nghề kinh doanh sau…', header bi converter tac thanh 4 paragraph roi (blocks B079-B082) -> KHONG co w:tbl -> MISSING grid. (2) Muc A.2 XOA BO: heading '2. Bỏ ngành…', 4 paragraph roi (blocks B083-B087) -> MISSING. (3) Muc A.3 SUA DOI nganh chinh: heading '3. Sửa đổi ngành, nghề kinh doanh chính6…', 3 paragraph roi (blocks B088-B091), chi 3 cot KHONG co cot nganh chinh (chu thich 6) -> MISSING. (4) Vung HIEN TAI/cap doi-dang ky lai: heading C.3 '3. Ngành, nghề kinh doanh7:' + w:tbl DUY NHAT cua file (6x4, blocks B117-B118 loop ds_nganh) -> DONE (already_complete). Ket luan: dung 4 semantic loop theo PLAN muc A; KHONG con vung danh sach nganh thu nam (da dump toan bo 190 paragraph + 1 w:tbl). Occurrence contract (Lead chot): moi region la 1 entry rieng voi 'occurrences'; match_heading khop lan thu nth, region ket thuc tai end_markers ke tiep; semantic_key = occurrence_id. sync_group=null cho ca 4 vi PLAN line 1102 cam auto-sync giua cac loop khac nghia (nganh bo sung / xoa bo / sua doi / hien tai la du lieu doc lap). Loop name production cua region 4 giu nguyen 'ds_nganh' de bao toan artifact hien co; occurrence_id 'nganh_hien_tai' se la semantic_key sau khi generator ho tro occurrences.",
   "gap_nghiepvu": null,
   "tables": [
+    {
+      "spec": {
+        "id": "ds_nganh_bo_sung",
+        "detect": ["stt", "ten nganh, nghe kinh doanh duoc bo sung", "ma nganh"],
+        "stt_tag": true,
+        "cols": [
+          ["^stt$", null],
+          ["ten nganh, nghe kinh doanh duoc bo sung", "ten_nganh_bo_sung"],
+          ["ma nganh", "ma_nganh"],
+          ["^nganh chinh$|nganh, nghe kinh doanh chinh", "la_nganh_chinh"]
+        ],
+        "loop": "nganh_bo_sung",
+        "fields": ["ten_nganh_bo_sung", "ma_nganh", "la_nganh_chinh"]
+      },
+      "pos": "after",
+      "anchor": "^1\\. bo sung nganh, nghe kinh doanh",
+      "no_default_drops": true,
+      "drop_until": "^2\\. bo nganh, nghe kinh doanh",
+      "drop": ["^stt$", "^ten nganh, nghe kinh doanh duoc bo sung",
+               "^ma nganh\\d*$", "^nganh, nghe kinh doanh chinh"],
+      "headers": ["STT", "Tên ngành, nghề kinh doanh được bổ sung", "Mã ngành",
+                  "Ngành, nghề kinh doanh chính"],
+      "notes": "P1-C: MISSING grid truoc integration. Template anchor P085 '1. Bổ sung ngành, nghề kinh doanh sau (kê khai trong trường hợp hộ kinh doanh đăng ký bổ sung ngành, nghề kinh doanh vào danh sách đã đăng ký…)'; header tan du 4 paragraph roi P086-P089 = blocks B079-B082 ('STT'|'Tên ngành, nghề kinh doanh được bổ sung'|'Mã ngành4'|'Ngành, nghề kinh doanh chính (đánh dấu X…)'). Cot cuoi la checkbox chon nganh chinh TRONG SO CAC NGANH BO SUNG. Khong w:tbl trong region.",
+      "occurrences": [
+        {
+          "occurrence_id": "nganh_bo_sung",
+          "match_heading": "^1\\. bo sung nganh, nghe kinh doanh",
+          "nth": 1,
+          "sync_group": null,
+          "end_markers": ["^2\\. bo nganh, nghe kinh doanh"]
+        }
+      ]
+    },
+    {
+      "spec": {
+        "id": "ds_nganh_xoa_bo",
+        "detect": ["stt",
+                   "ten nganh, nghe kinh doanh duoc bo khoi danh sach da dang ky",
+                   "ma nganh"],
+        "stt_tag": true,
+        "cols": [
+          ["^stt$", null],
+          ["ten nganh, nghe kinh doanh duoc bo", "ten_nganh_bo"],
+          ["ma nganh", "ma_nganh"],
+          ["^nganh chinh$|nganh, nghe kinh doanh chinh", "la_nganh_chinh"]
+        ],
+        "loop": "nganh_xoa_bo",
+        "fields": ["ten_nganh_bo", "ma_nganh", "la_nganh_chinh"]
+      },
+      "pos": "after",
+      "anchor": "^2\\. bo nganh, nghe kinh doanh",
+      "no_default_drops": true,
+      "drop_until": "^3\\. sua doi nganh, nghe kinh doanh",
+      "drop": ["^stt$", "^ten nganh, nghe kinh doanh duoc bo",
+               "^ma nganh\\d*$", "^nganh, nghe kinh doanh chinh"],
+      "headers": ["STT", "Tên ngành, nghề kinh doanh được bỏ khỏi danh sách đã đăng ký",
+                  "Mã ngành", "Ngành, nghề kinh doanh chính"],
+      "notes": "P1-C: MISSING grid truoc integration. Template anchor P094 '2. Bỏ ngành, nghề kinh doanh sau (kê khai trong trường hợp hộ kinh doanh đăng ký bỏ ngành khỏi danh sách đã đăng ký…)'; header tan du P095-P098 = blocks B083-B087. Chu thich 5: 'Mã ngành5'. Cot nganh chinh o day nghia: nganh bi bo CO PHAI nganh chinh da dang ky hay khong (dau X). Row contract rieng theo PLAN A 'Thay đổi ngành'; khong dong bo voi nganh_bo_sung.",
+      "occurrences": [
+        {
+          "occurrence_id": "nganh_xoa_bo",
+          "match_heading": "^2\\. bo nganh, nghe kinh doanh",
+          "nth": 1,
+          "sync_group": null,
+          "end_markers": ["^3\\. sua doi nganh, nghe kinh doanh"]
+        }
+      ]
+    },
+    {
+      "spec": {
+        "id": "ds_nganh_sua_chi_tiet",
+        "detect": ["stt", "ten nganh, nghe kinh doanh", "ma nganh"],
+        "stt_tag": true,
+        "cols": [
+          ["^stt$", null],
+          ["^ten nganh, nghe kinh doanh$", "ten_nganh"],
+          ["ma nganh", "ma_nganh"]
+        ],
+        "loop": "nganh_sua_doi_chi_tiet",
+        "fields": ["ten_nganh", "ma_nganh"]
+      },
+      "pos": "after",
+      "anchor": "^3\\. sua doi nganh, nghe kinh doanh",
+      "no_default_drops": true,
+      "drop_until": "^luu y: truong hop ho kinh doanh thay doi nganh",
+      "drop": ["^stt$", "^ten nganh, nghe kinh doanh$", "^ma nganh\\d*$"],
+      "headers": ["STT", "Tên ngành, nghề kinh doanh", "Mã ngành"],
+      "notes": "P1-C: MISSING grid truoc integration. Template anchor P103 '3. Sửa đổi ngành, nghề kinh doanh chính6 (kê khai trong trường hợp hộ kinh doanh chọn một trong các ngành đã đăng ký…)'; header tan du P104-P106 = blocks B088-B091 ('STT'|'Tên ngành, nghề kinh doanh'|'Mã ngành'). CHI 3 COT, khong co cot chon nganh chinh (chu thich 6: 'Ghi tên ngành và mã ngành cấp bốn…'); ghi chu cua mau: doi sang nganh khac phai ke khai dong thoi muc 1 va 2 (paragraph 'Lưu ý:…' ngay sau region, B092 - khong drop).",
+      "occurrences": [
+        {
+          "occurrence_id": "nganh_sua_doi_chi_tiet",
+          "match_heading": "^3\\. sua doi nganh, nghe kinh doanh",
+          "nth": 1,
+          "sync_group": null,
+          "end_markers": [
+            "^luu y: truong hop ho kinh doanh thay doi nganh",
+            "^dang ky thay doi noi dung dang ky thue"
+          ]
+        }
+      ]
+    },
     {
       "spec": {
         "id": "ds_nganh",
@@ -24,7 +125,17 @@
       "drop_until": "^4\\. von kinh doanh",
       "drop": ["^stt$", "^ten nganh\\b", "^ma nganh\\d*$",
                "^nganh, nghe kinh doanh chinh"],
-      "headers": ["STT", "Tên ngành", "Mã ngành", "Ngành, nghề kinh doanh chính"]
+      "headers": ["STT", "Tên ngành", "Mã ngành", "Ngành, nghề kinh doanh chính"],
+      "notes": "P1-C: DONE (already_complete) - day chinh la vung THU TU 'nganh hien tai/dang ky lai' theo PLAN muc A: bang nganh trong phan C. DANG KY CAP DOI SANG GCN ĐKHKD. Template anchor P143 '3. Ngành, nghề kinh doanh7:' + w:tbl DUY NHAT cua file 6r x 4c; blocks B117 anchor + B118 loop ds_nganh cols=[(1,ten_nganh),(2,ma_nganh),(3,la_nganh_chinh)] headerRows=[0] blankRows=4. Giu nguyen config production (loop=ds_nganh); occurrence_id='nganh_hien_tai' la semantic_key sau integration - Lead quyet dinh rename draft/UI key neu can, khong rename trong spec de khong vo draft nguoi dung.",
+      "occurrences": [
+        {
+          "occurrence_id": "nganh_hien_tai",
+          "match_heading": "^3\\. nganh, nghe kinh doanh",
+          "nth": 1,
+          "sync_group": null,
+          "end_markers": ["^4\\. von kinh doanh"]
+        }
+      ]
     }
   ]
 }

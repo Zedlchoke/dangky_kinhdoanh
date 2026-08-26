@@ -1,0 +1,2174 @@
+{
+ "generator": "L0-A census (temp script)",
+ "scope": [
+  "PLI_M01",
+  "PLI_M02",
+  "PLI_M03",
+  "PLI_M04",
+  "PLI_M05",
+  "PLI_M06",
+  "PLI_M07",
+  "PLI_M08",
+  "PLI_M09",
+  "PLI_M10",
+  "PLI_M11",
+  "PLI_M12"
+ ],
+ "branch": "l0/a-pli-early@0ee70d3",
+ "forms": {
+  "PLI_M01": {
+   "id": "PLI_M01",
+   "ten_mau": "Giấy đề nghị đăng ký doanh nghiệp - Doanh nghiệp tư nhân",
+   "block_count": 170,
+   "source_indicators": [
+    {
+     "idx": 0,
+     "t": "p",
+     "align": "left",
+     "text": "PL1 - Mau so 1: Giấy đề nghị đăng ký doanh nghiệp - Doanh nghiệp tư nhân"
+    }
+   ],
+   "form_number_lines": [
+    {
+     "idx": 1,
+     "align": "left",
+     "text": "Mẫu số 1"
+    }
+   ],
+   "national_header": [
+    {
+     "idx": 2,
+     "align": "center",
+     "bold": true,
+     "nl_count": 2,
+     "has_separator_line": true,
+     "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc \n---------------"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "idx": 2,
+     "t": "p",
+     "align": "center",
+     "nl_count": 2,
+     "preview": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc \n---------------"
+    },
+    {
+     "idx": 4,
+     "t": "p",
+     "align": "center",
+     "nl_count": 1,
+     "preview": "GIẤY ĐỀ NGHỊ ĐĂNG KÝ DOANH NGHIỆP\nDOANH NGHIỆP TƯ NHÂN"
+    },
+    {
+     "idx": 83,
+     "t": "p",
+     "align": "center",
+     "nl_count": 1,
+     "preview": "Giá trị vốn của từng tài sản trong vốn đầu tư\n(bằng số, VNĐ)"
+    },
+    {
+     "idx": 158,
+     "t": "p",
+     "align": "center",
+     "nl_count": 1,
+     "preview": "CHỦ DOANH NGHIỆP TƯ NHÂN\n(Ký và ghi họ tên)7"
+    }
+   ],
+   "glue_candidates": [
+    {
+     "idx": 0,
+     "origin": "p/runs",
+     "digits": "1",
+     "context": "PL1 - Mau so 1: Gi",
+     "class": "marker-self",
+     "reason": "block source-indicator tu no (chu PL1)"
+    },
+    {
+     "idx": 6,
+     "origin": "p/runs",
+     "digits": "1",
+     "context": "Tôi là1 (ghi họ tên bằ",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    },
+    {
+     "idx": 27,
+     "origin": "chk/label",
+     "digits": "2",
+     "context": "ội/quỹ xã hội/quỹ từ thiện2",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    },
+    {
+     "idx": 123,
+     "origin": "p/runs",
+     "digits": "3",
+     "context": "Ngày bắt đầu hoạt động3 (trường hợp do",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    },
+    {
+     "idx": 140,
+     "origin": "p/runs",
+     "digits": "5",
+     "context": "Phương pháp tính thuế GTGT5:",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    },
+    {
+     "idx": 145,
+     "origin": "p/runs",
+     "digits": "6",
+     "context": " việc đóng bảo hiểm xã hội6:",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    }
+   ],
+   "landmarks": {
+    "date_lines": [
+     {
+      "idx": 3,
+      "align": "center"
+     }
+    ],
+    "salutations": [
+     {
+      "idx": 5,
+      "align": "center"
+     }
+    ],
+    "titles": [
+     {
+      "idx": 4,
+      "bold": true,
+      "text": "GIẤY ĐỀ NGHỊ ĐĂNG KÝ DOANH NGHIỆP\nDOANH NGHIỆP TƯ NHÂN"
+     }
+    ],
+    "signatures": [
+     {
+      "idx": 158,
+      "align": "center",
+      "text": "CHỦ DOANH NGHIỆP TƯ NHÂN\n(Ký và ghi họ tên)7"
+     }
+    ]
+   },
+   "tab_runs": [
+    {
+     "idx": 6,
+     "preview": "Tôi là1 (ghi họ tên bằng chữ in hoa): \t"
+    },
+    {
+     "idx": 9,
+     "preview": "Số định danh cá nhân: \t"
+    },
+    {
+     "idx": 18,
+     "preview": "Ngày cấp:  Nơi cấp:  \t"
+    },
+    {
+     "idx": 34,
+     "preview": "Tên chủ hộ kinh doanh: \t"
+    }
+   ],
+   "ooxml": {
+    "paras": 240,
+    "w_br": 5,
+    "w_cr": 0,
+    "w_tab": 4,
+    "w_ind": 0,
+    "footnoteReference_total": 0,
+    "has_footnotes_part": false,
+    "sup_paras": 14,
+    "spacing_before120_paras": 210,
+    "spacing_after120_paras": 3
+   },
+   "tpl_landmark_props": {
+    "national_header": [
+     {
+      "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc ---------------",
+      "props": {
+       "jc": {
+        "val": "center"
+       },
+       "spacing": {
+        "before": "120"
+       }
+      }
+     }
+    ],
+    "date_line": [
+     {
+      "text": "{dia_diem_ky}, ngày {ngay_ky_vb}tháng {thang_ky_vb} năm {nam_ky_vb}",
+      "props": {
+       "jc": {
+        "val": "center"
+       },
+       "spacing": {
+        "before": "120"
+       }
+      }
+     }
+    ],
+    "salutation": [
+     {
+      "text": "Kính gửi: (Cơ quan đăng ký kinh doanh cấp tỉnh) {co_quan_dkkd}",
+      "props": {
+       "jc": {
+        "val": "center"
+       },
+       "spacing": {
+        "before": "120"
+       }
+      }
+     }
+    ],
+    "signature": [
+     {
+      "text": "CHỦ DOANH NGHIỆP TƯ NHÂN(Ký và ghi họ tên)7",
+      "props": {
+       "jc": {
+        "val": "center"
+       },
+       "spacing": {
+        "before": "120"
+       }
+      }
+     }
+    ]
+   },
+   "source_vs_template": {
+    "source_path": "C:\\Users\\Tuyen PC\\orca\\dangky_kinhdoanh-worktrees\\l0-a-pli-early\\06_ho_kinh_doanh_va_chuyen_doi\\02_chuyen_doi_hkd_sang_dn\\DN_PL1_Mau_01_giay_de_nghi_dang_ky_doanh_nghiep_doanh_nghiep_tu_nhan.docx",
+    "src_paras": 219,
+    "tpl_paras": 240,
+    "src_first": "PL1 - Mau so 1: Giấy đề nghị đăng ký doanh nghiệp - Doanh nghiệp tư nh",
+    "note": null
+   }
+  },
+  "PLI_M02": {
+   "id": "PLI_M02",
+   "ten_mau": "Giấy đề nghị đăng ký doanh nghiệp - Công ty trách nhiệm hữu hạn một thành viên",
+   "block_count": 270,
+   "source_indicators": [
+    {
+     "idx": 0,
+     "t": "p",
+     "align": "left",
+     "text": "PL1 - Mau so 2: Giấy đề nghị đăng ký doanh nghiệp - Công ty trách nhiệm hữu hạn một thành viên"
+    }
+   ],
+   "form_number_lines": [
+    {
+     "idx": 1,
+     "align": "left",
+     "text": "Mẫu số 2"
+    }
+   ],
+   "national_header": [
+    {
+     "idx": 2,
+     "align": "center",
+     "bold": true,
+     "nl_count": 2,
+     "has_separator_line": true,
+     "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc \n---------------"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "idx": 2,
+     "t": "p",
+     "align": "center",
+     "nl_count": 2,
+     "preview": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc \n---------------"
+    },
+    {
+     "idx": 4,
+     "t": "p",
+     "align": "center",
+     "nl_count": 1,
+     "preview": "GIẤY ĐỀ NGHỊ ĐĂNG KÝ DOANH NGHIỆP\nCÔNG TY TRÁCH NHIỆM HỮU HẠN MỘT THÀNH VIÊN"
+    },
+    {
+     "idx": 253,
+     "t": "p",
+     "align": "center",
+     "nl_count": 3,
+     "preview": "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT/\nCHỦ TỊCH CÔNG TY/CHỦ TỊCH HỘI ĐỒNG \nTHÀNH VIÊN CỦA CÔNG TY\n(Ký và ghi họ tên)15"
+    }
+   ],
+   "glue_candidates": [
+    {
+     "idx": 0,
+     "origin": "p/runs",
+     "digits": "1",
+     "context": "PL1 - Mau so 2: Gi",
+     "class": "marker-self",
+     "reason": "block source-indicator tu no (chu PL1)"
+    },
+    {
+     "idx": 6,
+     "origin": "p/runs",
+     "digits": "1",
+     "context": "Tôi là1 (ghi họ tên bằ",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    },
+    {
+     "idx": 25,
+     "origin": "p/runs",
+     "digits": "2",
+     "context": "ủ tịch Hội đồng thành viên2 với các nội du",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    },
+    {
+     "idx": 33,
+     "origin": "chk/label",
+     "digits": "3",
+     "context": "ội/quỹ xã hội/quỹ từ thiện3",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    },
+    {
+     "idx": 85,
+     "origin": "p/runs",
+     "digits": "4",
+     "context": "ng đến quốc phòng, an ninh4: Có  Không ",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    },
+    {
+     "idx": 126,
+     "origin": "p/runs",
+     "digits": "5",
+     "context": "iấy tờ pháp lý của cá nhân5Quốc tịchDân tộ",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    },
+    {
+     "idx": 126,
+     "origin": "p/runs",
+     "digits": "6",
+     "context": " liên lạcVốn được ủy quyền6Chữ ký của ngườ",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    },
+    {
+     "idx": 126,
+     "origin": "p/runs",
+     "digits": "8",
+     "context": "ười đại diện theo ủy quyền8Ghi chú (nếu có",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    },
+    {
+     "idx": 126,
+     "origin": "p/runs",
+     "digits": "7",
+     "context": "n nước ngoài, nếu có)Tỷ lệ7 (%)Thời điểm đ",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    },
+    {
+     "idx": 126,
+     "origin": "p/runs",
+     "digits": "12345678910111213",
+     "context": "hời điểm đại diện phần vốn12345678910111213- Thông tin về ",
+     "class": "candidate-legit-digit",
+     "reason": "chuoi so dai (cot so / lien tiep)"
+    },
+    {
+     "idx": 168,
+     "origin": "p/runs",
+     "digits": "9",
+     "context": "ời đại diện theo pháp luật9: ",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    },
+    {
+     "idx": 214,
+     "origin": "p/runs",
+     "digits": "10",
+     "context": "Ngày bắt đầu hoạt động10 (trường hợp do",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    },
+    {
+     "idx": 236,
+     "origin": "p/runs",
+     "digits": "13",
+     "context": " việc đóng bảo hiểm xã hội13:",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    },
+    {
+     "idx": 244,
+     "origin": "p/runs",
+     "digits": "14",
+     "context": "hưởng lợi của doanh nghiệp14:",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    }
+   ],
+   "landmarks": {
+    "date_lines": [
+     {
+      "idx": 3,
+      "align": "center"
+     }
+    ],
+    "salutations": [
+     {
+      "idx": 5,
+      "align": "center"
+     }
+    ],
+    "titles": [
+     {
+      "idx": 4,
+      "bold": true,
+      "text": "GIẤY ĐỀ NGHỊ ĐĂNG KÝ DOANH NGHIỆP\nCÔNG TY TRÁCH NHIỆM HỮU HẠN MỘT THÀNH VIÊN"
+     }
+    ],
+    "signatures": [
+     {
+      "idx": 253,
+      "align": "center",
+      "text": "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT/\nCHỦ TỊCH CÔNG TY/CHỦ TỊCH HỘI ĐỒNG \nTHÀNH VIÊN CỦA CÔNG TY\n"
+     }
+    ]
+   },
+   "tab_runs": [
+    {
+     "idx": 79,
+     "preview": "Thư điện tử (nếu có):  Website (nếu có): \t"
+    },
+    {
+     "idx": 112,
+     "preview": "Ngày cấp:  Cơ quan cấp: \t"
+    },
+    {
+     "idx": 115,
+     "preview": "Tên tổ chức (ghi bằng chữ in hoa): \t"
+    },
+    {
+     "idx": 117,
+     "preview": "Ngày cấp:  Nơi cấp: \t"
+    },
+    {
+     "idx": 123,
+     "preview": "Điện thoại (nếu có):  Số fax (nếu có):  \t"
+    },
+    {
+     "idx": 128,
+     "preview": "Ngày cấp:  Cơ quan cấp: \t"
+    },
+    {
+     "idx": 137,
+     "preview": "Giá trị tương đương theo đơn vị tiền nước ngoài (nếu có, bằng số, loại"
+    },
+    {
+     "idx": 183,
+     "preview": "Ngày cấp:  Nơi cấp:  \t"
+    }
+   ],
+   "ooxml": {
+    "paras": 358,
+    "w_br": 6,
+    "w_cr": 0,
+    "w_tab": 8,
+    "w_ind": 0,
+    "footnoteReference_total": 0,
+    "has_footnotes_part": false,
+    "sup_paras": 26,
+    "spacing_before120_paras": 322,
+    "spacing_after120_paras": 3
+   },
+   "tpl_landmark_props": {
+    "national_header": [
+     {
+      "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc ---------------",
+      "props": {
+       "jc": {
+        "val": "center"
+       },
+       "spacing": {
+        "before": "120"
+       }
+      }
+     }
+    ],
+    "date_line": [
+     {
+      "text": "{dia_diem_ky}, ngày {ngay_ky_vb}tháng {thang_ky_vb} năm {nam_ky_vb}",
+      "props": {
+       "jc": {
+        "val": "center"
+       },
+       "spacing": {
+        "before": "120"
+       }
+      }
+     }
+    ],
+    "salutation": [
+     {
+      "text": "Kính gửi: (Cơ quan đăng ký kinh doanh cấp tỉnh) {co_quan_dkkd}",
+      "props": {
+       "jc": {
+        "val": "center"
+       },
+       "spacing": {
+        "before": "120"
+       }
+      }
+     }
+    ],
+    "signature": [
+     {
+      "text": "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT/CHỦ TỊCH CÔNG TY/CHỦ TỊCH HỘI ĐỒNG THÀNH VIÊN CỦA ",
+      "props": {
+       "jc": {
+        "val": "center"
+       },
+       "spacing": {
+        "before": "120"
+       }
+      }
+     }
+    ]
+   },
+   "source_vs_template": {
+    "source_path": "C:\\Users\\Tuyen PC\\orca\\dangky_kinhdoanh-worktrees\\l0-a-pli-early\\06_ho_kinh_doanh_va_chuyen_doi\\02_chuyen_doi_hkd_sang_dn\\DN_PL1_Mau_02_giay_de_nghi_dang_ky_doanh_nghiep_cong_ty_trach_nhiem_huu_han_mot_thanh_vien.docx",
+    "src_paras": 331,
+    "tpl_paras": 358,
+    "src_first": "PL1 - Mau so 2: Giấy đề nghị đăng ký doanh nghiệp - Công ty trách nhiệ",
+    "note": null
+   }
+  },
+  "PLI_M03": {
+   "id": "PLI_M03",
+   "ten_mau": "Giấy đề nghị đăng ký doanh nghiệp - Công ty trách nhiệm hữu hạn hai thành viên trở lên",
+   "block_count": 102,
+   "source_indicators": [
+    {
+     "idx": 0,
+     "t": "p",
+     "align": "left",
+     "text": "PL1 - Mau so 3: Giấy đề nghị đăng ký doanh nghiệp - Công ty trách nhiệm hữu hạn hai thành viên trở lên"
+    }
+   ],
+   "form_number_lines": [
+    {
+     "idx": 1,
+     "align": "left",
+     "text": "Mẫu số 3"
+    }
+   ],
+   "national_header": [
+    {
+     "idx": 2,
+     "align": "center",
+     "bold": true,
+     "nl_count": 2,
+     "has_separator_line": true,
+     "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc \n---------------"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "idx": 2,
+     "t": "p",
+     "align": "center",
+     "nl_count": 2,
+     "preview": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc \n---------------"
+    },
+    {
+     "idx": 4,
+     "t": "p",
+     "align": "center",
+     "nl_count": 1,
+     "preview": "GIẤY ĐỀ NGHỊ ĐĂNG KÝ DOANH NGHIỆP\nCÔNG TY TRÁCH NHIỆM HỮU HẠN HAI THÀNH VIÊN TRỞ LÊN"
+    }
+   ],
+   "glue_candidates": [
+    {
+     "idx": 0,
+     "origin": "p/runs",
+     "digits": "1",
+     "context": "PL1 - Mau so 3: Gi",
+     "class": "marker-self",
+     "reason": "block source-indicator tu no (chu PL1)"
+    },
+    {
+     "idx": 6,
+     "origin": "p/runs",
+     "digits": "1",
+     "context": "Tôi là1 (ghi họ tên bằ",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    },
+    {
+     "idx": 25,
+     "origin": "p/runs",
+     "digits": "2",
+     "context": "ủ tịch Hội đồng thành viên2 với nội dung s",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    },
+    {
+     "idx": 33,
+     "origin": "chk/label",
+     "digits": "3",
+     "context": "ội/quỹ xã hội/quỹ từ thiện3",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    },
+    {
+     "idx": 85,
+     "origin": "p/runs",
+     "digits": "4",
+     "context": "ng đến quốc phòng, an ninh4: Có  Không ",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    }
+   ],
+   "landmarks": {
+    "date_lines": [
+     {
+      "idx": 3,
+      "align": "center"
+     }
+    ],
+    "salutations": [
+     {
+      "idx": 5,
+      "align": "center"
+     }
+    ],
+    "titles": [
+     {
+      "idx": 4,
+      "bold": true,
+      "text": "GIẤY ĐỀ NGHỊ ĐĂNG KÝ DOANH NGHIỆP\nCÔNG TY TRÁCH NHIỆM HỮU HẠN HAI THÀNH VIÊN TRỞ"
+     }
+    ],
+    "signatures": []
+   },
+   "tab_runs": [
+    {
+     "idx": 19,
+     "preview": "Ngày cấp:  Nơi cấp:  \t"
+    },
+    {
+     "idx": 42,
+     "preview": "Ngày cấp:  Nơi cấp: \t"
+    },
+    {
+     "idx": 45,
+     "preview": "Tên chủ hộ kinh doanh: \t"
+    },
+    {
+     "idx": 79,
+     "preview": "Thư điện tử (nếu có):  Website (nếu có): \t"
+    },
+    {
+     "idx": 91,
+     "preview": "Giá trị tương đương theo đơn vị tiền nước ngoài (nếu có, bằng số, loại"
+    }
+   ],
+   "ooxml": {
+    "paras": 151,
+    "w_br": 3,
+    "w_cr": 0,
+    "w_tab": 5,
+    "w_ind": 0,
+    "footnoteReference_total": 0,
+    "has_footnotes_part": false,
+    "sup_paras": 4,
+    "spacing_before120_paras": 124,
+    "spacing_after120_paras": 0
+   },
+   "tpl_landmark_props": {
+    "national_header": [
+     {
+      "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc ---------------",
+      "props": {
+       "jc": {
+        "val": "center"
+       },
+       "spacing": {
+        "before": "120"
+       }
+      }
+     }
+    ],
+    "date_line": [
+     {
+      "text": "{dia_diem_ky}, ngày {ngay_ky_vb}tháng {thang_ky_vb} năm {nam_ky_vb}",
+      "props": {
+       "jc": {
+        "val": "center"
+       },
+       "spacing": {
+        "before": "120"
+       }
+      }
+     }
+    ],
+    "salutation": [
+     {
+      "text": "Kính gửi: (Cơ quan đăng ký kinh doanh cấp tỉnh) {co_quan_dkkd}",
+      "props": {
+       "jc": {
+        "val": "center"
+       },
+       "spacing": {
+        "before": "120"
+       }
+      }
+     }
+    ],
+    "signature": []
+   },
+   "source_vs_template": {
+    "source_path": "C:\\Users\\Tuyen PC\\orca\\dangky_kinhdoanh-worktrees\\l0-a-pli-early\\06_ho_kinh_doanh_va_chuyen_doi\\02_chuyen_doi_hkd_sang_dn\\DN_PL1_Mau_03_giay_de_nghi_dang_ky_doanh_nghiep_cong_ty_trach_nhiem_huu_han_hai_thanh_vien_tro_len.docx",
+    "src_paras": 130,
+    "tpl_paras": 151,
+    "src_first": "PL1 - Mau so 3: Giấy đề nghị đăng ký doanh nghiệp - Công ty trách nhiệ",
+    "note": null
+   }
+  },
+  "PLI_M04": {
+   "id": "PLI_M04",
+   "ten_mau": "Giấy đề nghị đăng ký doanh nghiệp - Công ty cổ phần",
+   "block_count": 135,
+   "source_indicators": [
+    {
+     "idx": 0,
+     "t": "p",
+     "align": "left",
+     "text": "PL1 - Mau so 4: Giấy đề nghị đăng ký doanh nghiệp - Công ty cổ phần"
+    }
+   ],
+   "form_number_lines": [
+    {
+     "idx": 1,
+     "align": "left",
+     "text": "Mẫu số 4"
+    }
+   ],
+   "national_header": [
+    {
+     "idx": 2,
+     "align": "center",
+     "bold": true,
+     "nl_count": 2,
+     "has_separator_line": true,
+     "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc \n---------------"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "idx": 2,
+     "t": "p",
+     "align": "center",
+     "nl_count": 2,
+     "preview": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc \n---------------"
+    },
+    {
+     "idx": 4,
+     "t": "p",
+     "align": "center",
+     "nl_count": 1,
+     "preview": "GIẤY ĐỀ NGHỊ ĐĂNG KÝ DOANH NGHIỆP\nCÔNG TY CỔ PHẦN"
+    },
+    {
+     "idx": 85,
+     "t": "p",
+     "align": "left",
+     "nl_count": 1,
+     "preview": "- Doanh nghiệp có Giấy chứng nhận quyền sử dụng đất tại đảo và xã, phường biên giới; xã, phường ven biển; khu vực khác c"
+    }
+   ],
+   "glue_candidates": [
+    {
+     "idx": 0,
+     "origin": "p/runs",
+     "digits": "1",
+     "context": "PL1 - Mau so 4: Gi",
+     "class": "marker-self",
+     "reason": "block source-indicator tu no (chu PL1)"
+    },
+    {
+     "idx": 6,
+     "origin": "p/runs",
+     "digits": "1",
+     "context": "Tôi là1 (ghi họ tên bằ",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    },
+    {
+     "idx": 25,
+     "origin": "p/runs",
+     "digits": "2",
+     "context": "n trị với các nội dung sau2:",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    },
+    {
+     "idx": 33,
+     "origin": "chk/label",
+     "digits": "3",
+     "context": "ội/quỹ xã hội/quỹ từ thiện3",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    },
+    {
+     "idx": 85,
+     "origin": "p/runs",
+     "digits": "4",
+     "context": "ng đến quốc phòng, an ninh4:\nCó  Không ",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    }
+   ],
+   "landmarks": {
+    "date_lines": [
+     {
+      "idx": 3,
+      "align": "center"
+     }
+    ],
+    "salutations": [
+     {
+      "idx": 5,
+      "align": "center"
+     }
+    ],
+    "titles": [
+     {
+      "idx": 4,
+      "bold": true,
+      "text": "GIẤY ĐỀ NGHỊ ĐĂNG KÝ DOANH NGHIỆP\nCÔNG TY CỔ PHẦN"
+     }
+    ],
+    "signatures": []
+   },
+   "tab_runs": [
+    {
+     "idx": 19,
+     "preview": "Ngày cấp:  Nơi cấp:  \t"
+    },
+    {
+     "idx": 58,
+     "preview": "Tên người đại diện cơ sở bảo trợ xã hội/quỹ xã hội/quỹ từ thiện: \t"
+    },
+    {
+     "idx": 79,
+     "preview": "Thư điện tử (nếu có):  Website (nếu có): \t"
+    },
+    {
+     "idx": 91,
+     "preview": "Giá trị tương đương theo đơn vị tiền nước ngoài (nếu có, bằng số, loại"
+    },
+    {
+     "idx": 103,
+     "preview": "Mệnh giá cổ phần (VNĐ): \t"
+    }
+   ],
+   "ooxml": {
+    "paras": 208,
+    "w_br": 4,
+    "w_cr": 0,
+    "w_tab": 5,
+    "w_ind": 0,
+    "footnoteReference_total": 0,
+    "has_footnotes_part": false,
+    "sup_paras": 4,
+    "spacing_before120_paras": 181,
+    "spacing_after120_paras": 0
+   },
+   "tpl_landmark_props": {
+    "national_header": [
+     {
+      "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc ---------------",
+      "props": {
+       "jc": {
+        "val": "center"
+       },
+       "spacing": {
+        "before": "120"
+       }
+      }
+     }
+    ],
+    "date_line": [
+     {
+      "text": "{dia_diem_ky}, ngày {ngay_ky_vb}tháng {thang_ky_vb} năm {nam_ky_vb}",
+      "props": {
+       "jc": {
+        "val": "center"
+       },
+       "spacing": {
+        "before": "120"
+       }
+      }
+     }
+    ],
+    "salutation": [
+     {
+      "text": "Kính gửi: (Cơ quan đăng ký kinh doanh cấp tỉnh) {co_quan_dkkd}",
+      "props": {
+       "jc": {
+        "val": "center"
+       },
+       "spacing": {
+        "before": "120"
+       }
+      }
+     }
+    ],
+    "signature": []
+   },
+   "source_vs_template": {
+    "source_path": "C:\\Users\\Tuyen PC\\orca\\dangky_kinhdoanh-worktrees\\l0-a-pli-early\\06_ho_kinh_doanh_va_chuyen_doi\\02_chuyen_doi_hkd_sang_dn\\DN_PL1_Mau_04_giay_de_nghi_dang_ky_doanh_nghiep_cong_ty_co_phan.docx",
+    "src_paras": 187,
+    "tpl_paras": 208,
+    "src_first": "PL1 - Mau so 4: Giấy đề nghị đăng ký doanh nghiệp - Công ty cổ phần",
+    "note": null
+   }
+  },
+  "PLI_M05": {
+   "id": "PLI_M05",
+   "ten_mau": "Giấy đề nghị đăng ký doanh nghiệp - Công ty hợp danh",
+   "block_count": 81,
+   "source_indicators": [
+    {
+     "idx": 0,
+     "t": "p",
+     "align": "left",
+     "text": "PL1 - Mau so 5: Giấy đề nghị đăng ký doanh nghiệp - Công ty hợp danh"
+    }
+   ],
+   "form_number_lines": [
+    {
+     "idx": 1,
+     "align": "left",
+     "text": "Mẫu số 5"
+    }
+   ],
+   "national_header": [
+    {
+     "idx": 2,
+     "align": "center",
+     "bold": true,
+     "nl_count": 2,
+     "has_separator_line": true,
+     "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc \n---------------"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "idx": 2,
+     "t": "p",
+     "align": "center",
+     "nl_count": 2,
+     "preview": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc \n---------------"
+    },
+    {
+     "idx": 4,
+     "t": "p",
+     "align": "center",
+     "nl_count": 1,
+     "preview": "GIẤY ĐỀ NGHỊ ĐĂNG KÝ DOANH NGHIỆP\nCÔNG TY HỢP DANH"
+    },
+    {
+     "idx": 64,
+     "t": "p",
+     "align": "left",
+     "nl_count": 1,
+     "preview": "- Doanh nghiệp có Giấy chứng nhận quyền sử dụng đất tại đảo và xã, phường biên giới; xã, phường ven biển; khu vực khác c"
+    }
+   ],
+   "glue_candidates": [
+    {
+     "idx": 0,
+     "origin": "p/runs",
+     "digits": "1",
+     "context": "PL1 - Mau so 5: Gi",
+     "class": "marker-self",
+     "reason": "block source-indicator tu no (chu PL1)"
+    },
+    {
+     "idx": 6,
+     "origin": "p/runs",
+     "digits": "1",
+     "context": "Chúng tôi1 là các thành v",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    },
+    {
+     "idx": 13,
+     "origin": "chk/label",
+     "digits": "2",
+     "context": "ội/quỹ xã hội/quỹ từ thiện2",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    },
+    {
+     "idx": 64,
+     "origin": "p/runs",
+     "digits": "3",
+     "context": "ng đến quốc phòng, an ninh3:\nCó  Không ",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    }
+   ],
+   "landmarks": {
+    "date_lines": [
+     {
+      "idx": 3,
+      "align": "center"
+     }
+    ],
+    "salutations": [
+     {
+      "idx": 5,
+      "align": "center"
+     }
+    ],
+    "titles": [
+     {
+      "idx": 4,
+      "bold": true,
+      "text": "GIẤY ĐỀ NGHỊ ĐĂNG KÝ DOANH NGHIỆP\nCÔNG TY HỢP DANH"
+     }
+    ],
+    "signatures": []
+   },
+   "tab_runs": [
+    {
+     "idx": 25,
+     "preview": "Tên chủ hộ kinh doanh: \t"
+    },
+    {
+     "idx": 26,
+     "preview": "Loại giấy tờ pháp lý của cá nhân (kê khai theo giấy tờ pháp lý của cá "
+    },
+    {
+     "idx": 31,
+     "preview": "Số giấy tờ pháp lý của cá nhân (kê khai theo giấy tờ pháp lý của cá nh"
+    },
+    {
+     "idx": 57,
+     "preview": "Điện thoại:  Số fax (nếu có): \t"
+    },
+    {
+     "idx": 58,
+     "preview": "Thư điện tử (nếu có):  Website (nếu có): \t"
+    },
+    {
+     "idx": 68,
+     "preview": "Vốn điều lệ (bằng số; VNĐ): \t"
+    }
+   ],
+   "ooxml": {
+    "paras": 128,
+    "w_br": 4,
+    "w_cr": 0,
+    "w_tab": 7,
+    "w_ind": 0,
+    "footnoteReference_total": 0,
+    "has_footnotes_part": false,
+    "sup_paras": 3,
+    "spacing_before120_paras": 101,
+    "spacing_after120_paras": 0
+   },
+   "tpl_landmark_props": {
+    "national_header": [
+     {
+      "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc ---------------",
+      "props": {
+       "jc": {
+        "val": "center"
+       },
+       "spacing": {
+        "before": "120"
+       }
+      }
+     }
+    ],
+    "date_line": [
+     {
+      "text": "{dia_diem_ky}, ngày … tháng … năm {ngay_ky_vb}",
+      "props": {
+       "jc": {
+        "val": "center"
+       },
+       "spacing": {
+        "before": "120"
+       }
+      }
+     }
+    ],
+    "salutation": [
+     {
+      "text": "Kính gửi: (Cơ quan đăng ký kinh doanh cấp tỉnh) {co_quan_dkkd}",
+      "props": {
+       "jc": {
+        "val": "center"
+       },
+       "spacing": {
+        "before": "120"
+       }
+      }
+     }
+    ],
+    "signature": []
+   },
+   "source_vs_template": {
+    "source_path": "C:\\Users\\Tuyen PC\\orca\\dangky_kinhdoanh-worktrees\\l0-a-pli-early\\06_ho_kinh_doanh_va_chuyen_doi\\02_chuyen_doi_hkd_sang_dn\\DN_PL1_Mau_05_giay_de_nghi_dang_ky_doanh_nghiep_cong_ty_hop_danh.docx",
+    "src_paras": 107,
+    "tpl_paras": 128,
+    "src_first": "PL1 - Mau so 5: Giấy đề nghị đăng ký doanh nghiệp - Công ty hợp danh",
+    "note": null
+   }
+  },
+  "PLI_M06": {
+   "id": "PLI_M06",
+   "ten_mau": "Danh sách thành viên công ty trách nhiệm hữu hạn hai thành viên trở lên",
+   "block_count": 107,
+   "source_indicators": [
+    {
+     "idx": 0,
+     "t": "p",
+     "align": "left",
+     "text": "PL1 - Mau so 6: Danh sách thành viên công ty trách nhiệm hữu hạn hai thành viên trở lên"
+    }
+   ],
+   "form_number_lines": [
+    {
+     "idx": 1,
+     "align": "left",
+     "text": "Mẫu số 6"
+    }
+   ],
+   "national_header": [],
+   "newline_blocks": [
+    {
+     "idx": 91,
+     "t": "p",
+     "align": "center",
+     "nl_count": 2,
+     "preview": "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT/\nCHỦ TỊCH HỘI ĐỒNG THÀNH VIÊN CỦA CÔNG TY\n(Ký và ghi họ tên)11"
+    }
+   ],
+   "glue_candidates": [
+    {
+     "idx": 0,
+     "origin": "p/runs",
+     "digits": "1",
+     "context": "PL1 - Mau so 6: Da",
+     "class": "marker-self",
+     "reason": "block source-indicator tu no (chu PL1)"
+    },
+    {
+     "idx": 6,
+     "origin": "p/runs",
+     "digits": "5",
+     "context": "ời đại diện theo pháp luật5:",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    },
+    {
+     "idx": 52,
+     "origin": "p/runs",
+     "digits": "6",
+     "context": "Ngày bắt đầu hoạt động6 (trường hợp do",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    },
+    {
+     "idx": 74,
+     "origin": "p/runs",
+     "digits": "9",
+     "context": " việc đóng bảo hiểm xã hội9:",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    },
+    {
+     "idx": 82,
+     "origin": "p/runs",
+     "digits": "10",
+     "context": "hưởng lợi của doanh nghiệp10:",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    }
+   ],
+   "landmarks": {
+    "date_lines": [],
+    "salutations": [],
+    "titles": [],
+    "signatures": [
+     {
+      "idx": 91,
+      "align": "center",
+      "text": "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT/\nCHỦ TỊCH HỘI ĐỒNG THÀNH VIÊN CỦA CÔNG TY\n(Ký và ghi họ tên)"
+     }
+    ]
+   },
+   "tab_runs": [
+    {
+     "idx": 5,
+     "preview": "Ngày cấp:  Cơ quan cấp: \t"
+    },
+    {
+     "idx": 21,
+     "preview": "Ngày cấp:  Nơi cấp:  \t"
+    }
+   ],
+   "ooxml": {
+    "paras": 202,
+    "w_br": 2,
+    "w_cr": 0,
+    "w_tab": 2,
+    "w_ind": 0,
+    "footnoteReference_total": 0,
+    "has_footnotes_part": false,
+    "sup_paras": 18,
+    "spacing_before120_paras": 119,
+    "spacing_after120_paras": 8
+   },
+   "tpl_landmark_props": {
+    "national_header": [],
+    "date_line": [],
+    "salutation": [],
+    "signature": [
+     {
+      "text": "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT/CHỦ TỊCH HỘI ĐỒNG THÀNH VIÊN CỦA CÔNG TY(Ký và ghi",
+      "props": {
+       "jc": {
+        "val": "center"
+       },
+       "spacing": {
+        "before": "120"
+       }
+      }
+     }
+    ]
+   },
+   "source_vs_template": {
+    "source_path": "C:\\Users\\Tuyen PC\\orca\\dangky_kinhdoanh-worktrees\\l0-a-pli-early\\06_ho_kinh_doanh_va_chuyen_doi\\02_chuyen_doi_hkd_sang_dn\\DN_PL1_Mau_06_danh_sach_thanh_vien_cong_ty_trach_nhiem_huu_han_hai_thanh_vien_tro_len.docx",
+    "src_paras": 129,
+    "tpl_paras": 202,
+    "src_first": "PL1 - Mau so 6: Danh sách thành viên công ty trách nhiệm hữu hạn hai t",
+    "note": null
+   }
+  },
+  "PLI_M07": {
+   "id": "PLI_M07",
+   "ten_mau": "Danh sách cổ đông sáng lập công ty cổ phần",
+   "block_count": 3,
+   "source_indicators": [
+    {
+     "idx": 0,
+     "t": "p",
+     "align": "left",
+     "text": "PL1 - Mau so 7: Danh sách cổ đông sáng lập công ty cổ phần"
+    }
+   ],
+   "form_number_lines": [
+    {
+     "idx": 1,
+     "align": "left",
+     "text": "Mẫu số 7"
+    }
+   ],
+   "national_header": [],
+   "newline_blocks": [],
+   "glue_candidates": [
+    {
+     "idx": 0,
+     "origin": "p/runs",
+     "digits": "1",
+     "context": "PL1 - Mau so 7: Da",
+     "class": "marker-self",
+     "reason": "block source-indicator tu no (chu PL1)"
+    }
+   ],
+   "landmarks": {
+    "date_lines": [],
+    "salutations": [],
+    "titles": [],
+    "signatures": []
+   },
+   "tab_runs": [],
+   "ooxml": {
+    "paras": 69,
+    "w_br": 0,
+    "w_cr": 0,
+    "w_tab": 0,
+    "w_ind": 0,
+    "footnoteReference_total": 0,
+    "has_footnotes_part": false,
+    "sup_paras": 0,
+    "spacing_before120_paras": 0,
+    "spacing_after120_paras": 0
+   },
+   "tpl_landmark_props": {
+    "national_header": [],
+    "date_line": [],
+    "salutation": [],
+    "signature": []
+   },
+   "source_vs_template": {
+    "source_path": "C:\\Users\\Tuyen PC\\orca\\dangky_kinhdoanh-worktrees\\l0-a-pli-early\\06_ho_kinh_doanh_va_chuyen_doi\\02_chuyen_doi_hkd_sang_dn\\DN_PL1_Mau_07_danh_sach_co_dong_sang_lap_cong_ty_co_phan.docx",
+    "src_paras": 2,
+    "tpl_paras": 69,
+    "src_first": "PL1 - Mau so 7: Danh sách cổ đông sáng lập công ty cổ phần",
+    "note": "file nguon tach ra gan nhu trong (2 doan); noi dung that nam trong _Bieu_mau_PL_I_II_full.docx"
+   }
+  },
+  "PLI_M08": {
+   "id": "PLI_M08",
+   "ten_mau": "Danh sách cổ đông là nhà đầu tư nước ngoài",
+   "block_count": 107,
+   "source_indicators": [
+    {
+     "idx": 0,
+     "t": "p",
+     "align": "left",
+     "text": "PL1 - Mau so 8: Danh sách cổ đông là nhà đầu tư nước ngoài"
+    }
+   ],
+   "form_number_lines": [
+    {
+     "idx": 1,
+     "align": "left",
+     "text": "Mẫu số 8"
+    }
+   ],
+   "national_header": [],
+   "newline_blocks": [
+    {
+     "idx": 91,
+     "t": "p",
+     "align": "center",
+     "nl_count": 2,
+     "preview": "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT/\nCHỦ TỊCH HỘI ĐỒNG QUẢN TRỊ CỦA CÔNG TY\n(Ký và ghi họ tên)11"
+    }
+   ],
+   "glue_candidates": [
+    {
+     "idx": 0,
+     "origin": "p/runs",
+     "digits": "1",
+     "context": "PL1 - Mau so 8: Da",
+     "class": "marker-self",
+     "reason": "block source-indicator tu no (chu PL1)"
+    },
+    {
+     "idx": 6,
+     "origin": "p/runs",
+     "digits": "5",
+     "context": "ời đại diện theo pháp luật5:",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    },
+    {
+     "idx": 52,
+     "origin": "p/runs",
+     "digits": "6",
+     "context": "Ngày bắt đầu hoạt động6 (trường hợp do",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    },
+    {
+     "idx": 74,
+     "origin": "p/runs",
+     "digits": "9",
+     "context": " việc đóng bảo hiểm xã hội9:",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    },
+    {
+     "idx": 82,
+     "origin": "p/runs",
+     "digits": "10",
+     "context": "hưởng lợi của doanh nghiệp10:",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    }
+   ],
+   "landmarks": {
+    "date_lines": [],
+    "salutations": [],
+    "titles": [],
+    "signatures": [
+     {
+      "idx": 91,
+      "align": "center",
+      "text": "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT/\nCHỦ TỊCH HỘI ĐỒNG QUẢN TRỊ CỦA CÔNG TY\n(Ký và ghi họ tên)11"
+     }
+    ]
+   },
+   "tab_runs": [
+    {
+     "idx": 5,
+     "preview": "Ngày cấp:  Cơ quan cấp: \t"
+    },
+    {
+     "idx": 19,
+     "preview": "Dân tộc:  Quốc tịch:  \t"
+    },
+    {
+     "idx": 21,
+     "preview": "Ngày cấp:  Nơi cấp:  \t"
+    }
+   ],
+   "ooxml": {
+    "paras": 176,
+    "w_br": 2,
+    "w_cr": 0,
+    "w_tab": 3,
+    "w_ind": 0,
+    "footnoteReference_total": 0,
+    "has_footnotes_part": false,
+    "sup_paras": 18,
+    "spacing_before120_paras": 122,
+    "spacing_after120_paras": 3
+   },
+   "tpl_landmark_props": {
+    "national_header": [],
+    "date_line": [],
+    "salutation": [],
+    "signature": [
+     {
+      "text": "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT/CHỦ TỊCH HỘI ĐỒNG QUẢN TRỊ CỦA CÔNG TY(Ký và ghi h",
+      "props": {
+       "jc": {
+        "val": "center"
+       },
+       "spacing": {
+        "before": "120"
+       }
+      }
+     }
+    ]
+   },
+   "source_vs_template": {
+    "source_path": "C:\\Users\\Tuyen PC\\orca\\dangky_kinhdoanh-worktrees\\l0-a-pli-early\\06_ho_kinh_doanh_va_chuyen_doi\\02_chuyen_doi_hkd_sang_dn\\DN_PL1_Mau_08_danh_sach_co_dong_la_nha_dau_tu_nuoc_ngoai.docx",
+    "src_paras": 127,
+    "tpl_paras": 176,
+    "src_first": "PL1 - Mau so 8: Danh sách cổ đông là nhà đầu tư nước ngoài",
+    "note": null
+   }
+  },
+  "PLI_M09": {
+   "id": "PLI_M09",
+   "ten_mau": "Danh sách thành viên công ty hợp danh",
+   "block_count": 193,
+   "source_indicators": [
+    {
+     "idx": 0,
+     "t": "p",
+     "align": "left",
+     "text": "PL1 - Mau so 9: Danh sách thành viên công ty hợp danh"
+    }
+   ],
+   "form_number_lines": [
+    {
+     "idx": 1,
+     "align": "left",
+     "text": "Mẫu số 9"
+    },
+    {
+     "idx": 108,
+     "align": "right",
+     "text": "Mẫu số 7"
+    },
+    {
+     "idx": 128,
+     "align": "right",
+     "text": "Mẫu số 8"
+    },
+    {
+     "idx": 149,
+     "align": "right",
+     "text": "Mẫu số 9"
+    },
+    {
+     "idx": 178,
+     "align": "right",
+     "text": "Mẫu số 10"
+    }
+   ],
+   "national_header": [],
+   "newline_blocks": [
+    {
+     "idx": 70,
+     "t": "p",
+     "align": "center",
+     "nl_count": 1,
+     "preview": "CÁC THÀNH VIÊN HỢP DANH\n(Ký và ghi họ tên từng thành viên)9"
+    },
+    {
+     "idx": 89,
+     "t": "p",
+     "align": "center",
+     "nl_count": 2,
+     "preview": ", ngàythángnăm\nNGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT/CHỦ TỊCH HỘI ĐỒNG THÀNH VIÊN CỦA CÔNG TY\n(Ký và ghi họ tên)13"
+    },
+    {
+     "idx": 112,
+     "t": "p",
+     "align": "center",
+     "nl_count": 2,
+     "preview": ", ngàythángnăm\nNGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT/CHỦ TỊCH HỘI ĐỒNG QUẢN TRỊ CỦA CÔNG TY\n(Ký và ghi họ tên)13"
+    },
+    {
+     "idx": 133,
+     "t": "p",
+     "align": "center",
+     "nl_count": 2,
+     "preview": ", ngàythángnăm\nNGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT/CHỦ TỊCH HỘI ĐỒNG QUẢN TRỊ CỦA CÔNG TY\n(Ký và ghi họ tên)13"
+    },
+    {
+     "idx": 180,
+     "t": "p",
+     "align": "center",
+     "nl_count": 4,
+     "preview": ", ngàythángnăm\nNGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT/\nCHỦ TỊCH HỘI ĐỒNG THÀNH VIÊN/\nCHỦ TỊCH HỘI ĐỒNG QUẢN TRỊ CỦA CÔNG TY\n(Ký v"
+    }
+   ],
+   "glue_candidates": [
+    {
+     "idx": 0,
+     "origin": "p/runs",
+     "digits": "1",
+     "context": "PL1 - Mau so 9: Da",
+     "class": "marker-self",
+     "reason": "block source-indicator tu no (chu PL1)"
+    },
+    {
+     "idx": 31,
+     "origin": "p/runs",
+     "digits": "4",
+     "context": "Ngày bắt đầu hoạt động4 (trường hợp do",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    },
+    {
+     "idx": 53,
+     "origin": "p/runs",
+     "digits": "7",
+     "context": " việc đóng bảo hiểm xã hội7:",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    },
+    {
+     "idx": 61,
+     "origin": "p/runs",
+     "digits": "8",
+     "context": "hưởng lợi của doanh nghiệp8:",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    },
+    {
+     "idx": 88,
+     "origin": "p/runs",
+     "digits": "8",
+     "context": "ínhVốn gópThời hạn góp vốn8Ghi chú (nếu có",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    },
+    {
+     "idx": 88,
+     "origin": "p/runs",
+     "digits": "6",
+     "context": "i chú (nếu có)Phần vốn góp6 (bằng số; VNĐ ",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    },
+    {
+     "idx": 88,
+     "origin": "p/runs",
+     "digits": "71234567892",
+     "context": "g, giá trị tài sản góp vốn71234567892. Thông tin ngư",
+     "class": "candidate-legit-digit",
+     "reason": "chuoi so dai (cot so / lien tiep)"
+    },
+    {
+     "idx": 132,
+     "origin": "p/runs",
+     "digits": "6",
+     "context": "pháp lý tương đươngVốn góp6Thời hạn góp vố",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    },
+    {
+     "idx": 132,
+     "origin": "p/runs",
+     "digits": "8",
+     "context": "ngVốn góp6Thời hạn góp vốn8Ghi chú (nếu có",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    },
+    {
+     "idx": 132,
+     "origin": "p/runs",
+     "digits": "7",
+     "context": "g, giá trị tài sản góp vốn7Số lượngGiá trị",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    },
+    {
+     "idx": 132,
+     "origin": "p/runs",
+     "digits": "1279101112131415161718202",
+     "context": "ượngGiá trịSố lượngGiá trị1279101112131415161718202. Thông tin ngư",
+     "class": "candidate-legit-digit",
+     "reason": "chuoi so dai (cot so / lien tiep)"
+    },
+    {
+     "idx": 161,
+     "origin": "p/runs",
+     "digits": "8",
+     "context": "Thời hạn góp vốn8",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    },
+    {
+     "idx": 163,
+     "origin": "p/runs",
+     "digits": "6",
+     "context": "Phần vốn góp6 (bằng số; VNĐ ",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    },
+    {
+     "idx": 163,
+     "origin": "p/runs",
+     "digits": "71234567892",
+     "context": "g, giá trị tài sản góp vốn71234567892. Thông tin ngư",
+     "class": "candidate-legit-digit",
+     "reason": "chuoi so dai (cot so / lien tiep)"
+    }
+   ],
+   "landmarks": {
+    "date_lines": [],
+    "salutations": [],
+    "titles": [],
+    "signatures": [
+     {
+      "idx": 70,
+      "align": "center",
+      "text": "CÁC THÀNH VIÊN HỢP DANH\n(Ký và ghi họ tên từng thành viên)9"
+     }
+    ]
+   },
+   "tab_runs": [
+    {
+     "idx": 5,
+     "preview": "Ngày cấp:  Cơ quan cấp: \t"
+    }
+   ],
+   "ooxml": {
+    "paras": 294,
+    "w_br": 12,
+    "w_cr": 0,
+    "w_tab": 1,
+    "w_ind": 0,
+    "footnoteReference_total": 0,
+    "has_footnotes_part": false,
+    "sup_paras": 71,
+    "spacing_before120_paras": 216,
+    "spacing_after120_paras": 3
+   },
+   "tpl_landmark_props": {
+    "national_header": [],
+    "date_line": [
+     {
+      "text": "{dia_diem_ky}, ngày{ngay_ky_vb}tháng{thang_ky_vb}năm{nam_ky_vb}NGƯỜI ĐẠI DIỆN TH",
+      "props": {
+       "jc": {
+        "val": "center"
+       },
+       "spacing": {
+        "before": "120"
+       }
+      }
+     }
+    ],
+    "salutation": [],
+    "signature": [
+     {
+      "text": "CÁC THÀNH VIÊN HỢP DANH(Ký và ghi họ tên từng thành viên)9",
+      "props": {
+       "jc": {
+        "val": "center"
+       },
+       "spacing": {
+        "before": "120"
+       }
+      }
+     }
+    ]
+   },
+   "source_vs_template": {
+    "source_path": "C:\\Users\\Tuyen PC\\orca\\dangky_kinhdoanh-worktrees\\l0-a-pli-early\\06_ho_kinh_doanh_va_chuyen_doi\\02_chuyen_doi_hkd_sang_dn\\DN_PL1_Mau_09_danh_sach_thanh_vien_cong_ty_hop_danh.docx",
+    "src_paras": 232,
+    "tpl_paras": 294,
+    "src_first": "PL1 - Mau so 9: Danh sách thành viên công ty hợp danh",
+    "note": null
+   }
+  },
+  "PLI_M10": {
+   "id": "PLI_M10",
+   "ten_mau": "Danh sách chủ sở hữu hưởng lợi của doanh nghiệp",
+   "block_count": 5,
+   "source_indicators": [
+    {
+     "idx": 0,
+     "t": "p",
+     "align": "left",
+     "text": "PL1 - Mau so 10: Danh sách chủ sở hữu hưởng lợi của doanh nghiệp"
+    }
+   ],
+   "form_number_lines": [
+    {
+     "idx": 1,
+     "align": "left",
+     "text": "Mẫu số 10"
+    }
+   ],
+   "national_header": [],
+   "newline_blocks": [],
+   "glue_candidates": [
+    {
+     "idx": 0,
+     "origin": "p/runs",
+     "digits": "1",
+     "context": "PL1 - Mau so 10: D",
+     "class": "marker-self",
+     "reason": "block source-indicator tu no (chu PL1)"
+    }
+   ],
+   "landmarks": {
+    "date_lines": [],
+    "salutations": [],
+    "titles": [],
+    "signatures": []
+   },
+   "tab_runs": [],
+   "ooxml": {
+    "paras": 72,
+    "w_br": 0,
+    "w_cr": 0,
+    "w_tab": 0,
+    "w_ind": 0,
+    "footnoteReference_total": 0,
+    "has_footnotes_part": false,
+    "sup_paras": 1,
+    "spacing_before120_paras": 3,
+    "spacing_after120_paras": 0
+   },
+   "tpl_landmark_props": {
+    "national_header": [],
+    "date_line": [],
+    "salutation": [],
+    "signature": []
+   },
+   "source_vs_template": {
+    "source_path": "C:\\Users\\Tuyen PC\\orca\\dangky_kinhdoanh-worktrees\\l0-a-pli-early\\06_ho_kinh_doanh_va_chuyen_doi\\02_chuyen_doi_hkd_sang_dn\\DN_PL1_Mau_10_danh_sach_chu_so_huu_huong_loi_cua_doanh_nghiep.docx",
+    "src_paras": 5,
+    "tpl_paras": 72,
+    "src_first": "PL1 - Mau so 10: Danh sách chủ sở hữu hưởng lợi của doanh nghiệp",
+    "note": "file nguon tach ra gan nhu trong (5 doan); noi dung that nam trong _Bieu_mau_PL_I_II_full.docx"
+   }
+  },
+  "PLI_M11": {
+   "id": "PLI_M11",
+   "ten_mau": "Kê khai thông tin để xác định chủ sở hữu hưởng lợi của doanh nghiệp",
+   "block_count": 10,
+   "source_indicators": [
+    {
+     "idx": 0,
+     "t": "p",
+     "align": "left",
+     "text": "PL1 - Mau so 11: Kê khai thông tin để xác định chủ sở hữu hưởng lợi của doanh nghiệp"
+    }
+   ],
+   "form_number_lines": [
+    {
+     "idx": 1,
+     "align": "left",
+     "text": "Mẫu số 11"
+    }
+   ],
+   "national_header": [],
+   "newline_blocks": [
+    {
+     "idx": 5,
+     "t": "p",
+     "align": "center",
+     "nl_count": 3,
+     "preview": ", ngàythángnăm\nNGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT/\nCHỦ TỊCH HỘI ĐỒNG QUẢN TRỊ CỦA CÔNG TY\n(Ký và ghi họ tên)2"
+    }
+   ],
+   "glue_candidates": [
+    {
+     "idx": 0,
+     "origin": "p/runs",
+     "digits": "1",
+     "context": "PL1 - Mau so 11: K",
+     "class": "marker-self",
+     "reason": "block source-indicator tu no (chu PL1)"
+    }
+   ],
+   "landmarks": {
+    "date_lines": [
+     {
+      "idx": 5,
+      "align": "center"
+     }
+    ],
+    "salutations": [],
+    "titles": [
+     {
+      "idx": 2,
+      "bold": true,
+      "text": "DANH SÁCH ĐỂ XÁC ĐỊNH CHỦ SỞ HỮU HƯỞNG LỢI CỦA DOANH NGHIỆP"
+     }
+    ],
+    "signatures": []
+   },
+   "tab_runs": [],
+   "ooxml": {
+    "paras": 59,
+    "w_br": 3,
+    "w_cr": 0,
+    "w_tab": 0,
+    "w_ind": 0,
+    "footnoteReference_total": 0,
+    "has_footnotes_part": false,
+    "sup_paras": 3,
+    "spacing_before120_paras": 8,
+    "spacing_after120_paras": 0
+   },
+   "tpl_landmark_props": {
+    "national_header": [],
+    "date_line": [
+     {
+      "text": "{dia_diem_ky}, ngày{ngay_ky_vb}tháng{thang_ky_vb}năm{nam_ky_vb}NGƯỜI ĐẠI DIỆN TH",
+      "props": {
+       "jc": {
+        "val": "center"
+       },
+       "spacing": {
+        "before": "120"
+       }
+      }
+     }
+    ],
+    "salutation": [],
+    "signature": [
+     {
+      "text": "{dia_diem_ky}, ngày{ngay_ky_vb}tháng{thang_ky_vb}năm{nam_ky_vb}NGƯỜI ĐẠI DIỆN TH",
+      "props": {
+       "jc": {
+        "val": "center"
+       },
+       "spacing": {
+        "before": "120"
+       }
+      }
+     }
+    ]
+   },
+   "source_vs_template": {
+    "source_path": "C:\\Users\\Tuyen PC\\orca\\dangky_kinhdoanh-worktrees\\l0-a-pli-early\\06_ho_kinh_doanh_va_chuyen_doi\\02_chuyen_doi_hkd_sang_dn\\DN_PL1_Mau_11_ke_khai_thong_tin_de_xac_dinh_chu_so_huu_huong_loi_cua_doanh_nghiep.docx",
+    "src_paras": 11,
+    "tpl_paras": 59,
+    "src_first": "PL1 - Mau so 11: Kê khai thông tin để xác định chủ sở hữu hưởng lợi củ",
+    "note": "file nguon tach ra gan nhu trong (11 doan); noi dung that nam trong _Bieu_mau_PL_I_II_full.docx"
+   }
+  },
+  "PLI_M12": {
+   "id": "PLI_M12",
+   "ten_mau": "Giấy đề nghị đăng ký thay đổi nội dung Giấy chứng nhận đăng ký doanh nghiệp/Thông báo thay đổi nội dung đăng ký doanh nghiệp",
+   "block_count": 236,
+   "source_indicators": [],
+   "form_number_lines": [],
+   "national_header": [
+    {
+     "idx": 0,
+     "align": "center",
+     "bold": true,
+     "nl_count": 2,
+     "has_separator_line": true,
+     "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc \n---------------"
+    }
+   ],
+   "newline_blocks": [
+    {
+     "idx": 0,
+     "t": "p",
+     "align": "center",
+     "nl_count": 2,
+     "preview": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc \n---------------"
+    },
+    {
+     "idx": 42,
+     "t": "p",
+     "align": "center",
+     "nl_count": 1,
+     "preview": "ĐĂNG KÝ THAY ĐỔI THÀNH VIÊN CÔNG TY TNHH/\nTHÀNH VIÊN HỢP DANH CÔNG TY HỢP DANH"
+    },
+    {
+     "idx": 45,
+     "t": "p",
+     "align": "center",
+     "nl_count": 1,
+     "preview": "ĐĂNG KÝ THAY ĐỔI VỐN ĐIỀU LỆ, PHẦN VỐN GÓP, \nTỶ LỆ PHẦN VỐN GÓP"
+    },
+    {
+     "idx": 118,
+     "t": "p",
+     "align": "center",
+     "nl_count": 1,
+     "preview": "ĐĂNG KÝ THAY ĐỔI VỐN ĐẦU TƯ\nCỦA CHỦ DOANH NGHIỆP TƯ NHÂN"
+    },
+    {
+     "idx": 150,
+     "t": "p",
+     "align": "center",
+     "nl_count": 1,
+     "preview": "THÔNG BÁO THAY ĐỔI CỔ ĐÔNG SÁNG LẬP/ \nTHÔNG BÁO THAY ĐỔI CỔ ĐÔNG LÀ NHÀ ĐẦU TƯ NƯỚC NGOÀI CÔNG TY CỔ PHẦN1"
+    },
+    {
+     "idx": 232,
+     "t": "p",
+     "align": "center",
+     "nl_count": 3,
+     "preview": "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT/\nCHỦ TỊCH CÔNG TY/CHỦ TỊCH HỘI ĐỒNG THÀNH VIÊN/CHỦ TỊCH HỘI ĐỒNG QUẢN TRỊ/\nNGƯỜI ĐƯỢC ỦY Q"
+    }
+   ],
+   "glue_candidates": [
+    {
+     "idx": 18,
+     "origin": "p/runs",
+     "digits": "1",
+     "context": "ng đến quốc phòng, an ninh1: Có  Không ",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    },
+    {
+     "idx": 102,
+     "origin": "p/runs",
+     "digits": "1",
+     "context": "ĐỔI NGÀNH, NGHỀ KINH DOANH1",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    },
+    {
+     "idx": 143,
+     "origin": "p/runs",
+     "digits": "1",
+     "context": "ĐÔNG LÀ TỔ CHỨC NƯỚC NGOÀI1",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    },
+    {
+     "idx": 145,
+     "origin": "p/runs",
+     "digits": "2",
+     "context": "iấy tờ pháp lý của cá nhân2Quốc tịchDân tộ",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    },
+    {
+     "idx": 145,
+     "origin": "p/runs",
+     "digits": "4",
+     "context": "ười đại diện theo ủy quyền4Ghi chú (nếu có",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    },
+    {
+     "idx": 145,
+     "origin": "p/runs",
+     "digits": "3",
+     "context": "n nước ngoài, nếu có)Tỷ lệ3 (%)Thời điểm đ",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    },
+    {
+     "idx": 145,
+     "origin": "p/runs",
+     "digits": "1234567891011121314",
+     "context": "hời điểm đại diện phần vốn1234567891011121314_______________",
+     "class": "candidate-legit-digit",
+     "reason": "chuoi so dai (cot so / lien tiep)"
+    },
+    {
+     "idx": 150,
+     "origin": "p/runs",
+     "digits": "1",
+     "context": "NƯỚC NGOÀI CÔNG TY CỔ PHẦN1",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    },
+    {
+     "idx": 181,
+     "origin": "p/runs",
+     "digits": "2",
+     "context": "Ngày bắt đầu hoạt động2: //",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    },
+    {
+     "idx": 213,
+     "origin": "p/runs",
+     "digits": "15",
+     "context": " Điều 3 Luật số 76/2025/QH15 ngày 17/6/2025",
+     "class": "candidate-legit-digit",
+     "reason": "trich dan van ban phap luat (so VB/QH15/NĐ-CP), khong phai chu thich"
+    },
+    {
+     "idx": 214,
+     "origin": "p/runs",
+     "digits": "15",
+     "context": " Điều 3 Luật số 76/2025/QH15 ngày 17/6/2025",
+     "class": "candidate-legit-digit",
+     "reason": "trich dan van ban phap luat (so VB/QH15/NĐ-CP), khong phai chu thich"
+    },
+    {
+     "idx": 215,
+     "origin": "p/runs",
+     "digits": "1",
+     "context": "G TIN ĐĂNG KÝ DOANH NGHIỆP1",
+     "class": "candidate-footnote",
+     "reason": "digit co w:vertAlign=superscript tuong ung trong template"
+    }
+   ],
+   "landmarks": {
+    "date_lines": [
+     {
+      "idx": 2,
+      "align": "right"
+     }
+    ],
+    "salutations": [
+     {
+      "idx": 6,
+      "align": "center"
+     }
+    ],
+    "titles": [
+     {
+      "idx": 3,
+      "bold": true,
+      "text": "GIẤY ĐỀ NGHỊ"
+     }
+    ],
+    "signatures": [
+     {
+      "idx": 232,
+      "align": "center",
+      "text": "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT/\nCHỦ TỊCH CÔNG TY/CHỦ TỊCH HỘI ĐỒNG THÀNH VIÊN/CHỦ TỊCH HỘI "
+     }
+    ]
+   },
+   "tab_runs": [
+    {
+     "idx": 34,
+     "preview": "Thư điện tử (nếu có):  Website (nếu có): \t"
+    },
+    {
+     "idx": 51,
+     "preview": "Thời điểm thay đổi vốn: \t"
+    },
+    {
+     "idx": 123,
+     "preview": "Thời điểm thay đổi vốn: \t"
+    }
+   ],
+   "ooxml": {
+    "paras": 409,
+    "w_br": 18,
+    "w_cr": 0,
+    "w_tab": 3,
+    "w_ind": 0,
+    "footnoteReference_total": 0,
+    "has_footnotes_part": false,
+    "sup_paras": 24,
+    "spacing_before120_paras": 326,
+    "spacing_after120_paras": 8
+   },
+   "tpl_landmark_props": {
+    "national_header": [
+     {
+      "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc ---------------",
+      "props": {
+       "jc": {
+        "val": "center"
+       },
+       "spacing": {
+        "before": "120"
+       }
+      }
+     }
+    ],
+    "date_line": [
+     {
+      "text": "{dia_diem_ky}, ngày{ngay_ky_vb} tháng{thang_ky_vb} năm {nam_ky_vb}",
+      "props": {
+       "jc": {
+        "val": "right"
+       },
+       "spacing": {
+        "before": "120"
+       }
+      }
+     }
+    ],
+    "salutation": [
+     {
+      "text": "Kính gửi: (Cơ quan đăng ký kinh doanh cấp tỉnh) {co_quan_dkkd}",
+      "props": {
+       "jc": {
+        "val": "center"
+       },
+       "spacing": {
+        "before": "120"
+       }
+      }
+     }
+    ],
+    "signature": [
+     {
+      "text": "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT/CHỦ TỊCH CÔNG TY/CHỦ TỊCH HỘI ĐỒNG THÀNH VIÊN/CHỦ ",
+      "props": {
+       "jc": {
+        "val": "center"
+       },
+       "spacing": {
+        "before": "120"
+       }
+      }
+     }
+    ]
+   },
+   "source_vs_template": {
+    "source_path": "C:\\Users\\Tuyen PC\\orca\\dangky_kinhdoanh-worktrees\\l0-a-pli-early\\02_thay_doi_thong_tin_doanh_nghiep\\PL1_Mau_12_tach_tu_file_full.docx",
+    "src_paras": 346,
+    "tpl_paras": 409,
+    "src_first": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc --------",
+    "note": null
+   }
+  }
+ }
+}

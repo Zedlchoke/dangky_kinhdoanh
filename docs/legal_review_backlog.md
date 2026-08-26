@@ -11,6 +11,14 @@ NO_TABLE 50. Cả 33 form BLOCKED đều có `legal_questions`.
 Ưu tiên xử lý theo domain: capital-assets → people-ownership → tax →
 branches/admin (nhóm theo kind/title vì entry manifest không có trường owner).
 
+> **Ghi chú rebase 2026-08-26 (HEAD `bdc2d03`)** — riêng PLI_M72: ngoài câu
+> hỏi pháp lý trong entry bên dưới, việc kích hoạt (activation) 5 bảng ngành
+> theo loại hình DN đang **BLOCKED chờ owner** chọn phương án selector trong
+> `docs/m72_activation_proposal.md` (khuyến nghị Option B — canonical checks
+> key trên chính mẫu). Cơ chế selector (`activeWhen.checkedKey/valueOf`) đã có
+> sẵn và được test; hiện trạng production chạy INTERIM `minFilledRows`. Xem
+> thêm rủi ro + điều kiện chuyển P3 trong `p2_dependency_graph.md`.
+
 ---
 
 ## Domain 1 — capital-assets (6 form)

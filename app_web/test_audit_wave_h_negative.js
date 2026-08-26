@@ -570,6 +570,7 @@ function mkRow(tags, j) {
 //     (Lead P1.2, commit 5c75238 - regen theo spec change PLI_M72)
 (function h7() {
   const cp = require('child_process');
+  const fs = require('fs');
   const path = require('path');
   let files = [];
   try {
@@ -581,84 +582,51 @@ function mkRow(tags, j) {
     return;
   }
 
-  // Tự lập danh sách (auditor-derived), gồm cả chính file test này vì nó
-  // nằm trong diff sau khi commit.
-  const MY_ALLOW_GEN = [
-    'app/data/layout_specs/layout_manifest.json',
-    'app/data/layout_specs/fragments/l0_a.md',
-    'app/data/layout_specs/fragments/l0_a_evidence.json',
-    'app/data/layout_specs/fragments/l0_b.md',
-    'app/data/layout_specs/fragments/l0_b_evidence.json',
-    'app/data/layout_specs/fragments/l0_c.md',
-    'app/data/layout_specs/fragments/l0_c_evidence.json',
-    // Lead P1.2 (5c75238): blocks regen theo selector Option D
-    'app/data/blocks/PLI_M72.json'
-  ];
-  // Duy nhất file template được phép trong wave: PLI_M72.docx (Lead P1.2)
-  const MY_ALLOW_TPL = ['app/templates/PLI_M72.docx'];
+  // R1 Lead (de55824+): allowlist tĩnh trong code gãy ở MỌI lần integrate mới
+  // (mỗi commit hợp lệ đều làm EXPECTED lệch). Chuyển sang manifest dữ liệu
+  // `tools/audit_expected_diff_files.txt` do Lead cập nhật CÓ CHỦ ĐÍCH tại
+  // mỗi integrate; độ cứng giữ nguyên: exact-set equality + cấm entry "ma"
+  // + templates giới hạn. Mọi file mới phải đi qua review rồi mới được thêm
+  // vào manifest — không phải nới lỏng, chỉ tách dữ liệu khỏi code.
   const SELF = 'app_web/test_audit_wave_h_negative.js';
-  const EXPECTED_REST = [
-    'PLAN.md',
-    'tools/census/build_layout_manifest.py',
-    ...MY_ALLOW_GEN,
-    // Lead P1.2 (commit 5c75238): engine + converter + tagger + spec/template
-    'tools/audit_blocks_check.py',
-    'tools/docx_render.py',
-    'tools/docx_to_blocks.py',
-    'tools/form_specs/change/PLI_M72.json',
-    'tools/tag_m72_sections.py',
-    // Lane B P1.2 (merge e88315a): verifier cấu trúc thật + export isolation
-    'tools/census/p1_b_verify_m72.py',
-    'tools/test_industry_change.py',
-    'tools/test_m72_conditional_export.py',
-    ...MY_ALLOW_TPL,
-    'app_web/test_audit_p1_negative.js',
-    'app_web/test_acceptance.js',
-    'app_web/test_form_grid_meta.js',
-    'app_web/test_m72_activation.js',
-    'app_web/test_p12_m72_selector.js',
-    'app_web/test_p20_hardening.js',
-    'app_web/ui/app.js',
-    'app_web/ui/form-domain.js',
-    'app_web/ui/render.js',
-    'docs/legal_review_backlog.md',
-    'docs/m72_activation_proposal.md',
-    'docs/p2_component_contracts.md',
-    'docs/p2_dependency_graph.md',
-    // Lead R0 (2026-08-26): master plan docs + triage verifier PLII_M02 +
-    // release runner chinh thuc + dependency contract
-    'tools/census/p1_c_verify_plii_m02.py',
-    'tools/release_runner.py',
-    'requirements-dev.txt'
-  ];
+  const MANIFEST = 'tools/audit_expected_diff_files.txt';
+  let expected;
+  try {
+    expected = fs.readFileSync(path.join(__dirname, '..', MANIFEST), 'utf8')
+      .split(/\r?\n/)
+      .map(l => l.replace(/#.*$/, '').trim())
+      .filter(Boolean);
+  } catch (e) {
+    check('H7.0b doc duoc manifest ' + MANIFEST, false, String(e.message));
+    return;
+  }
 
   const rest = files.filter(f => f !== SELF);
   const genTouched = files.filter(f =>
     f.indexOf('app/templates/') === 0 || f.indexOf('app/data/') === 0);
+  const expGen = expected.filter(f =>
+    f.indexOf('app/templates/') === 0 || f.indexOf('app/data/') === 0);
 
-  check('H7.1 moi file app/templates|app/data trong diff thuoc allowlist tu lap',
-    genTouched.every(f => MY_ALLOW_GEN.concat(MY_ALLOW_TPL).indexOf(f) >= 0),
-    JSON.stringify(genTouched.filter(
-      f => MY_ALLOW_GEN.concat(MY_ALLOW_TPL).indexOf(f) < 0)));
+  check('H7.1 moi file app/templates|app/data trong diff thuoc manifest',
+    genTouched.every(f => expGen.indexOf(f) >= 0),
+    JSON.stringify(genTouched.filter(f => expGen.indexOf(f) < 0)));
 
   check('H7.2 file thuoc app/templates trong diff chi la PLI_M72.docx (Lead P1.2)',
     files.every(f => f.indexOf('app/templates/') !== 0 ||
-      MY_ALLOW_TPL.indexOf(f) >= 0),
+      f === 'app/templates/PLI_M72.docx'),
     JSON.stringify(files.filter(f =>
-      f.indexOf('app/templates/') === 0 && MY_ALLOW_TPL.indexOf(f) < 0)));
+      f.indexOf('app/templates/') === 0 && f !== 'app/templates/PLI_M72.docx')));
 
-  check('H7.3 allowlist tu lap KHONG co entry "ma" (moi entry co mat trong diff)',
-    MY_ALLOW_GEN.concat(EXPECTED_REST.filter(f => MY_ALLOW_GEN.indexOf(f) < 0))
-      .every(f => files.indexOf(f) >= 0 || f === SELF),
-    JSON.stringify([...MY_ALLOW_GEN, ...EXPECTED_REST]
-      .filter(f => files.indexOf(f) < 0 && f !== SELF)));
+  check('H7.3 manifest KHONG co entry "ma" (moi entry co mat trong diff)',
+    expected.every(f => files.indexOf(f) >= 0 || f === SELF),
+    JSON.stringify(expected.filter(f => files.indexOf(f) < 0 && f !== SELF)));
 
-  check('H7.4 diff (tru file test nay) dung bang tap EXPECTED cua auditor (' +
-      files.length + ' file trong diff)',
-    rest.length === EXPECTED_REST.length &&
-      EXPECTED_REST.every(f => rest.indexOf(f) >= 0),
-    JSON.stringify(rest.concat(EXPECTED_REST)
-      .filter(f => rest.indexOf(f) < 0 || EXPECTED_REST.indexOf(f) < 0)));
+  check('H7.4 diff (tru file test nay) dung bang tap manifest (' +
+      rest.length + ' file trong diff)',
+    rest.length === expected.length &&
+      expected.every(f => rest.indexOf(f) >= 0),
+    JSON.stringify(rest.concat(expected)
+      .filter(f => rest.indexOf(f) < 0 || expected.indexOf(f) < 0)));
 })();
 
 // ------------------------------------------------------------------ summary

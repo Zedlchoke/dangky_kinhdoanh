@@ -231,6 +231,10 @@ function selErrs(errs) {
     }
   });
 
+  // blocks-v3 giữ nguyên ranh giới run của nguồn (vd '(' b + tên b+i + ')' b),
+  // nên so tiêu đề trên TEXT đã strip tag thay vì chuỗi HTML liền.
+  const htmlText = h => String(h).replace(/<[^>]+>/g, '');
+
   function renderWith(values) {
     const st = mkStore({ values: values || {} });
     return R.renderBlocks({ id: 'PLI_M72', blocks: M72.blocks }, st, {
@@ -242,15 +246,16 @@ function selErrs(errs) {
   }
 
   const htmlDntn = renderWith({ [KEY]: 'DNTN' });
+  const htmlDntnText = htmlText(htmlDntn);
   check('d3. render chon DNTN: bien te dntn xuat hien (tieu de + data-loop)',
-    htmlDntn.indexOf(titleOfFlag.loai_hinh_dntn) >= 0 &&
+    htmlDntnText.indexOf(titleOfFlag.loai_hinh_dntn) >= 0 &&
       htmlDntn.indexOf('data-loop="ds_nganh_dntn"') >= 0,
     'title=' + titleOfFlag.loai_hinh_dntn);
   check('d4. render chon DNTN: 4 bien te kia vang mat khoi HTML',
     ['tnhh_1tv', 'tnhh_2tv', 'ctcp', 'dhdn'].every(suf =>
       ['loai_hinh_' + suf, 'ds_nganh_' + suf].every(token => {
         if (token.indexOf('loai_hinh_') === 0) {
-          return htmlDntn.indexOf(titleOfFlag[token]) < 0;
+          return htmlDntnText.indexOf(titleOfFlag[token]) < 0;
         }
         return htmlDntn.indexOf('data-loop="' + token + '"') < 0;
       })));

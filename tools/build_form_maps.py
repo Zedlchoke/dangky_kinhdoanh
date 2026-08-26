@@ -37,6 +37,11 @@ from docx import Document
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 
+try:
+    from tools import table_occurrences
+except ImportError:  # chay truc tiep: python tools/build_form_maps.py
+    import table_occurrences
+
 ROOT = Path(__file__).resolve().parent.parent
 OUT_TPL = ROOT / "app" / "templates"
 OUT_DATA = ROOT / "app" / "data"
@@ -597,6 +602,44 @@ _SPEC_BY_ID = {s["id"]: s for s in DYNAMIC_TABLES}
 FORM_SPECS_DIR = ROOT / "tools" / "form_specs"
 _form_spec_cache = {}
 
+# ---------------------------------------------------------------------------
+# Occurrence (P1): mot entry spec duoc phep khai bao truong tuy chon
+# "occurrences" — xem tools/table_occurrences.py (contract + y nghia).
+# Bang moi tao cho tung occurrence duoc DANH DAU bang thuoc tinh XML TAM
+# tren element w:tbl trong bo nho de process_form biet loop nao thuoc
+# occurrence nao; thuoc tinh bi don sach truoc khi luu template.
+# ---------------------------------------------------------------------------
+_OCC_TEMP_ATTR = "{urn:orca:p1a-temp}occurrence"
+
+
+def _mark_table_occurrence(tbl_element, info):
+    tbl_element.set(_OCC_TEMP_ATTR, json.dumps(info, ensure_ascii=False))
+
+
+def _pop_table_occurrence(table):
+    """Doc + xoa thuoc tinh tam khoi element w:tbl. Tra ve dict
+    {"occurrence_id", "sync_group", "spec_id"} hoac None."""
+    el = table._tbl
+    raw = el.get(_OCC_TEMP_ATTR)
+    if raw is None:
+        return None
+    del el.attrib[_OCC_TEMP_ATTR]
+    try:
+        info = json.loads(raw)
+    except ValueError:
+        print("[occ-rebuild] thuoc tinh tam hong, bo qua: %r" % raw[:100])
+        return None
+    if isinstance(info, dict) and info.get("occurrence_id"):
+        return info
+    return None
+
+
+def _scrub_occurrence_attrs(doc):
+    """Don sach moi thuoc tinh tam con sot truoc khi luu template."""
+    for el in doc.element.body.iter(qn("w:tbl")):
+        if el.get(_OCC_TEMP_ATTR) is not None:
+            del el.attrib[_OCC_TEMP_ATTR]
+
 
 def _json_spec(raw_spec):
     """JSON spec -> dict spec cùng hình dạng phần tử DYNAMIC_TABLES."""
@@ -643,6 +686,13 @@ def load_form_spec(form_id):
             ent = {k: v for k, v in e.items() if k != "spec"}
             ent["spec"] = s["id"]  # giữ hình dạng entry như REBUILD_TABLES inline
             entries.append(ent)
+        # Occurrence (P1): validate som de chan spec sai truoc khi sua document.
+        # Spec KHONG co "occurrences" khong bi anh huong gi (backward-compat).
+        all_loops = {s["loop"] for s in specs_by_id.values()}
+        for ent in entries:
+            if ent.get("occurrences"):
+                ent["_occurrences"] = table_occurrences.validate_occurrences(
+                    ent["occurrences"], all_loops, form_id)
         result = {"entries": entries, "specs_by_id": specs_by_id}
     _form_spec_cache[form_id] = result
     return result
@@ -732,8 +782,15 @@ def _build_list_table(doc, headers, spec):
 
 def rebuild_list_tables(doc, form_id, ext=None):
     """Xoa paragraph tan du cua luoi cu va chen bang danh sach moi vao ban sao
-    trong bo nho (khong ghi đè file nguồn). Chạy TRƯỚC khi gắn the.
-    ext = load_form_spec(form_id); None -> dùng khai báo inline REBUILD_TABLES."""
+    trong bo nhiem (khong ghi đè file nguồn). Chạy TRƯỚC khi gắn the.
+    ext = load_form_spec(form_id); None -> dùng khai báo inline REBUILD_TABLES.
+
+    Occurrence (P1): entry co "_occurrences" (da validate trong
+    load_form_spec) se tao MOT bang doc lap cho MOI occurrence khop:
+    semantic_key/loop = occurrence_id. Vung occurrence duoc dinh vi boi
+    tools/table_occurrences.resolve_regions; vung SKIP (nhiem/thieu lan)
+    KHONG bi xoa paragraph va KHONG duoc chen bang.
+    """
     entries = ext["entries"] if ext else REBUILD_TABLES.get(form_id)
     if not entries:
         return
@@ -741,12 +798,39 @@ def rebuild_list_tables(doc, form_id, ext=None):
     # duyệt (proxy tạo mới, CPython tái dùng địa chỉ sau GC) nên trạng thái
     # "đã xử lý" theo dõi bằng CHỈ SỐ trên MỘT danh sách paragraph dựng sẵn.
     paras = _body_paragraphs(doc)
-    # 1) cắt giữ phần hợp lệ trong paragraph tàn dư có lẫn nội dung thật
+    para_texts = [p.text for p in paras]
+
+    # 0) Occurrence: resolve TAT CA vung tren ban snapshot SACH (truoc khi
+    #    sua/cut paragraph) — giu reference paragraph de chen an toan sau nay.
+    occ_plan = []  # [(entry, region_ok)] — chi region status=ok
+    has_occ_entries = any(e.get("_occurrences") for e in entries)
+    if ext:
+        for e in entries:
+            cfgs = e.get("_occurrences")
+            if not cfgs:
+                continue
+            for reg in table_occurrences.resolve_regions(para_texts, cfgs):
+                if reg["status"] == "ok":
+                    occ_plan.append((e, reg))
+
+    def _entry_ok_regions(entry):
+        return [reg for en, reg in occ_plan if en is entry]
+
+    # 1) cắt giữ phần hợp lệ trong paragraph tàn dư có lẫn nội dung thật.
+    # Entry occurrence: trim CHỈ áp trong vùng ok của chính nó (không đụng
+    # ngoài vùng).
     protected = set()
     for e in entries:
-        for pat in e.get("trim", []):
+        trim_pats = e.get("trim") or []
+        if not trim_pats:
+            continue
+        occ_regs = _entry_ok_regions(e) if e.get("_occurrences") else None
+        for pat in trim_pats:
             for pi, para in enumerate(paras):
                 if pi in protected:
+                    continue
+                if occ_regs is not None and not any(
+                        r["start"] <= pi < r["end"] for r in occ_regs):
                     continue
                 if re.match(pat, _para_folded(para)):
                     full = para.text
@@ -760,14 +844,29 @@ def rebuild_list_tables(doc, form_id, ext=None):
                         para.add_run(keep)
                     protected.add(pi)
     # 2) xóa paragraph rác tàn dư của lưới cũ (chỉ khi khớp rõ ràng).
-    # Drop mặc định áp dụng toàn văn bản; drop khai báo trong entry kèm
+    # Drop mặc định áp dụng toàn-văn-bản; drop khai báo trong entry kèm
     # "drop_until" thì chỉ áp dụng trong vùng (sau anchor -> trước drop_until)
     # để không đụng các đoạn cùng nhãn ở mục khác của mẫu.
+    # Entry OCCURRENCE: drop (kể cả default) CHỈ chạy scoped trong vùng ok
+    # của chính nó — không bao giờ toàn văn bản (boundary an toàn, bài học
+    # PLI_M09). Khi form có bất kỳ entry occurrence nào, drop mặc định toàn
+    # văn bản bị tắt để không nuốt vùng của occurrence.
     drop_pats = ([] if any(e.get("no_default_drops") for e in entries)
                  else list(REBUILD_DROP_DEFAULT))
+    if has_occ_entries:
+        drop_pats = []
     scoped = []  # (start, end, pats) theo chỉ số paragraph
     for e in entries:
-        pats = e.get("drop") or []
+        pats = list(e.get("drop") or [])
+        if e.get("_occurrences"):
+            regs = _entry_ok_regions(e)
+            if not regs:
+                continue  # mọi vùng đều skipped -> không drop gì cả
+            if not e.get("no_default_drops"):
+                pats += list(REBUILD_DROP_DEFAULT)
+            for reg in regs:
+                scoped.append((reg["start"], reg["end"], pats))
+            continue
         if not pats:
             continue
         if e.get("drop_until"):
@@ -794,8 +893,32 @@ def rebuild_list_tables(doc, form_id, ext=None):
                          for s, en, pats in scoped for p in pats)
         if hit_global or hit_scoped:
             para._p.getparent().remove(para._p)
-    # 3) chèn bảng mới tại điểm neo
+    # 3a) chèn bảng cho TỪNG occurrence (theo thứ tự heading trong form);
+    # loop/semantic_key = occurrence_id; đánh dấu XML tạm để process_form
+    # map đúng bảng -> occurrence khi gắn the.
+    for e, reg in sorted(occ_plan, key=lambda item: item[1]["head"]):
+        spec = resolve_rebuild_spec(e["spec"], ext)
+        cfg = reg["cfg"]
+        occ_spec = dict(spec)
+        occ_spec["loop"] = cfg["occurrence_id"]
+        tbl = _build_list_table(doc, e["headers"], occ_spec)
+        _mark_table_occurrence(tbl._tbl, {
+            "occurrence_id": cfg["occurrence_id"],
+            "sync_group": cfg.get("sync_group"),
+            "spec_id": spec["id"],
+        })
+        head_para = paras[reg["head"]]
+        if e.get("pos", "after") == "before":
+            head_para._p.addprevious(tbl._tbl)
+        else:
+            head_para._p.addnext(tbl._tbl)
+        spacer = OxmlElement("w:p")
+        tbl._tbl.addnext(spacer)
+    # 3) chèn bảng mới tại điểm neo (entry legacy — bỏ qua entry occurrence
+    # vì đã chèn ở bước 3a)
     for e in entries:
+        if e.get("_occurrences"):
+            continue
         spec = resolve_rebuild_spec(e["spec"], ext)
         anchor_p = None
         for para in _body_paragraphs(doc):
@@ -1072,8 +1195,18 @@ def process_form(path, titles, coverage):
             table = Table(child, doc)
             det = detect_dynamic(
                 table, tuple(ext["specs_by_id"].values()) if ext else ())
+            # Occurrence (P1): bảng do rebuild chèn theo "occurrences" mang
+            # thuộc tính XML tạm -> loop/semantic_key riêng theo occurrence_id.
+            occ_info = _pop_table_occurrence(table)
+            if occ_info is not None and det is None:
+                print("[occ-rebuild] %s: bang occurrence %r khong khop spec "
+                      "detect nao -> bo qua gan the rieng"
+                      % (form_id, occ_info["occurrence_id"]))
             if det:
                 spec, hdr_row = det
+                # loop hieu luc: occurrence_id khi la bang occurrence
+                loop_name = (occ_info["occurrence_id"] if occ_info
+                             else spec["loop"])
                 cols = []
                 row_cells = tr_cells(table, hdr_row)
                 col_tags = {}
@@ -1098,8 +1231,8 @@ def process_form(path, titles, coverage):
                 if not tagged_cols:
                     continue
                 tpl_txt = "".join(cell.text for cell in tr_cells(table, tpl_row_idx))
-                pre_tagged = ("{#%s}" % spec["loop"] in tpl_txt
-                              and "{/%s}" % spec["loop"] in tpl_txt)
+                pre_tagged = ("{#%s}" % loop_name in tpl_txt
+                              and "{/%s}" % loop_name in tpl_txt)
                 if not pre_tagged:
                     first_col = min(tagged_cols)
                     last_col = max(tagged_cols)
@@ -1112,10 +1245,10 @@ def process_form(path, titles, coverage):
                         if p is None:
                             continue
                         if cidx == first_col:
-                            prefix = "{#%s}" % spec["loop"]
+                            prefix = "{#%s}" % loop_name
                         else:
                             prefix = ""
-                        suffix = "{/%s}" % spec["loop"] if cidx == last_col else ""
+                        suffix = "{/%s}" % loop_name if cidx == last_col else ""
                         for r_ in p.runs:
                             r_.text = ""
                         if p.runs:
@@ -1123,12 +1256,20 @@ def process_form(path, titles, coverage):
                         else:
                             p.add_run(f"{prefix}{{{tag}}}{suffix}")
                 for fldname in spec["fields"]:
-                    add_field("%s.%s" % (spec["loop"], fldname), fldname)
-                dyn_tables.append({
+                    add_field("%s.%s" % (loop_name, fldname), fldname)
+                dyn = {
                     "id": spec["id"], "table_index": tbl_idx,
                     "header_row": hdr_row, "template_row": tpl_row_idx,
-                    "loop": spec["loop"], "columns": cols,
-                })
+                    "loop": loop_name, "columns": cols,
+                }
+                if occ_info:
+                    # GRID_META/đồng bộ draft phía app key theo occurrence_id;
+                    # sync_group là tùy chọn để gộp draft giữa các occurrence.
+                    dyn["semantic_key"] = occ_info["occurrence_id"]
+                    dyn["occurrence_id"] = occ_info["occurrence_id"]
+                    if occ_info.get("sync_group"):
+                        dyn["sync_group"] = occ_info["sync_group"]
+                dyn_tables.append(dyn)
             else:
                 # bang tinh: slot trong o sau o nhan
                 for ri in range(len(table.rows)):
@@ -1168,6 +1309,8 @@ def process_form(path, titles, coverage):
 
     title = titles.get(f"Phu luc {pl}|{mau}", path.stem)
     OUT_TPL.mkdir(parents=True, exist_ok=True)
+    # don sach thuoc tinh XML tam cua occurrence truoc khi luu template
+    _scrub_occurrence_attrs(doc)
     tmp_copy = OUT_TPL / f"{form_id}.docx"
     doc.save(str(tmp_copy))
     meta = {

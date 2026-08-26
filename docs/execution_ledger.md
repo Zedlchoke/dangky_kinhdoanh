@@ -1,0 +1,59 @@
+# Execution ledger — master plan R0→R7 (checkpoint d882793)
+
+> Sổ cái điều phối. Lead cập nhật sau mỗi wave; mỗi dòng là một task có
+> owner + branch + ownership + gate + commit + evidence. Không báo hoàn tất
+> theo phần trăm — chỉ theo gate PASS/FAIL/NOT RUN.
+
+Quy ước worktree lane: `../dangky_kinhdoanh-worktrees/<lane>` ngoài repo chính.
+Ownership độc quyền theo wave: `app.js`, `form-domain.js`, `render.js`,
+`style.css`, `docx_to_blocks.py`, `build_form_maps.py`, `docx_render.py`.
+
+## R0 — Baseline, scope registry, decision queue
+
+| Task | Owner | Branch/Worktree | File ownership | Dependency | Gate | Commit | Test evidence | Blocker |
+|---|---|---|---|---|---|---|---|---|
+| Đọc PLAN.md + 5 docs, audit git (HEAD d882793, ahead 8/behind 0, 1 worktree) | Lead | main | — | — | baseline tái lập | — | git status sạch trừ PLAN.md | — |
+| Commit master plan PLAN.md | Lead | main | docs only | — | diff đúng 437 insertions | `208de0e` | git diff --stat | — |
+| Backup tag baseline | Lead | main | — | — | tag tại d882793 | tag `baseline/p1.2-d882793` | git tag -l | — |
+| Triage `p1_c_verify_plii_m02.py` FAIL (4 mâu thuẫn match_heading) | Lead | main | tools/census/p1_c_verify_plii_m02.py | — | production không đổi; verifier so hành vi + negative selftest | `1caabd5` | verifier PASS exit 0 | — |
+| Release test runner chính thức (29 suite, PASS/FAIL/NOT RUN, exit thật) | Lead | main | tools/release_runner.py | node, python-docx | verdict tổng đúng ngữ nghĩa NOT-RUN-critical=FAIL | `e6b9226` | runner VERDICT PASS 29/29 | — |
+| Dependency contract dev/test | Lead | main | requirements-dev.txt | pip | pin python-docx==1.2.0, lxml==6.1.1; pywebview ghi rõ chờ R6 | `e6b9226` | runner preflight deps | pywebview chưa cài máy dev |
+| Sync allowlist H7 (3 file R0) theo quy ước lane B P1.2 | Lead | main | app_web/test_audit_wave_h_negative.js | commit runner trước | H7.4 đúng tập EXPECTED | `c287562` | suite 56 PASS | — |
+| Product scope registry | Lead | main | docs/product_scope_registry.md | manifest census | mọi surface có trạng thái | (commit docs) | — | app_tk DECISION owner |
+| Decision registry D1–D7 từ 33 blockers | Lead | main | docs/decision_registry.md | legal_review_backlog | mỗi packet đủ evidence/options/khuyến nghị/impact | (commit docs) | — | **D1–D7 OPEN chờ owner** |
+
+**Gate R0:** ✅ baseline tái lập (29/29 PASS, 0 NOT RUN) · ✅ hết FAIL mơ hồ
+(p1_c triaged: verifier kỳ vọng sai format, production giữ nguyên) ·
+✅ release runner hoạt động · ✅ scope registry + decision registry tồn tại ·
+✅ worktree sạch sau commit · ⏳ owner chưa trả lời D1–D7 (không chặn R1/R2).
+
+## R1 — P1-LAYOUT (L1 → L2 → L3)
+
+| Task | Owner | Branch/Worktree | File ownership | Dependency | Gate | Commit | Test evidence | Blocker |
+|---|---|---|---|---|---|---|---|---|
+| R1.1 L1 extractor/schema (newline run, sup/sub/footnote, indent/spacing/keep-with-next, role, source-indicator vs form-number, detector 87/87, idempotent) | Lane L1 | agent/layout-l1 @ ../dangky_kinhdoanh-worktrees/layout-l1 | tools/docx_to_blocks.py + extractor tests | R0 | contract khóa, fixture extractor, semantic-idempotent | — | — | — |
+| R1.2 L2 renderer/CSS (escape→br, sup/sub semantic, ẩn source-indicator theo role, allowlist CSS, responsive 375/768/1280×800, zoom 100–200%) | Lane L2 | agent/layout-l2 | render.js, style.css + DOM tests | R1.1 merge | pilot PLI_M01/M02, PLII_M01/M72 có DOM test + visual | — | — | — |
+| R1.3 L3 rollout batch (pilot → M01–M11 → M12–M26 → PLI còn lại → PLII_M01–M28) | Lead | main regenerate | generated artifacts | R1.2 merge | detector 87/87, screenshot từng batch | — | — | — |
+| Independent visual auditor LAYOUT | Auditor mới | read-only | — | R1.3 | 8 Acceptance Gates P1-LAYOUT | — | — | — |
+
+## R2 — P2 table platform
+
+| Task | Owner | Branch/Worktree | File ownership | Dependency | Gate | Commit | Test evidence | Blocker |
+|---|---|---|---|---|---|---|---|---|
+| R2.1 khóa contract 4 kinds | Lead | main | docs/p2_component_contracts.md | R0 | hết DRAFT | — | — | — |
+| R2.2 editable-grid remainder (cross_field_rules slot, keyboard/a11y lưới) | Lane EG | agent/p2-eg | form-domain.js, app.js | R2.1 | fixture E1/E2 PASS | — | — | — |
+| R2.2 output-table → fixed-matrix → nested-grid | các lane tách module | tuần tự theo dependency graph | renderer/module riêng | R2.1 | fixture O1/O2, F1, N1 skeleton | — | — | F2/F3/F4 cần D1; N-full cần D2/D7 |
+| Generator anchor/boundary/occurrence/totals/idempotency | Lead-only regenerate | main | build_form_maps.py, docx_to_blocks.py | contracts | chạy 2 lần cùng hash | — | — | — |
+
+## R3–R7 (khung — chi tiết hóa khi mở wave)
+
+| Wave | Điều kiện mở | Ghi chú |
+|---|---|---|
+| R3A capital | D1 + D3 DECIDED, P2 fixture pass | PLI_M01–M05, M12 |
+| R3B people | D2 + D7 DECIDED | PLII_M02/M07, PLI_M06–M10, M13, M15, M72 |
+| R3C tax | D5 DECIDED | PLI_M17/M19/M23/M25, thuế PLII_M02 |
+| R3D branches/admin | D6 (+D4 cho M52) | 13 form còn lại |
+| R4 E2E/a11y | R1–R3 gates PASS | automated + manual WebView2 |
+| R5 visual QA | R4 PASS | cần LibreOffice/Word hoặc renderer được owner chấp thuận |
+| R6 Windows package | R5 PASS | cần môi trường Windows sạch của owner để smoke |
+| R7 independent audit | R6 PASS | auditor mới read-only; APP_DONE 10 điều kiện |

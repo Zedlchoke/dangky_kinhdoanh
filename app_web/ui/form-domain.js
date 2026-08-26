@@ -14,6 +14,11 @@
  *    activation của grid khai báo thuần dữ liệu (activeWhen) - selector
  *    (checkedKey/valueOf) là nguồn chính, minFilledRows chỉ INTERIM chờ
  *    owner chốt contract loại hình (docs/m72_activation_proposal.md).
+ *  - FORM_SELECTOR_META / getFormSelector / validateSelector /
+ *    selectedSelectorOption / selectorFlagsOf: P1.2 Option D - selector
+ *    'Loại hình doanh nghiệp' của PLI_M72 là metadata hồ sơ (store.values),
+ *    bắt buộc chọn đúng một trong 5 giá trị canonical; quyết định grid/
+ *    block active và flags xuất DOCX. KHÔNG render vào văn bản.
  */
 (function (root) {
   'use strict';
@@ -339,52 +344,44 @@
    * - Resolver getGridMeta(): (a) docId+semanticKey -> (b) docId+loop ->
    *   (c) GRID_META[loop] -> (d) null. */
   var FORM_GRID_META = {
-    /* PLI_M72: mẫu gồm 5 phần theo loại hình DN, người dùng chỉ điền phần
-     * áp dụng; blocks KHÔNG có ô chọn loại hình (đã audit - xem
-     * docs/m72_activation_proposal.md). CHƯA có contract owner cho selector
-     * loại hình nên activation hiện tại là INTERIM:
-     *   activeWhen.minFilledRows = grid chỉ active khi CÓ >=1 dòng dữ liệu,
-     *   KHÔNG phải nguồn xác định loại hình chính thức - chỉ để grid trống
-     *   không sinh lỗi blocking. Khi owner chốt selector (checkedKey hoặc
-     *   valueOf), chỉ cần thay activeWhen bằng khai báo selector - validator/
-     *   export guard tự chuyển sang chế độ 'selector' (activationModeOf),
-     *   không phải sửa code. Grid trống không sinh lỗi blocking nào; grid
-     *   active chịu đủ rule ngành (required cột/primary/VSIC/trùng mã). */
+    /* PLI_M72: mẫu gồm 5 phần theo loại hình DN. P1.2 Option D (owner đã
+     * chốt): selector metadata hồ sơ 'dn.loai_hinh' (FORM_SELECTOR_META)
+     * là NGUỒN CHÍNH duy nhất - mỗi loop chỉ active khi giá trị selector
+     * trùng đúng biến thể của nó (valueOf). KHÔNG còn cơ chế INTERIM
+     * minFilledRows: draft cũ chưa có selector -> mọi grid inactive và
+     * export bị chặn bởi SELECTOR_REQUIRED cho tới khi người dùng chọn.
+     * required:false/minRows:0 giữ nguyên hiện trạng (không tự suy thêm
+     * rule pháp lý ngoài quyết định 5 loại hình đã chốt). */
     'PLI_M72': {
       loops: {
         ds_nganh_dntn: mkGrid(GRID_META.ds_nganh, {
           label: 'Danh sách ngành nghề kinh doanh (Doanh nghiệp tư nhân)',
           required: false, minRows: 0,
-          /* INTERIM chờ owner chốt contract loại hình (P1.1 M72) */
-          activeWhen: { minFilledRows: 1 },
+          activeWhen: { valueOf: { key: 'dn.loai_hinh', equals: ['DNTN'] } },
           semanticKey: 'ds_nganh_dntn', syncGroup: 'ds_nganh_pli_m72'
         }),
         ds_nganh_tnhh_1tv: mkGrid(GRID_META.ds_nganh, {
           label: 'Danh sách ngành nghề kinh doanh (Công ty TNHH một thành viên)',
           required: false, minRows: 0,
-          /* INTERIM chờ owner chốt contract loại hình (P1.1 M72) */
-          activeWhen: { minFilledRows: 1 },
+          activeWhen: { valueOf: { key: 'dn.loai_hinh', equals: ['TNHH_1TV'] } },
           semanticKey: 'ds_nganh_tnhh_1tv', syncGroup: 'ds_nganh_pli_m72'
         }),
         ds_nganh_tnhh_2tv: mkGrid(GRID_META.ds_nganh, {
           label: 'Danh sách ngành nghề kinh doanh (Công ty TNHH hai thành viên trở lên)',
           required: false, minRows: 0,
-          /* INTERIM chờ owner chốt contract loại hình (P1.1 M72) */
-          activeWhen: { minFilledRows: 1 },
+          activeWhen: { valueOf: { key: 'dn.loai_hinh', equals: ['TNHH_2TV'] } },
           semanticKey: 'ds_nganh_tnhh_2tv', syncGroup: 'ds_nganh_pli_m72'
         }),
         ds_nganh_ctcp: mkGrid(GRID_META.ds_nganh, {
           label: 'Danh sách ngành nghề kinh doanh (Công ty cổ phần)',
           required: false, minRows: 0,
-          /* INTERIM chờ owner chốt contract loại hình (P1.1 M72) */
-          activeWhen: { minFilledRows: 1 },
+          activeWhen: { valueOf: { key: 'dn.loai_hinh', equals: ['CTCP'] } },
           semanticKey: 'ds_nganh_ctcp', syncGroup: 'ds_nganh_pli_m72'
         }),
         ds_nganh_dhdn: mkGrid(GRID_META.ds_nganh, {
           label: 'Danh sách ngành nghề kinh doanh (Công ty hợp danh)',
           required: false, minRows: 0,
-          /* INTERIM chờ owner chốt contract loại hình (P1.1 M72) */
-          activeWhen: { minFilledRows: 1 },
+          activeWhen: { valueOf: { key: 'dn.loai_hinh', equals: ['DHDN'] } },
           semanticKey: 'ds_nganh_dhdn', syncGroup: 'ds_nganh_pli_m72'
         })
       }
@@ -468,6 +465,93 @@
   Object.keys(FORM_GRID_META).forEach(function (fid) {
     indexFormMeta(FORM_GRID_META[fid], fid);
   });
+
+  /* ------------------------------------------- form-scoped selector metadata
+   * P1.2 "Option D" cho PLI_M72: selector 'Loại hình doanh nghiệp' là
+   * METADATA HỒ SƠ/APP (store.values[key]) - KHÔNG phải nội dung pháp lý,
+   * KHÔNG render/in vào DOCX. Nó quyết định:
+   *  - grid nào active (FORM_GRID_META activeWhen.valueOf cùng key);
+   *  - block nào hiển thị trên UI (render lọc theo flags, khớp cond blocks);
+   *  - phần nào của DOCX được xuất (engine vùng {?flag}/{/flag} + flags
+   *    do selectorFlagsOf suy ra từ ĐÚNG metadata này).
+   * Giá trị canonical đúng 5 loại; người dùng bắt buộc chọn đúng MỘT.
+   * flag phải khớp tools/form_specs/change/PLI_M72.json (section_cond)
+   * và marker trong app/templates/PLI_M72.docx - test đối chiếu chéo. */
+  var FORM_SELECTOR_META = {
+    'PLI_M72': {
+      formId: 'PLI_M72',
+      key: 'dn.loai_hinh',
+      label: 'Loại hình doanh nghiệp',
+      required: true,
+      help: 'Chọn đúng MỘT loại hình doanh nghiệp. Ứng dụng chỉ hiện, kiểm '
+        + 'tra và xuất phần công bố tương ứng; lựa chọn này là dữ liệu hồ '
+        + 'sơ trong ứng dụng, không in thành ô tick trên văn bản.',
+      options: [
+        { value: 'DNTN', label: 'Doanh nghiệp tư nhân', flag: 'loai_hinh_dntn' },
+        { value: 'TNHH_1TV', label: 'Công ty TNHH một thành viên', flag: 'loai_hinh_tnhh_1tv' },
+        { value: 'TNHH_2TV', label: 'Công ty TNHH hai thành viên trở lên', flag: 'loai_hinh_tnhh_2tv' },
+        { value: 'CTCP', label: 'Công ty cổ phần', flag: 'loai_hinh_ctcp' },
+        { value: 'DHDN', label: 'Công ty hợp danh', flag: 'loai_hinh_dhdn' }
+      ]
+    }
+  };
+
+  function getFormSelector(docId) {
+    return FORM_SELECTOR_META[docId] || null;
+  }
+
+  /* Option đang chọn trong store (so trim, phân biệt hoa/thường như
+   * evalActiveWhen.value). Trả null khi chưa chọn/giá trị lạ. */
+  function selectedSelectorOption(selMeta, store) {
+    if (!selMeta) return null;
+    var cur = ((store || {}).values || {})[selMeta.key];
+    cur = cur == null ? '' : String(cur).trim();
+    if (!cur) return null;
+    var hit = null;
+    (selMeta.options || []).forEach(function (o) {
+      if (o && String(o.value) === cur) hit = o;
+    });
+    return hit;
+  }
+
+  /* Validation thuần của selector: chưa chọn -> SELECTOR_REQUIRED;
+   * giá trị ngoài danh sách canonical (draft hỏng/sửa tay) ->
+   * SELECTOR_INVALID. Cả hai blocking. */
+  function validateSelector(docId, selMeta, store) {
+    if (!selMeta) return [];
+    var errs = [];
+    var opt = selectedSelectorOption(selMeta, store);
+    if (!opt) {
+      var raw = ((store || {}).values || {})[selMeta.key];
+      var typed = raw == null ? '' : String(raw).trim();
+      errs.push({
+        key: '@selector:' + selMeta.key,
+        docId: docId,
+        code: typed ? 'SELECTOR_INVALID' : 'SELECTOR_REQUIRED',
+        severity: 'blocking',
+        message: typed
+          ? (selMeta.label + ': giá trị "' + typed +
+             '" không thuộc danh mục cho phép - hãy chọn lại.')
+          : (selMeta.label + ': bắt buộc chọn đúng một loại trước khi kiểm '
+             + 'tra/xuất hồ sơ.')
+      });
+    }
+    return errs;
+  }
+
+  /* Flags điều kiện xuất/render suy từ selector ('X'/'' như checks) -
+   * nguồn duy nhất của payload export và renderer cond blocks. */
+  function selectorFlagsOf(docId, store) {
+    var out = {};
+    var selMeta = getFormSelector(docId);
+    if (!selMeta) return out;
+    (selMeta.options || []).forEach(function (o) {
+      if (o && o.flag) out[o.flag] = '';
+    });
+    var opt = selectedSelectorOption(selMeta, store);
+    if (opt && opt.flag) out[opt.flag] = 'X';
+    return out;
+  }
 
   /* Đăng ký/thay thế metadata form-scoped lúc RUNTIME và đánh chỉ mục như
    * các entry khai sẵn. Dùng cho test fixture (metadata giả định selector
@@ -992,6 +1076,10 @@
       else validateLegacyLoop(docId, name, info.loops[name], st, ctx, push);
     });
 
+    // Selector form-scoped (P1.2 Option D): M72 bắt buộc chọn đúng một
+    // loại hình - chưa chọn/giá trị lạ là blocking chặn export.
+    validateSelector(docId, getFormSelector(docId), st).forEach(push);
+
     return errors;
   }
 
@@ -1043,9 +1131,14 @@
   root.LOOP_META = LOOP_META;
   root.GRID_META = GRID_META;
   root.FORM_GRID_META = FORM_GRID_META;
+  root.FORM_SELECTOR_META = FORM_SELECTOR_META;
   root.getFieldMeta = getFieldMeta;
   root.getLoopMeta = getLoopMeta;
   root.getGridMeta = getGridMeta;
+  root.getFormSelector = getFormSelector;
+  root.selectedSelectorOption = selectedSelectorOption;
+  root.validateSelector = validateSelector;
+  root.selectorFlagsOf = selectorFlagsOf;
   root.registerFormGridMeta = registerFormGridMeta;
   root.evalActiveWhen = evalActiveWhen;
   root.activationModeOf = activationModeOf;

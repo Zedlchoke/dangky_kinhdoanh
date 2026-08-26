@@ -1,8 +1,9 @@
 /* test_form_grid_meta.js - P1-D "UI FORM-SCOPED GRID META" (PLAN.md mục
  * "editable-grid" + đặc tả bảng ngành):
- *  1. 5 loop PLI_M72 nhận metadata form-scoped đúng, không còn legacy path.
- *  2. Chỉ section PLI_M72 có dữ liệu mới chịu rule (required cột/ngành chính/
- *     VSIC/trùng mã); 4 section còn lại TRỐNG -> 0 lỗi blocking.
+ *  1. 5 loop PLI_M72 nhận metadata form-scoped đúng, không còn legacy path
+ *     (P1.2 Option D: activation SELECTOR valueOf 'dn.loai_hinh').
+ *  2. Chỉ section PLI_M72 ĐƯỢC CHỌN qua selector mới chịu rule (required cột/
+ *     ngành chính/VSIC/trùng mã); section còn lại -> 0 lỗi blocking.
  *  3. 4 vùng ngành PLII_M02 ĐỘC LẬP, đúng ten-tag thật từng vùng; C.3 resolve
  *     semanticKey=nganh_hien_tai -> loop ds_nganh requirePrimary riêng mẫu.
  *  4. VSIC tự ghi tên vào đúng row/loop theo autoName.nameTag (mock vsicList).
@@ -60,11 +61,14 @@ function findLoopBlock(doc, loopName) {
   return (doc.blocks || []).filter(b => b.t === 'loop' && b.loop === loopName)[0] || null;
 }
 
-/* render đúng cách app.js renderActiveDoc: gridMeta build theo docId */
+/* render đúng cách app.js renderActiveDoc: gridMeta build theo docId + flags
+ * điều kiện cond blocks (P1.2 selectorFlagsOf - M02 không có selector -> {}) */
 function renderDoc(doc, store) {
-  return R.renderBlocks(doc, store || R.newStore(), {
+  const s = store || R.newStore();
+  return R.renderBlocks(doc, s, {
     docId: doc.id, fieldMeta: FD.FIELD_META,
-    gridMeta: App.gridMetaForDoc(doc.id)
+    gridMeta: App.gridMetaForDoc(doc.id),
+    flags: FD.selectorFlagsOf(doc.id, s)
   });
 }
 
@@ -118,6 +122,9 @@ M72_LOOPS.forEach(loop => {
   check('1. PLI_M72/' + loop + ': resolver tra meta form-scoped (truoc day null)',
     !!b && !!g && !!FD.FORM_GRID_META.PLI_M72.loops[loop] &&
       g !== FD.GRID_META.ds_nganh && FD.getGridMeta(loop) === null);
+  // P1.2 Option D: activation SELECTOR theo valueOf dn.loai_hinh, mỗi loop
+  // khớp đúng MỘT giá trị canonical (không còn INTERIM minFilledRows).
+  const wantVal = loop.replace(/^ds_nganh_/, '').toUpperCase();
   check('1. PLI_M72/' + loop + ': semanticKey + sync_group + row contract',
     g.semanticKey === loop &&
       g.syncGroup === 'ds_nganh_pli_m72' &&
@@ -127,12 +134,17 @@ M72_LOOPS.forEach(loop => {
       colOf(g, 'ma_nganh').type === 'vsic' &&
       colOf(g, 'la_nganh_chinh').type === 'radio' &&
       g.requirePrimary === true &&
-      g.activeWhen && g.activeWhen.minFilledRows === 1);
+      FD.activationModeOf(g) === 'selector' &&
+      !!g.activeWhen && !!g.activeWhen.valueOf &&
+      g.activeWhen.valueOf.key === 'dn.loai_hinh' &&
+      JSON.stringify(g.activeWhen.valueOf.equals) === JSON.stringify([wantVal]));
 });
 
 {
   // chứng minh đi qua validateGridLoop (không legacy): lỗi mang key row_id
+  // P1.2: phải CHỌN DNTN thì grid ds_nganh_dntn mới active và được phét lỗi
   const st = mkStore({ ds_nganh_dntn: [{ ma_nganh: '9999', ten_nganh: 'X' }] });
+  st.values['dn.loai_hinh'] = 'DNTN';
   const errs = blockingLoopErrs(errsOf('PLI_M72', M72.blocks, st));
   check('1. PLI_M72 loop co du lieu di qua validateGridLoop (loi theo row_id)',
     errs.some(e => e.code === 'VSIC_INVALID' &&
@@ -148,12 +160,14 @@ M72_LOOPS.forEach(loop => {
     eEmpty.length === 0, JSON.stringify(eEmpty.map(e => e.key)));
 
   // chỉ 1 section có dữ liệu thiếu ngành chính -> lỗi CHỈ ở section đó
+  // (P1.2: chọn TNHH_1TV để section đó active)
   const st = mkStore({
     ds_nganh_tnhh_1tv: [
       { ma_nganh: '0111', ten_nganh: 'Trồng lúa' },
       { ma_nganh: '0112', ten_nganh: 'Trồng ngô và cây lương thực có hạt khác' }
     ]
   });
+  st.values['dn.loai_hinh'] = 'TNHH_1TV';
   const errs = errsOf('PLI_M72', M72.blocks, st);
   const pir = errs.filter(e => e.code === 'PRIMARY_INDUSTRY_REQUIRED');
   check('2. section CO du lieu chua chon nganh chinh -> PRIMARY_INDUSTRY_REQUIRED',
@@ -170,12 +184,14 @@ M72_LOOPS.forEach(loop => {
     blockingLoopErrs(errsOf('PLI_M72', M72.blocks, st)).length === 0);
 
   // trùng mã trong một section -> DUPLICATE_INDUSTRY blocking cả hai dòng
+  // (P1.2: chọn CTCP để section đó active)
   const dup = mkStore({
     ds_nganh_ctcp: [
       { ma_nganh: '0111', ten_nganh: 'Trồng lúa', la_nganh_chinh: 'X' },
       { ma_nganh: '0111', ten_nganh: 'Trồng lúa' }
     ]
   });
+  dup.values['dn.loai_hinh'] = 'CTCP';
   const dErrs = errsOf('PLI_M72', M72.blocks, dup)
     .filter(e => e.code === 'DUPLICATE_INDUSTRY');
   const ids = dup.loops.ds_nganh_ctcp.map(r => r._row_id);
@@ -261,15 +277,26 @@ M72_LOOPS.forEach(loop => {
   check('3. renderer: radio nganh chinh co o region co cot, KHONG co o sua_doi',
     /type="radio"/.test(segBoSung) && /type="radio"/.test(segXoa) &&
       /type="radio"/.test(segC3) && !/type="radio"/.test(segSua));
-  check('3. renderer M72: 5 bang deu radio + ten_nganh readonly theo meta form-scoped',
+  // renderer M72 (P1.2 Option D): chỉ biến thể ĐƯỢC CHỌN được render
+  // (cond blocks lọc theo flags) - bảng đó vẫn radio + ten_nganh readonly;
+  // 4 biến thể kia vắng mặt khỏi HTML.
+  check('3. renderer M72: chi bien the duoc chon xuat hien (radio+readonly), 4 bien the an',
     (() => {
-      const h72 = renderDoc(M72, mkStore({
+      const st72 = mkStore({
         ds_nganh_dntn: [{ ma_nganh: '0111', ten_nganh: 'T', la_nganh_chinh: 'X' }]
-      }));
-      return M72_LOOPS.every(l => {
-        const seg = loopTable(h72, l);
-        return seg && /type="radio"/.test(seg) && /\sreadonly/.test(seg);
-      }) && /checked/.test(loopTable(h72, 'ds_nganh_dntn'));
+      });
+      st72.values['dn.loai_hinh'] = 'DNTN';
+      const h72 = R.renderBlocks(M72, st72, {
+        docId: 'PLI_M72', fieldMeta: FD.FIELD_META,
+        gridMeta: App.gridMetaForDoc('PLI_M72'),
+        flags: FD.selectorFlagsOf('PLI_M72', st72)
+      });
+      const seg = loopTable(h72, 'ds_nganh_dntn');
+      return seg && /type="radio"/.test(seg) && /\sreadonly/.test(seg) &&
+        /checked/.test(seg) &&
+        M72_LOOPS.filter(l => l !== 'ds_nganh_dntn')
+          .every(l => loopTable(h72, l) === '' &&
+            h72.indexOf('data-loop="' + l + '"') < 0);
     })());
 }
 
@@ -286,6 +313,8 @@ M72_LOOPS.forEach(loop => {
   cases.forEach(c => {
     const docId = c.docId || 'PLII_M02';
     const st = mkStore({ [c.loop]: [{ ma_nganh: '0111', [c.nameTag]: 'Ten sai choi' }] });
+    // P1.2: grid M72 chỉ active (được autoName tự sửa tên) khi đã chọn biến thể
+    if (docId === 'PLI_M72') st.values['dn.loai_hinh'] = 'CTCP';
     const errs = errsOf(docId, docId === 'PLI_M72' ? M72.blocks : M02.blocks, st, VSIC_MOCK);
     const row = st.loops[c.loop][0];
     const othersOk = Object.keys(row).every(k =>
@@ -389,6 +418,7 @@ M72_LOOPS.forEach(l => runMiniContract('PLI_M72', M72, l));
     ]
   });
   const badId = st.loops.ds_nganh_dntn[1]._row_id;
+  st.values['dn.loai_hinh'] = 'DNTN'; // P1.2: chọn biến thể để grid active
   const errs = errsOf('PLI_M72', M72.blocks, st);
   const cellErr = errs.find(e => e.severity === 'blocking' &&
     e.key === 'loop:ds_nganh_dntn:' + badId + ':ma_nganh');
@@ -484,6 +514,7 @@ M72_LOOPS.forEach(l => runMiniContract('PLI_M72', M72, l));
     ],
     nganh_sua_doi_chi_tiet: [{ ma_nganh: '6201', ten_nganh: 'Lap trinh' }]
   });
+  st.values['dn.loai_hinh'] = 'CTCP'; // P1.2: chọn CTCP thì payload ds_nganh_ctcp không bị lọc
   const ex = G.exportLoops(st, ['PLI_M72']);
   const allRows = [].concat(ex.ds_nganh_ctcp || [], ex.nganh_sua_doi_chi_tiet || []);
   check('9. exportLoops(co docIds): khong con field noi bo (_*) trong payload',

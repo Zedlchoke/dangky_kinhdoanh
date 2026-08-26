@@ -900,11 +900,18 @@
         '(Chưa chọn mẫu biểu nào)</p></section>';
       return;
     }
+    // P1.2 Option D: selector metadata hồ sơ (vd M72 'Loại hình doanh
+    // nghiệp') + flags điều kiện render - block cond không thoả bị bỏ khỏi
+    // UI nên CHỈ biến thể đang chọn được render.
+    var sel = FD.getFormSelector(d.id);
+    var selHtml = sel ? R.selectorHtml(sel, R.makeAccessors(state.store)) : '';
     pages.innerHTML = '<section class="page-a4" id="doc_' + esc(d.id) +
       '" data-doc="' + esc(d.id) + '" tabindex="-1">' +
       R.renderBlocks(d, state.store, {
         docId: d.id, fieldMeta: FD.FIELD_META, gridMeta: gridMetaForDoc(d.id),
-        uiLayout: state.uiLayouts[d.id] || null
+        uiLayout: state.uiLayouts[d.id] || null,
+        flags: FD.selectorFlagsOf(d.id, state.store),
+        selectorHtml: selHtml
       }) +
       '</section>';
     applyReadonlyTotals();
@@ -1710,6 +1717,12 @@
     Object.keys(state.store.checks).forEach(function (k) {
       data[k] = state.store.checks[k] ? 'X' : '';
     });
+    // P1.2 Option D: flags điều kiện vùng DOCX (vd M72 loai_hinh_*) suy từ
+    // selector metadata của TỪNG mẫu đang chọn - engine chỉ xuất biến thể
+    // có flag 'X'; grid inactive-theo-selector đã bị exportLoops lọc rows.
+    visibleDocs().forEach(function (d) {
+      Object.assign(data, FD.selectorFlagsOf(d.id, state.store));
+    });
     // loops: bỏ _row_id/field nội bộ; la_nganh_chinh map 'X'/'' cho template
     // (đi qua GridCtl.exportLoopsStrict - chỗ duy nhất quyết định định dạng
     // payload + guard xung đột contract; resolve meta form-scoped theo các
@@ -1883,7 +1896,8 @@
     pages.addEventListener('input', function (e) {
       var t = e.target;
       var key = t.getAttribute && t.getAttribute('data-key');
-      if (!key || t.type === 'checkbox') return;
+      // checkbox/radio tự xử lý ở listener 'change' (radio = selector P1.2)
+      if (!key || t.type === 'checkbox' || t.type === 'radio') return;
       setKeyValue(key, t.value);
       mirrorKey(key, t);
       if (t.classList.contains('vsic-fld') &&
@@ -1896,6 +1910,19 @@
 
     pages.addEventListener('change', function (e) {
       var t = e.target;
+      // P1.2 Option D: selector metadata hồ sơ (vd 'dn.loai_hinh' của M72)
+      // - radio cùng name nên browser đã ép chọn đúng một; ghi giá trị
+      // canonical vào store.values rồi render lại để CHỈ biến thể được
+      // chọn hiển thị (block cond không thoả bị bỏ khỏi UI).
+      if (t.classList && t.classList.contains('sel-radio')) {
+        var sk = t.getAttribute('data-sel-key');
+        if (sk && t.value != null) {
+          state.store.values[sk] = t.value;
+          markDirty();
+          rerenderKeepView();
+        }
+        return;
+      }
       if (!t.classList || !t.classList.contains('chk-box')) return;
       var key = t.getAttribute('data-key');
       var lk = parseLoopKey(key);

@@ -506,9 +506,59 @@
     return out;
   }
 
+  // ------------------------------------- P1.2: cond blocks + selector UI
+
+  /* Block có điều kiện (converter gắn "cond": [flag,...] từ marker
+   * {?flag}/{/flag} của template): chỉ render khi MỌI flag truthy trong
+   * opts.flags. Không có cond -> luôn render (tương thích ngược 100%). */
+  function condAllows(b, flags) {
+    var c = b && b.cond;
+    if (!c || !c.length) return true;
+    flags = flags || {};
+    for (var i = 0; i < c.length; i++) {
+      if (!flags[c[i]]) return false;
+    }
+    return true;
+  }
+
+  /* HTML selector metadata hồ sơ (P1.2 Option D) - THUẦN, không biết form
+   * ID. Radio cùng name theo key => browser tự ép chọn đúng một (không thể
+   * chọn nhiều); chưa chọn = không radio nào checked. Giá trị KHÔNG ghi
+   * data-field-id kiểu ô nhập; app.js xử lý change riêng qua .sel-radio.
+   * Đây là điều khiển ứng dụng, KHÔNG phải nội dung in ra văn bản. */
+  function selectorHtml(selMeta, ac) {
+    if (!selMeta || !selMeta.key) return '';
+    var cur = ac ? String(ac.getVal(selMeta.key) || '').trim() : '';
+    var gid = 'selsel_' + sanitizeFieldId(selMeta.key);
+    var html = '<div class="doc-selector" role="radiogroup" data-sel-key="' +
+      escapeHtml(selMeta.key) + '" aria-labelledby="' + gid + '"' +
+      (selMeta.required ? ' aria-required="true"' : '') + '>';
+    html += '<div class="doc-sel-title" id="' + gid + '">' +
+      escapeHtml(selMeta.label || '') +
+      (selMeta.required ? ' <span class="req" title="Bắt buộc">*</span>' : '') +
+      '</div>';
+    (selMeta.options || []).forEach(function (o, i) {
+      if (!o || !o.value) return;
+      var rid = gid + '_opt' + i;
+      html += '<label class="doc-sel-opt"><input type="radio" class="sel-radio"' +
+        ' name="sel:' + escapeHtml(selMeta.key) + '"' +
+        ' id="' + escapeHtml(rid) + '"' +
+        ' data-sel-key="' + escapeHtml(selMeta.key) + '"' +
+        ' data-key="' + escapeHtml(selMeta.key) + '"' +
+        ' value="' + escapeHtml(o.value) + '"' +
+        (cur === String(o.value) ? ' checked' : '') +
+        '> ' + escapeHtml(o.label || o.value) + '</label>';
+    });
+    if (selMeta.help) {
+      html += '<div class="doc-sel-help">' + escapeHtml(selMeta.help) + '</div>';
+    }
+    return html + '</div>';
+  }
+
   /* Render toàn bộ một mẫu biểu thành HTML string.
    * opts tuỳ chọn: { fieldMeta: {key: meta}, gridMeta: {loop: meta},
-   * uiLayout: {grids:[...]}, docId }
+   * uiLayout: {grids:[...]}, docId, flags: {flag: bool} - điều kiện cond
+   * blocks P1.2, selectorHtml: chuỗi HTML chèn trước tờ khai }
    * — không truyền thì tương thích ngược hoàn toàn với bản cũ. */
   function renderBlocks(doc, store, opts) {
     var ac = makeAccessors(store || newStore());
@@ -518,13 +568,14 @@
       docId: (opts && opts.docId) || (doc && doc.id) || '',
       ids: {}
     };
-    var parts = (doc.blocks || []).map(function (b) {
-      return { b: b, html: renderBlock(b, ac, rctx) };
-    });
+    var parts = (doc.blocks || [])
+      .filter(function (b) { return condAllows(b, opts && opts.flags); })
+      .map(function (b) { return { b: b, html: renderBlock(b, ac, rctx) }; });
     var seq = (opts && opts.uiLayout)
       ? applyUiLayout(parts, opts.uiLayout, ac, rctx)
       : parts.map(function (p) { return p.html; });
-    return seq.join('\n');
+    var pre = (opts && opts.selectorHtml) || '';
+    return pre + seq.join('\n');
   }
 
   /* HTML cho tablist đáy (controller gắn sự kiện qua [data-doc-id]). */
@@ -638,6 +689,8 @@
   root.cloneStore = cloneStore;
   root.makeAccessors = makeAccessors;
   root.renderBlocks = renderBlocks;
+  root.condAllows = condAllows;
+  root.selectorHtml = selectorHtml;
   root.buildTabsHtml = buildTabsHtml;
   root.sanitizeFieldId = sanitizeFieldId;
   root.AUTO_KEYS = AUTO_KEYS;

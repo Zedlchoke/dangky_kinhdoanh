@@ -1,5 +1,9 @@
 # PROPOSAL: M72 Activation Contract (selector loại hình DN cho PLI_M72)
 
+> **CẬP NHẬT P1.2 (2026-08-26): OPTION D ĐÃ IMPLEMENT xong và PASS test.**
+> Xem phụ lục cuối file. Các mục 1–8 bên dưới là trạng thái TRƯỚC khi wiring,
+> giữ lại làm evidence audit.
+
 > **TRẠNG THÁI: PRODUCTION WIRING = BLOCKED** — chờ contract owner chốt
 > phương án selector + dữ liệu pháp lý. CƠ CHẾ (mechanism) đã triển khai xong,
 > test phủ, sẵn sàng nhận khai báo metadata khi owner quyết định.
@@ -169,3 +173,65 @@ nhận M72 luôn nộp kèm hồ sơ loại hình xác định.
   cầu + negative mutation-isolation + unit ưu tiên selector/interim.
 - Python (gate Lead, chạy tay xác nhận không đụng artifact):
   `python tools/test_industry_change.py` → 6 PASS / 0 FAIL.
+
+---
+
+## 9. PHỤ LỤC P1.2 — Option D đã wiring (2026-08-26, Lead)
+
+### 9.1 Quyết định nghiệp vụ đã implement
+
+Selector **"Loại hình doanh nghiệp"** là metadata hồ sơ/app (`store.values['dn.loai_hinh']`),
+KHÔNG phải nội dung pháp lý, KHÔNG render/in vào DOCX. Canonical đúng 5 giá trị:
+`DNTN, TNHH_1TV, TNHH_2TV, CTCP, DHDN`. Bắt buộc chọn đúng MỘT khi dùng M72;
+draft cũ chưa có selector bị chặn export bằng `SELECTOR_REQUIRED` (blocking),
+không tự suy đoán theo dữ liệu bảng. `minFilledRows` đã bị LOẠI khỏi production
+M72 (không còn INTERIM).
+
+### 9.2 Kiến trúc (data-driven, một nguồn chân truth)
+
+| Lớp | Cơ chế |
+|---|---|
+| Metadata selector | `FORM_SELECTOR_META['PLI_M72']` trong `form-domain.js`: key + label + help + 5 option `{value, label, flag}`; API thuần `getFormSelector/selectedSelectorOption/validateSelector/selectorFlagsOf` |
+| Mapping variant | `FORM_GRID_META.PLI_M72.loops[ds_nganh_X].activeWhen = {valueOf:{key:'dn.loai_hinh', equals:[VALUE_X]}}` → validate + export guard dùng cơ chế activeWhen đã test sẵn |
+| UI render | `render.js:selectorHtml()` (radiogroup cùng name → không thể chọn nhiều; trạng thái chưa chọn rõ ràng) + block schema mới `cond:["loai_hinh_*"]` do converter gắn → renderer chỉ render biến thể active |
+| Export payload | `buildExportData` merge `FD.selectorFlagsOf(docId, store)` (5 flag `'X'/''`) + `exportLoopsStrict` lọc rows grid inactive-theo-selector |
+| DOCX engine | `tools/docx_render.py` hỗ trợ vùng điều kiện body-level `{?flag}…{/flag}`: flag truthy → giữ nội dung bỏ marker; falsy → bỏ TOÀN vùng (kể cả văn bản pháp lý của biến thể không chọn). Sai cặp marker → `CondTagError` fail-loud |
+
+### 9.3 Template tagging
+
+`tools/tag_m72_sections.py` (idempotent) gắn 16 marker vào
+`app/templates/PLI_M72.docx`: 10 marker bọc 5 section loại hình (ranh giới =
+các paragraph `(TÊN …)`), 6 marker bọc 3 dòng ghi chú chân trang theo đúng
+biến thể chứa superscript 1/2/3 ("của công ty¹/²/³" — bằng chứng cấu trúc;
+dòng số 1 mất số ở nguồn, xác định theo vị trí). Khối cuối tài liệu (dòng gạch
+dưới + đoạn trắng) là nội dung dùng chung, CHƯA bọc — chờ owner xác nhận.
+Khai báo canonical nằm ở `tools/form_specs/change/PLI_M72.json` →
+`section_cond`; Node test đối chiếu chéo JS meta ↔ spec JSON.
+
+### 9.4 Test evidence
+
+- Node mới: `app_web/test_p12_m72_selector.js` — 38 PASS (contract meta,
+  đối chiếu spec, validation selector, flags, render isolation trên blocks
+  thật, export isolation, draft cũ, negative).
+- Python mới: `tools/test_m72_conditional_export.py` — 6 PASS: mỗi biến thể
+  render ra DOCX chỉ chứa section của mình (heading, bảng STT 1..n, đúng một
+  X, footnote luật theo biến thể); không chọn flag nào → chỉ còn phần chung,
+  0 bảng; 0 tag sót.
+- Verifier viết lại: `tools/census/p1_b_verify_m72.py` — 9 PASS: cấu trúc
+  template thật (5 w:tbl, header 4 cột, {_stt}, loop pair đúng thứ tự, 16
+  marker đúng sequence) + 6 negative mutation bắt đúng mã lỗi
+  (HEADER_MISSING_COL / WRONG_LOOP_ORDER / LOOP_TAG_CROSS_CONTAMINATION /
+  COND_SECTION_MISMATCH / COND_SEQUENCE_BROKEN / COND_MARKER_IN_TABLE).
+- Full regression tại merge e88315a..8dae0f8: 13 Node suite + bộ Python
+  industry/audit/contract + compileall + manifest gate layout 87/87 đều PASS.
+
+### 9.5 Điểm cần owner quyết định tiếp
+
+1. Dòng gạch dưới cuối + đoạn trắng sau section HỢP DANH: giữ dùng chung cho
+   mọi biến thể (hiện trạng) hay gắn vào biến thể nào đó?
+2. Ghi chú chân trang số 1 đã mất chữ số ở file nguồn — có cần khôi phục ký
+   hiệu chú thích không (hiện bọc theo vị trí)?
+3. Bảng ngành của biến thể active hiện `required:false/minRows:0` (giữ nguyên
+   hiện trạng trước P1.2) — có bắt buộc ≥1 ngành khi công bố thành lập không?
+4. Các lưới thành viên/cổ đông nested-grid trong từng biến thể vẫn
+   BLOCKED_LEGAL_REVIEW (ngoài phạm vi 5 loại hình đã chốt).

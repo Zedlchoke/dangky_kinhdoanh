@@ -7,24 +7,39 @@ các ô giữa là {tag_cot}. Biến đặc biệt {_stt} trong hàng khuôn là
 (1-based theo thứ tự dòng dữ liệu, engine render thay khi nhân bản hàng),
 không được tính là cột dữ liệu trong cols.
 
-Schema JSON đầu ra:
+Schema JSON đầu ra (blocks-v3 — mọi trường mới đều OPTIONAL, chỉ emit khi khác
+default; block cũ thiếu role/format/vertAlign vẫn hợp lệ hoàn toàn):
 {
   "id": "PLI_M02",
   "ten_mau": "...",            # lấy từ app/data/form_maps.json
-  "blocks": [
-    {"t":"p", "align":"left|center|right", "runs":[
-        {"text":"..."},
-        {"input":{"key":"dn.ten_tieng_viet","w":40}},
-        {"input":{"key":"chk_x","chk":true}}     # chk lồng trong paragraph dài
-    ]},
-    {"t":"chk", "label":"...", "key":"chk_x"},   # paragraph chỉ gồm chk + nhãn ngắn
-    {"t":"table", "widths":null, "rows":[
-        {"cells":[{"runs":[...], "colspan":1, "rowspan":1}]}
-    ]},
-    {"t":"loop", "loop":"ds_thanh_vien", "headerRows":[0],
-     "cols":[{"col":1,"tag":"ho_ten"}], "blankRows":4, "rows":[...]}
-  ]
+  "blocks": [...],
+  "v": 3                       # schema version (L1): 1 block mới có thể có
+                               # "role"/"format"/"footnotes", run mới có thể có
+                               # "vertAlign"/"role":"footnote-ref"
 }
+Block "p":
+{"t":"p", "align":"left|center|right",
+ "role": "...",               # optional, tools/layout_roles.py; thiếu = "body"
+ "format": {...},             # optional, chỉ khi khác default:
+                              # leftIndentPt/rightIndentPt/firstLineIndentPt/
+                              # spaceBeforePt/spaceAfterPt (EMU→pt, làm tròn 1),
+                              # lineSpacing (bội, vd 1.15) | lineSpacingPt
+                              # (exact/at-least), keepWithNext=true
+ "footnotes": {"7": "chú thích…"},  # optional, id→text từ word/footnotes.xml
+ "runs":[
+    {"text":"..."},                          # \n từ <w:br/>/<w:cr/>, \t từ
+                                             # <w:tab/> được giữ nguyên ký tự
+    {"text":"1","vertAlign":"superscript"},  # hoặc "subscript"
+    {"role":"footnote-ref","footnoteId":7},  # <w:footnoteReference w:id="7"/>
+    {"input":{"key":"dn.ten_tieng_viet","w":40}},
+    {"input":{"key":"chk_x","chk":true}}     # chk lồng trong paragraph dài
+ ]}
+{"t":"chk", "label":"...", "key":"chk_x"},   # paragraph chỉ gồm chk + nhãn ngắn
+{"t":"table", "widths":null, "rows":[
+    {"cells":[{"runs":[...], "colspan":1, "rowspan":1}]}
+]},
+{"t":"loop", "loop":"ds_thanh_vien", "headerRows":[0],
+ "cols":[{"col":1,"tag":"ho_ten"}], "blankRows":4, "rows":[...]}
 
 Chạy:
     python -X utf8 tools/docx_to_blocks.py              # chuyển cả 87 file + tự kiểm định
@@ -34,6 +49,7 @@ from __future__ import annotations
 
 import io
 import json
+import os
 import random
 import re
 import sys
@@ -44,8 +60,13 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 from docx import Document
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml.ns import qn
+from docx.shared import Length
 from docx.table import Table
 from docx.text.paragraph import Paragraph
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+import layout_roles
 
 ROOT = Path(__file__).resolve().parent.parent
 TEMPLATES_DIR = ROOT / "app" / "templates"
@@ -86,62 +107,130 @@ def _run_flags(run):
     return bool(run.bold), bool(run.italic), bool(run.underline)
 
 
+def _run_vert_align(run):
+    """'superscript'|'subscript' từ w:rPr/w:vertAlign, None nếu không có."""
+    rPr = run._element.rPr
+    if rPr is None:
+        return None
+    va = rPr.find(qn("w:vertAlign"))
+    if va is None:
+        return None
+    val = va.get(qn("w:val"))
+    return val if val in ("superscript", "subscript") else None
+
+
+# python-docx 1.2.0 (docx/oxml/text/run.py CT_R.text) map các con của w:r
+# thành ký tự: w:t -> text; w:br, w:cr -> "\n"; w:tab -> "\t";
+# w:noBreakHyphen -> "-"; w:ptab -> "\t". _char_stream dựng lại ĐÚNG chuỗi đó
+# kèm metadata từng ký tự và vị trí footnoteReference.
+_CHAR_STREAM_TAGS = {
+    qn("w:t"),
+    qn("w:br"),
+    qn("w:cr"),
+    qn("w:tab"),
+    qn("w:noBreakHyphen"),
+    qn("w:ptab"),
+}
+
+
+def _char_stream(p: Paragraph):
+    """Dựng dòng ký tự của paragraph với metadata mỗi ký tự.
+
+    Trả về (chars, footnote_refs):
+      chars: list[(ch, meta)], meta = (b, i, u, vertAlign)
+      footnote_refs: list[(pos, id)] — pos là vị trí chèn trong stream
+    """
+    chars: list[tuple] = []
+    fn_refs: list[tuple] = []
+    for r in p.runs:
+        b, i_, u = _run_flags(r)
+        meta = (b, i_, u, _run_vert_align(r))
+        for child in r._element:
+            tag = child.tag
+            if tag not in _CHAR_STREAM_TAGS:
+                if tag == qn("w:footnoteReference"):
+                    try:
+                        fid = int(child.get(qn("w:id")))
+                    except (TypeError, ValueError):
+                        continue  # fail-soft: thiếu id thì bỏ qua ref này
+                    fn_refs.append((len(chars), fid))
+                continue  # rPr & con khác không sinh text (như Run.text)
+            if tag == qn("w:t"):
+                txt = child.text or ""
+                for ch in txt:
+                    chars.append((ch, meta))
+            elif tag == qn("w:br") or tag == qn("w:cr"):
+                chars.append(("\n", meta))
+            elif tag == qn("w:noBreakHyphen"):
+                chars.append(("-", meta))
+            else:  # w:tab / w:ptab
+                chars.append(("\t", meta))
+    return chars, fn_refs
+
+
 def build_runs(p: Paragraph) -> list[dict]:
-    """Tách paragraph thành runs: gộp text liền nhau không chứa the,
-    tách run tại mỗi the; the chk -> input.chk=true, the thường -> input.key + w."""
-    runs = p.runs
-    full = "".join(r.text for r in runs)
-    # offset bắt đầu của từng run trong full
-    bounds = []
-    off = 0
-    for r in runs:
-        bounds.append(off)
-        off += len(r.text)
+    """Tách paragraph thành runs: gộp text liền nhau cùng metadata (b/i/u +
+    vertAlign), tách run tại mỗi the; the chk -> input.chk=true, the thường ->
+    input.key + w. <w:footnoteReference> -> run {"role":"footnote-ref",
+    "footnoteId":N} giữ đúng vị trí tương đối.
 
-    def flags_at(pos: int):
-        for i in range(len(bounds) - 1, -1, -1):
-            if bounds[i] <= pos:
-                return _run_flags(runs[i])
-        return (False, False, False)
-
+    Chuỗi text đầu ra khớp chính xác "".join(r.text ...) của python-docx
+    (hard break \n và tab \t được bảo toàn, KHÔNG collapse).
+    """
+    chars, fn_refs = _char_stream(p)
+    full = "".join(c for c, _meta in chars)
+    n = len(chars)
     out: list[dict] = []
-    plain_buf: list[str] = []  # các đoạn text thường liền nhau
 
-    def flush_plain():
-        if plain_buf:
-            b, i, u = flags_at(plain_start[0])
-            run = {"text": "".join(plain_buf)}
+    def emit_text(s: int, e: int) -> None:
+        while s < e:
+            j = s + 1
+            while j < e and chars[j][1] == chars[s][1]:
+                j += 1
+            b, i_, u, va = chars[s][1]
+            run = {"text": full[s:j]}
             if b:
                 run["b"] = True
-            if i:
+            if i_:
                 run["i"] = True
             if u:
                 run["u"] = True
+            if va:
+                run["vertAlign"] = va
             out.append(run)
-            plain_buf.clear()
+            s = j
 
-    plain_start = [0]
-    prev_end = 0
-    for m in TAG_RE.finditer(full):
-        seg = full[prev_end:m.start()]
-        if seg:
-            plain_start[0] = prev_end
-            plain_buf.append(seg)
-        flush_plain()
+    tags = list(TAG_RE.finditer(full))
+    fns = sorted(fn_refs)
+    ti = fi = 0
+    cur = 0
+    prev_tag_end = 0
+    while True:
+        nxt_tag = tags[ti].start() if ti < len(tags) else None
+        nxt_fn = fns[fi][0] if fi < len(fns) else None
+        if nxt_tag is None and nxt_fn is None:
+            emit_text(cur, n)
+            break
+        # footnote-ref đứng trước tag/text tại cùng vị trí (zero-width)
+        if nxt_fn is not None and (nxt_tag is None or nxt_fn <= nxt_tag):
+            emit_text(cur, nxt_fn)
+            out.append({"role": "footnote-ref", "footnoteId": fns[fi][1]})
+            fi += 1
+            cur = nxt_fn
+            continue
+        m = tags[ti]
+        emit_text(cur, m.start())
         key = m.group(1)
-        # nhãn trước the = đoạn text từ sau the trước đến the này
-        label_len = m.start() - prev_end
+        # nhãn trước the = khoảng cách từ the trước đến the này (giữ nguyên
+        # công thức cũ để output w không đổi với template hiện có)
+        label_len = m.start() - prev_tag_end
         w = min(60, max(12, label_len // 2 + 8))
         if key.startswith(CHK_PREFIX):
             out.append({"input": {"key": key, "chk": True}})
         else:
             out.append({"input": {"key": key, "w": w}})
-        prev_end = m.end()
-    seg = full[prev_end:]
-    if seg:
-        plain_start[0] = prev_end
-        plain_buf.append(seg)
-    flush_plain()
+        cur = prev_tag_end = m.end()
+        ti += 1
     return out
 
 
@@ -158,13 +247,98 @@ def _align_of(p: Paragraph) -> str:
     return "left"
 
 
+_EMU_PER_PT = 12700
+
+
+def _len_pt(length) -> float | None:
+    """EMU (docx.shared.Length) -> pt làm tròn 1 số thập phân."""
+    if length is None:
+        return None
+    return round(int(length) / _EMU_PER_PT, 1)
+
+
+def _para_format_dict(p: Paragraph) -> dict | None:
+    """Paragraph format khác default mới emit (schema blocks-v3)."""
+    pf = p.paragraph_format
+    fmt: dict = {}
+    for key, val in (
+        ("leftIndentPt", pf.left_indent),
+        ("rightIndentPt", pf.right_indent),
+        ("firstLineIndentPt", pf.first_line_indent),
+        ("spaceBeforePt", pf.space_before),
+        ("spaceAfterPt", pf.space_after),
+    ):
+        pt = _len_pt(val)
+        if pt:  # None hoặc 0 = mặc định -> bỏ
+            fmt[key] = pt
+    ls = pf.line_spacing
+    if ls is not None:
+        if isinstance(ls, Length):  # exact/at-least (twips) -> pt
+            pt = _len_pt(ls)
+            if pt:
+                fmt["lineSpacingPt"] = pt
+        elif abs(float(ls) - 1.0) > 1e-9:  # bội dòng, vd 1.15
+            fmt["lineSpacing"] = round(float(ls), 2)
+    if pf.keep_with_next:
+        fmt["keepWithNext"] = True
+    return fmt or None
+
+
+# ---------------------------------------------------------------------------
+# Override role tường minh (tools/layout_role_overrides.json)
+# ---------------------------------------------------------------------------
+
+OVERRIDES_PATH = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), "layout_role_overrides.json"
+)
+
+
+def load_role_overrides(path=None) -> dict:
+    """Đọc override JSON; file rỗng {} = dùng rule thuần.
+
+    Shape hỗ trợ (tất cả optional):
+      {"by_index": {FORM_ID: {"<block_index_cấp_thân>": role}},
+       "by_folded_prefix": [{"prefix": "...", "role": "...",
+                             "forms": ["PLI_M01"]}]}   # bỏ "forms" = mọi form
+    """
+    p = path or OVERRIDES_PATH
+    try:
+        with io.open(p, "r", encoding="utf-8-sig") as fh:
+            data = json.load(fh)
+        return data if isinstance(data, dict) else {}
+    except (OSError, ValueError):
+        return {}  # fail-soft: override hỏng/thiếu không được phá converter
+
+
+def apply_role_override(overrides, fid, body_para_index, text_folded, role):
+    """Áp override tường minh (ưu tiên index theo form, rồi prefix gập dấu)."""
+    form_map = (overrides.get("by_index") or {}).get(fid or "", {})
+    hit = form_map.get(str(body_para_index)) if form_map else None
+    if isinstance(hit, str) and hit in layout_roles.ROLES:
+        return hit
+    for entry in overrides.get("by_folded_prefix") or []:
+        if not isinstance(entry, dict):
+            continue
+        forms = entry.get("forms")
+        if forms and fid not in forms:
+            continue
+        prefix = entry.get("prefix")
+        if isinstance(prefix, str) and text_folded.startswith(prefix):
+            r = entry.get("role")
+            if isinstance(r, str) and r in layout_roles.ROLES:
+                return r
+    return role
+
+
 # ---------------------------------------------------------------------------
 # Body paragraph -> block (p hoặc chk)
 # ---------------------------------------------------------------------------
 
-def para_block(p: Paragraph, prev_block_ref: dict) -> list[dict]:
+def para_block(p: Paragraph, prev_block_ref: dict, ctx: dict | None = None) -> list[dict]:
     """Trả về list block cho 1 paragraph ở thân tài liệu.
-    prev_block_ref: {'block': dict|None} để lấy nhãn cho chk đứng một mình."""
+    prev_block_ref: {'block': dict|None} để lấy nhãn cho chk đứng một mình.
+    ctx (optional): {'form_id', 'body_para_index', 'footnotes', 'overrides'}
+    — dùng để gắn role/format/footnotes cho block "p" (schema blocks-v3)."""
     runs = build_runs(p)
     keys = [r["input"]["key"] for r in runs if "input" in r]
     rest = para_text_no_tags(p).strip()
@@ -217,7 +391,41 @@ def para_block(p: Paragraph, prev_block_ref: dict) -> list[dict]:
                 blocks.append({"t": "chk", "label": label, "key": k})
         return blocks
 
-    return [{"t": "p", "align": _align_of(p), "runs": runs}]
+    blk = {"t": "p", "align": _align_of(p), "runs": runs}
+    _attach_layout_metadata(blk, p, runs, ctx)
+    return [blk]
+
+
+def _attach_layout_metadata(blk: dict, p: Paragraph, runs: list, ctx: dict | None):
+    """Gắn role/format/footnotes (blocks-v3) — chỉ khi khác default."""
+    ctx = ctx or {}
+    fmt = _para_format_dict(p)
+    if fmt:
+        blk["format"] = fmt
+
+    raw_full = "".join(r.get("text", "") for r in runs if "text" in r)
+    folded = layout_roles.fold(raw_full)
+    role = layout_roles.classify_role(folded, fmt, runs)
+    role = apply_role_override(
+        ctx.get("overrides") or {}, ctx.get("form_id"),
+        ctx.get("body_para_index"), folded, role,
+    )
+    # blocks-v3: MỌI block "p" đều có role tường minh (kể cả "body") để L2
+    # không phải regex lại văn bản; block cũ thiếu role vẫn hợp lệ (= body).
+    blk["role"] = role
+
+    fn_texts = ctx.get("footnotes")
+    if fn_texts:
+        ids = sorted(
+            {
+                r["footnoteId"]
+                for r in runs
+                if r.get("role") == "footnote-ref" and "footnoteId" in r
+            }
+        )
+        present = {str(i): fn_texts[i] for i in ids if i in fn_texts}
+        if present:  # id không tìm thấy text vẫn giữ ở run (fail-soft)
+            blk["footnotes"] = present
 
 
 # ---------------------------------------------------------------------------
@@ -389,14 +597,57 @@ def table_block(tbl: Table) -> dict:
 # Chuyển 1 file
 # ---------------------------------------------------------------------------
 
-def convert(fid: str, form_maps: dict) -> dict:
-    path = TEMPLATES_DIR / ("%s.docx" % fid)
-    doc = Document(str(path))
-    ten_mau = form_maps.get(fid, {}).get("ten_mau", "")
+def load_footnotes(doc) -> dict:
+    """Đọc text chú thích từ word/footnotes.xml (python-docx 1.2.0 không có
+    API — truy cập part qua package). Trả về {id: text}; bỏ id <= 0
+    (separator/continuation). Fail-soft: thiếu part -> {}."""
+    out: dict = {}
+    try:
+        parts = list(doc.part.package.iter_parts())
+    except Exception:  # noqa: BLE001
+        return out
+    for part in parts:
+        name = str(part.partname)
+        if not name.endswith("/footnotes.xml") and name != "/word/footnotes.xml":
+            continue
+        try:
+            from lxml import etree
 
+            root = etree.fromstring(part.blob)
+            for el in root.iter(qn("w:footnote")):
+                raw = el.get(qn("w:id"))
+                try:
+                    fid = int(raw)
+                except (TypeError, ValueError):
+                    continue
+                if fid < 1:
+                    continue
+                txt = "".join(t.text or "" for t in el.iter(qn("w:t")))
+                txt = txt.strip()
+                if txt:
+                    out.setdefault(fid, txt)
+        except Exception:  # noqa: BLE001
+            continue  # part hỏng -> coi như không có footnote text
+    return out
+
+
+def convert_document(
+    doc, fid: str, ten_mau: str, overrides: dict | None = None,
+    footnotes: dict | None = None,
+) -> dict:
+    """Chuyển một Document đã mở thành block JSON (không IO file).
+
+    Tách riêng để test dựng fixture DOCX trong temp và gọi trực tiếp.
+    """
     blocks: list[dict] = []
     prev_ref = {"block": None, "consumed": False, "emitted": blocks}
     cond_stack: list[str] = []  # flag đang mở theo thứ tự (lồng nhau = AND)
+    ctx = {
+        "form_id": fid,
+        "footnotes": footnotes if footnotes is not None else {},
+        "overrides": overrides or {},
+        "body_para_index": -1,
+    }
 
     def _attach_cond(b: dict) -> dict:
         if cond_stack:
@@ -405,6 +656,7 @@ def convert(fid: str, form_maps: dict) -> dict:
 
     for kind, obj in iter_blocks(doc):
         if kind == "p":
+            ctx["body_para_index"] += 1
             full = _para_full_text(obj).strip()
             mo = COND_OPEN_FULL_RE.match(full)
             mc = COND_CLOSE_FULL_RE.match(full)
@@ -419,7 +671,7 @@ def convert(fid: str, form_maps: dict) -> dict:
                         % (fid, name, cond_stack))
                 cond_stack.pop()
                 continue
-            new_blocks = para_block(obj, prev_ref)
+            new_blocks = para_block(obj, prev_ref, ctx)
             blocks.extend(_attach_cond(b) for b in new_blocks)
             prev_ref["block"] = new_blocks[-1] if new_blocks else prev_ref["block"]
             if not new_blocks:
@@ -438,7 +690,21 @@ def convert(fid: str, form_maps: dict) -> dict:
         raise ValueError(
             "%s: marker {?%s} không được đóng trong template" % (fid, cond_stack[-1]))
 
-    return {"id": fid, "ten_mau": ten_mau, "blocks": blocks}
+    return {"id": fid, "ten_mau": ten_mau, "blocks": blocks, "v": SCHEMA_VERSION}
+
+
+SCHEMA_VERSION = 3
+
+
+def convert(fid: str, form_maps: dict, overrides: dict | None = None) -> dict:
+    path = TEMPLATES_DIR / ("%s.docx" % fid)
+    doc = Document(str(path))
+    ten_mau = form_maps.get(fid, {}).get("ten_mau", "")
+    return convert_document(
+        doc, fid, ten_mau,
+        overrides=overrides if overrides is not None else load_role_overrides(),
+        footnotes=load_footnotes(doc),
+    )
 
 
 # ---------------------------------------------------------------------------

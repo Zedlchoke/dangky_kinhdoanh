@@ -9,7 +9,8 @@
     {
      "text": "PL2 - Mau so 8: Thông báo về cơ quan thuế quản lý trực tiếp hộ kinh doanh"
     }
-   ]
+   ],
+   "role": "source-indicator"
   },
   {
    "t": "p",
@@ -18,7 +19,8 @@
     {
      "text": "Mẫu số 8"
     }
-   ]
+   ],
+   "role": "form-number"
   },
   {
    "t": "p",
@@ -28,7 +30,11 @@
      "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH\nCẤP XÃ\n----------",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle"
   },
   {
    "t": "p",
@@ -38,7 +44,11 @@
      "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc\n-----------------",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "national-header"
   },
   {
    "t": "p",
@@ -53,7 +63,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -95,7 +109,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "date-line"
   },
   {
    "t": "p",
@@ -105,7 +123,11 @@
      "text": "THÔNG BÁO",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-title"
   },
   {
    "t": "p",
@@ -115,7 +137,11 @@
      "text": "Về cơ quan thuế quản lý trực tiếp hộ kinh doanh",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -124,7 +150,11 @@
     {
      "text": "Kính gửi:"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "salutation"
   },
   {
    "t": "p",
@@ -134,7 +164,11 @@
      "text": "(Tên hộ kinh doanh) ",
      "i": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -143,7 +177,11 @@
     {
      "text": "Trụ sở của hộ kinh doanh:"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -152,14 +190,25 @@
     {
      "text": "Mã số hộ kinh doanh:"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "(Cơ quan đăng ký kinh doanh cấp xã) "
+     "text": "("
+    },
+    {
+     "text": "Cơ quan đăng ký kinh doanh cấp xã",
+     "i": true
+    },
+    {
+     "text": ") "
     },
     {
      "input": {
@@ -167,7 +216,11 @@
       "w": 26
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -182,7 +235,11 @@
       "w": 16
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -206,7 +263,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -230,16 +291,31 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Căn cứ thông tin do cơ quan thuế cung cấp, (Cơ quan đăng ký kinh doanh cấp xã) xin thông báo về cơ quan thuế quản lý trực tiếp hộ kinh doanh như sau:"
+     "text": "Căn cứ thông tin do cơ quan thuế cung cấp, "
+    },
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp xã)",
+     "i": true
+    },
+    {
+     "text": " xin thông báo về cơ quan thuế quản lý trực tiếp hộ kinh doanh như sau:"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -254,7 +330,11 @@
       "w": 33
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -263,16 +343,23 @@
     {
      "text": "Đề nghị hộ kinh doanh liên hệ với cơ quan thuế quản lý trực tiếp để kê khai, nộp thuế theo quy định."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "\nNơi nhận:\n- Như trên;\n- ",
+     "text": "\nNơi nhận:\n",
      "b": true,
      "i": true
+    },
+    {
+     "text": "- Như trên;\n- "
     },
     {
      "input": {
@@ -289,17 +376,30 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "center",
    "runs": [
     {
-     "text": "TRƯỞNG PHÒNG\n(Ký, ghi họ tên và đóng dấu)",
+     "text": "TRƯỞNG PHÒNG\n",
      "b": true
+    },
+    {
+     "text": "(Ký, ghi họ tên và đóng dấu)",
+     "i": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   }
- ]
+ ],
+ "v": 3
 }

@@ -10,7 +10,11 @@
      "text": "Mẫu số 18",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-number"
   },
   {
    "t": "p",
@@ -20,7 +24,11 @@
      "text": "TÊN DOANH NGHIỆP\n-------",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle"
   },
   {
    "t": "p",
@@ -30,7 +38,11 @@
      "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc\n---------------",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "national-header"
   },
   {
    "t": "p",
@@ -45,7 +57,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -87,7 +103,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "date-line"
   },
   {
    "t": "p",
@@ -97,7 +117,11 @@
      "text": "THÔNG BÁO",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-title"
   },
   {
    "t": "p",
@@ -107,14 +131,22 @@
      "text": "Về việc lập chi nhánh/văn phòng đại diện ở nước ngoài",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "center",
    "runs": [
     {
-     "text": "Kính gửi: (Cơ quan đăng ký kinh doanh cấp tỉnh) "
+     "text": "Kính gửi: "
+    },
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp tỉnh) ",
+     "i": true
     },
     {
      "input": {
@@ -122,14 +154,25 @@
       "w": 32
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "salutation"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Tên doanh nghiệp (ghi bằng chữ in hoa): "
+     "text": "Tên doanh nghiệp ("
+    },
+    {
+     "text": "ghi bằng chữ in hoa",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -137,7 +180,11 @@
       "w": 28
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -152,7 +199,11 @@
       "w": 23
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -162,7 +213,11 @@
      "text": "Thông báo về việc lập chi nhánh/\nvăn phòng đại diện ở nước ngoài như sau:",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -172,14 +227,25 @@
      "text": "1. Tên chi nhánh/văn phòng đại diện ",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Tên chi nhánh/văn phòng đại diện tại nước ngoài (ghi bằng chữ in hoa): \t"
+     "text": "Tên chi nhánh/văn phòng đại diện tại nước ngoài ("
+    },
+    {
+     "text": "ghi bằng chữ in hoa",
+     "i": true
+    },
+    {
+     "text": "): \t"
     },
     {
      "input": {
@@ -187,14 +253,25 @@
       "w": 44
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Tên chi nhánh/văn phòng đại diện viết bằng tiếng Việt (nếu có): "
+     "text": "Tên chi nhánh/văn phòng đại diện viết bằng tiếng Việt ("
+    },
+    {
+     "text": "nếu có",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -202,14 +279,25 @@
       "w": 40
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Tên chi nhánh/văn phòng đại diện viết tắt (nếu có): "
+     "text": "Tên chi nhánh/văn phòng đại diện viết tắt ("
+    },
+    {
+     "text": "nếu có",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -217,17 +305,35 @@
       "w": 34
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "2. Địa chỉ chi nhánh/văn phòng đại diện: ",
+     "text": "2. Địa chỉ",
      "b": true
+    },
+    {
+     "text": " "
+    },
+    {
+     "text": "chi nhánh/văn phòng đại diện",
+     "b": true
+    },
+    {
+     "text": ": "
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
@@ -239,14 +345,25 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Điện thoại (nếu có): "
+     "text": "Điện thoại ("
+    },
+    {
+     "text": "nếu có",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -255,7 +372,14 @@
      }
     },
     {
-     "text": " Số fax (nếu có): "
+     "text": " Số fax ("
+    },
+    {
+     "text": "nếu có",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -263,14 +387,25 @@
       "w": 17
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Thư điện tử (nếu có): "
+     "text": "Thư điện tử ("
+    },
+    {
+     "text": "nếu có",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -279,7 +414,14 @@
      }
     },
     {
-     "text": " Website (nếu có): "
+     "text": " Website ("
+    },
+    {
+     "text": "nếu có",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -287,15 +429,22 @@
       "w": 17
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "3. Số Giấy chứng nhận hoạt động chi nhánh/văn phòng đại diện hoặc giấy tờ tương đương khác: ",
+     "text": "3. Số Giấy chứng nhận hoạt động chi nhánh/văn phòng đại diện hoặc giấy tờ tương đương khác",
      "b": true
+    },
+    {
+     "text": ": "
     },
     {
      "input": {
@@ -303,7 +452,11 @@
       "w": 54
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
@@ -327,7 +480,11 @@
       "w": 13
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -337,23 +494,45 @@
      "text": "4. Ngành, nghề kinh doanh, nội dung hoạt động:",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "a) Ngành, nghề kinh doanh (đối với chi nhánh): …………………………………………….."
+     "text": "a) Ngành, nghề kinh doanh ("
+    },
+    {
+     "text": "đối với chi nhánh",
+     "i": true
+    },
+    {
+     "text": "): …………………………………………….."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "b) Nội dung hoạt động (đối với văn phòng đại diện): "
+     "text": "b) Nội dung hoạt động ("
+    },
+    {
+     "text": "đối với văn phòng đại diện",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -361,7 +540,11 @@
       "w": 34
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
@@ -371,16 +554,31 @@
      "text": "5. Người đứng đầu chi nhánh/văn phòng đại diện: ",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Họ, chữ đệm và tên người đứng đầu (ghi bằng chữ in hoa): \t"
+     "text": "Họ, chữ đệm và tên người đứng đầu ("
+    },
+    {
+     "text": "ghi bằng chữ in hoa",
+     "i": true
+    },
+    {
+     "text": "): \t"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -416,7 +614,11 @@
     {
      "text": "\t"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "date-line"
   },
   {
    "t": "p",
@@ -431,7 +633,11 @@
       "w": 13
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -446,7 +652,11 @@
       "w": 19
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -455,7 +665,11 @@
     {
      "text": "Địa chỉ liên lạc:"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -470,7 +684,11 @@
       "w": 42
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -485,7 +703,11 @@
       "w": 17
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -500,7 +722,11 @@
       "w": 27
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -515,14 +741,25 @@
       "w": 13
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Điện thoại (nếu có): "
+     "text": "Điện thoại"
+    },
+    {
+     "text": " (nếu có)",
+     "i": true
+    },
+    {
+     "text": ": "
     },
     {
      "input": {
@@ -531,7 +768,14 @@
      }
     },
     {
-     "text": " Thư điện tử (nếu có): "
+     "text": " Thư điện tử"
+    },
+    {
+     "text": " (nếu có)",
+     "i": true
+    },
+    {
+     "text": ": "
     },
     {
      "input": {
@@ -539,7 +783,11 @@
       "w": 19
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -549,7 +797,11 @@
      "text": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở dữ liệu quốc gia về dân cư bị gián đoạn thì đề nghị kê khai các thông tin cá nhân dưới đây:",
      "i": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -576,14 +828,32 @@
     {
      "text": " "
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Số Hộ chiếu (đối với cá nhân Việt Nam không có số định danh cá nhân)/Số Hộ chiếu nước ngoài hoặc giấy tờ có giá trị thay thế hộ chiếu nước ngoài (đối với cá nhân là người nước ngoài): "
+     "text": "Số Hộ chiếu ("
+    },
+    {
+     "text": "đối với cá nhân Việt Nam không có số định danh cá nhân",
+     "i": true
+    },
+    {
+     "text": ")/Số Hộ chiếu nước ngoài hoặc giấy tờ có giá trị thay thế hộ chiếu nước ngoài ("
+    },
+    {
+     "text": "đối với cá nhân là người nước ngoài",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -591,7 +861,11 @@
       "w": 60
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -618,7 +892,11 @@
     {
      "text": " \t"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -627,7 +905,11 @@
     {
      "text": "Nơi thường trú:"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -642,7 +924,11 @@
       "w": 42
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -657,7 +943,11 @@
       "w": 17
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -672,7 +962,11 @@
       "w": 27
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -687,7 +981,11 @@
       "w": 13
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -696,7 +994,11 @@
     {
      "text": "Doanh nghiệp cam kết hoàn toàn chịu trách nhiệm trước pháp luật về tính hợp pháp, chính xác và trung thực của nội dung Thông báo này."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -705,26 +1007,50 @@
     {
      "text": "Người ký tại Thông báo này cam kết là người có quyền và nghĩa vụ thực hiện thủ tục đăng ký doanh nghiệp theo quy định của pháp luật và Điều lệ công ty."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "center",
    "runs": [
     {
-     "text": "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT\nCỦA DOANH NGHIỆP\n(Ký và ghi họ tên)1",
+     "text": "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT\nCỦA DOANH NGHIỆP\n",
      "b": true
+    },
+    {
+     "text": "("
+    },
+    {
+     "text": "Ký và ghi họ tên)",
+     "i": true
+    },
+    {
+     "text": "1",
+     "vertAlign": "superscript"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "signature"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "________________________________________"
+     "text": "________________________________________",
+     "vertAlign": "superscript"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "national-separator"
   },
   {
    "t": "p",
@@ -733,7 +1059,11 @@
     {
      "text": " - Người đại diện theo pháp luật của doanh nghiệp ký trực tiếp vào phần này. "
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -742,7 +1072,12 @@
     {
      "text": "- Trường hợp Tòa án hoặc Trọng tài chỉ định người thực hiện thủ tục đăng ký doanh nghiệp thì người được chỉ định ký trực tiếp vào phần này."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   }
- ]
+ ],
+ "v": 3
 }

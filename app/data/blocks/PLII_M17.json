@@ -9,7 +9,8 @@
     {
      "text": "PL2 - Mau so 17: Giấy tiếp nhận hồ sơ và hẹn trả kết quả hồ sơ đăng ký hộ kinh doanh"
     }
-   ]
+   ],
+   "role": "source-indicator"
   },
   {
    "t": "p",
@@ -18,7 +19,8 @@
     {
      "text": "Mẫu số 17"
     }
-   ]
+   ],
+   "role": "form-number"
   },
   {
    "t": "p",
@@ -28,7 +30,11 @@
      "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH\nCẤP XÃ\n-----------",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle"
   },
   {
    "t": "p",
@@ -38,7 +44,11 @@
      "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc\n------------------",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "national-header"
   },
   {
    "t": "p",
@@ -53,7 +63,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -95,7 +109,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "date-line"
   },
   {
    "t": "p",
@@ -105,7 +123,11 @@
      "text": "GIẤY TIẾP NHẬN HỒ SƠ VÀ HẸN TRẢ KẾT QUẢ",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle"
   },
   {
    "t": "p",
@@ -115,14 +137,25 @@
      "text": "Hồ sơ đăng ký hộ kinh doanh",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "(Cơ quan đăng ký kinh doanh cấp xã)"
+     "text": "("
+    },
+    {
+     "text": "Cơ quan đăng ký kinh doanh cấp xã",
+     "i": true
+    },
+    {
+     "text": ")"
     },
     {
      "input": {
@@ -130,7 +163,11 @@
       "w": 25
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -145,7 +182,11 @@
       "w": 15
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -169,7 +210,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -193,7 +238,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -217,7 +266,11 @@
       "w": 20
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -232,7 +285,11 @@
       "w": 18
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -256,7 +313,11 @@
       "w": 14
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -271,7 +332,11 @@
       "w": 36
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
   },
   {
    "t": "p",
@@ -280,7 +345,11 @@
     {
      "text": "Hồ sơ bao gồm:"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -289,7 +358,11 @@
     {
      "text": "1. .................................................................................................................................."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -298,7 +371,11 @@
     {
      "text": "2. ..................................................................................................................................."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -307,7 +384,11 @@
     {
      "text": "3. ...................................................................................................................................."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -316,7 +397,11 @@
     {
      "text": "Thời gian trả kết quả giải quyết hồ sơ: ngày … tháng … năm …"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "date-line"
   },
   {
    "t": "p",
@@ -325,7 +410,11 @@
     {
      "text": "Trường hợp hồ sơ hợp lệ, thông tin đăng ký của hộ kinh doanh sẽ được cập nhật trong Cơ sở dữ liệu về đăng ký hộ kinh doanh/đăng tải trên Cổng thông tin quốc gia về đăng ký doanh nghiệp."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -340,27 +429,48 @@
       "w": 26
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "center",
    "runs": [
     {
-     "text": "NGƯỜI NỘP\n(Ký và ghi họ tên)",
+     "text": "NGƯỜI NỘP\n",
      "b": true
+    },
+    {
+     "text": "(Ký và ghi họ tên)",
+     "i": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "signature"
   },
   {
    "t": "p",
    "align": "center",
    "runs": [
     {
-     "text": "NGƯỜI NHẬN\n(Ký và ghi họ tên)",
+     "text": "NGƯỜI NHẬN\n",
      "b": true
+    },
+    {
+     "text": "(Ký và ghi họ tên)",
+     "i": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "signature"
   }
- ]
+ ],
+ "v": 3
 }

@@ -694,21 +694,34 @@ def audit_section4(form_maps: dict, loaded: dict) -> None:
 # MỤC 5 — Schema frontend
 # ---------------------------------------------------------------------------
 
-ALLOWED_TOP_KEYS = {"id", "ten_mau", "blocks"}
+ALLOWED_TOP_KEYS = {"id", "ten_mau", "blocks", "v"}
 # "cond" (P1.2 M72 Option D): danh sách flag điều kiện vùng - block chỉ
 # render/xuất khi mọi flag truthy; converter sinh từ marker {?flag}/{/flag}.
+# blocks-v3 (R1 L1 layout): role/format/footnotes trên block "p",
+# vertAlign + run footnote-ref {"role":"footnote-ref","footnoteId"}.
 ALLOWED_BLOCK_KEYS = {
-    "p": {"t", "align", "runs", "cond"},
+    "p": {"t", "align", "runs", "cond", "role", "format", "footnotes"},
     "chk": {"t", "key", "label", "cond"},
     "table": {"t", "widths", "rows", "cond"},
     "loop": {"t", "loop", "headerRows", "cols", "blankRows", "rows", "cond"},
 }
-ALLOWED_RUN_KEYS_TEXT = {"text", "b", "i", "u"}
+ALLOWED_RUN_KEYS_TEXT = {"text", "b", "i", "u", "vertAlign", "role", "footnoteId"}
 ALLOWED_COL_KEYS = {"col", "tag"}
 VALID_ALIGN = {"left", "center", "right"}
+VALID_ROLES = {
+    "source-indicator", "form-number", "national-header", "national-motto",
+    "national-separator", "date-line", "form-title", "form-subtitle",
+    "salutation", "body", "section-heading", "note", "footnote", "signature",
+}
+VALID_VERT_ALIGN = {"superscript", "subscript"}
+VALID_FORMAT_KEYS = {
+    "leftIndentPt", "rightIndentPt", "firstLineIndentPt", "spaceBeforePt",
+    "spaceAfterPt", "lineSpacing", "lineSpacingPt", "keepWithNext",
+}
 ALLOWED_NAMES = (
     "text/b/i/u/input/colspan/rowspan/label/key/w/loop/headerRows/cols/"
-    "blankRows/rows/cells/widths/t/align/id/ten_mau"
+    "blankRows/rows/cells/widths/t/align/id/ten_mau/v/role/format/"
+    "footnotes/vertAlign/footnoteId"
 )
 
 
@@ -723,6 +736,16 @@ def _check_runs(section, fid, where, runs, errs):
                 "%s run#%d có trường lạ %s (chỉ cho phép: %s)"
                 % (where, ri, sorted(bad), ALLOWED_NAMES)
             )
+        va = r.get("vertAlign")
+        if "vertAlign" in r and va not in VALID_VERT_ALIGN:
+            errs.append("%s run#%d vertAlign lạ: %r" % (where, ri, va))
+        if "role" in r:
+            if r["role"] != "footnote-ref":
+                errs.append("%s run#%d role run chỉ cho phép 'footnote-ref': %r"
+                            % (where, ri, r["role"]))
+            elif not isinstance(r.get("footnoteId"), int):
+                errs.append("%s run#%d footnote-ref thiếu footnoteId int"
+                            % (where, ri))
         if "input" in r:
             inp = r["input"]
             if not isinstance(inp, dict):
@@ -768,6 +791,27 @@ def audit_section5(loaded: dict) -> None:
             if t == "p":
                 if b.get("align") not in VALID_ALIGN:
                     errs.append("block#%d align lạ: %r" % (bi, b.get("align")))
+                role = b.get("role")
+                if "role" in b and (role not in VALID_ROLES):
+                    errs.append("block#%d role lạ: %r" % (bi, role))
+                fmt = b.get("format")
+                if "format" in b:
+                    if not isinstance(fmt, dict) or not fmt:
+                        errs.append("block#%d format phải dict không rỗng: %r"
+                                    % (bi, fmt))
+                    else:
+                        badf = set(fmt) - VALID_FORMAT_KEYS
+                        if badf:
+                            errs.append("block#%d format có trường lạ %s"
+                                        % (bi, sorted(badf)))
+                fn = b.get("footnotes")
+                if "footnotes" in b and (
+                    not isinstance(fn, dict)
+                    or not all(isinstance(k, str) and isinstance(v, str)
+                               for k, v in fn.items())
+                ):
+                    errs.append("block#%d footnotes phải dict id->text: %r"
+                                % (bi, type(fn).__name__))
                 _check_runs(5, fid, "p#%d" % bi, b.get("runs", []), errs)
             elif t == "table":
                 for rowi, row in enumerate(b.get("rows", [])):

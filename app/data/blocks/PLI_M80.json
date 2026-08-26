@@ -10,17 +10,34 @@
      "text": "Mẫu số 80",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-number"
   },
   {
    "t": "p",
    "align": "center",
    "runs": [
     {
-     "text": "TÊN TỔ CHỨC1\n-------",
+     "text": "TÊN TỔ CHỨC",
+     "b": true
+    },
+    {
+     "text": "1",
+     "b": true,
+     "vertAlign": "superscript"
+    },
+    {
+     "text": "\n-------",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle"
   },
   {
    "t": "p",
@@ -30,7 +47,11 @@
      "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc\n---------------",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "national-header"
   },
   {
    "t": "p",
@@ -45,7 +66,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -87,7 +112,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "date-line"
   },
   {
    "t": "p",
@@ -97,24 +126,45 @@
      "text": "GIẤY ĐỀ NGHỊ",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-title"
   },
   {
    "t": "p",
    "align": "center",
    "runs": [
     {
-     "text": "Thu hồi giấy tờ2 do kê khai trong hồ sơ đăng ký doanh nghiệp là giả mạo",
+     "text": "Thu hồi giấy tờ",
+     "b": true
+    },
+    {
+     "text": "2",
+     "b": true,
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " do kê khai trong hồ sơ đăng ký doanh nghiệp là giả mạo",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "center",
    "runs": [
     {
-     "text": "Kính gửi: (Cơ quan đăng ký kinh doanh cấp tỉnh) "
+     "text": "Kính gửi: "
+    },
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp tỉnh) ",
+     "i": true
     },
     {
      "input": {
@@ -122,7 +172,11 @@
       "w": 32
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "salutation"
   },
   {
    "t": "p",
@@ -132,14 +186,25 @@
      "text": "1. Trường hợp cá nhân đề nghị thu hồi theo quy định tại khoản 1 Điều 68 Nghị định số 168/2025/NĐ-CP thì ghi:",
      "i": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Tôi là (ghi họ tên bằng chữ in hoa): "
+     "text": "Tôi là ("
+    },
+    {
+     "text": "ghi họ tên bằng chữ in hoa",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -147,7 +212,11 @@
       "w": 26
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -180,7 +249,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "date-line"
   },
   {
    "t": "p",
@@ -195,7 +268,11 @@
       "w": 13
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -210,7 +287,11 @@
       "w": 19
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -220,14 +301,32 @@
      "text": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở dữ liệu quốc gia về dân cư bị gián đoạn thì đề nghị kê khai các thông tin cá nhân dưới đây:",
      "i": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Số Hộ chiếu (đối với cá nhân Việt Nam không có số định danh cá nhân)/Số Hộ chiếu nước ngoài hoặc giấy tờ có giá trị thay thế hộ chiếu nước ngoài (đối với cá nhân là người nước ngoài): "
+     "text": "Số Hộ chiếu ("
+    },
+    {
+     "text": "đối với cá nhân Việt Nam không có số định danh cá nhân",
+     "i": true
+    },
+    {
+     "text": ")/Số Hộ chiếu nước ngoài hoặc giấy tờ có giá trị thay thế hộ chiếu nước ngoài ("
+    },
+    {
+     "text": "đối với cá nhân là người nước ngoài",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -235,7 +334,11 @@
       "w": 60
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -262,14 +365,25 @@
     {
      "text": " \t"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Điện thoại (nếu có): "
+     "text": "Điện thoại"
+    },
+    {
+     "text": " (nếu có)",
+     "i": true
+    },
+    {
+     "text": ": "
     },
     {
      "input": {
@@ -278,7 +392,14 @@
      }
     },
     {
-     "text": " Thư điện tử (nếu có): "
+     "text": " Thư điện tử"
+    },
+    {
+     "text": " (nếu có)",
+     "i": true
+    },
+    {
+     "text": ": "
     },
     {
      "input": {
@@ -286,7 +407,11 @@
       "w": 19
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -296,7 +421,11 @@
      "text": "2. Trường hợp tổ chức đề nghị thu hồi theo quy định tại khoản 1 Điều 68 Nghị định số 168/2025/NĐ-CP thì ghi:",
      "i": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
@@ -311,14 +440,25 @@
       "w": 14
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Mã số doanh nghiệp/Số Quyết định thành lập (nếu có):"
+     "text": "Mã số doanh nghiệp/Số Quyết định thành lập ("
+    },
+    {
+     "text": "nếu có",
+     "i": true
+    },
+    {
+     "text": "):"
     },
     {
      "input": {
@@ -326,7 +466,11 @@
       "w": 34
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -341,7 +485,11 @@
       "w": 18
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -356,7 +504,11 @@
       "w": 25
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -371,7 +523,11 @@
       "w": 33
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -387,7 +543,14 @@
      }
     },
     {
-     "text": " Ngày hết hạn (nếu có): "
+     "text": " Ngày hết hạn ("
+    },
+    {
+     "text": "nếu có",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -395,14 +558,32 @@
       "w": 20
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Đề nghị thu hồi (Tên giấy tờ đề nghị thu hồi) được cấp lần thứ … (nếu có) ngày …/…/… tại (Cơ quan đăng ký kinh doanh cấp tỉnh) "
+     "text": "Đề nghị thu hồi ("
+    },
+    {
+     "text": "Tên giấy tờ đề nghị thu hồi",
+     "i": true
+    },
+    {
+     "text": ") được cấp lần thứ … (nếu có) ngày …/…/… tại "
+    },
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp tỉnh)",
+     "i": true
+    },
+    {
+     "text": " "
     },
     {
      "input": {
@@ -413,7 +594,11 @@
     {
      "text": " của: "
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -422,7 +607,11 @@
     {
      "text": "Tên doanh nghiệp/chi nhánh/văn phòng đại diện/địa điểm kinh doanh (ghi bằng chữ in hoa): ……………………………………………………………"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -437,7 +626,11 @@
       "w": 53
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -452,7 +645,11 @@
       "w": 19
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -461,7 +658,11 @@
     {
      "text": "............................................................................................................................................"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "national-separator"
   },
   {
    "t": "p",
@@ -470,7 +671,11 @@
     {
      "text": "Kèm theo Giấy đề nghị này có:"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -479,7 +684,11 @@
     {
      "text": "1. ........................................................................................................................................."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -488,7 +697,11 @@
     {
      "text": "2. ........................................................................................................................................."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -497,7 +710,11 @@
     {
      "text": "3. ........................................................................................................................................."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -506,7 +723,11 @@
     {
      "text": "…"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -515,53 +736,104 @@
     {
      "text": "Tôi/(Tên tổ chức) cam kết hoàn toàn chịu trách nhiệm trước pháp luật về tính hợp pháp, chính xác và trung thực của nội dung Giấy đề nghị này và tài liệu kèm theo."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "center",
    "runs": [
     {
-     "text": "NGƯỜI ĐỀ NGHỊ/NGƯỜI ĐẠI DIỆN \n(Ký và ghi họ tên)3",
+     "text": "NGƯỜI ĐỀ NGHỊ/NGƯỜI ĐẠI DIỆN \n",
      "b": true
+    },
+    {
+     "text": "("
+    },
+    {
+     "text": "Ký và ghi họ tên",
+     "i": true
+    },
+    {
+     "text": ")"
+    },
+    {
+     "text": "3",
+     "vertAlign": "superscript"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "signature"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "_______________________________________"
+     "text": "_______________________________________",
+     "vertAlign": "superscript"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "national-separator"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "1 Chỉ kê khai tên đối với tổ chức."
+     "text": "1",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " Chỉ kê khai tên đối với tổ chức."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "2 Tên giấy tờ đề nghị thu hồi: Giấy chứng nhận đăng ký doanh nghiệp/Giấy chứng nhận đăng ký hoạt động chi nhánh, văn phòng đại diện/Giấy chứng nhận đăng ký địa điểm kinh doanh/Giấy xác nhận về việc thay đổi nội dung đăng ký doanh nghiệp/Giấy xác nhận về việc thay đổi nội dung đăng ký hoạt động chi nhánh, văn phòng đại diện/địa điểm kinh doanh/Giấy xác nhận đăng ký tạm ngừng kinh doanh, tạm ngừng hoạt động, thông báo tiếp tục kinh doanh, thông báo tiếp tục hoạt động/Thông báo doanh nghiệp đang làm thủ tục giải thể, chi nhánh, văn phòng đại diện, địa điểm kinh doanh đang làm thủ tục chấm dứt hoạt động/Thông báo về việc giải thể của doanh nghiệp, chi nhánh, văn phòng đại diện, địa điểm kinh doanh chấm dứt hoạt động."
+     "text": "2",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " Tên giấy tờ đề nghị thu hồi: Giấy chứng nhận đăng ký doanh nghiệp/Giấy chứng nhận đăng ký hoạt động chi nhánh, văn phòng đại diện/Giấy chứng nhận đăng ký địa điểm kinh doanh/Giấy xác nhận về việc thay đổi nội dung đăng ký doanh nghiệp/Giấy xác nhận về việc thay đổi nội dung đăng ký hoạt động chi nhánh, văn phòng đại diện/địa điểm kinh doanh/Giấy xác nhận đăng ký tạm ngừng kinh doanh, tạm ngừng hoạt động, thông báo tiếp tục kinh doanh, thông báo tiếp tục hoạt động/Thông báo doanh nghiệp đang làm thủ tục giải thể, chi nhánh, văn phòng đại diện, địa điểm kinh doanh đang làm thủ tục chấm dứt hoạt động/Thông báo về việc giải thể của doanh nghiệp, chi nhánh, văn phòng đại diện, địa điểm kinh doanh chấm dứt hoạt động."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "3 Người đề nghị ký và ghi họ tên/Người đại diện của tổ chức ký và ghi họ tên và đóng dấu vào phần này."
+     "text": "3",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " Người đề nghị ký và ghi họ tên/Người đại diện của tổ chức ký và ghi họ tên và đóng dấu vào phần này."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
   },
   {
    "t": "p",
@@ -571,16 +843,29 @@
      "text": "PHỤ LỤC II",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-title"
   },
   {
    "t": "p",
    "align": "center",
    "runs": [
     {
-     "text": "BIỂU MẪU SỬ DỤNG TRONG ĐĂNG KÝ HỘ KINH DOANH\n(Kèm theo Thông tư số 68/2025/TT-BTC ngày 01 tháng 7 năm 2025 của Bộ trưởng Bộ Tài chính)"
+     "text": "BIỂU MẪU SỬ DỤNG TRONG ĐĂNG KÝ HỘ KINH DOANH\n"
+    },
+    {
+     "text": "(Kèm theo Thông tư số 68/2025/TT-BTC ngày 01 tháng 7 năm 2025 của Bộ trưởng Bộ Tài chính)",
+     "i": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   }
- ]
+ ],
+ "v": 3
 }

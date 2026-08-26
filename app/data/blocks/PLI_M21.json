@@ -10,7 +10,11 @@
      "text": "Mẫu số 21",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-number"
   },
   {
    "t": "p",
@@ -20,7 +24,11 @@
      "text": "TÊN DOANH NGHIỆP\n-------",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle"
   },
   {
    "t": "p",
@@ -30,7 +38,11 @@
      "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc\n---------------",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "national-header"
   },
   {
    "t": "p",
@@ -45,7 +57,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -87,7 +103,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "date-line"
   },
   {
    "t": "p",
@@ -97,7 +117,11 @@
      "text": "GIẤY ĐỀ NGHỊ",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-title"
   },
   {
    "t": "p",
@@ -107,14 +131,22 @@
      "text": "Cấp đổi sang Giấy chứng nhận đăng ký doanh nghiệp đối với doanh nghiệp\n được cấp Giấy chứng nhận đăng ký kinh doanh hoặc Giấy chứng nhận\n đăng ký kinh doanh và đăng ký thuế",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "center",
    "runs": [
     {
-     "text": "Kính gửi: (Cơ quan đăng ký kinh doanh cấp tỉnh) "
+     "text": "Kính gửi: "
+    },
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp tỉnh) ",
+     "i": true
     },
     {
      "input": {
@@ -122,14 +154,25 @@
       "w": 32
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "salutation"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Tên doanh nghiệp (ghi bằng chữ in hoa): "
+     "text": "Tên doanh nghiệp ("
+    },
+    {
+     "text": "ghi bằng chữ in hoa",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -137,7 +180,11 @@
       "w": 28
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -152,16 +199,31 @@
       "w": 23
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Đề nghị được cấp đổi sang Giấy chứng nhận đăng ký doanh nghiệp theo quy định tại Nghị định số 168/2025/NĐ-CP ngày 30/6/2025 của Chính phủ về đăng ký doanh nghiệp và cập nhật, bổ sung mã ngành kinh tế cấp bốn trong Hệ thống ngành kinh tế Việt Nam đối với những ngành, nghề mà doanh nghiệp đã đăng ký kinh doanh như sau1: "
+     "text": "Đề nghị được cấp đổi sang Giấy chứng nhận đăng ký doanh nghiệp theo quy định tại Nghị định số 168/2025/NĐ-CP ngày 30/6/2025 của Chính phủ về đăng ký doanh nghiệp và cập nhật, bổ sung mã ngành kinh tế cấp bốn trong Hệ thống ngành kinh tế Việt Nam đối với những ngành, nghề mà doanh nghiệp đã đăng ký kinh doanh như sau"
+    },
+    {
+     "text": "1",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": ": "
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "loop",
@@ -238,7 +300,11 @@
     {
      "text": "Doanh nghiệp cam kết hoàn toàn chịu trách nhiệm trước pháp luật về tính hợp pháp, chính xác và trung thực của nội dung Giấy đề nghị này."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -247,35 +313,67 @@
     {
      "text": "Người ký tại Giấy đề nghị này cam kết là người có quyền và nghĩa vụ thực hiện thủ tục đăng ký doanh nghiệp theo quy định của pháp luật và Điều lệ công ty. "
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "center",
    "runs": [
     {
-     "text": "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT\nCỦA DOANH NGHIỆP\n(Ký và ghi họ tên)2",
+     "text": "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT\nCỦA DOANH NGHIỆP\n",
      "b": true
+    },
+    {
+     "text": "("
+    },
+    {
+     "text": "Ký và ghi họ tên)",
+     "i": true
+    },
+    {
+     "text": "2",
+     "vertAlign": "superscript"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "signature"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "________________________________________"
+     "text": "________________________________________",
+     "vertAlign": "superscript"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "national-separator"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "1 - Doanh nghiệp có quyền tự do kinh doanh trong những ngành, nghề mà luật không cấm;"
+     "text": "1 ",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": "- Doanh nghiệp có quyền tự do kinh doanh trong những ngành, nghề mà luật không cấm;"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
   },
   {
    "t": "p",
@@ -284,7 +382,11 @@
     {
      "text": "- Các ngành, nghề cấm đầu tư kinh doanh quy định tại Điều 6 Luật Đầu tư; "
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -293,16 +395,28 @@
     {
      "text": "- Đối với những ngành, nghề đầu tư kinh doanh có điều kiện được quy định tại các văn bản quy phạm pháp luật khác, ngành, nghề kinh doanh được ghi theo ngành, nghề quy định tại các văn bản quy phạm pháp luật đó. Doanh nghiệp chỉ được kinh doanh khi có đủ điều kiện theo quy định."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "2 Người đại diện theo pháp luật của doanh nghiệp ký trực tiếp vào phần này. "
+     "text": "2",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " Người đại diện theo pháp luật của doanh nghiệp ký trực tiếp vào phần này. "
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
   },
   {
    "t": "p",
@@ -311,7 +425,12 @@
     {
      "text": "Trường hợp Tòa án hoặc Trọng tài chỉ định người thực hiện thủ tục đăng ký doanh nghiệp thì người được chỉ định ký trực tiếp vào phần này."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   }
- ]
+ ],
+ "v": 3
 }

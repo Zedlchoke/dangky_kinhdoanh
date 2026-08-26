@@ -10,7 +10,11 @@
      "text": "Mẫu số 73",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-number"
   },
   {
    "t": "p",
@@ -20,17 +24,35 @@
      "text": "CÔNG BỐ THAY ĐỔI NỘI DUNG ĐĂNG KÝ DOANH NGHIỆP",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "1. Tên doanh nghiệp: (ghi thông tin mới nhất của doanh nghiệp)",
+     "text": "1. Tên doanh nghiệp: ",
      "b": true
+    },
+    {
+     "text": "("
+    },
+    {
+     "text": "ghi thông tin mới nhất của doanh nghiệp",
+     "i": true
+    },
+    {
+     "text": ")"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
@@ -45,7 +67,11 @@
       "w": 27
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -60,7 +86,11 @@
       "w": 30
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -75,15 +105,22 @@
       "w": 21
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "2. Mã số doanh nghiệp: ",
+     "text": "2. Mã số doanh nghiệp:",
      "b": true
+    },
+    {
+     "text": " "
     },
     {
      "input": {
@@ -91,7 +128,11 @@
       "w": 19
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
@@ -101,7 +142,11 @@
      "text": "3. Nội dung thay đổi",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
@@ -111,7 +156,11 @@
      "text": "Khối thông tin cũ: ",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -120,7 +169,11 @@
     {
      "text": "…………………………………………………………………………………………"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -129,7 +182,11 @@
     {
      "text": "………………………………………………………………………………..............."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -139,7 +196,11 @@
      "text": "Khối thông tin mới:",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -148,7 +209,11 @@
     {
      "text": "……………………………………………………………………………………………"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -157,15 +222,22 @@
     {
      "text": "…………………………………………………………………………….........................."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "4. Ngày cấp đăng ký thay đổi: ",
+     "text": "4. Ngày cấp đăng ký thay đổi:",
      "b": true
+    },
+    {
+     "text": " "
     },
     {
      "input": {
@@ -173,15 +245,26 @@
       "w": 23
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "5. Nơi đăng ký: (Cơ quan đăng ký kinh doanh cấp tỉnh) ",
+     "text": "5. Nơi đăng ký:",
      "b": true
+    },
+    {
+     "text": " "
+    },
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp tỉnh) ",
+     "i": true
     },
     {
      "input": {
@@ -189,7 +272,12 @@
       "w": 35
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   }
- ]
+ ],
+ "v": 3
 }

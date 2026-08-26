@@ -10,7 +10,11 @@
      "text": "Mẫu số 70",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-number"
   },
   {
    "t": "p",
@@ -20,7 +24,11 @@
      "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH\nCẤP TỈNH\n-------",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle"
   },
   {
    "t": "p",
@@ -30,7 +38,11 @@
      "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc\n---------------",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "national-header"
   },
   {
    "t": "p",
@@ -54,7 +66,11 @@
       "w": 13
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -96,7 +112,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "date-line"
   },
   {
    "t": "p",
@@ -106,7 +126,11 @@
      "text": "GIẤY TIẾP NHẬN HỒ SƠ VÀ HẸN TRẢ KẾT QUẢ",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle"
   },
   {
    "t": "p",
@@ -116,15 +140,22 @@
      "text": "Hồ sơ đăng ký doanh nghiệp/chi nhánh/ văn phòng đại diện/địa điểm kinh doanh",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "(Cơ quan đăng ký kinh doanh cấp tỉnh):",
+     "text": "(Cơ quan đăng ký kinh doanh cấp tỉnh)",
      "i": true
+    },
+    {
+     "text": ":"
     },
     {
      "input": {
@@ -132,7 +163,11 @@
       "w": 27
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -147,7 +182,11 @@
       "w": 16
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -171,7 +210,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -195,7 +238,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -219,14 +266,25 @@
       "w": 21
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Số định danh cá nhân (hoặc số Hộ chiếu, Hộ chiếu nước ngoài, giấy tờ có giá trị thay thế hộ chiếu nước ngoài): "
+     "text": "Số định danh cá nhân ("
+    },
+    {
+     "text": "hoặc số Hộ chiếu, Hộ chiếu nước ngoài, giấy tờ có giá trị thay thế hộ chiếu nước ngoài",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -234,7 +292,11 @@
       "w": 60
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -268,7 +330,14 @@
      }
     },
     {
-     "text": " của (Tên doanh nghiệp) ……………… Mã số doanh nghiệp (nếu có): "
+     "text": " của (Tên doanh nghiệp) ……………… Mã số doanh nghiệp ("
+    },
+    {
+     "text": "nếu có",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -276,7 +345,11 @@
       "w": 38
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -285,7 +358,11 @@
     {
      "text": "Hồ sơ bao gồm:"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -294,7 +371,11 @@
     {
      "text": "1…………………………………………………………………………………………………."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -303,7 +384,11 @@
     {
      "text": "2.…………………………………………………………………………………………………"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -312,7 +397,11 @@
     {
      "text": "3.…………………………………………………………………………………………………"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -321,7 +410,11 @@
     {
      "text": "Thời gian trả kết quả giải quyết hồ sơ: ngày … tháng … năm …"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "date-line"
   },
   {
    "t": "p",
@@ -330,7 +423,11 @@
     {
      "text": "Trường hợp hồ sơ hợp lệ, thông tin đăng ký của doanh nghiệp sẽ được cập nhật trong Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp/đăng tải trên Cổng thông tin quốc gia về đăng ký doanh nghiệp."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -345,27 +442,60 @@
       "w": 26
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "center",
    "runs": [
     {
-     "text": "NGƯỜI NỘP\n(Ký và ghi họ tên)",
+     "text": "NGƯỜI NỘP\n",
      "b": true
+    },
+    {
+     "text": "("
+    },
+    {
+     "text": "Ký và ghi họ tên",
+     "i": true
+    },
+    {
+     "text": ")"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "signature"
   },
   {
    "t": "p",
    "align": "center",
    "runs": [
     {
-     "text": "NGƯỜI NHẬN\n(Ký và ghi họ tên)",
+     "text": "NGƯỜI NHẬN\n",
      "b": true
+    },
+    {
+     "text": "("
+    },
+    {
+     "text": "Ký và ghi họ tên",
+     "i": true
+    },
+    {
+     "text": ")"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "signature"
   }
- ]
+ ],
+ "v": 3
 }

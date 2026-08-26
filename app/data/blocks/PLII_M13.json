@@ -9,7 +9,8 @@
     {
      "text": "PL2 - Mau so 13: Thông báo về việc chấm dứt hoạt động hộ kinh doanh"
     }
-   ]
+   ],
+   "role": "source-indicator"
   },
   {
    "t": "p",
@@ -18,7 +19,8 @@
     {
      "text": "Mẫu số 13"
     }
-   ]
+   ],
+   "role": "form-number"
   },
   {
    "t": "p",
@@ -28,7 +30,11 @@
      "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH\nCẤP XÃ\n-----------",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle"
   },
   {
    "t": "p",
@@ -38,7 +44,11 @@
      "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc\n------------------",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "national-header"
   },
   {
    "t": "p",
@@ -53,7 +63,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -95,7 +109,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "date-line"
   },
   {
    "t": "p",
@@ -105,7 +123,11 @@
      "text": "THÔNG BÁO",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-title"
   },
   {
    "t": "p",
@@ -115,14 +137,25 @@
      "text": "Về việc chấm dứt hoạt động hộ kinh doanh",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "(Cơ quan đăng ký kinh doanh cấp xã) "
+     "text": "("
+    },
+    {
+     "text": "Cơ quan đăng ký kinh doanh cấp xã",
+     "i": true
+    },
+    {
+     "text": ") "
     },
     {
      "input": {
@@ -133,7 +166,11 @@
     {
      "text": " thông báo chấm dứt hoạt động của hộ kinh doanh sau đây: "
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -142,7 +179,11 @@
     {
      "text": "Tên hộ kinh doanh: …………………………………………………………........................."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -157,7 +198,11 @@
       "w": 18
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -172,7 +217,11 @@
       "w": 21
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -196,14 +245,25 @@
       "w": 19
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Do Ông/Bà (ghi họ tên bằng chữ in hoa): "
+     "text": "Do Ông/Bà "
+    },
+    {
+     "text": "(ghi họ tên bằng chữ in hoa)",
+     "i": true
+    },
+    {
+     "text": ": "
     },
     {
      "input": {
@@ -211,7 +271,11 @@
       "w": 28
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -262,7 +326,11 @@
       "w": 14
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -277,7 +345,11 @@
       "w": 19
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -292,7 +364,11 @@
       "w": 15
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -307,7 +383,11 @@
       "w": 16
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -331,7 +411,11 @@
       "w": 14
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -340,7 +424,11 @@
     {
      "text": "Là chủ hộ kinh doanh."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -355,16 +443,23 @@
       "w": 21
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Nơi nhận: \n- Tên, trụ sở của hộ kinh doanh;\n- ",
+     "text": "Nơi nhận: \n",
      "b": true,
      "i": true
+    },
+    {
+     "text": "- Tên, trụ sở của hộ kinh doanh;\n- "
     },
     {
      "input": {
@@ -381,17 +476,30 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "center",
    "runs": [
     {
-     "text": "TRƯỞNG PHÒNG\n(Ký, ghi họ tên và đóng dấu)",
+     "text": "TRƯỞNG PHÒNG\n",
      "b": true
+    },
+    {
+     "text": "(Ký, ghi họ tên và đóng dấu)",
+     "i": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   }
- ]
+ ],
+ "v": 3
 }

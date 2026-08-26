@@ -10,7 +10,11 @@
      "text": "Mẫu số 63",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-number"
   },
   {
    "t": "p",
@@ -20,7 +24,11 @@
      "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH\nCẤP TỈNH\n-------",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle"
   },
   {
    "t": "p",
@@ -30,7 +38,11 @@
      "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc\n---------------",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "national-header"
   },
   {
    "t": "p",
@@ -45,7 +57,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -87,7 +103,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "date-line"
   },
   {
    "t": "p",
@@ -97,7 +117,11 @@
      "text": "QUYẾT ĐỊNH",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle"
   },
   {
    "t": "p",
@@ -107,7 +131,11 @@
      "text": "Về việc thu hồi Giấy chứng nhận đăng ký hoạt động chi nhánh, văn phòng đại diện, Giấy chứng nhận đăng ký địa điểm kinh doanh",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -117,7 +145,11 @@
      "text": "TRƯỞNG CƠ QUAN ĐĂNG KÝ KINH DOANH CẤP TỈNH …",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle"
   },
   {
    "t": "p",
@@ -126,7 +158,11 @@
     {
      "text": "Căn cứ Nghị định số 168/2025/NĐ-CP ngày 30/6/2025 của Chính phủ về đăng ký doanh nghiệp;"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -142,25 +178,54 @@
      }
     },
     {
-     "text": "./…. của (Cơ quan đăng ký kinh doanh cấp tỉnh) về việc vi phạm của doanh nghiệp thuộc trường hợp thu hồi Giấy chứng nhận đăng ký hoạt động chi nhánh, văn phòng đại diện, Giấy chứng nhận đăng ký địa điểm kinh doanh;"
+     "text": "./…. của "
+    },
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp tỉnh)",
+     "i": true
+    },
+    {
+     "text": " về việc vi phạm của doanh nghiệp thuộc trường hợp thu hồi Giấy chứng nhận đăng ký hoạt động chi nhánh, văn phòng đại diện, Giấy chứng nhận đăng ký địa điểm kinh doanh;"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Căn cứ yêu cầu của Tòa án về việc thu hồi Giấy chứng nhận đăng ký hoạt động chi nhánh, văn phòng đại diện, Giấy chứng nhận đăng ký địa điểm kinh doanh (nếu có, ghi tên, số, ký hiệu, ngày, tháng, năm văn bản của Tòa án về việc thu hồi);"
+     "text": "Căn cứ yêu cầu của Tòa án về việc thu hồi Giấy chứng nhận đăng ký hoạt động chi nhánh, văn phòng đại diện, Giấy chứng nhận đăng ký địa điểm kinh doanh "
+    },
+    {
+     "text": "(nếu có, ghi tên, số, ký hiệu, ngày, tháng, năm văn bản của Tòa án về việc thu hồi)",
+     "i": true
+    },
+    {
+     "text": ";"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Căn cứ khác (nếu có): "
+     "text": "Căn cứ khác ("
+    },
+    {
+     "text": "nếu có)",
+     "i": true
+    },
+    {
+     "text": ": "
     },
     {
      "input": {
@@ -168,7 +233,11 @@
       "w": 19
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -178,24 +247,42 @@
      "text": "QUYẾT ĐỊNH:",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Điều 1. Thu hồi Giấy chứng nhận đăng ký hoạt động chi nhánh, văn phòng đại diện, Giấy chứng nhận đăng ký địa điểm kinh doanh:",
+     "text": "Điều 1.",
      "b": true
+    },
+    {
+     "text": " Thu hồi Giấy chứng nhận đăng ký hoạt động chi nhánh, văn phòng đại diện, Giấy chứng nhận đăng ký địa điểm kinh doanh:"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh (ghi bằng chữ in hoa): "
+     "text": "Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh ("
+    },
+    {
+     "text": "ghi bằng chữ in hoa",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -203,7 +290,11 @@
       "w": 46
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -218,7 +309,11 @@
       "w": 46
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -251,7 +346,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -293,7 +392,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -308,14 +411,25 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Số Giấy chứng nhận đăng ký hoạt động (trường hợp không có mã số/mã số thuế của chi nhánh/văn phòng đại diện/mã số địa điểm kinh doanh):"
+     "text": "Số Giấy chứng nhận đăng ký hoạt động ("
+    },
+    {
+     "text": "trường hợp không có mã số/mã số thuế của chi nhánh/văn phòng đại diện/mã số địa điểm kinh doanh",
+     "i": true
+    },
+    {
+     "text": "):"
     },
     {
      "input": {
@@ -335,7 +449,11 @@
     {
      "text": " "
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -350,7 +468,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -374,7 +496,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -398,7 +524,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -407,14 +537,25 @@
     {
      "text": "Do: "
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Ông/Bà (ghi họ tên bằng chữ in hoa): "
+     "text": "Ông/Bà ("
+    },
+    {
+     "text": "ghi họ tên bằng chữ in hoa",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -422,7 +563,11 @@
       "w": 26
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -464,7 +609,11 @@
       "w": 13
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "date-line"
   },
   {
    "t": "p",
@@ -480,7 +629,14 @@
      }
     },
     {
-     "text": " /Số Chứng minh nhân dân, Hộ chiếu, Hộ chiếu nước ngoài hoặc giấy tờ có giá trị thay thế hộ chiếu nước ngoài (đối với người đại diện là người nước ngoài): "
+     "text": " /Số Chứng minh nhân dân, Hộ chiếu, Hộ chiếu nước ngoài hoặc giấy tờ có giá trị thay thế hộ chiếu nước ngoài ("
+    },
+    {
+     "text": "đối với người đại diện là người nước ngoài",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -497,7 +653,11 @@
       "w": 19
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -512,7 +672,11 @@
       "w": 13
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -527,7 +691,11 @@
       "w": 17
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -536,7 +704,11 @@
     {
      "text": "Là người đứng đầu chi nhánh/văn phòng đại diện/địa điểm kinh doanh."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -551,7 +723,11 @@
       "w": 44
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -560,7 +736,11 @@
     {
      "text": "Có các địa điểm kinh doanh trực thuộc chi nhánh:"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -569,7 +749,11 @@
     {
      "text": "Tên, mã số, địa chỉ, tình trạng pháp lý địa điểm kinh doanh: .................................................."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -578,14 +762,25 @@
     {
      "text": "Là chi nhánh/văn phòng đại diện/địa điểm kinh doanh của doanh nghiệp sau:"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Tên doanh nghiệp (ghi bằng chữ in hoa): "
+     "text": "Tên doanh nghiệp ("
+    },
+    {
+     "text": "ghi bằng chữ in hoa",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -593,7 +788,11 @@
       "w": 28
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -608,14 +807,25 @@
       "w": 23
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Số Giấy chứng nhận đăng ký kinh doanh (chỉ kê khai nếu không có mã số doanh nghiệp/mã số thuế): "
+     "text": "Số Giấy chứng nhận đăng ký kinh doanh ("
+    },
+    {
+     "text": "chỉ kê khai nếu không có mã số doanh nghiệp/mã số thuế",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -632,7 +842,11 @@
       "w": 13
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -647,7 +861,11 @@
       "w": 19
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -671,7 +889,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -695,7 +917,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -705,7 +931,11 @@
      "text": "* Trường hợp thu hồi nội dung đăng ký hoạt động tại Giấy phép đầu tư, Giấy chứng nhận đầu tư (đồng thời là Giấy chứng nhận đăng ký kinh doanh) hoặc giấy tờ có giá trị pháp lý tương đương, Giấy chứng nhận đăng ký hoạt động chi nhánh, văn phòng đại diện, địa điểm kinh doanh do Cơ quan đăng ký đầu tư cấp, ghi cụ thể nội dung đăng ký hoạt động thu hồi theo quy định.",
      "i": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -715,7 +945,11 @@
      "text": "Nội dung sau Điều 1 của Quyết định thu hồi được ghi tương ứng với từng trường hợp như sau:",
      "i": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -725,27 +959,49 @@
      "text": "1. Đối với trường hợp bị thu hồi Giấy chứng nhận đăng ký hoạt động chi nhánh, văn phòng đại diện, địa điểm kinh doanh thuộc chi nhánh để thực hiện biện pháp cưỡng chế nợ thuế theo đề nghị của Cơ quan quản lý thuế:",
      "i": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Điều 2. (Cơ quan đăng ký kinh doanh cấp tỉnh) chuyển tình trạng pháp lý của chi nhánh, văn phòng đại diện, địa điểm kinh doanh trực thuộc chi nhánh sang tình trạng “Bị thu hồi do cưỡng chế về quản lý thuế” trong Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp. Đồng thời, đăng tải quyết định thu hồi này trên Cổng thông tin quốc gia về đăng ký doanh nghiệp.",
+     "text": "Điều 2. ",
      "b": true
+    },
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp tỉnh)",
+     "i": true
+    },
+    {
+     "text": " chuyển tình trạng pháp lý của chi nhánh, văn phòng đại diện, địa điểm kinh doanh trực thuộc chi nhánh sang tình trạng “Bị thu hồi do cưỡng chế về quản lý thuế” trong Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp. Đồng thời, đăng tải quyết định thu hồi này trên Cổng thông tin quốc gia về đăng ký doanh nghiệp."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Điều 3. Quyết định này có hiệu lực từ ngày ký.",
+     "text": "Điều 3.",
      "b": true
+    },
+    {
+     "text": " Quyết định này có hiệu lực từ ngày ký."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -755,45 +1011,91 @@
      "text": "2. Đối với trường hợp còn lại:",
      "i": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Điều 2. (Cơ quan đăng ký kinh doanh cấp tỉnh) thông báo tình trạng chi nhánh, văn phòng đại diện, địa điểm kinh doanh trực thuộc chi nhánh đang làm thủ tục chấm dứt hoạt động đồng thời với việc ban hành quyết định thu hồi Giấy chứng nhận đăng ký hoạt động chi nhánh, văn phòng đại diện và đăng tải thông báo, quyết định thu hồi này trên Cổng thông tin quốc gia về đăng ký doanh nghiệp. ",
+     "text": "Điều 2.",
      "b": true
+    },
+    {
+     "text": " "
+    },
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp tỉnh)",
+     "i": true
+    },
+    {
+     "text": " thông báo tình trạng chi nhánh, văn phòng đại diện, địa điểm kinh doanh trực thuộc chi nhánh đang làm thủ tục chấm dứt hoạt động đồng thời với việc ban hành quyết định thu hồi Giấy chứng nhận đăng ký hoạt động chi nhánh, văn phòng đại diện và đăng tải thông báo, quyết định thu hồi này trên Cổng thông tin quốc gia về đăng ký doanh nghiệp. "
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Điều 3. Doanh nghiệp có trách nhiệm thực hiện thủ tục chấm dứt hoạt động chi nhánh, văn phòng đại diện, địa điểm kinh doanh, địa điểm kinh doanh trực thuộc chi nhánh theo quy định.",
+     "text": "Điều 3.",
      "b": true
+    },
+    {
+     "text": " Doanh nghiệp có trách nhiệm thực hiện thủ tục chấm dứt hoạt động chi nhánh, văn phòng đại diện, địa điểm kinh doanh, địa điểm kinh doanh trực thuộc chi nhánh theo quy định."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Điều 4. Quyết định này có hiệu lực từ ngày ký.",
+     "text": "Điều 4.",
      "b": true
+    },
+    {
+     "text": " Quyết định này có hiệu lực từ ngày ký."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Nơi nhận:\n- Tên, địa chỉ doanh nghiệp bị thu hồi GCNĐKHĐ chi nhánh/văn phòng đại diện/ GCNĐK ĐĐKD;\n- Cơ quan quản lý thuế (tỉnh, thành phố nơi doanh nghiệp đăng ký trụ sở);\n- Cơ quan có thẩm quyền khác:",
+     "text": "Nơi nhận:\n",
      "b": true,
+     "i": true
+    },
+    {
+     "text": "- Tên, địa chỉ doanh nghiệp bị thu hồi GCNĐKHĐ chi nhánh/văn phòng đại diện/ GCNĐK ĐĐKD;\n- Cơ quan quản lý thuế "
+    },
+    {
+     "text": "(tỉnh, thành phố nơi doanh nghiệp đăng ký trụ sở);\n- ",
+     "i": true
+    },
+    {
+     "text": "Cơ quan có thẩm quyền khác"
+    },
+    {
+     "text": ":",
      "i": true
     },
     {
@@ -803,20 +1105,42 @@
      }
     },
     {
-     "text": " (nếu có);\n- Cơ quan ĐKKD các tỉnh, thành phố;\n- Lưu: …..",
+     "text": " (nếu có);\n",
      "i": true
+    },
+    {
+     "text": "- Cơ quan ĐKKD các tỉnh, thành phố;\n- Lưu: ….."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "center",
    "runs": [
     {
-     "text": "TRƯỞNG ĐƠN VỊ\n(Ký, ghi họ tên và đóng dấu)",
+     "text": "TRƯỞNG ĐƠN VỊ\n",
      "b": true
+    },
+    {
+     "text": "("
+    },
+    {
+     "text": "Ký, ghi họ tên và đóng dấu",
+     "i": true
+    },
+    {
+     "text": ")"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   }
- ]
+ ],
+ "v": 3
 }

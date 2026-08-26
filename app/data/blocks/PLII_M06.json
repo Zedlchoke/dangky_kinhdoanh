@@ -9,7 +9,8 @@
     {
      "text": "PL2 - Mau so 6: Giấy đề nghị dừng thực hiện thủ tục đăng ký hộ kinh doanh"
     }
-   ]
+   ],
+   "role": "source-indicator"
   },
   {
    "t": "p",
@@ -18,7 +19,8 @@
     {
      "text": "Mẫu số 6"
     }
-   ]
+   ],
+   "role": "form-number"
   },
   {
    "t": "p",
@@ -28,7 +30,11 @@
      "text": "TÊN HỘ KINH DOANH\n-------------",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle"
   },
   {
    "t": "p",
@@ -38,7 +44,11 @@
      "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc\n-------------------",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "national-header"
   },
   {
    "t": "p",
@@ -53,7 +63,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -95,7 +109,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "date-line"
   },
   {
    "t": "p",
@@ -105,7 +123,11 @@
      "text": "GIẤY ĐỀ NGHỊ ",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-title"
   },
   {
    "t": "p",
@@ -115,14 +137,25 @@
      "text": "Dừng thực hiện thủ tục đăng ký hộ kinh doanh",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "center",
    "runs": [
     {
-     "text": "Kính gửi: (Cơ quan đăng ký kinh doanh cấp xã) "
+     "text": "Kính gửi: "
+    },
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp xã)",
+     "i": true
+    },
+    {
+     "text": " "
     },
     {
      "input": {
@@ -130,14 +163,25 @@
       "w": 31
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "salutation"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Tôi là (ghi họ tên bằng chữ in hoa): "
+     "text": "Tôi là "
+    },
+    {
+     "text": "(ghi họ tên bằng chữ in hoa)",
+     "i": true
+    },
+    {
+     "text": ": "
     },
     {
      "input": {
@@ -145,7 +189,11 @@
       "w": 26
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -178,7 +226,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -193,14 +245,25 @@
       "w": 13
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Số định danh cá nhân (nếu có): "
+     "text": "Số định danh cá nhân "
+    },
+    {
+     "text": "(nếu có)",
+     "i": true
+    },
+    {
+     "text": ": "
     },
     {
      "input": {
@@ -208,14 +271,25 @@
       "w": 23
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Điện thoại (nếu có): "
+     "text": "Điện thoại"
+    },
+    {
+     "text": " (nếu có)",
+     "i": true
+    },
+    {
+     "text": ": "
     },
     {
      "input": {
@@ -224,7 +298,14 @@
      }
     },
     {
-     "text": " Thư điện tử (nếu có): "
+     "text": " Thư điện tử"
+    },
+    {
+     "text": " (nếu có)",
+     "i": true
+    },
+    {
+     "text": ": "
     },
     {
      "input": {
@@ -232,7 +313,11 @@
       "w": 19
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -242,7 +327,11 @@
      "text": "Trường hợp việc kết nối giữa Cơ sở dữ liệu về đăng ký hộ kinh doanh với Cơ sở dữ liệu quốc gia về dân cư bị gián đoạn thì đề nghị kê khai thêm các thông tin cá nhân dưới đây:",
      "i": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -269,7 +358,11 @@
     {
      "text": " "
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -278,7 +371,11 @@
     {
      "text": "Nơi thường trú:"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -293,7 +390,11 @@
       "w": 42
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -308,7 +409,11 @@
       "w": 17
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -323,7 +428,11 @@
       "w": 27
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -332,7 +441,11 @@
     {
      "text": "Nơi ở hiện tại:"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -347,7 +460,11 @@
       "w": 42
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -362,7 +479,11 @@
       "w": 17
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -377,23 +498,52 @@
       "w": 27
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Là chủ hộ kinh doanh1 (Tên hộ kinh doanh) .............................................."
+     "text": "Là chủ hộ kinh doanh"
+    },
+    {
+     "text": "1",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " "
+    },
+    {
+     "text": "(Tên hộ kinh doanh)",
+     "i": true
+    },
+    {
+     "text": " .............................................."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Tôi đề nghị (Cơ quan đăng ký kinh doanh cấp xã) "
+     "text": "Tôi đề nghị "
+    },
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp xã)",
+     "i": true
+    },
+    {
+     "text": " "
     },
     {
      "input": {
@@ -402,7 +552,14 @@
      }
     },
     {
-     "text": " dừng thực hiện thủ tục đăng ký hộ kinh doanh đối với Hồ sơ có Giấy tiếp nhận hồ sơ và hẹn trả kết quả số ………… do (Cơ quan đăng ký kinh doanh cấp xã) "
+     "text": " dừng thực hiện thủ tục đăng ký hộ kinh doanh đối với Hồ sơ có Giấy tiếp nhận hồ sơ và hẹn trả kết quả số ………… do "
+    },
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp xã)",
+     "i": true
+    },
+    {
+     "text": " "
     },
     {
      "input": {
@@ -420,9 +577,27 @@
      }
     },
     {
-     "text": " (Tên hộ kinh doanh) - Mã số hộ kinh doanh………… (nếu có)."
+     "text": " "
+    },
+    {
+     "text": "(Tên hộ kinh doanh)",
+     "i": true
+    },
+    {
+     "text": " - Mã số hộ kinh doanh………… "
+    },
+    {
+     "text": "(nếu có)",
+     "i": true
+    },
+    {
+     "text": "."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -437,7 +612,11 @@
       "w": 15
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -446,44 +625,83 @@
     {
      "text": "Tôi cam kết hoàn toàn chịu trách nhiệm trước pháp luật về việc đề nghị dừng thực hiện thủ tục đăng ký hộ kinh doanh này."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "center",
    "runs": [
     {
-     "text": "CHỦ HỘ KINH DOANH\n(Ký và ghi họ tên)1",
+     "text": "CHỦ HỘ KINH DOANH\n",
      "b": true
+    },
+    {
+     "text": "(Ký và ghi họ tên)",
+     "i": true
+    },
+    {
+     "text": "1",
+     "i": true,
+     "vertAlign": "superscript"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "signature"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "_______________________________________"
+     "text": "_______________________________________",
+     "vertAlign": "superscript"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "national-separator"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "1 Trường hợp chủ hộ kinh doanh là người mới được các thành viên hộ gia đình đăng ký hộ kinh doanh ủy quyền làm chủ hộ kinh doanh thì phải kèm theo bản sao văn bản ủy quyền theo quy định tại Nghị định số 168/2025/NĐ-CP."
+     "text": "1",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " Trường hợp chủ hộ kinh doanh là người mới được các thành viên hộ gia đình đăng ký hộ kinh doanh ủy quyền làm chủ hộ kinh doanh thì phải kèm theo bản sao văn bản ủy quyền theo quy định tại Nghị định số 168/2025/NĐ-CP."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "1 Chủ hộ kinh doanh ký trực tiếp vào phần này."
+     "text": "1",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " Chủ hộ kinh doanh ký trực tiếp vào phần này."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
   }
- ]
+ ],
+ "v": 3
 }

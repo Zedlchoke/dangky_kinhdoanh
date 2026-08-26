@@ -9,7 +9,8 @@
     {
      "text": "PL2 - Mau so 14: Quyết định về việc thu hồi Giấy chứng nhận đăng ký hộ kinh doanh"
     }
-   ]
+   ],
+   "role": "source-indicator"
   },
   {
    "t": "p",
@@ -18,7 +19,8 @@
     {
      "text": "Mẫu số 14"
     }
-   ]
+   ],
+   "role": "form-number"
   },
   {
    "t": "p",
@@ -28,7 +30,11 @@
      "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH\nCẤP XÃ\n-----------",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle"
   },
   {
    "t": "p",
@@ -38,7 +44,11 @@
      "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc\n------------------",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "national-header"
   },
   {
    "t": "p",
@@ -53,7 +63,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -95,7 +109,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "date-line"
   },
   {
    "t": "p",
@@ -105,7 +123,11 @@
      "text": "QUYẾT ĐỊNH",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle"
   },
   {
    "t": "p",
@@ -115,7 +137,11 @@
      "text": "Về việc thu hồi Giấy chứng nhận đăng ký hộ kinh doanh",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -125,7 +151,11 @@
      "text": "TRƯỞNG PHÒNG ...",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle"
   },
   {
    "t": "p",
@@ -134,7 +164,11 @@
     {
      "text": "Căn cứ Nghị định số 168/2025/NĐ-CP ngày 30/6/2025 của Chính phủ về đăng ký doanh nghiệp;"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -159,18 +193,49 @@
      }
     },
     {
-     "text": "/…../….. của (Cơ quan đăng ký kinh doanh cấp xã) về việc vi phạm của hộ kinh doanh thuộc trường hợp thu hồi Giấy chứng nhận đăng ký hộ kinh doanh;"
+     "text": "/…../….. của "
+    },
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp xã)",
+     "i": true
+    },
+    {
+     "text": " về việc vi phạm của hộ kinh doanh thuộc trường hợp thu hồi Giấy chứng nhận đăng ký hộ kinh doanh;"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Căn cứ yêu cầu của Tòa án về việc thu hồi Giấy chứng nhận đăng ký hộ kinh doanh (trường hợp thực hiện theo yêu cầu của Tòa án, nếu có);"
+     "text": "Căn cứ yêu cầu của Tòa án về việc thu hồi Giấy chứng nhận đăng ký hộ kinh doanh "
+    },
+    {
+     "text": "(trường hợp thực hiện theo",
+     "i": true
+    },
+    {
+     "text": " ",
+     "b": true,
+     "i": true
+    },
+    {
+     "text": "yêu cầu của Tòa án, nếu có)",
+     "i": true
+    },
+    {
+     "text": ";"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -185,7 +250,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -195,24 +264,42 @@
      "text": "QUYẾT ĐỊNH:",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Điều 1: Thu hồi Giấy chứng nhận đăng ký hộ kinh doanh sau:",
+     "text": "Điều 1:",
      "b": true
+    },
+    {
+     "text": " Thu hồi Giấy chứng nhận đăng ký hộ kinh doanh sau:"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Tên hộ kinh doanh (ghi bằng chữ in hoa):"
+     "text": "Tên hộ kinh doanh "
+    },
+    {
+     "text": "(ghi bằng chữ in hoa)",
+     "i": true
+    },
+    {
+     "text": ":"
     },
     {
      "input": {
@@ -220,7 +307,11 @@
       "w": 28
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -235,7 +326,11 @@
       "w": 18
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -250,7 +345,11 @@
       "w": 20
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -274,7 +373,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -298,7 +401,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -308,7 +415,11 @@
      "text": "Nội dung phần cuối của Quyết định thu hồi được ghi tương ứng với từng trường hợp như sau:",
      "i": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -318,27 +429,52 @@
      "text": "1. Đối với trường hợp hộ kinh doanh bị thu hồi Giấy chứng nhận đăng ký hộ kinh doanh để thực hiện biện pháp cưỡng chế nợ thuế theo đề nghị của Cơ quan quản lý thuế:",
      "i": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Điều 2: (Cơ quan đăng ký kinh doanh cấp xã) đăng tải quyết định thu hồi Giấy chứng nhận đăng ký hộ kinh doanh trên Cổng thông tin quốc gia về đăng ký doanh nghiệp.",
+     "text": "Điều 2",
      "b": true
+    },
+    {
+     "text": ": "
+    },
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp xã)",
+     "i": true
+    },
+    {
+     "text": " đăng tải quyết định thu hồi Giấy chứng nhận đăng ký hộ kinh doanh trên Cổng thông tin quốc gia về đăng ký doanh nghiệp."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Điều 3: Quyết định này có hiệu lực từ ngày ……../……../……..",
+     "text": "Điều 3",
      "b": true
+    },
+    {
+     "text": ": Quyết định này có hiệu lực từ ngày ……../……../…….."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -348,46 +484,88 @@
      "text": "2. Đối với trường hợp còn lại:",
      "i": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Điều 2: Hộ kinh doanh có trách nhiệm thực hiện thủ tục chấm dứt hoạt động của hộ kinh doanh theo quy định.",
+     "text": "Điều 2",
      "b": true
+    },
+    {
+     "text": ": Hộ kinh doanh có trách nhiệm thực hiện thủ tục chấm dứt hoạt động của hộ kinh doanh theo quy định."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Điều 3: (Cơ quan đăng ký kinh doanh cấp xã) đăng tải quyết định thu hồi Giấy chứng nhận đăng ký hộ kinh doanh kèm theo thông báo hộ kinh doanh đang làm thủ tục chấm dứt hoạt động trên Cổng thông tin quốc gia về đăng ký doanh nghiệp. ",
+     "text": "Điều 3:",
      "b": true
+    },
+    {
+     "text": " "
+    },
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp xã)",
+     "i": true
+    },
+    {
+     "text": " đăng tải quyết định thu hồi Giấy chứng nhận đăng ký hộ kinh doanh kèm theo thông báo hộ kinh doanh đang làm thủ tục chấm dứt hoạt động trên Cổng thông tin quốc gia về đăng ký doanh nghiệp. "
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Điều 4: Quyết định này có hiệu lực từ ngày ……../……../……..",
+     "text": "Điều 4:",
      "b": true
+    },
+    {
+     "text": " Quyết định này có hiệu lực từ ngày ……../……../…….."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Nơi nhận:\n- Tên, trụ sở của hộ kinh doanh bị thu hồi GCNĐKHKD;\n- Cơ quan quản lý thuế … (xã, phường, đặc khu nơi hộ kinh doanh đăng ký trụ sở của HKD);\n- ",
+     "text": "Nơi nhận:\n",
      "b": true,
      "i": true
+    },
+    {
+     "text": "- Tên, trụ sở của hộ kinh doanh bị thu hồi GCNĐKHKD;\n- Cơ quan quản lý thuế … "
+    },
+    {
+     "text": "(xã, phường, đặc khu nơi hộ kinh doanh đăng ký trụ sở của HKD)",
+     "i": true
+    },
+    {
+     "text": ";\n- "
     },
     {
      "input": {
@@ -404,17 +582,30 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "center",
    "runs": [
     {
-     "text": "TRƯỞNG PHÒNG\n(Ký, ghi họ tên và đóng dấu)",
+     "text": "TRƯỞNG PHÒNG\n",
      "b": true
+    },
+    {
+     "text": "(Ký, ghi họ tên và đóng dấu)",
+     "i": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   }
- ]
+ ],
+ "v": 3
 }

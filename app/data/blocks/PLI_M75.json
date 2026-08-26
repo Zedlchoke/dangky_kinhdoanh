@@ -10,7 +10,11 @@
      "text": "Mẫu số 75",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-number"
   },
   {
    "t": "p",
@@ -20,7 +24,11 @@
      "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH\nCẤP TỈNH\n-------",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle"
   },
   {
    "t": "p",
@@ -30,7 +38,11 @@
      "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc\n---------------",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "national-header"
   },
   {
    "t": "p",
@@ -45,7 +57,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -87,7 +103,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "date-line"
   },
   {
    "t": "p",
@@ -97,7 +117,11 @@
      "text": "THÔNG BÁO",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-title"
   },
   {
    "t": "p",
@@ -107,7 +131,11 @@
      "text": "Về việc khôi phục Giấy chứng nhận đăng ký doanh nghiệp/Giấy chứng nhận đăng ký hoạt động chi nhánh, văn phòng đại diện, Giấy chứng nhận đăng ký địa điểm kinh doanh",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -116,7 +144,11 @@
     {
      "text": "Căn cứ Nghị định số 168/2025/NĐ-CP ngày 30/6/2025 của Chính phủ về đăng ký doanh nghiệp, "
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -161,17 +193,35 @@
     {
      "text": " về việc huỷ bỏ Quyết định thu hồi Giấy chứng nhận đăng ký doanh nghiệp/Giấy chứng nhận đăng ký hoạt động chi nhánh, văn phòng đại diện, Giấy chứng nhận đăng ký địa điểm kinh doanh."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "(Cơ quan đăng ký kinh doanh cấp tỉnh) thông báo về việc khôi phục Giấy chứng nhận đăng ký doanh nghiệp/Giấy chứng nhận đăng ký hoạt động chi nhánh, văn phòng đại diện, Giấy chứng nhận đăng ký địa điểm kinh doanh đối với doanh nghiệp như sau:",
+     "text": "(Cơ quan đăng ký kinh doanh cấp tỉnh)",
      "i": true
+    },
+    {
+     "text": " thông báo về việc khôi phục Giấy chứng nhận đăng ký doanh nghiệp/Giấy chứng nhận đăng ký hoạt động chi nhánh, văn phòng đại diện, Giấy chứng nhận đăng ký địa điểm kinh doanh"
+    },
+    {
+     "text": " ",
+     "b": true
+    },
+    {
+     "text": "đối với doanh nghiệp như sau:"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -181,14 +231,25 @@
      "text": "● Đối với doanh nghiệp thì ghi:",
      "i": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Tên doanh nghiệp (ghi bằng chữ in hoa):"
+     "text": "Tên doanh nghiệp ("
+    },
+    {
+     "text": "ghi bằng chữ in hoa",
+     "i": true
+    },
+    {
+     "text": "):"
     },
     {
      "input": {
@@ -196,7 +257,11 @@
       "w": 27
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -211,7 +276,11 @@
       "w": 23
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -244,7 +313,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -286,7 +359,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -301,14 +378,25 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Số Giấy chứng nhận đăng ký kinh doanh (đối với trường hợp không có mã số doanh nghiệp/mã số thuế): "
+     "text": "Số Giấy chứng nhận đăng ký kinh doanh "
+    },
+    {
+     "text": "(đối với trường hợp không có mã số doanh nghiệp/mã số thuế)",
+     "i": true
+    },
+    {
+     "text": ": "
     },
     {
      "input": {
@@ -325,7 +413,11 @@
       "w": 13
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -340,7 +432,11 @@
       "w": 18
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -355,7 +451,11 @@
       "w": 18
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -379,7 +479,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -403,7 +507,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -412,7 +520,11 @@
     {
      "text": "Có các chi nhánh/văn phòng đại diện/địa điểm kinh doanh:"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -421,7 +533,11 @@
     {
      "text": "Tên, mã số, địa chỉ, tình trạng pháp lý chi nhánh:............................................................."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -430,7 +546,11 @@
     {
      "text": "Tên, mã số, địa chỉ, tình trạng pháp lý văn phòng đại diện:.............................................."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -439,7 +559,11 @@
     {
      "text": "Tên, mã số, địa chỉ, tình trạng pháp lý địa điểm kinh doanh:............................................."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -449,14 +573,25 @@
      "text": "● Đối với chi nhánh/văn phòng đại diện/địa điểm kinh doanh thì ghi:",
      "i": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh (ghi bằng chữ in hoa): "
+     "text": "Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh ("
+    },
+    {
+     "text": "ghi bằng chữ in hoa",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -464,7 +599,11 @@
       "w": 46
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -479,7 +618,11 @@
       "w": 46
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -512,7 +655,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -554,7 +701,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -569,14 +720,25 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Số Giấy chứng nhận đăng ký hoạt động (trường hợp không có mã số/mã số thuế của chi nhánh/văn phòng đại diện):"
+     "text": "Số Giấy chứng nhận đăng ký hoạt động ("
+    },
+    {
+     "text": "trường hợp không có mã số/mã số thuế của chi nhánh/văn phòng đại diện",
+     "i": true
+    },
+    {
+     "text": "):"
     },
     {
      "input": {
@@ -593,7 +755,11 @@
       "w": 13
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -608,7 +774,11 @@
       "w": 18
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -617,7 +787,11 @@
     {
      "text": "Có các địa điểm kinh doanh trực thuộc chi nhánh:"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -626,7 +800,11 @@
     {
      "text": "Tên, mã số, địa chỉ, tình trạng pháp lý địa điểm kinh doanh:........................................"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -635,14 +813,25 @@
     {
      "text": "Là chi nhánh/văn phòng đại diện/địa điểm kinh doanh của doanh nghiệp sau:"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Tên doanh nghiệp (ghi bằng chữ in hoa):"
+     "text": "Tên doanh nghiệp "
+    },
+    {
+     "text": "(ghi bằng chữ in hoa)",
+     "i": true
+    },
+    {
+     "text": ":"
     },
     {
      "input": {
@@ -650,7 +839,11 @@
       "w": 27
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -665,7 +858,11 @@
       "w": 23
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -680,7 +877,11 @@
       "w": 18
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -704,7 +905,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -728,14 +933,25 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "(Cơ quan đăng ký kinh doanh cấp tỉnh) gửi thông báo tới (Tên Cơ quan quản lý thuế ",
+     "text": "(Cơ quan đăng ký kinh doanh cấp tỉnh)",
+     "i": true
+    },
+    {
+     "text": " gửi thông báo tới "
+    },
+    {
+     "text": "(Tên Cơ quan quản lý thuế ",
      "i": true
     },
     {
@@ -745,19 +961,36 @@
      }
     },
     {
-     "text": ") để phối hợp quản lý.",
+     "text": ")",
      "i": true
+    },
+    {
+     "text": " để phối hợp quản lý."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Nơi nhận:\n- Cơ quan quản lý thuế (tỉnh, thành phố nơi doanh nghiệp đăng ký trụ sở);\n- Lưu: ",
+     "text": "Nơi nhận:\n",
      "b": true,
      "i": true
+    },
+    {
+     "text": "- Cơ quan quản lý thuế "
+    },
+    {
+     "text": "(tỉnh, thành phố nơi doanh nghiệp đăng ký trụ sở);\n",
+     "i": true
+    },
+    {
+     "text": "- Lưu: "
     },
     {
      "input": {
@@ -765,17 +998,36 @@
       "w": 53
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "center",
    "runs": [
     {
-     "text": "TRƯỞNG ĐƠN VỊ\n(Ký, ghi họ tên và đóng dấu)",
+     "text": "TRƯỞNG ĐƠN VỊ\n",
      "b": true
+    },
+    {
+     "text": "("
+    },
+    {
+     "text": "Ký, ghi họ tên và đóng dấu",
+     "i": true
+    },
+    {
+     "text": ")"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   }
- ]
+ ],
+ "v": 3
 }

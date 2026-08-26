@@ -10,7 +10,11 @@
      "text": "Mẫu số 76",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-number"
   },
   {
    "t": "p",
@@ -20,7 +24,11 @@
      "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH\nCẤP TỈNH\n-------",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle"
   },
   {
    "t": "p",
@@ -30,7 +38,11 @@
      "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc\n---------------",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "national-header"
   },
   {
    "t": "p",
@@ -45,7 +57,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -87,7 +103,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "date-line"
   },
   {
    "t": "p",
@@ -97,7 +117,11 @@
      "text": "THÔNG BÁO",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-title"
   },
   {
    "t": "p",
@@ -107,7 +131,11 @@
      "text": "Về việc cấp đăng ký doanh nghiệp",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -117,7 +145,11 @@
      "text": "(Áp dụng cho đăng ký doanh nghiệp qua mạng thông tin điện tử)",
      "i": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -126,42 +158,96 @@
     {
      "text": "Kính gửi:"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "salutation"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "(Tên doanh nghiệp)"
-    }
-   ]
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
+     "text": "("
+    },
     {
-     "text": "Địa chỉ: (Địa chỉ trụ sở chính)"
-    }
-   ]
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Mã số: (Mã số doanh nghiệp)"
-    }
-   ]
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "(Cơ quan đăng ký kinh doanh cấp tỉnh):",
+     "text": "Tên doanh nghiệp",
      "i": true
+    },
+    {
+     "text": ")"
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Địa chỉ:"
+    },
+    {
+     "text": " ",
+     "i": true
+    },
+    {
+     "text": "("
+    },
+    {
+     "text": "Địa chỉ trụ sở chính",
+     "i": true
+    },
+    {
+     "text": ")"
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Mã số:"
+    },
+    {
+     "text": " ",
+     "i": true
+    },
+    {
+     "text": "("
+    },
+    {
+     "text": "Mã số doanh nghiệp",
+     "i": true
+    },
+    {
+     "text": ")"
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp tỉnh)",
+     "i": true
+    },
+    {
+     "text": ":"
     },
     {
      "input": {
@@ -169,7 +255,11 @@
       "w": 27
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -184,7 +274,11 @@
       "w": 16
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -208,7 +302,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -232,7 +330,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -257,9 +359,20 @@
      }
     },
     {
-     "text": ", (Cơ quan đăng ký kinh doanh cấp tỉnh) thông báo hồ sơ đăng ký doanh nghiệp của Ông/Bà đã được chấp thuận."
+     "text": ", "
+    },
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp tỉnh)",
+     "i": true
+    },
+    {
+     "text": " thông báo hồ sơ đăng ký doanh nghiệp của Ông/Bà đã được chấp thuận."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -269,7 +382,11 @@
      "text": "Trường hợp Cơ quan đăng ký kinh doanh cấp tỉnh chỉ cập nhật, bổ sung thông tin đăng ký doanh nghiệp trong Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp thì ghi:",
      "i": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -278,7 +395,11 @@
     {
      "text": "Thông tin đăng ký doanh nghiệp của doanh nghiệp sẽ được cập nhật trong Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp/đăng tải trên Cổng thông tin quốc gia về đăng ký doanh nghiệp."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -288,16 +409,32 @@
      "text": "Trường hợp Cơ quan đăng ký kinh doanh cấp tỉnh trả kết quả là giấy chứng nhận/giấy xác nhận/thông báo cho doanh nghiệp thì ghi:",
      "i": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Đề nghị Ông/Bà liên hệ (Cơ quan đăng ký kinh doanh cấp tỉnh) để nhận kết quả."
+     "text": "Đề nghị Ông/Bà liên hệ "
+    },
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp tỉnh)",
+     "i": true
+    },
+    {
+     "text": " để nhận kết quả."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   }
- ]
+ ],
+ "v": 3
 }

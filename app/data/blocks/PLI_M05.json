@@ -9,7 +9,8 @@
     {
      "text": "PL1 - Mau so 5: Giấy đề nghị đăng ký doanh nghiệp - Công ty hợp danh"
     }
-   ]
+   ],
+   "role": "source-indicator"
   },
   {
    "t": "p",
@@ -18,7 +19,8 @@
     {
      "text": "Mẫu số 5"
     }
-   ]
+   ],
+   "role": "form-number"
   },
   {
    "t": "p",
@@ -28,7 +30,11 @@
      "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc \n---------------",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "national-header"
   },
   {
    "t": "p",
@@ -50,7 +56,11 @@
       "w": 18
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "date-line"
   },
   {
    "t": "p",
@@ -60,14 +70,22 @@
      "text": "GIẤY ĐỀ NGHỊ ĐĂNG KÝ DOANH NGHIỆP\nCÔNG TY HỢP DANH",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-title"
   },
   {
    "t": "p",
    "align": "center",
    "runs": [
     {
-     "text": "Kính gửi: (Cơ quan đăng ký kinh doanh cấp tỉnh) "
+     "text": "Kính gửi: "
+    },
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp tỉnh) ",
+     "i": true
     },
     {
      "input": {
@@ -75,16 +93,31 @@
       "w": 32
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "salutation"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Chúng tôi1 là các thành viên hợp danh "
+     "text": "Chúng tôi"
+    },
+    {
+     "text": "1",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " là các thành viên hợp danh "
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -94,17 +127,35 @@
      "text": "Đăng ký công ty hợp danh với các nội dung sau:",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "1. Tình trạng thành lập (đánh dấu X vào ô thích hợp):",
+     "text": "1. Tình trạng thành lập ",
      "b": true
+    },
+    {
+     "text": "("
+    },
+    {
+     "text": "đánh dấu X vào ô thích hợp",
+     "i": true
+    },
+    {
+     "text": "):"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "chk",
@@ -136,27 +187,62 @@
    "align": "left",
    "runs": [
     {
-     "text": "- Lý do chuyển đổi loại hình doanh nghiệp: (Quyết định của …/Thành viên không góp vốn/Tiếp nhận thành viên/cổ đông mới/…) …………………",
+     "text": "- Lý do chuyển đổi loại hình doanh nghiệp: ",
      "b": true
+    },
+    {
+     "text": "("
+    },
+    {
+     "text": "Quyết định của …/Thành viên không góp vốn/Tiếp nhận thành viên/cổ đông mới/…",
+     "i": true
+    },
+    {
+     "text": ") …………………"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "- Thông tin về các doanh nghiệp bị hợp nhất, được chuyển đổi (phải kê khai trong trường hợp thành lập công ty trên cơ sở hợp nhất doanh nghiệp, chuyển đổi loại hình doanh nghiệp):",
+     "text": "- Thông tin về các doanh nghiệp bị hợp nhất, được chuyển đổi ",
      "b": true
+    },
+    {
+     "text": "("
+    },
+    {
+     "text": "phải kê khai trong trường hợp thành lập công ty trên cơ sở hợp nhất doanh nghiệp, chuyển đổi loại hình doanh nghiệp",
+     "i": true
+    },
+    {
+     "text": "):"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Tên doanh nghiệp (ghi bằng chữ in hoa): "
+     "text": "Tên doanh nghiệp ("
+    },
+    {
+     "text": "ghi bằng chữ in hoa",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -164,7 +250,11 @@
       "w": 28
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -179,7 +269,11 @@
       "w": 23
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -188,24 +282,49 @@
     {
      "text": "Đề nghị Quý Cơ quan thực hiện chấm dứt tồn tại đối với doanh nghiệp bị hợp nhất và các chi nhánh/văn phòng đại diện/địa điểm kinh doanh của doanh nghiệp bị hợp nhất."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "- Thông tin về hộ kinh doanh được chuyển đổi (phải kê khai trong trường hợp thành lập doanh nghiệp trên cơ sở chuyển đổi từ hộ kinh doanh):",
+     "text": "- Thông tin về hộ kinh doanh được chuyển đổi ",
      "b": true
+    },
+    {
+     "text": "("
+    },
+    {
+     "text": "phải kê khai trong trường hợp thành lập doanh nghiệp trên cơ sở chuyển đổi từ hộ kinh doanh",
+     "i": true
+    },
+    {
+     "text": "):"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Tên hộ kinh doanh (ghi bằng chữ in hoa): "
+     "text": "Tên hộ kinh doanh ("
+    },
+    {
+     "text": "ghi bằng chữ in hoa",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -213,14 +332,25 @@
       "w": 28
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Số Giấy chứng nhận đăng ký hộ kinh doanh (nếu có): "
+     "text": "Số Giấy chứng nhận đăng ký hộ kinh doanh ("
+    },
+    {
+     "text": "nếu có",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -228,7 +358,11 @@
       "w": 33
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -252,7 +386,11 @@
       "w": 13
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -267,7 +405,11 @@
       "w": 23
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -282,7 +424,11 @@
       "w": 23
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -297,16 +443,31 @@
       "w": 20
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Loại giấy tờ pháp lý của cá nhân (kê khai theo giấy tờ pháp lý của cá nhân được ghi trên Giấy chứng nhận đăng ký thuế của hộ kinh doanh):\t"
+     "text": "Loại giấy tờ pháp lý của cá nhân ("
+    },
+    {
+     "text": "kê khai theo giấy tờ pháp lý của cá nhân được ghi trên Giấy chứng nhận đăng ký thuế của hộ kinh doanh",
+     "i": true
+    },
+    {
+     "text": "):\t"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "chk",
@@ -333,9 +494,20 @@
    "align": "left",
    "runs": [
     {
-     "text": "Số giấy tờ pháp lý của cá nhân (kê khai theo giấy tờ pháp lý của cá nhân được ghi trên Giấy chứng nhận đăng ký thuế của hộ kinh doanh): \t"
+     "text": "Số giấy tờ pháp lý của cá nhân ("
+    },
+    {
+     "text": "kê khai theo giấy tờ pháp lý của cá nhân được ghi trên Giấy chứng nhận đăng ký thuế của hộ kinh doanh",
+     "i": true
+    },
+    {
+     "text": "): \t"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -360,7 +532,14 @@
      }
     },
     {
-     "text": "Ngày hết hạn (nếu có): "
+     "text": "Ngày hết hạn ("
+    },
+    {
+     "text": "nếu có",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -368,24 +547,49 @@
       "w": 19
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "- Thông tin về cơ sở bảo trợ xã hội/quỹ xã hội/quỹ từ thiện được chuyển đổi (phải kê khai trong trường hợp thành lập doanh nghiệp xã hội trên cơ sở chuyển đổi từ cơ sở bảo trợ xã hội/quỹ xã hội/quỹ từ thiện):",
+     "text": "- Thông tin về cơ sở bảo trợ xã hội/quỹ xã hội/quỹ từ thiện được chuyển đổi ",
      "b": true
+    },
+    {
+     "text": "("
+    },
+    {
+     "text": "phải kê khai trong trường hợp thành lập doanh nghiệp xã hội trên cơ sở chuyển đổi từ cơ sở bảo trợ xã hội/quỹ xã hội/quỹ từ thiện",
+     "i": true
+    },
+    {
+     "text": "):"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Tên cơ sở bảo trợ xã hội/quỹ xã hội/quỹ từ thiện (ghi bằng chữ in hoa): "
+     "text": "Tên cơ sở bảo trợ xã hội/quỹ xã hội/quỹ từ thiện ("
+    },
+    {
+     "text": "ghi bằng chữ in hoa",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -393,7 +597,11 @@
       "w": 44
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -417,16 +625,31 @@
       "w": 16
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Mã số thuế của cơ sở bảo trợ xã hội/quỹ xã hội/quỹ từ thiện (chỉ kê khai mã số thuế 10 số): "
+     "text": "Mã số thuế của cơ sở bảo trợ xã hội/quỹ xã hội/quỹ từ thiện ("
+    },
+    {
+     "text": "chỉ kê khai mã số thuế 10 số",
+     "i": true
+    },
+    {
+     "text": "): "
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -438,7 +661,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -453,7 +680,11 @@
       "w": 19
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -468,16 +699,31 @@
       "w": 40
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Loại giấy tờ pháp lý của cá nhân (kê khai theo giấy tờ pháp lý của cá nhân được ghi trên Giấy chứng nhận đăng ký thuế của cơ sở bảo trợ xã hội/quỹ xã hội/quỹ từ thiện):"
+     "text": "Loại giấy tờ pháp lý của cá nhân ("
+    },
+    {
+     "text": "kê khai theo giấy tờ pháp lý của cá nhân được ghi trên Giấy chứng nhận đăng ký thuế của cơ sở bảo trợ xã hội/quỹ xã hội/quỹ từ thiện",
+     "i": true
+    },
+    {
+     "text": "):"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "chk",
@@ -504,7 +750,14 @@
    "align": "left",
    "runs": [
     {
-     "text": "Số giấy tờ pháp lý của cá nhân (kê khai theo giấy tờ pháp lý của cá nhân được ghi trên Giấy chứng nhận đăng ký thuế của cơ sở bảo trợ xã hội/quỹ xã hội/quỹ từ thiện): "
+     "text": "Số giấy tờ pháp lý của cá nhân ("
+    },
+    {
+     "text": "kê khai theo giấy tờ pháp lý của cá nhân được ghi trên Giấy chứng nhận đăng ký thuế của cơ sở bảo trợ xã hội/quỹ xã hội/quỹ từ thiện",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -512,7 +765,11 @@
       "w": 60
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -537,7 +794,14 @@
      }
     },
     {
-     "text": "Ngày hết hạn (nếu có): "
+     "text": "Ngày hết hạn ("
+    },
+    {
+     "text": "nếu có",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -545,14 +809,22 @@
       "w": 19
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "- Doanh nghiệp thực hiện dự án đầu tư được đăng ký đầu tư theo thủ tục đầu tư đặc biệt"
+     "text": "- "
+    },
+    {
+     "text": "Doanh nghiệp thực hiện dự án đầu tư được đăng ký đầu tư theo thủ tục đầu tư đặc biệt",
+     "b": true
     },
     {
      "input": {
@@ -560,7 +832,11 @@
       "chk": true
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -573,10 +849,18 @@
      }
     },
     {
-     "text": " Doanh nghiệp xã hội (Đánh dấu X vào ô vuông nếu là doanh nghiệp xã hội và kèm theo hồ sơ phải có Cam kết thực hiện mục tiêu xã hội, môi trường)",
+     "text": " Doanh nghiệp xã hội ",
      "b": true
+    },
+    {
+     "text": "(Đánh dấu X vào ô vuông nếu là doanh nghiệp xã hội và kèm theo hồ sơ phải có Cam kết thực hiện mục tiêu xã hội, môi trường)",
+     "i": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -586,14 +870,25 @@
      "text": "2. Tên công ty:",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Tên công ty viết bằng tiếng Việt (ghi bằng chữ in hoa): "
+     "text": "Tên công ty viết bằng tiếng Việt ("
+    },
+    {
+     "text": "ghi bằng chữ in hoa",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -601,14 +896,25 @@
       "w": 36
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Tên công ty viết bằng tiếng nước ngoài (nếu có): "
+     "text": "Tên công ty viết bằng tiếng nước ngoài ("
+    },
+    {
+     "text": "nếu có",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -616,14 +922,25 @@
       "w": 32
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Tên công ty viết tắt (nếu có): "
+     "text": "Tên công ty viết tắt ("
+    },
+    {
+     "text": "nếu có",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -631,7 +948,11 @@
       "w": 23
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -641,7 +962,11 @@
      "text": "3. Địa chỉ trụ sở chính:",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
@@ -656,7 +981,11 @@
       "w": 42
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -671,7 +1000,11 @@
       "w": 17
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -686,7 +1019,11 @@
       "w": 27
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -702,7 +1039,14 @@
      }
     },
     {
-     "text": " Số fax (nếu có): "
+     "text": " Số fax ("
+    },
+    {
+     "text": "nếu có",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -713,14 +1057,25 @@
     {
      "text": "\t"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Thư điện tử (nếu có): "
+     "text": "Thư điện tử ("
+    },
+    {
+     "text": "nếu có",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -729,7 +1084,14 @@
      }
     },
     {
-     "text": " Website (nếu có): "
+     "text": " Website ("
+    },
+    {
+     "text": "nếu có",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -740,16 +1102,31 @@
     {
      "text": "\t"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "- Doanh nghiệp nằm trong (Doanh nghiệp phải đánh dấu X vào ô vuông tương ứng với khu công nghệ cao nếu nộp hồ sơ tới Ban quản lý khu công nghệ cao):"
+     "text": "- Doanh nghiệp nằm trong ("
+    },
+    {
+     "text": "Doanh nghiệp phải đánh dấu X vào ô vuông tương ứng với khu công nghệ cao nếu nộp hồ sơ tới Ban quản lý khu công nghệ cao)",
+     "i": true
+    },
+    {
+     "text": ":"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "chk",
@@ -776,7 +1153,14 @@
    "align": "left",
    "runs": [
     {
-     "text": "- Doanh nghiệp có Giấy chứng nhận quyền sử dụng đất tại đảo và xã, phường biên giới; xã, phường ven biển; khu vực khác có ảnh hưởng đến quốc phòng, an ninh3:\nCó "
+     "text": "- Doanh nghiệp có Giấy chứng nhận quyền sử dụng đất tại đảo và xã, phường biên giới; xã, phường ven biển; khu vực khác có ảnh hưởng đến quốc phòng, an ninh"
+    },
+    {
+     "text": "3",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": ":\nCó "
     },
     {
      "input": {
@@ -793,17 +1177,35 @@
       "chk": true
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "4. Ngành, nghề kinh doanh (ghi tên và mã theo ngành cấp 4 trong Hệ thống ngành kinh tế của Việt Nam): ",
+     "text": "4. Ngành, nghề kinh doanh",
      "b": true
+    },
+    {
+     "text": " ("
+    },
+    {
+     "text": "ghi tên và mã theo ngành cấp 4 trong Hệ thống ngành kinh tế của Việt Nam)",
+     "i": true
+    },
+    {
+     "text": ": "
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "loop",
@@ -878,17 +1280,31 @@
    "align": "left",
    "runs": [
     {
-     "text": "5. Vốn điều lệ:",
+     "text": "5. Vốn điều lệ",
      "b": true
+    },
+    {
+     "text": ":"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Vốn điều lệ (bằng số; VNĐ): "
+     "text": "Vốn điều lệ ("
+    },
+    {
+     "text": "bằng số; VNĐ",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -899,14 +1315,25 @@
     {
      "text": "\t"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Vốn điều lệ (bằng chữ; VNĐ): "
+     "text": "Vốn điều lệ ("
+    },
+    {
+     "text": "bằng chữ; VNĐ",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -914,14 +1341,25 @@
       "w": 23
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Giá trị tương đương theo đơn vị tiền nước ngoài (nếu có, bằng số, loại ngoại tệ):"
+     "text": "Giá trị tương đương theo đơn vị tiền nước ngoài ("
+    },
+    {
+     "text": "nếu có, bằng số, loại ngoại tệ",
+     "i": true
+    },
+    {
+     "text": "):"
     },
     {
      "input": {
@@ -929,7 +1367,11 @@
       "w": 48
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -953,7 +1395,11 @@
       "chk": true
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -963,7 +1409,11 @@
      "text": "6. Nguồn vốn điều lệ:",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
@@ -973,27 +1423,57 @@
      "text": "Loại nguồn vốn",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "center",
    "runs": [
     {
-     "text": "Số tiền (bằng số; VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)",
+     "text": "Số tiền (",
+     "b": true
+    },
+    {
+     "text": "bằng số; VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có",
+     "b": true,
+     "i": true
+    },
+    {
+     "text": ")",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "center",
    "runs": [
     {
-     "text": "Tỷ lệ (%)",
+     "text": "Tỷ lệ (",
+     "b": true
+    },
+    {
+     "text": "%",
+     "b": true,
+     "i": true
+    },
+    {
+     "text": ")",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -1002,7 +1482,11 @@
     {
      "text": "Vốn ngân sách nhà nước"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -1011,7 +1495,11 @@
     {
      "text": "Vốn tư nhân"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -1020,7 +1508,11 @@
     {
      "text": "Vốn nước ngoài"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -1029,7 +1521,11 @@
     {
      "text": "Vốn khác"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -1038,7 +1534,12 @@
     {
      "text": "Tổng cộng"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   }
- ]
+ ],
+ "v": 3
 }

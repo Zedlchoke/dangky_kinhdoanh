@@ -10,7 +10,11 @@
      "text": "Mẫu số 74",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-number"
   },
   {
    "t": "p",
@@ -20,25 +24,44 @@
      "text": "CÔNG BỐ NỘI DUNG ĐĂNG KÝ DOANH NGHIỆP",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle"
   },
   {
    "t": "p",
    "align": "center",
    "runs": [
     {
-     "text": "(Áp dụng trong các trường hợp công bố nội dung đăng ký doanh nghiệp khác ngoài các nội dung Mẫu số 72, 73 Phụ lục I Thông tư này)"
+     "text": "("
+    },
+    {
+     "text": "Áp dụng trong các trường hợp công bố nội dung đăng ký doanh nghiệp khác ngoài các nội dung Mẫu số 72, 73 Phụ lục I Thông tư này",
+     "i": true
+    },
+    {
+     "text": ")"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "center",
    "runs": [
     {
-     "text": "(CƠ QUAN ĐĂNG KÝ KINH DOANH CẤP TỈNH) ",
+     "text": "(CƠ QUAN ĐĂNG KÝ KINH DOANH CẤP TỈNH)",
      "b": true,
      "i": true
+    },
+    {
+     "text": " ",
+     "b": true
     },
     {
      "input": {
@@ -46,7 +69,11 @@
       "w": 27
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle"
   },
   {
    "t": "p",
@@ -56,7 +83,11 @@
      "text": "1. Tên doanh nghiệp:",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
@@ -71,7 +102,11 @@
       "w": 27
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -86,7 +121,11 @@
       "w": 30
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -101,15 +140,22 @@
       "w": 21
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "2. Mã số doanh nghiệp: ",
+     "text": "2. Mã số doanh nghiệp:",
      "b": true
+    },
+    {
+     "text": " "
     },
     {
      "input": {
@@ -117,15 +163,22 @@
       "w": 19
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "3. Ngày được cấp Giấy chứng nhận đăng ký doanh nghiệp lần đầu: ",
+     "text": "3. Ngày được cấp Giấy chứng nhận đăng ký doanh nghiệp lần đầu:",
      "b": true
+    },
+    {
+     "text": " "
     },
     {
      "input": {
@@ -133,17 +186,28 @@
       "w": 39
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "4. Địa chỉ trụ sở chính: ",
+     "text": "4. Địa chỉ trụ sở chính:",
      "b": true
+    },
+    {
+     "text": " "
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
@@ -155,15 +219,23 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "5. Nơi đăng ký: (Cơ quan đăng ký kinh doanh cấp tỉnh)",
+     "text": "5. Nơi đăng ký: ",
      "b": true
+    },
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp tỉnh)",
+     "i": true
     },
     {
      "input": {
@@ -171,17 +243,28 @@
       "w": 34
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "6. Nội dung thông báo: ",
+     "text": "6. Nội dung thông báo:",
      "b": true
+    },
+    {
+     "text": " "
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
@@ -190,7 +273,11 @@
     {
      "text": "……………………………………………………………………………………………..................."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -199,7 +286,12 @@
     {
      "text": "………………………………………………………………………….........................................."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   }
- ]
+ ],
+ "v": 3
 }

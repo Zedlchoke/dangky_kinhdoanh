@@ -10,17 +10,34 @@
      "text": "Mẫu số 79",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-number"
   },
   {
    "t": "p",
    "align": "center",
    "runs": [
     {
-     "text": "TÊN TỔ CHỨC1\n-------",
+     "text": "TÊN TỔ CHỨC",
+     "b": true
+    },
+    {
+     "text": "1",
+     "b": true,
+     "vertAlign": "superscript"
+    },
+    {
+     "text": "\n-------",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle"
   },
   {
    "t": "p",
@@ -30,7 +47,11 @@
      "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc\n---------------",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "national-header"
   },
   {
    "t": "p",
@@ -45,7 +66,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -87,7 +112,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "date-line"
   },
   {
    "t": "p",
@@ -97,24 +126,45 @@
      "text": "GIẤY ĐỀ NGHỊ",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-title"
   },
   {
    "t": "p",
    "align": "center",
    "runs": [
     {
-     "text": "Cơ quan đăng ký kinh doanh yêu cầu doanh nghiệp2 thay đổi tên doanh nghiệp, tên chi nhánh, văn phòng đại diện, địa điểm kinh doanh",
+     "text": "Cơ quan đăng ký kinh doanh yêu cầu doanh nghiệp",
+     "b": true
+    },
+    {
+     "text": "2",
+     "b": true,
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " thay đổi tên doanh nghiệp, tên chi nhánh, văn phòng đại diện, địa điểm kinh doanh",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "center",
    "runs": [
     {
-     "text": "Kính gửi: (Cơ quan đăng ký kinh doanh cấp tỉnh) "
+     "text": "Kính gửi: "
+    },
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp tỉnh) ",
+     "i": true
     },
     {
      "input": {
@@ -122,7 +172,11 @@
       "w": 32
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "salutation"
   },
   {
    "t": "p",
@@ -132,14 +186,25 @@
      "text": "1. Trường hợp cá nhân đề nghị theo quy định tại khoản 3 Điều 15 Nghị định số 168/2025/NĐ-CP thì ghi:",
      "i": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Tôi là (ghi họ tên bằng chữ in hoa):"
+     "text": "Tôi là ("
+    },
+    {
+     "text": "ghi họ tên bằng chữ in hoa",
+     "i": true
+    },
+    {
+     "text": "):"
     },
     {
      "input": {
@@ -147,7 +212,11 @@
       "w": 26
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -183,7 +252,11 @@
     {
      "text": "\t"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "date-line"
   },
   {
    "t": "p",
@@ -198,7 +271,11 @@
       "w": 13
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -213,7 +290,11 @@
       "w": 19
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -223,14 +304,32 @@
      "text": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở dữ liệu quốc gia về dân cư bị gián đoạn thì đề nghị kê khai các thông tin cá nhân dưới đây:",
      "i": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Số Hộ chiếu (đối với cá nhân Việt Nam không có số định danh cá nhân)/Số Hộ chiếu nước ngoài hoặc giấy tờ có giá trị thay thế hộ chiếu nước ngoài (đối với cá nhân là người nước ngoài): "
+     "text": "Số Hộ chiếu ("
+    },
+    {
+     "text": "đối với cá nhân Việt Nam không có số định danh cá nhân",
+     "i": true
+    },
+    {
+     "text": ")/Số Hộ chiếu nước ngoài hoặc giấy tờ có giá trị thay thế hộ chiếu nước ngoài ("
+    },
+    {
+     "text": "đối với cá nhân là người nước ngoài",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -238,7 +337,11 @@
       "w": 60
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -265,14 +368,25 @@
     {
      "text": " \t"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Điện thoại (nếu có): "
+     "text": "Điện thoại"
+    },
+    {
+     "text": " (nếu có)",
+     "i": true
+    },
+    {
+     "text": ": "
     },
     {
      "input": {
@@ -281,7 +395,14 @@
      }
     },
     {
-     "text": " Thư điện tử (nếu có): "
+     "text": " Thư điện tử"
+    },
+    {
+     "text": " (nếu có)",
+     "i": true
+    },
+    {
+     "text": ": "
     },
     {
      "input": {
@@ -289,7 +410,11 @@
       "w": 19
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -299,7 +424,11 @@
      "text": "2. Trường hợp tổ chức đề nghị theo quy định tại khoản 3 Điều 15 Nghị định số 168/2025/NĐ-CP thì ghi:",
      "i": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
@@ -314,14 +443,25 @@
       "w": 14
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Mã số doanh nghiệp/Số Quyết định thành lập (nếu có):"
+     "text": "Mã số doanh nghiệp/Số Quyết định thành lập ("
+    },
+    {
+     "text": "nếu có",
+     "i": true
+    },
+    {
+     "text": "):"
     },
     {
      "input": {
@@ -329,7 +469,11 @@
       "w": 34
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -344,7 +488,11 @@
       "w": 18
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -359,7 +507,11 @@
       "w": 25
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -374,7 +526,11 @@
       "w": 33
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -390,7 +546,14 @@
      }
     },
     {
-     "text": " Ngày hết hạn (nếu có): "
+     "text": " Ngày hết hạn ("
+    },
+    {
+     "text": "nếu có",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -398,14 +561,25 @@
       "w": 20
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Đề nghị (Cơ quan đăng ký kinh doanh cấp tỉnh) "
+     "text": "Đề nghị "
+    },
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp tỉnh)",
+     "i": true
+    },
+    {
+     "text": " "
     },
     {
      "input": {
@@ -416,14 +590,25 @@
     {
      "text": " yêu cầu doanh nghiệp có tên doanh nghiệp, tên chi nhánh, văn phòng đại diện, địa điểm kinh doanh xâm phạm quyền sở hữu công nghiệp thay đổi tên doanh nghiệp, tên chi nhánh, văn phòng đại diện, địa điểm kinh doanh như sau: "
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Tên doanh nghiệp (ghi bằng chữ in hoa):"
+     "text": "Tên doanh nghiệp ("
+    },
+    {
+     "text": "ghi bằng chữ in hoa",
+     "i": true
+    },
+    {
+     "text": "):"
     },
     {
      "input": {
@@ -431,7 +616,11 @@
       "w": 27
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -446,14 +635,25 @@
       "w": 23
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh (ghi bằng chữ in hoa): "
+     "text": "Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh ("
+    },
+    {
+     "text": "ghi bằng chữ in hoa",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -461,7 +661,11 @@
       "w": 46
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -470,7 +674,11 @@
     {
      "text": "Mã số/mã số thuế chi nhánh/văn phòng đại diện/mã số địa điểm kinh doanh: \t"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -485,7 +693,11 @@
       "w": 15
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -494,7 +706,11 @@
     {
      "text": "…………………………………………………………………………………………………………."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -503,7 +719,11 @@
     {
      "text": "Kèm theo Giấy đề nghị này có:"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -512,7 +732,11 @@
     {
      "text": "1. ………………………………………………………………………………………………………"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
@@ -521,7 +745,11 @@
     {
      "text": "2. ………………………………………………………………………………………………………"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
@@ -530,7 +758,11 @@
     {
      "text": "3. ………………………………………………………………………………………………………"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
@@ -539,7 +771,11 @@
     {
      "text": "…"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -548,53 +784,105 @@
     {
      "text": "Tôi/(Tên tổ chức) cam kết hoàn toàn chịu trách nhiệm trước pháp luật về tính hợp pháp, chính xác và trung thực của nội dung Giấy đề nghị này và tài liệu kèm theo."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "center",
    "runs": [
     {
-     "text": "NGƯỜI ĐỀ NGHỊ/NGƯỜI ĐẠI DIỆN \n(Ký và ghi họ tên và đóng dấu)3",
+     "text": "NGƯỜI ĐỀ NGHỊ/NGƯỜI ĐẠI DIỆN \n",
      "b": true
+    },
+    {
+     "text": "("
+    },
+    {
+     "text": "Ký và ghi họ tên và đóng dấu",
+     "i": true
+    },
+    {
+     "text": ")"
+    },
+    {
+     "text": "3",
+     "vertAlign": "superscript"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "signature"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "_______________________________________"
+     "text": "_______________________________________",
+     "vertAlign": "superscript"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "national-separator"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "1 Chỉ kê khai tên đối với tổ chức."
+     "text": "1",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " Chỉ kê khai tên đối với tổ chức."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "2 Doanh nghiệp có tên doanh nghiệp, tên chi nhánh, văn phòng đại diện, địa điểm kinh doanh xâm phạm quyền sở hữu công nghiệp."
+     "text": "2",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " Doanh nghiệp có tên doanh nghiệp, tên chi nhánh, văn phòng đại diện, địa điểm kinh doanh xâm phạm quyền sở hữu công nghiệp."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "3 Người đề nghị ký và ghi họ tên/Người đại diện của tổ chức ký và ghi họ tên và đóng dấu vào phần này."
+     "text": "3",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " Người đề nghị ký và ghi họ tên/Người đại diện của tổ chức ký và ghi họ tên và đóng dấu vào phần này."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
   }
- ]
+ ],
+ "v": 3
 }

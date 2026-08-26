@@ -9,7 +9,8 @@
     {
      "text": "PL2 - Mau so 7: Giấy chứng nhận đăng ký hộ kinh doanh"
     }
-   ]
+   ],
+   "role": "source-indicator"
   },
   {
    "t": "p",
@@ -18,7 +19,8 @@
     {
      "text": "Mẫu số 7"
     }
-   ]
+   ],
+   "role": "form-number"
   },
   {
    "t": "p",
@@ -28,7 +30,11 @@
      "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH\nCẤP XÃ\n-----------",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle"
   },
   {
    "t": "p",
@@ -38,7 +44,11 @@
      "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc\n-----------------",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "national-header"
   },
   {
    "t": "p",
@@ -48,7 +58,11 @@
      "text": "GIẤY CHỨNG NHẬN ĐĂNG KÝ HỘ KINH DOANH",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-title"
   },
   {
    "t": "p",
@@ -63,7 +77,11 @@
       "w": 18
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -99,7 +117,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -145,7 +167,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -155,14 +181,29 @@
      "text": "1. Tên hộ kinh doanh:",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Tên hộ kinh doanh viết bằng tiếng Việt (ghi bằng chữ in hoa):"
+     "text": "Tên hộ kinh doanh viết bằng tiếng Việt"
+    },
+    {
+     "text": " ",
+     "b": true
+    },
+    {
+     "text": "(ghi bằng chữ in hoa)",
+     "i": true
+    },
+    {
+     "text": ":"
     },
     {
      "input": {
@@ -170,14 +211,25 @@
       "w": 38
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Tên hộ kinh doanh viết bằng tiếng nước ngoài (nếu có):"
+     "text": "Tên hộ kinh doanh viết bằng tiếng nước ngoài "
+    },
+    {
+     "text": "(nếu có)",
+     "i": true
+    },
+    {
+     "text": ":"
     },
     {
      "input": {
@@ -185,14 +237,25 @@
       "w": 35
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Tên hộ kinh doanh viết tắt (nếu có):"
+     "text": "Tên hộ kinh doanh viết tắt "
+    },
+    {
+     "text": "(nếu có)",
+     "i": true
+    },
+    {
+     "text": ":"
     },
     {
      "input": {
@@ -200,7 +263,11 @@
       "w": 26
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -216,7 +283,11 @@
       "w": 22
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
@@ -240,7 +311,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -264,7 +339,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -274,7 +353,11 @@
      "text": "3. Ngành, nghề kinh doanh: ",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "loop",
@@ -349,20 +432,38 @@
    "align": "left",
    "runs": [
     {
-     "text": "4. Vốn kinh doanh:.........................................................................................................",
+     "text": "4. Vốn kinh doanh",
      "b": true
+    },
+    {
+     "text": ":........................................................................................................."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "5. Chủ thể thành lập hộ kinh doanh (ghi một trong các chủ thể sau): Cá nhân/ Các thành viên hộ gia đình ",
+     "text": "5. Chủ thể thành lập hộ kinh doanh ",
      "b": true
+    },
+    {
+     "text": "(ghi một trong các chủ thể sau)",
+     "i": true
+    },
+    {
+     "text": ": Cá nhân/ Các thành viên hộ gia đình "
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
@@ -372,16 +473,31 @@
      "text": "6. Thông tin về chủ hộ kinh doanh:",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Họ và tên (ghi bằng chữ in hoa):............................................................................................"
+     "text": "Họ và tên "
+    },
+    {
+     "text": "(ghi bằng chữ in hoa)",
+     "i": true
+    },
+    {
+     "text": ":............................................................................................"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -396,7 +512,11 @@
       "w": 13
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -447,7 +567,11 @@
       "w": 14
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -462,7 +586,11 @@
       "w": 19
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -477,7 +605,11 @@
       "w": 16
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -492,17 +624,33 @@
       "w": 16
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "7. Danh sách thành viên hộ gia đình đăng ký thành lập hộ kinh doanh (chỉ ghi trong trường hợp các thành viên hộ gia đình đăng ký thành lập hộ kinh doanh):",
+     "text": "7. Danh sách thành viên hộ gia đình đăng ký thành lập hộ kinh doanh ",
+     "b": true
+    },
+    {
+     "text": "(chỉ ghi trong trường hợp các thành viên hộ gia đình đăng ký thành lập hộ kinh doanh)",
+     "i": true
+    },
+    {
+     "text": ":",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -511,7 +659,11 @@
     {
      "text": "STT"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -520,7 +672,11 @@
     {
      "text": "Tên thành viên"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -529,7 +685,11 @@
     {
      "text": "Quốc tịch"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -538,7 +698,11 @@
     {
      "text": "Nơi ở hiện tại"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -547,7 +711,11 @@
     {
      "text": "Nơi thường trú"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -556,7 +724,11 @@
     {
      "text": "Số định danh cá nhân"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -565,17 +737,30 @@
     {
      "text": "Ghi chú"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "note"
   },
   {
    "t": "p",
    "align": "center",
    "runs": [
     {
-     "text": "TRƯỞNG PHÒNG\n(Ký, ghi họ tên và đóng dấu)",
+     "text": "TRƯỞNG PHÒNG\n",
      "b": true
+    },
+    {
+     "text": "(Ký, ghi họ tên và đóng dấu)",
+     "i": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   }
- ]
+ ],
+ "v": 3
 }

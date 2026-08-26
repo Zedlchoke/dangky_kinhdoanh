@@ -9,7 +9,8 @@
     {
      "text": "PL2 - Mau so 15: Quyết định về việc thu hồi Giấy chứng nhận đăng ký hộ kinh doanh của lần đăng ký thay đổi"
     }
-   ]
+   ],
+   "role": "source-indicator"
   },
   {
    "t": "p",
@@ -18,7 +19,8 @@
     {
      "text": "Mẫu số 15"
     }
-   ]
+   ],
+   "role": "form-number"
   },
   {
    "t": "p",
@@ -28,7 +30,11 @@
      "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH\nCẤP XÃ\n-----------",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle"
   },
   {
    "t": "p",
@@ -38,7 +44,11 @@
      "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc\n------------------",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "national-header"
   },
   {
    "t": "p",
@@ -53,7 +63,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -95,7 +109,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "date-line"
   },
   {
    "t": "p",
@@ -105,7 +123,11 @@
      "text": "QUYẾT ĐỊNH",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle"
   },
   {
    "t": "p",
@@ -115,7 +137,11 @@
      "text": "Về việc thu hồi Giấy chứng nhận đăng ký hộ kinh doanh của lần đăng ký thay đổi",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -125,7 +151,11 @@
      "text": "TRƯỞNG PHÒNG ...",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle"
   },
   {
    "t": "p",
@@ -134,7 +164,11 @@
     {
      "text": "Căn cứ Nghị định số 168/2025/NĐ-CP ngày 30/6/2025 của Chính phủ về đăng ký doanh nghiệp;"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -159,9 +193,20 @@
      }
     },
     {
-     "text": "/…./….. của (Cơ quan đăng ký kinh doanh cấp xã) về việc vi phạm của hộ kinh doanh; "
+     "text": "/…./….. của "
+    },
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp xã)",
+     "i": true
+    },
+    {
+     "text": " về việc vi phạm của hộ kinh doanh; "
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -176,7 +221,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -186,24 +235,42 @@
      "text": "QUYẾT ĐỊNH:",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Điều 1. Thu hồi Giấy chứng nhận đăng ký hộ kinh doanh của lần đăng ký thay đổi như sau:",
+     "text": "Điều 1. ",
      "b": true
+    },
+    {
+     "text": "Thu hồi Giấy chứng nhận đăng ký hộ kinh doanh của lần đăng ký thay đổi như sau:"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Tên hộ kinh doanh (ghi bằng chữ in hoa): "
+     "text": "Tên hộ kinh doanh "
+    },
+    {
+     "text": "(ghi bằng chữ in hoa)",
+     "i": true
+    },
+    {
+     "text": ": "
     },
     {
      "input": {
@@ -211,7 +278,11 @@
       "w": 28
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -226,7 +297,11 @@
       "w": 18
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -241,7 +316,11 @@
       "w": 21
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -283,7 +362,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -292,27 +375,51 @@
     {
      "text": "Nơi cấp:"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "* Trường hợp thực hiện thu hồi theo quyết định của Tòa án thì ghi cụ thể nội dung thu hồi theo quyết định của Tòa án.",
+     "text": "* Trường hợp thực hiện thu hồi theo",
+     "i": true
+    },
+    {
+     "text": " ",
+     "b": true,
+     "i": true
+    },
+    {
+     "text": "quyết định của Tòa án thì ghi cụ thể nội dung thu hồi theo quyết định của Tòa án.",
      "i": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Điều 2. Cấp Giấy chứng nhận đăng ký hộ kinh doanh trên cơ sở hồ sơ hợp lệ của lần thay đổi thứ…../đăng ký lần đầu:",
+     "text": "Điều 2. ",
      "b": true
+    },
+    {
+     "text": "Cấp Giấy chứng nhận đăng ký hộ kinh doanh trên cơ sở hồ sơ hợp lệ của lần thay đổi thứ…../đăng ký lần đầu:"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -336,7 +443,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -351,46 +462,91 @@
       "w": 21
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "* Trường hợp thực hiện theo quyết định của Tòa án thì ghi cụ thể nội dung theo quyết định của Tòa án.",
+     "text": "* Trường hợp thực hiện theo",
      "i": true
-    }
-   ]
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
+    },
     {
-     "text": "Điều 3. (Cơ quan đăng ký kinh doanh cấp xã) đăng tải quyết định thu hồi này trên Cổng thông tin quốc gia về đăng ký doanh nghiệp.",
-     "b": true
-    }
-   ]
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Điều 4. Quyết định này có hiệu lực từ ngày ký.",
-     "b": true
-    }
-   ]
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Nơi nhận:\n- Tên, trụ sở của hộ kinh doanh bị thu hồi Giấy chứng nhận đăng ký hộ kinh doanh;\n- Cơ quan quản lý thuế … (xã, phường, đặc khu nơi hộ kinh doanh đăng ký trụ sở của HKD);\n- ",
+     "text": " ",
      "b": true,
      "i": true
+    },
+    {
+     "text": "quyết định của Tòa án thì ghi cụ thể nội dung theo quyết định của Tòa án.",
+     "i": true
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Điều 3. ",
+     "b": true
+    },
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp xã)",
+     "i": true
+    },
+    {
+     "text": " đăng tải quyết định thu hồi này trên Cổng thông tin quốc gia về đăng ký doanh nghiệp."
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Điều 4. ",
+     "b": true
+    },
+    {
+     "text": "Quyết định này có hiệu lực từ ngày ký."
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Nơi nhận:\n",
+     "b": true,
+     "i": true
+    },
+    {
+     "text": "- Tên, trụ sở của hộ kinh doanh bị thu hồi Giấy chứng nhận đăng ký hộ kinh doanh;\n- Cơ quan quản lý thuế … "
+    },
+    {
+     "text": "(xã, phường, đặc khu nơi hộ kinh doanh đăng ký trụ sở của HKD)",
+     "i": true
+    },
+    {
+     "text": ";\n- "
     },
     {
      "input": {
@@ -407,17 +563,30 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "center",
    "runs": [
     {
-     "text": "TRƯỞNG PHÒNG\n(Ký, ghi họ tên và đóng dấu)",
+     "text": "TRƯỞNG PHÒNG",
      "b": true
+    },
+    {
+     "text": "\n(Ký, ghi họ tên và đóng dấu)",
+     "i": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   }
- ]
+ ],
+ "v": 3
 }

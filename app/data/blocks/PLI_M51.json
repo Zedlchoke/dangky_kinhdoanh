@@ -10,7 +10,11 @@
      "text": "Mẫu số 51",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-number"
   },
   {
    "t": "p",
@@ -20,7 +24,11 @@
      "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH\nCẤP TỈNH\n-------",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle"
   },
   {
    "t": "p",
@@ -30,7 +38,11 @@
      "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc\n---------------",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "national-header"
   },
   {
    "t": "p",
@@ -45,7 +57,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -87,7 +103,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "date-line"
   },
   {
    "t": "p",
@@ -97,7 +117,11 @@
      "text": "THÔNG BÁO",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-title"
   },
   {
    "t": "p",
@@ -107,7 +131,11 @@
      "text": "Về việc hiệu đính thông tin trong Giấy chứng nhận đăng ký doanh nghiệp/Giấy xác nhận về việc thay đổi nội dung đăng ký doanh nghiệp/Giấy chứng nhận đăng ký hoạt động chi nhánh/văn phòng đại diện/Giấy chứng nhận đăng ký địa điểm kinh doanh/Giấy xác nhận về việc thay đổi nội dung đăng ký hoạt động chi nhánh/văn phòng đại diện",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -116,24 +144,84 @@
     {
      "text": "Kính gửi: "
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "salutation"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "(Tên doanh nghiệp)\nĐịa chỉ: (Địa chỉ trụ sở chính)\nMã số: (Mã số doanh nghiệp/Số Giấy chứng nhận đăng ký kinh doanh)"
-    }
-   ]
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
+     "text": "("
+    },
     {
-     "text": " (Cơ quan đăng ký kinh doanh cấp tỉnh): ",
+     "text": "Tên doanh nghiệp",
      "i": true
+    },
+    {
+     "text": ")"
+    },
+    {
+     "text": "\n",
+     "i": true
+    },
+    {
+     "text": "Địa chỉ:"
+    },
+    {
+     "text": " ",
+     "i": true
+    },
+    {
+     "text": "("
+    },
+    {
+     "text": "Địa chỉ trụ sở chính",
+     "i": true
+    },
+    {
+     "text": ")"
+    },
+    {
+     "text": "\n",
+     "i": true
+    },
+    {
+     "text": "Mã số:"
+    },
+    {
+     "text": " ",
+     "i": true
+    },
+    {
+     "text": "("
+    },
+    {
+     "text": "Mã số doanh nghiệp/Số Giấy chứng nhận đăng ký kinh doanh",
+     "i": true
+    },
+    {
+     "text": ")"
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": " (Cơ quan đăng ký kinh doanh cấp tỉnh)",
+     "i": true
+    },
+    {
+     "text": ": "
     },
     {
      "input": {
@@ -141,7 +229,11 @@
       "w": 28
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -156,7 +248,11 @@
       "w": 16
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -180,7 +276,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -204,7 +304,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -222,35 +326,60 @@
     {
      "text": "là người đại diện theo pháp luật."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "(Cơ quan đăng ký kinh doanh cấp tỉnh) phát hiện nội dung trong Giấy chứng nhận đăng ký doanh nghiệp/Giấy xác nhận về việc thay đổi nội dung đăng ký doanh nghiệp/Giấy chứng nhận đăng ký hoạt động chi nhánh/văn phòng đại diện/Giấy chứng nhận đăng ký địa điểm kinh doanh/Giấy xác nhận về việc thay đổi nội dung đăng ký hoạt động chi nhánh/văn phòng đại diện chưa chính xác so với nội dung hồ sơ đăng ký doanh nghiệp. ",
+     "text": "(Cơ quan đăng ký kinh doanh cấp tỉnh)",
      "i": true
+    },
+    {
+     "text": " phát hiện nội dung trong Giấy chứng nhận đăng ký doanh nghiệp/Giấy xác nhận về việc thay đổi nội dung đăng ký doanh nghiệp/Giấy chứng nhận đăng ký hoạt động chi nhánh/văn phòng đại diện/Giấy chứng nhận đăng ký địa điểm kinh doanh/Giấy xác nhận về việc thay đổi nội dung đăng ký hoạt động chi nhánh/văn phòng đại diện chưa chính xác so với nội dung hồ sơ đăng ký doanh nghiệp. "
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Do vậy, trong thời hạn 03 ngày làm việc kể từ ngày gửi Thông báo này, (Cơ quan đăng ký kinh doanh cấp tỉnh) sẽ tiến hành cấp lại Giấy chứng nhận đăng ký doanh nghiệp/Giấy xác nhận về việc thay đổi nội dung đăng ký doanh nghiệp/Giấy chứng nhận đăng ký hoạt động chi nhánh/văn phòng đại diện/Giấy chứng nhận đăng ký địa điểm kinh doanh/Giấy xác nhận về việc thay đổi nội dung đăng ký hoạt động chi nhánh/văn phòng đại diện thay thế cho giấy tờ đã cấp có nội dung chưa chính xác so với nội dung trong hồ sơ đăng ký doanh nghiệp."
+     "text": "Do vậy, trong thời hạn 03 ngày làm việc kể từ ngày gửi Thông báo này, "
+    },
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp tỉnh)",
+     "i": true
+    },
+    {
+     "text": " sẽ tiến hành cấp lại Giấy chứng nhận đăng ký doanh nghiệp/Giấy xác nhận về việc thay đổi nội dung đăng ký doanh nghiệp/Giấy chứng nhận đăng ký hoạt động chi nhánh/văn phòng đại diện/Giấy chứng nhận đăng ký địa điểm kinh doanh/Giấy xác nhận về việc thay đổi nội dung đăng ký hoạt động chi nhánh/văn phòng đại diện thay thế cho giấy tờ đã cấp có nội dung chưa chính xác so với nội dung trong hồ sơ đăng ký doanh nghiệp."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "\nNơi nhận:\n- Như trên;\n- ",
+     "text": "\nNơi nhận:\n",
      "b": true,
      "i": true
+    },
+    {
+     "text": "- Như trên;\n- "
     },
     {
      "input": {
@@ -267,17 +396,36 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "center",
    "runs": [
     {
-     "text": "TRƯỞNG ĐƠN VỊ\n(Ký, ghi họ tên và đóng dấu)",
+     "text": "TRƯỞNG ĐƠN VỊ\n",
      "b": true
+    },
+    {
+     "text": "("
+    },
+    {
+     "text": "Ký, ghi họ tên và đóng dấu",
+     "i": true
+    },
+    {
+     "text": ")"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   }
- ]
+ ],
+ "v": 3
 }

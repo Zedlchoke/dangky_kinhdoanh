@@ -9,7 +9,8 @@
     {
      "text": "PL2 - Mau so 12: Thông báo về việc vi phạm của hộ kinh doanh thuộc trường hợp thu hồi Giấy chứng nhận đăng ký hộ kinh doanh"
     }
-   ]
+   ],
+   "role": "source-indicator"
   },
   {
    "t": "p",
@@ -18,7 +19,8 @@
     {
      "text": "Mẫu số 12"
     }
-   ]
+   ],
+   "role": "form-number"
   },
   {
    "t": "p",
@@ -28,7 +30,11 @@
      "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH\nCẤP XÃ\n-----------",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle"
   },
   {
    "t": "p",
@@ -38,7 +44,11 @@
      "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc\n------------------",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "national-header"
   },
   {
    "t": "p",
@@ -53,7 +63,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -95,7 +109,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "date-line"
   },
   {
    "t": "p",
@@ -105,7 +123,11 @@
      "text": "THÔNG BÁO",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-title"
   },
   {
    "t": "p",
@@ -115,7 +137,11 @@
      "text": "Về việc vi phạm của hộ kinh doanh thuộc trường hợp thu hồi Giấy chứng nhận đăng ký hộ kinh doanh",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -124,7 +150,11 @@
     {
      "text": "Kính gửi:"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "salutation"
   },
   {
    "t": "p",
@@ -134,7 +164,11 @@
      "text": "(Tên hộ kinh doanh)",
      "i": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -143,7 +177,11 @@
     {
      "text": "Trụ sở của hộ kinh doanh:"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -152,14 +190,25 @@
     {
      "text": "Mã số hộ kinh doanh:"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "(Cơ quan đăng ký kinh doanh cấp xã) "
+     "text": "("
+    },
+    {
+     "text": "Cơ quan đăng ký kinh doanh cấp xã",
+     "i": true
+    },
+    {
+     "text": ") "
     },
     {
      "input": {
@@ -167,7 +216,11 @@
       "w": 26
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -182,7 +235,11 @@
       "w": 15
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -206,7 +263,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -230,7 +291,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -264,9 +329,20 @@
      }
     },
     {
-     "text": " (nếu có);"
+     "text": " "
+    },
+    {
+     "text": "(nếu có)",
+     "i": true
+    },
+    {
+     "text": ";"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -282,9 +358,27 @@
      }
     },
     {
-     "text": " của (Cơ quan đăng ký kinh doanh cấp xã) về việc yêu cầu hộ kinh doanh báo cáo về việc tuân thủ các quy định về hộ kinh doanh (nếu có);"
+     "text": " của "
+    },
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp xã)",
+     "i": true
+    },
+    {
+     "text": " về việc yêu cầu hộ kinh doanh báo cáo về việc tuân thủ các quy định về hộ kinh doanh "
+    },
+    {
+     "text": "(nếu có)",
+     "i": true
+    },
+    {
+     "text": ";"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -300,9 +394,27 @@
      }
     },
     {
-     "text": " của (Cơ quan đăng ký kinh doanh cấp xã) về việc yêu cầu hộ kinh doanh đăng ký thay đổi thành viên không được quyền thành lập hộ kinh doanh (nếu có);"
+     "text": " của "
+    },
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp xã)",
+     "i": true
+    },
+    {
+     "text": " về việc yêu cầu hộ kinh doanh đăng ký thay đổi thành viên không được quyền thành lập hộ kinh doanh "
+    },
+    {
+     "text": "(nếu có)",
+     "i": true
+    },
+    {
+     "text": ";"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -318,9 +430,27 @@
      }
     },
     {
-     "text": " của (Cơ quan đăng ký kinh doanh cấp xã) về việc hộ kinh doanh ngừng hoạt động kinh doanh tại địa chỉ đăng ký quá 06 tháng mà không thông báo với Cơ quan đăng ký kinh doanh cấp xã (nếu có);"
+     "text": " của "
+    },
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp xã)",
+     "i": true
+    },
+    {
+     "text": " về việc hộ kinh doanh ngừng hoạt động kinh doanh tại địa chỉ đăng ký quá 06 tháng mà không thông báo với Cơ quan đăng ký kinh doanh cấp xã "
+    },
+    {
+     "text": "(nếu có)",
+     "i": true
+    },
+    {
+     "text": ";"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -336,9 +466,33 @@
      }
     },
     {
-     "text": " của … về việc đề nghị thu hồi Giấy chứng nhận đăng ký hộ kinh doanh (trường hợp thực hiện theo đề nghị của cơ quan có thẩm quyền theo quy định của luật, nếu có)."
+     "text": " của … về việc đề nghị thu hồi Giấy chứng nhận đăng ký hộ kinh doanh"
+    },
+    {
+     "text": " ",
+     "b": true
+    },
+    {
+     "text": "(trường hợp thực hiện theo",
+     "i": true
+    },
+    {
+     "text": " ",
+     "b": true,
+     "i": true
+    },
+    {
+     "text": "đề nghị của cơ quan có thẩm quyền theo quy định của luật, nếu có)",
+     "i": true
+    },
+    {
+     "text": "."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -348,26 +502,40 @@
      "text": "(Ghi cụ thể nội dung vi phạm của hộ kinh doanh tương ứng theo các trường hợp thu hồi theo quy định).",
      "i": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "(Cơ quan đăng ký kinh doanh cấp xã) đăng tải thông báo vi phạm của hộ kinh doanh trên Cổng thông tin quốc gia về đăng ký doanh nghiệp.",
+     "text": "(Cơ quan đăng ký kinh doanh cấp xã)",
      "i": true
+    },
+    {
+     "text": " đăng tải thông báo vi phạm của hộ kinh doanh trên Cổng thông tin quốc gia về đăng ký doanh nghiệp."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Nơi nhận:\n- Như trên;\n- Cơ quan quản lý thuế",
+     "text": "Nơi nhận:\n",
      "b": true,
      "i": true
+    },
+    {
+     "text": "- Như trên;\n- Cơ quan quản lý thuế"
     },
     {
      "input": {
@@ -376,19 +544,46 @@
      }
     },
     {
-     "text": " (xã, phường, đặc khu nơi hộ kinh doanh đăng ký trụ sở của HKD);\n- Cơ quan có thẩm quyền khác:…… (nếu có);\n- Lưu: ……"
+     "text": " "
+    },
+    {
+     "text": "(xã, phường, đặc khu nơi hộ kinh doanh đăng ký trụ sở của HKD)",
+     "i": true
+    },
+    {
+     "text": ";\n- Cơ quan có thẩm quyền khác:…… "
+    },
+    {
+     "text": "(nếu có)",
+     "i": true
+    },
+    {
+     "text": ";\n- Lưu: ……"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "center",
    "runs": [
     {
-     "text": "TRƯỞNG PHÒNG\n(Ký, ghi họ tên và đóng dấu)",
+     "text": "TRƯỞNG PHÒNG\n",
      "b": true
+    },
+    {
+     "text": "(Ký, ghi họ tên và đóng dấu)",
+     "i": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   }
- ]
+ ],
+ "v": 3
 }

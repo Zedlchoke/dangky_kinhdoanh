@@ -10,7 +10,11 @@
      "text": "Mẫu số 26",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-number"
   },
   {
    "t": "p",
@@ -20,7 +24,11 @@
      "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH\nCẤP XÃ\n-----------",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle"
   },
   {
    "t": "p",
@@ -30,7 +38,11 @@
      "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc\n------------------",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "national-header"
   },
   {
    "t": "p",
@@ -45,7 +57,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -87,7 +103,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "date-line"
   },
   {
    "t": "p",
@@ -97,7 +117,11 @@
      "text": "THÔNG BÁO",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-title"
   },
   {
    "t": "p",
@@ -107,7 +131,11 @@
      "text": "Về việc dừng/từ chối dừng thực hiện thủ tục đăng ký hộ kinh doanh",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -116,7 +144,11 @@
     {
      "text": "Kính gửi: "
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "salutation"
   },
   {
    "t": "p",
@@ -126,7 +158,11 @@
      "text": "(Đối với hồ sơ thành lập mới hộ kinh doanh)",
      "i": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -144,7 +180,11 @@
     {
      "text": " "
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -159,7 +199,11 @@
       "w": 19
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -174,7 +218,11 @@
       "w": 17
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -184,7 +232,11 @@
      "text": "(Đối với các trường hợp còn lại)",
      "i": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -193,14 +245,22 @@
     {
      "text": "Tên hộ kinh doanh: …………………………………………..."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Trụ sở của hộ kinh doanh: "
+     "text": "Trụ sở của hộ kinh doanh:"
+    },
+    {
+     "text": " ",
+     "i": true
     },
     {
      "input": {
@@ -208,7 +268,11 @@
       "w": 21
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -223,14 +287,25 @@
       "w": 18
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "(Cơ quan đăng ký kinh doanh cấp xã) "
+     "text": "("
+    },
+    {
+     "text": "Cơ quan đăng ký kinh doanh cấp xã",
+     "i": true
+    },
+    {
+     "text": ") "
     },
     {
      "input": {
@@ -238,7 +313,11 @@
       "w": 26
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -253,7 +332,11 @@
       "w": 16
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -277,7 +360,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -301,14 +388,25 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Sau khi xem xét Giấy đề nghị dừng thực hiện thủ tục đăng ký hộ kinh doanh đã nhận ngày… tháng … năm … của Ông/Bà: … đối với Hồ sơ có Giấy tiếp nhận hồ sơ và hẹn trả kết quả số … do (Cơ quan đăng ký kinh doanh cấp xã) cấp ngày "
+     "text": "Sau khi xem xét Giấy đề nghị dừng thực hiện thủ tục đăng ký hộ kinh doanh đã nhận ngày… tháng … năm … của Ông/Bà: … đối với Hồ sơ có Giấy tiếp nhận hồ sơ và hẹn trả kết quả số … do "
+    },
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp xã)",
+     "i": true
+    },
+    {
+     "text": " cấp ngày "
     },
     {
      "input": {
@@ -317,7 +415,14 @@
      }
     },
     {
-     "text": " về việc đăng ký/thông báo … của … (Tên hộ kinh doanh) - Mã số hộ kinh doanh "
+     "text": " về việc đăng ký/thông báo … của … "
+    },
+    {
+     "text": "(Tên hộ kinh doanh)",
+     "i": true
+    },
+    {
+     "text": " - Mã số hộ kinh doanh "
     },
     {
      "input": {
@@ -326,27 +431,48 @@
      }
     },
     {
-     "text": " (nếu có). "
+     "text": " "
+    },
+    {
+     "text": "(nếu có)",
+     "i": true
+    },
+    {
+     "text": ". "
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Nếu chấp thuận đề nghị dừng thực hiện thủ tục đăng ký hộ kinh doanh thì ghi: (Cơ quan đăng ký kinh doanh cấp xã) thông báo đã dừng thực hiện thủ tục đăng ký hộ kinh doanh đối với Hồ sơ đăng ký hộ kinh doanh nêu trên và huỷ Hồ sơ trên Hệ thống thông tin về đăng ký hộ kinh doanh.",
+     "text": "Nếu chấp thuận đề nghị dừng thực hiện thủ tục đăng ký hộ kinh doanh thì ghi: (Cơ quan đăng ký kinh doanh cấp xã)",
      "i": true
+    },
+    {
+     "text": " thông báo đã dừng thực hiện thủ tục đăng ký hộ kinh doanh đối với Hồ sơ đăng ký hộ kinh doanh nêu trên và huỷ Hồ sơ trên Hệ thống thông tin về đăng ký hộ kinh doanh."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Nếu từ chối đề nghị dừng thực hiện thủ tục đăng ký hộ kinh doanh thì ghi: (Cơ quan đăng ký kinh doanh cấp xã) thông báo từ chối dừng thực hiện thủ tục đăng ký hộ kinh doanh đối với Hồ sơ đăng ký hộ kinh doanh nêu trên và lý do từ chối như sau: ",
+     "text": "Nếu từ chối đề nghị dừng thực hiện thủ tục đăng ký hộ kinh doanh thì ghi: (Cơ quan đăng ký kinh doanh cấp xã)",
      "i": true
+    },
+    {
+     "text": " thông báo từ chối dừng thực hiện thủ tục đăng ký hộ kinh doanh đối với Hồ sơ đăng ký hộ kinh doanh nêu trên và lý do từ chối như sau: "
     },
     {
      "input": {
@@ -354,16 +480,23 @@
       "w": 60
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Nơi nhận:\n- Như trên;\n- ",
+     "text": "Nơi nhận:\n",
      "b": true,
      "i": true
+    },
+    {
+     "text": "- Như trên;\n- "
     },
     {
      "input": {
@@ -380,17 +513,30 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "center",
    "runs": [
     {
-     "text": "TRƯỞNG PHÒNG\n(Ký, ghi họ tên và đóng dấu)",
+     "text": "TRƯỞNG PHÒNG\n",
      "b": true
+    },
+    {
+     "text": "(Ký, ghi họ tên và đóng dấu)",
+     "i": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   }
- ]
+ ],
+ "v": 3
 }

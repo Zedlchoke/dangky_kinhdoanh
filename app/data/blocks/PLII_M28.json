@@ -10,7 +10,11 @@
      "text": "Mẫu số 28",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-number"
   },
   {
    "t": "p",
@@ -20,7 +24,11 @@
      "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH\nCẤP XÃ\n-----------",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle"
   },
   {
    "t": "p",
@@ -30,7 +38,11 @@
      "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc\n------------------",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "national-header"
   },
   {
    "t": "p",
@@ -45,7 +57,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -87,7 +103,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "date-line"
   },
   {
    "t": "p",
@@ -97,7 +117,11 @@
      "text": "THÔNG BÁO",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-title"
   },
   {
    "t": "p",
@@ -107,7 +131,11 @@
      "text": "Về việc rà soát thông tin đăng ký hộ kinh doanh của hộ kinh doanh",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -116,7 +144,11 @@
     {
      "text": "Kính gửi: "
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "salutation"
   },
   {
    "t": "p",
@@ -126,7 +158,11 @@
      "text": "(Tên hộ kinh doanh)",
      "i": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -135,7 +171,11 @@
     {
      "text": "Trụ sở của hộ kinh doanh:"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -144,7 +184,11 @@
     {
      "text": "Mã số hộ kinh doanh:"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -153,7 +197,11 @@
     {
      "text": "Căn cứ quy định tại khoản 2 Điều 114 Nghị định số 168/2025/NĐ-CP ngày 30/6/2025 của Chính phủ về đăng ký doanh nghiệp, "
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -162,14 +210,25 @@
     {
      "text": "Để đảm bảo quyền lợi chính đáng của hộ kinh doanh về sự đầy đủ và chính xác của các thông tin đăng ký hộ kinh doanh,"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "(Cơ quan đăng ký kinh doanh cấp xã) "
+     "text": "("
+    },
+    {
+     "text": "Cơ quan đăng ký kinh doanh cấp xã",
+     "i": true
+    },
+    {
+     "text": ") "
     },
     {
      "input": {
@@ -177,7 +236,11 @@
       "w": 26
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -192,7 +255,11 @@
       "w": 16
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -216,7 +283,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -240,7 +311,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -249,7 +324,11 @@
     {
      "text": "Đề nghị hộ kinh doanh rà soát, đối chiếu thông tin đăng ký hộ kinh doanh của hộ kinh doanh như sau:"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -258,7 +337,11 @@
     {
      "text": "- Tên hộ kinh doanh: ……………………………………………………………"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -273,7 +356,11 @@
       "w": 19
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -288,7 +375,11 @@
       "w": 21
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -303,7 +394,11 @@
       "w": 15
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -312,7 +407,11 @@
     {
      "text": "- Chủ hộ kinh doanh:………….……………………………………………….."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -321,7 +420,11 @@
     {
      "text": "+ Họ và tên:…………………………………Ngày sinh:…………...................."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -354,7 +457,11 @@
       "w": 13
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -369,7 +476,11 @@
       "w": 35
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -378,7 +489,11 @@
     {
      "text": "+ Địa chỉ thường trú:……………………………………………………………."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -393,35 +508,75 @@
       "w": 17
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Sau khi rà soát, trong trường hợp thông tin đăng ký hộ kinh doanh của hộ kinh doanh tại thông báo bị thiếu hoặc chưa chính xác so với bản giấy của Giấy chứng nhận đăng ký hộ kinh doanh, đề nghị hộ kinh doanh gửi giấy đề nghị đăng ký thay đổi nội dung đăng ký hộ kinh doanh theo mẫu quy định tại Mẫu số 2 Phụ lục II ban hành kèm theo Thông tư số 68/2025/TT-BTC đến (Cơ quan đăng ký kinh doanh cấp xã) trong thời hạn 90 ngày kể từ ngày ra Thông báo này."
+     "text": "Sau khi rà soát, trong trường hợp thông tin đăng ký hộ kinh doanh của hộ kinh doanh tại thông báo bị thiếu hoặc chưa chính xác so với bản giấy của Giấy chứng nhận đăng ký hộ kinh doanh, đề nghị hộ kinh doanh gửi giấy đề nghị đăng ký thay đổi nội dung đăng ký hộ kinh doanh theo mẫu quy định tại Mẫu số 2 Phụ lục II ban hành kèm theo Thông tư số 68/2025/TT-BTC đến "
+    },
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp xã)",
+     "i": true
+    },
+    {
+     "text": " trong thời hạn 90 ngày kể từ ngày ra Thông báo này."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Trường hợp quá thời hạn 90 ngày mà hộ kinh doanh không có phản hồi tới (Cơ quan đăng ký kinh doanh cấp xã) thì được hiểu là hộ kinh doanh đã đồng ý xác nhận các thông tin đăng ký hộ kinh doanh của hộ kinh doanh tại Thông báo này là đầy đủ, chính xác và chịu trách nhiệm trước pháp luật về tính hợp pháp, trung thực và chính xác của các thông tin này."
+     "text": "Trường hợp quá thời hạn 90 ngày mà hộ kinh doanh không có phản hồi tới "
+    },
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp xã)",
+     "i": true
+    },
+    {
+     "text": " thì được hiểu là hộ kinh doanh đã đồng ý xác nhận các thông tin đăng ký hộ kinh doanh của hộ kinh doanh tại Thông báo này là đầy đủ, chính xác và chịu trách nhiệm trước pháp luật về tính hợp pháp, trung thực và chính xác của các thông tin này."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "center",
    "runs": [
     {
-     "text": "TRƯỞNG PHÒNG\n(Ký, ghi họ tên và đóng dấu)",
+     "text": "TRƯỞNG PHÒNG\n",
      "b": true
+    },
+    {
+     "text": "("
+    },
+    {
+     "text": "Ký, ghi họ tên và đóng dấu",
+     "i": true
+    },
+    {
+     "text": ")"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -430,7 +585,12 @@
     {
      "text": " PAGE   \\* MERGEFORMAT 2"
     }
-   ]
+   ],
+   "format": {
+    "spaceAfterPt": 6.0
+   },
+   "role": "form-subtitle"
   }
- ]
+ ],
+ "v": 3
 }

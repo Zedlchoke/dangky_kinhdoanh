@@ -9,7 +9,8 @@
     {
      "text": "PL1 - Mau so 9: Danh sách thành viên công ty hợp danh"
     }
-   ]
+   ],
+   "role": "source-indicator"
   },
   {
    "t": "p",
@@ -18,7 +19,8 @@
     {
      "text": "Mẫu số 9"
     }
-   ]
+   ],
+   "role": "form-number"
   },
   {
    "t": "loop",
@@ -201,9 +203,20 @@
    "align": "left",
    "runs": [
     {
-     "text": "- Thông tin về Giấy chứng nhận đăng ký đầu tư (kê khai trong trường hợp thành viên là nhà đầu tư nước ngoài được cấp Giấy chứng nhận đăng ký đầu tư theo quy định của Luật Đầu tư):"
+     "text": "- Thông tin về Giấy chứng nhận đăng ký đầu tư ("
+    },
+    {
+     "text": "kê khai trong trường hợp thành viên là nhà đầu tư nước ngoài được cấp Giấy chứng nhận đăng ký đầu tư theo quy định của Luật Đầu tư",
+     "i": true
+    },
+    {
+     "text": "):"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -218,7 +231,11 @@
       "w": 14
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -245,17 +262,28 @@
     {
      "text": "\t"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "8. Thông tin đăng ký thuế:",
+     "text": "8. Thông tin đăng ký thuế",
      "b": true
+    },
+    {
+     "text": ":"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
@@ -264,7 +292,11 @@
     {
      "text": "STT"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -273,7 +305,11 @@
     {
      "text": "Các chỉ tiêu thông tin đăng ký thuế"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -282,16 +318,31 @@
     {
      "text": "8.1"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Thông tin về Giám đốc/Tổng giám đốc (nếu có):"
+     "text": "Thông tin về Giám đốc/Tổng giám đốc "
+    },
+    {
+     "text": "(nếu có)",
+     "i": true
+    },
+    {
+     "text": ":"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -306,7 +357,11 @@
       "w": 29
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -339,7 +394,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "date-line"
   },
   {
    "t": "p",
@@ -354,7 +413,11 @@
       "w": 13
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -369,7 +432,11 @@
       "w": 19
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -384,7 +451,11 @@
       "w": 13
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -393,16 +464,31 @@
     {
      "text": "8.2"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Thông tin về Kế toán trưởng/Phụ trách kế toán (nếu có):"
+     "text": "Thông tin về Kế toán trưởng/Phụ trách kế toán "
+    },
+    {
+     "text": "(nếu có)",
+     "i": true
+    },
+    {
+     "text": ":"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -417,7 +503,11 @@
       "w": 34
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -450,7 +540,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "date-line"
   },
   {
    "t": "p",
@@ -465,7 +559,11 @@
       "w": 13
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -480,7 +578,11 @@
       "w": 19
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -495,7 +597,11 @@
       "w": 13
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -504,16 +610,31 @@
     {
      "text": "8.3"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Địa chỉ nhận thông báo thuế (chỉ kê khai nếu địa chỉ nhận thông báo thuế khác địa chỉ trụ sở chính):"
+     "text": "Địa chỉ nhận thông báo thuế ("
+    },
+    {
+     "text": "chỉ kê khai nếu địa chỉ nhận thông báo thuế khác địa chỉ trụ sở chính",
+     "i": true
+    },
+    {
+     "text": "):"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -528,7 +649,11 @@
       "w": 42
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -543,7 +668,11 @@
       "w": 17
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -558,14 +687,25 @@
       "w": 27
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Điện thoại (nếu có): "
+     "text": "Điện thoại ("
+    },
+    {
+     "text": "nếu có",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -574,7 +714,14 @@
      }
     },
     {
-     "text": "Số fax (nếu có):"
+     "text": "Số fax ("
+    },
+    {
+     "text": "nếu có",
+     "i": true
+    },
+    {
+     "text": "):"
     },
     {
      "input": {
@@ -582,14 +729,25 @@
       "w": 16
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Thư điện tử (nếu có):"
+     "text": "Thư điện tử ("
+    },
+    {
+     "text": "nếu có",
+     "i": true
+    },
+    {
+     "text": "):"
     },
     {
      "input": {
@@ -597,7 +755,11 @@
       "w": 18
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -606,14 +768,32 @@
     {
      "text": "8.4"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Ngày bắt đầu hoạt động4 (trường hợp doanh nghiệp dự kiến bắt đầu hoạt động kể từ ngày được cấp Giấy chứng nhận đăng ký doanh nghiệp thì không cần kê khai nội dung này): "
+     "text": "Ngày bắt đầu hoạt động"
+    },
+    {
+     "text": "4",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " ("
+    },
+    {
+     "text": "trường hợp doanh nghiệp dự kiến bắt đầu hoạt động kể từ ngày được cấp Giấy chứng nhận đăng ký doanh nghiệp thì không cần kê khai nội dung này",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -639,7 +819,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -648,16 +832,31 @@
     {
      "text": "8.5"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Hình thức hạch toán (Đánh dấu X vào một trong hai ô “Hạch toán độc lập” hoặc “Hạch toán phụ thuộc”. Trường hợp chọn ô “Hạch toán độc lập” mà thuộc đối tượng phải lập và gửi báo cáo tài chính hợp nhất cho cơ quan có thẩm quyền theo quy định thì chọn thêm ô “Có báo cáo tài chính hợp nhất”): "
+     "text": "Hình thức hạch toán ("
+    },
+    {
+     "text": "Đánh dấu X vào một trong hai ô “Hạch toán độc lập” hoặc “Hạch toán phụ thuộc”. Trường hợp chọn ô “Hạch toán độc lập” mà thuộc đối tượng phải lập và gửi báo cáo tài chính hợp nhất cho cơ quan có thẩm quyền theo quy định thì chọn thêm ô “Có báo cáo tài chính hợp nhất”",
+     "i": true
+    },
+    {
+     "text": "): "
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "chk",
@@ -681,7 +880,11 @@
     {
      "text": "8.6"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -690,7 +893,11 @@
     {
      "text": "Năm tài chính:"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -706,18 +913,37 @@
      }
     },
     {
-     "text": "/….5"
+     "text": "/…."
+    },
+    {
+     "text": "5",
+     "vertAlign": "superscript"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "(ghi ngày, tháng bắt đầu và kết thúc niên độ kế toán)"
+     "text": "("
+    },
+    {
+     "text": "ghi ngày, tháng bắt đầu và kết thúc niên độ kế toán",
+     "i": true
+    },
+    {
+     "text": ")"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -726,14 +952,25 @@
     {
      "text": "8.7"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Tổng số lao động (dự kiến): "
+     "text": "Tổng số lao động ("
+    },
+    {
+     "text": "dự kiến",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -744,7 +981,11 @@
     {
      "text": " "
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -753,7 +994,11 @@
     {
      "text": "8.8"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -762,7 +1007,11 @@
     {
      "text": "Hoạt động theo dự án BOT/BTO/BT/BOO, BLT, BTL, O&M:"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "chk",
@@ -781,16 +1030,38 @@
     {
      "text": "8.9"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Phương pháp tính thuế GTGT (chọn 1 trong 4 phương pháp)6:"
+     "text": "Phương pháp tính thuế GTGT ("
+    },
+    {
+     "text": "chọn 1 trong 4 phương pháp",
+     "i": true
+    },
+    {
+     "text": ")"
+    },
+    {
+     "text": "6",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": ":"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "chk",
@@ -817,19 +1088,50 @@
    "align": "left",
    "runs": [
     {
-     "text": "9. Thông tin về việc đóng bảo hiểm xã hội7:",
+     "text": "9. Thông tin về việc đóng bảo hiểm xã hội",
+     "b": true
+    },
+    {
+     "text": "7",
+     "b": true,
+     "vertAlign": "superscript"
+    },
+    {
+     "text": ":",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Phương thức đóng bảo hiểm xã hội (chọn 1 trong 3 phương thức):"
+     "text": "Phương thức đóng bảo hiểm xã hội"
+    },
+    {
+     "text": " ",
+     "b": true
+    },
+    {
+     "text": "("
+    },
+    {
+     "text": "chọn 1 trong 3 phương thức",
+     "i": true
+    },
+    {
+     "text": "):"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "chk",
@@ -855,7 +1157,11 @@
      "b": true,
      "i": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "note"
   },
   {
    "t": "p",
@@ -864,7 +1170,11 @@
     {
      "text": "- Doanh nghiệp đăng ký ngành, nghề kinh doanh chính là nông nghiệp, lâm nghiệp, ngư nghiệp, diêm nghiệp và trả lương theo sản phẩm, theo khoán: có thể lựa chọn 1 trong 3 phương thức đóng bảo hiểm xã hội: hàng tháng, 03 tháng một lần, 06 tháng một lần."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -873,17 +1183,33 @@
     {
      "text": "- Doanh nghiệp đăng ký ngành, nghề kinh doanh chính khác: đánh dấu vào phương thức đóng bảo hiểm xã hội hàng tháng."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "10. Thông tin về chủ sở hữu hưởng lợi của doanh nghiệp8:",
+     "text": "10. Thông tin về chủ sở hữu hưởng lợi của doanh nghiệp",
+     "b": true
+    },
+    {
+     "text": "8",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": ":",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
@@ -892,7 +1218,11 @@
     {
      "text": "Doanh nghiệp có chủ sở hữu hưởng lợi không?"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "chk",
@@ -911,7 +1241,11 @@
     {
      "text": "Trường hợp hồ sơ đăng ký doanh nghiệp hợp lệ, đề nghị Quý Cơ quan đăng công bố nội dung đăng ký doanh nghiệp trên Cổng thông tin quốc gia về đăng ký doanh nghiệp."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -920,16 +1254,31 @@
     {
      "text": "Các thành viên hợp danh cam kết:"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "- Bản thân không thuộc diện cấm thành lập và quản lý doanh nghiệp theo quy định tại Luật Doanh nghiệp; không là chủ doanh nghiệp tư nhân; không đồng thời là thành viên hợp danh của công ty hợp danh khác (trừ trường hợp được sự nhất trí của các thành viên hợp danh còn lại);"
+     "text": "- Bản thân không thuộc diện cấm thành lập và quản lý doanh nghiệp theo quy định tại Luật Doanh nghiệp; không là chủ doanh nghiệp tư nhân; không đồng thời là thành viên hợp danh của công ty hợp danh khác ("
+    },
+    {
+     "text": "trừ trường hợp được sự nhất trí của các thành viên hợp danh còn lại",
+     "i": true
+    },
+    {
+     "text": ");"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -938,7 +1287,11 @@
     {
      "text": "- Trụ sở chính thuộc quyền sử dụng hợp pháp của công ty và được sử dụng đúng mục đích theo quy định của pháp luật;"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -947,17 +1300,39 @@
     {
      "text": "- Chịu trách nhiệm trước pháp luật về tính hợp pháp, chính xác và trung thực của nội dung đăng ký doanh nghiệp trên."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "center",
    "runs": [
     {
-     "text": "CÁC THÀNH VIÊN HỢP DANH\n(Ký và ghi họ tên từng thành viên)9",
+     "text": "CÁC THÀNH VIÊN HỢP DANH",
      "b": true
+    },
+    {
+     "text": "\n("
+    },
+    {
+     "text": "Ký và ghi họ tên từng thành viên",
+     "i": true
+    },
+    {
+     "text": ")"
+    },
+    {
+     "text": "9",
+     "vertAlign": "superscript"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "signature"
   },
   {
    "t": "p",
@@ -966,52 +1341,96 @@
     {
      "text": "_________________________"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "national-separator"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "1 Trường hợp Tòa án hoặc Trọng tài chỉ định người thực hiện thủ tục đăng ký doanh nghiệp thì người được chỉ định kê khai thông tin vào phần này."
+     "text": "1",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " Trường hợp Tòa án hoặc Trọng tài chỉ định người thực hiện thủ tục đăng ký doanh nghiệp thì người được chỉ định kê khai thông tin vào phần này."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "2 Trường hợp đăng ký thành lập công ty hợp danh trên cơ sở chuyển đổi từ cơ sở bảo trợ xã hội/quỹ xã hội/quỹ từ thiện qua mạng thông tin điện tử thì người nộp hồ sơ scan Giấy chứng nhận đăng ký thành lập (đối với cơ sở bảo trợ xã hội)/Giấy phép thành lập và công nhận điều lệ quỹ (đối với quỹ xã hội/quỹ từ thiện) trong hồ sơ đăng ký doanh nghiệp qua mạng thông tin điện tử và nộp bản chính Giấy này tới Cơ quan đăng ký kinh doanh cấp tỉnh để được cấp Giấy chứng nhận đăng ký doanh nghiệp theo quy định tại khoản 7 Điều 28 Nghị định số 168/2025/NĐ-CP ngày 30/6/2025 của Chính phủ về đăng ký doanh nghiệp."
+     "text": "2",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " Trường hợp đăng ký thành lập công ty hợp danh trên cơ sở chuyển đổi từ cơ sở bảo trợ xã hội/quỹ xã hội/quỹ từ thiện qua mạng thông tin điện tử thì người nộp hồ sơ scan Giấy chứng nhận đăng ký thành lập (đối với cơ sở bảo trợ xã hội)/Giấy phép thành lập và công nhận điều lệ quỹ (đối với quỹ xã hội/quỹ từ thiện) trong hồ sơ đăng ký doanh nghiệp qua mạng thông tin điện tử và nộp bản chính Giấy này tới Cơ quan đăng ký kinh doanh cấp tỉnh để được cấp Giấy chứng nhận đăng ký doanh nghiệp theo quy định tại khoản 7 Điều 28 Nghị định số 168/2025/NĐ-CP ngày 30/6/2025 của Chính phủ về đăng ký doanh nghiệp."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "3 Kê khai trong trường hợp có nhà đầu tư nước ngoài góp vốn, mua cổ phần, phần vốn góp vào doanh nghiệp dẫn đến thay đổi nội dung đăng ký doanh nghiệp."
+     "text": "3",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " Kê khai trong trường hợp có nhà đầu tư nước ngoài góp vốn, mua cổ phần, phần vốn góp vào doanh nghiệp dẫn đến thay đổi nội dung đăng ký doanh nghiệp."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "4 Trường hợp doanh nghiệp được cấp Giấy chứng nhận đăng ký doanh nghiệp sau ngày bắt đầu hoạt động đã kê khai thì ngày bắt đầu hoạt động là ngày doanh nghiệp được cấp Giấy chứng nhận đăng ký doanh nghiệp."
+     "text": "4 ",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": "Trường hợp doanh nghiệp được cấp Giấy chứng nhận đăng ký doanh nghiệp sau ngày bắt đầu hoạt động đã kê khai thì ngày bắt đầu hoạt động là ngày doanh nghiệp được cấp Giấy chứng nhận đăng ký doanh nghiệp."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "5 - Trường hợp niên độ kế toán theo năm dương lịch thì ghi từ ngày 01/01 đến ngày 31/12. "
+     "text": "5 ",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": "- Trường hợp niên độ kế toán theo năm dương lịch thì ghi từ ngày 01/01 đến ngày 31/12. "
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
   },
   {
    "t": "p",
@@ -1020,7 +1439,11 @@
     {
      "text": "- Trường hợp niên độ kế toán theo năm tài chính khác năm dương lịch thì ghi ngày, tháng bắt đầu niên độ kế toán là ngày đầu tiên của quý; ngày, tháng kết thúc niên độ kế toán là ngày cuối cùng của quý. "
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -1029,52 +1452,103 @@
     {
      "text": "- Tổng thời gian từ ngày bắt đầu đến ngày kết thúc niên độ kế toán phải đủ 12 tháng hoặc 4 quý liên tiếp."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "6 Chỉ kê khai trong trường hợp thành lập mới. Doanh nghiệp căn cứ vào quy định của pháp luật về thuế giá trị gia tăng và dự kiến hoạt động kinh doanh của doanh nghiệp để xác định 01 trong 04 phương pháp tính thuế giá trị gia tăng tại chỉ tiêu này, trừ trường hợp doanh nghiệp mua bán, chế tác vàng, bạc, đá quý có thể chọn thêm phương pháp trực tiếp trên GTGT ngoài các phương pháp khác (nếu có)."
+     "text": "6 ",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": "Chỉ kê khai trong trường hợp thành lập mới. Doanh nghiệp căn cứ vào quy định của pháp luật về thuế giá trị gia tăng và dự kiến hoạt động kinh doanh của doanh nghiệp để xác định 01 trong 04 phương pháp tính thuế giá trị gia tăng tại chỉ tiêu này, trừ trường hợp doanh nghiệp mua bán, chế tác vàng, bạc, đá quý có thể chọn thêm phương pháp trực tiếp trên GTGT ngoài các phương pháp khác ("
+    },
+    {
+     "text": "nếu có",
+     "i": true
+    },
+    {
+     "text": ")."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "7 Không kê khai trong trường hợp thành lập doanh nghiệp trên cơ sở chuyển đổi loại hình doanh nghiệp."
+     "text": "7",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " Không kê khai trong trường hợp thành lập doanh nghiệp trên cơ sở chuyển đổi loại hình doanh nghiệp."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "8 Trường hợp doanh nghiệp có thông tin về chủ sở hữu hưởng lợi của doanh nghiệp quy định tại khoản 1, khoản 2 Điều 18 Nghị định số 168/2025/NĐ-CP thì kê khai theo Mẫu số 10 Phụ lục I Thông tư này."
+     "text": "8",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " Trường hợp doanh nghiệp có thông tin về chủ sở hữu hưởng lợi của doanh nghiệp quy định tại khoản 1, khoản 2 Điều 18 Nghị định số 168/2025/NĐ-CP thì kê khai theo Mẫu số 10 Phụ lục I Thông tư này."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "9 - Các thành viên hợp danh của công ty ký trực tiếp vào phần này. "
+     "text": "9 ",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": "- Các thành viên hợp danh của công ty ký trực tiếp vào phần này. "
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
   },
   {
    "t": "p",
    "align": "right",
    "runs": [
     {
-     "text": "- Trường hợp Tòa án hoặc Trọng tài chỉ định người thực hiện thủ tục đăng ký doanh nghiệp thì người được chỉ định ký trực tiếp vào phần này.Mẫu số 6"
+     "text": "- Trường hợp Tòa án hoặc Trọng tài chỉ định người thực hiện thủ tục đăng ký doanh nghiệp thì người được chỉ định ký trực tiếp vào phần này.\n"
+    },
+    {
+     "text": "Mẫu số 6",
+     "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -1084,7 +1558,11 @@
      "text": "DANH SÁCH THÀNH VIÊN CÔNG TY TRÁCH NHIỆM HỮU HẠN HAI THÀNH VIÊN TRỞ LÊN",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle"
   },
   {
    "t": "p",
@@ -1094,7 +1572,11 @@
      "text": "I. Thành viên là cá nhân",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
@@ -1104,7 +1586,11 @@
      "text": "1. Thông tin thành viên",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
@@ -1113,16 +1599,60 @@
     {
      "text": "STTTên thành viênSố, ngày cấp, nơi cấp"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Giấy chứng nhận đăng ký doanh nghiệp; Quyết định thành lập hoặc giấy tờ có giá trị pháp lý tương đươngĐịa chỉ trụ sở chínhVốn gópThời hạn góp vốn8Ghi chú (nếu có)Phần vốn góp6 (bằng số; VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài: bằng số, loại ngoại tệ, nếu có)Tỷ lệ (%)Loại tài sản, số lượng, giá trị tài sản góp vốn71234567892. Thông tin người đại diện theo pháp luật/ủy quyền của thành viên"
+     "text": "Giấy chứng nhận đăng ký doanh nghiệp; Quyết định thành lập hoặc giấy tờ có giá trị pháp lý tương đươngĐịa chỉ trụ sở chínhVốn gópThời hạn góp vốn"
+    },
+    {
+     "text": "8",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": "Ghi chú (nếu có)Phần vốn góp"
+    },
+    {
+     "text": "6",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " ("
+    },
+    {
+     "text": "bằng số; VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài: bằng số, loại ngoại tệ, nếu có",
+     "i": true
+    },
+    {
+     "text": ")Tỷ lệ ("
+    },
+    {
+     "text": "%",
+     "i": true
+    },
+    {
+     "text": ")Loại tài sản, số lượng, giá trị tài sản góp vốn"
+    },
+    {
+     "text": "7",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": "1234567892. Thông tin người đại diện theo pháp luật/ủy quyền của thành viên",
+     "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -1165,10 +1695,30 @@
      }
     },
     {
-     "text": "\nNGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT/CHỦ TỊCH HỘI ĐỒNG THÀNH VIÊN CỦA CÔNG TY\n(Ký và ghi họ tên)13",
+     "text": "\nNGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT/CHỦ TỊCH HỘI ĐỒNG THÀNH VIÊN CỦA CÔNG TY",
      "b": true
+    },
+    {
+     "text": "\n",
+     "i": true
+    },
+    {
+     "text": "("
+    },
+    {
+     "text": "Ký và ghi họ tên)",
+     "i": true
+    },
+    {
+     "text": "13",
+     "i": true,
+     "vertAlign": "superscript"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "date-line"
   },
   {
    "t": "p",
@@ -1177,34 +1727,62 @@
     {
      "text": "__________________________"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "national-separator"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "1 Nếu cột số 5 kê khai Số định danh cá nhân thì không phải kê khai các cột số 6, 7."
+     "text": "1",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " Nếu cột số 5 kê khai Số định danh cá nhân thì không phải kê khai các cột số 6, 7."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "2 Ghi phần vốn góp của từng thành viên. Giá trị ghi bằng số theo đơn vị VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, ghi bằng số, loại ngoại tệ (nếu có)."
+     "text": "2",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " Ghi phần vốn góp của từng thành viên. Giá trị ghi bằng số theo đơn vị VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, ghi bằng số, loại ngoại tệ (nếu có)."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "3 Loại tài sản góp vốn bao gồm: Đồng Việt Nam; Ngoại tệ tự do chuyển đổi (ghi rõ loại ngoại tệ, số tiền được góp bằng mỗi loại ngoại tệ); Vàng; Quyền sử dụng đất, quyền sở hữu trí tuệ, công nghệ, bí quyết kỹ thuật; Tài sản khác (ghi rõ loại tài sản, số lượng và giá trị còn lại của mỗi loại tài sản)."
+     "text": "3",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " Loại tài sản góp vốn bao gồm: Đồng Việt Nam; Ngoại tệ tự do chuyển đổi (ghi rõ loại ngoại tệ, số tiền được góp bằng mỗi loại ngoại tệ); Vàng; Quyền sử dụng đất, quyền sở hữu trí tuệ, công nghệ, bí quyết kỹ thuật; Tài sản khác (ghi rõ loại tài sản, số lượng và giá trị còn lại của mỗi loại tài sản)."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -1213,16 +1791,28 @@
     {
      "text": "Có thể lập thành danh mục riêng kèm theo hồ sơ đăng ký doanh nghiệp."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "4 - Trường hợp đăng ký thành lập doanh nghiệp, thời hạn góp vốn là thời hạn thành viên dự kiến hoàn thành việc góp vốn."
+     "text": "4 ",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": "- Trường hợp đăng ký thành lập doanh nghiệp, thời hạn góp vốn là thời hạn thành viên dự kiến hoàn thành việc góp vốn."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
   },
   {
    "t": "p",
@@ -1231,7 +1821,11 @@
     {
      "text": "- Trường hợp đăng ký tăng vốn điều lệ, thời hạn góp vốn là thời điểm thành viên hoàn thành việc góp vốn."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -1240,16 +1834,28 @@
     {
      "text": "- Các trường hợp khác ngoài các trường hợp nêu trên, thành viên không kê khai thời hạn góp vốn."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "5 - Trường hợp thay đổi nội dung đăng ký doanh nghiệp, thành viên có phần vốn góp không thay đổi không bắt buộc phải ký vào phần này."
+     "text": "5",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " - Trường hợp thay đổi nội dung đăng ký doanh nghiệp, thành viên có phần vốn góp không thay đổi không bắt buộc phải ký vào phần này."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
   },
   {
    "t": "p",
@@ -1258,61 +1864,113 @@
     {
      "text": "- Trường hợp đăng ký/thông báo thay đổi nội dung đăng ký doanh nghiệp theo quyết định của Tòa án hoặc Trọng tài thì không cần chữ ký tại phần này."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "6, 7, 8 Kê khai tương tự thành viên là cá nhân."
+     "text": "6, 7, 8",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " Kê khai tương tự thành viên là cá nhân."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "9 Nếu cột số 6 kê khai Số định danh cá nhân thì không phải kê khai các cột số 7, 8."
+     "text": "9 ",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": "Nếu cột số 6 kê khai Số định danh cá nhân thì không phải kê khai các cột số 7, 8."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "10 Không phải kê khai phần này đối với trường hợp kê khai người đại diện theo pháp luật."
+     "text": "10 ",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": "Không phải kê khai phần này đối với trường hợp kê khai người đại diện theo pháp luật."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "11 Tỷ lệ % của phần vốn góp được ủy quyền đại diện trên tổng số vốn góp của thành viên đó tại doanh nghiệp."
+     "text": "11",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " Tỷ lệ % của phần vốn góp được ủy quyền đại diện trên tổng số vốn góp của thành viên đó tại doanh nghiệp."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "12 Người được kê khai thông tin ký trực tiếp vào phần này."
+     "text": "12 ",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": "Người được kê khai thông tin ký trực tiếp vào phần này."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "13 - Người đại diện theo pháp luật của doanh nghiệp ký trực tiếp vào phần này. "
+     "text": "13",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " - Người đại diện theo pháp luật của doanh nghiệp ký trực tiếp vào phần này. "
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
   },
   {
    "t": "p",
@@ -1321,7 +1979,11 @@
     {
      "text": "- Trường hợp đăng ký chuyển đổi loại hình doanh nghiệp đồng thời đăng ký thay đổi người đại diện theo pháp luật thì Chủ tịch Hội đồng thành viên của công ty sau chuyển đổi ký trực tiếp vào phần này."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -1330,7 +1992,11 @@
     {
      "text": "- Trường hợp Tòa án hoặc Trọng tài chỉ định người thực hiện thủ tục đăng ký doanh nghiệp thì người được chỉ định ký trực tiếp vào phần này."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -1340,7 +2006,11 @@
      "text": "Mẫu số 7",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-number"
   },
   {
    "t": "p",
@@ -1350,7 +2020,11 @@
      "text": "DANH SÁCH CỔ ĐÔNG SÁNG LẬP CÔNG TY CỔ PHẦN",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle"
   },
   {
    "t": "p",
@@ -1360,7 +2034,11 @@
      "text": "I. Cổ đông sáng lập là cá nhân",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
@@ -1370,7 +2048,11 @@
      "text": "1. Thông tin cổ đông",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
@@ -1413,10 +2095,30 @@
      }
     },
     {
-     "text": "\nNGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT/CHỦ TỊCH HỘI ĐỒNG QUẢN TRỊ CỦA CÔNG TY\n(Ký và ghi họ tên)13",
+     "text": "\nNGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT/CHỦ TỊCH HỘI ĐỒNG QUẢN TRỊ CỦA CÔNG TY",
      "b": true
+    },
+    {
+     "text": "\n",
+     "i": true
+    },
+    {
+     "text": "("
+    },
+    {
+     "text": "Ký và ghi họ tên)",
+     "i": true
+    },
+    {
+     "text": "13",
+     "i": true,
+     "vertAlign": "superscript"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "date-line"
   },
   {
    "t": "p",
@@ -1425,34 +2127,62 @@
     {
      "text": "_________________________"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "national-separator"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "1 Nếu cột số 5 kê khai Số định danh cá nhân thì không phải kê khai các cột số 6, 7."
+     "text": "1",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " Nếu cột số 5 kê khai Số định danh cá nhân thì không phải kê khai các cột số 6, 7."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "2 Ghi giá trị vốn cổ phần của từng cổ đông sáng lập. Tài sản hình thành giá trị vốn cổ phần của từng cổ đông sáng lập cần được liệt kê cụ thể: tên loại tài sản góp vốn cổ phần; số lượng từng loại tài sản góp vốn cổ phần; giá trị còn lại của từng loại tài sản góp vốn cổ phần; thời điểm góp vốn cổ phần của từng loại tài sản. Giá trị ghi bằng số theo đơn vị VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài (ghi bằng số, loại ngoại tệ), nếu có."
+     "text": "2",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " Ghi giá trị vốn cổ phần của từng cổ đông sáng lập. Tài sản hình thành giá trị vốn cổ phần của từng cổ đông sáng lập cần được liệt kê cụ thể: tên loại tài sản góp vốn cổ phần; số lượng từng loại tài sản góp vốn cổ phần; giá trị còn lại của từng loại tài sản góp vốn cổ phần; thời điểm góp vốn cổ phần của từng loại tài sản. Giá trị ghi bằng số theo đơn vị VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài (ghi bằng số, loại ngoại tệ), nếu có."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "3 Loại tài sản góp vốn bao gồm: Đồng Việt Nam; Ngoại tệ tự do chuyển đổi (ghi rõ loại ngoại tệ, số tiền được góp bằng mỗi loại ngoại tệ); Vàng; Quyền sử dụng đất, quyền sở hữu trí tuệ, công nghệ, bí quyết kỹ thuật; Tài sản khác (ghi rõ loại tài sản, số lượng và giá trị còn lại của mỗi loại tài sản)."
+     "text": "3",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " Loại tài sản góp vốn bao gồm: Đồng Việt Nam; Ngoại tệ tự do chuyển đổi (ghi rõ loại ngoại tệ, số tiền được góp bằng mỗi loại ngoại tệ); Vàng; Quyền sử dụng đất, quyền sở hữu trí tuệ, công nghệ, bí quyết kỹ thuật; Tài sản khác (ghi rõ loại tài sản, số lượng và giá trị còn lại của mỗi loại tài sản)."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -1461,79 +2191,147 @@
     {
      "text": "Có thể lập thành danh mục riêng kèm theo hồ sơ đăng ký doanh nghiệp."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "4 Khi đăng ký thành lập doanh nghiệp, thời hạn góp vốn là thời hạn cổ đông sáng lập dự kiến hoàn thành việc góp vốn. Các trường hợp khác không kê khai thời hạn góp vốn."
+     "text": "4 ",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": "Khi đăng ký thành lập doanh nghiệp, thời hạn góp vốn là thời hạn cổ đông sáng lập dự kiến hoàn thành việc góp vốn. Các trường hợp khác không kê khai thời hạn góp vốn."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "5 Trường hợp đăng ký/thông báo thay đổi nội dung đăng ký doanh nghiệp theo quyết định của Tòa án hoặc Trọng tài thì không cần chữ ký tại phần này."
+     "text": "5 ",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": "Trường hợp đăng ký/thông báo thay đổi nội dung đăng ký doanh nghiệp theo quyết định của Tòa án hoặc Trọng tài thì không cần chữ ký tại phần này."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "6, 7, 8 Kê khai tương tự các cổ đông là nhà đầu tư nước ngoài là cá nhân."
+     "text": "6, 7, 8",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " Kê khai tương tự các cổ đông là nhà đầu tư nước ngoài là cá nhân."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "9 Nếu cột số 6 kê khai Số định danh cá nhân thì không phải kê khai các cột số 7, 8."
+     "text": "9",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " Nếu cột số 6 kê khai Số định danh cá nhân thì không phải kê khai các cột số 7, 8."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "10 Không phải kê khai phần này đối với trường hợp kê khai người đại diện theo pháp luật."
+     "text": "10",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " Không phải kê khai phần này đối với trường hợp kê khai người đại diện theo pháp luật."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "11 Tỷ lệ % của phần vốn góp được ủy quyền đại diện trên tổng số vốn góp của cổ đông đó tại doanh nghiệp."
+     "text": "11",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " Tỷ lệ % của phần vốn góp được ủy quyền đại diện trên tổng số vốn góp của cổ đông đó tại doanh nghiệp."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "12 Người được kê khai thông tin ký trực tiếp vào phần này."
+     "text": "12 ",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": "Người được kê khai thông tin ký trực tiếp vào phần này."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "13 - Người đại diện theo pháp luật của doanh nghiệp ký trực tiếp vào phần này. "
+     "text": "13",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " - Người đại diện theo pháp luật của doanh nghiệp ký trực tiếp vào phần này. "
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
   },
   {
    "t": "p",
@@ -1542,7 +2340,11 @@
     {
      "text": "- Trường hợp đăng ký chuyển đổi loại hình doanh nghiệp đồng thời đăng ký thay đổi người đại diện theo pháp luật thì Chủ tịch Hội đồng quản trị của công ty sau chuyển đổi ký trực tiếp vào phần này. "
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -1551,7 +2353,11 @@
     {
      "text": "- Trường hợp Tòa án hoặc Trọng tài chỉ định người thực hiện thủ tục đăng ký doanh nghiệp thì người được chỉ định ký trực tiếp vào phần này."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -1561,7 +2367,11 @@
      "text": "Mẫu số 8",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-number"
   },
   {
    "t": "p",
@@ -1571,7 +2381,11 @@
      "text": "DANH SÁCH CỔ ĐÔNG LÀ NHÀ ĐẦU TƯ NƯỚC NGOÀI",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle"
   },
   {
    "t": "p",
@@ -1581,7 +2395,11 @@
      "text": "I. Cổ đông là nhà đầu tư nước ngoài là cá nhân ",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
@@ -1591,16 +2409,56 @@
      "text": "1. Thông tin cổ đông",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Giấy chứng nhận đăng ký doanh nghiệp; Quyết định thành lập hoặc giấy tờ có giá trị pháp lý tương đươngVốn góp6Thời hạn góp vốn8Ghi chú (nếu có)Tổng số cổ phầnTỷ lệ (%)Loại cổ phầnLoại tài sản, số lượng, giá trị tài sản góp vốn7Số lượngGiá trịPhổ thông……..Số lượngGiá trịSố lượngGiá trị1279101112131415161718202. Thông tin người đại diện theo pháp luật/ủy quyền của cổ đông"
+     "text": "Giấy chứng nhận đăng ký doanh nghiệp; Quyết định thành lập hoặc giấy tờ có giá trị pháp lý tương đươngVốn góp"
+    },
+    {
+     "text": "6",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": "Thời hạn góp vốn"
+    },
+    {
+     "text": "8",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": "Ghi chú (nếu có)Tổng số cổ phầnTỷ lệ ("
+    },
+    {
+     "text": "%",
+     "i": true
+    },
+    {
+     "text": ")Loại cổ phầnLoại tài sản, số lượng, giá trị tài sản góp vốn"
+    },
+    {
+     "text": "7",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": "Số lượngGiá trịPhổ thông……..Số lượngGiá trịSố lượngGiá trị"
+    },
+    {
+     "text": "1279101112131415161718202. Thông tin người đại diện theo pháp luật/ủy quyền của cổ đông",
+     "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -1643,10 +2501,30 @@
      }
     },
     {
-     "text": "\nNGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT/CHỦ TỊCH HỘI ĐỒNG QUẢN TRỊ CỦA CÔNG TY\n(Ký và ghi họ tên)13",
+     "text": "\nNGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT/CHỦ TỊCH HỘI ĐỒNG QUẢN TRỊ CỦA CÔNG TY",
      "b": true
+    },
+    {
+     "text": "\n",
+     "i": true
+    },
+    {
+     "text": "("
+    },
+    {
+     "text": "Ký và ghi họ tên)",
+     "i": true
+    },
+    {
+     "text": "13",
+     "i": true,
+     "vertAlign": "superscript"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "date-line"
   },
   {
    "t": "p",
@@ -1655,34 +2533,62 @@
     {
      "text": "_________________________"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "national-separator"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "1 Nếu cột số 5 kê khai Số định danh cá nhân thì không phải kê khai cột số 6."
+     "text": "1",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " Nếu cột số 5 kê khai Số định danh cá nhân thì không phải kê khai cột số 6."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "2 Ghi giá trị vốn cổ phần của từng cổ đông là nhà đầu tư nước ngoài. Tài sản hình thành giá trị vốn cổ phần của từng cổ đông cần được liệt kê cụ thể: tên loại tài sản góp vốn cổ phần; số lượng từng loại tài sản góp vốn cổ phần; giá trị còn lại của từng loại tài sản góp vốn cổ phần; thời điểm góp vốn cổ phần của từng loại tài sản. Giá trị ghi bằng số theo đơn vị VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài (ghi bằng số, loại ngoại tệ), nếu có."
+     "text": "2 ",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": "Ghi giá trị vốn cổ phần của từng cổ đông là nhà đầu tư nước ngoài. Tài sản hình thành giá trị vốn cổ phần của từng cổ đông cần được liệt kê cụ thể: tên loại tài sản góp vốn cổ phần; số lượng từng loại tài sản góp vốn cổ phần; giá trị còn lại của từng loại tài sản góp vốn cổ phần; thời điểm góp vốn cổ phần của từng loại tài sản. Giá trị ghi bằng số theo đơn vị VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài (ghi bằng số, loại ngoại tệ), nếu có."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "3 Loại tài sản góp vốn bao gồm: Đồng Việt Nam; Ngoại tệ tự do chuyển đổi (ghi rõ loại ngoại tệ, số tiền được góp bằng mỗi loại ngoại tệ); Vàng; Quyền sử dụng đất, quyền sở hữu trí tuệ, công nghệ, bí quyết kỹ thuật; Tài sản khác (ghi rõ loại tài sản, số lượng và giá trị còn lại của mỗi loại tài sản)."
+     "text": "3",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " Loại tài sản góp vốn bao gồm: Đồng Việt Nam; Ngoại tệ tự do chuyển đổi (ghi rõ loại ngoại tệ, số tiền được góp bằng mỗi loại ngoại tệ); Vàng; Quyền sử dụng đất, quyền sở hữu trí tuệ, công nghệ, bí quyết kỹ thuật; Tài sản khác (ghi rõ loại tài sản, số lượng và giá trị còn lại của mỗi loại tài sản)."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -1691,79 +2597,147 @@
     {
      "text": "Có thể lập thành danh mục riêng kèm theo hồ sơ đăng ký doanh nghiệp."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "4 Khi đăng ký thành lập doanh nghiệp, thời hạn góp vốn là thời hạn cổ đông sáng lập dự kiến hoàn thành việc góp vốn. Các trường hợp khác không kê khai thời hạn góp vốn."
+     "text": "4 ",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": "Khi đăng ký thành lập doanh nghiệp, thời hạn góp vốn là thời hạn cổ đông sáng lập dự kiến hoàn thành việc góp vốn. Các trường hợp khác không kê khai thời hạn góp vốn."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "5 Trường hợp đăng ký/thông báo thay đổi nội dung đăng ký doanh nghiệp theo quyết định của Tòa án hoặc Trọng tài thì không cần chữ ký tại phần này."
+     "text": "5 ",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": "Trường hợp đăng ký/thông báo thay đổi nội dung đăng ký doanh nghiệp theo quyết định của Tòa án hoặc Trọng tài thì không cần chữ ký tại phần này."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "6, 7, 8 Kê khai tương tự các cổ đông là nhà đầu tư nước ngoài là cá nhân."
+     "text": "6, 7, 8",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " Kê khai tương tự các cổ đông là nhà đầu tư nước ngoài là cá nhân."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "9 Nếu cột số 6 kê khai Số định danh cá nhân thì không phải kê khai các cột số 7, 8."
+     "text": "9",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " Nếu cột số 6 kê khai Số định danh cá nhân thì không phải kê khai các cột số 7, 8."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "10 Không phải kê khai phần này đối với trường hợp kê khai người đại diện theo pháp luật."
+     "text": "10",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " Không phải kê khai phần này đối với trường hợp kê khai người đại diện theo pháp luật."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "11 Tỷ lệ % của phần vốn góp được ủy quyền đại diện trên tổng số vốn góp của cổ đông đó tại doanh nghiệp."
+     "text": "11",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " Tỷ lệ % của phần vốn góp được ủy quyền đại diện trên tổng số vốn góp của cổ đông đó tại doanh nghiệp."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "12 Người được kê khai thông tin ký trực tiếp vào phần này."
+     "text": "12 ",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": "Người được kê khai thông tin ký trực tiếp vào phần này."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "13 - Người đại diện theo pháp luật của doanh nghiệp ký trực tiếp vào phần này. "
+     "text": "13",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " - Người đại diện theo pháp luật của doanh nghiệp ký trực tiếp vào phần này. "
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
   },
   {
    "t": "p",
@@ -1772,7 +2746,11 @@
     {
      "text": "- Trường hợp đăng ký chuyển đổi loại hình doanh nghiệp đồng thời đăng ký thay đổi người đại diện theo pháp luật thì Chủ tịch Hội đồng quản trị của công ty sau chuyển đổi ký trực tiếp vào phần này. "
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -1781,7 +2759,11 @@
     {
      "text": "- Trường hợp Tòa án hoặc Trọng tài chỉ định người thực hiện thủ tục đăng ký doanh nghiệp thì người được chỉ định ký trực tiếp vào phần này."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -1791,7 +2773,11 @@
      "text": "Mẫu số 9",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-number"
   },
   {
    "t": "p",
@@ -1801,7 +2787,11 @@
      "text": "DANH SÁCH THÀNH VIÊN CÔNG TY HỢP DANH",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle"
   },
   {
    "t": "p",
@@ -1811,26 +2801,51 @@
      "text": "I. Thành viên là cá nhân",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "B. Thành viên góp vốn (nếu có)"
+     "text": "B. Thành viên góp vốn "
+    },
+    {
+     "text": "(nếu có)",
+     "i": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
    "align": "center",
    "runs": [
     {
-     "text": "II. Thành viên góp vốn là tổ chức (nếu có)",
+     "text": "II. Thành viên góp vốn là tổ chức (",
+     "b": true
+    },
+    {
+     "text": "nếu có",
+     "b": true,
+     "i": true
+    },
+    {
+     "text": ")",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
@@ -1840,7 +2855,11 @@
      "text": "1. Thông tin thành viên",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
@@ -1849,7 +2868,11 @@
     {
      "text": "STT"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -1858,7 +2881,11 @@
     {
      "text": "Tên thành viên"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -1867,7 +2894,11 @@
     {
      "text": "Số, ngày cấp, nơi cấp"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -1876,7 +2907,11 @@
     {
      "text": "Giấy chứng nhận đăng ký doanh nghiệp; Quyết định thành lập hoặc giấy tờ có giá trị pháp lý tương đương"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -1885,7 +2920,11 @@
     {
      "text": "Địa chỉ trụ sở chính"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -1894,16 +2933,28 @@
     {
      "text": "Vốn góp"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "center",
    "runs": [
     {
-     "text": "Thời hạn góp vốn8"
+     "text": "Thời hạn góp vốn"
+    },
+    {
+     "text": "8",
+     "vertAlign": "superscript"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -1912,43 +2963,104 @@
     {
      "text": "Ghi chú (nếu có)"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "note"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Phần vốn góp6 (bằng số; VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài: bằng số, loại ngoại tệ, nếu có)Tỷ lệ (%)Loại tài sản, số lượng, giá trị tài sản góp vốn71234567892. Thông tin người đại diện theo pháp luật/ủy quyền của thành viên"
+     "text": "Phần vốn góp"
+    },
+    {
+     "text": "6",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " ("
+    },
+    {
+     "text": "bằng số; VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài: bằng số, loại ngoại tệ, nếu có",
+     "i": true
+    },
+    {
+     "text": ")Tỷ lệ ("
+    },
+    {
+     "text": "%",
+     "i": true
+    },
+    {
+     "text": ")Loại tài sản, số lượng, giá trị tài sản góp vốn"
+    },
+    {
+     "text": "7",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": "1234567892. Thông tin người đại diện theo pháp luật/ủy quyền của thành viên",
+     "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "1 Nếu cột số 5 kê khai Số định danh cá nhân thì không phải kê khai các cột số 6, 7."
+     "text": "1",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " Nếu cột số 5 kê khai Số định danh cá nhân thì không phải kê khai các cột số 6, 7."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "2 Ghi phần vốn góp của từng thành viên. Giá trị ghi bằng số theo đơn vị VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, ghi bằng số, loại ngoại tệ (nếu có)."
+     "text": "2",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " Ghi phần vốn góp của từng thành viên. Giá trị ghi bằng số theo đơn vị VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, ghi bằng số, loại ngoại tệ (nếu có)."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "3 Loại tài sản góp vốn bao gồm: Đồng Việt Nam; Ngoại tệ tự do chuyển đổi (ghi rõ loại ngoại tệ, số tiền được góp bằng mỗi loại ngoại tệ); Vàng; Quyền sử dụng đất, quyền sở hữu trí tuệ, công nghệ, bí quyết kỹ thuật; Tài sản khác (ghi rõ loại tài sản, số lượng và giá trị còn lại của mỗi loại tài sản)."
+     "text": "3",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " Loại tài sản góp vốn bao gồm: Đồng Việt Nam; Ngoại tệ tự do chuyển đổi (ghi rõ loại ngoại tệ, số tiền được góp bằng mỗi loại ngoại tệ); Vàng; Quyền sử dụng đất, quyền sở hữu trí tuệ, công nghệ, bí quyết kỹ thuật; Tài sản khác (ghi rõ loại tài sản, số lượng và giá trị còn lại của mỗi loại tài sản)."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -1957,16 +3069,28 @@
     {
      "text": "Có thể lập thành danh mục riêng kèm theo hồ sơ đăng ký doanh nghiệp."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "4 - Trường hợp đăng ký thành lập doanh nghiệp, thời hạn góp vốn là thời hạn thành viên dự kiến hoàn thành việc góp vốn."
+     "text": "4",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " - Trường hợp đăng ký thành lập doanh nghiệp, thời hạn góp vốn là thời hạn thành viên dự kiến hoàn thành việc góp vốn."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
   },
   {
    "t": "p",
@@ -1975,7 +3099,11 @@
     {
      "text": "- Trường hợp đăng ký tăng vốn điều lệ, thời hạn góp vốn là thời điểm thành viên hoàn thành việc góp vốn."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -1984,16 +3112,28 @@
     {
      "text": "- Các trường hợp khác ngoài các trường hợp nêu trên, thành viên không kê khai thời hạn góp vốn."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "5 - Trường hợp thay đổi nội dung đăng ký doanh nghiệp, thành viên có phần vốn góp không thay đổi không bắt buộc phải ký vào phần này."
+     "text": "5",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " - Trường hợp thay đổi nội dung đăng ký doanh nghiệp, thành viên có phần vốn góp không thay đổi không bắt buộc phải ký vào phần này."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
   },
   {
    "t": "p",
@@ -2002,52 +3142,96 @@
     {
      "text": "- Trường hợp đăng ký/thông báo thay đổi nội dung đăng ký doanh nghiệp theo quyết định của Tòa án hoặc Trọng tài thì không cần chữ ký tại phần này."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "6, 7, 8 Kê khai tương tự thành viên là cá nhân."
+     "text": "6, 7, 8",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " Kê khai tương tự thành viên là cá nhân."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "9 Nếu cột số 6 kê khai Số định danh cá nhân thì không phải kê khai các cột số 7, 8."
+     "text": "9",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " Nếu cột số 6 kê khai Số định danh cá nhân thì không phải kê khai các cột số 7, 8."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "10 Không phải kê khai phần này đối với trường hợp kê khai người đại diện theo pháp luật."
+     "text": "10",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " Không phải kê khai phần này đối với trường hợp kê khai người đại diện theo pháp luật."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "11 Tỷ lệ % của phần vốn góp được ủy quyền đại diện trên tổng số vốn góp của thành viên đó tại doanh nghiệp."
+     "text": "11",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " Tỷ lệ % của phần vốn góp được ủy quyền đại diện trên tổng số vốn góp của thành viên đó tại doanh nghiệp."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "12 Người được kê khai thông tin ký trực tiếp vào phần này."
+     "text": "12 ",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": "Người được kê khai thông tin ký trực tiếp vào phần này."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
   },
   {
    "t": "p",
@@ -2057,7 +3241,11 @@
      "text": "Mẫu số 10",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-number"
   },
   {
    "t": "p",
@@ -2067,7 +3255,11 @@
      "text": "DANH SÁCH CHỦ SỞ HỮU HƯỞNG LỢI CỦA DOANH NGHIỆP",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle"
   },
   {
    "t": "p",
@@ -2110,11 +3302,31 @@
      }
     },
     {
-     "text": "\nNGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT/\nCHỦ TỊCH HỘI ĐỒNG THÀNH VIÊN/\nCHỦ TỊCH HỘI ĐỒNG QUẢN TRỊ CỦA CÔNG TY\n(Ký và ghi họ tên)5",
+     "text": "\n",
      "b": true,
      "i": true
+    },
+    {
+     "text": "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT/\nCHỦ TỊCH HỘI ĐỒNG THÀNH VIÊN/\nCHỦ TỊCH HỘI ĐỒNG QUẢN TRỊ CỦA CÔNG TY",
+     "b": true
+    },
+    {
+     "text": "\n"
+    },
+    {
+     "text": "(Ký và ghi họ tên)",
+     "i": true
+    },
+    {
+     "text": "5",
+     "i": true,
+     "vertAlign": "superscript"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "signature"
   },
   {
    "t": "p",
@@ -2123,25 +3335,45 @@
     {
      "text": "______________________"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "national-separator"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "1 Nếu cột số 5 kê khai Số định danh cá nhân thì không phải kê khai các cột số 6, 7."
+     "text": "1",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " Nếu cột số 5 kê khai Số định danh cá nhân thì không phải kê khai các cột số 6, 7."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "2 Trường hợp CSHHL thông qua sở hữu vốn điều lệ hoặc tổng số cổ phần có quyền biểu quyết được xác định như sau:"
+     "text": "2",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " Trường hợp CSHHL thông qua sở hữu vốn điều lệ hoặc tổng số cổ phần có quyền biểu quyết được xác định như sau:"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
   },
   {
    "t": "p",
@@ -2150,7 +3382,11 @@
     {
      "text": "- Cá nhân là cổ đông sở hữu từ 25% tổng số cổ phần có quyền biểu quyết trở lên;"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -2159,7 +3395,11 @@
     {
      "text": "- Cá nhân là thành viên sở hữu từ 25% vốn điều lệ trở lên của công ty trách nhiệm hữu hạn hai thành viên trở lên;"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -2168,7 +3408,11 @@
     {
      "text": "- Cá nhân là chủ sở hữu công ty trách nhiệm hữu hạn một thành viên;"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -2177,34 +3421,62 @@
     {
      "text": "- Cá nhân là thành viên hợp danh công ty hợp danh."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "3 Tỷ lệ sở hữu cổ phần có quyền biểu quyết = Số cổ phần có quyền biểu quyết của chủ sở hữu hưởng lợi/tổng số cổ phần có quyền biểu quyết của công ty cổ phần."
+     "text": "3 ",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": "Tỷ lệ sở hữu cổ phần có quyền biểu quyết = Số cổ phần có quyền biểu quyết của chủ sở hữu hưởng lợi/tổng số cổ phần có quyền biểu quyết của công ty cổ phần."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "4 Nếu doanh nghiệp xác định được chủ sở hữu hưởng lợi của doanh nghiệp theo quy định tại điểm b khoản 1 Điều 17 Nghị định số 168/2025/NĐ-CP thông qua quyền chi phối, doanh nghiệp ghi rõ một trong các quyền chi phối sau: bổ nhiệm, miễn nhiệm hoặc bãi nhiệm đa số hoặc tất cả thành viên hội đồng quản trị, chủ tịch hội đồng quản trị, chủ tịch hội đồng thành viên; người đại diện theo pháp luật, giám đốc hoặc tổng giám đốc của doanh nghiệp; sửa đổi, bổ sung điều lệ của doanh nghiệp; thay đổi cơ cấu tổ chức quản lý công ty; tổ chức lại, giải thể công ty."
+     "text": "4 ",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": "Nếu doanh nghiệp xác định được chủ sở hữu hưởng lợi của doanh nghiệp theo quy định tại điểm b khoản 1 Điều 17 Nghị định số 168/2025/NĐ-CP thông qua quyền chi phối, doanh nghiệp ghi rõ một trong các quyền chi phối sau: bổ nhiệm, miễn nhiệm hoặc bãi nhiệm đa số hoặc tất cả thành viên hội đồng quản trị, chủ tịch hội đồng quản trị, chủ tịch hội đồng thành viên; người đại diện theo pháp luật, giám đốc hoặc tổng giám đốc của doanh nghiệp; sửa đổi, bổ sung điều lệ của doanh nghiệp; thay đổi cơ cấu tổ chức quản lý công ty; tổ chức lại, giải thể công ty."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "5 - Người đại diện theo pháp luật của doanh nghiệp ký trực tiếp vào phần này. "
+     "text": "5",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " - Người đại diện theo pháp luật của doanh nghiệp ký trực tiếp vào phần này. "
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
   },
   {
    "t": "p",
@@ -2213,7 +3485,11 @@
     {
      "text": "- Trường hợp đăng ký chuyển đổi loại hình doanh nghiệp đồng thời đăng ký thay đổi người đại diện theo pháp luật thì Chủ tịch Hội đồng quản trị của công ty sau chuyển đổi ký trực tiếp vào phần này. "
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -2222,7 +3498,12 @@
     {
      "text": "- Trường hợp Tòa án hoặc Trọng tài chỉ định người thực hiện thủ tục đăng ký doanh nghiệp thì người được chỉ định ký trực tiếp vào phần này."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   }
- ]
+ ],
+ "v": 3
 }

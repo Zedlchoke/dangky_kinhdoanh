@@ -10,7 +10,11 @@
      "text": "Mẫu số 49",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-number"
   },
   {
    "t": "p",
@@ -20,7 +24,11 @@
      "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH\nCẤP TỈNH\n-------",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle"
   },
   {
    "t": "p",
@@ -30,7 +38,11 @@
      "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc\n---------------",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "national-header"
   },
   {
    "t": "p",
@@ -45,7 +57,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -87,7 +103,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "date-line"
   },
   {
    "t": "p",
@@ -97,7 +117,11 @@
      "text": "THÔNG BÁO",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-title"
   },
   {
    "t": "p",
@@ -107,7 +131,11 @@
      "text": "Về việc dừng/từ chối dừng thực hiện thủ tục đăng ký doanh nghiệp",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -116,14 +144,25 @@
     {
      "text": "Kính gửi: "
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "salutation"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "(Đối với hồ sơ thành lập mới doanh nghiệp)\nÔng/Bà: ………………………………………………………. \nSố giấy tờ pháp lý của cá nhân: "
+     "text": "("
+    },
+    {
+     "text": "Đối với hồ sơ thành lập mới doanh nghiệp",
+     "i": true
+    },
+    {
+     "text": ")\nÔng/Bà: ………………………………………………………. \nSố giấy tờ pháp lý của cá nhân: "
     },
     {
      "input": {
@@ -141,7 +180,32 @@
      }
     },
     {
-     "text": "\n(Đối với các trường hợp còn lại)\n……….(Tên doanh nghiệp)…………..\nĐịa chỉ trụ sở chính: "
+     "text": "\n("
+    },
+    {
+     "text": "Đối với các trường hợp còn lại",
+     "i": true
+    },
+    {
+     "text": ")\n……….("
+    },
+    {
+     "text": "Tên doanh nghiệp",
+     "i": true
+    },
+    {
+     "text": ")………….."
+    },
+    {
+     "text": "\n",
+     "i": true
+    },
+    {
+     "text": "Địa chỉ trụ sở chính:"
+    },
+    {
+     "text": " ",
+     "i": true
     },
     {
      "input": {
@@ -150,8 +214,11 @@
      }
     },
     {
-     "text": "\nMã số doanh nghiệp/Số Giấy chứng nhận đăng ký kinh doanh đối với doanh nghiệp: ",
+     "text": "\n",
      "i": true
+    },
+    {
+     "text": "Mã số doanh nghiệp/Số Giấy chứng nhận đăng ký kinh doanh đối với doanh nghiệp: "
     },
     {
      "input": {
@@ -159,15 +226,22 @@
       "w": 48
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "(Cơ quan đăng ký kinh doanh cấp tỉnh): ",
+     "text": "(Cơ quan đăng ký kinh doanh cấp tỉnh)",
      "i": true
+    },
+    {
+     "text": ": "
     },
     {
      "input": {
@@ -175,7 +249,11 @@
       "w": 27
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -190,7 +268,11 @@
       "w": 16
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -214,7 +296,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -238,14 +324,25 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Sau khi xem xét Giấy đề nghị dừng thực hiện thủ tục đăng ký doanh nghiệp đã nhận ngày… tháng … năm … của Ông/Bà: … đối với Hồ sơ có Giấy tiếp nhận hồ sơ và hẹn trả kết quả số … do (Cơ quan đăng ký kinh doanh cấp tỉnh) … cấp ngày "
+     "text": "Sau khi xem xét Giấy đề nghị dừng thực hiện thủ tục đăng ký doanh nghiệp đã nhận ngày… tháng … năm … của Ông/Bà: … đối với Hồ sơ có Giấy tiếp nhận hồ sơ và hẹn trả kết quả số … do "
+    },
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp tỉnh)",
+     "i": true
+    },
+    {
+     "text": " … cấp ngày "
     },
     {
      "input": {
@@ -254,27 +351,55 @@
      }
     },
     {
-     "text": " về việc đăng ký/thông báo … của … (Tên Doanh nghiệp) - Mã số doanh nghiệp … (nếu có). "
+     "text": " về việc đăng ký/thông báo … của … ("
+    },
+    {
+     "text": "Tên Doanh nghiệp",
+     "i": true
+    },
+    {
+     "text": ") - Mã số doanh nghiệp … ("
+    },
+    {
+     "text": "nếu có",
+     "i": true
+    },
+    {
+     "text": "). "
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Nếu chấp thuận đề nghị dừng thực hiện thủ tục đăng ký doanh nghiệp theo quy định tại khoản 6 Điều 31 Nghị định số 168/2025/NĐ-CP ngày 30/6/2025 của Chính phủ thì ghi: (Cơ quan đăng ký kinh doanh cấp tỉnh) thông báo đã dừng thực hiện thủ tục đăng ký doanh nghiệp đối với Hồ sơ đăng ký doanh nghiệp nêu trên và hủy Hồ sơ trên Hệ thống thông tin quốc gia về đăng ký doanh nghiệp.",
+     "text": "Nếu chấp thuận đề nghị dừng thực hiện thủ tục đăng ký doanh nghiệp theo quy định tại khoản 6 Điều 31 Nghị định số 168/2025/NĐ-CP ngày 30/6/2025 của Chính phủ thì ghi: (Cơ quan đăng ký kinh doanh cấp tỉnh)",
      "i": true
+    },
+    {
+     "text": " thông báo đã dừng thực hiện thủ tục đăng ký doanh nghiệp đối với Hồ sơ đăng ký doanh nghiệp nêu trên và hủy Hồ sơ trên Hệ thống thông tin quốc gia về đăng ký doanh nghiệp."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Nếu từ chối đề nghị dừng thực hiện thủ tục đăng ký doanh nghiệp theo quy định tại khoản 6 Điều 31 Nghị định số 168/2025/NĐ-CP ngày 30/6/2025 của Chính phủ thì ghi: (Cơ quan đăng ký kinh doanh cấp tỉnh) thông báo từ chối dừng thực hiện thủ tục đăng ký doanh nghiệp đối với Hồ sơ đăng ký doanh nghiệp nêu trên và lý do từ chối như sau: ",
+     "text": "Nếu từ chối đề nghị dừng thực hiện thủ tục đăng ký doanh nghiệp theo quy định tại khoản 6 Điều 31 Nghị định số 168/2025/NĐ-CP ngày 30/6/2025 của Chính phủ thì ghi: (Cơ quan đăng ký kinh doanh cấp tỉnh)",
      "i": true
+    },
+    {
+     "text": " thông báo từ chối dừng thực hiện thủ tục đăng ký doanh nghiệp đối với Hồ sơ đăng ký doanh nghiệp nêu trên và lý do từ chối như sau: "
     },
     {
      "input": {
@@ -282,16 +407,23 @@
       "w": 60
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "\nNơi nhận:\n- Như trên;\n- ",
+     "text": "\nNơi nhận:\n",
      "b": true,
      "i": true
+    },
+    {
+     "text": "- Như trên;\n- "
     },
     {
      "input": {
@@ -308,17 +440,36 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "center",
    "runs": [
     {
-     "text": "TRƯỞNG ĐƠN VỊ\n(Ký, ghi họ tên và đóng dấu)",
+     "text": "TRƯỞNG ĐƠN VỊ\n",
      "b": true
+    },
+    {
+     "text": "("
+    },
+    {
+     "text": "Ký, ghi họ tên và đóng dấu",
+     "i": true
+    },
+    {
+     "text": ")"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   }
- ]
+ ],
+ "v": 3
 }

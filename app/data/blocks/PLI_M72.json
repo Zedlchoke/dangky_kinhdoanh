@@ -10,7 +10,11 @@
      "text": "Mẫu số 72",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-number"
   },
   {
    "t": "p",
@@ -20,17 +24,34 @@
      "text": "CÔNG BỐ NỘI DUNG ĐĂNG KÝ THÀNH LẬP DOANH NGHIỆP",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle"
   },
   {
    "t": "p",
    "align": "center",
    "runs": [
     {
-     "text": "(TÊN DOANH NGHIỆP TƯ NHÂN)",
+     "text": "(",
+     "b": true
+    },
+    {
+     "text": "TÊN DOANH NGHIỆP TƯ NHÂN",
+     "b": true,
+     "i": true
+    },
+    {
+     "text": ")",
      "b": true
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle",
    "cond": [
     "loai_hinh_dntn"
    ]
@@ -44,6 +65,10 @@
      "b": true
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle",
    "cond": [
     "loai_hinh_dntn"
    ]
@@ -57,6 +82,10 @@
      "b": true
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading",
    "cond": [
     "loai_hinh_dntn"
    ]
@@ -75,6 +104,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_dntn"
    ]
@@ -93,6 +126,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_dntn"
    ]
@@ -111,6 +148,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_dntn"
    ]
@@ -120,8 +161,11 @@
    "align": "left",
    "runs": [
     {
-     "text": "2. Mã số doanh nghiệp: ",
+     "text": "2. Mã số doanh nghiệp:",
      "b": true
+    },
+    {
+     "text": " "
     },
     {
      "input": {
@@ -130,6 +174,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading",
    "cond": [
     "loai_hinh_dntn"
    ]
@@ -139,8 +187,11 @@
    "align": "left",
    "runs": [
     {
-     "text": "3. Ngày được cấp Giấy chứng nhận đăng ký doanh nghiệp lần đầu: ",
+     "text": "3. Ngày được cấp Giấy chứng nhận đăng ký doanh nghiệp lần đầu:",
      "b": true
+    },
+    {
+     "text": " "
     },
     {
      "input": {
@@ -149,6 +200,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading",
    "cond": [
     "loai_hinh_dntn"
    ]
@@ -158,8 +213,11 @@
    "align": "left",
    "runs": [
     {
-     "text": "4. Địa chỉ trụ sở chính: ",
+     "text": "4. Địa chỉ trụ sở chính:",
      "b": true
+    },
+    {
+     "text": " "
     },
     {
      "input": {
@@ -168,6 +226,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading",
    "cond": [
     "loai_hinh_dntn"
    ]
@@ -195,6 +257,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_dntn"
    ]
@@ -222,6 +288,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_dntn"
    ]
@@ -235,6 +305,10 @@
      "b": true
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading",
    "cond": [
     "loai_hinh_dntn"
    ]
@@ -315,8 +389,18 @@
    "align": "left",
    "runs": [
     {
-     "text": "6. Vốn đầu tư (bằng số; bằng chữ; VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có): ",
+     "text": "6. Vốn đầu tư ",
      "b": true
+    },
+    {
+     "text": "("
+    },
+    {
+     "text": "bằng số; bằng chữ; VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -325,6 +409,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading",
    "cond": [
     "loai_hinh_dntn"
    ]
@@ -338,6 +426,10 @@
      "b": true
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading",
    "cond": [
     "loai_hinh_dntn"
    ]
@@ -347,7 +439,14 @@
    "align": "left",
    "runs": [
     {
-     "text": "Họ, chữ đệm và tên (ghi bằng chữ in hoa):"
+     "text": "Họ, chữ đệm và tên ("
+    },
+    {
+     "text": "ghi bằng chữ in hoa",
+     "i": true
+    },
+    {
+     "text": "):"
     },
     {
      "input": {
@@ -365,6 +464,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_dntn"
    ]
@@ -410,6 +513,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "date-line",
    "cond": [
     "loai_hinh_dntn"
    ]
@@ -428,6 +535,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_dntn"
    ]
@@ -437,8 +548,18 @@
    "align": "left",
    "runs": [
     {
-     "text": "(hoặc) Số Hộ chiếu, Hộ chiếu nước ngoài, giấy tờ có giá trị thay thế hộ chiếu nước ngoài (đối với chủ doanh nghiệp là người nước ngoài): ",
+     "text": "(hoặc) ",
      "i": true
+    },
+    {
+     "text": "Số Hộ chiếu, Hộ chiếu nước ngoài, giấy tờ có giá trị thay thế hộ chiếu nước ngoài ("
+    },
+    {
+     "text": "đối với chủ doanh nghiệp là người nước ngoài",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -456,6 +577,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_dntn"
    ]
@@ -474,6 +599,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_dntn"
    ]
@@ -483,8 +612,15 @@
    "align": "left",
    "runs": [
     {
-     "text": "8. Nơi đăng ký: (Cơ quan đăng ký kinh doanh cấp tỉnh) ",
+     "text": "8. Nơi đăng ký:",
      "b": true
+    },
+    {
+     "text": " "
+    },
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp tỉnh) ",
+     "i": true
     },
     {
      "input": {
@@ -493,6 +629,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading",
    "cond": [
     "loai_hinh_dntn"
    ]
@@ -502,10 +642,23 @@
    "align": "center",
    "runs": [
     {
-     "text": "(TÊN CÔNG TY TNHH MỘT THÀNH VIÊN)",
+     "text": "(",
+     "b": true
+    },
+    {
+     "text": "TÊN CÔNG TY TNHH MỘT THÀNH VIÊN",
+     "b": true,
+     "i": true
+    },
+    {
+     "text": ")",
      "b": true
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle",
    "cond": [
     "loai_hinh_tnhh_1tv"
    ]
@@ -519,6 +672,10 @@
      "b": true
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle",
    "cond": [
     "loai_hinh_tnhh_1tv"
    ]
@@ -532,6 +689,10 @@
      "b": true
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading",
    "cond": [
     "loai_hinh_tnhh_1tv"
    ]
@@ -550,6 +711,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_tnhh_1tv"
    ]
@@ -568,6 +733,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_tnhh_1tv"
    ]
@@ -586,6 +755,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_tnhh_1tv"
    ]
@@ -595,8 +768,11 @@
    "align": "left",
    "runs": [
     {
-     "text": "2. Mã số doanh nghiệp: ",
+     "text": "2. Mã số doanh nghiệp:",
      "b": true
+    },
+    {
+     "text": " "
     },
     {
      "input": {
@@ -605,6 +781,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading",
    "cond": [
     "loai_hinh_tnhh_1tv"
    ]
@@ -614,8 +794,11 @@
    "align": "left",
    "runs": [
     {
-     "text": "3. Ngày được cấp Giấy chứng nhận đăng ký doanh nghiệp lần đầu: ",
+     "text": "3. Ngày được cấp Giấy chứng nhận đăng ký doanh nghiệp lần đầu:",
      "b": true
+    },
+    {
+     "text": " "
     },
     {
      "input": {
@@ -624,6 +807,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading",
    "cond": [
     "loai_hinh_tnhh_1tv"
    ]
@@ -633,10 +820,17 @@
    "align": "left",
    "runs": [
     {
-     "text": "4. Địa chỉ trụ sở chính: ",
+     "text": "4. Địa chỉ trụ sở chính:",
      "b": true
+    },
+    {
+     "text": " "
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading",
    "cond": [
     "loai_hinh_tnhh_1tv"
    ]
@@ -652,6 +846,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_tnhh_1tv"
    ]
@@ -679,6 +877,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_tnhh_1tv"
    ]
@@ -706,6 +908,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_tnhh_1tv"
    ]
@@ -719,6 +925,10 @@
      "b": true
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading",
    "cond": [
     "loai_hinh_tnhh_1tv"
    ]
@@ -809,6 +1019,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading",
    "cond": [
     "loai_hinh_tnhh_1tv"
    ]
@@ -818,10 +1032,17 @@
    "align": "left",
    "runs": [
     {
-     "text": "7. Thông tin về chủ sở hữu ",
+     "text": "7. Thông tin về chủ sở hữu",
      "b": true
+    },
+    {
+     "text": " "
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading",
    "cond": [
     "loai_hinh_tnhh_1tv"
    ]
@@ -836,6 +1057,10 @@
      "i": true
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_tnhh_1tv"
    ]
@@ -845,7 +1070,14 @@
    "align": "left",
    "runs": [
     {
-     "text": "Họ, chữ đệm và tên (ghi bằng chữ in hoa): "
+     "text": "Họ, chữ đệm và tên ("
+    },
+    {
+     "text": "ghi bằng chữ in hoa",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -863,6 +1095,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_tnhh_1tv"
    ]
@@ -908,6 +1144,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "date-line",
    "cond": [
     "loai_hinh_tnhh_1tv"
    ]
@@ -926,6 +1166,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_tnhh_1tv"
    ]
@@ -935,8 +1179,18 @@
    "align": "left",
    "runs": [
     {
-     "text": "(hoặc) Số Hộ chiếu, Hộ chiếu nước ngoài, giấy tờ có giá trị thay thế hộ chiếu nước ngoài (đối với chủ sở hữu là người nước ngoài): ",
+     "text": "(hoặc) ",
      "i": true
+    },
+    {
+     "text": "Số Hộ chiếu, Hộ chiếu nước ngoài, giấy tờ có giá trị thay thế hộ chiếu nước ngoài ("
+    },
+    {
+     "text": "đối với chủ sở hữu là người nước ngoài",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -954,6 +1208,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_tnhh_1tv"
    ]
@@ -972,6 +1230,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_tnhh_1tv"
    ]
@@ -986,6 +1248,10 @@
      "i": true
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_tnhh_1tv"
    ]
@@ -995,7 +1261,14 @@
    "align": "left",
    "runs": [
     {
-     "text": "Tên tổ chức (ghi bằng chữ in hoa): "
+     "text": "Tên tổ chức ("
+    },
+    {
+     "text": "ghi bằng chữ in hoa",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -1004,6 +1277,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_tnhh_1tv"
    ]
@@ -1022,6 +1299,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_tnhh_1tv"
    ]
@@ -1049,6 +1330,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_tnhh_1tv"
    ]
@@ -1067,6 +1352,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_tnhh_1tv"
    ]
@@ -1076,10 +1365,23 @@
    "align": "left",
    "runs": [
     {
-     "text": "8. Người đại diện theo pháp luật của công ty1:",
+     "text": "8. Người đại diện theo pháp luật của công ty",
+     "b": true
+    },
+    {
+     "text": "1",
+     "b": true,
+     "vertAlign": "superscript"
+    },
+    {
+     "text": ":",
      "b": true
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading",
    "cond": [
     "loai_hinh_tnhh_1tv"
    ]
@@ -1089,7 +1391,14 @@
    "align": "left",
    "runs": [
     {
-     "text": "- Họ, chữ đệm và tên (ghi bằng chữ in hoa): "
+     "text": "- Họ, chữ đệm và tên ("
+    },
+    {
+     "text": "ghi bằng chữ in hoa",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -1107,6 +1416,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_tnhh_1tv"
    ]
@@ -1152,6 +1465,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "date-line",
    "cond": [
     "loai_hinh_tnhh_1tv"
    ]
@@ -1170,6 +1487,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_tnhh_1tv"
    ]
@@ -1179,8 +1500,18 @@
    "align": "left",
    "runs": [
     {
-     "text": "(hoặc) Số Hộ chiếu, Hộ chiếu nước ngoài, giấy tờ có giá trị thay thế hộ chiếu nước ngoài (đối với người đại diện là người nước ngoài): ",
+     "text": "(hoặc) ",
      "i": true
+    },
+    {
+     "text": "Số Hộ chiếu, Hộ chiếu nước ngoài, giấy tờ có giá trị thay thế hộ chiếu nước ngoài ("
+    },
+    {
+     "text": "đối với người đại diện là người nước ngoài",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -1198,6 +1529,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_tnhh_1tv"
    ]
@@ -1216,6 +1551,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_tnhh_1tv"
    ]
@@ -1234,6 +1573,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_tnhh_1tv"
    ]
@@ -1243,8 +1586,15 @@
    "align": "left",
    "runs": [
     {
-     "text": "9. Nơi đăng ký: (Cơ quan đăng ký kinh doanh cấp tỉnh)",
+     "text": "9. Nơi đăng ký:",
      "b": true
+    },
+    {
+     "text": " "
+    },
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp tỉnh)",
+     "i": true
     },
     {
      "input": {
@@ -1253,6 +1603,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading",
    "cond": [
     "loai_hinh_tnhh_1tv"
    ]
@@ -1262,10 +1616,23 @@
    "align": "center",
    "runs": [
     {
-     "text": "(TÊN CÔNG TY TNHH HAI THÀNH VIÊN)",
+     "text": "(",
+     "b": true
+    },
+    {
+     "text": "TÊN CÔNG TY TNHH HAI THÀNH VIÊN",
+     "b": true,
+     "i": true
+    },
+    {
+     "text": ")",
      "b": true
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle",
    "cond": [
     "loai_hinh_tnhh_2tv"
    ]
@@ -1279,6 +1646,10 @@
      "b": true
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle",
    "cond": [
     "loai_hinh_tnhh_2tv"
    ]
@@ -1292,6 +1663,10 @@
      "b": true
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading",
    "cond": [
     "loai_hinh_tnhh_2tv"
    ]
@@ -1310,6 +1685,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_tnhh_2tv"
    ]
@@ -1328,6 +1707,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_tnhh_2tv"
    ]
@@ -1346,6 +1729,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_tnhh_2tv"
    ]
@@ -1355,8 +1742,11 @@
    "align": "left",
    "runs": [
     {
-     "text": "2. Mã số doanh nghiệp: ",
+     "text": "2. Mã số doanh nghiệp:",
      "b": true
+    },
+    {
+     "text": " "
     },
     {
      "input": {
@@ -1365,6 +1755,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading",
    "cond": [
     "loai_hinh_tnhh_2tv"
    ]
@@ -1374,8 +1768,11 @@
    "align": "left",
    "runs": [
     {
-     "text": "3. Ngày được cấp Giấy chứng nhận đăng ký doanh nghiệp lần đầu: ",
+     "text": "3. Ngày được cấp Giấy chứng nhận đăng ký doanh nghiệp lần đầu:",
      "b": true
+    },
+    {
+     "text": " "
     },
     {
      "input": {
@@ -1384,6 +1781,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading",
    "cond": [
     "loai_hinh_tnhh_2tv"
    ]
@@ -1393,10 +1794,17 @@
    "align": "left",
    "runs": [
     {
-     "text": "4. Địa chỉ trụ sở chính: ",
+     "text": "4. Địa chỉ trụ sở chính:",
      "b": true
+    },
+    {
+     "text": " "
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading",
    "cond": [
     "loai_hinh_tnhh_2tv"
    ]
@@ -1412,6 +1820,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_tnhh_2tv"
    ]
@@ -1439,6 +1851,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_tnhh_2tv"
    ]
@@ -1466,6 +1882,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_tnhh_2tv"
    ]
@@ -1479,6 +1899,10 @@
      "b": true
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading",
    "cond": [
     "loai_hinh_tnhh_2tv"
    ]
@@ -1569,6 +1993,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading",
    "cond": [
     "loai_hinh_tnhh_2tv"
    ]
@@ -1582,6 +2010,10 @@
      "b": true
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading",
    "cond": [
     "loai_hinh_tnhh_2tv"
    ]
@@ -1594,6 +2026,10 @@
      "text": "STT"
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_tnhh_2tv"
    ]
@@ -1606,6 +2042,10 @@
      "text": "Tên thành viên"
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_tnhh_2tv"
    ]
@@ -1618,6 +2058,10 @@
      "text": "Quốc tịch"
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_tnhh_2tv"
    ]
@@ -1630,6 +2074,10 @@
      "text": "Số Giấy tờ pháp lý của cá nhân/tổ chức"
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_tnhh_2tv"
    ]
@@ -1642,6 +2090,10 @@
      "text": "Địa chỉ liên lạc đối với cá nhân; địa chỉ trụ sở chính đối với tổ chức"
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_tnhh_2tv"
    ]
@@ -1654,6 +2106,10 @@
      "text": "Phần vốn góp"
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_tnhh_2tv"
    ]
@@ -1663,9 +2119,20 @@
    "align": "center",
    "runs": [
     {
-     "text": "(VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)"
+     "text": "("
+    },
+    {
+     "text": "VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có",
+     "i": true
+    },
+    {
+     "text": ")"
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_tnhh_2tv"
    ]
@@ -1675,9 +2142,20 @@
    "align": "center",
    "runs": [
     {
-     "text": "Tỷ lệ (%)"
+     "text": "Tỷ lệ ("
+    },
+    {
+     "text": "%",
+     "i": true
+    },
+    {
+     "text": ")"
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_tnhh_2tv"
    ]
@@ -1690,6 +2168,10 @@
      "text": "Ghi chú (nếu có)"
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "note",
    "cond": [
     "loai_hinh_tnhh_2tv"
    ]
@@ -1699,10 +2181,23 @@
    "align": "left",
    "runs": [
     {
-     "text": "8. Người đại diện theo pháp luật của công ty2:",
+     "text": "8. Người đại diện theo pháp luật của công ty",
+     "b": true
+    },
+    {
+     "text": "2",
+     "b": true,
+     "vertAlign": "superscript"
+    },
+    {
+     "text": ":",
      "b": true
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading",
    "cond": [
     "loai_hinh_tnhh_2tv"
    ]
@@ -1712,7 +2207,14 @@
    "align": "left",
    "runs": [
     {
-     "text": "- Họ, chữ đệm và tên (ghi bằng chữ in hoa):"
+     "text": "- Họ, chữ đệm và tên ("
+    },
+    {
+     "text": "ghi bằng chữ in hoa",
+     "i": true
+    },
+    {
+     "text": "):"
     },
     {
      "input": {
@@ -1730,6 +2232,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_tnhh_2tv"
    ]
@@ -1775,6 +2281,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "date-line",
    "cond": [
     "loai_hinh_tnhh_2tv"
    ]
@@ -1793,6 +2303,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_tnhh_2tv"
    ]
@@ -1802,8 +2316,18 @@
    "align": "left",
    "runs": [
     {
-     "text": "(hoặc) Số Hộ chiếu, Hộ chiếu nước ngoài, giấy tờ có giá trị thay thế hộ chiếu nước ngoài (đối với người đại diện là người nước ngoài): ",
+     "text": "(hoặc) ",
      "i": true
+    },
+    {
+     "text": "Số Hộ chiếu, Hộ chiếu nước ngoài, giấy tờ có giá trị thay thế hộ chiếu nước ngoài ("
+    },
+    {
+     "text": "đối với người đại diện là người nước ngoài",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -1821,6 +2345,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_tnhh_2tv"
    ]
@@ -1839,6 +2367,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_tnhh_2tv"
    ]
@@ -1857,6 +2389,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_tnhh_2tv"
    ]
@@ -1866,8 +2402,15 @@
    "align": "left",
    "runs": [
     {
-     "text": "9. Nơi đăng ký: (Cơ quan đăng ký kinh doanh cấp tỉnh) ",
+     "text": "9. Nơi đăng ký:",
      "b": true
+    },
+    {
+     "text": " "
+    },
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp tỉnh) ",
+     "i": true
     },
     {
      "input": {
@@ -1876,6 +2419,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading",
    "cond": [
     "loai_hinh_tnhh_2tv"
    ]
@@ -1885,10 +2432,23 @@
    "align": "center",
    "runs": [
     {
-     "text": "(TÊN CÔNG TY CỔ PHẦN)",
+     "text": "(",
+     "b": true
+    },
+    {
+     "text": "TÊN CÔNG TY CỔ PHẦN",
+     "b": true,
+     "i": true
+    },
+    {
+     "text": ")",
      "b": true
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle",
    "cond": [
     "loai_hinh_ctcp"
    ]
@@ -1902,6 +2462,10 @@
      "b": true
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle",
    "cond": [
     "loai_hinh_ctcp"
    ]
@@ -1915,6 +2479,10 @@
      "b": true
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading",
    "cond": [
     "loai_hinh_ctcp"
    ]
@@ -1933,6 +2501,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_ctcp"
    ]
@@ -1951,6 +2523,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_ctcp"
    ]
@@ -1969,6 +2545,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_ctcp"
    ]
@@ -1978,8 +2558,11 @@
    "align": "left",
    "runs": [
     {
-     "text": "2. Mã số doanh nghiệp: ",
+     "text": "2. Mã số doanh nghiệp:",
      "b": true
+    },
+    {
+     "text": " "
     },
     {
      "input": {
@@ -1988,6 +2571,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading",
    "cond": [
     "loai_hinh_ctcp"
    ]
@@ -1997,8 +2584,11 @@
    "align": "left",
    "runs": [
     {
-     "text": "3. Ngày được cấp Giấy chứng nhận đăng ký doanh nghiệp lần đầu: ",
+     "text": "3. Ngày được cấp Giấy chứng nhận đăng ký doanh nghiệp lần đầu:",
      "b": true
+    },
+    {
+     "text": " "
     },
     {
      "input": {
@@ -2007,6 +2597,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading",
    "cond": [
     "loai_hinh_ctcp"
    ]
@@ -2016,10 +2610,17 @@
    "align": "left",
    "runs": [
     {
-     "text": "4. Địa chỉ trụ sở chính: ",
+     "text": "4. Địa chỉ trụ sở chính:",
      "b": true
+    },
+    {
+     "text": " "
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading",
    "cond": [
     "loai_hinh_ctcp"
    ]
@@ -2035,6 +2636,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_ctcp"
    ]
@@ -2062,6 +2667,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_ctcp"
    ]
@@ -2089,6 +2698,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_ctcp"
    ]
@@ -2102,6 +2715,10 @@
      "b": true
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading",
    "cond": [
     "loai_hinh_ctcp"
    ]
@@ -2182,8 +2799,18 @@
    "align": "left",
    "runs": [
     {
-     "text": "6. Vốn điều lệ (bằng số; VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có): ",
+     "text": "6. Vốn điều lệ ",
      "b": true
+    },
+    {
+     "text": "("
+    },
+    {
+     "text": "bằng số; VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -2192,6 +2819,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading",
    "cond": [
     "loai_hinh_ctcp"
    ]
@@ -2210,6 +2841,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_ctcp"
    ]
@@ -2228,6 +2863,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_ctcp"
    ]
@@ -2241,6 +2880,10 @@
      "b": true
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading",
    "cond": [
     "loai_hinh_ctcp"
    ]
@@ -2253,6 +2896,10 @@
      "text": "STTTên cổ đôngQuốc tịchSố Giấy tờ pháp lý của cá nhân/tổ chứcĐịa chỉ liên lạc đối với cá nhân; địa chỉ trụ sở chính đối với tổ chứcLoại cổ phầnSố cổ phầnGiá trị cổ phần"
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_ctcp"
    ]
@@ -2262,9 +2909,31 @@
    "align": "left",
    "runs": [
     {
-     "text": "(VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)Tỷ lệ (%)Ghi chú (nếu có)8. Cổ đông là nhà đầu tư nước ngoài: "
+     "text": "("
+    },
+    {
+     "text": "VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có",
+     "i": true
+    },
+    {
+     "text": ")Tỷ lệ ("
+    },
+    {
+     "text": "%",
+     "i": true
+    },
+    {
+     "text": ")Ghi chú (nếu có)"
+    },
+    {
+     "text": "8. Cổ đông là nhà đầu tư nước ngoài: ",
+     "b": true
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_ctcp"
    ]
@@ -2277,6 +2946,10 @@
      "text": "STTTên cổ đôngQuốc tịchSố Giấy tờ pháp lý của cá nhân/tổ chứcĐịa chỉ liên lạc đối với cá nhân; địa chỉ trụ sở chính đối với tổ chứcLoại cổ phầnSố cổ phầnGiá trị cổ phần"
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_ctcp"
    ]
@@ -2286,9 +2959,40 @@
    "align": "left",
    "runs": [
     {
-     "text": "(VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)Tỷ lệ (%)Ghi chú (nếu có)9. Người đại diện theo pháp luật của công ty3:"
+     "text": "("
+    },
+    {
+     "text": "VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có",
+     "i": true
+    },
+    {
+     "text": ")Tỷ lệ ("
+    },
+    {
+     "text": "%",
+     "i": true
+    },
+    {
+     "text": ")Ghi chú (nếu có)"
+    },
+    {
+     "text": "9. Người đại diện theo pháp luật của công ty",
+     "b": true
+    },
+    {
+     "text": "3",
+     "b": true,
+     "vertAlign": "superscript"
+    },
+    {
+     "text": ":",
+     "b": true
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_ctcp"
    ]
@@ -2298,7 +3002,14 @@
    "align": "left",
    "runs": [
     {
-     "text": "- Họ, chữ đệm và tên (ghi bằng chữ in hoa):"
+     "text": "- Họ, chữ đệm và tên ("
+    },
+    {
+     "text": "ghi bằng chữ in hoa",
+     "i": true
+    },
+    {
+     "text": "):"
     },
     {
      "input": {
@@ -2316,6 +3027,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_ctcp"
    ]
@@ -2361,6 +3076,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "date-line",
    "cond": [
     "loai_hinh_ctcp"
    ]
@@ -2379,6 +3098,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_ctcp"
    ]
@@ -2388,8 +3111,18 @@
    "align": "left",
    "runs": [
     {
-     "text": "(hoặc) Số Hộ chiếu, Hộ chiếu nước ngoài, giấy tờ có giá trị thay thế hộ chiếu nước ngoài (đối với người đại diện là người nước ngoài): ",
+     "text": "(hoặc) ",
      "i": true
+    },
+    {
+     "text": "Số Hộ chiếu, Hộ chiếu nước ngoài, giấy tờ có giá trị thay thế hộ chiếu nước ngoài ("
+    },
+    {
+     "text": "đối với người đại diện là người nước ngoài",
+     "i": true
+    },
+    {
+     "text": "): "
     },
     {
      "input": {
@@ -2407,6 +3140,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_ctcp"
    ]
@@ -2425,6 +3162,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_ctcp"
    ]
@@ -2443,6 +3184,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_ctcp"
    ]
@@ -2452,8 +3197,15 @@
    "align": "left",
    "runs": [
     {
-     "text": "10. Nơi đăng ký: (Cơ quan đăng ký kinh doanh cấp tỉnh)",
+     "text": "10. Nơi đăng ký:",
      "b": true
+    },
+    {
+     "text": " "
+    },
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp tỉnh)",
+     "i": true
     },
     {
      "input": {
@@ -2462,6 +3214,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading",
    "cond": [
     "loai_hinh_ctcp"
    ]
@@ -2471,10 +3227,23 @@
    "align": "center",
    "runs": [
     {
-     "text": "(TÊN CÔNG TY HỢP DANH)",
+     "text": "(",
+     "b": true
+    },
+    {
+     "text": "TÊN CÔNG TY HỢP DANH",
+     "b": true,
+     "i": true
+    },
+    {
+     "text": ")",
      "b": true
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle",
    "cond": [
     "loai_hinh_dhdn"
    ]
@@ -2488,6 +3257,10 @@
      "b": true
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle",
    "cond": [
     "loai_hinh_dhdn"
    ]
@@ -2501,6 +3274,10 @@
      "b": true
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading",
    "cond": [
     "loai_hinh_dhdn"
    ]
@@ -2519,6 +3296,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_dhdn"
    ]
@@ -2537,6 +3318,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_dhdn"
    ]
@@ -2555,6 +3340,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_dhdn"
    ]
@@ -2564,8 +3353,11 @@
    "align": "left",
    "runs": [
     {
-     "text": "2. Mã số doanh nghiệp: ",
+     "text": "2. Mã số doanh nghiệp:",
      "b": true
+    },
+    {
+     "text": " "
     },
     {
      "input": {
@@ -2574,6 +3366,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading",
    "cond": [
     "loai_hinh_dhdn"
    ]
@@ -2583,8 +3379,11 @@
    "align": "left",
    "runs": [
     {
-     "text": "3. Ngày được cấp Giấy chứng nhận đăng ký doanh nghiệp lần đầu: ",
+     "text": "3. Ngày được cấp Giấy chứng nhận đăng ký doanh nghiệp lần đầu:",
      "b": true
+    },
+    {
+     "text": " "
     },
     {
      "input": {
@@ -2593,6 +3392,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading",
    "cond": [
     "loai_hinh_dhdn"
    ]
@@ -2602,10 +3405,17 @@
    "align": "left",
    "runs": [
     {
-     "text": "4. Địa chỉ trụ sở chính: ",
+     "text": "4. Địa chỉ trụ sở chính:",
      "b": true
+    },
+    {
+     "text": " "
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading",
    "cond": [
     "loai_hinh_dhdn"
    ]
@@ -2621,6 +3431,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_dhdn"
    ]
@@ -2648,6 +3462,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_dhdn"
    ]
@@ -2675,6 +3493,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_dhdn"
    ]
@@ -2688,6 +3510,10 @@
      "b": true
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading",
    "cond": [
     "loai_hinh_dhdn"
    ]
@@ -2778,6 +3604,10 @@
      }
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading",
    "cond": [
     "loai_hinh_dhdn"
    ]
@@ -2791,6 +3621,10 @@
      "b": true
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading",
    "cond": [
     "loai_hinh_dhdn"
    ]
@@ -2803,6 +3637,10 @@
      "text": "STT"
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_dhdn"
    ]
@@ -2815,6 +3653,10 @@
      "text": "Tên thành viên hợp danh"
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_dhdn"
    ]
@@ -2827,6 +3669,10 @@
      "text": "Quốc tịch"
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_dhdn"
    ]
@@ -2839,6 +3685,10 @@
      "text": "Số định danh cá nhân/Số Hộ chiếu/Hộ chiếu nước ngoài hoặc giấy tờ có giá trị thay thế hộ chiếu nước ngoài"
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_dhdn"
    ]
@@ -2851,6 +3701,10 @@
      "text": "Địa chỉ liên lạc"
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_dhdn"
    ]
@@ -2863,6 +3717,10 @@
      "text": "Phần vốn góp"
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_dhdn"
    ]
@@ -2872,9 +3730,20 @@
    "align": "center",
    "runs": [
     {
-     "text": "(VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)"
+     "text": "("
+    },
+    {
+     "text": "VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có",
+     "i": true
+    },
+    {
+     "text": ")"
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_dhdn"
    ]
@@ -2884,9 +3753,20 @@
    "align": "center",
    "runs": [
     {
-     "text": "Tỷ lệ (%)"
+     "text": "Tỷ lệ ("
+    },
+    {
+     "text": "%",
+     "i": true
+    },
+    {
+     "text": ")"
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_dhdn"
    ]
@@ -2896,8 +3776,12 @@
    "align": "left",
    "runs": [
     {
-     "text": "8. Nơi đăng ký: (Cơ quan đăng ký kinh doanh cấp tỉnh) ",
+     "text": "8. Nơi đăng ký: ",
      "b": true
+    },
+    {
+     "text": "(Cơ quan đăng ký kinh doanh cấp tỉnh) ",
+     "i": true
     },
     {
      "input": {
@@ -2910,6 +3794,10 @@
      "i": true
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading",
    "cond": [
     "loai_hinh_dhdn"
    ]
@@ -2919,9 +3807,14 @@
    "align": "left",
    "runs": [
     {
-     "text": "_______________________________________"
+     "text": "_______________________________________",
+     "vertAlign": "superscript"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "national-separator"
   },
   {
    "t": "p",
@@ -2931,6 +3824,10 @@
      "text": " Ghi tên của tất cả người đại diện theo pháp luật trong trường hợp công ty có nhiều hơn 01 người đại diện theo pháp luật."
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
    "cond": [
     "loai_hinh_tnhh_1tv"
    ]
@@ -2940,9 +3837,17 @@
    "align": "left",
    "runs": [
     {
-     "text": "2 Ghi tên của tất cả người đại diện theo pháp luật trong trường hợp công ty có nhiều hơn 01 người đại diện theo pháp luật."
+     "text": "2",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " Ghi tên của tất cả người đại diện theo pháp luật trong trường hợp công ty có nhiều hơn 01 người đại diện theo pháp luật."
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote",
    "cond": [
     "loai_hinh_tnhh_2tv"
    ]
@@ -2952,12 +3857,21 @@
    "align": "left",
    "runs": [
     {
-     "text": "3 Ghi tên của tất cả người đại diện theo pháp luật trong trường hợp công ty có nhiều hơn 01 người đại diện theo pháp luật."
+     "text": "3",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " Ghi tên của tất cả người đại diện theo pháp luật trong trường hợp công ty có nhiều hơn 01 người đại diện theo pháp luật."
     }
    ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote",
    "cond": [
     "loai_hinh_ctcp"
    ]
   }
- ]
+ ],
+ "v": 3
 }

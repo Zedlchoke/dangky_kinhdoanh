@@ -10,7 +10,11 @@
      "text": "Mẫu số 67",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-number"
   },
   {
    "t": "p",
@@ -20,7 +24,11 @@
      "text": "CƠ QUAN ĐĂNG KÝ KINH DOANH\nCẤP TỈNH\n-------",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle"
   },
   {
    "t": "p",
@@ -30,7 +38,11 @@
      "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc\n---------------",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "national-header"
   },
   {
    "t": "p",
@@ -45,7 +57,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -87,7 +103,11 @@
       "w": 12
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "date-line"
   },
   {
    "t": "p",
@@ -97,7 +117,11 @@
      "text": "THÔNG BÁO",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-title"
   },
   {
    "t": "p",
@@ -107,14 +131,32 @@
      "text": "Về việc chấm dứt hoạt động chi nhánh/ văn phòng đại diện/địa điểm kinh doanh",
      "b": true
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "(Cơ quan đăng ký kinh doanh cấp tỉnh) thông báo (các) chi nhánh/văn phòng đại diện/địa điểm kinh doanh sau đây của doanh nghiệp: (tên doanh nghiệp) ",
+     "text": "(Cơ quan đăng ký kinh doanh cấp tỉnh)",
+     "i": true
+    },
+    {
+     "text": " thông báo (các) chi nhánh/văn phòng đại diện/địa điểm kinh doanh sau đây của doanh nghiệp: ("
+    },
+    {
+     "text": "tên doanh nghiệp",
+     "i": true
+    },
+    {
+     "text": ")"
+    },
+    {
+     "text": " ",
      "i": true
     },
     {
@@ -124,8 +166,11 @@
      }
     },
     {
-     "text": ", mã số doanh nghiệp: .........................................., địa chỉ trụ sở chính: ",
+     "text": ", ",
      "i": true
+    },
+    {
+     "text": "mã số doanh nghiệp: .........................................., địa chỉ trụ sở chính: "
     },
     {
      "input": {
@@ -134,17 +179,38 @@
      }
     },
     {
-     "text": ", do Ông/Bà1: .............................. là người đại diện theo pháp luật, đã chấm dứt hoạt động:"
+     "text": ", do Ông/Bà"
+    },
+    {
+     "text": "1",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": ": .............................. là người đại diện theo pháp luật, đã chấm dứt hoạt động:"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "1. Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh (ghi bằng chữ in hoa): ",
+     "text": "1. Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh",
      "b": true
+    },
+    {
+     "text": " "
+    },
+    {
+     "text": "(ghi bằng chữ in hoa)",
+     "i": true
+    },
+    {
+     "text": ": "
     },
     {
      "input": {
@@ -152,7 +218,11 @@
       "w": 47
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
@@ -167,7 +237,11 @@
       "w": 60
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -183,14 +257,25 @@
       "w": 38
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Điện thoại (nếu có): "
+     "text": "Điện thoại "
+    },
+    {
+     "text": "(nếu có)",
+     "i": true
+    },
+    {
+     "text": ": "
     },
     {
      "input": {
@@ -199,7 +284,14 @@
      }
     },
     {
-     "text": "Fax (nếu có): "
+     "text": "Fax"
+    },
+    {
+     "text": " (nếu có)",
+     "i": true
+    },
+    {
+     "text": ": "
     },
     {
      "input": {
@@ -207,14 +299,25 @@
       "w": 15
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Thư điện tử (nếu có): "
+     "text": "Thư điện tử"
+    },
+    {
+     "text": " (nếu có)",
+     "i": true
+    },
+    {
+     "text": ": "
     },
     {
      "input": {
@@ -223,7 +326,14 @@
      }
     },
     {
-     "text": "Website (nếu có): "
+     "text": "Website"
+    },
+    {
+     "text": " (nếu có)",
+     "i": true
+    },
+    {
+     "text": ": "
     },
     {
      "input": {
@@ -231,17 +341,35 @@
       "w": 17
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "3. Thông tin về chi nhánh chủ quản (đối với trường hợp chấm dứt hoạt động của địa điểm kinh doanh trực thuộc chi nhánh):",
+     "text": "3. Thông tin về chi nhánh chủ quản",
      "b": true
+    },
+    {
+     "text": " "
+    },
+    {
+     "text": "(đối với trường hợp chấm dứt hoạt động của địa điểm kinh doanh trực thuộc chi nhánh)",
+     "i": true
+    },
+    {
+     "text": ":"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "section-heading"
   },
   {
    "t": "p",
@@ -256,7 +384,11 @@
       "w": 15
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -271,7 +403,11 @@
       "w": 17
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
@@ -286,16 +422,44 @@
       "w": 28
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Nơi nhận: \n- Tên, địa chỉ doanh nghiệp;\n- Cơ quan hải quan … (tỉnh, thành phố nơi doanh nghiệp đặt trụ sở chính) (để biết);\n- Cơ quan quản lý thị trường ",
+     "text": "Nơi nhận: \n",
      "b": true,
      "i": true
+    },
+    {
+     "text": "- Tên, địa chỉ doanh nghiệp;\n- Cơ quan hải quan … ("
+    },
+    {
+     "text": "tỉnh, thành phố nơi doanh nghiệp đặt trụ sở chính",
+     "i": true
+    },
+    {
+     "text": ")"
+    },
+    {
+     "text": " ",
+     "i": true
+    },
+    {
+     "text": "("
+    },
+    {
+     "text": "để biết",
+     "i": true
+    },
+    {
+     "text": ");\n- Cơ quan quản lý thị trường "
     },
     {
      "input": {
@@ -304,7 +468,28 @@
      }
     },
     {
-     "text": " (tỉnh, thành phố nơi doanh nghiệp đặt trụ sở chính) (để biết);\n- ……….;\n- Lưu: "
+     "text": " ("
+    },
+    {
+     "text": "tỉnh, thành phố nơi doanh nghiệp đặt trụ sở chính",
+     "i": true
+    },
+    {
+     "text": ")"
+    },
+    {
+     "text": " ",
+     "i": true
+    },
+    {
+     "text": "("
+    },
+    {
+     "text": "để biết",
+     "i": true
+    },
+    {
+     "text": ");\n- ……….;\n- Lưu: "
     },
     {
      "input": {
@@ -312,26 +497,49 @@
       "w": 47
      }
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "center",
    "runs": [
     {
-     "text": "TRƯỞNG ĐƠN VỊ\n(Ký, ghi họ tên và đóng dấu)",
+     "text": "TRƯỞNG ĐƠN VỊ\n",
      "b": true
+    },
+    {
+     "text": "("
+    },
+    {
+     "text": "Ký, ghi họ tên và đóng dấu",
+     "i": true
+    },
+    {
+     "text": ")"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "_______________________________________"
+     "text": "_______________________________________",
+     "vertAlign": "superscript"
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "national-separator"
   },
   {
    "t": "p",
@@ -340,7 +548,12 @@
     {
      "text": " Ghi tên của tất cả người đại diện theo pháp luật trong trường hợp công ty có nhiều hơn 01 người đại diện theo pháp luật."
     }
-   ]
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   }
- ]
+ ],
+ "v": 3
 }

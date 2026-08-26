@@ -1,0 +1,1056 @@
+{
+ "generated_by": "t0-b",
+ "range": "PLI_M13-M80",
+ "forms": [
+  {
+   "form_id": "PLI_M13",
+   "form_status": "BLOCKED_LEGAL_REVIEW",
+   "sections": [
+    {
+     "section_id": "ndd_pl_sau_thay_doi",
+     "title": "Người đại diện theo pháp luật sau khi thay đổi",
+     "kind": "editable-grid",
+     "semantic_key_suggestion": "ds_ndd_pl_sau_thay_doi",
+     "required_columns": ["ho_ten", "ngay_thang_nam_sinh", "gioi_tinh", "so_dinh_danh_ca_nhan", "chuc_danh", "dia_chi_lien_lac", "quoc_gia"],
+     "status": "missing_grid",
+     "source_evidence": {
+      "template": "app/templates/PLI_M13.docx",
+      "heading": "Người đại diện theo pháp luật sau khi thay đổi2:",
+      "anchor": "02_thay_doi_thong_tin_doanh_nghiep/PL1_Mau_13_tach_tu_file_full.docx#p12"
+     },
+     "notes": "Chân trang 2 (dòng 40 nguồn): 'Ghi thông tin của tất cả người đại diện theo pháp luật trong trường hợp sau khi thay đổi công ty có nhiều hơn 01 người đại diện theo pháp luật'. Blocks hiện chỉ có 1 bộ field ndd.* (không thêm/xóa dòng được)."
+    }
+   ],
+   "summary_counts": {"p": 40, "chk": 0, "table": 0, "loop": 0},
+   "legal_questions": [
+    "Chân trang mẫu cho phép nhiều NĐDPL trong 1 giấy đề nghị: cần dựng editable-grid danh sách NĐDPL hay giữ 1 bộ field và bắt nộp nhiều hồ sơ?"
+   ]
+  },
+  {
+   "form_id": "PLI_M14",
+   "form_status": "TABLE_COMPLETE",
+   "sections": [
+    {
+     "section_id": "lua_chon_truong_hop_thay_doi_chu_dntn",
+     "title": "Trường hợp thay đổi chủ doanh nghiệp (đánh dấu X vào ô thích hợp)",
+     "kind": "fixed-matrix",
+     "semantic_key_suggestion": "lua_chon_hinh_thuc_thay_doi_chu_dntn",
+     "required_columns": ["tang_cho_dntn", "chu_dn_chet", "ban_dntn"],
+     "status": "already_complete",
+     "source_evidence": {
+      "template": "app/templates/PLI_M14.docx",
+      "heading": "Trường hợp thay đổi chủ doanh nghiệp (đánh dấu X vào ô thích hợp):",
+      "anchor": "02_thay_doi_thong_tin_doanh_nghiep/PL1_Mau_14_tach_tu_file_full.docx#p11"
+     },
+     "notes": "Bảng lựa chọn cố định không STT đã bị làm phẳng thành 3 nhãn + ô □ rời; blocks đã map đủ 3 chk (chk_cd_dntn_tang, chk chủ chết, chk bán)."
+    }
+   ],
+   "summary_counts": {"p": 55, "chk": 3, "table": 0, "loop": 0},
+   "legal_questions": []
+  },
+  {
+   "form_id": "PLI_M15",
+   "form_status": "BLOCKED_LEGAL_REVIEW",
+   "sections": [
+    {
+     "section_id": "ndd_pl_uy_quyen_chu_so_huu_moi",
+     "title": "Thông tin về người đại diện theo pháp luật/người đại diện theo ủy quyền của chủ sở hữu (header nối 'STTTên...')",
+     "kind": "nested-grid",
+     "semantic_key_suggestion": "ds_nddpl_uy_quyen_chu_so_huu_moi",
+     "required_columns": ["stt", "ten_ndd_pl_or_uy_quyen", "ngay_thang_nam_sinh", "gioi_tinh", "so_ngay_cap_co_quan_cap_gtpl_ca_nhan", "quoc_tich", "dan_toc", "dia_chi_lien_lac", "ty_le_phan_von_du_uy_quyen"],
+     "status": "missing_grid",
+     "source_evidence": {
+      "template": "app/templates/PLI_M15.docx",
+      "heading": "- Thông tin về người đại diện theo pháp luật/người đại diện theo ủy quyền của chủ sở hữu:",
+      "anchor": "02_thay_doi_thong_tin_doanh_nghiep/PL1_Mau_15_tach_tu_file_full.docx#p50"
+     },
+     "notes": "Header bị nối thành 1 paragraph 'STTTên người đại diện theo pháp luật/người đại diện theo ủy quyềnNgày, tháng, năm sinhGiới tínhSố, ngày cấp, cơ quan cấp Giấy tờ pháp lý của cá nhân(5)Quốc tịch(6)Dân tộc(7)Địa chỉ...(4)'. Không có bất kỳ input nào cho vùng này trong blocks. Chân trang: nếu cột 5 là Số ĐDCN thì bỏ cột 6,7; tỷ lệ % chỉ kê khai khi ủy quyền."
+    }
+   ],
+   "summary_counts": {"p": 63, "chk": 0, "table": 0, "loop": 0},
+   "legal_questions": [
+    "Cột bắt buộc khác nhau giữa NĐDPL (không kê khai phần ủy quyền) và người đại diện theo ủy quyền (có tỷ lệ %): row contract phân biệt theo loại như thế nào?",
+    "Số dòng tối thiểu/tối đa của danh sách trong 1 giấy đề nghị?"
+   ]
+  },
+  {
+   "form_id": "PLI_M17",
+   "form_status": "BLOCKED_LEGAL_REVIEW",
+   "sections": [
+    {
+     "section_id": "nganh_nghe_kinh_doanh_chi_nhanh",
+     "title": "3.a Ngành, nghề kinh doanh (chi nhánh, địa điểm kinh doanh)",
+     "kind": "editable-grid",
+     "semantic_key_suggestion": "ds_nganh_cn_ddkd",
+     "required_columns": ["stt", "ten_nganh", "ma_nganh", "la_nganh_chinh"],
+     "status": "already_complete",
+     "source_evidence": {
+      "template": "app/templates/PLI_M17.docx",
+      "heading": "a) Ngành, nghề kinh doanh (chỉ kê khai đối với chi nhánh, địa điểm kinh doanh)1:",
+      "anchor": "tools/form_specs/change/PLI_M17.json + loop ds_nganh"
+     },
+     "notes": "Loop ds_nganh đã dựng qua form_specs (template có 1 w:tbl)."
+    },
+    {
+     "section_id": "thue_chi_tieu_6_1_8",
+     "title": "6. Thông tin đăng ký thuế (STT | Các chỉ tiêu thông tin đăng ký thuế)",
+     "kind": "fixed-matrix",
+     "semantic_key_suggestion": "chi_tieu_thue_cn_ddkd",
+     "required_columns": ["stt", "chi_tieu", "noi_dung"],
+     "status": "partial_columns",
+     "source_evidence": {
+      "template": "app/templates/PLI_M17.docx",
+      "heading": "6. Thông tin đăng ký thuế:",
+      "anchor": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_17_....docx#p67-p128"
+     },
+     "notes": "8 chỉ tiêu cố định. Đã map: 1 kế toán trưởng (kt.*), 2 địa chỉ nhận TB thuế, 3 ngày bắt đầu hoạt động (ngay_bd/thang_bd/nam_bd), 5 năm tài chính (ap_dung_tu), 6 tổng số lao động (so_lao_dong). THIẾU: 4 hình thức hạch toán (Hạch toán độc lập/phụ thuộc + Có BCTC hợp nhất), 7 hoạt động dự án BOT/BTO/BT/BOO, BLT, BTL, O&M (Có/Không), 8 phương pháp tính thuế GTGT (4 lựa chọn)."
+    },
+    {
+     "section_id": "lua_chon_khu_cn_cxc_kt_kccn",
+     "title": "Chi nhánh/VPĐD/ĐĐKD nằm trong khu công nghiệp/chế xuất/kinh tế/công nghệ cao",
+     "kind": "fixed-matrix",
+     "semantic_key_suggestion": "lua_chon_khu_san_xuat",
+     "required_columns": ["khu_cong_nghiep", "khu_che_xuat", "khu_kinh_te", "khu_cong_nghe_cao"],
+     "status": "missing_grid",
+     "source_evidence": {
+      "template": "app/templates/PLI_M17.docx",
+      "heading": "- Chi nhánh/Văn phòng đại diện/Địa điểm kinh doanh nằm trong ...",
+      "anchor": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_17_....docx#p23-p31"
+     },
+     "notes": "4 ô □ rời không được convert thành chk block."
+    },
+    {
+     "section_id": "phuong_thuc_dong_bhxh",
+     "title": "7. Thông tin về việc đóng bảo hiểm xã hội (phương thức đóng)",
+     "kind": "fixed-matrix",
+     "semantic_key_suggestion": "phuong_thuc_dong_bhxh_cn",
+     "required_columns": ["hang_thang", "ba_thang_mot_lan", "sau_thang_mot_lan"],
+     "status": "missing_grid",
+     "source_evidence": {
+      "template": "app/templates/PLI_M17.docx",
+      "heading": "7. Thông tin về việc đóng bảo hiểm xã hội (chỉ kê khai đối với chi nhánh/văn phòng đại diện):",
+      "anchor": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_17_....docx#p128-p135"
+     },
+     "notes": "3 lựa chọn □ Hàng tháng / 03 tháng / 06 tháng một lần; điều kiện chọn theo ngành chính nông-lâm-ngư-diêm nghiệp."
+    }
+   ],
+   "summary_counts": {"p": 100, "chk": 16, "table": 0, "loop": 1},
+   "legal_questions": [
+    "Các nhóm checkbox chọn-1 (hạch toán, thuế GTGT, BHXH, khu) nên dựng fixed-matrix radio hay giữ chk độc lập? Điều kiện nghiệp vụ BHXH (ngành nông-lâm-ngư-diêm phải trả lương theo sản phẩm) có cần validation chéo?",
+    "Chỉ tiêu 8 CTCK nước ngoài (mục 8) đã có chk_ctck + gp_ucsn_so — xác nhận đây là mục riêng ngoài bảng thuế?"
+   ]
+  },
+  {
+   "form_id": "PLI_M18",
+   "form_status": "NO_TABLE",
+   "sections": [],
+   "summary_counts": {"p": 50, "chk": 0, "table": 0, "loop": 0},
+   "legal_questions": []
+  },
+  {
+   "form_id": "PLI_M19",
+   "form_status": "BLOCKED_LEGAL_REVIEW",
+   "sections": [
+    {
+     "section_id": "nganh_nghe_sau_thay_doi",
+     "title": "A - Đăng ký thay đổi ngành, nghề kinh doanh sau khi thay đổi",
+     "kind": "editable-grid",
+     "semantic_key_suggestion": "ds_nganh_cn_sau_thay_doi",
+     "required_columns": ["stt", "ten_nganh", "ma_nganh", "la_nganh_chinh"],
+     "status": "already_complete",
+     "source_evidence": {
+      "template": "app/templates/PLI_M19.docx",
+      "heading": "Ngành, nghề kinh doanh sau khi thay đổi (chỉ kê khai đối với chi nhánh, địa điểm kinh doanh)1:",
+      "anchor": "tools/form_specs/change/PLI_M19.json + loop ds_nganh"
+     },
+     "notes": "Loop ds_nganh đã dựng."
+    },
+    {
+     "section_id": "thue_thay_doi_A",
+     "title": "A - ĐĂNG KÝ THAY ĐỔI THÔNG TIN ĐĂNG KÝ THUẾ (STT | Các chỉ tiêu)",
+     "kind": "fixed-matrix",
+     "semantic_key_suggestion": "chi_tieu_thue_thay_doi_cn",
+     "required_columns": ["stt", "chi_tieu", "noi_dung"],
+     "status": "partial_columns",
+     "source_evidence": {
+      "template": "app/templates/PLI_M19.docx",
+      "heading": "ĐĂNG KÝ THAY ĐỔI THÔNG TIN ĐĂNG KÝ THUẾ:",
+      "anchor": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_19_....docx#p86-p126"
+     },
+     "notes": "7 chỉ tiêu. Đã map: kế toán trưởng, địa chỉ nhận TB thuế, ngày bắt đầu, năm tài chính, lao động. THIẾU: 4 hình thức hạch toán (2 chk + BCTC hợp nhất), 7 dự án BOT/BTO/BT/BOO, BLT, BTL, O&M (Có/Không). Phần B (bổ sung cập nhật) và C (hiệu đính) là vùng text tự do, không phải lưới."
+    }
+   ],
+   "summary_counts": {"p": 112, "chk": 9, "table": 0, "loop": 1},
+   "legal_questions": [
+    "Nhóm checkbox hạch toán/BOT thiếu hoàn toàn trong blocks — dựng fixed-matrix chung kiểu 'chỉ tiêu thuế' cho M17/M19/M23/M25?"
+   ]
+  },
+  {
+   "form_id": "PLI_M21",
+   "form_status": "TABLE_COMPLETE",
+   "sections": [
+    {
+     "section_id": "nganh_nghe_kinh_doanh",
+     "title": "Ngành, nghề kinh doanh (cấp đổi sang GCNĐKDN)",
+     "kind": "editable-grid",
+     "semantic_key_suggestion": "ds_nganh_cap_doi_gcn",
+     "required_columns": ["stt", "ten_nganh", "ma_nganh", "la_nganh_chinh"],
+     "status": "already_complete",
+     "source_evidence": {
+      "template": "app/templates/PLI_M21.docx",
+      "heading": "STT | Tên ngành | Mã ngành | Ngành, nghề kinh doanh chính",
+      "anchor": "02_thay_doi_thong_tin_doanh_nghiep/PL1_Mau_21_tach_tu_file_full.docx#p12"
+     },
+     "notes": "Loop ds_nganh đã dựng; toàn bộ các vùng STT của mẫu chỉ có duy nhất bảng ngành này."
+    }
+   ],
+   "summary_counts": {"p": 20, "chk": 0, "table": 0, "loop": 1},
+   "legal_questions": []
+  },
+  {
+   "form_id": "PLI_M23",
+   "form_status": "BLOCKED_LEGAL_REVIEW",
+   "sections": [
+    {
+     "section_id": "nganh_nghe_bo_sung_cap_nhat",
+     "title": "I.5.a Ngành, nghề kinh doanh (chi nhánh, địa điểm kinh doanh)",
+     "kind": "editable-grid",
+     "semantic_key_suggestion": "ds_nganh_bo_sung_cap_nhat_cn",
+     "required_columns": ["stt", "ten_nganh", "ma_nganh", "la_nganh_chinh"],
+     "status": "already_complete",
+     "source_evidence": {
+      "template": "app/templates/PLI_M23.docx",
+      "heading": "a) Ngành, nghề kinh doanh (chỉ kê khai đối với chi nhánh, địa điểm kinh doanh):",
+      "anchor": "tools/form_specs/change/PLI_M23.json + loop ds_nganh"
+     },
+     "notes": "Loop ds_nganh đã dựng."
+    },
+    {
+     "section_id": "thue_chi_tieu_6_1_6",
+     "title": "6. Thông tin đăng ký thuế (STT | Các chỉ tiêu)",
+     "kind": "fixed-matrix",
+     "semantic_key_suggestion": "chi_tieu_thue_bo_sung_cn",
+     "required_columns": ["stt", "chi_tieu", "noi_dung"],
+     "status": "partial_columns",
+     "source_evidence": {
+      "template": "app/templates/PLI_M23.docx",
+      "heading": "6. Thông tin đăng ký thuế:",
+      "anchor": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_23_....docx#p55-p105"
+     },
+     "notes": "6 chỉ tiêu. Đã map: địa chỉ nhận TB thuế, năm tài chính (ap_dung_tu), lao động. THIẾU: 2 hình thức hạch toán, 5 dự án BOT..., 6 phương pháp thuế GTGT."
+    }
+   ],
+   "summary_counts": {"p": 80, "chk": 9, "table": 0, "loop": 1},
+   "legal_questions": [
+    "Như M19: thiếu nhóm checkbox hạch toán/BOT/GTGT — cần spec fixed-matrix dùng chung."
+   ]
+  },
+  {
+   "form_id": "PLI_M25",
+   "form_status": "BLOCKED_LEGAL_REVIEW",
+   "sections": [
+    {
+     "section_id": "nganh_nghe_bo_sung_cap_nhat_ctck",
+     "title": "I.4.a Ngành, nghề kinh doanh (chi nhánh chứng khoán)",
+     "kind": "editable-grid",
+     "semantic_key_suggestion": "ds_nganh_bo_sung_cap_nhat_ctck",
+     "required_columns": ["stt", "ten_nganh", "ma_nganh", "la_nganh_chinh"],
+     "status": "already_complete",
+     "source_evidence": {
+      "template": "app/templates/PLI_M25.docx",
+      "heading": "a) Ngành, nghề kinh doanh (đối với chi nhánh, địa điểm kinh doanh):",
+      "anchor": "tools/form_specs/change/PLI_M25.json + loop ds_nganh"
+     },
+     "notes": "Loop ds_nganh đã dựng."
+    },
+    {
+     "section_id": "thue_chi_tieu_6_1_6_ctck",
+     "title": "6. Thông tin đăng ký thuế (STT | Các chỉ tiêu)",
+     "kind": "fixed-matrix",
+     "semantic_key_suggestion": "chi_tieu_thue_bo_sung_ctck",
+     "required_columns": ["stt", "chi_tieu", "noi_dung"],
+     "status": "partial_columns",
+     "source_evidence": {
+      "template": "app/templates/PLI_M25.docx",
+      "heading": "6. Thông tin đăng ký thuế:",
+      "anchor": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_25_....docx#p58-p105"
+     },
+     "notes": "6 chỉ tiêu, cấu trúc giống M23. Đã map địa chỉ TB thuế/năm tài chính/lao động. THIẾU: hạch toán, BOT, thuế GTGT."
+    }
+   ],
+   "summary_counts": {"p": 78, "chk": 9, "table": 0, "loop": 1},
+   "legal_questions": [
+    "Như M19/M23."
+   ]
+  },
+  {
+   "form_id": "PLI_M26",
+   "form_status": "NO_TABLE",
+   "sections": [],
+   "summary_counts": {"p": 23, "chk": 0, "table": 0, "loop": 0},
+   "legal_questions": []
+  },
+  {
+   "form_id": "PLI_M27",
+   "form_status": "BLOCKED_LEGAL_REVIEW",
+   "sections": [
+    {
+     "section_id": "danh_sach_ndd_pl_thong_bao",
+     "title": "1.a Thông tin người đại diện theo pháp luật (đánh số 1., 2., ...)",
+     "kind": "editable-grid",
+     "semantic_key_suggestion": "ds_ndd_pl_thong_bao_tam_ngung",
+     "required_columns": ["stt", "ho_ten", "ngay_thang_nam_sinh", "gioi_tinh", "so_dinh_danh_ca_nhan", "dien_thoai", "dia_chi_lien_he"],
+     "status": "missing_grid",
+     "source_evidence": {
+      "template": "app/templates/PLI_M27.docx",
+      "heading": "Thông tin người đại diện theo pháp luật của doanh nghiệp2:",
+      "anchor": "04_tam_ngung_cham_dut_giai_the/PL1_Mau_27_....docx#p17-p25"
+     },
+     "notes": "Nguồn liệt kê '1. Họ tên...' rồi '2. Họ tên...' rồi '…'; chân trang 2 yêu cầu ghi tất cả NĐDPL. Blocks chỉ có 1 bộ field (ho_ten_in_hoa_2 lặp 2 lần)."
+    },
+    {
+     "section_id": "don_vi_tam_ngung_tiep_tuc",
+     "title": "Các khối 'đối với chi nhánh/địa điểm kinh doanh/văn phòng đại diện sau:' (tạm ngừng + tiếp tục)",
+     "kind": "unknown",
+     "semantic_key_suggestion": "don_vi_truc_thuoc_tam_ngung_tiep_tuc",
+     "required_columns": ["loai_don_vi", "ten_don_vi", "ma_so_don_vi", "tu_ngay", "den_ngay", "ly_do"],
+     "status": "missing_grid",
+     "source_evidence": {
+      "template": "app/templates/PLI_M27.docx",
+      "heading": "b) Đối với chi nhánh/địa điểm kinh doanh: ... đối với chi nhánh/địa điểm kinh doanh sau:",
+      "anchor": "04_tam_ngung_cham_dut_giai_the/PL1_Mau_27_....docx#p26-p55"
+     },
+     "notes": "6 khối đơn vị (tạm ngừng CN/ĐĐKD, VPĐD; tiếp tục CN/VPĐD/ĐĐKD), mỗi khối chỉ 1 bộ tên+mã số trong blocks. Cần quyết định 1 đơn vị/giấy hay cho phép nhiều dòng."
+    }
+   ],
+   "summary_counts": {"p": 66, "chk": 0, "table": 0, "loop": 0},
+   "legal_questions": [
+    "Một thông báo M27 có được phép tạm ngừng/tiếp tục nhiều đơn vị cùng lúc không, hay mỗi đơn vị một thông báo riêng (giấy gốc trình bày dạng đơn khối)?",
+    "Số lượng NĐDPL liệt kê ở mục 1.a tối đa bao nhiêu dòng?"
+   ]
+  },
+  {
+   "form_id": "PLI_M28",
+   "form_status": "NO_TABLE",
+   "sections": [
+    {
+     "section_id": "don_vi_cham_dut_hoat_dong",
+     "title": "Thông báo chấm dứt hoạt động chi nhánh/VPĐD/địa điểm KD sau: (1. Tên, 2. Địa chỉ, 3. Chi nhánh chủ quản, 4. Lý do)",
+     "kind": "unknown",
+     "semantic_key_suggestion": "don_vi_cham_dut_hoat_dong",
+     "required_columns": [],
+     "status": "no_table",
+     "source_evidence": {
+      "template": "app/templates/PLI_M28.docx",
+      "heading": "Thông báo chấm dứt hoạt động chi nhánh/văn phòng đại diện/ địa điểm kinh doanh sau:",
+      "anchor": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_28_....docx#p13"
+     },
+     "notes": "Audit từ khóa 'sau:': cấu trúc đánh số 1..4 là thông tin của MỘT đơn vị/giấy (không có dòng lặp, không STT); blocks đã map đủ cn.*. File nguồn trùng tại 04_tam_ngung... (bản 03 thắng theo find_source)."
+    }
+   ],
+   "summary_counts": {"p": 35, "chk": 0, "table": 0, "loop": 0},
+   "legal_questions": []
+  },
+  {
+   "form_id": "PLI_M29",
+   "form_status": "NO_TABLE",
+   "sections": [],
+   "summary_counts": {"p": 28, "chk": 0, "table": 0, "loop": 0},
+   "legal_questions": []
+  },
+  {
+   "form_id": "PLI_M30",
+   "form_status": "NO_TABLE",
+   "sections": [],
+   "summary_counts": {"p": 20, "chk": 0, "table": 0, "loop": 0},
+   "legal_questions": []
+  },
+  {
+   "form_id": "PLI_M31",
+   "form_status": "NO_TABLE",
+   "sections": [],
+   "summary_counts": {"p": 21, "chk": 0, "table": 0, "loop": 0},
+   "legal_questions": []
+  },
+  {
+   "form_id": "PLI_M32",
+   "form_status": "NO_TABLE",
+   "sections": [],
+   "summary_counts": {"p": 32, "chk": 0, "table": 0, "loop": 0},
+   "legal_questions": []
+  },
+  {
+   "form_id": "PLI_M33",
+   "form_status": "NO_TABLE",
+   "sections": [],
+   "summary_counts": {"p": 38, "chk": 0, "table": 0, "loop": 0},
+   "legal_questions": []
+  },
+  {
+   "form_id": "PLI_M42",
+   "form_status": "NO_TABLE",
+   "sections": [],
+   "summary_counts": {"p": 25, "chk": 0, "table": 0, "loop": 0},
+   "legal_questions": []
+  },
+  {
+   "form_id": "PLI_M43",
+   "form_status": "NO_TABLE",
+   "sections": [],
+   "summary_counts": {"p": 25, "chk": 0, "table": 0, "loop": 0},
+   "legal_questions": []
+  },
+  {
+   "form_id": "PLI_M45",
+   "form_status": "NO_TABLE",
+   "sections": [],
+   "summary_counts": {"p": 20, "chk": 0, "table": 0, "loop": 0},
+   "legal_questions": []
+  },
+  {
+   "form_id": "PLI_M46",
+   "form_status": "NO_TABLE",
+   "sections": [],
+   "summary_counts": {"p": 11, "chk": 0, "table": 0, "loop": 0},
+   "legal_questions": []
+  },
+  {
+   "form_id": "PLI_M47",
+   "form_status": "NO_TABLE",
+   "sections": [],
+   "summary_counts": {"p": 19, "chk": 0, "table": 0, "loop": 0},
+   "legal_questions": []
+  },
+  {
+   "form_id": "PLI_M48",
+   "form_status": "NO_TABLE",
+   "sections": [],
+   "summary_counts": {"p": 23, "chk": 0, "table": 0, "loop": 0},
+   "legal_questions": []
+  },
+  {
+   "form_id": "PLI_M49",
+   "form_status": "NO_TABLE",
+   "sections": [],
+   "summary_counts": {"p": 18, "chk": 0, "table": 0, "loop": 0},
+   "legal_questions": []
+  },
+  {
+   "form_id": "PLI_M50",
+   "form_status": "NO_TABLE",
+   "sections": [
+    {
+     "section_id": "noi_dung_yeu_cau_bao_cao",
+     "title": "Yêu cầu doanh nghiệp báo cáo về các nội dung sau: (3 dòng chấm)",
+     "kind": "output-table",
+     "semantic_key_suggestion": "noi_dung_yeu_cau_bao_cao",
+     "required_columns": [],
+     "status": "no_table",
+     "source_evidence": {
+      "template": "app/templates/PLI_M50.docx",
+      "heading": "Yêu cầu doanh nghiệp báo cáo về các nội dung sau:",
+      "anchor": "05_cong_bo_cung_cap_thong_tin/PL1_Mau_50_....docx#p16-p19"
+     },
+     "notes": "Vùng điền tự do do CQĐKKD viết tay khi phát hành, không có cấu trúc cột/hàng; audit từ khóa 'các nội dung sau' → kết luận không phải lưới."
+    }
+   ],
+   "summary_counts": {"p": 23, "chk": 0, "table": 0, "loop": 0},
+   "legal_questions": []
+  },
+  {
+   "form_id": "PLI_M51",
+   "form_status": "NO_TABLE",
+   "sections": [],
+   "summary_counts": {"p": 18, "chk": 0, "table": 0, "loop": 0},
+   "legal_questions": []
+  },
+  {
+   "form_id": "PLI_M52",
+   "form_status": "BLOCKED_LEGAL_REVIEW",
+   "sections": [
+    {
+     "section_id": "khung_ra_soat_4_nhom",
+     "title": "Rà soát 4 nhóm: doanh nghiệp / chi nhánh / văn phòng đại diện / địa điểm kinh doanh",
+     "kind": "fixed-matrix",
+     "semantic_key_suggestion": "ra_soat_thong_tin_4_nhom",
+     "required_columns": ["nhom", "ten", "ma_so", "dia_chi", "dien_thoai", "nguoi_dd_pl_hoac_nguoi_dung_dau", "tinh_trang_hoat_dong"],
+     "status": "partial_columns",
+     "source_evidence": {
+      "template": "app/templates/PLI_M52.docx",
+      "heading": "Đề nghị doanh nghiệp rà soát, kiểm tra đối chiếu và bổ sung, cập nhật thông tin đăng ký doanh nghiệp...",
+      "anchor": "05_cong_bo_cung_cap_thong_tin/PL1_Mau_52_....docx#p16-p42"
+     },
+     "notes": "Khung viền gốc bị làm phẳng thành 4 nhóm bullet '- Tên/- Mã số/- Địa chỉ...'. Blocks map đủ 3 nhóm đơn vị nhưng: key 'ma_so_van_ban' bị tái sử dụng làm mã số của cả 3 nhóm (nhiễu ngữ nghĩa); nhóm DN thiếu field người đại diện theo pháp luật (nguồn dòng '- Người đại diện theo pháp luật:'); nhóm ĐĐKD còn '- Đơn vị chủ quản:' chưa thấy key riêng."
+    }
+   ],
+   "summary_counts": {"p": 46, "chk": 0, "table": 0, "loop": 0},
+   "legal_questions": [
+    "Key 'ma_so_van_ban' dùng chung cho MSDN/mã số của 3 nhóm — cần tách key riêng từng nhóm trước khi dựng grid không?",
+    "Mẫu do CQĐKKD phát hành để DN phản hồi: chủ thể nhập 4 nhóm này là doanh nghiệp đúng không?"
+   ]
+  },
+  {
+   "form_id": "PLI_M53",
+   "form_status": "NO_TABLE",
+   "sections": [],
+   "summary_counts": {"p": 21, "chk": 0, "table": 0, "loop": 0},
+   "legal_questions": []
+  },
+  {
+   "form_id": "PLI_M54",
+   "form_status": "NO_TABLE",
+   "sections": [
+    {
+     "section_id": "xac_nhan_tam_ngung_toan_bo_don_vi",
+     "title": "Xác nhận: doanh nghiệp VÀ TẤT CẢ các chi nhánh/VPĐD/địa điểm KD tạm ngừng kể từ ngày… đến hết ngày…",
+     "kind": "unknown",
+     "semantic_key_suggestion": "xac_nhan_tam_ngung_toan_dn",
+     "required_columns": [],
+     "status": "no_table",
+     "source_evidence": {
+      "template": "app/templates/PLI_M54.docx",
+      "heading": "Doanh nghiệp và tất cả các chi nhánh/văn phòng đại diện/địa điểm kinh doanh của doanh nghiệp thông báo tạm ngừng kinh doanh...",
+      "anchor": "04_tam_ngung_cham_dut_giai_the/PL1_Mau_54_....docx#p15"
+     },
+     "notes": "PLAN mục E dự đoán M54 có danh sách đơn vị — census bác bỏ: mẫu gốc chỉ có MỘT câu xác nhận áp dụng cho toàn bộ đơn vị (đã map tu_ngay/den_ngay), không có dòng liệt kê, không STT."
+    }
+   ],
+   "summary_counts": {"p": 18, "chk": 0, "table": 0, "loop": 0},
+   "legal_questions": []
+  },
+  {
+   "form_id": "PLI_M55",
+   "form_status": "NO_TABLE",
+   "sections": [
+    {
+     "section_id": "don_vi_tam_ngung_xac_nhan",
+     "title": "Xác nhận tạm ngừng đối với chi nhánh/địa điểm KD hoặc VPĐD sau: (Tên + Mã số)",
+     "kind": "unknown",
+     "semantic_key_suggestion": "don_vi_tam_ngung_xac_nhan",
+     "required_columns": [],
+     "status": "no_table",
+     "source_evidence": {
+      "template": "app/templates/PLI_M55.docx",
+      "heading": "... đối với chi nhánh/địa điểm kinh doanh sau:",
+      "anchor": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_55_....docx#p16"
+     },
+     "notes": "'sau:' ở số ít, một giấy = một đơn vị (không dòng lặp). Blocks map đủ. File nguồn trùng tại 04_tam_ngung... (bản 03 thắng)."
+    }
+   ],
+   "summary_counts": {"p": 30, "chk": 0, "table": 0, "loop": 0},
+   "legal_questions": []
+  },
+  {
+   "form_id": "PLI_M56",
+   "form_status": "BLOCKED_LEGAL_REVIEW",
+   "sections": [
+    {
+     "section_id": "cn_vppd_ddkd_tiep_tuc_truoc_han",
+     "title": "- Nếu tiếp tục cho DN và MỘT HOẶC MỘT SỐ CN/VPĐD/ĐĐKD: Tên + Mã số",
+     "kind": "editable-grid",
+     "semantic_key_suggestion": "don_vi_tiep_tuc_truoc_han",
+     "required_columns": ["ten_don_vi", "ma_so_don_vi"],
+     "status": "missing_grid",
+     "source_evidence": {
+      "template": "app/templates/PLI_M56.docx",
+      "heading": "- Nếu doanh nghiệp thông báo tiếp tục kinh doanh...cho doanh nghiệp và một hoặc một số chi nhánh/văn phòng đại diện/địa điểm...",
+      "anchor": "04_tam_ngung_cham_dut_giai_the/PL1_Mau_56_....docx#p16-p21"
+     },
+     "notes": "Văn bản mẫu nói 'một hoặc một số' nhưng chỉ có 1 bộ field; key 'ma_so_van_ban' đang mang ngữ nghĩa mã số đơn vi (sai ngữ nghĩa)."
+    }
+   ],
+   "summary_counts": {"p": 25, "chk": 0, "table": 0, "loop": 0},
+   "legal_questions": [
+    "Trường hợp 'một hoặc một số đơn vị': cần grid nhiều dòng cho giấy xác nhận do CQĐKKD lập? Key ma_so_van_ban cần đổi tên đúng ngữ nghĩa?"
+   ]
+  },
+  {
+   "form_id": "PLI_M57",
+   "form_status": "NO_TABLE",
+   "sections": [
+    {
+     "section_id": "don_vi_tiep_tuc_xac_nhan",
+     "title": "Đăng ký tiếp tục kể từ ngày… đối với chi nhánh/địa điểm KD hoặc VPĐD sau: (Tên + Mã số)",
+     "kind": "unknown",
+     "semantic_key_suggestion": "don_vi_tiep_tuc_xac_nhan",
+     "required_columns": [],
+     "status": "no_table",
+     "source_evidence": {
+      "template": "app/templates/PLI_M57.docx",
+      "heading": "... đối với chi nhánh/địa điểm kinh doanh sau:",
+      "anchor": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_57_....docx#p16"
+     },
+     "notes": "Số ít, một giấy = một đơn vị; không có dòng lặp. Blocks map đủ. File nguồn trùng tại 04_tam_ngung... (bản 03 thắng)."
+    }
+   ],
+   "summary_counts": {"p": 27, "chk": 0, "table": 0, "loop": 0},
+   "legal_questions": []
+  },
+  {
+   "form_id": "PLI_M63",
+   "form_status": "BLOCKED_LEGAL_REVIEW",
+   "sections": [
+    {
+     "section_id": "dia_diem_truc_thuoc_bi_thu_hoi",
+     "title": "Có các địa điểm kinh doanh trực thuộc chi nhánh: (Tên, mã số, địa chỉ, tình trạng pháp lý)",
+     "kind": "editable-grid",
+     "semantic_key_suggestion": "ddkd_truc_thuoc_bi_thu_hoi",
+     "required_columns": ["ten_ddkd", "ma_so", "dia_chi", "tinh_trang_phap_ly"],
+     "status": "missing_grid",
+     "source_evidence": {
+      "template": "app/templates/PLI_M63.docx",
+      "heading": "Có các địa điểm kinh doanh trực thuộc chi nhánh:",
+      "anchor": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_63_....docx#p32-p33"
+     },
+     "notes": "PLAN mục E. Blocks không có field nào cho danh sách ĐĐKD trực thuộc."
+    },
+    {
+     "section_id": "noi_dung_quyet_dinh_thu_hoi",
+     "title": "QUYẾT ĐỊNH: Điều 1-4 (thu hồi GCNĐKHĐ chi nhánh/VPĐD/GCNĐK ĐĐKD)",
+     "kind": "output-table",
+     "semantic_key_suggestion": "quyet_dinh_thu_hoi_gcn_cn",
+     "required_columns": [],
+     "status": "output_only",
+     "source_evidence": {
+      "template": "app/templates/PLI_M63.docx",
+      "heading": "QUYẾT ĐỊNH Về việc thu hồi Giấy chứng nhận đăng ký hoạt động chi nhánh...",
+      "anchor": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_63_....docx#p6-p49"
+     },
+     "notes": "Văn bản quyết định do TRƯỞNG CQĐKKD cấp tỉnh ban hành; 2 biến thể Điều 2-4 tùy trường hợp (cưỡng chế nợ thuế / còn lại). Chữ ký TRƯỞNG ĐƠN VỊ là outputOnly."
+    }
+   ],
+   "summary_counts": {"p": 51, "chk": 0, "table": 0, "loop": 0},
+   "legal_questions": [
+    "M63 là quyết định hành chính do CQĐKKD ban hành — app ĐKKD cho doanh nghiệp kê khai thì section nào thuộc thẩm quyền nhập của DN, phần nào chỉ là output khi tích hợp hệ thống cơ quan?",
+    "Biến thể Điều 2/3/4 theo 2 trường hợp thu hồi: render có điều kiện theo trường hợp nào?"
+   ]
+  },
+  {
+   "form_id": "PLI_M66",
+   "form_status": "BLOCKED_LEGAL_REVIEW",
+   "sections": [
+    {
+     "section_id": "don_vi_dang_lam_thu_tuc_cham_dut",
+     "title": "Thông tin chi nhánh/VPĐD/địa điểm KD đang làm thủ tục chấm dứt hoạt động2 (- Tên, - Mã số/Số GCN..., - …)",
+     "kind": "editable-grid",
+     "semantic_key_suggestion": "don_vi_dang_cham_dut",
+     "required_columns": ["ten_don_vi", "ma_so_hoac_so_gcn", "ngay_cap", "noi_cap"],
+     "status": "missing_grid",
+     "source_evidence": {
+      "template": "app/templates/PLI_M66.docx",
+      "heading": "Thông tin chi nhánh/văn phòng đại diện/địa điểm kinh doanh đang làm thủ tục chấm dứt hoạt động2:",
+      "anchor": "04_tam_ngung_cham_dut_giai_the/PL1_Mau_66_....docx#p18-p27"
+     },
+     "notes": "PLAN mục E. Dấu '- …' cuối vùng + chân trang 2 'Liệt kê các chi nhánh/văn phòng đại diện/địa điểm kinh doanh đang làm thủ tục chấm dứt hoạt động' → nhiều đơn vị/giấy. Blocks chỉ có 1 bộ tên+mã."
+    },
+    {
+     "section_id": "ddkd_truc_thuoc_dang_cham_dut",
+     "title": "Có các địa điểm kinh doanh trực thuộc sau đang làm thủ tục chấm dứt hoạt động3:",
+     "kind": "editable-grid",
+     "semantic_key_suggestion": "ddkd_truc_thuoc_dang_cham_dut",
+     "required_columns": ["ten_ddkd", "ma_so"],
+     "status": "missing_grid",
+     "source_evidence": {
+      "template": "app/templates/PLI_M66.docx",
+      "heading": "Có các địa điểm kinh doanh trực thuộc sau đang làm thủ tục chấm dứt hoạt động3:",
+      "anchor": "04_tam_ngung_cham_dut_giai_the/PL1_Mau_66_....docx#p24-p27"
+     },
+     "notes": "Chân trang 3 'Liệt kê tất cả các địa điểm kinh doanh trực thuộc chi nhánh'. Blocks không có field riêng cho nhóm này."
+    },
+    {
+     "section_id": "thong_bao_cqb",
+     "title": "Phần đầu thông báo do CQĐKKD phát hành (Do1: Ông/Bà...) + nơi nhận",
+     "kind": "output-table",
+     "semantic_key_suggestion": "thong_bao_cqb_dang_cham_dut",
+     "required_columns": [],
+     "status": "output_only",
+     "source_evidence": {
+      "template": "app/templates/PLI_M66.docx",
+      "heading": "(Cơ quan đăng ký kinh doanh cấp tỉnh) thông báo chi nhánh/văn phòng đại diện/địa điểm kinh doanh của doanh nghiệp sau đang làm thủ tục chấm dứt hoạt động:",
+      "anchor": "04_tam_ngung_cham_dut_giai_the/PL1_Mau_66_....docx#p8-p17"
+     },
+     "notes": "Toàn biểu là thông báo do CQB phát hành (đăng tải trên Cổng QTG); chữ ký TRƯỞNG ĐƠN VỊ outputOnly."
+    }
+   ],
+   "summary_counts": {"p": 34, "chk": 0, "table": 0, "loop": 0},
+   "legal_questions": [
+    "M66 do CQĐKKD phát hành: ai là chủ thể kê khai trong app (DN xem/output hay cán bộ nhập)? Nếu output-only vẫn phải giữ grid khi xuất DOCX theo PLAN mục G.",
+    "Số dòng tối đa của 2 danh sách đơn vị/địa điểm trực thuộc?"
+   ]
+  },
+  {
+   "form_id": "PLI_M67",
+   "form_status": "BLOCKED_LEGAL_REVIEW",
+   "sections": [
+    {
+     "section_id": "don_vi_cham_dut_sau_day",
+     "title": "(Các) chi nhánh/VPĐD/địa điểm KD sau đây của doanh nghiệp: 1. Tên+MS, 2. Địa chỉ, 3. Chi nhánh chủ quản",
+     "kind": "unknown",
+     "semantic_key_suggestion": "don_vi_cham_dut_m67",
+     "required_columns": ["ten_don_vi", "ma_so", "dia_chi", "chi_nhanh_chu_quan"],
+     "status": "missing_grid",
+     "source_evidence": {
+      "template": "app/templates/PLI_M67.docx",
+      "heading": "(Cơ quan ĐKKD cấp tỉnh) thông báo (các) chi nhánh/văn phòng đại diện/địa điểm kinh doanh sau đây của doanh nghiệp...",
+      "anchor": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_67_....docx#p8"
+     },
+     "notes": "Từ '(các)' gợi ý nhiều đơn vị trong 1 thông báo nhưng blocks chỉ có 1 bộ tên/mã/địa chỉ (lặp 2 lần trong blocks). Cần chốt 1-nhiều. File nguồn trùng tại 04_tam_ngung... (bản 03 thắng)."
+    }
+   ],
+   "summary_counts": {"p": 21, "chk": 0, "table": 0, "loop": 0},
+   "legal_questions": [
+    "'(các) chi nhánh... sau đây': một thông báo M67 liệt kê được nhiều đơn vị không?"
+   ]
+  },
+  {
+   "form_id": "PLI_M68",
+   "form_status": "BLOCKED_LEGAL_REVIEW",
+   "sections": [
+    {
+     "section_id": "don_vi_cham_dut_khi_doanh_nghiep_giai_the",
+     "title": "Các chi nhánh, văn phòng đại diện, địa điểm kinh doanh sau của doanh nghiệp đang làm thủ tục chấm dứt hoạt động: (Tên + Mã số)",
+     "kind": "editable-grid",
+     "semantic_key_suggestion": "don_vi_cham_dut_giai_the",
+     "required_columns": ["ten_don_vi", "ma_so_hoac_ms_thue"],
+     "status": "missing_grid",
+     "source_evidence": {
+      "template": "app/templates/PLI_M68.docx",
+      "heading": "Các chi nhánh, văn phòng đại diện, địa điểm kinh doanh sau của doanh nghiệp đang làm thủ tục chấm dứt hoạt động:",
+      "anchor": "04_tam_ngung_cham_dut_giai_the/PL1_Mau_68_....docx#p17-p19"
+     },
+     "notes": "PLAN mục E. Detector 'Các … sau'. Blocks chỉ có 1 bộ cn.ten_tieng_viet/cn.ma_so."
+    },
+    {
+     "section_id": "thong_bao_dang_giai_the",
+     "title": "Thông báo doanh nghiệp đang làm thủ tục giải thể (phần CQB phát hành)",
+     "kind": "output-table",
+     "semantic_key_suggestion": "thong_bao_dang_giai_the",
+     "required_columns": [],
+     "status": "output_only",
+     "source_evidence": {
+      "template": "app/templates/PLI_M68.docx",
+      "heading": "(Cơ quan đăng ký kinh doanh cấp tỉnh) thông báo doanh nghiệp sau đang làm thủ tục giải thể:",
+      "anchor": "04_tam_ngung_cham_dut_giai_the/PL1_Mau_68_....docx#p8-p16"
+     },
+     "notes": "Biểu do CQB đăng tải trên Cổng QTG; chữ ký TRƯỞNG ĐƠN VỊ outputOnly."
+    }
+   ],
+   "summary_counts": {"p": 28, "chk": 0, "table": 0, "loop": 0},
+   "legal_questions": [
+    "Danh sách đơn vị chấm dứt khi giải thể: chủ thể nhập và giới hạn số dòng? Phần còn lại của biểu là output của cơ quan?"
+   ]
+  },
+  {
+   "form_id": "PLI_M69",
+   "form_status": "NO_TABLE",
+   "sections": [],
+   "summary_counts": {"p": 25, "chk": 0, "table": 0, "loop": 0},
+   "legal_questions": []
+  },
+  {
+   "form_id": "PLI_M70",
+   "form_status": "BLOCKED_LEGAL_REVIEW",
+   "sections": [
+    {
+     "section_id": "ho_so_bao_gom",
+     "title": "Hồ sơ bao gồm: 1. … 2. … 3. …",
+     "kind": "fixed-matrix",
+     "semantic_key_suggestion": "ds_tai_lieu_ho_so_nop",
+     "required_columns": ["stt", "mo_ta_tai_lieu"],
+     "status": "missing_grid",
+     "source_evidence": {
+      "template": "app/templates/PLI_M70.docx",
+      "heading": "Hồ sơ bao gồm:",
+      "anchor": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_70_....docx#p15-p18"
+     },
+     "notes": "Bảng hành chính không header/STT-header, 3 dòng đánh số cố định trên giấy; blocks không có key nào cho 3 dòng này. File nguồn trùng tại 05_cong_bo... (bản 03 thắng)."
+    },
+    {
+     "section_id": "chu_ky_nguoi_nop_nguoi_nhan",
+     "title": "NGƯỜI NỘP (Ký và ghi họ tên) / NGƯỜI NHẬN (Ký và ghi họ tên)",
+     "kind": "output-table",
+     "semantic_key_suggestion": "chu_ky_tiep_nhan_ho_so",
+     "required_columns": [],
+     "status": "output_only",
+     "source_evidence": {
+      "template": "app/templates/PLI_M70.docx",
+      "heading": "NGƯỜI NỘP (Ký và ghi họ tên)",
+      "anchor": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_70_....docx#p23-p24"
+     },
+     "notes": "Bảng chữ ký 2 ô do hai bên ký khi giao dịch hồ sơ."
+    }
+   ],
+   "summary_counts": {"p": 23, "chk": 0, "table": 0, "loop": 0},
+   "legal_questions": [
+    "'Hồ sơ bao gồm:' cố định 3 dòng hay cho phép n tài liệu (một số hồ sơ có >3 tài liệu đính kèm)?",
+    "Ô NGƯỜI NỘP/NGƯỜI NHẬN xử lý outputOnly đúng theo PLAN mục C/G?"
+   ]
+  },
+  {
+   "form_id": "PLI_M71",
+   "form_status": "BLOCKED_LEGAL_REVIEW",
+   "sections": [
+    {
+     "section_id": "ho_so_bao_gom_online",
+     "title": "Hồ sơ bao gồm: 1. … 2. … 3. … (nộp qua mạng)",
+     "kind": "fixed-matrix",
+     "semantic_key_suggestion": "ds_tai_lieu_ho_so_online",
+     "required_columns": ["stt", "mo_ta_tai_lieu"],
+     "status": "missing_grid",
+     "source_evidence": {
+      "template": "app/templates/PLI_M71.docx",
+      "heading": "Hồ sơ bao gồm:",
+      "anchor": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_71_....docx#p16-p19"
+     },
+     "notes": "Giống M70 nhưng bản điện tử; blocks không có key cho 3 dòng. File nguồn trùng tại 05_cong_bo... (bản 03 thắng)."
+    },
+    {
+     "section_id": "chu_ky_co_quan_cap_tinh",
+     "title": "(TÊN CƠ QUAN ĐĂNG KÝ KINH DOANH CẤP TỈNH) — chữ ký cơ quan",
+     "kind": "output-table",
+     "semantic_key_suggestion": "chu_ky_cqb_m71",
+     "required_columns": [],
+     "status": "output_only",
+     "source_evidence": {
+      "template": "app/templates/PLI_M71.docx",
+      "heading": "(TÊN CƠ QUAN ĐĂNG KÝ KINH DOANH CẤP TỈNH)",
+      "anchor": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_71_....docx#p25-p26"
+     },
+     "notes": "Chỉ có chữ ký cơ quan, không có ô ký của người nộp (khác M70)."
+    }
+   ],
+   "summary_counts": {"p": 25, "chk": 0, "table": 0, "loop": 0},
+   "legal_questions": [
+    "Như M70: số dòng tài liệu cố định hay biến thiên?"
+   ]
+  },
+  {
+   "form_id": "PLI_M72",
+   "form_status": "BLOCKED_LEGAL_REVIEW",
+   "sections": [
+    {
+     "section_id": "nganh_nghe_5_loai_hinh",
+     "title": "5. Ngành, nghề kinh doanh × 5 phần loại hình (DNTN/TNHH 1TV/TNHH 2TV+/CP/HD)",
+     "kind": "editable-grid",
+     "semantic_key_suggestion": "ds_nganh_cong_bo_thanh_lap",
+     "required_columns": ["stt", "ten_nganh", "ma_nganh", "la_nganh_chinh"],
+     "status": "partial_columns",
+     "source_evidence": {
+      "template": "app/templates/PLI_M72.docx",
+      "heading": "5. Ngành, nghề kinh doanh (x5 phần loại hình)",
+      "anchor": "05_cong_bo_cung_cap_thong_tin/PL1_Mau_72_....docx#p1648,p1673,p1710,p1745,p1776"
+     },
+     "notes": "Detector: 5 vùng STT|Tên ngành|Mã ngành nhưng template/blocks chỉ có 1 loop ds_nganh (spec change/PLI_M72.json neo 1 chỗ). 4 vùng còn lại là paragraph header rời."
+    },
+    {
+     "section_id": "thanh_vien_tnhhh_hai_tv_tro_len",
+     "title": "TNHH 2TV trở lên — 7. Danh sách thành viên: STT|Tên thành viên|Quốc tịch|Số GTPL|Địa chỉ|Phần vốn góp|Tỷ lệ (%)|Ghi chú",
+     "kind": "nested-grid",
+     "semantic_key_suggestion": "ds_thanh_vien_tnhh_cong_bo",
+     "required_columns": ["stt", "ten_thanh_vien", "quoc_tich", "so_gtpl_ca_nhan_to_chuc", "dia_chi_lien_lac", "phan_von_gop", "ty_le", "ghi_chu"],
+     "status": "missing_grid",
+     "source_evidence": {
+      "template": "app/templates/PLI_M72.docx",
+      "heading": "7. Danh sách thành viên:",
+      "anchor": "05_cong_bo_cung_cap_thong_tin/PL1_Mau_72_....docx#p1796-p1823"
+     },
+     "notes": "PLAN mục C. Header nhiều hàng (Phần vốn góp gộp chú thích VNĐ/ngoại tệ) — không được làm phẳng mất cột."
+    },
+    {
+     "section_id": "co_dong_sang_lap_cp",
+     "title": "CP — 7. Cổ đông sáng lập: STT|Tên cổ đông|Quốc tịch|Số GTPL|Địa chỉ|Loại cổ phần|Số cổ phần|Giá trị cổ phần (VNĐ...)|Tỷ lệ (%)|Ghi chú",
+     "kind": "nested-grid",
+     "semantic_key_suggestion": "ds_co_dong_sang_lap_cong_bo",
+     "required_columns": ["stt", "ten_co_dong", "quoc_tich", "so_gtpl", "dia_chi_lien_lac", "loai_co_phan", "so_co_phan", "gia_tri_co_phan", "ty_le", "ghi_chu"],
+     "status": "missing_grid",
+     "source_evidence": {
+      "template": "app/templates/PLI_M72.docx",
+      "heading": "STTTên cổ đôngQuốc tịch...Loại cổ phầnSố cổ phầnGiá trị cổ phần",
+      "anchor": "05_cong_bo_cung_cap_thong_tin/PL1_Mau_72_....docx#p1751-p1753"
+     },
+     "notes": "Header nối 'STTTên cổ đông...' (detector stt_joined ×2)."
+    },
+    {
+     "section_id": "co_dong_nuoc_ngoai_cp",
+     "title": "CP — 8. Cổ đông là nhà đầu tư nước ngoài (cùng cấu trúc header nối)",
+     "kind": "nested-grid",
+     "semantic_key_suggestion": "ds_co_dong_nn_cong_bo",
+     "required_columns": ["stt", "ten_co_dong", "quoc_tich", "so_gtpl", "dia_chi_lien_lac", "loai_co_phan", "so_co_phan", "gia_tri_co_phan", "ty_le", "ghi_chu"],
+     "status": "missing_grid",
+     "source_evidence": {
+      "template": "app/templates/PLI_M72.docx",
+      "heading": "...8. Cổ đông là nhà đầu tư nước ngoài: STTTên cổ đông...",
+      "anchor": "05_cong_bo_cung_cap_thong_tin/PL1_Mau_72_....docx#p1753-p1755"
+     },
+     "notes": "Header nối thứ 2; cột giá trị cổ phần có chú thích đơn vị tiền."
+    },
+    {
+     "section_id": "thanh_vien_hop_danh",
+     "title": "HD — 7. Danh sách thành viên hợp danh: STT|Tên TVHD|Quốc tịch|Số ĐDCN/Hộ chiếu|Địa chỉ liên lạc|Phần vốn góp|Tỷ lệ (%)",
+     "kind": "nested-grid",
+     "semantic_key_suggestion": "ds_thanh_vien_hop_danh_cong_bo",
+     "required_columns": ["stt", "ten_thanh_vien_hop_danh", "quoc_tich", "so_dinh_danh_ho_chieu", "dia_chi_lien_lac", "phan_von_gop", "ty_le"],
+     "status": "missing_grid",
+     "source_evidence": {
+      "template": "app/templates/PLI_M72.docx",
+      "heading": "7. Danh sách thành viên hợp danh:",
+      "anchor": "05_cong_bo_cung_cap_thong_tin/PL1_Mau_72_....docx#p1876-p1889"
+     },
+     "notes": "PLAN mục C. Blocks hiện không có input nào cho danh sách này."
+    }
+   ],
+   "summary_counts": {"p": 156, "chk": 0, "table": 0, "loop": 1},
+   "legal_questions": [
+    "M72 gồm 5 phần theo loại hình DN: render chỉ phần được chọn (PLAN yêu cầu) thì 4 bảng ngành + 4 danh sách thành viên/cổ đông cần loop riêng cho từng phần hay engine render lặp 1 spec theo section active?",
+    "Key trùng giữa các phần (dn.ten_tieng_viet, ndd.* xuất hiện nhiều lần) — cần namespacing theo loại hình trước khi thêm grid?",
+    "Cột 'Giá trị cổ phần' có quy đổi ngoại tệ — computed totals đối chiếu vốn điều lệ như PLAN mục B/C?"
+   ]
+  },
+  {
+   "form_id": "PLI_M73",
+   "form_status": "NO_TABLE",
+   "sections": [],
+   "summary_counts": {"p": 16, "chk": 0, "table": 0, "loop": 0},
+   "legal_questions": []
+  },
+  {
+   "form_id": "PLI_M74",
+   "form_status": "NO_TABLE",
+   "sections": [],
+   "summary_counts": {"p": 16, "chk": 0, "table": 0, "loop": 0},
+   "legal_questions": []
+  },
+  {
+   "form_id": "PLI_M75",
+   "form_status": "BLOCKED_LEGAL_REVIEW",
+   "sections": [
+    {
+     "section_id": "cn_vppd_ddkd_khoi_phuc",
+     "title": "● Đối với doanh nghiệp: Có các chi nhánh/văn phòng đại diện/địa điểm kinh doanh: (Tên, mã số, địa chỉ, tình trạng pháp lý của CN / VPĐD / ĐĐKD)",
+     "kind": "editable-grid",
+     "semantic_key_suggestion": "don_vi_khoi_phuc_cua_dn",
+     "required_columns": ["loai_don_vi", "ten_don_vi", "ma_so", "dia_chi", "tinh_trang_phap_ly"],
+     "status": "missing_grid",
+     "source_evidence": {
+      "template": "app/templates/PLI_M75.docx",
+      "heading": "Có các chi nhánh/văn phòng đại diện/địa điểm kinh doanh:",
+      "anchor": "04_tam_ngung_cham_dut_giai_the/PL1_Mau_75_....docx#p22-p25"
+     },
+     "notes": "PLAN mục E. 3 dòng theo loại đơn vị (CN/VPĐD/ĐĐKD) — fixed theo loại hay editable tự do cần chốt."
+    },
+    {
+     "section_id": "ddkd_truc_thuoc_khoi_phuc",
+     "title": "● Đối với chi nhánh: Có các địa điểm kinh doanh trực thuộc chi nhánh: (Tên, mã số, địa chỉ, tình trạng pháp lý)",
+     "kind": "editable-grid",
+     "semantic_key_suggestion": "ddkd_truc_thuoc_khoi_phuc",
+     "required_columns": ["ten_ddkd", "ma_so", "dia_chi", "tinh_trang_phap_ly"],
+     "status": "missing_grid",
+     "source_evidence": {
+      "template": "app/templates/PLI_M75.docx",
+      "heading": "Có các địa điểm kinh doanh trực thuộc chi nhánh:",
+      "anchor": "04_tam_ngung_cham_dut_giai_the/PL1_Mau_75_....docx#p34-p35"
+     },
+     "notes": "PLAN mục E. Blocks không có field cho nhóm này."
+    },
+    {
+     "section_id": "thong_bao_khoi_phuc_gcn",
+     "title": "THÔNG BÁO khôi phục GCNĐKDN/GCNĐKHĐ (phát hành bởi CQĐKKD)",
+     "kind": "output-table",
+     "semantic_key_suggestion": "thong_bao_khoi_phuc_gcn",
+     "required_columns": [],
+     "status": "output_only",
+     "source_evidence": {
+      "template": "app/templates/PLI_M75.docx",
+      "heading": "(Cơ quan đăng ký kinh doanh cấp tỉnh) thông báo về việc khôi phục Giấy chứng nhận...",
+      "anchor": "04_tam_ngung_cham_dut_giai_the/PL1_Mau_75_....docx#p10"
+     },
+     "notes": "Chữ ký TRƯỞNG ĐƠN VỊ outputOnly; gửi kèm CQ quản lý thuế."
+    }
+   ],
+   "summary_counts": {"p": 44, "chk": 0, "table": 0, "loop": 0},
+   "legal_questions": [
+    "3 dòng đơn vị theo loại (CN/VPĐD/ĐĐKD): fixed-matrix 3 hàng hay editable-grid tự do? Chủ thể kê khai (CQB vs DN)?"
+   ]
+  },
+  {
+   "form_id": "PLI_M76",
+   "form_status": "NO_TABLE",
+   "sections": [],
+   "summary_counts": {"p": 21, "chk": 0, "table": 0, "loop": 0},
+   "legal_questions": []
+  },
+  {
+   "form_id": "PLI_M78",
+   "form_status": "BLOCKED_LEGAL_REVIEW",
+   "sections": [
+    {
+     "section_id": "san_pham_cung_cap_thong_tin",
+     "title": "3. Thông tin yêu cầu: STT | Tên sản phẩm | Số lượng sản phẩm (4 dòng quy định + Sản phẩm khác)",
+     "kind": "fixed-matrix",
+     "semantic_key_suggestion": "ds_san_pham_yeu_cau",
+     "required_columns": ["stt", "ten_san_pham", "so_luong_san_pham"],
+     "status": "missing_grid",
+     "source_evidence": {
+      "template": "app/templates/PLI_M78.docx",
+      "heading": "3. Thông tin yêu cầu: STT | Tên sản phẩm | Số lượng sản phẩm",
+      "anchor": "05_cong_bo_cung_cap_thong_tin/PL1_Mau_78_....docx#p19-p33"
+     },
+     "notes": "PLAN mục F. 4 hàng cố định: 1 GCNĐKDN của…, 2 Thông tin lịch sử 3 năm của DN…, 3 Thông tin DN mới nhất của…, 4 Sản phẩm khác (+ dòng mô tả '……'). Blocks KHÔNG có key nào cho sản phẩm/số lượng (fm_fields=17 đều là thông tin người yêu cầu/biên lai). Hybrid fixed rows + ô mô tả cho hàng 4."
+    }
+   ],
+   "summary_counts": {"p": 35, "chk": 0, "table": 0, "loop": 0},
+   "legal_questions": [
+    "Số lượng sản phẩm: integer >=0, giới hạn tối đa? Hàng 4 'Sản phẩm khác' bắt buộc nhập tên SP chi tiết khi SL > 0?",
+    "Cột 'Tên sản phẩm' các hàng 1-3 có placeholder tên DN điền vào ('của …') — canonical key cho tên DN trong từng hàng?"
+   ]
+  },
+  {
+   "form_id": "PLI_M79",
+   "form_status": "BLOCKED_LEGAL_REVIEW",
+   "sections": [
+    {
+     "section_id": "tai_lieu_kem_theo_de_nghi",
+     "title": "Kèm theo Giấy đề nghị này có: 1. … 2. … 3. … …",
+     "kind": "editable-grid",
+     "semantic_key_suggestion": "ds_tai_lieu_kem_theo_m79",
+     "required_columns": ["stt", "mo_ta_tai_lieu"],
+     "status": "missing_grid",
+     "source_evidence": {
+      "template": "app/templates/PLI_M79.docx",
+      "heading": "Kèm theo Giấy đề nghị này có:",
+      "anchor": "05_cong_bo_cung_cap_thong_tin/PL1_Mau_79_....docx#p32-p36"
+     },
+     "notes": "Bảng hành chính không header; 3 dòng đánh số + dấu '…' → số dòng biến thiên. Blocks không có key nào."
+    }
+   ],
+   "summary_counts": {"p": 42, "chk": 0, "table": 0, "loop": 0},
+   "legal_questions": [
+    "Số lượng tài liệu kèm theo: min/max? Cần upload file kèm mỗi dòng không (ngoài scope census)?"
+   ]
+  },
+  {
+   "form_id": "PLI_M80",
+   "form_status": "BLOCKED_LEGAL_REVIEW",
+   "sections": [
+    {
+     "section_id": "tai_lieu_kem_theo_thu_hoi",
+     "title": "Kèm theo Giấy đề nghị này có: 1. … 2. … 3. … …",
+     "kind": "editable-grid",
+     "semantic_key_suggestion": "ds_tai_lieu_kem_theo_m80",
+     "required_columns": ["stt", "mo_ta_tai_lieu"],
+     "status": "missing_grid",
+     "source_evidence": {
+      "template": "app/templates/PLI_M80.docx",
+      "heading": "Kèm theo Giấy đề nghị này có:",
+      "anchor": "05_cong_bo_cung_cap_thong_tin/PL1_Mau_80_....docx#p30-p34"
+     },
+     "notes": "Giống M79; blocks không có key nào cho danh sách."
+    }
+   ],
+   "summary_counts": {"p": 42, "chk": 0, "table": 0, "loop": 0},
+   "legal_questions": [
+    "Như M79: min/max dòng tài liệu kèm theo."
+   ]
+  }
+ ]
+}

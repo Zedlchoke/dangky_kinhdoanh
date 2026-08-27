@@ -171,7 +171,11 @@ class Bridge:
             template = APP_DIR / fmap["template"]
             out_file = out_dir / ("%s.docx" % fid)
             try:
-                write_rendered(template, data, out_file)
+                # R2: section_specs (metadata bảng kind mới) -> recompute tổng
+                # lúc export, fail-loud nếu stored lệch computed. Form không có
+                # specs giữ hành vi cũ.
+                write_rendered(template, data, out_file,
+                               tables_meta=(fmap.get("section_specs") or None))
                 files.append(out_file.name)
             except Exception as exc:  # noqa: BLE001
                 errors.append("%s: lỗi render %r" % (fid, exc))

@@ -1026,51 +1026,242 @@
    "role": "body"
   },
   {
+   "t": "loop",
+   "loop": "ds_nddpl_uy_quyen_chu_so_huu_moi",
+   "headerRows": [
+    0,
+    1
+   ],
+   "cols": [
+    {
+     "col": 1,
+     "tag": "ten_nguoi_dai_dien"
+    },
+    {
+     "col": 2,
+     "tag": "ngay_sinh"
+    },
+    {
+     "col": 3,
+     "tag": "gioi_tinh"
+    },
+    {
+     "col": 4,
+     "tag": "giay_to_so"
+    },
+    {
+     "col": 5,
+     "tag": "giay_to_ngay"
+    },
+    {
+     "col": 6,
+     "tag": "giay_to_co_quan"
+    },
+    {
+     "col": 7,
+     "tag": "quoc_tich"
+    },
+    {
+     "col": 8,
+     "tag": "dan_toc"
+    },
+    {
+     "col": 9,
+     "tag": "dia_chi"
+    },
+    {
+     "col": 10,
+     "tag": "von_duoc_uy_quyen_vnd"
+    },
+    {
+     "col": 11,
+     "tag": "ty_le"
+    },
+    {
+     "col": 12,
+     "tag": "chu_ky"
+    },
+    {
+     "col": 13,
+     "tag": "ghi_chu"
+    }
+   ],
+   "blankRows": 5,
+   "rows": [
+    {
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "STT",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 2
+      },
+      {
+       "runs": [
+        {
+         "text": "Tên người đại diện theo pháp luật/người đại diện theo ủy quyền",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 2
+      },
+      {
+       "runs": [
+        {
+         "text": "Ngày, tháng, năm sinh",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 2
+      },
+      {
+       "runs": [
+        {
+         "text": "Giới tính",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 2
+      },
+      {
+       "runs": [
+        {
+         "text": "Số, ngày cấp, cơ quan cấp Giấy tờ pháp lý của cá nhân",
+         "b": true
+        }
+       ],
+       "colspan": 3,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Quốc tịch",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 2
+      },
+      {
+       "runs": [
+        {
+         "text": "Dân tộc",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 2
+      },
+      {
+       "runs": [
+        {
+         "text": "Địa chỉ liên lạc",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 2
+      },
+      {
+       "runs": [
+        {
+         "text": "Vốn được ủy quyền",
+         "b": true
+        }
+       ],
+       "colspan": 2,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Chữ ký của người đại diện theo pháp luật/người đại diện theo ủy quyền",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 2
+      },
+      {
+       "runs": [
+        {
+         "text": "Ghi chú (nếu có)",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 2
+      }
+     ]
+    },
+    {
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "Số",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Ngày cấp",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Cơ quan cấp",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "VNĐ",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Tỷ lệ (%)",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
+    }
+   ]
+  },
+  {
    "t": "p",
    "align": "center",
    "runs": [
-    {
-     "text": "STTTên người đại diện theo pháp luật/người đại diện theo ủy quyềnNgày, tháng, năm sinhGiới tínhSố, ngày cấp, cơ quan cấp Giấy tờ pháp lý của cá nhân"
-    },
-    {
-     "text": "2",
-     "vertAlign": "superscript"
-    },
-    {
-     "text": "Quốc tịchDân tộcĐịa chỉ liên lạcVốn được ủy quyền"
-    },
-    {
-     "text": "3",
-     "vertAlign": "superscript"
-    },
-    {
-     "text": "Chữ ký của người đại diện theo pháp luật/người đại diện theo ủy quyền"
-    },
-    {
-     "text": "5",
-     "vertAlign": "superscript"
-    },
-    {
-     "text": "Ghi chú (nếu có)Tổng giá trị vốn được đại diện ("
-    },
-    {
-     "text": "bằng số; VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)",
-     "i": true
-    },
-    {
-     "text": "Tỷ lệ"
-    },
-    {
-     "text": "4 ",
-     "vertAlign": "superscript"
-    },
-    {
-     "text": "(%)Thời điểm đại diện phần vốn"
-    },
-    {
-     "text": "12345678910111213",
-     "b": true
-    },
     {
      "text": "Trường hợp hồ sơ đăng ký doanh nghiệp hợp lệ, đề nghị Quý Cơ quan đăng công bố nội dung đăng ký doanh nghiệp trên Cổng thông tin quốc gia về đăng ký doanh nghiệp."
     }

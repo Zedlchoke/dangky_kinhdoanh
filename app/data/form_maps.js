@@ -145,6 +145,58 @@ window.FORM_MAPS = {
     "label": "Vốn đầu tư đã đăng ký (bằng số; bằng chữ; VNĐ):"
    },
    {
+    "key": "ds_ndd_uy_quyen_sau_thay_doi.chu_so_huu_tvtnhh_cdnn_to_chuc",
+    "label": "chu_so_huu_tvtnhh_cdnn_to_chuc"
+   },
+   {
+    "key": "ds_ndd_uy_quyen_sau_thay_doi.ten_ndd_uy_quyen",
+    "label": "ten_ndd_uy_quyen"
+   },
+   {
+    "key": "ds_ndd_uy_quyen_sau_thay_doi.ngay_sinh",
+    "label": "ngay_sinh"
+   },
+   {
+    "key": "ds_ndd_uy_quyen_sau_thay_doi.gioi_tinh",
+    "label": "gioi_tinh"
+   },
+   {
+    "key": "ds_ndd_uy_quyen_sau_thay_doi.giay_to_so",
+    "label": "giay_to_so"
+   },
+   {
+    "key": "ds_ndd_uy_quyen_sau_thay_doi.giay_to_ngay",
+    "label": "giay_to_ngay"
+   },
+   {
+    "key": "ds_ndd_uy_quyen_sau_thay_doi.giay_to_co_quan",
+    "label": "giay_to_co_quan"
+   },
+   {
+    "key": "ds_ndd_uy_quyen_sau_thay_doi.quoc_tich",
+    "label": "quoc_tich"
+   },
+   {
+    "key": "ds_ndd_uy_quyen_sau_thay_doi.dan_toc",
+    "label": "dan_toc"
+   },
+   {
+    "key": "ds_ndd_uy_quyen_sau_thay_doi.dia_chi",
+    "label": "dia_chi"
+   },
+   {
+    "key": "ds_ndd_uy_quyen_sau_thay_doi.von_duoc_uy_quyen_vnd",
+    "label": "von_duoc_uy_quyen_vnd"
+   },
+   {
+    "key": "ds_ndd_uy_quyen_sau_thay_doi.ty_le",
+    "label": "ty_le"
+   },
+   {
+    "key": "ds_ndd_uy_quyen_sau_thay_doi.ghi_chu",
+    "label": "ghi_chu"
+   },
+   {
     "key": "gd.ho_ten",
     "label": "Họ, chữ đệm và tên Giám đốc/Tổng giám đốc:"
    },
@@ -386,6 +438,319 @@ window.FORM_MAPS = {
       "tag": "la_nganh_chinh"
      }
     ]
+   },
+   {
+    "id": "ndd_uy_quyen_sau_thay_doi",
+    "table_index": 3,
+    "template_row": 7,
+    "loop": "ds_ndd_uy_quyen_sau_thay_doi",
+    "columns": [
+     {
+      "col": 1,
+      "tag": "chu_so_huu_tvtnhh_cdnn_to_chuc"
+     },
+     {
+      "col": 2,
+      "tag": "ten_ndd_uy_quyen"
+     },
+     {
+      "col": 3,
+      "tag": "ngay_sinh"
+     },
+     {
+      "col": 4,
+      "tag": "gioi_tinh"
+     },
+     {
+      "col": 5,
+      "tag": "giay_to_so"
+     },
+     {
+      "col": 6,
+      "tag": "giay_to_ngay"
+     },
+     {
+      "col": 7,
+      "tag": "giay_to_co_quan"
+     },
+     {
+      "col": 8,
+      "tag": "quoc_tich"
+     },
+     {
+      "col": 9,
+      "tag": "dan_toc"
+     },
+     {
+      "col": 10,
+      "tag": "dia_chi"
+     },
+     {
+      "col": 11,
+      "tag": "von_duoc_uy_quyen_vnd"
+     },
+     {
+      "col": 12,
+      "tag": "ty_le"
+     },
+     {
+      "col": 13,
+      "tag": "chu_ky"
+     },
+     {
+      "col": 14,
+      "tag": "ghi_chu"
+     }
+    ],
+    "header_row": 0
+   }
+  ],
+  "section_specs": [
+   {
+    "kind": "nested-grid",
+    "id": "ndd_uy_quyen_sau_thay_doi",
+    "semantic_key": "ds_ndd_uy_quyen_sau_thay_doi",
+    "section_id": "ndd_uy_quyen_sau_thay_doi",
+    "table_index": 3,
+    "loop": "ds_ndd_uy_quyen_sau_thay_doi",
+    "header_rows": [
+     [
+      {
+       "text": "STT",
+       "rowspan": 2,
+       "colspan": 1,
+       "col_index": 0
+      },
+      {
+       "text": "Chủ sở hữu/Thành viên công ty TNHH/Cổ đông là nhà đầu tư nước ngoài là tổ chức",
+       "rowspan": 2,
+       "colspan": 1,
+       "col_index": 1
+      },
+      {
+       "text": "Tên người đại diện theo ủy quyền",
+       "rowspan": 2,
+       "colspan": 1,
+       "col_index": 2
+      },
+      {
+       "text": "Ngày, tháng, năm sinh",
+       "rowspan": 2,
+       "colspan": 1,
+       "col_index": 3
+      },
+      {
+       "text": "Giới tính",
+       "rowspan": 2,
+       "colspan": 1,
+       "col_index": 4
+      },
+      {
+       "text": "Số, ngày cấp, cơ quan cấp Giấy tờ pháp lý của cá nhân",
+       "rowspan": 1,
+       "colspan": 3,
+       "col_index": 5
+      },
+      {
+       "text": "Quốc tịch",
+       "rowspan": 2,
+       "colspan": 1,
+       "col_index": 8
+      },
+      {
+       "text": "Dân tộc",
+       "rowspan": 2,
+       "colspan": 1,
+       "col_index": 9
+      },
+      {
+       "text": "Địa chỉ liên lạc",
+       "rowspan": 2,
+       "colspan": 1,
+       "col_index": 10
+      },
+      {
+       "text": "Vốn được ủy quyền",
+       "rowspan": 1,
+       "colspan": 2,
+       "col_index": 11
+      },
+      {
+       "text": "Chữ ký của người đại diện theo ủy quyền",
+       "rowspan": 2,
+       "colspan": 1,
+       "col_index": 13
+      },
+      {
+       "text": "Ghi chú (nếu có)",
+       "rowspan": 2,
+       "colspan": 1,
+       "col_index": 14
+      }
+     ],
+     [
+      {
+       "text": "Số",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 5
+      },
+      {
+       "text": "Ngày cấp",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 6
+      },
+      {
+       "text": "Cơ quan cấp",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 7
+      },
+      {
+       "text": "VNĐ",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 11
+      },
+      {
+       "text": "Tỷ lệ (%)",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 12
+      }
+     ]
+    ],
+    "header_texts": [
+     [
+      "STT",
+      "Chủ sở hữu/Thành viên công ty TNHH/Cổ đông là nhà đầu tư nước ngoài là tổ chức",
+      "Tên người đại diện theo ủy quyền",
+      "Ngày, tháng, năm sinh",
+      "Giới tính",
+      "Số, ngày cấp, cơ quan cấp Giấy tờ pháp lý của cá nhân",
+      "Quốc tịch",
+      "Dân tộc",
+      "Địa chỉ liên lạc",
+      "Vốn được ủy quyền",
+      "Chữ ký của người đại diện theo ủy quyền",
+      "Ghi chú (nếu có)"
+     ],
+     [
+      "Số",
+      "Ngày cấp",
+      "Cơ quan cấp",
+      "VNĐ",
+      "Tỷ lệ (%)"
+     ]
+    ],
+    "width": 15,
+    "columns": [
+     {
+      "col_index": 1,
+      "tag": "chu_so_huu_tvtnhh_cdnn_to_chuc",
+      "required": true,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 2,
+      "tag": "ten_ndd_uy_quyen",
+      "required": true,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 3,
+      "tag": "ngay_sinh",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 4,
+      "tag": "gioi_tinh",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 5,
+      "tag": "giay_to_so",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 6,
+      "tag": "giay_to_ngay",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 7,
+      "tag": "giay_to_co_quan",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 8,
+      "tag": "quoc_tich",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 9,
+      "tag": "dan_toc",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 10,
+      "tag": "dia_chi",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 11,
+      "tag": "von_duoc_uy_quyen_vnd",
+      "required": false,
+      "input_type": "money",
+      "output_only": false
+     },
+     {
+      "col_index": 12,
+      "tag": "ty_le",
+      "required": false,
+      "input_type": "percent",
+      "output_only": false
+     },
+     {
+      "col_index": 13,
+      "tag": "chu_ky",
+      "required": false,
+      "input_type": "outputOnly",
+      "output_only": true
+     },
+     {
+      "col_index": 14,
+      "tag": "ghi_chu",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     }
+    ],
+    "stt": {
+     "mode": "generated",
+     "col_index": 0
+    },
+    "discriminator": null,
+    "totals": []
    }
   ]
  },
@@ -737,9 +1102,360 @@ window.FORM_MAPS = {
     "label": "Website (nếu có):"
    },
    {
+    "key": "ds_nddpl_uy_quyen_chu_so_huu_moi.ten_nguoi_dai_dien",
+    "label": "ten_nguoi_dai_dien"
+   },
+   {
+    "key": "ds_nddpl_uy_quyen_chu_so_huu_moi.ngay_sinh",
+    "label": "ngay_sinh"
+   },
+   {
+    "key": "ds_nddpl_uy_quyen_chu_so_huu_moi.gioi_tinh",
+    "label": "gioi_tinh"
+   },
+   {
+    "key": "ds_nddpl_uy_quyen_chu_so_huu_moi.giay_to_so",
+    "label": "giay_to_so"
+   },
+   {
+    "key": "ds_nddpl_uy_quyen_chu_so_huu_moi.giay_to_ngay",
+    "label": "giay_to_ngay"
+   },
+   {
+    "key": "ds_nddpl_uy_quyen_chu_so_huu_moi.giay_to_co_quan",
+    "label": "giay_to_co_quan"
+   },
+   {
+    "key": "ds_nddpl_uy_quyen_chu_so_huu_moi.quoc_tich",
+    "label": "quoc_tich"
+   },
+   {
+    "key": "ds_nddpl_uy_quyen_chu_so_huu_moi.dan_toc",
+    "label": "dan_toc"
+   },
+   {
+    "key": "ds_nddpl_uy_quyen_chu_so_huu_moi.dia_chi",
+    "label": "dia_chi"
+   },
+   {
+    "key": "ds_nddpl_uy_quyen_chu_so_huu_moi.von_duoc_uy_quyen_vnd",
+    "label": "von_duoc_uy_quyen_vnd"
+   },
+   {
+    "key": "ds_nddpl_uy_quyen_chu_so_huu_moi.ty_le",
+    "label": "ty_le"
+   },
+   {
+    "key": "ds_nddpl_uy_quyen_chu_so_huu_moi.ghi_chu",
+    "label": "ghi_chu"
+   },
+   {
     "key": "chk_khong",
     "label": "Không",
     "type": "chk"
+   }
+  ],
+  "dynamic_tables": [
+   {
+    "id": "ndd_pl_uy_quyen_chu_so_huu_moi",
+    "table_index": 0,
+    "template_row": 7,
+    "loop": "ds_nddpl_uy_quyen_chu_so_huu_moi",
+    "columns": [
+     {
+      "col": 1,
+      "tag": "ten_nguoi_dai_dien"
+     },
+     {
+      "col": 2,
+      "tag": "ngay_sinh"
+     },
+     {
+      "col": 3,
+      "tag": "gioi_tinh"
+     },
+     {
+      "col": 4,
+      "tag": "giay_to_so"
+     },
+     {
+      "col": 5,
+      "tag": "giay_to_ngay"
+     },
+     {
+      "col": 6,
+      "tag": "giay_to_co_quan"
+     },
+     {
+      "col": 7,
+      "tag": "quoc_tich"
+     },
+     {
+      "col": 8,
+      "tag": "dan_toc"
+     },
+     {
+      "col": 9,
+      "tag": "dia_chi"
+     },
+     {
+      "col": 10,
+      "tag": "von_duoc_uy_quyen_vnd"
+     },
+     {
+      "col": 11,
+      "tag": "ty_le"
+     },
+     {
+      "col": 12,
+      "tag": "chu_ky"
+     },
+     {
+      "col": 13,
+      "tag": "ghi_chu"
+     }
+    ],
+    "header_row": 0
+   }
+  ],
+  "section_specs": [
+   {
+    "kind": "nested-grid",
+    "id": "ndd_pl_uy_quyen_chu_so_huu_moi",
+    "semantic_key": "ds_nddpl_uy_quyen_chu_so_huu_moi",
+    "section_id": "ndd_pl_uy_quyen_chu_so_huu_moi",
+    "table_index": 0,
+    "loop": "ds_nddpl_uy_quyen_chu_so_huu_moi",
+    "header_rows": [
+     [
+      {
+       "text": "STT",
+       "rowspan": 2,
+       "colspan": 1,
+       "col_index": 0
+      },
+      {
+       "text": "Tên người đại diện theo pháp luật/người đại diện theo ủy quyền",
+       "rowspan": 2,
+       "colspan": 1,
+       "col_index": 1
+      },
+      {
+       "text": "Ngày, tháng, năm sinh",
+       "rowspan": 2,
+       "colspan": 1,
+       "col_index": 2
+      },
+      {
+       "text": "Giới tính",
+       "rowspan": 2,
+       "colspan": 1,
+       "col_index": 3
+      },
+      {
+       "text": "Số, ngày cấp, cơ quan cấp Giấy tờ pháp lý của cá nhân",
+       "rowspan": 1,
+       "colspan": 3,
+       "col_index": 4
+      },
+      {
+       "text": "Quốc tịch",
+       "rowspan": 2,
+       "colspan": 1,
+       "col_index": 7
+      },
+      {
+       "text": "Dân tộc",
+       "rowspan": 2,
+       "colspan": 1,
+       "col_index": 8
+      },
+      {
+       "text": "Địa chỉ liên lạc",
+       "rowspan": 2,
+       "colspan": 1,
+       "col_index": 9
+      },
+      {
+       "text": "Vốn được ủy quyền",
+       "rowspan": 1,
+       "colspan": 2,
+       "col_index": 10
+      },
+      {
+       "text": "Chữ ký của người đại diện theo pháp luật/người đại diện theo ủy quyền",
+       "rowspan": 2,
+       "colspan": 1,
+       "col_index": 12
+      },
+      {
+       "text": "Ghi chú (nếu có)",
+       "rowspan": 2,
+       "colspan": 1,
+       "col_index": 13
+      }
+     ],
+     [
+      {
+       "text": "Số",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 4
+      },
+      {
+       "text": "Ngày cấp",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 5
+      },
+      {
+       "text": "Cơ quan cấp",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 6
+      },
+      {
+       "text": "VNĐ",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 10
+      },
+      {
+       "text": "Tỷ lệ (%)",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 11
+      }
+     ]
+    ],
+    "header_texts": [
+     [
+      "STT",
+      "Tên người đại diện theo pháp luật/người đại diện theo ủy quyền",
+      "Ngày, tháng, năm sinh",
+      "Giới tính",
+      "Số, ngày cấp, cơ quan cấp Giấy tờ pháp lý của cá nhân",
+      "Quốc tịch",
+      "Dân tộc",
+      "Địa chỉ liên lạc",
+      "Vốn được ủy quyền",
+      "Chữ ký của người đại diện theo pháp luật/người đại diện theo ủy quyền",
+      "Ghi chú (nếu có)"
+     ],
+     [
+      "Số",
+      "Ngày cấp",
+      "Cơ quan cấp",
+      "VNĐ",
+      "Tỷ lệ (%)"
+     ]
+    ],
+    "width": 14,
+    "columns": [
+     {
+      "col_index": 1,
+      "tag": "ten_nguoi_dai_dien",
+      "required": true,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 2,
+      "tag": "ngay_sinh",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 3,
+      "tag": "gioi_tinh",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 4,
+      "tag": "giay_to_so",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 5,
+      "tag": "giay_to_ngay",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 6,
+      "tag": "giay_to_co_quan",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 7,
+      "tag": "quoc_tich",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 8,
+      "tag": "dan_toc",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 9,
+      "tag": "dia_chi",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 10,
+      "tag": "von_duoc_uy_quyen_vnd",
+      "required": false,
+      "input_type": "money",
+      "output_only": false
+     },
+     {
+      "col_index": 11,
+      "tag": "ty_le",
+      "required": false,
+      "input_type": "percent",
+      "output_only": false
+     },
+     {
+      "col_index": 12,
+      "tag": "chu_ky",
+      "required": false,
+      "input_type": "outputOnly",
+      "output_only": true
+     },
+     {
+      "col_index": 13,
+      "tag": "ghi_chu",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     }
+    ],
+    "stt": {
+     "mode": "generated",
+     "col_index": 0
+    },
+    "discriminator": {
+     "tag": "loai_dong",
+     "values": [
+      "ndd_pl",
+      "ndd_uy_quyen"
+     ]
+    },
+    "totals": []
    }
   ]
  },
@@ -2998,7 +3714,7 @@ window.FORM_MAPS = {
   "phu_luc": "I",
   "mau_so": 70,
   "ten_mau": "Giấy tiếp nhận hồ sơ và hẹn trả kết quả hồ sơ đăng ký doanh nghiệp/chi nhánh/văn phòng đại diện/địa điểm kinh doanh",
-  "file": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_70_giay_tiep_nhan_ho_so_va_hen_tra_ket_qua_ho_so_dang_ky_doanh_nghiep_chi_nhanh_van_phong_dai_dien.docx",
+  "file": "05_cong_bo_cung_cap_thong_tin/PL1_Mau_70_giay_tiep_nhan_ho_so_va_hen_tra_ket_qua_ho_so_dang_ky_doanh_nghiep_chi_nhanh_van_phong_dai_dien.docx",
   "template": "templates/PLI_M70.docx",
   "fields": [
    {
@@ -3094,7 +3810,7 @@ window.FORM_MAPS = {
   "phu_luc": "I",
   "mau_so": 71,
   "ten_mau": "Giấy tiếp nhận hồ sơ và hẹn trả kết quả hồ sơ đăng ký doanh nghiệp/chi nhánh/văn phòng đại diện/địa điểm kinh doanh qua mạng thông tin điện tử",
-  "file": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_71_giay_tiep_nhan_ho_so_va_hen_tra_ket_qua_ho_so_dang_ky_doanh_nghiep_chi_nhanh_van_phong_dai_dien.docx",
+  "file": "05_cong_bo_cung_cap_thong_tin/PL1_Mau_71_giay_tiep_nhan_ho_so_va_hen_tra_ket_qua_ho_so_dang_ky_doanh_nghiep_chi_nhanh_van_phong_dai_dien.docx",
   "template": "templates/PLI_M71.docx",
   "fields": [
    {
@@ -8505,8 +9221,52 @@ window.FORM_MAPS = {
     "label": "Mã số doanh nghiệp/Số Quyết định thành lập:"
    },
    {
-    "key": "ndd.ngay_cap",
-    "label": "Ngày cấp:"
+    "key": "ds_nddpl_uy_quyen_chu_so_huu.ten_nguoi_dai_dien",
+    "label": "ten_nguoi_dai_dien"
+   },
+   {
+    "key": "ds_nddpl_uy_quyen_chu_so_huu.ngay_sinh",
+    "label": "ngay_sinh"
+   },
+   {
+    "key": "ds_nddpl_uy_quyen_chu_so_huu.gioi_tinh",
+    "label": "gioi_tinh"
+   },
+   {
+    "key": "ds_nddpl_uy_quyen_chu_so_huu.giay_to_so",
+    "label": "giay_to_so"
+   },
+   {
+    "key": "ds_nddpl_uy_quyen_chu_so_huu.giay_to_ngay",
+    "label": "giay_to_ngay"
+   },
+   {
+    "key": "ds_nddpl_uy_quyen_chu_so_huu.giay_to_co_quan",
+    "label": "giay_to_co_quan"
+   },
+   {
+    "key": "ds_nddpl_uy_quyen_chu_so_huu.quoc_tich",
+    "label": "quoc_tich"
+   },
+   {
+    "key": "ds_nddpl_uy_quyen_chu_so_huu.dan_toc",
+    "label": "dan_toc"
+   },
+   {
+    "key": "ds_nddpl_uy_quyen_chu_so_huu.dia_chi",
+    "label": "dia_chi"
+   },
+   {
+    "key": "ds_nddpl_uy_quyen_chu_so_huu.von_duoc_uy_quyen_vnd",
+    "label": "von_duoc_uy_quyen_vnd"
+   },
+   {
+    "key": "ds_nddpl_uy_quyen_chu_so_huu.ty_le",
+    "label": "ty_le"
+   },
+   {
+    "key": "ds_nddpl_uy_quyen_chu_so_huu.ghi_chu",
+    "label": "ghi_chu"
    },
    {
     "key": "von_dieu_le",
@@ -8800,6 +9560,307 @@ window.FORM_MAPS = {
       "tag": "la_nganh_chinh"
      }
     ]
+   },
+   {
+    "id": "nddpl_uy_quyen_chu_so_huu",
+    "table_index": 1,
+    "template_row": 7,
+    "loop": "ds_nddpl_uy_quyen_chu_so_huu",
+    "columns": [
+     {
+      "col": 1,
+      "tag": "ten_nguoi_dai_dien"
+     },
+     {
+      "col": 2,
+      "tag": "ngay_sinh"
+     },
+     {
+      "col": 3,
+      "tag": "gioi_tinh"
+     },
+     {
+      "col": 4,
+      "tag": "giay_to_so"
+     },
+     {
+      "col": 5,
+      "tag": "giay_to_ngay"
+     },
+     {
+      "col": 6,
+      "tag": "giay_to_co_quan"
+     },
+     {
+      "col": 7,
+      "tag": "quoc_tich"
+     },
+     {
+      "col": 8,
+      "tag": "dan_toc"
+     },
+     {
+      "col": 9,
+      "tag": "dia_chi"
+     },
+     {
+      "col": 10,
+      "tag": "von_duoc_uy_quyen_vnd"
+     },
+     {
+      "col": 11,
+      "tag": "ty_le"
+     },
+     {
+      "col": 12,
+      "tag": "chu_ky"
+     },
+     {
+      "col": 13,
+      "tag": "ghi_chu"
+     }
+    ],
+    "header_row": 0
+   }
+  ],
+  "section_specs": [
+   {
+    "kind": "nested-grid",
+    "id": "nddpl_uy_quyen_chu_so_huu",
+    "semantic_key": "ds_nddpl_uy_quyen_chu_so_huu",
+    "section_id": "nddpl_uy_quyen_chu_so_huu",
+    "table_index": 1,
+    "loop": "ds_nddpl_uy_quyen_chu_so_huu",
+    "header_rows": [
+     [
+      {
+       "text": "STT",
+       "rowspan": 2,
+       "colspan": 1,
+       "col_index": 0
+      },
+      {
+       "text": "Tên người đại diện theo pháp luật/người đại diện theo ủy quyền",
+       "rowspan": 2,
+       "colspan": 1,
+       "col_index": 1
+      },
+      {
+       "text": "Ngày, tháng, năm sinh",
+       "rowspan": 2,
+       "colspan": 1,
+       "col_index": 2
+      },
+      {
+       "text": "Giới tính",
+       "rowspan": 2,
+       "colspan": 1,
+       "col_index": 3
+      },
+      {
+       "text": "Số, ngày cấp, cơ quan cấp Giấy tờ pháp lý của cá nhân",
+       "rowspan": 1,
+       "colspan": 3,
+       "col_index": 4
+      },
+      {
+       "text": "Quốc tịch",
+       "rowspan": 2,
+       "colspan": 1,
+       "col_index": 7
+      },
+      {
+       "text": "Dân tộc",
+       "rowspan": 2,
+       "colspan": 1,
+       "col_index": 8
+      },
+      {
+       "text": "Địa chỉ liên lạc",
+       "rowspan": 2,
+       "colspan": 1,
+       "col_index": 9
+      },
+      {
+       "text": "Vốn được ủy quyền",
+       "rowspan": 1,
+       "colspan": 2,
+       "col_index": 10
+      },
+      {
+       "text": "Chữ ký của người đại diện theo pháp luật/người đại diện theo ủy quyền",
+       "rowspan": 2,
+       "colspan": 1,
+       "col_index": 12
+      },
+      {
+       "text": "Ghi chú (nếu có)",
+       "rowspan": 2,
+       "colspan": 1,
+       "col_index": 13
+      }
+     ],
+     [
+      {
+       "text": "Số",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 4
+      },
+      {
+       "text": "Ngày cấp",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 5
+      },
+      {
+       "text": "Cơ quan cấp",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 6
+      },
+      {
+       "text": "VNĐ",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 10
+      },
+      {
+       "text": "Tỷ lệ (%)",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 11
+      }
+     ]
+    ],
+    "header_texts": [
+     [
+      "STT",
+      "Tên người đại diện theo pháp luật/người đại diện theo ủy quyền",
+      "Ngày, tháng, năm sinh",
+      "Giới tính",
+      "Số, ngày cấp, cơ quan cấp Giấy tờ pháp lý của cá nhân",
+      "Quốc tịch",
+      "Dân tộc",
+      "Địa chỉ liên lạc",
+      "Vốn được ủy quyền",
+      "Chữ ký của người đại diện theo pháp luật/người đại diện theo ủy quyền",
+      "Ghi chú (nếu có)"
+     ],
+     [
+      "Số",
+      "Ngày cấp",
+      "Cơ quan cấp",
+      "VNĐ",
+      "Tỷ lệ (%)"
+     ]
+    ],
+    "width": 14,
+    "columns": [
+     {
+      "col_index": 1,
+      "tag": "ten_nguoi_dai_dien",
+      "required": true,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 2,
+      "tag": "ngay_sinh",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 3,
+      "tag": "gioi_tinh",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 4,
+      "tag": "giay_to_so",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 5,
+      "tag": "giay_to_ngay",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 6,
+      "tag": "giay_to_co_quan",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 7,
+      "tag": "quoc_tich",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 8,
+      "tag": "dan_toc",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 9,
+      "tag": "dia_chi",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 10,
+      "tag": "von_duoc_uy_quyen_vnd",
+      "required": false,
+      "input_type": "money",
+      "output_only": false
+     },
+     {
+      "col_index": 11,
+      "tag": "ty_le",
+      "required": false,
+      "input_type": "percent",
+      "output_only": false
+     },
+     {
+      "col_index": 12,
+      "tag": "chu_ky",
+      "required": false,
+      "input_type": "outputOnly",
+      "output_only": true
+     },
+     {
+      "col_index": 13,
+      "tag": "ghi_chu",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     }
+    ],
+    "stt": {
+     "mode": "generated",
+     "col_index": 0
+    },
+    "discriminator": {
+     "tag": "loai_dong",
+     "values": [
+      "ndd_pl",
+      "ndd_uy_quyen"
+     ]
+    },
+    "totals": []
    }
   ]
  },

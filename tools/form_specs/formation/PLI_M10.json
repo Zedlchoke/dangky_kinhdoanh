@@ -1,0 +1,44 @@
+{
+ "form_id": "PLI_M10",
+ "group": "formation",
+ "note": "Danh sach chu so huu huong loi (CSHHL) cua doanh nghiep. Chuyen khai bao inline REBUILD_TABLES['PLI_M10'] sang file spec DUNG DE them cot bi thieu: template production co 11 cot NHUNG KHONG CO cho ke khai QUYEN CHI PHOI. Header mau goc 12 cot (bi glue trong nguon Mau 9, block P216 'STTHọ và tênNgày, tháng, năm sinh...Chủ sở hữu hưởng lợi của doanh nghiệp2...Tỷ lệ sở hữu vốn điều lệTỷ lệ sở hữu cổ phần có quyền biểu quyết3Quyền chi phối4' + chan cot '123456789101112') xac dinh nhom 'Chủ sở hữu hưởng lợi của doanh nghiệp' gom 3 cot con: Tỷ lệ sở hữu vốn điều lệ | Tỷ lệ sở hữu cổ phần có quyền biểu quyết | QUYỀN CHI PHỐI. Chan trang 4 cua mau: 'Nếu doanh nghiệp xác định được chủ sở hữu hưởng lợi của doanh nghiệp theo quy định tại điểm b khoản 1 Điều 17 Nghị định số 168/2025/NĐ-CP thông qua quyền chi phối, doanh nghiệp ghi rõ một trong các quyền chi phối sau: bổ nhiệm, miễn nhiệm hoặc bãi nhiệm...' -> D2.5=A (docs/decision_registry.md packet D2): QUYEN CHI PHOI LA COT RIENG, khong ghi vao Ghi chú.",
+ "gap_nghiepvu": "(a) Thu tu cot: spec giu nguyen thu tu cot production (Giấy tờ pháp lý của cá nhân dung SAU Địa chỉ liên lạc) thay vì thu tu mau goc (Số, ngày cấp, cơ quan cấp Giấy tờ pháp lý của cá nhân dung TRƯỚC Quốc tịch) — viec doi thu tu la rename layout pham vi Lead regen, khong co quyet dinh rieng; gap de owner chot khi regen. (b) ALIAS ten tag: manifest required_columns goi so_ngay_cap_co_quan_cap_gtpl/dia_chi_lien_lac/ngay_thang_nam_sinh/ty_le_so_huu_von_dieule/ty_le_co_phan_bieu_quyet, spec giu tag production so_giay_to/dia_chi/ngay_sinh/ty_le/ty_le_co_phan (migration additive); cot MOI dung dung tag canonical quyen_chi_phoi. (c) Cot 'Quyền chi phối' la text tu do (ghi ro mot trong cac quyen chi phoi theo chan trang 4) — UI chua co danh muc chon san (gap mo cho owner). (d) Template production khong co cot Chữ ký cho bang nay va header mau goc 12 cot cung khong co (cot cuoi la 'Ghi chú (nếu có)') nen D2.4=A KHONG ap dung — khong them cot chu_ky de tranh bia noi dung phap ly. (e) fields cua khai bao inline thieu ghi_chu (cot Ghi chú khong duoc dang ky field) — giu nguyen de khong sduc pham vi lane; owner xem lai khi regen.",
+ "tables": [
+  {
+   "spec": {
+    "id": "ds_cshhl",
+    "kind": "list",
+    "detect": ["stt", "ho va ten", "gioi tinh", "quyen chi phoi"],
+    "stt_tag": true,
+    "cols": [
+     ["^stt$", null],
+     ["ho va ten|ho ten|ten co dong", "ho_ten"],
+     ["sinh|nam sinh", "ngay_sinh"],
+     ["gioi tinh", "gioi_tinh"],
+     ["quoc tich|quoc gia", "quoc_tich"],
+     ["dan toc", "dan_toc"],
+     ["thuong tru|noi o|dia chi", "dia_chi"],
+     ["giay to phap ly|dinh danh|cccd|ma so", "so_giay_to"],
+     ["ty le so huu co phan", "ty_le_co_phan"],
+     ["ty le", "ty_le"],
+     ["quyen chi phoi", "quyen_chi_phoi"],
+     ["ghi chu", "ghi_chu"],
+     ["ky ten|chu ky", "chu_ky"]
+    ],
+    "loop": "ds_cshhl",
+    "fields": ["ho_ten", "ngay_sinh", "gioi_tinh", "quoc_tich", "dan_toc",
+               "dia_chi", "so_giay_to", "ty_le", "ty_le_co_phan",
+               "quyen_chi_phoi"]
+   },
+   "pos": "after",
+   "anchor": "^mau so 10$",
+   "no_default_drops": true,
+   "headers": ["STT", "Họ và tên", "Ngày, tháng, năm sinh", "Giới tính",
+               "Quốc tịch", "Dân tộc", "Địa chỉ liên lạc",
+               "Giấy tờ pháp lý của cá nhân", "Tỷ lệ sở hữu vốn điều lệ (%)",
+               "Tỷ lệ sở hữu cổ phần có quyền biểu quyết (%)", "Quyền chi phối",
+               "Ghi chú"],
+   "notes": "P2A (2026-08-27): khac biet so voi khai bao inline = (1) them cot 11 'Quyền chi phối' gan the {quyen_chi_phoi} (D2.5=A, NĐ 168/2025 điểm b khoản 1 Điều 17 qua chân trang 4 của mẫu); (2) detect them token 'quyen chi phoi' de chan som truong hop header thieu cot. Khong doi cot nao khac, khong doi thu tu. QUYET DINH ap dung: D2.5=A (cot rieng, khong gop vao Ghi chú); D2.4=A khong ap dung (nguon khong co cot chu ky cho bang nay) — docs/decision_registry.md packet D2; evidence: census manifest section ds_cshhl_doanh_nghiep + nguon DN_PL1_Mau_09_*.docx P216 (header glue Mau 10) + chan trang 4. Nguon Mau 10 khong con paragraph header nao (bang mat toan bo khi convert) nen khong can trim/drop; no_default_drops=true an toan theo convention R3B1, da xac minh REBUILD_DROP_DEFAULT khong khop paragraph nao trong nguon. LUU Y ky thuat: entry kind=list khong dung co che legal_status.blocked cua loader (chi cho 3 kind moi) nen quyet dinh duoc ghi o notes nay."
+  }
+ ]
+}

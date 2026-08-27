@@ -1,0 +1,42 @@
+{
+ "form_id": "PLI_M06",
+ "group": "formation",
+ "note": "Danh sach thanh vien cong ty TNHH hai thanh vien tro len. Chuyen khai bao inline REBUILD_TABLES['PLI_M06'] sang file spec (loader uu tien file JSON) DUNG DE them cot bi thieu: hien trang template co 12 cot vat ly nhung cot 10 'Thời hạn góp vốn' KHONG duoc gan the (manifest loop_audit.missing_cols=[{col:10,header:'Thời hạn góp vốn'}], status=partial_columns) -> ke khai khong duoc. D2.2=A (docs/decision_registry.md packet D2): GIU KIEN TRUC PHANG, bo sung cot thieu; khong tach nested I.a ca nhan / I.b to chuc o wave nay (do la D2.2=B, thuoc roadmap nested-grid). Ten tag giu nguyen tag production dang chay (ho_ten/ngay_sinh/so_cccd/dia_chi/von_dong_gop/ty_le_von/chu_ky) de migration draft la ADDITIVE; chi cot MOI dung tag canonical cua manifest (thoi_han_gop_von).",
+ "gap_nghiepvu": "(a) So voi header mau goc 14 cot (bi glue trong nguon Mau 9, block 'STTTên thành viênNgày, tháng, năm sinh...') tap cot phang wave-1 nay VAN THIEU cot 'Ghi chú (nếu có)' va nhom 'Loại tài sản, số lượng, giá trị tài sản góp vốn' (2 cot con Số lượng | Giá trị) + cau truc I.a/I.b — chua co quyet dinh nguon cho wave phang (D2.2=B) nen KHAI THIEU (absence, khong mislabel), cho owner/Lane B2 roadmap nested. (b) ALIAS ten tag: manifest required_columns goi phan_von_gop/ty_le_von_gop/dia_chi_lien_lac/so_gtpl/ngay_thang_nam_sinh/chu_ky_output_only, spec giu tag production von_dong_gop/ty_le_von/dia_chi/so_cccd/ngay_sinh/chu_ky (migration additive) — owner muon doi ten canonical thi phai co buoc migration draft rieng. (c) Chu thich 5 cua mau (nguoi dai dien theo phap luat: 'ghi thông tin của tất cả người đại diện...') la mot bo field rieng (ndd.*) khong thuoc bang nay. (d) Cot moi thoi_han_gop_von CHUA co metadata kieu o runtime: GRID_META.ds_thanh_vien bi test_form_grid_meta.js ghim columns.length===10 va getGridMeta({docId:'PLI_M06',loop:'ds_thanh_vien'})===GRID_META.ds_thanh_vien (check 10/11) -> khong the them cot/FORM_GRID_META ma khong sua 2 assertion do (ngoai ownership lane P2A). Den khi do renderer tra ve text input mac dinh cho cot nay (van nhap/duoc xuat), chi thieu rule kieu.",
+ "tables": [
+  {
+   "spec": {
+    "id": "ds_thanh_vien_tnhh",
+    "kind": "list",
+    "detect": ["stt", "ten thanh vien", "gioi tinh", "thoi han gop von"],
+    "stt_tag": true,
+    "cols": [
+     ["^stt$", null],
+     ["ho ten|ten thanh vien", "ho_ten"],
+     ["dinh danh|cccd", "so_cccd"],
+     ["sinh|nam sinh", "ngay_sinh"],
+     ["gioi tinh", "gioi_tinh"],
+     ["quoc tich", "quoc_tich"],
+     ["dan toc", "dan_toc"],
+     ["thuong tru|noi o|dia chi", "dia_chi"],
+     ["phan von gop|dong gop von|von dong gop", "von_dong_gop"],
+     ["ty le", "ty_le_von"],
+     ["thoi han gop von", "thoi_han_gop_von"],
+     ["ky ten|chu ky", "chu_ky"]
+    ],
+    "loop": "ds_thanh_vien",
+    "fields": ["ho_ten", "so_cccd", "ngay_sinh", "gioi_tinh", "quoc_tich",
+               "dan_toc", "dia_chi", "von_dong_gop", "ty_le_von",
+               "thoi_han_gop_von"]
+   },
+   "pos": "before",
+   "anchor": "thong tin ve giay chung nhan dang ky dau tu",
+   "no_default_drops": true,
+   "headers": ["STT", "Tên thành viên", "Ngày, tháng, năm sinh", "Giới tính",
+               "Số định danh cá nhân/Giấy tờ pháp lý của cá nhân", "Quốc tịch",
+               "Dân tộc", "Địa chỉ liên lạc/Nơi thường trú", "Phần vốn góp (VNĐ)",
+               "Tỷ lệ vốn góp (%)", "Thời hạn góp vốn", "Chữ ký"],
+   "notes": "P2A (2026-08-27): header GIU NGUYEN text production (khong doi thu tu) — khac biet duy nhat so voi khai bao inline la cot 10 'Thời hạn góp vốn' duoc gan the {thoi_han_gop_von}; detect them token 'thoi han gop von' de chan som truong hop header thieu cot. D2.4=A: cot Chữ ký gan {chu_ky} va la outputOnly tai GRID_META.ds_thanh_vien (khong doi). QUYET DINH ap dung: D2.2=A (giu kien truc phang, bo sung cot thieu); D2.7 khong ap dung cho bang nay (min 2 thanh vien da co san tu GRID_META.ds_thanh_vien.minRows=2) — docs/decision_registry.md packet D2; evidence: census manifest app/data/table_specs/manifest.json section ds_thanh_vien_tnhh (loop_audit.missing_cols col 10 'Thời hạn góp vốn') + nguon DN_PL1_Mau_06_*.docx. Nguon Mau 6 khong con paragraph header nao (bang mat toan bo khi convert) nen khong can trim/drop; no_default_drops=true an toan theo convention R3B1 va da xac minh REBUILD_DROP_DEFAULT khong khop paragraph nao trong nguon. LUU Y ky thuat: entry kind=list khong dung co che legal_status.blocked cua loader (chi cho 3 kind moi) nen quyet dinh duoc ghi o notes nay."
+  }
+ ]
+}

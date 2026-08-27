@@ -1,0 +1,63 @@
+{
+  "form_id": "PLI_M15",
+  "group": "change",
+  "note": "Thay doi chu so huu cong ty TNHH mot thanh vien. Luoi 'Thong tin ve nguoi dai dien theo phap luat/nguoi dai dien theo uy quyen cua chu so huu' mat khi convert: source chi con 1 paragraph ghep (blocks B49) dung TRUOC dong cam ket cua mau ('Trường hợp hồ sơ đăng ký doanh nghiệp hợp lệ...'). Header cung ho voi pli_m02/nddpl_uy_quyen_chu_so_huu nen ap DUNG policy row-contract da review o FORM_TABLE_CONTRACTS['PLI_M02'] (D2.1=A mot policy chung cho M02/M13/M15).",
+  "gap_nghiepvu": "(a) 2 nhom cot cuoi header ghep B49 - 'Tổng giá trị vốn được đại diện (bằng số; VNĐ và giá trị tương đương...)' va 'Thời điểm đại diện phần vốn' - CHUA du evidence de khai tag canonical -> KHAI THIEU (absence, khong mislabel), dung gap da ghi cua FORM_TABLE_CONTRACTS['PLI_M02'], cho owner/B3 mo khoa. (b) Chu thich nguon 2 ('Nếu cột số 5 kê khai Số định danh cá nhân thì không phải kê khai các cột số 6, 7') dinh nghia rule dieu kien giua giay_to_so/giay_to_ngay/giay_to_co_quan; validator cross-field tuong ung chua co trong contract v1 -> gap mo. (c) min/max rows (D2.7) khong co truong trong generator spec v1: ghi form_maps side (min_rows 1 / max_rows null tai FORM_TABLE_CONTRACTS['PLI_M15']). (d) Vuon duoc uy quyen: theo policy contract M02, 'Vốn được ủy quyền' la nhom gop 2 cot con (VNĐ | Tỷ lệ (%)); bang ke khai ty le % chi khi uy quyen (chu thich 4) thuoc rule UI/validation.",
+  "tables": [
+    {
+      "spec": {
+        "id": "ndd_pl_uy_quyen_chu_so_huu_moi",
+        "kind": "nested-grid",
+        "section_id": "ndd_pl_uy_quyen_chu_so_huu_moi",
+        "semantic_key": "ds_nddpl_uy_quyen_chu_so_huu_moi",
+        "loop": "ds_nddpl_uy_quyen_chu_so_huu_moi",
+        "stt": {"mode": "generated", "col_index": 0},
+        "header_rows": [
+          [
+            {"text": "STT", "rowspan": 2},
+            {"text": "Tên người đại diện theo pháp luật/người đại diện theo ủy quyền", "rowspan": 2},
+            {"text": "Ngày, tháng, năm sinh", "rowspan": 2},
+            {"text": "Giới tính", "rowspan": 2},
+            {"text": "Số, ngày cấp, cơ quan cấp Giấy tờ pháp lý của cá nhân", "colspan": 3},
+            {"text": "Quốc tịch", "rowspan": 2},
+            {"text": "Dân tộc", "rowspan": 2},
+            {"text": "Địa chỉ liên lạc", "rowspan": 2},
+            {"text": "Vốn được ủy quyền", "colspan": 2},
+            {"text": "Chữ ký của người đại diện theo pháp luật/người đại diện theo ủy quyền", "rowspan": 2},
+            {"text": "Ghi chú (nếu có)", "rowspan": 2}
+          ],
+          [
+            {"text": "Số"}, {"text": "Ngày cấp"}, {"text": "Cơ quan cấp"},
+            {"text": "VNĐ"}, {"text": "Tỷ lệ (%)"}
+          ]
+        ],
+        "columns": [
+          {"header": "Tên người đại diện theo pháp luật/người đại diện theo ủy quyền", "tag": "ten_nguoi_dai_dien", "col_index": 1, "input_type": "text", "required": true},
+          {"header": "Ngày, tháng, năm sinh", "tag": "ngay_sinh", "col_index": 2, "input_type": "text"},
+          {"header": "Giới tính", "tag": "gioi_tinh", "col_index": 3, "input_type": "text"},
+          {"header": "Số", "tag": "giay_to_so", "col_index": 4, "input_type": "text"},
+          {"header": "Ngày cấp", "tag": "giay_to_ngay", "col_index": 5, "input_type": "text"},
+          {"header": "Cơ quan cấp", "tag": "giay_to_co_quan", "col_index": 6, "input_type": "text"},
+          {"header": "Quốc tịch", "tag": "quoc_tich", "col_index": 7, "input_type": "text"},
+          {"header": "Dân tộc", "tag": "dan_toc", "col_index": 8, "input_type": "text"},
+          {"header": "Địa chỉ liên lạc", "tag": "dia_chi", "col_index": 9, "input_type": "text"},
+          {"header": "VNĐ", "tag": "von_duoc_uy_quyen_vnd", "col_index": 10, "input_type": "money"},
+          {"header": "Tỷ lệ (%)", "tag": "ty_le", "col_index": 11, "input_type": "percent"},
+          {"header": "Chữ ký của người đại diện theo pháp luật/người đại diện theo ủy quyền", "tag": "chu_ky", "col_index": 12, "input_type": "outputOnly", "output_only": true},
+          {"header": "Ghi chú (nếu có)", "tag": "ghi_chu", "col_index": 13, "input_type": "text"}
+        ],
+        "discriminator": {"tag": "loai_dong", "values": ["ndd_pl", "ndd_uy_quyen"]},
+        "totals": []
+      },
+      "pos": "after",
+      "anchor": "- thong tin ve nguoi dai dien theo phap luat/nguoi dai dien theo uy quyen cua chu so huu:",
+      "no_default_drops": true,
+      "legal_status": {
+        "blocked": false,
+        "ref": "D2.1=A (discriminator loai_dong cho M02/M13/M15), D2.4=A (chu_ky outputOnly), D2.7=min1/max null - docs/decision_registry.md packet D2; evidence: census manifest section ndd_pl_uy_quyen_chu_so_huu_moi + blocks PLI_M15.json B48-B49"
+      },
+      "trim": ["^sttten nguoi dai dien theo phap luat"],
+      "keep_from": "Trường hợp hồ sơ đăng ký doanh nghiệp hợp lệ"
+    }
+  ]
+}

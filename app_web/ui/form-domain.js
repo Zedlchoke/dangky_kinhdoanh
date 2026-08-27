@@ -1162,20 +1162,22 @@
       return draft;
     }
     if (!draft.store) return null; // draft không hiểu -> bỏ qua
-    var up = {
+    /* Start with shallow copies of every legacy object.  Migration is
+     * additive: fields introduced by newer/unknown producers must survive
+     * even when this module does not understand them yet. */
+    var up = Object.assign({}, draft, {
       v: 2,
       caseId: draft.caseId != null ? draft.caseId : null,
       checkedForms: Array.isArray(draft.checkedForms) ? draft.checkedForms.slice() : [],
       activeDocId: null,
       autoSum: !!draft.autoSum,
       viewState: {},
-      store: {
-        values: Object.assign({}, draft.store.values),
-        checks: Object.assign({}, draft.store.checks),
-        loops: draft.store.loops || {}
-      },
       savedAt: null
-    };
+    });
+    up.store = Object.assign({}, draft.store);
+    up.store.values = Object.assign({}, draft.store.values);
+    up.store.checks = Object.assign({}, draft.store.checks);
+    up.store.loops = draft.store.loops || {};
     normalizeStoreLoops(up.store);
     return up;
   }

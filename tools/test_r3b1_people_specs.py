@@ -296,10 +296,18 @@ def t_trim_matches_glue():
                if ext["specs_by_id"][e["spec"]]["kind"] == "nested-grid"][0]
         pats = ent.get("trim") or []
         assert pats, "%s: header glue cần trim/keep_from" % fid
-        raws = block_texts(blocks_json(fid)["blocks"])
+        # [Lead sync sau regen R3B1] trim chạy lúc REBUILD trên NGUỒN
+        # (build_form_maps.process_form -> find_source), trước khi paragraph
+        # glue bị thay bằng w:tbl; sau đó cả app/templates lẫn blocks đều là
+        # artifact đã rebuild nên không còn glue (sandbox tự chứng minh qua
+        # assert leftovers rỗng). Tra đúng stage nguồn mà generator dùng.
+        src = bfm.find_source(fid)
+        assert src is not None, "%s: không tìm thấy nguồn docx" % fid
+        doc = docx.Document(str(src))
+        raws = [p.text for p in doc.paragraphs]
         hits = [i for i, t in enumerate(raws) if any(re.match(p, fold(t))
                                                      for p in pats)]
-        assert len(hits) == 1, "%s: trim khớp %d paragraph (%r)" % (
+        assert len(hits) == 1, "%s: trim khớp %d paragraph nguồn (%r)" % (
             fid, len(hits), hits)
         raw = raws[hits[0]]
         m = re.search(keep, raw)
@@ -443,12 +451,13 @@ def t_blocked_pli_m72():
     assert len(raw["tables"]) == 1, "PLI_M72 đã thêm entry ngoài 5 occurrence ngành"
     assert "section_cond" in raw, "mất section_cond (fixture selector phụ thuộc)"
     blocks = blocks_json("PLI_M72")["blocks"]
-    audited = {109: "sttten co dongquoc tich", 111: "sttten co dongquoc tich"}
+    # [Lead sync sau L1FIX regen] index trượt +2 (heading 8./9. tách riêng) —
+    # tra glue header theo nội dung thay vì index tuyệt đối.
     folds = [fold("".join(str(r.get("text", "")) for r in (b.get("runs") or [])))
              for b in blocks]
-    for idx, prefix in audited.items():
-        assert folds[idx].startswith(prefix), \
-            "B%03d lệch evidence: %r" % (idx, folds[idx][:40])
+    glued = [f for f in folds if f.startswith("sttten co dongquoc tich")]
+    assert len(glued) >= 2, \
+        "mất evidence glue header cổ đông (expect >=2, có %d)" % len(glued)
     data = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
     sec = {s["section_id"]: s for f in data["forms"] if f["form_id"] == "PLI_M72"
            for s in f["sections"]}

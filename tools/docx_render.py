@@ -304,9 +304,49 @@ def write_rendered(template_path: str | os.PathLike, data: dict,
 
 # ---------------------------------------------------------------------------
 # Totals recompute lúc export (D1.1=A — ô tổng outputOnly, không tin stored)
+#
+# Lane W2 — D1.4=A: "giá trị loại cổ phần = số lượng × mệnh giá" là projection,
+# nên ngoài `sum(<tag>)` lớp này nhận thêm `product(<tag>[, <tag>...])`. Grammar
+# được nới tương ứng ở tools/form_specs/schema/table_kinds.schema.json (mục
+# fixed_matrix.totals); phía JS đối ứng là productFormula() trong
+# app_web/ui/fixed-matrix.js.
+#
+# Ngữ nghĩa product() chốt cho CẢ HAI phía:
+#   1. op viết thường đúng chữ (`sum`|`product`) — 'SUM(' vẫn bị coi là formula
+#      lạ để hai engine không lệch nhau; `sum` giữ nguyên arity 1 tag như cũ;
+#   2. quét các dòng input (loại dòng tổng/output_only), mỗi dòng nhân các ô số
+#      theo đúng thứ tự tag khai báo, rồi CỘNG DỒN tích từng dòng vào ô tổng;
+#   3. dòng KHÔNG kê khai gì (rỗng ở mọi thừa số) bị bỏ qua — như sum đã bỏ qua
+#      ô rỗng, một loại cổ phần không dùng không được tính thành 0 đồng;
+#   4. dòng ĐÃ kê khai mà THIẾU >= 1 thừa số -> không suy ra được con số pháp
+#      lý nên ô tổng bị coi là KHÔNG XÁC ĐỊNH và in TRỐNG (''), tuyệt đối KHÔNG
+#      thay bằng '0' (trống nghĩa là "chưa đủ dữ liệu nguồn");
+#   5. không có dòng nào đủ thừa số (ví dụ draft trắng tinh) -> cũng TRỐNG;
+#   6. parse/format vẫn dùng number_value()/format_total() hiện có; tích có thể
+#      âm/thập phân, việc chặn số âm thuộc validator đầu vào (input_type=money);
+#   7. mã lỗi KHÔNG đổi tên, KHÔNG thêm mới: FORMULA_UNSUPPORTED và
+#      EXPORT_TOTALS_RECOMPUTE_CONFLICT như trước; mã chốt đường export thật
+#      vẫn thuộc về exportLoopsStrict (app_web/ui/app.js), lớp này không chạm.
 # ---------------------------------------------------------------------------
 
-_TOTALS_FORMULA_RE = re.compile(r"^sum\(\s*([A-Za-z0-9_]+)\s*\)$")
+_TOTALS_FORMULA_RE = re.compile(
+    r"^(sum|product)\(\s*"
+    r"([A-Za-z0-9_]+(?:\s*,\s*[A-Za-z0-9_]+)*)\s*\)$")
+
+
+def _parse_totals_formula(formula: str) -> tuple[str | None, list[str]]:
+    """Đọc formula tổng -> (op, [tag...]); op=None nếu không thuộc grammar.
+
+    `sum(<tag>)` : đúng 1 tag (hành vi cũ, không đổi);
+    `product(a[, b...])`: >=1 tag, phân tách bởi dấu phẩy.
+    """
+    match = _TOTALS_FORMULA_RE.match(str(formula or ""))
+    if not match:
+        return None, []
+    tags = [part.strip() for part in match.group(2).split(",")]
+    if match.group(1) == "sum" and len(tags) != 1:
+        return None, []      # sum nhiều tham số chưa từng hợp lệ ở v1
+    return match.group(1), tags
 
 
 class ExportTotalsError(ValueError):
@@ -379,6 +419,9 @@ def recompute_totals(data: dict, tables_meta: list,
                      *, strict: bool = True) -> list[dict]:
     """Tính lại mọi tổng khai báo trong tables_meta từ chính các ô dữ liệu.
 
+    Formula nhận ở v1 + mở rộng lane W2 (D1.4=A): `sum(<tag>)` và
+    `product(<tag>[, <tag>...])` — ngữ nghĩa ghi chú ngay trên
+    _TOTALS_FORMULA_RE, đối ứng phía JS là app_web/ui/fixed-matrix.js.
     Trả về report list [{"semantic_key","row","formula","target","stored",
     "computed"}]; raise ExportTotalsError khi strict=True và có xung đột.
     Chỉ hỗ trợ kind "fixed-matrix"; kind khác (nested-grid/output-table) hiện
@@ -401,10 +444,12 @@ def recompute_totals(data: dict, tables_meta: list,
                       if not r.get("output_only")
                       and str(r["id"]) not in total_row_ids]
         for total in meta.get("totals", []) or []:
-            match = _TOTALS_FORMULA_RE.match(str(total.get("formula") or ""))
+            op, formula_tags = _parse_totals_formula(
+                str(total.get("formula") or ""))
             target = "%s.%s.%s" % (sem, total.get("target_row"),
                                    total.get("target_tag"))
-            if not match or match.group(1) not in column_tags:
+            # tag lạ (không thuộc columns) vẫn là formula không hỗ trợ như v1
+            if op is None or any(t not in column_tags for t in formula_tags):
                 if strict:
                     raise ExportTotalsError([{
                         "code": "FORMULA_UNSUPPORTED", "semantic_key": sem,
@@ -415,16 +460,47 @@ def recompute_totals(data: dict, tables_meta: list,
                     "row": total.get("target_row"), "detail": "formula %r"
                     % (total.get("formula"),)})
                 continue
-            tag = match.group(1)
-            acc = 0.0
+
             seen_any = False
-            for rid in input_rows:
-                val = number_value(_lookup(data, "%s.%s.%s" % (sem, rid, tag)))
-                if val is None:
-                    continue
-                seen_any = True
-                acc += val
-            computed = format_total(acc)
+            if op == "sum":
+                # hành vi cũ: bỏ qua ô rỗng, tổng của "không kê khai" là 0
+                acc = 0.0
+                for rid in input_rows:
+                    val = number_value(
+                        _lookup(data, "%s.%s.%s" % (sem, rid, formula_tags[0])))
+                    if val is None:
+                        continue
+                    seen_any = True
+                    acc += val
+                computed = format_total(acc)
+            else:
+                # product (D1.4=A): tích các cột thừa số theo từng dòng rồi cộng
+                # dồn; dòng khai báo thiếu thừa số -> tổng TRỐNG, KHÔNG thay 0.
+                acc = 0.0
+                complete_rows = 0
+                indeterminate = False
+                for rid in input_rows:
+                    missing = 0
+                    row_product = 1.0
+                    for tag in formula_tags:
+                        val = number_value(
+                            _lookup(data, "%s.%s.%s" % (sem, rid, tag)))
+                        if val is None:
+                            missing += 1
+                            continue
+                        row_product *= val
+                    if missing == len(formula_tags):
+                        continue          # dòng không kê khai gì: bỏ như sum
+                    if missing:
+                        # dòng có khai báo mà thiếu thừa số -> không suy ra được
+                        indeterminate = True
+                        break
+                    complete_rows += 1
+                    seen_any = True
+                    acc += row_product
+                computed = ("" if indeterminate or not complete_rows
+                            else format_total(acc))
+
             stored_raw = _lookup(data, target)
             stored = "" if stored_raw is None else str(stored_raw).strip()
             record = {
@@ -435,9 +511,15 @@ def recompute_totals(data: dict, tables_meta: list,
                 "had_input": seen_any,
             }
             report.append(record)
-            stored_num = number_value(stored)
-            if stored and stored_num is not None and \
-                    abs(stored_num - round(acc, 4)) > 1e-9:
+            mismatch = False
+            if computed == "":
+                # tổng trống mà draft còn giữ số -> vẫn là xung đột phải nêu ra
+                mismatch = bool(stored)
+            else:
+                stored_num = number_value(stored)
+                mismatch = bool(stored) and stored_num is not None and \
+                    abs(stored_num - round(acc, 4)) > 1e-9
+            if mismatch:
                 problems.append({
                     "code": "EXPORT_TOTALS_RECOMPUTE_CONFLICT",
                     "semantic_key": sem, "row": total.get("target_row"),

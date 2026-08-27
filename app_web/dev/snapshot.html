@@ -38,6 +38,16 @@
   <span id="snap-flags"></span><span id="snap-err"></span></div>
 <main id="pages"></main>
 
+<!-- P2 R2: nạp 3 platform module như index.html (shim CommonJS) để dispatcher
+     kind mới hoạt động trong harness visual -->
+<script>window.__P2_TABLES__={};window.module={exports:{}};</script>
+<script src="/app_web/ui/fixed-matrix.js"></script>
+<script>(function(){var e=window.module&&window.module.exports;if(e&&!Array.isArray(e)){window.__P2_TABLES__.FixedMatrix=e;}delete window.module;})();</script>
+<script>window.module={exports:{}};</script>
+<script src="/app_web/ui/nested-grid.js"></script>
+<script>(function(){var e=window.module&&window.module.exports;if(e&&!Array.isArray(e)){window.__P2_TABLES__.NestedGrid=e;}delete window.module;})();</script>
+<script src="/app_web/ui/output-table.js"></script>
+<script>window.P2Tables=window.__P2_TABLES__;if(window.OutputTable){window.P2Tables.OutputTable=window.OutputTable;}</script>
 <script src="/app_web/ui/render.js"></script>
 <script src="/app_web/ui/form-domain.js"></script>
 <script>
@@ -110,7 +120,10 @@
       fieldMeta: fieldMeta || null,
       gridMeta: gridMetaForDoc(docId),
       flags: flags,
-      selectorHtml: selHtml
+      selectorHtml: selHtml,
+      /* P2 R2: dispatcher kind mới — truyền contract registry thật như app.js */
+      sectionContracts: (FD && typeof FD.sectionContractsOf === 'function')
+        ? FD.sectionContractsOf(docId) : []
     });
     var pages = document.getElementById('pages');
     pages.innerHTML = '';

@@ -177,7 +177,22 @@ column-level projection formula; case-sensitivity sum.
 **Blocker còn mở (owner, không chặn lane khác):** M09 (D3), PLII_M02 member grids
 (ghim occurrence), M72 N2–N5, D5.2 canonical thuế PLII_M02, N-tail groups
 (Tổng giá trị/Thời điểm), D6.1 evidence M56, D6.3 min/max, D6.4 max/placeholder,
-M03/M04/M05 bản gốc. **Visual re-shoot 8 form P2:** chạy riêng sau checkpoint.
+M03/M04/M05 bản gốc.
+
+### Visual re-shoot P2 @ fc8b5e0→b839fa6 (2026-08-28)
+
+| Vòng | Kết quả | Evidence |
+|---|---|---|
+| Re-shoot 9 chủ thể (8 form regen + M72@dntn) | **FAIL** — bắt 2 regression do wire 516b22a: ISS-1 (M02 §7/§8 endMatch:null → span EOF nuốt section 8–12) + ISS-3 (M01 matchRole sai, contract fail-close mất totals computed) | report.json `gates` + 9 PNG `p2reshoot/` |
+| Fix 1 (5f73f10) | endMatch thật cho M02 §7/§8; M01 anchor role body + endMatch; REG gate renderBlocks thật (bắt marker/khoảng trống) | test_p2c 64/0; runner 38/0/0 |
+| Re-verify 1 | ISS-1/3 hết; còn ISS-5 (builder fixed-matrix ăn heading section — M03 gap có sẵn từ R2) | report.json `reverify` |
+| Fix 2 (b839fa6) | render.js: block anchor fixed-matrix giữ hiển thị (theo kind); REG +assert heading đúng 1 lần ×3 form | test_p2c 66/0; runner 38/0/0 |
+| Re-verify 2 | **RESHOOT_PASS 5/5** — heading đúng vị trí/đúng 1 lần, 0 marker, không tràn; ISS-2 được fix 2 xử lý; ghi chú nhỏ còn mở: M01 header là td (semantics bảng, để P5) | report.json `reverify2` + `final_verdict` |
+
+**Ghi chú quy trình:** re-shoot bắt regression do chính Lead wire — đúng lý do
+PLAN bắt visual evidence sau mọi regen; Production fix + REG gate đi cặp.
+
+## R3–R7 (khung — chi tiết hóa khi mở wave)
 
 ## R3–R7 (khung — chi tiết hóa khi mở wave)
 

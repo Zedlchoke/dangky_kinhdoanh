@@ -1521,6 +1521,9 @@
         var tag = cfg.tag || (m ? m[1].trim() : null);
         var expected = cfg.equals != null ? Number(cfg.equals) :
           (cfg.value != null ? Number(cfg.value) : null);
+        // percentSum không khai mốc -> mặc định đúng 100% (mệnh đề phổ biến
+        // nhất của bảng tỷ lệ; ghi rõ để rule thiếu dữ liệu vẫn có nghĩa).
+        if (sugarPercent && expected == null) expected = 100;
         var vsKey = cfg.valueKey || null;
         if (!tag || !op) return;
         if (String(op) === '=') op = '==';

@@ -487,6 +487,14 @@ section('5. validation: severity contract + tổng projection');
   check('F2: section chưa kê khai -> không sinh lỗi giả',
     FD.validateSectionEntry('PLI_M03', entry, emptyStore()).length === 0);
 
+  // 5c'. shape rút gọn: percentSum không khai equals vẫn ngầm định ==100
+  const slim = JSON.parse(JSON.stringify(entry));
+  slim.spec.cross_field_rules = [{ type: 'percentSum', tag: 'ty_le' }];
+  check('cross-field: percentSum thiếu equals -> ngầm định ==100 (warning)',
+    FD.validateSectionEntry('PLI_M03', slim, pct90)
+      .some(e => e.code === 'PERCENT_SUM' && e.severity === 'warning'));
+  delete slim.spec.cross_field_rules;
+
   // 5d. cross-field đối chiếu vốn điều lệ: blocking đúng severity contract
   const mismatch = emptyStore({ [C('von_tu_nhan', 'so_tien_vnd_va_tuong_duong')]: '60.000.000',
     'von_dieu_le': '50.000.000' });

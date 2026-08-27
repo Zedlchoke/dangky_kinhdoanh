@@ -170,6 +170,11 @@
         { tag: 'gioi_tinh', type: 'text' },
         { tag: 'so_cccd', type: 'text' },
         { tag: 'quoc_tich', type: 'text' },
+        /* P2A (D2.3=A): cột Dân tộc của PLI_M07 trước đây không được gắn the
+         * trong khai báo inline (manifest loop_audit.missing_cols col 6) ->
+         * spec tools/form_specs/formation/PLI_M07.json đã gắn {dan_toc};
+         * khai metadata tại đây để cột không rơi về text mặc định. */
+        { tag: 'dan_toc', type: 'text' },
         { tag: 'dia_chi', type: 'text' },
         { tag: 'so_co_phan', type: 'money' },
         { tag: 'ty_le', type: 'percent' },
@@ -216,6 +221,13 @@
         { tag: 'so_giay_to', type: 'text' },
         { tag: 'ty_le', type: 'percent' },
         { tag: 'ty_le_co_phan', type: 'percent' },
+        /* P2A (D2.5=A, NĐ 168/2025 điểm b khoản 1 Điều 17 qua chân trang 4
+         * Mẫu 10): QUYỀN CHI PHỐI là cột riêng của nhóm "Chủ sở hữu hưởng lợi
+         * của doanh nghiệp" (3 cột con: Tỷ lệ sở hữu vốn điều lệ | Tỷ lệ sở
+         * hữu cổ phần có quyền biểu quyết | Quyền chi phối), KHÔNG ghi vào
+         * Ghi chú. Spec tools/form_specs/formation/PLI_M10.json thêm cột
+         * {quyen_chi_phoi}; text tự do (ghi rõ một trong các quyền chi phối). */
+        { tag: 'quyen_chi_phoi', type: 'text' },
         { tag: 'ghi_chu', type: 'text' }
       ],
       duplicateKeys: ['so_giay_to', 'ma_so_dn'],
@@ -366,37 +378,41 @@
      * trùng đúng biến thể của nó (valueOf). KHÔNG còn cơ chế INTERIM
      * minFilledRows: draft cũ chưa có selector -> mọi grid inactive và
      * export bị chặn bởi SELECTOR_REQUIRED cho tới khi người dùng chọn.
-     * required:false/minRows:0 giữ nguyên hiện trạng (không tự suy thêm
-     * rule pháp lý ngoài quyết định 5 loại hình đã chốt). */
+     * D7.3=A (docs/decision_registry.md packet D7, wave P2A 2026-08-27):
+     * bảng ngành của phần ĐƯỢC CHỌN bắt buộc >= 1 ngành khi công bố thành
+     * lập -> required:true + minRows:1. required chặn 0 dòng dữ liệu
+     * (INDUSTRY_REQUIRED), minRows là rào cản thứ hai khi có dòng nhưng
+     * chưa đủ (validateGridLoop); grid KHÔNG được chọn vẫn im hoàn toàn
+     * nhờ activeWhen (không sinh lỗi giả). */
     'PLI_M72': {
       loops: {
         ds_nganh_dntn: mkGrid(GRID_META.ds_nganh, {
           label: 'Danh sách ngành nghề kinh doanh (Doanh nghiệp tư nhân)',
-          required: false, minRows: 0,
+          required: true, minRows: 1,
           activeWhen: { valueOf: { key: 'dn.loai_hinh', equals: ['DNTN'] } },
           semanticKey: 'ds_nganh_dntn', syncGroup: 'ds_nganh_pli_m72'
         }),
         ds_nganh_tnhh_1tv: mkGrid(GRID_META.ds_nganh, {
           label: 'Danh sách ngành nghề kinh doanh (Công ty TNHH một thành viên)',
-          required: false, minRows: 0,
+          required: true, minRows: 1,
           activeWhen: { valueOf: { key: 'dn.loai_hinh', equals: ['TNHH_1TV'] } },
           semanticKey: 'ds_nganh_tnhh_1tv', syncGroup: 'ds_nganh_pli_m72'
         }),
         ds_nganh_tnhh_2tv: mkGrid(GRID_META.ds_nganh, {
           label: 'Danh sách ngành nghề kinh doanh (Công ty TNHH hai thành viên trở lên)',
-          required: false, minRows: 0,
+          required: true, minRows: 1,
           activeWhen: { valueOf: { key: 'dn.loai_hinh', equals: ['TNHH_2TV'] } },
           semanticKey: 'ds_nganh_tnhh_2tv', syncGroup: 'ds_nganh_pli_m72'
         }),
         ds_nganh_ctcp: mkGrid(GRID_META.ds_nganh, {
           label: 'Danh sách ngành nghề kinh doanh (Công ty cổ phần)',
-          required: false, minRows: 0,
+          required: true, minRows: 1,
           activeWhen: { valueOf: { key: 'dn.loai_hinh', equals: ['CTCP'] } },
           semanticKey: 'ds_nganh_ctcp', syncGroup: 'ds_nganh_pli_m72'
         }),
         ds_nganh_dhdn: mkGrid(GRID_META.ds_nganh, {
           label: 'Danh sách ngành nghề kinh doanh (Công ty hợp danh)',
-          required: false, minRows: 0,
+          required: true, minRows: 1,
           activeWhen: { valueOf: { key: 'dn.loai_hinh', equals: ['DHDN'] } },
           semanticKey: 'ds_nganh_dhdn', syncGroup: 'ds_nganh_pli_m72'
         })
@@ -482,6 +498,70 @@
           label: 'Thông tin về các thành viên hộ gia đình đăng ký hộ kinh doanh (cấp đổi/đăng ký lại)',
           semanticKey: 'tv_hgd_cap_doi'
         })
+      }
+    },
+    /* Wave P2A (2026-08-27): PLI_M13 - NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT SAU KHI
+     * THAY ĐỔI (census manifest section ndd_pl_sau_thay_doi, kind
+     * editable-grid, status missing_grid; spec rebuild
+     * tools/form_specs/change/PLI_M13.json). Chân trang 2 của Mẫu 13: "Ghi
+     * thông tin của TẤT CẢ người đại diện theo pháp luật trong trường hợp
+     * sau khi thay đổi công ty có nhiều hơn 01 người đại diện theo pháp
+     * luật" -> D2.6=A dựng GRID nhiều dòng thay cho 1 bộ field; D2.7=A
+     * minRows 1 / maxRows null. 7 cột đúng manifest required_columns
+     * (alias ten tag ngắn như bộ người M02/M12/M15).
+     * KHÔNG discriminator: nguồn Mẫu 13 chỉ có MỘT row-type (không có nhóm
+     * "người đại diện theo ủy quyền" như M02/M15) -> không tự chế loai_dong.
+     * KHÔNG cột Chữ ký: nguồn không có ô ký trong mục này (ký ở phần cuối
+     * mẫu) -> D2.4=A không áp dụng cho bảng này. */
+    'PLI_M13': {
+      loops: {
+        ds_ndd_pl_sau_thay_doi: {
+          label: 'Người đại diện theo pháp luật sau khi thay đổi',
+          minRows: 1, maxRows: null, required: false,
+          allowAdd: true, allowDelete: true, allowReorder: true,
+          confirmDeleteNonEmpty: true, requirePrimary: false,
+          columns: [
+            { tag: 'ho_ten', type: 'text', required: true },
+            { tag: 'ngay_sinh', type: 'text' },
+            { tag: 'gioi_tinh', type: 'text' },
+            { tag: 'so_cccd', type: 'text' },
+            { tag: 'chuc_danh', type: 'text' },
+            { tag: 'dia_chi', type: 'text' },
+            { tag: 'quoc_gia', type: 'text' }
+          ],
+          duplicateKeys: ['so_cccd'],
+          outputOnlyTags: [],
+          semanticKey: 'ds_ndd_pl_sau_thay_doi'
+        }
+      }
+    },
+    /* Wave P2A (2026-08-27): PLII_M07 (GCN ĐKHKD) mục 7 - D2.8=A KEY RIÊNG
+     * ds_thanh_vien_hkd_gcn, KHÔNG subset contract ds_tv_ho_gia_dinh của
+     * M01/M02 vì tập cột KHÁC thật (nguồn PL2_Mau_07 P035-P041 = blocks
+     * B027-B033): STT | Tên thành viên | Quốc tịch | Nơi ở hiện tại | Nơi
+     * thường trú | Số định danh cá nhân | Ghi chú - KHÔNG có ngày sinh/
+     * giới tính/dân tộc/chữ ký. Chu thich của mẫu ("chỉ ghi trong trường hợp
+     * các thành viên hộ gia đình đăng ký thành lập hộ kinh doanh") -> bảng
+     * TUỲ CHỌN (minRows 0, required false), khác ds_nganh (minRows 1). */
+    'PLII_M07': {
+      loops: {
+        ds_thanh_vien_hkd_gcn: {
+          label: 'Danh sách thành viên hộ gia đình đăng ký thành lập hộ kinh doanh',
+          minRows: 0, maxRows: null, required: false,
+          allowAdd: true, allowDelete: true, allowReorder: true,
+          confirmDeleteNonEmpty: true, requirePrimary: false,
+          columns: [
+            { tag: 'ten_thanh_vien', type: 'text', required: true },
+            { tag: 'quoc_tich', type: 'text' },
+            { tag: 'noi_o_hien_tai', type: 'text' },
+            { tag: 'noi_thuong_tru', type: 'text' },
+            { tag: 'so_cccd', type: 'text' },
+            { tag: 'ghi_chu', type: 'text' }
+          ],
+          duplicateKeys: ['so_cccd'],
+          outputOnlyTags: [],
+          semanticKey: 'ds_thanh_vien_hkd_gcn'
+        }
       }
     }
   };

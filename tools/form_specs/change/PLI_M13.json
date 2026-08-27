@@ -1,0 +1,48 @@
+{
+ "form_id": "PLI_M13",
+ "group": "change",
+ "note": "Giay de nghi dang ky thay doi nguoi dai dien theo phap luat. Muc 'Người đại diện theo pháp luật sau khi thay đổi2:' (blocks B011, nguon P012) khong co bang nao: nguon chi con 1 BO FIELD (B012-B031: ho ten/ngay sinh/gioi tinh/so dinh danh ca nhan/chuc danh/dia chi lien lac/quoc gia...) nen khong them/xoa dong duoc khi cong ty co nhieu hon 01 nguoi dai dien theo phap luat. Chan trang 2 cua mau: 'Ghi thông tin của TẤT CẢ người đại diện theo pháp luật trong trường hợp sau khi thay đổi công ty có nhiều hơn 01 người đại diện theo pháp luật' -> D2.6=A (docs/decision_registry.md packet D2): dung GRID nhieu dong thay cho 1 bo field. D2.7=A: min 1 dong / max khong gioi han (ghi tai FORM_GRID_META.PLI_M13 vi spec kind=list khong co truong min/max trong contract v1 - cung cach ghi nhu PLI_M15 da lam).",
+ "gap_nghiepvu": "(a) D2.1 (discriminator loai_dong: NĐDPL vs người đại diện theo ủy quyền): KHONG KHAI — nguon Mau 13 chi co MỘT row-type cho muc nay (heading 'Người đại diện theo pháp luật sau khi thay đổi2:' + cac field ca nhan; khong co nhom 'người đại diện theo ủy quyền' nhu M02/M15); 'NGƯỜI ĐƯỢC ỦY QUYỀN' chi xuat hien o phan KY cuoi mau (blocks B034) nen khong phai row-type cua bang. Neu owner xac dinh can 2 row-type thi phai co nguon moi. (b) KHONG co cot Chữ ký trong bang: nguon khong co o ky nao trong muc nay (ky o phan cuoi mau) nen D2.4=A khong ap dung — khong them cot chu_ky de tranh bia noi dung phap ly. (c) Tap cot 7 cot lay DUNG manifest required_columns (stt do engine sinh, khong tinh): ho_ten/ngay_sinh/gioi_tinh/so_cccd/chuc_danh/dia_chi/quoc_gia — ALIAS so voi ten manifest: ngay_thang_nam_sinh=ngay_sinh, so_dinh_danh_ca_nhan=so_cccd, dia_chi_lien_lac=dia_chi, chuc_danh=chuc_danh; cac thong tin khac cua nguon (Dân tộc/Quốc tịch/Số Hộ chiếu + Ngày cấp/Nơi cấp, Nơi thường trú, Điện thoại/Thư điện tử) CHUA duoc owner chot dua vao grid -> KHAI THIEU (absence, khong mislabel). (d) BO FIELD cu (blocks B012-B031, ndd.*) DUOC GIU NGUYEN: khong co quyet dinh nao cho phep xoa; hien trang sau regen se co ca grid nhieu dong va bo field don — overlap do owner chot (khong auto-sync theo PLAN A).",
+ "tables": [
+  {
+   "spec": {
+    "id": "ndd_pl_sau_thay_doi",
+    "kind": "list",
+    "detect": ["stt", "ho, chu dem va ten (ghi bang chu in hoa)",
+               "ngay, thang, nam sinh", "gioi tinh",
+               "so dinh danh ca nhan", "chuc danh", "dia chi lien lac",
+               "quoc gia"],
+    "stt_tag": true,
+    "cols": [
+     ["^stt$", null],
+     ["^ho, chu dem va ten", "ho_ten"],
+     ["sinh|nam sinh", "ngay_sinh"],
+     ["gioi tinh", "gioi_tinh"],
+     ["so dinh danh ca nhan|dinh danh|cccd", "so_cccd"],
+     ["chuc danh", "chuc_danh"],
+     ["dia chi lien lac|dia chi", "dia_chi"],
+     ["quoc gia", "quoc_gia"]
+    ],
+    "loop": "ds_ndd_pl_sau_thay_doi",
+    "fields": ["ho_ten", "ngay_sinh", "gioi_tinh", "so_cccd", "chuc_danh",
+               "dia_chi", "quoc_gia"]
+   },
+   "pos": "after",
+   "anchor": "^nguoi dai dien theo phap luat sau khi thay doi",
+   "no_default_drops": true,
+   "headers": ["STT", "Họ, chữ đệm và tên (ghi bằng chữ in hoa)",
+               "Ngày, tháng, năm sinh", "Giới tính", "Số định danh cá nhân",
+               "Chức danh", "Địa chỉ liên lạc", "Quốc gia"],
+   "notes": "P2A (2026-08-27): MISSING grid truoc integration; header cot lay NGUYEN VAN BAN nhan cua tung field trong nguon (P013 'Họ, chữ đệm và tên (ghi bằng chữ in hoa):', P014 'Ngày, tháng, năm sinh:', P015 'Giới tính:', P016 'Số định danh cá nhân:', P017 'Chức danh:', P018 'Địa chỉ liên lạc:', P022 'Quốc gia:' bo dau hai cham/gach ke). Occurrence dinh vi vung [heading B011, '^truong hop ho so dang ky doanh nghiep' = blocks B032) de drop (neu co) khong the lan sang noi dung lang gieng; trong vung khong co paragraph tan du header nen KHONG khai drop nao, bang duoc chen ngay sau heading (pos=after) va bo field hien tai GIU NGUYEN. no_default_drops=true an toan theo convention R3B1; da xac minh REBUILD_DROP_DEFAULT khong khop paragraph nao trong nguon PL1_Mau_13_tach_tu_file_full.docx. semantic_key/loop = occurrence_id = ds_ndd_pl_sau_thay_doi (dung semantic_key cua census manifest section ndd_pl_sau_thay_doi). QUYET DINH ap dung: D2.6=A (grid), D2.7=A (min 1/max null tai FORM_GRID_META.PLI_M13); D2.1 KHONG khai discriminator thieu evidence; D2.4 khong ap dung — docs/decision_registry.md packet D2. LUU Y ky thuat: entry kind=list khong dung co che legal_status.blocked cua loader (chi cho 3 kind moi) nen quyet dinh duoc ghi o notes nay.",
+   "occurrences": [
+    {
+     "occurrence_id": "ds_ndd_pl_sau_thay_doi",
+     "match_heading": "Người đại diện theo pháp luật sau khi thay đổi",
+     "nth": 1,
+     "sync_group": null,
+     "end_markers": ["^truong hop ho so dang ky doanh nghiep"]
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,36 @@
+{
+ "form_id": "PLI_M08",
+ "group": "formation",
+ "note": "Danh sach co dong la nha dau tu nuoc ngoai. Chuyen khai bao inline REBUILD_TABLES['PLI_M08'] sang file spec. Template production HIEN TAI da du 8 cot va du tag (manifest loop_audit.missing_cols=[] ) nen file nay KHONG them cot nao — nhiem vu cua no la GHIM KIEN TRUC PHANG cua bang theo D2.3=A (docs/decision_registry.md packet D2): BAT BUOC CUNG KIEN TRUC voi PLI_M07 (cung file-shape, cung cach dat tag, cung cong bo gap), de dot nested sau (D2.3=B) khong con nghiengo giua hai bang co dong nua.",
+ "gap_nghiepvu": "(a) Manifest danh status=partial_columns theo chuan audit-so-voi-mau-goc: header mau goc 18 cot (bi glue trong nguon Mau 9, block 'STTTên cổ đông là nhà đầu tư nước ngoàiNgày, tháng, năm sinh...') co them Vốn góp | Thời hạn góp vốn, 'Ghi chú (nếu có)', 'Loại cổ phần' (nhóm Phổ thông/Ưu đãi: Số lượng | Giá trị), nhóm 'Loại tài sản, số lượng, giá trị tài sản góp vốn' va cau truc I. ca nhan / II. to chuc + muc '2. Thông tin người đại diện theo pháp luật/ủy quyền của cổ đông' — tap phang wave-1 nay KHAI THIEU cac phan do (absence, khong mislabel), thuoc D2.3=B roadmap nested-grid, chua co quyet dinh nguon. (b) ALIAS ten tag: manifest required_columns goi ten_co_dong/ma_so_dn_gtpl/tong_so_co_phan/chu_ky_output_only, spec giu tag production ten_cd/ma_so/so_co_phan/chu_ky (migration additive). (c) Chu thich 1 cua mau goc ('Nếu cột số 5 kê khai Số định danh cá nhân thì không phải kê khai các cột số 6, 7') la rule dieu kien giua giay to — validator cross-field chua co trong contract v1 -> gap mo.",
+ "tables": [
+  {
+   "spec": {
+    "id": "ds_co_dong_nn",
+    "kind": "list",
+    "detect": ["stt", "quoc gia", "tong so co phan"],
+    "stt_tag": true,
+    "cols": [
+     ["^stt$", null],
+     ["ten cong ty|ten to chuc|ho ten|ten co dong", "ten_cd"],
+     ["ma so doanh nghiep|ma so thue", "ma_so"],
+     ["quoc gia", "quoc_gia"],
+     ["dia chi", "dia_chi"],
+     ["so co phan", "so_co_phan"],
+     ["ty le", "ty_le"],
+     ["ky ten|chu ky", "chu_ky"]
+    ],
+    "loop": "ds_co_dong_nn",
+    "fields": ["ten_cd", "ma_so", "quoc_gia", "dia_chi", "so_co_phan", "ty_le"]
+   },
+   "pos": "before",
+   "anchor": "thong tin ve giay chung nhan dang ky dau tu",
+   "no_default_drops": true,
+   "headers": ["STT", "Tên cổ đông là nhà đầu tư nước ngoài", "Quốc gia",
+               "Mã số doanh nghiệp/Giấy tờ pháp lý",
+               "Địa chỉ trụ sở chính/Địa chỉ liên lạc", "Tổng số cổ phần",
+               "Tỷ lệ (%)", "Chữ ký"],
+   "notes": "P2A (2026-08-27): ban sao DUNG Y khai bao inline (cung headers, cols, fields, pos, anchor) — khong co cot nao bi thay doi; chi them detect khong doi va no_default_drops=true (an toan theo convention R3B1; da xac minh REBUILD_DROP_DEFAULT khong khop paragraph nao trong nguon DN_PL1_Mau_08_*.docx). D2.4=A: cot Chữ ký gan {chu_ky} va la outputOnly tai GRID_META.ds_co_dong_nn (khong doi). LUU Y ky thuat: entry kind=list khong dung co che legal_status.blocked cua loader (chi cho 3 kind moi) nen quyet dinh duoc ghi o notes nay."
+  }
+ ]
+}

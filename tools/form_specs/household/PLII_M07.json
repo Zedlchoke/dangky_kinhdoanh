@@ -25,6 +25,44 @@
       "drop": ["^stt$", "^ten nganh\\b", "^ma nganh\\d*$",
                "^nganh, nghe kinh doanh chinh"],
       "headers": ["STT", "Tên ngành", "Mã ngành", "Ngành, nghề kinh doanh chính"]
+    },
+    {
+      "spec": {
+        "id": "m7_danh_sach_thanh_vien_hgd",
+        "kind": "list",
+        "detect": ["stt", "ten thanh vien", "quoc tich", "noi o hien tai",
+                   "noi thuong tru", "so dinh danh ca nhan", "ghi chu"],
+        "stt_tag": true,
+        "cols": [
+          ["^stt$", null],
+          ["^ten thanh vien$", "ten_thanh_vien"],
+          ["^quoc tich$", "quoc_tich"],
+          ["^noi o hien tai$", "noi_o_hien_tai"],
+          ["^noi thuong tru$", "noi_thuong_tru"],
+          ["^so dinh danh ca nhan$", "so_cccd"],
+          ["^ghi chu$", "ghi_chu"]
+        ],
+        "loop": "ds_thanh_vien_hkd_gcn",
+        "fields": ["ten_thanh_vien", "quoc_tich", "noi_o_hien_tai",
+                   "noi_thuong_tru", "so_cccd", "ghi_chu"]
+      },
+      "pos": "after",
+      "anchor": "^7\\. danh sach thanh vien ho gia dinh dang ky thanh lap ho kinh doanh",
+      "no_default_drops": true,
+      "drop": ["^stt$", "^ten thanh vien$", "^quoc tich$", "^noi o hien tai$",
+               "^noi thuong tru$", "^so dinh danh ca nhan$", "^ghi chu$"],
+      "headers": ["STT", "Tên thành viên", "Quốc tịch", "Nơi ở hiện tại",
+                  "Nơi thường trú", "Số định danh cá nhân", "Ghi chú"],
+      "notes": "P2A (2026-08-27): MISSING grid truoc integration. Muc 7 mat luoi khi convert: header bi tac thanh 7 paragraph roi (blocks B027-B033, nguon P035-P041), template khong co w:tbl tuong ung. DA XAC MINH tren nguon PL2_Mau_07_giay_chung_nhan_dang_ky_ho_kinh_doanh.docx (python-docx P035-P041): tap cot that la STT | Tên thành viên | Quốc tịch | Nơi ở hiện tại | Nơi thường trú | Số định danh cá nhân | Ghi chú — KHÔNG co Ngay thang nam sinh / Gioi tinh / Dan toc / Chu ky. D2.8=A (docs/decision_registry.md packet D2): key RIENG ds_thanh_vien_hkd_gcn, KHONG subset contract ds_tv_ho_gia_dinh cua M01/M02. Occurrence giu boundary an toan (bai hoc PLI_M09): drop CHAY TRONG vung [heading 7, '^truong phong' = blocks B034) nen khong lam anh huong dong chu ky cuoi mau. Chu thich mau ('chỉ ghi trong trường hợp các thành viên hộ gia đình đăng ký thành lập hộ kinh doanh') -> bang TUY CHON: minRows 0 / required false tai FORM_GRID_META.PLII_M07. Khong co cot Chu ky trong nguon nen D2.4=A khong ap dung cho bang nay (ghi ro de khong bi hieu la quen sot).",
+      "occurrences": [
+        {
+          "occurrence_id": "ds_thanh_vien_hkd_gcn",
+          "match_heading": "7. Danh sách thành viên hộ gia đình đăng ký thành lập hộ kinh doanh",
+          "nth": 1,
+          "sync_group": null,
+          "end_markers": ["^truong phong"]
+        }
+      ]
     }
   ]
 }

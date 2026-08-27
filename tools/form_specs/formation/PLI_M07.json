@@ -1,0 +1,40 @@
+{
+ "form_id": "PLI_M07",
+ "group": "formation",
+ "note": "Danh sach co dong sang lap cong ty co phan. Chuyen khai bao inline REBUILD_TABLES['PLI_M07'] sang file spec. Hien trang template co 11 cot vat ly nhung cot 6 'Dân tộc' KHONG duoc gan the (manifest loop_audit.missing_cols=[{col:6,header:'Dân tộc'}], status=partial_columns) — khai bao inline bi thieu rule 'dan toc' trong cols. D2.3=A (docs/decision_registry.md packet D2): KIEN TRUC PHANG, BAT BUOC CUNG KIEN TRUC voi PLI_M08 (cung file-shape, cung cach dat tag, cung cong bo gap) — khong lam nested 19 cot o wave nay (D2.3=B thuoc roadmap nested-grid).",
+ "gap_nghiepvu": "(a) So voi header mau goc 19 cot (bi glue trong nguon Mau 9, block 'STTTên cổ đông sáng lậpNgày, tháng, năm sinh...'), tap phang wave-1 nay VAN THIEU: Loại cổ phần (nhóm Phổ thông/Ưu đãi: Số lượng | Giá trị), nhóm 'Loại tài sản, số lượng, giá trị tài sản góp vốn', 'Vốn góp', 'Thời hạn góp vốn', 'Ghi chú (nếu có)' va cau truc I.a ca nhan / II.b to chuc + muc '2. Thông tin người đại diện theo pháp luật/ủy quyền của cổ đông' — thuoc D2.3=B, chua co quyet dinh nguon cho wave phang nen KHAI THIEU (absence, khong mislabel). (b) ALIAS ten tag: manifest required_columns goi so_gtpl/dia_chi_lien_lac/ngay_thang_nam_sinh/chu_ky_output_only, spec giu tag production so_cccd/dia_chi/ngay_sinh/chu_ky (migration additive). (c) Chu thich 1 cua mau goc ('Nếu cột số 5 kê khai Số định danh cá nhân thì không phải kê khai các cột số 6, 7') la rule dieu kien giua giay to ngay/co quan cap — validator cross-field chua co trong contract v1 -> gap mo.",
+ "tables": [
+  {
+   "spec": {
+    "id": "ds_co_dong_sang_lap",
+    "kind": "list",
+    "detect": ["stt", "ten co dong sang lap", "tong so co phan", "dan toc"],
+    "stt_tag": true,
+    "cols": [
+     ["^stt$", null],
+     ["ho ten|ten co dong sang lap", "ho_ten"],
+     ["dinh danh|cccd", "so_cccd"],
+     ["sinh|nam sinh", "ngay_sinh"],
+     ["gioi tinh", "gioi_tinh"],
+     ["quoc tich", "quoc_tich"],
+     ["dan toc", "dan_toc"],
+     ["thuong tru|noi o|dia chi", "dia_chi"],
+     ["so co phan", "so_co_phan"],
+     ["ty le", "ty_le"],
+     ["ky ten|chu ky", "chu_ky"]
+    ],
+    "loop": "ds_co_dong_sang_lap",
+    "fields": ["ho_ten", "so_cccd", "ngay_sinh", "gioi_tinh", "quoc_tich",
+               "dan_toc", "dia_chi", "so_co_phan", "ty_le"]
+   },
+   "pos": "after",
+   "anchor": "^mau so 7$",
+   "no_default_drops": true,
+   "headers": ["STT", "Tên cổ đông sáng lập", "Ngày, tháng, năm sinh",
+               "Giới tính", "Số định danh cá nhân/Giấy tờ pháp lý", "Quốc tịch",
+               "Dân tộc", "Địa chỉ liên lạc", "Tổng số cổ phần", "Tỷ lệ (%)",
+               "Chữ ký"],
+   "notes": "P2A (2026-08-27): header GIU NGUYEN text production (khong doi thu tu) — khac biet duy nhat so voi khai bao inline la cot 6 'Dân tộc' duoc gan the {dan_toc} (rule bi thieu trong cols cua inline) va fields duoc bo sung dan_toc/gioi_tinh. D2.4=A: cot Chữ ký gan {chu_ky} va la outputOnly tai GRID_META.ds_co_dong_sang_lap (khong doi). Kien truc PHANG giong het PLI_M08 (D2.3=A bat buoc cung kien truc). Nguon Mau 7 (DN_PL1_Mau_07_*.docx) khong con paragraph header nao (bang mat toan bo khi convert) nen khong can trim/drop; no_default_drops=true an toan theo convention R3B1, da xac minh REBUILD_DROP_DEFAULT khong khop paragraph nao trong nguon. LUU Y ky thuat: entry kind=list khong dung co che legal_status.blocked cua loader (chi cho 3 kind moi) nen quyet dinh duoc ghi o notes nay."
+  }
+ ]
+}

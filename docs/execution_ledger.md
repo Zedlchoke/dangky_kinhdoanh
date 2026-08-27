@@ -50,6 +50,21 @@ Ownership độc quyền theo wave: `app.js`, `form-domain.js`, `render.js`,
 | R2.2 output-table → fixed-matrix → nested-grid | các lane tách module | tuần tự theo dependency graph | renderer/module riêng | R2.1 | fixture O1/O2, F1, N1 skeleton | — | — | F2/F3/F4 cần D1; N-full cần D2/D7 |
 | Generator anchor/boundary/occurrence/totals/idempotency | Lead-only regenerate | main | build_form_maps.py, docx_to_blocks.py | contracts | chạy 2 lần cùng hash | — | — | — |
 
+## Wave A rebaseline @ main 0fd2785→972e765 (2026-08-27)
+
+| Task | Owner | Evidence | Trạng thái |
+|---|---|---|---|
+| Audit dirty state (89 artifact files) | Lead | Kiểm chứng byte-level: `word/document.xml` identical HEAD vs WT cho PLI_M01/M02/M30/PLII_M10; PLI_M72 chỉ thiếu 16 marker `{?loai_hinh_*}` → 146 field `cond` strip trong blocks; nguyên nhân = regen toàn cục đứt giữa chừng (zip timestamps + mất bước `tag_m72_sections.py`) | ✅ phân loại xong |
+| Quarantine backup dirty artifacts | Lead | `/tmp/dangky_dirty_backup_0fd2785/templates` (87 file) + `/data/PLI_M72.json`; owner phê duyệt restore | ✅ |
+| Restore artifacts về HEAD + baseline tái lập | Lead | Working tree sạch trừ PLAN.md; release runner **34 PASS / 0 FAIL / 0 NOT RUN** (`rr_clean_baseline.json`); `git diff --check` xanh | ✅ PASS |
+| Commit master plan mới | Lead | `972e765` (chỉ PLAN.md, 1 file) | ✅ |
+| Inspect production wiring của output-table/fixed-matrix/nested-grid | Lead | grep runtime: **0 reference** trong `index.html`/`app.js`/`render.js`/`form-domain.js`/`main.py` — 3 module standalone chưa nối. Call graph hiện hành: `index.html → form-domain.js/render.js/app.js → store(Render.newStore)+GridCtl(FormDomain.getGridMeta)` ; draft=`main.py save_draft/load_draft` ; export=`main.py export(payload)` ; generator=`build_form_maps.py (nguồn 6 folder → form_maps + templates) → tag_m72_sections.py (M72 markers) → docx_to_blocks.py (templates → blocks/*.json)` ; export DOCX=`docx_render.py` | ✅ ghi rõ — B1 sẽ lắp dispatcher theo kind, B2 khai bridge/generator |
+
+**Gate A:** ✅ integration worktree sạch · ✅ baseline tái lập 34/34 ·
+✅ ownership map: B1=index.html/app.js/render.js(+style.css/form-domain.js nếu bắt buộc);
+B2=build_form_maps.py/docx_to_blocks.py/docx_render.py+spec/test mới;
+B3=QA test/fixture mới (không đụng production); Lead giữ regenerate + merge.
+
 ## R3–R7 (khung — chi tiết hóa khi mở wave)
 
 | Wave | Điều kiện mở | Ghi chú |

@@ -13,8 +13,14 @@ suy diễn từ contract kỹ thuật này.
 > `checkedKey`/`valueOf` là nguồn chính, `minFilledRows` chỉ INTERIM),
 > `mkGrid` **deep clone** toàn bộ metadata, **export conflict guard**
 > (`exportLoopsStrict` fail-loud) và **focus sau row-op** ĐÃ CÓ trong code.
-> Các mục 2–4 (`fixed-matrix`/`nested-grid`/`output-table`) vẫn là DRAFT đề
-> xuất chưa implement. Số liệu kiểm chứng tại HEAD: 31 dynamic tables = 31
+>
+> **REBASE 2026-08-27 theo HEAD `972e765`** — các mục 2–4 không còn "chưa có
+> code": module `fixed-matrix.js`/`nested-grid.js`/`output-table.js` cùng
+> fixture/test production đã merge (`5e3381b`, `bc8cbb4`, `0e25d93`) và PASS
+> độc lập qua release runner; phần CHƯA CÓ THẬT là wiring runtime/draft/export
+> và generator deep integration — see bảng gap mục 5. Schema contract v1 giữ
+> nguyên.
+> Số liệu kiểm chứng tại HEAD: 31 dynamic tables = 31
 > loop blocks; 9/9 loop mới (5 PLI_M72 + 4 PLII_M02) có meta form-scoped;
 > suite Node gồm 11 file (thêm `test_m72_activation.js` 45 PASS,
 > `test_p20_hardening.js` 56 PASS).
@@ -368,9 +374,14 @@ báo CQB (PLI_M66/M68/M75), khối chữ ký (PLI_M70/M71). 6 section, tất c�
 | Component | Đã có | Gap P2 |
 |---|---|---|
 | editable-grid | GridCtl, GRID_META + FORM_GRID_META (`getGridMeta` form-scoped), activeWhen selector/INTERIM, mkGrid deep clone, conflict guard `exportLoopsStrict`, focus sau row-op, `_row_id`, validateGridLoop, renderer loop, exportLoops | slot `cross_field_rules`, keyboard/a11y lưới; owner chốt selector M72 để bỏ INTERIM |
-| fixed-matrix | — (chưa renderer riêng) | schema `fixed_rows`, computed totals, cross-check vốn, renderer readonly |
-| nested-grid | — (NOT IMPLEMENTED) | `header_rows`, `row_groups`, rowspan/colspan, discriminator |
-| output-table | — | schema tối giản, audit `output_only`, render có điều kiện |
+| fixed-matrix | module `app_web/ui/fixed-matrix.js` + fixture/test PLI_M03/M04 đã merge (`5e3381b`) — **chưa nối runtime/generator** (0 reference trong UI, soi ngày 2026-08-27) | wire dispatcher/runtime, computed totals recompute lúc export, generator rebuild anchor/boundary |
+| nested-grid | module `app_web/ui/nested-grid.js` + fixture/test N1 đã merge (`bc8cbb4`) — **chưa nối runtime/generator** | wire dispatcher/runtime, generator header_rows/rowspan/colspan/discriminator, occurrence M72 |
+| output-table | module `app_web/ui/output-table.js` + fixture/test O1/O2 đã merge (`0e25d93`) — **chưa nối runtime/generator** | wire dispatcher/renderer presence gate, audit `output_only`, render có điều kiện |
+
+> Cập nhật trạng thái 2026-08-27 (HEAD `972e765`): ba module trên là code
+> standalone PASS độc lập qua release runner; chấp nhận Gate R2 khi đã wire vào
+> runtime/draft/validation/DOCX và generator deep-idempotent. Contract v1
+> trường tên/severity KHÔNG đổi.
 
 > Lưu ý review: các shape trên là đề xuất ban đầu từ census; Lead cân nhắc
 > thống nhất tên trường (`fixed_rows` vs `fixedRows`, snake_case hiện tại của

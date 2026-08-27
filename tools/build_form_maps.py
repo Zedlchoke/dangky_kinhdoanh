@@ -1011,7 +1011,11 @@ def load_form_spec(form_id):
                   "REBUILD_TABLES -> dung file JSON" % (form_id, path_used.name))
         if raw.get("gap_nghiepvu"):
             print("[form_specs] %s GAP NGHIEPVU: %s" % (form_id, raw["gap_nghiepvu"]))
-        allowed_root = {"form_id", "group", "note", "gap_nghiepvu", "tables"}
+        # section_cond: metadata điều kiện P1.2 Option D (M72 selector) —
+        # đọc bởi census verifier (p1_b_verify_m72) và docx_render; loader
+        # chỉ cần chấp nhận sự tồn tại, không tham gia rebuild bảng.
+        allowed_root = {"form_id", "group", "note", "gap_nghiepvu", "tables",
+                        "section_cond"}
         extra_root = set(raw) - allowed_root
         if extra_root:
             raise ValueError(

@@ -127,3 +127,4 @@ tools/docx_render.py
 tools/form_specs/schema/table_kinds.schema.json
 tools/test_export_grid_kinds.py
 tools/test_generator_deep_idempotency.py
+app_web/main.py

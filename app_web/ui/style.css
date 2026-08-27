@@ -622,3 +622,50 @@ tr.row-sel-multi td.stt { box-shadow: inset 3px 0 0 #c62828; }
   .fld { max-width: 100%; }
   .bp-flex { column-gap: .4em; }
 }
+
+/* ================== P2 R2 runtime wiring: 3 table component ==============
+ * Lý do phải đụng CSS: markup của 3 kind mới do render.js dựng từ module
+ * thuần (fixed-matrix.js/nested-grid.js/output-table.js) và tái dùng .btable/
+ * .fld/.calc/.dupe-anchor sẵn có. Chỉ thêm style cho PHẦN CHƯA CÓ: ô chỉ đọc
+ * (label dòng pháp lý, tổng outputOnly) cần phân biệt rõ với ô nhập, grid
+ * output-table phải giữ chiều cao khi không có input nào, select vai trò dòng
+ * (nested-grid discriminator) cần bề rộng ổn định trong ô.
+ * ------------------------------------------------------------------------ */
+
+/* fixed-matrix: nhãn dòng pháp lý (cột "Loại nguồn vốn"/"Loại cổ phần") */
+.btable td.fm-label {
+  font-family: "Times New Roman", serif;
+  font-size: 13pt;
+  color: #111;
+  white-space: normal;
+  min-width: 24ch;
+}
+
+/* ô projection/readonly của bảng component (tổng cộng, tổng số):
+   nền xám nhạt như .fld.calc nhưng là <td> nên khai riêng */
+.btable td.fm-out {
+  background: #f1f3f7;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  min-width: 14ch;
+}
+.btable tr[data-total-row="true"] td { font-weight: 600; }
+
+/* nested-grid: select vai trò dòng (discriminator) - cùng ngôn ngữ .fld */
+select.fld.ng-discriminator {
+  min-width: 12ch;
+  max-width: 100%;
+  background-color: transparent;
+}
+
+/* output-table: grid chỉ để ký/in - KHÔNG có input, phải giữ chiều cao ô và
+   chữ nằm đáy ô như bản giấy (không được vì thiếu input mà cao độ bằng 0) */
+.btable.output-table td {
+  height: 64pt;
+  vertical-align: bottom;
+  font-size: 12.5pt;
+  min-width: 48ch;
+}
+@media print {
+  .btable.output-table td { height: 72pt; }
+}

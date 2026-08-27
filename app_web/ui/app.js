@@ -892,6 +892,65 @@
     return m;
   }
 
+  /* P2 R2 runtime wiring: chính sách CRUD dòng theo SECTION KIND.
+   * - nested-grid : add/delete/reorder theo policy contract (giữ _row_id).
+   * - fixed-matrix: KHÔNG add/delete/reorder dòng pháp lý (policy=false).
+   * - output-table: không có dòng dữ liệu nào.
+   * Trả null cho loop editable-grid/schema legacy -> caller dùng GridCtl.meta
+   * như cũ, hành vi cũ KHÔNG đổi một bit. Thuần (node test qua Helpers). */
+  function sectionRowMeta(docId, loop) {
+    var e = FD.sectionContractForLoop(docId, loop);
+    if (!e) return null;
+    var spec = e.spec || {};
+    var pol = e.policy || {};
+    return {
+      kind: e.kind,
+      semanticKey: spec.semantic_key,
+      label: (spec.section_id || spec.semantic_key) + ' (' + e.kind + ')',
+      allowAdd: pol.allowAdd !== false && e.kind === 'nested-grid',
+      allowDelete: pol.allowDelete !== false && e.kind === 'nested-grid',
+      allowReorder: pol.allowReorder !== false && e.kind === 'nested-grid',
+      confirmDeleteNonEmpty: pol.confirmDeleteNonEmpty !== false,
+      maxRows: spec.max_rows != null ? spec.max_rows :
+        (spec.maxRows != null ? spec.maxRows : null),
+      columns: (spec.columns || []).map(function (c) {
+        return { tag: c.tag,
+          type: c.type === 'stt' ? 'readonly' : (c.type || 'text'),
+          outputOnly: !!(c.outputOnly || c.output_only) };
+      })
+    };
+  }
+
+  /* Metadata DÙNG CHO row-op/focus: section kind mới ưu tiên; bảng cũ rơi về
+   * resolver editable-grid hiện hành. */
+  function rowOpMeta(loop) {
+    return sectionRowMeta(state.activeDocId, loop) ||
+      GridCtl.meta(loop, state.activeDocId);
+  }
+
+  /* Text hiển thị ô tổng outputOnly từ projection {value, inputType}. */
+  function componentComputedText(proj) {
+    if (!proj || proj.value == null) return '';
+    if (proj.inputType === 'money') return R.formatVnd(proj.value);
+    return String(proj.value);
+  }
+
+  /* Điền lại giá trị ô tổng (data-computed-key) sau mỗi thay đổi store. Chỉ
+   * GHI VÀO DOM readonly cell: draft luôn giữ dữ liệu người dùng nhập, con số
+   * tổng luôn là projection recompute -> không thể có hai nguồn lệch nhau. */
+  function refreshComponentComputed() {
+    var docId = state.activeDocId;
+    if (!docId) return;
+    var proj = FD.recomputeSections(docId, state.store);
+    Object.keys(proj).forEach(function (keyPath) {
+      var text = componentComputedText(proj[keyPath]);
+      document.querySelectorAll(
+        '#pages [data-computed-key="' + cssEsc(keyPath) + '"]').forEach(function (el) {
+          if (el.textContent !== text) el.textContent = text;
+        });
+    });
+  }
+
   function renderActiveDoc() {
     var d = activeDoc();
     var pages = $('#pages');
@@ -900,6 +959,8 @@
         '(Chưa chọn mẫu biểu nào)</p></section>';
       return;
     }
+    // R2: mọi dòng lặp mang _row_id ổn định trước khi render (idempotent)
+    GridCtl.ensureIds(state.store);
     // P1.2 Option D: selector metadata hồ sơ (vd M72 'Loại hình doanh
     // nghiệp') + flags điều kiện render - block cond không thoả bị bỏ khỏi
     // UI nên CHỈ biến thể đang chọn được render.
@@ -910,12 +971,14 @@
       R.renderBlocks(d, state.store, {
         docId: d.id, fieldMeta: FD.FIELD_META, gridMeta: gridMetaForDoc(d.id),
         uiLayout: state.uiLayouts[d.id] || null,
+        sectionContracts: FD.sectionContractsOf(d.id),
         flags: FD.selectorFlagsOf(d.id, state.store),
         selectorHtml: selHtml
       }) +
       '</section>';
     enhanceEditableGrids();
     applyReadonlyTotals();
+    refreshComponentComputed();
     patchErrorsDom();
   }
 
@@ -1041,6 +1104,8 @@
       if (R.AUTO_KEYS[key]) mirrorKey(key);
     });
     applyReadonlyTotals();
+    // R2: tổng outputOnly của fixed-matrix luôn là projection recompute
+    refreshComponentComputed();
   }
 
   function validateAllMaNganh() {
@@ -1236,7 +1301,7 @@
   }
 
   function uiAddRow(loop) {
-    var gm = GridCtl.meta(loop, state.activeDocId);
+    var gm = rowOpMeta(loop); // R2: policy theo section.kind (fixed-matrix chặn)
     if (gm && gm.allowAdd === false) return;
     var rows = state.store.loops[loop] || [];
     var gmMax = gm && gm.maxRows != null ? gm.maxRows : null;
@@ -1256,7 +1321,7 @@
   }
 
   function uiDeleteRows(loop) {
-    var gm = GridCtl.meta(loop, state.activeDocId);
+    var gm = rowOpMeta(loop); // R2: fixed-matrix KHÔNG xóa dòng pháp lý
     if (gm && gm.allowDelete === false) return;
     var rows = state.store.loops[loop] || [];
     if (!rows.length) return;
@@ -1308,7 +1373,7 @@
   }
 
   function uiClearRows(loop) {
-    var gm = GridCtl.meta(loop, state.activeDocId);
+    var gm = rowOpMeta(loop); // R2: policy theo section.kind
     if (gm && gm.allowDelete === false) return;
     var rows = state.store.loops[loop] || [];
     if (!rows.length) return;
@@ -1323,7 +1388,7 @@
   }
 
   function uiMoveRow(loop, dir) {
-    var gm = GridCtl.meta(loop, state.activeDocId);
+    var gm = rowOpMeta(loop); // R2: fixed-matrix/output-table KHÔNG reorder
     if (gm && gm.allowReorder === false) return;
     var id = targetRowId(loop);
     if (!id) return;
@@ -1339,7 +1404,7 @@
   }
 
   function uiDuplicateRow(loop) {
-    var gm = GridCtl.meta(loop, state.activeDocId);
+    var gm = rowOpMeta(loop); // R2: policy theo section.kind
     if (gm && gm.allowAdd === false) return;
     var id = targetRowId(loop);
     if (!id) return;
@@ -2167,6 +2232,21 @@
       focusGridRow: focusGridRow,
       enhanceEditableGrids: enhanceEditableGrids,
       gridNavigationIndex: gridNavigationIndex
+    },
+    /* P2 R2 runtime wiring 3 kind mới (fixed-matrix/nested-grid/output-table):
+     * policy CRUD theo kind + projection tổng outputOnly. SectionCtl thành phần
+     * THUẦN (trừ refresh có DOM) để node-test không GUI. */
+    SectionCtl: {
+      rowMeta: sectionRowMeta,
+      rowOpMeta: rowOpMeta,
+      computedText: componentComputedText,
+      projectionOf: function (docId, store) {
+        return FD.recomputeSections(docId, store);
+      },
+      contractsOf: function (docId) { return FD.sectionContractsOf(docId); },
+      validateFormSections: function (docId, store) {
+        return FD.validateFormSections(docId, store || {});
+      }
     },
     FormFlow: {
       formIdOf: formIdOf,

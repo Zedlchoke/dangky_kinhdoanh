@@ -704,11 +704,351 @@
     return html + '</div>';
   }
 
+  // ---------------------- P2 R2 runtime wiring: dispatcher theo section.kind
+  /* Nối 3 kind mới (fixed-matrix/nested-grid/output-table) vào pipeline render
+   * MÀ KHÔNG viết lại component: markup được dựng TỪ output của module thuần
+   * đã merge (fixed-matrix.js, nested-grid.js, output-table.js). Module nào
+   * không nạp được -> trả '' và renderer GIỮ NGUYÊN blocks cũ (degrade an toàn,
+   * tuyệt đối không ẩn nội dung pháp lý vì lỗi wiring).
+   *
+   * Contract section (kind + spec + anchor) đến từ FormDomain.sectionContractsOf
+   * qua opts.sectionContracts; renderer GENERIC: không biết form ID. Kinds:
+   *   editable-grid : NO-OP (đường renderLoop hiện hành giữ nguyên 100%).
+   *   fixed-matrix  : bảng dòng pháp lý cố định, ô tổng readonly recompute.
+   *   nested-grid   : header nhiều hàng rowspan/colspan vật lý + rows có _row_id.
+   *   output-table  : delegate thẳng OutputTable.renderOutputTable (0 input).
+   *
+   * Block nguồn của các section vẫn là paragraph rời (generator lane B2 chưa
+   * rebuild thành w:tbl). Section được dispatch sẽ được bọc .dupe-anchor
+   * (display:none - cùng cơ chế uiLayout grids dùng sẵn, dữ liệu/không đụng)
+   * để không còn hai bản hiển thị. */
+
+  function p2TableModule(name) {
+    var fileMap = { FixedMatrix: './fixed-matrix.js', NestedGrid: './nested-grid.js',
+      OutputTable: './output-table.js' };
+    var seen = null;
+    if (typeof self !== 'undefined') seen = self;
+    else if (typeof window !== 'undefined') seen = window;
+    if (seen) {
+      if (seen.P2Tables && seen.P2Tables[name]) return seen.P2Tables[name];
+      if (name === 'OutputTable' && seen.OutputTable) return seen.OutputTable;
+    }
+    // Node harness (test không GUI): require cùng thư mục ui/.
+    if (typeof require === 'function' && fileMap[name]) {
+      try { return require(fileMap[name]); } catch (e) { /* chưa nối */ }
+    }
+    return null;
+  }
+
+  /* Text phẳng của một block (dùng để khớp anchor khai trong contract -
+   * matching chỉ nằm ở renderer, metadata domain không biết gì về blocks). */
+  function blockPlainText(b) {
+    var out = [];
+    function walkRuns(runs) {
+      (runs || []).forEach(function (r) { out.push((r && r.text) || ''); });
+    }
+    if (!b || typeof b !== 'object') return '';
+    if (b.t === 'p') walkRuns(b.runs);
+    else if (b.t === 'chk') out.push(b.label || '');
+    else if (b.t === 'table' || b.t === 'loop') {
+      (b.rows || []).forEach(function (row) {
+        (row.cells || []).forEach(function (c) { walkRuns(c && c.runs); });
+      });
+    }
+    return out.join(' ');
+  }
+
+  /* Khóa so sánh anchor: normText + bỏ TOÀN BỘ khoảng trắng. Lý do: cùng một
+   * dòng pháp lý trong blocks-v3 có thể tách thành nhiều run ("NGƯỜI NỘP\n" +
+   * "(" + "Ký và ghi họ tên" + ")"), khoảng trắng/giãn dòng không mang ý nghĩa
+   * khi khớp tiêu đề section. So theo chữ: chứa-substr một chiều. */
+  function anchorKey(s) {
+    return normText(s).replace(/\s+/g, '');
+  }
+
+  /* Khớp(anchor): role phải bằng khi khai, text so trên anchorKey chứa-substr.
+   * end: thiếu cả endMatch lẫn endRole -> chạy tới hết mẫu (EOF). */
+  function blockMatchesAnchor(block, anchorSpec, which) {
+    var needle = which === 'end' ? anchorSpec.endMatch : anchorSpec.match;
+    var wantRole = which === 'end' ? anchorSpec.endRole : anchorSpec.matchRole;
+    if (needle == null && !wantRole) return true; // chỉ có ở vòng EOF
+    var ok = true;
+    if (wantRole && (!block || block.role !== wantRole)) ok = false;
+    if (ok && needle != null &&
+        anchorKey(blockPlainText(block)).indexOf(anchorKey(needle)) < 0) {
+      ok = false;
+    }
+    return ok;
+  }
+
+  /* Vị trí vùng section trong danh sách parts: [start, end) - end EXCLUSIVE.
+   * Không tìm thấy start -> null (không đụng blocks của section này). */
+  function sectionSpanOfParts(parts, anchor) {
+    var start = -1;
+    for (var i = 0; i < parts.length; i++) {
+      if (blockMatchesAnchor(parts[i].b, anchor, 'match')) { start = i; break; }
+    }
+    if (start < 0) return null;
+    var end = parts.length;
+    if (anchor.endMatch != null || anchor.endRole) {
+      end = -1;
+      for (var j = start + 1; j < parts.length; j++) {
+        if (blockMatchesAnchor(parts[j].b, anchor, 'end')) { end = j; break; }
+      }
+      if (end < 0) return null; // boundary khai mà không thấy -> fail-closed
+    }
+    return { start: start, end: end };
+  }
+
+  /* Số định dạng hiển thị ô readonly/computed (money -> dấu chấm ngăn nghìn
+   * như formatVnd; percent/text giữ nguyên giá trị projection). */
+  function componentNumberText(value, type) {
+    if (value == null || String(value).trim() === '') return '';
+    var typeKey = type === 'money' || type === 'percent' ? type : null;
+    var n = parseNum(value);
+    if (typeKey === 'money' && n != null) return formatVnd(n);
+    if (typeKey === 'percent' && n != null) {
+      var s = String(n);
+      return s.indexOf('.') >= 0 ? s.replace(/\.?0+$/, '') : s;
+    }
+    return String(value);
+  }
+
+  /* ------------------------------- fixed-matrix */
+  function fixedMatrixHtml(entry, ac, rctx) {
+    var FM = p2TableModule('FixedMatrix');
+    var spec = entry.spec || entry.contract || {};
+    if (!FM || typeof FM.recompute !== 'function' ||
+        !Array.isArray(spec.fixed_rows) || !spec.fixed_rows.length) return '';
+    var cols = Array.isArray(spec.columns) ? spec.columns : [];
+    var proj = FM.recompute(spec, ac.storeRef);
+    var rowById = {};
+    proj.rows.forEach(function (r) { rowById[String(r.id)] = r; });
+
+    var head = '<tr>' + cols.map(function (c) {
+      return '<th>' + escapeHtml(c.header || c.tag) + '</th>';
+    }).join('') + '</tr>';
+
+    function cellsFor(rowId, isTotalRow) {
+      var cells = (rowById[String(rowId)] || {}).cells || {};
+      return cols.map(function (c) {
+        var tag = c.tag;
+        if (c.inputType === 'readonly') {
+          // Cột nhãn pháp lý: nội dung = label của dòng (isOutputColumn không
+          // thuộc trường hợp này nên không trùng với cột computed).
+          return '<td class="fm-label">' + escapeHtml(rowLabelById(spec, rowId)) +
+            '</td>';
+        }
+        var vkey = spec.semantic_key + '.' + rowId + '.' + tag;
+        if ((FM.isOutputColumn && FM.isOutputColumn(c)) || isTotalRow) {
+          return '<td class="calc fm-out" data-computed-key="' + escapeHtml(vkey) +
+            '">' + escapeHtml(componentNumberText(cells[tag], c.inputType)) + '</td>';
+        }
+        var fa = fieldAriaAttrs(vkey, rctx, [], -1,
+          (rowLabelById(spec, rowId)) + ' - ' + (c.header || tag));
+        var cls = 'fld comp-fld' + fa.extraCls +
+          (c.inputType === 'money' || c.inputType === 'percent' ? ' num' : '');
+        return '<td><input type="text" class="' + cls + '" data-key="' +
+          escapeHtml(vkey) + '" data-tag="' + escapeHtml(tag) +
+          '" data-fixed-row="' + escapeHtml(String(rowId)) + '" data-section-kind="fixed-matrix"' +
+          fa.attrs + ' value="' + escapeHtml(ac.getVal(vkey)) + '"></td>';
+      }).join('');
+    }
+
+    var body = (spec.fixed_rows || []).map(function (row, i) {
+      // Dòng tổng: mọi ô là projection readonly (outputOnly), KHÔNG có input
+      // -> không bao giờ tạo hai nguồn số liệu cho cùng một con số.
+      var total = (spec.totals || []).some(function (t) {
+          return String(t.id) === String(row.id); }) ||
+        row.output_only === true || row.outputOnly === true;
+      var sttCell = (spec.stt && spec.stt.mode === 'generated')
+        ? '<td class="stt">' + (i + 1) + '</td>' : '';
+      return '<tr data-row-id="' + escapeHtml(String(row.id)) +
+        '" data-section-kind="fixed-matrix" data-semantic-key="' +
+        escapeHtml(spec.semantic_key) + '"' +
+        (total ? ' data-total-row="true"' : '') + '>' +
+        sttCell + cellsFor(row.id, total) + '</tr>';
+    }).join('');
+
+    return '<div class="loop-wrap"><div class="btable-wrap"><table ' +
+      'class="btable component-table" data-component="fixed-matrix" ' +
+      'data-semantic-key="' + escapeHtml(spec.semantic_key) + '" ' +
+      'data-section-kind="fixed-matrix" role="grid"><thead>' + head +
+      '</thead><tbody>' + body + '</tbody></table></div></div>';
+  }
+
+  function rowLabelById(spec, id) {
+    var hit = (spec.fixed_rows || []).filter(function (r) {
+      return String(r.id) === String(id);
+    })[0];
+    return hit ? (hit.label == null ? '' : String(hit.label)) : '';
+  }
+
+  /* -------------------------------- nested-grid */
+  function nestedGridHtml(entry, ac, rctx) {
+    var NG = p2TableModule('NestedGrid');
+    var spec = entry.spec || entry.contract || {};
+    if (!NG || typeof NG.headerLayout !== 'function') return '';
+    var layout = NG.headerLayout(spec);
+    if (!layout.rows.length) return ''; // contract hỏng -> giữ blocks cũ
+
+    var loop = spec.loop || spec.semantic_key;
+    // KHÔNG tạo mảng rỗng trong store khi section chưa có dữ liệu: render phải
+    // side-effect-free, draft/export không bị thêm key lạ.
+    var storeRows = Array.isArray(ac.storeRef.loops[loop])
+      ? ac.storeRef.loops[loop] : [];
+    var normalized = NG.normalizeRows(spec, storeRows);
+    var rows = normalized.errors.length ? storeRows.slice() : normalized.rows;
+    if (normalized.errors.length && typeof console !== 'undefined' &&
+        console.warn) {
+      console.warn('[runtime-tables] nested-grid rows lenh contract (' +
+        loop + '): ' + JSON.stringify(normalized.errors));
+    }
+    var minUiRows = entry.policy && entry.policy.allowAdd === false ? 0 : 1;
+    var nRows = Math.max(storeRows.length, rows.length, minUiRows);
+
+    var head = layout.rows.map(function (row) {
+      return '<tr>' + row.map(function (cell) {
+        var attrs = '';
+        if (cell.rowspan > 1) attrs += ' rowspan="' + cell.rowspan + '"';
+        if (cell.colspan > 1) attrs += ' colspan="' + cell.colspan + '"';
+        return '<th' + attrs + '>' + escapeHtml(cell.text) + '</th>';
+      }).join('') + '</tr>';
+    }).join('');
+
+    var colByIndex = layout.columns; // đã sort theo col_index vật lý
+    var discTag = (spec.discriminator && spec.discriminator.tag) || null;
+    var discValues = (spec.discriminator && spec.discriminator.values) || [];
+
+    /* Ô vai trò dòng (discriminator): KHÔNG phải cột vật lý của bảng nên
+     * nhúng vào ô STT để không làm lệch header/cột vật lý. Chỉ cho chọn giá
+     * trị canonical của contract -> row_groups quyết định tập cột bắt buộc. */
+    function discriminatorSelect(i) {
+      if (!discTag) return '';
+      var cur = String((storeRows[i] || {})[discTag] == null
+        ? '' : (storeRows[i] || {})[discTag]);
+      var opts = discValues.map(function (v) {
+        var lab = entry.groupLabels ? (entry.groupLabels[v] || v) : String(v);
+        return '<option value="' + escapeHtml(String(v)) + '"' +
+          (cur === String(v) ? ' selected' : '') + '>' +
+          escapeHtml(lab) + '</option>';
+      }).join('');
+      return '<select class="fld ng-discriminator"' +
+        ' aria-label="Vai trò dòng ' + (i + 1) + '" data-key="loop:' +
+        escapeHtml(loop) + ':' + i + ':' + escapeHtml(discTag) +
+        '" data-tag="' + escapeHtml(discTag) + '" data-loop="' +
+        escapeHtml(loop) + '" data-row="' + i + '"><option value=""' +
+        (cur === '' ? ' selected' : '') + '>—</option>' + opts + '</select>';
+    }
+
+    var body = '';
+    for (var i = 0; i < nRows; i++) {
+      var tds = '';
+      colByIndex.forEach(function (col) {
+        var colType = col.type || 'text';
+        if (colType === 'stt') {
+          tds += '<td class="stt">' + (i + 1) + discriminatorSelect(i) + '</td>';
+          return;
+        }
+        if (!col.tag) { tds += '<td></td>'; return; }
+        if (colType === 'outputOnly') { tds += '<td></td>'; return; }
+        var vkey = 'loop:' + loop + ':' + i + ':' + col.tag;
+        var rawVal = storeRows[i] ? storeRows[i][col.tag] : undefined;
+        var shown = rawVal == null ? '' : String(rawVal);
+        var fa = fieldAriaAttrs(vkey, rctx, [], -1,
+          'Dòng ' + (i + 1) + ' - ' + col.tag);
+        var cls = 'fld loop-fld comp-fld' + fa.extraCls +
+          (colType === 'money' || colType === 'percent' ? ' num' : '');
+        tds += '<td><input type="text" class="' + cls + '" data-key="' +
+          escapeHtml(vkey) + '" data-tag="' + escapeHtml(col.tag) +
+          '" data-loop="' + escapeHtml(loop) + '" data-row="' + i + '"' +
+          fa.attrs + ' value="' + escapeHtml(shown) + '"></td>';
+      });
+      var rid = storeRows[i] && storeRows[i]._row_id ?
+        String(storeRows[i]._row_id) : '';
+      body += '<tr data-row-index="' + i + '" data-loop="' + escapeHtml(loop) +
+        '" data-section-kind="nested-grid"' +
+        (rid ? ' data-row-id="' + escapeHtml(rid) + '"' : '') +
+        '>' + tds + '</tr>';
+    }
+
+    var pol = entry.policy || {};
+    var btns = '<div class="loop-btns" data-loop="' + escapeHtml(loop) +
+      '" data-component="nested-grid">' +
+      (pol.allowAdd !== false
+        ? '<button type="button" class="btn-row-add" data-act="add" data-loop="' +
+          escapeHtml(loop) + '">[+ Thêm dòng]</button>'
+        : '') +
+      (pol.allowDelete !== false
+        ? '<button type="button" class="btn-row-del" data-act="del" data-loop="' +
+          escapeHtml(loop) + '">[- Xóa dòng]</button>'
+        : '') +
+      (pol.allowReorder !== false
+        ? '<button type="button" class="btn-row-up" data-act="up" data-loop="' +
+          escapeHtml(loop) + '">[↑ Lên]</button>' +
+          '<button type="button" class="btn-row-down" data-act="down" data-loop="' +
+          escapeHtml(loop) + '">[↓ Xuống]</button>'
+        : '') +
+      '</div>';
+
+    return '<div class="loop-wrap"><div class="btable-wrap"><table ' +
+      'class="btable loop-table component-table" data-component="nested-grid" ' +
+      'data-loop="' + escapeHtml(loop) + '" data-semantic-key="' +
+      escapeHtml(spec.semantic_key) + '" data-section-kind="nested-grid" ' +
+      'role="grid" aria-colcount="' + colByIndex.length + '">' +
+      '<thead>' + head + '</thead><tbody>' + body +
+      '</tbody></table></div>' + btns + '</div>';
+  }
+
+  /* -------------------------------- output-table */
+  function outputTableHtml(entry, ac, rctx) {
+    var OT = p2TableModule('OutputTable');
+    var spec = entry.spec || entry.contract || {};
+    if (!OT || typeof OT.renderOutputTable !== 'function') return '';
+    // Delegate NGUYÊN văn: module chịu trách nhiệm active_when/fail-closed.
+    return OT.renderOutputTable(spec,
+      { values: ac.storeRef.values, checks: ac.storeRef.checks }) || '';
+  }
+
+  /* Dispatcher: entry.kind -> builder tương ứng. Kind lạ/'editable-grid'
+   * đều trả '' (giữ đường legacy), giúp metadata sai không nuốt pipeline. */
+  function renderSectionComponentHtml(entry, ac, rctx) {
+    if (!entry || !ac) return '';
+    switch (entry.kind) {
+      case 'fixed-matrix': return fixedMatrixHtml(entry, ac, rctx);
+      case 'nested-grid': return nestedGridHtml(entry, ac, rctx);
+      case 'output-table': return outputTableHtml(entry, ac, rctx);
+      default: return '';
+    }
+  }
+
+  /* Đẩy component vào pipeline: ẩn blocks nguồn của section (.dupe-anchor) rồi
+   * CHÈN 1 phần tử giả {b:null, html} ngay sau block cuối của vùng (splice nên
+   * cả EOF cũng đúng; các contract sau khớp trên mảng đã cập nhật). */
+  function applySectionComponents(parts, contracts, ac, rctx) {
+    (contracts || []).forEach(function (entry) {
+      if (!entry || !entry.anchor) return;
+      var span = sectionSpanOfParts(parts, entry.anchor);
+      if (!span) return;
+      var html = renderSectionComponentHtml(entry, ac, rctx);
+      if (!html) return; // degrade: module thiếu/contract hỏng -> giữ blocks cũ
+      for (var i = span.start; i < span.end; i++) {
+        if (!parts[i]) break;
+        if (parts[i].hidden) continue;
+        parts[i].html = '<div class="dupe-anchor">' + parts[i].html + '</div>';
+        parts[i].hidden = true;
+      }
+      parts.splice(span.end, 0, { b: null, html: html,
+        componentKind: entry.kind, componentKey: entry.semanticKey });
+    });
+  }
+
   /* Render toàn bộ một mẫu biểu thành HTML string.
    * opts tuỳ chọn: { fieldMeta: {key: meta}, gridMeta: {loop: meta},
    * uiLayout: {grids:[...]}, docId, flags: {flag: bool} - điều kiện cond
-   * blocks P1.2, selectorHtml: chuỗi HTML chèn trước tờ khai }
-   * — không truyền thì tương thích ngược hoàn toàn với bản cũ. */
+   * blocks P1.2, selectorHtml: chuỗi HTML chèn trước tờ khai,
+   * sectionContracts: [entry] metadata SECTION theo kind (P2 R2) - không
+   * truyền / truyền rỗng -> tương thích ngược hoàn toàn với bản cũ. */
   function renderBlocks(doc, store, opts) {
     var ac = makeAccessors(store || newStore());
     var rctx = {
@@ -721,6 +1061,11 @@
     var parts = (doc.blocks || [])
       .filter(function (b) { return condAllows(b, opts && opts.flags); })
       .map(function (b) { return { b: b, html: renderBlock(b, ac, rctx) }; });
+    // P2 R2 dispatcher theo section.kind (editable-grid giữ đường cũ).
+    if (opts && Array.isArray(opts.sectionContracts) &&
+        opts.sectionContracts.length) {
+      applySectionComponents(parts, opts.sectionContracts, ac, rctx);
+    }
     /* Audit L2: marker kỹ thuật bị ẩn -> log ĐÚNG 1 LẦN/form (không render
      * vào DOM; giữ evidence cho detector/gate LAYOUT_DONE). */
     if (rctx.siSkipped.length && typeof console !== 'undefined' &&
@@ -864,5 +1209,11 @@
   root.formatStyleAttr = formatStyleAttr;
   root.roleClassOf = roleClassOf;
   root.bindFootnoteRefs = bindFootnoteRefs;
+
+  /* P2 R2 runtime wiring: dispatcher theo section.kind (3 module platform chỉ
+   * được require/gọi, không sửa). Renderer GENERIC - contracts đến qua opts. */
+  root.renderSectionComponentHtml = renderSectionComponentHtml;
+  root.applySectionComponents = applySectionComponents;
+  root.sectionSpanOfParts = sectionSpanOfParts;
 
 })(typeof module !== 'undefined' && module.exports ? module.exports : (window.Render = window.Render || {}));

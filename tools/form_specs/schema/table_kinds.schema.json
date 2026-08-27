@@ -14,7 +14,13 @@
     "\"legal_status\": {\"blocked\": true, \"ref\": ..., \"question\": ...}.",
     "Khi đó build vẫn validate cấu trúc spec nhưng BỎ QUA hoàn toàn lúc rebuild",
     "(in '[form_specs] <form>/<spec> BLOCKED LEGAL REVIEW (...) -> BO QUA').",
-    "Không suy đoán nội dung pháp lý; owner mở chốt bằng cách đặt blocked=false."
+    "Không suy đoán nội dung pháp lý; owner mở chốt bằng cách đặt blocked=false.",
+    "",
+    "W2 (2026-08-27, D1.4=A): mở rộng ADDITIVE cho fixed_matrix.totals[].formula",
+    "thêm `product(<tag>[, <tag>...])` bên cạnh `sum(<tag>)`. Không đổi field nào",
+    "khác nên vẫn tương thích v1 (version không bump — contract docs đang LOCKED).",
+    "Engine hai phía bắt buộc cùng ngữ nghĩa: tools/docx_render.py",
+    "(_TOTALS_FORMULA_RE) và app_web/ui/fixed-matrix.js (productFormula())."
   ],
   "version": "v1",
   "owner_lane": "B2 generator + DOCX/export",
@@ -68,7 +74,14 @@
         "id là key draft; label in vào cột nhãn; dòng tổng bắt buộc output_only=true"
       ],
       "totals": [
-        "{formula: \"sum(<tag>)\", target_row, target_tag}",
+        "{formula: \"sum(<tag>)\" | \"product(<tag>[,<tag>...])\", target_row, target_tag}",
+        "sum(<tag>): đúng 1 tag — bỏ ô rỗng rồi cộng dồn, không kê khai gì -> 0",
+        "product(<tag>[,<tag>...]): >=1 tag thừa số; ô tổng = CỘNG DỒN tích từng",
+        "  dòng input (vd D1.4=A: giá trị = số lượng × mệnh giá cổ phần). Dòng",
+        "  KHÔNG kê khai gì bị bỏ qua; dòng có kê khai mà THIẾU >=1 thừa số làm",
+        "  ô tổng KHÔNG XÁC ĐỊNH -> in TRỐNG (''), KHÔNG thay bằng '0'; không có",
+        "  dòng nào đủ thừa số -> cũng TRỐNG. Tên op viết thường đúng chữ",
+        "  (sum|product), thừa số phải là tag cột hợp lệ",
         "target_row phải là dòng fixed_rows có output_only=true",
         "target_tag phải là tag input column hợp lệ"
       ]
@@ -82,7 +95,7 @@
     "export_behaviour": [
       "tools/docx_render.recompute_totals(data, tables_meta) tính tổng từ chính các ô dữ liệu, luôn GHI ĐÈ stored value của ô tổng",
       "stored != computed -> raise ExportTotalsError code EXPORT_TOTALS_RECOMPUTE_CONFLICT (strict=True mặc định)",
-      "formula không khớp sum(<tag>) hoặc tag lạ -> EXPORT_TOTALS_RECOMPUTE_CONFLICT với code FORMULA_UNSUPPORTED",
+      "formula không khớp sum(<tag>)/product(<tag>...) hoặc tag lạ -> code FORMULA_UNSUPPORTED (fail loud)",
       "render(..., tables_meta=...) làm việc trên bản sao sâu, không mutate payload caller",
       "lớp này KHÔNG thay thế chỗ chốt duy nhất của đường export thật: ExportLoopContractConflict/exportLoopsStrict (app_web/ui/app.js, code EXPORT_LOOP_CONTRACT_CONFLICT)"
     ],
@@ -155,6 +168,34 @@
         ],
         "totals": [{"formula": "sum(so_tien_vnd)", "target_row": "tong_cong",
                     "target_tag": "so_tien_vnd"}]
+      }
+    },
+    "fixed-matrix-product": {
+      "_note": "W2 (D1.4=A): dạng thu gọn F3 — giá trị loại cổ phần = số lượng × mệnh giá. Như mọi example khác, instance này PHẢI qua được tools/build_form_maps._json_spec(); tools/test_export_totals_product.py chốt điều đó.",
+      "kind": "fixed-matrix",
+      "pos": "after",
+      "anchor": "^7\\. co cau loai co phan",
+      "no_default_drops": true,
+      "drop_until": "^8\\. thong tin chu so huu",
+      "spec": {
+        "id": "co_cau_loai_co_phan_demo",
+        "kind": "fixed-matrix",
+        "semantic_key": "co_cau_loai_co_phan_demo",
+        "columns": [
+          {"header": "Loại cổ phần", "tag": null, "input_type": "readonly"},
+          {"header": "Số lượng", "tag": "so_luong", "input_type": "money"},
+          {"header": "Mệnh giá cổ phần (VNĐ)", "tag": "menh_gia_co_phan",
+           "input_type": "money"},
+          {"header": "Giá trị (VNĐ)", "tag": "gia_tri_vnd",
+           "input_type": "money"}
+        ],
+        "fixed_rows": [
+          {"id": "cp_pho_thong", "label": "Cổ phần phổ thông"},
+          {"id": "cp_uu_dai_khac", "label": "Các cổ phần ưu đãi khác"},
+          {"id": "tong_so", "label": "Tổng số", "output_only": true}
+        ],
+        "totals": [{"formula": "product(so_luong, menh_gia_co_phan)",
+                    "target_row": "tong_so", "target_tag": "gia_tri_vnd"}]
       }
     },
     "nested-grid": {

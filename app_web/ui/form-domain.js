@@ -296,6 +296,15 @@
     }
   };
 
+  /* Every editable-grid contract exposes this additive slot.  An empty slot
+   * deliberately preserves the legacy validator path below; form/spec owners
+   * can add declarative rules without changing existing hard-coded behavior. */
+  Object.keys(GRID_META).forEach(function (name) {
+    if (!Array.isArray(GRID_META[name].cross_field_rules)) {
+      GRID_META[name].cross_field_rules = [];
+    }
+  });
+
   /* Clone giá trị metadata (P2.0 hardening): object/array -> bản sao ĐỆ QUY
    * mọi mức, scalar (string/number/bool/null/undefined) giữ nguyên.
    * Không dependency - chỉ dùng cho metadata JSON-thuần của grid. */
@@ -802,6 +811,52 @@
     return evalActiveWhen(g.activeWhen, filled.length, st);
   }
 
+  /* Declarative cross-field rules. Supported contract forms are intentionally
+   * small: {rule:'sum', tag|tags, equals|value, severity?, code?, when?} and
+   * expression strings such as "sum(ty_le) == 100". Unknown rules are ignored
+   * so introducing metadata ahead of a validator upgrade cannot break export. */
+  function validateCrossFieldRules(docId, name, rules, rows, filled, tags, push) {
+    (rules || []).forEach(function (spec) {
+      if (!spec) return;
+      var text = typeof spec === 'string' ? spec : String(spec.rule || '');
+      var m = text.match(/^\s*sum\(\s*([^)]+?)\s*\)\s*(==|=|<=|>=|<|>)\s*(-?\d+(?:[.,]\d+)?)\s*$/i);
+      var tag = null, op = null, expected = null;
+      if (m) {
+        tag = m[1].trim();
+        op = m[2] === '=' ? '==' : m[2];
+        expected = Number(m[3].replace(',', '.'));
+      } else if (typeof spec === 'object' && (spec.rule === 'sum' || spec.type === 'sum')) {
+        tag = spec.tag || (spec.tags && spec.tags[0]);
+        op = spec.operator || '==';
+        expected = spec.equals != null ? spec.equals : spec.value;
+        expected = expected == null ? null : Number(expected);
+      }
+      if (!tag || !op || expected == null || isNaN(expected) ||
+          (tags || []).indexOf(tag) < 0) return;
+      var hasValue = false;
+      var sum = 0;
+      filled.forEach(function (r) {
+        var n = parseMoney((r || {})[tag]);
+        if (n != null) { hasValue = true; sum += n; }
+      });
+      if (!hasValue) return;
+      var ok = op === '==' ? Math.round(sum * 100) === Math.round(expected * 100) :
+        op === '<=' ? sum <= expected : op === '>=' ? sum >= expected :
+        op === '<' ? sum < expected : sum > expected;
+      if (ok) return;
+      var cfg = typeof spec === 'object' ? spec : {};
+      var code = cfg.code || 'CROSS_FIELD_RULE';
+      var severity = cfg.severity || 'blocking';
+      push({
+        key: name + '.cross_field.' + tag,
+        docId: docId, code: code,
+        message: (cfg.message || ('Tổng ' + tag + ' không thỏa điều kiện ' +
+          op + ' ' + expected + ' (đang là ' + sum + ')')),
+        severity: severity
+      });
+    });
+  }
+
   /* Validate một bảng lặp CÓ grid meta (toàn cục hoặc form-scoped). Lỗi
    * row-level mang key
    * "loop:<name>:<row_id>:<tag>" nên reorder/xóa dòng không làm lỗi trỏ sai
@@ -978,6 +1033,8 @@
         });
       }
     });
+
+    validateCrossFieldRules(docId, name, g.cross_field_rules, rows, filled, tags, push);
   }
 
   /* Path legacy cho loop KHÔNG có GRID_META (vd ds_nganh_kinh_doanh cũ). */

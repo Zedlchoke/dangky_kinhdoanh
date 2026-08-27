@@ -609,6 +609,47 @@ function industryStore(rows) {
     segRo);
 }
 
+// --------------------------------- R2.2 editable-grid remainder
+
+{
+  const industryMeta = FD.getGridMeta({ docId: 'PLII_M01', loop: 'ds_nganh' });
+  const householdMeta = FD.getGridMeta({
+    docId: 'PLII_M01', loop: 'ds_tv_ho_gia_dinh'
+  });
+  check('R2.2 E1/E2: production meta co slot cross_field_rules',
+    Array.isArray(industryMeta.cross_field_rules) &&
+      Array.isArray(householdMeta.cross_field_rules));
+
+  const nav = App.GridFocus.gridNavigationIndex;
+  check('R2.2 keyboard: di chuyen ngang/dọc trong bounds',
+    nav(0, 0, 'ArrowRight', 2, 3).col === 1 &&
+      nav(0, 1, 'ArrowDown', 2, 3).row === 1 &&
+      nav(0, 0, 'ArrowLeft', 2, 3) === null &&
+      nav(1, 2, 'ArrowDown', 2, 3) === null);
+
+  // Dùng fixture PLII_M01 thật, chỉ thay metadata runtime để chứng minh slot
+  // được validator consume mà không đổi hard-coded rules production.
+  const scopedHousehold = Object.assign({}, householdMeta, {
+    cross_field_rules: [{
+      rule: 'sum', tag: 'so_cccd', equals: 0,
+      code: 'HOUSEHOLD_TEST_CROSS_FIELD', severity: 'warning'
+    }]
+  });
+  FD.registerFormGridMeta('PLII_M01_R22_TEST', {
+    loops: { ds_tv_ho_gia_dinh: scopedHousehold }
+  });
+  const crossStore = R.newStore();
+  crossStore.loops.ds_tv_ho_gia_dinh = [{
+    _row_id: FD.makeRowId(), ho_ten: 'LE VAN TEST', so_cccd: '012345678901'
+  }];
+  const crossErrors = FD.validateDocument(
+    'PLII_M01_R22_TEST', loadProd('PLII_M01').blocks, crossStore, { vsicList: VSIC });
+  check('R2.2 E2: validator doc cross_field_rules tu fixture household',
+    crossErrors.some(e => e.code === 'HOUSEHOLD_TEST_CROSS_FIELD' &&
+      e.severity === 'warning' &&
+      e.key === 'ds_tv_ho_gia_dinh.cross_field.so_cccd'));
+}
+
 // --------------------------------- F. PHASE 6: field-grid theo uiLayout
 
 {

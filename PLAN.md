@@ -98,6 +98,11 @@ python app_web/main.py --mock
 
 ## Master execution plan — hoàn thiện toàn bộ ứng dụng từ checkpoint `d882793`
 
+> **Progress checkpoint 2026-08-27:** `main=e95f03a`, worktree chính sạch,
+> local ahead `origin/main` 19 commit và chưa push. R0 đã PASS; R1.1 đã merge;
+> R1.2 đã hoàn thành trên branch `agent/layout-l2` tại `c301599` nhưng chưa merge;
+> R1.3 và R2–R7 chưa bắt đầu/hoàn tất theo gate tương ứng.
+
 ### Phạm vi và nguồn sự thật
 
 Kế hoạch này bắt đầu tại `main` commit `d882793` sau Wave P1.2 M72 và **thay thế
@@ -128,10 +133,34 @@ desktop web/DOCX hiện tại.
   verifier cấu trúc và conditional export đã PASS tại checkpoint.
 - Editable-grid foundation/P2.0: form-scoped meta, selector activation, stable
   row ID, deep clone, export conflict guard và focus sau row-op đã có.
-- Chưa hoàn thành: L1/L2/L3 layout, ba table component mới, P3 domain rollout,
-  33 `BLOCKED_LEGAL_REVIEW`, visual QA đầy đủ và Windows clean-machine release.
-- `tools/census/p1_c_verify_plii_m02.py` có FAIL baseline đã biết; phải triage và
-  sửa gate theo contract thật trước khi dùng full regression làm release gate.
+- R0 đã triage `tools/census/p1_c_verify_plii_m02.py`: verifier cũ so sai shape
+  `match_heading`; production giữ nguyên, verifier + negative selftest đã PASS.
+- Release runner tại `e95f03a`: **29 PASS / 0 FAIL / 0 NOT RUN**.
+- R1.1 blocks-v3 đã merge và regenerate 87/87: 0 thiếu role, 46/46
+  `source-indicator` đúng role, 0 marker leak, 0 digit-glue; lần regenerate thứ
+  hai không tạo diff.
+- R1.2 code đã xong tại `c301599`: 77/77 test PASS cho newline, sup/sub,
+  footnote, semantic role/format allowlist, responsive và M72 isolation. Branch
+  còn chờ Lead review/merge + full regression trên main.
+- Chưa hoàn thành: R1.3 visual rollout 87/87, independent layout audit, ba table
+  component mới của P2, P3 domain rollout, 33 `BLOCKED_LEGAL_REVIEW`, visual QA
+  đầy đủ và Windows clean-machine release.
+
+### Trạng thái thực thi hiện tại
+
+| Wave | Trạng thái | Evidence / bước tiếp theo |
+|---|---|---|
+| R0 baseline/scope/decisions | **PASS** | `208de0e..a0453d0`; release runner 29/29; D1–D7 vẫn `OPEN` |
+| R1.1 L1 extractor/schema | **PASS, đã merge** | `de55824`, regen `8cb30fc`, gate hardening tới `e95f03a`; detector 87/87 PASS |
+| R1.2 L2 renderer/CSS | **IMPLEMENTED, CHỜ MERGE** | branch `agent/layout-l2`, commit `c301599`, test 77/77 PASS; Lead phải review/merge rồi chạy release runner |
+| R1.3 L3 rollout/visual | **CHƯA BẮT ĐẦU** | sau L2 merge: pilot → các batch 87/87 → independent visual audit |
+| R2 table platform | **CHƯA BẮT ĐẦU** | có thể chuẩn bị contract sau L2 merge; chưa được coi là P2 PASS |
+| R3 domain rollout | **BLOCKED MỘT PHẦN** | chờ D1–D7 `DECIDED` và Gate R2 |
+| R4–R7 | **CHƯA BẮT ĐẦU** | phụ thuộc R1–R3; WebView2/visual/Windows clean-machine vẫn chưa chạy |
+
+**Next action bắt buộc:** Lead review `c301599`, kiểm ownership/diff, merge tuần
+tự vào `main`, chạy `test_layout_l2_render.js` + release runner + detector L1,
+cập nhật execution ledger; chỉ khi xanh mới mở R1.3.
 
 ### Định nghĩa `APP_DONE`
 
@@ -177,7 +206,7 @@ Không dùng phần trăm hoặc số test pass lớn để thay thế các đi�
 - Một wave chỉ được merge khi branch sạch, `git diff --check` pass và test liên
   quan pass. Sau mỗi integrate chạy regression chung trước khi mở wave phụ thuộc.
 
-## R0 — Release baseline, scope registry và decision queue
+## R0 — Release baseline, scope registry và decision queue — **PASS**
 
 ### R0.1 Baseline kỹ thuật
 
@@ -225,9 +254,9 @@ owner, forms/sections bị ảnh hưởng, lựa chọn, quyết định cuối 
 Không bắt đầu rollout của section còn `OPEN`; các section độc lập đã `DECIDED`
 vẫn được làm tiếp.
 
-## R1 — Hoàn tất P1-LAYOUT (L1 → L2 → L3)
+## R1 — Hoàn tất P1-LAYOUT (L1 → L2 → L3) — **IN PROGRESS**
 
-### R1.1 L1 extractor/schema contract
+### R1.1 L1 extractor/schema contract — **PASS, đã merge**
 
 Một lane sở hữu `tools/docx_to_blocks.py`, semantic-role/override module và test:
 
@@ -242,7 +271,11 @@ Một lane sở hữu `tools/docx_to_blocks.py`, semantic-role/override module v
 Gate L1: contract khóa bằng commit; fixture extractor gồm newline, footnote,
 marker/form-number và paragraph format; generator semantic-idempotent.
 
-### R1.2 L2 renderer/CSS
+Evidence hiện tại: lane `agent/layout-l1` commit `ef51caa`, merge `de55824`,
+regenerate blocks-v3 `8cb30fc`, detector 87/87 PASS và main hardening tới
+`e95f03a`. Không mở lại L1 nếu regression không chứng minh lỗi thật.
+
+### R1.2 L2 renderer/CSS — **IMPLEMENTED, chờ Lead merge**
 
 Sau L1 integrate, một lane sở hữu `render.js`, `style.css` và DOM/layout tests:
 
@@ -257,7 +290,12 @@ Sau L1 integrate, một lane sở hữu `render.js`, `style.css` và DOM/layout 
 Gate L2: pilot `PLI_M01`, `PLI_M02`, `PLII_M01`, `PLI_M72` có DOM test và visual
 evidence; không hồi quy M72 conditional variant.
 
-### R1.3 L3 rollout 87/87
+Trạng thái: commit `c301599` trên `agent/layout-l2`, worktree sạch, test
+`app_web/test_layout_l2_render.js` **77 PASS / 0 FAIL**. Đây chưa phải Gate L2
+hoàn tất cho tới khi Lead review/merge, full regression xanh và pilot có visual
+evidence ở viewport/zoom release.
+
+### R1.3 L3 rollout 87/87 — **CHƯA BẮT ĐẦU**
 
 Lead regenerate theo batch: pilot → PLI_M01–M11 → PLI_M12–M26 → PLI còn lại →
 PLII_M01–M28. Mỗi batch có detector, generated allowlist, regression và screenshot

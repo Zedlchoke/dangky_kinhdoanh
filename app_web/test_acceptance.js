@@ -49,7 +49,7 @@ function loadProd(id) {
 }
 const M02 = loadProd('PLI_M02');               // pilot: loop ds_nganh 5 cột
 const M01 = loadProd('PLII_M01');              // ds_nganh + ds_tv_ho_gia_dinh
-const M06 = loadProd('PLI_M06');               // ds_thanh_vien (minRows)
+const M06 = loadProd('PLI_M06');               // ds_thanh_vien_tnhh (minRows, rename P2)
 const VSIC = JSON.parse(
   fs.readFileSync(path.join(ROOT, 'app', 'data', 'nganh_vsic.json'), 'utf8')
 ).nganh;
@@ -656,12 +656,12 @@ function runPy(scriptRel) {
 // EXTRA - MIN_ROWS vi phạm: chặn export nhưng add/delete vẫn thao tác được
 // ======================================================================
 {
-  // ds_thanh_vien (production PLI_M06) yêu cầu tối thiểu 2 thành viên
+  // ds_thanh_vien_tnhh (production PLI_M06, rename P2) yêu cầu tối thiểu 2 thành viên
   const store = R.newStore();
-  G.addRow(store, 'ds_thanh_vien', null);
-  store.loops.ds_thanh_vien[0].ho_ten = 'NGUYEN VAN A';
-  store.loops.ds_thanh_vien[0].von_dong_gop = '100.000.000';
-  store.loops.ds_thanh_vien[0].ty_le_von = '100';
+  G.addRow(store, 'ds_thanh_vien_tnhh', null);
+  store.loops.ds_thanh_vien_tnhh[0].ho_ten = 'NGUYEN VAN A';
+  store.loops.ds_thanh_vien_tnhh[0].von_dong_gop = '100.000.000';
+  store.loops.ds_thanh_vien_tnhh[0].ty_le_von = '100';
 
   const errs = errsDoc('PLI_M06', M06.blocks, store);
   const mr = blockingOf(errs, 'MIN_ROWS');
@@ -671,13 +671,13 @@ function runPy(scriptRel) {
   // Nhưng thao tác chỉnh sửa KHÔNG bị khóa/không exception
   let opOk = true;
   try {
-    const added = G.addRow(store, 'ds_thanh_vien', null);       // thêm được
-    const removed = G.deleteRows(store, 'ds_thanh_vien', [
-      added.id, store.loops.ds_thanh_vien[0]._row_id]);          // xóa dưới min vẫn được
+    const added = G.addRow(store, 'ds_thanh_vien_tnhh', null);       // thêm được
+    const removed = G.deleteRows(store, 'ds_thanh_vien_tnhh', [
+      added.id, store.loops.ds_thanh_vien_tnhh[0]._row_id]);    // xóa dưới min vẫn được
     if (!(added && added.id && removed === 2 &&
-          store.loops.ds_thanh_vien.length === 0)) opOk = false;
+          store.loops.ds_thanh_vien_tnhh.length === 0)) opOk = false;
     // UI vẫn render bình thường khi bảng rỗng (>=1 dòng trống)
-    const tbl = loopTable(renderDoc(M06, store), 'ds_thanh_vien');
+    const tbl = loopTable(renderDoc(M06, store), 'ds_thanh_vien_tnhh');
     if (bodyRows(tbl).length < 1) opOk = false;
     // ds_nganh cũng vậy: xóa hết vẫn thao tác tiếp được
     const s2 = industryStore([{ ma_nganh: '0111', ten_nganh: 'Trồng lúa' }]);

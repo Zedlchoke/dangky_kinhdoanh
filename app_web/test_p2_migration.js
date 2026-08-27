@@ -23,7 +23,7 @@ function tagsOf(block) {
 }
 
 const m06 = loadProd('PLI_M06');
-const members = loopBlock(m06, 'ds_thanh_vien');
+const members = loopBlock(m06, 'ds_thanh_vien_tnhh'); /* rename P2 */
 assert(members, 'production PLI_M06 member loop is required by fixture');
 assert(tagsOf(members).includes('ho_ten'), 'fixture uses a production member column');
 
@@ -46,7 +46,7 @@ const legacy = {
     checks: { 'legacy.check': true, futureCheck: false },
     loops: {
       ds_nganh_kinh_doanh: legacyRows,
-      ds_thanh_vien: memberRows,
+      ds_thanh_vien_tnhh: memberRows,
       future_loop_name: [{ future: 'row' }]
     },
     futureStoreField: { keep: 'store-extension' }
@@ -65,25 +65,25 @@ assert.strictEqual(migrated.store.futureStoreField.keep, 'store-extension');
 assert.strictEqual(migrated.store.values.futureValue, 'keep');
 assert.strictEqual(migrated.store.checks.futureCheck, false);
 assert.strictEqual(migrated.store.loops.future_loop_name[0].future, 'row');
-assert.strictEqual(migrated.store.loops.ds_thanh_vien[0].customCell, 'member');
+assert.strictEqual(migrated.store.loops.ds_thanh_vien_tnhh[0].customCell, 'member');
 
 // The only migration mapping is explicit and does not alter unrelated loops.
 assert.strictEqual(migrated.store.loops.ds_nganh, legacyRows);
 assert.strictEqual(migrated.store.loops.ds_nganh_kinh_doanh, undefined);
 assert.strictEqual(migrated.store.loops.ds_nganh[0].customCell, 'keep');
-assert.strictEqual(migrated.store.loops.ds_thanh_vien, memberRows);
+assert.strictEqual(migrated.store.loops.ds_thanh_vien_tnhh, memberRows);
 assert.strictEqual(migrated.store.loops.future_loop_name[0].future, 'row');
 assert(migrated.store.loops.ds_nganh.every(row => /^r\d+_/.test(row._row_id)));
-assert.strictEqual(migrated.store.loops.ds_thanh_vien[0]._row_id, 'member-stable-1');
-assert(/^r\d+_/.test(migrated.store.loops.ds_thanh_vien[1]._row_id));
+assert.strictEqual(migrated.store.loops.ds_thanh_vien_tnhh[0]._row_id, 'member-stable-1');
+assert(/^r\d+_/.test(migrated.store.loops.ds_thanh_vien_tnhh[1]._row_id));
 
 const ids = {
   industry: migrated.store.loops.ds_nganh.map(row => row._row_id),
-  members: migrated.store.loops.ds_thanh_vien.map(row => row._row_id)
+  members: migrated.store.loops.ds_thanh_vien_tnhh.map(row => row._row_id)
 };
 assert.strictEqual(FD.migrateDraft(migrated), migrated);
 assert.deepStrictEqual(migrated.store.loops.ds_nganh.map(row => row._row_id), ids.industry);
-assert.deepStrictEqual(migrated.store.loops.ds_thanh_vien.map(row => row._row_id), ids.members);
+assert.deepStrictEqual(migrated.store.loops.ds_thanh_vien_tnhh.map(row => row._row_id), ids.members);
 
 // Canonical data wins; the legacy key is not deleted or merged implicitly.
 const both = {

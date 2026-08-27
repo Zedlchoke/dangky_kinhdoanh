@@ -457,6 +457,30 @@
         ds_nganh: mkGrid(GRID_META.ds_nganh, {
           required: false, minRows: 0,
           semanticKey: 'nganh_hien_tai'
+        }),
+        /* Wave R3B1 (2026-08-27): HAI bảng thành viên hộ gia đình của
+         * PLII_M02 (census manifest section a4_tv_hgd_sau_thay_doi = blocks
+         * B072 ghep 10 cột và c7_tv_hgd_cap_doi = blocks B137/B129). Tập cột
+         * GIỐNG HẾT GRID_META.ds_tv_ho_gia_dinh (M01) nhưng NGỮ CẢNH khác ->
+         * key riêng, KHÔNG auto-sync (manifest ghi chú "key riêng"; cùng
+         * nguyên tắc PLAN A như D4.1=A), chu_ky outputOnly đúng D2.4=A.
+         *
+         * TRẠNG THÁI: metadata sẵn sàng nhưng entry spec rebuild CHƯA được
+         * khai ở tools/form_specs/household/PLII_M02.json vì file đó bị test
+         * contract lane khác ghim cứng tập occurrence_id (tools/
+         * test_industry_household.py t_m02_spec_occurrence_identity yêu cầu
+         * đếm entry == 1 cho MÔI entry và tập id == 4 id ngành; tools/census/
+         * p1_c_verify_plii_m02.py cũng vậy) - ngoài ownership lane R3B1.
+         * Bỏ khoá ngay khi Lead/L3 mở tập id (thêm 2 id + spec list 10 cột).
+         * Loop chưa tồn tại trong blocks -> resolver trả meta này KHÔNG đổi
+         * hành vi runtime hiện có. */
+        tv_hgd_sau_thay_doi: mkGrid(GRID_META.ds_tv_ho_gia_dinh, {
+          label: 'Danh sách các thành viên hộ gia đình đăng ký hộ kinh doanh sau khi thay đổi',
+          semanticKey: 'tv_hgd_sau_thay_doi'
+        }),
+        tv_hgd_cap_doi: mkGrid(GRID_META.ds_tv_ho_gia_dinh, {
+          label: 'Thông tin về các thành viên hộ gia đình đăng ký hộ kinh doanh (cấp đổi/đăng ký lại)',
+          semanticKey: 'tv_hgd_cap_doi'
         })
       }
     }
@@ -1390,6 +1414,147 @@
           }),
           min_rows: 0,
           max_rows: null,
+          totals: [],
+          cross_field_rules: []
+        }
+      }]
+    },
+    /* N6 - nested-grid PLI_M12 (Wave R3B1, 2026-08-27): người đại diện theo
+     * ủy quyền SAU KHI THAY ĐỔI - ngữ cảnh riêng của mẫu thay đổi, KHÔNG dùng
+     * chung key với PLI_M02/M15 (cùng nguyên tắc độc lập draft như PLAN A).
+     * Nguồn header: app/data/blocks/PLI_M12.json block B145 (header ghep, số
+     * cột vật lý dẫn đầu bởi "Chủ sở hữu/Thành viên công ty TNHH/Cổ đông là
+     * nhà đầu tư nước ngoài là tổ chức" theo census manifest section
+     * ndd_uy_quyen_sau_thay_doi). D2.1=A chỉ chốt discriminator cho bộ
+     * M02/M13/M15 nên mẫu này CHƯA có evidence 2 row-type -> KHÔNG khai
+     * discriminator (absence, không mislabel). Chu thich 2 ("nếu cột số 5 là
+     * Số ĐDCN thì bỏ cột 6, 7") là rule điều kiện chưa có trong contract v1.
+     * Hai nhóm 'Tổng giá trị vốn được đại diện'/'Thời điểm đại diện phần vốn'
+     * tiếp tục chờ owner/B3 như N1. Spec cùng hình dạng đã qua validator
+     * tools/build_form_maps.py tại tools/form_specs/change/PLI_M12.json. */
+    'PLI_M12': {
+      sections: [{
+        sectionId: 'ndd_uy_quyen_sau_thay_doi',
+        semanticKey: 'ds_ndd_uy_quyen_sau_thay_doi',
+        kind: 'nested-grid',
+        policy: { allowAdd: true, allowDelete: true, allowReorder: true,
+          confirmDeleteNonEmpty: false },
+        anchor: {
+          match: 'thong tin ve nguoi dai dien theo uy quyen sau khi thay doi',
+          matchRole: 'body',
+          endMatch: '1 dung trong truong hop thay doi tu nguoi dai dien',
+          endRole: 'body'
+        },
+        spec: {
+          kind: 'nested-grid',
+          section_id: 'ndd_uy_quyen_sau_thay_doi',
+          semantic_key: 'ds_ndd_uy_quyen_sau_thay_doi',
+          loop: 'ds_ndd_uy_quyen_sau_thay_doi',
+          form_id: 'PLI_M12',
+          header_rows: [
+            [
+              { text: 'STT', rowspan: 2 },
+              { text: 'Chủ sở hữu/Thành viên công ty TNHH/Cổ đông là nhà đầu tư nước ngoài là tổ chức', rowspan: 2 },
+              { text: 'Tên người đại diện theo ủy quyền', rowspan: 2 },
+              { text: 'Ngày, tháng, năm sinh', rowspan: 2 },
+              { text: 'Giới tính', rowspan: 2 },
+              { text: 'Số, ngày cấp, cơ quan cấp Giấy tờ pháp lý của cá nhân', colspan: 3 },
+              { text: 'Quốc tịch', rowspan: 2 },
+              { text: 'Dân tộc', rowspan: 2 },
+              { text: 'Địa chỉ liên lạc', rowspan: 2 },
+              { text: 'Vốn được ủy quyền', colspan: 2 },
+              { text: 'Chữ ký của người đại diện theo ủy quyền', rowspan: 2 },
+              { text: 'Ghi chú (nếu có)', rowspan: 2 }
+            ],
+            [
+              { text: 'Số' }, { text: 'Ngày cấp' }, { text: 'Cơ quan cấp' },
+              { text: 'VNĐ' }, { text: 'Tỷ lệ (%)' }
+            ]
+          ],
+          columns: ['stt', 'chu_so_huu_tvtnhh_cdnn_to_chuc', 'ten_ndd_uy_quyen',
+            'ngay_sinh', 'gioi_tinh', 'giay_to_so', 'giay_to_ngay',
+            'giay_to_co_quan', 'quoc_tich', 'dan_toc', 'dia_chi',
+            'von_duoc_uy_quyen_vnd', 'ty_le', 'chu_ky', 'ghi_chu'
+          ].map(function (tag, col_index) {
+            return { tag: tag, col_index: col_index,
+              type: tag === 'chu_ky' ? 'outputOnly' :
+                (tag === 'stt' ? 'stt' :
+                  ((tag === 'von_duoc_uy_quyen_vnd' || tag === 'ty_le')
+                    ? 'money' : 'text')) };
+          }),
+          min_rows: 1,       // D2.7=A: tối thiểu 1 dòng có dữ liệu
+          max_rows: null,    // D2.7=A: không giới hạn vô căn cứ
+          totals: [],
+          cross_field_rules: []
+        }
+      }]
+    },
+    /* N7 - nested-grid PLI_M15 (Wave R3B1): người đại diện/theo ủy quyền của
+     * chủ sở hữu MỚI. Cùng row-contract N1 theo D2.1=A (một policy chung cho
+     * M02/M13/M15); nguồn: app/data/blocks/PLI_M15.json B48-B49 (paragraph
+     * header ghep còn đựng chuỗi cam kết của mẫu ở run cuối -> rebuild ở
+     * tools/form_specs/change/PLI_M15.json dùng trim/keep_from để GIỮ nguyên
+     * chuỗi đó). min_rows 1 / max_rows null đúng D2.7=A. */
+    'PLI_M15': {
+      sections: [{
+        sectionId: 'ndd_pl_uy_quyen_chu_so_huu_moi',
+        semanticKey: 'ds_nddpl_uy_quyen_chu_so_huu_moi',
+        kind: 'nested-grid',
+        policy: { allowAdd: true, allowDelete: true, allowReorder: true,
+          confirmDeleteNonEmpty: false },
+        anchor: {
+          match: 'nguoi dai dien theo phap luat/nguoi dai dien theo uy quyen cua chu so huu',
+          matchRole: 'body',
+          endMatch: 'doanh nghiep cam ket hoan toan chiu trach nhiem',
+          endRole: 'body'
+        },
+        spec: {
+          kind: 'nested-grid',
+          section_id: 'ndd_pl_uy_quyen_chu_so_huu_moi',
+          semantic_key: 'ds_nddpl_uy_quyen_chu_so_huu_moi',
+          loop: 'ds_nddpl_uy_quyen_chu_so_huu_moi',
+          form_id: 'PLI_M15',
+          header_rows: [
+            [
+              { text: 'STT', rowspan: 2 },
+              { text: 'Tên người đại diện theo pháp luật/người đại diện theo ủy quyền', rowspan: 2 },
+              { text: 'Ngày, tháng, năm sinh', rowspan: 2 },
+              { text: 'Giới tính', rowspan: 2 },
+              { text: 'Số, ngày cấp, cơ quan cấp Giấy tờ pháp lý của cá nhân', colspan: 3 },
+              { text: 'Quốc tịch', rowspan: 2 },
+              { text: 'Dân tộc', rowspan: 2 },
+              { text: 'Địa chỉ liên lạc', rowspan: 2 },
+              { text: 'Vốn được ủy quyền', colspan: 2 },
+              { text: 'Chữ ký của người đại diện theo pháp luật/người đại diện theo ủy quyền', rowspan: 2 },
+              { text: 'Ghi chú (nếu có)', rowspan: 2 }
+            ],
+            [
+              { text: 'Số' }, { text: 'Ngày cấp' }, { text: 'Cơ quan cấp' },
+              { text: 'VNĐ' }, { text: 'Tỷ lệ (%)' }
+            ]
+          ],
+          row_groups: [
+            { group_id: 'ndd_pl',
+              match: { tag: 'loai_dong', equals: 'ndd_pl' },
+              required_columns: ['ten_nguoi_dai_dien'] },
+            { group_id: 'ndd_uy_quyen',
+              match: { tag: 'loai_dong', equals: 'ndd_uy_quyen' },
+              required_columns: ['ten_nguoi_dai_dien', 'ty_le'] }
+          ],
+          discriminator: { tag: 'loai_dong', values: ['ndd_pl', 'ndd_uy_quyen'] },
+          columns: ['stt', 'ten_nguoi_dai_dien', 'ngay_sinh', 'gioi_tinh',
+            'giay_to_so', 'giay_to_ngay', 'giay_to_co_quan', 'quoc_tich',
+            'dan_toc', 'dia_chi', 'von_duoc_uy_quyen_vnd', 'ty_le', 'chu_ky',
+            'ghi_chu'
+          ].map(function (tag, col_index) {
+            return { tag: tag, col_index: col_index,
+              type: tag === 'chu_ky' ? 'outputOnly' :
+                (tag === 'stt' ? 'stt' :
+                  ((tag === 'von_duoc_uy_quyen_vnd' || tag === 'ty_le')
+                    ? 'money' : 'text')) };
+          }),
+          min_rows: 1,       // D2.7=A: tối thiểu 1 dòng có dữ liệu
+          max_rows: null,    // D2.7=A: không giới hạn vô căn cứ
           totals: [],
           cross_field_rules: []
         }

@@ -164,3 +164,23 @@ draft shape).
 Trả lời theo cụm (a) D1 → (b) D3 → (c) D2/D7 → (d) D5 → (e) D4/D6 sẽ mở đường
 rollout R3A→R3B→R3C→R3D tương ứng. Trong lúc chờ: LAYOUT (R1) và P2 platform
 (R2) không phụ thuộc packet nào ở trên.
+
+## Owner response checkpoint — 2026-08-27
+
+Owner đã chọn bundle khuyến nghị cho D1–D7 qua checkpoint execution. Các lựa
+chọn đã ghi nhận: D1.1=A, D1.2=B cho M01, D1.3=B, D1.4=A, D1.5=B,
+D1.6=A; D2.1–D2.6=A, D2.7=min 1/max null, D2.8=A, D2.9=A; D3.1=A,
+D3.2=A, D3.3=A; D4.1=A, D4.2=A; D5.1=A, D5.3=A, D5.4=A; D6.2=A,
+D6.3=B, D6.5=A, D6.6=tên tài liệu bắt buộc/các trường còn lại optional;
+D7.1=A, D7.2=A nếu có nguồn đối chiếu, D7.3=A, D7.4=A.
+
+Các packet **chưa được đóng DECIDED** vì còn thiếu thông tin/biên quyết định:
+
+- D1/D3: D1.3, D1.5 yêu cầu lấy bản nguồn gốc để đối chiếu; D1.2 chưa
+  xác định policy cho mọi form ngoài M01.
+- D5: D5.2 canonical list chỉ tiêu thuế PLII_M02 chưa được cung cấp; section
+  này tiếp tục `BLOCKED_LEGAL_REVIEW`.
+- D6: owner chọn lập evidence theo từng mẫu cho D6.1; D6.4 mới chốt rule
+  mô tả “Sản phẩm khác” khi số lượng > 0, chưa chốt max/placeholder.
+- D4, D2 và D7 có thể mở phần kỹ thuật tương ứng theo các lựa chọn đã đủ,
+  nhưng không tự động đóng các packet khác còn phụ thuộc source evidence.

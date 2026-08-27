@@ -128,3 +128,12 @@ tools/form_specs/schema/table_kinds.schema.json
 tools/test_export_grid_kinds.py
 tools/test_generator_deep_idempotency.py
 app_web/main.py
+# Wave W1 (2026-08-27): publication specs + targeted regen O1/O2
+app/data/form_maps.js
+app/data/form_maps.json
+app/templates/PLI_M70.docx
+app/templates/PLI_M71.docx
+tools/form_specs/formation/PLI_M01.json
+tools/form_specs/publication/PLI_M70.json
+tools/form_specs/publication/PLI_M71.json
+tools/test_w1_publication_specs.py

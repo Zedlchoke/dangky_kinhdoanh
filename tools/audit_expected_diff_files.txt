@@ -141,3 +141,4 @@ app_web/test_fixed_matrix_product.js
 tools/test_export_totals_product.py
 tools/census/build_manifest.py
 app/data/table_specs/manifest.json
+PLAN_excel.md

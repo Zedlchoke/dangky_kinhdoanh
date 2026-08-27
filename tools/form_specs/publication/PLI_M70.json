@@ -1,0 +1,36 @@
+{
+  "form_id": "PLI_M70",
+  "group": "publication",
+  "note": "W1 spec registration (base 0cddd7f) - GIAY TIEP NHAN HO SO VA HEN TRA KET QUA. Section duy nha duoc khai trong file nay la bang chu ky output-table O1. | NGUON THAT: 03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_70_giay_tiep_nhan_ho_so_va_hen_tra_ket_qua_ho_so_dang_ky_doanh_nghiep_chi_nhanh_van_phong_dai_dien.docx (iter_docx_files quet 03_ truoc 05_, nen find_source('PLI_M70') chon ban trong 03_; hai ban 03_/05_ NGUYEN VAN identical, md5 08f291ffa660c6c28f62fda14007f2c6). | EVIDENCE BLOCKS (app/data/blocks/PLI_M70.json, trich anchor text da fold de truy vet): B020 fold='noi nhan ket qua ban giay (neu co):' (dieu neo con song, co input -> KHONG bi drop); B021 fold='nguoi nop (ky va ghi ho ten)'; B022 fold='nguoi nhan (ky va ghi ho ten)' - hai paragraph nay LA NOI DUNG DUOC dua vao o cua grid moi roi BI DROP de khong in trung lan thu hai. Truoc khi rebuild template CHUA co w:tbl nao (blocks chi co t='p'). | MANIFEST (app/data/table_specs/manifest.json, form PLI_M70): section_id='chu_ky_nguoi_nop_nguoi_nhan', semantic_key='chu_ky_tiep_nhan_ho_so', kind='output-table', status='output_only', required_columns=[]. | RUNTIME REGISTRY (app_web/ui/form-domain.js FORM_TABLE_CONTRACTS['PLI_M70'].sections[0].spec): section_id/'semantic_key'/'grid' GIONG HET ben duoi (rows=2, cols=1, labels 'NGUOI NOP\\n(Ky va ghi ho ten)' / 'NGUOI NHAN\\n(Ky va ghi ho ten)'), inputs=[]; nhãn lay TRUC TIEP tu blocks that, khong bia. | LUAT: D6.2=A (docs/decision_registry.md packet D6) + docs/p2_component_contracts.md muc 4 -> khong gan legal_status.blocked.",
+  "gap_nghiepvu": "Sau khi Lead chay regen --one PLI_M70: (1) hai paragraph chu ky cu bi drop va thay bang 1 w:tbl 2x1 -> so block cua PLI_M70 doi (+1 table, -2 p); can cap nhat ky vong trong tools/audit_blocks_check.py neu co khoa count rieng cho mau nay, va kiem tra tools/audit_expected_diff_files.txt (file do nam ngoai pham vi lane W1). (2) Runtime dispatcher app_web/ui/form-domain.js dang dinh vi section qua anchor.match='nguoi nop (ky va ghi ho ten)' voi matchRole='signature' tren PARAGRAPH; sau regen, chu van ban nay nam BEN TRONG o cua w:tbl thay vi paragraph roi -> role/match cua renderer can review lai boi lane runtime/B1 (khong sua tai day vi cam dung app_web/**). (3) Section ho_so_bao_gom (kind fixed-matrix, status missing_grid, semantic_key ds_tai_lieu_ho_so_nop) van chua khai o day vi D6.3 con OPEN - KHONG dua vao spec nay truoc khi owner chot.",
+  "tables": [
+    {
+      "kind": "output-table",
+      "pos": "after",
+      "anchor": "^noi nhan ket qua ban giay \\(neu co\\)",
+      "no_default_drops": true,
+      "drop": [
+        "^nguoi nop \\(ky va ghi ho ten\\)$",
+        "^nguoi nhan \\(ky va ghi ho ten\\)$"
+      ],
+      "legal_status": {
+        "blocked": false,
+        "ref": "D6.2=A; docs/decision_registry.md packet D6; docs/p2_component_contracts.md #4"
+      },
+      "spec": {
+        "id": "chu_ky_nguoi_nop_nguoi_nhan",
+        "kind": "output-table",
+        "section_id": "chu_ky_nguoi_nop_nguoi_nhan",
+        "semantic_key": "chu_ky_tiep_nhan_ho_so",
+        "grid": {
+          "rows": 2,
+          "cols": 1,
+          "labels": [
+            "NGƯỜI NỘP\n(Ký và ghi họ tên)",
+            "NGƯỜI NHẬN\n(Ký và ghi họ tên)"
+          ]
+        }
+      }
+    }
+  ]
+}

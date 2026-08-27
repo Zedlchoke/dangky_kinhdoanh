@@ -1,0 +1,36 @@
+{
+  "form_id": "PLI_M71",
+  "group": "publication",
+  "note": "W1 spec registration (base 0cddd7f) - GIAY TIEP NHAN HO SO (NOP QUA MANG DIEN TU), phien ban 1 o ky: CHI co chu ky co quan cap tinh, KHONG co o ky nguoi nop (khac M70). | NGUON THAT: 03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_71_giay_tiep_nhan_ho_so_va_hen_tra_ket_qua_ho_so_dang_ky_doanh_nghiep_chi_nhanh_van_phong_dai_dien.docx (find_source('PLI_M71') chon ban trong 03_ vi iter_docx_files quet 03_ truoc 05_; hai ban identical). | EVIDENCE BLOCKS (app/data/blocks/PLI_M71.json, trich anchor text da fold de truy vet): B021 fold='noi nhan ket qua ban giay (neu co):' (dieu neo con song, co input -> KHONG bi drop); B022 fold='(ten co quan dang ky kinh doanh cap tinh)' - paragraph nay dua vao o cua grid moi roi BI DROP de khong in trung; B023 fold='_______________________________________' GIU NGUYEN lam dong ky ten duoi grid. Truoc khi rebuild template CHUA co w:tbl nao (blocks chi co t='p'). | MANIFEST (app/data/table_specs/manifest.json, form PLI_M71): section_id='chu_ky_co_quan_cap_tinh', semantic_key='chu_ky_cqb_m71', kind='output-table', status='output_only', required_columns=[]. | RUNTIME REGISTRY (app_web/ui/form-domain.js FORM_TABLE_CONTRACTS['PLI_M71'].sections[0].spec): section_id/'semantic_key'/'grid' GIONG HET ben duoi (rows=1, cols=1, labels dang MA TRAN [['(TEN CO QUAN DANG KY KINH DOANH CAP TINH)']]), inputs=[]; nhan lay TRUC TIEP tu blocks that, khong bia. Khac biet so voi O1/M70: dung ma tran thay vi labels flat vi grid chi co 1 o. | LUAT: D6.2=A (docs/decision_registry.md packet D6) + docs/p2_component_contracts.md muc 4 -> khong gan legal_status.blocked.",
+  "gap_nghiepvu": "Sau khi Lead chay regen --one PLI_M71: (1) paragraph '(TÊN CƠ QUAN ĐĂNG KÝ KINH DOANH CẤP TỈNH)' bi drop va thay bang 1 w:tbl 1x1; dong '_____' giu nguyen -> cap nhat ky vong audit (tools/audit_blocks_check.py / tools/audit_expected_diff_files.txt nam ngoai pham vi lane W1). (2) Runtime dispatcher dinh vi section qua anchor.match='ten co quan dang ky kinh doanh cap tinh' matchRole='form-subtitle' + endMatch='truong hop ho so duoc tiep nhan tren he thong': sau regen chu nay nam BEN TRONG o cua w:tbl -> can lane runtime/B1 review role/match (cam sua app_web/** tai day). (3) Section ho_so_bao_gom_online (fixed-matrix, missing_grid, semantic_key ds_tai_lieu_ho_so_online, D6.3 con OPEN) KHONG khai trong file nay.",
+  "tables": [
+    {
+      "kind": "output-table",
+      "pos": "after",
+      "anchor": "^noi nhan ket qua ban giay \\(neu co\\)",
+      "no_default_drops": true,
+      "drop": [
+        "^\\(?ten co quan dang ky kinh doanh cap tinh\\)?$"
+      ],
+      "legal_status": {
+        "blocked": false,
+        "ref": "D6.2=A; docs/decision_registry.md packet D6; docs/p2_component_contracts.md #4"
+      },
+      "spec": {
+        "id": "chu_ky_co_quan_cap_tinh",
+        "kind": "output-table",
+        "section_id": "chu_ky_co_quan_cap_tinh",
+        "semantic_key": "chu_ky_cqb_m71",
+        "grid": {
+          "rows": 1,
+          "cols": 1,
+          "labels": [
+            [
+              "(TÊN CƠ QUAN ĐĂNG KÝ KINH DOANH CẤP TỈNH)"
+            ]
+          ]
+        }
+      }
+    }
+  ]
+}

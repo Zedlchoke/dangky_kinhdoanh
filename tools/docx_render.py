@@ -15,6 +15,7 @@ Chạy tự kiểm tra:  python -m tools.docx_render --test-all
 
 from __future__ import annotations
 
+import copy
 import io
 import json
 import os
@@ -244,11 +245,35 @@ def _apply_conditions(xml: str, data: dict) -> str:
     return xml[:bm.start(2)] + "".join(out) + xml[bm.end(2):]
 
 
-def render(template_path: str | os.PathLike, data: dict) -> bytes:
+def render(template_path: str | os.PathLike, data: dict,
+           tables_meta: list | None = None,
+           totals_strict: bool = True) -> bytes:
     """Render template thành nội dung file .docx mới (bytes).
+
+    tables_meta (tuỳ chọn): metadata cấu trúc bảng do form_maps mang
+    (`section_specs`, xem tools/form_specs/schema/table_kinds.schema.json).
+    Có giá trị -> TỔNG của fixed-matrix được TÍNH LẠI từ các ô dữ liệu trước
+    khi thay biến (không tin giá trị lưu trong draft, D1.1=A). Payload người
+    gọi không bị mutate (bản sao sâu làm bên trong).
+    totals_strict=False chỉ ghi nhận xung đột vào báo cáo trả về bởi
+    recompute_totals() thay vì raise — dùng cho trường hợp audit/khám phá.
 
     Không đụng vào file template nguồn — mọi thứ diễn ra trong bộ nhớ.
     """
+    payload = data
+    if tables_meta:
+        # render không được mutate payload của caller: tính tổng trên bản sao
+        # sâu (payload draft luôn JSON-serializable; phòng khi không phải thì
+        # dùng deepcopy tổng quát)
+        if isinstance(data, dict):
+            try:
+                payload = json.loads(json.dumps(data))
+            except (TypeError, ValueError):
+                payload = copy.deepcopy(data)
+        else:
+            payload = copy.deepcopy(data)
+        recompute_totals(payload, tables_meta, strict=totals_strict)
+
     src_path = os.fspath(template_path)
     buf = io.BytesIO()
     with zipfile.ZipFile(src_path, "r") as src:
@@ -258,9 +283,9 @@ def render(template_path: str | os.PathLike, data: dict) -> bytes:
                 name = info.filename.replace("\\", "/")
                 if _RENDER_PART_RE.match(name):
                     xml = raw.decode("utf-8")
-                    xml = _apply_conditions(xml, data)
-                    xml = _expand_loops(xml, data)
-                    xml = _subst_vars(xml, data)
+                    xml = _apply_conditions(xml, payload)
+                    xml = _expand_loops(xml, payload)
+                    xml = _subst_vars(xml, payload)
                     raw = xml.encode("utf-8")
                 zi = zipfile.ZipInfo(info.filename, date_time=info.date_time)
                 zi.compress_type = zipfile.ZIP_DEFLATED
@@ -269,11 +294,161 @@ def render(template_path: str | os.PathLike, data: dict) -> bytes:
     return buf.getvalue()
 
 
-def write_rendered(template_path: str | os.PathLike, data: dict, out_path: str | os.PathLike) -> None:
+def write_rendered(template_path: str | os.PathLike, data: dict,
+                   out_path: str | os.PathLike, **kwargs) -> None:
     """Tiện ích: render rồi ghi ra file."""
-    content = render(template_path, data)
+    content = render(template_path, data, **kwargs)
     Path(out_path).parent.mkdir(parents=True, exist_ok=True)
     Path(out_path).write_bytes(content)
+
+
+# ---------------------------------------------------------------------------
+# Totals recompute lúc export (D1.1=A — ô tổng outputOnly, không tin stored)
+# ---------------------------------------------------------------------------
+
+_TOTALS_FORMULA_RE = re.compile(r"^sum\(\s*([A-Za-z0-9_]+)\s*\)$")
+
+
+class ExportTotalsError(ValueError):
+    """Tính lại tổng lúc export gặp xung đột/formula không hỗ trợ.
+
+    problems: list dict {"code", "semantic_key", "row", "detail",
+    "stored", "computed"}. code =
+      EXPORT_TOTALS_RECOMPUTE_CONFLICT — stored != computed;
+      FORMULA_UNSUPPORTED              — mẫu formula chưa hỗ trợ.
+
+    Chú ý: đây KHÔNG phải cơ chế chốt của đường export thật. Loop-contract
+    vẫn do `exportLoopsStrict` (app_web/ui/app.js) giữ vai trò duy nhất với
+    mã lỗi riêng của nó; lớp này chỉ bảo đảm DOCX không bao giờ in một con
+    số tổng mà các ô dữ liệu nguồn không tính ra, và KHÔNG đặt tên đè lên
+    mã chốt đó."""
+
+    def __init__(self, problems: list):
+        self.problems = problems
+        detail = "; ".join(
+            "%s [%s]%s%s" % (
+                p["code"], p["semantic_key"],
+                (" row=%s" % p["row"]) if p.get("row") else "",
+                (" %s" % p["detail"]) if p.get("detail") else "")
+            for p in problems)
+        super().__init__("tổng lúc export lệch/sai spec (%d): %s"
+                         % (len(problems), detail))
+
+
+def number_value(value) -> float | None:
+    """Đổi chuỗi số người dùng thành số: bỏ dấu cách, chấp nhận dấu phẩy thập
+    phân và dấu chấm ngăn cách nghìn. Trả về None khi rỗng/không parse được —
+    trùng hành vi numberValue() của app_web/ui/fixed-matrix.js."""
+    if value is None or str(value).strip() == "":
+        return None
+    text = str(value).strip().replace(" ", "").replace(" ", "")
+    if "." in text and "," in text:
+        text = text.replace(".", "").replace(",", ".")
+    elif "," in text:
+        text = text.replace(",", ".")
+    elif re.fullmatch(r"-?\d{1,3}(\.\d{3})+", text):
+        text = text.replace(".", "")
+    try:
+        result = float(text)
+    except ValueError:
+        return None
+    return result
+
+
+def format_total(value: float) -> str:
+    """Định dạng tổng tính lại: số nguyên không nhóm hàng nghìn, số lẻ cắt
+    zero-dư (locale-free để DOCX và UI không lệch nhau vì định dạng máy)."""
+    if float(value).is_integer():
+        return str(int(value))
+    return ("%.4f" % value).rstrip("0").rstrip(".")
+
+
+def _set_nested(data: dict, dotted_key: str, value) -> None:
+    cur = data
+    parts = dotted_key.split(".")
+    for part in parts[:-1]:
+        nxt = cur.get(part)
+        if not isinstance(nxt, dict):
+            nxt = {}
+            cur[part] = nxt
+        cur = nxt
+    cur[parts[-1]] = value
+
+
+def recompute_totals(data: dict, tables_meta: list,
+                     *, strict: bool = True) -> list[dict]:
+    """Tính lại mọi tổng khai báo trong tables_meta từ chính các ô dữ liệu.
+
+    Trả về report list [{"semantic_key","row","formula","target","stored",
+    "computed"}]; raise ExportTotalsError khi strict=True và có xung đột.
+    Chỉ hỗ trợ kind "fixed-matrix"; kind khác (nested-grid/output-table) hiện
+    không có hàng tổng nên được bỏ qua im lặng.
+    """
+    problems: list[dict] = []
+    report: list[dict] = []
+    for meta in tables_meta or []:
+        if not isinstance(meta, dict):
+            continue
+        if meta.get("kind") != "fixed-matrix":
+            continue
+        sem = str(meta.get("semantic_key") or "")
+        if not sem:
+            continue
+        rows = [r for r in meta.get("fixed_rows", []) if isinstance(r, dict)]
+        total_row_ids = {str(t.get("id")) for t in rows if t.get("output_only")}
+        column_tags = {c.get("tag") for c in meta.get("columns", []) if c.get("tag")}
+        input_rows = [str(r["id"]) for r in rows
+                      if not r.get("output_only")
+                      and str(r["id"]) not in total_row_ids]
+        for total in meta.get("totals", []) or []:
+            match = _TOTALS_FORMULA_RE.match(str(total.get("formula") or ""))
+            target = "%s.%s.%s" % (sem, total.get("target_row"),
+                                   total.get("target_tag"))
+            if not match or match.group(1) not in column_tags:
+                if strict:
+                    raise ExportTotalsError([{
+                        "code": "FORMULA_UNSUPPORTED", "semantic_key": sem,
+                        "row": total.get("target_row"),
+                        "detail": "formula %r" % total.get("formula")}])
+                problems.append({
+                    "code": "FORMULA_UNSUPPORTED", "semantic_key": sem,
+                    "row": total.get("target_row"), "detail": "formula %r"
+                    % (total.get("formula"),)})
+                continue
+            tag = match.group(1)
+            acc = 0.0
+            seen_any = False
+            for rid in input_rows:
+                val = number_value(_lookup(data, "%s.%s.%s" % (sem, rid, tag)))
+                if val is None:
+                    continue
+                seen_any = True
+                acc += val
+            computed = format_total(acc)
+            stored_raw = _lookup(data, target)
+            stored = "" if stored_raw is None else str(stored_raw).strip()
+            record = {
+                "semantic_key": sem, "row": total.get("target_row"),
+                "formula": total.get("formula"), "target": target,
+                "target_tag": total.get("target_tag"),
+                "stored": stored, "computed": computed,
+                "had_input": seen_any,
+            }
+            report.append(record)
+            stored_num = number_value(stored)
+            if stored and stored_num is not None and \
+                    abs(stored_num - round(acc, 4)) > 1e-9:
+                problems.append({
+                    "code": "EXPORT_TOTALS_RECOMPUTE_CONFLICT",
+                    "semantic_key": sem, "row": total.get("target_row"),
+                    "detail": "%s: stored %r != computed %r"
+                              % (total.get("target_tag"), stored, computed),
+                    "stored": stored, "computed": computed})
+            # luôn lấy kết quả tính lại — draft không được quyết định tổng
+            _set_nested(data, target, computed)
+    if problems and strict:
+        raise ExportTotalsError(problems)
+    return report
 
 
 # ---------------------------------------------------------------------------
@@ -287,12 +462,36 @@ OUT_TEST_DIR = Path(__file__).resolve().parent.parent / "generated_ho_so" / "_re
 
 
 def dummy_data_from_map(fmap: dict) -> dict:
-    """Sinh dữ liệu dummy từ form_maps: text->'TEST', chk->'X', loop->2 dòng."""
+    """Sinh dữ liệu dummy từ form_maps: text->'TEST', chk->'X', loop->2 dòng.
+
+    section_specs (fixed-matrix/nested-grid/output-table) cũng được phủ:
+    ô input nhận 'TEST', còn ô tổng/computed/outputOnly KHÔNG được gán giá trị
+    giả — sau đó recompute_totals() điền số tổng từ chính các ô 'TEST'.
+    """
     data: dict = {}
     for f in fmap.get("fields", []):
         data[f["key"]] = "X" if f.get("type") == "chk" else "TEST"
     for t in fmap.get("dynamic_tables", []):
         data[t["loop"]] = [{c["tag"]: "TEST" for c in t["columns"]} for _ in range(2)]
+    for spec in fmap.get("section_specs", []) or []:
+        kind = spec.get("kind")
+        sem = spec.get("semantic_key")
+        if kind == "fixed-matrix":
+            editable = {r["id"] for r in spec.get("fixed_rows", [])
+                        if not r.get("output_only")}
+            for row_id in sorted(editable):
+                for c in spec.get("columns", []):
+                    if c.get("tag") and not c.get("computed"):
+                        data["%s.%s.%s" % (sem, row_id, c["tag"])] = "TEST"
+        elif kind == "nested-grid":
+            # đã được phủ qua dynamic_tables phía trên (loop cùng tên)
+            continue
+        elif kind == "output-table":
+            continue  # lưới chỉ để in: không có input nào
+    specs = [s for s in (fmap.get("section_specs") or [])
+             if s.get("kind") == "fixed-matrix"]
+    if specs:
+        recompute_totals(data, specs, strict=False)
     return data
 
 

@@ -65,6 +65,9 @@ SUITES: list[dict] = [
     {"name": "test_fixed_matrix",         "type": "node", "target": "app_web/test_fixed_matrix.js"},
     {"name": "test_nested_grid",          "type": "node", "target": "app_web/test_nested_grid.js"},
     {"name": "test_p2_migration",         "type": "node", "target": "app_web/test_p2_migration.js"},
+    # --- Wave B (2026-08-27): B1 runtime wiring + B3 wiring gate ---
+    {"name": "test_runtime_tables",       "type": "node", "target": "app_web/test_runtime_tables.js"},
+    {"name": "test_wiring_gate",          "type": "node", "target": "app_web/test_wiring_gate.js"},
     # --- Python ---
     {"name": "p1_b_verify_m72",           "type": "module", "target": "tools.census.p1_b_verify_m72",
      "requires": ["python-docx"]},
@@ -75,6 +78,11 @@ SUITES: list[dict] = [
     {"name": "test_industry_formation",   "type": "module", "target": "tools.test_industry_formation",
      "requires": ["python-docx"]},
     {"name": "test_industry_change",      "type": "module", "target": "tools.test_industry_change",
+     "requires": ["python-docx"]},
+    # --- Wave B (2026-08-27): B2 generator/export ---
+    {"name": "test_generator_deep_idempotency", "type": "module",
+     "target": "tools.test_generator_deep_idempotency", "requires": ["python-docx"]},
+    {"name": "test_export_grid_kinds",    "type": "module", "target": "tools.test_export_grid_kinds",
      "requires": ["python-docx"]},
     {"name": "test_industry_household",   "type": "module", "target": "tools.test_industry_household",
      "requires": ["python-docx"]},

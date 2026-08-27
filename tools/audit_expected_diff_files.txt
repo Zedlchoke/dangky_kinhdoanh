@@ -143,3 +143,20 @@ tools/census/build_manifest.py
 app/data/table_specs/manifest.json
 PLAN_excel.md
 app_web/test_m72_activation.js
+
+# --- R3B1 people/ownership regen + Lead P0 recovery (checkpoint 7300ab4) ---
+# Templates/blocks/form_maps: rebuild N1/N6/N7 nested-grid (D2.1/D2.4/D2.7)
+# + role flip body->section-heading sau L1FIX round 2 (merge 7300ab4).
+app/templates/PLI_M02.docx
+app/templates/PLI_M12.docx
+app/templates/PLI_M15.docx
+# Spec nguồn lane R3B1 + suite của lane
+tools/form_specs/core/PLI_M02.json
+tools/form_specs/change/PLI_M12.json
+tools/form_specs/change/PLI_M15.json
+app_web/test_r3b1_people_contracts.js
+tools/test_r3b1_people_specs.py
+# Lead sync expectation sau regen (trim-anchor stage, exact-set loop, EVOLVED_FORMS)
+tools/test_pli_m02_industry.py
+tools/test_industry_change.py
+.gitignore

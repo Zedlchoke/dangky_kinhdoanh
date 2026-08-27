@@ -94,6 +94,9 @@ app_web/ui/style.css
 docs/decision_registry.md
 docs/execution_ledger.md
 docs/layout_l1_contract.md
+docs/p2_component_contracts.md
+docs/p2_dependency_graph.md
+docs/p2_fixture_candidates.md
 docs/product_scope_registry.md
 requirements-dev.txt
 tools/audit_blocks_check.py

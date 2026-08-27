@@ -91,8 +91,10 @@ app_web/dev/snapshot.html
 app_web/test_layout_l2_render.js
 app_web/test_output_table.js
 app_web/test_fixed_matrix.js
+app_web/test_nested_grid.js
 app_web/test_grid.js
 app_web/ui/fixed-matrix.js
+app_web/ui/nested-grid.js
 app_web/ui/output-table.js
 app_web/ui/app.js
 app_web/ui/form-domain.js

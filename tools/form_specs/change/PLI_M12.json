@@ -2,7 +2,7 @@
   "form_id": "PLI_M12",
   "group": "change",
   "note": "Thong bao thay doi nganh, nghe kinh doanh - template co BA luoi nganh ke nhau (muc 1 bo sung / muc 2 bo khoi danh sach / muc 3 sua doi chi tiet), deu mat khi convert. Theo wave1_contract_inventory muc 2: loop khac nghia KHONG duoc gop vao ds_nganh -> moi luoi mot loop rieng. Row contract da agent 2B chot tren template that (python-docx): nganh_bo_sung = STT{_stt} | ten_nganh | ma_nganh | la_nganh_chinh(X); nganh_xoa_bo = STT{_stt} | ten_nganh | ma_nganh | ghi_chu (cot 4 la Ghi chu, KHONG co cot nganh chinh); nganh_sua_doi_chi_tiet = STT{_stt} | ten_nganh | ma_nganh | la_nganh_chinh(X). Ba danh sach doc lap -> GRID_META minRows 0, duplicateKeys [], requirePrimary false (khong ap requirePrimary/vsic duplicate-rule cua ds_nganh).",
-  "gap_nghiepvu": "(1) Ten loop 'nganh_sua_doi_chi_tiet' do agent 2B chot (PLAN.md chi dat ten nganh_bo_sung/nganh_xoa_bo); da ghi contract trong 'note'. (2) PLAN.md q#3 dua lieu loop 'nganh_truoc_thay_doi' nhung template M12 KHONG co luoi truoc-thay-doi (da kiem python-docx) - khong tao spec, khong suy dien; can Lead quyet nguon du lieu neu van can. (3) Grid muc 2 (bo nganh) khong co cot nganh chinh tren template - cot thu 4 la 'Ghi chu' -> map {ghi_chu}; requirePrimary/PRIMARY_INDUSTRY_REQUIRED khong ap dung cho grid nay.",
+  "gap_nghiepvu": "(1) Ten loop 'nganh_sua_doi_chi_tiet' do agent 2B chot (PLAN.md chi dat ten nganh_bo_sung/nganh_xoa_bo); da ghi contract trong 'note'. (2) PLAN.md q#3 dua lieu loop 'nganh_truoc_thay_doi' nhung template M12 KHONG co luoi truoc-thay-doi (da kiem python-docx) - khong tao spec, khong suy dien; can Lead quyet nguon du lieu neu van can. (3) Grid muc 2 (bo nganh) khong co cot nganh chinh tren template - cot thu 4 la 'Ghi chu' -> map {ghi_chu}; requirePrimary/PRIMARY_INDUSTRY_REQUIRED khong ap dung cho grid nay. || Wave R3B1 (2026-08-27): them entry nested-grid 'ndd_uy_quyen_sau_thay_doi' (D2.1=A discriminator loai_dong, D2.4=A chu_ky outputOnly, D2.7=min1/max null). GAP con lai: 2 nhom cot header ghep block B145 ('Tổng giá trị vốn được đại diện', 'Thời điểm đại diện phần vốn') CHUA du evidence de khai tag canonical - dung policy 'absence, khong mislabel' cua FORM_TABLE_CONTRACTS['PLI_M02']; doan '____________________' cuoi block B145 duoc GIU LAI (trim keep_from) vi khac ky phan cach/ke trong cua nguon; min/max rows chi ghi form_maps side (spec v1 khong co truong).",
   "tables": [
     {
       "spec": {
@@ -72,6 +72,63 @@
                "^nganh, nghe kinh doanh chinh"],
       "headers": ["STT", "Tên ngành, nghề kinh doanh được sửa đổi chi tiết", "Mã ngành",
                   "Ngành, nghề kinh doanh chính"]
+    },
+    {
+      "spec": {
+        "id": "ndd_uy_quyen_sau_thay_doi",
+        "kind": "nested-grid",
+        "section_id": "ndd_uy_quyen_sau_thay_doi",
+        "semantic_key": "ds_ndd_uy_quyen_sau_thay_doi",
+        "loop": "ds_ndd_uy_quyen_sau_thay_doi",
+        "stt": {"mode": "generated", "col_index": 0},
+        "header_rows": [
+          [
+            {"text": "STT", "rowspan": 2},
+            {"text": "Chủ sở hữu/Thành viên công ty TNHH/Cổ đông là nhà đầu tư nước ngoài là tổ chức", "rowspan": 2},
+            {"text": "Tên người đại diện theo ủy quyền", "rowspan": 2},
+            {"text": "Ngày, tháng, năm sinh", "rowspan": 2},
+            {"text": "Giới tính", "rowspan": 2},
+            {"text": "Số, ngày cấp, cơ quan cấp Giấy tờ pháp lý của cá nhân", "colspan": 3},
+            {"text": "Quốc tịch", "rowspan": 2},
+            {"text": "Dân tộc", "rowspan": 2},
+            {"text": "Địa chỉ liên lạc", "rowspan": 2},
+            {"text": "Vốn được ủy quyền", "colspan": 2},
+            {"text": "Chữ ký của người đại diện theo ủy quyền", "rowspan": 2},
+            {"text": "Ghi chú (nếu có)", "rowspan": 2}
+          ],
+          [
+            {"text": "Số"}, {"text": "Ngày cấp"}, {"text": "Cơ quan cấp"},
+            {"text": "VNĐ"}, {"text": "Tỷ lệ (%)"}
+          ]
+        ],
+        "columns": [
+          {"header": "Chủ sở hữu/Thành viên công ty TNHH/Cổ đông là nhà đầu tư nước ngoài là tổ chức", "tag": "chu_so_huu_tvtnhh_cdnn_to_chuc", "col_index": 1, "input_type": "text", "required": true},
+          {"header": "Tên người đại diện theo ủy quyền", "tag": "ten_ndd_uy_quyen", "col_index": 2, "input_type": "text", "required": true},
+          {"header": "Ngày, tháng, năm sinh", "tag": "ngay_sinh", "col_index": 3, "input_type": "text"},
+          {"header": "Giới tính", "tag": "gioi_tinh", "col_index": 4, "input_type": "text"},
+          {"header": "Số", "tag": "giay_to_so", "col_index": 5, "input_type": "text"},
+          {"header": "Ngày cấp", "tag": "giay_to_ngay", "col_index": 6, "input_type": "text"},
+          {"header": "Cơ quan cấp", "tag": "giay_to_co_quan", "col_index": 7, "input_type": "text"},
+          {"header": "Quốc tịch", "tag": "quoc_tich", "col_index": 8, "input_type": "text"},
+          {"header": "Dân tộc", "tag": "dan_toc", "col_index": 9, "input_type": "text"},
+          {"header": "Địa chỉ liên lạc", "tag": "dia_chi", "col_index": 10, "input_type": "text"},
+          {"header": "VNĐ", "tag": "von_duoc_uy_quyen_vnd", "col_index": 11, "input_type": "money"},
+          {"header": "Tỷ lệ (%)", "tag": "ty_le", "col_index": 12, "input_type": "percent"},
+          {"header": "Chữ ký của người đại diện theo ủy quyền", "tag": "chu_ky", "col_index": 13, "input_type": "outputOnly", "output_only": true},
+          {"header": "Ghi chú (nếu có)", "tag": "ghi_chu", "col_index": 14, "input_type": "text"}
+        ],
+        "discriminator": null,
+        "totals": []
+      },
+      "pos": "after",
+      "anchor": "^thong tin ve nguoi dai dien theo uy quyen sau khi thay doi:",
+      "no_default_drops": true,
+      "legal_status": {
+        "blocked": false,
+        "ref": "D2.1=A (discriminator loai_dong), D2.4=A (chu_ky outputOnly), D2.7=min1/max null - docs/decision_registry.md packet D2; evidence: census manifest section ndd_uy_quyen_sau_thay_doi + blocks PLI_M12.json B144-B145"
+      },
+      "trim": ["^sttchu so huu/thanh vien cong ty tnhh"],
+      "keep_from": "____________________"
     }
   ]
 }

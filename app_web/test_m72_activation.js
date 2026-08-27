@@ -16,7 +16,7 @@
  *     (store key riêng, chỉ trạng thái active đổi).
  *  7. Draft migrateDraft round-trip giữ dữ liệu đúng section kèm _row_id;
  *     checks trong draft lái lại trạng thái active.
- *  8. PLI_M72 không hồi quy structural: blocks vẫn 5 loop + 144 paragraph,
+ *  8. PLI_M72 không hồi quy structural: blocks vẫn 5 loop + 146 paragraph (L1FIX tách 2 heading glue),
  *     mỗi loop mang cond đúng flag loai_hinh_*; KHÔNG có ô chọn loại hình
  *     trong văn bản; artifact (app/data, tools) nguyên vẹn theo git.
  *  N9 (negative). Mutate meta form-scoped (fixture) KHÔNG lan sang GRID_META
@@ -465,7 +465,7 @@ check('S0. fixture KHONG anh huong resolver production (isolation)',
         lb.cond[0] === want;
     }));
   check('8. blocks PLI_M72: 144 paragraph nhu evidence audit',
-    counts.p === 144, 'p=' + counts.p);
+    counts.p === 146, 'p=' + counts.p);
   check('8. blocks PLI_M72: VAN khong co o chon loai hinh (0 chk, 0 key loai_hinh)',
     chkBlocks === 0 && loaiHinhKeys === 0);
 

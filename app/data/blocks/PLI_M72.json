@@ -2924,7 +2924,20 @@
     },
     {
      "text": ")Ghi chú (nếu có)"
-    },
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
+   "cond": [
+    "loai_hinh_ctcp"
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
     {
      "text": "8. Cổ đông là nhà đầu tư nước ngoài: ",
      "b": true
@@ -2933,7 +2946,7 @@
    "format": {
     "spaceBeforePt": 6.0
    },
-   "role": "body",
+   "role": "section-heading",
    "cond": [
     "loai_hinh_ctcp"
    ]
@@ -2974,7 +2987,20 @@
     },
     {
      "text": ")Ghi chú (nếu có)"
-    },
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body",
+   "cond": [
+    "loai_hinh_ctcp"
+   ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
     {
      "text": "9. Người đại diện theo pháp luật của công ty",
      "b": true
@@ -2992,7 +3018,7 @@
    "format": {
     "spaceBeforePt": 6.0
    },
-   "role": "body",
+   "role": "section-heading",
    "cond": [
     "loai_hinh_ctcp"
    ]

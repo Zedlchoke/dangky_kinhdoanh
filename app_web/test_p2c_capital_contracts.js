@@ -403,6 +403,17 @@ function renderDoc2(id) {
     html02.indexOf('Người đại diện theo pháp luật') >= 0 &&
       html02.indexOf('Thông tin đăng ký thuế') >= 0 &&
       html02.indexOf('chủ sở hữu hưởng lợi') >= 0);
+  /* [Fix ISS-5] heading "7."/"8." phải hiển thị ĐÚNG 1 LẦN (anchor
+   * fixed-matrix không bị nuốt, builder không phát lại). */
+  const cnt = (str, needle) => str.split(needle).length - 1;
+  check('REG PLI_M02: heading §7/§8 hien thi dung 1 lan (khong an, khong doi)',
+    cnt(html02, '7. Nguồn vốn điều lệ') === 1 &&
+      cnt(html02, '8. Tài sản góp vốn') === 1,
+    'moi heading xuat hien 1 lan',
+    cnt(html02, '7. Nguồn vốn điều lệ') + '/' + cnt(html02, '8. Tài sản góp vốn'));
+  const html03 = renderDoc2('PLI_M03');
+  check('REG PLI_M03: heading nguon von dieu le cung khong bi nuot (cung kind)',
+    html03.indexOf('Nguồn vốn điều lệ') >= 0);
   const html01 = renderDoc2('PLI_M01');
   const nFixed01 = (html01.match(/data-component="fixed-matrix"/g) || []).length;
   check('REG PLI_M01: 1 bang fixed-matrix hien thi',

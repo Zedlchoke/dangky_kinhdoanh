@@ -1035,6 +1035,10 @@
       for (var i = span.start; i < span.end; i++) {
         if (!parts[i]) break;
         if (parts[i].hidden) continue;
+        /* [Fix ISS-5 re-shoot P2] anchor của fixed-matrix CHÍNH LÀ heading
+         * đánh số của section ("7. Nguồn vốn điều lệ:") mà builder không phát
+         * lại — giữ block đầu hiển thị, chỉ ẩn các block nguồn còn lại. */
+        if (i === span.start && entry.kind === 'fixed-matrix') continue;
         parts[i].html = '<div class="dupe-anchor">' + parts[i].html + '</div>';
         parts[i].hidden = true;
       }

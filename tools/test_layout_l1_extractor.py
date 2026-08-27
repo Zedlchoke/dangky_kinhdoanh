@@ -18,7 +18,10 @@ TOOLS_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(TOOLS_DIR)
 sys.path.insert(0, TOOLS_DIR)
 
+sys.path.insert(0, os.path.join(TOOLS_DIR, "census"))
+
 import docx_to_blocks as d2b          # noqa: E402
+import check_layout_l1 as cl1         # noqa: E402
 import layout_roles                   # noqa: E402
 from layout_roles import classify_role, fold  # noqa: E402
 
@@ -306,6 +309,252 @@ class TestSemanticRoles(unittest.TestCase):
         self.assertEqual(fold("Mẫu số 72"), "mau so 72")
         self.assertEqual(fold("Đắk Lắk"), "dak lak")
         self.assertEqual(fold("  A\n B  "), "a b")
+
+
+# ---------------------------------------------------------------------------
+# V2/V3 — heading đánh số bị gộp vào đuôi paragraph trước (audit Wave D)
+#
+# Bằng chứng thật (PLI_M72 blk110/112, PLI_M09 #88/#132/#163): template scrape
+# lại gộp cả đuôi bảng lưới và heading mục kế tiếp vào CÙNG một w:p — heading
+# chỉ là <w:r> riêng ở cuối (M72) hoặc dính chung cột đếm "123456789" (M09).
+# Converter phải tách ranh giới này thành block "p" riêng; detector Wave L1
+# giữ bản predicate đối xứng để báo đỏ khi blocks còn dính.
+# ---------------------------------------------------------------------------
+
+GLUE_TAIL = ("(VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)"
+             "Tỷ lệ (%)Ghi chú (nếu có)")
+GLUE_HEAD_8 = "8. Cổ đông là nhà đầu tư nước ngoài: "
+GLUE_HEAD_9 = "9. Người đại diện theo pháp luật của công ty"
+
+
+def _blocks_text(block):
+    return "".join(r.get("text", "") for r in block["runs"] if "text" in r)
+
+
+class TestGluedNumberedHeadingSplit(unittest.TestCase):
+    """(V2) extractor tách ranh giới heading đánh số dính đuôi paragraph."""
+
+    def _convert_runs(self, runs):
+        doc = Document()
+        p = doc.add_paragraph()
+        for r in runs:
+            run = p.add_run(r.get("text", ""))
+            if r.get("b"):
+                run.bold = True
+            if r.get("vertAlign"):
+                run.font.superscript = r["vertAlign"] == "superscript"
+        blocks = d2b.convert_document(doc, FIXTURE_ID, "fx")["blocks"]
+        return [b for b in blocks if b.get("t") == "p"]
+
+    def test_m72_heading_run_rieng_duoc_tach(self):
+        """Dạng (1) của audit: heading là run riêng ở CUỐI w:p (evidence M72)."""
+        groups = d2b.split_glued_numbered_headings([
+            {"text": "("}, {"text": GLUE_TAIL[:60]}, {"text": ")Tỷ lệ ("},
+            {"text": "%"}, {"text": GLUE_TAIL[60:]}, {"text": GLUE_HEAD_8},
+        ])
+        self.assertEqual(len(groups), 2)
+        self.assertEqual(
+            "".join(r["text"] for r in groups[1]), GLUE_HEAD_8)
+
+    def test_docx_thuc_tach_thanh_block_section_heading(self):
+        blocks = self._convert_runs(
+            [{"text": GLUE_TAIL}, {"text": GLUE_HEAD_8, "b": True}])
+        self.assertEqual(len(blocks), 2)
+        self.assertEqual(blocks[0].get("role"), "body")
+        self.assertEqual(blocks[1].get("role"), "section-heading")
+        self.assertEqual(_blocks_text(blocks[1]), GLUE_HEAD_8)
+
+    def test_heading_long_trong_mot_run_cung_tach(self):
+        """Dạng glue khác: ')Ghi chú (nếu có)8. Cổ đông…' nằm chung MỘT run."""
+        groups = d2b.split_glued_numbered_headings(
+            [{"text": GLUE_TAIL + GLUE_HEAD_8}])
+        self.assertEqual(len(groups), 2)
+        self.assertEqual("".join(r["text"] for r in groups[0]), GLUE_TAIL)
+        self.assertEqual("".join(r["text"] for r in groups[1]), GLUE_HEAD_8)
+
+    def test_metadata_align_giu_nguyen_cho_moi_block_con(self):
+        doc = Document()
+        p = doc.add_paragraph()
+        p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        p.add_run(GLUE_TAIL)
+        run = p.add_run(GLUE_HEAD_9)
+        run.bold = True
+        blocks = [b for b in d2b.convert_document(doc, FIXTURE_ID, "fx")["blocks"]
+                  if b.get("t") == "p"]
+        self.assertEqual(len(blocks), 2)
+        self.assertTrue(all(b.get("align") == "center" for b in blocks))
+
+    def test_superscript_chu_so_khong_mo_heading(self):
+        groups = d2b.split_glued_numbered_headings([
+            {"text": GLUE_TAIL}, {"text": GLUE_HEAD_9},
+            {"text": "3", "vertAlign": "superscript"}, {"text": ":"},
+        ])
+        self.assertEqual(len(groups), 2)
+        self.assertEqual(
+            "".join(r["text"] for r in groups[1]), GLUE_HEAD_9 + "3:")
+
+    def test_so_nhieu_chu_so_khong_bi_cat_roi_giua_hai_run(self):
+        """Số nhiều chữ số phải giữ nguyên về một nhóm ("1"+"0." = mục "10."),
+        không bao giờ tách thành đuôi mồ côi bắt đầu bằng "0. …"."""
+        for runs in (
+            # số ở ĐẦU đoạn: heading tự nó là block riêng, không phải glue
+            [{"text": "1"}, {"text": "0. Thông tin đăng ký thuế:"}],
+            # số có chữ đứng trước trong cùng run: chỉ được cắt TRƯỚC "10."
+            [{"text": "Điều kiện"}, {"text": "10. Thông tin đăng ký thuế:"}],
+            # chú thích số mũ/giá trị số ngay trước: không suy ra ranh giới
+            [{"text": "Giấy tờ hợp lệ 76"}, {"text": GLUE_HEAD_8}],
+        ):
+            groups = d2b.split_glued_numbered_headings(runs)
+            joined = ["|".join(r["text"] for r in g) for g in groups]
+            orphans = [t for t in joined[1:] if not d2b.NUMBERED_HEADING_RUN_RE.match(t)]
+            self.assertEqual(orphans, [], "%r -> %r" % (runs, joined))
+
+    def test_dau_cham_nhap_cap_khong_tach(self):
+        """'…mục 5.' + '1. Địa chỉ…' là đánh số nhiều cấp con (PLII_M01)."""
+        groups = d2b.split_glued_numbered_headings(
+            [{"text": "Thông tin đăng ký thuế5."},
+             {"text": "1. Địa chỉ nhận thông báo thuế:"}])
+        self.assertEqual(len(groups), 1)
+
+    def test_hard_break_da_ngat_dong_khong_tach(self):
+        groups = d2b.split_glued_numbered_headings(
+            [{"text": "5.\n"}, {"text": "1. Địa chỉ nhận thông báo thuế:"}])
+        self.assertEqual(len(groups), 1)
+
+    def test_heading_dau_paragraph_khong_tach(self):
+        self.assertEqual(
+            len(d2b.split_glued_numbered_headings([{"text": GLUE_HEAD_8}])), 1)
+
+    def test_doan_van_dai_khong_phai_heading_khong_tach(self):
+        long_prose = "1. " + "nội dung pháp lý kéo dài nhiều câu bình thường " * 40
+        self.assertGreater(len(long_prose), d2b.MAX_HEADING_TAIL_CHARS)
+        groups = d2b.split_glued_numbered_headings(
+            [{"text": "Căn cứ văn bản hợp lệ "}, {"text": long_prose}])
+        self.assertEqual(len(groups), 1)
+
+    def test_dong_ke_cham_trong_chu_khong_tach(self):
+        groups = d2b.split_glued_numbered_headings(
+            [{"text": "Họ tên chủ hộ "}, {"text": "1. ...................."}])
+        self.assertEqual(len(groups), 1)
+
+    def test_counter_scrape_chua_the_xac_dinh_thi_khong_doan(self):
+        """PLI_M09: '123456789' + '2. Thông tin…' chung cột đếm scrape.
+
+        Ranh giới thật KHÔNG suy ra được từ text nên converter chủ động không
+        đoán; vùng lỗi do lane sửa template xử lý và vẫn bị detector L1 bắt
+        qua rule (e)/(f). Test khoá hành vi để mọi thay đổi là quyết định có
+        ý thức."""
+        groups = d2b.split_glued_numbered_headings(
+            [{"text": "Giấy chứng nhận đăng ký doanh nghiệp; "},
+             {"text": "123456789"},
+             {"text": "2. Thông tin người đại diện theo pháp luật"}])
+        self.assertEqual(len(groups), 1)
+
+
+class TestDetectorStructuralRules(unittest.TestCase):
+    """(V3) rule (e)(f)(g) của tools/census/check_layout_l1.py."""
+
+    @staticmethod
+    def _block(runs, role="body"):
+        return {"t": "p", "align": "left", "role": role, "runs": runs}
+
+    def _findings(self, block):
+        return cl1.structural_findings(block, block.get("role"))
+
+    def test_e_stt_glue_bat_dau_ten_cot_lien(self):
+        blk = self._block([{"text": "STTTên cổ đôngQuốc tịch"}])
+        self.assertIn(("e",), tuple(f[:1] for f in self._findings(blk)))
+
+    def test_e_stt_hop_le_dung_mot_minh_khong_bao(self):
+        runs = [
+            {"text": "STT"}, {"input": {"key": "ds.ho_ten", "w": 20}},
+            {"text": "\tHọ và tên"},
+        ]
+        self.assertEqual(self._findings(self._block(runs)), [])
+
+    def test_e_stt_theo_sau_dau_cham_va_ngoac_khong_bao(self):
+        for txt in ("xếp hạng theo STT.", "(mã STT)", "STT:"):
+            self.assertFalse(cl1.is_stt_glue_run(txt), txt)
+        self.assertTrue(cl1.is_stt_glue_run("SttTÊN người"))
+        # chú thích số mũ được miễn
+        blk = self._block([{"text": "STTHọ tên", "vertAlign": "superscript"}])
+        self.assertEqual(self._findings(blk), [])
+
+    def test_f_digit_run_dai_bi_bat(self):
+        blk = self._block([{"text": "12345678910"}])
+        rules = [f[0] for f in self._findings(blk)]
+        self.assertIn("f", rules)
+        self.assertNotIn("e", rules)
+
+    def test_f_mien_role_metadata_va_violation_trong_cung_block(self):
+        meta = self._block([{"text": "PL1_M01.docx 12345"}], role="source-indicator")
+        self.assertEqual(self._findings(meta), [])
+        fm = self._block([{"text": "Mẫu số 72 1234567"}], role="form-number")
+        self.assertEqual(self._findings(fm), [])
+        still = self._block([{"text": "Số điện thoại cơ quan 1900561258 trực" }])
+        self.assertEqual([f[0] for f in self._findings(still)], ["f"])
+
+    def test_g1_numbered_text_voi_role_body(self):
+        blk = self._block([{"text": "1. Đối với trường hợp bị thu hồi Giấy "
+                                     "chứng nhận đăng ký hoạt động"}])
+        self.assertEqual([f[0] for f in self._findings(blk)], ["g1"])
+
+    def test_g1_hop_le_khi_role_da_la_heading(self):
+        blk = self._block([{"text": "1. Tên doanh nghiệp: "}],
+                          role="section-heading")
+        self.assertEqual(self._findings(blk), [])
+
+    def test_g1_mien_dong_ke_cham_diEN_tay(self):
+        for txt in ("1. ....................", "2. ....................",
+                    "1.\t............"):
+            self.assertFalse(cl1.numbered_head_misrole(txt, "body"), txt)
+
+    def test_g2_heading_dinh_duoiblock_truoc_pli_m72(self):
+        runs = [{"text": GLUE_TAIL}, {"text": GLUE_HEAD_8}]
+        out = self._findings(self._block(runs))
+        self.assertEqual([f[0] for f in out], ["g2"])
+        self.assertIn(GLUE_HEAD_8.strip(), out[0][1])
+
+    def test_block_rieng_role_heading_thi_khong_bao_g1_lan_g2(self):
+        self.assertEqual(
+            self._findings(
+                self._block([{"text": GLUE_HEAD_8}], role="section-heading")), [])
+        # cùng text nhưng role=body thì đúng luật là bị (g1) nhắc — role là
+        # phần dữ liệu khác ngoài cấu trúc chạy (run).
+        self.assertEqual(
+            [f[0] for f in self._findings(self._block([{"text": GLUE_HEAD_8}]))],
+            ["g1"])
+
+    def test_predicate_detector_khop_converter_chong_drift(self):
+        cases = [
+            GLUE_TAIL + GLUE_HEAD_8,
+            "Điều kiện1" + "0. Thông tin đăng ký thuế:",
+            "Thông tin đăng ký thuế5." + "1. Địa chỉ nhận thông báo thuế:",
+            "5.\n" + "1. Địa chỉ nhận thông báo thuế:",
+            "Giấy chứng nhận; 1234567892. Thông tin người đại diện",
+            "Họ tên chủ hộ 1. ....................",
+            GLUE_TAIL + GLUE_HEAD_9,
+            "Văn bản dài " + "1. " + "nội dung thường " * 90,
+        ]
+        for full in cases:
+            want = []
+            got = []
+            for m in d2b.NUMBERED_HEADING_FIND_RE.finditer(full):
+                pos = m.start()
+                if pos and full[:pos].strip() and \
+                        d2b._is_glued_heading_cut(full, pos):
+                    want.append(pos)
+            for m in cl1.NUMBERED_HEAD_OFFSET_RE.finditer(full):
+                pos = m.start()
+                if pos and full[:pos].strip() and \
+                        cl1._is_glued_heading_cut(full, pos):
+                    got.append(pos)
+            self.assertEqual(want, got, full)
+        # guard độ dài phải đồng bộ giữa hai module
+        self.assertEqual(d2b.MAX_HEADING_TAIL_CHARS,
+                         cl1.GLUED_HEADING_MAX_TAIL_CHARS)
+        self.assertEqual(sorted(d2b.HEADING_ROLES),
+                         sorted(cl1.HEADING_ROLES_FOR_NUMBERING))
 
 
 class TestOverridesAndSchema(unittest.TestCase):

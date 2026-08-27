@@ -1,6 +1,6 @@
 # P2 — Dependency graph và thứ tự triển khai an toàn
 
-Trạng thái: **DRAFT cho Lead review**. Mô tả quan hệ renderer/controller/
+Trạng thái: **LOCKED v1 — Lead review 2026-08-27**. Mô tả quan hệ renderer/controller/
 generator/validation/domain-rollout cho 4 table component, dựa trên PLAN.md
 (kiến trúc generator, Wave T1/P2/P3), manifest `table-manifest-v1` và hiện
 trạng `app_web/ui/*`.

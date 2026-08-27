@@ -1,10 +1,11 @@
 # P2 — Contract dự kiến cho 4 table component
 
-Trạng thái: **DRAFT cho Lead review — CHƯA KHÓA**. Tài liệu này mô tả contract
+Trạng thái: **LOCKED v1 — Lead review 2026-08-27**. Tài liệu này khóa contract
 *du kiến* cho `editable-grid`, `fixed-matrix`, `nested-grid`, `output-table`
 theo taxonomy PLAN.md, hiện trạng UI (`app_web/ui/form-domain.js`, `render.js`,
 `app.js`) và census `app/data/table_specs/manifest.json` (`table-manifest-v1`).
-Chỉ khi Lead duyệt mới trở thành baseline implement P2.
+baseline implement P2. Các quyết định pháp lý D1–D7 vẫn độc lập và không được
+suy diễn từ contract kỹ thuật này.
 
 > **REBASE 2026-08-26 theo HEAD `bdc2d03`** — mục 1 (`editable-grid`) đã được
 > cập nhật theo code thực tế sau merge P1-UI/P1.1/P2.0: metadata **form-scoped**

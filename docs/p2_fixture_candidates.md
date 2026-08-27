@@ -1,6 +1,6 @@
 # P2 — Production fixture candidates cho 4 table component
 
-Trạng thái: **DRAFT cho Lead review**. Chọn fixture production NHỎ từ
+Trạng thái: **LOCKED v1 — Lead review 2026-08-27**. Chọn fixture production NHỎ từ
 `app/data/table_specs/manifest.json` (87 form / 111 section) để làm fixture +
 contract test cho từng loại component trước khi rollout domain (P2 mục 5 của
 PLAN). Tiêu chí: số cột/dòng tối thiểu nhưng vẫn đụng đặc tính khó nhất của

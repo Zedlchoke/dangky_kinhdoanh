@@ -98,10 +98,11 @@ python app_web/main.py --mock
 
 ## Master execution plan — hoàn thiện toàn bộ ứng dụng từ checkpoint `d882793`
 
-> **Progress checkpoint 2026-08-27:** `main=e95f03a`, worktree chính sạch,
-> local ahead `origin/main` 19 commit và chưa push. R0 đã PASS; R1.1 đã merge;
-> R1.2 đã hoàn thành trên branch `agent/layout-l2` tại `c301599` nhưng chưa merge;
-> R1.3 và R2–R7 chưa bắt đầu/hoàn tất theo gate tương ứng.
+> **Progress checkpoint 2026-08-27:** R0 đã PASS; R1.1 đã merge; R1.2 đã
+> review/merge (`c301599` → merge `1aaa6c5`) và structural regression đã PASS.
+> Release machinery sync tại `5e1e08f` đưa L2 vào runner và giữ H7 exact-set xanh.
+> R1.3 chưa đạt vì visual browser backend unavailable (`NOT RUN`); R2–R7 chưa
+> hoàn tất theo gate tương ứng.
 
 ### Phạm vi và nguồn sự thật
 
@@ -139,9 +140,9 @@ desktop web/DOCX hiện tại.
 - R1.1 blocks-v3 đã merge và regenerate 87/87: 0 thiếu role, 46/46
   `source-indicator` đúng role, 0 marker leak, 0 digit-glue; lần regenerate thứ
   hai không tạo diff.
-- R1.2 code đã xong tại `c301599`: 77/77 test PASS cho newline, sup/sub,
-  footnote, semantic role/format allowlist, responsive và M72 isolation. Branch
-  còn chờ Lead review/merge + full regression trên main.
+- R1.2 đã review và merge từ `c301599` (`1aaa6c5`): 77/77 test PASS cho newline,
+  sup/sub, footnote, semantic role/format allowlist, responsive và M72 isolation.
+  Release runner sau sync có 30 PASS / 0 FAIL / 0 NOT RUN.
 - Chưa hoàn thành: R1.3 visual rollout 87/87, independent layout audit, ba table
   component mới của P2, P3 domain rollout, 33 `BLOCKED_LEGAL_REVIEW`, visual QA
   đầy đủ và Windows clean-machine release.
@@ -152,15 +153,15 @@ desktop web/DOCX hiện tại.
 |---|---|---|
 | R0 baseline/scope/decisions | **PASS** | `208de0e..a0453d0`; release runner 29/29; D1–D7 vẫn `OPEN` |
 | R1.1 L1 extractor/schema | **PASS, đã merge** | `de55824`, regen `8cb30fc`, gate hardening tới `e95f03a`; detector 87/87 PASS |
-| R1.2 L2 renderer/CSS | **IMPLEMENTED, CHỜ MERGE** | branch `agent/layout-l2`, commit `c301599`, test 77/77 PASS; Lead phải review/merge rồi chạy release runner |
-| R1.3 L3 rollout/visual | **CHƯA BẮT ĐẦU** | sau L2 merge: pilot → các batch 87/87 → independent visual audit |
-| R2 table platform | **CHƯA BẮT ĐẦU** | có thể chuẩn bị contract sau L2 merge; chưa được coi là P2 PASS |
+| R1.2 L2 renderer/CSS | **STRUCTURAL PASS, VISUAL NOT RUN** | `c301599` → merge `1aaa6c5`; test L2 77/77; detector 87/87; release runner 30/30; browser visual evidence chưa chạy |
+| R1.3 L3 rollout/visual | **BLOCKED GATE** | visual browser backend unavailable; không được báo R1/LAYOUT PASS khi screenshot gate là NOT RUN |
+| R2 table platform | **CONTRACT LOCKED, IMPLEMENTATION CHƯA BẮT ĐẦU** | ba tài liệu P2 khóa v1; chưa có bốn component/fixture nên chưa được coi là P2 PASS |
 | R3 domain rollout | **BLOCKED MỘT PHẦN** | chờ D1–D7 `DECIDED` và Gate R2 |
 | R4–R7 | **CHƯA BẮT ĐẦU** | phụ thuộc R1–R3; WebView2/visual/Windows clean-machine vẫn chưa chạy |
 
-**Next action bắt buộc:** Lead review `c301599`, kiểm ownership/diff, merge tuần
-tự vào `main`, chạy `test_layout_l2_render.js` + release runner + detector L1,
-cập nhật execution ledger; chỉ khi xanh mới mở R1.3.
+**Next action bắt buộc:** cung cấp browser backend/visual tooling, chạy screenshot
+pilot theo viewport/zoom rồi mới mở rollout R1.3 và auditor độc lập. Có thể
+tiếp tục khóa contract/implement P2 độc lập, nhưng không đánh dấu R1/LAYOUT PASS.
 
 ### Định nghĩa `APP_DONE`
 

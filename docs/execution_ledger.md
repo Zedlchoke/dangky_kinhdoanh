@@ -32,15 +32,16 @@ Ownership độc quyền theo wave: `app.js`, `form-domain.js`, `render.js`,
 | Task | Owner | Branch/Worktree | File ownership | Dependency | Gate | Commit | Test evidence | Blocker |
 |---|---|---|---|---|---|---|---|---|
 | R1.1 L1 extractor/schema (newline run, sup/sub/footnote, indent/spacing/keep-with-next, role, source-indicator vs form-number, detector 87/87, idempotent) | Lane L1 | agent/layout-l1 @ ../dangky_kinhdoanh-worktrees/layout-l1 | tools/docx_to_blocks.py + extractor tests | R0 | contract khóa, fixture extractor, semantic-idempotent | — | — | — |
-| R1.2 L2 renderer/CSS (escape→br, sup/sub semantic, ẩn source-indicator theo role, allowlist CSS, responsive 375/768/1280×800, zoom 100–200%) | Lane L2 | agent/layout-l2 | render.js, style.css + DOM tests | R1.1 merge | pilot PLI_M01/M02, PLII_M01/M72 có DOM test + visual | — | — | — |
-| R1.3 L3 rollout batch (pilot → M01–M11 → M12–M26 → PLI còn lại → PLII_M01–M28) | Lead | main regenerate | generated artifacts | R1.2 merge | detector 87/87, screenshot từng batch | — | — | — |
-| Independent visual auditor LAYOUT | Auditor mới | read-only | — | R1.3 | 8 Acceptance Gates P1-LAYOUT | — | — | — |
+| R1.2 L2 renderer/CSS (escape→br, sup/sub semantic, ẩn source-indicator theo role, allowlist CSS, responsive 375/768/1280×800, zoom 100–200%) | Lane L2 → Lead | agent/layout-l2 @ ../dangky_kinhdoanh-worktrees/layout-l1 → main | render.js, style.css, test_layout_l2_render.js, dev/snapshot.html | R1.1 merge | structural/DOM PASS; visual gate NOT RUN | `c301599`, merge `1aaa6c5` | `node app_web/test_layout_l2_render.js`: 77 PASS / 0 FAIL; L1 detector 87/87 PASS; release runner 30 PASS / 0 FAIL / 0 NOT RUN sau machinery sync; `git diff --check` PASS; visual browser backend unavailable = NOT RUN | visual evidence viewport/zoom chưa có |
+| R1.2 release machinery sync | Lead | main | tools/release_runner.py, tools/audit_expected_diff_files.txt | L2 merge | suite L2 nằm trong runner; H7 exact-set không hồi quy | `5e1e08f` | `test_m72_activation`: 48 PASS / 0 FAIL; `test_audit_wave_h_negative`: 56 PASS / 0 FAIL; release runner 30/30 PASS | — |
+| R1.3 L3 rollout batch (pilot → M01–M11 → M12–M26 → PLI còn lại → PLII_M01–M28) | Lead | main regenerate | generated artifacts | R1.2 merge + visual tooling | detector 87/87, screenshot từng batch | — | detector structural PASS; screenshot pilot/batches NOT RUN vì browser backend unavailable | visual gate chặn rollout/gate R1 |
+| Independent visual auditor LAYOUT | Auditor mới | read-only | — | R1.3 | 8 Acceptance Gates P1-LAYOUT | — | NOT RUN — chưa có visual evidence để audit | chờ R1.3 visual evidence |
 
 ## R2 — P2 table platform
 
 | Task | Owner | Branch/Worktree | File ownership | Dependency | Gate | Commit | Test evidence | Blocker |
 |---|---|---|---|---|---|---|---|---|
-| R2.1 khóa contract 4 kinds | Lead | main | docs/p2_component_contracts.md | R0 | hết DRAFT | — | — | — |
+| R2.1 khóa contract 4 kinds | Lead | main | docs/p2_component_contracts.md, docs/p2_dependency_graph.md, docs/p2_fixture_candidates.md | R1.2 merge | hết DRAFT | — | LOCKED v1 sau review Lead ngày 2026-08-27; D1–D7 vẫn OPEN và độc lập | — |
 | R2.2 editable-grid remainder (cross_field_rules slot, keyboard/a11y lưới) | Lane EG | agent/p2-eg | form-domain.js, app.js | R2.1 | fixture E1/E2 PASS | — | — | — |
 | R2.2 output-table → fixed-matrix → nested-grid | các lane tách module | tuần tự theo dependency graph | renderer/module riêng | R2.1 | fixture O1/O2, F1, N1 skeleton | — | — | F2/F3/F4 cần D1; N-full cần D2/D7 |
 | Generator anchor/boundary/occurrence/totals/idempotency | Lead-only regenerate | main | build_form_maps.py, docx_to_blocks.py | contracts | chạy 2 lần cùng hash | — | — | — |

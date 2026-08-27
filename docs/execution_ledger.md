@@ -110,6 +110,22 @@ runner xanh ✓.
    find_source first-hit có thể lật path lưu trong form_maps — đề nghị chuẩn hóa
    mapping canonical nguồn ở hygiene wave sau.
 
+## Wave W1/W2 — R2-closure @ main 0cddd7f→(sau merge) (2026-08-27)
+
+| Task | Owner | Commit/evidence | Trạng thái |
+|---|---|---|---|
+| W1 publication specs O1/O2 | Lane W1 → Lead | `f155078`,`bd9c25e`,`3c44b64` merge `d48eb7d`; test riêng 8/8; baselines giữ nguyên | ✅ merged |
+| Lead regen targeted O1/O2 | Lead | `11f3f3b`: templates M70/M71 có w:tbl thật (2x1/1x1), blocks + form_maps `section_specs` sinh đúng; dispatcher anchors adapt (M71 span trước national-separator); fixture assertions đọc cell thay paragraph role cũ | ✅ regen theo batch, allowlist review |
+| W1 gap trung thực | Lead ghi nhận | PLI_M01 2 section already_complete **chưa đăng ký được** — schema v1 chỉ có entry rebuild; chỉ ghi `gap_nghiepvu`, không chế mechanism | ⏳ backlog schema "already-mapped mode" |
+| W2 product() parity | Lane W2 → Lead | `19bbd3e`,`a07ddaf` merge `0b0a2bd`; 24 JS + 19 PY assertions mới; parity cơ học py→JS | ✅ merged |
+| Semantics product() Lead duyệt | Lead | (1) dòng bỏ trống hoàn toàn bị skip như sum; (2) đã kê khai thiếu thừa số → tổng TRỐNG không in 0; (3) cột-level projection backlog R3; (4) case-sensitivity backlog; (5) version giữ v1 + note additive | ✅ ghi minh bạch |
+| Census evolution | Lead | `604a830` EVOLVED_FORMS + manifest recount 87/87 GATE PASS | ✅ |
+| Battery sau closure | Lead | **38 PASS / 0 FAIL / 0 NOT RUN**, H7 56/0, H7.2 tổng quát hóa manifest-driven | ✅ VERDICT PASS |
+
+**R2 kỹ thuật platform: ĐÓNG.** Còn mở (không chặn các wave sau, isolate đúng): N1
+vocabulary owner decision; bản gốc M03/M04/M05; already-mapped registration mode;
+column-level projection formula; case-sensitivity sum.
+
 ## R3–R7 (khung — chi tiết hóa khi mở wave)
 
 | Wave | Điều kiện mở | Ghi chú |

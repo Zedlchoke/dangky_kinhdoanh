@@ -1,88 +1,110 @@
-# PLAN_excel — nhập hồ sơ từ file Excel khách hàng điền (DRAFT, chờ P4)
+# PLAN_excel — Excel thu thập thông tin khách hàng (DRAFT, chờ P4)
 
 > **Trạng thái:** DRAFT do yêu cầu owner ngày 2026-08-27. KHÔNG thuộc release
 > hiện tại; `PLAN.md` mục 2 vẫn giữ Excel ngoài scope cho đến khi owner mở.
 > **Mốc xem xét bắt buộc:** sau khi chạy hết **P4** (Wave E R3 domain rollout +
 > Wave F R4 E2E), Lead đánh giá khả thi trên kiến trúc ổn định và báo owner.
->
-> **Mục đích do owner xác định (2026-08-27):** khách hàng của dịch vụ đăng ký
-> kinh doanh **tự ghi thông tin vào một file Excel** theo mẫu do owner phát;
-> nạp file đó vào app; app **tự điền toàn bộ thông tin vào đúng biểu mẫu**;
-> owner chỉ cần **bổ sung những ô app chưa có dữ liệu** là hồ sơ hoàn chỉnh.
 
-## 1. Luồng nghiệp vụ đích
+## 0. Quy trình đích (owner xác định 2026-08-27 — BẮT BUỘC theo đúng thứ tự)
 
 ```
-Owner phát file Excel mẫu cho khách
-        │  (khách điền ở nhà — app không cần chạy)
-        ▼
-Khách trả lại file .xlsx đã điền
+(1) Owner xác định khách muốn làm dịch vụ nào
         │
-        ▼  [Nạp file vào app]
-App đọc Excel → sinh draft {values, checks, loops}
-        │  + chạy validator FormDomain như khi gõ tay
-        ▼
-App hiển thị hồ sơ đã điền + DANH SÁCH Ô CÒN THIẾU (đánh dấu)
+(2) Owner CHỌN thủ tục trong app
         │
-        ▼  Owner rà, bổ sung phần thiếu trên biểu mẫu
-Xuất DOCX/ZIP như quy trình hiện tại (cùng gate chặn lỗi)
+(3) App XUẤT file Excel riêng cho thủ tục đó
+      — đẹp, dễ dùng, câu hỏi viết bằng ngôn ngữ đời thường
+        │
+(4) Khách nhận file, tự điền thông tin (app không cần chạy)
+        │
+(5) Owner nạp file Excel vào app
+        │
+(6) App tự điền toàn bộ thông tin vào đúng biểu mẫu
+      + chỉ rõ những ô CÒN THIẾU cần owner bổ sung
+        │
+(7) Owner rà, bổ sung, xuất DOCX như quy trình hiện tại
 ```
 
-Điểm mấu chốt: Excel chỉ là **lớp "phiếu thu thông tin"**. Sau khi nạp, mọi thứ
-chạy đúng một đường như nhập tay — draft JSON vẫn là nguồn chân lý duy nhất.
+Excel = **phiếu thu thập thông tin đối mặt khách hàng**, không phải bản sao
+biểu mẫu pháp lý. Sau bước (6), Excel hết vai trò; draft trong app là nguồn
+chân lý duy nhất.
 
-## 2. Vì sao kiến trúc hiện tại làm được (điểm tựa)
+## 1. Nguyên tắc "câu hỏi dễ hiểu" (yêu cầu cứng của owner)
 
-| Nền có sẵn | Vai trò với Excel |
-|---|---|
-| Draft v2 `{values, checks, loops}` + `_row_id` | Translator Excel→draft ghi vào đúng store; sau đó mọi tính năng (đồng bộ key, bảng lặp, M72 selector) tự hoạt động |
-| `form_maps` + `section_specs` + registry runtime | Sinh file Excel mẫu **tự động** theo từng nhóm thủ tục (mỗi form một vùng/sheet), không vẽ tay ô |
-| Validator tập trung FormDomain | Sau import chạy đúng validator; ô thiếu/bị chặn hiện lên trong panel lỗi hiện có — đúng "bổ sung phần thiếu" |
-| Conditional blocks (`cond`, selector M72) | Giá trị loại hình/điều kiện trong Excel quyết định variant — không cần logic mới |
-| Xuất DOCX/ZIP + recompute totals | Không đổi; Excel không phải "cửa sau" bỏ validation |
+File Excel KHÔNG dùng nhãn biểu mẫu khô cứng. Mỗi ô điền là một **câu hỏi/
+nhóm câu hỏi đời thường** có mapping ngầm về data-key của app:
 
-## 3. Thiết kế file Excel gốc (cần owner chốt khi mở — không tự chế)
+| Trong Excel (khách đọc) | Mapping ngầm | Trong biểu mẫu (app tự điền) |
+|---|---|---|
+| "Bạn muốn đặt tên công ty là gì? (tiếng Việt)" | `dn.ten_tieng_viet` | Tên công ty viết bằng tiếng Việt |
+| "Công ty do ai đứng tên chịu trách nhiệm? Họ tên đầy đủ" | `ndd.ho_ten` | Người đại diện theo pháp luật |
+| "Vốn bạn đăng ký góp là bao nhiêu (VNĐ)?" | `von_dieu_le` | Vốn điều lệ |
+| "Công ty hoạt động trong lĩnh vực nào? Ghi tên ngành bạn muốn" | `ds_nganh.ten_nganh` | Ngành nghề kinh doanh (app tra mã VSIC giúp) |
 
-- **Một khách = một file**. Cấu trúc đề xuất: 1 sheet "Thông tin chung" (loại
-  thủ tục, loại hình DN…) + mỗi nhóm biểu một sheet; hàng = trường, cột =
-  `Nhãn (người đọc)` | `Ô điền` | `Ghi chú`.
-- File mẫu **sinh tự động từ form_maps** kèm chú thích bắt buộc/tùy chọn — tránh
-  drift khi mẫu giấy đổi: regen file mẫu cùng đợt regen template.
-- Ô điều kiện dạng chọn (loại hình DN, hạch toán…) dùng Data Validation dropdown
-  trong Excel để hạn chế khách gõ sai.
-- Bảng lặp (thành viên, ngành nghề, tài sản): mỗi dòng một hàng Excel; số dòng
-  linh hoạt; cột "STT" là số thứ tự hiển thị, không phải dữ liệu nhập.
+Quy tắc soạn câu hỏi:
+- Một câu hỏi một ý; có **ví dụ điền mẫu** (chữ mờ) ngay dưới ô;
+- Tùy chọn dạng chọn dùng **dropdown** (loại hình DN, phương án thuế…) — khách
+  không phải gõ;
+- Gom câu theo **nhóm đời thường** ("Về người đại diện", "Về vốn", "Về ngành
+  nghề") thay vì mục 1/2/3 của biểu mẫu;
+- Câu hỏi nào app **tự sinh được** thì không hỏi khách (tổng vốn, số lượng thành
+  viên suy từ danh sách, ngày nộp hồ sơ…).
 
-## 4. Rủi ro chính & cách chặn
+## 2. Hình thức file Excel — "đẹp, dễ dùng" (yêu cầu cứng của owner)
+
+- Sheet mở đầu: tiêu đề dịch vụ, hướng dẫn 5 dòng, cách điền (ô vàng = điền,
+  ô xám = app tự làm, đừng đụng);
+- **Khóa bảo vệ** mọi ô ngoài vùng điền (Excel protection) — khách không thể
+  phá khung cột;
+- Màu nhóm phần, viền rõ, cột rộng vừa, không cuộn ngang trên màn hình thường;
+- Điền ví dụ mẫu (xám mờ) ngay trong ô;
+- Cuối file: bảng "Giấy tờ bạn cần chuẩn bị" liệt kê hồ sơ kèm theo của thủ
+  tục đã chọn (từ `ho_so_bao_gom` khi đã DECIDED).
+
+## 3. Kiến trúc kỹ thuật (khi mở — mọi thứ sinh từ nguồn có sẵn)
+
+- **Lớp questionnaire** (mới): mapping `question_id → data-key` + câu hỏi +
+  ví dụ + dropdown options. KHUNG sinh tự động từ `form_maps`/registry; **nội
+  dung câu hỏi là sản phẩm** — Lead soạn thảo, owner duyệt từng cụm trước khi
+  dùng thật. Lớp này tách biệt, không sửa form_maps/templates.
+- **Xuất Excel** (bước 3): app đọc thủ tục đang chọn → lấy lớp questionnaire
+  → viết .xlsx (openpyxl, pin version) — gồm protection + styling.
+- **Nạp Excel** (bước 5): kiểm cấu trúc file trước (sai khung → fail-loud mã
+  lỗi riêng), rồi dịch question_id→data-key vào draft, chạy validator chuẩn,
+  panel lỗi hiện có làm "danh sách còn thiếu".
+- Round-trip test: draft→xlsx→draft giữ 100% giá trị; file khách sửa khung →
+  báo lỗi rõ ràng; bảng lặp nhiều dòng; file rỗng trường bắt buộc.
+
+## 4. Rủi ro chính & chặn
 
 | Rủi ro | Chặn bằng |
 |---|---|
-| Khách gửi file lệch khung / đổi tên sheet | Import kiểm cấu trúc trước, sai → fail-loud kèm mã lỗi riêng + chỉ đúng ô sai; không đoán mò |
-| Khách gõ tự do vào ô chọn (loại hình, GTGT…) | Dropdown + validator giá trị; sai severity blocking |
-| Nhãn mẫu giấy đổi theo thời gian | File mẫu regenerate từ nguồn; round-trip test chặn |
-| Hồ sơ lớn (nhiều thành viên/nhiều ngành) | Giới hạn dòng hợp lý + test dữ liệu biên |
-| Hai nguồn dữ liệu (Excel cũ vs draft chỉnh tay sau import) | Import one-shot: sau nạp, Excel không còn vai trò; mọi chỉnh sửa diễn ra trên app |
+| Khách phá khung/sheet | Excel protection + kiểm cấu trúc lúc nạp, fail-loud |
+| Khách gõ tự do ô dropdown | Data Validation + validator blocking |
+| Câu hỏi thân thiện lệch nghĩa pháp lý | Owner duyệt từng cụm câu hỏi trước dùng thật; câu hỏi gắn version |
+| Mẫu giấy đổi → câu hỏi cũ sai | Regen questionnaire cùng đợt regen template; diff review như generated artifacts |
+| Excel cũ/không cài Excel trên máy khách | .xlsx mở được LibreOffice/Excel/Google Sheets; app không cần Excel khi nạp |
+| Phá Windows packaging (R6) | openpyxl thuần Python, pin version, test trên máy sạch |
 
-## 5. Điều kiện mở triển khai (checklist gate riêng)
+## 5. Điều kiện mở triển khai
 
-1. P4 đóng; canonical keys ổn định (hết "vocabulary chờ chốt" N1).
-2. Owner duyệt **hình dạng file Excel** (Lead đề xuất từ form_maps → owner duyệt).
-3. Chốt thư viện `openpyxl` (pin version) — đóng gói được trên máy Windows sạch
-   không cần cài Excel (không phá R6).
-4. Contract test: round-trip draft→xlsx→draft giữ 100% giá trị; file sai cấu
-   trúc → fail-loud; bảng lặp nhiều dòng; file rỗng/trống trường bắt buộc.
-5. UI import: một nút "Nạp hồ sơ từ Excel" cạnh "Mở hồ sơ (.json)" hiện có;
-   báo lỗi hiển thị trong panel lỗi chuẩn.
+1. P4 đóng; canonical keys ổn định.
+2. Owner duyệt: hình dạng file + BỘ CÂU HỎI cụm đầu tiên (khuyến nghị bắt đầu
+   bằng "Thành lập doanh nghiệp" — nhóm thủ tục đông khách nhất).
+3. Chốt openpyxl + requirements pin.
+4. Contract test round-trip + negative (file sai, file rỗng, ô lạ).
+5. UI: nút "Xuất phiếu Excel cho khách" (trong màn hồ sơ) + "Nạp phiếu Excel"
+   (cạnh "Mở hồ sơ (.json)").
 
-## 6. Câu hỏi owner trả khi MỘT bộ hồ sơ Excel (trả lời được ngay, không gấp)
+## 6. Câu hỏi owner trả khi MỞ (không gấp)
 
-- E1: Mỗi file Excel phủ **một nhóm thủ tục** (VD chỉ "thành lập TNHH") hay
-  **gộp mọi loại thủ tục** trong một file (nhiều sheet, app tự chọn phần dùng)?
-- E2: Khách điền **tiếng Việt có dấu** thoải mái — cần app chuẩn hóa gì thêm
-  (hoa/lthường, ngày tháng dạng 01/02/2026…)?
-- E3: Ngành nghề: khách ghi **tên ngành tự do** rồi app tra VSIC giúp, hay yêu
-  cầu khách có sẵn mã ngành?
-- E4: Sau import, ô còn thiếu cần hiển thị thế nào cho đủ nhanh: đếm tổng +
-  danh sách theo mẫu (panel lỗi hiện có) hay thêm chế độ "checklist bổ sung"?
-- E5: Có cần xuất ngược **đã điền ra Excel** (để khách xác nhận lại) không,
-  hay chỉ một chiều khách→app?
+- E1: Xuất phiếu theo **một thủ tục đã chọn** (như quy trình mục 0) — cần cả
+  biến thể gì kèm theo không (VD: thành lập có kèm ngành đặc biệt)?
+- E2: Khách điền tiếng Việt có dấu — app chuẩn hóa gì thêm (hoa/lthường, ngày
+  01/02/2026, số tiền có dấu chấm nghìn)?
+- E3: Ngành nghề: khách ghi tên tự do, app tra VSIC đề xuất rồi owner chọn —
+  đúng ý không?
+- E4: Danh sách "còn thiếu" sau nạp: dùng panel lỗi hiện có hay thêm chế độ
+  "checklist bổ sung" theo từng nhóm câu?
+- E5: Có cần xuất ngược hồ sơ đã điền ra Excel để khách xác nhận lại không?
+- E6: Bộ câu hỏi đầu tiên owner muốn tự soạn hay Lead soạn nháp rồi owner sửa?

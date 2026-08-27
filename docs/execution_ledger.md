@@ -65,6 +65,19 @@ Ownership độc quyền theo wave: `app.js`, `form-domain.js`, `render.js`,
 B2=build_form_maps.py/docx_to_blocks.py/docx_render.py+spec/test mới;
 B3=QA test/fixture mới (không đụng production); Lead giữ regenerate + merge.
 
+## Wave D — visual P1-LAYOUT: pilot mở màn @ ab3c1f1 (2026-08-27)
+
+| Task | Owner | Evidence | Trạng thái |
+|---|---|---|---|
+| Kiểm tra tooling browser/render | Lead | Python Playwright OK (`chromium-1228` tại `~/Library/Caches/ms-playwright`); DOCX renderer candidate: **Microsoft Word** (`/Applications/Microsoft Word.app`) — LibreOffice chưa có; harness `app_web/dev/snapshot.html` sẵn từ merge L2 | ✅ tooling đủ cho UI pilot |
+| Pilot screenshots qua Playwright (Lead preview trước batch audit) | Lead | Script `~/.claude/jobs/8bd7e9b6/tmp/visual_pilot.py`; evidence `generated_ho_so/_visual_layout/pilot/` (9 PNG gitignored): PLI_M01/M02/PLII_M01/M70 @1280×800; PLI_M72 dntn+tnhh_2tv (biến thể switch đúng subtitle/Vốn điều lệ/mục 7, footnote superscript ²); PLI_M01 @768w, @375w; PLI_M72 zoom200% | ✅ 9/9 chụp thành công, 0 marker-leak, 0 snap-err (script tự scan DOM) |
+| Lead mắt thường từng shot then chốt | Lead | M01 input viền/bảng vốn góp giữ hình học; M72 chỉ một variant hiển thị + selector radio đúng Option D; M70 date-line flex + hai khối ký output presence | ✅ structural pilot PASS |
+| Batch 87 form + auditor độc lập read-only | Auditor mới | NOT RUN — chờ merge Wave B (B1 đổi dispatcher) rồi mới audit có ý nghĩa | ⏳ chờ B1 |
+
+> Ghi chú kế hoạch batch sau merge: 3 viewport (1280×800/768/375) + zoom 100/150/200%
+> × 87 form, lưu theo pattern `_visual_layout/<batch>/`, auditor agent KHÁC lead
+> implement, đối chiếu DOCX qua Word→PDF→PNG khi mở Wave G.
+
 ## R3–R7 (khung — chi tiết hóa khi mở wave)
 
 | Wave | Điều kiện mở | Ghi chú |

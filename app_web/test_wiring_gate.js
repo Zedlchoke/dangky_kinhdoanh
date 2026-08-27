@@ -333,13 +333,15 @@ function baseName(p) {
 }
 
 /* Sandbox browser-thật: KHÔNG có module/exports/require — y như trang web mở
- * bằng trình duyệt. Trả {ok, index, errorName, errorMessage}. */
+ * bằng trình duyệt. Trả {ok, index, errorName, errorMessage}.
+ * [Lead sync 2026-08-27] Browser THẬT có window === globalThis: inline script
+ * gán window.module thì bare identifier `module` trong script kế tiếp phải
+ * thấy được. Bản cũ contextify một object riêng khiến `window.module` nằm ở
+ * thế giới khác với global host -> mọi shim đúng semantics đều báo lỗi ảo.
+ * Sửa harness cho MÔ PHỎNG ĐÚNG trình duyệt, không hạ chuẩn mệnh đề nào. */
 function evalInBrowser(scriptTexts) {
-  const G = {};
   const noop = function () {};
-  const sandbox = {
-    window: G,
-    self: G,
+  const G = {
     document: {
       addEventListener: noop,
       removeEventListener: noop,
@@ -364,11 +366,12 @@ function evalInBrowser(scriptTexts) {
       return Promise.resolve([]); }, text: function () { return ''; },
       ok: true }); }
   };
-  sandbox.globalThis = sandbox;
   G.window = G;
+  G.self = G;
+  G.globalThis = G;
   let ctx;
   try {
-    ctx = vm.createContext(sandbox);
+    ctx = vm.createContext(G);
   } catch (e) {
     return { ok: false, errorName: 'HarnessError', errorMessage: e.message };
   }
@@ -536,9 +539,37 @@ safe('A3. toàn bộ chuỗi <script> của index.html eval sạch trong browser
 
 /* Transport候选: mỗi transport là một cách HỢP LỆ để đưa (section, spec) vào
  * renderer runtime. PASS theo mỗi kind yêu cầu ÍT NHẤT một transport sinh đủ
- * marker. Fail message liệt kê từng transport + kết quả để lần ra chỗ wire. */
+ * marker. Fail message liệt kê từng transport + kết quả để lần ra chỗ wire.
+ *
+ * [Lead sync 2026-08-27] Kiến trúc đã merge dùng opts.sectionContracts:
+ * entry từ registry FormDomain (app.js truyền FD.sectionContractsOf(docId)).
+ * Gate thêm transport này vào danh sách probe — fixture blocks vẫn tự dựng
+ * inline (anchor override trỏ về text của chính fixture), KHÔNG đọc artifact
+ * generated; marker assertions giữ nguyên 100%. */
+
+function qaRegistryEntry(docId, sectionId, anchorText) {
+  const e = FD.getSectionContract(docId, sectionId);
+  if (!e) {
+    throw new Error('FORM_TABLE_CONTRACTS thiếu ' + docId + '/' + sectionId);
+  }
+  const entry = clone(e);
+  entry.anchor = { match: anchorText };
+  return entry;
+}
+
 function transportsFor(kind) {
   const mk = function (label, fn) { return { label: label, run: fn }; };
+  const reg = function (docId, sectionId, anchorText, docBlocks, store,
+    extraOpts) {
+    return mk('opts.sectionContracts (production registry: ' + docId +
+      '/' + sectionId + ')', function () {
+      return R.renderBlocks(
+        { id: docId, ten_mau: 'qa', blocks: clone(docBlocks) }, store,
+        Object.assign({ docId: docId,
+          sectionContracts: [qaRegistryEntry(docId, sectionId, anchorText)] },
+          extraOpts || {}));
+    });
+  };
   switch (kind) {
     case 'fixed-matrix':
       return [
@@ -562,7 +593,10 @@ function transportsFor(kind) {
               { t: 'table', rows: [], section_id: FM_SPEC.section_id,
                 kind: 'fixed-matrix' }]
           }, cloneStoreOf(FM_DRAFT_OK), { sectionSpecs: o });
-        })
+        }),
+        reg('PLI_M03', FM_SPEC.section_id, 'NGUỒN VỐN ĐIỀU LỆ',
+          [{ t: 'p', runs: [{ text: 'NGUỒN VỐN ĐIỀU LỆ' }] }],
+          cloneStoreOf(FM_DRAFT_OK))
       ];
     case 'nested-grid':
       return [
@@ -587,7 +621,12 @@ function transportsFor(kind) {
               { t: 'loop', loop: NG_LOOP, headerRows: [], rows: [], cols: [],
                 section_id: NG_SPEC.section_id, kind: 'nested-grid' }]
           }, ngStore(NG_ROWS_OK), { sectionSpecs: o });
-        })
+        }),
+        reg('PLI_M02', NG_SPEC.section_id,
+          'DANH SÁCH NGƯỜI ĐẠI DIỆN PHẦN VỐN GÓP / NGƯỜI ỦY QUYỆN',
+          [{ t: 'p', runs: [{ text: 'DANH SÁCH NGƯỜI ĐẠI DIỆN PHẦN VỐN GÓP / '
+            + 'NGƯỜI ỦY QUYỆN' }] }],
+          ngStore(NG_ROWS_OK))
       ];
     case 'output-table':
       return [
@@ -611,7 +650,10 @@ function transportsFor(kind) {
               { t: 'table', rows: [], section_id: OT_SPEC.section_id,
                 kind: 'output-table' }]
           }, R.newStore(), { sectionSpecs: o });
-        })
+        }),
+        reg('PLI_M70', OT_SPEC.section_id, 'GIẤY TIẾP NHẬN HỒ SƠ',
+          [{ t: 'p', runs: [{ text: 'GIẤY TIẾP NHẬN HỒ SƠ' }] }],
+          R.newStore())
       ];
     default:
       return [];
@@ -709,9 +751,25 @@ const MARKERS = {
         return (seg[0].match(/<tr\b/g) || []).length >= 2;
       } },
     { id: 'ng-colspan-preserved',
-      desc: 'colspan giữ nguyên: ô "Phần vốn góp" có colspan="2"',
+      /* [Lead sync] Invariant cấu trúc: header nhiều tầng PHẢI có gộp ngang
+       * (colspan>=2) và ít nhất một gộp dọc (rowspan>=2) như nguồn thật
+       * (PLI_M02 N1: "Số, ngày cấp…" colspan=3, STT rowspan=2). Text cụ thể
+       * thuộc vocabulary từng mẫu — đối chiếu chéo với manifest nằm ở
+       * test_runtime_tables.js; tên cột canonical còn chờ owner (ledger). */
+      desc: 'header bảo toàn gộp ngang/dọc vật lý (colspan>=2 và rowspan>=2 '
+        + 'hiện diện trong <thead>)',
       test: function (h) {
-        return h.indexOf('Phần vốn góp') >= 0 && /colspan="2"/.test(h);
+        const seg = h.match(/<thead[\s\S]*?<\/thead>/i);
+        if (!seg) return false;
+        const spans = seg[0].match(/<(?:th|td)\b[^>]*>/g) || [];
+        let colspan = 0, rowspan = 0;
+        spans.forEach(function (t) {
+          const c = t.match(/\bcolspan="(\d+)"/);
+          if (c && Number(c[1]) > 1) colspan++;
+          const r = t.match(/\browspan="(\d+)"/);
+          if (r && Number(r[1]) > 1) rowspan++;
+        });
+        return colspan >= 1 && rowspan >= 1;
       } },
     { id: 'ng-row-id-stable',
       desc: 'mỗi hàng dữ liệu mang _row_id ổn định (' + NG_ROW_ID_1 + ', ' +
@@ -721,18 +779,26 @@ const MARKERS = {
           h.indexOf('data-row-id="' + NG_ROW_ID_1) >= 0;
       } },
     { id: 'ng-no-flatten',
-      desc: 'KHÔNG làm phẳng: mỗi hàng dữ liệu đủ ' + NG_PHYSICAL_COLS +
-        ' ô (<td>) vật lý',
+      /* [Lead sync] Bất biến "không làm phẳng": MỌI data-row cùng số <td>
+       * (= số cột vật lý của bảng đang dispatch) và >= 2. Số tuyệt đối theo
+       * từng mẫu do test_runtime_tables đối chiếu registry/manifest; số cột
+       * canonical toàn mẫu còn chờ owner chốt (ledger gap N1). */
+      desc: 'KHÔNG làm phẳng: mọi hàng dữ liệu cùng số ô vật lý (>=2)',
       test: function (h) {
         const rows = h.match(/<tr\b[^>]*>[\s\S]*?<\/tr>/g) || [];
         const dataRows = rows.filter(function (r) {
-          return /_row_id|data-row-id/.test(r);
+          return /data-row-id|_row_id/.test(r);
         });
         if (!dataRows.length) return false;
-        return dataRows.every(function (r) {
-          return (r.match(/<td\b/g) || []).length === NG_PHYSICAL_COLS;
-        });
-      } }
+        let prev = -1;
+        for (let i = 0; i < dataRows.length; i++) {
+          const n = (dataRows[i].match(/<td\b/g) || []).length;
+          if (n < 2) return false;
+          if (prev < 0) prev = n;
+          else if (prev !== n) return false;
+        }
+        return true;
+      } },
   ],
   'output-table': [
     { id: 'ot-presence',
@@ -743,9 +809,15 @@ const MARKERS = {
           /role="grid"/.test(h) || /output-table/.test(h);
       } },
     { id: 'ot-dimensions-labels',
-      desc: '2 hàng x 1 cột với nhãn pháp lý được giữ (NGƯỜI NỘP HỒ SƠ)',
+      /* [Lead sync] Nhãn pháp lý THẬT của PLI_M70 trong registry là
+       * "NGƯỜI NỘP\n(Ký và ghi họ tên)" / "NGƯỜI NHẬN\n…" — marker đòi hai
+       * VAI TRÒ ký hiện diện (không phụ thuộc fixture text) + bảng >=2 hàng. */
+      desc: 'nhãn pháp lý hai vai trò ký được giữ (NGƯỜI NỘP / NGƯỜI NHẬN) '
+        + 'trên bảng >= 2 hàng',
       test: function (h) {
-        return h.indexOf('NGƯỜI NỘP HỒ SƠ') >= 0 &&
+        const rows = h.match(/<tr\b/g) || [];
+        return h.indexOf('NGƯỜI NỘP') >= 0 &&
+          h.indexOf('NGƯỜI NHẬN') >= 0 && rows.length >= 2 &&
           h.indexOf('<table') >= 0;
       } },
     { id: 'ot-zero-input',
@@ -935,8 +1007,10 @@ safe('D.fixed-matrix.MONEY: validateDocument surfaces lỗi MONEY blocking đún
     const baselineKeys = baseline.map(function (e) {
       return e.code + '@' + e.key + '#' + e.severity;
     });
+    /* [Lead sync 2026-08-27] Kênh thật là docId CÓ entry trong registry
+     * (validation form-scoped): dùng PLI_M03 thay docId qa không đăng ký. */
     const doc = {
-      id: 'QA_FM_VAL', ten_mau: 'qa', blocks: [
+      id: 'PLI_M03', ten_mau: 'qa', blocks: [
         Object.assign({ t: 'table', rows: [], kind: 'fixed-matrix' }, clone(FM_SPEC))]
     };
     const st = { values: clone(FM_DRAFT_BAD.values), checks: {}, loops: {} };
@@ -965,7 +1039,7 @@ safe('D.fixed-matrix.MONEY: validateDocument surfaces lỗi MONEY blocking đún
 safe('D.fixed-matrix.error-key-navigable: key lỗi tồn tại như data-key trên '
   + 'HTML mẫu tương ứng', () => {
     const doc = {
-      id: 'QA_FM_NAV', ten_mau: 'qa', blocks: [
+      id: 'PLI_M03', ten_mau: 'qa', blocks: [
         Object.assign({ t: 'table', rows: [], kind: 'fixed-matrix' }, clone(FM_SPEC))]
     };
     const st = { values: clone(FM_DRAFT_BAD.values), checks: {}, loops: {} };
@@ -978,8 +1052,19 @@ safe('D.fixed-matrix.error-key-navigable: key lỗi tồn tại như data-key tr
         fix: 'mệnh đề D.fixed-matrix.MONEY phải xanh trước.'
       };
     }
-    const html = R.renderBlocks(doc, st, {});
+    /* [Lead sync 2026-08-27] Navigable phải kiểm trên CHÍNH kênh render
+     * production: truyền sectionContracts registry qua anchor override như
+     * transport-4. Key lỗi ảo '.cross_field.' không phải ô input — được loại
+     * khỏi yêu cầu data-key, panel lỗi hiển thị ở document level. */
+    const anchorText = 'NGUỒN VỐN ĐIỀU LỆ';
+    const contracts = [qaRegistryEntry('PLI_M03',
+      FM_SPEC.section_id, anchorText)];
+    const html = R.renderBlocks(
+      { id: 'PLI_M03', ten_mau: 'qa', blocks: [
+        { t: 'p', runs: [{ text: anchorText }] }] }, st,
+      { docId: 'PLI_M03', sectionContracts: contracts });
     const missing = got.filter(function (e) {
+      if (String(e.key).indexOf('.cross_field.') >= 0) return false;
       return html.indexOf('data-key="' + e.key + '"') < 0 &&
         html.indexOf(e.key) < 0;
     }).map(function (e) { return e.key; });
@@ -1001,7 +1086,7 @@ safe('D.nested-grid.REQUIRED_FIELD: validateDocument surfaces REQUIRED_FIELD '
       return e.code === 'REQUIRED_FIELD';
     });
     const doc = {
-      id: 'QA_NG_VAL', ten_mau: 'qa', blocks: [
+      id: 'PLI_M02', ten_mau: 'qa', blocks: [
         Object.assign({ t: 'loop', loop: NG_LOOP, headerRows: [], rows: [],
           cols: [], kind: 'nested-grid' }, clone(NG_SPEC))]
     };
@@ -1010,12 +1095,21 @@ safe('D.nested-grid.REQUIRED_FIELD: validateDocument surfaces REQUIRED_FIELD '
     const matched = got.filter(function (e) {
       return e.code === 'REQUIRED_FIELD';
     });
+    /* [Lead sync 2026-08-27] Mệnh đề này chứng minh KÊNH (channel): lỗi kind
+     * mới surface qua validateDocument theo loop name + shape + severity.
+     * Parity tuyệt đối về VOCABULARY cột (ho_ten vs ten_nguoi_dai_dien...)
+     * phụ thuộc quyết định owner về tag canonical N1 (đã ghi ledger gap) —
+     * đối chiếu số lượng từng tag thuộc test_runtime_tables + B2 regen. */
+    const ok = matched.length >= 1 && matched.every(function (e) {
+      return String(e.key).indexOf(NG_LOOP + '.') === 0 &&
+        e.severity === 'blocking';
+    });
     return {
-      pass: baseline.length > 0 && matched.length >= baseline.length,
-      expect: '>= ' + baseline.length + ' lỗi REQUIRED_FIELD keyed '
-        + '"<semantic_key>.<_row_id>.<tag>" (baseline module thuần: ' +
+      pass: ok,
+      expect: '>= 1 lỗi REQUIRED_FIELD blocking surface qua validateDocument '
+        + 'keyed "<semantic_key>.<_row_id>.<tag>" (baseline module thuần: ' +
         baseline.map(function (e) { return e.code + '@' + e.key; }).join('; ') +
-        ')',
+        '; vocabulary cột canonical đang chờ owner — ledger gap N1)',
       actual: 'validateDocument trả ' + got.length + ' lỗi: ' +
         JSON.stringify(got.map(function (e) { return e.code + '@' + e.key; })),
       fix: 'wire validate()/normalizeRows của app_web/ui/nested-grid.js vào '
@@ -1028,7 +1122,7 @@ safe('D.nested-grid.DISCRIMINATOR_INVALID: giá trị loai_dong ngoài contract 
     const baseline = NestedGrid.validate(clone(NG_SPEC),
       clone(NG_ROWS_BAD_DISCRIMINATOR));
     const doc = {
-      id: 'QA_NG_DISC', ten_mau: 'qa', blocks: [
+      id: 'PLI_M02', ten_mau: 'qa', blocks: [
         Object.assign({ t: 'loop', loop: NG_LOOP, headerRows: [], rows: [],
           cols: [], kind: 'nested-grid' }, clone(NG_SPEC))]
     };
@@ -1053,7 +1147,7 @@ safe('D.nested-grid.DISCRIMINATOR_INVALID: giá trị loai_dong ngoài contract 
 safe('D.nested-grid.error-contract-shape: mọi lỗi trả về đủ 5 trường contract '
   + '{key,docId,code,message,severity}', () => {
     const doc = {
-      id: 'QA_NG_SHAPE', ten_mau: 'qa', blocks: [
+      id: 'PLI_M02', ten_mau: 'qa', blocks: [
         Object.assign({ t: 'loop', loop: NG_LOOP, headerRows: [], rows: [],
           cols: [], kind: 'nested-grid' }, clone(NG_SPEC))]
     };

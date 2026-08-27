@@ -1187,7 +1187,10 @@
         semanticKey: 'chu_ky_tiep_nhan_ho_so',
         kind: 'output-table',
         policy: { allowAdd: false, allowDelete: false, allowReorder: false },
-        anchor: { match: 'nguoi nop (ky va ghi ho ten)', matchRole: 'signature',
+        /* Sau regen W1 (d48eb7d): chuỗi ký nằm TRONG ô w:tbl 2x1 (block cuối),
+         * không còn paragraph role 'signature' — match thuần text trên
+         * blockPlainText của table; EOF tới hết mẫu. */
+        anchor: { match: 'nguoi nop (ky va ghi ho ten)',
           endMatch: null, endRole: null },
         spec: {
           kind: 'output-table',
@@ -1210,9 +1213,11 @@
         semanticKey: 'chu_ky_cqb_m71',
         kind: 'output-table',
         policy: { allowAdd: false, allowDelete: false, allowReorder: false },
+        /* Sau regen W1: heading '(TÊN CƠ QUAN...)' là ô w:tbl 1x1; span kết
+         * thúc TRƯỚC national-separator '_____' để dòng gạch giữ nguyên hiển
+         * thị dưới lưới ký (không bị bọc dupe-anchor). */
         anchor: { match: 'ten co quan dang ky kinh doanh cap tinh',
-          matchRole: 'form-subtitle',
-          endMatch: 'truong hop ho so duoc tiep nhan tren he thong', endRole: 'body' },
+          endMatch: '_____', endRole: 'national-separator' },
         spec: {
           kind: 'output-table',
           section_id: 'chu_ky_co_quan_cap_tinh',

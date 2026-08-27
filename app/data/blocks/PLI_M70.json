@@ -449,52 +449,38 @@
    "role": "body"
   },
   {
-   "t": "p",
-   "align": "center",
-   "runs": [
+   "t": "table",
+   "widths": null,
+   "rows": [
     {
-     "text": "NGƯỜI NỘP\n",
-     "b": true
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "NGƯỜI NỘP\n(Ký và ghi họ tên)",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
     },
     {
-     "text": "("
-    },
-    {
-     "text": "Ký và ghi họ tên",
-     "i": true
-    },
-    {
-     "text": ")"
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "NGƯỜI NHẬN\n(Ký và ghi họ tên)",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
     }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "signature"
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "NGƯỜI NHẬN\n",
-     "b": true
-    },
-    {
-     "text": "("
-    },
-    {
-     "text": "Ký và ghi họ tên",
-     "i": true
-    },
-    {
-     "text": ")"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "signature"
+   ]
   }
  ],
  "v": 3

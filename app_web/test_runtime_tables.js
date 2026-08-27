@@ -644,10 +644,18 @@ section('6. draft round-trip qua migrateDraft');
 /* --------------------------------------------------- 7. fixture nhóm nhỏ */
 section('7. fixture production đủ đặc tính khó nhất của từng kind');
 {
-  // O2: nhãn khớp text thực tế trong blocks (không phải chuỗi chế tay)
+  // O2/O1: nhãn khớp text thực tế trong blocks (không phải chuỗi chế tay).
+  // [Lead sync sau regen W1 d48eb7d] nhãn ký giờ nằm trong Ô của w:tbl
+  // output-table — đọc cell text thay vì paragraph role cũ; bản chất khẳng
+  // định (labels lấy từ blocks production) giữ nguyên.
+  const cellTextOf = cell => ((cell && cell.runs) || [])
+    .map(r => (r && r.text) || '').join('');
+  const tableCellTexts = blocks => (blocks || [])
+    .filter(b => b.t === 'table')
+    .flatMap(b => (b.rows || []).map(row =>
+      (row.cells || []).map(cellTextOf).join('\n')));
   const m71 = loadBlocks('PLI_M71');
-  const sub = m71.blocks.filter(b => b.role === 'form-subtitle')
-    .map(b => (b.runs || []).map(r => (r && r.text) || '').join(''))
+  const sub = tableCellTexts(m71.blocks)
     .find(t => t.toUpperCase().indexOf('TÊN CƠ QUAN') >= 0);
   const o2spec = FD.getSectionContract('PLI_M71', 'chu_ky_co_quan_cap_tinh').spec;
   check('O2: label component = text thật trong blocks (bỏ xuống dòng)',
@@ -655,10 +663,10 @@ section('7. fixture production đủ đặc tính khó nhất của từng kind'
     String(sub).replace(/\s+/g, ''),
     JSON.stringify([o2spec.grid.labels[0][0], sub]));
   const m70 = loadBlocks('PLI_M70');
-  const sigs = m70.blocks.filter(b => b.role === 'signature')
-    .map(b => (b.runs || []).map(r => (r && r.text) || '').join(''));
+  const sigs = tableCellTexts(m70.blocks).filter(t =>
+    t.indexOf('NGƯỜI') >= 0);
   const o1spec = FD.getSectionContract('PLI_M70', 'chu_ky_nguoi_nop_nguoi_nhan').spec;
-  check('O1: 2 ô ký khớp 2 block signature của PLI_M70',
+  check('O1: 2 ô ký khớp 2 ô của w:tbl output-table PLI_M70',
     sigs.length === 2 && o1spec.grid.labels.every((lb, i) =>
       String(lb).replace(/\s+/g, '') === String(sigs[i]).replace(/\s+/g, '')),
     JSON.stringify(sigs));

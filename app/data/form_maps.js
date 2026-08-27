@@ -2998,7 +2998,7 @@ window.FORM_MAPS = {
   "phu_luc": "I",
   "mau_so": 70,
   "ten_mau": "Giấy tiếp nhận hồ sơ và hẹn trả kết quả hồ sơ đăng ký doanh nghiệp/chi nhánh/văn phòng đại diện/địa điểm kinh doanh",
-  "file": "05_cong_bo_cung_cap_thong_tin/PL1_Mau_70_giay_tiep_nhan_ho_so_va_hen_tra_ket_qua_ho_so_dang_ky_doanh_nghiep_chi_nhanh_van_phong_dai_dien.docx",
+  "file": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_70_giay_tiep_nhan_ho_so_va_hen_tra_ket_qua_ho_so_dang_ky_doanh_nghiep_chi_nhanh_van_phong_dai_dien.docx",
   "template": "templates/PLI_M70.docx",
   "fields": [
    {
@@ -3069,6 +3069,24 @@ window.FORM_MAPS = {
     "key": "noi_nhan",
     "label": "Nơi nhận kết quả bản giấy (nếu có):"
    }
+  ],
+  "section_specs": [
+   {
+    "kind": "output-table",
+    "id": "chu_ky_nguoi_nop_nguoi_nhan",
+    "semantic_key": "chu_ky_tiep_nhan_ho_so",
+    "section_id": "chu_ky_nguoi_nop_nguoi_nhan",
+    "table_index": 0,
+    "grid": {
+     "rows": 2,
+     "cols": 1,
+     "labels": [
+      "NGƯỜI NỘP\n(Ký và ghi họ tên)",
+      "NGƯỜI NHẬN\n(Ký và ghi họ tên)"
+     ]
+    },
+    "inputs": []
+   }
   ]
  },
  "PLI_M71": {
@@ -3076,7 +3094,7 @@ window.FORM_MAPS = {
   "phu_luc": "I",
   "mau_so": 71,
   "ten_mau": "Giấy tiếp nhận hồ sơ và hẹn trả kết quả hồ sơ đăng ký doanh nghiệp/chi nhánh/văn phòng đại diện/địa điểm kinh doanh qua mạng thông tin điện tử",
-  "file": "05_cong_bo_cung_cap_thong_tin/PL1_Mau_71_giay_tiep_nhan_ho_so_va_hen_tra_ket_qua_ho_so_dang_ky_doanh_nghiep_chi_nhanh_van_phong_dai_dien.docx",
+  "file": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_71_giay_tiep_nhan_ho_so_va_hen_tra_ket_qua_ho_so_dang_ky_doanh_nghiep_chi_nhanh_van_phong_dai_dien.docx",
   "template": "templates/PLI_M71.docx",
   "fields": [
    {
@@ -3142,6 +3160,25 @@ window.FORM_MAPS = {
    {
     "key": "noi_nhan",
     "label": "Nơi nhận kết quả bản giấy (nếu có):"
+   }
+  ],
+  "section_specs": [
+   {
+    "kind": "output-table",
+    "id": "chu_ky_co_quan_cap_tinh",
+    "semantic_key": "chu_ky_cqb_m71",
+    "section_id": "chu_ky_co_quan_cap_tinh",
+    "table_index": 0,
+    "grid": {
+     "rows": 1,
+     "cols": 1,
+     "labels": [
+      [
+       "(TÊN CƠ QUAN ĐĂNG KÝ KINH DOANH CẤP TỈNH)"
+      ]
+     ]
+    },
+    "inputs": []
    }
   ]
  },

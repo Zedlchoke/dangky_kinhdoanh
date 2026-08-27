@@ -13,33 +13,39 @@ function loadProduction(formId) {
     path.join(BLOCKS, formId + '.json'), 'utf8'));
 }
 
+/* [Lead sync sau regen W1 d48eb7d] Nhãn chữ ký PLI_M70/M71 KHÔNG còn là
+ * paragraph role 'signature'/'form-subtitle' nữa — regen chuyển chúng thành
+ * Ô của w:tbl output-table (1 bảng 2x1 / 1x1). Fixture đọc cell text của
+ * bảng thật thay vì paragraph; bản chất khẳng định (labels lấy từ blocks
+ * production) giữ nguyên. */
 function signatureText(block) {
+  if (block.t === 'table') {
+    return (block.rows || []).map(row => (row.cells || []).map(cell =>
+      (cell.runs || []).map(run => run && run.text || '').join('')
+    ).join('\n')).join('\n');
+  }
   return (block.runs || []).map(run => run && run.text || '').join('');
 }
 
-function signatureBlocks(document) {
-  return (document.blocks || []).filter(block =>
-    block.t === 'p' && block.role === 'signature');
+function gridCellTexts(document) {
+  return (document.blocks || [])
+    .filter(block => block.t === 'table')
+    .flatMap(block => (block.rows || []).map(row =>
+      (row.cells || []).map(cell => signatureText(cell)).join('\n')));
 }
 
-function checkProductionSignature(formId, expectedCount, labels) {
-  const document = loadProduction(formId);
-  const blocks = signatureBlocks(document);
-  assert.strictEqual(blocks.length, expectedCount,
-    formId + ' signature fixture count');
-  labels.forEach((label, index) => {
-    assert.ok(signatureText(blocks[index]).includes(label),
-      formId + ' production signature label ' + label);
+const m70Labels = (() => {
+  const cells = gridCellTexts(loadProduction('PLI_M70'))
+    .filter(text => text.includes('NGƯỜI'));
+  assert.strictEqual(cells.length, 2, 'PLI_M70 signature grid cells');
+  cells.forEach((text, index) => {
+    assert.ok(text.includes(['NGƯỜI NỘP', 'NGƯỜI NHẬN'][index]),
+      'PLI_M70 production signature label ' + index);
   });
-  return labels;
-}
-
-const m70Labels = checkProductionSignature(
-  'PLI_M70', 2, ['NGƯỜI NỘP', 'NGƯỜI NHẬN']);
+  return cells.map(text => text.split('\n')[0].trim());
+})();
 const m71 = loadProduction('PLI_M71');
-const m71LabelsFromBlocks = (m71.blocks || [])
-  .filter(block => block.role === 'form-subtitle')
-  .map(block => signatureText(block))
+const m71LabelsFromBlocks = gridCellTexts(m71)
   .filter(text => text.includes('TÊN CƠ QUAN ĐĂNG KÝ KINH'));
 assert.strictEqual(m71LabelsFromBlocks.length, 1,
   'PLI_M71 production signing heading exists');

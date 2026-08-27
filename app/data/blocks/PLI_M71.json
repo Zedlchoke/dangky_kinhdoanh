@@ -468,18 +468,24 @@
    "role": "body"
   },
   {
-   "t": "p",
-   "align": "center",
-   "runs": [
+   "t": "table",
+   "widths": null,
+   "rows": [
     {
-     "text": "(TÊN CƠ QUAN ĐĂNG KÝ KINH \nDOANH CẤP TỈNH)",
-     "b": true
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "(TÊN CƠ QUAN ĐĂNG KÝ KINH DOANH CẤP TỈNH)",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
     }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "form-subtitle"
+   ]
   },
   {
    "t": "p",

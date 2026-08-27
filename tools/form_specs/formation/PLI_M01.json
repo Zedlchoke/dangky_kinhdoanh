@@ -55,6 +55,103 @@
         "Mã ngành",
         "Ngành, nghề kinh doanh chính"
       ]
-    }
-  ]
+    },
+  {
+   "kind": "fixed-matrix",
+   "spec": {
+    "id": "tai_san_gop_von_von_dau_tu",
+    "kind": "fixed-matrix",
+    "section_id": "tai_san_gop_von_von_dau_tu",
+    "semantic_key": "co_cau_tai_san_gop_von_dau_tu",
+    "columns": [
+     {
+      "header": "Tài sản góp vốn",
+      "tag": null,
+      "input_type": "readonly"
+     },
+     {
+      "header": "Ghi rõ loại ngoại tệ, số tiền được góp bằng mỗi loại ngoại tệ / loại tài sản, số lượng và giá trị còn lại của mỗi loại tài sản",
+      "tag": "chi_tiet_ngoai_te_tai_san_khac",
+      "input_type": "text"
+     },
+     {
+      "header": "Giá trị vốn của từng tài sản trong vốn đầu tư (bằng số, VNĐ)",
+      "tag": "gia_tri_vnd",
+      "input_type": "money"
+     },
+     {
+      "header": "Tỷ lệ (%)",
+      "tag": "ty_le",
+      "input_type": "percent"
+     }
+    ],
+    "fixed_rows": [
+     {
+      "id": "dong_viet_nam",
+      "label": "Đồng Việt Nam"
+     },
+     {
+      "id": "ngoai_te_tu_do_chuyen_doi",
+      "label": "Ngoại tệ tự do chuyển đổi (ghi rõ loại ngoại tệ, số tiền được góp bằng mỗi loại ngoại tệ)"
+     },
+     {
+      "id": "vang",
+      "label": "Vàng"
+     },
+     {
+      "id": "quyen_su_dung_dat",
+      "label": "Quyền sử dụng đất"
+     },
+     {
+      "id": "quyen_so_huu_tri_tue",
+      "label": "Quyền sở hữu trí tuệ"
+     },
+     {
+      "id": "tai_san_khac",
+      "label": "Các tài sản khác (ghi rõ loại tài sản, số lượng và giá trị còn lại của mỗi loại tài sản, có thể lập thành danh mục riêng kèm theo hồ sơ đăng ký doanh nghiệp)"
+     },
+     {
+      "id": "tong_so",
+      "label": "Tổng số",
+      "output_only": true
+     }
+    ],
+    "totals": [
+     {
+      "formula": "sum(gia_tri_vnd)",
+      "target_row": "tong_so",
+      "target_tag": "gia_tri_vnd"
+     },
+     {
+      "formula": "sum(ty_le)",
+      "target_row": "tong_so",
+      "target_tag": "ty_le"
+     }
+    ]
+   },
+   "pos": "after",
+   "anchor": "^tai san gop von:",
+   "no_default_drops": true,
+   "drop_until": "^6\\. thong tin dang ky thue",
+   "drop": [
+    "^stt$",
+    "^tai san gop von$",
+    "^gia tri von cua tung tai san trong von dau tu",
+    "^ty le \\(%\\)$",
+    "^\\d$",
+    "^dong viet nam$",
+    "^ngoai te tu do chuyen doi",
+    "^vang$",
+    "^quyen su dung dat$",
+    "^quyen so huu tri tue$",
+    "^cac tai san khac \\(",
+    "^tong so$"
+   ],
+   "legal_status": {
+    "blocked": false,
+    "ref": "D1.1=A (tong/ty le computed outputOnly + doi chieu von chan export), D1.2=B CHO M01 ('Các tài sản khác' = mo ta text/dinh kem, KHONG sub-grid) - docs/decision_registry.md packet D1 (owner checkpoint 2026-08-27); evidence: census manifest section tai_san_gop_von_von_dau_tu (fixed-matrix, status=missing_grid, semantic_key=co_cau_tai_san_gop_von_dau_tu) + app/templates/PLI_M01.docx#p91-p123 (chuoi paragraph roi, khong w:tbl, blocks khong co input nao trong vung nay).",
+    "question": "(a) Cot STT 1..6 in san cua mau KHONG tái lap duoc o fixed-matrix v1 (khong co slot stt; chi duoc 1 cot tag=null tai index 0 lam cot nhan) -> khai thieu + gap mo cho Lead/B2 (manifest required_columns co 'stt'). (b) D1.1=A doc la 'Tổng cộng + tỷ lệ computed' nhung contract v1 chi co sum/product -> khai theo tien le fixture F2 cua PLI_M03 (app_web/ui/form-domain.js): ty_le la o nhap percent, o tong ty le = sum(ty_le), % tu tinh theo gia tri CHUA khai duoc - gap. (c) Cross-field 'Tổng số == Vốn đầu tư' (von_dau_tu_so, muc 5) blocking theo D1.1=A: spec v1 khong co slot cross_field_rules -> gap cho Lead/B1 wire o FORM_TABLE_CONTRACTS (dung valueKey von_dau_tu_so)."
+   }
+  }
+ ]
 }

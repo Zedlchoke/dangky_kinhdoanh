@@ -82,6 +82,183 @@
       },
       "trim": ["^sttten nguoi dai dien theo phap luat"],
       "keep_from": "- Thông tin về Giấy chứng nhận đăng ký đầu tư"
-    }
-  ]
+    },
+  {
+   "kind": "fixed-matrix",
+   "spec": {
+    "id": "nguon_von_dieule",
+    "kind": "fixed-matrix",
+    "section_id": "nguon_von_dieule",
+    "semantic_key": "nguon_von_dieu_le",
+    "columns": [
+     {
+      "header": "Loại nguồn vốn",
+      "tag": null,
+      "input_type": "readonly"
+     },
+     {
+      "header": "Số tiền (bằng số; VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)",
+      "tag": "so_tien_vnd_va_tuong_duong",
+      "input_type": "money"
+     },
+     {
+      "header": "Tỷ lệ (%)",
+      "tag": "ty_le",
+      "input_type": "percent"
+     }
+    ],
+    "fixed_rows": [
+     {
+      "id": "von_ngan_sach_nha_nuoc",
+      "label": "Vốn ngân sách nhà nước"
+     },
+     {
+      "id": "von_tu_nhan",
+      "label": "Vốn tư nhân"
+     },
+     {
+      "id": "von_nuoc_ngoai",
+      "label": "Vốn nước ngoài"
+     },
+     {
+      "id": "von_khac",
+      "label": "Vốn khác"
+     },
+     {
+      "id": "tong_cong",
+      "label": "Tổng cộng",
+      "output_only": true
+     }
+    ],
+    "totals": [
+     {
+      "formula": "sum(so_tien_vnd_va_tuong_duong)",
+      "target_row": "tong_cong",
+      "target_tag": "so_tien_vnd_va_tuong_duong"
+     },
+     {
+      "formula": "sum(ty_le)",
+      "target_row": "tong_cong",
+      "target_tag": "ty_le"
+     }
+    ]
+   },
+   "pos": "after",
+   "anchor": "^7\\. nguon von dieu le",
+   "no_default_drops": true,
+   "drop_until": "^8\\. tai san gop von",
+   "drop": [
+    "^loai nguon von$",
+    "^so tien \\(bang so; vnd",
+    "^ty le \\(%\\)$",
+    "^von ngan sach nha nuoc$",
+    "^von tu nhan$",
+    "^von nuoc ngoai$",
+    "^von khac$",
+    "^tong cong$"
+   ],
+   "legal_status": {
+    "blocked": false,
+    "ref": "D1.1=A (tong computed outputOnly + doi chieu von dieu le blocking) - docs/decision_registry.md packet D1 (owner checkpoint 2026-08-27); evidence: census manifest section nguon_von_dieule (fixed-matrix, missing_grid, semantic_key=nguon_von_dieu_le, fixed_rows 5 dong) + app/templates/PLI_M02.docx#p155-p174 (paragraph roi, khong w:tbl). Row id + tag lay DUNG manifest (khong tu che); khop ca contract F2 cung section o PLI_M03 (app_web/ui/form-domain.js).",
+    "question": "(a) 'Vốn khác' (dong 4): mau KHONG co o mo ta nao (chi nhan 'Vốn khác') -> KHONG khai cot text mo ta, KHONG tu che sub-grid (D1.2 chua co quyet dinh rieng cho M02); neu owner muon mo ta thi phai mo khoa rieng. (b) ty_le la o nhap percent + tong cot = sum(ty_le) theo tien le F2; % tu tinh theo gia tri chua co formula trong v1 - gap. (c) Cross-field 'Tổng cộng == Vốn điều lệ' (von_dieu_le, muc 6) blocking theo D1.1=A: spec v1 khong co slot cross_field_rules -> gap cho Lead/B1 wire o FORM_TABLE_CONTRACTS (valueKey von_dieu_le, code CAPITAL_MISMATCH). (d) PERCENT_SUM la severity=warning phia runtime, khong khai duoc trong spec generator v1."
+   }
+  },
+  {
+   "kind": "fixed-matrix",
+   "spec": {
+    "id": "tai_san_gop_von_von_dieu_le",
+    "kind": "fixed-matrix",
+    "section_id": "tai_san_gop_von_von_dieu_le",
+    "semantic_key": "co_cau_tai_san_gop_von_dieu_le",
+    "columns": [
+     {
+      "header": "Tài sản góp vốn",
+      "tag": null,
+      "input_type": "readonly"
+     },
+     {
+      "header": "Ghi rõ loại ngoại tệ, số tiền được góp bằng mỗi loại ngoại tệ / loại tài sản, số lượng và giá trị còn lại của mỗi loại tài sản",
+      "tag": "chi_tiet_ngoai_te_tai_san_khac",
+      "input_type": "text"
+     },
+     {
+      "header": "Giá trị vốn của từng tài sản trong vốn điều lệ (bằng số, VNĐ)",
+      "tag": "gia_tri_vnd",
+      "input_type": "money"
+     },
+     {
+      "header": "Tỷ lệ (%)",
+      "tag": "ty_le",
+      "input_type": "percent"
+     }
+    ],
+    "fixed_rows": [
+     {
+      "id": "dong_viet_nam",
+      "label": "Đồng Việt Nam"
+     },
+     {
+      "id": "ngoai_te_tu_do_chuyen_doi",
+      "label": "Ngoại tệ tự do chuyển đổi (ghi rõ loại ngoại tệ, số tiền được góp bằng mỗi loại ngoại tệ)"
+     },
+     {
+      "id": "vang",
+      "label": "Vàng"
+     },
+     {
+      "id": "quyen_su_dung_dat",
+      "label": "Quyền sử dụng đất"
+     },
+     {
+      "id": "quyen_so_huu_tri_tue",
+      "label": "Quyền sở hữu trí tuệ"
+     },
+     {
+      "id": "tai_san_khac",
+      "label": "Các tài sản khác (ghi rõ loại tài sản, số lượng và giá trị còn lại của mỗi loại tài sản, có thể lập thành danh mục riêng kèm theo hồ sơ đăng ký doanh nghiệp)"
+     },
+     {
+      "id": "tong_so",
+      "label": "Tổng số",
+      "output_only": true
+     }
+    ],
+    "totals": [
+     {
+      "formula": "sum(gia_tri_vnd)",
+      "target_row": "tong_so",
+      "target_tag": "gia_tri_vnd"
+     },
+     {
+      "formula": "sum(ty_le)",
+      "target_row": "tong_so",
+      "target_tag": "ty_le"
+     }
+    ]
+   },
+   "pos": "after",
+   "anchor": "^8\\. tai san gop von",
+   "no_default_drops": true,
+   "drop_until": "^9\\. nguoi dai dien theo phap luat",
+   "drop": [
+    "^stt$",
+    "^tai san gop von$",
+    "^gia tri von cua tung tai san trong von dieu le",
+    "^ty le \\(%\\)$",
+    "^\\d$",
+    "^dong viet nam$",
+    "^ngoai te tu do chuyen doi",
+    "^vang$",
+    "^quyen su dung dat$",
+    "^quyen so huu tri tue$",
+    "^cac tai san khac \\(",
+    "^tong so$"
+   ],
+   "legal_status": {
+    "blocked": false,
+    "ref": "D1.1=A (tong computed outputOnly + doi chieu von dieu le blocking); D1.2 CHUA co quyet dinh rieng cho M02 -> KHONG sub-grid, chi khai o mo ta text theo dung nguon mau (cot 'Các tài sản khác' cua mau chua san chu 'ghi rõ loại tài sản, số lượng và giá trị còn lại...') - docs/decision_registry.md packet D1 + docs/p2_fixture_candidates.md F4 ('điền dòng Đồng Việt Nam + 1 dòng tài sản khác có mô tả'); evidence: census manifest section tai_san_gop_von_von_dieu_le (fixed-matrix, missing_grid, semantic_key=co_cau_tai_san_gop_von_dieu_le) + app/templates/PLI_M02.docx#p174-p206.",
+    "question": "(a) Cot STT 1..6 in san khong tái lap duoc o fixed-matrix v1 (nhu M01) -> khai thieu + gap. (b) Cot mo ta (chi_tiet_ngoai_te_tai_san_khac, ten lay DUNG manifest required_columns) phu ca hai dong mau tu quy dinh ghi ro: dong 2 ngoai te (ghi rõ loại ngoại tệ...) va dong 6 tai san khac; header cot ghep tu chu cua chinh hai dong do, KHONG tu che noi dung moi. (c) Cross-field 'Tổng số == Vốn điều lệ' blocking theo D1.1=A -> gap cho Lead/B1 wire (valueKey von_dieu_le, code CAPITAL_MISMATCH). (d) % tu tinh theo gia tri chua co formula trong v1 - gap."
+   }
+  }
+ ]
 }

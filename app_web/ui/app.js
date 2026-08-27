@@ -914,8 +914,28 @@
         selectorHtml: selHtml
       }) +
       '</section>';
+    enhanceEditableGrids();
     applyReadonlyTotals();
     patchErrorsDom();
+  }
+
+  /* R2.2: add grid semantics after the shared renderer emits production HTML.
+   * The renderer remains unchanged and older callers still receive identical
+   * data attributes/content. */
+  function enhanceEditableGrids() {
+    document.querySelectorAll('#pages table.loop-table').forEach(function (table) {
+      table.setAttribute('role', 'grid');
+      var allRows = table.querySelectorAll('thead tr, tbody tr');
+      table.setAttribute('aria-rowcount', String(allRows.length));
+      allRows.forEach(function (tr, ri) {
+        tr.setAttribute('role', 'row');
+        tr.setAttribute('aria-rowindex', String(ri + 1));
+        Array.prototype.forEach.call(tr.children, function (cell, ci) {
+          cell.setAttribute('aria-colindex', String(ci + 1));
+          cell.setAttribute('role', cell.tagName.toLowerCase() === 'th' ? 'columnheader' : 'gridcell');
+        });
+      });
+    });
   }
 
   function updateTabsSelection(focusCurrent) {
@@ -1178,6 +1198,41 @@
     } catch (e) {
       return false; // DOM lạ/bảng rỗng: bỏ qua, không chặn thao tác dữ liệu
     }
+  }
+
+  /* Pure index movement shared by keyboard UI and contract tests. */
+  function gridNavigationIndex(row, col, key, rowCount, colCount) {
+    var r = row, c = col;
+    if (key === 'ArrowLeft') c--;
+    else if (key === 'ArrowRight') c++;
+    else if (key === 'ArrowUp') r--;
+    else if (key === 'ArrowDown') r++;
+    else return null;
+    if (r < 0 || c < 0 || r >= rowCount || c >= colCount) return null;
+    return { row: r, col: c };
+  }
+
+  function handleGridKeydown(e) {
+    var input = e.target;
+    if (!input || !input.matches || !input.matches(
+      '.loop-table tbody input[data-key]')) return false;
+    var tr = input.closest('tr');
+    var table = input.closest('table.loop-table');
+    if (!tr || !table) return false;
+    var rows = Array.prototype.slice.call(table.querySelectorAll('tbody tr'));
+    var row = rows.indexOf(tr);
+    var td = input.closest('td');
+    var currentCol = td ? (+td.getAttribute('aria-colindex') - 1) : -1;
+    var colCount = tr.children.length;
+    var target = gridNavigationIndex(row, currentCol, e.key, rows.length, colCount);
+    if (!target) return false;
+    var targetRow = rows[target.row];
+    var targetCell = targetRow.children[target.col];
+    var targetInput = targetCell && targetCell.querySelector('input[data-key]');
+    if (!targetInput) return false;
+    e.preventDefault();
+    targetInput.focus();
+    return true;
   }
 
   function uiAddRow(loop) {
@@ -1983,6 +2038,7 @@
     document.addEventListener('keydown', function (e) {
       // VSIC keyboard trước hết
       if (handleVsicKeydown(e)) return;
+      if (handleGridKeydown(e)) return;
       if (e.key === 'Escape' && pop && !pop.hidden) { hideVsic(); return; }
       // Ctrl+S lưu nhanh
       if ((e.ctrlKey || e.metaKey) && !e.shiftKey && !e.altKey &&
@@ -2108,7 +2164,9 @@
     GridFocus: {
       focusTagOfGrid: focusTagOfGrid,
       nextSelAfterDelete: nextSelAfterDelete,
-      focusGridRow: focusGridRow
+      focusGridRow: focusGridRow,
+      enhanceEditableGrids: enhanceEditableGrids,
+      gridNavigationIndex: gridNavigationIndex
     },
     FormFlow: {
       formIdOf: formIdOf,

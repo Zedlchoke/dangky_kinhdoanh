@@ -61,6 +61,7 @@ SUITES: list[dict] = [
     {"name": "test_p20_hardening",        "type": "node", "target": "app_web/test_p20_hardening.js"},
     {"name": "test_audit_wave_h_negative", "type": "node", "target": "app_web/test_audit_wave_h_negative.js"},
     {"name": "test_layout_l2_render",     "type": "node", "target": "app_web/test_layout_l2_render.js"},
+    {"name": "test_output_table",         "type": "node", "target": "app_web/test_output_table.js"},
     # --- Python ---
     {"name": "p1_b_verify_m72",           "type": "module", "target": "tools.census.p1_b_verify_m72",
      "requires": ["python-docx"]},

@@ -457,7 +457,34 @@ def audit_section3(form_maps: dict, loaded: dict) -> None:
 
             if not hdr_list:
                 add("3", fid, "loop %s: headerRows rỗng" % dt["id"], SEV_CHAN)
+            # Nested-grid 2 tầng: nối TOÀN BỘ hàng được headerRows trỏ và so
+            # với NỐI các hàng template từ hr_grid (một hàng template mỗi hàng
+            # blocks). Single-row giữ nguyên đối chiếu 1:1 như trước.
+            if len(hdr_list) > 1:
+                blk_join = WS_RE.sub("", "".join(
+                    "".join(rr.get("text", "")
+                            for cell in rows_json[ri]["cells"]
+                            for rr in cell["runs"])
+                    for ri in hdr_list if isinstance(ri, int)
+                    and 0 <= ri < len(rows_json)))
+                tpl_join = ""
+                for off in range(len(hdr_list)):
+                    tpl_join += WS_RE.sub("", "".join(table_row_cells(
+                        TEMPLATES_DIR / ("%s.docx" % fid),
+                        ti, hr_grid + off)))
+                if blk_join != tpl_join:
+                    add(
+                        "3",
+                        fid,
+                        "loop %s: header %d hàng KHÔNG khớp template "
+                        "(blocks=%r vs template=%r)"
+                        % (dt["id"], len(hdr_list), blk_join[:80],
+                           tpl_join[:80]),
+                        SEV_CHAN,
+                    )
             for ri in hdr_list:
+                if len(hdr_list) > 1:
+                    continue
                 if not isinstance(ri, int) or ri < 0 or ri >= len(rows_json):
                     add(
                         "3",

@@ -274,12 +274,18 @@ check('PLI_M72: N2-N5 van khong contract, con grid nganh san co khong anh huong'
     m09folds[87].indexOf(fold('STTTên thành viênSố, ngày cấp, nơi cấp')) === 0 &&
       m09folds[132].indexOf(fold('Giấy chứng nhận đăng ký doanh nghiệp')) === 0 &&
       m09folds[163].indexOf(fold('Phần vốn góp')) === 0);
-  check('PLI_M72: header ghep co dong sang lap (B109/B111) con nguyen',
-    m72folds[109].indexOf(fold('STTTên cổ đôngQuốc tịch')) === 0 &&
-      m72folds[111].indexOf(fold('STTTên cổ đôngQuốc tịch')) === 0);
-  check('PLII_M02: 2 paragraph glue thanh vien ho gia dinh con nguyen (B072/B129)',
-    m02folds[72].indexOf(fold('STTHọ tênNgày, tháng, năm sinh')) === 0 &&
-      m02folds[129].indexOf(fold('Hộ kinh doanh cam kết về tính hợp pháp')) > 0);
+  /* [Lead sync sau L1FIX regen] blocks M72 tăng 2 heading section (149→151)
+   * nên index tuyệt đối trượt — tra theo NỘI DUNG glue thay vì index. */
+  const m72glued = m72folds.filter(f =>
+    f.indexOf(fold('STTTên cổ đôngQuốc tịch')) === 0);
+  check('PLI_M72: header ghep co dong sang lap con nguyen (tra theo text)',
+    m72glued.length >= 2);
+  const m02glued1 = m02folds.filter(f =>
+    f.indexOf(fold('STTHọ tênNgày, tháng, năm sinh')) === 0);
+  const m02glued2 = m02folds.some(f =>
+    f.indexOf(fold('Hộ kinh doanh cam kết về tính hợp pháp')) > 0);
+  check('PLII_M02: 2 paragraph glue thanh vien ho gia dinh con nguyen (tra theo text)',
+    m02glued1.length >= 1 && m02glued2);
 }
 
 // manifest vẫn ghi nhận các section này là missing_grid (không tự suy)

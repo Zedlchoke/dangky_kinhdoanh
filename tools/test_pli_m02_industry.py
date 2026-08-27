@@ -2,7 +2,8 @@
 """Kiểm tra PHASE 3: bảng ngành nghề ds_nganh trong PLI_M02 (production).
 
 Phạm vi:
-1. blocks app/data/blocks/PLI_M02.json có đúng 1 loop "ds_nganh":
+1. blocks app/data/blocks/PLI_M02.json có đúng 1 loop "ds_nganh" (chọn theo
+   tên loop; form còn loop người/ủy quyền R3B1 thuộc lane khác):
    - hàng tiêu đề 5 cột khớp số ô của body/template;
    - cols zero-based {ma_nganh, ten_nganh, chi_tiet, la_nganh_chinh};
    - cột 0 (STT) KHÔNG tag (STT tự sinh qua biến engine {_stt}).
@@ -119,13 +120,18 @@ def find_industry_table(doc):
     return None, None
 
 
-@check("blocks PLI_M02.json: dung 1 loop ds_nganh, cols zero-based, cot 0 STT khong tag")
+@check("blocks PLI_M02.json: dung 1 loop ds_nganh (tra theo ten loop), cols zero-based, cot 0 STT khong tag")
 def t_blocks_loop_structure():
     data = json.loads(BLOCKS_PATH.read_text(encoding="utf-8"))
-    loops = [b for b in data["blocks"] if b.get("t") == "loop"]
-    assert len(loops) == 1, "kỳ vọng đúng 1 block loop, thấy %d" % len(loops)
+    # [Lead sync sau regen R3B1] form có thêm block loop người/ủy quyền
+    # (ds_nddpl_uy_quyen_chu_so_huu — lane R3B1 sở hữu). Test ngành này chỉ
+    # khóa loop ds_nganh của mình: chọn theo TÊN loop thay vì đếm tổng số
+    # block loop trong blocks.
+    loops = [b for b in data["blocks"]
+             if b.get("t") == "loop" and b.get("loop") == LOOP_NAME]
+    assert len(loops) == 1, \
+        "kỳ vọng đúng 1 block loop %s, thấy %d" % (LOOP_NAME, len(loops))
     blk = loops[0]
-    assert blk["loop"] == LOOP_NAME, "loop=%r != %r" % (blk["loop"], LOOP_NAME)
     assert blk["headerRows"] == [0], "headerRows=%r != [0]" % (blk["headerRows"],)
 
     # header 5 cột, text khớp thiết kế

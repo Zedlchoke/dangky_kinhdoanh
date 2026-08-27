@@ -700,11 +700,14 @@ section('7. fixture production đủ đặc tính khó nhất của từng kind'
       return tags.every(t => want.indexOf(t) >= 0);
     })());
 
-  // N1: header N1 thuộc đúng block nguồn PLI_M02 (block nối dính)
+  // N1: header N1 khớp headerRows của loop block thật sau regen R3B1
+  // (block glue 'STTTên người đại diện…' KHÔNG còn tồn tại — đã dựng w:tbl).
   const m02Blocks = loadBlocks('PLI_M02').blocks;
-  const joinedHeader = (m02Blocks.map(b => (b.runs || [])
-    .map(r => (r && r.text) || '').join('')))
-    .find(t => t.indexOf('STTTên người đại diện') >= 0);
+  const n1Loop = m02Blocks.find(b => b.t === 'loop' &&
+    b.loop === 'ds_nddpl_uy_quyen_chu_so_huu');
+  const joinedHeader = n1Loop ? n1Loop.headerRows.map(ri =>
+    (n1Loop.rows[ri].cells || []).map(c => (c.runs || [])
+      .map(r => (r && r.text) || '').join('')).join('')).join('') : '';
   const n1 = FD.getSectionContract('PLI_M02', 'ds_nddpl_uy_quyen_chu_so_huu').spec;
   check('N1: mọi tiêu đề cột khai đều nằm trong header nguồn đã join '
     + '(bỏ số chú thích chân trang/khoảng trắng/không phân biệt hoa thường)',

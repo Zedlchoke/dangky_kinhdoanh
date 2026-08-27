@@ -72,6 +72,16 @@ CONTRACT_DS_NGANH = [(0, None), (1, "ten_nganh"), (2, "ma_nganh"),
                      (3, "la_nganh_chinh")]
 # PLI_M12 mục 2 (bỏ ngành): cột 4 template là "Ghi chú", KHÔNG có ngành chính
 CONTRACT_XOA_BO = [(0, None), (1, "ten_nganh"), (2, "ma_nganh"), (3, "ghi_chu")]
+# Loop KHÔNG thuộc nhóm ngành nhưng đã đăng ký có chủ đích bởi lane domain
+# khác (R3B1 people/ownership 2026-08-27, specs core/PLI_M02.json +
+# change/PLI_M12.json + suite test_r3b1_people_specs): exact-set của từng form
+# vẫn bị khóa chặt ở assert_loop_contract.
+EXTRA_LOOPS = {
+    "PLI_M02": {"ds_nddpl_uy_quyen_chu_so_huu"},
+    "PLI_M12": {"ds_ndd_uy_quyen_sau_thay_doi"},
+    "PLI_M15": set(),   # M15 không nằm trong EXPECTED_CONTRACTS; chỉ để tra cứu rõ ràng
+}
+
 EXPECTED_CONTRACTS = {
     "PLI_M12": [
         ("nganh_bo_sung", CONTRACT_DS_NGANH,
@@ -225,9 +235,15 @@ def assert_loop_contract(fid: str, form_maps: dict) -> None:
     data = json.loads((BLOCKS_DIR / ("%s.json" % fid)).read_text(encoding="utf-8"))
     loops = {b["loop"]: b for b in data["blocks"] if b.get("t") == "loop"}
     contract = EXPECTED_CONTRACTS[fid]
-    assert len(loops) == len(contract), \
-        "%s: kỳ vọng %d block loop, thấy %d (%s)" % (
-            fid, len(contract), len(loops), sorted(loops))
+    # [Lead sync sau regen R3B1] khóa ĐÚNG TẬP tên loop thay vì chỉ đếm:
+    # lane domain khác (R3B1 people/ownership) thêm loop người đã đăng ký
+    # (EXTRA_LOOPS dưới) — exact-set giữ nguyên độ cứng, không nới thành
+    # "ít nhất N vòng".
+    want_set = set(EXTRA_LOOPS.get(fid, set())) | {
+        name for name, _cols, _hdr in contract}
+    assert set(loops) == want_set, \
+        "%s: tập block loop %r != kỳ vọng %r" % (
+            fid, sorted(loops), sorted(want_set))
     fm_dts = {t["loop"]: t for t in (form_maps[fid].get("dynamic_tables") or [])}
     for name, cols_want, headers_want in contract:
         assert name in loops, "%s: thiếu block loop %r" % (fid, name)

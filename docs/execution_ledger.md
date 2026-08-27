@@ -146,6 +146,20 @@ column-level projection formula; case-sensitivity sum.
 > V1/V2 là nợ census đã ghi "Giới hạn ghi nhận tại HEAD" trong dependency graph,
 > giờ bị auditor chặn tại gate thật. Wave E R3B mở để sửa đúng phần DECIDED.
 
+## Wave P0 — Recovery checkpoint R3B1 @ main 7300ab4 (2026-08-27, Lead mới)
+
+| Task | Owner | Evidence | Trạng thái |
+|---|---|---|---|
+| Phân loại 25 file modified + .DS_Store | Lead | Toàn bộ thuộc batch R3B1 regen + L1FIX round 2 (role flip body→section-heading 6 block) + sync test của lead trước; `.DS_Store` là rác macOS (đã ignore); `git branch --no-merged main` RỖNG — không còn sub-agent commit chưa merge | ✅ |
+| Trim-anchor PLI_M02 theo đúng stage | Lead | Trim chạy lúc REBUILD trên NGUỒN (`bfm.find_source`, build_form_maps.py:1416-1443): hits=[144]/[230]/[50] khớp đúng 1 paragraph/form. Template generated + blocks không còn glue (đã thành w:tbl). Sync test đọc stage NGUỒN `tools/test_r3b1_people_specs.py::t_trim_matches_glue` — giữ nguyên độ cứng (exact 1 hit + keep_from) | ✅ 11/11 PASS |
+| Sync expectation stale post-regen | Lead | `test_acceptance`/`test_pli_m02_industry`: chọn loop ds_nganh THEO TÊN thay vì đếm tổng (46/0); `test_industry_change`: exact-set + EXTRA_LOOPS {M02:1, M12:1} (6/0); `test_nested_grid`: header tra từ loop block 14 cột sau rebuild, giữ negative digit-run (PASS); H7 allowlist +10 entry có chủ đích | ✅ |
+| Manifest recount M02/M12/M15 | Lead | Theo tiền lệ EVOLVED_FORMS (604a830): 3 entry lý do R3B1 (loop 1→2 / 3→4 / 0→1); `build_manifest --deep --write` GATE PASS 87/87, chỉ lệch key loop, p/chk/table nguyên vẹn | ✅ |
+| Generator lần hai zero diff | Lead | Full pipeline (build_form_maps → tag_m72_sections → docx_to_blocks) ×2: JSON/blocks strict ZERO-DIFF RUN2 vs RUN1. Templates 87: 84 file member-level IDENTICAL toàn bộ (chỉ zip mtime/recompress — packaging noise của full regen) → RESTORE về HEAD để batch đúng scope evidence; 3 file content-change đúng bằng PLI_M02/M12/M15 (R3B1 chủ đích). Caveat: docx zip mtime làm byte-idempotency tuyệt đối bất khả thi — backlog generator hygiene | ✅ (classification minh bạch) |
+| Dirty-worktree guard M72 | Lead | `test_m72_activation` check #8 đúng thiết kế: đỏ khi tree bẩn, tự xanh sau commit — KHÔNG sửa gate | ✅ (post-commit) |
+
+**Gate P0:** release runner đầy đủ sau commit — 38 PASS / 0 FAIL / 0 NOT RUN
+(xem Báo cáo checkpoint P0). LAYOUT_DONE vẫn CHƯA (P1 re-audit là phase kế tiếp).
+
 ## R3–R7 (khung — chi tiết hóa khi mở wave)
 
 | Wave | Điều kiện mở | Ghi chú |

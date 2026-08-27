@@ -1,125 +1,149 @@
 # MASTER PLAN — hoàn thiện `dangky_kinhdoanh`
 
-> **Checkpoint lập kế hoạch:** 2026-08-27, `main@0fd2785`.
+> **Checkpoint:** 2026-08-27, `main@7300ab4`.
 >
-> Đây là kế hoạch **duy nhất đang có hiệu lực** cho agent mới. Các checkpoint và
-> prompt cũ đã được thay thế. Agent phải xác minh lại Git/test khi bắt đầu vì HEAD
-> có thể đã thay đổi sau checkpoint này.
+> Đây là kế hoạch điều phối duy nhất cho thread mới. Không chạy lại prompt tại
+> `0fd2785`, không làm lại P0/P1/R2 nếu không có regression thật. Trước khi làm,
+> agent phải xác minh lại HEAD và trạng thái test vì checkpoint hiện tại đang có
+> một batch R3B1 chưa commit.
 
-## 1. Mục tiêu và định nghĩa hoàn tất
+## 1. Đích sản phẩm
 
-Hoàn thiện ứng dụng desktop khai hồ sơ đăng ký kinh doanh trực tiếp trên biểu
-mẫu, gồm UI web/pywebview, draft JSON, validation, các loại bảng, đồng bộ dữ
-liệu, xuất DOCX/ZIP, độ trung thành hình thức, accessibility và bản phát hành
-Windows.
+Ứng dụng desktop cho phép chọn thủ tục đăng ký kinh doanh, nhập dữ liệu trực tiếp
+trên biểu mẫu, dùng chung dữ liệu giữa các mẫu, khai các loại bảng, kiểm tra lỗi,
+lưu/nhập draft và xuất DOCX/ZIP đúng cấu trúc pháp lý.
 
-Chỉ được báo `APP_DONE` khi đồng thời:
+Sản phẩm được chia thành hai mốc:
 
-1. Layout 87/87 biểu mẫu đạt gate cấu trúc **và** visual; không lấy test DOM thay
-   cho ảnh render thật.
-2. `editable-grid`, `output-table`, `fixed-matrix`, `nested-grid` đã nối vào
-   runtime UI, draft, validation và DOCX; fixture production của từng loại PASS.
-3. Generator source/spec → template → `form_maps` → blocks chạy hai lần không
-   tạo diff và không mất marker/format/rowspan/colspan/totals.
-4. Mọi section trong manifest có implementation hoặc quyết định cuối của owner;
-   không còn `BLOCKED_LEGAL_REVIEW` bị che giấu hoặc tự suy đoán.
-5. Tất cả use case công bố chọn đúng forms, draft round-trip không mất dữ liệu,
-   validation điều hướng đúng và export không rò placeholder/tag.
-6. Keyboard-only, accessibility, viewport release và resilience đạt gate.
-7. UI và DOCX/PDF có visual evidence; nested-grid được kiểm trực quan.
-8. Windows `.exe` được build tái lập và smoke trên máy sạch không có Python.
-9. Release runner không có FAIL hay critical NOT RUN; repo sạch, tài liệu build,
-   version và checklist đầy đủ.
-10. Auditor độc lập read-only xác nhận PASS. Push/tag/release chỉ khi owner yêu
-    cầu rõ ràng.
+### `CORE_APP_DONE`
 
-Không dùng phần trăm hoàn thành hoặc tổng số test lớn để thay thế các gate trên.
+Chỉ được công bố khi:
 
-## 2. Phạm vi và nguồn sự thật
+1. Mọi section trong 87 biểu mẫu có implementation hoặc blocker pháp lý được
+   owner xác nhận; không tự đoán để xóa blocker.
+2. Bốn loại bảng `editable-grid`, `fixed-matrix`, `nested-grid`, `output-table`
+   hoạt động xuyên UI, draft, validation và DOCX.
+3. Generator source/spec → template → `form_maps` → blocks chạy hai lần không tạo
+   diff và không mất marker/format/rowspan/colspan/totals.
+4. Mọi use case công bố qua E2E: chọn form, nhập, chuyển tab, lưu/mở/import,
+   validation, DOCX/ZIP export và lỗi được điều hướng đúng.
+5. Layout 87/87 qua detector, screenshot và auditor độc lập; không lấy DOM test
+   thay cho visual evidence.
+6. Keyboard-only, accessibility, viewport, resilience và security đạt gate.
+7. Windows `.exe` build tái lập và smoke trên máy sạch không có Python.
+8. Release runner không còn FAIL hoặc critical NOT RUN; repo sạch và final
+   auditor read-only xác nhận PASS.
 
-### Trong scope
+### `FULL_PRODUCT_DONE`
 
-- UI chính: `app_web/ui/index.html`, `app_web/ui/app.js`,
-  `app_web/ui/render.js`, `app_web/ui/form-domain.js`, `app_web/ui/style.css`.
-- Desktop bridge: `app_web/main.py` + pywebview/WebView2.
-- Schema/runtime data: `app/data/blocks/*.json`, `app/data/use_cases.json`,
-  `app/data/form_maps.json` và bản JS tương ứng.
-- Pipeline DOCX: source/spec, templates, converter/generator, export DOCX/ZIP.
-- 87 biểu mẫu thuộc table/layout manifest và mọi use case đang công bố.
-- Test, visual evidence, Windows packaging và release audit.
+`CORE_APP_DONE` cộng thêm luồng Excel trong `PLAN_excel.md`, nhưng chỉ sau Review
+Gate Excel và quyết định mở scope rõ ràng của owner. Khi chưa mở gate, Excel là
+DRAFT và không chặn release core app.
 
-### Ngoài scope nếu chưa có quyết định mới
+## 2. Nguồn sự thật và phạm vi
 
-- `PLAN_excel.md` không tồn tại tại checkpoint. Excel không thuộc release này;
-  muốn thêm phải có contract/roadmap riêng.
-- `app_tk` chỉ compatibility với engine dùng chung. Owner vẫn phải chọn
-  `legacy-supported` hoặc `deprecated`; không tự mở rộng Tk UI.
-- Không thay đổi nội dung pháp lý chỉ để làm test xanh.
+Đọc theo thứ tự:
 
-### Tài liệu phải đọc trước khi sửa code
-
-1. `PLAN.md` — tài liệu này.
-2. `docs/execution_ledger.md` — evidence/commit đã chạy.
-3. `docs/decision_registry.md` — quyết định owner và phần còn thiếu.
+1. `PLAN.md` — trạng thái và thứ tự thực thi hiện hành.
+2. `docs/execution_ledger.md` — commit/evidence lịch sử.
+3. `docs/decision_registry.md` — lựa chọn owner và blocker còn thiếu.
 4. `docs/product_scope_registry.md`.
 5. `docs/p2_component_contracts.md`, `docs/p2_dependency_graph.md`,
    `docs/p2_fixture_candidates.md`.
-6. `docs/legal_review_backlog.md` khi đụng nội dung pháp lý.
+6. `PLAN_excel.md` — chỉ đọc khi tới Review Gate Excel.
+7. Source, tests và manifests tại HEAD — trọng tài cuối nếu docs cũ bị stale.
 
-Nếu tài liệu cũ mâu thuẫn trạng thái ở mục 3 dưới đây, kiểm tra source/test/commit
-và cập nhật tài liệu; không lùi production về checkpoint cũ.
+Trong scope core:
 
-## 3. Hiện trạng đã xác minh tại `0fd2785`
+- `app_web/ui/*`, `app_web/main.py`, pywebview/WebView2.
+- Draft, validation, shared keys, VSIC và bốn table kinds.
+- `app/data/blocks`, use cases, `form_maps`, templates và DOCX/ZIP export.
+- 87 biểu mẫu, visual QA, accessibility, Windows packaging và release audit.
 
-### Git và release baseline
+Ngoài scope nếu chưa có quyết định mới:
 
-- Branch: `main`; local hơn `origin/main` 4 commit tại thời điểm kiểm tra; chưa
-  push.
-- Release runner: **34 PASS / 0 FAIL / 0 NOT RUN**.
-- Các worktree/branch cũ còn tồn tại; chúng chứa commit đã merge hoặc checkpoint
-  cũ. Không tiếp tục code mù trên chúng. Lead phải audit rồi reuse hoặc dọn sau
-  khi chắc chắn không có commit chưa merge.
-- Không chạy generator với `--help` nếu script không khai báo CLI help; trước mọi
-  generator run phải kiểm tra parser/source và có worktree sạch.
+- Không mở rộng `app_tk`; owner phải chọn `legacy-supported` hoặc `deprecated`.
+- Không tự triển khai Excel trước Review Gate.
+- Không tự sửa nội dung pháp lý thiếu nguồn.
+- Không push/tag/release nếu owner chưa yêu cầu.
 
-### Những phần đã xong — không làm lại từ đầu
+## 3. Đã hoàn thành — không làm lại
 
 | Hạng mục | Trạng thái/evidence |
 |---|---|
-| P0 table manifest | 87/87 form, 111 section, signature đã classify |
-| L0 layout manifest | 87/87 form |
-| P1 industry | M72 đủ 5 occurrence; PLII_M02 có 4 semantic loop riêng |
-| P1.2 M72 | selector `dn.loai_hinh`; UI/DOCX chỉ đúng một variant; verifier và conditional export PASS |
-| R0 baseline | verifier PLII_M02 cũ đã triage; release runner/dependency/scope registries có sẵn |
-| R1.1 extractor | blocks-v3 đã merge/regenerate 87/87; 0 role thiếu, 0 marker leak, idempotency PASS |
-| R1.2 renderer | L2 structural/DOM PASS; merge `1aaa6c5`; release machinery `5e1e08f` |
-| Editable grid | module/runtime nền đã merge `b169c4b` |
-| Output table | module + production fixture/test đã merge `0e25d93` |
-| Fixed matrix | module + production fixture/test đã merge `5e3381b` |
-| Nested grid | module + production fixture/test đã merge `bc8cbb4` |
-| Draft migration | additive, idempotent, giữ unknown fields; merge `48fd3e2` |
+| P0 manifests | 87/87 form, 111 section, không còn signature unclassified |
+| P1/P1.2 | industry grids và M72 selector/conditional export đã PASS; M72 chỉ xuất một variant |
+| R0 | release runner, dependency contract, scope/decision registry đã có |
+| Layout L1/L2 nền | blocks-v3, semantic roles/format, renderer/CSS structural đã merge |
+| R2 runtime | bốn kind đã có dispatcher/runtime, draft, validation và fixtures |
+| R2 generator/export | generator/export hỗ trợ kinds mới, recompute fail-loud và deep idempotency |
+| R2 closure | output specs M70/M71 và formula `product()` parity JS/Python đã merge |
+| R2 release checkpoint | từng đạt 38 PASS / 0 FAIL / 0 NOT RUN |
+| Visual batch lần 1 | 123 PNG phủ 87 form; auditor độc lập đã chạy |
+| Excel planning | `PLAN_excel.md` đã tồn tại dưới dạng DRAFT, review sau P4 |
 
-### Việc còn thật sự mở
+Các commit chính đã có trong lịch sử; agent mới không cần kể lại hoặc tái tạo
+chúng. Chỉ điều tra khi test hiện hành chứng minh regression.
 
-1. **R1 visual:** structural PASS nhưng screenshot/visual browser vẫn `NOT RUN`.
-   Chưa được gọi P1-LAYOUT hoàn tất.
-2. **R2 runtime wiring:** `output-table.js`, `fixed-matrix.js`,
-   `nested-grid.js` hiện là module/test độc lập; chưa có reference production rõ
-   trong `index.html`, `app.js`, `render.js`, `form-domain.js` hoặc bridge.
-3. **R2 generator/export:** chưa chứng minh đủ anchor, boundary, occurrence,
-   rowspan/colspan, totals, conditional presence và deep idempotency cho ba kind
-   mới.
-4. **P2 docs:** header đã khóa v1 nhưng một số đoạn thân còn ghi DRAFT/NOT
-   IMPLEMENTED; phải rebase theo source hiện tại, không sửa contract ngầm.
-5. **R3 rollout nghiệp vụ:** chỉ mở phần đã có quyết định; giữ block phần thiếu
-   nguồn/canonical list.
-6. **R4–R7:** E2E, accessibility/resilience, visual toàn diện, Windows package,
-   clean-machine smoke và final audit chưa hoàn tất.
+## 4. Trạng thái thật tại checkpoint mới
 
-## 4. Quyết định owner đã có và blocker còn lại
+### Git
 
-Owner đã chọn bundle sau; agent phải triển khai đúng lựa chọn, không hỏi lại nếu
-evidence hiện tại không mâu thuẫn:
+- HEAD: `7300ab4`.
+- Local hơn `origin/main` 50 commit tại thời điểm checkpoint; chưa push.
+- Có nhiều worktree cũ; đa số lane đã merge. Không code tiếp trên branch cũ nếu
+  chưa audit commit chưa merge.
+- Main đang bẩn: 24 file tracked thuộc batch R3B1/regenerate và một `.DS_Store`.
+  Đây chưa phải checkpoint có thể bàn giao sạch.
+
+### Layout audit
+
+Audit lần 1 đã PASS các gate allowlist, detector, release runner, DOM, screenshot
+coverage, viewport và marker leak, nhưng **FAIL blocking** ở nội dung dòng chuẩn:
+
+- Một số bảng people/ownership bị dẹt thành text glue.
+- M72 có heading đánh số bị classifier gán `body`.
+- Detector L1 trước đó chưa bắt đủ glue/digit-run/numbered-heading.
+
+Hai vòng L1FIX đã merge tới `7300ab4`; cần regenerate/re-shoot và auditor tái
+kiểm. Vì chưa có re-audit cuối, `LAYOUT_DONE = CHƯA`.
+
+### R3B1 đang làm dở
+
+Đã merge contracts/specs cho people/ownership và đăng ký N6/N7:
+
+- `PLI_M02`: người đại diện/ủy quyền của chủ sở hữu.
+- `PLI_M12`: người đại diện/ủy quyền sau thay đổi.
+- `PLI_M15`: người đại diện/ủy quyền mới.
+- Metadata hai nhóm thành viên hộ gia đình của `PLII_M02` đã có nhưng spec vẫn
+  blocked theo evidence/legal contract.
+
+Batch regenerate hiện tại đã làm thay đổi templates/blocks/form maps và tests,
+nhưng chưa commit.
+
+Targeted checks hiện tại:
+
+- `test_r3b1_people_contracts.js`: 59 PASS / 0 FAIL.
+- `test_runtime_tables.js`: 134 PASS / 0 FAIL.
+- `test_r3b1_people_specs.py`: 10 PASS / **1 FAIL** tại trim-anchor `PLI_M02`.
+
+Release runner hiện tại: **32 PASS / 6 FAIL / 0 NOT RUN**.
+
+Sáu FAIL cần phân loại/sửa trước khi mở scope mới:
+
+1. `test_acceptance`: kỳ vọng PLI_M02 chỉ có một loop đã stale.
+2. `test_m72_activation`: dirty-worktree guard đang thấy batch chưa commit.
+3. `test_audit_wave_h_negative`: exact diff allowlist chưa sync batch R3B1.
+4. `test_nested_grid`: test còn tìm paragraph header cũ sau rebuild thành bảng.
+5. `test_industry_change`: kỳ vọng PLI_M12 ba loop, hiện có bốn.
+6. `build_manifest_deep`: summary counts của PLI_M02/M12/M15 chưa cập nhật.
+
+Không mặc định coi tất cả là test stale: trim-anchor PLI_M02 phải kiểm tra production
+shape trước, và mọi thay đổi expectation phải dựa vào contract/evidence.
+
+## 5. Quyết định owner và blocker pháp lý
+
+Các lựa chọn đã ghi nhận:
 
 - D1: D1.1=A; D1.2=B cho M01; D1.3=B; D1.4=A; D1.5=B; D1.6=A.
 - D2: D2.1–D2.6=A; D2.7 min=1/max=null; D2.8=A; D2.9=A.
@@ -127,295 +151,244 @@ evidence hiện tại không mâu thuẫn:
 - D4: D4.1=A; D4.2=A.
 - D5: D5.1=A; D5.3=A; D5.4=A.
 - D6: D6.2=A; D6.3=B; D6.5=A; D6.6 tên tài liệu required, trường khác optional.
-- D7: D7.1=A; D7.2=A nếu có nguồn đối chiếu; D7.3=A; D7.4=A.
+- D7: D7.1=A; D7.2=A nếu có nguồn; D7.3=A; D7.4=A.
 
-Các packet chưa được đóng hoàn toàn:
+Blocker còn mở:
 
-- **D1/D3:** cần nguồn gốc M03/M04/M05 và policy D1.2 cho các form ngoài M01.
-- **D5.2:** chưa có canonical list chỉ tiêu thuế PLII_M02; section giữ
-  `BLOCKED_LEGAL_REVIEW`.
-- **D6.1:** phải lập bảng evidence theo từng form trước khi chọn grid/scalar.
-- **D6.4/M78:** đã chốt integer >=0 và mô tả “Sản phẩm khác” required khi SL>0,
-  nhưng chưa có max/placeholder chính thức; không tự đặt giới hạn.
-- **Product:** owner chưa chốt `app_tk` legacy hay deprecated.
+- D1/D3: thiếu nguồn gốc M03/M04/M05 và policy D1.2 ngoài M01.
+- D5.2: thiếu canonical list chỉ tiêu thuế PLII_M02.
+- D6.1: cần evidence per-form trước khi chọn grid/scalar.
+- D6.4/M78: chưa có max/placeholder chính thức.
+- N1/N6/N7: hai nhóm cột cuối về giá trị/thời điểm đại diện chưa đủ evidence để
+  khóa canonical tag; phải khai thiếu, không mislabel.
+- PLI_M15: cross-field rule giấy tờ theo chú thích nguồn chưa có contract v1.
+- Product: `app_tk` chưa được owner phân loại cuối.
 
-D2, D4, D7 và phần kỹ thuật D6 đã đủ quyết định có thể triển khai. Một blocker
-không được làm dừng toàn bộ app: isolate đúng section/form và tiếp tục lane độc
-lập có evidence.
+Blocker cục bộ không được làm dừng lane độc lập; giữ đúng section ở trạng thái
+blocked và tiếp tục phần đã có quyết định.
 
-## 5. Mô hình điều phối bắt buộc cho Lead Agent
+## 6. Cách điều phối để tiết kiệm token
 
-Lead phải dùng sub-agent/worktree để giảm thời gian, nhưng chỉ song song hóa việc
-không chồng file hoặc dependency. Tối đa số lane phù hợp với concurrency thực tế;
-không spawn agent chỉ để đọc cùng một việc.
+### Luật bắt buộc
 
-### Quy tắc chung
+- Lead giữ main và context tổng; sub-agent chỉ nhận một task hữu hạn cùng exact
+  file ownership, forbidden files, gate và output format.
+- Không spawn agent trong khi main đang bẩn chưa phân loại.
+- Tối đa ba coding lane song song, chỉ khi không chồng file/dependency.
+- Không giao nhiều agent cùng đọc/audit một tập file.
+- Targeted tests trong lúc sửa; release runner đầy đủ chỉ tại checkpoint merge,
+  trước regenerate và sau regenerate. Không chạy full visual 87 form sau mỗi sửa
+  nhỏ; pilot form ảnh hưởng trước.
+- Lead là người duy nhất merge, regenerate global artifacts, cập nhật manifest và
+  ledger.
+- Không dùng index block tuyệt đối nếu có semantic key/section ID/content anchor
+  ổn định.
+- Không chỉnh generated artifact bằng tay. Generator lần hai phải zero diff.
+- Mỗi wave kết thúc bằng commit sạch. Không kéo work dở qua wave kế tiếp.
+- Báo ngắn theo delta từ checkpoint; không kể lại toàn bộ lịch sử.
+- PASS/FAIL/NOT RUN trung thực. Visual, WebView2 và `.exe` chỉ PASS khi chạy thật.
 
-- Lead giữ `main` làm integration worktree và là người duy nhất merge, regenerate
-  global artifacts, cập nhật ledger và chạy release gate sau merge.
-- Mỗi lane: branch + worktree riêng ngoài repo, allowlist file rõ, commit nhỏ,
-  báo hash + test + PASS/FAIL/NOT RUN.
-- Không cho hai lane đồng thời sở hữu `app.js`, `render.js`, `form-domain.js`,
-  `style.css`, `docx_to_blocks.py`, `build_form_maps.py` hoặc `docx_render.py`.
-- Không chỉnh tay generated artifacts. Sub-agent sửa source/spec/test; Lead
-  regenerate một lần sau khi merge và chạy lần hai để chứng minh zero diff.
-- Không reset/revert/clean/pull mù; không ghi đè thay đổi chưa rõ chủ sở hữu; không
-  push/tag/release nếu owner chưa yêu cầu.
-- Mỗi agent phải tự đọc file instruction/contract liên quan, inspect source trước
-  khi sửa và giữ `git diff --check` xanh.
-- Agent audit/visual là read-only với production code; phát hiện lỗi thì trả
-  evidence cho lane sở hữu, không tự vá ngoài allowlist.
+## 7. Kế hoạch thực thi từ bây giờ
 
-## 6. Lộ trình thực thi từ checkpoint hiện tại
+### P0 — Recovery checkpoint R3B1 hiện tại
 
-### Wave A — Rebaseline và khóa integration surface
+Lead mới tự làm; **không spawn agent** cho tới khi phân loại xong worktree.
 
-Lead tự thực hiện, không giao agent:
+1. Audit 24 modified files và `.DS_Store`; xác nhận toàn bộ thuộc batch R3B1,
+   L1FIX regenerate hoặc thay đổi ngoài scope.
+2. Không reset/revert. Lưu backup/quarantine nếu cần trước bất kỳ thao tác có thể
+   ghi đè generated artifacts.
+3. Điều tra trim-anchor PLI_M02 trên source template và template generated:
+   - nếu production anchor/trim sai, sửa spec/generator;
+   - nếu test đọc sai stage của pipeline, sửa test để kiểm đúng stage;
+   - không nới thành “tìm thấy bất kỳ đâu”.
+4. Đồng bộ năm test/manifest expectation còn stale theo semantic contract mới.
+5. Chạy targeted tests R3B1, runtime, M72, industry, nested-grid và manifest.
+6. Chạy generator lần hai; yêu cầu zero diff ngoài evidence file chủ đích.
+7. Chạy release runner đầy đủ tới 0 FAIL.
+8. Review exact allowlist, commit batch R3B1/regenerate/test sync thành các commit
+   nhỏ hợp lý; cập nhật execution ledger.
+9. Đảm bảo `git status` sạch và không còn sub-agent có commit chưa merge.
 
-1. Xác minh `git status`, `HEAD`, divergence, `git worktree list`, commit chưa
-   merge và thay đổi chưa rõ chủ sở hữu. Dừng nếu worktree bẩn không phân loại.
-2. Chạy `python -m tools.release_runner --json-out <tmp-file>` hoặc CLI đúng theo
-   source hiện tại. Baseline phải không thấp hơn 34 suite trừ khi runner được thay
-   đổi có giải thích.
-3. Inspect production imports/references của ba module mới, bridge export và
-   generator. Ghi call graph ngắn vào execution ledger.
-4. Rebase nội dung ba tài liệu P2 về trạng thái thật; không đổi contract v1 nếu
-   chưa có evidence buộc đổi.
-5. Tạo branch/worktree mới cho các lane dưới; không dùng branch đã merge nếu chưa
-   audit sạch.
+**Gate P0:** 0 FAIL, generator idempotent, worktree sạch, commit hash + evidence.
+Nếu chưa đạt, không mở P1.
 
-**Gate A:** worktree integration sạch; baseline tái lập; ownership map và thứ tự
-merge được ghi rõ.
+### P1 — Re-audit Layout và đóng R3B1
 
-### Wave B — ba lane chạy song song
+Sau P0, tạo một `visual-auditor` read-only, khác agent implement:
 
-#### Lane B1 — runtime wiring
+1. Pilot lại các form lỗi: PLI_M02, PLII_M02, PLI_M09, PLI_M12, PLI_M15, PLI_M72
+   và các form bị role override round 2.
+2. Kiểm bảng thật thay text glue, heading đúng role, không digit-run, không marker
+   leak, M72 chỉ một variant.
+3. Chụp 1280×800, 768, 375 và zoom 100/150/200 cho pilot.
+4. Pilot PASS mới chạy batch evidence 87 form; reuse ảnh cũ chỉ khi hash input và
+   renderer không đổi, nếu không phải chụp lại form bị ảnh hưởng.
+5. Auditor ghi PASS/FAIL/NOT RUN từng gate. FAIL quay về lane sở hữu, không tự sửa.
 
-Mục tiêu: nối `output-table`, `fixed-matrix`, `nested-grid` vào UI/controller và
-draft/validation mà không phá editable-grid/M72.
+**Gate P1:** `LAYOUT_DONE` chỉ khi detector + visual batch + auditor PASS.
 
-Ownership dự kiến:
+### P2 — R3 domain rollout còn lại
 
-- `app_web/ui/index.html`
-- `app_web/ui/app.js`
-- `app_web/ui/render.js`
-- `app_web/ui/form-domain.js` chỉ khi integration bắt buộc
-- test integration runtime mới
+Chỉ mở khi P0 sạch; P1 visual có thể chạy song song nếu read-only. Lead lập bảng
+`form → section → source → decision → kind → keys → validation → export` trước
+mỗi lane.
 
-Yêu cầu:
+#### P2A — People/ownership phần còn lại
 
-- Dùng module hiện có, không viết lại component.
-- Có dispatcher theo `section.kind`; fallback cũ chỉ cho schema legacy đã
-  classify, không nuốt kind mới.
-- Stable IDs/keys, keyboard navigation, focus, add/remove, computed/output-only,
-  validation và draft round-trip đúng contract.
-- Production fixtures tối thiểu: O1/O2, F2/F3 và N1 theo tài liệu candidates.
-- Test isolation M72 và editable-grid vẫn PASS.
+- Hoàn tất phần D2/D7 đủ evidence: PLII_M02/M07, PLI_M06–M10/M13/M15/M72.
+- Không tự mở các section PLI_M09 còn source contamination hoặc M72 N2–N5 thiếu
+  source/canonical tags.
+- Thêm conditional/cross-field validation chỉ khi contract đã khóa.
 
-#### Lane B2 — generator + DOCX/export
+#### P2B — Branches/admin/output
 
-Mục tiêu: hỗ trợ ba kind mới xuyên pipeline và chứng minh output cấu trúc.
+- Triển khai D4 và phần D6 đã quyết định.
+- Lập evidence D6.1 theo từng form trước khi chọn grid/scalar.
+- M78 dùng integer >=0 và required mô tả khi số lượng >0; không tự đặt max hoặc
+  placeholder.
 
-Ownership dự kiến:
+#### P2C — Capital/assets
 
-- `tools/build_form_maps.py`
-- `tools/docx_to_blocks.py`
-- `tools/docx_render.py`/engine export liên quan
-- schema/spec contract và test generator/DOCX mới
-- không commit bulk generated artifacts
+- Triển khai phần D1/D3 có nguồn.
+- M03/M04/M05 và policy ngoài M01 thiếu nguồn giữ block đúng section.
+- Dùng formula `product()` đã có; không tự chế column projection/case policy nếu
+  contract chưa khóa.
 
-Yêu cầu:
+#### P2D — Tax
 
-- Anchor/boundary/occurrence tường minh; không match heading mơ hồ.
-- Giữ multi-row header, rowspan/colspan, physical column count, totals,
-  output-only/conditional presence và nested discriminator/group.
-- Negative mutation phải bắt thiếu/thừa/đảo marker, contamination và sai
-  boundary.
-- Có deep idempotency test; generator lần hai không thay semantic/hash đã định.
-- M72 tiếp tục export đúng một variant.
+- Triển khai D5.1/D5.3/D5.4.
+- PLII_M02 D5.2 tiếp tục `BLOCKED_LEGAL_REVIEW` tới khi owner cung cấp canonical
+  list.
 
-#### Lane B3 — QA/contract/audit tooling
+Các lane domain có thể dùng sub-agent song song khi file spec/forms không chồng;
+Lead merge tuần tự, regenerate theo batch, targeted test rồi release runner.
 
-Mục tiêu: độc lập tạo gate bắt integration sai, không sửa production runtime hay
-generator.
+**Gate P2:** mọi section có implementation hoặc blocker owner minh bạch; manifests
+khớp recount; không mất dữ liệu/contamination/rule tự đoán.
 
-Ownership dự kiến:
+### P3 — Hồ sơ end-to-end, accessibility, security và resilience
 
-- test/fixture QA mới
-- `tools/release_runner.py`
-- allowlist audit liên quan
-- tài liệu P2/execution ledger đề xuất; Lead quyết định merge docs cuối
+1. Test mọi use case: required/optional/oneOf forms và selector.
+2. Nhập shared keys, bốn kinds, VSIC; chuyển tab không mất dữ liệu.
+3. Save/reload/import legacy draft; giữ unknown fields, row IDs và thứ tự.
+4. Validation điều hướng đúng form/field; lỗi blocking chặn export.
+5. DOCX/ZIP không còn placeholder/tag và chỉ chứa section active.
+6. Keyboard-only, focus order/restore, ARIA, contrast và zoom 200%.
+7. Malformed/large draft, Unicode, đường dẫn dài, permission error, retry và
+   offline behavior.
+8. Escaping/injection/filename và log dữ liệu nhạy cảm.
+9. Pywebview/WebView2 smoke thật; không có môi trường thì ghi NOT RUN.
 
-Yêu cầu:
+**Gate P3:** core flow automated PASS và manual platform evidence đầy đủ.
 
-- Test production fixture theo cả UI và DOCX shape.
-- Test draft migration từ schema cũ, unknown-field preservation, round-trip và
-  idempotency.
-- Gate không cho module “PASS độc lập” bị hiểu nhầm là runtime hoàn tất.
-- Ghi đúng PASS/FAIL/NOT RUN; không sửa production để chiều test.
+### P4 — Review Gate Excel
 
-### Wave C — Lead integration và regenerate
+Sau P2 + P3, Lead chỉ audit feasibility theo `PLAN_excel.md`, không implement ngay:
 
-Thứ tự mặc định: **B3 test contract → B2 generator → B1 runtime**, nhưng Lead
-được đổi thứ tự nếu dependency thực tế yêu cầu và phải ghi lý do. Không merge
-một lane có contract khác với source đã khóa.
+1. Đối chiếu questionnaire mapping với canonical keys/form maps ổn định.
+2. Liệt kê thủ tục ưu tiên và câu hỏi đời thường cần owner duyệt.
+3. Kiểm tra dependency/openpyxl, protection, dropdown và round-trip contract.
+4. Báo effort/risk và xin owner lệnh rõ: `Bắt đầu Excel` hoặc `Để sau`.
 
-1. Review từng commit theo allowlist; cherry-pick/merge tuần tự.
-2. Chạy test lane ngay sau mỗi merge.
-3. Sau khi source/spec hoàn tất, Lead mới regenerate toàn bộ artifacts.
-4. Review exact diff manifest; chạy generator lần hai; lần hai phải zero diff.
-5. Chạy release runner, compileall, census/audit/DOCX negative tests và M72
-   conditional export.
-6. Render/inspect DOCX production của từng kind, chứng minh cả presence và absence
-   đúng điều kiện.
+Nếu owner chọn `Để sau`, Excel không chặn `CORE_APP_DONE`. Nếu owner chọn bắt đầu,
+thực hiện chi tiết trong `PLAN_excel.md`: questionnaire layer → xuất XLSX theo
+thủ tục → import fail-loud → remaining-fields report → round-trip/visual QA.
 
-**Gate R2:** bốn kind hoạt động thật trong runtime + draft + validation + DOCX;
-generator deep-idempotent; release regression xanh. Chỉ khi đó mới ghi R2 PASS.
-
-### Wave D — visual P1-LAYOUT, chạy độc lập với phần không chồng R2
-
-Ngay khi có browser/render tooling, Lead tạo agent `visual-auditor` read-only:
-
-1. Pilot biểu mẫu đại diện có newline, superscript/footnote, source indicator,
-   fixed/nested/output/editable grid và M72 variant.
-2. Chụp 1280x800, 768px, 375px; zoom 100%, 150%, 200%; kiểm keyboard focus,
-   overflow, footer/panel che nội dung và marker leak.
-3. Với DOCX, render PDF/PNG bằng LibreOffice/Word hoặc renderer đã được owner
-   chấp thuận; lưu command, tool version và ảnh evidence.
-4. Nếu tooling không có, ghi `NOT RUN`; tuyệt đối không suy ra visual PASS từ DOM.
-5. Sau pilot PASS mới chia batch 87 form; auditor xác nhận độc lập.
-
-**Gate R1:** detector/DOM + screenshot evidence 87/87 + auditor PASS.
-
-### Wave E — R3 domain rollout
-
-Chỉ mở sau R2 PASS; các lane domain có thể song song nếu file ownership không
-chồng. Mỗi lane bắt đầu bằng evidence table `form → section → source → decision →
-kind → keys → validation → export`.
-
-1. **People/ownership:** D2 + phần D7 đủ evidence; PLII_M02/M07,
-   PLI_M06–M10/M13/M15/M72. Không tự mở tax section D5.2.
-2. **Branches/admin/output:** D4 + phần D6 đã quyết định. Lập evidence D6.1 trước;
-   M78 triển khai rule đã chốt nhưng không tự đặt max/placeholder.
-3. **Capital/assets:** chỉ phần D1/D3 có source. M03/M04/M05 hoặc policy ngoài
-   M01 thiếu nguồn tiếp tục block đúng section.
-4. **Tax:** triển khai D5.1/D5.3/D5.4; PLII_M02 D5.2 giữ block tới khi owner cung
-   cấp canonical list.
-
-Lead merge từng domain tuần tự, regenerate một lần mỗi batch, chạy release runner
-và cập nhật manifest/blocker counts. Không dùng bulk heuristic để “xóa blocker”.
-
-**Gate R3:** mọi section có implementation hoặc blocker owner minh bạch; không có
-data loss, contamination hay rule pháp lý tự đoán.
-
-### Wave F — R4 E2E, accessibility, security và resilience
-
-- Test mọi use case: required/optional/oneOf forms, shared key, switch form,
-  save/reload/import draft, validation, DOCX/ZIP export.
-- Test keyboard-only, focus order/restore, `aria-*`, 200% zoom, contrast và screen
-  reader smoke phù hợp tooling.
-- Test malformed/legacy draft, unknown field, large nested grids, Unicode, đường
-  dẫn dài, file permission lỗi, export retry và offline mode.
-- Kiểm tra escaping/injection ở UI/DOCX/filename; không log dữ liệu nhạy cảm.
-- WebView2/pywebview smoke phải chạy thật mới ghi PASS.
-
-### Wave G — R5 visual QA toàn diện
+### P5 — Visual QA toàn diện
 
 - UI screenshot matrix cho representative flows và mọi layout/table class.
-- DOCX/PDF render 87/87 hoặc sample policy đã được owner phê duyệt; ưu tiên toàn
-  bộ nested/fixed/output và variant conditional.
-- So với source/reference theo typography, spacing, page breaks, table geometry,
-  superscript/footnote và absence/presence.
-- Lỗi visual quay về lane sở hữu; sửa xong phải rerender evidence.
+- DOCX/PDF render bằng Word/LibreOffice hoặc renderer owner chấp thuận.
+- Kiểm 87/87 hoặc sample policy được owner duyệt; mọi nested/fixed/output và M72
+  conditional phải có visual evidence.
+- So typography, spacing, page breaks, table geometry, superscript/footnote,
+  presence/absence và marker leak.
 
-### Wave H — R6 Windows release
+### P6 — Windows build và clean-machine smoke
 
-- Khóa Python/Node/build dependencies, WebView2 runtime policy, icon/version và
-  reproducible build command.
-- Build `.exe`/bundle trên Windows; không gọi artifact macOS/Linux là Windows
-  smoke.
-- Máy Windows sạch không Python: mở app, chọn hồ sơ, nhập bảng mỗi kind, save,
-  reload, import legacy draft, validate, export DOCX/ZIP, chạy offline.
-- Ghi hash, kích thước, exact path, OS/WebView2 version và PASS/FAIL/NOT RUN.
+1. Khóa dependency, WebView2 policy, icon/version và reproducible build command.
+2. Build `.exe`/bundle trên Windows.
+3. Máy sạch không Python: mở app, chọn hồ sơ, nhập từng kind, save/reload/import,
+   validate, export DOCX/ZIP và chạy offline.
+4. Ghi exact artifact path, hash, size, OS/WebView2 version và verdict.
 
-### Wave I — R7 audit và bàn giao
+Không gọi macOS/Linux build hoặc compileall là Windows smoke.
 
-Tạo auditor mới read-only, không dùng agent đã implement lane chính. Auditor đối
-chiếu `APP_DONE`, manifests, decision registry, release report, ảnh evidence,
-package hash và repo cleanliness. Mọi FAIL quay về wave sở hữu. Chỉ sau auditor
-PASS mới cập nhật `APP_DONE`; vẫn không push/tag/release nếu owner chưa yêu cầu.
+### P7 — Final audit và bàn giao
 
-## 7. Test/evidence contract
+Tạo auditor read-only mới, không dùng agent đã implement lane chính. Auditor đối
+chiếu định nghĩa `CORE_APP_DONE`, manifests, decisions, release report, visual
+evidence, package hash, docs và repo cleanliness. FAIL quay lại phase sở hữu.
 
-Mỗi báo cáo wave phải có:
+Chỉ sau auditor PASS mới ghi `CORE_APP_DONE`. Nếu Excel đã được owner mở scope,
+audit thêm `PLAN_excel.md` trước khi ghi `FULL_PRODUCT_DONE`.
 
-- branch/worktree, commit hash, base hash;
-- exact diff allowlist và file ngoài allowlist (nếu có);
-- command + exit code + số PASS/FAIL/NOT RUN;
-- generated diff lần một và zero diff lần hai;
-- ảnh/visual evidence path nếu đã chạy;
-- blocker, rủi ro và quyết định owner cần thêm;
-- trạng thái rõ `PASS`, `FAIL` hoặc `NOT RUN`.
+## 8. Evidence contract cho mọi checkpoint
 
-Bộ gate tối thiểu gồm release runner hiện hành, test component/integration mới,
-Python tests industry/DOCX/audit, `compileall`, manifest gate, generator deep
-idempotency và M72 conditional export. Agent phải đọc `tools/release_runner.py`
-để dùng đúng CLI thay vì đoán lệnh.
+Mỗi báo cáo phải có:
 
-Không được ghi PASS cho visual QA, WebView2 hoặc `.exe` smoke nếu chưa chạy thật.
+- HEAD/base, branch/worktree và commit hash;
+- exact diff allowlist, generated files và file ngoài allowlist;
+- command, exit code, PASS/FAIL/NOT RUN;
+- generator lần một + bằng chứng lần hai zero diff;
+- visual evidence path/tool/version nếu đã chạy;
+- blocker/rủi ro/quyết định owner;
+- `git status` cuối.
 
-## 8. Prompt khởi động cho Lead Agent mới
+Bộ gate tối thiểu: release runner hiện hành, relevant component/domain tests,
+industry/DOCX/audit tests, `compileall`, manifests, generator deep idempotency,
+M72 conditional export và `git diff --check`.
 
-Sao chép nguyên khối dưới đây cho agent mới:
+## 9. Prompt implement cho thread mới
 
 ```text
-Bạn là Lead Engineer chịu trách nhiệm hoàn thiện repo dangky_kinhdoanh đến
-APP_DONE.
+Bạn là Lead Engineer mới tiếp quản repo dangky_kinhdoanh. Mục tiêu là hoàn thiện
+CORE_APP_DONE theo PLAN.md hiện tại, sau đó xử lý Review Gate Excel đúng policy.
 
-Nguồn điều phối duy nhất là PLAN.md hiện tại. Trước khi làm, đọc trọn PLAN.md,
-docs/execution_ledger.md, docs/decision_registry.md,
-docs/product_scope_registry.md, docs/p2_component_contracts.md,
-docs/p2_dependency_graph.md và docs/p2_fixture_candidates.md. Sau đó inspect
-source/test; không tin trạng thái cũ nếu không khớp code.
+Không dùng lịch sử hội thoại cũ làm nguồn sự thật. Đọc theo thứ tự:
+1. PLAN.md;
+2. docs/execution_ledger.md;
+3. docs/decision_registry.md;
+4. docs/product_scope_registry.md;
+5. docs/p2_component_contracts.md, docs/p2_dependency_graph.md,
+   docs/p2_fixture_candidates.md;
+6. source/tests/manifests tại HEAD.
+Chỉ đọc PLAN_excel.md khi tới P4 hoặc khi cần xác minh boundary Excel.
 
-Bắt đầu bằng Wave A: audit git status/HEAD/divergence/worktrees, phân loại mọi
-dirty file, chạy release baseline và xác minh production wiring của
-output-table/fixed-matrix/nested-grid. Không reset/revert/clean thay đổi chưa rõ
-chủ sở hữu; không push.
+Checkpoint dự kiến là main@7300ab4 nhưng phải tự xác minh HEAD. Main đang có batch
+R3B1 chưa commit: khoảng 24 modified files + .DS_Store; release gần nhất 32 PASS /
+6 FAIL / 0 NOT RUN; targeted people contracts 59/59 PASS, runtime tables 134/134
+PASS, people specs 10 PASS / 1 FAIL tại trim-anchor PLI_M02.
 
-Sau khi baseline sạch, hãy chủ động tạo các sub-agent/worktree độc lập để tối ưu
-thời gian theo PLAN:
-- B1 runtime wiring;
-- B2 generator + DOCX/export;
-- B3 QA/contract/audit tooling.
+Nhiệm vụ đầu tiên là P0 Recovery trong PLAN. KHÔNG spawn agent, KHÔNG mở scope
+mới và KHÔNG reset/revert/clean trước khi phân loại toàn bộ dirty files. Kiểm tra
+trim-anchor PLI_M02 trên đúng stage source/template/generated; sửa production hoặc
+test theo evidence, không nới test. Đồng bộ các expectation stale của acceptance,
+M72 dirty guard, audit allowlist, nested-grid, industry-change và manifest recount.
+Đưa release runner về 0 FAIL, chạy generator lần hai zero diff, review allowlist,
+commit sạch và cập nhật execution ledger. Dừng mở phase mới nếu P0 chưa PASS.
 
-Trước khi spawn, giao cho mỗi agent base commit, branch/worktree, mục tiêu, exact
-file ownership, forbidden files, test gate và format báo cáo. Không để hai agent
-sửa cùng file. Lead giữ main, review/merge tuần tự và là người duy nhất regenerate
-global artifacts. Khi có browser/render tooling, tạo thêm visual-auditor read-only
-cho Wave D; công việc visual có thể chạy song song nếu không chồng file.
+Sau P0, tiếp tục tuần tự P1→P7 trong PLAN. Hãy tạo sub-agent/worktree để tối ưu
+thời gian chỉ cho task độc lập:
+- visual-auditor read-only cho P1;
+- tối đa ba domain lane không chồng file trong P2;
+- auditor read-only ở P7.
+Trước khi spawn, giao base commit, exact file ownership, forbidden files, gate và
+format báo cáo. Lead giữ main, review/merge tuần tự và là người duy nhất regenerate
+global artifacts. Không tiếp tục branch/worktree cũ nếu chưa audit commit chưa merge.
 
-Không viết lại bốn component đã merge. Mục tiêu gần nhất là đưa ba module mới vào
-runtime + generator/export, chứng minh production fixture, migration và deep
-idempotency. Giữ M72 chỉ xuất đúng một variant. Không tự đoán nội dung pháp lý;
-isolate đúng blocker D1/D3, D5.2, D6.1, D6.4 và tiếp tục phần đã có quyết định.
+Không làm lại P0/P1/R2 lịch sử khi không có regression. Không tự đoán nội dung
+pháp lý; isolate blocker D1/D3, D5.2, D6.1, D6.4, N1/N6/N7 và tiếp tục phần độc lập.
+Không implement Excel trước P4 và lệnh owner rõ ràng. Không push/tag/release.
 
-Sau mỗi merge: chạy test lane, release runner và git diff --check. Sau thay đổi
-source/spec: regenerate một lần, review exact allowlist, chạy lần hai phải zero
-diff. Ghi PASS/FAIL/NOT RUN trung thực; visual, WebView2 và Windows .exe không
-được PASS nếu chưa chạy.
+Để tiết kiệm token:
+- báo cáo theo delta từ checkpoint, không kể lại toàn bộ lịch sử;
+- targeted tests trong lúc sửa, full runner tại checkpoint;
+- pilot visual form bị ảnh hưởng trước, batch 87 form tại gate;
+- không để hai agent đọc/sửa cùng scope;
+- mỗi phase phải kết thúc bằng commit sạch trước khi mở phase sau.
 
-Tiếp tục lần lượt Wave C→I tới khi APP_DONE hoặc gặp blocker cần authority/source
-từ owner. Nếu blocker chỉ ảnh hưởng một section, không dừng các lane độc lập.
-Cuối mỗi wave cập nhật execution ledger và báo commit, diff, tests, visual
-evidence, rủi ro, blockers và bước tiếp theo. Không tự push/tag/release.
+Cuối mỗi checkpoint báo ngắn nhưng kiểm chứng được: HEAD/commits, exact diff,
+tests PASS/FAIL/NOT RUN, generator idempotency, visual evidence, blockers và git
+status. Chỉ ghi CORE_APP_DONE/FULL_PRODUCT_DONE khi mọi điều kiện trong PLAN đạt.
 ```
-
-## 9. Điểm bắt đầu ngay bây giờ
-
-Agent mới không quay lại P0/P1 hay viết thêm một “master plan” khác. Việc đầu tiên
-sau rebaseline là mở Wave B, với mục tiêu gần nhất:
-
-> **R2 production integration:** nối ba module bảng đã merge vào runtime và
-> DOCX/generator, bổ sung gate integration + deep idempotency, giữ release runner
-> xanh; đồng thời chạy visual auditor R1 nếu tooling khả dụng.

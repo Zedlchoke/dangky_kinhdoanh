@@ -42,7 +42,7 @@ Ownership độc quyền theo wave: `app.js`, `form-domain.js`, `render.js`,
 | Task | Owner | Branch/Worktree | File ownership | Dependency | Gate | Commit | Test evidence | Blocker |
 |---|---|---|---|---|---|---|---|---|
 | R2.1 khóa contract 4 kinds | Lead | main | docs/p2_component_contracts.md, docs/p2_dependency_graph.md, docs/p2_fixture_candidates.md | R1.2 merge | hết DRAFT | — | LOCKED v1 sau review Lead ngày 2026-08-27; D1–D7 vẫn OPEN và độc lập | — |
-| R2.2 editable-grid remainder (cross_field_rules slot, keyboard/a11y lưới) | Lane EG | agent/p2-eg | form-domain.js, app.js | R2.1 | fixture E1/E2 PASS | — | — | — |
+| R2.2 editable-grid remainder (cross_field_rules slot, keyboard/a11y lưới) | Lane EG → Lead | agent/p2-eg @ ../dangky_kinhdoanh-worktrees/p2-eg → main | form-domain.js, app.js, test_grid.js | R2.1 | fixture E1/E2 PASS | `213add3`, merge `b169c4b` | `node app_web/test_grid.js`: 111 PASS / 0 FAIL; `test_domain.js`: 64 PASS / 0 FAIL; `test_dom.js`: 58 PASS / 0 FAIL; release runner: 30 PASS / 0 FAIL / 0 NOT RUN; `git diff --check` PASS | fixed/nested/output components and generator gate remain |
 | R2.2 output-table → fixed-matrix → nested-grid | các lane tách module | tuần tự theo dependency graph | renderer/module riêng | R2.1 | fixture O1/O2, F1, N1 skeleton | — | — | F2/F3/F4 cần D1; N-full cần D2/D7 |
 | Generator anchor/boundary/occurrence/totals/idempotency | Lead-only regenerate | main | build_form_maps.py, docx_to_blocks.py | contracts | chạy 2 lần cùng hash | — | — | — |
 

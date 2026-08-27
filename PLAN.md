@@ -155,7 +155,7 @@ desktop web/DOCX hiện tại.
 | R1.1 L1 extractor/schema | **PASS, đã merge** | `de55824`, regen `8cb30fc`, gate hardening tới `e95f03a`; detector 87/87 PASS |
 | R1.2 L2 renderer/CSS | **STRUCTURAL PASS, VISUAL NOT RUN** | `c301599` → merge `1aaa6c5`; test L2 77/77; detector 87/87; release runner 30/30; browser visual evidence chưa chạy |
 | R1.3 L3 rollout/visual | **BLOCKED GATE** | visual browser backend unavailable; không được báo R1/LAYOUT PASS khi screenshot gate là NOT RUN |
-| R2 table platform | **CONTRACT LOCKED, IMPLEMENTATION CHƯA BẮT ĐẦU** | ba tài liệu P2 khóa v1; chưa có bốn component/fixture nên chưa được coi là P2 PASS |
+| R2 table platform | **EDITABLE-GRID PASS, CÒN 3 COMPONENT** | contract v1 khóa; R2.2 merge `b169c4b`, fixture E1/E2 và regression PASS; fixed/nested/output, migration/generator gates còn thiếu |
 | R3 domain rollout | **BLOCKED MỘT PHẦN** | chờ D1–D7 `DECIDED` và Gate R2 |
 | R4–R7 | **CHƯA BẮT ĐẦU** | phụ thuộc R1–R3; WebView2/visual/Windows clean-machine vẫn chưa chạy |
 

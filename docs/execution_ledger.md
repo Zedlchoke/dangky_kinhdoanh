@@ -160,6 +160,25 @@ column-level projection formula; case-sensitivity sum.
 **Gate P0:** release runner đầy đủ sau commit — 38 PASS / 0 FAIL / 0 NOT RUN
 (xem Báo cáo checkpoint P0). LAYOUT_DONE vẫn CHƯA (P1 re-audit là phase kế tiếp).
 
+## Wave P2 — R3 domain rollout (lane P2A/P2C/P2D) @ cdf8803→78d1879 (2026-08-27/28)
+
+| Task | Owner | Evidence | Trạng thái |
+|---|---|---|---|
+| Merge lane P2D (a61cdfb) | Lead | D5.1: audit chứng minh chk_* đã wired đủ tại base (M17 17 ô/M19 9/M23 10/M25 10) — manifest census STALE; không khai entry trùng (tránh 2 nguồn sự thật). D5.3: slot cross_field_rules chưa có trong contract v1 (thử nghiệm cả 2 vị trí đều bị loader chặn) → khai slot inert + gap. M23 numbering nguồn là mục 7 (defect đã ghi). Suite mới 10/0 | ✅ |
+| Merge lane P2C (1691728) | Lead | 3 fixed-matrix: M01 tai_san (D1.2=B mô tả text), M02 nguon_von + tai_san_von_dieu_le (D1.1=A totals output_only). Suite sandbox 16/0 + JS 60/0. Gap minh bạch: STT in sẵn, % computed, cross-field wire | ✅ |
+| Merge lane P2A (abe6084) | Lead | PLII_M07 D2.8=A key riêng; M06 +thoi_han_gop_von (D2.2=A); M07 +dan_toc; M08 ghim spec (D2.3=A); M10 +quyen_chi_phoi (D2.5=A); M13 grid 7 cột, 1 row-type → KHÔNG discriminator; D7.3=A required/minRows 5 loop M72. Suite 14 PY + 80 JS | ✅ |
+| Lead regen batch 8 mẫu (b9bccdf) | Lead | --one ×8 (PLII_M07, M06, M07, M08, M10, M13, M01, M02) + docx_to_blocks; deep idempotency 17/0; template member-level byte-identical quy tắc như P0 | ✅ |
+| Lead wire runtime (516b22a) | Lead | FORM_TABLE_CONTRACTS +3 section P2C (sumEqualsKey CAPITAL_MISMATCH blocking + percentSum warning, key canonical chung F2); tripwire [GATE]/[GAP] P2C lật thành assert thật; m72 N9 required=true/minRows=1 | ✅ |
+| Rename M06 loop (a578e43, 78d1879) | Lead | Export conflict guard flag ĐÚNG ds_thanh_vien 2 contract (11 vs 10 cột) — fail-loud đúng LOCKED v1. Theo tiền lệ nganh_sua_doi_chi_tiet: M06 loop riêng ds_thanh_vien_tnhh (trùng semantic_key manifest); GRID_META entry global mới 11 cột; ds_thanh_vien 10 cột giữ cho M09; draft M06 rỗng thực tế → không migration (chính sách D2.9). Sync 6 suite pin cũ | ✅ |
+| Census refresh (6e972e7) | Lead | 18 LEAD_STATUS_OVERRIDES có evidence suite thật: 15 already_complete + N1/N6/N7 partial_columns (2 nhóm cuối khai thiếu); EVOLVED_FORMS +PLII_M07/PLI_M01/PLI_M13. GATE PASS 87/87 sau --write | ✅ |
+| Fix L1 invariant + W1 guard | Lead | test_layout_l1_extractor 55/55 (invariant 12 override viết lại MẠNH HƠN post-regen); test_w1 8/8 (guard PLI_M01 thu hẹp theo section đã-map) | ✅ |
+| Release runner checkpoint | Lead | **38 PASS / 0 FAIL / 0 NOT RUN — VERDICT PASS** @ 78d1879; git status sạch; allowlist exact-set 180=180 | ✅ |
+
+**Blocker còn mở (owner, không chặn lane khác):** M09 (D3), PLII_M02 member grids
+(ghim occurrence), M72 N2–N5, D5.2 canonical thuế PLII_M02, N-tail groups
+(Tổng giá trị/Thời điểm), D6.1 evidence M56, D6.3 min/max, D6.4 max/placeholder,
+M03/M04/M05 bản gốc. **Visual re-shoot 8 form P2:** chạy riêng sau checkpoint.
+
 ## R3–R7 (khung — chi tiết hóa khi mở wave)
 
 | Wave | Điều kiện mở | Ghi chú |

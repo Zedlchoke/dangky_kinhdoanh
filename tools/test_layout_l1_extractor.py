@@ -557,10 +557,173 @@ class TestDetectorStructuralRules(unittest.TestCase):
                          sorted(cl1.HEADING_ROLES_FOR_NUMBERING))
 
 
+REPO_OVERRIDES_PATH = os.path.join(TOOLS_DIR, "layout_role_overrides.json")
+
+# 12 vi tri (g1) cua audit round 2: heading danh so THAT bi guard len(folded)
+# <=120 cua layout_roles tier-11 xep body — xu ly bang override theo PREFIX GAP
+# DAU (khong by_index vi truot sau regen). Chi muc bang chuoi goc de doc duoc.
+G1_HEADING_CASES = [
+    ("PLII_M02",
+     "1. Bổ sung ngành, nghề kinh doanh sau (kê khai trong trường hợp hộ kinh "
+     "doanh đăng ký bổ sung ngành, nghề kinh doanh vào danh sách đã đăng ký):"),
+    ("PLII_M02",
+     "2. Bỏ ngành, nghề kinh doanh sau (kê khai trong trường hợp hộ kinh doanh "
+     "đăng ký bỏ ngành, nghề kinh doanh khỏi danh sách đã đăng ký):"),
+    ("PLII_M02",
+     "3. Sửa đổi ngành, nghề kinh doanh chính6 (kê khai trong trường hợp hộ "
+     "kinh doanh chọn một trong các ngành nghề đã đăng ký làm nghề chính):"),
+    ("PLI_M12",
+     "1. Bổ sung ngành, nghề kinh doanh sau (kê khai trong trường hợp doanh "
+     "nghiệp thông báo bổ sung ngành, nghề kinh doanh vào danh sách):"),
+    ("PLI_M12",
+     "2. Bỏ ngành, nghề kinh doanh sau (kê khai trong trường hợp doanh nghiệp "
+     "thông báo bỏ ngành, nghề kinh doanh khỏi danh sách):"),
+    ("PLI_M12",
+     "3. Sửa đổi chi tiết ngành, nghề kinh doanh sau (kê khai trong trường hợp "
+     "doanh nghiệp thông báo thay đổi nội dung chi tiết ngành nghề):"),
+    ("PLII_M07", "4. Vốn kinh doanh:" + "." * 96),
+    ("PLII_M07",
+     "7. Danh sách thành viên hộ gia đình đăng ký thành lập hộ kinh doanh "
+     "(chỉ ghi trong trường hợp các thành viên hộ gia đình cùng đăng ký):"),
+    ("PLII_M14",
+     "1. Đối với trường hợp hộ kinh doanh bị thu hồi Giấy chứng nhận đăng ký "
+     "hộ kinh doanh để thực hiện biện pháp cưỡng chế nợ thuế theo đề nghị của "
+     "Cơ quan quản lý thuế:"),
+    ("PLI_M23",
+     "3. Thông tin về Giấy phép đầu tư/Giấy chứng nhận đầu tư/Giấy chứng nhận "
+     "đăng ký hoạt động của chi nhánh/văn phòng đại diện/giấy tờ có giá trị "
+     "tương đương khác do Cơ quan đăng ký đầu tư cấp:"),
+    ("PLI_M28",
+     "3. Chi nhánh chủ quản (chỉ kê khai đối với trường hợp đăng ký chấm dứt "
+     "hoạt động của địa điểm kinh doanh trực thuộc chi nhánh):"),
+    ("PLI_M63",
+     "1. Đối với trường hợp bị thu hồi Giấy chứng nhận đăng ký hoạt động chi "
+     "nhánh, văn phòng đại diện, địa điểm kinh doanh thuộc chi nhánh để thực "
+     "hiện biện pháp cưỡng chế nợ thuế:"),
+]
+
+# Cùng dạng số nhưng KHÔNG thuộc nhãn nào được override -> phải giữ nguyên role
+NEGATIVE_OVERRIDE_CASES = [
+    ("PLII_M14", "2. Đối với trường hợp còn lại:"),
+    ("PLI_M23", "4. Địa chỉ chi nhánh/văn phòng đại diện/địa điểm kinh doanh:"),
+    ("PLI_M28", "4. Lý do chấm dứt hoạt động:\t"),
+    ("PLII_M07",
+     "5. Chủ thể thành lập hộ kinh doanh (ghi một trong các chủ thể sau):"),
+    ("PLI_M28", "1. Tình trạng thành lập "),
+    ("PLI_M02", "10. Thông tin đăng ký thuế"),
+]
+
+
+def _repo_overrides():
+    return d2b.load_role_overrides(REPO_OVERRIDES_PATH)
+
+
+def _effective_role(fid, raw_text):
+    folded = fold(raw_text)
+    role = classify_role(folded, None, [{"text": raw_text}])
+    return d2b.apply_role_override(_repo_overrides(), fid, -1, folded, role)
+
+
+def _blocks_corpus():
+    bd = os.path.join(ROOT, "app", "data", "blocks")
+    out = []
+    for name in sorted(os.listdir(bd)):
+        if name.endswith(".json"):
+            with io.open(os.path.join(bd, name), encoding="utf-8-sig") as fh:
+                out.append((name[:-5], json.load(fh)))
+    return out
+
+
 class TestOverridesAndSchema(unittest.TestCase):
-    def test_overrides_file_rong_hop_le(self):
-        data = d2b.load_role_overrides(os.path.join(TOOLS_DIR, "layout_role_overrides.json"))
-        self.assertEqual(data, {})
+    def test_overrides_file_temp_trong_hop_le(self):
+        # File override rỗng/thiếu vẫn hợp lệ (fail-soft của converter).
+        tmpdir = tempfile.mkdtemp(prefix="l1_override_empty_")
+        path = os.path.join(tmpdir, "empty.json")
+        with io.open(path, "w", encoding="utf-8") as fh:
+            fh.write("{}")
+        self.assertEqual(d2b.load_role_overrides(path), {})
+
+    def test_repo_overrides_shape_hop_le(self):
+        data = _repo_overrides()
+        self.assertIsInstance(data, dict)
+        entries = data.get("by_folded_prefix") or []
+        self.assertTrue(entries, "cần entry heading đánh số dài (round 2)")
+        for e in entries:
+            self.assertIsInstance(e.get("prefix"), str)
+            self.assertTrue(e["prefix"].strip())
+            self.assertIn(e.get("role"), layout_roles.ROLES)
+            self.assertIn("reason", e)   # mọi entry phải ghi rõ lý do
+            forms = e.get("forms")
+            self.assertIsInstance(forms, list)
+            self.assertTrue(forms, "entry override phải khoá theo form")
+            for f in forms:
+                self.assertRegex(f, r"^PLI+I?_M\d+$")
+
+    def test_repo_overrides_prefix_dinh_vi_doc_nhat(self):
+        # Mỗi prefix phải khớp ĐÚNG 1 block "p" trong từng form khai báo —
+        # chống prefix trôi/khớp lan khi Lead regen.
+        ov = _repo_overrides()
+        corpus = dict(_blocks_corpus())
+        for e in ov["by_folded_prefix"]:
+            for fid in e["forms"]:
+                blks = corpus[fid]["blocks"]
+                hits = []
+                for b in blks:
+                    if b.get("t") != "p":
+                        continue
+                    txt = "".join(r.get("text", "") for r in b["runs"]
+                                  if "text" in r)
+                    if fold(txt).startswith(e["prefix"]):
+                        hits.append(b.get("role"))
+                self.assertEqual(
+                    len(hits), 1,
+                    "%s %r khớp %d block" % (fid, e["prefix"], len(hits)))
+
+    def test_g1_heading_dai_day_role_section_heading(self):
+        for fid, raw in G1_HEADING_CASES:
+            folded = fold(raw)
+            self.assertGreater(len(folded), 0)
+            self.assertEqual(
+                _effective_role(fid, raw), "section-heading",
+                "%s %r" % (fid, raw[:50]))
+
+    def test_g1_so_khac_giu_nguyen_role_hoac_heading_ngan(self):
+        for fid, raw in NEGATIVE_OVERRIDE_CASES:
+            role = _effective_role(fid, raw)
+            self.assertIn(role, {"body", "section-heading"}, "%s %r" % (fid, raw))
+
+    def test_g1_all_toan_bang_blocks_chi_doi_dung_12_vitri(self):
+        # Áp toàn bộ bảng override lên app/data/blocks hiện tại: đúng 12 block
+        # trên 7 form được chuyển sang section-heading, không block nào khác.
+        ov = _repo_overrides()
+        flips = {}
+        ALLOWED_FORMS = {f for e in ov["by_folded_prefix"] for f in e["forms"]}
+        for fid, data in _blocks_corpus():
+            for b in data.get("blocks", []):
+                if b.get("t") != "p":
+                    continue
+                raw = "".join(r.get("text", "") for r in b["runs"]
+                              if "text" in r)
+                if not raw.strip():
+                    continue
+                base = classify_role(fold(raw), None, b["runs"])
+                after = d2b.apply_role_override(ov, fid, -1, fold(raw), base)
+                if after != base:
+                    self.assertNotIn(
+                        b.get("role"), ("section-heading",),
+                        "%s: block đã là heading lại bị override" % fid)
+                    flips.setdefault(fid, []).append((b.get("role"), after))
+                    self.assertIn(fid, ALLOWED_FORMS)
+        total = sum(len(v) for v in flips.values())
+        self.assertEqual(total, 12, "số vị trí đổi role: %s" %
+                         {k: len(v) for k, v in flips.items()})
+        self.assertEqual(sorted(flips), sorted([
+            "PLII_M02", "PLII_M07", "PLII_M14",
+            "PLI_M12", "PLI_M23", "PLI_M28", "PLI_M63"]))
+        for fid, pairs in flips.items():
+            self.assertTrue(all(a == "body" and b == "section-heading"
+                                for a, b in pairs), fid)
+
 
     def test_override_by_index_va_prefix(self):
         ov = {

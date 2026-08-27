@@ -1,1 +1,91 @@
-{}
+{
+  "_doc": [
+    "Override role tường minh cho converter (tools/docx_to_blocks.apply_role_override).",
+    "Wave L1FIX round 2 — g1: heading đánh số THẬT bị classifier xếp body.",
+    "",
+    "Nguyên nhân chung (đã đối chiếu từng vị trí trên block + template nguồn):",
+    "các dòng này thuộc cùng một chuỗi mục đánh số với những dòng NGẮN HƠN mà",
+    "layout_roles đã xếp section-heading — ví dụ cùng form PLII_M14 có",
+    "'2. Đối với trường hợp còn lại:' là section-heading trong khi anh em của nó",
+    "'1. Đối với trường hợp … (164 ký tự)' thành body; PLI_M23 #22 '4. Địa chỉ",
+    "chi nhánh…' là section-heading, '3. Thông tin về Giấy phép đầu tư…' thì",
+    "không; PLI_M28 #25, PLII_M07 #18/#19 cũng vậy. Kẻ phân biệt duy nhất là",
+    "guard len(folded) <= 120 ở tier-11 SECTION_HEADING_NUM_RE của",
+    "tools/layout_roles.py (file ngoài scope lane nên không sửa): các heading",
+    "dài vì kèm ngoặc giải thích/kê khai liền sau nhãn. Tất cả đều kết thúc",
+    "bằng ':' và đứng ngay trước bảng loop/nhóm trường nhập → heading thật",
+    "(phân loại A), KHÔNG phải glue nội dung hay dòng điền tay.",
+    "",
+    "Vì layout_roles.py không thuộc quyền sửa của lane, xử lý bằng override theo",
+    "text gập dấu (by_folded_prefix) + khoá 'forms' để không rò sang biểu mẫu",
+    "khác; prefix được kiểm chứng khớp đúng 1 block trong mỗi form của nó",
+    "(selftest TestHeadingRoleOverridesRound2.assert_prefixes_dinh_vi_doc_nhat).",
+    "Prefix dùng bản fold() (thường hoá, bỏ dấu, đ→d) của tools/layout_roles.py.",
+    "Detector L1 rule (g1) đọc role đã lưu trong app/data/blocks nên các vị trí",
+    "này chỉ hết đỏ sau khi Lead regen; (e)/(f) giữ nguyên màu đỏ vì lỗi dữ liệu",
+    "template do lane khác sở hữu."
+  ],
+  "by_index": {},
+  "by_folded_prefix": [
+    {
+      "prefix": "1. bo sung nganh, nghe kinh doanh sau",
+      "role": "section-heading",
+      "forms": ["PLII_M02", "PLI_M12"],
+      "reason": "Mục 1 trong nhóm thay đổi ngành nghề; kèm ngoặc giải thích dài (PLII_M02 #78 '…hộ kinh doanh', PLI_M12 #103 '…doanh nghiệp'); đứng ngay trước bảng loop ngành"
+    },
+    {
+      "prefix": "2. bo nganh, nghe kinh doanh sau",
+      "role": "section-heading",
+      "forms": ["PLII_M02", "PLI_M12"],
+      "reason": "Mục 2 cùng nhóm (PLII_M02 #80, PLI_M12 #105); đứng ngay trước bảng loop ngành"
+    },
+    {
+      "prefix": "3. sua doi nganh, nghe kinh doanh chinh",
+      "role": "section-heading",
+      "forms": ["PLII_M02"],
+      "reason": "Mục 3 nhóm ngành nghề của PLII_M02 #82 ('Sửa đổi ngành, nghề kinh doanh chính' + chú thích superscript '6'); đứng ngay trước bảng loop ngành"
+    },
+    {
+      "prefix": "3. sua doi chi tiet nganh, nghe kinh doanh sau",
+      "role": "section-heading",
+      "forms": ["PLI_M12"],
+      "reason": "Mục 3 nhóm ngành nghề của PLI_M12 #107 (cùng dạng với mục 1/2 phía trên)"
+    },
+    {
+      "prefix": "4. von kinh doanh:",
+      "role": "section-heading",
+      "forms": ["PLII_M07"],
+      "reason": "Nhãn mục '4.' của PLII_M07 #17, dòng kẻ chấm để in giá trị; các mục lân cận 5./6. trong cùng form đã là section-heading"
+    },
+    {
+      "prefix": "7. danh sach thanh vien ho gia dinh dang ky thanh lap ho kinh doanh",
+      "role": "section-heading",
+      "forms": ["PLII_M07"],
+      "reason": "Tiêu đề mục '7.' mở bảng danh sách thành viên hộ gia đình (PLII_M07 #26); đổi mức 120 ký tự vì ngoặc điều kiện '(chỉ ghi trong trường hợp…)'"
+    },
+    {
+      "prefix": "1. doi voi truong hop ho kinh doanh bi thu hoi giay chung nhan dang ky",
+      "role": "section-heading",
+      "forms": ["PLII_M14"],
+      "reason": "PLII_M14 #21: mục '1.' cùng chuỗi với '2. Đối với trường hợp còn lại:' (#24, đã là section-heading); dài hơn chỉ vì trích dẫn cơ sở pháp lý, kết thúc ':'"
+    },
+    {
+      "prefix": "3. thong tin ve giay phep dau tu/giay chung nhan dau tu",
+      "role": "section-heading",
+      "forms": ["PLI_M23"],
+      "reason": "PLI_M23 #19: tiêu đề mục '3.', liệt kê tên giấy tờ ngăn cách '/' rồi kết thúc ':'; mục '4. Địa chỉ chi nhánh…' (#22) liền sau đã là section-heading"
+    },
+    {
+      "prefix": "3. chi nhanh chu quan",
+      "role": "section-heading",
+      "forms": ["PLI_M28"],
+      "reason": "PLI_M28 #21: tiêu đề mục '3.' mở nhóm trường Tên/Địa chỉ/Mã số chi nhánh; mục '4. Lý do chấm dứt hoạt động:' (#25) liền sau đã là section-heading"
+    },
+    {
+      "prefix": "1. doi voi truong hop bi thu hoi giay chung nhan dang ky hoat dong chi nhanh",
+      "role": "section-heading",
+      "forms": ["PLI_M63"],
+      "reason": "PLI_M63 #42: mục '1.' cùng chuỗi với '2. Đối với trường hợp còn lại:' (#45, đã là section-heading), kết thúc ':'"
+    }
+  ]
+}

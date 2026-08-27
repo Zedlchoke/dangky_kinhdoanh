@@ -594,6 +594,350 @@ def table_block(tbl: Table) -> dict:
 
 
 # ---------------------------------------------------------------------------
+# Section specs (P2/Lane B2): kiểm định cấu trúc bảng kind mới trong blocks
+#
+# form_maps.json[fid]["section_specs"] (do tools/build_form_maps.py sinh cho
+# kind fixed-matrix / nested-grid / output-table) cho converter biết:
+#   1. bảng nào phải tồn tại và ở vị trí nào;
+#   2. cấu trúc vật lý phải thế nào (số cột gridCol, rowspan/colspan, vị trí
+#      the STT/totals/the dữ liệu theo col_index);
+#   3. output-table không được chứa bất kỳ input nào.
+# Lệch -> GridSpecMismatch -> exit != 0. Chỉ áp dụng cho form CÓ spec nên các
+# mẫu hiện tại giữ hành vi và JSON byte-identical.
+#
+# CHÚ Ý integration: danh sách kind KHÔNG được ghi vào block JSON bằng khoá
+# mới. tools/audit_blocks_check.py (contract QA) khóa chặt ALLOWED_TOP_KEYS =
+# {id, ten_mau, blocks, v} và ALLOWED_BLOCK_KEYS[t]; muốn gắn marker vào block
+# thì trước hết B3/owner phải mở rộng allowlist đó. Cho đến khi đó, định danh
+# của từng bảng lấy bằng JOIN: thứ tự các block t∈{table,loop} trong blocks[]
+# trùng với "table_index" ghi trong form_maps[fid]["section_specs"][k].
+# ---------------------------------------------------------------------------
+
+
+class GridSpecMismatch(ValueError):
+    """Blocks lệch so với section_spec khai báo — fail loud."""
+
+
+def _fold_txt(text: str) -> str:
+    return layout_roles.fold(text or "")
+
+
+def _block_row_runs_text(cell: dict) -> str:
+    return "".join(r.get("text", "") for r in cell.get("runs", []) if "text" in r)
+
+
+def _block_cell_inputs(cell: dict) -> list[str]:
+    return [r["input"]["key"] for r in cell.get("runs", []) if "input" in r]
+
+
+def _physical_indexes(cells: list[dict]):
+    """[(index_bắt_đầu, colspan, cell)] theo chiều rộng vật lý của một hàng."""
+    out = []
+    cursor = 0
+    for cell in cells:
+        span = int(cell.get("colspan") or 1)
+        out.append((cursor, span, cell))
+        cursor += span
+    return out
+
+
+def _find_table_block(blocks, want_headers, start_at=0):
+    """Table block có hàng 0 khớp chuỗi tiêu đề đã gập dấu."""
+    want = "|".join(_fold_txt(h) for h in want_headers)
+    for bi in range(start_at, len(blocks)):
+        blk = blocks[bi]
+        if blk.get("t") != "table" or not blk.get("rows"):
+            continue
+        got = "|".join([_fold_txt(_block_row_runs_text(cell))
+                        for _i, _s, cell in _physical_indexes(blk["rows"][0]["cells"])])
+        if got == want:
+            return bi, blk
+    return None, None
+
+
+def _table_block_signature(blk: dict) -> str:
+    """Chuỗi chuẩn hoá của toàn bộ block 'table' (mỗi hàng = các ô gập dấu
+    nối bằng '|'). Dùng để định vị lưới output-table mà không phụ thuộc một
+    hàng tiêu đề cụ thể."""
+    lines = []
+    for row in blk.get("rows", []):
+        cells = [_fold_txt(_block_row_runs_text(cell))
+                 for _pos, _span, cell in _physical_indexes(row.get("cells", []))]
+        lines.append("|".join(cells))
+    return "#".join(lines)
+
+
+def _find_output_grid_block(blocks, labels: list, cols: int):
+    matrix = bool(labels) and all(isinstance(x, list) for x in labels)
+    rows_txt = []
+    for r in range(len(labels)):
+        if matrix:
+            cells = [labels[r][c] if c < len(labels[r]) else ""
+                     for c in range(cols)]
+        else:
+            cells = [labels[r] if (c == 0 and r < len(labels)) else ""
+                     for c in range(cols)]
+        rows_txt.append("|".join(_fold_txt(x) for x in cells))
+    want = "#".join(rows_txt)
+    for bi, blk in enumerate(blocks):
+        if blk.get("t") != "table" or not blk.get("rows"):
+            continue
+        if _table_block_signature(blk) == want:
+            return bi, blk
+    return None, None
+
+
+def verify_fixed_matrix_spec(blk, spec: dict, sem: str) -> list[str]:
+    errs = []
+    cols = spec["columns"]
+    rows_spec = spec["fixed_rows"]
+    width = len(cols)
+    body = blk.get("rows") or []
+    if len(body) != len(rows_spec) + 1:
+        errs.append("số hàng %d != %d (header + %d dòng pháp lý)"
+                    % (len(body), len(rows_spec) + 1, len(rows_spec)))
+        return errs
+    for ri, row in enumerate(body):
+        if sum(int(c.get("colspan") or 1) for c in row["cells"]) != width:
+            errs.append("hàng %d mất cột vật lý (tổng colspan != %d)"
+                        % (ri, width))
+    head_cells = {pos: cell for pos, _span, cell
+                  in _physical_indexes(body[0]["cells"])}
+    for ci, col in enumerate(cols):
+        cell = head_cells.get(ci)
+        if cell is None or \
+                _fold_txt(_block_row_runs_text(cell)) != _fold_txt(col["header"]):
+            errs.append("header cột %d != %r" % (ci, col["header"]))
+    seen_keys = {}
+    for ri, row_spec in enumerate(rows_spec):
+        row = body[ri + 1]
+        cells_by_pos = {pos: cell for pos, _span, cell
+                        in _physical_indexes(row["cells"])}
+        for ci, col in enumerate(cols):
+            cell = cells_by_pos.get(ci)
+            if cell is None:
+                errs.append("hàng '%s' thiếu ô tại cột %d" % (row_spec["id"], ci))
+                continue
+            keys = _block_cell_inputs(cell)
+            if col["tag"] is None:
+                if keys:
+                    errs.append("hàng '%s' cột nhãn %d vẫn còn the %s"
+                                % (row_spec["id"], ci, keys))
+                continue
+            want_key = "%s.%s.%s" % (sem, row_spec["id"], col["tag"])
+            seen_keys[want_key] = seen_keys.get(want_key, 0) + 1
+            if keys != [want_key]:
+                errs.append("ô (%s,%d) có the %s, kỳ vọng [%r]"
+                            % (row_spec["id"], ci, keys, want_key))
+    duplicated = {k: n for k, n in seen_keys.items() if n > 1}
+    if duplicated:
+        errs.append("the tổng/dòng bị lặp: %s" % sorted(duplicated))
+    for tot in spec.get("totals", []):
+        want = "%s.%s.%s" % (sem, tot["target_row"], tot["target_tag"])
+        if seen_keys.get(want, 0) < 1:
+            errs.append("mất the tổng %r" % want)
+    return errs
+
+
+def verify_nested_grid_spec(blk, spec: dict, sem: str) -> list[str]:
+    errs = []
+    width = int(spec["width"])
+    hdr_spec = spec["header_rows"]
+    hdr_n = len(hdr_spec)
+    hdr_idx = blk.get("headerRows")
+    if list(hdr_idx or []) != list(range(hdr_n)):
+        errs.append("headerRows %s != %s" % (hdr_idx, list(range(hdr_n))))
+        return errs
+    rows = blk.get("rows") or []
+    if len(rows) < hdr_n:
+        errs.append("blocks thiếu hàng sau header (%d < %d)"
+                    % (len(rows), hdr_n))
+        return errs
+    # Không được có thêm hàng khuôn nào ngoài hàng mẫu chuẩn: {#name} kèm
+    # {/name} xuất hiện trong hàng khác là dấu hiệu bảng bị nhân bản khi rebuild.
+    def row_text(row: dict) -> str:
+        return "".join(r.get("text", "") for c in row.get("cells", [])
+                       for r in c.get("runs", []))
+    extra_rows = []
+    for ri, row in enumerate(rows[hdr_n:], start=hdr_n):
+        text = row_text(row)
+        for m in LOOP_OPEN_RE.finditer(text):
+            if "{/%s}" % m.group(1) in text:
+                extra_rows.append((ri, m.group(1)))
+    if extra_rows:
+        errs.append("bảng chứa %d hàng khuôn lặp nữa ngoài hàng mẫu chuẩn %s "
+                    "(phải đúng 1 hàng khuôn)" % (len(extra_rows),
+                                                  extra_rows[:4]))
+    covered = {}
+    expected = {}
+    for ri, row_spec in enumerate(hdr_spec):
+        cursor = 0
+        for src in row_spec:
+            while (ri, cursor) in covered:
+                cursor += 1
+            for r in range(ri, ri + src["rowspan"]):
+                for c in range(cursor, cursor + src["colspan"]):
+                    covered[(r, c)] = True
+            expected[(ri, cursor)] = (src["text"], src["rowspan"],
+                                      src["colspan"])
+            cursor += src["colspan"]
+    missing = [(r, c) for r in range(hdr_n) for c in range(width)
+               if not covered.get((r, c))]
+    if missing:
+        errs.append("header chưa phủ kín %dx%d, thiếu %s"
+                    % (hdr_n, width, missing[:5]))
+    # Dựng lại VỊ TRÍ vật lý của các ô header trong blocks: ô bị gộp dọc
+    # (vMerge continue) bị parse_table lượt khỏi danh sách cell, nên vị trí
+    # từng ô phải suy từ occupancy của các ô phía trên mang rowspan.
+    actual = {}
+    over_wide = []
+    filled = set()
+    for ri, row in enumerate(rows[:hdr_n]):
+        cursor = 0
+        for cell in row["cells"]:
+            rs = int(cell.get("rowspan") or 1)
+            cs = int(cell.get("colspan") or 1)
+            while (ri, cursor) in filled:
+                cursor += 1
+            if cursor + cs > width:
+                over_wide.append((ri, cursor, cs))
+                break
+            actual[(ri, cursor)] = (_fold_txt(_block_row_runs_text(cell)),
+                                    rs, cs)
+            for r in range(ri, ri + rs):
+                for c in range(cursor, cursor + cs):
+                    filled.add((r, c))
+            cursor += cs
+    del filled
+    if over_wide:
+        errs.append("header ô vượt quá chiều rộng vật lý %d tại %s"
+                    % (width, over_wide[:4]))
+    for pos, want in sorted(expected.items()):
+        text, want_rs, want_cs = want
+        got = actual.get(pos)
+        if got is None:
+            errs.append("header thiếu ô tại %s" % (pos,))
+            continue
+        if got[0] != _fold_txt(text):
+            errs.append("header %s text=%r != %r" % (pos, got[0], text))
+        if got[1] != want_rs or got[2] != want_cs:
+            errs.append("header %s span=(rs=%d,cs=%d) != kỳ vọng "
+                        "(rs=%d,cs=%d)" % (pos, got[1], got[2],
+                                           want_rs, want_cs))
+    for pos in sorted(actual.keys()):
+        if pos not in expected:
+            errs.append("header thừa ô tại %s (%r)"
+                        % (pos, actual[pos][0]))
+    stt_ci = (spec.get("stt") or {}).get("col_index")
+    got_cols = {int(c["col"]): c["tag"] for c in blk.get("cols", [])}
+    want_cols = {}
+    for c in spec["columns"]:
+        if c["tag"]:
+            want_cols[int(c["col_index"])] = c["tag"]
+    if got_cols != want_cols:
+        errs.append("cols của hàng khuôn %s != %s (vị trí vật lý sai/mất cột)"
+                    % (
+                        sorted(got_cols.items()),
+                        sorted(want_cols.items())))
+    if stt_ci is not None and stt_ci in got_cols:
+        errs.append("cột STT %d bị gắn the dữ liệu" % stt_ci)
+    return errs
+
+
+def verify_output_table_spec(blk, spec: dict, sem: str) -> list[str]:
+    errs = []
+    grid = spec["grid"]
+    rows = blk.get("rows") or []
+    if len(rows) != grid["rows"]:
+        errs.append("số hàng %d != %d" % (len(rows), grid["rows"]))
+    inputs = []
+    for ri, row in enumerate(rows):
+        if sum(int(c.get("colspan") or 1) for c in row["cells"]) != grid["cols"]:
+            errs.append("hàng %d lệch số cột vật lý (kỳ vọng %d)"
+                        % (ri, grid["cols"]))
+        for cell in row["cells"]:
+            inputs.extend(_block_cell_inputs(cell))
+    if inputs:
+        errs.append("output-table KHÔNG được có input, thấy %s" % inputs[:8])
+    labels = grid["labels"]
+    matrix = bool(labels) and all(isinstance(x, list) for x in labels)
+    for ri, row in enumerate(rows):
+        for pos, _span, cell in _physical_indexes(row["cells"]):
+            if matrix:
+                want = (labels[ri][pos] if ri < len(labels) and
+                        pos < len(labels[ri]) else "")
+            else:
+                want = (labels[ri] if pos == 0 and ri < len(labels) else "")
+            if _fold_txt(_block_row_runs_text(cell)) != _fold_txt(want):
+                errs.append("nhãn (%d,%d) = %r != %r"
+                            % (ri, pos, _block_row_runs_text(cell), want))
+    return errs
+
+
+def annotate_and_verify_section_specs(blocks, section_specs) -> int:
+    """Định vị + kiểm định mọi section_spec trên danh sách blocks.
+
+    Trả về số section đã ghép; raise GridSpecMismatch khi có bất kỳ lệch nào
+    (thiếu/xa lạ/mất cột/theo vị trí sai). KHÔNG thêm khoá nào vào block —
+    xem ghi chú integration phía trên."""
+    problems = []
+    matched = 0
+    for spec_info in section_specs or []:
+        kind = spec_info.get("kind")
+        sem = spec_info.get("semantic_key")
+        sid = spec_info.get("section_id") or spec_info.get("id") or sem
+        payload = spec_info
+        if kind == "nested-grid":
+            loop = spec_info.get("loop") or sem
+            cand = [b for b in blocks
+                    if b.get("t") == "loop" and b.get("loop") == loop]
+            if not cand:
+                problems.append("%s (%s): không tìm thấy block loop %r"
+                                % (sid, sem, loop))
+                continue
+            if len(cand) > 1:
+                # >1 hàng khuôn cùng tên ({#loop} lặp lại trong bảng) -> engine
+                # sẽ nhân bản hàng mơ hồ; bắt ngay ở lúc convert.
+                problems.append(
+                    "%s (%s): thấy %d block loop %r (phải đúng 1 hàng khuôn)"
+                    % (sid, sem, len(cand), loop))
+                continue
+            blk = cand[0]
+            errs = verify_nested_grid_spec(blk, payload, sem)
+        elif kind == "fixed-matrix":
+            headers = [c["header"] for c in payload["columns"]]
+            _bi, blk = _find_table_block(blocks, headers)
+            if blk is None:
+                problems.append("%s (%s): không tìm thấy bảng khớp header %s"
+                                % (sid, sem, headers))
+                continue
+            errs = verify_fixed_matrix_spec(blk, payload, sem)
+        elif kind == "output-table":
+            grid = payload.get("grid", {})
+            _bi, blk = _find_output_grid_block(blocks, grid.get("labels", []),
+                                               int(grid.get("cols", 1)))
+            if blk is None:
+                problems.append("%s (%s): không tìm thấy lưới output khớp "
+                                "labels %r" % (sid, sem,
+                                               grid.get("labels")))
+                continue
+            errs = verify_output_table_spec(blk, payload, sem)
+        else:
+            problems.append("%s: kind không hỗ trợ trong converter: %r"
+                            % (sid, kind))
+            continue
+        matched += 1
+        if errs:
+            problems.append("%s (%s/%s):\n   - %s"
+                            % (sid, sem, kind, "\n   - ".join(errs)))
+    if problems:
+        raise GridSpecMismatch(
+            "section_specs lệch cấu trúc (%d):\n - %s"
+            % (len(problems), "\n - ".join(problems)))
+    return matched
+
+
+# ---------------------------------------------------------------------------
 # Chuyển 1 file
 # ---------------------------------------------------------------------------
 
@@ -633,11 +977,14 @@ def load_footnotes(doc) -> dict:
 
 def convert_document(
     doc, fid: str, ten_mau: str, overrides: dict | None = None,
-    footnotes: dict | None = None,
+    footnotes: dict | None = None, section_specs: list | None = None,
 ) -> dict:
     """Chuyển một Document đã mở thành block JSON (không IO file).
 
     Tách riêng để test dựng fixture DOCX trong temp và gọi trực tiếp.
+    section_specs: metadata cấu trúc của kind mới (fixed-matrix/nested-grid/
+    output-table) lấy từ form_maps[fid]["section_specs"]; có -> converter
+    kiểm định CHẶT cấu trúc block tương ứng rồi mới ghi JSON.
     """
     blocks: list[dict] = []
     prev_ref = {"block": None, "consumed": False, "emitted": blocks}
@@ -690,7 +1037,13 @@ def convert_document(
         raise ValueError(
             "%s: marker {?%s} không được đóng trong template" % (fid, cond_stack[-1]))
 
-    return {"id": fid, "ten_mau": ten_mau, "blocks": blocks, "v": SCHEMA_VERSION}
+    if section_specs:
+        # kind mới: kiểm định cấu trúc NGAY TRƯỚC khi ghi JSON (fail loud);
+        # chỉ đếm số section đã ghép, không thêm khoá nào vào JSON đầu ra.
+        annotate_and_verify_section_specs(blocks, section_specs)
+
+    return {"id": fid, "ten_mau": ten_mau, "blocks": blocks,
+            "v": SCHEMA_VERSION}
 
 
 SCHEMA_VERSION = 3
@@ -699,11 +1052,13 @@ SCHEMA_VERSION = 3
 def convert(fid: str, form_maps: dict, overrides: dict | None = None) -> dict:
     path = TEMPLATES_DIR / ("%s.docx" % fid)
     doc = Document(str(path))
-    ten_mau = form_maps.get(fid, {}).get("ten_mau", "")
+    fmap = form_maps.get(fid, {})
+    ten_mau = fmap.get("ten_mau", "")
     return convert_document(
         doc, fid, ten_mau,
         overrides=overrides if overrides is not None else load_role_overrides(),
         footnotes=load_footnotes(doc),
+        section_specs=fmap.get("section_specs"),
     )
 
 

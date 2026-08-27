@@ -23,6 +23,13 @@ Nguyen ly:
     core). Generator uu tien doc file spec theo form_id; khong co file thi
     fallback ve khai bao inline REBUILD_TABLES nhu cu. Schema JSON: ghi chu o
     tools/form_specs/README.md.
+  - P2/Lane B2: entry spec co the khai bao "kind" la "fixed-matrix",
+    "nested-grid" hoac "output-table" ben canh "list" truyen thong — du dung
+    bang dong phap ly co dinh, header nhieu tang rowspan/colspan va luoi chi
+    de in. Hop dong truong: tools/form_specs/schema/table_kinds.schema.json.
+    Entry dang BLOCKED_LEGAL_REVIEW khai "legal_status": {"blocked": true}
+    se van duoc validate NHUNG bi BO QUA hoan toan khi rebuild (khong suy
+    doan noi dung phap ly).
 """
 import csv
 import json
@@ -637,20 +644,342 @@ def _pop_table_occurrence(table):
 def _scrub_occurrence_attrs(doc):
     """Don sach moi thuoc tinh tam con sot truoc khi luu template."""
     for el in doc.element.body.iter(qn("w:tbl")):
-        if el.get(_OCC_TEMP_ATTR) is not None:
-            del el.attrib[_OCC_TEMP_ATTR]
+        for attr in (_OCC_TEMP_ATTR, GRID_META_TEMP_ATTR):
+            if el.get(attr) is not None:
+                del el.attrib[attr]
 
 
-def _json_spec(raw_spec):
-    """JSON spec -> dict spec cùng hình dạng phần tử DYNAMIC_TABLES."""
-    return {
-        "id": raw_spec["id"],
-        "detect": set(raw_spec.get("detect") or []),
-        "stt_tag": bool(raw_spec.get("stt_tag")),
-        "cols": [(pat, tag) for pat, tag in raw_spec.get("cols") or []],
-        "loop": raw_spec["loop"],
-        "fields": list(raw_spec.get("fields") or []),
+def _json_spec(raw_spec, form_id="<form>"):
+    """JSON spec -> dict spec đã chuẩn hoá theo kind khai báo trong file.
+
+    - kind "list" (mặc định, backward-compat): giữ nguyên hình dạng cũ giống
+      phần tử DYNAMIC_TABLES.
+    - kind "fixed-matrix" | "nested-grid" | "output-table": trả về spec đã
+      validate + chuẩn hoá (xem _validate_kind_spec). Spec sai phải bị chặn
+      ở bước đọc file, TRƯỚC khi đụng tới document.
+    """
+    kind = raw_spec.get("kind") or KIND_LIST
+    if kind == KIND_LIST:
+        return {
+            "id": raw_spec["id"],
+            "kind": KIND_LIST,
+            "detect": set(raw_spec.get("detect") or []),
+            "stt_tag": bool(raw_spec.get("stt_tag")),
+            "cols": [(pat, tag) for pat, tag in raw_spec.get("cols") or []],
+            "loop": raw_spec["loop"],
+            "fields": list(raw_spec.get("fields") or []),
+        }
+    return _validate_kind_spec(raw_spec, form_id)
+
+
+# ===========================================================================
+# Section kinds P2 (Lane B2 generator + DOCX/export)
+#
+# Ngoài "list" (bảng danh sách {#loop}), file spec
+# tools/form_specs/<nhóm>/<FORM_ID>.json được phép khai báo thêm 3 kind:
+#   fixed-matrix  : bảng dòng pháp lý cố định + ô tổng computed
+#   nested-grid   : bảng lặp header nhiều hàng (rowspan/colspan vật lý)
+#   output-table  : lưới chỉ để in/ký, KHÔNG có input nào
+# Hợp đồng v1 đầy đủ: tools/form_specs/schema/table_kinds.schema.json.
+#
+# Nguyên tắc số 0 của lane này: một section đang BLOCKED_LEGAL_REVIEW PHẢI
+# được khai báo legal_status.blocked=true và khi đó generator BỎ QUA hoàn toàn
+# (in ra log, không chạm document) — capability có sẵn nhưng không suy đoán
+# nội dung pháp lý.
+# ===========================================================================
+KIND_LIST = "list"
+KIND_FIXED_MATRIX = "fixed-matrix"
+KIND_NESTED_GRID = "nested-grid"
+KIND_OUTPUT_TABLE = "output-table"
+SECTION_KINDS = (KIND_LIST, KIND_FIXED_MATRIX, KIND_NESTED_GRID, KIND_OUTPUT_TABLE)
+
+# ENTRY KEYS cho phép theo kind; kind mới siết chặt để bắt lỗi đánh máy
+# (vd header_rows vs headerRows) thay vì nuốt im lặng như kind legacy.
+_ENTRY_KEYS = {
+    KIND_LIST: None,  # legacy: permissive như trước, không đổi hành vi
+    KIND_FIXED_MATRIX: {"kind", "pos", "anchor", "spec", "cond_flag",
+                        "no_default_drops", "drop", "drop_until", "trim",
+                        "keep_from", "occurrences", "legal_status"},
+    KIND_NESTED_GRID: {"kind", "pos", "anchor", "spec", "cond_flag",
+                       "no_default_drops", "drop", "drop_until", "trim",
+                       "keep_from", "occurrences", "legal_status"},
+    KIND_OUTPUT_TABLE: {"kind", "pos", "anchor", "spec", "cond_flag",
+                        "no_default_drops", "drop", "drop_until", "trim",
+                        "keep_from", "occurrences", "legal_status"},
+}
+_ID_RE = re.compile(r"^[A-Za-z0-9_.]+$")
+
+
+def _speck(key, fmt, form_id, sid):
+    """Gắn ngữ cảnh form/spec vào một thông báo lỗi spec."""
+    return "[form_specs] %s/%s: %s" % (form_id, sid or "?", key % fmt)
+
+
+def _form_context(form_id, sid):
+    def fail(msg):
+        raise ValueError("[form_specs] %s/%s: %s" % (form_id, sid or "?", msg))
+    return fail
+
+
+def _validate_legal_status(raw, form_id, sid):
+    ls = raw.get("legal_status")
+    if ls is None:
+        return {}
+    allowed = {"blocked", "ref", "question"}
+    if not isinstance(ls, dict) or set(ls) - allowed:
+        raise ValueError(
+            "[form_specs] %s/%s: legal_status phai la object co cac truong "
+            "{blocked, ref, question}, nhan %r" % (form_id, sid, ls))
+    if not isinstance(ls.get("blocked"), bool):
+        raise ValueError("[form_specs] %s/%s: legal_status.blocked phai la "
+                         "boolean" % (form_id, sid))
+    return ls
+
+
+def _validate_kind_spec(raw_spec, form_id="<form>"):
+    """Validate + chuẩn hoá spec của 3 kind mới. Raise ValueError khi sai."""
+    sid_raw = raw_spec.get("id")
+    if not isinstance(sid_raw, str) or not _ID_RE.match(sid_raw):
+        raise ValueError(
+            "[form_specs] %s: spec.id khong hop le: %r "
+            "(phai khop [A-Za-z0-9_.]+)" % (form_id, sid_raw))
+    kind = raw_spec["kind"]
+
+    def fail(msg):
+        raise ValueError("[form_specs] %s/%s (%s): %s"
+                         % (form_id, sid_raw, kind, msg))
+
+    # Siết khóa trường theo kind: mọi khoá lạ là lỗi đánh máy -> chặn sớm.
+    spec_keys = {
+        KIND_FIXED_MATRIX: {"id", "kind", "semantic_key", "section_id",
+                            "columns", "fixed_rows", "totals"},
+        KIND_NESTED_GRID: {"id", "kind", "semantic_key", "section_id", "loop",
+                           "stt", "header_rows", "columns", "discriminator",
+                           "totals"},
+        KIND_OUTPUT_TABLE: {"id", "kind", "semantic_key", "section_id",
+                            "grid"},
     }
+    if kind in spec_keys:
+        unknown = set(raw_spec) - spec_keys[kind]
+        if unknown:
+            fail("spec co truong khong thuoc hop dong v1: %s" % sorted(unknown))
+
+    def need(condition, msg):
+        if not condition:
+            fail(msg)
+
+    def norm_column(c, idx):
+        need(isinstance(c, dict), "columns[%d] phai la object" % idx)
+        need(set(c) <= {"header", "tag", "col_index", "input_type", "computed",
+                        "output_only", "required"},
+             "columns[%d] co truong le: %s" % (idx, sorted(set(c))))
+        header = c.get("header")
+        need(isinstance(header, str) and header.strip(),
+             "columns[%d].header bat buoc" % idx)
+        tag = c.get("tag")
+        need(tag is None or isinstance(tag, str),
+             "columns[%d].tag phai la string hoac null" % idx)
+        return {
+            "header": header.strip(),
+            "tag": tag,
+            "col_index": c.get("col_index"),
+            "input_type": c.get("input_type") or ("readonly" if tag is None
+                                                  else "text"),
+            "computed": bool(c.get("computed")),
+            "output_only": bool(c.get("output_only")) or bool(c.get("computed"))
+            or c.get("input_type") == "outputOnly",
+            "required": bool(c.get("required")),
+        }
+
+    common = {
+        "id": sid_raw,
+        # section_id: định danh theo manifest table-specs (JOIN với runtime/UI);
+        # mặc định = id để spec không phải khai hai lần.
+        "section_id": raw_spec.get("section_id") or sid_raw,
+        "kind": kind,
+    }
+    if "section_id" in raw_spec and not (
+            isinstance(raw_spec["section_id"], str)
+            and _ID_RE.match(raw_spec["section_id"])):
+        fail("section_id khong hop le: %r" % (raw_spec["section_id"],))
+    if kind == KIND_FIXED_MATRIX:
+        sem = raw_spec.get("semantic_key")
+        need(isinstance(sem, str) and _ID_RE.match(sem),
+             "semantic_key khong hop le: %r" % (sem,))
+        common["semantic_key"] = sem
+        cols = raw_spec.get("columns")
+        need(isinstance(cols, list) and cols,
+             "columns phai la list khong rong")
+        columns = [norm_column(c, i) for i, c in enumerate(cols)]
+        untagged = [i for i, c in enumerate(columns) if c["tag"] is None]
+        need(len(untagged) <= 1,
+             "chi duoi 1 cot nhan khong gan the (cot loai/hang doc)")
+        if untagged:
+            need(untagged == [0],
+                 "cot nhan khong gan the phai o chi so 0")
+        tags = [c["tag"] for c in columns if c["tag"]]
+        need(len(tags) == len(set(tags)), "column.tag trung nhau: %s" % tags)
+        rows_raw = raw_spec.get("fixed_rows")
+        need(isinstance(rows_raw, list) and rows_raw,
+             "fixed_rows phai la list khong rong")
+        fixed_rows = []
+        seen_ids = set()
+        for i, r in enumerate(rows_raw):
+            need(isinstance(r, dict), "fixed_rows[%d] phai la object" % i)
+            rid = r.get("id")
+            need(isinstance(rid, str) and _ID_RE.match(rid),
+                 "fixed_rows[%d].id khong hop le: %r" % (i, rid))
+            need(rid not in seen_ids, "fixed_rows[%d].id '%s' trung" % (i, rid))
+            seen_ids.add(rid)
+            label = r.get("label")
+            need(isinstance(label, str) and label.strip(),
+                 "fixed_rows[%d].label bat buoc" % i)
+            fixed_rows.append({"id": rid, "label": label.strip(),
+                               "output_only": bool(r.get("output_only"))})
+        raw_totals = raw_spec.get("totals") or []
+        need(isinstance(raw_totals, (list, tuple)), "totals phai la list")
+        totals = []
+        for i, t in enumerate(raw_totals or []):
+            need(isinstance(t, dict), "totals[%d] phai la object" % i)
+            need(set(t) <= {"formula", "target_row", "target_tag"},
+                 "totals[%d] co truong le: %s" % (i, sorted(set(t))))
+            formula = t.get("formula")
+            need(isinstance(formula, str) and formula.strip(),
+                 "totals[%d].formula bat buoc" % i)
+            target_row = t.get("target_row")
+            need(target_row in seen_ids,
+                 "totals[%d].target_row '%r' khong nam trong fixed_rows"
+                 % (i, target_row))
+            target_tag = t.get("target_tag")
+            need(target_tag in set(tags),
+                 "totals[%d].target_tag '%r' khong phai cot dau vao hop le"
+                 % (i, target_tag))
+            by_id = {r["id"]: r for r in fixed_rows}
+            need(by_id[target_row]["output_only"],
+                 "hang tong '%s' phai khai bao output_only=true" % target_row)
+            totals.append({"formula": formula.strip(),
+                           "target_row": target_row,
+                           "target_tag": target_tag})
+        common.update({"columns": columns, "fixed_rows": fixed_rows,
+                       "totals": totals})
+        return common
+
+    if kind == KIND_NESTED_GRID:
+        sem = raw_spec.get("semantic_key")
+        need(isinstance(sem, str) and _ID_RE.match(sem),
+             "semantic_key khong hop le: %r" % (sem,))
+        loop = raw_spec.get("loop") or sem
+        need(bool(_ID_RE.match(loop)), "loop khong hop le: %r" % (loop,))
+        common["semantic_key"] = sem
+        common["loop"] = loop
+        hdr = raw_spec.get("header_rows")
+        need(isinstance(hdr, list) and hdr,
+             "header_rows phai la list >=1 hang (nested-grid bat buoc)")
+        header_rows = []
+        for ri, row in enumerate(hdr):
+            need(isinstance(row, list) and row,
+                 "header_rows[%d] phai la list khong rong" % ri)
+            norm_row = []
+            for ci, c in enumerate(row):
+                need(isinstance(c, dict) and isinstance(c.get("text"), str),
+                     "header_rows[%d][%d] phai la object co 'text'" % (ri, ci))
+                rs = c.get("rowspan", 1)
+                cs = c.get("colspan", 1)
+                need(isinstance(rs, int) and rs >= 1,
+                     "header_rows[%d][%d].rowspan phai la int >=1" % (ri, ci))
+                need(isinstance(cs, int) and cs >= 1,
+                     "header_rows[%d][%d].colspan phai la int >=1" % (ri, ci))
+                norm_row.append({"text": c["text"].strip(),
+                                 "rowspan": rs, "colspan": cs})
+            header_rows.append(norm_row)
+
+        cols = raw_spec.get("columns")
+        need(isinstance(cols, list) and cols,
+             "columns phai la list khong rong")
+        columns = []
+        for i, c in enumerate(cols):
+            norm = norm_column(c, i)
+            ci = norm.pop("col_index")
+            need(isinstance(ci, int) and ci >= 0,
+                 "columns[%d].col_index phai la int >=0 (vi tri vat ly)" % i)
+            norm["col_index"] = ci
+            columns.append(norm)
+        indexes = [c["col_index"] for c in columns]
+        need(len(indexes) == len(set(indexes)),
+             "col_index trung nhau: %s" % indexes)
+        width = max(indexes) + 1
+        need(sorted(indexes) == list(range(width)) or
+             sorted(indexes) == list(range(1, width)),
+             "col_index phai lien tu 0 hoac lien tu 1: %s" % sorted(indexes))
+
+        stt = raw_spec.get("stt") or {"mode": "none"}
+        need(isinstance(stt, dict) and set(stt) <= {"mode", "col_index"},
+             "stt chi cho phep {mode, col_index}")
+        mode = stt.get("mode") or "none"
+        need(mode in ("generated", "none"), "stt.mode khong hop le: %r" % mode)
+        stt_ci = stt.get("col_index")
+        if mode == "generated":
+            need(isinstance(stt_ci, int) and stt_ci >= 0,
+                 "stt.col_index bat buoc khi mode='generated'")
+            need(stt_ci not in indexes,
+                 "stt.col_index %s bi trung voi cot du lieu" % stt_ci)
+            width = max(width, stt_ci + 1)
+        raw_disc = raw_spec.get("discriminator")
+        discriminator = None
+        if raw_disc is not None:
+            need(isinstance(raw_disc, dict) and
+                 isinstance(raw_disc.get("tag"), str) and
+                 isinstance(raw_disc.get("values"), list) and
+                 raw_disc["values"],
+                 "discriminator can {tag, values[]}")
+            discriminator = {"tag": raw_disc["tag"],
+                             "values": [str(v) for v in raw_disc["values"]]}
+        raw_totals = raw_spec.get("totals") or []
+        need(isinstance(raw_totals, (list, tuple)), "totals phai la list")
+        need(not raw_totals,
+             "nested-grid v1 khong tinh target tong trong ban (hang tong phap "
+             "ly thuoc pham vi nguon phap ly BLOCKED) — de totals=[] ")
+        common.update({
+            "header_rows": header_rows, "columns": columns, "width": width,
+            "stt": {"mode": mode,
+                    "col_index": stt_ci if mode == "generated" else None},
+            "discriminator": discriminator, "totals": [],
+        })
+        return common
+
+    if kind == KIND_OUTPUT_TABLE:
+        sem = raw_spec.get("semantic_key")
+        need(isinstance(sem, str) and _ID_RE.match(sem),
+             "semantic_key khong hop le: %r" % (sem,))
+        grid = raw_spec.get("grid")
+        need(isinstance(grid, dict), "grid phai la object")
+        need(set(grid) <= {"rows", "cols", "labels"},
+             "grid co truong le: %s" % sorted(set(grid)))
+        rows, ncols = grid.get("rows"), grid.get("cols")
+        need(isinstance(rows, int) and rows > 0, "grid.rows phai la int >0")
+        need(isinstance(ncols, int) and ncols > 0, "grid.cols phai la int >0")
+        labels = grid.get("labels")
+        need(isinstance(labels, list),
+             "grid.labels phai la list (string tung hang hoặc ma tran)")
+        if any(isinstance(x, list) for x in labels):
+            need(all(isinstance(x, list) and len(x) == ncols for x in labels),
+                 "grid.labels dang ma tran phai du %d cot moi hang" % ncols)
+            need(len(labels) == rows, "grid.labels thieu hang")
+        else:
+            need(all(isinstance(x, str) for x in labels),
+                 "grid.labels phai gom string")
+            need(len(labels) <= rows,
+                 "grid.labels nhieu hon grid.rows=%d" % rows)
+            need(ncols == 1 or len(labels) == 0,
+                 "grid.labels dang flat chi dung voi grid.cols=1")
+        common.update({
+            "semantic_key": sem,
+            "grid": {"rows": rows, "cols": ncols, "labels": labels},
+        })
+        return common
+
+    fail("kind khong ho tro: %r" % (kind,))
+    raise AssertionError("unreachable")
 
 
 def load_form_spec(form_id):
@@ -660,6 +989,10 @@ def load_form_spec(form_id):
     ngược lại {"entries": [entry...], "specs_by_id": {spec_id: spec}} với
     entry là dict giống phần tử REBUILD_TABLES (trừ "spec" đã tách ra).
     Kết quả cache theo form_id trong tiến trình.
+
+    Entry khai báo "legal_status": {"blocked": true, ...} vẫn được validate
+    NHƯNG bị BỎ QUA hoàn toàn lúc rebuild (không chạm document) — cơ chế
+    isolate đúng section BLOCKED_LEGAL_REVIEW, không suy đoán pháp lý.
     """
     if form_id in _form_spec_cache:
         return _form_spec_cache[form_id]
@@ -678,25 +1011,65 @@ def load_form_spec(form_id):
                   "REBUILD_TABLES -> dung file JSON" % (form_id, path_used.name))
         if raw.get("gap_nghiepvu"):
             print("[form_specs] %s GAP NGHIEPVU: %s" % (form_id, raw["gap_nghiepvu"]))
+        allowed_root = {"form_id", "group", "note", "gap_nghiepvu", "tables"}
+        extra_root = set(raw) - allowed_root
+        if extra_root:
+            raise ValueError(
+                "[form_specs] %s (%s): truong root khong duoc phep: %s"
+                % (form_id, path_used, sorted(extra_root)))
         specs_by_id = {}
         entries = []
         for e in raw.get("tables") or []:
-            s = _json_spec(e["spec"])
+            s_kind = e.get("kind") or KIND_LIST
+            if s_kind not in SECTION_KINDS:
+                raise ValueError(
+                    "[form_specs] %s (%s): kind khong hop le: %r "
+                    "(cho phep: %s)" % (form_id, path_used,
+                                        s_kind, ", ".join(SECTION_KINDS)))
+            if s_kind != KIND_LIST:
+                unknown = set(e) - _ENTRY_KEYS[s_kind]
+                if unknown:
+                    raise ValueError(
+                        "[form_specs] %s (%s): entry kind=%s co truong le: %s"
+                        % (form_id, path_used, s_kind, sorted(unknown)))
+            s = _json_spec(e["spec"], form_id)
             specs_by_id[s["id"]] = s
             ent = {k: v for k, v in e.items() if k != "spec"}
             ent["spec"] = s["id"]  # giữ hình dạng entry như REBUILD_TABLES inline
+            if s.get("kind", KIND_LIST) != KIND_LIST:
+                legal = _validate_legal_status(ent, form_id, s["id"])
+                ent["_blocked"] = bool(legal.get("blocked"))
+                if ent["_blocked"]:
+                    print("[form_specs] %s/%s BLOCKED LEGAL REVIEW (%s) -> "
+                          "BO QUA rebuild entry nay"
+                          % (form_id, s["id"], legal.get("ref") or "ref chua ghi"))
             entries.append(ent)
         # Occurrence (P1): validate som de chan spec sai truoc khi sua document.
         # Spec KHONG co "occurrences" khong bi anh huong gi (backward-compat).
-        all_loops = {s["loop"] for s in specs_by_id.values()}
+        all_loops = {s["loop"] for s in specs_by_id.values() if "loop" in s}
         for ent in entries:
-            if ent.get("occurrences"):
-                # occurrence_id duoc phep trung voi loop cua CHINH entry do
-                # (occ_spec["loop"] bi ghi de bang occurrence_id khi rebuild);
-                # chi cam trung ten loop cua entry/spec khac trong cung form.
-                own_loop = specs_by_id.get(ent.get("spec"), {}).get("loop")
-                ent["_occurrences"] = table_occurrences.validate_occurrences(
-                    ent["occurrences"], all_loops - {own_loop}, form_id)
+            if not ent.get("occurrences"):
+                continue
+            spec_k = specs_by_id[ent["spec"]].get("kind", KIND_LIST)
+            if spec_k not in (KIND_LIST, KIND_NESTED_GRID):
+                raise ValueError(
+                    "[form_specs] %s/%s: chi list/nested-grid duoc khai bao "
+                    "'occurrences'" % (form_id, spec_k))
+            nth_set = [c.get("nth", 1) for c in ent["occurrences"]]
+            if spec_k != KIND_LIST and sorted(nth_set) != list(
+                    range(1, len(nth_set) + 1)):
+                # heading giong het nhau nen nth la dinh danh duy nhat; bo sot
+                # mot lan xuat hien nghia la mot bang bi bo lung -> chan som.
+                raise ValueError(
+                    "[form_specs] %s/%s: nth phai lien tu 1..%d de dinh vi "
+                    "dung tung lan xuat hien, nhan %s"
+                    % (form_id, ent["spec"], len(nth_set), sorted(nth_set)))
+            # occurrence_id duoc phep trung voi loop cua CHINH entry do
+            # (occ_spec["loop"] bi ghi de bang occurrence_id khi rebuild);
+            # chi cam trung ten loop cua entry/spec khac trong cung form.
+            own_loop = specs_by_id.get(ent.get("spec"), {}).get("loop")
+            ent["_occurrences"] = table_occurrences.validate_occurrences(
+                ent["occurrences"], all_loops - {own_loop}, form_id)
         result = {"entries": entries, "specs_by_id": specs_by_id}
     _form_spec_cache[form_id] = result
     return result
@@ -784,6 +1157,221 @@ def _build_list_table(doc, headers, spec):
     return tbl
 
 
+# ---------------------------------------------------------------------------
+# Builder cho 3 kind mới. Mọi bảng đều dựng trong bộ nhớ rồi do
+# rebuild_list_tables chèn đúng điểm neo — không đụng file nguồn.
+# ---------------------------------------------------------------------------
+
+def _new_grid(doc, nrows, ncols):
+    """Bảng rỗng có viền, cùng style nền của bảng danh sách hiện có."""
+    tbl = doc.add_table(rows=nrows, cols=ncols)
+    _set_table_borders(tbl)
+    return tbl
+
+
+def _cell_set_text(cell, text, bold=False):
+    """Ghi text vào ô (xoá sạch paragraph/run dư)."""
+    paras = cell.paragraphs
+    for extra in paras[1:]:
+        extra._p.getparent().remove(extra._p)
+    p0 = paras[0]
+    for run in p0.runs:
+        run.text = ""
+    if text:
+        run = p0.add_run(text)
+        run.bold = bold
+    return p0
+
+
+def _fill_header_spans(tbl, header_rows):
+    """Điền N HÀNG TIÊU ĐỀ nhiều tầng với rowspan/colspan vật lý.
+
+    Tiling quét theo thứ tự trên->dưới, trái->phải: ô nào đã bị hàng trước
+    rowspan chiếm thì bỏ qua; ô còn trống được merge hình chữ nhật
+    (gridSpan + vMerge qua python-docx cell.merge) đúng span khai báo.
+    Sai tiling -> raise ValueError (không bao giờ làm phẳng mất cột).
+    """
+    occupied = set()
+    for ri, row_cells in enumerate(header_rows):
+        cursor = 0
+        for src in row_cells:
+            while (ri, cursor) in occupied and cursor < tbl_cols_count(tbl):
+                cursor += 1
+            rs, cs = src["rowspan"], src["colspan"]
+            if cursor + cs > tbl_cols_count(tbl) or ri + rs > len(header_rows):
+                raise ValueError(
+                    "[form_specs] header_rows: o %r vuot ra ngoai luoi vat ly "
+                    "%dx%d" % (src.get("text"), len(header_rows),
+                               tbl_cols_count(tbl)))
+            base = tbl.rows[ri].cells[cursor]
+            if rs > 1 or cs > 1:
+                end_cell = tbl.rows[ri + rs - 1].cells[cursor + cs - 1]
+                base = base.merge(end_cell)
+            for r in range(ri, ri + rs):
+                for c in range(cursor, cursor + cs):
+                    if (r, c) in occupied:
+                        raise ValueError(
+                            "[form_specs] header_rows: span de` len nhau tai "
+                            "(%d,%d)" % (r, c))
+                    occupied.add((r, c))
+            _cell_set_text(base, src["text"], bold=True)
+            cursor += cs
+    missing = [(r, c) for r in range(len(header_rows))
+               for c in range(tbl_cols_count(tbl)) if (r, c) not in occupied]
+    if missing:
+        raise ValueError(
+            "[form_specs] header_rows khong phu het luoi vat ly, thieu %d o "
+            "vd %s" % (len(missing), missing[:6]))
+    return tbl
+
+
+def tbl_cols_count(tbl):
+    """Số cột vật lý của bảng (đếm con w:gridCol của w:tblGrid)."""
+    grid = tbl._tbl.find(qn("w:tblGrid"))
+    if grid is None:
+        return 0
+    return len([el for el in grid.iterchildren() if el.tag == qn("w:gridCol")])
+
+
+def _build_fixed_matrix_table(doc, spec):
+    """fixed-matrix: hàng tiêu đề + TRỌN các dòng pháp lý khai báo.
+
+    Mỗi ô giá trị được gắn sẵn the `"<semantic_key>.<row_id>.<tag>"`; ô tổng
+    thuộc dòng output_only cũng được gắn the để engine TÍNH LẠI lúc export
+    (không tin giá trị lưu trong draft).
+    """
+    cols = spec["columns"]
+    rows = spec["fixed_rows"]
+    ncols = len(cols)
+    tbl = _new_grid(doc, len(rows) + 1, ncols)
+    for ci, col in enumerate(cols):
+        _cell_set_text(tbl.rows[0].cells[ci], col["header"], bold=True)
+    sem = spec["semantic_key"]
+    for ri, row in enumerate(rows):
+        cells = tbl.rows[ri + 1].cells
+        for ci, col in enumerate(cols):
+            tag = col["tag"]
+            if tag is None:
+                _cell_set_text(cells[ci], row["label"] if ci == 0 else "")
+                continue
+            _cell_set_text(cells[ci], "{%s.%s.%s}" % (sem, row["id"], tag))
+    return tbl
+
+
+def _build_nested_grid_table(doc, spec):
+    """nested-grid: header_rows nhiều tầng (rowspan/colspan) + hàng mẫu lặp.
+
+    Cột dữ liệu giữ NGUYÊN vị trí vật lý col_index; STT tự sinh ở stt.col_index;
+    cột không gắn the vẫn tồn tại như một cột vật lý (KHÔNG làm phẳng mất cột).
+    """
+    width = spec["width"]
+    n_blank = REBUILD_BLANK_ROWS
+    tbl = _new_grid(doc, len(spec["header_rows"]) + n_blank + 1, width)
+    _fill_header_spans(tbl, spec["header_rows"])
+    tagged = {c["col_index"]: c["tag"] for c in spec["columns"]}
+    stt_ci = spec["stt"]["col_index"] if spec["stt"]["mode"] == "generated" \
+        else None
+    open_candidates = ([stt_ci] if stt_ci is not None else []) + \
+        [c for c in sorted(tagged)]
+    open_c = min(open_candidates) if open_candidates else None
+    close_c = max(tagged) if tagged else None
+    tpl_row = tbl.rows[-1]
+    for c in range(width):
+        txt = ""
+        if c is not None and c == open_c:
+            txt += "{#%s}" % spec["loop"]
+        if stt_ci is not None and c == stt_ci:
+            txt += "{_stt}"
+        if c in tagged:
+            txt += "{%s}" % tagged[c]
+        if c is not None and c == close_c:
+            txt += "{/%s}" % spec["loop"]
+        if txt:
+            _cell_set_text(tpl_row.cells[c], txt)
+    return tbl
+
+
+def _build_output_table_grid(doc, spec):
+    """output-table: lưới chỉ để in/ký — KHÔNG the input nào."""
+    grid = spec["grid"]
+    labels = grid["labels"]
+    matrix = all(isinstance(x, list) for x in labels)
+
+    def label_at(r, c):
+        if not labels:
+            return ""
+        if matrix:
+            return labels[r][c] if r < len(labels) else ""
+        return labels[r] if c == 0 else ""
+
+    tbl = _new_grid(doc, grid["rows"], grid["cols"])
+    for r in range(grid["rows"]):
+        for c in range(grid["cols"]):
+            text = label_at(r, c)
+            if text:
+                _cell_set_text(tbl.rows[r].cells[c], text, bold=True)
+    return tbl
+
+
+COND_MARKER_RE = re.compile(r"^[A-Za-z0-9_]+$")
+
+
+def _insert_cond_markers(tbl_element, flag):
+    """Bọc bảng vừa dựng bằng cặp paragraph marker `{?flag}` ... `{/flag}`
+    (contract P1.2 Option D dùng chung với PLI_M72): docx_render chỉ xuất
+    vùng khi data[flag] truthy, docx_to_blocks gắn `cond` vào blocks.
+    Marker luôn là CON TRỰC TIẾP của body và luôn cân đối."""
+    if not COND_MARKER_RE.match(flag or ""):
+        raise ValueError("[form_specs] cond_flag khong hop le: %r" % (flag,))
+    spacer = tbl_element.getnext()  # đoạn trống chèn kèm sau bảng
+
+    def marker(close):
+        p = OxmlElement("w:p")
+        r_ = OxmlElement("w:r")
+        t = OxmlElement("w:t")
+        t.set(qn("xml:space"), "preserve")
+        t.text = ("{/%s}" if close else "{?%s}") % flag
+        r_.append(t)
+        p.append(r_)
+        return p
+
+    open_p = marker(False)
+    close_p = marker(True)
+    if spacer is None:
+        tbl_element.addnext(close_p)
+    else:
+        spacer.addnext(close_p)
+    tbl_element.addprevious(open_p)
+    return open_p, close_p
+
+
+GRID_META_TEMP_ATTR = "{urn:orca:p1b-temp}section_meta"
+
+
+def _mark_grid_meta(tbl_element, info):
+    """Thuộc tính XML tạm mang metadata cấu trúc của bảng kind mới để
+    process_form map bảng -> section_spec khi gắn the/đăng ký form_maps.
+    Bị xoá trước khi lưu template (xem _scrub_occurrence_attrs)."""
+    tbl_element.set(GRID_META_TEMP_ATTR, json.dumps(info, ensure_ascii=False))
+
+
+def _pop_grid_meta(table):
+    """Đọc + xoá thuộc tính tạm; trả dict hoặc None."""
+    el = table._tbl
+    raw = el.get(GRID_META_TEMP_ATTR)
+    if raw is None:
+        return None
+    del el.attrib[GRID_META_TEMP_ATTR]
+    try:
+        info = json.loads(raw)
+    except ValueError:
+        print("[rebuild] thuoc tinh meta tam hong, bo qua: %r" % raw[:100])
+        return None
+    if isinstance(info, dict) and info.get("kind") in SECTION_KINDS:
+        return info
+    return None
+
+
 def rebuild_list_tables(doc, form_id, ext=None):
     """Xoa paragraph tan du cua luoi cu va chen bang danh sach moi vao ban sao
     trong bo nhiem (khong ghi đè file nguồn). Chạy TRƯỚC khi gắn the.
@@ -825,6 +1413,8 @@ def rebuild_list_tables(doc, form_id, ext=None):
     # ngoài vùng).
     protected = set()
     for e in entries:
+        if e.get("_blocked"):
+            continue  # BLOCKED: entry này không được đụng document
         trim_pats = e.get("trim") or []
         if not trim_pats:
             continue
@@ -861,6 +1451,8 @@ def rebuild_list_tables(doc, form_id, ext=None):
         drop_pats = []
     scoped = []  # (start, end, pats) theo chỉ số paragraph
     for e in entries:
+        if e.get("_blocked"):
+            continue  # BLOCKED: entry này không được đụng document
         pats = list(e.get("drop") or [])
         if e.get("_occurrences"):
             regs = _entry_ok_regions(e)
@@ -901,14 +1493,17 @@ def rebuild_list_tables(doc, form_id, ext=None):
     # loop/semantic_key = occurrence_id; đánh dấu XML tạm để process_form
     # map đúng bảng -> occurrence khi gắn the.
     for e, reg in sorted(occ_plan, key=lambda item: item[1]["head"]):
+        if e.get("_blocked"):
+            continue  # BLOCKED_LEGAL_REVIEW: không chạm document
         spec = resolve_rebuild_spec(e["spec"], ext)
         cfg = reg["cfg"]
+        kind = spec.get("kind", KIND_LIST)
         occ_spec = dict(spec)
         # Loop name mac dinh = occurrence_id; cho phep ghi de bang cfg["loop"]
         # de BAO TOAN canonical key (vd ds_nganh PLII_M02 vung C.3 giu ten
         # loop dung chung giua cac mau) trong khi semantic_key van rieng.
         occ_spec["loop"] = cfg.get("loop") or cfg["occurrence_id"]
-        tbl = _build_list_table(doc, e["headers"], occ_spec)
+        tbl = _build_kind_table(doc, occ_spec, e, kind)
         _mark_table_occurrence(tbl._tbl, {
             "occurrence_id": cfg["occurrence_id"],
             "sync_group": cfg.get("sync_group"),
@@ -916,6 +1511,18 @@ def rebuild_list_tables(doc, form_id, ext=None):
             # bao toan canonical loop name (vd ds_nganh) neu co khai bao
             "loop": cfg.get("loop"),
         })
+        if kind != KIND_LIST:
+            # metadata cấu trúc của kind mới: process_form đăng ký section_spec
+            # (header nhiều tầng/totals/cột vật lý) cho converter + export.
+            _mark_grid_meta(tbl._tbl, {
+                "kind": kind,
+                "spec_id": spec["id"],
+                "section_id": spec.get("section_id") or spec["id"],
+                "occurrence_id": cfg["occurrence_id"],
+                "loop": occ_spec["loop"],
+                "semantic_key": cfg["occurrence_id"],
+                "spec": _grid_meta_payload(spec),
+            })
         head_para = paras[reg["head"]]
         if e.get("pos", "after") == "before":
             head_para._p.addprevious(tbl._tbl)
@@ -923,12 +1530,14 @@ def rebuild_list_tables(doc, form_id, ext=None):
             head_para._p.addnext(tbl._tbl)
         spacer = OxmlElement("w:p")
         tbl._tbl.addnext(spacer)
+        _maybe_wrap_cond(tbl._tbl, e, form_id, spec)
     # 3) chèn bảng mới tại điểm neo (entry legacy — bỏ qua entry occurrence
     # vì đã chèn ở bước 3a)
     for e in entries:
-        if e.get("_occurrences"):
+        if e.get("_occurrences") or e.get("_blocked"):
             continue
         spec = resolve_rebuild_spec(e["spec"], ext)
+        kind = spec.get("kind", KIND_LIST)
         anchor_p = None
         for para in _body_paragraphs(doc):
             if re.search(e["anchor"], _para_folded(para)):
@@ -937,13 +1546,103 @@ def rebuild_list_tables(doc, form_id, ext=None):
         if anchor_p is None:
             print("[rebuild] KHONG tim thay anchor cho %s: %r" % (form_id, e["anchor"]))
             continue
-        tbl = _build_list_table(doc, e["headers"], spec)
+        tbl = _build_kind_table(doc, spec, e, kind)
+        if kind != KIND_LIST:
+            _mark_grid_meta(tbl._tbl, {
+                "kind": kind,
+                "spec_id": spec["id"],
+                "section_id": spec.get("section_id") or spec["id"],
+                "semantic_key": spec.get("semantic_key") or spec["id"],
+                "loop": spec.get("loop"),
+                "spec": _grid_meta_payload(spec),
+            })
         if e.get("pos", "after") == "before":
             anchor_p._p.addprevious(tbl._tbl)
         else:
             anchor_p._p.addnext(tbl._tbl)
         spacer = OxmlElement("w:p")
         tbl._tbl.addnext(spacer)
+        _maybe_wrap_cond(tbl._tbl, e, form_id, spec)
+
+
+def _build_kind_table(doc, spec, entry, kind):
+    """Chọn builder đúng kind; kind legacy "list" giữ nguyên hành vi cũ."""
+    if kind == KIND_FIXED_MATRIX:
+        return _build_fixed_matrix_table(doc, spec)
+    if kind == KIND_NESTED_GRID:
+        return _build_nested_grid_table(doc, spec)
+    if kind == KIND_OUTPUT_TABLE:
+        return _build_output_table_grid(doc, spec)
+    return _build_list_table(doc, entry["headers"], spec)
+
+
+def _grid_meta_payload(spec):
+    """Phần metadata cấu trúc cần ghi vào form_maps cho converter/audit."""
+    kind = spec.get("kind", KIND_LIST)
+    if kind == KIND_FIXED_MATRIX:
+        return {
+            "columns": [{k: c[k] for k in
+                         ("header", "tag", "input_type", "computed",
+                          "output_only", "required")} for c in spec["columns"]],
+            "fixed_rows": [{"id": r["id"], "label": r["label"],
+                            "output_only": r["output_only"]}
+                           for r in spec["fixed_rows"]],
+            "totals": [dict(t) for t in spec.get("totals", [])],
+        }
+    if kind == KIND_NESTED_GRID:
+        return {
+            "header_rows": [[{"text": c["text"], "rowspan": c["rowspan"],
+                              "colspan": c["colspan"]}
+                             for c in row] for row in spec["header_rows"]],
+            "width": spec["width"],
+            "columns": [{k: c[k] for k in ("col_index", "tag", "required",
+                                           "input_type", "output_only")}
+                        for c in spec["columns"]],
+            "stt": dict(spec["stt"]),
+            "discriminator": (dict(spec["discriminator"])
+                              if spec.get("discriminator") else None),
+            "totals": [],
+        }
+    if kind == KIND_OUTPUT_TABLE:
+        return {"grid": {k: spec["grid"][k]
+                         for k in ("rows", "cols", "labels")},
+                "inputs": []}
+    raise ValueError("kind khong co grid meta payload: %r" % kind)
+
+
+def _header_layout(spec):
+    """Vị trí vật lý (col_index bắt đầu từ 0) của từng ô header_rows —
+    cùng thuật toán tiling với `headerLayout` của app_web/ui/nested-grid.js
+    để UI và DOCX không bao giờ lệch cột."""
+    occupied = set()
+    out = []
+    for ri, row in enumerate(spec["header_rows"]):
+        cursor = 0
+        cells = []
+        for src in row:
+            while (ri, cursor) in occupied:
+                cursor += 1
+            rs, cs = src["rowspan"], src["colspan"]
+            for r in range(ri, ri + rs):
+                for c in range(cursor, cursor + cs):
+                    occupied.add((r, c))
+            cells.append({"text": src["text"], "rowspan": rs,
+                          "colspan": cs, "col_index": cursor})
+            cursor += cs
+        out.append(cells)
+    return out
+
+
+def _maybe_wrap_cond(tbl_element, entry, form_id, spec):
+    """Bọc `{?cond_flag}` ... `{/cond_flag}` khi spec khai báo presence có
+    điều kiện. Đây là vùng do CHÍNH builder vừa dựng nên việc bọc luôn cân
+    đối; converter/engine dùng chung cơ chế marker của PLI_M72."""
+    flag = entry.get("cond_flag")
+    if not flag:
+        return
+    open_p, close_p = _insert_cond_markers(tbl_element, flag)
+    print("[rebuild] %s/%s: boc vung bang voi {?%s}...{/%s}"
+          % (form_id, spec.get("id"), flag, flag))
 
 
 def detect_dynamic(table, extra_specs=()):
@@ -962,6 +1661,10 @@ def detect_dynamic(table, extra_specs=()):
             texts.append(fold(re.sub(r"\s+", " ", cell.text)).strip())
         joined = set(t for t in texts if t)
         for spec in list(extra_specs) + list(DYNAMIC_TABLES):
+            # kind mới (fixed-matrix/nested-grid/output-table) KHÔNG có
+            # "detect" — bảng của chúng được nhận diện qua meta XML tạm.
+            if not spec.get("detect"):
+                continue
             if spec["detect"] <= joined:
                 return (spec, hdr_row)
     return None
@@ -1111,6 +1814,7 @@ def process_form(path, titles, coverage):
     rebuild_list_tables(doc, form_id, ext)
     fields = []          # [{key,label,(type)}]
     dyn_tables = []
+    section_specs = []   # metadata cấu trúc của kind mới (fixed-matrix, ...)
     unmatched = []
 
     def add_field(key, label, type_=None):
@@ -1119,6 +1823,80 @@ def process_form(path, titles, coverage):
             if type_:
                 entry["type"] = type_
             fields.append(entry)
+
+    def _register_section_spec(info, table, tbl_idx, fid, out, register_field):
+        """Đăng ký bảng dựng từ kind mới: section_spec (cấu trúc) + fields.
+
+        Chỉ ô người dùng nhập được đăng ký thành field form_maps; ô computed
+        / output_only KHÔNG được đăng ký để không có dữ liệu giả nào ghi đè
+        kết quả tính lại lúc export."""
+        spec = info["spec"]
+        kind = info["kind"]
+        sem = info.get("semantic_key") or info.get("occurrence_id")
+        base = {"kind": kind, "id": info["spec_id"], "semantic_key": sem,
+                "section_id": info.get("section_id") or info["spec_id"],
+                "table_index": tbl_idx}
+        if kind == KIND_FIXED_MATRIX:
+            cols = spec["columns"]
+            base["columns"] = [{"col": ci, "header": c["header"],
+                                "tag": c["tag"], "input_type": c["input_type"],
+                                "computed": c["computed"],
+                                "output_only": c["output_only"],
+                                "required": c["required"]}
+                               for ci, c in enumerate(cols)]
+            base["fixed_rows"] = [dict(r) for r in spec["fixed_rows"]]
+            base["totals"] = [dict(t) for t in spec["totals"]]
+            editable_rows = {r["id"] for r in spec["fixed_rows"]
+                             if not r["output_only"]}
+            for c in cols:
+                tag = c["tag"]
+                if not tag or c["computed"]:
+                    continue
+                for r in sorted(editable_rows):
+                    register_field("%s.%s.%s" % (sem, r, tag), "%s.%s" % (
+                        r, tag))
+        elif kind == KIND_NESTED_GRID:
+            loop_name = info.get("loop") or sem
+            header_texts = [[c["text"] for c in row]
+                            for row in spec["header_rows"]]
+            base.update({
+                "loop": loop_name,
+                "header_rows": [[{k: cell[k] for k in
+                                  ("text", "rowspan", "colspan", "col_index")}
+                                 for cell in row]
+                                for row in _header_layout(spec)],
+                "header_texts": header_texts,
+                "width": spec["width"],
+                "columns": [dict(c) for c in spec["columns"]],
+                "stt": dict(spec["stt"]),
+                "discriminator": (dict(spec["discriminator"])
+                                  if spec.get("discriminator") else None),
+                "totals": [],
+            })
+            # dòng dữ liệu trong dynamic_tables giữ đúng hình dạng cũ để UI/
+            # GRID_META đọc không đổi (kèm semantic_key khi là occurrence).
+            dyn = {
+                "id": info["spec_id"], "table_index": tbl_idx,
+                "template_row": len(table.rows) - 1,
+                "loop": loop_name,
+                "columns": [{"col": c["col_index"], "tag": c["tag"]}
+                            for c in spec["columns"]],
+            }
+            dyn["header_row"] = 0
+            if info.get("occurrence_id"):
+                dyn["semantic_key"] = info["occurrence_id"]
+                dyn["occurrence_id"] = info["occurrence_id"]
+                if info.get("sync_group"):
+                    dyn["sync_group"] = info["sync_group"]
+            dyn_tables.append(dyn)
+            for c in spec["columns"]:
+                if c["tag"] and not c["output_only"]:
+                    register_field("%s.%s" % (loop_name, c["tag"]), c["tag"])
+        else:  # output-table
+            base["grid"] = {k: spec["grid"][k] for k in ("rows", "cols",
+                                                         "labels")}
+            base["inputs"] = []
+        out.append(base)
 
     body_blocks = list(doc.element.body.iterchildren())
 
@@ -1202,6 +1980,14 @@ def process_form(path, titles, coverage):
             tbl_idx += 1
             from docx.table import Table
             table = Table(child, doc)
+            grid_info = _pop_grid_meta(table)
+            if grid_info is not None:
+                # Bảng dựng từ kind mới (fixed-matrix / nested-grid /
+                # output-table): the đã được builder gắn sẵn — chỉ đăng ký
+                # metadata cấu trúc + fields, KHÔNG đi qua nhánh detect/tag cũ.
+                _register_section_spec(grid_info, table, tbl_idx, form_id,
+                                       section_specs, add_field)
+                continue
             det = detect_dynamic(
                 table, tuple(ext["specs_by_id"].values()) if ext else ())
             # Occurrence (P1): bảng do rebuild chèn theo "occurrences" mang
@@ -1332,6 +2118,8 @@ def process_form(path, titles, coverage):
     }
     if dyn_tables:
         meta["dynamic_tables"] = dyn_tables
+    if section_specs:
+        meta["section_specs"] = section_specs
     return meta, unmatched
 
 

@@ -1,0 +1,217 @@
+{
+  "_contract": [
+    "table-kinds.v1 — hợp đồng khai báo SECTION KIND cho pipeline generator/export",
+    "(Lane B2, base ab3c1f1). File này là NGUỒN THẬT cho các trường được chấp nhận;",
+    "validator cứng nằm trong tools/build_form_maps.py (_validate_kind_spec /",
+    "load_form_spec) và CHẠY TRƯỚC khi đụng tới document.",
+    "",
+    "Nơi đặt: tools/form_specs/<nhóm>/<FORM_ID>.json với \"tables\": [entry...] và",
+    "entry mang \"kind\" trong {list, fixed-matrix, nested-grid, output-table}.",
+    "\"list\" là kind legacy (mặc định): giữ nguyên hành vi cũ như tài liệu",
+    "tools/form_specs/README.md mô tả. Ba kind còn lại là phần mới.",
+    "",
+    "Rule số 0: một section đang BLOCKED_LEGAL_REVIEW PHẢI ghi",
+    "\"legal_status\": {\"blocked\": true, \"ref\": ..., \"question\": ...}.",
+    "Khi đó build vẫn validate cấu trúc spec nhưng BỎ QUA hoàn toàn lúc rebuild",
+    "(in '[form_specs] <form>/<spec> BLOCKED LEGAL REVIEW (...) -> BO QUA').",
+    "Không suy đoán nội dung pháp lý; owner mở chốt bằng cách đặt blocked=false."
+  ],
+  "version": "v1",
+  "owner_lane": "B2 generator + DOCX/export",
+  "spec_fields_common": {
+    "id": "string khớp [A-Za-z0-9_.]+ — duy nhất trong file spec",
+    "section_id": "tùy chọn; định danh theo app/data/table_specs/manifest.json (mặc định = id)",
+    "semantic_key": "key draft/export — với kind dùng occurrences thì semantic_key = occurrence_id"
+  },
+  "kind_default": "list",
+  "entry_common_fields": {
+    "pos": {
+      "type": "string enum(after|before)",
+      "default": "after",
+      "meaning": "chèn bảng TRƯỚC hoặc SAU paragraph khớp anchor"
+    },
+    "anchor": {
+      "type": "regex trên text đã fold của paragraph body",
+      "required": true,
+      "meaning": "điểm neo duy nhất định vị bảng; KHÔNG dùng để match heading mơ hồ — với section cùng tên lặp lại hãy dùng occurrences[nth]"
+    },
+    "cond_flag": {
+      "type": "string khớp [A-Za-z0-9_]+ hoặc bỏ qua",
+      "meaning": "bọc bảng vừa dựng bằng cặp marker {?flag}...{/flag} (cơ chế P1.2 Option D của PLI_M72): engine chỉ xuất vùng khi data[flag] truthy, converter gắn cond vào blocks"
+    },
+    "drop/drop_until/no_default_drops/trim/keep_from": {
+      "type": "như kind legacy",
+      "boundary_rule": "drop KHÔNG bao giờ xoá w:tbl hay đoạn thuộc bảng khác; kèm drop_until thì chỉ áp dụng trong khoảng [anchor, drop_until) để không nuốt vùng kế"
+    },
+    "occurrences": {
+      "type": "chỉ cho kind=list và kind=nested-grid",
+      "note": "nth phải liên tục 1..N (giới hạn mới cho kind mới); occurrence_id phải duy nhất trong form"
+    },
+    "legal_status": {
+      "type": "object {blocked:bool, ref?:string, question?:string}",
+      "rule": "blocked=true -> entry bị bỏ qua hoàn toàn khi rebuild"
+    }
+  },
+  "fixed_matrix": {
+    "use_for": "bảng dòng pháp lý cố định người dùng chỉ điền giá trị: nguồn vốn điều lệ, cơ cấu cổ phần, nhóm lựa chọn checkbox/radio",
+    "spec_fields": {
+      "kind": "\"fixed-matrix\"",
+      "semantic_key": "string khớp [A-Za-z0-9_]+ — key draft/values['<semantic_key>.<row_id>.<tag>']",
+      "columns": [
+        "mỗi phần tử {header, tag|null, input_type?, computed?, output_only?, required?}",
+        "tối đa 1 cột tag=null và nếu có phải ở chỉ số 0 (cột nhãn readonly)",
+        "input_type ∈ text|money|percent|readonly|checkbox|radio|vsic|outputOnly",
+        "computed=true -> output_only=true tự động"
+      ],
+      "fixed_rows": [
+        "mỗi phần tử {id, label, output_only?}",
+        "id là key draft; label in vào cột nhãn; dòng tổng bắt buộc output_only=true"
+      ],
+      "totals": [
+        "{formula: \"sum(<tag>)\", target_row, target_tag}",
+        "target_row phải là dòng fixed_rows có output_only=true",
+        "target_tag phải là tag input column hợp lệ"
+      ]
+    },
+    "generator_behaviour": [
+      "dựng w:tbl đủ mọi dòng pháp lý (kể cả khi trống), không có nút thao tác dòng",
+      "mỗi ô giá trị gắn sẵn the {<semantic_key>.<row_id>.<tag>}",
+      "ô tổng cũng gắn the vì engine TÍNH LẠI lúc export",
+      "fields trong form_maps chỉ đăng ký ô người dùng nhập (trừ computed/output_only)"
+    ],
+    "export_behaviour": [
+      "tools/docx_render.recompute_totals(data, tables_meta) tính tổng từ chính các ô dữ liệu, luôn GHI ĐÈ stored value của ô tổng",
+      "stored != computed -> raise ExportTotalsError code EXPORT_TOTALS_RECOMPUTE_CONFLICT (strict=True mặc định)",
+      "formula không khớp sum(<tag>) hoặc tag lạ -> EXPORT_TOTALS_RECOMPUTE_CONFLICT với code FORMULA_UNSUPPORTED",
+      "render(..., tables_meta=...) làm việc trên bản sao sâu, không mutate payload caller",
+      "lớp này KHÔNG thay thế chỗ chốt duy nhất của đường export thật: ExportLoopContractConflict/exportLoopsStrict (app_web/ui/app.js, code EXPORT_LOOP_CONTRACT_CONFLICT)"
+    ],
+    "format_total": "số nguyên không nhóm hàng nghìn; số lẻ cắt zero-dư (locale-free)"
+  },
+  "nested_grid": {
+    "use_for": "bảng lặp nhiều tầng tiêu đề (Phần vốn góp gộp VNĐ/ngoại tệ...), thành viên/cổ đông theo biến thể loại hình",
+    "spec_fields": {
+      "kind": "\"nested-grid\"",
+      "semantic_key": "key UI/draft; khi dùng occurrences thì semantic_key = occurrence_id",
+      "loop": "tên loop docxtemplater; thiếu -> lấy bằng semantic_key",
+      "header_rows": [
+        "bắt buộc >=1 hàng; mỗi hàng là [{text, rowspan?, colspan?}]",
+        "span phải phủ kín đúng width x số hàng tiêu đề — thừa/thiếu đều bị validator chặn"
+      ],
+      "columns": [
+        "mỗi phần tử {header, tag, col_index, required?, input_type?, output_only?}",
+        "col_index là vị trí CỘT VẬT LÝ bắt đầu từ 0 (hoặc 1 nếu có cột STT ở 0) — bắt buộc, unique, liền kề"
+      ],
+      "stt": "{mode: generated|none, col_index} — generated sẽ gắn {_stt} engine tại col_index đó",
+      "discriminator": "{tag, values[]} khai báo nghĩa dòng (vd loai_dong: ndd_pl|ndd_uy_quyen); metadata cho UI/validation",
+      "totals": "phải là [] ở v1: hàng tổng trong bảng nested thuộc phạm vi nguồn pháp lý chưa đối chiếu (D1/D3) — khai báo khác rỗng bị từ chối"
+    },
+    "generator_behaviour": [
+      "header nhiều tầng dựng bằng gridSpan/vMerge thật (_fill_header_spans tiling quét trên->dưới, trái->phải), KHÔNG làm phẳng mất cột",
+      "hàng mẫu cuối giữ {_stt}, {#loop} ở cột đầu tiên có the, {/loop} ở cột cuối có the",
+      "cột không gắn the vẫn tồn tại như cột vật lý (tblGrid giữ nguyên số gridCol)",
+      "converter kiểm định lại bằng annotate_and_verify_section_specs: sai vị trí the/mất cột/span lệch -> exit != 0"
+    ],
+    "docx_export_check": "w:tbl xuất ra phải giữ nguyên số gridCol mỗi bảng; tổng gridSpan từng hàng = width; rowspan/colspan header không đổi sau render"
+  },
+  "output_table": {
+    "use_for": "lưới do cơ quan phát hành hoặc chỉ để in/ký (PLI_M70/M71 chữ ký, thông báo CQB)",
+    "spec_fields": {
+      "kind": "\"output-table\"",
+      "semantic_key": "key section cho audit/UI",
+      "grid": "{rows:int>0, cols:int>0, labels:[string,...] hoặc ma trận [[string]]}"
+    },
+    "behaviour": [
+      "KHÔNG sinh bất kỳ input nào; label in đậm vào ô tương ứng",
+      "grid PHẢI còn nguyên trong DOCX dù draft không có dữ liệu nào (không bị coi là loop rỗng nên không bị xoá hàng)",
+      "cond_flag vẫn dùng được: {'?flag'} đúng nghĩa presence có điều kiện",
+      "converter đánh dấu block outputOnly=true và từ chối block nào chứa the input"
+    ]
+  },
+  "examples": {
+    "_note": "Mỗi instance dưới đây PHẢI đi qua được validator của tools/build_form_maps._json_spec() — tools/test_generator_deep_idempotency.py chốt điều này bằng mệnh đề [SCH].",
+    "fixed-matrix": {
+      "kind": "fixed-matrix",
+      "pos": "after",
+      "anchor": "^6\\. nguon von dieu le",
+      "no_default_drops": true,
+      "drop_until": "^7\\. bao hiem xa hoi",
+      "drop": ["^loai nguon von$", "^ty le \\(%\\)$"],
+      "spec": {
+        "id": "nguon_von_dieule_demo",
+        "kind": "fixed-matrix",
+        "semantic_key": "nguon_von_dieu_le_demo",
+        "columns": [
+          {"header": "Loại nguồn vốn", "tag": null, "input_type": "readonly"},
+          {"header": "Số tiền (bằng số; VNĐ)", "tag": "so_tien_vnd",
+           "input_type": "money"},
+          {"header": "Tỷ lệ (%)", "tag": "ty_le", "input_type": "percent",
+           "computed": true}
+        ],
+        "fixed_rows": [
+          {"id": "von_tu_nhan", "label": "Vốn tư nhân"},
+          {"id": "von_khac", "label": "Vốn khác"},
+          {"id": "tong_cong", "label": "Tổng cộng", "output_only": true}
+        ],
+        "totals": [{"formula": "sum(so_tien_vnd)", "target_row": "tong_cong",
+                    "target_tag": "so_tien_vnd"}]
+      }
+    },
+    "nested-grid": {
+      "kind": "nested-grid",
+      "pos": "after",
+      "anchor": "^5\\. nganh, nghe kinh doanh",
+      "occurrences": [{
+        "occurrence_id": "ds_tv_01", "loop": "ds_tv_01",
+        "match_heading": "5. Ngành, nghề kinh doanh", "nth": 1,
+        "end_markers": ["^6\\. von"]
+      }],
+      "spec": {
+        "id": "thanh_vien_demo",
+        "kind": "nested-grid",
+        "semantic_key": "ds_thanh_vien_demo",
+        "stt": {"mode": "generated", "col_index": 0},
+        "header_rows": [
+          [{"text": "STT", "rowspan": 2}, {"text": "Tên thành viên", "rowspan": 2},
+           {"text": "Phần vốn góp", "colspan": 2}],
+          [{"text": "VNĐ"}, {"text": "Ngoại tệ"}]
+        ],
+        "columns": [
+          {"header": "Tên thành viên", "tag": "ho_ten", "col_index": 1},
+          {"header": "VNĐ", "tag": "von_vnd", "col_index": 2},
+          {"header": "Ngoại tệ", "tag": "von_ntte", "col_index": 3}
+        ],
+        "totals": []
+      }
+    },
+    "output-table": {
+      "kind": "output-table",
+      "pos": "after",
+      "anchor": "^4\\. chu ky nguoi nop",
+      "cond_flag": "co_chi_tiet_cn",
+      "legal_status": {"blocked": false, "ref": "D6/O1 (ví dụ)"},
+      "spec": {
+        "id": "chu_ky_demo",
+        "kind": "output-table",
+        "semantic_key": "chu_ky_tiep_nhan_ho_so_demo",
+        "grid": {"rows": 2, "cols": 1,
+                 "labels": ["NGƯỜI NỘP (Ký và ghi họ tên)",
+                            "NGƯỜI NHẬN (Ký và ghi họ tên)"]}
+      }
+    }
+  },
+  "artifacts_downstream": {
+    "form_maps.json[fid].section_specs[]": [
+      "kind, id, section_id, semantic_key, table_index",
+      "fixed-matrix: columns[], fixed_rows[], totals[]",
+      "nested-grid: loop, header_rows[](kèm col_index vật lý), width, columns[], stt{}, discriminator, header_texts[]",
+      "output-table: grid{rows,cols,labels}, inputs=[] (luôn rỗng)"
+    ],
+    "blocks_json": {
+      "contract": "KHÔNG thêm khoá mới vào block JSON.",
+      "why": "tools/audit_blocks_check.py khóa ALLOWED_TOP_KEYS = {id, ten_mau, blocks, v} và ALLOWED_BLOCK_KEYS[t]; mọi khoá lạ đều FAIL audit contract. Converter chỉ KIỂM ĐỊNH cấu trúc và raise GridSpecMismatch, không ghi chú thích.",
+      "join_rule": "identity của bảng = thứ tự các block t∈{table,loop} trong blocks[] trùng với \"table_index\" của form_maps[fid][\"section_specs\"][k]. Runtime/UI (Lane B1) muốn marker trong block thì cần B3/owner mở rộng allowlist trước."
+    },
+    "docx_export_call": "write_rendered(template, data, out, tables_meta=form_maps[fid]['section_specs']) — tham số tuỳ chọn; callers cũ không truyền tables_meta thì hành vi byte-identical"
+  }
+}

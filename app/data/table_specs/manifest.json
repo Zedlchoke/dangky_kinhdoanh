@@ -1686,10 +1686,10 @@
     "p": 234,
     "chk": 35,
     "table": 0,
-    "loop": 1
+    "loop": 2
    },
    "detector": {
-    "p_signatures": 3,
+    "p_signatures": 2,
     "list_hints": 5,
     "hits": [
      {
@@ -1717,32 +1717,26 @@
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
      },
      {
-      "block": 126,
-      "stt": true,
-      "list_hint": false,
-      "excerpt": "STTTên người đại diện theo pháp luật/người đại diện theo ủy quyềnNgày, tháng, năm sinhGiới tínhSố, ngày cấp, cơ quan cấp"
-     },
-     {
-      "block": 151,
+      "block": 152,
       "stt": true,
       "list_hint": false,
       "excerpt": "STT"
      },
      {
-      "block": 180,
+      "block": 181,
       "stt": false,
       "list_hint": true,
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
      },
      {
-      "block": 190,
+      "block": 191,
       "stt": true,
       "list_hint": false,
       "excerpt": "STT"
      }
     ],
     "classifications": [],
-    "template_w_tbl": 1
+    "template_w_tbl": 2
    }
   },
   {
@@ -3258,10 +3252,10 @@
     "p": 218,
     "chk": 15,
     "table": 0,
-    "loop": 3
+    "loop": 4
    },
    "detector": {
-    "p_signatures": 5,
+    "p_signatures": 4,
     "list_hints": 1,
     "hits": [
      {
@@ -3289,20 +3283,14 @@
       "excerpt": "STT"
      },
      {
-      "block": 145,
-      "stt": true,
-      "list_hint": false,
-      "excerpt": "STTChủ sở hữu/Thành viên công ty TNHH/ Cổ đông là nhà đầu tư nước ngoài là tổ chứcTên người đại diện theo ủy quyềnNgày, "
-     },
-     {
-      "block": 157,
+      "block": 158,
       "stt": true,
       "list_hint": false,
       "excerpt": "STT"
      }
     ],
     "classifications": [],
-    "template_w_tbl": 3
+    "template_w_tbl": 4
    }
   },
   {
@@ -3483,10 +3471,10 @@
     "p": 63,
     "chk": 0,
     "table": 0,
-    "loop": 0
+    "loop": 1
    },
    "detector": {
-    "p_signatures": 1,
+    "p_signatures": 0,
     "list_hints": 1,
     "hits": [
      {
@@ -3494,16 +3482,10 @@
       "stt": false,
       "list_hint": true,
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
-     },
-     {
-      "block": 49,
-      "stt": true,
-      "list_hint": false,
-      "excerpt": "STTTên người đại diện theo pháp luật/người đại diện theo ủy quyềnNgày, tháng, năm sinhGiới tínhSố, ngày cấp, cơ quan cấp"
      }
     ],
     "classifications": [],
-    "template_w_tbl": 0
+    "template_w_tbl": 1
    }
   },
   {
@@ -5439,7 +5421,7 @@
     "loop": 1
    },
    "summary_counts_recount": {
-    "p": 144,
+    "p": 146,
     "chk": 0,
     "table": 0,
     "loop": 5
@@ -5461,13 +5443,13 @@
       "excerpt": "STTTên cổ đôngQuốc tịchSố Giấy tờ pháp lý của cá nhân/tổ chứcĐịa chỉ liên lạc đối với cá nhân; địa chỉ trụ sở chính đối "
      },
      {
-      "block": 111,
+      "block": 112,
       "stt": true,
       "list_hint": false,
       "excerpt": "STTTên cổ đôngQuốc tịchSố Giấy tờ pháp lý của cá nhân/tổ chứcĐịa chỉ liên lạc đối với cá nhân; địa chỉ trụ sở chính đối "
      },
      {
-      "block": 136,
+      "block": 138,
       "stt": true,
       "list_hint": false,
       "excerpt": "STT"

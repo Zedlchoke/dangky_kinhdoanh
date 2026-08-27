@@ -39,6 +39,15 @@ EVOLVED_FORMS = {
     # W1 regen 2026-08-27 (commit d48eb7d): chu ky tro thanh w:tbl that
     "PLI_M70": "W1: 2 paragraph chu ky -> w:tbl output-table 2x1 (spec publication)",
     "PLI_M71": "W1: heading chu ky -> w:tbl output-table 1x1, giu national-separator",
+    # R3B1 regen 2026-08-27 (merge 2202937/29b1efa): glue header nguoi/uy quyen
+    # tro thanh loop nested-grid that, theo specs D2.1/D2.4/D2.7 da chot
+    "PLI_M02":
+        "R3B1: them loop nested-grid ds_nddpl_uy_quyen_chu_so_huu (1->2 loop)",
+    "PLI_M12":
+        "R3B1: them loop nested-grid ds_ndd_uy_quyen_sau_thay_doi (3->4 loop)",
+    "PLI_M15":
+        "R3B1: glue header B49 -> loop nested-grid "
+        "ds_nddpl_uy_quyen_chu_so_huu_moi (0->1 loop)",
 }
 
 TABLE_KINDS = ("editable-grid", "fixed-matrix", "nested-grid", "output-table")

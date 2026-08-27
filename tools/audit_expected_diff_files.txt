@@ -89,6 +89,9 @@ app/data/blocks/PLI_M80.json
 app_web/test_p12_m72_selector.js
 app_web/dev/snapshot.html
 app_web/test_layout_l2_render.js
+app_web/test_grid.js
+app_web/ui/app.js
+app_web/ui/form-domain.js
 app_web/ui/render.js
 app_web/ui/style.css
 docs/decision_registry.md

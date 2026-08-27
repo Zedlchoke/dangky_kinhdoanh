@@ -186,3 +186,7 @@ tools/test_p2c_capital_specs.py
 tools/test_p2d_tax_specs.py
 tools/test_industry_household.py
 app_web/test_form_grid_meta.js
+
+# --- P2 rename M06 loop: sync 2 suite dem/contract cu ---
+app_web/test_acceptance.js
+app_web/test_loop_prod.js

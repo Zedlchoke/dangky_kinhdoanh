@@ -78,6 +78,38 @@ B3=QA test/fixture mới (không đụng production); Lead giữ regenerate + me
 > × 87 form, lưu theo pattern `_visual_layout/<batch>/`, auditor agent KHÁC lead
 > implement, đối chiếu DOCX qua Word→PDF→PNG khi mở Wave G.
 
+## Wave B/C — R2 platform integration @ main ab3c1f1→(mới) (2026-08-27)
+
+| Task | Owner | Commit/evidence | Trạng thái |
+|---|---|---|---|
+| B3 independent wiring gate | Lane B3 → Lead | `96cc12e`+`07808d0` merge `6486b5e`; gate 37 mệnh đề (S/A/B/C/D) | ✅ merged |
+| B1 runtime wiring | Lane B1 → Lead | `94b98fb`,`a9ee544`,`65b9c23` merge `3428584`; suite riêng 124 PASS, toàn bộ regression giữ nguyên | ✅ merged |
+| Gate sync theo kiến trúc production | Lead | `8567684`: sandbox window===globalThis, transport `opts.sectionContracts`, bất biến cấu trúc header, docId thật | ✅ **37 PASS / 0 FAIL** |
+| B2 generator/export | Lane B2 → Lead | `62bbfa2` merge `676bf58`; deep idempotency 17 PASS, export kinds 13 PASS, M72 conditional 6 PASS | ✅ merged |
+| Bridge totals recompute | Lead | `29ee9b6`: `write_rendered(...tables_meta=section_specs)` | ✅ |
+| Machinery sync | Lead | manifest + runner đăng ký 4 suite mới → release runner **38 PASS / 0 FAIL / 0 NOT RUN**, H7 56 PASS, `git diff --check` xanh | ✅ VERDICT PASS |
+| Visual evidence kind mới | Lead | snapshot harness nạp module + contracts; browser thật: M03 FM 3×5 + 8 input, M04 FM 4×6, M02 nested-grid ×2 (14 cột vật lý), M70 OT 2×1 outOnly=1; ảnh trong `generated_ho_so/_visual_layout/pilot/`; marker-leak scan 9/9 clean | ✅ pilot |
+
+**Gate kỹ thuật R2 platform:** bốn kind wired runtime/draft/validation ✓ · generator
+deep-idempotent ✓ · export recompute fail-loud ✓ · fixtures production PASS ✓ ·
+runner xanh ✓.
+
+**Chưa gọi R2 PASS tổng thể** — các mục còn mở (trung thực):
+1. Regen batch thực tế sinh `w:tbl` mới trong templates/blocks: bị chặn pháp lý
+   cho F2/F3 (D1.3/D1.5/D3.3 chờ bản gốc) — build skip qua `legal_status.blocked`;
+   O1/O2 (DECIDED) sẵn sàng làm batch đầu nhưng cần per-form spec filescommitted.
+2. Kênh validation N1 vocabulary canonical (`ten_nguoi_dai_dien` vs `ho_ten`,
+   `ds_nddpl_uy_quyen_chu_so_huu` vs `nddpl_uy_quyen_chu_so_huu`) — chờ owner chốt
+   trước khi khóa spec (ledger gap từ B1 #5.3).
+3. Slot formula tích `so_luong × menh_gia` (F3/D1.4=A đã DECIDED): fixed-matrix
+   hiện chỉ hỗ trợ `sum()` — cần schema v2 slot (đề xuất `product()`) trước khi
+   rebuild PLI_M04/M12.
+4. Free-text rule shape `sumEqualsKey` dùng trong runtime cần ghi nhận thành
+   contract khi update docs v2 (docs v1 không bị sửa).
+5. Duplicate source aliasing M70/M71 (03↔05 folder cùng tên file byte-identical):
+   find_source first-hit có thể lật path lưu trong form_maps — đề nghị chuẩn hóa
+   mapping canonical nguồn ở hygiene wave sau.
+
 ## R3–R7 (khung — chi tiết hóa khi mở wave)
 
 | Wave | Điều kiện mở | Ghi chú |

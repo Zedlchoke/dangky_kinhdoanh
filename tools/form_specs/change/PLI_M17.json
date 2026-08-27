@@ -1,8 +1,8 @@
 {
   "form_id": "PLI_M17",
   "group": "change",
-  "note": "Giay de nghi dang ky hoat dong chi nhanh/VPDD/thong bao lap dia diem KD. Luoi nganh o muc '3a' mat khi convert; muc sau la '3b) Noi dung hoat dong'.",
-  "gap_nghiepvu": null,
+  "note": "Giay de nghi dang ky hoat dong chi nhanh/VPDD/thong bao lap dia diem KD. Luoi nganh o muc '3a' mat khi convert; muc sau la '3b) Noi dung hoat dong'. || P2D tax (base cdf8803, D5.1/D5.3/D5.4=A). Nguon that: 03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_17_*.docx; so 'pNNN' ben duoi la CHI SO PARAGRAPH 0-based do python-docx dem tren body w:p cua file NGUON (khong phai index trong app/templates, file do la artifact da rebuild). KHONG co bat ky w:tbl nao trong nguon mau nay (ca 4 luoi deu mat khi convert). (a) D5.1 - nhom checkbox chon-1 / chi tieu co dinh DA DUOC GAN THE DAY DU o base nay, khong con o nao thieu tag: [khu CN] heading '- Chi nhánh/Văn phòng đại diện/Địa điểm kinh doanh nằm trong (Doanh nghiệp phải đánh dấu X vào ô vuông tương ứng với khu công nghệ cao nếu nộp hồ sơ tới Ban quản lý khu công nghệ cao):' p023, 4 o □ p024-p031 -> chk_khu_cong_nghiep / chk_khu_che_xuat / chk_khu_kinh_te / chk_khu_cong_nghe_cao; [muc 6 thue] heading '6. Thông tin đăng ký thuế:' p066, 8 chi tieu p067-p127 -> chi tieu 1 kt.* (p069-p075), 2 dia chi nhan TB thue (p076-p082), 3 ngay bat dau hoat dong ngay_bd/thang_bd/nam_bd (p083-p084), 4 hinh thuc hach toan p085-p094 = chk_ht_doc_lap (p088 □) + chk_ht_hop_nhat (p090 □ 'Có báo cáo tài chính hợp nhất') + chk_ht_phu_thuoc (p093 □), 5 nam tai chinh ap_dung_tu (p098-p101), 6 tong so lao dong so_lao_dong (p102-p103), 7 du an BOT/BTO/BT/BOO, BLT, BTL, O&M p104-p107 = chk_co (p106) + chk_khong (p107), 8 phuong phap tinh thue GTGT p110-p126 = chk_gtgt_khoan_tru / chk_gtgt_truc_tiep_tren_gtgt / chk_gtgt_truc_tiep_doanh_so / chk_gtgt_khong_phai_nop (4 □ p114/p118/p122/p126); [muc 7 BHXH] heading '7. Thông tin về việc đóng bảo hiểm xã hội (chỉ kê khai đối với chi nhánh/văn phòng đại diện):' p128, 'Phương thức đóng bảo hiểm xã hội (chọn 1 trong 3 phương thức):' p129, 3 □ p130-p132 -> chk_bc_hang_thang / chk_bc_03_thang / chk_bc_06_thang. Kiem tran tu dong (tools/test_p2d_tax_specs.py, clause [TAGS]): 16 chk block trong app/data/blocks/PLI_M17.json va 17 key chk_* trong app/data/form_maps.json (them chk_ctck) khop tung o □ cua nguon, khong thua khong thieu. || (b) D5.4 - chi tieu '8. Chi nhánh công ty chứng khoán nước ngoài/Chi nhánh công ty quản lý quỹ nước ngoài tại Việt Nam:' LA MUC RIENG p136-p138, NGOAI bang thue o muc 6 (sau muc 7 BHXH): heading p136, □ + chu 'Đánh dấu X nếu là chi nhánh công ty chứng khoán nước ngoài/chi nhánh công ty quản lý quỹ nước ngoài tại Việt Nam và kê khai thêm các thông tin sau đây:' p137, 'Giấy phép thành lập và hoạt động số… do Ủy ban Chứng khoán Nhà nước cấp ngày…' p138. Trạng thái DA DUNG: token {chk_ctck} nam o paragraph ngay sau heading 8 trong app/templates/PLI_M17.docx, KHONG nam trong bat ky w:tbl nao - dung nhu decision (muc rieng ngoai bang thue), khong dua vao bang chi tieu thue.",
+  "gap_nghiepvu": "P2D tax (base cdf8803): (1) VI SAO FILE NAY KHONG KHAI ENTRY kind=fixed-matrix cho cac nhom checkbox/chi tieu o tren du D5.1=A da chot co che fixed_rows: hop dong v1 (tools/form_specs/schema/table_kinds.schema.json + build_form_maps._ENTRY_KEYS + _validate_kind_spec) chi co dung vi REBUILD-BANG-MOI - _register_section_spec dang ky field duoi dang '<semantic_key>.<row_id>.<tag>' va generator chen mot w:tbl moi tai anchor, trong khi 16 o □ cua mau nay da co token rieng chk_* va da duoc dang ky trong form_maps. Sandbox chay that (tools/test_p2d_tax_specs.py clause [NO-REBUILD]) chung minh: them 1 entry fixed-matrix cho nhom BHXH lam form_maps XUAT HIEN THEM 3 key 'phuong_thuc_dong_bhxh_cn.<row>.chon' SONG SONG voi chk_bc_hang_thang/chk_bc_03_thang/chk_bc_06_thang (van con nguyen) -> hai nguon su that cho cung 3 o vuong; khai them drop thi mat luon wiring cu. Trung hop giong het gap da ghi o tools/form_specs/formation/PLI_M01.json cho lua_chon_khu_san_xuat + thue_chi_tieu_6_1_6_9: can Lead mo khoa khai bao dang 'register: already-mapped' (section_specs KHONG keo theo bang moi) truoc khi D5.1 co the len spec. Cac trang thai 'partial_columns'/'missing_grid' cua 6 section P2D trong app/data/table_specs/manifest.json da STALE so voi blocks/form_maps hien tai - Lead can refresh manifest sau regen. (2) D5.3 - cong v1 CHUA co slot cross_field_rules: khai cross_field_rules trong spec kind=fixed-matrix bi _validate_kind_spec tu choi ('spec co truong khong thuoc hop dong v1'), khai o root bi tu choi ('truong root khong duoc phep'). Slot duy nhat loader chap nhan va GIU DUOC la entry-level tren entry kind=list (kind legacy la permissive) - da khai tai day, sandbox chung minh INERT (template byte-identical, blocks identical, section_specs khong doi). CAN LEAD: mo truong cross_field_rules trong _ENTRY_KEYS[KIND_FIXED_MATRIX] + spec_keys, chuyen khai bao vao entry cua section BHXH, va wire consumer app_web/ui/form-domain.js evalSectionCrossFieldRules (shape hien co chi biet percentSum / sumEqualsKey / 'sum(tag) op n' - chua biet chkExclusiveConditional nen fail-open BO QUA rule nay, an toan). (3) D5.3 - DIEU KIEN CUA RULE KHONG DANH GIA DUOC TU DU LIEU MAU: nen 'ngành, nghề kinh doanh chính là nông nghiệp, lâm nghiệp, ngư nghiệp, diêm nghiệp và trả lương theo sản phẩm, theo khoán' khong duoc ghi boi bat ky input nao trong PLI_M17 (khong co o 'trả lương theo sản phẩm/khoán', la_nganh_chinh la the per-row cua luoi ds_nganh chu khong co nhom nganh) -> chi phan 'chọn 1 trong 3' (exclusive) la co the enforces duoc; phan dieu kien khai o status='not_evaluable' va la gap mo cho owner/legal chot nguon du lieu truoc khi bat buoc. (4) Khong dong nao trong pham vi D5 duoc sua trong app/templates/** hay app/data/** - lane nay chi dung spec + suite.",
   "tables": [
     {
       "spec": {
@@ -24,7 +24,32 @@
       "drop_until": "^b\\) noi dung hoat dong",
       "drop": ["^stt$", "^ten nganh\\b", "^ma nganh\\d*$",
                "^nganh, nghe kinh doanh chinh"],
-      "headers": ["STT", "Tên ngành", "Mã ngành", "Ngành, nghề kinh doanh chính"]
+      "headers": ["STT", "Tên ngành", "Mã ngành", "Ngành, nghề kinh doanh chính"],
+      "cross_field_rules": [
+        {
+          "rule_id": "bhxh_phuong_thuc_theo_nganh_chinh",
+          "declares": "D5.3=A",
+          "section_id": "phuong_thuc_dong_bhxh",
+          "semantic_key": "phuong_thuc_dong_bhxh_cn",
+          "type": "chkExclusiveConditional",
+          "status": "declared-only",
+          "source": "nguon PL1_Mau_17_*.docx p133-p135: 'Lưu ý:' + 2 gạch đầu dòng về ngành chính nông/lâm/ngư/diên nghiệp và trả lương theo sản phẩm, theo khoán",
+          "exclusive_group": ["chk_bc_hang_thang", "chk_bc_03_thang", "chk_bc_06_thang"],
+          "exclusive_code": "BHXH_PHUONG_THUC_CHON_MOT",
+          "when": {
+            "status": "not_evaluable",
+            "why": "không có input nào của PLI_M17 ghi 'trả lương theo sản phẩm, theo khoán' hay nhóm ngành chính; la_nganh_chinh là thẻ per-row của lưới ds_nganh",
+            "all_of": [
+              {"key": "nhom_nganh_chinh", "in": ["nong_nghiep", "lam_nghiep", "ngu_nghiep", "diem_nghiep"]},
+              {"key": "tra_luong_theo_san_pham_khoan", "equals": true}
+            ]
+          },
+          "allow": ["chk_bc_hang_thang", "chk_bc_03_thang", "chk_bc_06_thang"],
+          "otherwise_allow": ["chk_bc_hang_thang"],
+          "violation_code": "BHXH_PHUONG_THUC_KHONG_HOP_LE",
+          "severity": "blocking"
+        }
+      ]
     }
   ]
 }

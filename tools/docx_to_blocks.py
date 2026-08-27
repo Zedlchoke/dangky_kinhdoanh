@@ -334,11 +334,216 @@ def apply_role_override(overrides, fid, body_para_index, text_folded, role):
 # Body paragraph -> block (p hoặc chk)
 # ---------------------------------------------------------------------------
 
+# ---------------------------------------------------------------------------
+# Ranh giới heading đánh số bị dính vào đuôi paragraph trước (bug cấu trúc V2)
+#
+# Nguồn gốc: một số template scrape lại từ DOCX gốc gộp cả đuôi bảng lưới và
+# heading mục tiếp theo vào CÙNG MỘT w:p (không có <w:br/>), heading chỉ là
+# một <w:r> riêng ở cuối paragraph — vd PLI_M72 (blk110/112):
+#   "(VNĐ … )Tỷ lệ (%)Ghi chú (nếu có)" + <w:r><w:b/>"8. Cổ đông là nhà đầu
+#   tư nước ngoài: " + …
+# Không sửa template tay: converter TÁCH ranh giới run này thành block "p"
+# riêng rồi classify_role() tự xếp nó vào section-heading. Điều kiện tách nằm
+# trong split_glued_numbered_headings(); detector Wave L1
+# (tools/census/check_layout_l1.py, nhóm rule (g2)) DÙNG CHÍNH XÁC cùng điều
+# kiện nên khi blocks còn dính thì đỏ, sau regen thì về 0.
+# ---------------------------------------------------------------------------
+
+# "8. Cổ đông…" / "9. Người đại diện…" — số (1-2 chữ số) + dấu chấm +
+# khoảng trắng + chữ. "5.1"/"10.1" (heading thập phân con) KHÔNG khớp vì sau
+# dấu chấm là chữ số, không phải khoảng trắng.
+NUMBERED_HEADING_RUN_RE = re.compile(r"^\d{1,2}\.[ \t]\S")
+NUMBERED_HEADING_FIND_RE = re.compile(r"\d{1,2}\.[ \t](?=\S)")
+# Guard chống tách nhầm: phần đuôi sau ranh giới phải là 1 dòng heading, không
+# phải cả đoạn văn pháp lý dài bắt đầu bằng "N. …".
+MAX_HEADING_TAIL_CHARS = 300
+# Heading-role mà phần đuôi tách ra PHẢI đạt được để được coi là ranh giới
+# heading thật (cùng nhóm heading của detector L1 rule (g1)).
+HEADING_ROLES = frozenset(
+    {"section-heading", "form-title", "form-subtitle"}
+)
+
+
+def _text_len(runs: list[dict]) -> int:
+    return sum(
+        len(r.get("text", ""))
+        for r in runs
+        if isinstance(r, dict) and isinstance(r.get("text"), str)
+    )
+
+
+def _is_heading_tail(text: str) -> bool:
+    """Text hậu kiểm có đóng vai heading đánh số (giống tier-11 của
+    layout_roles) hay không. Dòng kẻ chấm trống chữ ("1. ......") là bản in
+    để điền tay — không phải heading có nội dung."""
+    body = (text or "").strip()
+    if not body or not any(ch.isalpha() for ch in body):
+        return False
+    folded = layout_roles.fold(body)
+    return (
+        layout_roles.classify_role(folded, None, [{"text": body}])
+        in HEADING_ROLES
+    )
+
+
+def _join_tail(runs: list[dict], start: int) -> str:
+    """Text ghép của các run text từ vị trí `start` đến hết danh sách."""
+    return "".join(
+        r.get("text", "") for r in runs[start:]
+        if isinstance(r, dict) and isinstance(r.get("text"), str)
+    )
+
+
+def _embedded_heading_cuts(full: str) -> list[int]:
+    """Các offset (trên chuỗi `full`) cần chẻ vì có heading đánh số dính đuôi.
+
+    Ứng viên: mọi vị trí khớp NUMBERED_HEADING_FIND_RE (số 1-2 chữ số + dấu
+    chấm + khoảng trắng + chữ, KHÔNG khớp "5.1"/"10.1" kiểu thập phân con)
+    nằm KHÔNG ở đầu đoạn — glue V2 luôn có text đứng trước; trường hợp
+    "N. xxx" ngay đầu paragraph là heading tự nó (block riêng), không glue.
+
+    Guard chặn tách nhầm (mọi điều kiện phải đúng, xem _is_glued_heading_cut):
+      * ký tự ngay trước số không được là ".", khoảng trắng hay chữ số;
+      * đuôi từ offset đến hết <= MAX_HEADING_TAIL_CHARS;
+      * đuôi hậu kiểm đạt một role thuộc HEADING_ROLES.
+    """
+    cuts: list[int] = []
+    for m in NUMBERED_HEADING_FIND_RE.finditer(full):
+        pos = m.start()
+        if pos == 0 or not full[:pos].strip():
+            continue
+        if _is_glued_heading_cut(full, pos):
+            cuts.append(pos)
+    return cuts
+
+
+def _is_glued_heading_cut(full: str, pos: int) -> bool:
+    """`pos` có phải ranh giới heading đánh số bị GHÉP vào text trước đó?
+
+    Đây là predicate CHUNG của cả hai dạng glue audit Wave D; detector L1
+    (tools/census/check_layout_l1.py, nhóm rule (g2)) dùng cùng bản sao để
+    đỏ đúng chỗ blocks còn dính và tự về 0 sau khi Lead regen."""
+    prev = full[pos - 1]
+    if prev == ".":
+        # "…mục 5." + "1. …" / "5." + "1. Địa chỉ…" (PLII_M01) là đánh số nhiều
+        # cấp con, chứ không phải heading mới dính đuôi.
+        return False
+    if prev.isdigit():
+        # Số bị cắt đôi giữa các run ("1"+"0. Thông tin đăng ký thuế" = mục
+        # "10.", PLI_M02/M06/M08) hoặc heading nằm chung cột đếm scrape
+        # ("123456789"+"2. Thông tin…", PLI_M09) — ranh giới thật KHÔNG suy
+        # ra được từ text nên converter KHÔNG tự đoán; vùng lỗi này thuộc
+        # trách nhiệm lane sửa template và vẫn bị detector L1 bắt qua rule
+        # (e) STT-glue + (f) digit-run dài.
+        return False
+    if prev.isspace():
+        # đã ngắt dòng / hard break rõ ràng: ranh giới hiển thị còn nguyên.
+        return False
+    tail = full[pos:]
+    if not tail.strip():
+        return False
+    if len(tail) > MAX_HEADING_TAIL_CHARS:
+        return False
+    return _is_heading_tail(tail)
+
+
+def _split_runs_at_offsets(runs: list[dict], cuts: list[int]) -> list[dict]:
+    """Chẻ các run text tại offset tuyệt đối trong chuỗi text ghép.
+
+    Run mới giữ nguyên mọi metadata (b/i/u/vertAlign), chỉ khác khoá "text".
+    Run không chứa offset nào được trả nguyên vẹn (cùng tham chiếu)."""
+    if not cuts:
+        return list(runs)
+    cut_set = set(cuts)
+    out: list[dict] = []
+    off = 0
+    for r in runs:
+        txt = r.get("text") if isinstance(r, dict) else None
+        if isinstance(txt, str):
+            end = off + len(txt)
+            internal = sorted(p - off for p in cut_set if off < p < end)
+            if internal:
+                prev_at = 0
+                for cp in internal:
+                    head = dict(r)
+                    head["text"] = txt[prev_at:cp]
+                    out.append(head)
+                    prev_at = cp
+                last = dict(r)
+                last["text"] = txt[prev_at:]
+                out.append(last)
+                off = end
+                continue
+            off = end
+        out.append(r)
+    return out
+
+
+def _groups_from_offsets(
+    runs: list[dict], offsets: list[int]
+) -> list[list[dict]]:
+    """Chia danh sách run thành các nhóm tại offset tuyệt đối (đã tăng dần)."""
+    groups: list[list[dict]] = []
+    cur: list[dict] = []
+    wanted = set(offsets)
+    off = 0
+    for r in _split_runs_at_offsets(runs, sorted(wanted)):
+        txt = r.get("text") if isinstance(r, dict) else None
+        if off in wanted and cur:
+            groups.append(cur)
+            cur = []
+        cur.append(r)
+        off += len(txt) if isinstance(txt, str) else 0
+    if cur:
+        groups.append(cur)
+    return groups
+
+
+def split_glued_numbered_headings(runs: list[dict]) -> list[list[dict]]:
+    """Tách danh sách run thành các nhóm tại mỗi ranh giới heading đánh số.
+
+    Trả về [runs] nguyên vẹn khi không có gì phải tách (trường hợp thường);
+    ngược lại trả về >= 2 nhóm: các run trước ranh giới, và mỗi đoạn bắt đầu
+    bằng một heading đánh số riêng.
+
+    Hai dạng glue của audit Wave D cùng đi qua MỘT predicate
+    (_is_glued_heading_cut) nên dễ đoán và dễ kiểm chứng:
+      (1) heading là run riêng ở cuối w:p — PLI_M72 blk110/112:
+          "(VNĐ … )Tỷ lệ (%)Ghi chú (nếu có)" | "8. Cổ đông là nhà đầu tư…";
+      (2) heading ghép chung một run với cột đếm scrape (dạng ")Ghi chú…8.
+          Cổ đông…" trong MỘT w:t): _split_runs_at_offsets chẻ theo offset
+          rồi quy về dạng (1).
+
+    Điều kiện tách tại mọi ứng viên "N. <chữ>" (TẤT CẢ phải đúng):
+      * KHÔNG đứng đầu paragraph (heading ở đầu đoạn tự nó là block riêng);
+      * trước đó vẫn còn text khác trong cùng paragraph;
+      * ký tự ngay trước số không là ".", khoảng trắng hay chữ số
+        ("1"+"0." = mục 10.; "5."+"1." = mục con; cột đếm scrape như
+        "1234567892." thì ranh giới thật không suy ra được từ text nên
+        converter chủ động KHÔNG tự đoán — lane sửa template xử lý, vùng lỗi
+        vẫn bị detector L1 bắt qua rule (e)/(f));
+      * đuôi từ ranh giới đến hết <= MAX_HEADING_TAIL_CHARS;
+      * đuôi hậu kiểm (_is_heading_tail) đạt một role thuộc HEADING_ROLES
+        (tier-11 của tools/layout_roles.py).
+    """
+    full = _join_tail(runs, 0)
+    if not full.strip():
+        return [list(runs)]
+    cuts = _embedded_heading_cuts(full)
+    if not cuts:
+        return [list(runs)]
+    return _groups_from_offsets(runs, cuts)
+
+
 def para_block(p: Paragraph, prev_block_ref: dict, ctx: dict | None = None) -> list[dict]:
     """Trả về list block cho 1 paragraph ở thân tài liệu.
     prev_block_ref: {'block': dict|None} để lấy nhãn cho chk đứng một mình.
     ctx (optional): {'form_id', 'body_para_index', 'footnotes', 'overrides'}
-    — dùng để gắn role/format/footnotes cho block "p" (schema blocks-v3)."""
+    — dùng để gắn role/format/footnotes cho block "p" (schema blocks-v3).
+
+    Một paragraph có thể trả về NHIỀU block "p" khi template gộp heading
+    đánh số vào đuôi paragraph (split_glued_numbered_headings); cả NHIỀU block
+    đều kế thừa align/format/cond của paragraph nguồn."""
     runs = build_runs(p)
     keys = [r["input"]["key"] for r in runs if "input" in r]
     rest = para_text_no_tags(p).strip()
@@ -391,9 +596,14 @@ def para_block(p: Paragraph, prev_block_ref: dict, ctx: dict | None = None) -> l
                 blocks.append({"t": "chk", "label": label, "key": k})
         return blocks
 
-    blk = {"t": "p", "align": _align_of(p), "runs": runs}
-    _attach_layout_metadata(blk, p, runs, ctx)
-    return [blk]
+    # V2: heading đánh số dính đuôi paragraph -> tách thành block "p" riêng
+    # (mỗi block classify role độc lập; cùng align/format/cond nguồn).
+    blocks_out: list[dict] = []
+    for run_group in split_glued_numbered_headings(runs):
+        blk = {"t": "p", "align": _align_of(p), "runs": run_group}
+        _attach_layout_metadata(blk, p, run_group, ctx)
+        blocks_out.append(blk)
+    return blocks_out
 
 
 def _attach_layout_metadata(blk: dict, p: Paragraph, runs: list, ctx: dict | None):

@@ -198,13 +198,22 @@ check('GRID_META.ds_cshhl: co cot quyen_chi_phoi TRUOC ghi_chu (D2.5=A)',
   })(),
   '...,quyen_chi_phoi,ghi_chu',
   FD.GRID_META.ds_cshhl.columns.map(c => c.tag).join(','));
-check('GRID_META.ds_thanh_vien GIU NGUYEN 10 cot (gap: test_form_grid_meta ghim)',
+/* [Lead sync sau wire] global GIỮ 10 cột (phục vụ mẫu khác + pin
+ * test_form_grid_meta); PLI_M06 resolve qua FORM_GRID_META form-scoped 11 cột
+ * với thoi_han_gop_von chèn trước chu_ky (D2.2=A). */
+check('GRID_META.ds_thanh_vien global giu 10 cot; PLI_M06 form-scoped 11 cot',
   FD.GRID_META.ds_thanh_vien.columns.length === 10 &&
-    FD.getGridMeta({ docId: 'PLI_M06', loop: 'ds_thanh_vien' }) ===
+    FD.GRID_META.ds_thanh_vien.columns.every(c => c.tag !== 'thoi_han_gop_von') &&
+    FD.getGridMeta({ docId: 'PLI_M06', loop: 'ds_thanh_vien' }) !==
       FD.GRID_META.ds_thanh_vien &&
-    FD.GRID_META.ds_thanh_vien.columns.every(c => c.tag !== 'thoi_han_gop_von'),
-  '10 cot, khong co thoi_han_gop_von',
-  FD.GRID_META.ds_thanh_vien.columns.map(c => c.tag).join(','));
+    FD.getGridMeta({ docId: 'PLI_M06', loop: 'ds_thanh_vien' }).columns.length === 11 &&
+    FD.getGridMeta({ docId: 'PLI_M06', loop: 'ds_thanh_vien' })
+      .columns.map(c => c.tag).join(',') ===
+      'ho_ten,ngay_sinh,gioi_tinh,so_cccd,quoc_tich,dan_toc,dia_chi,' +
+      'von_dong_gop,ty_le_von,thoi_han_gop_von,chu_ky',
+  'global 10 cot khong thoi_han; M06 scoped 11 cot co thoi_han truoc chu_ky',
+  FD.getGridMeta({ docId: 'PLI_M06', loop: 'ds_thanh_vien' })
+    .columns.map(c => c.tag).join(','));
 check('GRID_META.ds_nganh/ds_tv_ho_gia_dinh khong bi xuyen tach',
   FD.GRID_META.ds_nganh.columns.length === 4 &&
     FD.GRID_META.ds_tv_ho_gia_dinh.columns.length === 9);
@@ -250,23 +259,31 @@ P2A.forEach(s => {
     const specTags = tagsFromSpec.filter(t => t);
     const added = specTags.filter(t => prodTags.indexOf(t) < 0);
     const lost = prodTags.filter(t => specTags.indexOf(t) < 0);
+    /* [Lead sync sau regen P2 2026-08-27] probe pre-integration giờ chạy ở
+     * steady-state: form_maps ĐÃ chứa loop với đủ tag spec. Hợp lệ khi
+     * (a) pre-integration: added == want; hoặc (b) post-regen: added == []
+     * VÀ mọi tag hứa (want) NẰM TRONG production (delta đã land). */
+    const integrated = added.length === 0;
+    const deltaOk = integrated
+      ? want.every(t => prodTags.indexOf(t) >= 0)
+      : JSON.stringify(added.slice().sort()) ===
+          JSON.stringify(want.slice().sort());
     check(s.docId + '/' + s.loop + ': DELTA additive = [' + want.join(',') + ']',
-      JSON.stringify(added.sort()) === JSON.stringify(want.slice().sort()) &&
-        lost.length === 0,
+      deltaOk && lost.length === 0,
       'added=[' + want.join(',') + '] lost=[]',
       'added=[' + added.join(',') + '] lost=[' + lost.join(',') + ']');
     check(s.docId + '/' + s.loop + ': header text production duoc giu nguyen',
       dt.columns.every(c => hdrs.indexOf(c.header) >= 0),
       'moi header cu con trong spec', JSON.stringify(
         dt.columns.map(c => c.header).filter(h => hdrs.indexOf(h) < 0)));
-    // cột mới phải có metadata runtime trừ ds_thanh_vien (gap đã ghi)
+    // cột mới phải có metadata runtime (M06 đã wire form-scoped FORM_GRID_META)
     const meta = FD.getGridMeta({ docId: s.docId, loop: s.loop });
     const metaTags = ((meta && meta.columns) || []).map(c => c.tag);
     const unMeta = want.filter(t => metaTags.indexOf(t) < 0);
-    check(s.docId + '/' + s.loop + ': cot moi co metadata runtime (tru gap da ghi)',
-      JSON.stringify(unMeta) ===
-        JSON.stringify(s.docId === 'PLI_M06' ? ['thoi_han_gop_von'] : []),
-      '[] (PLI_M06 gap da ghi o spec + report)', JSON.stringify(unMeta));
+    check(s.docId + '/' + s.loop + ': cot moi co metadata runtime',
+      JSON.stringify(unMeta) === JSON.stringify([]),
+      '[] (Lead wire xong: M06 form-scoped, M07/M10 GRID_META)',
+      JSON.stringify(unMeta));
   }
 
   // PRE-INTEGRATION probe: với loop ĐÃ có trong blocks thì đối chiếu hiện
@@ -382,9 +399,12 @@ M72_LOOPS.forEach(ln => {
 // ===========================================================================
 // 5. Cổng registry: P2A KHÔNG thêm contract kind mới
 // ===========================================================================
+/* [Lead sync sau wire P2C] registry kind-table giờ 8 form (thêm PLI_M01 +
+ * PLI_M02 fixed-matrix). P2A là editable-grid → 6 section của lane VẪN PHẢI
+ * vắng mặt trong FORM_TABLE_CONTRACTS (check dưới). */
 const WANT_CONTRACT_FORMS = ['PLI_M02', 'PLI_M03', 'PLI_M04', 'PLI_M70',
-  'PLI_M71', 'PLI_M12', 'PLI_M15'];
-check('FORM_TABLE_CONTRACTS giu nguyen 7 fixture (P2A la editable-grid)',
+  'PLI_M71', 'PLI_M12', 'PLI_M15', 'PLI_M01'];
+check('FORM_TABLE_CONTRACTS dung 8 fixture form (P2A la editable-grid)',
   Object.keys(FD.FORM_TABLE_CONTRACTS).sort().join(',') ===
     WANT_CONTRACT_FORMS.sort().join(','),
   WANT_CONTRACT_FORMS.sort().join(','),

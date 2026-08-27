@@ -563,6 +563,22 @@
           semanticKey: 'ds_thanh_vien_hkd_gcn'
         }
       }
+    },
+    /* Wave P2 Lead-wire (merge abe6084): PLI_M06 ds_thanh_vien — D2.2=A bổ
+     * sung cột 10 'Thời hạn góp vốn' {thoi_han_gop_von} (text) ngay trước
+     * chu_ky. FORM-SCOPED để KHÔNG đụng GRID_META.ds_thanh_vien toàn cục
+     * (đang phục vụ mẫu khác và bị test_form_grid_meta ghim 10 cột). */
+    'PLI_M06': {
+      loops: {
+        ds_thanh_vien: (function () {
+          var m = mkGrid(GRID_META.ds_thanh_vien, {
+            label: 'Danh sách thành viên công ty TNHH (cập nhật)',
+            semanticKey: 'ds_thanh_vien'
+          });
+          m.columns.splice(9, 0, { tag: 'thoi_han_gop_von', type: 'text' });
+          return m;
+        })()
+      }
     }
   };
 
@@ -1426,6 +1442,61 @@
         }
       }]
     },
+    /* P2C fixed-matrix (merge 1691728, Lead wire): tài sản góp vốn vào VỐN ĐẦU
+     * TƯ của PLI_M01 - D1.2=B: "Các tài sản khác" là Ô MÔ TẢ TEXT (đính kèm
+     * danh mục riêng), KHÔNG sub-grid; D1.1=A: Tổng số output_only computed,
+     * đối chiếu von_dau_tu_so blocking (CAPITAL_MISMATCH). */
+    'PLI_M01': {
+      sections: [{
+        sectionId: 'tai_san_gop_von_von_dau_tu',
+        semanticKey: 'co_cau_tai_san_gop_von_dau_tu',
+        kind: 'fixed-matrix',
+        policy: { allowAdd: false, allowDelete: false, allowReorder: false },
+        anchor: { match: 'tai san gop von', matchRole: 'section-heading',
+          endMatch: null, endRole: null },
+        spec: {
+          kind: 'fixed-matrix',
+          section_id: 'tai_san_gop_von_von_dau_tu',
+          semantic_key: 'co_cau_tai_san_gop_von_dau_tu',
+          form_id: 'PLI_M01',
+          stt: { mode: 'none' },
+          fixed_rows: [
+            { id: 'dong_viet_nam', label: 'Đồng Việt Nam' },
+            { id: 'ngoai_te_tu_do_chuyen_doi',
+              label: 'Ngoại tệ tự do chuyển đổi (ghi rõ loại ngoại tệ, số tiền được góp bằng mỗi loại ngoại tệ)' },
+            { id: 'vang', label: 'Vàng' },
+            { id: 'quyen_su_dung_dat', label: 'Quyền sử dụng đất' },
+            { id: 'quyen_so_huu_tri_tue', label: 'Quyền sở hữu trí tuệ' },
+            { id: 'tai_san_khac',
+              label: 'Các tài sản khác (ghi rõ loại tài sản, số lượng và giá trị còn lại của mỗi loại tài sản, có thể lập thành danh mục riêng kèm theo hồ sơ đăng ký doanh nghiệp)' },
+            { id: 'tong_so', label: 'Tổng số', output_only: true }
+          ],
+          columns: [
+            { tag: 'loai_tai_san_gop_von', inputType: 'readonly',
+              header: 'Tài sản góp vốn' },
+            { tag: 'chi_tiet_ngoai_te_tai_san_khac', inputType: 'text',
+              header: 'Ghi rõ loại ngoại tệ, số tiền được góp bằng mỗi loại ngoại tệ / loại tài sản, số lượng và giá trị còn lại của mỗi loại tài sản' },
+            { tag: 'gia_tri_vnd', inputType: 'money',
+              header: 'Giá trị vốn của từng tài sản trong vốn đầu tư (bằng số, VNĐ)' },
+            { tag: 'ty_le', inputType: 'percent', header: 'Tỷ lệ (%)' }
+          ],
+          totals: [
+            { id: 'tong_so', formula: 'sum(gia_tri_vnd)',
+              target_tag: 'gia_tri_vnd' },
+            { id: 'tong_so', formula: 'sum(ty_le)', target_tag: 'ty_le' }
+          ],
+          cross_field_rules: [
+            { type: 'percentSum', tag: 'ty_le', equals: 100,
+              severity: 'warning', code: 'PERCENT_SUM',
+              message: 'Tổng tỷ lệ tài sản góp vốn đầu tư phải đúng 100% khi đã kê khai.' },
+            { type: 'sumEqualsKey', tag: 'gia_tri_vnd',
+              valueKey: 'von_dau_tu_so', severity: 'blocking',
+              code: 'CAPITAL_MISMATCH',
+              message: 'Tổng số tài sản góp vốn đầu tư phải khớp Vốn đầu tư kê khai.' }
+          ]
+        }
+      }]
+    },
     /* N1 - nested-grid PLI_M02: header nhiều hàng thật (rowspan/colspan VẬT LÝ)
      * + discriminator loai_dong (NĐDPL vs người ủy quyền).
      * Nguồn header: app/data/blocks/PLI_M02.json block 126 (header nối dính).
@@ -1497,6 +1568,102 @@
           max_rows: null,
           totals: [],
           cross_field_rules: []
+        }
+      }, {
+        /* P2C fixed-matrix (merge 1691728, Lead wire): nguồn vốn điều lệ
+         * 5 dòng pháp lý + Tổng cộng output_only (D1.1=A), cùng bộ key
+         * canonical với F2 (PLI_M03) - sumEqualsKey đối chiếu VĐL blocking. */
+        sectionId: 'nguon_von_dieule',
+        semanticKey: 'nguon_von_dieu_le',
+        kind: 'fixed-matrix',
+        policy: { allowAdd: false, allowDelete: false, allowReorder: false },
+        anchor: { match: 'nguon von dieu le', matchRole: 'section-heading',
+          endMatch: null, endRole: null },
+        spec: {
+          kind: 'fixed-matrix',
+          section_id: 'nguon_von_dieule',
+          semantic_key: 'nguon_von_dieu_le',
+          form_id: 'PLI_M02',
+          stt: { mode: 'none' },
+          fixed_rows: [
+            { id: 'von_ngan_sach_nha_nuoc', label: 'Vốn ngân sách nhà nước' },
+            { id: 'von_tu_nhan', label: 'Vốn tư nhân' },
+            { id: 'von_nuoc_ngoai', label: 'Vốn nước ngoài' },
+            { id: 'von_khac', label: 'Vốn khác' },
+            { id: 'tong_cong', label: 'Tổng cộng', output_only: true }
+          ],
+          columns: [
+            { tag: 'loai_nguon_von', inputType: 'readonly',
+              header: 'Loại nguồn vốn' },
+            { tag: 'so_tien_vnd_va_tuong_duong', inputType: 'money',
+              header: 'Số tiền (bằng số; VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)' },
+            { tag: 'ty_le', inputType: 'percent', header: 'Tỷ lệ (%)' }
+          ],
+          totals: [
+            { id: 'tong_cong', formula: 'sum(so_tien_vnd_va_tuong_duong)',
+              target_tag: 'so_tien_vnd_va_tuong_duong' },
+            { id: 'tong_cong', formula: 'sum(ty_le)', target_tag: 'ty_le' }
+          ],
+          cross_field_rules: [
+            { type: 'percentSum', tag: 'ty_le', equals: 100,
+              severity: 'warning', code: 'PERCENT_SUM',
+              message: 'Tổng tỷ lệ nguồn vốn điều lệ phải đúng 100% khi đã kê khai.' },
+            { type: 'sumEqualsKey', tag: 'so_tien_vnd_va_tuong_duong',
+              valueKey: 'von_dieu_le', severity: 'blocking',
+              code: 'CAPITAL_MISMATCH',
+              message: 'Tổng cộng nguồn vốn điều lệ phải khớp Vốn điều lệ kê khai ở mục 7.' }
+          ]
+        }
+      }, {
+        /* P2C fixed-matrix (merge 1691728, Lead wire): cơ cấu tài sản góp vốn
+         * vào vốn điều lệ 6 dòng + Tổng số; "Các tài sản khác" là Ô MÔ TẢ TEXT
+         * theo chính chữ mẫu (D1.2 chưa có quyết định sub-grid cho M02). */
+        sectionId: 'tai_san_gop_von_von_dieu_le',
+        semanticKey: 'co_cau_tai_san_gop_von_dieu_le',
+        kind: 'fixed-matrix',
+        policy: { allowAdd: false, allowDelete: false, allowReorder: false },
+        anchor: { match: 'tai san gop von', matchRole: 'section-heading',
+          endMatch: null, endRole: null },
+        spec: {
+          kind: 'fixed-matrix',
+          section_id: 'tai_san_gop_von_von_dieu_le',
+          semantic_key: 'co_cau_tai_san_gop_von_dieu_le',
+          form_id: 'PLI_M02',
+          stt: { mode: 'none' },
+          fixed_rows: [
+            { id: 'dong_viet_nam', label: 'Đồng Việt Nam' },
+            { id: 'ngoai_te_tu_do_chuyen_doi',
+              label: 'Ngoại tệ tự do chuyển đổi (ghi rõ loại ngoại tệ, số tiền được góp bằng mỗi loại ngoại tệ)' },
+            { id: 'vang', label: 'Vàng' },
+            { id: 'quyen_su_dung_dat', label: 'Quyền sử dụng đất' },
+            { id: 'quyen_so_huu_tri_tue', label: 'Quyền sở hữu trí tuệ' },
+            { id: 'tai_san_khac',
+              label: 'Các tài sản khác (ghi rõ loại tài sản, số lượng và giá trị còn lại của mỗi loại tài sản, có thể lập thành danh mục riêng kèm theo hồ sơ đăng ký doanh nghiệp)' },
+            { id: 'tong_so', label: 'Tổng số', output_only: true }
+          ],
+          columns: [
+            { tag: 'loai_tai_san_gop_von', inputType: 'readonly',
+              header: 'Tài sản góp vốn' },
+            { tag: 'chi_tiet_ngoai_te_tai_san_khac', inputType: 'text',
+              header: 'Ghi rõ loại ngoại tệ, số tiền được góp bằng mỗi loại ngoại tệ / loại tài sản, số lượng và giá trị còn lại của mỗi loại tài sản' },
+            { tag: 'gia_tri_vnd', inputType: 'money',
+              header: 'Giá trị vốn của từng tài sản trong vốn điều lệ (bằng số, VNĐ)' },
+            { tag: 'ty_le', inputType: 'percent', header: 'Tỷ lệ (%)' }
+          ],
+          totals: [
+            { id: 'tong_so', formula: 'sum(gia_tri_vnd)',
+              target_tag: 'gia_tri_vnd' },
+            { id: 'tong_so', formula: 'sum(ty_le)', target_tag: 'ty_le' }
+          ],
+          cross_field_rules: [
+            { type: 'percentSum', tag: 'ty_le', equals: 100,
+              severity: 'warning', code: 'PERCENT_SUM',
+              message: 'Tổng tỷ lệ tài sản góp vốn phải đúng 100% khi đã kê khai.' },
+            { type: 'sumEqualsKey', tag: 'gia_tri_vnd',
+              valueKey: 'von_dieu_le', severity: 'blocking',
+              code: 'CAPITAL_MISMATCH',
+              message: 'Tổng số tài sản góp vốn phải khớp Vốn điều lệ kê khai ở mục 7.' }
+          ]
         }
       }]
     },

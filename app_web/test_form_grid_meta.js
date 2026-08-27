@@ -535,8 +535,14 @@ M72_LOOPS.forEach(l => runMiniContract('PLI_M72', M72, l));
 // ==== 10. grid cu khong hoi quy (fall-through toan cuc nguyen ven) ==========
 
 {
-  check('10. loop cu resolve ve dung object GRID_META toan cuc (same ref)',
-    FD.getGridMeta({ docId: 'PLI_M06', loop: 'ds_thanh_vien' }) === FD.GRID_META.ds_thanh_vien &&
+  /* [Lead sync sau wire P2] PLI_M06 giờ có FORM_GRID_META form-scoped
+   * (11 cột, thoi_han_gop_von trước chu_ky — D2.2=A); các form KHÔNG khai
+   * scoped vẫn fall-through về GRID_META toàn cục nguyênven (same ref). */
+  const m06Scoped = FD.getGridMeta({ docId: 'PLI_M06', loop: 'ds_thanh_vien' });
+  check('10. PLI_M06 resolve form-scoped 11 cot; loop cu khac van same-ref global',
+    m06Scoped !== FD.GRID_META.ds_thanh_vien &&
+      m06Scoped.columns.length === 11 &&
+      m06Scoped.columns[9].tag === 'thoi_han_gop_von' &&
       FD.getGridMeta({ docId: 'PLII_M01', loop: 'ds_nganh' }) === FD.GRID_META.ds_nganh &&
       FD.getGridMeta({ docId: 'PLI_M02', loop: 'ds_nganh' }) === FD.GRID_META.ds_nganh);
   check('10. GRID_META.ds_nganh khong bi mutate khi khai FORM_GRID_META (clone isolation)',

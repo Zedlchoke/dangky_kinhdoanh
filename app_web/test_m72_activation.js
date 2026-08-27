@@ -502,8 +502,11 @@ check('S0. fixture KHONG anh huong resolver production (isolation)',
       base.label === 'Danh sách ngành nghề kinh doanh');
 
   const prodG = FD.FORM_GRID_META.PLI_M72.loops.ds_nganh_dntn;
+  /* [Lead sync D7.3=A, merge abe6084] bảng ngành của phần ĐƯỢC CHỌN bắt buộc
+   * >= 1 ngành khi công bố -> required:true + minRows:1 (chốt owner packet D7). */
   check('N9. meta production PLI_M72 khong bi lan mutation tu fixture',
-    prodG.columns.length === 4 && prodG.required === false &&
+    prodG.columns.length === 4 && prodG.required === true &&
+      prodG.minRows === 1 &&
       prodG.activeWhen.valueOf.key === 'dn.loai_hinh' &&
       JSON.stringify(prodG.activeWhen.valueOf.equals) === '["DNTN"]' &&
       FD.activationModeOf(prodG) === 'selector' &&

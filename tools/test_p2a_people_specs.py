@@ -263,31 +263,37 @@ def t_manifest_state():
                     fid, uncovered)
 
 
-@check("[EVD] manifest loop_audit chỉ ra DUNG cot bi thieu ma spec bo sung")
+@check("[EVD] manifest loop_audit la ho so lich su; template DA tag du cot sau regen P2")
 def t_manifest_loop_audit():
     secs = manifest_sections()
-    # fid -> (missing [(col, header)], số tag template production, cột mới)
+    # [Lead sync sau regen P2 2026-08-27] loop_audit là census lịch sử (T0):
+    # vẫn ghi missing_cols NHỮNG CỘT LÚC ĐÓ THIẾU; bất biến mới là template
+    # production PHẢI đã tag đúng các cột đó (gap đóng) + tag mới đã vào.
+    # fid -> (missing_cols lịch sử, số tag sau regen, tag mới)
     audit = {
-        "PLI_M06": ([(10, "Thời hạn góp vốn")], 10, "thoi_han_gop_von"),
-        "PLI_M07": ([(6, "Dân tộc")], 9, "dan_toc"),
+        "PLI_M06": ([(10, "Thời hạn góp vốn")], 11, "thoi_han_gop_von"),
+        "PLI_M07": ([(6, "Dân tộc")], 10, "dan_toc"),
         "PLI_M08": ([], 7, None),
-        "PLI_M10": ([], 10, "quyen_chi_phoi"),
+        "PLI_M10": ([], 11, "quyen_chi_phoi"),
     }
     for fid, (missing, n_tags, new_tag) in audit.items():
         la = secs[MANIFEST_SECTION_OF[fid]].get("loop_audit") or {}
         got = [(m["col"], m["header"]) for m in (la.get("missing_cols") or [])]
         assert got == missing, "%s: missing_cols=%r != %r" % (fid, got, missing)
-        tagged_cols = {c for c, _ in prod_tags(fid, SPEC_OF[fid][1])}
+        prod = prod_tags(fid, SPEC_OF[fid][1])
+        tagged_cols = {c for c, _ in prod}
+        tags = [t for _, t in prod]
         for col, _h in missing:
-            assert col not in tagged_cols, \
-                "%s: cột %d đã tag trong khi manifest còn ghi thiếu" % (fid, col)
-        tags = [t for _, t in prod_tags(fid, SPEC_OF[fid][1])]
+            assert col in tagged_cols, \
+                "%s: cột %d manifest ghi thiếu nhưng template vẫn chưa tag" % (
+                    fid, col)
         assert len(tags) == n_tags, \
             "%s: template production có %d tag, kỳ vọng %d" % (fid, len(tags),
                                                                n_tags)
-        assert new_tag not in tags, \
-            "%s: %r đã có trong template production (spec không cần thêm)" % (
-                fid, new_tag)
+        if new_tag:
+            assert new_tag in tags, \
+                "%s: %r chưa có trong template production sau regen" % (
+                    fid, new_tag)
 
 
 @check("[SRC] PLII_M07: nguon co DUNG 7 nhan cot, khong ngay sinh/gioi/dan toc/chu ky")
@@ -416,12 +422,16 @@ def t_delta_vs_inline():
     for fid, added in WANT_ADDED.items():
         sid, loop, headers, tags = SPEC_OF[fid]
         prod = prod_tags(fid, loop)               # [(col, tag)] theo template
-        # tag mới phải nằm ngoài tập production, còn lại phải GIỮ NGUYÊN tag cũ
+        # [Lead sync sau regen P2] steady-state: template ĐÃ nhận đủ tag spec
+        # (delta rỗng); mọi tag hứa phải NẰM TRONG template production.
         prod_tag_set = {t for _, t in prod}
         new_set = set(tags)
-        assert new_set - prod_tag_set == set(added), \
-            "%s: spec thêm %r, chỉ được thêm %r" % (
-                fid, sorted(new_set - prod_tag_set), added)
+        assert not (new_set - prod_tag_set), \
+            "%s: spec còn thêm %r ngoài template production (chưa regen?)" % (
+                fid, sorted(new_set - prod_tag_set))
+        assert set(added) <= prod_tag_set, \
+            "%s: tag hứa %r chưa land vào template production" % (
+                fid, sorted(set(added) - prod_tag_set))
         missing = prod_tag_set - new_set
         assert not missing, "%s: spec làm MẤT tag production %r" % (fid, missing)
         # header text production phải là tập con của header spec (không đổi text)

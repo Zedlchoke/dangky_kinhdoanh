@@ -208,8 +208,16 @@ def t_blocks_loop_structure(fid: str):
         dupes = sorted({n for n in names if names.count(n) > 1})
         assert not dupes, "loop bị trùng tên: %r" % (dupes,)
     else:
-        assert len(loops) == 1 and len(cands) == 1, \
-            "kỳ vọng đúng 1 block loop, thấy %d" % len(loops)
+        # [Lead sync P2A merge abe6084] PLII_M07 có thêm loop người
+        # ds_thanh_vien_hkd_gcn (D2.8=A, lane people sở hữu): chọn loop ngành
+        # THEO TÊN như PLII_M02, kiểm tra không trùng tên loop.
+        assert len(cands) == 1, \
+            "kỳ vọng đúng 1 block loop %r, thấy %d (tổng %d loop: %r)" % (
+                LOOP_NAME, len(cands), len(loops),
+                [b.get("loop") for b in loops])
+        names = [b["loop"] for b in loops]
+        dupes = sorted({n for n in names if names.count(n) > 1})
+        assert not dupes, "loop bị trùng tên: %r" % (dupes,)
     blk = cands[0]
     assert blk["loop"] == LOOP_NAME, "loop=%r != %r" % (blk["loop"], LOOP_NAME)
     assert blk["headerRows"] == [0], "headerRows=%r != [0]" % (blk["headerRows"],)

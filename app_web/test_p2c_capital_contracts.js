@@ -292,15 +292,27 @@ SPECS.forEach(want => {
 });
 
 // ===========================================================================
-// 5. [GATE] registry runtime chưa wire 3 section (Lead phải đăng ký)
+// 5. [GATE - Lead wire xong 2026-08-27] 3 section ĐÃ đăng ký FORM_TABLE_
+//    CONTRACTS, shape runtime khớp spec generator (fixed_rows + input tags).
 // ===========================================================================
 SPECS.forEach(want => {
   const bySection = FD.getSectionContract(want.docId, want.sectionId);
   const bySem = FD.getSectionContract(want.docId, want.sem);
+  const rt = (bySection && bySection.spec) || (bySem && bySem.spec) || null;
+  const specEntry = findEntry(want.file, want.sectionId);
+  const inputTags = (cols, key) => (cols || [])
+    .filter(c => c[key] && c[key] !== 'readonly')
+    .map(c => c[key]);
   check('GATE ' + want.docId + '/' + want.sectionId +
-      ': CHUA co contract runtime (gap can Lead wire)',
-    bySection === null && bySem === null, 'null (chưa đăng ký)',
-    String(!!bySection || !!bySem));
+      ': da dang ky contract runtime, shape khop spec',
+    !!bySection && !!bySem && !!rt && !!specEntry &&
+      rt.kind === 'fixed-matrix' &&
+      JSON.stringify(rt.fixed_rows.map(r => r.id)) ===
+        JSON.stringify(want.rows) &&
+      JSON.stringify(inputTags(rt.columns, 'inputType').sort()) ===
+        JSON.stringify(inputTags(specEntry.spec.columns, 'input_type').sort()),
+    'contract khop spec (fixed_rows + input tags)',
+    JSON.stringify(rt && rt.fixed_rows && rt.fixed_rows.map(r => r.id)));
 });
 
 // F2 (M03) cùng section nguon_von_dieule phải dùng đúng bộ key canonical
@@ -334,25 +346,32 @@ check('GAP cot nhan: F2 dat tag, generator v1 bat buoc tag=null (can Lead chot)'
   JSON.stringify([f2 && f2.spec.columns[0].tag, m02 && m02.spec.columns[0].tag]));
 
 // ===========================================================================
-// 6. [GAP] cross_field đối chiếu vốn điều lệ (D1.1=A) chưa wire cho M01/M02
+// 6. [GATE - Lead wire xong] CAPITAL_MISMATCH (D1.1=A) ĐÃ wire cho M01/M02
 // ===========================================================================
 const f2Rules = (f2 && f2.spec.cross_field_rules) || [];
-check('GAP M01/M02: chua co rule CAPITAL_MISMATCH dang ky trong runtime',
-  SPECS.every(w => FD.getSectionContract(w.docId, w.sectionId) === null) &&
+check('GATE M01/M02: rule CAPITAL_MISMATCH da dang ky dung shape F2',
+  SPECS.every(w => {
+    const c = FD.getSectionContract(w.docId, w.sectionId) ||
+      FD.getSectionContract(w.docId, w.sem);
+    const rules = (c && c.spec && c.spec.cross_field_rules) || [];
+    return rules.some(r => r.type === 'sumEqualsKey' &&
+      r.severity === 'blocking' && r.code === 'CAPITAL_MISMATCH');
+  }) &&
     f2Rules.some(r => r.type === 'sumEqualsKey' && r.severity === 'blocking' &&
       r.valueKey === 'von_dieu_le' && r.code === 'CAPITAL_MISMATCH'),
-  'F2(M03) có sample sumEqualsKey/valueKey=von_dieu_le; M01/M02 chưa có',
+  'M01/M02 + F2 cùng shape sumEqualsKey/valueKey/CAPITAL_MISMATCH blocking',
   JSON.stringify(f2Rules.map(r => [r.type, r.valueKey, r.code])));
 
-// Mismatch thật của PLI_M01 không sinh CAPITAL_MISMATCH nào hôm nay
+// Mismatch thật của PLI_M01 GIỜ PHẢI bị chặn blocking (valueKey von_dau_tu_so)
 const mismatch = {
   'von_dau_tu_so': '9000000',
   'co_cau_tai_san_gop_von_dau_tu.dong_viet_nam.gia_tri_vnd': '8000000',
 };
 const errs01 = FD.validateFormSections('PLI_M01', { values: mismatch });
-check('GAP PLI_M01: lệch vốn đầu tư chua bi chan (khong co contract)',
-  errs01.length === 0, '0 error (chưa wire)',
-  JSON.stringify(errs01.map(e => e.code)));
+check('GATE PLI_M01: lệch vốn đầu tư bị CHẶN blocking CAPITAL_MISMATCH',
+  errs01.some(e => e.code === 'CAPITAL_MISMATCH' && e.severity === 'blocking'),
+  'CAPITAL_MISMATCH blocking',
+  JSON.stringify(errs01.map(e => [e.code, e.severity])));
 
 // ---------------------------------------------------------------------------
 console.log('-'.repeat(72));

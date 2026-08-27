@@ -76,7 +76,12 @@ const FIXTURES = [
   ['PLI_M02', 'nddpl_uy_quyen_chu_so_huu', 'nested-grid'],
   /* R3B1 (2026-08-27): người đại diện ủy quyền — D2.1=A, D2.4=A, D2.7=A */
   ['PLI_M12', 'ndd_uy_quyen_sau_thay_doi', 'nested-grid'],
-  ['PLI_M15', 'ndd_pl_uy_quyen_chu_so_huu_moi', 'nested-grid']
+  ['PLI_M15', 'ndd_pl_uy_quyen_chu_so_huu_moi', 'nested-grid'],
+  /* P2C (merge 1691728 + Lead wire): D1.1=A/D1.2=B — fixed-matrix nguồn vốn
+   * và tài sản góp vốn; M02 nguồn vốn dùng cùng key canonical với F2(M03). */
+  ['PLI_M01', 'tai_san_gop_von_von_dau_tu', 'fixed-matrix'],
+  ['PLI_M02', 'nguon_von_dieule', 'fixed-matrix'],
+  ['PLI_M02', 'tai_san_gop_von_von_dieu_le', 'fixed-matrix']
 ];
 
 section('6. registry khớp census manifest (không tự chế section/kind)');
@@ -99,7 +104,7 @@ check('PLI_M72 KHÔNG bị đăng ký kind mới (cô lập editable-grid/M72)',
   !FD.FORM_TABLE_CONTRACTS.PLI_M72);
 check('danh sách mẫu đăng ký đúng ' + FIXTURES.length + ' fixture',
   Object.keys(FD.FORM_TABLE_CONTRACTS).sort().join(',') ===
-  FIXTURES.map(f => f[0]).sort().join(','));
+  [...new Set(FIXTURES.map(f => f[0]))].sort().join(','));
 
 /* ---------------------------------------------- 1. index.html + vm load order */
 section('1. index.html nạp script đúng thứ tự dependency');

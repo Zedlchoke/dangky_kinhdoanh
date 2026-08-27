@@ -554,14 +554,17 @@
       "so_cccd",
       "ghi_chu"
      ],
-     "status": "missing_grid",
+     "status": "already_complete",
      "source_evidence": {
       "template": "app/templates/PLII_M07.docx",
       "heading": "7. Danh sách thành viên hộ gia đình đăng ký thành lập hộ kinh doanh (chỉ ghi trong trường hợp các thành viên hộ gia đình đăng ký thành lập hộ kinh doanh):",
       "anchor": "7 paragraph header rời sau heading: 'STT'|'Tên thành viên'|'Quốc tịch'|'Nơi ở hiện tại'|'Nơi thường trú'|'Số định danh cá nhân'|'Ghi chú' (blocks B027-B033); template không có w:tbl tương ứng"
      },
      "notes": "Header bị converter làm mất lưới. Tập cột KHÁC ds_tv_ho_gia_dinh của M01/M02: 'Tên thành viên', Quốc tịch/Nơi ở đứng trước Nơi thường trú, thêm Ghi chú, không có ngày sinh/giới tính/dân tộc/chữ ký.",
-     "semantic_key": "ds_thanh_vien_hkd_gcn"
+     "semantic_key": "ds_thanh_vien_hkd_gcn",
+     "lead_status_override": {
+      "evidence": "P2A D2.8=A: key riêng ds_thanh_vien_hkd_gcn đúng 7 cột nguồn; test_industry_household 13 PASS (loop ngành không xâm lấn)."
+     }
     }
    ],
    "legal_questions": [
@@ -575,13 +578,13 @@
     "loop": 1
    },
    "summary_counts_recount": {
-    "p": 34,
+    "p": 27,
     "chk": 0,
     "table": 0,
-    "loop": 1
+    "loop": 2
    },
    "detector": {
-    "p_signatures": 1,
+    "p_signatures": 0,
     "list_hints": 1,
     "hits": [
      {
@@ -589,16 +592,10 @@
       "stt": false,
       "list_hint": true,
       "excerpt": "5. Chủ thể thành lập hộ kinh doanh (ghi một trong các chủ thể sau): Cá nhân/ Các thành viên hộ gia đình"
-     },
-     {
-      "block": 27,
-      "stt": true,
-      "list_hint": false,
-      "excerpt": "STT"
      }
     ],
     "classifications": [],
-    "template_w_tbl": 1
+    "template_w_tbl": 2
    }
   },
   {
@@ -1324,7 +1321,7 @@
       "gia_tri_vnd",
       "ty_le"
      ],
-     "status": "missing_grid",
+     "status": "already_complete",
      "source_evidence": {
       "template": "app/templates/PLI_M01.docx",
       "heading": "Tài sản góp vốn:",
@@ -1335,7 +1332,10 @@
       ]
      },
      "notes": "Toàn bộ là chuỗi paragraph rời (STT/Tên/Giá trị/Tỷ lệ + 6 dòng cố định: Đồng Việt Nam, ngoại tệ tự do chuyển đổi, vàng, QSDĐ, QSHTT, các tài sản khác + Tổng số); không có w:tbl, blocks không có bất kỳ input nào cho vùng này. Dòng 'Các tài sản khác' mẫu cho phép lập danh mục riêng → candidate sub-grid.",
-     "semantic_key": "co_cau_tai_san_gop_von_dau_tu"
+     "semantic_key": "co_cau_tai_san_gop_von_dau_tu",
+     "lead_status_override": {
+      "evidence": "P2C D1.1=A/D1.2=B: fixed-matrix 7 dòng + Tổng số computed, 'tài sản khác' là ô mô tả text; regen template + section_specs; suite P2C 16 PASS, runtime contract wired."
+     }
     },
     {
      "section_id": "thue_chi_tieu_6_1_6_9",
@@ -1395,13 +1395,13 @@
     "loop": 1
    },
    "summary_counts_recount": {
-    "p": 143,
+    "p": 126,
     "chk": 26,
-    "table": 0,
+    "table": 1,
     "loop": 1
    },
    "detector": {
-    "p_signatures": 2,
+    "p_signatures": 1,
     "list_hints": 2,
     "hits": [
      {
@@ -1417,20 +1417,14 @@
       "excerpt": "Đăng ký doanh nghiệp tư nhân do tôi làm chủ với các nội dung sau:"
      },
      {
-      "block": 81,
-      "stt": true,
-      "list_hint": false,
-      "excerpt": "STT"
-     },
-     {
-      "block": 99,
+      "block": 83,
       "stt": true,
       "list_hint": false,
       "excerpt": "STT"
      }
     ],
     "classifications": [],
-    "template_w_tbl": 1
+    "template_w_tbl": 2
    }
   },
   {
@@ -1517,7 +1511,7 @@
       "ty_le",
       "thoi_diem_dai_dien_phan_von"
      ],
-     "status": "missing_grid",
+     "status": "partial_columns",
      "source_evidence": {
       "template": "app/templates/PLI_M02.docx",
       "heading": "- Thông tin về người đại diện theo pháp luật/người đại diện theo ủy quyền của chủ sở hữu:",
@@ -1528,7 +1522,10 @@
       ]
      },
      "notes": "Header bị nối thành 1 paragraph 'STTTên người đại diện...Thời điểm đại diện phần vốn' (13 cột). Blocks chỉ có 1 bộ field ndd.* đơn (không thêm/xóa dòng, không đủ cột vốn được ủy quyền/tổng giá trị được đại diện/thời điểm đại diện). Chân trang 5/6/7/8 quy định cột điều kiện.",
-     "semantic_key": "ds_nddpl_uy_quyen_chu_so_huu"
+     "semantic_key": "ds_nddpl_uy_quyen_chu_so_huu",
+     "lead_status_override": {
+      "evidence": "N1 rebuild 14 cột w:tbl thật (visual pilot PASS); thiếu 2 nhóm header chưa có evidence tag canonical (gap đã ghi)."
+     }
     },
     {
      "section_id": "mo_hinh_to_chuc_cong_ty",
@@ -1560,7 +1557,7 @@
       "so_tien_vnd_va_tuong_duong",
       "ty_le"
      ],
-     "status": "missing_grid",
+     "status": "already_complete",
      "source_evidence": {
       "template": "app/templates/PLI_M02.docx",
       "heading": "7. Nguồn vốn điều lệ:",
@@ -1578,7 +1575,10 @@
       "von_khac",
       "tong_cong"
      ],
-     "semantic_key": "nguon_von_dieu_le"
+     "semantic_key": "nguon_von_dieu_le",
+     "lead_status_override": {
+      "evidence": "P2C D1.1=A: 5 dòng + Tổng cộng output_only, cùng key canonical F2(M03); regen + section_specs; 16 PASS."
+     }
     },
     {
      "section_id": "tai_san_gop_von_von_dieu_le",
@@ -1591,7 +1591,7 @@
       "gia_tri_vnd",
       "ty_le"
      ],
-     "status": "missing_grid",
+     "status": "already_complete",
      "source_evidence": {
       "template": "app/templates/PLI_M02.docx",
       "heading": "8. Tài sản góp vốn:",
@@ -1602,7 +1602,10 @@
       ]
      },
      "notes": "6 dòng cố định + Tổng số, paragraph rời như M01, chưa có input.",
-     "semantic_key": "co_cau_tai_san_gop_von_dieu_le"
+     "semantic_key": "co_cau_tai_san_gop_von_dieu_le",
+     "lead_status_override": {
+      "evidence": "P2C: 6 dòng + Tổng số; 'tài sản khác' ô mô tả theo chữ mẫu; regen + section_specs; 16 PASS."
+     }
     },
     {
      "section_id": "thue_chi_tieu_10_1_10_9",
@@ -1683,13 +1686,13 @@
     "loop": 1
    },
    "summary_counts_recount": {
-    "p": 234,
+    "p": 209,
     "chk": 35,
-    "table": 0,
+    "table": 2,
     "loop": 2
    },
    "detector": {
-    "p_signatures": 2,
+    "p_signatures": 1,
     "list_hints": 5,
     "hits": [
      {
@@ -1717,26 +1720,20 @@
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
      },
      {
-      "block": 152,
-      "stt": true,
-      "list_hint": false,
-      "excerpt": "STT"
-     },
-     {
-      "block": 181,
+      "block": 158,
       "stt": false,
       "list_hint": true,
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
      },
      {
-      "block": 191,
+      "block": 168,
       "stt": true,
       "list_hint": false,
       "excerpt": "STT"
      }
     ],
     "classifications": [],
-    "template_w_tbl": 2
+    "template_w_tbl": 4
    }
   },
   {
@@ -2226,7 +2223,7 @@
       "thoi_han_gop_von",
       "chu_ky_output_only"
      ],
-     "status": "partial_columns",
+     "status": "already_complete",
      "source_evidence": {
       "template": "app/templates/PLI_M06.docx",
       "heading": "PL1 - Mau so 6: Danh sách thành viên công ty trách nhiệm hữu hạn hai thành viên trở lên",
@@ -2259,7 +2256,10 @@
        }
       ]
      },
-     "semantic_key": "ds_thanh_vien_tnhh"
+     "semantic_key": "ds_thanh_vien_tnhh",
+     "lead_status_override": {
+      "evidence": "P2A D2.2=A: cột 10 thoi_han_gop_von đã tag sau regen (template 11 tag); test_p2a_people_specs [EVD]/[DELTA] 14 PASS."
+     }
     },
     {
      "section_id": "thue_chi_tieu_9_1_9_9",
@@ -2388,7 +2388,7 @@
       "ty_le",
       "chu_ky_output_only"
      ],
-     "status": "partial_columns",
+     "status": "already_complete",
      "source_evidence": {
       "template": "app/templates/PLI_M07.docx",
       "heading": "PL1 - Mau so 7: Danh sách cổ đông sáng lập công ty cổ phần",
@@ -2420,7 +2420,10 @@
        }
       ]
      },
-     "semantic_key": "ds_co_dong_sang_lap"
+     "semantic_key": "ds_co_dong_sang_lap",
+     "lead_status_override": {
+      "evidence": "P2A D2.3=A: +dan_toc cột 6 sau regen (10 tag); cùng kiến trúc phẳng với PLI_M08; suite P2A 14 PASS."
+     }
     }
    ],
    "legal_questions": [
@@ -2467,7 +2470,7 @@
       "ty_le",
       "chu_ky_output_only"
      ],
-     "status": "partial_columns",
+     "status": "already_complete",
      "source_evidence": {
       "template": "app/templates/PLI_M08.docx",
       "heading": "PL1 - Mau so 8: Danh sách cổ đông là nhà đầu tư nước ngoài",
@@ -2492,7 +2495,10 @@
       ],
       "missing_cols": []
      },
-     "semantic_key": "ds_co_dong_nn"
+     "semantic_key": "ds_co_dong_nn",
+     "lead_status_override": {
+      "evidence": "P2A D2.3=A: ghim spec khớp template (7 tag, thiếu 0); suite P2A 14 PASS."
+     }
     },
     {
      "section_id": "thue_chi_tieu_11_1_11_9",
@@ -2816,7 +2822,7 @@
       "quyen_chi_phoi",
       "ghi_chu"
      ],
-     "status": "partial_columns",
+     "status": "already_complete",
      "source_evidence": {
       "template": "app/templates/PLI_M10.docx",
       "heading": "PL1 - Mau so 10: Danh sách chủ sở hữu hưởng lợi của doanh nghiệp",
@@ -2844,7 +2850,10 @@
       ],
       "missing_cols": []
      },
-     "semantic_key": "ds_cshhl"
+     "semantic_key": "ds_cshhl",
+     "lead_status_override": {
+      "evidence": "P2A D2.5=A: cột quyen_chi_phoi trước Ghi chú (11 tag); NĐ 168/2025 đ.b.k1 Đ17; suite P2A 14 PASS."
+     }
     }
    ],
    "legal_questions": [
@@ -3200,7 +3209,7 @@
       "ty_le",
       "thoi_diem_dai_dien_phan_von"
      ],
-     "status": "missing_grid",
+     "status": "partial_columns",
      "source_evidence": {
       "template": "app/templates/PLI_M12.docx",
       "heading": "THÔNG BÁO THAY ĐỔI NGƯỜI ĐẠI DIỆN THEO ỦY QUYỀN CỦA CHỦ SỞ HỮU/THÀNH VIÊN CÔNG TY TRÁCH NHIỆM HỮU HẠN LÀ TỔ CHỨC/CỔ ĐÔNG LÀ TỔ CHỨC NƯỚC NGOÀI1",
@@ -3211,7 +3220,10 @@
       ]
      },
      "notes": "Header nối dính 14 cột ('STTChủ sở hữu/Thành viên công ty TNHH...Thời điểm đại diện phần vốn'). Blocks không có input/loop cho vùng này; PLAN yêu cầu audit dựng editable/nested grid thay vì field đơn.",
-     "semantic_key": "ds_ndd_uy_quyen_sau_thay_doi"
+     "semantic_key": "ds_ndd_uy_quyen_sau_thay_doi",
+     "lead_status_override": {
+      "evidence": "N6 rebuild 15 cột; cùng gap 2 nhóm cuối như N1."
+     }
     },
     {
      "section_id": "thue_thay_doi_1_9",
@@ -3312,14 +3324,17 @@
       "dia_chi_lien_lac",
       "quoc_gia"
      ],
-     "status": "missing_grid",
+     "status": "already_complete",
      "source_evidence": {
       "template": "app/templates/PLI_M13.docx",
       "heading": "Người đại diện theo pháp luật sau khi thay đổi2:",
       "anchor": "02_thay_doi_thong_tin_doanh_nghiep/PL1_Mau_13_tach_tu_file_full.docx#p12"
      },
      "notes": "Chân trang 2 (dòng 40 nguồn): 'Ghi thông tin của tất cả người đại diện theo pháp luật trong trường hợp sau khi thay đổi công ty có nhiều hơn 01 người đại diện theo pháp luật'. Blocks hiện chỉ có 1 bộ field ndd.* (không thêm/xóa dòng được).",
-     "semantic_key": "ds_ndd_pl_sau_thay_doi"
+     "semantic_key": "ds_ndd_pl_sau_thay_doi",
+     "lead_status_override": {
+      "evidence": "P2A D2.6/D2.7=A: loop grid 7 cột + minRows1; nguồn 1 row-type nên KHÔNG discriminator (không mislabel); 14 PASS."
+     }
     }
    ],
    "legal_questions": [
@@ -3336,7 +3351,7 @@
     "p": 40,
     "chk": 0,
     "table": 0,
-    "loop": 0
+    "loop": 1
    },
    "detector": {
     "p_signatures": 0,
@@ -3349,14 +3364,14 @@
       "excerpt": "Đăng ký thay đổi người đại diện theo pháp luật với các nội dung sau:"
      },
      {
-      "block": 23,
+      "block": 24,
       "stt": false,
       "list_hint": true,
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
      }
     ],
     "classifications": [],
-    "template_w_tbl": 0
+    "template_w_tbl": 1
    }
   },
   {
@@ -3446,14 +3461,17 @@
       "dia_chi_lien_lac",
       "ty_le_phan_von_du_uy_quyen"
      ],
-     "status": "missing_grid",
+     "status": "partial_columns",
      "source_evidence": {
       "template": "app/templates/PLI_M15.docx",
       "heading": "- Thông tin về người đại diện theo pháp luật/người đại diện theo ủy quyền của chủ sở hữu:",
       "anchor": "02_thay_doi_thong_tin_doanh_nghiep/PL1_Mau_15_tach_tu_file_full.docx#p50"
      },
      "notes": "Header bị nối thành 1 paragraph 'STTTên người đại diện theo pháp luật/người đại diện theo ủy quyềnNgày, tháng, năm sinhGiới tínhSố, ngày cấp, cơ quan cấp Giấy tờ pháp lý của cá nhân(5)Quốc tịch(6)Dân tộc(7)Địa chỉ...(4)'. Không có bất kỳ input nào cho vùng này trong blocks. Chân trang: nếu cột 5 là Số ĐDCN thì bỏ cột 6,7; tỷ lệ % chỉ kê khai khi ủy quyền.",
-     "semantic_key": "ds_nddpl_uy_quyen_chu_so_huu_moi"
+     "semantic_key": "ds_nddpl_uy_quyen_chu_so_huu_moi",
+     "lead_status_override": {
+      "evidence": "N7 rebuild 14 cột; cùng gap 2 nhóm cuối như N1."
+     }
     }
    ],
    "legal_questions": [
@@ -3522,14 +3540,17 @@
       "chi_tieu",
       "noi_dung"
      ],
-     "status": "partial_columns",
+     "status": "already_complete",
      "source_evidence": {
       "template": "app/templates/PLI_M17.docx",
       "heading": "6. Thông tin đăng ký thuế:",
       "anchor": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_17_....docx#p67-p128"
      },
      "notes": "8 chỉ tiêu cố định. Đã map: 1 kế toán trưởng (kt.*), 2 địa chỉ nhận TB thuế, 3 ngày bắt đầu hoạt động (ngay_bd/thang_bd/nam_bd), 5 năm tài chính (ap_dung_tu), 6 tổng số lao động (so_lao_dong). THIẾU: 4 hình thức hạch toán (Hạch toán độc lập/phụ thuộc + Có BCTC hợp nhất), 7 hoạt động dự án BOT/BTO/BT/BOO, BLT, BTL, O&M (Có/Không), 8 phương pháp tính thuế GTGT (4 lựa chọn).",
-     "semantic_key": "chi_tieu_thue_cn_ddkd"
+     "semantic_key": "chi_tieu_thue_cn_ddkd",
+     "lead_status_override": {
+      "evidence": "P2D audit: chk_* đã gắn tag đủ 17 ô tại base cdf8803; manifest census T0 stale; test_p2d_tax_specs 10 PASS."
+     }
     },
     {
      "section_id": "lua_chon_khu_cn_cxc_kt_kccn",
@@ -3541,14 +3562,17 @@
       "khu_kinh_te",
       "khu_cong_nghe_cao"
      ],
-     "status": "missing_grid",
+     "status": "already_complete",
      "source_evidence": {
       "template": "app/templates/PLI_M17.docx",
       "heading": "- Chi nhánh/Văn phòng đại diện/Địa điểm kinh doanh nằm trong ...",
       "anchor": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_17_....docx#p23-p31"
      },
      "notes": "4 ô □ rời không được convert thành chk block.",
-     "semantic_key": "lua_chon_khu_san_xuat"
+     "semantic_key": "lua_chon_khu_san_xuat",
+     "lead_status_override": {
+      "evidence": "P2D D5.1=A: nhóm checkbox đã tag đủ tại base; census stale."
+     }
     },
     {
      "section_id": "phuong_thuc_dong_bhxh",
@@ -3559,14 +3583,17 @@
       "ba_thang_mot_lan",
       "sau_thang_mot_lan"
      ],
-     "status": "missing_grid",
+     "status": "already_complete",
      "source_evidence": {
       "template": "app/templates/PLI_M17.docx",
       "heading": "7. Thông tin về việc đóng bảo hiểm xã hội (chỉ kê khai đối với chi nhánh/văn phòng đại diện):",
       "anchor": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_17_....docx#p128-p135"
      },
      "notes": "3 lựa chọn □ Hàng tháng / 03 tháng / 06 tháng một lần; điều kiện chọn theo ngành chính nông-lâm-ngư-diêm nghiệp.",
-     "semantic_key": "phuong_thuc_dong_bhxh_cn"
+     "semantic_key": "phuong_thuc_dong_bhxh_cn",
+     "lead_status_override": {
+      "evidence": "P2D D5.1=A: nhóm BHXH đã tag đủ tại base; census stale; entry trùng sẽ tạo 2 nguồn sự thật nên không khai thêm."
+     }
     }
    ],
    "legal_questions": [
@@ -3694,14 +3721,17 @@
       "chi_tieu",
       "noi_dung"
      ],
-     "status": "partial_columns",
+     "status": "already_complete",
      "source_evidence": {
       "template": "app/templates/PLI_M19.docx",
       "heading": "ĐĂNG KÝ THAY ĐỔI THÔNG TIN ĐĂNG KÝ THUẾ:",
       "anchor": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_19_....docx#p86-p126"
      },
      "notes": "7 chỉ tiêu. Đã map: kế toán trưởng, địa chỉ nhận TB thuế, ngày bắt đầu, năm tài chính, lao động. THIẾU: 4 hình thức hạch toán (2 chk + BCTC hợp nhất), 7 dự án BOT/BTO/BT/BOO, BLT, BTL, O&M (Có/Không). Phần B (bổ sung cập nhật) và C (hiệu đính) là vùng text tự do, không phải lưới.",
-     "semantic_key": "chi_tieu_thue_thay_doi_cn"
+     "semantic_key": "chi_tieu_thue_thay_doi_cn",
+     "lead_status_override": {
+      "evidence": "P2D: 9 ô chọn-1 đã tag đủ tại base; test_p2d 10 PASS."
+     }
     }
    ],
    "legal_questions": [
@@ -3823,14 +3853,17 @@
       "chi_tieu",
       "noi_dung"
      ],
-     "status": "partial_columns",
+     "status": "already_complete",
      "source_evidence": {
       "template": "app/templates/PLI_M23.docx",
       "heading": "6. Thông tin đăng ký thuế:",
       "anchor": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_23_....docx#p55-p105"
      },
      "notes": "6 chỉ tiêu. Đã map: địa chỉ nhận TB thuế, năm tài chính (ap_dung_tu), lao động. THIẾU: 2 hình thức hạch toán, 5 dự án BOT..., 6 phương pháp thuế GTGT.",
-     "semantic_key": "chi_tieu_thue_bo_sung_cn"
+     "semantic_key": "chi_tieu_thue_bo_sung_cn",
+     "lead_status_override": {
+      "evidence": "P2D: 10 ô đã tag đủ tại base; numbering nguồn là mục 7 (defect đã ghi); section_id giữ nguyên để JOIN spec/tests."
+     }
     }
    ],
    "legal_questions": [
@@ -3918,14 +3951,17 @@
       "chi_tieu",
       "noi_dung"
      ],
-     "status": "partial_columns",
+     "status": "already_complete",
      "source_evidence": {
       "template": "app/templates/PLI_M25.docx",
       "heading": "6. Thông tin đăng ký thuế:",
       "anchor": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_25_....docx#p58-p105"
      },
      "notes": "6 chỉ tiêu, cấu trúc giống M23. Đã map địa chỉ TB thuế/năm tài chính/lao động. THIẾU: hạch toán, BOT, thuế GTGT.",
-     "semantic_key": "chi_tieu_thue_bo_sung_ctck"
+     "semantic_key": "chi_tieu_thue_bo_sung_ctck",
+     "lead_status_override": {
+      "evidence": "P2D: 10 ô đã tag đủ tại base (CTCK); census stale."
+     }
     }
    ],
    "legal_questions": [

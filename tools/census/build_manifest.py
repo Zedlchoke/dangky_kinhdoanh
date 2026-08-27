@@ -42,12 +42,20 @@ EVOLVED_FORMS = {
     # R3B1 regen 2026-08-27 (merge 2202937/29b1efa): glue header nguoi/uy quyen
     # tro thanh loop nested-grid that, theo specs D2.1/D2.4/D2.7 da chot
     "PLI_M02":
-        "R3B1: them loop nested-grid ds_nddpl_uy_quyen_chu_so_huu (1->2 loop)",
+        "R3B1: +loop nested-grid ds_nddpl_uy_quyen_chu_so_huu; P2C: +2 "
+        "fixed-matrix nguon_von/tai_san (section_specs)",
     "PLI_M12":
         "R3B1: them loop nested-grid ds_ndd_uy_quyen_sau_thay_doi (3->4 loop)",
     "PLI_M15":
         "R3B1: glue header B49 -> loop nested-grid "
         "ds_nddpl_uy_quyen_chu_so_huu_moi (0->1 loop)",
+    # Wave P2 regen 2026-08-27 (abe6084/1691728 + Lead regen batch)
+    "PLII_M07":
+        "P2A D2.8=A: +loop ds_thanh_vien_hkd_gcn (1->2 loop, 7 p -> w:tbl)",
+    "PLI_M01":
+        "P2C D1.1=A/D1.2=B: tai_san_gop_von_von_dau_tu -> w:tbl fixed-matrix",
+    "PLI_M13":
+        "P2A D2.6/D2.7=A: glue header -> loop grid ndd_pl_sau_thay_doi (0->1)",
 }
 
 TABLE_KINDS = ("editable-grid", "fixed-matrix", "nested-grid", "output-table")
@@ -133,6 +141,98 @@ SIGNATURE_CLASSIFICATIONS = {
 }
 
 LEAD_STATUS_OVERRIDES = {
+    # --- Wave P2 (2026-08-27): merge abe6084 (P2A) / 1691728 (P2C) /
+    # a61cdfb (P2D) + Lead regen batch 8 mẫu. Evidence = suite thật đã chạy
+    # trên main sau merge; loop_audit census giữ nguyên như hồ sơ lịch sử. ---
+    ("PLI_M06", "ds_thanh_vien_tnhh"): {
+        "status": "already_complete",
+        "evidence": "P2A D2.2=A: cột 10 thoi_han_gop_von đã tag sau regen "
+                    "(template 11 tag); test_p2a_people_specs [EVD]/[DELTA] 14 PASS.",
+    },
+    ("PLI_M07", "ds_co_dong_sang_lap"): {
+        "status": "already_complete",
+        "evidence": "P2A D2.3=A: +dan_toc cột 6 sau regen (10 tag); cùng kiến "
+                    "trúc phẳng với PLI_M08; suite P2A 14 PASS.",
+    },
+    ("PLI_M08", "ds_co_dong_nn"): {
+        "status": "already_complete",
+        "evidence": "P2A D2.3=A: ghim spec khớp template (7 tag, thiếu 0); "
+                    "suite P2A 14 PASS.",
+    },
+    ("PLI_M10", "ds_cshhl_doanh_nghiep"): {
+        "status": "already_complete",
+        "evidence": "P2A D2.5=A: cột quyen_chi_phoi trước Ghi chú (11 tag); "
+                    "NĐ 168/2025 đ.b.k1 Đ17; suite P2A 14 PASS.",
+    },
+    ("PLI_M13", "ndd_pl_sau_thay_doi"): {
+        "status": "already_complete",
+        "evidence": "P2A D2.6/D2.7=A: loop grid 7 cột + minRows1; nguồn 1 "
+                    "row-type nên KHÔNG discriminator (không mislabel); 14 PASS.",
+    },
+    ("PLII_M07", "m7_danh_sach_thanh_vien_hgd"): {
+        "status": "already_complete",
+        "evidence": "P2A D2.8=A: key riêng ds_thanh_vien_hkd_gcn đúng 7 cột "
+                    "nguồn; test_industry_household 13 PASS (loop ngành không "
+                    "xâm lấn).",
+    },
+    ("PLI_M17", "thue_chi_tieu_6_1_8"): {
+        "status": "already_complete",
+        "evidence": "P2D audit: chk_* đã gắn tag đủ 17 ô tại base cdf8803; "
+                    "manifest census T0 stale; test_p2d_tax_specs 10 PASS.",
+    },
+    ("PLI_M17", "lua_chon_khu_cn_cxc_kt_kccn"): {
+        "status": "already_complete",
+        "evidence": "P2D D5.1=A: nhóm checkbox đã tag đủ tại base; census stale.",
+    },
+    ("PLI_M17", "phuong_thuc_dong_bhxh"): {
+        "status": "already_complete",
+        "evidence": "P2D D5.1=A: nhóm BHXH đã tag đủ tại base; census stale; "
+                    "entry trùng sẽ tạo 2 nguồn sự thật nên không khai thêm.",
+    },
+    ("PLI_M19", "thue_thay_doi_A"): {
+        "status": "already_complete",
+        "evidence": "P2D: 9 ô chọn-1 đã tag đủ tại base; test_p2d 10 PASS.",
+    },
+    ("PLI_M23", "thue_chi_tieu_6_1_6"): {
+        "status": "already_complete",
+        "evidence": "P2D: 10 ô đã tag đủ tại base; numbering nguồn là mục 7 "
+                    "(defect đã ghi); section_id giữ nguyên để JOIN spec/tests.",
+    },
+    ("PLI_M25", "thue_chi_tieu_6_1_6_ctck"): {
+        "status": "already_complete",
+        "evidence": "P2D: 10 ô đã tag đủ tại base (CTCK); census stale.",
+    },
+    ("PLI_M01", "tai_san_gop_von_von_dau_tu"): {
+        "status": "already_complete",
+        "evidence": "P2C D1.1=A/D1.2=B: fixed-matrix 7 dòng + Tổng số computed, "
+                    "'tài sản khác' là ô mô tả text; regen template + "
+                    "section_specs; suite P2C 16 PASS, runtime contract wired.",
+    },
+    ("PLI_M02", "nguon_von_dieule"): {
+        "status": "already_complete",
+        "evidence": "P2C D1.1=A: 5 dòng + Tổng cộng output_only, cùng key "
+                    "canonical F2(M03); regen + section_specs; 16 PASS.",
+    },
+    ("PLI_M02", "tai_san_gop_von_von_dieu_le"): {
+        "status": "already_complete",
+        "evidence": "P2C: 6 dòng + Tổng số; 'tài sản khác' ô mô tả theo chữ "
+                    "mẫu; regen + section_specs; 16 PASS.",
+    },
+    # --- R3B1 rebuild (b9bc572): 3 nested-grid thành bảng thật; 2 nhóm cột
+    # cuối vẫn KHAI THIẾU chờ owner -> partial_columns (như tiền lệ M09). ---
+    ("PLI_M02", "nddpl_uy_quyen_chu_so_huu"): {
+        "status": "partial_columns",
+        "evidence": "N1 rebuild 14 cột w:tbl thật (visual pilot PASS); thiếu 2 "
+                    "nhóm header chưa có evidence tag canonical (gap đã ghi).",
+    },
+    ("PLI_M12", "ndd_uy_quyen_sau_thay_doi"): {
+        "status": "partial_columns",
+        "evidence": "N6 rebuild 15 cột; cùng gap 2 nhóm cuối như N1.",
+    },
+    ("PLI_M15", "ndd_pl_uy_quyen_chu_so_huu_moi"): {
+        "status": "partial_columns",
+        "evidence": "N7 rebuild 14 cột; cùng gap 2 nhóm cuối như N1.",
+    },
     ("PLI_M72", "nganh_nghe_5_loai_hinh"): {
         "status": "already_complete",
         "evidence": "P1 integrate: generator occurrence identity + spec 5 occurrence "

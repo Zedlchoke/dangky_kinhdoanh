@@ -142,3 +142,4 @@ tools/test_export_totals_product.py
 tools/census/build_manifest.py
 app/data/table_specs/manifest.json
 PLAN_excel.md
+app_web/test_m72_activation.js

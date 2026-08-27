@@ -11408,43 +11408,43 @@
   "template": "templates/PLI_M06.docx",
   "fields": [
    {
-    "key": "ds_thanh_vien.ho_ten",
+    "key": "ds_thanh_vien_tnhh.ho_ten",
     "label": "ho_ten"
    },
    {
-    "key": "ds_thanh_vien.so_cccd",
+    "key": "ds_thanh_vien_tnhh.so_cccd",
     "label": "so_cccd"
    },
    {
-    "key": "ds_thanh_vien.ngay_sinh",
+    "key": "ds_thanh_vien_tnhh.ngay_sinh",
     "label": "ngay_sinh"
    },
    {
-    "key": "ds_thanh_vien.gioi_tinh",
+    "key": "ds_thanh_vien_tnhh.gioi_tinh",
     "label": "gioi_tinh"
    },
    {
-    "key": "ds_thanh_vien.quoc_tich",
+    "key": "ds_thanh_vien_tnhh.quoc_tich",
     "label": "quoc_tich"
    },
    {
-    "key": "ds_thanh_vien.dan_toc",
+    "key": "ds_thanh_vien_tnhh.dan_toc",
     "label": "dan_toc"
    },
    {
-    "key": "ds_thanh_vien.dia_chi",
+    "key": "ds_thanh_vien_tnhh.dia_chi",
     "label": "dia_chi"
    },
    {
-    "key": "ds_thanh_vien.von_dong_gop",
+    "key": "ds_thanh_vien_tnhh.von_dong_gop",
     "label": "von_dong_gop"
    },
    {
-    "key": "ds_thanh_vien.ty_le_von",
+    "key": "ds_thanh_vien_tnhh.ty_le_von",
     "label": "ty_le_von"
    },
    {
-    "key": "ds_thanh_vien.thoi_han_gop_von",
+    "key": "ds_thanh_vien_tnhh.thoi_han_gop_von",
     "label": "thoi_han_gop_von"
    },
    {
@@ -11674,7 +11674,7 @@
     "table_index": 0,
     "header_row": 0,
     "template_row": 5,
-    "loop": "ds_thanh_vien",
+    "loop": "ds_thanh_vien_tnhh",
     "columns": [
      {
       "col": 1,

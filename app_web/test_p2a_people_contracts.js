@@ -92,8 +92,9 @@ const P2A = [
   },
   {
     docId: 'PLI_M06', sectionId: 'ds_thanh_vien_tnhh',
+    /* loop đổi riêng (Lead sync) trùng semantic_key manifest — guard export */
     specFile: 'tools/form_specs/formation/PLI_M06.json',
-    specId: 'ds_thanh_vien_tnhh', loop: 'ds_thanh_vien',
+    specId: 'ds_thanh_vien_tnhh', loop: 'ds_thanh_vien_tnhh',
     added: ['thoi_han_gop_von'], decision: 'D2.2=A phẳng + bổ sung cột thiếu',
     tags: null /* lấy từ form_maps production + added */
   },
@@ -198,22 +199,19 @@ check('GRID_META.ds_cshhl: co cot quyen_chi_phoi TRUOC ghi_chu (D2.5=A)',
   })(),
   '...,quyen_chi_phoi,ghi_chu',
   FD.GRID_META.ds_cshhl.columns.map(c => c.tag).join(','));
-/* [Lead sync sau wire] global GIỮ 10 cột (phục vụ mẫu khác + pin
- * test_form_grid_meta); PLI_M06 resolve qua FORM_GRID_META form-scoped 11 cột
- * với thoi_han_gop_von chèn trước chu_ky (D2.2=A). */
-check('GRID_META.ds_thanh_vien global giu 10 cot; PLI_M06 form-scoped 11 cot',
+/* [Lead sync sau rename] M06 dùng LOOP RIÊNG ds_thanh_vien_tnhh (11 cột,
+ * thoi_han_gop_von trước chu_ky) — GRID_META.ds_thanh_vien 10 cột giữ nguyên
+ * cho M09/các mẫu khác; export conflict guard hết cờ vì tên loop là duy nhất. */
+check('GRID_META.ds_thanh_vien global giu 10 cot; M06 loop rieng 11 cot',
   FD.GRID_META.ds_thanh_vien.columns.length === 10 &&
     FD.GRID_META.ds_thanh_vien.columns.every(c => c.tag !== 'thoi_han_gop_von') &&
-    FD.getGridMeta({ docId: 'PLI_M06', loop: 'ds_thanh_vien' }) !==
-      FD.GRID_META.ds_thanh_vien &&
-    FD.getGridMeta({ docId: 'PLI_M06', loop: 'ds_thanh_vien' }).columns.length === 11 &&
-    FD.getGridMeta({ docId: 'PLI_M06', loop: 'ds_thanh_vien' })
-      .columns.map(c => c.tag).join(',') ===
+    FD.getGridMeta('ds_thanh_vien_tnhh') === FD.GRID_META.ds_thanh_vien_tnhh &&
+    FD.GRID_META.ds_thanh_vien_tnhh.columns.length === 11 &&
+    FD.GRID_META.ds_thanh_vien_tnhh.columns.map(c => c.tag).join(',') ===
       'ho_ten,ngay_sinh,gioi_tinh,so_cccd,quoc_tich,dan_toc,dia_chi,' +
       'von_dong_gop,ty_le_von,thoi_han_gop_von,chu_ky',
-  'global 10 cot khong thoi_han; M06 scoped 11 cot co thoi_han truoc chu_ky',
-  FD.getGridMeta({ docId: 'PLI_M06', loop: 'ds_thanh_vien' })
-    .columns.map(c => c.tag).join(','));
+  'ds_thanh_vien 10 cot; ds_thanh_vien_tnhh 11 cot co thoi_han truoc chu_ky',
+  FD.GRID_META.ds_thanh_vien_tnhh.columns.map(c => c.tag).join(','));
 check('GRID_META.ds_nganh/ds_tv_ho_gia_dinh khong bi xuyen tach',
   FD.GRID_META.ds_nganh.columns.length === 4 &&
     FD.GRID_META.ds_tv_ho_gia_dinh.columns.length === 9);
@@ -315,15 +313,16 @@ P2A.forEach(s => {
   }
 });
 
-// manifest không tự suy: PLI_M13 và PLII_M07 vẫn missing_grid, 4 mẫu kia
-// vẫn partial_columns cho tới khi Lead regen
-check('manifest: status 6 section P2A chua doi (chua regen)',
-  MANIFEST.PLI_M13.ndd_pl_sau_thay_doi.status === 'missing_grid' &&
-    MANIFEST.PLII_M07.m7_danh_sach_thanh_vien_hgd.status === 'missing_grid' &&
+// [Lead sync census 6e972e7] 6 section P2A ĐÃ lên already_complete với
+// evidence suite thật (build_manifest LEAD_STATUS_OVERRIDES); N1/N6/N7 thì
+// partial_columns (2 nhóm cuối khai thiếu).
+check('manifest: status 6 section P2A da already_complete (post-census)',
+  MANIFEST.PLI_M13.ndd_pl_sau_thay_doi.status === 'already_complete' &&
+    MANIFEST.PLII_M07.m7_danh_sach_thanh_vien_hgd.status === 'already_complete' &&
     [['PLI_M06', 'ds_thanh_vien_tnhh'], ['PLI_M07', 'ds_co_dong_sang_lap'],
       ['PLI_M08', 'ds_co_dong_nn'], ['PLI_M10', 'ds_cshhl_doanh_nghiep']]
       .every(([fid, sid]) => (MANIFEST[fid][sid] || {})
-        .status === 'partial_columns'));
+        .status === 'already_complete'));
 
 // ===========================================================================
 // 4. D7.3=A: 5 loop ngành PLI_M72 bắt buộc >= 1 ngành
@@ -386,7 +385,7 @@ M72_LOOPS.forEach(ln => {
   // D7.3 KHÔNG đụng mẫu khác: PLI_M06 vẫn minRows=2 (2 thành viên) như cũ
   const m06 = loadBlocks('PLI_M06');
   const s06 = R.newStore();
-  s06.loops.ds_thanh_vien = [{ _row_id: 'r1', ho_ten: 'A',
+  s06.loops.ds_thanh_vien_tnhh = [{ _row_id: 'r1', ho_ten: 'A',
     von_dong_gop: '1', ty_le_von: '100' }];
   const e06 = FD.validateDocument('PLI_M06', m06.blocks, s06, { vsicList: VSIC });
   check('D7.3: PLI_M06 giu nguyen rule minRows 2 (khong bi keo theo)',

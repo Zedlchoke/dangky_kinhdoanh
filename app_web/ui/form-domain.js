@@ -159,6 +159,33 @@
       duplicateKeys: ['so_cccd'],
       outputOnlyTags: ['chu_ky']
     },
+    /* Wave P2 Lead-wire (merge abe6084 + rename): PLI_M06 có THÊM cột
+     * 'Thời hạn góp vốn' {thoi_han_gop_von} (D2.2=A) so với các mẫu khác cùng
+     * tên loop nguồn 'ds_thanh_vien' (M09/M02...). Export conflict guard
+     * (LOCKED v1) cấm cùng tên loop khác contract giữa các mẫu → M06 dùng
+     * TÊN LOOP RIÊNG trùng semantic_key manifest; draft M06 thực tế rỗng
+     * (section mới có meta) nên không cần migration — cùng chính sách D2.9. */
+    ds_thanh_vien_tnhh: {
+      label: 'Danh sách thành viên công ty TNHH (cập nhật)',
+      minRows: 2, maxRows: null, required: false,
+      allowAdd: true, allowDelete: true, allowReorder: true,
+      confirmDeleteNonEmpty: true, requirePrimary: false,
+      columns: [
+        { tag: 'ho_ten', type: 'text', required: true },
+        { tag: 'ngay_sinh', type: 'text' },
+        { tag: 'gioi_tinh', type: 'text' },
+        { tag: 'so_cccd', type: 'text' },
+        { tag: 'quoc_tich', type: 'text' },
+        { tag: 'dan_toc', type: 'text' },
+        { tag: 'dia_chi', type: 'text' },
+        { tag: 'von_dong_gop', type: 'money' },
+        { tag: 'ty_le_von', type: 'percent' },
+        { tag: 'thoi_han_gop_von', type: 'text' },
+        { tag: 'chu_ky', type: 'outputOnly' }
+      ],
+      duplicateKeys: ['so_cccd'],
+      outputOnlyTags: ['chu_ky']
+    },
     ds_co_dong_sang_lap: {
       label: 'Danh sách cổ đông sáng lập',
       minRows: 1, maxRows: null, required: false,
@@ -562,22 +589,6 @@
           outputOnlyTags: [],
           semanticKey: 'ds_thanh_vien_hkd_gcn'
         }
-      }
-    },
-    /* Wave P2 Lead-wire (merge abe6084): PLI_M06 ds_thanh_vien — D2.2=A bổ
-     * sung cột 10 'Thời hạn góp vốn' {thoi_han_gop_von} (text) ngay trước
-     * chu_ky. FORM-SCOPED để KHÔNG đụng GRID_META.ds_thanh_vien toàn cục
-     * (đang phục vụ mẫu khác và bị test_form_grid_meta ghim 10 cột). */
-    'PLI_M06': {
-      loops: {
-        ds_thanh_vien: (function () {
-          var m = mkGrid(GRID_META.ds_thanh_vien, {
-            label: 'Danh sách thành viên công ty TNHH (cập nhật)',
-            semanticKey: 'ds_thanh_vien'
-          });
-          m.columns.splice(9, 0, { tag: 'thoi_han_gop_von', type: 'text' });
-          return m;
-        })()
       }
     }
   };

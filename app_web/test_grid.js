@@ -129,7 +129,10 @@ function errsOf(docId, blocks, store, vsicList) {
 // --------------------------------------------------- A. GRID_META coverage
 
 const PROD_LOOPS = [
-  { doc: 'PLI_M06', loop: 'ds_thanh_vien' },
+  /* [Lead sync P2] M06 đổi loop riêng ds_thanh_vien_tnhh (D2.2=A thêm cột
+   * thoi_han_gop_von; export conflict guard cấm cùng tên loop khác contract
+   * giữa các mẫu — M09 vẫn dùng ds_thanh_vien 10 cột). */
+  { doc: 'PLI_M06', loop: 'ds_thanh_vien_tnhh' },
   { doc: 'PLI_M07', loop: 'ds_co_dong_sang_lap' },
   { doc: 'PLI_M08', loop: 'ds_co_dong_nn' },
   { doc: 'PLI_M09', loop: 'ds_thanh_vien' },
@@ -276,7 +279,7 @@ runGridContract('PLII_M01', 'ds_nganh',
     row.ten_nganh = 'Lập trình máy vi tính';
   }, 'ma_nganh');
 
-runGridContract('PLI_M06', 'ds_thanh_vien',
+runGridContract('PLI_M06', 'ds_thanh_vien_tnhh',
   function fill(row) {
     row.ho_ten = 'NGUYEN VAN TEST';
     row.von_dong_gop = '100.000.000';
@@ -486,19 +489,20 @@ function industryStore(rows) {
     !e8.some(e => e.code === 'MIN_ROWS' || e.code === 'INDUSTRY_REQUIRED'));
 }
 
-// MIN_ROWS ds_thanh_vien giữ hành vi cũ (regression)
+// MIN_ROWS ds_thanh_vien_tnhh (M06) giữ hành vi cũ (regression, sau rename P2)
 {
   const M06 = loadProd('PLI_M06');
   const s1 = R.newStore();
-  s1.loops.ds_thanh_vien = [
+  s1.loops.ds_thanh_vien_tnhh = [
     { ho_ten: 'A', von_dong_gop: '500.000.000', ty_le_von: '100' }];
   const e = errsOf('PLI_M06', M06.blocks, s1, VSIC);
   const mr = e.find(x => x.code === 'MIN_ROWS');
-  check('ds_thanh_vien 1 thanh vien -> MIN_ROWS blocking (regression)',
+  check('ds_thanh_vien_tnhh 1 thanh vien -> MIN_ROWS blocking (regression)',
     !!mr && mr.severity === 'blocking');
   check('minRows khong khoa thao tac: deleteRows van chap nhan duoi 2 dong',
-    G.deleteRows(s1, 'ds_thanh_vien', [s1.loops.ds_thanh_vien[0]._row_id]) === 1 &&
-      s1.loops.ds_thanh_vien.length === 0);
+    G.deleteRows(s1, 'ds_thanh_vien_tnhh',
+      [s1.loops.ds_thanh_vien_tnhh[0]._row_id]) === 1 &&
+      s1.loops.ds_thanh_vien_tnhh.length === 0);
 }
 
 // ----------------------------------------------- D. VSIC flow (thuần)

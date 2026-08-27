@@ -535,14 +535,12 @@ M72_LOOPS.forEach(l => runMiniContract('PLI_M72', M72, l));
 // ==== 10. grid cu khong hoi quy (fall-through toan cuc nguyen ven) ==========
 
 {
-  /* [Lead sync sau wire P2] PLI_M06 giờ có FORM_GRID_META form-scoped
-   * (11 cột, thoi_han_gop_von trước chu_ky — D2.2=A); các form KHÔNG khai
-   * scoped vẫn fall-through về GRID_META toàn cục nguyênven (same ref). */
-  const m06Scoped = FD.getGridMeta({ docId: 'PLI_M06', loop: 'ds_thanh_vien' });
-  check('10. PLI_M06 resolve form-scoped 11 cot; loop cu khac van same-ref global',
-    m06Scoped !== FD.GRID_META.ds_thanh_vien &&
-      m06Scoped.columns.length === 11 &&
-      m06Scoped.columns[9].tag === 'thoi_han_gop_von' &&
+  /* [Lead sync sau rename P2] M06 dùng loop riêng ds_thanh_vien_tnhh (global
+   * GRID_META, 11 cột); các loop cũ vẫn fall-through global nguyên vẹn. */
+  check('10. M06 loop rieng same-ref global 11 cot; loop cu khac van global',
+    FD.getGridMeta('ds_thanh_vien_tnhh') === FD.GRID_META.ds_thanh_vien_tnhh &&
+      FD.getGridMeta({ docId: 'PLI_M06', loop: 'ds_thanh_vien_tnhh' }) ===
+        FD.GRID_META.ds_thanh_vien_tnhh &&
       FD.getGridMeta({ docId: 'PLII_M01', loop: 'ds_nganh' }) === FD.GRID_META.ds_nganh &&
       FD.getGridMeta({ docId: 'PLI_M02', loop: 'ds_nganh' }) === FD.GRID_META.ds_nganh);
   check('10. GRID_META.ds_nganh khong bi mutate khi khai FORM_GRID_META (clone isolation)',
@@ -556,7 +554,7 @@ M72_LOOPS.forEach(l => runMiniContract('PLI_M72', M72, l));
     e0.length === 1 && e0[0].code === 'INDUSTRY_REQUIRED' && e0[0].key === 'loop:ds_nganh',
     JSON.stringify(e0.map(e => e.key)));
   const M06 = loadProd('PLI_M06');
-  const s1 = mkStore({ ds_thanh_vien: [
+  const s1 = mkStore({ ds_thanh_vien_tnhh: [
     { ho_ten: 'A', von_dong_gop: 'chuwa nhap', ty_le_von: '100' }] });
   const e1 = errsOf('PLI_M06', M06.blocks, s1);
   check('10. PLI_M06 MIN_ROWS/MONEY van hoat dong tren meta toan cuc',

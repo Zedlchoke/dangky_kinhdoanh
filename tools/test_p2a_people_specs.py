@@ -171,7 +171,7 @@ _GROUP_OF = {
     "PLI_M10": "formation", "PLI_M13": "change", "PLII_M07": "household",
 }
 SPEC_OF = {   # form -> (spec_id, loop, headers, [tag] theo thứ tự cột)
-    "PLI_M06": ("ds_thanh_vien_tnhh", "ds_thanh_vien", M06_HEADERS,
+    "PLI_M06": ("ds_thanh_vien_tnhh", "ds_thanh_vien_tnhh", M06_HEADERS,
                 ["ho_ten", "ngay_sinh", "gioi_tinh", "so_cccd", "quoc_tich",
                  "dan_toc", "dia_chi", "von_dong_gop", "ty_le_von",
                  "thoi_han_gop_von", "chu_ky"]),
@@ -223,7 +223,7 @@ ALIAS = {
 
 
 # ---------------------------------------------------------------------------
-@check("[EVD] census manifest van ghi nhan 6 section chua regen (kind/status/sem)")
+@check("[EVD] census manifest ghi nhan dung kind/status/sem 6 section P2A (post-census)")
 def t_manifest_state():
     secs = manifest_sections()
     for fid, sid in MANIFEST_SECTION_OF.items():
@@ -232,8 +232,8 @@ def t_manifest_state():
         _fid, _sid, loop, _h, _t = (
             fid, sid, SPEC_OF[fid][1], SPEC_OF[fid][2], SPEC_OF[fid][3])
         # loop spec phải trùng semantic_key của manifest HOẶC loop_audit.loop
-        # (M06: semantic_key=ds_thanh_vien_tnhh nhưng loop production
-        # ds_thanh_vien — giữ nguyên key draft, migration additive)
+        # (M06: loop production ĐỔI RIÊNG ds_thanh_vien_tnhh trùng semantic_key
+        # — guard export cấm cùng tên loop khác contract; draft M06 rỗng)
         ok_loop = (sec["semantic_key"] == loop or
                    (sec.get("loop_audit") or {}).get("loop") == loop)
         assert ok_loop, "%s/%s: loop %r không khớp manifest (semantic_key=%r, " \
@@ -244,14 +244,16 @@ def t_manifest_state():
         ev = sec.get("source_evidence") or {}
         assert (ev.get("heading") or ev.get("anchor")), \
             "%s/%s thiếu evidence nguồn" % (fid, sid)
+        # [Lead sync census 6e972e7] 6 section P2A đã already_complete với
+        # evidence suite thật (LEAD_STATUS_OVERRIDES) sau regen.
         if fid == "PLII_M07":
-            assert sec["status"] == "missing_grid", sec["status"]
+            assert sec["status"] == "already_complete", sec["status"]
             assert ",".join(sec["required_columns"]) == ",".join(
                 ["stt"] + SPEC_OF[fid][3]), sec["required_columns"]
         elif fid == "PLI_M13":
-            assert sec["status"] == "missing_grid", sec["status"]
+            assert sec["status"] == "already_complete", sec["status"]
         else:
-            assert sec["status"] == "partial_columns", sec["status"]
+            assert sec["status"] == "already_complete", sec["status"]
         if fid != "PLII_M07":
             # mọi cột manifest yêu cầu phải được spec phủ (trực tiếp hoặc qua
             # ALIAS ten tag ngắn — cùng convention R3B1 cho bộ người M02/M12/M15)

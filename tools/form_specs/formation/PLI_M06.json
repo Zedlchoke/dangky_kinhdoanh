@@ -8,34 +8,94 @@
    "spec": {
     "id": "ds_thanh_vien_tnhh",
     "kind": "list",
-    "detect": ["stt", "ten thanh vien", "gioi tinh", "thoi han gop von"],
+    "detect": [
+     "stt",
+     "ten thanh vien",
+     "gioi tinh",
+     "thoi han gop von"
+    ],
     "stt_tag": true,
     "cols": [
-     ["^stt$", null],
-     ["ho ten|ten thanh vien", "ho_ten"],
-     ["dinh danh|cccd", "so_cccd"],
-     ["sinh|nam sinh", "ngay_sinh"],
-     ["gioi tinh", "gioi_tinh"],
-     ["quoc tich", "quoc_tich"],
-     ["dan toc", "dan_toc"],
-     ["thuong tru|noi o|dia chi", "dia_chi"],
-     ["phan von gop|dong gop von|von dong gop", "von_dong_gop"],
-     ["ty le", "ty_le_von"],
-     ["thoi han gop von", "thoi_han_gop_von"],
-     ["ky ten|chu ky", "chu_ky"]
+     [
+      "^stt$",
+      null
+     ],
+     [
+      "ho ten|ten thanh vien",
+      "ho_ten"
+     ],
+     [
+      "dinh danh|cccd",
+      "so_cccd"
+     ],
+     [
+      "sinh|nam sinh",
+      "ngay_sinh"
+     ],
+     [
+      "gioi tinh",
+      "gioi_tinh"
+     ],
+     [
+      "quoc tich",
+      "quoc_tich"
+     ],
+     [
+      "dan toc",
+      "dan_toc"
+     ],
+     [
+      "thuong tru|noi o|dia chi",
+      "dia_chi"
+     ],
+     [
+      "phan von gop|dong gop von|von dong gop",
+      "von_dong_gop"
+     ],
+     [
+      "ty le",
+      "ty_le_von"
+     ],
+     [
+      "thoi han gop von",
+      "thoi_han_gop_von"
+     ],
+     [
+      "ky ten|chu ky",
+      "chu_ky"
+     ]
     ],
-    "loop": "ds_thanh_vien",
-    "fields": ["ho_ten", "so_cccd", "ngay_sinh", "gioi_tinh", "quoc_tich",
-               "dan_toc", "dia_chi", "von_dong_gop", "ty_le_von",
-               "thoi_han_gop_von"]
+    "loop": "ds_thanh_vien_tnhh",
+    "fields": [
+     "ho_ten",
+     "so_cccd",
+     "ngay_sinh",
+     "gioi_tinh",
+     "quoc_tich",
+     "dan_toc",
+     "dia_chi",
+     "von_dong_gop",
+     "ty_le_von",
+     "thoi_han_gop_von"
+    ]
    },
    "pos": "before",
    "anchor": "thong tin ve giay chung nhan dang ky dau tu",
    "no_default_drops": true,
-   "headers": ["STT", "Tên thành viên", "Ngày, tháng, năm sinh", "Giới tính",
-               "Số định danh cá nhân/Giấy tờ pháp lý của cá nhân", "Quốc tịch",
-               "Dân tộc", "Địa chỉ liên lạc/Nơi thường trú", "Phần vốn góp (VNĐ)",
-               "Tỷ lệ vốn góp (%)", "Thời hạn góp vốn", "Chữ ký"],
+   "headers": [
+    "STT",
+    "Tên thành viên",
+    "Ngày, tháng, năm sinh",
+    "Giới tính",
+    "Số định danh cá nhân/Giấy tờ pháp lý của cá nhân",
+    "Quốc tịch",
+    "Dân tộc",
+    "Địa chỉ liên lạc/Nơi thường trú",
+    "Phần vốn góp (VNĐ)",
+    "Tỷ lệ vốn góp (%)",
+    "Thời hạn góp vốn",
+    "Chữ ký"
+   ],
    "notes": "P2A (2026-08-27): header GIU NGUYEN text production (khong doi thu tu) — khac biet duy nhat so voi khai bao inline la cot 10 'Thời hạn góp vốn' duoc gan the {thoi_han_gop_von}; detect them token 'thoi han gop von' de chan som truong hop header thieu cot. D2.4=A: cot Chữ ký gan {chu_ky} va la outputOnly tai GRID_META.ds_thanh_vien (khong doi). QUYET DINH ap dung: D2.2=A (giu kien truc phang, bo sung cot thieu); D2.7 khong ap dung cho bang nay (min 2 thanh vien da co san tu GRID_META.ds_thanh_vien.minRows=2) — docs/decision_registry.md packet D2; evidence: census manifest app/data/table_specs/manifest.json section ds_thanh_vien_tnhh (loop_audit.missing_cols col 10 'Thời hạn góp vốn') + nguon DN_PL1_Mau_06_*.docx. Nguon Mau 6 khong con paragraph header nao (bang mat toan bo khi convert) nen khong can trim/drop; no_default_drops=true an toan theo convention R3B1 va da xac minh REBUILD_DROP_DEFAULT khong khop paragraph nao trong nguon. LUU Y ky thuat: entry kind=list khong dung co che legal_status.blocked cua loader (chi cho 3 kind moi) nen quyet dinh duoc ghi o notes nay."
   }
  ]

@@ -404,7 +404,10 @@ function vsicOf(ma) {
     return st;
   }
 
-  ['PLI_M06', 'PLI_M12'].forEach(function (docId) {
+  /* [Lead sync P2] PLI_M06 rời baseline 6eaf4ee một cách HỢP LỆ (D2.2=A:
+   * +cột thoi_han_gop_von, loop riêng ds_thanh_vien_tnhh) — thay bằng
+   * PLII_M01 (không đổi trong P2) để giữ so-sánh 2 mẫu với baseline. */
+  ['PLII_M01', 'PLI_M12'].forEach(function (docId) {
     const blocks = loadProd(docId);
     const cur = errsOf(docId, blocks.blocks, fixtureStore(blocks), VSIC_FULL);
     const base = FB.validateDocument(docId, clone(blocks.blocks),

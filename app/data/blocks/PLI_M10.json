@@ -67,6 +67,10 @@
     },
     {
      "col": 10,
+     "tag": "quyen_chi_phoi"
+    },
+    {
+     "col": 11,
      "tag": "ghi_chu"
     }
    ],
@@ -168,6 +172,16 @@
        "runs": [
         {
          "text": "Tỷ lệ sở hữu cổ phần có quyền biểu quyết (%)",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Quyền chi phối",
          "b": true
         }
        ],

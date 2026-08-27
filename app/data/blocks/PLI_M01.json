@@ -1645,261 +1645,397 @@
    "role": "body"
   },
   {
-   "t": "p",
-   "align": "center",
-   "runs": [
+   "t": "table",
+   "widths": null,
+   "rows": [
     {
-     "text": "STT",
-     "b": true
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "Tài sản góp vốn",
-     "b": true
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "Giá trị vốn của từng tài sản trong vốn đầu tư\n(",
-     "b": true
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "Tài sản góp vốn",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Ghi rõ loại ngoại tệ, số tiền được góp bằng mỗi loại ngoại tệ / loại tài sản, số lượng và giá trị còn lại của mỗi loại tài sản",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Giá trị vốn của từng tài sản trong vốn đầu tư (bằng số, VNĐ)",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Tỷ lệ (%)",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
     },
     {
-     "text": "bằng số, VNĐ",
-     "b": true,
-     "i": true
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "Đồng Việt Nam"
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "input": {
+          "key": "co_cau_tai_san_gop_von_dau_tu.dong_viet_nam.chi_tiet_ngoai_te_tai_san_khac",
+          "w": 12
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "input": {
+          "key": "co_cau_tai_san_gop_von_dau_tu.dong_viet_nam.gia_tri_vnd",
+          "w": 12
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "input": {
+          "key": "co_cau_tai_san_gop_von_dau_tu.dong_viet_nam.ty_le",
+          "w": 12
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
     },
     {
-     "text": ")",
-     "b": true
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "Tỷ lệ (",
-     "b": true
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "Ngoại tệ tự do chuyển đổi (ghi rõ loại ngoại tệ, số tiền được góp bằng mỗi loại ngoại tệ)"
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "input": {
+          "key": "co_cau_tai_san_gop_von_dau_tu.ngoai_te_tu_do_chuyen_doi.chi_tiet_ngoai_te_tai_san_khac",
+          "w": 12
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "input": {
+          "key": "co_cau_tai_san_gop_von_dau_tu.ngoai_te_tu_do_chuyen_doi.gia_tri_vnd",
+          "w": 12
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "input": {
+          "key": "co_cau_tai_san_gop_von_dau_tu.ngoai_te_tu_do_chuyen_doi.ty_le",
+          "w": 12
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
     },
     {
-     "text": "%",
-     "b": true,
-     "i": true
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "Vàng"
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "input": {
+          "key": "co_cau_tai_san_gop_von_dau_tu.vang.chi_tiet_ngoai_te_tai_san_khac",
+          "w": 12
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "input": {
+          "key": "co_cau_tai_san_gop_von_dau_tu.vang.gia_tri_vnd",
+          "w": 12
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "input": {
+          "key": "co_cau_tai_san_gop_von_dau_tu.vang.ty_le",
+          "w": 12
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
     },
     {
-     "text": ")",
-     "b": true
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "1"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Đồng Việt Nam"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "2"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Ngoại tệ tự do chuyển đổi ("
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "Quyền sử dụng đất"
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "input": {
+          "key": "co_cau_tai_san_gop_von_dau_tu.quyen_su_dung_dat.chi_tiet_ngoai_te_tai_san_khac",
+          "w": 12
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "input": {
+          "key": "co_cau_tai_san_gop_von_dau_tu.quyen_su_dung_dat.gia_tri_vnd",
+          "w": 12
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "input": {
+          "key": "co_cau_tai_san_gop_von_dau_tu.quyen_su_dung_dat.ty_le",
+          "w": 12
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
     },
     {
-     "text": "ghi rõ loại ngoại tệ, số tiền được góp bằng mỗi loại ngoại tệ",
-     "i": true
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "Quyền sở hữu trí tuệ"
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "input": {
+          "key": "co_cau_tai_san_gop_von_dau_tu.quyen_so_huu_tri_tue.chi_tiet_ngoai_te_tai_san_khac",
+          "w": 12
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "input": {
+          "key": "co_cau_tai_san_gop_von_dau_tu.quyen_so_huu_tri_tue.gia_tri_vnd",
+          "w": 12
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "input": {
+          "key": "co_cau_tai_san_gop_von_dau_tu.quyen_so_huu_tri_tue.ty_le",
+          "w": 12
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
     },
     {
-     "text": ")"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "3"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Vàng"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "4"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Quyền sử dụng đất"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "5"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Quyền sở hữu trí tuệ"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "6"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Các tài sản khác ("
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "Các tài sản khác (ghi rõ loại tài sản, số lượng và giá trị còn lại của mỗi loại tài sản, có thể lập thành danh mục riêng kèm theo hồ sơ đăng ký doanh nghiệp)"
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "input": {
+          "key": "co_cau_tai_san_gop_von_dau_tu.tai_san_khac.chi_tiet_ngoai_te_tai_san_khac",
+          "w": 12
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "input": {
+          "key": "co_cau_tai_san_gop_von_dau_tu.tai_san_khac.gia_tri_vnd",
+          "w": 12
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "input": {
+          "key": "co_cau_tai_san_gop_von_dau_tu.tai_san_khac.ty_le",
+          "w": 12
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
     },
     {
-     "text": "ghi rõ loại tài sản, số lượng và giá trị còn lại của mỗi loại tài sản, có thể lập thành danh mục riêng kèm theo hồ sơ đăng ký doanh nghiệp",
-     "i": true
-    },
-    {
-     "text": ")"
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "Tổng số"
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "input": {
+          "key": "co_cau_tai_san_gop_von_dau_tu.tong_so.chi_tiet_ngoai_te_tai_san_khac",
+          "w": 12
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "input": {
+          "key": "co_cau_tai_san_gop_von_dau_tu.tong_so.gia_tri_vnd",
+          "w": 12
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "input": {
+          "key": "co_cau_tai_san_gop_von_dau_tu.tong_so.ty_le",
+          "w": 12
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
     }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "Tổng số"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
+   ]
   },
   {
    "t": "p",

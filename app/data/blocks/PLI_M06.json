@@ -66,6 +66,10 @@
      "tag": "ty_le_von"
     },
     {
+     "col": 10,
+     "tag": "thoi_han_gop_von"
+    },
+    {
      "col": 11,
      "tag": "chu_ky"
     }

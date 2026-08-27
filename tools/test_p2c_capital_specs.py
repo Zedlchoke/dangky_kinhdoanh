@@ -80,7 +80,7 @@ SECTIONS = {
         "tags": ["chi_tiet_ngoai_te_tai_san_khac", "gia_tri_vnd", "ty_le"],
         "detail_tag": "chi_tiet_ngoai_te_tai_san_khac",
         "table_shape": (8, 4),
-        "tail_tokens": ["{gd.ho_ten}", "{ap_dung_tu}"],
+        "tail_tokens": ["{gd.ho_ten}", "{ap_dung_tu}", "{von_dau_tu_so}"],
     },
     ("PLI_M02", "nguon_von_dieule"): {
         "file": "tools/form_specs/core/PLI_M02.json",
@@ -517,7 +517,7 @@ def t_sandbox_m01():
         assert want["next_heading_fold"].rstrip(":") in " ".join(folds), \
             "PLI_M01: mất heading mục kế"
         blob = "".join(texts)
-        for tok in ("{gd.ho_ten}", "{ap_dung_tu}", "{von_dau_tu_so}"):
+        for tok in want["tail_tokens"]:
             assert tok in blob, "PLI_M01: mất token mục kế %s" % tok
         # blocks qua kiểm định converter (annotate_and_verify đã chạy trong
         # convert_document) + đủ the từng ô
@@ -595,8 +595,8 @@ def t_sandbox_m02():
             for row in t.rows:
                 for cell in row.cells:
                     blob += cell.text
-        for tok in ("{von_dieu_le}", "{ndd.ho_ten}",
-                    "{#ds_nddpl_uy_quyen_chu_so_huu}"):
+        for tok in ("{von_dieu_le}", "{#ds_nddpl_uy_quyen_chu_so_huu}",
+                    "{ndd.ho_ten}"):
             assert tok in blob, "PLI_M02: mất chuỗi pháp lý/token %s" % tok
         blocks = dxtb.convert_document(docx.Document(str(tpl)), "PLI_M02",
                                        "DEMO", overrides={}, footnotes={},

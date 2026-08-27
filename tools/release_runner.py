@@ -64,6 +64,7 @@ SUITES: list[dict] = [
     {"name": "test_output_table",         "type": "node", "target": "app_web/test_output_table.js"},
     {"name": "test_fixed_matrix",         "type": "node", "target": "app_web/test_fixed_matrix.js"},
     {"name": "test_nested_grid",          "type": "node", "target": "app_web/test_nested_grid.js"},
+    {"name": "test_p2_migration",         "type": "node", "target": "app_web/test_p2_migration.js"},
     # --- Python ---
     {"name": "p1_b_verify_m72",           "type": "module", "target": "tools.census.p1_b_verify_m72",
      "requires": ["python-docx"]},

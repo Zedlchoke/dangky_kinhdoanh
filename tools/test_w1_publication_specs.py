@@ -511,13 +511,22 @@ def idempotency_checks():
 @check("[W1-GAP] PLI_M01 already_complete CHUA co duong dang ky v1")
 def pli_m01_gap_guard():
     raw = json.loads(M01_SPEC.read_text(encoding="utf-8-sig"))
-    kinds = {(e.get("kind") or "list") for e in raw["tables"]}
-    extra = sorted(kinds - {"list"})
-    assert not extra, (
-        "PLI_M01 đang có entry kind %s: schema v1 chỉ hỗ trợ entry "
-        "REBUILD-bảng-mới — một fixed-matrix tại đây sẽ dựng w:tbl mới gắn the "
-        "'<sem>.<row>.<tag>' đè lên vùng ĐÃ map chk_khu_* / gd.* / kt.* của "
-        "census manifest" % extra)
+    # [Lead sync P2C 1691728] guard thu hẹp theo SECTION: ý đồ gốc là bảo vệ
+    # vùng ĐÃ map (chk_khu_* / gd.* / kt.*) khỏi bị rebuild đè — không phải cấm
+    # mọi entry kind bảng. Entry fixed-matrix `tai_san_gop_von_von_dau_tu`
+    # (D1.1=A/D1.2=B, lane P2C) nhắm section missing_grid nên HỢP LỆ.
+    GUARDED_ALREADY_MAPPED = {"lua_chon_khu_san_xuat", "thue_chi_tieu_6_1_6_9"}
+    for e in raw["tables"]:
+        sid = ((e.get("spec") or {}).get("id")) or (e.get("id") or "")
+        kind = (e.get("spec") or {}).get("kind") or e.get("kind") or "list"
+        if sid in GUARDED_ALREADY_MAPPED:
+            assert kind == "list", (
+                "PLI_M01 section đã-map %s không được rebuild (kind=%r) — "
+                "sẽ đè binding chk_khu_* / gd.* / kt. của census" % (sid, kind))
+        else:
+            assert kind != "list" or sid == "ds_nganh", (
+                "PLI_M01 entry %s kind=%r: entry bảng phải khai kind rõ "
+                "(fixed-matrix/…) trừ entry ngành legacy" % (sid, kind))
     forms = json.loads(MANIFEST.read_text(encoding="utf-8"))["forms"]
     m01 = [f for f in forms if f["form_id"] == "PLI_M01"][0]
     by_sid = {s["section_id"]: s for s in m01["sections"]}

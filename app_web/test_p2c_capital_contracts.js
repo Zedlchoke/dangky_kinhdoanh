@@ -373,6 +373,48 @@ check('GATE PLI_M01: lệch vốn đầu tư bị CHẶN blocking CAPITAL_MISMAT
   'CAPITAL_MISMATCH blocking',
   JSON.stringify(errs01.map(e => [e.code, e.severity])));
 
+
+// ===========================================================================
+// 7. [GATE - regression ISS-1/ISS-3 re-shoot P2] anchor span KHÔNG được nuốt
+//    section khác: endMatch=null chỉ hợp lệ cho section cuối; matchRole phải
+//    khớp role block thật. Kiểm bằng renderBlocks HTML thật.
+// ===========================================================================
+const Rr = require('./ui/render.js');
+const Apph = require('./ui/app.js');
+const fs2 = require('fs');
+const path2 = require('path');
+function loadProd2(id) {
+  return JSON.parse(fs2.readFileSync(path2.join(__dirname, '..',
+    'app', 'data', 'blocks', id + '.json'), 'utf8'));
+}
+function renderDoc2(id) {
+  return Rr.renderBlocks(loadProd2(id), Rr.newStore(), {
+    docId: id, fieldMeta: FD.FIELD_META,
+    gridMeta: Apph.gridMetaForDoc(id), flags: {},
+    /* dispatcher kind mới: phải truyền contract registry như app.js/harness */
+    sectionContracts: FD.sectionContractsOf(id) });
+}
+{
+  const html02 = renderDoc2('PLI_M02');
+  const nFixed = (html02.match(/data-component="fixed-matrix"/g) || []).length;
+  check('REG PLI_M02: dung 2 bang fixed-matrix hien thi (nguon_von + tai_san)',
+    nFixed === 2, '2', String(nFixed));
+  check('REG PLI_M02: section 9..12 van hien thi (khong bi span EOF nuot)',
+    html02.indexOf('Người đại diện theo pháp luật') >= 0 &&
+      html02.indexOf('Thông tin đăng ký thuế') >= 0 &&
+      html02.indexOf('chủ sở hữu hưởng lợi') >= 0);
+  const html01 = renderDoc2('PLI_M01');
+  const nFixed01 = (html01.match(/data-component="fixed-matrix"/g) || []).length;
+  check('REG PLI_M01: 1 bang fixed-matrix hien thi',
+    nFixed01 === 1, '1', String(nFixed01));
+  // hàng "Tổng số" (dòng cuối fixed-matrix) phải output: 0 input trong row đó
+  const rows01 = html01.match(/<tr[\s\S]*?<\/tr>/g) || [];
+  const rowTong = rows01.filter(r => /Tổng số/.test(r)).pop();
+  check('REG PLI_M01: tong so la output (0 input trong hang Tong so)',
+    !!rowTong && (rowTong.match(/<input/g) || []).length === 0,
+    '0 input', rowTong ? String((rowTong.match(/<input/g) || []).length) : 'no-row');
+}
+
 // ---------------------------------------------------------------------------
 console.log('-'.repeat(72));
 RESULTS.forEach(r => { if (!r.pass) console.log('  -> ' + r.name); });

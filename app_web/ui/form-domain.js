@@ -1463,8 +1463,11 @@
         semanticKey: 'co_cau_tai_san_gop_von_dau_tu',
         kind: 'fixed-matrix',
         policy: { allowAdd: false, allowDelete: false, allowReorder: false },
-        anchor: { match: 'tai san gop von', matchRole: 'section-heading',
-          endMatch: null, endRole: null },
+        /* [Fix ISS-3 re-shoot P2] heading 'Tài sản góp vốn:' của M01 là block
+         * BODY (không phải section-heading) — matchRole sai làm contract
+         * fail-close, mất totals computed (Tổng số thành ô nhập). */
+        anchor: { match: 'tai san gop von', matchRole: 'body',
+          endMatch: 'thong tin dang ky thue', endRole: 'section-heading' },
         spec: {
           kind: 'fixed-matrix',
           section_id: 'tai_san_gop_von_von_dau_tu',
@@ -1588,8 +1591,10 @@
         semanticKey: 'nguon_von_dieu_le',
         kind: 'fixed-matrix',
         policy: { allowAdd: false, allowDelete: false, allowReorder: false },
+        /* [Fix ISS-1 re-shoot P2] endMatch=null chỉ hợp lệ cho section CUỐI
+         * form — span tới EOF đã ẩn luôn section 8..12 của M02. */
         anchor: { match: 'nguon von dieu le', matchRole: 'section-heading',
-          endMatch: null, endRole: null },
+          endMatch: 'tai san gop von', endRole: 'section-heading' },
         spec: {
           kind: 'fixed-matrix',
           section_id: 'nguon_von_dieule',
@@ -1634,7 +1639,8 @@
         kind: 'fixed-matrix',
         policy: { allowAdd: false, allowDelete: false, allowReorder: false },
         anchor: { match: 'tai san gop von', matchRole: 'section-heading',
-          endMatch: null, endRole: null },
+          endMatch: 'nguoi dai dien theo phap luat',
+          endRole: 'section-heading' },
         spec: {
           kind: 'fixed-matrix',
           section_id: 'tai_san_gop_von_von_dieu_le',

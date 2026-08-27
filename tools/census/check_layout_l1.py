@@ -38,7 +38,12 @@ KHÔNG nhìn thấy; mỗi rule đều bắt được bằng chứng thật ở 
       (g1) cả block bắt đầu "N. <chữ>" (^\\d{1,2}\\.\\s\\S) mà role không thuộc
            nhóm heading (section-heading/form-title/form-subtitle);
            whitelist: dòng kẻ chấm trống chữ ("1. .....", bản in để điền tay)
-           không phải heading có nội dung;
+           không phải heading có nội dung.
+           Round 2 L1FIX: 12 vị trí heading dài (>120 ký tự, cùng chuỗi mục
+           với các nhãn NGẮN hơn đã là section-heading trong cùng form) được
+           xử lý bằng tools/layout_role_overrides.json (by_folded_prefix +
+           forms) nên tự hết đỏ sau regen; detector vẫn đọc role đã lưu nên
+           trước regen chỉ báo đỏ đúng bằng dữ liệu thật.
       (g2) heading đánh số DÍNH ĐUÔI block trước, không phải block riêng —
            chính là bug V2 của PLI_M72 blk110/112. Predicate sao chép 1:1 từ
            docx_to_blocks._is_glued_heading_cut (kèm MAX_HEADING_TAIL_CHARS,

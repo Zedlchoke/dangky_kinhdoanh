@@ -80,6 +80,46 @@
   <div id="vsic-pop" hidden></div>
   <div id="toasts" aria-live="polite"></div>
 
+  <!-- ===== P2 R2 runtime wiring: nạp 3 platform module trước runtime =====
+       Thứ tự dependency (không đổi được):
+         fixed-matrix.js / nested-grid.js / output-table.js  (thuần, 0 DOM)
+           -> form-domain.js (dispatcher theo section.kind + validation)
+             -> render.js -> app.js
+       Hai file đầu là CommonJS thuần (module.exports) nên cần shim nhỏ tạo
+       rồi thu hồi global `window.module` quanh từng script; output-table.js
+       là UMD và PHẢI thấy `window.module` không tồn tại để tự gắn
+       window.OutputTable. KHÔNG sửa nội dung 3 module (chỉ require/gọi). -->
+  <script>window.__P2_TABLES__ = {};</script>
+  <script>window.module = { exports: {} };</script>
+  <script src="fixed-matrix.js"></script>
+  <script>
+    (function () {
+      var exp = window.module && window.module.exports;
+      if (exp && !Array.isArray(exp)) {
+        window.__P2_TABLES__.FixedMatrix = exp;   // API setCell/recompute/validate
+      }
+      delete window.module;
+    })();
+  </script>
+  <script>window.module = { exports: {} };</script>
+  <script src="nested-grid.js"></script>
+  <script>
+    (function () {
+      var exp = window.module && window.module.exports;
+      if (exp && !Array.isArray(exp)) {
+        window.__P2_TABLES__.NestedGrid = exp;    // API headerLayout/validate
+      }
+      delete window.module;
+    })();
+  </script>
+  <!-- UMD: nạp SAU cùng trong nhóm này, khi `window.module` đã được xóa -->
+  <script src="output-table.js"></script>
+  <script>
+    /* namespace thống nhất FormDomain.p2TableModule / Render.p2TableModule đọc */
+    window.P2Tables = window.__P2_TABLES__;
+    if (window.OutputTable) { window.P2Tables.OutputTable = window.OutputTable; }
+  </script>
+
   <script src="form-domain.js"></script>
   <script src="render.js"></script>
   <script src="app.js"></script>

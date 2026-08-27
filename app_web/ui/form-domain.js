@@ -19,6 +19,13 @@
  *    'Loại hình doanh nghiệp' của PLI_M72 là metadata hồ sơ (store.values),
  *    bắt buộc chọn đúng một trong 5 giá trị canonical; quyết định grid/
  *    block active và flags xuất DOCX. KHÔNG render vào văn bản.
+ *  - R2 runtime wiring: FORM_TABLE_CONTRACTS + sectionContractsOf /
+ *    getSectionContract / sectionContractForLoop (metadata SECTION theo kind:
+ *    fixed-matrix/nested-grid/output-table cho fixture P2), p2TableModule
+ *    (resolve module thuần, chỉ require/gọi), validateSectionEntry /
+ *    validateFormSections (dispatcher validation theo kind, severity đúng
+ *    contract), recomputeSections (tổng outputOnly recompute - projection,
+ *    không ghi ngược draft). editable-grid giữ nguyên đường getGridMeta cũ.
  */
 (function (root) {
   'use strict';
@@ -1098,10 +1105,547 @@
     });
   }
 
+  /* ==================== P2 R2 runtime wiring: section theo kind ===========
+   * Nối 3 kind mới (fixed-matrix / nested-grid / output-table) vào runtime
+   * mà KHÔNG viết lại component: module thuần đã merge (fixed-matrix.js,
+   * nested-grid.js, output-table.js) chỉ được require/gọi.
+   *
+   * - FORM_TABLE_CONTRACTS: metadata SECTION THEO KIND cho fixture production
+   *   tối thiểu (O1 PLI_M70, O2 PLI_M71, F2 PLI_M03, F3 PLI_M04, N1 PLI_M02)
+   *   theo docs/p2_component_contracts.md (LOCKED v1) +
+   *   docs/p2_fixture_candidates.md + app/data/table_specs/manifest.json
+   *   (`kind`, `semantic_key`, `fixed_rows`, `required_columns`). KHÔNG chế
+   *   field ngoài schema đã khóa; thiếu gì báo gap ở lane B3/Lead.
+   * - Dispatcher VALIDATION: kind quyết định đường validate. editable-grid
+   *   giữ NGUYÊN đường cũ (getGridMeta -> validateGridLoop); fixed-matrix/
+   *   nested-grid/output-table đi qua module tương ứng; fallback legacy chỉ
+   *   áp dụng cho loop CHƯA classify thành kind mới (KHÔNG nuốt kind mới).
+   * - Draft: dữ liệu vẫn nằm trong store {values, checks, loops};
+   *   fixed-matrix giữ giá trị phẳng values["<semantic_key>.<row>.<tag>"]
+   *   (đúng contract mục 2.4), nested-grid giữ rows phẳng trong
+   *   loops[<loop>] có `_row_id` + field discriminator; ô computed/outputOnly
+   *   là PROJECTION (recompute lúc render/export) và KHÔNG BAO GIỜ được ghi
+   *   ngược vào draft -> không có hai nguồn số liệu mâu thuẫn.
+   * ---------------------------------------------------------------------- */
+
+  /* Danh sách kind hợp lệ (docs/p2_component_contracts.md mục 0). */
+  var P2_SECTION_KINDS =
+    ['editable-grid', 'fixed-matrix', 'nested-grid', 'output-table'];
+
+  /* Resolve platform module của một kind. Browser: index.html nạp 3 script
+   * TRƯỚC form-domain.js nên globals đã có (window.P2Tables.* cho hai module
+   * CommonJS-shim, window.OutputTable do UMD tự gắn). Node (test không GUI):
+   * require trực tiếp trong cùng thư mục ui/. KHÔNG cache khi chưa thấy -
+   * trả null để caller degrade an toàn (giữ hành vi cũ) thay vì crash. */
+  var _p2ModuleCache = {};
+  function p2TableModule(name) {
+    if (_p2ModuleCache[name] !== undefined) return _p2ModuleCache[name];
+    var fileMap = { FixedMatrix: './fixed-matrix.js', NestedGrid: './nested-grid.js',
+      OutputTable: './output-table.js' };
+    var seen = null;
+    try {
+      if (typeof self !== 'undefined') seen = self;
+      else if (typeof globalThis !== 'undefined') seen = globalThis;
+      else if (typeof window !== 'undefined') seen = window;
+    } catch (e) { seen = null; }
+    if (seen && seen.P2Tables && seen.P2Tables[name]) {
+      _p2ModuleCache[name] = seen.P2Tables[name];
+      return _p2ModuleCache[name];
+    }
+    if (seen && name === 'OutputTable' && seen.OutputTable) {
+      _p2ModuleCache[name] = seen.OutputTable;
+      return _p2ModuleCache[name];
+    }
+    if (typeof require === 'function' && fileMap[name]) {
+      try {
+        _p2ModuleCache[name] = require(fileMap[name]);
+        return _p2ModuleCache[name];
+      } catch (e) { /* nạp không được -> coi như chưa nối */ }
+    }
+    _p2ModuleCache[name] = null;
+    return null;
+  }
+
+  /* Contract SECTION cho các fixture production P2 (docs/
+   * p2_fixture_candidates.md). Mỗi entry:
+   *   sectionId / semanticKey : khớp manifest.json của form đó
+   *   kind                    : kind đã classify (nguồn chân lý của dispatcher)
+   *   policy                  : CRUD row cho controller UI
+   *   anchor                  : nơi renderer chèn component vào blocks L0/v3
+   *                             hiện vẫn là paragraph rời (generator lane B2
+   *                             chưa rebuild) - text đã chuẩn hoá bỏ dấu/thẻ
+   *                             (so normText như render.normText)
+   *   spec                    : shape của module đúng như contract v1
+   * Các section CÙNG mẫu nhưng CHƯA đăng ký (vd lua_chon_khu_san_xuat,
+   * co_phan_duoc_quyen_chao_ban của PLI_M04, ho_so_bao_gom của PLI_M70/M71)
+   * VẪN render/validate bằng đường cũ - không bị nuốt bởi dispatcher. */
+  var FORM_TABLE_CONTRACTS = {
+    /* O1 - output-table, bảng chữ ký 2 ô độc lập (M70 #block signature). */
+    'PLI_M70': {
+      sections: [{
+        sectionId: 'chu_ky_nguoi_nop_nguoi_nhan',
+        semanticKey: 'chu_ky_tiep_nhan_ho_so',
+        kind: 'output-table',
+        policy: { allowAdd: false, allowDelete: false, allowReorder: false },
+        anchor: { match: 'nguoi nop (ky va ghi ho ten)', matchRole: 'signature',
+          endMatch: null, endRole: null },
+        spec: {
+          kind: 'output-table',
+          section_id: 'chu_ky_nguoi_nop_nguoi_nhan',
+          semantic_key: 'chu_ky_tiep_nhan_ho_so',
+          form_id: 'PLI_M70',
+          grid: { rows: 2, cols: 1, labels: [
+            'NGƯỜI NỘP\n(Ký và ghi họ tên)', 'NGƯỜI NHẬN\n(Ký và ghi họ tên)'
+          ] },
+          inputs: [],
+          active_when: [],
+          notes: 'Giữ grid khi xuất DOCX dù không nhập liệu (PLAN mục G).'
+        }
+      }]
+    },
+    /* O2 - output-table biến thể 1 ô ký (chỉ cơ quan cấp tỉnh). */
+    'PLI_M71': {
+      sections: [{
+        sectionId: 'chu_ky_co_quan_cap_tinh',
+        semanticKey: 'chu_ky_cqb_m71',
+        kind: 'output-table',
+        policy: { allowAdd: false, allowDelete: false, allowReorder: false },
+        anchor: { match: 'ten co quan dang ky kinh doanh cap tinh',
+          matchRole: 'form-subtitle',
+          endMatch: 'truong hop ho so duoc tiep nhan tren he thong', endRole: 'body' },
+        spec: {
+          kind: 'output-table',
+          section_id: 'chu_ky_co_quan_cap_tinh',
+          semantic_key: 'chu_ky_cqb_m71',
+          form_id: 'PLI_M71',
+          grid: { rows: 1, cols: 1,
+            labels: [['(TÊN CƠ QUAN ĐĂNG KÝ KINH DOANH CẤP TỈNH)']] },
+          inputs: [],
+          active_when: []
+        }
+      }]
+    },
+    /* F2 - fixed-matrix nguồn vốn điều lệ: 5 dòng pháp lý + Tổng cộng
+     * outputOnly; tag cột lấy ĐÚNG manifest required_columns. */
+    'PLI_M03': {
+      sections: [{
+        sectionId: 'nguon_von_dieule',
+        semanticKey: 'nguon_von_dieu_le',
+        kind: 'fixed-matrix',
+        policy: { allowAdd: false, allowDelete: false, allowReorder: false },
+        anchor: { match: 'nguon von dieu le', matchRole: 'section-heading',
+          endMatch: null, endRole: null }, // mục cuối của mẫu
+        spec: {
+          kind: 'fixed-matrix',
+          section_id: 'nguon_von_dieule',
+          semantic_key: 'nguon_von_dieu_le',
+          form_id: 'PLI_M03',
+          stt: { mode: 'none' },
+          fixed_rows: [
+            { id: 'von_ngan_sach_nha_nuoc', label: 'Vốn ngân sách nhà nước' },
+            { id: 'von_tu_nhan', label: 'Vốn tư nhân' },
+            { id: 'von_nuoc_ngoai', label: 'Vốn nước ngoài' },
+            { id: 'von_khac', label: 'Vốn khác' },
+            { id: 'tong_cong', label: 'Tổng cộng', output_only: true }
+          ],
+          columns: [
+            { tag: 'loai_nguon_von', inputType: 'readonly',
+              header: 'Loại nguồn vốn' },
+            { tag: 'so_tien_vnd_va_tuong_duong', inputType: 'money',
+              header: 'Số tiền (bằng số; VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)' },
+            { tag: 'ty_le', inputType: 'percent', header: 'Tỷ lệ (%)' }
+          ],
+          totals: [
+            { id: 'tong_cong', formula: 'sum(so_tien_vnd_va_tuong_duong)',
+              target_tag: 'so_tien_vnd_va_tuong_duong' },
+            { id: 'tong_cong', formula: 'sum(ty_le)', target_tag: 'ty_le' }
+          ],
+          cross_field_rules: [
+            { type: 'percentSum', tag: 'ty_le', equals: 100,
+              severity: 'warning', code: 'PERCENT_SUM',
+              message: 'Tổng tỷ lệ nguồn vốn điều lệ phải đúng 100% khi đã kê khai.' },
+            { type: 'sumEqualsKey', tag: 'so_tien_vnd_va_tuong_duong',
+              valueKey: 'von_dieu_le', severity: 'blocking',
+              code: 'CAPITAL_MISMATCH',
+              message: 'Tổng cộng nguồn vốn điều lệ phải khớp Vốn điều lệ kê khai ở mục 5.' }
+          ]
+        }
+      }]
+    },
+    /* F3 - fixed-matrix cơ cấu loại cổ phần + Tổng số (đối chiếu VĐL). */
+    'PLI_M04': {
+      sections: [{
+        sectionId: 'co_cau_loai_co_phan',
+        semanticKey: 'co_cau_loai_co_phan',
+        kind: 'fixed-matrix',
+        policy: { allowAdd: false, allowDelete: false, allowReorder: false },
+        anchor: { match: 'thong tin ve co phan', matchRole: 'section-heading',
+          endMatch: 'thong tin ve co phan duoc quyen chao ban', endRole: 'body' },
+        spec: {
+          kind: 'fixed-matrix',
+          section_id: 'co_cau_loai_co_phan',
+          semantic_key: 'co_cau_loai_co_phan',
+          form_id: 'PLI_M04',
+          stt: { mode: 'generated' },
+          fixed_rows: [
+            { id: 'co_phan_pho_thong', label: 'Cổ phần phổ thông' },
+            { id: 'cp_uu_dai_bieu_quyet', label: 'Cổ phần ưu đãi biểu quyết' },
+            { id: 'cp_uu_dai_co_tuc', label: 'Cổ phần ưu đãi cổ tức' },
+            { id: 'cp_uu_dai_hoan_lai', label: 'Cổ phần ưu đãi hoàn lại' },
+            { id: 'cp_uu_dai_khac', label: 'Các cổ phần ưu đãi khác' },
+            { id: 'tong_so', label: 'Tổng số', output_only: true }
+          ],
+          columns: [
+            { tag: 'loai_co_phan', inputType: 'readonly', header: 'Loại cổ phần' },
+            { tag: 'so_luong', inputType: 'money', header: 'Số lượng' },
+            { tag: 'gia_tri_vnd', inputType: 'money', header: 'Giá trị (bằng số, VNĐ)' },
+            { tag: 'ty_le_so_von_dieule', inputType: 'percent',
+              header: 'Tỉ lệ so với vốn điều lệ (%)' }
+          ],
+          totals: [
+            { id: 'tong_so', formula: 'sum(so_luong)', target_tag: 'so_luong' },
+            { id: 'tong_so', formula: 'sum(gia_tri_vnd)', target_tag: 'gia_tri_vnd' }
+          ],
+          cross_field_rules: [
+            { type: 'percentSum', tag: 'ty_le_so_von_dieule', equals: 100,
+              severity: 'warning', code: 'PERCENT_SUM',
+              message: 'Tổng tỷ lệ so với vốn điều lệ phải đúng 100% khi đã kê khai.' },
+            { type: 'sumEqualsKey', tag: 'gia_tri_vnd', valueKey: 'von_dieu_le',
+              severity: 'blocking', code: 'CAPITAL_MISMATCH',
+              message: 'Tổng số cổ phần (giá trị VNĐ) phải khớp Vốn điều lệ kê khai.' }
+          ]
+        }
+      }]
+    },
+    /* N1 - nested-grid PLI_M02: header nhiều hàng thật (rowspan/colspan VẬT LÝ)
+     * + discriminator loai_dong (NĐDPL vs người ủy quyền).
+     * Nguồn header: app/data/blocks/PLI_M02.json block 126 (header nối dính).
+     * Khớp vật lý 14 cột: 'Vốn được ủy quyền' là nhóm GỘP 2 cột con
+     * (VNĐ | Tỷ lệ (%)) - tag cột thứ hai lấy ĐÚNG `ty_le` từ
+     * manifest.required_columns, KHÔNG tự chế. Gap đã ghi nhận (báo lane B3/
+     * Lead): header nguồn còn 2 nhóm chưa đủ evidence để khai tag canonical -
+     * "Tổng giá trị vốn được đại diện" và "Thời điểm đại diện phần vốn";
+     * contract dưới KHÔNG khai chúng (absence, không mislabel), chờ owner/B2. */
+    'PLI_M02': {
+      sections: [{
+        sectionId: 'nddpl_uy_quyen_chu_so_huu',
+        semanticKey: 'ds_nddpl_uy_quyen_chu_so_huu',
+        kind: 'nested-grid',
+        policy: { allowAdd: true, allowDelete: true, allowReorder: true,
+          confirmDeleteNonEmpty: false },
+        anchor: {
+          match: 'thong tin ve nguoi dai dien theo phap luat/nguoi dai dien theo uy quyen cua chu so huu',
+          matchRole: 'body',
+          endMatch: 'von dieu le', endRole: 'section-heading'
+        },
+        spec: {
+          kind: 'nested-grid',
+          section_id: 'nddpl_uy_quyen_chu_so_huu',
+          semantic_key: 'ds_nddpl_uy_quyen_chu_so_huu',
+          loop: 'ds_nddpl_uy_quyen_chu_so_huu',
+          form_id: 'PLI_M02',
+          header_rows: [
+            [
+              { text: 'STT', rowspan: 2 },
+              { text: 'Tên người đại diện theo pháp luật/người đại diện theo ủy quyền', rowspan: 2 },
+              { text: 'Ngày, tháng, năm sinh', rowspan: 2 },
+              { text: 'Giới tính', rowspan: 2 },
+              { text: 'Số, ngày cấp, cơ quan cấp Giấy tờ pháp lý của cá nhân', colspan: 3 },
+              { text: 'Quốc tịch', rowspan: 2 },
+              { text: 'Dân tộc', rowspan: 2 },
+              { text: 'Địa chỉ liên lạc', rowspan: 2 },
+              { text: 'Vốn được ủy quyền', colspan: 2 },
+              { text: 'Chữ ký của người đại diện theo pháp luật/người đại diện theo ủy quyền', rowspan: 2 },
+              { text: 'Ghi chú (nếu có)', rowspan: 2 }
+            ],
+            [
+              { text: 'Số' }, { text: 'Ngày cấp' }, { text: 'Cơ quan cấp' },
+              { text: 'VNĐ' }, { text: 'Tỷ lệ (%)' }
+            ]
+          ],
+          row_groups: [
+            { group_id: 'ndd_uy_quyen',
+              match: { tag: 'loai_dong', equals: 'ndd_uy_quyen' },
+              required_columns: ['ten_nguoi_dai_dien', 'von_duoc_uy_quyen_vnd'] },
+            { group_id: 'ndd_pl',
+              match: { tag: 'loai_dong', equals: 'ndd_pl' },
+              required_columns: ['ten_nguoi_dai_dien'] }
+          ],
+          discriminator: { tag: 'loai_dong', values: ['ndd_pl', 'ndd_uy_quyen'] },
+          columns: ['stt', 'ten_nguoi_dai_dien', 'ngay_sinh', 'gioi_tinh',
+            'giay_to_so', 'giay_to_ngay', 'giay_to_co_quan', 'quoc_tich',
+            'dan_toc', 'dia_chi', 'von_duoc_uy_quyen_vnd', 'ty_le', 'chu_ky',
+            'ghi_chu'
+          ].map(function (tag, col_index) {
+            return { tag: tag, col_index: col_index,
+              type: tag === 'chu_ky' ? 'outputOnly' :
+                (tag === 'stt' ? 'stt' :
+                  ((tag === 'von_duoc_uy_quyen_vnd' || tag === 'ty_le')
+                    ? 'money' : 'text')) };
+          }),
+          min_rows: 0,
+          max_rows: null,
+          totals: [],
+          cross_field_rules: []
+        }
+      }]
+    }
+  };
+
+  function sectionsOfForm(docId) {
+    var fm = docId ? FORM_TABLE_CONTRACTS[docId] : null;
+    return (fm && fm.sections) || [];
+  }
+
+  /* Tất cả entry của một mẫu (renderer/controller nhận qua opts.sectionContracts).
+   * Trả bản sao SHALLOW của array để caller mutate parts không đụng registry. */
+  function sectionContractsOf(docId) {
+    return sectionsOfForm(docId).slice();
+  }
+
+  /* Entry theo semantic_key HOẶC section_id (dùng cho test/gate). */
+  function getSectionContract(docId, key) {
+    var want = String(key == null ? '' : key);
+    return sectionsOfForm(docId).filter(function (e) {
+      return e.semanticKey === want || e.sectionId === want ||
+        (e.spec && e.spec.semantic_key === want);
+    })[0] || null;
+  }
+
+  /* Entry của LOOP name (chỉ kind mang dòng dữ liệu). Dùng trong validator
+   * + controller row-op để kind mới KHÔNG rơi xuống đường editable/legacy. */
+  function sectionContractForLoop(docId, name) {
+    var hit = null;
+    sectionsOfForm(docId).some(function (e) {
+      var sk = e.spec && e.spec.semantic_key;
+      if ((e.kind === 'nested-grid') &&
+          (sk === name || (e.spec.loop || '') === name)) { hit = e; return true; }
+      return false;
+    });
+    return hit;
+  }
+
+  // ------------------------------------------------- validate theo kind
+
+  /* Row của fixed-matrix là dòng tổng/outputOnly? Nhất quán với predicate
+   * của fixed-matrix.js (isOutputRow) + mọi id khai trong spec.totals. */
+  function isFixedTotalRow(spec, row) {
+    if (!row) return false;
+    if (row.output_only === true || row.outputOnly === true) return true;
+    return (Array.isArray(spec.totals) ? spec.totals : []).some(function (t) {
+      return String(t.id) === String(row.id);
+    });
+  }
+
+  /* Section còn có ÍT NHẤT MỘT ô nhập có dữ liệu? (fixed-matrix: giá trị phẳng
+   * trong values; nested-grid: bất kỳ row nào có dữ liệu khác _row_id.) */
+  function sectionHasData(entry, st) {
+    var spec = entry.spec || {};
+    var vals = st.values || {};
+    if (entry.kind === 'fixed-matrix') {
+      return (spec.fixed_rows || []).some(function (row) {
+        if (isFixedTotalRow(spec, row)) return false;
+        return (spec.columns || []).some(function (col) {
+          if (!col) return false;
+          var v = vals[spec.semantic_key + '.' + row.id + '.' + col.tag];
+          return v != null && String(v).trim() !== '';
+        });
+      });
+    }
+    if (entry.kind === 'nested-grid') {
+      var rows = (st.loops || {})[spec.semantic_key] || [];
+      return rows.some(function (r) {
+        return Object.keys(r || {}).some(function (k) {
+          if (k.charAt(0) === '_') return false;
+          return r[k] != null && String(r[k]).trim() !== '';
+        });
+      });
+    }
+    return false; // output-table không có rule dữ liệu
+  }
+
+  /* Cộng dồn 1 tag của section qua accessor đúng kind. Chỉ đếm ô NHẬP (bỏ
+   * dòng tổng/outputOnly) để projection không được cộng hai lần. */
+  function sectionSumTag(entry, st, tag) {
+    var spec = entry.spec || {};
+    var out = { hasValue: false, sum: 0 };
+    if (entry.kind === 'fixed-matrix') {
+      var vals = st.values || {};
+      (spec.fixed_rows || []).forEach(function (row) {
+        if (isFixedTotalRow(spec, row)) return;
+        var raw = vals[spec.semantic_key + '.' + row.id + '.' + tag];
+        if (raw == null || String(raw).trim() === '') return;
+        var n = parseMoney(raw);
+        if (n == null) return;
+        out.hasValue = true;
+        out.sum += n;
+      });
+    } else if (entry.kind === 'nested-grid') {
+      ((st.loops || {})[spec.semantic_key] || []).forEach(function (row) {
+        var raw = row ? row[tag] : null;
+        if (raw == null || String(raw).trim() === '') return;
+        var n = parseMoney(raw);
+        if (n == null) return;
+        out.hasValue = true;
+        out.sum += n;
+      });
+    }
+    return out;
+  }
+
+  /* Cross-field rules khai trong entry.spec.cross_field_rules. Shape hỗ trợ
+   * nhỏ, cố ý giống slot của editable-grid (validateCrossFieldRules):
+   *  - chuỗi "sum(<tag>) <= <số>" ;
+   *  - {type:'percentSum', tag, equals?, severity?, code?, message?}
+   *    (severity mặc định warning, code PERCENT_SUM);
+   *  - {type:'sumEqualsKey', tag, valueKey, operator?, severity?, code?,
+   *    message?} - đối chiếu tổng cột với một giá trị hồ sơ (vd vốn điều lệ).
+   * Rule lạ bị BỎ QUA (fail-open ở mức "không tự sinh lỗi pháp lý") đúng như
+   * nguyên tắc slot additive; severity đi thẳng vào error[] theo contract. */
+  function evalSectionCrossFieldRules(docId, entry, st, push) {
+    var spec = entry.spec || {};
+    (Array.isArray(spec.cross_field_rules) ? spec.cross_field_rules : [])
+      .forEach(function (ruleRaw) {
+        if (!ruleRaw) return;
+        var cfg = typeof ruleRaw === 'string' ? { rule: ruleRaw } : ruleRaw;
+        var text = typeof ruleRaw === 'string' ? ruleRaw : String(cfg.rule || '');
+        var m = text.match(
+          /^\s*sum\(\s*([^)]+?)\s*\)\s*(==|=|<=|>=|<|>)\s*(-?\d+(?:[.,]\d+)?)\s*$/i);
+
+        var sugarPercent = (cfg.type === 'percentSum');
+        var compareKey = (cfg.type === 'sumEqualsKey');
+        // Shape có cấu trúc không khai operator -> mặc định '==' (vd
+        // percentSum: tổng == 100; sumEqualsKey: tổng cộng == vốn điều lệ).
+        var op = cfg.operator || (m ? m[2] :
+          ((sugarPercent || compareKey) ? '==' : null));
+        var tag = cfg.tag || (m ? m[1].trim() : null);
+        var expected = cfg.equals != null ? Number(cfg.equals) :
+          (cfg.value != null ? Number(cfg.value) : null);
+        var vsKey = cfg.valueKey || null;
+        if (!tag || !op) return;
+        if (String(op) === '=') op = '==';
+
+        if (!compareKey && (expected == null || isNaN(expected))) return;
+
+        var sum = sectionSumTag(entry, st, tag);
+        var actual = sum.sum;
+        if (compareKey) {
+          var other = parseMoney((st.values || {})[vsKey]);
+          if (other == null) return;          // chưa kê khai giá trị đối chiếu
+          actual = Math.round(sum.sum * 100) / 100;
+          op = op || '==';
+          expected = other;
+        } else if (!sugarPercent && m == null) {
+          return;                              // shape không hỗ trợ -> bỏ qua
+        }
+        if (!sum.hasValue) return;             // "khi co ke khai"
+        var ok = op === '==' ?
+          Math.round(actual * 100) === Math.round(expected * 100) :
+          op === '<=' ? actual <= expected :
+          op === '>=' ? actual >= expected :
+          op === '<' ? actual < expected : actual > expected;
+        if (ok) return;
+        push({
+          key: spec.semantic_key + '.cross_field.' + tag,
+          docId: docId,
+          code: cfg.code || (sugarPercent ? 'PERCENT_SUM' : 'CROSS_FIELD_RULE'),
+          message: cfg.message || ('Tổng ' + tag + ' không thỏa điều kiện ' +
+            op + ' ' + expected + ' (đang là ' + actual + ')'),
+          severity: cfg.severity || (sugarPercent ? 'warning' : 'blocking')
+        });
+      });
+  }
+
+  /* Validate MỘT section theo kind bằng chính module của nó. Trả error[]
+   * shape {key, docId, code, message, severity} (docs/htkk-ui-contract.md). */
+  function validateSectionEntry(docId, entry, st) {
+    var errs = [];
+    var spec = entry.spec || {};
+    if (entry.kind === 'fixed-matrix') {
+      var FM = p2TableModule('FixedMatrix');
+      if (FM && typeof FM.validate === 'function') {
+        FM.validate(spec, { values: st.values || {} }).forEach(function (e) {
+          errs.push({
+            key: e.key, docId: docId, code: e.code,
+            message: e.message, severity: e.severity || 'blocking'
+          });
+        });
+      }
+    } else if (entry.kind === 'nested-grid') {
+      var NG = p2TableModule('NestedGrid');
+      if (NG && typeof NG.validate === 'function') {
+        NG.validate(spec, (st.loops || {})[spec.semantic_key] || [])
+          .forEach(function (e) {
+            errs.push({
+              key: e.key, docId: docId, code: e.code,
+              message: e.message, severity: e.severity || 'blocking'
+            });
+          });
+      }
+    } else if (entry.kind === 'editable-grid') {
+      // Không thể xảy ra trong registry hiện tại; giữ nhánh này để dispatcher
+      // Không nuốt kind editable-grid của section-level (đường cũ lo phần đó).
+      var g = getGridMeta({ docId: docId, loop: spec.semantic_key });
+      if (g) validateGridLoop(docId, spec.semantic_key, g, [], st, {}, function (e) {
+        errs.push(e);
+      });
+    }
+    // output-table: không có rule dữ liệu -> không sinh lỗi nào.
+    evalSectionCrossFieldRules(docId, entry, st, function (e) { errs.push(e); });
+    return errs;
+  }
+
+  /* Validate TẤT CẢ section đã đăng ký của một mẫu (dispatcher theo kind). */
+  function validateFormSections(docId, st) {
+    var errors = [];
+    var seen = {};
+    sectionsOfForm(docId).forEach(function (entry) {
+      validateSectionEntry(docId, entry, st).forEach(function (e) {
+        var id = [e.docId, e.key, e.code].join('|');
+        if (seen[id]) return;
+        seen[id] = true;
+        errors.push(e);
+      });
+    });
+    return errors;
+  }
+
+  /* Projection TỔNG TÍNH LẠI (recompute) cho các section tổng của một mẫu.
+   * Đây là NGUỒN SỐ LIỆU duy nhất cho ô tổng outputOnly ở UI/export: giá trị
+   * dùng công thức khai trong spec.totals, đọc THẲNG dữ liệu người dùng nhập,
+   * KHÔNG đọc lại con số đã lưu -> không bao giờ có hai nguồn mâu thuẫn.
+   * Trả map key "<semantic_key>.<row>.<tag>" ->
+   * {value: number|null, inputType: 'money'|'percent'|null} để caller format
+   * đúng kiểu (tiền dấu chấm ngăn nghìn, percent giữ số). */
+  function recomputeSections(docId, store) {
+    var out = {};
+    var st = store || {};
+    var FM = p2TableModule('FixedMatrix');
+    sectionsOfForm(docId).forEach(function (entry) {
+      if (entry.kind !== 'fixed-matrix') return;
+      if (!FM || typeof FM.formulaValue !== 'function') return;
+      var spec = entry.spec || {};
+      (Array.isArray(spec.totals) ? spec.totals : []).forEach(function (t) {
+        var ev = FM.formulaValue(t.formula, spec, { values: st.values || {} });
+        var tag = t.target_tag || t.targetTag || 'value';
+        var col = (Array.isArray(spec.columns) ? spec.columns : [])
+          .filter(function (c) { return c && c.tag === tag; })[0];
+        out[spec.semantic_key + '.' + t.id + '.' + tag] = {
+          value: ev.supported ? ev.value : null,
+          inputType: (col && (col.inputType || col.type)) || null
+        };
+      });
+    });
+    return out;
+  }
+
   /* Validate một mẫu biểu. store = {values, checks, loops}. Trả error[].
    * Loop có grid meta (resolve theo docId: form-scoped trước, rồi toàn cục)
    * -> validate editable-grid với lỗi key theo _row_id:
-   * "loop:<name>:<row_id>[:<tag>]"; loop khác giữ hành vi legacy. */
+   * "loop:<name>:<row_id>[:<tag>]"; loop khác giữ hành vi legacy.
+   * R2 dispatch: loop ĐÃ classify là kind mới (nested-grid...) chạy qua
+   * module của nó và KHÔNG rơi xuống đường editable/legacy; section không
+   * khai loop (fixed-matrix giá trị phẳng, output-table) vẫn được validate. */
   function validateDocument(docId, blocks, store, ctx) {
     ctx = ctx || {};
     var st = store || {};
@@ -1128,9 +1672,26 @@
     });
 
     Object.keys(info.loops).forEach(function (name) {
+      // R2 dispatcher theo section.kind: loop đã classify thành kind mới
+      // (nested-grid/fixed-matrix/output-table) phải đi đúng đường của nó -
+      // fallback editable/legacy CHỈ dành cho schema chưa classify.
+      var sec = sectionContractForLoop(docId, name);
+      if (sec && sec.kind !== 'editable-grid') {
+        validateSectionEntry(docId, sec, st).forEach(push);
+        return;
+      }
       var g = getGridMeta({ docId: docId, loop: name });
       if (g) validateGridLoop(docId, name, g, info.loops[name], st, ctx, push);
       else validateLegacyLoop(docId, name, info.loops[name], st, ctx, push);
+    });
+
+    // R2 dispatch: section không khai loop trong blocks (fixed-matrix lưu giá
+    // trị phẳng values["<sk>.<row>.<tag>"], output-table không có input nào)
+    // vẫn được validate qua module của nó; grid inactive chưa có dữ liệu thì
+    // im hoàn toàn (không sinh lỗi giả).
+    validateFormSections(docId, st).forEach(function (e) {
+      var id = [e.docId, e.key, e.code].join('|');
+      if (!seenErr[id]) { seenErr[id] = true; errors.push(e); }
     });
 
     // Selector form-scoped (P1.2 Option D): M72 bắt buộc chọn đúng một
@@ -1210,5 +1771,18 @@
   root.validateDossier = validateDossier;
   root.isValidMaNganh = isValidMaNganh;
   root.migrateDraft = migrateDraft;
+
+  /* P2 R2 runtime wiring: dispatcher + section theo kind (3 module output-
+   * table/fixed-matrix/nested-grid chỉ được require/gọi, không sửa). */
+  root.P2_SECTION_KINDS = P2_SECTION_KINDS;
+  root.FORM_TABLE_CONTRACTS = FORM_TABLE_CONTRACTS;
+  root.p2TableModule = p2TableModule;
+  root.sectionContractsOf = sectionContractsOf;
+  root.getSectionContract = getSectionContract;
+  root.sectionContractForLoop = sectionContractForLoop;
+  root.sectionHasData = sectionHasData;
+  root.validateSectionEntry = validateSectionEntry;
+  root.validateFormSections = validateFormSections;
+  root.recomputeSections = recomputeSections;
 
 })(typeof module !== 'undefined' && module.exports ? module.exports : (window.FormDomain = window.FormDomain || {}));

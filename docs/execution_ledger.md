@@ -126,6 +126,26 @@ runner xanh ✓.
 vocabulary owner decision; bản gốc M03/M04/M05; already-mapped registration mode;
 column-level projection formula; case-sensitivity sum.
 
+## Wave D audit lần 1 — độc lập @ HEAD 5118b7e (2026-08-27)
+
+| Gate | Verdict | Evidence auditor (đã spot-check lệnh) |
+|---|---|---|
+| G1 allowlist + idempotency | ✅ PASS | 144 file diff = manifest exact (141 + 3 self-ref); diff --check 0 |
+| G2 L1 detector | ✅ PASS (nhưng coverage hẹp — V3) | 87/87, exit 0; SI 46/46, leak 0 |
+| G3 release runner | ✅ PASS | 38/0/0 VERDICT PASS |
+| G4 DOM/layout | ✅ PASS | wiring 37/0; L2 render 77/0 |
+| G5 screenshot phủ | ✅ PASS | 123 PNG / 87 form; 3 form dài nhất kiểm đáy không cắt |
+| G6 viewport matrix | ✅ PASS (note N1: 375/768 xuất 804px do min-width 210mm — hành vi cuộn ngang đúng thiết kế) | |
+| G7 marker/SI/form-number | ✅ PASS | 21 ảnh soi mắt; 0 `{..}`; "Mẫu số XX" đủ |
+| **G8 nội dung dòng chuẩn** | ❌ **FAIL — BLOCKING** | V1: 6 form (PLI_M02 blk126, PLII_M02 blk72/129, PLI_M09 blk87/88/132/163, PLI_M12 blk145, PLI_M15 blk49, PLI_M72 blk109/111) bảng bị dẹt thành text glue + digit runs `12345678910`, không lưới dù GRID_META sẵn; V2: M72 blk110/112 tail-glue heading "8."/"9." role=body |
+| V3 detector gap | 🟡 minor | L1 cần 3 rule: `STT<Capital>` run-glue, `\d{5,}` trong run text, numbered-heading role sai |
+| Kết luận | **LAYOUT_DONE = CHƯA** | Sửa V1/V2 (+V3 rule) → re-shoot → tái audit |
+
+> Ghi chú không chặn: N2 harness bar hiện flags JSON (chrome harness, không vào
+> DOCX); N3 selector M72 nằm trong sheet ở harness (không có @media print).
+> V1/V2 là nợ census đã ghi "Giới hạn ghi nhận tại HEAD" trong dependency graph,
+> giờ bị auditor chặn tại gate thật. Wave E R3B mở để sửa đúng phần DECIDED.
+
 ## R3–R7 (khung — chi tiết hóa khi mở wave)
 
 | Wave | Điều kiện mở | Ghi chú |

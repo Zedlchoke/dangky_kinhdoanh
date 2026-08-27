@@ -614,11 +614,15 @@ function mkRow(tags, j) {
     genTouched.every(f => expGen.indexOf(f) >= 0),
     JSON.stringify(genTouched.filter(f => expGen.indexOf(f) < 0)));
 
-  check('H7.2 file thuoc app/templates trong diff chi la PLI_M72.docx (Lead P1.2)',
+  /* [Lead 2026-08-27 sau regen W1 d48eb7d] Nguyên tắc giữ nguyên, hình thức
+   * tổng quát hoá: template là generated, MỌI file app/templates đổi phải
+   * được Lead khai tường minh trong manifest (exact-set) — không còn hard-code
+   * "chỉ PLI_M72" từ thời P1.2. Template lọt ngoài manifest vẫn đỏ như cũ. */
+  check('H7.2 moi file app/templates trong diff deu nam trong manifest (Lead regen co chu dich)',
     files.every(f => f.indexOf('app/templates/') !== 0 ||
-      f === 'app/templates/PLI_M72.docx'),
+      expected.indexOf(f) >= 0),
     JSON.stringify(files.filter(f =>
-      f.indexOf('app/templates/') === 0 && f !== 'app/templates/PLI_M72.docx')));
+      f.indexOf('app/templates/') === 0 && expected.indexOf(f) < 0)));
 
   check('H7.3 manifest KHONG co entry "ma" (moi entry co mat trong diff)',
     expected.every(f => files.indexOf(f) >= 0 || f === SELF),

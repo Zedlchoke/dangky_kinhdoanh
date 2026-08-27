@@ -709,10 +709,17 @@ class TestOverridesAndSchema(unittest.TestCase):
                 base = classify_role(fold(raw), None, b["runs"])
                 after = d2b.apply_role_override(ov, fid, -1, fold(raw), base)
                 if after != base:
-                    self.assertNotIn(
-                        b.get("role"), ("section-heading",),
-                        "%s: block đã là heading lại bị override" % fid)
-                    flips.setdefault(fid, []).append((b.get("role"), after))
+                    # [Lead sync sau regen P0] corpus blocks giờ ĐÃ chứa 12 flip
+                    # nên proxy cũ "stored phải là body" hết nghĩa. Thay bằng
+                    # mệnh đề MẠNH HƠN: nơi override bắn, blocks phải lưu ĐÚNG
+                    # role hiệu lực (base+override); override đè lên heading sẵn
+                    # có hoặc lệch giữa corpus/override vẫn đỏ như cũ.
+                    self.assertEqual(
+                        b.get("role"), after,
+                        "%s: override bắn (%r -> %r) nhưng blocks lưu %r — "
+                        "corpus không khớp role hiệu lực" % (
+                            fid, base, after, b.get("role")))
+                    flips.setdefault(fid, []).append((base, after))
                     self.assertIn(fid, ALLOWED_FORMS)
         total = sum(len(v) for v in flips.values())
         self.assertEqual(total, 12, "số vị trí đổi role: %s" %

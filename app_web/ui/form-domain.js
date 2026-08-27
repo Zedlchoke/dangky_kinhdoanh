@@ -1412,7 +1412,8 @@
                   ((tag === 'von_duoc_uy_quyen_vnd' || tag === 'ty_le')
                     ? 'money' : 'text')) };
           }),
-          min_rows: 0,
+          /* D2.7=A: min 1 dòng / max không giới hạn cho danh sách NĐDPL/ủy quyền. */
+          min_rows: 1,
           max_rows: null,
           totals: [],
           cross_field_rules: []

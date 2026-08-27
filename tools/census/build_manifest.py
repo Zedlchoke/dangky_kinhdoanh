@@ -36,6 +36,9 @@ VALID_STATUS = ("NO_TABLE", "TABLE_COMPLETE", "BLOCKED_LEGAL_REVIEW")
 EVOLVED_FORMS = {
     "PLI_M72": "P1: 1 loop -> 5 occurrence ds_nganh_*",
     "PLII_M02": "P1: them 3 loop Muc A (bo_sung/xoa_bo/sua_doi)",
+    # W1 regen 2026-08-27 (commit d48eb7d): chu ky tro thanh w:tbl that
+    "PLI_M70": "W1: 2 paragraph chu ky -> w:tbl output-table 2x1 (spec publication)",
+    "PLI_M71": "W1: heading chu ky -> w:tbl output-table 1x1, giu national-separator",
 }
 
 TABLE_KINDS = ("editable-grid", "fixed-matrix", "nested-grid", "output-table")

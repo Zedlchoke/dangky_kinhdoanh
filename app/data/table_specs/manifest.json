@@ -5227,9 +5227,9 @@
     "loop": 0
    },
    "summary_counts_recount": {
-    "p": 23,
+    "p": 21,
     "chk": 0,
-    "table": 0,
+    "table": 1,
     "loop": 0
    },
    "detector": {
@@ -5237,7 +5237,7 @@
     "list_hints": 0,
     "hits": [],
     "classifications": [],
-    "template_w_tbl": 0
+    "template_w_tbl": 1
    }
   },
   {
@@ -5289,9 +5289,9 @@
     "loop": 0
    },
    "summary_counts_recount": {
-    "p": 25,
+    "p": 24,
     "chk": 0,
-    "table": 0,
+    "table": 1,
     "loop": 0
    },
    "detector": {
@@ -5299,7 +5299,7 @@
     "list_hints": 0,
     "hits": [],
     "classifications": [],
-    "template_w_tbl": 0
+    "template_w_tbl": 1
    }
   },
   {

@@ -45,6 +45,8 @@ import shutil
 import sys
 import tempfile
 import unicodedata
+import xml.etree.ElementTree as ET
+import zipfile
 from pathlib import Path
 
 import docx
@@ -174,6 +176,29 @@ def body_folds(path: Path) -> list[str]:
 
 def sha256_file(p: Path) -> str:
     return hashlib.sha256(p.read_bytes()).hexdigest()
+
+
+def _canon_element(el) -> dict:
+    return {
+        "tag": el.tag.split("}")[-1],
+        "attrs": sorted((k.split("}")[-1], v) for k, v in el.attrib.items()),
+        "text": el.text or "",
+        "children": [_canon_element(child) for child in el],
+    }
+
+
+def template_hash(docx_path: Path) -> str:
+    """sha256(word/document.xml dạng cây canonical) — BỎ zip metadata.
+
+   Không so byte thô của .docx: python-docx ghi entry zip kèm date_time hiện
+    tại nên hash byte đổi ngay cả khi nội dung giống hệt nhau (idempotency ở
+    đây là SEMANTIC, cùng định nghĩa với test_generator_deep_idempotency).
+    """
+    with zipfile.ZipFile(docx_path) as zf:
+        raw = zf.read("word/document.xml")
+    blob = json.dumps(_canon_element(ET.fromstring(raw)),
+                      ensure_ascii=False, sort_keys=True)
+    return hashlib.sha256(blob.encode("utf-8")).hexdigest()
 
 
 def nest(flat_values: dict) -> dict:
@@ -540,9 +565,9 @@ def t_sandbox_m01():
             "PLI_M01: dòng tổng bị đăng ký thành field (vi phạm outputOnly)"
         assert ("%s.dong_viet_nam.gia_tri_vnd" % want["semantic_key"]) in fields
         # idempotent: 2 lần chạy cho cùng template
-        h1 = sha256_file(tpl)
+        h1 = template_hash(tpl)
         run_generation("PLI_M01", 1, tpl_dir)
-        assert sha256_file(tpl) == h1, "PLI_M01: rebuild 2 lần lệch nhau"
+        assert template_hash(tpl) == h1, "PLI_M01: rebuild 2 lần lệch nhau"
         # template gốc trong repo KHÔNG bị chạm
         for name, before in guards.items():
             assert sha256_file(ROOT / "app" / "templates" / name) == before, \
@@ -608,9 +633,9 @@ def t_sandbox_m02():
                 for tag in want["tags"]:
                     key = "%s.%s.%s" % (want["semantic_key"], r, tag)
                     assert key in toks, "PLI_M02/%s: thiếu the %s" % (sid, key)
-        h1 = sha256_file(tpl)
+        h1 = template_hash(tpl)
         run_generation("PLI_M02", 2, tpl_dir)
-        assert sha256_file(tpl) == h1, "PLI_M02: rebuild 2 lần lệch nhau"
+        assert template_hash(tpl) == h1, "PLI_M02: rebuild 2 lần lệch nhau"
     finally:
         bfm.OUT_TPL, bfm.OUT_DATA = saved_tpl, saved_data
         bfm._form_spec_cache.clear()

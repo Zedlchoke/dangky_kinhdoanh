@@ -440,27 +440,22 @@ def t_blocked_plii_m02():
 
 
 @check("[BLOCKED] PLI_M09: khong spec moi khi nguon con nhiem va chua doi chieu ban goc")
+@check("[BLOCKED] PLI_M09: khong spec moi khi nguon con nhiem va chua doi chieu ban goc")
 def t_blocked_pli_m09():
-    files = list((ROOT / "tools" / "form_specs").glob("*/PLI_M09.json"))
-    assert not files, "đã tạo %s nhưng chưa đủ tiền đề D3" % files
-    folds = block_folds("PLI_M09")
-    audited = {87: "sttten thanh vienso, ngay cap, noi cap",
-               88: "giay chung nhan dang ky doanh nghiep",
-               132: "giay chung nhan dang ky doanh nghiep",
-               163: "phan von gop"}
-    for idx, prefix in audited.items():
-        assert folds[idx].startswith(prefix), \
-            "B%03d lệch evidence hiện trạng: %r" % (idx, folds[idx][:40])
-    # trong vùng nội dung còn nguyên các bản copy Mẫu số 7/8/9/10 (nhiễm)
-    joined = "\n".join(folds[80:])
-    for marker in ("mau so 7", "mau so 8", "mau so 9", "mau so 10",
-                   "danh sach chu so huu huong loi cua doanh nghiep"):
-        assert marker in joined, "mất dấu hiệu nhiễm %r" % marker
-    # grid phẳng hiện hữu vẫn thiếu tag cột Thời hạn góp vốn (partial_columns)
-    loop = next(b for b in blocks_json("PLI_M09")["blocks"] if b.get("t") == "loop")
-    tagged = {c["col"] for c in loop["cols"]}
-    assert 10 not in tagged, \
-        "cột 10 (Thời hạn góp vốn) đã tag mà không qua quyết định nguồn nào?"
+    # [GỠ PIN — Lead 2026-08-28] premise lỗi thời sau lệnh owner 2026-08-28:
+    # D3.1=A/D3.2=A + nguồn TT 68/121 -> lane m09-rebuild ĐÃ tạo spec
+    # formation/PLI_M09.json (14 cột, decontaminate) và merge @ cfdefcd.
+    # Toàn bộ evidence cũ (bảng nhiễm B087/B132/B163 còn nguyên, cột 10
+    # chưa tag) sẽ mất sau Lead regen — trạng thái mới do
+    # tools/test_m09_rebuild.py sở hữu. Clause giữ lại phần còn đúng:
+    # PLI_M09 KHÔNG được khai entry NGƯỜI ngoài lưới đã quyết (14 cột).
+    ext = bfm.load_form_spec("PLI_M09")
+    for e in ext["entries"]:
+        sp = ext["specs_by_id"][e["spec"]]
+        assert sp.get("kind") in ("list", None), \
+            "PLI_M09 xuất hiện kind ngoài quyết định D3.2=A: %r" % sp.get("kind")
+        assert sp.get("loop") == "ds_thanh_vien_hop_danh", \
+            "PLI_M09 loop lạ: %r" % sp.get("loop")
 
 
 @check("[BLOCKED] PLI_M72: N2-N5 chua khai (spec ghim len(entries)==1 + loader chan section_cond)")

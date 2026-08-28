@@ -605,8 +605,9 @@ def t_sandbox_rebuild():
 
 @check("[BLOCKED] PLI_M09 van chua co spec (D3 chua kien trung) + PLII_M02 giu nguyen")
 def t_blocked_others():
-    files = list((ROOT / "tools" / "form_specs").glob("*/PLI_M09.json"))
-    assert not files, "đã tạo %s nhưng chưa đủ tiền đề D3" % files
+    # [GỠ PIN — Lead 2026-08-28] 'assert not files' cho PLI_M09 lỗi thời:
+    # D3.1/D3.2=A + lệnh owner -> spec tồn tại (merge cfdefcd); trạng thái
+    # mới do tools/test_m09_rebuild.py sở hữu.
     raw = json.loads((ROOT / "tools" / "form_specs" / "household" /
                       "PLII_M02.json").read_text(encoding="utf-8-sig"))
     ids = []

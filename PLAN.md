@@ -201,6 +201,42 @@ file: bảng "Giấy tờ bạn cần chuẩn bị" từ `ho_so_bao_gom` (khi DE
   `td` trong `tbody` — quyết định nâng `thead` hay chấp nhận).
 - Auditor độc lập read-only chấm từng gate.
 
+### P5R — Rà soát toàn diện app (Whole-App Detail Review) — NGAY TRƯỚC ĐÓNG GÓI
+
+> Mở theo lệnh owner 2026-08-28: "rà lại toàn bộ app, sử dụng toàn bộ, xem
+> xét toàn bộ biểu mẫu, attention to detail — xem lại toàn bộ rồi rút ra gate
+> chỉ tiêu riêng biệt chi tiết, chỉn chu, tỉ mỉ nhất", đặt **ngay trước P6**.
+> Đây là cổng chất lượng cuối: KHÔNG cho phép đóng gói khi còn một gate đỏ.
+
+**Phạm vi rà (toàn bộ, không sampling):** 87/87 biểu mẫu · mọi use case
+(use_cases.json) · mọi loại trường (input, ngày, checkbox, dropdown, 4 kind
+bảng + nested + selector M72) · mọi luồng (chọn thủ tục → nhập → draft →
+validate → Excel xuất/nạp → DOCX/ZIP) · mọi trạng thái (rỗng, đầy đủ, lỗi,
+draft cũ/migration) · nội dung đối chiếu **nguồn pháp lý HIỆN HÀNH**
+(TT 68/2025 như được sửa bởi TT 121/2026 — 9 mẫu PL I 1/2/3/4/5/10/12/27/30
+đã thay, Mẫu 11 đã bãi bỏ; PL II nguyên bản TT 68).
+
+**Gate chỉ tiêu riêng biệt (mỗi gate đo được, có evidence riêng):**
+
+| # | Gate | Chỉ tiêu PASS |
+|---|---|---|
+| G1 | Nội dung ↔ nguồn pháp lý | 87/87 khớp bản biểu mẫu hiệu lực (TT 121 amends TT 68); 0 lệch chữ/cột/mục; mọi spec có `source_evidence` số hiệu văn bản + mẫu + dòng |
+| G2 | Đánh số mục | `tools/census/numbering_audit --gate` xanh: 0 JUMP, chuỗi companion liên tục, EXCEPTIONS RỖNG |
+| G3 | Checkbox | 0 glyph □/☐ dẹt trong blocks; 100% checkbox tick được, giá trị vào draft + DOCX |
+| G4 | Sạch marker/ghép chữ | 0 marker `{..}` sót trong UI lẫn DOCX xuất; 0 GLUE chữ số chú thích dính chữ (census GLUE = 0) |
+| G5 | Header band | 22 mẫu TÊN DN/HKD: tên TRÁI + quốc hiệu PHẢI cùng band, "Số:" trái + ngày phải — đúng cả UI lẫn DOCX in qua Word |
+| G6 | Bảng 4 kind | nhập/xóa/tổng/cross-field đúng từng section; draft round-trip giữ 100% giá trị; conflict-guard không lặng lẽ nuốt dữ liệu |
+| G7 | Export DOCX/ZIP | 87/87 mở được bằng Microsoft Word, đúng 1 biến thể M72, không trang trắng/cookies; lỗi điều hướng export đúng mã |
+| G8 | Luồng Excel | xuất phiếu → điền mẫu → nạp → danh sách "còn thiếu" đúng, file khách phá khung bị chặn fail-loud |
+| G9 | A11y/keyboard/viewport | không hồi quy so với P3 (tab/roving/aria/focus-visible; 3 viewport) |
+| G10 | Sạch máy dựng | runner toàn XANH 0 NOT RUN critical; census manifest GATE 87/87; allowlist exact-set cân; `git status` sạch |
+
+**Cách làm:** Lead chạy census/probe tự động (số liệu G2–G4, G10) → auditor
+độc lập read-only MỚI chấm G1/G5–G9 theo checklist từng mẫu (attention to
+detail: kể cả dấu chấm lửng, dòng kẻ, chính tả nguồn) → mọi gate đỏ quay lại
+phase sở hữu sửa → chỉ khi 10/10 XANH mới mở P6. Bất kỳ gate nào không đo được
+bằng máy phải có evidence thủ tục + người chấm ghi rõ tên.
+
 ### P6 — Windows build + clean-machine smoke
 
 1. Khóa dependency (requirements pin + openpyxl nếu Excel đã mở), WebView2

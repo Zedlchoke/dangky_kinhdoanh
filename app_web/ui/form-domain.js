@@ -186,6 +186,35 @@
       duplicateKeys: ['so_cccd'],
       outputOnlyTags: ['chu_ky']
     },
+    /* Wave m09-rebuild (merge cfdefcd + Lead chèn mục 7 @ 11861b6): D3.2=A —
+     * PLI_M09 dùng TÊN LOOP RIÊNG ds_thanh_vien_hop_danh 14 cột theo Mẫu 9
+     * Phụ lục I TT 68/121 (loop cũ ds_thanh_vien 10 cột trả lại cho M02).
+     * 3 cột mới so với 10 cột cũ: loai_tai_san_gop_von, thoi_han_gop_von,
+     * ghi_chu. Draft M09 thực tế rỗng nên migration chỉ là tiền tố
+     * ds_thanh_vien. -> ds_thanh_vien_hop_danh. (chính sách D2.9). */
+    ds_thanh_vien_hop_danh: {
+      label: 'Danh sách thành viên công ty hợp danh',
+      minRows: 2, maxRows: null, required: false,
+      allowAdd: true, allowDelete: true, allowReorder: true,
+      confirmDeleteNonEmpty: true, requirePrimary: false,
+      columns: [
+        { tag: 'ho_ten', type: 'text', required: true },
+        { tag: 'ngay_sinh', type: 'text' },
+        { tag: 'gioi_tinh', type: 'text' },
+        { tag: 'so_cccd', type: 'text' },
+        { tag: 'quoc_tich', type: 'text' },
+        { tag: 'dan_toc', type: 'text' },
+        { tag: 'dia_chi', type: 'text' },
+        { tag: 'von_dong_gop', type: 'money' },
+        { tag: 'ty_le_von', type: 'percent' },
+        { tag: 'loai_tai_san_gop_von', type: 'text' },
+        { tag: 'thoi_han_gop_von', type: 'text' },
+        { tag: 'ghi_chu', type: 'text' },
+        { tag: 'chu_ky', type: 'outputOnly' }
+      ],
+      duplicateKeys: ['so_cccd'],
+      outputOnlyTags: ['chu_ky']
+    },
     ds_co_dong_sang_lap: {
       label: 'Danh sách cổ đông sáng lập',
       minRows: 1, maxRows: null, required: false,
@@ -442,6 +471,19 @@
           required: true, minRows: 1,
           activeWhen: { valueOf: { key: 'dn.loai_hinh', equals: ['DHDN'] } },
           semanticKey: 'ds_nganh_dhdn', syncGroup: 'ds_nganh_pli_m72'
+        })
+      }
+    },
+    /* m09-rebuild (D3.2=A): PLI_M09 — bảng 14 cột Mẫu 9 Phụ lục I TT 68/121.
+     * Loop riêng ds_thanh_vien_hop_danh (tránh EXPORT_LOOP_CONTRACT_CONFLICT
+     * với ds_thanh_vien 10 cột của PLI_M02 — tiền lệ M06 ds_thanh_vien_tnhh).
+     * minRows 2: công ty hợp danh phải có ÍT NHẤT 2 thành viên hợp danh
+     * (Điều 20 Luật Doanh nghiệp; khớp manifest min_rows). */
+    'PLI_M09': {
+      loops: {
+        ds_thanh_vien_hop_danh: mkGrid(GRID_META.ds_thanh_vien_hop_danh, {
+          label: 'Danh sách thành viên công ty hợp danh',
+          semanticKey: 'ds_thanh_vien_hop_danh'
         })
       }
     },
@@ -1462,6 +1504,93 @@
               message: 'Tổng số cổ phần (giá trị VNĐ) phải khớp Vốn điều lệ kê khai.' }
           ]
         }
+      },
+      /* Wave cap-von (merge fc07c69): bảng "Thông tin về cổ phần được quyền
+       * chào bán" 2 cột (Loại cổ phần readonly + Số lượng) — 5 loại cổ phần +
+       * Tổng số output_only sum(so_luong). Biểu mẫu KHÔNG yêu cầu đối chiếu
+       * VĐL cho bảng này (không cross rule). Dòng 5 in 'Cổ phần ưu đãi khác'
+       * (không có 'Các') — nguyên văn TT 121/2026 Mẫu 4 tr.5. */
+      {
+        sectionId: 'co_phan_duoc_quyen_chao_ban',
+        semanticKey: 'co_phan_duoc_quyen_chao_ban',
+        kind: 'fixed-matrix',
+        policy: { allowAdd: false, allowDelete: false, allowReorder: false },
+        anchor: { match: 'thong tin ve co phan duoc quyen chao ban',
+          matchRole: 'body', endMatch: null, endRole: null },
+        spec: {
+          kind: 'fixed-matrix',
+          section_id: 'co_phan_duoc_quyen_chao_ban',
+          semantic_key: 'co_phan_duoc_quyen_chao_ban',
+          form_id: 'PLI_M04',
+          stt: { mode: 'none' },
+          fixed_rows: [
+            { id: 'co_phan_pho_thong', label: 'Cổ phần phổ thông' },
+            { id: 'cp_uu_dai_bieu_quyet', label: 'Cổ phần ưu đãi biểu quyết' },
+            { id: 'cp_uu_dai_co_tuc', label: 'Cổ phần ưu đãi cổ tức' },
+            { id: 'cp_uu_dai_hoan_lai', label: 'Cổ phần ưu đãi hoàn lại' },
+            { id: 'cp_uu_dai_khac', label: 'Cổ phần ưu đãi khác' },
+            { id: 'tong_so', label: 'Tổng số', output_only: true }
+          ],
+          columns: [
+            { tag: null, inputType: 'readonly',
+              header: 'Loại cổ phần được quyền chào bán' },
+            { tag: 'so_luong', inputType: 'money', header: 'Số lượng' }
+          ],
+          totals: [
+            { id: 'tong_so', formula: 'sum(so_luong)', target_tag: 'so_luong' }
+          ],
+          cross_field_rules: []
+        }
+      }]
+    },
+    /* Wave cap-von (merge fc07c69): PLI_M05 nguồn vốn điều lệ — bảng 3 cột
+     * (Loại nguồn vốn readonly / Số tiền money / Tỷ lệ %) + 5 dòng (VNNSNN,
+     * tư nhân, nước ngoài, khác, Tổng cộng output_only), GIỐNG HỆT M03 —
+     * đối chiếu trực tiếp TT 121/2026 Mẫu 5 tr.4 (cũng là trang owner xem
+     * screenshot). Rules như M03: percentSum warning + sumEqualsKey blocking
+     * với valueKey von_dieu_le (mục 5). */
+    'PLI_M05': {
+      sections: [{
+        sectionId: 'nguon_von_dieule',
+        semanticKey: 'nguon_von_dieu_le',
+        kind: 'fixed-matrix',
+        policy: { allowAdd: false, allowDelete: false, allowReorder: false },
+        anchor: { match: 'nguon von dieu le', matchRole: 'section-heading',
+          endMatch: null, endRole: null },
+        spec: {
+          kind: 'fixed-matrix',
+          section_id: 'nguon_von_dieule',
+          semantic_key: 'nguon_von_dieu_le',
+          form_id: 'PLI_M05',
+          stt: { mode: 'none' },
+          fixed_rows: [
+            { id: 'von_ngan_sach_nha_nuoc', label: 'Vốn ngân sách nhà nước' },
+            { id: 'von_tu_nhan', label: 'Vốn tư nhân' },
+            { id: 'von_nuoc_ngoai', label: 'Vốn nước ngoài' },
+            { id: 'von_khac', label: 'Vốn khác' },
+            { id: 'tong_cong', label: 'Tổng cộng', output_only: true }
+          ],
+          columns: [
+            { tag: null, inputType: 'readonly', header: 'Loại nguồn vốn' },
+            { tag: 'so_tien_vnd_va_tuong_duong', inputType: 'money',
+              header: 'Số tiền (bằng số; VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)' },
+            { tag: 'ty_le', inputType: 'percent', header: 'Tỷ lệ (%)' }
+          ],
+          totals: [
+            { id: 'tong_cong', formula: 'sum(so_tien_vnd_va_tuong_duong)',
+              target_tag: 'so_tien_vnd_va_tuong_duong' },
+            { id: 'tong_cong', formula: 'sum(ty_le)', target_tag: 'ty_le' }
+          ],
+          cross_field_rules: [
+            { type: 'percentSum', tag: 'ty_le', equals: 100,
+              severity: 'warning', code: 'PERCENT_SUM',
+              message: 'Tổng tỷ lệ nguồn vốn điều lệ phải đúng 100% khi đã kê khai.' },
+            { type: 'sumEqualsKey', tag: 'so_tien_vnd_va_tuong_duong',
+              valueKey: 'von_dieu_le', severity: 'blocking',
+              code: 'CAPITAL_MISMATCH',
+              message: 'Tổng cộng nguồn vốn điều lệ phải khớp Vốn điều lệ kê khai ở mục 5.' }
+          ]
+        }
       }]
     },
     /* P2C fixed-matrix (merge 1691728, Lead wire): tài sản góp vốn vào VỐN ĐẦU
@@ -1710,6 +1839,45 @@
      * tools/build_form_maps.py tại tools/form_specs/change/PLI_M12.json. */
     'PLI_M12': {
       sections: [{
+        /* Wave cap-von (merge fc07c69): 'Nguồn vốn điều lệ sau khi thay đổi
+         * vốn điều lệ' — bảng 3 cột × 5 dòng như M03/M05, heading body-level
+         * (không phải section-heading). Chưa có cross rule: form_maps PLI_M12
+         * chưa có key số vốn điều lệ SAU thay đổi để đối chiếu (gap đã ghi —
+         * valueKey cần owner/Lead chốt khi mở capability). */
+        sectionId: 'nguon_von_dieule_sau_thay_doi',
+        semanticKey: 'nguon_von_dieu_le_sau_thay_doi',
+        kind: 'fixed-matrix',
+        policy: { allowAdd: false, allowDelete: false, allowReorder: false },
+        anchor: { match: 'nguon von dieu le sau khi thay doi von dieu le',
+          matchRole: 'body', endMatch: null, endRole: null },
+        spec: {
+          kind: 'fixed-matrix',
+          section_id: 'nguon_von_dieule_sau_thay_doi',
+          semantic_key: 'nguon_von_dieu_le_sau_thay_doi',
+          form_id: 'PLI_M12',
+          stt: { mode: 'none' },
+          fixed_rows: [
+            { id: 'von_ngan_sach_nha_nuoc', label: 'Vốn ngân sách nhà nước' },
+            { id: 'von_tu_nhan', label: 'Vốn tư nhân' },
+            { id: 'von_nuoc_ngoai', label: 'Vốn nước ngoài' },
+            { id: 'von_khac', label: 'Vốn khác' },
+            { id: 'tong_cong', label: 'Tổng cộng', output_only: true }
+          ],
+          columns: [
+            { tag: null, inputType: 'readonly', header: 'Loại nguồn vốn' },
+            { tag: 'so_tien_vnd_va_tuong_duong', inputType: 'money',
+              header: 'Số tiền (bằng số; VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)' },
+            { tag: 'ty_le', inputType: 'percent', header: 'Tỷ lệ (%)' }
+          ],
+          totals: [
+            { id: 'tong_cong', formula: 'sum(so_tien_vnd_va_tuong_duong)',
+              target_tag: 'so_tien_vnd_va_tuong_duong' },
+            { id: 'tong_cong', formula: 'sum(ty_le)', target_tag: 'ty_le' }
+          ],
+          cross_field_rules: []
+        }
+      },
+      {
         sectionId: 'ndd_uy_quyen_sau_thay_doi',
         semanticKey: 'ds_ndd_uy_quyen_sau_thay_doi',
         kind: 'nested-grid',
@@ -1831,6 +1999,44 @@
           }),
           min_rows: 1,       // D2.7=A: tối thiểu 1 dòng có dữ liệu
           max_rows: null,    // D2.7=A: không giới hạn vô căn cứ
+          totals: [],
+          cross_field_rules: []
+        }
+      }]
+    },
+    /* Wave cap-von (merge fc07c69) — D5.2: bảng "đăng ký cũ / đăng ký mới"
+     * 3 chỉ tiêu của Phụ lục II Mẫu 2 (5.1 địa chỉ nhận thông báo thuế,
+     * 5.2 tổng số lao động, chỉ tiêu khác). Text thuần, không totals/rules.
+     * Anchor là câu dẫn body ngay trước bảng (heading là form-subtitle
+     * 'ĐĂNG KÝ THAY ĐỔI NỘI DUNG ĐĂNG KÝ THUẾ'). */
+    'PLII_M02': {
+      sections: [{
+        sectionId: 'a7_thue_chi_tieu_cu_moi',
+        semanticKey: 'thue_chi_tieu_cu_moi',
+        kind: 'fixed-matrix',
+        policy: { allowAdd: false, allowDelete: false, allowReorder: false },
+        anchor: { match: 'dang ky bo sung, thay doi cac chi tieu dang ky thue',
+          matchRole: 'body', endMatch: null, endRole: null },
+        spec: {
+          kind: 'fixed-matrix',
+          section_id: 'a7_thue_chi_tieu_cu_moi',
+          semantic_key: 'thue_chi_tieu_cu_moi',
+          form_id: 'PLII_M02',
+          stt: { mode: 'none' },
+          fixed_rows: [
+            { id: 'chi_tieu_5_1_dia_chi_nhan_thong_bao_thue',
+              label: '- Chỉ tiêu 5.1: Địa chỉ nhận thông báo thuế' },
+            { id: 'chi_tieu_5_2_tong_so_lao_dong',
+              label: '- Chỉ tiêu 5.2: Tổng số lao động' },
+            { id: 'chi_tieu_khac', label: '-…..' }
+          ],
+          columns: [
+            { tag: null, inputType: 'readonly', header: 'Chỉ tiêu' },
+            { tag: 'thong_tin_dang_ky_cu', inputType: 'text',
+              header: 'Thông tin đăng ký cũ' },
+            { tag: 'thong_tin_dang_ky_moi', inputType: 'text',
+              header: 'Thông tin đăng ký mới' }
+          ],
           totals: [],
           cross_field_rules: []
         }

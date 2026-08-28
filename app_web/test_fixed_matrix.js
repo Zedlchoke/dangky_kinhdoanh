@@ -12,17 +12,25 @@ function load(formId) {
 }
 
 function paragraphLabels(doc, start, end) {
+  /* [Lead sync 2026-08-28] sau regen cap-von (merge fc07c69), bảng nguồn vốn
+   * là w:tbl thật trong blocks: nhãn cột nằm ở cells hàng đầu, nhãn dòng nằm
+   * ở cells[0] các hàng sau — không còn paragraph phẳng. Trích theo cấu trúc
+   * bảng: header cells + cells[0] từng hàng, dừng ở nhãn `end`. */
   const labels = [];
-  let active = false;
   let done = false;
   (doc.blocks || []).forEach(function (block) {
-    const text = (block.runs || []).map(r => r.text || '').join('').trim();
-    if (!done && text === start) active = true;
-    if (active && text) labels.push(text);
-    if (active && text === end) {
-      active = false;
-      done = true;
-    }
+    if (!Array.isArray(block.rows) || done) return;
+    const firstCell = (((block.rows[0] || {}).cells || [])[0] || {}).runs;
+    const head = (firstCell || []).map(r => r.text || '').join('').trim();
+    if (head !== start) return;
+    (block.rows || []).forEach(function (row, ri) {
+      (row.cells || []).slice(0, ri === 0 ? row.cells.length : 1)
+        .forEach(function (cell) {
+          const cellText = (cell.runs || []).map(r => r.text || '').join('').trim();
+          if (cellText) labels.push(cellText);
+        });
+    });
+    done = true;
   });
   return labels;
 }
@@ -107,7 +115,11 @@ assert(validation.some(e => e.code === 'PERCENT'));
 assert(hookCalls.indexOf('percent') >= 0);
 
 const m04 = load('PLI_M04');
-const shareRows = paragraphLabels(m04, 'STT', 'Tổng số');
+// [Lead sync 2026-08-28] bảng co_cau sinh mới không có cột STT in sẵn
+// (engine tự đánh số {_stt}) — nhãn bắt đầu từ 'Loại cổ phần'. Lưu ý nguyên
+// văn TT 121: bảng co_cau giữ 'Các cổ phần ưu đãi khác', bảng chào bán dùng
+// 'Cổ phần ưu đãi khác' (khác biệt có chủ đích giữa 2 bảng).
+const shareRows = paragraphLabels(m04, 'Loại cổ phần', 'Tổng số');
 assert(shareRows.some(label => label === 'Cổ phần phổ thông'));
 assert(shareRows.some(label => label === 'Các cổ phần ưu đãi khác'));
 assert(shareRows.indexOf('Tổng số') >

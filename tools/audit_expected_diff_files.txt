@@ -289,3 +289,10 @@ app/templates/PLI_M09.docx
 # tools/test_m09_rebuild.py: suite 8 mệnh đề (load/cols/sandbox/decon/blocks/
 # num/guard), Lead sync pin theo trạng thái đã vá mục 7.
 tools/test_m09_rebuild.py
+
+# --- lane cap-von (merge fc07c69): 3a nguồn vốn TT 121 + 3b thuế PLII_M02 ---
+tools/form_specs/formation/PLI_M03.json
+tools/form_specs/formation/PLI_M04.json
+tools/form_specs/formation/PLI_M05.json
+tools/form_specs/household/PLII_M02.json
+tools/test_cap_von_specs.py

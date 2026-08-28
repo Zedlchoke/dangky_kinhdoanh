@@ -1869,69 +1869,155 @@
    "role": "body"
   },
   {
-   "t": "p",
-   "align": "center",
-   "runs": [
+   "t": "table",
+   "widths": null,
+   "rows": [
     {
-     "text": "Chỉ tiêu"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "Chỉ tiêu",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Thông tin đăng ký cũ",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Thông tin đăng ký mới",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
+    },
     {
-     "text": "Thông tin đăng ký cũ"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "- Chỉ tiêu 5.1: Địa chỉ nhận thông báo thuế"
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "input": {
+          "key": "thue_chi_tieu_cu_moi.chi_tieu_5_1_dia_chi_nhan_thong_bao_thue.thong_tin_dang_ky_cu",
+          "w": 12
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "input": {
+          "key": "thue_chi_tieu_cu_moi.chi_tieu_5_1_dia_chi_nhan_thong_bao_thue.thong_tin_dang_ky_moi",
+          "w": 12
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
+    },
     {
-     "text": "Thông tin đăng ký mới"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "- Chỉ tiêu 5.2: Tổng số lao động"
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "input": {
+          "key": "thue_chi_tieu_cu_moi.chi_tieu_5_2_tong_so_lao_dong.thong_tin_dang_ky_cu",
+          "w": 12
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "input": {
+          "key": "thue_chi_tieu_cu_moi.chi_tieu_5_2_tong_so_lao_dong.thong_tin_dang_ky_moi",
+          "w": 12
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
+    },
     {
-     "text": "- Chỉ tiêu 5.1: Địa chỉ nhận thông báo thuế"
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "-….."
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "input": {
+          "key": "thue_chi_tieu_cu_moi.chi_tieu_khac.thong_tin_dang_ky_cu",
+          "w": 12
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "input": {
+          "key": "thue_chi_tieu_cu_moi.chi_tieu_khac.thong_tin_dang_ky_moi",
+          "w": 12
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
     }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "-….."
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
+   ]
   },
   {
    "t": "p",

@@ -5,7 +5,7 @@
  *
  * Load TRỰC TIẾP 8 bảng lặp production:
  *   PLI_M06 ds_thanh_vien_tnhh (rename P2), PLI_M07 ds_co_dong_sang_lap, PLI_M08 ds_co_dong_nn,
- *   PLI_M09 ds_thanh_vien, PLI_M10 ds_cshhl, PLI_M11 ds_cshhl,
+ *   PLI_M09 ds_thanh_vien_hop_danh, PLI_M10 ds_cshhl, PLI_M11 ds_cshhl,
  *   PLII_M01 ds_nganh, PLII_M01 ds_tv_ho_gia_dinh
  * và assert cho từng loop:
  *   - tổng cột grid header == số td mỗi hàng body;
@@ -152,7 +152,7 @@ const PROD_LOOPS = [
   { doc: 'PLI_M06', loop: 'ds_thanh_vien_tnhh' }, /* rename P2 */
   { doc: 'PLI_M07', loop: 'ds_co_dong_sang_lap' },
   { doc: 'PLI_M08', loop: 'ds_co_dong_nn' },
-  { doc: 'PLI_M09', loop: 'ds_thanh_vien' },
+  { doc: 'PLI_M09', loop: 'ds_thanh_vien_hop_danh' },
   { doc: 'PLI_M10', loop: 'ds_cshhl' },
   { doc: 'PLI_M11', loop: 'ds_cshhl' },
   { doc: 'PLII_M01', loop: 'ds_nganh' },

@@ -81,7 +81,14 @@ const FIXTURES = [
    * và tài sản góp vốn; M02 nguồn vốn dùng cùng key canonical với F2(M03). */
   ['PLI_M01', 'tai_san_gop_von_von_dau_tu', 'fixed-matrix'],
   ['PLI_M02', 'nguon_von_dieule', 'fixed-matrix'],
-  ['PLI_M02', 'tai_san_gop_von_von_dieu_le', 'fixed-matrix']
+  ['PLI_M02', 'tai_san_gop_von_von_dieu_le', 'fixed-matrix'],
+  /* Wave cap-von + m09-rebuild (Lead wire @ fc07c69/cfdefcd, lệnh owner
+   * 2026-08-28): nguồn vốn M03/M04/M05/M12 theo TT 121/2026; thuế PLII_M02
+   * D5.2 (mục 5 phần C — 5.1/5.2/chỉ tiêu khác). */
+  ['PLI_M05', 'nguon_von_dieule', 'fixed-matrix'],
+  ['PLI_M12', 'nguon_von_dieule_sau_thay_doi', 'fixed-matrix'],
+  ['PLI_M04', 'co_phan_duoc_quyen_chao_ban', 'fixed-matrix'],
+  ['PLII_M02', 'a7_thue_chi_tieu_cu_moi', 'fixed-matrix']
 ];
 
 section('6. registry khớp census manifest (không tự chế section/kind)');
@@ -287,9 +294,9 @@ function renderDoc(docId, store, opts) {
   check('F3: component fixed-matrix xuất hiện trong PLI_M04',
     out.indexOf('data-component="fixed-matrix"') >= 0);
   check('F3: STT generated tự đánh số', out.indexOf('<td class="stt">1</td>') >= 0);
-  check('F3: các mẫu khác cùng form KHÔNG bị dispatch (lua_chon/chao bán)',
+  check('F3: các mẫu khác cùng form KHÔNG bị dispatch (lua_chon) — chao_ban ĐÃ wire (cap-von fc07c69)',
     out.indexOf('data-semantic-key="lua_chon_khu_san_xuat"') < 0 &&
-    out.indexOf('data-semantic-key="co_phan_duoc_quyen_chao_ban"') < 0);
+    out.indexOf('data-semantic-key="co_phan_duoc_quyen_chao_ban"') >= 0);
   const proj = FD.recomputeSections('PLI_M04', store);
   check('F3: tổng số lượng/giá trị được recompute từ công thức khai',
     proj['co_cau_loai_co_phan.tong_so.so_luong'].value === 1000000 &&
@@ -680,8 +687,12 @@ section('7. fixture production đủ đặc tính khó nhất của từng kind'
     JSON.stringify(sigs));
 
   // F2 khớp 5 nhãn dòng trong blocks nguồn (không STT)
+  // [Lead sync 2026-08-28] sau regen cap-von, nhãn dòng nằm TRONG ô w:tbl
+  // (block t=table có rows[].cells[].runs) — gộp thêm text bảng vào phép tìm.
   const m03Text = (loadBlocks('PLI_M03').blocks.map(b => (b.runs || [])
-    .map(r => (r && r.text) || '').join(''))).join('|');
+    .map(r => (r && r.text) || '').join('')
+    + (b.rows || []).map(row => (row.cells || []).map(c => (c.runs || [])
+      .map(r => (r && r.text) || '').join('')).join('')).join(''))).join('|');
   const f2 = FD.getSectionContract('PLI_M03', 'nguon_von_dieule').spec;
   check('F2: 5 id fixed_rows khớp manifest (census là nguồn chân lý)',
     JSON.stringify((MANIFEST.forms.filter(f => f.form_id === 'PLI_M03')[0]

@@ -233,8 +233,15 @@ def audit_working_template_and_maps() -> None:
         fail("loop lạ ngoài 4 semantic region: %r" % unknown)
 
     tbl_owner = []
+    first_tbl_seen = False
     for i, (k, _v) in enumerate(seq):
         if k != "tbl":
+            continue
+        # [Lead sync 2026-08-28] hdr2col (084444d): bảng header band (tên hộ +
+        # quốc hiệu) đứng TRƯỚC mọi vùng ngành — không thuộc vùng nào, loại
+        # khỏi phép đối chiếu 1-1 (đồng bộ test_industry_household).
+        if not first_tbl_seen:
+            first_tbl_seen = True
             continue
         owner = next((oid for oid, h, e in spans if h < i < e), None)
         if owner is None:
@@ -327,6 +334,11 @@ def audit_spec_contract() -> None:
     entries = raw.get("tables") or []
     seen = {}
     for e in entries:
+        # [Lead sync 2026-08-28] entry fixed-matrix (a7_thue_chi_tieu_cu_moi,
+        # D5.2 — lane cap-von) không dùng cơ chế occurrences; chỉ các entry
+        # ngành dạng list mới cần occurrences 1/entry.
+        if (e.get("spec") or {}).get("kind") == "fixed-matrix":
+            continue
         occs = e.get("occurrences") or []
         if not occs:
             fail("entry %r thiếu occurrences" % e.get("spec", {}).get("id"))

@@ -58,18 +58,10 @@
   từng mẫu ảnh hưởng (UI + DOCX qua Word).
 - **Trạng thái: IN FIX** (lane đang chạy).
 
-## Class 5 — "Vấn đề nhập trong bảng ngành nghề" (chưa tái hiện được)
+## Class 5 — "Vấn đề nhập trong bảng ngành nghề" (ĐÃ TÁI HIỆN — chuyển Class 9)
 
-- **Bằng chứng probe 2026-08-28 (Playwright trên snapshot thật):** PLI_M05
-  `ds_nganh` render bảng có `data-loop`, nút "[+ Thêm dòng]" hoạt động
-  (3→4 hàng), gõ được vào ô (DOM nhận "0110"), 0 page error. Suite
-  `test_industry_formation` phủ M01/M03/M04/M05 end-to-end 9/0 PASS;
-  `test_p3_e2e` P3-RP5 phủ loop dùng chung 4 mẫu.
-- **Kết luận trung thực:** KHÔNG tái hiện được lỗi ở tầng renderer/runtime
-  cho M05. Cần owner chỉ rõ: mẫu nào, bước nào, hiện tượng gì (không gõ
-  được / mất dữ liệu khi chuyển tab / không in ra DOCX / thiếu tra cứu VSIC /
-  bảng không hiện?).
-- **Trạng thái: NEEDS OWNER CLARIFICATION.**
+- Probe 2026-08-28 trên snapshot sạch không tái hiện; screenshot owner
+  14:13 sau đó tái hiện được với dấu hiệu cụ thể → nhập vào Class 9.
 
 ## Class 6 — Số mồ côi trong PDF xuất (bảng thuế bị dẹt ở mẫu NGOÀI 5 nhóm)
 
@@ -104,6 +96,22 @@
   docxtemplater đổ giá trị "X" xuống dòng riêng. Cần gộp nhãn+tag cùng
   paragraph ở template/extractor, hoặc renderer chk ghép inline.
 - **Trạng thái: OPEN** (Lead, đợt layout DOCX cùng Class 7).
+
+## Class 9 — Bảng ngành nghề: ô Tên ngành hiện "undefined", Mã ngành tự có số "6"
+
+- **Bằng chứng:** screenshot owner 2026-08-28 14:13 — app, thủ tục "Thành lập
+  Công ty TNHH hai thành viên trở lên" (PLI_M03), mục 4 bảng ngành: ô Tên
+  ngành dòng 1 hiện chữ **`undefined`** (viền đỏ, kèm lỗi bắt buộc "bắt buộc
+  kê khai ít nhất một dòng"), ô **Mã ngành tự điền sẵn `6`** (text bôi đen);
+  cột "Ngành, nghề kinh doanh chính" hiển thị ○ (hình tròn) thay □ như bản gốc.
+- **Đây chính là tái hiện được Class 5** ("vấn đề nhập trong bảng ngành nghề")
+  — đóng Class 5, tách thành Class 9 có bằng chứng cụ thể.
+- **Giả thuyết gốc rễ (chưa xác nhận):** draft/autosave đã lưu chuỗi
+  `"undefined"` (lỗi JS ghép chuỗi khi ghi draft) và giá trị rác `"6"` vào
+  store của `ds_nganh.ten_nganh`/`ma_nganh`, hoặc binding ô input đọc nhầm
+  key. Cần reproduce + dump draft json để chỉ đúng dòng code.
+- **Trạng thái: OPEN — ƯU TIÊN CAO** (ảnh hưởng trực tiếp thao tác nhập của
+  khách; lỗi dữ liệu 'undefined' có thể lan vào DOCX export).
 
 ## Phương pháp chống hồi quy cho Wave D2
 

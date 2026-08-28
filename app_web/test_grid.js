@@ -135,7 +135,7 @@ const PROD_LOOPS = [
   { doc: 'PLI_M06', loop: 'ds_thanh_vien_tnhh' },
   { doc: 'PLI_M07', loop: 'ds_co_dong_sang_lap' },
   { doc: 'PLI_M08', loop: 'ds_co_dong_nn' },
-  { doc: 'PLI_M09', loop: 'ds_thanh_vien' },
+  { doc: 'PLI_M09', loop: 'ds_thanh_vien_hop_danh' },
   { doc: 'PLI_M10', loop: 'ds_cshhl' },
   { doc: 'PLI_M11', loop: 'ds_cshhl' },
   { doc: 'PLII_M01', loop: 'ds_nganh' },

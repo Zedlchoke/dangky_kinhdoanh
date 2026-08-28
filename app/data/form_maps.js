@@ -101,6 +101,38 @@ window.FORM_MAPS = {
     "label": "Hình thức tăng, giảm vốn:"
    },
    {
+    "key": "nguon_von_dieu_le_sau_thay_doi.von_khac.so_tien_vnd_va_tuong_duong",
+    "label": "von_khac.so_tien_vnd_va_tuong_duong"
+   },
+   {
+    "key": "nguon_von_dieu_le_sau_thay_doi.von_ngan_sach_nha_nuoc.so_tien_vnd_va_tuong_duong",
+    "label": "von_ngan_sach_nha_nuoc.so_tien_vnd_va_tuong_duong"
+   },
+   {
+    "key": "nguon_von_dieu_le_sau_thay_doi.von_nuoc_ngoai.so_tien_vnd_va_tuong_duong",
+    "label": "von_nuoc_ngoai.so_tien_vnd_va_tuong_duong"
+   },
+   {
+    "key": "nguon_von_dieu_le_sau_thay_doi.von_tu_nhan.so_tien_vnd_va_tuong_duong",
+    "label": "von_tu_nhan.so_tien_vnd_va_tuong_duong"
+   },
+   {
+    "key": "nguon_von_dieu_le_sau_thay_doi.von_khac.ty_le",
+    "label": "von_khac.ty_le"
+   },
+   {
+    "key": "nguon_von_dieu_le_sau_thay_doi.von_ngan_sach_nha_nuoc.ty_le",
+    "label": "von_ngan_sach_nha_nuoc.ty_le"
+   },
+   {
+    "key": "nguon_von_dieu_le_sau_thay_doi.von_nuoc_ngoai.ty_le",
+    "label": "von_nuoc_ngoai.ty_le"
+   },
+   {
+    "key": "nguon_von_dieu_le_sau_thay_doi.von_tu_nhan.ty_le",
+    "label": "von_tu_nhan.ty_le"
+   },
+   {
     "key": "menh_gia_co_phan",
     "label": "Mệnh giá cổ phần:"
    },
@@ -369,7 +401,7 @@ window.FORM_MAPS = {
   "dynamic_tables": [
    {
     "id": "nganh_bo_sung",
-    "table_index": 0,
+    "table_index": 1,
     "header_row": 0,
     "template_row": 5,
     "loop": "nganh_bo_sung",
@@ -393,7 +425,7 @@ window.FORM_MAPS = {
    },
    {
     "id": "nganh_xoa_bo",
-    "table_index": 1,
+    "table_index": 2,
     "header_row": 0,
     "template_row": 5,
     "loop": "nganh_xoa_bo",
@@ -417,7 +449,7 @@ window.FORM_MAPS = {
    },
    {
     "id": "nganh_sua_doi_chi_tiet",
-    "table_index": 2,
+    "table_index": 3,
     "header_row": 0,
     "template_row": 5,
     "loop": "nganh_sua_doi_chi_tiet",
@@ -441,7 +473,7 @@ window.FORM_MAPS = {
    },
    {
     "id": "ndd_uy_quyen_sau_thay_doi",
-    "table_index": 3,
+    "table_index": 4,
     "template_row": 7,
     "loop": "ds_ndd_uy_quyen_sau_thay_doi",
     "columns": [
@@ -507,11 +539,86 @@ window.FORM_MAPS = {
   ],
   "section_specs": [
    {
+    "kind": "fixed-matrix",
+    "id": "nguon_von_dieule_sau_thay_doi",
+    "semantic_key": "nguon_von_dieu_le_sau_thay_doi",
+    "section_id": "nguon_von_dieule_sau_thay_doi",
+    "table_index": 0,
+    "columns": [
+     {
+      "col": 0,
+      "header": "Loại nguồn vốn",
+      "tag": null,
+      "input_type": "readonly",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     },
+     {
+      "col": 1,
+      "header": "Số tiền (bằng số; VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)",
+      "tag": "so_tien_vnd_va_tuong_duong",
+      "input_type": "money",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     },
+     {
+      "col": 2,
+      "header": "Tỷ lệ (%)",
+      "tag": "ty_le",
+      "input_type": "percent",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     }
+    ],
+    "fixed_rows": [
+     {
+      "id": "von_ngan_sach_nha_nuoc",
+      "label": "Vốn ngân sách nhà nước",
+      "output_only": false
+     },
+     {
+      "id": "von_tu_nhan",
+      "label": "Vốn tư nhân",
+      "output_only": false
+     },
+     {
+      "id": "von_nuoc_ngoai",
+      "label": "Vốn nước ngoài",
+      "output_only": false
+     },
+     {
+      "id": "von_khac",
+      "label": "Vốn khác",
+      "output_only": false
+     },
+     {
+      "id": "tong_cong",
+      "label": "Tổng cộng",
+      "output_only": true
+     }
+    ],
+    "totals": [
+     {
+      "formula": "sum(so_tien_vnd_va_tuong_duong)",
+      "target_row": "tong_cong",
+      "target_tag": "so_tien_vnd_va_tuong_duong"
+     },
+     {
+      "formula": "sum(ty_le)",
+      "target_row": "tong_cong",
+      "target_tag": "ty_le"
+     }
+    ]
+   },
+   {
     "kind": "nested-grid",
     "id": "ndd_uy_quyen_sau_thay_doi",
     "semantic_key": "ds_ndd_uy_quyen_sau_thay_doi",
     "section_id": "ndd_uy_quyen_sau_thay_doi",
-    "table_index": 3,
+    "table_index": 4,
     "loop": "ds_ndd_uy_quyen_sau_thay_doi",
     "header_rows": [
      [
@@ -6627,6 +6734,30 @@ window.FORM_MAPS = {
     "label": "ma_nganh"
    },
    {
+    "key": "thue_chi_tieu_cu_moi.chi_tieu_5_1_dia_chi_nhan_thong_bao_thue.thong_tin_dang_ky_cu",
+    "label": "chi_tieu_5_1_dia_chi_nhan_thong_bao_thue.thong_tin_dang_ky_cu"
+   },
+   {
+    "key": "thue_chi_tieu_cu_moi.chi_tieu_5_2_tong_so_lao_dong.thong_tin_dang_ky_cu",
+    "label": "chi_tieu_5_2_tong_so_lao_dong.thong_tin_dang_ky_cu"
+   },
+   {
+    "key": "thue_chi_tieu_cu_moi.chi_tieu_khac.thong_tin_dang_ky_cu",
+    "label": "chi_tieu_khac.thong_tin_dang_ky_cu"
+   },
+   {
+    "key": "thue_chi_tieu_cu_moi.chi_tieu_5_1_dia_chi_nhan_thong_bao_thue.thong_tin_dang_ky_moi",
+    "label": "chi_tieu_5_1_dia_chi_nhan_thong_bao_thue.thong_tin_dang_ky_moi"
+   },
+   {
+    "key": "thue_chi_tieu_cu_moi.chi_tieu_5_2_tong_so_lao_dong.thong_tin_dang_ky_moi",
+    "label": "chi_tieu_5_2_tong_so_lao_dong.thong_tin_dang_ky_moi"
+   },
+   {
+    "key": "thue_chi_tieu_cu_moi.chi_tieu_khac.thong_tin_dang_ky_moi",
+    "label": "chi_tieu_khac.thong_tin_dang_ky_moi"
+   },
+   {
     "key": "ds_nganh.ten_nganh",
     "label": "ten_nganh"
    },
@@ -6743,7 +6874,7 @@ window.FORM_MAPS = {
    },
    {
     "id": "ds_nganh",
-    "table_index": 4,
+    "table_index": 5,
     "header_row": 0,
     "template_row": 5,
     "loop": "ds_nganh",
@@ -6766,6 +6897,62 @@ window.FORM_MAPS = {
     ],
     "semantic_key": "nganh_hien_tai",
     "occurrence_id": "nganh_hien_tai"
+   }
+  ],
+  "section_specs": [
+   {
+    "kind": "fixed-matrix",
+    "id": "a7_thue_chi_tieu_cu_moi",
+    "semantic_key": "thue_chi_tieu_cu_moi",
+    "section_id": "a7_thue_chi_tieu_cu_moi",
+    "table_index": 4,
+    "columns": [
+     {
+      "col": 0,
+      "header": "Chỉ tiêu",
+      "tag": null,
+      "input_type": "readonly",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     },
+     {
+      "col": 1,
+      "header": "Thông tin đăng ký cũ",
+      "tag": "thong_tin_dang_ky_cu",
+      "input_type": "text",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     },
+     {
+      "col": 2,
+      "header": "Thông tin đăng ký mới",
+      "tag": "thong_tin_dang_ky_moi",
+      "input_type": "text",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     }
+    ],
+    "fixed_rows": [
+     {
+      "id": "chi_tieu_5_1_dia_chi_nhan_thong_bao_thue",
+      "label": "- Chỉ tiêu 5.1: Địa chỉ nhận thông báo thuế",
+      "output_only": false
+     },
+     {
+      "id": "chi_tieu_5_2_tong_so_lao_dong",
+      "label": "- Chỉ tiêu 5.2: Tổng số lao động",
+      "output_only": false
+     },
+     {
+      "id": "chi_tieu_khac",
+      "label": "-…..",
+      "output_only": false
+     }
+    ],
+    "totals": []
    }
   ]
  },
@@ -10697,6 +10884,38 @@ window.FORM_MAPS = {
     "label": "Giá trị tương đương theo đơn vị tiền nước ngoài (nếu có, bằng số, loại ngoại tệ):"
    },
    {
+    "key": "nguon_von_dieu_le.von_khac.so_tien_vnd_va_tuong_duong",
+    "label": "von_khac.so_tien_vnd_va_tuong_duong"
+   },
+   {
+    "key": "nguon_von_dieu_le.von_ngan_sach_nha_nuoc.so_tien_vnd_va_tuong_duong",
+    "label": "von_ngan_sach_nha_nuoc.so_tien_vnd_va_tuong_duong"
+   },
+   {
+    "key": "nguon_von_dieu_le.von_nuoc_ngoai.so_tien_vnd_va_tuong_duong",
+    "label": "von_nuoc_ngoai.so_tien_vnd_va_tuong_duong"
+   },
+   {
+    "key": "nguon_von_dieu_le.von_tu_nhan.so_tien_vnd_va_tuong_duong",
+    "label": "von_tu_nhan.so_tien_vnd_va_tuong_duong"
+   },
+   {
+    "key": "nguon_von_dieu_le.von_khac.ty_le",
+    "label": "von_khac.ty_le"
+   },
+   {
+    "key": "nguon_von_dieu_le.von_ngan_sach_nha_nuoc.ty_le",
+    "label": "von_ngan_sach_nha_nuoc.ty_le"
+   },
+   {
+    "key": "nguon_von_dieu_le.von_nuoc_ngoai.ty_le",
+    "label": "von_nuoc_ngoai.ty_le"
+   },
+   {
+    "key": "nguon_von_dieu_le.von_tu_nhan.ty_le",
+    "label": "von_tu_nhan.ty_le"
+   },
+   {
     "key": "chk_tt_thanh_lap_moi",
     "label": "thanh lap moi",
     "type": "chk"
@@ -10814,6 +11033,83 @@ window.FORM_MAPS = {
       "col": 3,
       "header": "Ngành, nghề kinh doanh chính",
       "tag": "la_nganh_chinh"
+     }
+    ]
+   }
+  ],
+  "section_specs": [
+   {
+    "kind": "fixed-matrix",
+    "id": "nguon_von_dieule",
+    "semantic_key": "nguon_von_dieu_le",
+    "section_id": "nguon_von_dieule",
+    "table_index": 1,
+    "columns": [
+     {
+      "col": 0,
+      "header": "Loại nguồn vốn",
+      "tag": null,
+      "input_type": "readonly",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     },
+     {
+      "col": 1,
+      "header": "Số tiền (bằng số; VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)",
+      "tag": "so_tien_vnd_va_tuong_duong",
+      "input_type": "money",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     },
+     {
+      "col": 2,
+      "header": "Tỷ lệ (%)",
+      "tag": "ty_le",
+      "input_type": "percent",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     }
+    ],
+    "fixed_rows": [
+     {
+      "id": "von_ngan_sach_nha_nuoc",
+      "label": "Vốn ngân sách nhà nước",
+      "output_only": false
+     },
+     {
+      "id": "von_tu_nhan",
+      "label": "Vốn tư nhân",
+      "output_only": false
+     },
+     {
+      "id": "von_nuoc_ngoai",
+      "label": "Vốn nước ngoài",
+      "output_only": false
+     },
+     {
+      "id": "von_khac",
+      "label": "Vốn khác",
+      "output_only": false
+     },
+     {
+      "id": "tong_cong",
+      "label": "Tổng cộng",
+      "output_only": true
+     }
+    ],
+    "totals": [
+     {
+      "formula": "sum(so_tien_vnd_va_tuong_duong)",
+      "target_row": "tong_cong",
+      "target_tag": "so_tien_vnd_va_tuong_duong"
+     },
+     {
+      "formula": "sum(ty_le)",
+      "target_row": "tong_cong",
+      "target_tag": "ty_le"
      }
     ]
    }
@@ -11036,8 +11332,120 @@ window.FORM_MAPS = {
     "label": "Giá trị tương đương theo đơn vị tiền nước ngoài (nếu có, bằng số, loại ngoại tệ):"
    },
    {
+    "key": "nguon_von_dieu_le.von_khac.so_tien_vnd_va_tuong_duong",
+    "label": "von_khac.so_tien_vnd_va_tuong_duong"
+   },
+   {
+    "key": "nguon_von_dieu_le.von_ngan_sach_nha_nuoc.so_tien_vnd_va_tuong_duong",
+    "label": "von_ngan_sach_nha_nuoc.so_tien_vnd_va_tuong_duong"
+   },
+   {
+    "key": "nguon_von_dieu_le.von_nuoc_ngoai.so_tien_vnd_va_tuong_duong",
+    "label": "von_nuoc_ngoai.so_tien_vnd_va_tuong_duong"
+   },
+   {
+    "key": "nguon_von_dieu_le.von_tu_nhan.so_tien_vnd_va_tuong_duong",
+    "label": "von_tu_nhan.so_tien_vnd_va_tuong_duong"
+   },
+   {
+    "key": "nguon_von_dieu_le.von_khac.ty_le",
+    "label": "von_khac.ty_le"
+   },
+   {
+    "key": "nguon_von_dieu_le.von_ngan_sach_nha_nuoc.ty_le",
+    "label": "von_ngan_sach_nha_nuoc.ty_le"
+   },
+   {
+    "key": "nguon_von_dieu_le.von_nuoc_ngoai.ty_le",
+    "label": "von_nuoc_ngoai.ty_le"
+   },
+   {
+    "key": "nguon_von_dieu_le.von_tu_nhan.ty_le",
+    "label": "von_tu_nhan.ty_le"
+   },
+   {
+    "key": "co_cau_loai_co_phan.co_phan_pho_thong.so_luong",
+    "label": "co_phan_pho_thong.so_luong"
+   },
+   {
+    "key": "co_cau_loai_co_phan.cp_uu_dai_bieu_quyet.so_luong",
+    "label": "cp_uu_dai_bieu_quyet.so_luong"
+   },
+   {
+    "key": "co_cau_loai_co_phan.cp_uu_dai_co_tuc.so_luong",
+    "label": "cp_uu_dai_co_tuc.so_luong"
+   },
+   {
+    "key": "co_cau_loai_co_phan.cp_uu_dai_hoan_lai.so_luong",
+    "label": "cp_uu_dai_hoan_lai.so_luong"
+   },
+   {
+    "key": "co_cau_loai_co_phan.cp_uu_dai_khac.so_luong",
+    "label": "cp_uu_dai_khac.so_luong"
+   },
+   {
+    "key": "co_cau_loai_co_phan.co_phan_pho_thong.gia_tri_vnd",
+    "label": "co_phan_pho_thong.gia_tri_vnd"
+   },
+   {
+    "key": "co_cau_loai_co_phan.cp_uu_dai_bieu_quyet.gia_tri_vnd",
+    "label": "cp_uu_dai_bieu_quyet.gia_tri_vnd"
+   },
+   {
+    "key": "co_cau_loai_co_phan.cp_uu_dai_co_tuc.gia_tri_vnd",
+    "label": "cp_uu_dai_co_tuc.gia_tri_vnd"
+   },
+   {
+    "key": "co_cau_loai_co_phan.cp_uu_dai_hoan_lai.gia_tri_vnd",
+    "label": "cp_uu_dai_hoan_lai.gia_tri_vnd"
+   },
+   {
+    "key": "co_cau_loai_co_phan.cp_uu_dai_khac.gia_tri_vnd",
+    "label": "cp_uu_dai_khac.gia_tri_vnd"
+   },
+   {
+    "key": "co_cau_loai_co_phan.co_phan_pho_thong.ty_le_so_von_dieule",
+    "label": "co_phan_pho_thong.ty_le_so_von_dieule"
+   },
+   {
+    "key": "co_cau_loai_co_phan.cp_uu_dai_bieu_quyet.ty_le_so_von_dieule",
+    "label": "cp_uu_dai_bieu_quyet.ty_le_so_von_dieule"
+   },
+   {
+    "key": "co_cau_loai_co_phan.cp_uu_dai_co_tuc.ty_le_so_von_dieule",
+    "label": "cp_uu_dai_co_tuc.ty_le_so_von_dieule"
+   },
+   {
+    "key": "co_cau_loai_co_phan.cp_uu_dai_hoan_lai.ty_le_so_von_dieule",
+    "label": "cp_uu_dai_hoan_lai.ty_le_so_von_dieule"
+   },
+   {
+    "key": "co_cau_loai_co_phan.cp_uu_dai_khac.ty_le_so_von_dieule",
+    "label": "cp_uu_dai_khac.ty_le_so_von_dieule"
+   },
+   {
     "key": "menh_gia_co_phan",
     "label": "Mệnh giá cổ phần (VNĐ):"
+   },
+   {
+    "key": "co_phan_duoc_quyen_chao_ban.co_phan_pho_thong.so_luong",
+    "label": "co_phan_pho_thong.so_luong"
+   },
+   {
+    "key": "co_phan_duoc_quyen_chao_ban.cp_uu_dai_bieu_quyet.so_luong",
+    "label": "cp_uu_dai_bieu_quyet.so_luong"
+   },
+   {
+    "key": "co_phan_duoc_quyen_chao_ban.cp_uu_dai_co_tuc.so_luong",
+    "label": "cp_uu_dai_co_tuc.so_luong"
+   },
+   {
+    "key": "co_phan_duoc_quyen_chao_ban.cp_uu_dai_hoan_lai.so_luong",
+    "label": "cp_uu_dai_hoan_lai.so_luong"
+   },
+   {
+    "key": "co_phan_duoc_quyen_chao_ban.cp_uu_dai_khac.so_luong",
+    "label": "cp_uu_dai_khac.so_luong"
    },
    {
     "key": "chk_tt_thanh_lap_moi",
@@ -11157,6 +11565,243 @@ window.FORM_MAPS = {
       "col": 3,
       "header": "Ngành, nghề kinh doanh chính",
       "tag": "la_nganh_chinh"
+     }
+    ]
+   }
+  ],
+  "section_specs": [
+   {
+    "kind": "fixed-matrix",
+    "id": "nguon_von_dieule",
+    "semantic_key": "nguon_von_dieu_le",
+    "section_id": "nguon_von_dieule",
+    "table_index": 1,
+    "columns": [
+     {
+      "col": 0,
+      "header": "Loại nguồn vốn",
+      "tag": null,
+      "input_type": "readonly",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     },
+     {
+      "col": 1,
+      "header": "Số tiền (bằng số; VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)",
+      "tag": "so_tien_vnd_va_tuong_duong",
+      "input_type": "money",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     },
+     {
+      "col": 2,
+      "header": "Tỷ lệ (%)",
+      "tag": "ty_le",
+      "input_type": "percent",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     }
+    ],
+    "fixed_rows": [
+     {
+      "id": "von_ngan_sach_nha_nuoc",
+      "label": "Vốn ngân sách nhà nước",
+      "output_only": false
+     },
+     {
+      "id": "von_tu_nhan",
+      "label": "Vốn tư nhân",
+      "output_only": false
+     },
+     {
+      "id": "von_nuoc_ngoai",
+      "label": "Vốn nước ngoài",
+      "output_only": false
+     },
+     {
+      "id": "von_khac",
+      "label": "Vốn khác",
+      "output_only": false
+     },
+     {
+      "id": "tong_cong",
+      "label": "Tổng cộng",
+      "output_only": true
+     }
+    ],
+    "totals": [
+     {
+      "formula": "sum(so_tien_vnd_va_tuong_duong)",
+      "target_row": "tong_cong",
+      "target_tag": "so_tien_vnd_va_tuong_duong"
+     },
+     {
+      "formula": "sum(ty_le)",
+      "target_row": "tong_cong",
+      "target_tag": "ty_le"
+     }
+    ]
+   },
+   {
+    "kind": "fixed-matrix",
+    "id": "co_cau_loai_co_phan",
+    "semantic_key": "co_cau_loai_co_phan",
+    "section_id": "co_cau_loai_co_phan",
+    "table_index": 2,
+    "columns": [
+     {
+      "col": 0,
+      "header": "Loại cổ phần",
+      "tag": null,
+      "input_type": "readonly",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     },
+     {
+      "col": 1,
+      "header": "Số lượng",
+      "tag": "so_luong",
+      "input_type": "money",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     },
+     {
+      "col": 2,
+      "header": "Giá trị (bằng số, VNĐ)",
+      "tag": "gia_tri_vnd",
+      "input_type": "money",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     },
+     {
+      "col": 3,
+      "header": "Tỉ lệ so với vốn điều lệ (%)",
+      "tag": "ty_le_so_von_dieule",
+      "input_type": "percent",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     }
+    ],
+    "fixed_rows": [
+     {
+      "id": "co_phan_pho_thong",
+      "label": "Cổ phần phổ thông",
+      "output_only": false
+     },
+     {
+      "id": "cp_uu_dai_bieu_quyet",
+      "label": "Cổ phần ưu đãi biểu quyết",
+      "output_only": false
+     },
+     {
+      "id": "cp_uu_dai_co_tuc",
+      "label": "Cổ phần ưu đãi cổ tức",
+      "output_only": false
+     },
+     {
+      "id": "cp_uu_dai_hoan_lai",
+      "label": "Cổ phần ưu đãi hoàn lại",
+      "output_only": false
+     },
+     {
+      "id": "cp_uu_dai_khac",
+      "label": "Các cổ phần ưu đãi khác",
+      "output_only": false
+     },
+     {
+      "id": "tong_so",
+      "label": "Tổng số",
+      "output_only": true
+     }
+    ],
+    "totals": [
+     {
+      "formula": "sum(so_luong)",
+      "target_row": "tong_so",
+      "target_tag": "so_luong"
+     },
+     {
+      "formula": "sum(gia_tri_vnd)",
+      "target_row": "tong_so",
+      "target_tag": "gia_tri_vnd"
+     },
+     {
+      "formula": "sum(ty_le_so_von_dieule)",
+      "target_row": "tong_so",
+      "target_tag": "ty_le_so_von_dieule"
+     }
+    ]
+   },
+   {
+    "kind": "fixed-matrix",
+    "id": "co_phan_duoc_quyen_chao_ban",
+    "semantic_key": "co_phan_duoc_quyen_chao_ban",
+    "section_id": "co_phan_duoc_quyen_chao_ban",
+    "table_index": 3,
+    "columns": [
+     {
+      "col": 0,
+      "header": "Loại cổ phần được quyền chào bán",
+      "tag": null,
+      "input_type": "readonly",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     },
+     {
+      "col": 1,
+      "header": "Số lượng",
+      "tag": "so_luong",
+      "input_type": "money",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     }
+    ],
+    "fixed_rows": [
+     {
+      "id": "co_phan_pho_thong",
+      "label": "Cổ phần phổ thông",
+      "output_only": false
+     },
+     {
+      "id": "cp_uu_dai_bieu_quyet",
+      "label": "Cổ phần ưu đãi biểu quyết",
+      "output_only": false
+     },
+     {
+      "id": "cp_uu_dai_co_tuc",
+      "label": "Cổ phần ưu đãi cổ tức",
+      "output_only": false
+     },
+     {
+      "id": "cp_uu_dai_hoan_lai",
+      "label": "Cổ phần ưu đãi hoàn lại",
+      "output_only": false
+     },
+     {
+      "id": "cp_uu_dai_khac",
+      "label": "Cổ phần ưu đãi khác",
+      "output_only": false
+     },
+     {
+      "id": "tong_so",
+      "label": "Tổng số",
+      "output_only": true
+     }
+    ],
+    "totals": [
+     {
+      "formula": "sum(so_luong)",
+      "target_row": "tong_so",
+      "target_tag": "so_luong"
      }
     ]
    }
@@ -11323,6 +11968,38 @@ window.FORM_MAPS = {
     "label": "Giá trị tương đương theo đơn vị tiền nước ngoài (nếu có, bằng số, loại ngoại tệ):"
    },
    {
+    "key": "nguon_von_dieu_le.von_khac.so_tien_vnd_va_tuong_duong",
+    "label": "von_khac.so_tien_vnd_va_tuong_duong"
+   },
+   {
+    "key": "nguon_von_dieu_le.von_ngan_sach_nha_nuoc.so_tien_vnd_va_tuong_duong",
+    "label": "von_ngan_sach_nha_nuoc.so_tien_vnd_va_tuong_duong"
+   },
+   {
+    "key": "nguon_von_dieu_le.von_nuoc_ngoai.so_tien_vnd_va_tuong_duong",
+    "label": "von_nuoc_ngoai.so_tien_vnd_va_tuong_duong"
+   },
+   {
+    "key": "nguon_von_dieu_le.von_tu_nhan.so_tien_vnd_va_tuong_duong",
+    "label": "von_tu_nhan.so_tien_vnd_va_tuong_duong"
+   },
+   {
+    "key": "nguon_von_dieu_le.von_khac.ty_le",
+    "label": "von_khac.ty_le"
+   },
+   {
+    "key": "nguon_von_dieu_le.von_ngan_sach_nha_nuoc.ty_le",
+    "label": "von_ngan_sach_nha_nuoc.ty_le"
+   },
+   {
+    "key": "nguon_von_dieu_le.von_nuoc_ngoai.ty_le",
+    "label": "von_nuoc_ngoai.ty_le"
+   },
+   {
+    "key": "nguon_von_dieu_le.von_tu_nhan.ty_le",
+    "label": "von_tu_nhan.ty_le"
+   },
+   {
     "key": "chk_tt_thanh_lap_moi",
     "label": "thanh lap moi",
     "type": "chk"
@@ -11425,6 +12102,83 @@ window.FORM_MAPS = {
       "col": 3,
       "header": "Ngành, nghề kinh doanh chính",
       "tag": "la_nganh_chinh"
+     }
+    ]
+   }
+  ],
+  "section_specs": [
+   {
+    "kind": "fixed-matrix",
+    "id": "nguon_von_dieule",
+    "semantic_key": "nguon_von_dieu_le",
+    "section_id": "nguon_von_dieule",
+    "table_index": 1,
+    "columns": [
+     {
+      "col": 0,
+      "header": "Loại nguồn vốn",
+      "tag": null,
+      "input_type": "readonly",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     },
+     {
+      "col": 1,
+      "header": "Số tiền (bằng số; VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)",
+      "tag": "so_tien_vnd_va_tuong_duong",
+      "input_type": "money",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     },
+     {
+      "col": 2,
+      "header": "Tỷ lệ (%)",
+      "tag": "ty_le",
+      "input_type": "percent",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     }
+    ],
+    "fixed_rows": [
+     {
+      "id": "von_ngan_sach_nha_nuoc",
+      "label": "Vốn ngân sách nhà nước",
+      "output_only": false
+     },
+     {
+      "id": "von_tu_nhan",
+      "label": "Vốn tư nhân",
+      "output_only": false
+     },
+     {
+      "id": "von_nuoc_ngoai",
+      "label": "Vốn nước ngoài",
+      "output_only": false
+     },
+     {
+      "id": "von_khac",
+      "label": "Vốn khác",
+      "output_only": false
+     },
+     {
+      "id": "tong_cong",
+      "label": "Tổng cộng",
+      "output_only": true
+     }
+    ],
+    "totals": [
+     {
+      "formula": "sum(so_tien_vnd_va_tuong_duong)",
+      "target_row": "tong_cong",
+      "target_tag": "so_tien_vnd_va_tuong_duong"
+     },
+     {
+      "formula": "sum(ty_le)",
+      "target_row": "tong_cong",
+      "target_tag": "ty_le"
      }
     ]
    }

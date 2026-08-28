@@ -12181,40 +12181,52 @@
   "template": "templates/PLI_M09.docx",
   "fields": [
    {
-    "key": "ds_thanh_vien.ho_ten",
+    "key": "ds_thanh_vien_hop_danh.ho_ten",
     "label": "ho_ten"
    },
    {
-    "key": "ds_thanh_vien.so_cccd",
-    "label": "so_cccd"
-   },
-   {
-    "key": "ds_thanh_vien.ngay_sinh",
+    "key": "ds_thanh_vien_hop_danh.ngay_sinh",
     "label": "ngay_sinh"
    },
    {
-    "key": "ds_thanh_vien.gioi_tinh",
+    "key": "ds_thanh_vien_hop_danh.gioi_tinh",
     "label": "gioi_tinh"
    },
    {
-    "key": "ds_thanh_vien.quoc_tich",
+    "key": "ds_thanh_vien_hop_danh.so_cccd",
+    "label": "so_cccd"
+   },
+   {
+    "key": "ds_thanh_vien_hop_danh.quoc_tich",
     "label": "quoc_tich"
    },
    {
-    "key": "ds_thanh_vien.dan_toc",
+    "key": "ds_thanh_vien_hop_danh.dan_toc",
     "label": "dan_toc"
    },
    {
-    "key": "ds_thanh_vien.dia_chi",
+    "key": "ds_thanh_vien_hop_danh.dia_chi",
     "label": "dia_chi"
    },
    {
-    "key": "ds_thanh_vien.von_dong_gop",
+    "key": "ds_thanh_vien_hop_danh.von_dong_gop",
     "label": "von_dong_gop"
    },
    {
-    "key": "ds_thanh_vien.ty_le_von",
+    "key": "ds_thanh_vien_hop_danh.ty_le_von",
     "label": "ty_le_von"
+   },
+   {
+    "key": "ds_thanh_vien_hop_danh.loai_tai_san_gop_von",
+    "label": "loai_tai_san_gop_von"
+   },
+   {
+    "key": "ds_thanh_vien_hop_danh.thoi_han_gop_von",
+    "label": "thoi_han_gop_von"
+   },
+   {
+    "key": "ds_thanh_vien_hop_danh.ghi_chu",
+    "label": "ghi_chu"
    },
    {
     "key": "ma_so_du_an",
@@ -12329,22 +12341,6 @@
     "label": "Tổng số lao động (dự kiến):"
    },
    {
-    "key": "dia_diem_ky",
-    "label": ""
-   },
-   {
-    "key": "ngay_ky_vb",
-    "label": ""
-   },
-   {
-    "key": "thang_ky_vb",
-    "label": ""
-   },
-   {
-    "key": "nam_ky_vb",
-    "label": ""
-   },
-   {
     "key": "chk_ht_doc_lap",
     "label": "hach toan doc lap",
     "type": "chk"
@@ -12407,11 +12403,11 @@
   ],
   "dynamic_tables": [
    {
-    "id": "ds_thanh_vien_tnhh",
+    "id": "ds_thanh_vien_hop_danh",
     "table_index": 0,
     "header_row": 0,
     "template_row": 5,
-    "loop": "ds_thanh_vien",
+    "loop": "ds_thanh_vien_hop_danh",
     "columns": [
      {
       "col": 1,
@@ -12420,7 +12416,7 @@
      },
      {
       "col": 2,
-      "header": "Ngày, tháng, năm sinh",
+      "header": "Ngày, tháng, năm sinh đối với thành viên là cá nhân",
       "tag": "ngay_sinh"
      },
      {
@@ -12430,7 +12426,7 @@
      },
      {
       "col": 4,
-      "header": "Số định danh cá nhân/Giấy tờ pháp lý của cá nhân",
+      "header": "Loại giấy tờ, số, ngày cấp, cơ quan cấp Giấy tờ pháp lý của cá nhân",
       "tag": "so_cccd"
      },
      {
@@ -12445,23 +12441,38 @@
      },
      {
       "col": 7,
-      "header": "Địa chỉ liên lạc/Nơi thường trú",
+      "header": "Địa chỉ liên lạc",
       "tag": "dia_chi"
      },
      {
       "col": 8,
-      "header": "Phần vốn góp (VNĐ)",
+      "header": "Phần vốn góp (bằng số; VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài: bằng số, loại ngoại tệ, nếu có)",
       "tag": "von_dong_gop"
      },
      {
       "col": 9,
-      "header": "Tỷ lệ vốn góp (%)",
+      "header": "Tỷ lệ (%)",
       "tag": "ty_le_von"
      },
      {
+      "col": 10,
+      "header": "Loại tài sản, số lượng, giá trị tài sản góp vốn",
+      "tag": "loai_tai_san_gop_von"
+     },
+     {
       "col": 11,
-      "header": "Chữ ký",
+      "header": "Thời hạn góp vốn",
+      "tag": "thoi_han_gop_von"
+     },
+     {
+      "col": 12,
+      "header": "Chữ ký của thành viên",
       "tag": "chu_ky"
+     },
+     {
+      "col": 13,
+      "header": "Ghi chú (nếu có)",
+      "tag": "ghi_chu"
      }
     ]
    }

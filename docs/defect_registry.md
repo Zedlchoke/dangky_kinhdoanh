@@ -71,6 +71,40 @@
   bảng không hiện?).
 - **Trạng thái: NEEDS OWNER CLARIFICATION.**
 
+## Class 6 — Số mồ côi trong PDF xuất (bảng thuế bị dẹt ở mẫu NGOÀI 5 nhóm)
+
+- **Bằng chứng:** owner duyệt `generated_ho_so/_visual_layout/hdr2col/pdf/PLII_M06.pdf`
+  (Word render bản export thật) và báo "có các số lẩn lơ mất thẩm mỹ" — các số
+  "4/5/6/1/2" đứng riêng một dòng quanh mục 6 Thông tin đăng ký thuế.
+- **Gốc rễ:** census blocks PLII_M06 KHÔNG có paragraph số standalone — các số
+  đó là STT/số mục của BẢNG CHỈ TIÊU THUẾ bị dẹt thành text ở nguồn (mẫu
+  tạm ngừng HKD — KHÔNG thuộc 5 nhóm được duyệt rebuild, các lớp fixed-matrix
+  thuế của nhóm này còn BLOCKED).
+- **Hướng xử lý:** cần owner mở phạm vi rebuild bảng thuế cho nhóm PLII_M03–M06
+  (tạm ngừng/chấm dứt HKD) theo TT 68/121, hoặc chấp nhận REMAP các số tàn dư
+  vào layout dạng danh sách như bản gốc. KHÔNG tự mở phạm vi.
+- **Trạng thái: CẦN OWNER CHỐT PHẠM VI.**
+
+## Class 7 — Chữ ký không có chỗ trống để ký
+
+- **Bằng chứng:** owner: "ký họ tên phải chừa chỗ ra cho đúng để người ta ký".
+  Blocks PLII_M06 b25 `signature` = "CHỦ HỘ KINH DOANH\n(Ký và ghi họ tên)1"
+  — không có khoảng trống dọc nào trên chữ ký; bản Word gốc có 2–4 dòng trắng.
+- **Gốc rễ:** extractor giữ nguyên đoạn nguồn không có dòng trống; renderer
+  không cộng thêm chỗ ký. (Glue số "1" sau "(Ký và ghi họ tên)" = Class 3.)
+- **Hướng xử lý:** rule layout cho block role `signature` (spaceBefore hoặc
+  N dòng trắng) ở extractor/renderer — thuộc đợt V3/GLUE + P5R gate G5/G7.
+- **Trạng thái: OPEN** (xếp hàng đợt extractor V3, Lead sở hữu).
+
+## Class 8 — Dấu X checkbox rơi riêng dòng trong PDF xuất
+
+- **Bằng chứng:** PLII_M06.pdf: "Khấu trừ" / "X" tách 2 dòng; "Có X" và
+  "Không X" mỗi cái một dòng (bản gốc in "Có □  Không □" cùng hàng).
+- **Gốc rễ:** template đặt nhãn và ô {chk_*} ở paragraph kế nhau; export
+  docxtemplater đổ giá trị "X" xuống dòng riêng. Cần gộp nhãn+tag cùng
+  paragraph ở template/extractor, hoặc renderer chk ghép inline.
+- **Trạng thái: OPEN** (Lead, đợt layout DOCX cùng Class 7).
+
 ## Phương pháp chống hồi quy cho Wave D2
 
 - `tools/census/numbering_audit.py` (JUMP/CHAIN/GLUE) — inventory hiện tại,

@@ -185,5 +185,25 @@
    ],
    "notes": "Quy uoc doc: 'drop_until' = r'\\^mau so 99$' la anchor KHONG ton tai trong tai lieu => vung quet drop chay tu ngay sau khoi GCN dau tu den het van ban (co che drop_until cua loader chi ho tro vung [anchor, drop_until)). 71 pattern drop duoc kiem tran: khop 116/121 paragraph khong rong cua vung nhiem (p102-p231 nguon), khop 0 paragraph hop phap (p003-p101). 5 paragraph khong the phan biet bang text duoc giu lai: 4 duong '___' ky (p112/p140/p166/p219, trung duong ky hop phai p090) va 'STT' (p189, trung o 'STT' cua bang thue muc 8 p006) - xem gap_nghiepvu (b). Drop pattern r'\\^- truong hop toa an hoac trong tai chi dinh' xoa ca p102 nguon - paragraph nay chua CHAN TRANG 9 (ky do Tòa án/Trọng tài chi dinh) cua Mau so 5 dan voi heading 'Mẫu số 6'; quy tac trim/keep_from cua engine chi giu duoc PHAN SAU nen khong cat duoc duoi dan => mat 1 gach dau dong chan trang (noi dung tuong tu da co o chan trang 1 p091 'Trường hợp Tòa án hoặc Trọng tài chỉ định ... kê khai thông tin vào phần này'). Cac pattern r'^mau so [6789]$'/r'^mau so 10$' chi an trong vung [3, end) nen KHONG an dong 'Mẫu số 9' (p001) cua chinh mau."
   }
+ ],
+ "inserts": [
+  {
+   "pos": "before",
+   "anchor": "^-?\\s*thong tin ve giay chung nhan dang ky dau tu",
+   "runs": [
+    {
+     "text": "7. Thành viên công ty",
+     "b": true
+    },
+    {
+     "text": " (kê khai theo Mẫu số 9 Phụ lục I ban hành kèm Thông tư này)",
+     "i": true
+    },
+    {
+     "text": ": Gửi kèm."
+    }
+   ],
+   "note": "Nguyên văn TT 121/2026 Mẫu 5 trang 4 (PDF tr.45, đối chiếu TT 68 giống hệt) — dòng mục 7 bị mất ở nguồn; block '- Thông tin về GCN đầu tư...' là ý con không số của mục 7 (gap_nghiepvu a)."
+  }
  ]
 }

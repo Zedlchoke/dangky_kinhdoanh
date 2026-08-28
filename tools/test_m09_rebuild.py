@@ -91,10 +91,13 @@ FIELDS = [t for t in EXPECTED_TAGS if t and t != "chu_ky"]   # chu_ky = outputOn
 # Mục đánh số "N." của Mẫu số 9 Phụ lục I (đoạn mà template PLI_M09 giữ) và của
 # Mẫu số 5 (Giấy đề nghị đăng ký doanh nghiệp - Công ty hợp danh, mục 1..6 nằm
 # trong template PLI_M05 — cùng use case thanh_lap_hop_danh trên app).
-M09_SECTIONS_PRESENT = [8, 9, 10]
+# [Lead sync 2026-08-28] dòng mục 7 ĐÃ được chèn vào template qua spec
+# "inserts" (nguyên văn TT 121/2026 Mẫu 5 tr.4/PDF45 — giống hệt TT 68):
+# M09 giờ đủ 7..10; khi ghép M05 (1..6) phủ trọn 1..10, KHÔNG còn gap.
+M09_SECTIONS_PRESENT = [7, 8, 9, 10]
 M05_SECTIONS_PRESENT = [1, 2, 3, 4, 5, 6]
 FULL_RANGE = list(range(1, 11))          # mục 1..10 của Mẫu số 5 Phụ lục I
-KNOWN_GAP = [7]                          # mục 7 bị mất ở nguồn (đã khai gap)
+KNOWN_GAP = []                           # đã vá — không còn mục thiếu
 SECTION7_VERBATIM = ("7. Thành viên công ty (kê khai theo Mẫu số 9 Phụ lục I "
                      "ban hành kèm Thông tư này): Gửi kèm.")
 
@@ -366,12 +369,15 @@ def t_decontaminate():
     assert len(stt_only) == 2, (
         "số paragraph 'STT' = %d, kỳ vọng 2 (bảng thuế mục 8 + tàn dư p189)"
         % len(stt_only))
-    # bảng chèn đúng chỗ: ngay sau 'Mẫu số 9', trước khối GCN đầu tư
+    # bảng chèn đúng chỗ: ngay sau 'Mẫu số 9', rồi dòng mục 7 (Lead chèn qua
+    # spec inserts — lệnh owner 2026-08-28), rồi khối GCN đầu tư
     folds = [fold(t) for t in texts]
     assert folds[0].startswith("pl1 - mau so 9"), "mất dòng tiêu đề nguồn"
     assert folds[1] == "mau so 9", "p001 phải là 'Mẫu số 9', nhận %r" % folds[1]
-    assert folds[3].startswith("- thong tin ve giay chung nhan dang ky dau tu"), (
-        "p003 sau bảng phải là khối GCN đầu tư, nhận %r" % folds[3])
+    assert folds[3].startswith("7. thanh vien cong ty"), (
+        "p003 sau bảng phải là dòng mục 7 vừa chèn, nhận %r" % folds[3])
+    assert folds[4].startswith("- thong tin ve giay chung nhan dang ky dau tu"), (
+        "p004 sau mục 7 phải là khối GCN đầu tư, nhận %r" % folds[4])
 
 
 @check("[BLOCKS] template sandbox quay tron duoc ve blocks (converter app đọc)")
@@ -400,7 +406,7 @@ def t_blocks_roundtrip():
         shutil.rmtree(tmp, ignore_errors=True)
 
 
-@check("[NUM] danh so muc lien tuc: M09 = [8,9,10], ghep M05 phu 1..10 thieu dung muc 7")
+@check("[NUM] danh so muc lien tuc: M09 = [7..10] (da chen muc 7), ghep M05 phu 1..10 DU")
 def t_numbering():
     texts = sandbox_texts()
     nums = section_numbers(texts)
@@ -417,13 +423,20 @@ def t_numbering():
     missing = [n for n in FULL_RANGE if n not in merged]
     assert missing == KNOWN_GAP, (
         "mục thiếu khi ghép M05+M09 = %r, kỳ vọng Đúng %r" % (missing, KNOWN_GAP))
-    # gap phải được khai rõ trong spec (không nuốt im lặng) kèm nguyên văn mục 7
+    # mục 7 chèn bằng spec "inserts" với NGUYÊN VĂN đúng bản hiện hành
+    # (TT 121/2026 Mẫu 5 tr.4/PDF45 — đối chiếu TT 68 giống hệt)
     raw = json.loads(SPEC_PATH.read_text(encoding="utf-8-sig"))
-    gap_txt = (raw.get("gap_nghiepvu") or "") + (raw.get("note") or "")
-    assert "MUC 7" in gap_txt or "mục 7" in gap_txt, (
-        "spec phải khai gap mục 7 trong gap_nghiepvu/note")
-    assert SECTION7_VERBATIM in gap_txt, (
-        "spec phải ghi nguyên văn dòng mục 7 để Lead chèn: %r" % SECTION7_VERBATIM)
+    ins = raw.get("inserts") or []
+    assert ins, "spec phải khai inserts để chèn mục 7 (không sửa tay template)"
+    joined = "".join(r.get("text", "") for r in ins[0]["runs"])
+    assert SECTION7_VERBATIM in joined, (
+        "insert không chứa nguyên văn dòng mục 7: %r" % joined[:120])
+    # template thật phải chứa dòng đã chèn (không chỉ spec)
+    import zipfile as _zip
+    tpl_xml = _zip.ZipFile(str(bfm.OUT_TPL / "PLI_M09.docx")).read(
+        "word/document.xml").decode("utf-8")
+    assert "7. Thành viên công ty" in tpl_xml, \
+        "template PLI_M09 chưa có dòng mục 7 — regen chưa chạy inserts"
 
 
 @check("[NEG] spec bi thao 1 cot -> build ra 13 cot va helper contract TU CHOI")
@@ -470,8 +483,10 @@ def t_guard_production():
     for p in GUARDED:
         assert sha256_file(p) == before[str(p)], "%s bị ghi ngoài sandbox!" % p
     raw = json.loads(SPEC_PATH.read_text(encoding="utf-8-sig"))
+    # [Lead sync 2026-08-28] + "inserts": capability chèn paragraph qua spec
+    # (sửa mất mục 7) — loader tools/build_form_maps.py đã validate shape.
     extra = set(raw) - {"form_id", "group", "note", "gap_nghiepvu", "tables",
-                        "section_cond"}
+                        "section_cond", "inserts"}
     assert not extra, "root key không được phép: %r" % sorted(extra)
 
 

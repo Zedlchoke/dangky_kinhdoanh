@@ -1015,13 +1015,25 @@ def load_form_spec(form_id):
         # section_cond: metadata điều kiện P1.2 Option D (M72 selector) —
         # đọc bởi census verifier (p1_b_verify_m72) và docx_render; loader
         # chỉ cần chấp nhận sự tồn tại, không tham gia rebuild bảng.
+        # inserts: chèn paragraph văn bản (hdr2col-era capability, lệnh owner
+        # 2026-08-28 — sửa M09 mất mục 7); validate shape fail-loud ở đây.
         allowed_root = {"form_id", "group", "note", "gap_nghiepvu", "tables",
-                        "section_cond"}
+                        "section_cond", "inserts"}
         extra_root = set(raw) - allowed_root
         if extra_root:
             raise ValueError(
                 "[form_specs] %s (%s): truong root khong duoc phep: %s"
                 % (form_id, path_used, sorted(extra_root)))
+        for ins in raw.get("inserts") or []:
+            if not isinstance(ins, dict) or not ins.get("anchor") \
+                    or not ins.get("runs"):
+                raise ValueError(
+                    "[form_specs] %s (%s): insert phải có anchor + runs: %r"
+                    % (form_id, path_used, ins))
+            if ins.get("pos", "after") not in ("after", "before"):
+                raise ValueError(
+                    "[form_specs] %s (%s): insert.pos phải after|before: %r"
+                    % (form_id, path_used, ins.get("pos")))
         specs_by_id = {}
         entries = []
         for e in raw.get("tables") or []:
@@ -1076,6 +1088,8 @@ def load_form_spec(form_id):
             ent["_occurrences"] = table_occurrences.validate_occurrences(
                 ent["occurrences"], all_loops - {own_loop}, form_id)
         result = {"entries": entries, "specs_by_id": specs_by_id}
+        if raw.get("inserts"):
+            result["inserts"] = raw["inserts"]
     _form_spec_cache[form_id] = result
     return result
 
@@ -1568,6 +1582,35 @@ def rebuild_list_tables(doc, form_id, ext=None):
         spacer = OxmlElement("w:p")
         tbl._tbl.addnext(spacer)
         _maybe_wrap_cond(tbl._tbl, e, form_id, spec)
+    # 4) chèn paragraph văn bản (capability mở theo lệnh owner 2026-08-28 —
+    # sửa lỗi M09 mất mục 7; mọi chèn đều qua spec, KHÔNG sửa tay template):
+    # spec khai top-level "inserts":
+    #   {"pos": "after"|"before", "anchor": <regex trên text đã fold>,
+    #    "runs": [{"text": "...", "b": true, "i": true}, ...]}
+    # Anchor phải khớp ĐÚNG 1 paragraph — 0 hoặc >1 là SystemExit (fail-loud,
+    # không bao giờ chèn mù).
+    from docx.text.paragraph import Paragraph as _Paragraph
+    for ins in (ext or {}).get("inserts") or []:
+        hits = [p for p in _body_paragraphs(doc)
+                if re.search(ins["anchor"], _para_folded(p))]
+        if len(hits) != 1:
+            raise SystemExit(
+                "[rebuild] insert anchor '%s' khớp %d paragraph (mong 1) "
+                "cho %s" % (ins["anchor"], len(hits), form_id))
+        if not ins.get("runs"):
+            raise SystemExit("[rebuild] insert thiếu runs: %r" % ins)
+        new_p = OxmlElement("w:p")
+        if ins.get("pos", "after") == "before":
+            hits[0]._p.addprevious(new_p)
+        else:
+            hits[0]._p.addnext(new_p)
+        np = _Paragraph(new_p, hits[0]._parent)
+        for r in ins["runs"]:
+            run = np.add_run(r.get("text", ""))
+            if r.get("b"):
+                run.bold = True
+            if r.get("i"):
+                run.italic = True
 
 
 def _build_kind_table(doc, spec, entry, kind):

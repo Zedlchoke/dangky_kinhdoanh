@@ -208,6 +208,15 @@ superscript/footnote, presence/absence, marker leak.
 
 ### P5R — Rà soát toàn diện app (Whole-App Detail Review) — NGAY TRƯỚC ĐÓNG GÓI
 
+> **Bản vận hành chi tiết: `docs/plan_wave_D2_P5R.md`** — trình tự phase
+> D2-A (gỡ pin đỏ) → D2-B (worker điều tra 87 mẫu, read-only) → D2-C (3 lane
+> worker sửa: fix-industry / fix-render-docx / fix-extractor) → D2-D (Lead
+> merge + regen 8 bước) → **D2-E worker AUDIT chuyên trách** (người mới, không
+> trùng người sửa — chấm 3 tầng: lỗi đã sửa chưa / quy trình chuẩn không /
+> công cụ độc lập) → D2-F chạy P5R 10 gate + ma trận hồi quy 9 Class lỗi.
+> Danh mục lỗi còn lại: `docs/defect_registry.md` (Class 1–9 + câu hỏi chờ
+> owner ở mục 9 của plan).
+
 > Mở theo lệnh owner 2026-08-28: "rà lại toàn bộ app, sử dụng toàn bộ, xem
 > xét toàn bộ biểu mẫu, attention to detail — xem lại toàn bộ rồi rút ra gate
 > chỉ tiêu riêng biệt chi tiết, chỉn chu, tỉ mỉ nhất", đặt **ngay trước P6**.

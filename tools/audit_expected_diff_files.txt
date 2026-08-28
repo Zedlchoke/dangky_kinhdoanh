@@ -300,3 +300,6 @@ tools/test_cap_von_specs.py
 app/templates/PLI_M03.docx
 app/templates/PLI_M04.docx
 app/templates/PLI_M05.docx
+
+# --- PLAN vận hành Wave D2 + P5R (lệnh owner 2026-08-28) ---
+docs/plan_wave_D2_P5R.md

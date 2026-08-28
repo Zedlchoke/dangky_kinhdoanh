@@ -231,3 +231,8 @@ tools/test_excel_negative.py
 
 # --- Handoff Lead kế tiếp (docs-only): Excel X6 + rollout bảng + header ---
 docs/leader_handoff_excel_next.md
+
+# --- Use case "Thay đổi nội dung đăng ký hộ kinh doanh" -> PLII_M02 (85fa95b) ---
+# app/data/use_cases.json: +1 case theo lệnh owner 2026-08-28 (data-only,
+# Điều 100/101 NĐ 168/2025; pin P3-UC1 sync 27 -> 28 trong test_p3_e2e.js).
+app/data/use_cases.json

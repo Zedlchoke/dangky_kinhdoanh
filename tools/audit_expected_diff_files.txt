@@ -248,3 +248,6 @@ app/templates/PLII_M02.docx
 # (M09 mất mục 7) + GLUE chữ chú thích; inventory mode, gate sau khi các
 # nhóm rebuild theo TT 68 merge.
 tools/census/numbering_audit.py
+
+# --- Wave D2 Defect Hunt: so loi he thong (lệnh owner 2026-08-28) ---
+docs/defect_registry.md

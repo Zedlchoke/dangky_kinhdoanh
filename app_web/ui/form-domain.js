@@ -746,12 +746,23 @@
   function normalizeStoreLoops(store) {
     if (!store || typeof store !== 'object') return store;
     var loops = store.loops = store.loops || {};
+    /* Guard draft hỏng: loops là primitive (chuỗi/số) thì không gán/đổi được
+     * gì (strict mode ném khi ghi index chuỗi) -> bỏ qua chuẩn hoá, không ném. */
+    if (!loops || typeof loops !== 'object') return store;
     if (loops.ds_nganh_kinh_doanh && !loops.ds_nganh) {
       loops.ds_nganh = loops.ds_nganh_kinh_doanh;
       delete loops.ds_nganh_kinh_doanh;
     }
     Object.keys(loops).forEach(function (name) {
-      (loops[name] || []).forEach(function (r) {
+      var rows = loops[name];
+      /* Guard draft hỏng: loop truthy nhưng KHÔNG phải mảng (object/chuỗi/số)
+       * trước đây ném TypeError ở .forEach -> chuẩn hoá về [] để bỏ dữ liệu
+       * hỏng an toàn thay vì làm rơi cả luồng load draft. */
+      if (!Array.isArray(rows)) {
+        loops[name] = [];
+        return;
+      }
+      rows.forEach(function (r) {
         if (r && typeof r === 'object' && !r._row_id) r._row_id = makeRowId();
       });
     });

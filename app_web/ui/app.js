@@ -85,8 +85,12 @@
                    : FD.getGridMeta(loop);
     },
 
+    /* Trả mảng row của loop (mutate tại chỗ): giá trị KHÔNG phải mảng
+     * (truthy nhưng hỏng) được thay bằng mảng rỗng thay vì trả nguyên về cho
+     * caller rồi ném TypeError ở .forEach/.splice. */
     rows: function (store, loop) {
-      return store.loops[loop] = store.loops[loop] || [];
+      if (!Array.isArray(store.loops[loop])) store.loops[loop] = [];
+      return store.loops[loop];
     },
 
     findRowIndex: function (rows, rowId) {
@@ -98,7 +102,10 @@
 
     /* Gán _row_id cho mọi row còn thiếu (mutate tại chỗ, idempotent). */
     ensureIds: function (store) {
-      Object.keys(store.loops || {}).forEach(function (name) {
+      var loops = store.loops || {};
+      /* Guard draft hỏng: loops là primitive thì bỏ qua, không ném. */
+      if (typeof loops !== 'object') return store;
+      Object.keys(loops).forEach(function (name) {
         GridCtl.rows(store, name).forEach(function (r) {
           if (r && typeof r === 'object' && !r._row_id) r._row_id = GridCtl.nextId();
         });

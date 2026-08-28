@@ -73,6 +73,8 @@ SUITES: list[dict] = [
     {"name": "test_p3_draft",             "type": "node", "target": "app_web/test_p3_draft.js"},
     {"name": "test_p3_security",          "type": "node", "target": "app_web/test_p3_security.js"},
     {"name": "test_p3_a11y",              "type": "node", "target": "app_web/test_p3_a11y.js"},
+    # --- Excel X1 (2026-08-28): lớp questionnaire (PLAN.md mục 4) ---
+    {"name": "test_questionnaire",        "type": "module", "target": "tools.test_questionnaire"},
     # --- Python ---
     {"name": "p1_b_verify_m72",           "type": "module", "target": "tools.census.p1_b_verify_m72",
      "requires": ["python-docx"]},

@@ -207,3 +207,13 @@ docs/platform_smoke_checklist.md
 
 # --- P4: Review Gate Excel — bao cao cho owner (docs-only, khong implement) ---
 docs/p4_excel_review_gate.md
+
+# --- Excel X1: lop questionnaire (schema + builder + cum dau owner duyet) ---
+tools/questionnaire/schema.py
+tools/questionnaire/build_questionnaire.py
+tools/questionnaire/clusters/thanh_lap_doanh_nghiep.json
+tools/test_questionnaire.py
+# app/data/questionnaire/PLI_M72.json: ARTIFACT GENERATED boi builder
+# (regen bang: python3 -X utf8 -m tools.questionnaire.build_questionnaire;
+# regen di cung dot regen template theo PLAN 4.5 — diff review nhu generated).
+app/data/questionnaire/PLI_M72.json

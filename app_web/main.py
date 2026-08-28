@@ -11,6 +11,11 @@ Bridge (window.pywebview.api trong JS):
 - save_draft(payload_str)       -> dialog lưu .json, trả {ok,path}
 - export(payload)               -> render .docx bằng tools/docx_render, ZIP,
                                   trả {ok,files,errors,dir,zip}
+- export_questionnaire(payload) -> xuất phiếu Excel cho khách
+                                  (tools/excel_export): {ok,path} |
+                                  {ok:False,cancelled} | {ok:False,errors:[…]}
+- import_questionnaire(payload) -> nạp phiếu Excel khách điền
+                                  (tools/excel_import): {ok,errors,data}
 - open_dir(path)                -> mở thư mục bằng Explorer
 
 Không đụng tools/*, app_tk/*, app/data/* (chỉ đọc).
@@ -251,6 +256,116 @@ class Bridge:
                     "dir": str(out_dir), "zip": None}
         return {"ok": len(errors) == 0, "files": files, "errors": errors,
                 "dir": str(out_dir), "zip": zip_path}
+
+    # ------------------------------------------------- phiếu Excel (X5)
+    def _questionnaire_path(self, payload) -> tuple[str, Path]:
+        """doc_id từ payload -> đường dẫn questionnaire JSON tương ứng.
+
+        doc_id đến thẳng từ Bridge nên KHÔNG được tin: ghép đường dẫn qua
+        _sanitize_name để '../x' không đọc thoát ra ngoài app/data (F-P3-SEC-PATH),
+        id hợp lệ giữ nguyên 100% nên tra cứu thật không bị ảnh hưởng.
+        """
+        payload = _as_dict(payload) or {}
+        doc_id = _sanitize_name(str(payload.get("doc_id") or ""), "form", 120)
+        return doc_id, APP_DIR / "data" / "questionnaire" / ("%s.json" % doc_id)
+
+    def export_questionnaire(self, payload):
+        """Xuất phiếu Excel thu thập thông tin khách cho MỘT thủ tục.
+
+        payload: {doc_id, case_id?}. Hỏi chỗ lưu (dialog .xlsx), đọc lớp
+        questionnaire của thủ tục rồi gọi tools/excel_export.write_questionnaire.
+        Không đụng draft/store: xuất là đường một chiều sang file cho khách.
+        """
+        payload = _as_dict(payload) or {}
+        doc_id, q_path = self._questionnaire_path(payload)
+        if not q_path.exists():
+            return {"ok": False, "errors": [{"code": "NO_QUESTIONNAIRE",
+                    "message": "Chưa có phiếu câu hỏi cho thủ tục này."}]}
+        try:
+            with open(q_path, encoding="utf-8") as f:
+                q = json.load(f)
+        except Exception as exc:  # noqa: BLE001
+            return {"ok": False, "errors": [{"code": "NO_QUESTIONNAIRE",
+                    "message": "không đọc được phiếu câu hỏi (%s: %s)"
+                               % (type(exc).__name__, _safe_error(exc))}]}
+
+        import tkinter as tk
+        from tkinter import filedialog
+
+        case_id = _sanitize_name(str(payload.get("case_id") or ""), "phieu_excel", 80)
+        root = tk.Tk()
+        root.withdraw()
+        root.attributes("-topmost", True)
+        path = filedialog.asksaveasfilename(
+            title="Xuất phiếu Excel cho khách",
+            defaultextension=".xlsx",
+            initialfile="%s.xlsx" % case_id,
+            filetypes=[("Phiếu Excel", "*.xlsx"), ("Tất cả file", "*.*")],
+            parent=root,
+        )
+        root.destroy()
+        if not path:
+            return {"ok": False, "cancelled": True}
+        try:
+            # import bên trong hàm như Bridge.export làm với docx_render: module
+            # chỉ cần openpyxl khi dùng phiếu Excel, không chặn khởi động app.
+            from tools.excel_export import write_questionnaire  # noqa: E402
+
+            write_questionnaire(q, path, meta={
+                "case_id": str(payload.get("case_id") or ""),
+                "today": time.strftime("%d/%m/%Y"),
+            })
+            return {"ok": True, "path": str(path)}
+        except Exception as exc:  # noqa: BLE001
+            # KHÔNG nhúng repr(exception): message gốc có thể mang giá trị người
+            # dùng (F-P3-SEC-LOG) — chỉ trả loại lỗi + message đã lọc.
+            return {"ok": False, "errors": [{"code": "EXPORT_FAILED",
+                    "message": "%s: %s" % (type(exc).__name__, _safe_error(exc))}]}
+
+    def import_questionnaire(self, payload):
+        """Nạp phiếu Excel khách đã điền cho thủ tục đang mở.
+
+        payload: {doc_id} bắt buộc (UI luôn biết thủ tục đang mở) — lớp
+        questionnaire cần thiết để excel_import dịch question_id -> data_key.
+        Trả thẳng {"ok", "errors", "data"} của tools/excel_import; ok=false thì
+        UI KHÔNG đụng store (draft hiện tại giữ nguyên — yêu cầu X3).
+        """
+        payload = _as_dict(payload) or {}
+        doc_id, q_path = self._questionnaire_path(payload)
+        if not q_path.exists():
+            return {"ok": False, "errors": [{"code": "NO_QUESTIONNAIRE",
+                    "message": "Chưa có phiếu câu hỏi cho thủ tục này."}]}
+        try:
+            with open(q_path, encoding="utf-8") as f:
+                q = json.load(f)
+        except Exception as exc:  # noqa: BLE001
+            return {"ok": False, "errors": [{"code": "NO_QUESTIONNAIRE",
+                    "message": "không đọc được phiếu câu hỏi (%s: %s)"
+                               % (type(exc).__name__, _safe_error(exc))}]}
+
+        import tkinter as tk
+        from tkinter import filedialog
+
+        root = tk.Tk()
+        root.withdraw()
+        root.attributes("-topmost", True)
+        path = filedialog.askopenfilename(
+            title="Nạp phiếu Excel",
+            filetypes=[("Phiếu Excel", "*.xlsx"), ("Tất cả file", "*.*")],
+            parent=root,
+        )
+        root.destroy()
+        if not path:
+            return {"ok": False, "cancelled": True}
+        try:
+            from tools.excel_import import import_questionnaire  # noqa: E402
+
+            return import_questionnaire(q, path)
+        except Exception as exc:  # noqa: BLE001
+            # module excel_import tự trả lỗi có cấu trúc; nhánh này chỉ còn lại
+            # lỗi bất thường của chính Bridge (không ném exception ra webview).
+            return {"ok": False, "errors": [{"code": "IMPORT_FAILED",
+                    "message": "%s: %s" % (type(exc).__name__, _safe_error(exc))}]}
 
     def open_dir(self, path):
         try:

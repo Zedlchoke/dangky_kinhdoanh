@@ -2005,6 +2005,105 @@
     });
   }
 
+  // ------------------------------------------------------- phiếu Excel (X5)
+  /* errors[] của Bridge có thể là chuỗi lẫn {code, message} (main.py trả dict
+   * có cấu trúc cho phiếu Excel) -> chuẩn hoá thành 1 đoạn HTML để toast. */
+  function bridgeErrorsText(errors) {
+    return (errors || []).map(function (e) {
+      if (typeof e === 'string') return e;
+      return (e && e.code ? e.code + ': ' : '') + ((e && e.message) || '');
+    }).filter(Boolean).join('<br>') || 'lỗi không rõ';
+  }
+
+  /* doc_id của thủ tục đang mở: mẫu active trước, mẫu đang chọn đầu tiên sau.
+   * Phiếu Excel xuất theo MỘT thủ tục (PLAN_excel mục 0 bước 3). */
+  function currentDocId() {
+    var d = activeDoc() || visibleDocs()[0] || null;
+    return d ? d.id : '';
+  }
+
+  function exportQuestionnaire() {
+    var a = api();
+    if (!a) {
+      toast('Cần chạy trong app desktop (python app_web/main.py) để xuất phiếu Excel.', 'err');
+      return;
+    }
+    var docId = currentDocId();
+    if (!docId) { toast('Chưa chọn thủ tục nào để xuất phiếu Excel.', 'err'); return; }
+    var box = toast('Đang tạo phiếu Excel…', '', true);
+    Promise.resolve(a.export_questionnaire(
+      JSON.stringify({ doc_id: docId, case_id: state.caseId || '' })
+    )).then(function (res) {
+      if (typeof res === 'string') res = JSON.parse(res);
+      box.remove();
+      if (res.ok) {
+        toast('<b>Đã xuất phiếu Excel!</b><br>' + esc(res.path || ''), 'ok', true);
+      } else if (!res.cancelled) {
+        toast('<b>Không xuất được phiếu Excel</b><br>' +
+          esc(bridgeErrorsText(res.errors)), 'err', true);
+      }
+    }).catch(function (e) {
+      box.remove();
+      toast('Lỗi xuất phiếu Excel: ' + esc(String(e)), 'err', true);
+    });
+  }
+
+  /* MERGE dữ liệu phiếu Excel vào store ĐANG CÓ (X3): values phẳng gán thẳng
+   * vào store.values, mảng rows gán vào store.loops[tên loop]. Chấp nhận cả
+   * shape gói {values:{}, loops:{}} lẫn phẳng {data_key: giá trị | rows[]}.
+   * Chỉ gọi khi res.ok — ok=false giữ nguyên draft hiện tại. */
+  function mergeQuestionnaireData(data) {
+    if (!data || typeof data !== 'object') return;
+    var flat = data;
+    var loops = null;
+    if (data.values && typeof data.values === 'object' && !Array.isArray(data.values)) {
+      flat = data.values;
+      loops = (data.loops && typeof data.loops === 'object' &&
+        !Array.isArray(data.loops)) ? data.loops : null;
+    }
+    Object.keys(flat).forEach(function (k) {
+      if (k === 'loops') return; // shape gói: loops xử lý riêng bên dưới
+      var v = flat[k];
+      if (Array.isArray(v)) state.store.loops[k] = v;
+      else state.store.values[k] = v;
+    });
+    if (loops) {
+      Object.keys(loops).forEach(function (name) {
+        if (Array.isArray(loops[name])) state.store.loops[name] = loops[name];
+      });
+    }
+  }
+
+  function importQuestionnaire() {
+    var a = api();
+    if (!a) {
+      toast('Cần chạy trong app desktop (python app_web/main.py) để nạp phiếu Excel.', 'err');
+      return;
+    }
+    var docId = currentDocId();
+    if (!docId) { toast('Chưa chọn thủ tục nào để nạp phiếu Excel.', 'err'); return; }
+    Promise.resolve(a.import_questionnaire(
+      JSON.stringify({ doc_id: docId }) // dialog chọn file do Python mở
+    )).then(function (res) {
+      if (typeof res === 'string') res = JSON.parse(res);
+      if (!res.ok) {
+        // X3: nạp thất bại KHÔNG đụng store -> draft hiện tại nguyên vẹn
+        if (!res.cancelled) {
+          toast('<b>Không nạp được phiếu Excel</b><br>' +
+            esc(bridgeErrorsText(res.errors)), 'err', true);
+        }
+        return;
+      }
+      mergeQuestionnaireData(res.data);
+      runAutoFills();
+      renderAllPages(); // render lại toàn bộ hồ sơ (mẫu active + tab + form list)
+      markDirty();
+      toast('Đã nạp phiếu, kiểm tra mục còn thiếu.');
+    }).catch(function (e) {
+      toast('Lỗi nạp phiếu Excel: ' + esc(String(e)), 'err', true);
+    });
+  }
+
   function resetDossier() {
     if (state.dirty &&
         !confirm('Nhập lại sẽ XÓA toàn bộ dữ liệu đang khai. Tiếp tục?')) return;
@@ -2214,6 +2313,8 @@
     $('#btn-export2').addEventListener('click', doExport);
     $('#btn-save-draft').addEventListener('click', saveDraftFile);
     $('#btn-open-draft').addEventListener('click', openDraftFile);
+    $('#btn-export-excel').addEventListener('click', exportQuestionnaire);
+    $('#btn-import-excel').addEventListener('click', importQuestionnaire);
 
     $('#btn-toggle-right').addEventListener('click', function () { toggleRightPanel(); });
     $('#btn-toggle-side').addEventListener('click', function () {

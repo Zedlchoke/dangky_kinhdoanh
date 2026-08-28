@@ -68,6 +68,11 @@ SUITES: list[dict] = [
     # --- Wave B (2026-08-27): B1 runtime wiring + B3 wiring gate ---
     {"name": "test_runtime_tables",       "type": "node", "target": "app_web/test_runtime_tables.js"},
     {"name": "test_wiring_gate",          "type": "node", "target": "app_web/test_wiring_gate.js"},
+    # --- P3 (2026-08-28): E2E / draft resilience / security / a11y ---
+    {"name": "test_p3_e2e",               "type": "node", "target": "app_web/test_p3_e2e.js"},
+    {"name": "test_p3_draft",             "type": "node", "target": "app_web/test_p3_draft.js"},
+    {"name": "test_p3_security",          "type": "node", "target": "app_web/test_p3_security.js"},
+    {"name": "test_p3_a11y",              "type": "node", "target": "app_web/test_p3_a11y.js"},
     # --- Python ---
     {"name": "p1_b_verify_m72",           "type": "module", "target": "tools.census.p1_b_verify_m72",
      "requires": ["python-docx"]},

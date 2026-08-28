@@ -195,3 +195,9 @@ app_web/test_loop_prod.js
 # docs/leader_handoff_p3.md: ban luu prompt ban giao Lead P3 (docs-only,
 # khong dung production/generated; bo sot khi can exact-set o commit ea112ed).
 docs/leader_handoff_p3.md
+
+# --- P3.1: merge lane p3-e2e @ b61def0 — 4 suite test moi (76c89b8) ---
+app_web/test_p3_e2e.js
+app_web/test_p3_draft.js
+app_web/test_p3_security.js
+app_web/test_p3_a11y.js

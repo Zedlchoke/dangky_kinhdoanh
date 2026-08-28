@@ -200,7 +200,26 @@ PLAN bắt visual evidence sau mọi regen; Production fix + REG gate đi cặp.
 | Rewrite PLAN.md v3 | Lead | Xóa P0/P1/P2 đã đóng (tham chiếu ledger); chi tiết còn lại: P3 (merge p3-e2e + 9 finding theo 4 cụm fix + app-shell a11y + platform NOT RUN), P4 Review Gate Excel, P5/P6/P7; tích hợp PLAN_excel nguyên văn thành mục 4 (workflow 7 bước + X1–X6 + rủi ro + E1–E6); quy tắc "phase mới chỉ mở theo lệnh owner" vào mục 6 | ✅ |
 | PLAN_excel.md → bản lưu | Lead | Đánh dấu superseded bởi PLAN.md mục 4, giữ nguyên văn để tra cứu | ✅ |
 
-## R3–R7 (khung — chi tiết hóa khi mở wave)
+## Wave P3 — E2E/A11y/Security/Resilience @ main ccff34a→eeb0ba1 (2026-08-28, lệnh owner)
+
+| Task | Owner | Evidence | Trạng thái |
+|---|---|---|---|
+| Phân loại baseline đỏ 37/1 | Lead | H7.4 exact-set lệch `docs/leader_handoff_p3.md` (commit ea112ed của Lead trước chưa cân manifest — docs-only, không phải regression production). Fix +1 dòng chủ đích `ccff34a`; tái lập **38 PASS / 0 FAIL / 0 NOT RUN** | ✅ |
+| P3.0 dọn worktree đã merge | Lead | 17 lane cũ merged=YES sạch → remove + xóa 17 branch; **lệch mô tả bắt được**: `p2-wire` có 4 file CHƯA commit (prototype component-dispatch bị Wave B1 thay thế) → park thành commit `200780a` trên `agent/p2-wire` (KHÔNG merge), không xóa mất việc | ✅ |
+| P3.1 merge p3-e2e @ b61def0 | Lead | `76c89b8` --no-ff: đúng 4 file test mới (2360 dòng, 220 PASS tại lane); đăng ký 4 suite vào release_runner + allowlist +4 (`b490874`); runner **42/0/0**. a11y exit-0 là quy ước lane (8 FAIL = KNOWN-FINDING, không phá gate) | ✅ |
+| P3.2 cụm draft-crash | Lane p3-fix-draft | `451a4ae` merge `a4749e2`: guard Array.isArray `normalizeStoreLoops` + `GridCtl.rows/ensureIds` (2 lớp — loops primitive strict-mode ném khi ghi index); draft hỏng → chuẩn hóa [] an toàn. test_p3_draft **80/0/0 KNOWN-FINDING** (74/0/6 trước); domain 64/0, grid 111/0, hardening 56/0 | ✅ đóng F-P3-1/2 |
+| P3.2 cụm export-path + log-redact | Lane p3-fix-export | `7cf8144`+`3e7ab7f` merge `704a9e3`: `_sanitize_name` (case_id limit 255-1-16 ts; fid chỉ phần tên file, key tra maps giữ nguyên) + mkdir try/except `EXPORT_DIR_CREATE_FAILED` + `_safe_error` bỏ repr; docx_render detail ExportTotalsError lọc stored/computed (giữ ở problems[i]). 7/7 case hostile không throw/không thoát generated_ho_so. Lead sync 2 pin cũ GHIM giá trị thô → `not in` (`65cd829`, CHẶT hơn không nới); export kinds 13/0, totals product 19/0 | ✅ đóng F-P3-SEC-PATH/FID/LOG |
+| P3.2 cụm DOCX-NUL | Lane p3-fix-docx | `328fcac` merge `d1f4727`: `safe_escape` strip `[\x00-\x08\x0b\x0c\x0e-\x1f\x7f\x80-\x9f]` (XML 1.0 Char spec 2.2), GIỮ \t\n\r; giá trị sạch byte-for-byte (docx_render --test-all 87/87). test_p3_security **90/0/0** | ✅ đóng F-P3-SEC-NUL |
+| P3.2 cụm a11y + P3.3 app shell | Lane p3-fix-a11y | `53f3133` merge `eeb0ba1`: bỏ `outline:none` 2 chỗ che `:focus-visible`; renderLoop/nested/fixed-matrix `role=grid`+col/rowcount; 6 nút row-op + .chk-box aria-label (chk-box qua enhancement DOM — test_dom/layout_l2 pin đúng chuỗi HTML, pattern "renderer remains unchanged"); test_p3_a11y **36/0** (24/8 trước) + gate G7 app shell thật (tablist/roving/arrow/trap, `?mock=1`, index.html KHÔNG cần sửa) | ✅ 8 FAIL → 0; 9/9 finding đóng |
+| P3.4 platform Windows | Lead | `865cb16`: `docs/platform_smoke_checklist.md` S1–S8 + quy tắc verdict; **NOT RUN — CHƯA TỪNG CHẠY** (không có máy Windows) | ✅ NOT RUN có lý do |
+| Gate P3 | Lead | Runner **42 PASS / 0 FAIL / 0 NOT RUN — VERDICT PASS** @ eeb0ba1; compileall PASS; `git diff --check` 0; **không regen** (0 thay đổi generated; test_generator_deep_idempotency 17/0); visual re-shoot 5/5 (M01/M02/M03/M70/M72@dntn — 0 marker, aria đủ, không tràn, 0 page error; Lead soi mắt M01+M72) `generated_ho_so/_visual_layout/p3_reshoot/`; dọn xong 5 worktree fix-lane đã merge; git status sạch | ✅ **P3 PASS** |
+
+**Gate P3 (PLAN mục 5):** runner ~42 suite 0 FAIL ✓ · 4 suite P3 xanh ✓ · 9 finding
+đóng ✓ · blocking-error chặn export có test (test_p3_e2e DOCX export gate 38/0) ✓ ·
+evidence platform NOT RUN có lý do ✓. **Blocker pháp lý giữ nguyên trạng thái blocked**
+(M09, PLII_M02 member, M72 N2–N5, D5.2, N-tail, D6.x, M03/M04/M05 — không đụng).
+Còn mở không chặn: lone surrogate/U+FFFE-U+FFFF không strip trong safe_escape
+(fail-loud ở render, gap đã ghi); index.html không phát hiện thiếu sót a11y.
 
 ## R3–R7 (khung — chi tiết hóa khi mở wave)
 

@@ -246,8 +246,13 @@ def t_evidence_manifest():
         assert sec is not None, "%s: thiếu section %r trong manifest" % (fid, sid)
         assert sec["kind"] == "fixed-matrix", "%s/%s kind=%r" % (fid, sid,
                                                                 sec["kind"])
-        assert sec["status"] == "missing_grid", \
-            "%s/%s status=%r (section đã map rồi thì không rebuild)" % (
+        # [Đổi pin — lane cap-von 2026-08-28] Pin cũ đòi status == missing_grid
+        # cho cả 3 section. Sau khi Lead regen artifact (P2C được wire vào
+        # form-domain.js), census manifest flip cả 3 sang already_complete vì
+        # section giờ đã có w:tbl + fields thật trên template — trạng thái
+        # không còn là tín hiệu "chưa được dựng" nữa.
+        assert sec["status"] in ("missing_grid", "already_complete"), \
+            "%s/%s status=%r (không phải trạng thái census hợp lệ)" % (
                 fid, sid, sec["status"])
         assert sec["semantic_key"] == want["semantic_key"], \
             "%s/%s semantic_key=%r != %r" % (fid, sid, sec["semantic_key"],
@@ -797,27 +802,39 @@ def t_blocked_m02_no_packet():
     assert [c["tag"] for c in loops[0]["cols"]][0] == "ten_nguoi_dai_dien"
 
 
-@check("[BLOCKED] D1.2 policy ngoai M01 + M03/M04/M05/M12: khong spec tu doan")
+@check("[BUILT] M03/M04/M05/M12: dung tap section von TT68 (owner 2026-08-28 mo chot)")
 def t_blocked_other_forms():
-    # M03/M04/M05 đã có file spec (bảng ngành Wave 2A) nhưng phần vốn/cổ phần
-    # của chúng là BLOCKED — không được thêm fixed-matrix hộ owner
-    for fid, banned in (("PLI_M03", "nguon_von_dieule"),
-                        ("PLI_M04", "co_cau_loai_co_phan"),
-                        ("PLI_M05", "nguon_von_dieule")):
-        path = ROOT / "tools" / "form_specs" / "formation" / ("%s.json" % fid)
-        assert path.exists(), "%s: mất file spec ngành có sẵn" % fid
+    # [Đổi pin — lane cap-von 2026-08-28] Pin cũ cấm M03/M04/M05/M12 khai
+    # fixed-matrix vì D1.3/D1.5=D3.3 (chờ bản gốc). Owner 2026-08-28 (docs/
+    # leader_handoff_excel_next.md Việc 4.1) cho phép dựng theo Phụ lục I
+    # TT 68/2025/TT-BTC thay vì chờ bản gốc -> chốt cũ hết giá trị. Pin mới:
+    # mỗi mẫu được phép có ĐÚNG tập section vốn đã khai, không rộng hơn.
+    EXPECTED = {
+        "PLI_M03": {"nguon_von_dieule"},
+        "PLI_M04": {"nguon_von_dieule", "co_cau_loai_co_phan",
+                    "co_phan_duoc_quyen_chao_ban"},
+        "PLI_M05": {"nguon_von_dieule"},
+        "PLI_M12": {"nguon_von_dieule_sau_thay_doi"},
+    }
+    for fid, want in EXPECTED.items():
+        group = "change" if fid == "PLI_M12" else "formation"
+        path = ROOT / "tools" / "form_specs" / group / ("%s.json" % fid)
+        assert path.exists(), "%s: mất file spec" % fid
         raw = json.loads(path.read_text(encoding="utf-8-sig"))
-        kinds = [(e["spec"].get("kind") or "list") for e in raw["tables"]]
-        assert "fixed-matrix" not in kinds, \
-            "%s: xuất hiện fixed-matrix (%s là BLOCKED, fixture F2/F3 chỉ là " \
-            "contract runtime của lane khác)" % (fid, banned)
-    # PLI_M12 capital: chỉ có entry người đại diện (lane people), không fixed-matrix vốn
-    p12 = ROOT / "tools" / "form_specs" / "change" / "PLI_M12.json"
-    if p12.exists():
-        raw = json.loads(p12.read_text(encoding="utf-8-sig"))
-        kinds = {(e["spec"].get("kind") or "list") for e in raw["tables"]}
-        assert "fixed-matrix" not in kinds, \
-            "PLI_M12: capital (policy ngoài M01) là BLOCKED -> không khai fixed-matrix"
+        got = {e["spec"].get("id") for e in raw["tables"]
+               if (e["spec"].get("kind") or "list") == "fixed-matrix"}
+        assert got == want, \
+            "%s: tập fixed-matrix %r != %r (đổi phạm vi phải qua owner)" % (
+                fid, sorted(got), sorted(want))
+        # D1.2 vẫn giữ: không tự chế ô mô tả/sub-grid cho 'Vốn khác'
+        for e in raw["tables"]:
+            spec = e["spec"]
+            if (spec.get("kind") or "list") != "fixed-matrix":
+                continue
+            assert not any("chi_tiet" in (c.get("tag") or "")
+                           for c in spec["columns"]), \
+                "%s/%s: 'Vốn khác' của mẫu KHÔNG có ô mô tả -> không tự chế cột" % (
+                    fid, spec["id"])
     # 2 file của lane: không thêm form nào khác
     forms = manifest_sections()
     assert "nguon_von_dieule" not in forms["PLI_M01"], \

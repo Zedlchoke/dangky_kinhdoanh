@@ -892,6 +892,22 @@
     return m;
   }
 
+  /* Component contracts are additive metadata. Keep this adapter generic:
+   * render.js dispatches by contract.kind and never infers legal semantics. */
+  function componentOptionsForDoc(d, selector, docId) {
+    var contracts = d && (d.components ||
+      (d.metadata && d.metadata.components) || d.component_contracts);
+    return {
+      docId: docId,
+      fieldMeta: FD.FIELD_META,
+      gridMeta: gridMetaForDoc(docId),
+      uiLayout: state.uiLayouts[docId] || null,
+      flags: FD.selectorFlagsOf(docId, state.store),
+      selectorHtml: selector,
+      components: contracts || []
+    };
+  }
+
   function renderActiveDoc() {
     var d = activeDoc();
     var pages = $('#pages');
@@ -907,12 +923,7 @@
     var selHtml = sel ? R.selectorHtml(sel, R.makeAccessors(state.store)) : '';
     pages.innerHTML = '<section class="page-a4" id="doc_' + esc(d.id) +
       '" data-doc="' + esc(d.id) + '" tabindex="-1">' +
-      R.renderBlocks(d, state.store, {
-        docId: d.id, fieldMeta: FD.FIELD_META, gridMeta: gridMetaForDoc(d.id),
-        uiLayout: state.uiLayouts[d.id] || null,
-        flags: FD.selectorFlagsOf(d.id, state.store),
-        selectorHtml: selHtml
-      }) +
+      R.renderBlocks(d, state.store, componentOptionsForDoc(d, selHtml, d.id)) +
       '</section>';
     enhanceEditableGrids();
     applyReadonlyTotals();

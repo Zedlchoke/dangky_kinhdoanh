@@ -4,6 +4,23 @@
 (function (root) {
   'use strict';
 
+  /* Component contracts are an additive seam around the legacy block renderer.
+   * The dispatcher knows only contract kinds, never legal row meanings. */
+  var COMPONENTS = {};
+  if (typeof module !== 'undefined' && module.exports) {
+    COMPONENTS['output-table'] = {
+      render: require('./output-table.js').renderOutputTable
+    };
+    COMPONENTS['fixed-matrix'] = require('./fixed-matrix.js');
+    COMPONENTS['nested-grid'] = require('./nested-grid.js');
+  } else if (typeof window !== 'undefined') {
+    COMPONENTS['output-table'] = window.OutputTable ? {
+      render: window.OutputTable.renderOutputTable
+    } : null;
+    COMPONENTS['fixed-matrix'] = window.FixedMatrix || null;
+    COMPONENTS['nested-grid'] = window.NestedGrid || null;
+  }
+
   // ------------------------------------------------------------------ utils
 
   function escapeHtml(s) {
@@ -704,6 +721,43 @@
     return html + '</div>';
   }
 
+  function componentContracts(doc, opts) {
+    var source = opts && (opts.components || opts.componentContracts);
+    if (source == null && doc) {
+      source = doc.components || (doc.metadata && doc.metadata.components) ||
+        doc.component_contracts;
+    }
+    if (!Array.isArray(source)) source = source ? [source] : [];
+    return source;
+  }
+
+  /* Dispatch one contract to a renderer supplied by the contract kind or by
+   * opts.componentHandlers. Custom handlers may be functions or {render}.
+   * Missing renderers fail soft so old/partial production metadata remains
+   * usable. The returned HTML is always owned by the handler and may be ''. */
+  function dispatchComponent(contract, context, opts) {
+    if (!contract || typeof contract !== 'object' || !contract.kind) return '';
+    var handlers = (opts && opts.componentHandlers) || {};
+    var handler = handlers[contract.kind] || COMPONENTS[contract.kind];
+    if (typeof handler === 'function') handler = { render: handler };
+    if (!handler || typeof handler.render !== 'function') return '';
+    var result = handler.render(contract, context || {});
+    return result == null ? '' : String(result);
+  }
+
+  /* Render all metadata/options contracts in declaration order. Contracts are
+   * intentionally independent from blocks and do not alter the draft/store. */
+  function renderComponentContracts(contracts, store, opts) {
+    var s = store || newStore();
+    var context = Object.assign({}, s, {
+      store: s,
+      docId: (opts && opts.docId) || ''
+    });
+    return (contracts || []).map(function (contract) {
+      return dispatchComponent(contract, context, opts);
+    }).filter(Boolean).join('\n');
+  }
+
   /* Render toàn bộ một mẫu biểu thành HTML string.
    * opts tuỳ chọn: { fieldMeta: {key: meta}, gridMeta: {loop: meta},
    * uiLayout: {grids:[...]}, docId, flags: {flag: bool} - điều kiện cond
@@ -733,7 +787,9 @@
       ? applyUiLayout(parts, opts.uiLayout, ac, rctx)
       : parts.map(function (p) { return p.html; });
     var pre = (opts && opts.selectorHtml) || '';
-    return pre + seq.join('\n');
+    var components = renderComponentContracts(componentContracts(doc, opts),
+      store || newStore(), opts);
+    return pre + seq.join('\n') + (components ? '\n' + components : '');
   }
 
   /* HTML cho tablist đáy (controller gắn sự kiện qua [data-doc-id]). */
@@ -864,5 +920,8 @@
   root.formatStyleAttr = formatStyleAttr;
   root.roleClassOf = roleClassOf;
   root.bindFootnoteRefs = bindFootnoteRefs;
+  root.dispatchComponent = dispatchComponent;
+  root.renderComponentContracts = renderComponentContracts;
+  root.componentContracts = componentContracts;
 
 })(typeof module !== 'undefined' && module.exports ? module.exports : (window.Render = window.Render || {}));

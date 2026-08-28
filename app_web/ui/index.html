@@ -80,6 +80,16 @@
   <div id="vsic-pop" hidden></div>
   <div id="toasts" aria-live="polite"></div>
 
+  <!-- Browser UMD component adapter; legacy blocks remain rendered by render.js. -->
+  <script src="output-table.js"></script>
+  <!-- The fixed/nested platforms are CommonJS-only by design. This tiny
+       loader gives them a browser module slot without changing their source. -->
+  <script>window.module = { exports: {} };</script>
+  <script src="fixed-matrix.js"></script>
+  <script>window.FixedMatrix = window.module.exports;</script>
+  <script>window.module = { exports: {} };</script>
+  <script src="nested-grid.js"></script>
+  <script>window.NestedGrid = window.module.exports; delete window.module;</script>
   <script src="form-domain.js"></script>
   <script src="render.js"></script>
   <script src="app.js"></script>

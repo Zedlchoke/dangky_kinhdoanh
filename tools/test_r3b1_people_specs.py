@@ -394,14 +394,25 @@ def t_sandbox_rebuild_and_convert():
         bfm._form_spec_cache.clear()
 
 
-@check("[BLOCKED] PLII_M02: chua khai spec nguoi vi file bi test contract ghim tap occurrence_id")
+@check("[BLOCKED] PLII_M02: khong khai spec nguoi; 4 loop nganh giu nguyen + thuế II.2")
 def t_blocked_plii_m02():
     path = ROOT / "tools" / "form_specs" / "household" / "PLII_M02.json"
     raw = json.loads(path.read_text(encoding="utf-8-sig"))
     ids = []
+    kinds = []
     for e in raw["tables"]:
-        assert e["spec"]["id"].startswith(("nganh_", "ds_nganh")), \
-            "PLII_M02 xuất hiện entry ngoài nhóm ngành: %r" % e["spec"]["id"]
+        sid = e["spec"]["id"]
+        kinds.append(e["spec"].get("kind") or "list")
+        # [Đổi pin — lane cap-von 2026-08-28] cho phép thêm entry fixed-matrix
+        # thuế của mẫu II.2 (D5.2, owner 2026-08-28: lấy danh mục chỉ tiêu từ
+        # TT 68); vẫn CẤM entry NGƯỜI (nested-grid thành viên hộ gia đình) vì
+        # packet D2 chưa có quyết định cho 2 lưới đó.
+        if sid.startswith("a7_thue_"):
+            assert e["spec"].get("kind") == "fixed-matrix", \
+                "entry ngoài nhóm ngành phải là fixed-matrix: %r" % sid
+            continue
+        assert sid.startswith(("nganh_", "ds_nganh")), \
+            "PLII_M02 xuất hiện entry ngoài nhóm ngành/thuế: %r" % sid
         occs = e.get("occurrences") or []
         ids.extend(o["occurrence_id"] for o in occs)
     want_ids = ["nganh_bo_sung", "nganh_xoa_bo", "nganh_sua_doi_chi_tiet",
@@ -410,6 +421,11 @@ def t_blocked_plii_m02():
         "tập occurrence_id PLII_M02 đã đổi -> phải cập nhật "
         "tools/test_industry_household.py + tools/census/p1_c_verify_plii_m02.py "
         "trước rồi mới thêm 2 lưới thành viên hộ gia đình (hiện %r)" % ids)
+    assert kinds.count("nested-grid") == 0, \
+        "PLII_M02: đã khai lưới thành viên hộ gia đình mà không qua packet D2?"
+    assert kinds.count("fixed-matrix") == 1, \
+        "PLII_M02: đúng 1 entry fixed-matrix thuế (D5.2), thấy %d" % \
+        kinds.count("fixed-matrix")
     # glue hiện trạng vẫn còn nguyên trong blocks (chưa regen)
     folds = block_folds("PLII_M02")
     assert folds[72].startswith(

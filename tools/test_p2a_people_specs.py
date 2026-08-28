@@ -615,7 +615,10 @@ def t_blocked_others():
     assert sorted(ids) == sorted(["nganh_bo_sung", "nganh_xoa_bo",
                                   "nganh_sua_doi_chi_tiet", "nganh_hien_tai"]), \
         "file household/PLII_M02.json (ngoài ownership P2A) đã đổi: %r" % ids
-    assert len(raw["tables"]) == 4, "PLII_M02 đổi số entry: %d" % len(raw["tables"])
+    # [Đổi pin — lane cap-von 2026-08-28] 4 -> 5 entry: thêm fixed-matrix
+    # 'a7_thue_chi_tieu_cu_moi' (D5.2 thuế mẫu II.2, owner 2026-08-28);
+    # 4 occurrence ngành giữ nguyên như assert phía trên.
+    assert len(raw["tables"]) == 5, "PLII_M02 đổi số entry: %d" % len(raw["tables"])
 
 
 @check("[BLOCKED] khong bia cot chu ky cho bang nguon khong co (PLII_M07/M10/M13)")

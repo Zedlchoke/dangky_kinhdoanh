@@ -222,6 +222,9 @@ app/data/questionnaire/PLI_M72.json
 tools/excel_export.py
 tools/test_excel_export.py
 
+# --- Excel X3: nap phieu xlsx fail-loud, dich question_id -> data_key ---
+tools/excel_import.py
+
 # --- Excel X4: round-trip + negative (gate PLAN 4.4) ---
 tools/test_excel_roundtrip.py
 tools/test_excel_negative.py

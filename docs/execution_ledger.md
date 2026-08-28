@@ -221,6 +221,16 @@ evidence platform NOT RUN có lý do ✓. **Blocker pháp lý giữ nguyên tr�
 Còn mở không chặn: lone surrogate/U+FFFE-U+FFFF không strip trong safe_escape
 (fail-loud ở render, gap đã ghi); index.html không phát hiện thiếu sót a11y.
 
+## Wave P4 — Review Gate Excel @ main 78a0b0f→b72a155 (2026-08-28, lệnh owner)
+
+| Task | Owner | Evidence | Trạng thái |
+|---|---|---|---|
+| P4.1 đối chiếu data-key | Lead | `docs/p4_excel_review_gate.md` §1: 381 scalar key (243 prefixed/138 flat) + 20 loop đo từ form_maps @ 78a0b0f; phân loại Ổn định (dn.*, 5 loop ngành M72 `ds_nganh_pli_m72`, vốn, người, 6 lưới người DECIDED) / Đang trôi (`ma_so_van_ban` D4.2 chưa tách; `ds_thanh_vien` M09 sẽ đổi 14 cột D3.2; flat-vs-prefix → bắt buộc map per-procedure; ngày sinh tách 3 key) / Bị chặn (D5.2, N2–N5, N-tail — 40 section census chưa đủ) | ✅ |
+| P4.2 thủ tục ưu tiên + cụm câu hỏi | Lead | §2: khuyến nghị cụm đầu **"Thành lập doanh nghiệp" qua PLI_M72** (1 thủ tục phủ 5 variant `loai_hinh`, key thuộc vùng ổn định; phù sau: PLII_M01 hộ KD, M02/M12 đổi ngành; thuế để sau) + draft 23 câu v1 nhóm đời thường map `question_id → data_key`, chờ owner duyệt (E6) | ✅ draft chờ duyệt |
+| P4.3 dependency | Lead | §3: openpyxl 3.1.5 có sẵn máy dev **chưa pin**; probe thật sandbox: protection sheet ✓, dropdown DataValidation Unicode ✓, round-trip ✓; file dialog theo pattern tkinter `main.py:139–166`; máy sạch OK (thuần Python) | ✅ khả thi |
+| P4.4 effort/risk + E1–E6 | Lead | §4: X1–X6 ~9–13 phiên, mỗi wave commit sạch; §5: E1–E6 kèm khuyến nghị; **lệnh chờ owner: `Bắt đầu Excel` hoặc `Để sau`** | ⏳ chờ owner |
+| Gate P4 (docs-only) | Lead | commit `b72a155` (+allowlist 1 entry có chú thích); H7 56/0 tại HEAD; full runner tái xác minh tại HEAD docs-only | ✅ |
+
 ## R3–R7 (khung — chi tiết hóa khi mở wave)
 
 | Wave | Điều kiện mở | Ghi chú |

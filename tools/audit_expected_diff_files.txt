@@ -280,3 +280,12 @@ app/templates/PLI_M33.docx
 # layout/text/fields/tags/idempotent/untouched/negative), Lead sync 2 pin theo
 # trạng thái post-regen (census đọc band:header; FIELDS chấp nhận +1-shift).
 tools/test_header_layout.py
+
+# --- M09 rebuild + chèn mục 7 (lane m09-rebuild cfdefcd + Lead 11861b6) ---
+# form_specs/formation/PLI_M09.json: spec 14 cột D3.2=A + decontaminate D3.1=A
+# + inserts chèn dòng mục 7 (nguyên văn TT 121/2026 Mẫu 5 tr.4).
+tools/form_specs/formation/PLI_M09.json
+app/templates/PLI_M09.docx
+# tools/test_m09_rebuild.py: suite 8 mệnh đề (load/cols/sandbox/decon/blocks/
+# num/guard), Lead sync pin theo trạng thái đã vá mục 7.
+tools/test_m09_rebuild.py

@@ -2901,17 +2901,9 @@
    "key": "chk_bc_hang_thang"
   },
   {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "□ 3 tháng một lần"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
+   "t": "chk",
+   "label": "3 tháng một lần",
+   "key": "chk_bc_03_thang"
   },
   {
    "t": "chk",

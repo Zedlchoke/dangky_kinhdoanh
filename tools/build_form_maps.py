@@ -354,8 +354,8 @@ CHK_RULES = [
     (r"truc tiep tren doanh so", "gtgt_truc_tiep_doanh_so"),
     (r"khong phai nop thue gtgt", "gtgt_khong_phai_nop"),
     (r"hang thang", "bc_hang_thang"),
-    (r"03 thang mot lan", "bc_03_thang"),
-    (r"06 thang mot lan", "bc_06_thang"),
+    (r"0?3 thang mot lan", "bc_03_thang"),
+    (r"0?6 thang mot lan", "bc_06_thang"),
     (r"khong kinh doanh tai tru so", "khong_kd_tai_tru_so"),
     (r"doanh nghiep xa hoi", "dn_xa_hoi"),
     (r"dau tu dac biet", "dau_tu_dac_biet"),
@@ -1742,11 +1742,24 @@ def match_chk(label_folded):
     return None
 
 
+def _auto_chk_key(label_folded, seen):
+    """Key chk dự phòng khi không khớp CHK_RULES — loại bỏ lớp lỗi 'checkbox
+    dẹt thành text' (lệnh owner 2026-08-28): MỌI ô □/☐ phải được gắn the,
+    không phụ thuộc whitelist nhãn. Key ổn định theo nội dung nhãn; trùng
+    nhãn trong cùng mẫu -> _2, _3…"""
+    slug = re.sub(r"[^a-z0-9]+", "_", label_folded).strip("_")[:40].strip("_")
+    name = "auto_%s" % (slug or "o")
+    n = seen.get(name, 0) + 1
+    seen[name] = n
+    return name if n == 1 else "%s_%d" % (name, n)
+
+
 def process_checkboxes(doc, form_id, add_field, unmatched):
     """Quét mọi paragraph (cả trong bảng), thay □/☐ bằng the {chk_*}."""
     from docx.text.paragraph import Paragraph
 
     last_label = ""
+    seen_auto: dict = {}
     for p_el in doc.element.body.iter(qn("w:p")):
         para = Paragraph(p_el, doc)
         full = "".join(r.text for r in para.runs)
@@ -1760,6 +1773,7 @@ def process_checkboxes(doc, form_id, add_field, unmatched):
         for k, i in enumerate(pos):
             seg_after = full[i + 1: pos[k + 1] if k + 1 < len(pos) else len(full)]
             seg_before = full[0:i] if k == 0 else full[pos[k - 1] + 1:i]
+            label_raw = (seg_after or seg_before or last_label).strip()
             name = None
             # ưu tiên: chữ ngay sau ô -> chữ trước ô -> paragraph trước đó
             for cand in (seg_after, seg_before, last_label if not seg_after.strip() else ""):
@@ -1767,13 +1781,18 @@ def process_checkboxes(doc, form_id, add_field, unmatched):
                     name = match_chk(fold(cand))
                     if name:
                         break
+            if name is None:
+                # fallback: không bỏ sót ô nào — key sinh từ nhãn (norm_label
+                # để bỏ đánh số đầu dòng/gạch đầu dòng trước khi slug)
+                label_folded = norm_label(label_raw) if label_raw else ""
+                if label_folded.strip():
+                    name = _auto_chk_key(fold(label_folded), seen_auto)
             if name:
                 assignments.append((i, i + 1, "{chk_%s}" % name))
-                add_field("chk_%s" % name, (seg_after or seg_before or last_label).strip(),
-                          type_="chk")
+                add_field("chk_%s" % name, label_raw, type_="chk")
             else:
                 unmatched.append({"form": form_id, "where": "chk[p]",
-                                  "label": (seg_after or seg_before or last_label).strip()[:100]})
+                                  "label": label_raw[:100]})
         apply_tags_to_para(para, assignments)
 
 

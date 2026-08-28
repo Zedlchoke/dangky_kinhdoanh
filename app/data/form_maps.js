@@ -1229,6 +1229,16 @@ window.FORM_MAPS = {
     "key": "chk_khong",
     "label": "Không",
     "type": "chk"
+   },
+   {
+    "key": "chk_auto_hoi_dong_thanh_vien_giam_doc_hoac_tong_g",
+    "label": "hoi dong thanh vien, giam doc hoac tong giam doc",
+    "type": "chk"
+   },
+   {
+    "key": "chk_auto_chu_tich_cong_ty_giam_doc_hoac_tong_giam",
+    "label": "chu tich cong ty, giam doc hoac tong giam doc",
+    "type": "chk"
    }
   ],
   "dynamic_tables": [
@@ -6647,6 +6657,11 @@ window.FORM_MAPS = {
     "type": "chk"
    },
    {
+    "key": "chk_auto_chu_ho_kinh_doanh_chet_hoac_bi_toa_an_tu",
+    "label": "chu ho kinh doanh chet hoac bi toa an tuyen bo da chet, mat tich, bi han che hoac mat nang luc hanh vi dan su, co kho kh",
+    "type": "chk"
+   },
+   {
     "key": "chk_ct_ca_nhan",
     "label": "Cá nhân",
     "type": "chk"
@@ -9165,6 +9180,11 @@ window.FORM_MAPS = {
     "type": "chk"
    },
    {
+    "key": "chk_bc_03_thang",
+    "label": "3 tháng một lần",
+    "type": "chk"
+   },
+   {
     "key": "chk_bc_06_thang",
     "label": "06 tháng một lần",
     "type": "chk"
@@ -9886,6 +9906,16 @@ window.FORM_MAPS = {
    {
     "key": "chk_khong",
     "label": "Không",
+    "type": "chk"
+   },
+   {
+    "key": "chk_auto_hoi_dong_thanh_vien_giam_doc_hoac_tong_g",
+    "label": "hoi dong thanh vien, giam doc hoac tong giam doc",
+    "type": "chk"
+   },
+   {
+    "key": "chk_auto_chu_tich_cong_ty_giam_doc_hoac_tong_giam",
+    "label": "chu tich cong ty, giam doc hoac tong giam doc",
     "type": "chk"
    },
    {

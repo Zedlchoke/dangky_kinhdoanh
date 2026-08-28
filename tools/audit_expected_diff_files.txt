@@ -236,3 +236,9 @@ docs/leader_handoff_excel_next.md
 # app/data/use_cases.json: +1 case theo lệnh owner 2026-08-28 (data-only,
 # Điều 100/101 NĐ 168/2025; pin P3-UC1 sync 27 -> 28 trong test_p3_e2e.js).
 app/data/use_cases.json
+
+# --- Fix lớp lỗi checkbox dẹt thành text (lệnh owner 2026-08-28) ---
+# build_form_maps: rule "0?3/0?6 thang mot lan" + fallback key chk_auto_*
+# cho mọi ô □/☐ không khớp whitelist — không còn ô nào bị bỏ lại thành
+# text thường. Regen 4 mẫu (M01, M02, M15, PLII_M02): 6 glyph -> 6 chk.
+app/templates/PLII_M02.docx

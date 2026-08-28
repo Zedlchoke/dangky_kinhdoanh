@@ -961,56 +961,14 @@
    "role": "body"
   },
   {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Hội đồng thành viên, Giám đốc hoặc Tổng Giám đốc"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
+   "t": "chk",
+   "label": "Hội đồng thành viên, Giám đốc hoặc Tổng Giám đốc",
+   "key": "chk_auto_hoi_dong_thanh_vien_giam_doc_hoac_tong_g"
   },
   {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "□"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Chủ tịch công ty, Giám đốc hoặc Tổng Giám đốc"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "□"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
+   "t": "chk",
+   "label": "Chủ tịch công ty, Giám đốc hoặc Tổng Giám đốc",
+   "key": "chk_auto_chu_tich_cong_ty_giam_doc_hoac_tong_giam"
   },
   {
    "t": "p",

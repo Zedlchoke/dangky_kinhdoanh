@@ -692,17 +692,9 @@
    "role": "body"
   },
   {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "☐"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
+   "t": "chk",
+   "label": "",
+   "key": "chk_auto_chu_ho_kinh_doanh_chet_hoac_bi_toa_an_tu"
   },
   {
    "t": "p",

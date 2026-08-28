@@ -60,10 +60,27 @@ def _lookup(data: dict, key: str):
     return cur
 
 
+# XML 1.0 (spec 2.2, production "Char") chỉ cho phép 3 ký tự điều khiển C0:
+# tab 0x09, LF 0x0A, CR 0x0D. Phần còn lại của khối C0 (NUL, BEL, US, …), DEL
+# 0x7F và khối C1 0x80-0x9F KHÔNG phải Char: đưa thẳng vào giá trị làm
+# word/document.xml không well-formed -> Word từ chối mở file DOCX
+# (finding F-P3-SEC-NUL). Giá trị người dùng được loại các ký tự này trước
+# khi escape; tab/LF/CR được GIỮ NGUYÊN vì hợp lệ và Word cần chúng để ngắt
+# dòng/đoạn. Pattern viết bằng raw string (escape \x do re tự đọc) để file
+# nguồn không chứa byte điều khiển thô.
+_XML_BAD_CTRL_RE = re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f\x7f\x80-\x9f]")
+
+
 def safe_escape(val) -> str:
     """Escape giá trị dữ liệu cho XML; đồng thời vô hiệu hóa ngoặc nhọn để
-    giá trị người dùng không bị đọc nhầm thành tag ở lượt thay sau."""
-    return escape(str(val)).replace("{", "&#123;").replace("}", "&#125;")
+    giá trị người dùng không bị đọc nhầm thành tag ở lượt thay sau.
+
+    Ký tự điều khiển bất hợp pháp trong XML 1.0 bị loại khỏi giá trị trước
+    khi escape; tab 0x09 / LF 0x0A / CR 0x0D được giữ lại vì spec 2.2 cho
+    phép. Giá trị rỗng sau khi loại vẫn trả chuỗi rỗng hợp lệ."""
+    return escape(
+        _XML_BAD_CTRL_RE.sub("", str(val))
+    ).replace("{", "&#123;").replace("}", "&#125;")
 
 
 def _subst_vars(xml: str, data: dict) -> str:

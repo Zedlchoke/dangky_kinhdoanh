@@ -163,6 +163,47 @@
     return rootEl;
   }
 
+  /* F-P3-A11Y-LABEL: input .chk-box sinh từ block chk / run.input.chk PHẢI giữ
+   * nguyên chuỗi attribute (test_dom + test_layout_l2_render pin đúng chuỗi
+   * '<input type="checkbox" class="chk-box" data-key="..." checked>'), nên nhãn
+   * cho trình đọc màn hình được gắn ở bước enhancement phía DOM — cùng pattern
+   * với enhanceEditableGrids của controller: caller cũ vẫn nhận HTML y như cũ.
+   * Nguồn nhãn: <label> bọc ngoài (block chk đã có chữ hiển thị) > chữ tĩnh
+   * đứng trước ô trong cùng cha (như prevStaticText: gom lại, lấy 90 ký tự
+   * cuối) > data-key. Checkbox bảng lặp (loop-chk/loop-radio) đã có aria-label
+   * từ fieldAriaAttrs nên được bỏ qua; chạy lại nhiều lần vẫn idempotent. */
+  function enhanceChkLabels(rootEl) {
+    if (!rootEl || typeof rootEl.querySelectorAll !== 'function') return null;
+    Array.prototype.forEach.call(rootEl.querySelectorAll('input.chk-box'),
+      function (el) {
+        if ((el.getAttribute('aria-label') || '').trim()) return;
+        var wrap = el.closest ? el.closest('label') : null;
+        var label = wrap ? (wrap.textContent || '').replace(/\s+/g, ' ').trim() : '';
+        if (!label) {
+          var parts = [], hops = 0, node = el.previousSibling;
+          while (node && hops++ < 24) {
+            var t = (node.nodeType === 3 ? node.nodeValue : node.textContent) || '';
+            if (t.replace(/\s+/g, ' ').trim()) parts.unshift(t);
+            node = node.previousSibling;
+          }
+          var s = parts.join(' ').replace(/\s+/g, ' ').trim();
+          label = s.length > 90 ? s.slice(s.length - 90).trim() : s;
+        }
+        el.setAttribute('aria-label',
+          label || el.getAttribute('data-key') || 'Ô chọn');
+      });
+    return rootEl;
+  }
+
+  /* Enhancement DOM cho một section VỪA gắn vào cây: footnote ref (như cũ) +
+   * aria-label cho checkbox. entry point duy nhất của harness (snapshot.html
+   * gọi bindFootnoteRefs) và controller (app.js gọi sau renderActiveDoc). */
+  function enhanceSectionDom(rootEl) {
+    bindFootnoteRefs(rootEl);
+    enhanceChkLabels(rootEl);
+    return rootEl;
+  }
+
   // ------------------------------------------------------------------ store
 
   function newStore() {
@@ -494,37 +535,47 @@
         ' data-loop="' + escapeHtml(b.loop) + '">' + tds + '</tr>';
     }
     var btns;
+    /* F-P3-A11Y-BUTTON: nút row-op chỉ có title= (screen reader không đọc) ->
+     * thêm aria-label đúng ngữ nghĩa với title/chữ hiển thị. */
     if (gm) {
       btns = '<div class="loop-btns" data-loop="' + escapeHtml(b.loop) + '">' +
         (gm.allowAdd !== false
           ? '<button type="button" class="btn-row-add" data-act="add" data-loop="' +
-            escapeHtml(b.loop) + '" title="Thêm dòng trống">[+ Thêm dòng]</button>' +
+            escapeHtml(b.loop) + '" title="Thêm dòng trống" aria-label="Thêm dòng">[+ Thêm dòng]</button>' +
             '<button type="button" class="btn-row-dup" data-act="dup" data-loop="' +
-            escapeHtml(b.loop) + '" title="Nhân bản dòng đang chọn (bỏ field định danh)">[⧉ Nhân bản]</button>'
+            escapeHtml(b.loop) + '" title="Nhân bản dòng đang chọn (bỏ field định danh)" aria-label="Nhân bản dòng đang chọn">[⧉ Nhân bản]</button>'
           : '') +
         (gm.allowDelete !== false
           ? '<button type="button" class="btn-row-del" data-act="del" data-loop="' +
-            escapeHtml(b.loop) + '" title="Xóa dòng đang chọn (Ctrl+click để chọn nhiều)">[- Xóa dòng]</button>' +
+            escapeHtml(b.loop) + '" title="Xóa dòng đang chọn (Ctrl+click để chọn nhiều)" aria-label="Xóa dòng đang chọn">[- Xóa dòng]</button>' +
             '<button type="button" class="btn-row-clear btn-danger-row" data-act="clear" data-loop="' +
-            escapeHtml(b.loop) + '" title="Xóa dữ liệu TẤT CẢ các dòng">[× Xóa tất cả]</button>'
+            escapeHtml(b.loop) + '" title="Xóa dữ liệu TẤT CẢ các dòng" aria-label="Xóa tất cả các dòng">[× Xóa tất cả]</button>'
           : '') +
         (gm.allowReorder !== false
           ? '<button type="button" class="btn-row-up" data-act="up" data-loop="' +
-            escapeHtml(b.loop) + '" title="Chuyển dòng đang chọn lên trên">[↑ Lên]</button>' +
+            escapeHtml(b.loop) + '" title="Chuyển dòng đang chọn lên trên" aria-label="Chuyển dòng đang chọn lên trên">[↑ Lên]</button>' +
             '<button type="button" class="btn-row-down" data-act="down" data-loop="' +
-            escapeHtml(b.loop) + '" title="Chuyển dòng đang chọn xuống dưới">[↓ Xuống]</button>'
+            escapeHtml(b.loop) + '" title="Chuyển dòng đang chọn xuống dưới" aria-label="Chuyển dòng đang chọn xuống dưới">[↓ Xuống]</button>'
           : '') +
         '</div>';
     } else {
       btns = '<div class="loop-btns" data-loop="' + escapeHtml(b.loop) + '">' +
         '<button type="button" class="btn-row-add" data-act="add" data-loop="' + escapeHtml(b.loop) +
-        '">[+ Thêm dòng]</button>' +
+        '" title="Thêm dòng trống" aria-label="Thêm dòng">[+ Thêm dòng]</button>' +
         '<button type="button" class="btn-row-del" data-act="del" data-loop="' + escapeHtml(b.loop) +
-        '">[- Xóa dòng]</button>' +
+        '" title="Xóa dòng đang chọn" aria-label="Xóa dòng đang chọn">[- Xóa dòng]</button>' +
         '</div>';
     }
+    /* F-P3-A11Y-TABLE: role=grid + aria-colcount (số cột vật lý từ header grid)
+     * + aria-rowcount (header + số dòng dữ liệu đang render). Controller
+     * (app.js enhanceEditableGrids) cập nhật lại aria-rowcount sau thêm/xóa
+     * dòng nên hai đường phải cùng chuẩn. */
+    var nHeadRows = (b.rows || []).filter(function (r, i) {
+      return headerIdx.indexOf(i) >= 0;
+    }).length;
     return '<div class="loop-wrap"><div class="btable-wrap"><table class="btable loop-table" data-loop="' +
-      escapeHtml(b.loop) + '"><thead>' + headHtml +
+      escapeHtml(b.loop) + '" role="grid" aria-colcount="' + nCols +
+      '" aria-rowcount="' + (nHeadRows + nRows) + '"><thead>' + headHtml +
       '</thead><tbody>' + body + '</tbody></table></div>' + btns + '</div>';
   }
 
@@ -870,10 +921,14 @@
         sttCell + cellsFor(row.id, total) + '</tr>';
     }).join('');
 
+    /* F-P3-A11Y-TABLE: bảng component cũng cần colcount/rowcount như loop-table
+     * (fixed-matrix là bảng tĩnh: 1 hàng tiêu đề + mọi hàng khai). */
     return '<div class="loop-wrap"><div class="btable-wrap"><table ' +
       'class="btable component-table" data-component="fixed-matrix" ' +
       'data-semantic-key="' + escapeHtml(spec.semantic_key) + '" ' +
-      'data-section-kind="fixed-matrix" role="grid"><thead>' + head +
+      'data-section-kind="fixed-matrix" role="grid" aria-colcount="' +
+      (cols.length || 1) + '" aria-rowcount="' + ((spec.fixed_rows || []).length + 1) +
+      '"><thead>' + head +
       '</thead><tbody>' + body + '</tbody></table></div></div>';
   }
 
@@ -973,29 +1028,33 @@
     }
 
     var pol = entry.policy || {};
+    /* F-P3-A11Y-BUTTON: cùng chuẩn aria-label với renderLoop. */
     var btns = '<div class="loop-btns" data-loop="' + escapeHtml(loop) +
       '" data-component="nested-grid">' +
       (pol.allowAdd !== false
         ? '<button type="button" class="btn-row-add" data-act="add" data-loop="' +
-          escapeHtml(loop) + '">[+ Thêm dòng]</button>'
+          escapeHtml(loop) + '" title="Thêm dòng trống" aria-label="Thêm dòng">[+ Thêm dòng]</button>'
         : '') +
       (pol.allowDelete !== false
         ? '<button type="button" class="btn-row-del" data-act="del" data-loop="' +
-          escapeHtml(loop) + '">[- Xóa dòng]</button>'
+          escapeHtml(loop) + '" title="Xóa dòng đang chọn" aria-label="Xóa dòng đang chọn">[- Xóa dòng]</button>'
         : '') +
       (pol.allowReorder !== false
         ? '<button type="button" class="btn-row-up" data-act="up" data-loop="' +
-          escapeHtml(loop) + '">[↑ Lên]</button>' +
+          escapeHtml(loop) + '" title="Chuyển dòng đang chọn lên trên" aria-label="Chuyển dòng đang chọn lên trên">[↑ Lên]</button>' +
           '<button type="button" class="btn-row-down" data-act="down" data-loop="' +
-          escapeHtml(loop) + '">[↓ Xuống]</button>'
+          escapeHtml(loop) + '" title="Chuyển dòng đang chọn xuống dưới" aria-label="Chuyển dòng đang chọn xuống dưới">[↓ Xuống]</button>'
         : '') +
       '</div>';
 
+    /* F-P3-A11Y-TABLE: nested-grid đã có role=grid + aria-colcount, bổ sung
+     * aria-rowcount (header nhiều hàng vật lý + số dòng đang render). */
     return '<div class="loop-wrap"><div class="btable-wrap"><table ' +
       'class="btable loop-table component-table" data-component="nested-grid" ' +
       'data-loop="' + escapeHtml(loop) + '" data-semantic-key="' +
       escapeHtml(spec.semantic_key) + '" data-section-kind="nested-grid" ' +
-      'role="grid" aria-colcount="' + colByIndex.length + '">' +
+      'role="grid" aria-colcount="' + colByIndex.length +
+      '" aria-rowcount="' + (layout.rows.length + nRows) + '">' +
       '<thead>' + head + '</thead><tbody>' + body +
       '</tbody></table></div>' + btns + '</div>';
   }
@@ -1212,7 +1271,9 @@
   root.textToHtml = textToHtml;
   root.formatStyleAttr = formatStyleAttr;
   root.roleClassOf = roleClassOf;
-  root.bindFootnoteRefs = bindFootnoteRefs;
+  root.bindFootnoteRefs = enhanceSectionDom;
+  root.enhanceSectionDom = enhanceSectionDom;
+  root.enhanceChkLabels = enhanceChkLabels;
 
   /* P2 R2 runtime wiring: dispatcher theo section.kind (3 module platform chỉ
    * được require/gọi, không sửa). Renderer GENERIC - contracts đến qua opts. */

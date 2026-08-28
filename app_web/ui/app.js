@@ -983,18 +983,55 @@
         selectorHtml: selHtml
       }) +
       '</section>';
+    /* F-P3-A11Y-LABEL: nhãn cho checkbox .chk-box gắn ở bước enhancement DOM
+     * (HTML renderer giữ nguyên cho caller cũ — xem render.enhanceChkLabels). */
+    R.enhanceChkLabels(pages);
     enhanceEditableGrids();
     applyReadonlyTotals();
     refreshComponentComputed();
     patchErrorsDom();
   }
 
+  /* Số cột VẬT LÝ của bảng: duyệt header grid, cộng dồn chiếm chỗ qua
+   * colspan/rowspan (cùng thuật toán với loopHeaderGrid của renderer để hai
+   * đường render/enhance không lệch nhau). Không có thead -> lấy max ô/tr. */
+  function tableColCount(table) {
+    var head = table.tHead;
+    if (!head || !head.rows.length) {
+      var maxCells = 0;
+      Array.prototype.forEach.call(table.rows, function (tr) {
+        if (tr.cells.length > maxCells) maxCells = tr.cells.length;
+      });
+      return maxCells;
+    }
+    var occ = {}, nCols = 0;
+    Array.prototype.forEach.call(head.rows, function (tr, ri) {
+      var col = 0;
+      Array.prototype.forEach.call(tr.cells, function (cell) {
+        while (occ[ri + ':' + col]) col++;
+        var cs = Math.max(1, cell.colSpan | 0 || 1);
+        var rs = Math.max(1, cell.rowSpan | 0 || 1);
+        for (var dr = 0; dr < rs; dr++) {
+          for (var dc = 0; dc < cs; dc++) occ[(ri + dr) + ':' + (col + dc)] = true;
+        }
+        col += cs;
+      });
+      var w = 0;
+      while (occ[ri + ':' + w]) w++;
+      if (w > nCols) nCols = w;
+    });
+    return nCols;
+  }
+
   /* R2.2: add grid semantics after the shared renderer emits production HTML.
    * The renderer remains unchanged and older callers still receive identical
-   * data attributes/content. */
+   * data attributes/content. F-P3-A11Y-TABLE: role=grid + aria-colcount (cột
+   * vật lý) + aria-rowcount (header + dòng hiện có) — gọi lại sau MỌI lần
+   * render lại (thêm/xóa dòng đi qua renderActiveDoc) nên rowcount luôn khớp. */
   function enhanceEditableGrids() {
     document.querySelectorAll('#pages table.loop-table').forEach(function (table) {
       table.setAttribute('role', 'grid');
+      table.setAttribute('aria-colcount', String(tableColCount(table)));
       var allRows = table.querySelectorAll('thead tr, tbody tr');
       table.setAttribute('aria-rowcount', String(allRows.length));
       allRows.forEach(function (tr, ri) {

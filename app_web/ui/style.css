@@ -276,8 +276,11 @@ select, .btn {
   padding: 0 3px;
   color: #00379b;
 }
+/* F-P3-A11Y-FOCUS: KHÔNG tắt outline ở :focus — rule này đứng sau
+ * .fld:focus-visible (đầu file) và cùng độ đặc hiệu nên đã che mất chỉ báo
+ * focus cho điều hướng bàn phím. Phản hồi focus của ô nhập = nền + viền dưới;
+ * outline do :focus-visible phía trên lo. */
 .fld:focus, .loop-fld:focus {
-  outline: none;
   background: #eaf2ff;
   border-bottom: 1px solid #2f6fbf;
 }
@@ -384,8 +387,9 @@ tr.row-sel td.stt { box-shadow: inset 3px 0 0 #2f6fbf; }
   background: transparent;
   color: #00379b;
 }
+/* F-P3-A11Y-FOCUS: cùng lý do .fld:focus — giữ chỉ báo focus cho ô trong
+ * field-grid (.fld:focus-visible của nó bị rule này đè nếu tắt outline). */
 .field-grid .fg-fld:focus {
-  outline: none;
   background: #eaf2ff;
   border-bottom: 1px solid #2f6fbf;
 }

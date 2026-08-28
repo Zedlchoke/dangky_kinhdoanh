@@ -1,0 +1,189 @@
+{
+ "form_id": "PLI_M09",
+ "group": "formation",
+ "note": "Lane m09-rebuild (2026-08-28, BASE eaa50f0, quyet dinh D3.1=A + D3.2=A — docs/decision_registry.md packet D3). Mau so 9 Phu luc I TT 68/2025/TT-BTC 'Danh sach thanh vien cong ty hop danh'. || (1) DECONTAMINATE (D3.1=A): template/nguon PLI_M09 bi nap ca toan van Mau 6, Mau 7, Mau 8, MOT BAN Mau 9 thu hai va Mau 10 (tai lieu nguon docx khong co bat ky w:tbl nao - tat ca luoi mat khi convert, moi bang chi con chu noi). Vung nhiem bat dau tu paragraph nguon p102 ('- Trường hợp Tòa án hoặc Trọng tài ... phần này.Mẫu số 6' - heading 'Mẫu số 6' dan dut) va keo dai den het tai lieu. Cơ chế drop_until cua loader quét vung [sau anchor, truoc drop_until) nen entry nay ne anchor tai khoi 'Thông tin về Giấy chứng nhận đăng ký đầu tư' (p002 nguon) va drop_until la anchor 'Mẫu số 99' KHONG TON TAI trong tai lieu => vung quet chay den het van ban; 68 pattern drop chi ap trong vung do, khong the đụng p000 (tieu de) / p001 ('Mẫu số 9') / p002 (khoi GCN dau tu). KET QUA DA KIEM TRAN BANG SCRIPT tren nguon: 116/121 paragraph khong rong trong vung nhiem bi xoa, 0 paragraph hop phap (p003-p101) bi khop. || (2) BANG 14 COT (D3.2=A): chon ban 'Mẫu số 9 thu hai' (p182-p213 nguon) lam cau truc chuan. Header 14 cot duoc xac minh lai tren file mau .doc Mau so 9 Phu luc I (nguon tham chieu mau-so-9-pl1.doc, tao 10/07/2025, trung khop 100% voi chu glue p185 nguon: 'STT|Tên thành viên|Ngày, tháng, năm sinh đối với thành viên là cá nhân|Giới tính|Loại giấy tờ, số, ngày cấp, cơ quan cấp Giấy tờ pháp lý của cá nhân(1)|Quốc tịch|Dân tộc|Địa chỉ liên lạc|Vốn góp[Phần vốn góp(2) | Tỷ lệ (%) | Loại tài sản, số lượng, giá trị tài sản góp vốn(3)]|Thời hạn góp vốn(4)|Chữ ký của thành viên(5)|Ghi chú (nếu có)|1234567891011121314'). Chu so 1..14 o chan header cho thay dung 14 cot vat ly; chan trang 1 ('Nếu cột số 5 kê khai Số định danh cá nhân thì không phải kê khai các cột số 6, 7') khop cot 5 = Giấy tờ pháp lý, cot 6 = Quốc tịch, cot 7 = Dân tộc -> thu tu cot duoc ghinh nhu bang. So voi TBL[0] phang cu (grid 12 cot vat ly / 10 the, loop ds_thanh_vien) bang moi them 3 cot bi thieu: 'Loại tài sản, số lượng, giá trị tài sản góp vốn', 'Thời hạn góp vốn' (manifest loop_audit.missing_cols col 10) va 'Ghi chú (nếu có)'. Header duoc viet PHANG 1 hang (kind=list) theo convention cung loai bang ngu da rebuild: PLI_M06/PLI_M07/PLI_M08/PLI_M10 deu kind=list sau D2.3=A (cung kien truc phang, nested-grid de roadmap D2.3=B). Nhom cot 'Vốn góp' (rowspan 1 hang, colspan 3 cot) cua mau goc bi về 3 cot la thanh vien - nen mo gap cho owner neu muon dung nested-grid 2 hang header. Danh so chan trang (1)-(5) trong header mau goc KHONG in lai vao header moi theo convention PLI_M06-M10. || (3) DOI TEN LOOP: 'ds_thanh_vien' -> 'ds_thanh_vien_hop_danh' (trung section_id/semantic_key trong app/data/table_specs/manifest.json). Ly do: export conflict guard LOCKED v1 (EXPORT_LOOP_CONTRACT_CONFLICT) cam cung ten loop khac contract giua cac mau; GRID_META.ds_thanh_vien (10 cot) dang dung chung, M09 can 14 cot -> lam loop rieng giong het precedent PLI_M06 (ds_thanh_vien_tnhh, D2.2=A). Tag cu duoc GIU (ho_ten/ngay_sinh/gioi_tinh/so_cccd/quoc_tich/dan_toc/dia_chi/von_dong_gop/ty_le_von/chu_ky) theo chinh sach alias-additive cua P2A (PLI_M10.json); 3 tag MOI dung ten canonical: loai_tai_san_gop_von, thoi_han_gop_von (da co trong GRID_META.ds_thanh_vien_tnhh cua M06), ghi_chu. Chu ky giu the chu_ky + outputOnly tai GRID_META (khong dang ky vao fields). || (4) Kiem tran: tools/test_m09_rebuild.py (sandbox build + kiem tra 14 cot + decontaminate + danh so muc).",
+ "gap_nghiepvu": "(a) MAT DANG SO 'MUC 7' - LOI OWNER BAO 2026-08-28 (app nhay tu muc 6 thang muc 8): theo Mau so 5 Phu luc I (Giay de nghi dang ky doanh nghiep - Cong ty hop danh), section 7 la '7. Thành viên công ty (kê khai theo Mẫu số 9 Phụ lục I ban hành kèm Thông tư này): Gửi kèm.' va khoi 'Thông tin về Giấy chứng nhận đăng ký đầu tư / Mã số dự án / Ngày cấp / Cơ quan cấp' la KY CON cua muc 7 (khong co so rieng). Dong '7. Thành viên công ty ... Gửi kèm.' BI MAT trong ca nguon docx M09 lan template PLI_M05 (khong nam trong bat ky mau nao) - day la loi mat chu khi convert, khong phai nhiem. engine spec v1 chi co drop/trim(keep_from giu PHAN SAU cua paragraph)/chen bang => KHONG THE tao paragraph heading moi. Can Lead: chen dong '7. Thành viên công ty (kê khai theo Mẫu số 9 Phụ lục I ban hành kèm Thông tư này): Gửi kèm.' vao template PLI_M09 (truoc khoi GCN dau tu / ngay sau bang 14 cot) hoac mo engine extension 'chen paragraph/doi text'. Test tools/test_m09_rebuild.py pin trang thai nay va se DO ngay khi dong 7 duoc chen (yeu cau cap nhat danh sach ky vong). (b) 5 paragraph tan du khong the xoa bang text: 4 duong '___' (p112/p140/p166/p219 nguon) trung khop voi duong ky hop phai p090 (25 ky tu '_') va 'STT' (p189 nguon) trung voi 'STT' cua bang thue muc 8 (p006 nguon) - pattern text khong phan biet duoc, giu lai de khong mat noi dung hop phap. Can Lead xoa theo chi so sau regen neu muon sach. (c) CHAN TRANG VA KHOI KY CUA MAU 9 THAT nam trong vung bi xoa theo D3.1=A: p199-p212 nguon (chan trang 1-13 giai nghia cot) va p111 '……, ngày……tháng……năm…… NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT/CHỦ TỊCH HỘI ĐỒNG THÀNH VIÊN CỦA CÔNG TY (Ký và ghi họ tên)13' + p112 duong ky. Template hien giu chan trang 1-9 va khoi ky 'CÁC THÀNH VIÊN HỢP DANH' cua Mau so 5. Cau hoi owner: co can giu/chen lai chan trang 1-13 cua Mau 9 (giai nghia 14 cot) va khoi ky rieng cua Mau 9 khong? Dang chot: header bang moi KHONG in so chan trang nen khong co tham chieu dut. (d) TT 121/2026/TT-BTC (hieu luc 21/8/2026) thay the Mau 1,2,3,4,5,10,12,27,30 Phu luc I va bai bo Mau 11 - MAU SO 9 KHONG thuoc so bi thay (kiem tra 2 nguon doc lap: SHTP TP.HCM + LuatVietnam, ngay tra cuu 2026-08-28) => cau truc 14 cot van la ban hien hanh. LUU Y phu: doan duoi (muc 7-10, cam ket, ky, chan trang 1-9) trong template PLI_M09 ve ban chat la trang 2 cua MAU SO 5 - Mau 5 DA BI TT 121 thay the nen van ban do co the da doi; ngoai pham vi lane nay, can owner cham. (e) Nguon khong co w:tbl nao; bang 'II. Thành viên góp vốn là tổ chức' (8 cot) va '2. Thông tin người đại diện theo pháp luật/ủy quyền' (14 cot) cua Mau 9 chua duoc rebuild - pham vi D3.2=A chi chot BANG CHINH 14 cot, 2 bang con lai can quyet dinh rieng (du lieu da ghi trong note de lan sau). (f) HAI CLAUSE GATE DANG PIN 'PLI_M09 chua co spec' can Lead LAT (premise 'chua du tien de D3' da sai sau khi owner chot D3.1=A/D3.2=A): tools/test_r3b1_people_specs.py t_blocked_pli_m09 (dòng glob '*/PLI_M09.json' + 4 assert evidence nhiễm B087/B088/B132/B163 + assert cột 10 chưa tag) và tools/test_p2a_people_specs.py t_blocked_others (glob tương tự). Lane m09 KHONG duoc sua 2 file nay vi khong thuoc ownership - khi chua lat, tools.test_r3b1_people_specs = 10 PASS / 1 FAIL (dung clause nay, khong loi khac) va tools.test_p2a_people_specs = 13 PASS / 1 FAIL.",
+ "tables": [
+  {
+   "spec": {
+    "id": "ds_thanh_vien_hop_danh",
+    "kind": "list",
+    "detect": [
+     "stt",
+     "ten thanh vien",
+     "gioi tinh",
+     "quoc tich",
+     "dan toc",
+     "dia chi lien lac",
+     "thoi han gop von",
+     "ghi chu (neu co)"
+    ],
+    "stt_tag": true,
+    "cols": [
+     [
+      "^stt$",
+      null
+     ],
+     [
+      "^ten thanh vien$",
+      "ho_ten"
+     ],
+     [
+      "ngay, thang, nam sinh",
+      "ngay_sinh"
+     ],
+     [
+      "^gioi tinh$",
+      "gioi_tinh"
+     ],
+     [
+      "giay to phap ly|dinh danh|cccd",
+      "so_cccd"
+     ],
+     [
+      "^quoc tich$",
+      "quoc_tich"
+     ],
+     [
+      "^dan toc$",
+      "dan_toc"
+     ],
+     [
+      "^dia chi lien lac$|dia chi",
+      "dia_chi"
+     ],
+     [
+      "^phan von gop",
+      "von_dong_gop"
+     ],
+     [
+      "^ty le",
+      "ty_le_von"
+     ],
+     [
+      "loai tai san",
+      "loai_tai_san_gop_von"
+     ],
+     [
+      "^thoi han gop von",
+      "thoi_han_gop_von"
+     ],
+     [
+      "ky ten|chu ky",
+      "chu_ky"
+     ],
+     [
+      "^ghi chu",
+      "ghi_chu"
+     ]
+    ],
+    "loop": "ds_thanh_vien_hop_danh",
+    "fields": [
+     "ho_ten",
+     "ngay_sinh",
+     "gioi_tinh",
+     "so_cccd",
+     "quoc_tich",
+     "dan_toc",
+     "dia_chi",
+     "von_dong_gop",
+     "ty_le_von",
+     "loai_tai_san_gop_von",
+     "thoi_han_gop_von",
+     "ghi_chu"
+    ]
+   },
+   "pos": "before",
+   "anchor": "thong tin ve giay chung nhan dang ky dau tu",
+   "no_default_drops": true,
+   "drop_until": "^mau so 99$",
+   "drop": [
+    "^mau so [6789]$",
+    "^mau so 10$",
+    "^danh sach thanh vien cong ty",
+    "^danh sach co dong",
+    "^danh sach chu so huu huong loi",
+    "^i\\. (thanh vien|co dong)",
+    "^ii\\. (thanh vien|co dong)",
+    "^a\\. thanh vien hop danh$",
+    "^b\\. thanh vien gop von",
+    "^1\\. thong tin (thanh vien|co dong)$",
+    "^2\\. thong tin nguoi dai dien",
+    "^stt(ten|ho va ten)",
+    "^giay chung nhan dang ky doanh nghiep; quyet dinh",
+    "^phan von gop\\d? \\(bang so",
+    "^dia chi tru so chinh(so, ngay cap)?",
+    "^von gop\\d?$",
+    "^thoi han gop von\\d?$",
+    "^ghi chu \\(neu co\\)$",
+    "^ten thanh vien$",
+    "^so, ngay cap, noi cap$",
+    "^…+, ?ngay…+thang",
+    "^- truong hop toa an hoac trong tai chi dinh",
+    "^\\d+ neu cot so \\d+ ke khai so dinh danh",
+    "^\\d+ ghi (phan von gop|gia tri von co phan)",
+    "^3 loai tai san gop von bao gom",
+    "^co the lap thanh danh muc rieng",
+    "^\\d+ - truong hop dang ky thanh lap doanh nghiep, thoi han gop von",
+    "^\\d+ khi dang ky thanh lap doanh nghiep, thoi han gop von",
+    "^- truong hop dang ky tang von dieu le",
+    "^- cac truong hop khac ngoai cac truong hop neu tren",
+    "^\\d+ - truong hop thay doi noi dung dang ky doanh nghiep",
+    "^\\d+ truong hop dang ky/thong bao thay doi noi dung",
+    "^- truong hop dang ky/thong bao thay doi noi dung",
+    "^6, 7, 8 ke khai tuong tu",
+    "^\\d+ neu cot so \\d+ ke khai",
+    "^10 khong phai ke khai phan nay",
+    "^\\d+ ty le % cua phan von gop",
+    "^12 nguoi duoc ke khai thong tin",
+    "^- nguoi dai dien theo phap luat cua doanh nghiep ky truc tiep",
+    "^\\d+ - nguoi dai dien theo phap luat cua doanh nghiep ky truc tiep",
+    "^- truong hop dang ky chuyen doi loai hinh doanh nghiep dong thoi",
+    "^- truong hop toa an hoac trong tai chi dinh nguoi thuc hien thu tuc",
+    "^\\d+ truong hop cshhl thong qua so huu von dieu le",
+    "^- ca nhan la ",
+    "^\\d+ ty le so huu co phan co quyen bieu quyet",
+    "^\\d+ neu doanh nghiep xac dinh duoc chu so huu huong loi",
+    "^tong gia tri von duoc dai dien",
+    "^loai co phan",
+    "^pho thong",
+    "^so luong",
+    "^gia tri",
+    "^ty le \\(%\\)$",
+    "^ty le$",
+    "^quoc tich$",
+    "^dan toc$",
+    "^gioi tinh$",
+    "^ho va ten$",
+    "^ten co dong",
+    "^ten nguoi dai dien",
+    "^dia chi lien lac$",
+    "^quyen chi phoi\\d?$",
+    "^ty le so huu von dieu le",
+    "^ty le so huu co phan co quyen bieu quyet",
+    "^chu so huu huong loi cua doanh nghiep\\d?$",
+    "^giay to phap ly",
+    "^thoi diem dai dien phan von",
+    "^von duoc uy quyen\\d?$",
+    "^chu ky cua "
+   ],
+   "headers": [
+    "STT",
+    "Tên thành viên",
+    "Ngày, tháng, năm sinh đối với thành viên là cá nhân",
+    "Giới tính",
+    "Loại giấy tờ, số, ngày cấp, cơ quan cấp Giấy tờ pháp lý của cá nhân",
+    "Quốc tịch",
+    "Dân tộc",
+    "Địa chỉ liên lạc",
+    "Phần vốn góp (bằng số; VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài: bằng số, loại ngoại tệ, nếu có)",
+    "Tỷ lệ (%)",
+    "Loại tài sản, số lượng, giá trị tài sản góp vốn",
+    "Thời hạn góp vốn",
+    "Chữ ký của thành viên",
+    "Ghi chú (nếu có)"
+   ],
+   "notes": "Quy uoc doc: 'drop_until' = r'\\^mau so 99$' la anchor KHONG ton tai trong tai lieu => vung quet drop chay tu ngay sau khoi GCN dau tu den het van ban (co che drop_until cua loader chi ho tro vung [anchor, drop_until)). 71 pattern drop duoc kiem tran: khop 116/121 paragraph khong rong cua vung nhiem (p102-p231 nguon), khop 0 paragraph hop phap (p003-p101). 5 paragraph khong the phan biet bang text duoc giu lai: 4 duong '___' ky (p112/p140/p166/p219, trung duong ky hop phai p090) va 'STT' (p189, trung o 'STT' cua bang thue muc 8 p006) - xem gap_nghiepvu (b). Drop pattern r'\\^- truong hop toa an hoac trong tai chi dinh' xoa ca p102 nguon - paragraph nay chua CHAN TRANG 9 (ky do Tòa án/Trọng tài chi dinh) cua Mau so 5 dan voi heading 'Mẫu số 6'; quy tac trim/keep_from cua engine chi giu duoc PHAN SAU nen khong cat duoc duoi dan => mat 1 gach dau dong chan trang (noi dung tuong tu da co o chan trang 1 p091 'Trường hợp Tòa án hoặc Trọng tài chỉ định ... kê khai thông tin vào phần này'). Cac pattern r'^mau so [6789]$'/r'^mau so 10$' chi an trong vung [3, end) nen KHONG an dong 'Mẫu số 9' (p001) cua chinh mau."
+  }
+ ]
+}

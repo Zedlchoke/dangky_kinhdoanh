@@ -242,3 +242,9 @@ app/data/use_cases.json
 # cho mọi ô □/☐ không khớp whitelist — không còn ô nào bị bỏ lại thành
 # text thường. Regen 4 mẫu (M01, M02, M15, PLII_M02): 6 glyph -> 6 chk.
 app/templates/PLII_M02.docx
+
+# --- Census đánh số mục + chuỗi companion (lệnh owner 2026-08-28) ---
+# tools/census/numbering_audit.py: quét 87 blocks bắt lớp lỗi "nhảy mục"
+# (M09 mất mục 7) + GLUE chữ chú thích; inventory mode, gate sau khi các
+# nhóm rebuild theo TT 68 merge.
+tools/census/numbering_audit.py

@@ -192,6 +192,14 @@ M03/M04/M05 bản gốc.
 **Ghi chú quy trình:** re-shoot bắt regression do chính Lead wire — đúng lý do
 PLAN bắt visual evidence sau mọi regen; Production fix + REG gate đi cặp.
 
+## Wave PLAN-v3 — rewrite kế hoạch @ f3d614c (2026-08-28, lệnh owner)
+
+| Task | Owner | Evidence | Trạng thái |
+|---|---|---|---|
+| Push toàn bộ lên GitHub | Lead | origin/main = f3d614c (85 commit), 29 heads (22 agent/*), 2 tag baseline | ✅ |
+| Rewrite PLAN.md v3 | Lead | Xóa P0/P1/P2 đã đóng (tham chiếu ledger); chi tiết còn lại: P3 (merge p3-e2e + 9 finding theo 4 cụm fix + app-shell a11y + platform NOT RUN), P4 Review Gate Excel, P5/P6/P7; tích hợp PLAN_excel nguyên văn thành mục 4 (workflow 7 bước + X1–X6 + rủi ro + E1–E6); quy tắc "phase mới chỉ mở theo lệnh owner" vào mục 6 | ✅ |
+| PLAN_excel.md → bản lưu | Lead | Đánh dấu superseded bởi PLAN.md mục 4, giữ nguyên văn để tra cứu | ✅ |
+
 ## R3–R7 (khung — chi tiết hóa khi mở wave)
 
 ## R3–R7 (khung — chi tiết hóa khi mở wave)

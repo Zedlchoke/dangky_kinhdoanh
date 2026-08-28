@@ -1,9 +1,9 @@
-# PLAN_excel — Excel thu thập thông tin khách hàng (DRAFT, chờ P4)
+# PLAN_excel — Excel thu thập thông tin khách hàng (BẢN LƯU — ĐÃ HỢP NHẤT)
 
-> **Trạng thái:** DRAFT do yêu cầu owner ngày 2026-08-27. KHÔNG thuộc release
-> hiện tại; `PLAN.md` mục 2 vẫn giữ Excel ngoài scope cho đến khi owner mở.
-> **Mốc xem xét bắt buộc:** sau khi chạy hết **P4** (Wave E R3 domain rollout +
-> Wave F R4 E2E), Lead đánh giá khả thi trên kiến trúc ổn định và báo owner.
+> **Trạng thái 2026-08-28:** Nội dung bản này đã được hợp nhất nguyên vẹn vào
+> **`PLAN.md` mục 4** (kèm wave triển khai X1–X6). Bản lưu giữ nguyên để tra
+> cứu lịch sử; KHÔNG cập nhật nữa — mọi sửa đổi sau này làm trực tiếp trên
+> `PLAN.md`. Implement vẫn chỉ mở theo lệnh owner ("Bắt đầu Excel").
 
 ## 0. Quy trình đích (owner xác định 2026-08-27 — BẮT BUỘC theo đúng thứ tự)
 

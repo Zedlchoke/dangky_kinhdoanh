@@ -1,394 +1,244 @@
-# MASTER PLAN — hoàn thiện `dangky_kinhdoanh`
+# MASTER PLAN — hoàn thiện `dangky_kinhdoanh` (v3)
 
-> **Checkpoint:** 2026-08-27, `main@7300ab4`.
+> **Checkpoint:** 2026-08-28, `main@f3d614c` — đã push `origin/main`
+> (github.com/Zedlchoke/dangky_kinhdoanh, 29 heads, 2 tag baseline).
+> Release runner hiện hành: **38 PASS / 0 FAIL / 0 NOT RUN — VERDICT PASS**.
 >
-> Đây là kế hoạch điều phối duy nhất cho thread mới. Không chạy lại prompt tại
-> `0fd2785`, không làm lại P0/P1/R2 nếu không có regression thật. Trước khi làm,
-> agent phải xác minh lại HEAD và trạng thái test vì checkpoint hiện tại đang có
-> một batch R3B1 chưa commit.
+> Đây là kế hoạch duy nhất có hiệu lực. Các phase **P0 (Recovery), P1
+> (Layout), P2 (Domain rollout)** đã ĐÓNG — chi tiết trong
+> `docs/execution_ledger.md`, không làm lại nếu không có regression thật.
+> **Quy tắc đứng đầu (lệnh owner 2026-08-28):** mỗi phase dưới đây CHỈ mở khi
+> owner ra lệnh rõ ràng;lane P3 (`agent/p3-e2e`) đã chạy xong nhưng CHƯA merge —
+> merge cũng phải có lệnh.
 
 ## 1. Đích sản phẩm
 
-Ứng dụng desktop cho phép chọn thủ tục đăng ký kinh doanh, nhập dữ liệu trực tiếp
-trên biểu mẫu, dùng chung dữ liệu giữa các mẫu, khai các loại bảng, kiểm tra lỗi,
-lưu/nhập draft và xuất DOCX/ZIP đúng cấu trúc pháp lý.
+Ứng dụng desktop cho phép chọn thủ tục đăng ký kinh doanh, nhập dữ liệu trực
+tiếp trên biểu mẫu, dùng chung dữ liệu giữa các mẫu, khai các loại bảng, kiểm
+tra lỗi, lưu/nhập draft và xuất DOCX/ZIP đúng cấu trúc pháp lý.
 
-Sản phẩm được chia thành hai mốc:
+### `CORE_APP_DONE` — chỉ công bố khi TOÀN BỘ:
 
-### `CORE_APP_DONE`
-
-Chỉ được công bố khi:
-
-1. Mọi section trong 87 biểu mẫu có implementation hoặc blocker pháp lý được
-   owner xác nhận; không tự đoán để xóa blocker.
-2. Bốn loại bảng `editable-grid`, `fixed-matrix`, `nested-grid`, `output-table`
-   hoạt động xuyên UI, draft, validation và DOCX.
-3. Generator source/spec → template → `form_maps` → blocks chạy hai lần không tạo
-   diff và không mất marker/format/rowspan/colspan/totals.
+1. Mọi section trong 87 biểu mẫu có implementation hoặc blocker pháp lý do
+   owner xác nhận (không tự đoán để xóa blocker).
+2. Bốn loại bảng `editable-grid`, `fixed-matrix`, `nested-grid`,
+   `output-table` hoạt động xuyên UI, draft, validation và DOCX.
+3. Generator source/spec → template → `form_maps` → blocks chạy hai lần không
+   tạo diff, không mất marker/format/rowspan/colspan/totals.
 4. Mọi use case công bố qua E2E: chọn form, nhập, chuyển tab, lưu/mở/import,
-   validation, DOCX/ZIP export và lỗi được điều hướng đúng.
-5. Layout 87/87 qua detector, screenshot và auditor độc lập; không lấy DOM test
-   thay cho visual evidence.
-6. Keyboard-only, accessibility, viewport, resilience và security đạt gate.
-7. Windows `.exe` build tái lập và smoke trên máy sạch không có Python.
-8. Release runner không còn FAIL hoặc critical NOT RUN; repo sạch và final
-   auditor read-only xác nhận PASS.
+   validation, DOCX/ZIP export, lỗi điều hướng đúng.
+5. Layout 87/87 qua detector + screenshot + auditor độc lập (đã đạt P1 — duy
+   trì qua mọi regen).
+6. Keyboard-only, accessibility, viewport, resilience, security đạt gate.
+7. Windows `.exe` build tái lập + smoke trên máy sạch không Python.
+8. Release runner không còn FAIL/critical NOT RUN; repo sạch; final auditor
+   read-only PASS.
 
-### `FULL_PRODUCT_DONE`
+### `FULL_PRODUCT_DONE` = `CORE_APP_DONE` + luồng Excel (phần 4 của PLAN này)
+đã implement và audit. Excel KHÔNG chặn `CORE_APP_DONE`.
 
-`CORE_APP_DONE` cộng thêm luồng Excel trong `PLAN_excel.md`, nhưng chỉ sau Review
-Gate Excel và quyết định mở scope rõ ràng của owner. Khi chưa mở gate, Excel là
-DRAFT và không chặn release core app.
+## 2. Nguồn sự thật (đọc theo thứ tự)
 
-## 2. Nguồn sự thật và phạm vi
+1. `PLAN.md` này → 2. `docs/execution_ledger.md` → 3.
+`docs/decision_registry.md` (D1–D7 + các gap còn mở) → 4.
+`docs/product_scope_registry.md` → 5. `docs/p2_component_contracts.md`,
+`docs/p2_dependency_graph.md`, `docs/p2_fixture_candidates.md` → 6. Source,
+tests, manifests tại HEAD (trọng tài cuối nếu docs stale).
 
-Đọc theo thứ tự:
+## 3. Hiện trạng kỹ thuật tại checkpoint (cần biết khi làm)
 
-1. `PLAN.md` — trạng thái và thứ tự thực thi hiện hành.
-2. `docs/execution_ledger.md` — commit/evidence lịch sử.
-3. `docs/decision_registry.md` — lựa chọn owner và blocker còn thiếu.
-4. `docs/product_scope_registry.md`.
-5. `docs/p2_component_contracts.md`, `docs/p2_dependency_graph.md`,
-   `docs/p2_fixture_candidates.md`.
-6. `PLAN_excel.md` — chỉ đọc khi tới Review Gate Excel.
-7. Source, tests và manifests tại HEAD — trọng tài cuối nếu docs cũ bị stale.
+- **Đã DECIDED + implement:** 3 nested-grid N1/N6/N7 (PLI_M02/M12/M15); 6
+  lưới người (PLII_M07, PLI_M06/M07/M08/M10/M13); 3 fixed-matrix capital
+  (M01 tài sản ĐT, M02 nguồn vốn + tài sản VĐL); D7.3 (M72 required/minRows 1);
+  census 18 lead_status_override — GATE PASS 87/87.
+- **Đang đậu trên branch:** `agent/p3-e2e` @ `b61def0` — 4 suite mới
+  (`test_p3_e2e/draft/security/a11y.js`, 2.360 dòng, 220 PASS) + **9 finding**
+  production có bằng chứng (chưa sửa).
+- **Blocker pháp lý chờ owner** (giữ đúng trạng thái blocked, không tự mở):
+  M09 (packet D3) · PLII_M02 2 lưới thành viên (ghim occurrence_id) · M72
+  N2–N5 · D5.2 (canonical thuế PLII_M02) · 2 nhóm cột cuối N1/N6/N7 ·
+  D6.1 (evidence per-form, M56 chưa đọc) · D6.3 min/max · D6.4 max/placeholder ·
+  M03/M04/M05 cần bản gốc.
+- **Nợ kỹ thuật đã ghi:** docx zip-mtime làm byte-idempotency tuyệt đối bất
+  khả thi (generator hygiene) · slot `cross_field_rules` chưa có trong
+  generator contract v1 (chỉ runtime) · thiếu chế độ đăng ký section
+  "already-mapped" · validator chưa có type `chkExclusiveConditional` · M01
+  header bảng là `td` trong `tbody` (cosmetic, P5).
+- **Worktrees:** 15 lane cũ ĐÃ merge (có thể dọn sau khi owner duyệt — P3.0);
+  `p3-e2e` giữ nguyên tới khi merge.
 
-Trong scope core:
+## 4. LUỒNG EXCEL — tích hợp từ `PLAN_excel.md` (nguyên văn đã hợp nhất)
 
-- `app_web/ui/*`, `app_web/main.py`, pywebview/WebView2.
-- Draft, validation, shared keys, VSIC và bốn table kinds.
-- `app/data/blocks`, use cases, `form_maps`, templates và DOCX/ZIP export.
-- 87 biểu mẫu, visual QA, accessibility, Windows packaging và release audit.
+> Trạng thái: **THIẾT KẾ CHI TIẾT ĐÃ DUYỆT đưa vào PLAN**; implement CHỈ khi
+> owner ra lệnh "Bắt đầu Excel" sau Review Gate (mục 5.4). `PLAN_excel.md`
+> giữ nguyên như bản lưu; phần này là bản hợp nhất có hiệu lực.
 
-Ngoài scope nếu chưa có quyết định mới:
+### 4.1 Quy trình đích (owner chốt 2026-08-27 — BẮT BUỘC đúng thứ tự)
 
-- Không mở rộng `app_tk`; owner phải chọn `legacy-supported` hoặc `deprecated`.
-- Không tự triển khai Excel trước Review Gate.
-- Không tự sửa nội dung pháp lý thiếu nguồn.
-- Không push/tag/release nếu owner chưa yêu cầu.
+```
+(1) Owner xác định khách muốn làm dịch vụ nào
+(2) Owner CHỌN thủ tục trong app
+(3) App XUẤT file Excel riêng cho thủ tục đó — đẹp, dễ dùng, câu hỏi đời thường
+(4) Khách nhận file, tự điền (app không cần chạy)
+(5) Owner nạp file Excel vào app
+(6) App tự điền toàn bộ thông tin vào biểu mẫu + liệt kê ô CÒN THIẾU
+(7) Owner rà, bổ sung, xuất DOCX như quy trình hiện tại
+```
 
-## 3. Đã hoàn thành — không làm lại
+Excel = **phiếu thu thập thông tin đối mặt khách**, KHÔNG phải bản sao biểu
+mẫu pháp lý. Sau bước (6) Excel hết vai trò; draft trong app là nguồn chân lý
+duy nhất.
 
-| Hạng mục | Trạng thái/evidence |
+### 4.2 Nguyên tắc "câu hỏi dễ hiểu" (yêu cầu cứng)
+
+- Không dùng nhãn biểu mẫu khô cứng. Mapping ngầm `question_id → data-key`,
+  ví dụ: "Bạn muốn đặt tên công ty là gì? (tiếng Việt)" → `dn.ten_tieng_viet`;
+  "Công ty do ai đứng tên chịu trách nhiệm?" → `ndd.ho_ten`; "Vốn bạn đăng ký
+  góp là bao nhiêu (VNĐ)?" → `von_dieu_le`; "Công ty hoạt động trong lĩnh vực
+  nào? Ghi tên ngành" → `ds_nganh.ten_nganh` (app tra VSIC giúp).
+- Một câu hỏi một ý; có ví dụ điền mẫu (chữ mờ) ngay dưới ô.
+- Tùy chọn chọn-là-dropdown (loại hình DN, phương án thuế…), khách không gõ.
+- Gom theo nhóm đời thường ("Về người đại diện", "Về vốn", "Về ngành nghề"),
+  KHÔNG theo mục 1/2/3 biểu mẫu.
+- Cái app tự sinh được thì KHÔNG hỏi khách (tổng vốn, số thành viên suy từ
+  danh sách, ngày nộp hồ sơ…).
+
+### 4.3 Hình thức file (yêu cầu cứng "đẹp, dễ dùng")
+
+Sheet mở đầu: tiêu đề dịch vụ + hướng dẫn 5 dòng + quy ước màu (ô vàng = điền,
+ô xám = app tự làm). **Khóa bảo vệ** mọi ô ngoài vùng điền (Excel protection).
+Màu nhóm phần, viền rõ, cột rộng vừa, không cuộn ngang màn hình thường. Cuối
+file: bảng "Giấy tờ bạn cần chuẩn bị" từ `ho_so_bao_gom` (khi DECIDED).
+
+### 4.4 Kiến trúc + các wave triển khai (khi được mở)
+
+| Wave | Nội dung | File/ownership | Gate |
+|---|---|---|---|
+| X1 Lớp questionnaire | Schema `{question_id, data_key, type, example, options[], group, version}`; KHUNG sinh tự động từ `form_maps`/registry; **nội dung câu hỏi là sản phẩm** — Lead soạn, owner duyệt từng cụm; tách biệt hoàn toàn, KHÔNG sửa form_maps/templates | `tools/questionnaire/` (schema + builder) + `app/data/questionnaire/*.json` | khung khớp 100% data-key có trong registry; question chưa có data-key = fail build |
+| X2 Xuất .xlsx | openpyxl **pin version** trong `requirements-dev.txt`; đọc use case đang chọn → subset questionnaire → viết file: protection, styling, data validation dropdown, bảng giấy tờ kèm theo | `tools/excel_export.py` (mới) | mở được Excel/LibreOffice/Google Sheets; protection bật; 0 ô data ngoài locked-region |
+| X3 Nạp .xlsx | Kiểm cấu trúc fail-loud (mã lỗi riêng: sai khung/sai version/ô lạ) → dịch question_id→data_key vào draft → validator chuẩn hiện có → panel lỗi = "danh sách còn thiếu" | `tools/excel_import.py` (mới) | file khách sửa khung → lỗi rõ; không bao giờ ghi đè draft khi fail |
+| X4 Round-trip + negative | draft→xlsx→draft giữ 100% giá trị; file rỗng trường bắt buộc; bảng lặp nhiều dòng; dropdown gõ tự do; protection phá khung | `tools/test_excel_roundtrip.py`, `tools/test_excel_negative.py` | 2 suite xanh + đăng ký release_runner |
+| X5 UI | Nút "Xuất phiếu Excel cho khách" (màn hồ sơ) + "Nạp phiếu Excel" (cạnh "Mở hồ sơ .json") | `app_web/ui/app.js`, `index.html`, `main.py` bridge | E2E: chọn thủ tục → xuất → nạp → draft đúng |
+| X6 Visual + packaging | Screenshot phiếu Excel; kiểm openpyxl trên máy sạch (R6) | evidence `generated_ho_so/_visual_layout/excel/` | owner duyệt hình ảnh file |
+
+### 4.5 Rủi ro & chặn (nguyên bảng PLAN_excel)
+
+| Rủi ro | Chặn bằng |
 |---|---|
-| P0 manifests | 87/87 form, 111 section, không còn signature unclassified |
-| P1/P1.2 | industry grids và M72 selector/conditional export đã PASS; M72 chỉ xuất một variant |
-| R0 | release runner, dependency contract, scope/decision registry đã có |
-| Layout L1/L2 nền | blocks-v3, semantic roles/format, renderer/CSS structural đã merge |
-| R2 runtime | bốn kind đã có dispatcher/runtime, draft, validation và fixtures |
-| R2 generator/export | generator/export hỗ trợ kinds mới, recompute fail-loud và deep idempotency |
-| R2 closure | output specs M70/M71 và formula `product()` parity JS/Python đã merge |
-| R2 release checkpoint | từng đạt 38 PASS / 0 FAIL / 0 NOT RUN |
-| Visual batch lần 1 | 123 PNG phủ 87 form; auditor độc lập đã chạy |
-| Excel planning | `PLAN_excel.md` đã tồn tại dưới dạng DRAFT, review sau P4 |
+| Khách phá khung/sheet | Protection + kiểm cấu trúc lúc nạp, fail-loud |
+| Khách gõ tự do ô dropdown | Data Validation + validator blocking |
+| Câu hỏi thân thiện lệch nghĩa pháp lý | Owner duyệt từng cụm; câu hỏi gắn version |
+| Mẫu giấy đổi → câu hỏi sai | Regen questionnaire cùng đợt regen template; diff review như generated artifact |
+| Máy khách không có Excel | .xlsx mở đa ứng dụng; app nạp bằng openpyxl, không cần Excel |
+| Phá Windows packaging | openpyxl thuần Python, pin version, test máy sạch (P6) |
 
-Các commit chính đã có trong lịch sử; agent mới không cần kể lại hoặc tái tạo
-chúng. Chỉ điều tra khi test hiện hành chứng minh regression.
+### 4.6 Câu hỏi owner trả khi MỞ (chưa trả)
 
-## 4. Trạng thái thật tại checkpoint mới
+- **E1** Xuất theo một thủ tục đã chọn — có cần kèm biến thể gì không?
+- **E2** Chuẩn hóa dữ liệu khách: hoa/thường, ngày `01/02/2026`, số tiền có
+  dấu chấm nghìn — xử lý thế nào?
+- **E3** Ngành nghề: khách ghi tên tự do → app tra VSIC đề xuất → owner chọn?
+- **E4** Danh sách "còn thiếu": dùng panel lỗi hiện có hay thêm "checklist bổ
+  sung" theo nhóm câu?
+- **E5** Có cần xuất ngược hồ sơ đã điền ra Excel để khách xác nhận không?
+- **E6** Bộ câu hỏi cụm đầu: owner tự soạn hay Lead soạn nháp owner sửa?
+  (Khuyến nghị cụm đầu: **"Thành lập doanh nghiệp"**.)
 
-### Git
+## 5. Các phase còn lại — chi tiết thực thi
 
-- HEAD: `7300ab4`.
-- Local hơn `origin/main` 50 commit tại thời điểm checkpoint; chưa push.
-- Có nhiều worktree cũ; đa số lane đã merge. Không code tiếp trên branch cũ nếu
-  chưa audit commit chưa merge.
-- Main đang bẩn: 24 file tracked thuộc batch R3B1/regenerate và một `.DS_Store`.
-  Đây chưa phải checkpoint có thể bàn giao sạch.
+### P3 — E2E / A11y / Security / Resilience (SẴN SÀNG, chờ lệnh)
 
-### Layout audit
+- **P3.0** (tùy chọn, cần owner duyệt) dọn 15 worktree lane đã merge.
+- **P3.1** Merge `agent/p3-e2e` → main; đăng ký 4 suite vào
+  `tools/release_runner.py` + `tools/audit_expected_diff_files.txt`; runner
+  vẫn 0 FAIL.
+- **P3.2** Sửa 9 finding theo cụm (mỗi cụm 1 commit + test phủ):
+  - **Cụm draft-crash**: `Array.isArray` guard ở `normalizeStoreLoops`
+    (form-domain.js:754) và `GridCtl.ensureIds/rows` (app.js:97) — draft hỏng
+    bị bỏ qua an toàn thay vì crash; negative test trong `test_p3_draft.js`.
+  - **Cụm export-path**: `Bridge.export` sanitize `case_id` (cấm `..`, NUL,
+    ký tự điều khiển, >255 byte) + `try/except` quanh `mkdir` trả mã lỗi;
+    test bằng `case_id` hostile qua stub webview.
+  - **Cụm DOCX-NUL**: `docx_render.safe_escape` loại ký tự điều khiển bất hợp
+    pháp XML (giữ `\t\n\r`) + test ParseError biến mất.
+  - **Cụm a11y**: bỏ `.fld:focus{outline:none}` (giữ `:focus-visible`);
+    `aria-colcount`/`aria-rowcount` cho `renderLoop` + nested + đồng bộ
+    `enhanceEditableGrids`; `aria-label` cho 6 nút row-op và `.chk-box`;
+    log info truncate giá trị nhạy cảm. Mục tiêu: `test_p3_a11y` 8 FAIL → 0.
+  Mỗi cụm: targeted suite trong lúc sửa; không đụng generated artifacts.
+- **P3.3** Đo a11y trên **app shell thật** (app.js tablist) — mở rộng
+  `test_p3_a11y.js` hoặc ghi manual evidence; hiện finding a11y dựa trên
+  renderer + đối chiếu tĩnh app.js.
+- **P3.4** Platform thật: pywebview/WebView2 smoke + dialog tkinter — CHỈ chạy
+  được khi owner cung cấp máy Windows; không có → giữ NOT RUN kèm hướng dẫn
+  chưa từng chạy.
+- **Gate P3**: runner (giờ ~42 suite) 0 FAIL; 4 suite P3 xanh; 9 finding đóng
+  hoặc owner chấp nhận chờ; blocking error chặn export đã có test; evidence
+  platform đầy đủ hoặc NOT RUN có lý do.
 
-Audit lần 1 đã PASS các gate allowlist, detector, release runner, DOM, screenshot
-coverage, viewport và marker leak, nhưng **FAIL blocking** ở nội dung dòng chuẩn:
+### P4 — Review Gate Excel (sau P3; KHÔNG implement trước lệnh)
 
-- Một số bảng people/ownership bị dẹt thành text glue.
-- M72 có heading đánh số bị classifier gán `body`.
-- Detector L1 trước đó chưa bắt đủ glue/digit-run/numbered-heading.
-
-Hai vòng L1FIX đã merge tới `7300ab4`; cần regenerate/re-shoot và auditor tái
-kiểm. Vì chưa có re-audit cuối, `LAYOUT_DONE = CHƯA`.
-
-### R3B1 đang làm dở
-
-Đã merge contracts/specs cho people/ownership và đăng ký N6/N7:
-
-- `PLI_M02`: người đại diện/ủy quyền của chủ sở hữu.
-- `PLI_M12`: người đại diện/ủy quyền sau thay đổi.
-- `PLI_M15`: người đại diện/ủy quyền mới.
-- Metadata hai nhóm thành viên hộ gia đình của `PLII_M02` đã có nhưng spec vẫn
-  blocked theo evidence/legal contract.
-
-Batch regenerate hiện tại đã làm thay đổi templates/blocks/form maps và tests,
-nhưng chưa commit.
-
-Targeted checks hiện tại:
-
-- `test_r3b1_people_contracts.js`: 59 PASS / 0 FAIL.
-- `test_runtime_tables.js`: 134 PASS / 0 FAIL.
-- `test_r3b1_people_specs.py`: 10 PASS / **1 FAIL** tại trim-anchor `PLI_M02`.
-
-Release runner hiện tại: **32 PASS / 6 FAIL / 0 NOT RUN**.
-
-Sáu FAIL cần phân loại/sửa trước khi mở scope mới:
-
-1. `test_acceptance`: kỳ vọng PLI_M02 chỉ có một loop đã stale.
-2. `test_m72_activation`: dirty-worktree guard đang thấy batch chưa commit.
-3. `test_audit_wave_h_negative`: exact diff allowlist chưa sync batch R3B1.
-4. `test_nested_grid`: test còn tìm paragraph header cũ sau rebuild thành bảng.
-5. `test_industry_change`: kỳ vọng PLI_M12 ba loop, hiện có bốn.
-6. `build_manifest_deep`: summary counts của PLI_M02/M12/M15 chưa cập nhật.
-
-Không mặc định coi tất cả là test stale: trim-anchor PLI_M02 phải kiểm tra production
-shape trước, và mọi thay đổi expectation phải dựa vào contract/evidence.
-
-## 5. Quyết định owner và blocker pháp lý
-
-Các lựa chọn đã ghi nhận:
-
-- D1: D1.1=A; D1.2=B cho M01; D1.3=B; D1.4=A; D1.5=B; D1.6=A.
-- D2: D2.1–D2.6=A; D2.7 min=1/max=null; D2.8=A; D2.9=A.
-- D3: D3.1=A; D3.2=A; D3.3=A.
-- D4: D4.1=A; D4.2=A.
-- D5: D5.1=A; D5.3=A; D5.4=A.
-- D6: D6.2=A; D6.3=B; D6.5=A; D6.6 tên tài liệu required, trường khác optional.
-- D7: D7.1=A; D7.2=A nếu có nguồn; D7.3=A; D7.4=A.
-
-Blocker còn mở:
-
-- D1/D3: thiếu nguồn gốc M03/M04/M05 và policy D1.2 ngoài M01.
-- D5.2: thiếu canonical list chỉ tiêu thuế PLII_M02.
-- D6.1: cần evidence per-form trước khi chọn grid/scalar.
-- D6.4/M78: chưa có max/placeholder chính thức.
-- N1/N6/N7: hai nhóm cột cuối về giá trị/thời điểm đại diện chưa đủ evidence để
-  khóa canonical tag; phải khai thiếu, không mislabel.
-- PLI_M15: cross-field rule giấy tờ theo chú thích nguồn chưa có contract v1.
-- Product: `app_tk` chưa được owner phân loại cuối.
-
-Blocker cục bộ không được làm dừng lane độc lập; giữ đúng section ở trạng thái
-blocked và tiếp tục phần đã có quyết định.
-
-## 6. Cách điều phối để tiết kiệm token
-
-### Luật bắt buộc
-
-- Lead giữ main và context tổng; sub-agent chỉ nhận một task hữu hạn cùng exact
-  file ownership, forbidden files, gate và output format.
-- Không spawn agent trong khi main đang bẩn chưa phân loại.
-- Tối đa ba coding lane song song, chỉ khi không chồng file/dependency.
-- Không giao nhiều agent cùng đọc/audit một tập file.
-- Targeted tests trong lúc sửa; release runner đầy đủ chỉ tại checkpoint merge,
-  trước regenerate và sau regenerate. Không chạy full visual 87 form sau mỗi sửa
-  nhỏ; pilot form ảnh hưởng trước.
-- Lead là người duy nhất merge, regenerate global artifacts, cập nhật manifest và
-  ledger.
-- Không dùng index block tuyệt đối nếu có semantic key/section ID/content anchor
-  ổn định.
-- Không chỉnh generated artifact bằng tay. Generator lần hai phải zero diff.
-- Mỗi wave kết thúc bằng commit sạch. Không kéo work dở qua wave kế tiếp.
-- Báo ngắn theo delta từ checkpoint; không kể lại toàn bộ lịch sử.
-- PASS/FAIL/NOT RUN trung thực. Visual, WebView2 và `.exe` chỉ PASS khi chạy thật.
-
-## 7. Kế hoạch thực thi từ bây giờ
-
-### P0 — Recovery checkpoint R3B1 hiện tại
-
-Lead mới tự làm; **không spawn agent** cho tới khi phân loại xong worktree.
-
-1. Audit 24 modified files và `.DS_Store`; xác nhận toàn bộ thuộc batch R3B1,
-   L1FIX regenerate hoặc thay đổi ngoài scope.
-2. Không reset/revert. Lưu backup/quarantine nếu cần trước bất kỳ thao tác có thể
-   ghi đè generated artifacts.
-3. Điều tra trim-anchor PLI_M02 trên source template và template generated:
-   - nếu production anchor/trim sai, sửa spec/generator;
-   - nếu test đọc sai stage của pipeline, sửa test để kiểm đúng stage;
-   - không nới thành “tìm thấy bất kỳ đâu”.
-4. Đồng bộ năm test/manifest expectation còn stale theo semantic contract mới.
-5. Chạy targeted tests R3B1, runtime, M72, industry, nested-grid và manifest.
-6. Chạy generator lần hai; yêu cầu zero diff ngoài evidence file chủ đích.
-7. Chạy release runner đầy đủ tới 0 FAIL.
-8. Review exact allowlist, commit batch R3B1/regenerate/test sync thành các commit
-   nhỏ hợp lý; cập nhật execution ledger.
-9. Đảm bảo `git status` sạch và không còn sub-agent có commit chưa merge.
-
-**Gate P0:** 0 FAIL, generator idempotent, worktree sạch, commit hash + evidence.
-Nếu chưa đạt, không mở P1.
-
-### P1 — Re-audit Layout và đóng R3B1
-
-Sau P0, tạo một `visual-auditor` read-only, khác agent implement:
-
-1. Pilot lại các form lỗi: PLI_M02, PLII_M02, PLI_M09, PLI_M12, PLI_M15, PLI_M72
-   và các form bị role override round 2.
-2. Kiểm bảng thật thay text glue, heading đúng role, không digit-run, không marker
-   leak, M72 chỉ một variant.
-3. Chụp 1280×800, 768, 375 và zoom 100/150/200 cho pilot.
-4. Pilot PASS mới chạy batch evidence 87 form; reuse ảnh cũ chỉ khi hash input và
-   renderer không đổi, nếu không phải chụp lại form bị ảnh hưởng.
-5. Auditor ghi PASS/FAIL/NOT RUN từng gate. FAIL quay về lane sở hữu, không tự sửa.
-
-**Gate P1:** `LAYOUT_DONE` chỉ khi detector + visual batch + auditor PASS.
-
-### P2 — R3 domain rollout còn lại
-
-Chỉ mở khi P0 sạch; P1 visual có thể chạy song song nếu read-only. Lead lập bảng
-`form → section → source → decision → kind → keys → validation → export` trước
-mỗi lane.
-
-#### P2A — People/ownership phần còn lại
-
-- Hoàn tất phần D2/D7 đủ evidence: PLII_M02/M07, PLI_M06–M10/M13/M15/M72.
-- Không tự mở các section PLI_M09 còn source contamination hoặc M72 N2–N5 thiếu
-  source/canonical tags.
-- Thêm conditional/cross-field validation chỉ khi contract đã khóa.
-
-#### P2B — Branches/admin/output
-
-- Triển khai D4 và phần D6 đã quyết định.
-- Lập evidence D6.1 theo từng form trước khi chọn grid/scalar.
-- M78 dùng integer >=0 và required mô tả khi số lượng >0; không tự đặt max hoặc
-  placeholder.
-
-#### P2C — Capital/assets
-
-- Triển khai phần D1/D3 có nguồn.
-- M03/M04/M05 và policy ngoài M01 thiếu nguồn giữ block đúng section.
-- Dùng formula `product()` đã có; không tự chế column projection/case policy nếu
-  contract chưa khóa.
-
-#### P2D — Tax
-
-- Triển khai D5.1/D5.3/D5.4.
-- PLII_M02 D5.2 tiếp tục `BLOCKED_LEGAL_REVIEW` tới khi owner cung cấp canonical
-  list.
-
-Các lane domain có thể dùng sub-agent song song khi file spec/forms không chồng;
-Lead merge tuần tự, regenerate theo batch, targeted test rồi release runner.
-
-**Gate P2:** mọi section có implementation hoặc blocker owner minh bạch; manifests
-khớp recount; không mất dữ liệu/contamination/rule tự đoán.
-
-### P3 — Hồ sơ end-to-end, accessibility, security và resilience
-
-1. Test mọi use case: required/optional/oneOf forms và selector.
-2. Nhập shared keys, bốn kinds, VSIC; chuyển tab không mất dữ liệu.
-3. Save/reload/import legacy draft; giữ unknown fields, row IDs và thứ tự.
-4. Validation điều hướng đúng form/field; lỗi blocking chặn export.
-5. DOCX/ZIP không còn placeholder/tag và chỉ chứa section active.
-6. Keyboard-only, focus order/restore, ARIA, contrast và zoom 200%.
-7. Malformed/large draft, Unicode, đường dẫn dài, permission error, retry và
-   offline behavior.
-8. Escaping/injection/filename và log dữ liệu nhạy cảm.
-9. Pywebview/WebView2 smoke thật; không có môi trường thì ghi NOT RUN.
-
-**Gate P3:** core flow automated PASS và manual platform evidence đầy đủ.
-
-### P4 — Review Gate Excel
-
-Sau P2 + P3, Lead chỉ audit feasibility theo `PLAN_excel.md`, không implement ngay:
-
-1. Đối chiếu questionnaire mapping với canonical keys/form maps ổn định.
-2. Liệt kê thủ tục ưu tiên và câu hỏi đời thường cần owner duyệt.
-3. Kiểm tra dependency/openpyxl, protection, dropdown và round-trip contract.
-4. Báo effort/risk và xin owner lệnh rõ: `Bắt đầu Excel` hoặc `Để sau`.
-
-Nếu owner chọn `Để sau`, Excel không chặn `CORE_APP_DONE`. Nếu owner chọn bắt đầu,
-thực hiện chi tiết trong `PLAN_excel.md`: questionnaire layer → xuất XLSX theo
-thủ tục → import fail-loud → remaining-fields report → round-trip/visual QA.
+1. Lead đối chiếu questionnaire mapping với canonical keys/form_maps — báo
+   danh sách data-key ổn định vs đang trôi.
+2. Liệt kê thủ tục ưu tiên + các câu hỏi đời thường cần owner duyệt (đề xuất
+   cụm "Thành lập doanh nghiệp").
+3. Kiểm dependency: openpyxl pin, protection/dropdown/round-trip khả thi trên
+   pywebview (file dialog).
+4. Báo effort/risk và hỏi owner trả **E1–E6** (mục 4.6) + lệnh rõ:
+   `Bắt đầu Excel` hoặc `Để sau`. Nếu `Để sau` → Excel không chặn
+   CORE_APP_DONE; nếu `Bắt đầu` → chạy X1→X6 (mục 4.4) theo đúng wave, mỗi
+   wave kết thúc commit sạch.
 
 ### P5 — Visual QA toàn diện
 
-- UI screenshot matrix cho representative flows và mọi layout/table class.
-- DOCX/PDF render bằng Word/LibreOffice hoặc renderer owner chấp thuận.
-- Kiểm 87/87 hoặc sample policy được owner duyệt; mọi nested/fixed/output và M72
-  conditional phải có visual evidence.
-- So typography, spacing, page breaks, table geometry, superscript/footnote,
-  presence/absence và marker leak.
+- UI screenshot matrix cho representative flows + MỌI layout/table class
+  (editable/fixed/nested/output + M72 conditional) — tái sử dụng ảnh P1/P2
+  chỉ khi hash input + renderer không đổi.
+- DOCX → PDF/PNG bằng **Microsoft Word** (đã có trên máy) hoặc renderer owner
+  chấp thuận; so typography, spacing, page breaks, table geometry,
+  superscript/footnote, presence/absence, marker leak.
+- 87/87 hoặc sample policy do owner duyệt; xử lý ghi chú còn mở (M01 header
+  `td` trong `tbody` — quyết định nâng `thead` hay chấp nhận).
+- Auditor độc lập read-only chấm từng gate.
 
-### P6 — Windows build và clean-machine smoke
+### P6 — Windows build + clean-machine smoke
 
-1. Khóa dependency, WebView2 policy, icon/version và reproducible build command.
-2. Build `.exe`/bundle trên Windows.
-3. Máy sạch không Python: mở app, chọn hồ sơ, nhập từng kind, save/reload/import,
-   validate, export DOCX/ZIP và chạy offline.
-4. Ghi exact artifact path, hash, size, OS/WebView2 version và verdict.
+1. Khóa dependency (requirements pin + openpyxl nếu Excel đã mở), WebView2
+   policy, icon/version, build command tái lập được.
+2. Build `.exe`/installer trên Windows (máy owner).
+3. Máy sạch KHÔNG Python: mở app, chọn hồ sơ, nhập từng kind, save/reload/
+   import, validate, export DOCX/ZIP, chạy offline.
+4. Ghi exact artifact path, hash, size, OS + WebView2 version, verdict từng
+   bước. macOS/Linux/compileall KHÔNG được tính là Windows smoke.
 
-Không gọi macOS/Linux build hoặc compileall là Windows smoke.
+### P7 — Final audit + bàn giao
 
-### P7 — Final audit và bàn giao
+- Auditor read-only MỚI (không dùng agent đã implement): đối chiếu định nghĩa
+  `CORE_APP_DONE` (mục 1) với manifests, decisions, release report, visual
+  evidence, package hash, docs, repo cleanliness. FAIL → quay lại phase sở hữu.
+- PASS → ghi `CORE_APP_DONE`. Nếu Excel đã được mở + hoàn thành → audit thêm
+  luồng Excel → `FULL_PRODUCT_DONE`.
 
-Tạo auditor read-only mới, không dùng agent đã implement lane chính. Auditor đối
-chiếu định nghĩa `CORE_APP_DONE`, manifests, decisions, release report, visual
-evidence, package hash, docs và repo cleanliness. FAIL quay lại phase sở hữu.
+## 6. Quy tắc điều phối (bất biến)
 
-Chỉ sau auditor PASS mới ghi `CORE_APP_DONE`. Nếu Excel đã được owner mở scope,
-audit thêm `PLAN_excel.md` trước khi ghi `FULL_PRODUCT_DONE`.
+- Lead giữ main, là người DUY NHẤT regen global artifacts (build_form_maps →
+  tag_m72_sections → docx_to_blocks → census manifest) và merge lane.
+- Không spawn agent khi main bẩn chưa phân loại; tối đa 3 lane song song,
+  không chồng file; mỗi lane nhận base commit + ownership + forbidden files +
+  gate + format báo cáo.
+- Targeted tests khi sửa; release runner đầy đủ tại checkpoint; visual pilot
+  form bị ảnh hưởng trước, batch tại gate. **Visual re-shoot sau mọi regen là
+  BẮT BUỘC** (bài học P2: bắt 2 regression mà 38 suite xanh không thấy).
+- Mọi thay đổi generated phải nằm trong `tools/audit_expected_diff_files.txt`
+  có chủ đích; exact-set phải cân trước commit.
+- Mỗi phase kết thúc commit sạch + cập nhật ledger; **phase mới chỉ mở theo
+  lệnh owner**. PASS/FAIL/NOT RUN trung thực — chỉ PASS khi chạy thật.
 
-## 8. Evidence contract cho mọi checkpoint
+## 7. Evidence contract mỗi checkpoint
 
-Mỗi báo cáo phải có:
-
-- HEAD/base, branch/worktree và commit hash;
-- exact diff allowlist, generated files và file ngoài allowlist;
-- command, exit code, PASS/FAIL/NOT RUN;
-- generator lần một + bằng chứng lần hai zero diff;
-- visual evidence path/tool/version nếu đã chạy;
-- blocker/rủi ro/quyết định owner;
-- `git status` cuối.
-
-Bộ gate tối thiểu: release runner hiện hành, relevant component/domain tests,
-industry/DOCX/audit tests, `compileall`, manifests, generator deep idempotency,
-M72 conditional export và `git diff --check`.
-
-## 9. Prompt implement cho thread mới
-
-```text
-Bạn là Lead Engineer mới tiếp quản repo dangky_kinhdoanh. Mục tiêu là hoàn thiện
-CORE_APP_DONE theo PLAN.md hiện tại, sau đó xử lý Review Gate Excel đúng policy.
-
-Không dùng lịch sử hội thoại cũ làm nguồn sự thật. Đọc theo thứ tự:
-1. PLAN.md;
-2. docs/execution_ledger.md;
-3. docs/decision_registry.md;
-4. docs/product_scope_registry.md;
-5. docs/p2_component_contracts.md, docs/p2_dependency_graph.md,
-   docs/p2_fixture_candidates.md;
-6. source/tests/manifests tại HEAD.
-Chỉ đọc PLAN_excel.md khi tới P4 hoặc khi cần xác minh boundary Excel.
-
-Checkpoint dự kiến là main@7300ab4 nhưng phải tự xác minh HEAD. Main đang có batch
-R3B1 chưa commit: khoảng 24 modified files + .DS_Store; release gần nhất 32 PASS /
-6 FAIL / 0 NOT RUN; targeted people contracts 59/59 PASS, runtime tables 134/134
-PASS, people specs 10 PASS / 1 FAIL tại trim-anchor PLI_M02.
-
-Nhiệm vụ đầu tiên là P0 Recovery trong PLAN. KHÔNG spawn agent, KHÔNG mở scope
-mới và KHÔNG reset/revert/clean trước khi phân loại toàn bộ dirty files. Kiểm tra
-trim-anchor PLI_M02 trên đúng stage source/template/generated; sửa production hoặc
-test theo evidence, không nới test. Đồng bộ các expectation stale của acceptance,
-M72 dirty guard, audit allowlist, nested-grid, industry-change và manifest recount.
-Đưa release runner về 0 FAIL, chạy generator lần hai zero diff, review allowlist,
-commit sạch và cập nhật execution ledger. Dừng mở phase mới nếu P0 chưa PASS.
-
-Sau P0, tiếp tục tuần tự P1→P7 trong PLAN. Hãy tạo sub-agent/worktree để tối ưu
-thời gian chỉ cho task độc lập:
-- visual-auditor read-only cho P1;
-- tối đa ba domain lane không chồng file trong P2;
-- auditor read-only ở P7.
-Trước khi spawn, giao base commit, exact file ownership, forbidden files, gate và
-format báo cáo. Lead giữ main, review/merge tuần tự và là người duy nhất regenerate
-global artifacts. Không tiếp tục branch/worktree cũ nếu chưa audit commit chưa merge.
-
-Không làm lại P0/P1/R2 lịch sử khi không có regression. Không tự đoán nội dung
-pháp lý; isolate blocker D1/D3, D5.2, D6.1, D6.4, N1/N6/N7 và tiếp tục phần độc lập.
-Không implement Excel trước P4 và lệnh owner rõ ràng. Không push/tag/release.
-
-Để tiết kiệm token:
-- báo cáo theo delta từ checkpoint, không kể lại toàn bộ lịch sử;
-- targeted tests trong lúc sửa, full runner tại checkpoint;
-- pilot visual form bị ảnh hưởng trước, batch 87 form tại gate;
-- không để hai agent đọc/sửa cùng scope;
-- mỗi phase phải kết thúc bằng commit sạch trước khi mở phase sau.
-
-Cuối mỗi checkpoint báo ngắn nhưng kiểm chứng được: HEAD/commits, exact diff,
-tests PASS/FAIL/NOT RUN, generator idempotency, visual evidence, blockers và git
-status. Chỉ ghi CORE_APP_DONE/FULL_PRODUCT_DONE khi mọi điều kiện trong PLAN đạt.
-```
+HEAD/base + commit list · exact diff allowlist · command/exit code/PASS-FAIL-
+NOT RUN · generator lần hai zero diff (ngoại lệ đã classification) · visual
+evidence path/tool · blocker/rủi ro/quyết định owner · `git status` cuối.
+Bộ gate tối thiểu: release runner, suite lane liên quan, industry/DOCX/audit,
+compileall, manifests, generator deep idempotency, M72 conditional export,
+`git diff --check`.

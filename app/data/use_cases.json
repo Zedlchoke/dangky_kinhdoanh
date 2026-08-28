@@ -404,6 +404,36 @@
    "luu_y": []
   },
   {
+   "id": "thay_doi_noi_dung_dang_ky_hkd",
+   "nhom": "Thay đổi nội dung đăng ký hộ kinh doanh",
+   "ten": "Thay đổi nội dung đăng ký hộ kinh doanh",
+   "mo_ta": "Dùng khi hộ kinh doanh thay đổi một trong các nội dung đã đăng ký: tên hộ, địa chỉ trụ sở, chủ hộ, thành viên hộ gia đình đăng ký, vốn kinh doanh, ngành nghề kinh doanh hoặc nội dung đăng ký thuế (trừ phương pháp tính thuế). Hồ sơ nộp tại Cơ quan đăng ký kinh doanh cấp xã nơi hộ kinh doanh đặt trụ sở.",
+   "forms": [
+    {
+     "pl": "II",
+     "mau": 2,
+     "bat_buoc": true,
+     "ghi_chu": "Giấy đề nghị đăng ký thay đổi nội dung đăng ký hộ kinh doanh (do chủ hộ kinh doanh ký)"
+    }
+   ],
+   "giay_to_kem": [
+    "Thay đổi chủ hộ do các thành viên hộ gia đình ủy quyền cho thành viên còn lại: bản sao văn bản ủy quyền (công chứng/chứng thực) - khoản 3 Điều 100",
+    "Thay đổi chủ hộ do chủ hộ chết/bị Tòa án tuyên bố đã chết, mất tích, bị hạn chế hoặc mất năng lực hành vi dân sự: bản sao giấy chứng tử hoặc quyết định của Tòa án - khoản 4, 5 Điều 100",
+    "Thay đổi thành viên hộ gia đình (tiếp nhận thành viên mới): bản sao văn bản ủy quyền của thành viên mới cho chủ hộ kinh doanh (công chứng/chứng thực) - khoản 6 Điều 100"
+   ],
+   "co_so_phap_ly": [
+    "Điều 100 Nghị định 168/2025/NĐ-CP (hồ sơ, trình tự, thủ tục đăng ký thay đổi nội dung đăng ký hộ kinh doanh)",
+    "Điều 101 Nghị định 168/2025/NĐ-CP (bắt buộc bổ sung số điện thoại liên hệ khi đăng ký thay đổi)"
+   ],
+   "luu_y": [
+    "Chủ hộ phải đăng ký thay đổi trong 10 ngày kể từ ngày có thay đổi (khoản 1 Điều 100).",
+    "Giấy đề nghị do chủ hộ kinh doanh ký (khoản 2 Điều 100).",
+    "Bắt buộc kê khai số điện thoại liên hệ — thiếu số điện thoại thì hồ sơ bị coi là không hợp lệ (khoản 1 Điều 101).",
+    "Thay đổi trụ sở dẫn đến thay đổi cơ quan thuế quản lý trực tiếp: phải hoàn tất thủ tục với cơ quan thuế TRƯỚC khi đăng ký với cấp xã (khoản 2 Điều 100).",
+    "Giải quyết trong 03 ngày làm việc; thay đổi tên/trụ sở/chủ hộ/thành viên/vốn/ngành nghề được cấp Giấy chứng nhận đăng ký hộ kinh doanh mới (khoản 7 Điều 100)."
+   ]
+  },
+  {
    "id": "lap_chi_nhanh_vpdd",
    "nhom": "Chi nhánh, VPĐĐ, địa điểm kinh doanh",
    "ten": "Đăng ký hoạt động chi nhánh / văn phòng đại diện",

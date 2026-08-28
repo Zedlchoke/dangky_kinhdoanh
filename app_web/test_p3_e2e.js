@@ -115,11 +115,12 @@ function buildExportData(store, docIds) {
 }
 
 // ======================================================================
-// 1. Dữ liệu use_cases.json — 27 use case
+// 1. Dữ liệu use_cases.json — 28 use case
+// (27 + thay_doi_noi_dung_dang_ky_hkd / PLII_M02 — lệnh owner 2026-08-28)
 // ======================================================================
-section('1. use_cases.json: 27 use case, id duy nhat, moi case co forms');
+section('1. use_cases.json: 28 use case, id duy nhat, moi case co forms');
 const CASES = UC.cases || [];
-check('P3-UC1: dung 27 use case trong use_cases.json', CASES.length === 27,
+check('P3-UC1: dung 28 use case trong use_cases.json', CASES.length === 28,
   'n=' + CASES.length);
 check('P3-UC2: id use case duy nhat',
   new Set(CASES.map(c => c.id)).size === CASES.length);
@@ -241,9 +242,9 @@ CASES.forEach(cs => {
   }
 });
 
-check('P3-UC4: 27/27 case resolve du tap form + blocks that ton tai (' +
+check('P3-UC4: 28/28 case resolve du tap form + blocks that ton tai (' +
   CASES.length + ' case)', allResolved, DETAIL.slice(0, 4).join(' | '));
-check('P3-UC5: gate chon mau (bat buoc thieu / oneOf trong / vuot max) dung cho 27/27 case',
+check('P3-UC5: gate chon mau (bat buoc thieu / oneOf trong / vuot max) dung cho 28/28 case',
   allGates, DETAIL.slice(0, 4).join(' | '));
 check('P3-UC6: applyOneOfExclusive khong mat mau vua tick + khong vuot max',
   allExclusive, DETAIL.slice(0, 4).join(' | '));
@@ -270,13 +271,13 @@ check('P3-UC7: restoreSelection tu draft — bat buoc luon tick, nhom <= max',
 // 3. Representative case: chuyen_doi_hkd_sang_dn — shared key lan sang >=2 mau
 // ======================================================================
 section('3. Case dai dien chuyen_doi_hkd_sang_dn (PLI_M01..M04) - shared key');
-/* Đây là case DUY NHẤT của bộ 27 vừa có nhóm oneOf vừa có key dùng chung
+/* Đây là case DUY NHẤT của bộ 28 vừa có nhóm oneOf vừa có key dùng chung
  * (dn.ten_tieng_viet / dn.ten_nuoc_ngoai / dn.ten_viet_tat) và loop dùng chung
  * (ds_nganh) trên cả 4 mẫu. Nhóm oneOf max=1 nghĩa là MỘT thời điểm chỉ in một
  * mẫu: giá trị đặt MỘT LẦN trong store phải lan sang payload của BẤT KỲ mẫu
  * nào được chọn (không được phụ thuộc mẫu được chọn đầu tiên).
  * Selector dn.loai_hinh chỉ tồn tại trên PLI_M72 và PLI_M72 KHÔNG thuộc use
- * case nào trong 27 case -> phần selector được kiểm ở mục 4 (DOCX M72 ×5 sel)
+ * case nào trong 28 case -> phần selector được kiểm ở mục 4 (DOCX M72 ×5 sel)
  * và P3-DX9 (UI render theo sel). */
 const REP = CASES.filter(c => c.id === 'chuyen_doi_hkd_sang_dn')[0];
 const REP_IDS = FF.formIds(REP);              // [PLI_M01, PLI_M02, PLI_M03, PLI_M04]
@@ -287,7 +288,7 @@ const SHARED_VALS = {
   'dn.ten_nuoc_ngoai': 'P3 E2E CO., LTD',
   'dn.ten_viet_tat': 'P3E2E'
 };
-check('P3-RP0: khong use case nao trong 27 case chua PLI_M72 (mang selector) '
+check('P3-RP0: khong use case nao trong 28 case chua PLI_M72 (mang selector) '
   + '-> selector kiem o muc DOCX/M72',
   CASES.every(c => FF.formIds(c).indexOf('PLI_M72') < 0) &&
     Object.keys(FD.FORM_SELECTOR_META).join(',') === 'PLI_M72',

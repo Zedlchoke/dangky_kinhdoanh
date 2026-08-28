@@ -317,6 +317,14 @@ select, .btn {
   vertical-align: top;
   font-weight: normal;
 }
+/* header 2 band (hdr2col, Việc 2): KHÔNG viền — đúng bản Word gốc;
+ * hình học 42%/58% khớp tblW fixed trong template. */
+table.hdr-band, table.hdr-band td {
+  border: none;
+}
+table.hdr-band td:first-child { width: 42%; }
+table.hdr-band td:last-child { width: 58%; }
+table.hdr-band td { vertical-align: bottom; }
 .loop-fld {
   font-family: "Times New Roman", serif;
   font-size: 12pt;

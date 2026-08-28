@@ -335,9 +335,9 @@
     "loop": 1
    },
    "summary_counts_recount": {
-    "p": 144,
-    "chk": 3,
-    "table": 0,
+    "p": 139,
+    "chk": 4,
+    "table": 1,
     "loop": 4
    },
    "detector": {
@@ -345,43 +345,43 @@
     "list_hints": 4,
     "hits": [
      {
-      "block": 44,
+      "block": 41,
       "stt": false,
       "list_hint": true,
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu về đăng ký hộ kinh doanh với Cơ sở dữ liệu"
      },
      {
-      "block": 60,
+      "block": 57,
       "stt": false,
       "list_hint": true,
       "excerpt": "Trường hợp việc kết nối giữa Cơ sở dữ liệu về đăng ký hộ kinh doanh với Cơ sở dữ liệu quốc gia về dân cư bị gián đoạn th"
      },
      {
-      "block": 71,
+      "block": 68,
       "stt": false,
       "list_hint": true,
       "excerpt": "Danh sách các thành viên hộ gia đình đăng ký hộ kinh doanh sau khi thay đổi2:"
      },
      {
-      "block": 72,
+      "block": 69,
       "stt": true,
       "list_hint": false,
       "excerpt": "STTHọ tênNgày, tháng, năm sinhSố định danh cá nhânGiới tínhQuốc tịchDân tộcNơi thường trúNơi ở hiện tạiChữ ký12345678910"
      },
      {
-      "block": 86,
+      "block": 83,
       "stt": false,
       "list_hint": true,
       "excerpt": "Đăng ký bổ sung, thay đổi các chỉ tiêu đăng ký thuế như sau:"
      },
      {
-      "block": 114,
+      "block": 111,
       "stt": true,
       "list_hint": false,
       "excerpt": "STT"
      },
      {
-      "block": 129,
+      "block": 126,
       "stt": true,
       "list_hint": false,
       "excerpt": "STTHọ tênNgày, tháng, năm sinhSố định danh cá nhânGiới tínhQuốc tịchDân tộcNơi thường trúNơi ở hiện tạiChữ ký12345678910"
@@ -406,9 +406,9 @@
     "loop": 0
    },
    "summary_counts_recount": {
-    "p": 22,
+    "p": 18,
     "chk": 0,
-    "table": 0,
+    "table": 1,
     "loop": 0
    },
    "detector": {
@@ -434,9 +434,9 @@
     "loop": 0
    },
    "summary_counts_recount": {
-    "p": 16,
+    "p": 12,
     "chk": 0,
-    "table": 0,
+    "table": 1,
     "loop": 0
    },
    "detector": {
@@ -462,9 +462,9 @@
     "loop": 0
    },
    "summary_counts_recount": {
-    "p": 17,
+    "p": 13,
     "chk": 0,
-    "table": 0,
+    "table": 1,
     "loop": 0
    },
    "detector": {
@@ -490,9 +490,9 @@
     "loop": 0
    },
    "summary_counts_recount": {
-    "p": 32,
+    "p": 28,
     "chk": 0,
-    "table": 0,
+    "table": 1,
     "loop": 0
    },
    "detector": {
@@ -500,7 +500,7 @@
     "list_hints": 1,
     "hits": [
      {
-      "block": 14,
+      "block": 11,
       "stt": false,
       "list_hint": true,
       "excerpt": "Trường hợp việc kết nối giữa Cơ sở dữ liệu về đăng ký hộ kinh doanh với Cơ sở dữ liệu quốc gia về dân cư bị gián đoạn th"
@@ -508,9 +508,9 @@
     ],
     "classifications": [
      {
-      "block": 14,
-      "verdict": "FALSE_POSITIVE_PROSE",
-      "reason": "Cau van huong dan ke khai khi mat ket noi CSDL; review_t0_c xac minh 0 w:tbl."
+      "block": 11,
+      "verdict": "FALSE_POSITIVE_HEADER_BAND",
+      "reason": "hdr2col: w:tbl header 2 band - khong phai bang du lieu."
      }
     ],
     "template_w_tbl": 0
@@ -1395,8 +1395,8 @@
     "loop": 1
    },
    "summary_counts_recount": {
-    "p": 126,
-    "chk": 26,
+    "p": 125,
+    "chk": 27,
     "table": 1,
     "loop": 1
    },
@@ -1686,8 +1686,8 @@
     "loop": 1
    },
    "summary_counts_recount": {
-    "p": 209,
-    "chk": 35,
+    "p": 205,
+    "chk": 37,
     "table": 2,
     "loop": 2
    },
@@ -1720,13 +1720,13 @@
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
      },
      {
-      "block": 158,
+      "block": 156,
       "stt": false,
       "list_hint": true,
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
      },
      {
-      "block": 168,
+      "block": 166,
       "stt": true,
       "list_hint": false,
       "excerpt": "STT"
@@ -3348,9 +3348,9 @@
     "loop": 0
    },
    "summary_counts_recount": {
-    "p": 40,
+    "p": 36,
     "chk": 0,
-    "table": 0,
+    "table": 1,
     "loop": 1
    },
    "detector": {
@@ -3358,13 +3358,13 @@
     "list_hints": 2,
     "hits": [
      {
-      "block": 10,
+      "block": 7,
       "stt": false,
       "list_hint": true,
       "excerpt": "Đăng ký thay đổi người đại diện theo pháp luật với các nội dung sau:"
      },
      {
-      "block": 24,
+      "block": 21,
       "stt": false,
       "list_hint": true,
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
@@ -3408,9 +3408,9 @@
     "loop": 0
    },
    "summary_counts_recount": {
-    "p": 55,
+    "p": 51,
     "chk": 3,
-    "table": 0,
+    "table": 1,
     "loop": 0
    },
    "detector": {
@@ -3418,19 +3418,19 @@
     "list_hints": 3,
     "hits": [
      {
-      "block": 9,
+      "block": 6,
       "stt": false,
       "list_hint": true,
       "excerpt": "Đăng ký thay đổi chủ doanh nghiệp tư nhân với các nội dung sau:"
      },
      {
-      "block": 24,
+      "block": 21,
       "stt": false,
       "list_hint": true,
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
      },
      {
-      "block": 42,
+      "block": 39,
       "stt": false,
       "list_hint": true,
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
@@ -3486,9 +3486,9 @@
     "loop": 0
    },
    "summary_counts_recount": {
-    "p": 63,
-    "chk": 0,
-    "table": 0,
+    "p": 55,
+    "chk": 2,
+    "table": 1,
     "loop": 1
    },
    "detector": {
@@ -3496,7 +3496,7 @@
     "list_hints": 1,
     "hits": [
      {
-      "block": 22,
+      "block": 19,
       "stt": false,
       "list_hint": true,
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
@@ -3608,9 +3608,9 @@
     "loop": 1
    },
    "summary_counts_recount": {
-    "p": 100,
+    "p": 96,
     "chk": 16,
-    "table": 0,
+    "table": 1,
     "loop": 1
    },
    "detector": {
@@ -3618,25 +3618,25 @@
     "list_hints": 3,
     "hits": [
      {
-      "block": 11,
+      "block": 8,
       "stt": false,
       "list_hint": true,
       "excerpt": "Đăng ký hoạt động chi nhánh/văn phòng đại diện/\nThông báo lập địa điểm kinh doanh với các nội dung sau:"
      },
      {
-      "block": 42,
+      "block": 39,
       "stt": false,
       "list_hint": true,
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
      },
      {
-      "block": 55,
+      "block": 52,
       "stt": true,
       "list_hint": false,
       "excerpt": "STT"
      },
      {
-      "block": 103,
+      "block": 100,
       "stt": false,
       "list_hint": true,
       "excerpt": "Đánh dấu X nếu là chi nhánh công ty chứng khoán nước ngoài/chi nhánh công ty quản lý quỹ nước ngoài tại Việt Nam và kê k"
@@ -3661,9 +3661,9 @@
     "loop": 0
    },
    "summary_counts_recount": {
-    "p": 50,
+    "p": 46,
     "chk": 0,
-    "table": 0,
+    "table": 1,
     "loop": 0
    },
    "detector": {
@@ -3671,7 +3671,7 @@
     "list_hints": 1,
     "hits": [
      {
-      "block": 35,
+      "block": 32,
       "stt": false,
       "list_hint": true,
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
@@ -3679,9 +3679,9 @@
     ],
     "classifications": [
      {
-      "block": 35,
-      "verdict": "FALSE_POSITIVE_PROSE",
-      "reason": "Chan trang truong hop khong co CCCD/mat ket noi CSDL; 0 w:tbl."
+      "block": 32,
+      "verdict": "FALSE_POSITIVE_HEADER_BAND",
+      "reason": "hdr2col: w:tbl header 2 band - khong phai bang du lieu."
      }
     ],
     "template_w_tbl": 0
@@ -3745,9 +3745,9 @@
     "loop": 1
    },
    "summary_counts_recount": {
-    "p": 112,
+    "p": 108,
     "chk": 9,
-    "table": 0,
+    "table": 1,
     "loop": 1
    },
    "detector": {
@@ -3755,13 +3755,13 @@
     "list_hints": 1,
     "hits": [
      {
-      "block": 52,
+      "block": 49,
       "stt": false,
       "list_hint": true,
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
      },
      {
-      "block": 68,
+      "block": 65,
       "stt": true,
       "list_hint": false,
       "excerpt": "STT"
@@ -3806,9 +3806,9 @@
     "loop": 1
    },
    "summary_counts_recount": {
-    "p": 20,
+    "p": 16,
     "chk": 0,
-    "table": 0,
+    "table": 1,
     "loop": 1
    },
    "detector": {
@@ -3885,9 +3885,9 @@
     "loop": 1
    },
    "summary_counts_recount": {
-    "p": 80,
+    "p": 76,
     "chk": 9,
-    "table": 0,
+    "table": 1,
     "loop": 1
    },
    "detector": {
@@ -3895,19 +3895,19 @@
     "list_hints": 2,
     "hits": [
      {
-      "block": 11,
+      "block": 8,
       "stt": false,
       "list_hint": true,
       "excerpt": "Đề nghị bổ sung, cập nhật thông tin đăng ký hoạt động của chi nhánh/văn phòng đại diện/địa điểm kinh doanh với các nội d"
      },
      {
-      "block": 38,
+      "block": 35,
       "stt": false,
       "list_hint": true,
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
      },
      {
-      "block": 47,
+      "block": 44,
       "stt": true,
       "list_hint": false,
       "excerpt": "STT"
@@ -3975,9 +3975,9 @@
     "loop": 1
    },
    "summary_counts_recount": {
-    "p": 78,
+    "p": 74,
     "chk": 9,
-    "table": 0,
+    "table": 1,
     "loop": 1
    },
    "detector": {
@@ -3985,19 +3985,19 @@
     "list_hints": 2,
     "hits": [
      {
-      "block": 12,
+      "block": 9,
       "stt": false,
       "list_hint": true,
       "excerpt": "Đề nghị bổ sung, cập nhật thông tin đăng ký hoạt động của chi nhánh/văn phòng đại diện/địa điểm kinh doanh với các nội d"
      },
      {
-      "block": 40,
+      "block": 37,
       "stt": false,
       "list_hint": true,
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
      },
      {
-      "block": 50,
+      "block": 47,
       "stt": true,
       "list_hint": false,
       "excerpt": "STT"
@@ -4022,9 +4022,9 @@
     "loop": 0
    },
    "summary_counts_recount": {
-    "p": 23,
+    "p": 19,
     "chk": 0,
-    "table": 0,
+    "table": 1,
     "loop": 0
    },
    "detector": {
@@ -4100,9 +4100,9 @@
     "loop": 0
    },
    "summary_counts_recount": {
-    "p": 66,
+    "p": 62,
     "chk": 0,
-    "table": 0,
+    "table": 1,
     "loop": 0
    },
    "detector": {
@@ -4146,9 +4146,9 @@
     "loop": 0
    },
    "summary_counts_recount": {
-    "p": 35,
+    "p": 31,
     "chk": 0,
-    "table": 0,
+    "table": 1,
     "loop": 0
    },
    "detector": {
@@ -4174,9 +4174,9 @@
     "loop": 0
    },
    "summary_counts_recount": {
-    "p": 28,
+    "p": 24,
     "chk": 0,
-    "table": 0,
+    "table": 1,
     "loop": 0
    },
    "detector": {
@@ -4202,9 +4202,9 @@
     "loop": 0
    },
    "summary_counts_recount": {
-    "p": 20,
+    "p": 16,
     "chk": 0,
-    "table": 0,
+    "table": 1,
     "loop": 0
    },
    "detector": {
@@ -4230,9 +4230,9 @@
     "loop": 0
    },
    "summary_counts_recount": {
-    "p": 21,
+    "p": 17,
     "chk": 0,
-    "table": 0,
+    "table": 1,
     "loop": 0
    },
    "detector": {
@@ -4258,9 +4258,9 @@
     "loop": 0
    },
    "summary_counts_recount": {
-    "p": 32,
+    "p": 28,
     "chk": 0,
-    "table": 0,
+    "table": 1,
     "loop": 0
    },
    "detector": {
@@ -4268,7 +4268,7 @@
     "list_hints": 1,
     "hits": [
      {
-      "block": 14,
+      "block": 11,
       "stt": false,
       "list_hint": true,
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
@@ -4276,9 +4276,9 @@
     ],
     "classifications": [
      {
-      "block": 14,
-      "verdict": "FALSE_POSITIVE_PROSE",
-      "reason": "Chan trang truong hop khong co CCCD/mat ket noi CSDL; 0 w:tbl."
+      "block": 11,
+      "verdict": "FALSE_POSITIVE_HEADER_BAND",
+      "reason": "hdr2col: w:tbl header 2 band - khong phai bang du lieu."
      }
     ],
     "template_w_tbl": 0
@@ -4299,9 +4299,9 @@
     "loop": 0
    },
    "summary_counts_recount": {
-    "p": 38,
+    "p": 34,
     "chk": 0,
-    "table": 0,
+    "table": 1,
     "loop": 0
    },
    "detector": {
@@ -4309,7 +4309,7 @@
     "list_hints": 1,
     "hits": [
      {
-      "block": 19,
+      "block": 16,
       "stt": false,
       "list_hint": true,
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
@@ -4317,9 +4317,9 @@
     ],
     "classifications": [
      {
-      "block": 19,
-      "verdict": "FALSE_POSITIVE_PROSE",
-      "reason": "Chan trang truong hop khong co CCCD/mat ket noi CSDL; 0 w:tbl."
+      "block": 16,
+      "verdict": "FALSE_POSITIVE_HEADER_BAND",
+      "reason": "hdr2col: w:tbl header 2 band - khong phai bang du lieu."
      }
     ],
     "template_w_tbl": 0

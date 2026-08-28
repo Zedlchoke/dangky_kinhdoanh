@@ -739,6 +739,24 @@ def row_visible_text(row_cells: list[dict]) -> str:
     return ANY_TAG_RE.sub("", "".join(txts)).strip()
 
 
+HEADER_BAND_FIRST_CELL = ("TÊN DOANH NGHIỆP", "TÊN HỘ KINH DOANH")
+HEADER_BAND_MOTTO = "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM"
+
+
+def is_header_band_table(grid: list[list[dict]]) -> bool:
+    """Bảng header 2 band (hdr2col): ô đầu trái là ô TÊN …, bảng chứa khối
+    quốc hiệu — chỉ các bảng header band của Việc 2 khớp, bảng dữ liệu thường
+    không bao giờ chứa cả hai."""
+    if not grid or not grid[0]:
+        return False
+    first = ANY_TAG_RE.sub("", cell_full_text(grid[0][0]))
+    if not any(k in first for k in HEADER_BAND_FIRST_CELL):
+        return False
+    all_text = ANY_TAG_RE.sub(
+        "", "".join(cell_full_text(rec) for row in grid for rec in row))
+    return HEADER_BAND_MOTTO in all_text
+
+
 def table_block(tbl: Table) -> dict:
     grid = parse_table(tbl)
 
@@ -756,7 +774,7 @@ def table_block(tbl: Table) -> dict:
             break
 
     if loop_name is None:
-        return {
+        block = {
             "t": "table",
             "widths": None,
             "rows": [
@@ -764,6 +782,9 @@ def table_block(tbl: Table) -> dict:
                 for row in grid
             ],
         }
+        if is_header_band_table(grid):
+            block["band"] = "header"
+        return block
 
     # bảng loop: headerRows = hàng tiêu đề (không trắng) trước hàng khuôn,
     # blankRows = số hàng trắng giữa header và khuôn (bỏ khỏi rows),

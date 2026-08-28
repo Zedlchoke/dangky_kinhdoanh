@@ -262,7 +262,8 @@ def t_anchor_unique():
     EXPECTED_ANCHOR_BLOCK = {
         "PLI_M02": 125,       # audit Wave D: blk126 là glue, B125 là heading
         "PLI_M12": 144,       # blk145 glue
-        "PLI_M15": 48,        # blk49 glue
+        "PLI_M15": 43,        # blk49 glue — hdr2col (084444d): bảng header
+                              # band thay 4 p header -> index dịch 48 -> 43
     }
     for fid, idx in EXPECTED_ANCHOR_BLOCK.items():
         ext = bfm.load_form_spec(fid)
@@ -410,14 +411,16 @@ def t_blocked_plii_m02():
         "tập occurrence_id PLII_M02 đã đổi -> phải cập nhật "
         "tools/test_industry_household.py + tools/census/p1_c_verify_plii_m02.py "
         "trước rồi mới thêm 2 lưới thành viên hộ gia đình (hiện %r)" % ids)
-    # glue hiện trạng vẫn còn nguyên trong blocks (chưa regen)
+    # glue hiện trạng vẫn còn nguyên trong blocks (chưa regen người)
+    # hdr2col (084444d): bảng header band thay 4 p header -> index dịch -3
+    # (B072 -> B069, B129 -> B126)
     folds = block_folds("PLII_M02")
-    assert folds[72].startswith(
+    assert folds[69].startswith(
         "sttho tenngay, thang, nam sinhso dinh danh ca nhan"), \
-        "block B072 không còn glue như evidence: %r" % folds[72][:60]
-    assert "12345678910" in folds[72]
-    assert "ho kinh doanh cam ket ve tinh hop phap" in folds[129], \
-        "B129 mất chuỗi cam kết hộ kinh doanh"
+        "block B069 không còn glue như evidence: %r" % folds[69][:60]
+    assert "12345678910" in folds[69]
+    assert "ho kinh doanh cam ket ve tinh hop phap" in folds[126], \
+        "B126 mất chuỗi cam kết hộ kinh doanh"
 
 
 @check("[BLOCKED] PLI_M09: khong spec moi khi nguon con nhiem va chua doi chieu ban goc")

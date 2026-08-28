@@ -56,6 +56,33 @@ EVOLVED_FORMS = {
         "P2C D1.1=A/D1.2=B: tai_san_gop_von_von_dau_tu -> w:tbl fixed-matrix",
     "PLI_M13":
         "P2A D2.6/D2.7=A: glue header -> loop grid ndd_pl_sau_thay_doi (0->1)",
+
+
+    # hdr2col merge 084444d (2026-08-28): 4 paragraph header dọc (ô tên /
+    # quốc hiệu / Số: / ngày ký) -> 1 w:tbl header band 2x2 (Việc 2 — lệnh
+    # owner). summary_counts.p giảm 3-4, table 0 -> 1 ở TOÀN BỘ 22 mẫu census.
+    "PLII_M02": "hdr2col: 4 p header -> w:tbl header band (band:header)",
+    "PLII_M03": "hdr2col: 4 p header -> w:tbl header band (band:header)",
+    "PLII_M04": "hdr2col: 4 p header -> w:tbl header band (band:header)",
+    "PLII_M05": "hdr2col: 4 p header -> w:tbl header band (band:header)",
+    "PLII_M06": "hdr2col: 4 p header -> w:tbl header band (band:header)",
+    "PLI_M13": "hdr2col: 4 p header -> w:tbl header band (band:header)",
+    "PLI_M14": "hdr2col: 4 p header -> w:tbl header band (band:header)",
+    "PLI_M15": "hdr2col: 4 p header -> w:tbl header band (band:header)",
+    "PLI_M17": "hdr2col: 4 p header -> w:tbl header band (band:header)",
+    "PLI_M18": "hdr2col: 4 p header -> w:tbl header band (band:header)",
+    "PLI_M19": "hdr2col: 4 p header -> w:tbl header band (band:header)",
+    "PLI_M21": "hdr2col: 4 p header -> w:tbl header band (band:header)",
+    "PLI_M23": "hdr2col: 4 p header -> w:tbl header band (band:header)",
+    "PLI_M25": "hdr2col: 4 p header -> w:tbl header band (band:header)",
+    "PLI_M26": "hdr2col: 4 p header -> w:tbl header band (band:header)",
+    "PLI_M27": "hdr2col: 4 p header -> w:tbl header band (band:header)",
+    "PLI_M28": "hdr2col: 4 p header -> w:tbl header band (band:header)",
+    "PLI_M29": "hdr2col: 4 p header -> w:tbl header band (band:header)",
+    "PLI_M30": "hdr2col: 4 p header -> w:tbl header band (band:header)",
+    "PLI_M31": "hdr2col: 4 p header -> w:tbl header band (band:header)",
+    "PLI_M32": "hdr2col: 4 p header -> w:tbl header band (band:header)",
+    "PLI_M33": "hdr2col: 4 p header -> w:tbl header band (band:header)",
 }
 
 TABLE_KINDS = ("editable-grid", "fixed-matrix", "nested-grid", "output-table")
@@ -138,6 +165,18 @@ SIGNATURE_CLASSIFICATIONS = {
                  "reason": "Chan trang truong hop khong co CCCD/mat ket noi CSDL; 0 w:tbl."}],
     "PLI_M50": [{"block": 15, "verdict": "FALSE_POSITIVE_PROSE",
                  "reason": "'Yeu cầu doanh nghiệp báo cáo về các nội dung sau' la dau muc van ban; vung tuong ung da duoc ghi section noi_dung_yeu_cau_bao_cao (output-table/no_table)."}],
+
+
+    # hdr2col merge 084444d: bảng header band (band:header) KHÔNG phải bảng
+    # dữ liệu — 4 mẫu NO_TABLE duy nhất có w:tbl mới sau regen.
+    "PLII_M06": [{"block": 11, "verdict": "FALSE_POSITIVE_HEADER_BAND",
+                  "reason": "hdr2col: w:tbl header 2 band - khong phai bang du lieu."}],
+    "PLI_M18": [{"block": 32, "verdict": "FALSE_POSITIVE_HEADER_BAND",
+                 "reason": "hdr2col: w:tbl header 2 band - khong phai bang du lieu."}],
+    "PLI_M32": [{"block": 11, "verdict": "FALSE_POSITIVE_HEADER_BAND",
+                 "reason": "hdr2col: w:tbl header 2 band - khong phai bang du lieu."}],
+    "PLI_M33": [{"block": 16, "verdict": "FALSE_POSITIVE_HEADER_BAND",
+                 "reason": "hdr2col: w:tbl header 2 band - khong phai bang du lieu."}],
 }
 
 LEAD_STATUS_OVERRIDES = {
@@ -330,6 +369,19 @@ def deep_template_tables(form_id):
     path = os.path.join(TEMPLATES_DIR, "%s.docx" % form_id)
     doc = Document(path)
     n = len(doc.tables)
+
+    def _is_header_band(tbl) -> bool:
+        """hdr2col merge 084444d: bảng header 2 band là layout artifact
+        (ô tên + quốc hiệu + Số/ngày), KHÔNG phải bảng dữ liệu — không đếm."""
+        if not tbl.rows or not tbl.rows[0].cells:
+            return False
+        first = tbl.rows[0].cells[0].text or ""
+        if not ("TÊN DOANH NGHIỆP" in first or "TÊN HỘ KINH DOANH" in first):
+            return False
+        all_text = "\n".join(c.text for r in tbl.rows for c in r.cells)
+        return "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM" in all_text
+
+    n -= sum(1 for t in doc.tables if _is_header_band(t))
     W = "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}"
     for part in (doc.part.header_parts if hasattr(doc.part, "header_parts") else []):
         pass
@@ -339,7 +391,10 @@ def deep_template_tables(form_id):
             if root is not None:
                 n += len(root.findall(".//%stbl" % W))
     body_root = doc.element.body
-    raw_tbl = len(body_root.findall(".//%stbl" % W))
+    body_tbls = body_root.findall(".//%stbl" % W)
+    body_bands = sum(1 for t in body_tbls
+                     if any(t is tt._tbl for tt in doc.tables if _is_header_band(tt)))
+    raw_tbl = len(body_tbls) - body_bands
     return max(n, raw_tbl)
 
 

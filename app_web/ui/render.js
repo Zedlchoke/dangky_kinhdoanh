@@ -355,7 +355,7 @@
           escapeHtml(b.key) + '"' + (ac.getChk(b.key) ? ' checked' : '') +
           '><span>' + escapeHtml(b.label || '') + '</span></label>';
       case 'table':
-        return renderTableRows(b.rows || [], ac, rctx);
+        return renderTableRows(b, ac, rctx);
       case 'loop':
         return renderLoop(b, ac, rctx);
       default:
@@ -363,7 +363,11 @@
     }
   }
 
-  function renderTableRows(rows, ac, rctx) {
+  /* b.band === 'header' (Việc 2 — hdr2col): bảng header 2 band không viền,
+   * đúng hình học DOCX 42%/58% — chỉ bảng header band có band:header trong
+   * blocks (tools/docx_to_blocks.py is_header_band_table). */
+  function renderTableRows(b, ac, rctx) {
+    var rows = b.rows || [];
     var body = rows.map(function (r) {
       var cells = (r.cells || []).map(function (c) {
         var attrs = '';
@@ -373,7 +377,8 @@
       }).join('');
       return '<tr>' + cells + '</tr>';
     }).join('');
-    return '<table class="btable"><tbody>' + body + '</tbody></table>';
+    var cls = 'btable' + (b.band === 'header' ? ' hdr-band' : '');
+    return '<table class="' + cls + '"><tbody>' + body + '</tbody></table>';
   }
 
   /* Bảng lặp - CONTRACT:

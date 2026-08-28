@@ -898,7 +898,7 @@ window.FORM_MAPS = {
   "dynamic_tables": [
    {
     "id": "ndd_pl_sau_thay_doi",
-    "table_index": 0,
+    "table_index": 1,
     "header_row": 0,
     "template_row": 5,
     "loop": "ds_ndd_pl_sau_thay_doi",
@@ -1244,7 +1244,7 @@ window.FORM_MAPS = {
   "dynamic_tables": [
    {
     "id": "ndd_pl_uy_quyen_chu_so_huu_moi",
-    "table_index": 0,
+    "table_index": 1,
     "template_row": 7,
     "loop": "ds_nddpl_uy_quyen_chu_so_huu_moi",
     "columns": [
@@ -1310,7 +1310,7 @@ window.FORM_MAPS = {
     "id": "ndd_pl_uy_quyen_chu_so_huu_moi",
     "semantic_key": "ds_nddpl_uy_quyen_chu_so_huu_moi",
     "section_id": "ndd_pl_uy_quyen_chu_so_huu_moi",
-    "table_index": 0,
+    "table_index": 1,
     "loop": "ds_nddpl_uy_quyen_chu_so_huu_moi",
     "header_rows": [
      [
@@ -1601,7 +1601,7 @@ window.FORM_MAPS = {
   "dynamic_tables": [
    {
     "id": "ds_nganh",
-    "table_index": 0,
+    "table_index": 1,
     "header_row": 0,
     "template_row": 5,
     "loop": "ds_nganh",
@@ -1960,7 +1960,7 @@ window.FORM_MAPS = {
   "dynamic_tables": [
    {
     "id": "ds_nganh",
-    "table_index": 0,
+    "table_index": 1,
     "header_row": 0,
     "template_row": 5,
     "loop": "ds_nganh",
@@ -2363,7 +2363,7 @@ window.FORM_MAPS = {
   "dynamic_tables": [
    {
     "id": "ds_nganh",
-    "table_index": 0,
+    "table_index": 1,
     "header_row": 0,
     "template_row": 5,
     "loop": "ds_nganh",
@@ -2597,7 +2597,7 @@ window.FORM_MAPS = {
   "dynamic_tables": [
    {
     "id": "ds_nganh",
-    "table_index": 0,
+    "table_index": 1,
     "header_row": 0,
     "template_row": 5,
     "loop": "ds_nganh",
@@ -2835,7 +2835,7 @@ window.FORM_MAPS = {
   "dynamic_tables": [
    {
     "id": "ds_nganh",
-    "table_index": 0,
+    "table_index": 1,
     "header_row": 0,
     "template_row": 5,
     "loop": "ds_nganh",
@@ -6670,7 +6670,7 @@ window.FORM_MAPS = {
   "dynamic_tables": [
    {
     "id": "ds_nganh_bo_sung",
-    "table_index": 0,
+    "table_index": 1,
     "header_row": 0,
     "template_row": 5,
     "loop": "nganh_bo_sung",
@@ -6696,7 +6696,7 @@ window.FORM_MAPS = {
    },
    {
     "id": "ds_nganh_xoa_bo",
-    "table_index": 1,
+    "table_index": 2,
     "header_row": 0,
     "template_row": 5,
     "loop": "nganh_xoa_bo",
@@ -6722,7 +6722,7 @@ window.FORM_MAPS = {
    },
    {
     "id": "ds_nganh_sua_chi_tiet",
-    "table_index": 2,
+    "table_index": 3,
     "header_row": 0,
     "template_row": 5,
     "loop": "nganh_sua_doi_chi_tiet",
@@ -6743,7 +6743,7 @@ window.FORM_MAPS = {
    },
    {
     "id": "ds_nganh",
-    "table_index": 3,
+    "table_index": 4,
     "header_row": 0,
     "template_row": 5,
     "loop": "ds_nganh",

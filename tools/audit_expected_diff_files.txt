@@ -251,3 +251,32 @@ tools/census/numbering_audit.py
 
 # --- Wave D2 Defect Hunt: so loi he thong (lệnh owner 2026-08-28) ---
 docs/defect_registry.md
+
+# --- Việc 2 header 2 band (merge hdr2col 084444d + Lead regen) ---
+# 22 mẫu có ô TÊN DOANH NGHIỆP/TÊN HỘ KINH DOANH: 4 paragraph header dọc ->
+# w:tbl không viền 2 band (tên trái + quốc hiệu phải; Số trái + ngày phải).
+# Blocks + form_maps + manifest đã có entry; đây là template lần đầu đổi.
+app/templates/PLII_M03.docx
+app/templates/PLII_M04.docx
+app/templates/PLII_M05.docx
+app/templates/PLII_M06.docx
+app/templates/PLI_M14.docx
+app/templates/PLI_M17.docx
+app/templates/PLI_M18.docx
+app/templates/PLI_M19.docx
+app/templates/PLI_M21.docx
+app/templates/PLI_M23.docx
+app/templates/PLI_M25.docx
+app/templates/PLI_M26.docx
+app/templates/PLI_M27.docx
+app/templates/PLI_M28.docx
+app/templates/PLI_M29.docx
+app/templates/PLI_M30.docx
+app/templates/PLI_M31.docx
+app/templates/PLI_M32.docx
+app/templates/PLI_M33.docx
+
+# tools/test_header_layout.py: suite mới của lane hdr2col (11 mệnh đề census/
+# layout/text/fields/tags/idempotent/untouched/negative), Lead sync 2 pin theo
+# trạng thái post-regen (census đọc band:header; FIELDS chấp nhận +1-shift).
+tools/test_header_layout.py

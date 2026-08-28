@@ -729,7 +729,7 @@ ALLOWED_TOP_KEYS = {"id", "ten_mau", "blocks", "v"}
 ALLOWED_BLOCK_KEYS = {
     "p": {"t", "align", "runs", "cond", "role", "format", "footnotes"},
     "chk": {"t", "key", "label", "cond"},
-    "table": {"t", "widths", "rows", "cond"},
+    "table": {"t", "widths", "rows", "cond", "band"},
     "loop": {"t", "loop", "headerRows", "cols", "blankRows", "rows", "cond"},
 }
 ALLOWED_RUN_KEYS_TEXT = {"text", "b", "i", "u", "vertAlign", "role", "footnoteId"}

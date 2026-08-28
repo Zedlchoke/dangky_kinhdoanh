@@ -224,11 +224,24 @@ BAND_LABEL_FOLD = ("ten doanh nghiep", "ten ho kinh doanh")
 
 
 def blocks_band_label_ids():
-    """Mẫu nào trong blocks JSON có ô band "TÊN …" (đầu tài liệu)."""
+    """Mẫu nào trong blocks JSON có bảng header band (đầu tài liệu).
+
+    Sau khi Lead regen (merge hdr2col @ 084444d), ô "TÊN …" KHÔNG còn là
+    paragraph form-subtitle đứng riêng mà nằm trong bảng header 2 band —
+    extractor gắn marker `band: "header"` (docx_to_blocks.is_header_band_table).
+    Pin đổi theo bằng chứng sản phẩm mới: census vẫn ÉP ĐÚNG tập 22 mẫu,
+    chỉ đổi cách nhận diện từ paragraph-sang-bảng. Trạng thái pre-regen
+    (ô tên còn là paragraph) vẫn được nhận để suite đọc được ở cả 2 thời điểm.
+    """
     hits = []
     for jf in sorted(BLOCKS_DIR.glob("*.json")):
         d = json.loads(jf.read_text(encoding="utf-8"))
         for blk in d.get("blocks", [])[:12]:
+            # trạng thái MỚI (post-regen): bảng header band có marker
+            if blk.get("t") == "table" and blk.get("band") == "header":
+                hits.append(jf.stem)
+                break
+            # trạng thái CŨ (pre-regen): ô tên là paragraph riêng
             if blk.get("t") != "p" or blk.get("role") != "form-subtitle":
                 continue
             txt = "".join(r.get("text", "") for r in blk.get("runs", []))
@@ -239,6 +252,8 @@ def blocks_band_label_ids():
                     if rest == "" or bfm.HEADER_BAND_RULE_RE.match(rest):
                         hits.append(jf.stem)
                     break
+            if jf.stem in hits:
+                break
     return sorted(set(hits))
 
 
@@ -486,15 +501,32 @@ def t_fields_unchanged():
                 ov = committed[fid].get(kind) or []
                 nv = generated[fid].get(kind) or []
                 if fid in bfm.HEADER_BAND_FORMS:
-                    # bảng header chèn ở đầu -> MỌI table_index +1, còn lại nguyên
-                    for o, n in zip(ov, nv):
-                        assert o.get("table_index") + 1 == n.get("table_index"), (
-                            "%s/%s: table_index %s -> %s (kỳ vọng +1)"
-                            % (fid, kind, o.get("table_index"), n.get("table_index")))
-                        o2 = dict(o); n2 = dict(n)
-                        o2.pop("table_index"); n2.pop("table_index")
-                        assert o2 == n2, ("%s/%s: metadata %s đổi ngoài table_index"
-                                          % (fid, kind, sorted(o2)))
+                    # Hai trạng thái hợp lệ (pin sync theo bằng chứng, merge
+                    # hdr2col @ 084444d):
+                    #  (a) ĐỒNG NHẤT — trạng thái ổn định sau khi Lead commit
+                    #      form_maps regen (sandbox rebuild == đĩa);
+                    #  (b) DỊCH +1 — cửa sổ migration: đĩa còn form_maps cũ
+                    #      (chưa regen/commit), sandbox build từ nguồn đã có
+                    #      bảng header -> MỌI table_index +1, còn lại nguyên.
+                    def _is_plus1_shape(ovv, nvv):
+                        if len(ovv) != len(nvv):
+                            return False
+                        for o, n in zip(ovv, nvv):
+                            if o.get("table_index") is None or \
+                               n.get("table_index") is None or \
+                               o.get("table_index") + 1 != n.get("table_index"):
+                                return False
+                            o2 = dict(o); n2 = dict(n)
+                            o2.pop("table_index"); n2.pop("table_index")
+                            if o2 != n2:
+                                return False
+                        return True
+                    if ov == nv:
+                        continue
+                    assert _is_plus1_shape(ov, nv), (
+                        "%s/%s: form_maps lệch sandbox — không đồng nhất và "
+                        "không đúng hình +1 (migration chưa chạy hoặc metadata "
+                        "trôi)" % (fid, kind))
                 else:
                     assert ov == nv, ("%s/%s: KHÔNG được đổi khi mẫu không nằm "
                                       "trong allowlist" % (fid, kind))

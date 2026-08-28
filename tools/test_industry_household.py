@@ -421,6 +421,9 @@ def t_m02_working_template_regions():
 
     tbl_region = []
     first_tbl_seen = False
+    tax_start = next((i for i, (k, v) in enumerate(seq)
+                      if k == "p" and "dang ky bo sung, thay doi cac chi tieu dang ky thue"
+                      in fold(str(v))), len(seq))
     for i, (k, _v) in enumerate(seq):
         if k != "tbl":
             continue
@@ -428,6 +431,9 @@ def t_m02_working_template_regions():
         # không thuộc vùng nào, loại khỏi phép đối chiếu 1-1
         if not first_tbl_seen:
             first_tbl_seen = True
+            continue
+        # cap-von (fc07c69): bảng thuế a7 sau marker nằm ngoài 4 vùng ngành
+        if i > tax_start:
             continue
         owner = next((oid for oid, h, e in spans if h < i < e), None)
         assert owner is not None, \
@@ -602,6 +608,10 @@ def t_m02_render_isolation():
         # bảng ngành — loại khỏi đếm, giữ nguyên gate 4 bảng ngành phân biệt
         first_cell = fold(tbl.rows[0].cells[0].text) if tbl.rows[0].cells else ""
         if first_cell.startswith(("ten ho kinh doanh", "ten doanh nghiep")):
+            continue
+        # cap-von (fc07c69): bảng thuế a7 (Chỉ tiêu | cũ | mới) — không phải
+        # bảng ngành
+        if first_cell.startswith("chi tieu"):
             continue
         hdr = fold(" ".join(tr_cell_texts(tbl, 0)))
         by_header[hdr] = tbl

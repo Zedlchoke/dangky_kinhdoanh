@@ -87,6 +87,14 @@ EVOLVED_FORMS = {
     "PLI_M31": "hdr2col: 4 p header -> w:tbl header band (band:header)",
     "PLI_M32": "hdr2col: 4 p header -> w:tbl header band (band:header)",
     "PLI_M33": "hdr2col: 4 p header -> w:tbl header band (band:header)",
+
+    # cap-von regen (merge fc07c69 + Lead regen 5 mẫu): bảng nguồn vốn/
+    # cấu cổ phần/chào bán/thuế II.2 thay paragraph glue — p giảm, table +1..+3.
+    "PLI_M03": "cap-von: nguon_von -> w:tbl fixed-matrix",
+    "PLI_M04": "cap-von: nguon_von + co_cau + chao_ban -> 3 w:tbl",
+    "PLI_M05": "cap-von: nguon_von -> w:tbl fixed-matrix",
+    "PLI_M12": "cap-von: nguon_von_sau -> w:tbl fixed-matrix",
+    "PLII_M02": "cap-von: a7_thue -> w:tbl fixed-matrix",
 }
 
 TABLE_KINDS = ("editable-grid", "fixed-matrix", "nested-grid", "output-table")

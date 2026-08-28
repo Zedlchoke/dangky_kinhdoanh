@@ -296,3 +296,7 @@ tools/form_specs/formation/PLI_M04.json
 tools/form_specs/formation/PLI_M05.json
 tools/form_specs/household/PLII_M02.json
 tools/test_cap_von_specs.py
+# --- cap-von regen: 3 template lần đầu đổi (nguon_von/co_cau/chao_ban) ---
+app/templates/PLI_M03.docx
+app/templates/PLI_M04.docx
+app/templates/PLI_M05.docx

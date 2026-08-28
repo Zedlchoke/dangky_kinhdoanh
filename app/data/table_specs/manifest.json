@@ -335,9 +335,9 @@
     "loop": 1
    },
    "summary_counts_recount": {
-    "p": 139,
+    "p": 134,
     "chk": 4,
-    "table": 1,
+    "table": 2,
     "loop": 4
    },
    "detector": {
@@ -375,20 +375,20 @@
       "excerpt": "Đăng ký bổ sung, thay đổi các chỉ tiêu đăng ký thuế như sau:"
      },
      {
-      "block": 111,
+      "block": 107,
       "stt": true,
       "list_hint": false,
       "excerpt": "STT"
      },
      {
-      "block": 126,
+      "block": 122,
       "stt": true,
       "list_hint": false,
       "excerpt": "STTHọ tênNgày, tháng, năm sinhSố định danh cá nhânGiới tínhQuốc tịchDân tộcNơi thường trúNơi ở hiện tạiChữ ký12345678910"
      }
     ],
     "classifications": [],
-    "template_w_tbl": 4
+    "template_w_tbl": 5
    }
   },
   {
@@ -1839,9 +1839,9 @@
     "loop": 1
    },
    "summary_counts_recount": {
-    "p": 82,
+    "p": 74,
     "chk": 19,
-    "table": 0,
+    "table": 1,
     "loop": 1
    },
    "detector": {
@@ -1862,7 +1862,7 @@
      }
     ],
     "classifications": [],
-    "template_w_tbl": 1
+    "template_w_tbl": 2
    }
   },
   {
@@ -2032,13 +2032,13 @@
     "loop": 1
    },
    "summary_counts_recount": {
-    "p": 115,
+    "p": 77,
     "chk": 19,
-    "table": 0,
+    "table": 3,
     "loop": 1
    },
    "detector": {
-    "p_signatures": 2,
+    "p_signatures": 0,
     "list_hints": 3,
     "hits": [
      {
@@ -2058,22 +2058,10 @@
       "stt": false,
       "list_hint": true,
       "excerpt": "Công ty chứng khoán/Công ty quản lý quỹ đầu tư chứng khoán/Công ty đầu tư chứng khoán: (Đánh dấu X nếu là Công ty chứng "
-     },
-     {
-      "block": 104,
-      "stt": true,
-      "list_hint": false,
-      "excerpt": "STT"
-     },
-     {
-      "block": 121,
-      "stt": true,
-      "list_hint": false,
-      "excerpt": "STT"
      }
     ],
     "classifications": [],
-    "template_w_tbl": 1
+    "template_w_tbl": 4
    }
   },
   {
@@ -2179,9 +2167,9 @@
     "loop": 1
    },
    "summary_counts_recount": {
-    "p": 63,
+    "p": 55,
     "chk": 17,
-    "table": 0,
+    "table": 1,
     "loop": 1
    },
    "detector": {
@@ -2196,7 +2184,7 @@
      }
     ],
     "classifications": [],
-    "template_w_tbl": 1
+    "template_w_tbl": 2
    }
   },
   {
@@ -3249,9 +3237,9 @@
     "loop": 3
    },
    "summary_counts_recount": {
-    "p": 218,
+    "p": 210,
     "chk": 15,
-    "table": 0,
+    "table": 1,
     "loop": 4
    },
    "detector": {
@@ -3259,38 +3247,38 @@
     "list_hints": 1,
     "hits": [
      {
-      "block": 63,
+      "block": 56,
       "stt": true,
       "list_hint": false,
       "excerpt": "STT"
      },
      {
-      "block": 82,
+      "block": 75,
       "stt": true,
       "list_hint": false,
       "excerpt": "STT"
      },
      {
-      "block": 101,
+      "block": 94,
       "stt": false,
       "list_hint": true,
       "excerpt": "Doanh nghiệp cam kết bảo đảm thanh toán đủ các khoản nợ và các nghĩa vụ tài sản khác sau khi giảm vốn (doanh nghiệp chỉ "
      },
      {
-      "block": 126,
+      "block": 119,
       "stt": true,
       "list_hint": false,
       "excerpt": "STT"
      },
      {
-      "block": 158,
+      "block": 151,
       "stt": true,
       "list_hint": false,
       "excerpt": "STT"
      }
     ],
     "classifications": [],
-    "template_w_tbl": 4
+    "template_w_tbl": 5
    }
   },
   {

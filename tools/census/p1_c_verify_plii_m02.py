@@ -234,9 +234,17 @@ def audit_working_template_and_maps() -> None:
 
     tbl_owner = []
     first_tbl_seen = False
+    _doc_tables = doc.tables
+    def _is_band_or_tax(tbl_idx):
+        t = _doc_tables[tbl_idx]
+        c0 = fold(t.rows[0].cells[0].text) if t.rows and t.rows[0].cells else ""
+        return (c0.startswith(("ten ho kinh doanh", "ten doanh nghiep"))
+                or c0.startswith("chi tieu"))
     for i, (k, _v) in enumerate(seq):
         if k != "tbl":
             continue
+        if _is_band_or_tax(_v):
+            continue  # bảng header band (hdr2col) + bảng thuế a7 (cap-von)
         # [Lead sync 2026-08-28] hdr2col (084444d): bảng header band (tên hộ +
         # quốc hiệu) đứng TRƯỚC mọi vùng ngành — không thuộc vùng nào, loại
         # khỏi phép đối chiếu 1-1 (đồng bộ test_industry_household).

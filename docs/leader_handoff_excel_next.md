@@ -65,9 +65,9 @@ marker/field; snapshot + DOCX export đều phải ra đúng band 2 cột.
 
 ### Việc 4 — bổ sung TOÀN BỘ loại bảng còn blocked (nguồn pháp lý mới)
 
-- Owner CHÍNH THỨC cho phép: tự tra cứu trên mạng **Nghị định 168/2025/NĐ-CP
-(ngày 30/6/2025) + Thông tư 68/2025/TT-BTC** (biểu mẫu phụ lục I/II chính
-là các mẫu trong app) và **hỏi owner bất cứ thông tin pháp lý nào**.
+- Owner CHÍNH THỨC cho phép: tự tra cứu trên mạng **Nghị định 168/2025/NĐ-CP**  
+**(ngày 30/6/2025) + Thông tư 68/2025/TT-BTC** (biểu mẫu phụ lục I/II chính  
+là các mẫu trong app) hoặc **hỏi owner bất cứ thông tin pháp lý nào**.
 - Các nhóm việc (theo census 33 missing_grid + 5 partial_columns + 1
 partial + 1 contaminated):
   1. Nguồn vốn điều lệ PLI_M03/M04/M05 + PLI_M12 (blocker cũ D1.3/D1.5/

@@ -31,6 +31,7 @@ Nguyen ly:
     se van duoc validate NHUNG bi BO QUA hoan toan khi rebuild (khong suy
     doan noi dung phap ly).
 """
+import copy
 import csv
 import json
 import re
@@ -644,7 +645,7 @@ def _pop_table_occurrence(table):
 def _scrub_occurrence_attrs(doc):
     """Don sach moi thuoc tinh tam con sot truoc khi luu template."""
     for el in doc.element.body.iter(qn("w:tbl")):
-        for attr in (_OCC_TEMP_ATTR, GRID_META_TEMP_ATTR):
+        for attr in (_OCC_TEMP_ATTR, GRID_META_TEMP_ATTR, HEADER_BAND_TEMP_ATTR):
             if el.get(attr) is not None:
                 del el.attrib[attr]
 
@@ -1731,6 +1732,77 @@ def apply_tags_to_para(para, assignments):
         r.text = "".join(new_runs[ri])
 
 
+def _assign_para_slots(full, groups, add_field, unmatched, form_id, where,
+                       section_ctx="", pending_label=""):
+    """Gán the cho TẤT CẢ nhóm dấu chấm của MỘT paragraph -> [(s, e, tag)].
+
+    Tách từ vòng lặp trong process_form (hành vi giữ nguyên 1:1) để dùng CHUNG
+    cho quét thân tài liệu và cho 2 ô băng dưới của bảng header 2-band
+    (xem _tag_header_band_slots). `where` chỉ dùng cho báo cáo unmatched.
+    """
+    assignments = []
+    prev_end = 0
+    gi = 0
+    while gi < len(groups):
+        g_start, g_end = groups[gi]
+        label = full[prev_end:g_start]
+        lab = norm_label(label)
+        # trường hợp đặc biệt: "……, ngày ……tháng ……năm ……" (ký tên, có slot đầu dòng)
+        if not lab.strip() and re.match(r"[,.]?\s*ngay\b", fold(full[g_end:g_end + 30])):
+            names = ["dia_diem_ky", "ngay_ky_vb", "thang_ky_vb", "nam_ky_vb"]
+            take = min(len(names), len(groups) - gi)
+            for j in range(take):
+                s, e = groups[gi + j]
+                assignments.append((s, e, "{%s}" % names[j]))
+                add_field(names[j], label if j == 0 else "")
+            prev_end = groups[gi + take - 1][1]
+            gi += take
+            continue
+        if not lab.strip() and pending_label:
+            # slot ở đoạn riêng, nhãn nằm ở paragraph trước kết thúc bằng ":"
+            lab = norm_label(pending_label)
+        matched = None
+        for pat, key, grps, ctx in R:
+            if pat and re.search(pat, lab):
+                if ctx and not re.search(ctx, section_ctx):
+                    continue
+                if grps:
+                    need = len(grps)
+                    avail = len(groups) - gi
+                    take = min(need, avail)
+                    last_ai = None
+                    for j in range(take):
+                        s, e = groups[gi + j]
+                        if grps[j] == "":
+                            # nhóm nối tiếp (vd …/… trong ngày tháng): kéo dài tag trước
+                            # phủ luôn đoạn này thay vì để nguyên dấu chấm lửng
+                            if last_ai is not None:
+                                ps_, pe_, pt_ = assignments[last_ai]
+                                assignments[last_ai] = (ps_, e, pt_)
+                            continue
+                        assignments.append((s, e, "{%s}" % grps[j]))
+                        last_ai = len(assignments) - 1
+                        add_field(grps[j], label if j == 0 else "")
+                    prev_end = groups[min(gi + take - 1, len(groups) - 1)][1]
+                    gi += take
+                elif key:
+                    assignments.append((g_start, g_end, "{%s}" % key))
+                    add_field(key, label)
+                    prev_end = g_end
+                    gi += 1
+                else:  # nhóm checkbox: bỏ qua không gắn the
+                    prev_end = g_end
+                    gi += 1
+                matched = True
+                break
+        if not matched:
+            unmatched.append({"form": form_id, "where": where,
+                              "label": label.strip()[:100]})
+            prev_end = g_end
+            gi += 1
+    return assignments
+
+
 def cell_first_para(cell):
     return cell.paragraphs[0] if cell.paragraphs else None
 
@@ -1797,6 +1869,371 @@ def process_checkboxes(doc, form_id, add_field, unmatched):
 
 
 # ---------------------------------------------------------------------------
+# Header 2-band (Việc 2 — lệnh owner 2026-08-28)
+#
+# Hiện trạng nguồn docx scrape được xếp DỌC: "TÊN …/-----", "CỘNG HÒA …/Độc lập
+# …/-----", "Số: …", "……, ngày … tháng … năm …" mỗi cái một paragraph canh
+# giữa/trái riêng -> bản in lệch hẳn bản Word gốc (PL II Mẫu 2 / PL I Mẫu 13 —
+# TT 68/2025/TT-BTC). Bản gốc là 2 băng ngang:
+#     BAND 1 | TÊN ….. + dòng kẻ | CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM
+#            |                    | Độc lập - Tự do - Hạnh phúc  (gạch chân)
+#     BAND 2 | Số: …              | ……, ngày … tháng … năm …
+#
+# Cách làm: TRƯỚC khi gắn the, generator TÁI DỤNG 4 paragraph đó thành một
+# w:tbl KHÔNG VIỀN 2 cột. Các paragraph nguồn được DI CHUYỂN nguyên vẹn
+# (giữ w:r/w:rPr/w:jc/w:spacing) vào ô tương ứng nên KHÔNG có the {..} nào
+# mất; the {so_van_ban} và nhóm ngày/tháng/năm được gắn SAU đó bằng đúng bộ
+# rule R qua _assign_para_slots (section_ctx rỗng — giống vị trí cũ ở đầu
+# tài liệu) nên form_maps KHÔNG đổi key/label.
+# Idempotent: transformation chỉ đọc file nguồn pristine, chạy lại ra cùng
+# kết quả (được chứng minh bằng test_header_layout + deep idempotency).
+# ---------------------------------------------------------------------------
+
+HEADER_BAND_TEMP_ATTR = "{urn:orca:hdr2col}band"
+
+# Ô tiêu đề trái theo từng mẫu. Census 2026-08-28: grep
+# 'TÊN DOANH NGHIỆP|TÊN HỘ KINH DOANH' trên app/data/blocks/*.json + đối chiếu
+# trực tiếp nguồn docx trong 02_..06_:
+#   PL I  (TÊN DOANH NGHIỆP) : 13,14,15,17,18,19,21,23,25,26,27,28,29,30,31,32,33
+#   PL II (TÊN HỘ KINH DOANH): 02,03,04,05,06
+# Các mẫu KHÔNG nằm trong danh sách (đã rà, không phải ô header 2-band):
+#   PLI_M01..M05, M42, M43, M45..M57, M63, M66..M71, M75, M76, M78..M80 và
+#   PLII_M01, M07..M28 — chỉ có khối quốc hiệu căn giữa (giấy chứng nhận /
+#   thông báo / quyết định), KHÔNG có ô tên bên trái.
+#   PLI_M11 — không có khối quốc hiệu; PLI_M06..M10 — không có header.
+# Ngoại lệ CẦN OWNER (xem docs handoff):
+#   PLI_M12 — nguồn docx MẤT ô "TÊN DOANH NGHIỆP" khi scrape; đồng thời
+#             Thông tư 121/2026/TT-BTC (hiệu lực 21/8/2026) đã thay Mẫu 12
+#             -> chờ nguồn mới theo TT 121, không tự chế nội dung.
+#   PLI_M72 — "(TÊN DOANH NGHIỆP TƯ NHÂN)" là subtitle mục công bố, không
+#             phải ô header; mẫu không có khối quốc hiệu.
+#   PLI_M27, PLI_M30 — nằm trong census NƯNG cũng là 2/9 mẫu bị Thông tư
+#             121/2026/TT-BTC thay thế; vẫn sửa layout (chỉ đổi hình thức,
+#             không đổi nội dung) và đã ghi chú chờ đối chiếu bản TT 121.
+HEADER_BAND_FORMS = {
+    "PLI_M13": "TÊN DOANH NGHIỆP",
+    "PLI_M14": "TÊN DOANH NGHIỆP",
+    "PLI_M15": "TÊN DOANH NGHIỆP",
+    "PLI_M17": "TÊN DOANH NGHIỆP",
+    "PLI_M18": "TÊN DOANH NGHIỆP",
+    "PLI_M19": "TÊN DOANH NGHIỆP",
+    "PLI_M21": "TÊN DOANH NGHIỆP",
+    "PLI_M23": "TÊN DOANH NGHIỆP",
+    "PLI_M25": "TÊN DOANH NGHIỆP",
+    "PLI_M26": "TÊN DOANH NGHIỆP",
+    "PLI_M27": "TÊN DOANH NGHIỆP",
+    "PLI_M28": "TÊN DOANH NGHIỆP",
+    "PLI_M29": "TÊN DOANH NGHIỆP",
+    "PLI_M30": "TÊN DOANH NGHIỆP",
+    "PLI_M31": "TÊN DOANH NGHIỆP",
+    "PLI_M32": "TÊN DOANH NGHIỆP",
+    "PLI_M33": "TÊN DOANH NGHIỆP",
+    "PLII_M02": "TÊN HỘ KINH DOANH",
+    "PLII_M03": "TÊN HỘ KINH DOANH",
+    "PLII_M04": "TÊN HỘ KINH DOANH",
+    "PLII_M05": "TÊN HỘ KINH DOANH",
+    "PLII_M06": "TÊN HỘ KINH DOANH",
+}
+
+# Dòng 2 khối quốc hiệu — bản Word gốc có gạch chân thật; bản scrape thay
+# bằng một dòng kẻ "-----". Chuyển đổi: bỏ dòng kẻ scraped, gạch chân thật.
+HEADER_BAND_MOTTO_LINE1 = "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM"
+HEADER_BAND_MOTTO_LINE2 = "Độc lập - Tự do - Hạnh phúc"
+# Chỉ dòng kẻ thuần dấu gạch/chấm mới được coi là decoration bỏ được.
+HEADER_BAND_RULE_RE = re.compile(r"^[\s\-_.…—–]+$")
+# "……, ngày…… tháng…… năm ……" — băng dưới cột phải
+_HEADER_BAND_DATE_RE = re.compile(r"^[\s.…,;:\-–—]*ngay\b.*\bthang\b.*\bnam\b")
+# Tỉ lệ chiều rộng cột TRÁI (phần còn lại cho khối quốc hiệu + ngày ký).
+HEADER_BAND_LEFT_RATIO = 0.42
+_HEADER_BAND_ALIGN = {(0, 0): "left", (0, 1): "center",
+                      (1, 0): "left", (1, 1): "right"}
+
+
+def _hdr_fold(text):
+    return fold(re.sub(r"\s+", " ", text or "")).strip()
+
+
+def _hdr_is_label(text, label):
+    """Ô "TÊN DOANH NGHIỆP" / "TÊN HỘ KINH DOANH" (+ dòng kẻ điền tên)."""
+    f = _hdr_fold(text)
+    lf = _hdr_fold(label)
+    if not f.startswith(lf):
+        return False
+    rest = f[len(lf):].strip().strip(":").strip()
+    return rest == "" or bool(HEADER_BAND_RULE_RE.match(rest))
+
+
+def _hdr_is_motto(text):
+    f = _hdr_fold(text)
+    return (_hdr_fold(HEADER_BAND_MOTTO_LINE1) in f
+            and _hdr_fold(HEADER_BAND_MOTTO_LINE2) in f)
+
+
+def _hdr_is_so(text):
+    t = re.sub(r"\s+", " ", text or "").strip()
+    return t.startswith("Số") and bool(DOT_RUN.search(t))
+
+
+def _hdr_is_date(text):
+    # nguồn scrape có tiền tố dấu chấm "……, ngày…" -> bỏ qua phần đầu không chữ
+    return bool(_HEADER_BAND_DATE_RE.match(_hdr_fold(text)))
+
+
+def _hdr_para_align(p_el, mode):
+    """Gán w:jc cho paragraph (trái/phải/giữa) — giữ mọi pPr khác."""
+    pPr = p_el.find(qn("w:pPr"))
+    if pPr is None:
+        pPr = OxmlElement("w:pPr")
+        p_el.insert(0, pPr)
+    jc = pPr.find(qn("w:jc"))
+    if jc is None:
+        jc = OxmlElement("w:jc")
+        pPr.append(jc)
+    jc.set(qn("w:val"), mode)
+
+
+def _restyle_national_motto(p_el, form_id):
+    """Đưa khối quốc hiệu về 2 dòng như bản Word gốc:
+      1. BỎ dòng kẻ scraped ("-----") ở cuối — chỉ khi thuần dấu kẻ;
+      2. GẠCH CHÂN thật dòng "Độc lập - Tự do - Hạnh phúc" (w:u).
+    Trả về True nếu đã xử lý; raise ValueError khi cấu trúc lạ (fail loud —
+    22 mẫu trong allowlist phải đồng nhất, lệch dạng phải bị nhìn thấy)."""
+    runs = [r for r in p_el if r.tag == qn("w:r")]
+
+    def _flat_elems():
+        # w:t rỗng/scrape thừa (vd run cuối rỗng của PLII_M02) không phải một
+        # dòng hiển thị -> loại khỏi cấu trúc dòng trước khi xét.
+        out = []
+        for r in runs:
+            for ch in list(r):
+                if ch.tag not in (qn("w:t"), qn("w:br"), qn("w:cr")):
+                    continue
+                if ch.tag == qn("w:t") and not (ch.text or "").strip():
+                    continue
+                out.append(ch)
+        return out
+
+    flat = _flat_elems()
+    texts = [ch for ch in flat if ch.tag == qn("w:t")]
+    if len(texts) < 2:
+        raise ValueError("[hdr2col] %s: khối quốc hiệu chỉ có %d dòng text, "
+                         "không nhận dạng được dòng kẻ" % (form_id, len(texts)))
+    # 1) dòng kẻ ở CUỐI khối
+    last = len(flat) - 1
+    while last >= 0 and flat[last].tag in (qn("w:br"), qn("w:cr")):
+        last -= 1
+    if last < 0 or flat[last].tag != qn("w:t") \
+            or not HEADER_BAND_RULE_RE.match(flat[last].text or ""):
+        raise ValueError("[hdr2col] %s: dòng cuối khối quốc hiệu %r không phải "
+                         "dòng kẻ scraped" % (form_id, (flat[last].text if last >= 0 else None)))
+    rule_el = flat[last]
+    prev_el = flat[last - 1] if last >= 1 else None
+    if prev_el is None or prev_el.tag not in (qn("w:br"), qn("w:cr")):
+        raise ValueError("[hdr2col] %s: dòng kẻ quốc hiệu không đứng sau <w:br/>"
+                         % form_id)
+    rule_el.getparent().remove(rule_el)
+    prev_el.getparent().remove(prev_el)
+    # 2) gạch chân dòng text cuối còn lại
+    tail = [ch for ch in _flat_elems() if ch.tag == qn("w:t")]
+    if not tail:
+        raise ValueError("[hdr2col] %s: mất dòng text sau khi bỏ dòng kẻ" % form_id)
+    t_el = tail[-1]
+    if _hdr_fold(t_el.text) != _hdr_fold(HEADER_BAND_MOTTO_LINE2):
+        raise ValueError("[hdr2col] %s: dòng dưới cùng %r không phải %r"
+                         % (form_id, t_el.text, HEADER_BAND_MOTTO_LINE2))
+    run_el = t_el.getparent()
+    new_r = OxmlElement("w:r")
+    old_rPr = run_el.find(qn("w:rPr"))
+    rPr = OxmlElement("w:rPr")
+    if old_rPr is not None:
+        for ch in old_rPr:
+            rPr.append(copy.deepcopy(ch))
+    u = OxmlElement("w:u")
+    u.set(qn("w:val"), "single")
+    rPr.append(u)          # w:u đứng sau w:sz/w:szCs -> append cuối là đúng thứ tự
+    new_r.append(rPr)
+    new_r.append(t_el)     # di chuyển w:t sang run mới
+    run_el.addnext(new_r)
+    return True
+
+
+def _band_usable_width_twips(doc):
+    """Chiều rộng vùng chữ (twips) theo sectPr đầu tiên; fallback A4 trừ lề."""
+    try:
+        sec = doc.sections[0]
+        usable = int(sec.page_width) - int(sec.left_margin) - int(sec.right_margin)
+        if usable > 0:
+            return usable // 635
+    except (IndexError, TypeError):
+        pass
+    return 9026  # A4 (11906) - 2 lề 1440
+
+
+def _band_set_borders_none(tbl_el):
+    """Bảng layout: KHÔNG viền (mọi mức tbl + tc), không lề ô."""
+    ns = "http://schemas.openxmlformats.org/wordprocessingml/2006/main"
+
+    def none_borders(tag):
+        el = OxmlElement(tag)
+        for edge in ("top", "left", "bottom", "right", "insideH", "insideV"):
+            e = OxmlElement("w:%s" % edge)
+            e.set(qn("w:val"), "nil")
+            el.append(e)
+        return el
+
+    tblPr = tbl_el.tblPr
+    for old in tblPr.findall(qn("w:tblBorders")):
+        tblPr.remove(old)
+    tblPr.append(none_borders("w:tblBorders"))
+    cell_mar = OxmlElement("w:tblCellMar")
+    for side in ("left", "right"):
+        e = OxmlElement("w:%s" % side)
+        e.set(qn("w:w"), "0")
+        e.set(qn("w:type"), "dxa")
+        cell_mar.append(e)
+    tblPr.append(cell_mar)
+    for tc in tbl_el.iter("{%s}tc" % ns):
+        tcPr = tc.find(qn("w:tcPr"))
+        if tcPr is None:
+            tcPr = OxmlElement("w:tcPr")
+            tc.insert(0, tcPr)
+        for old in tcPr.findall(qn("w:tcBorders")):
+            tcPr.remove(old)
+        tcPr.append(none_borders("w:tcBorders"))
+
+
+_TBLPR_ORDER = ("tblStyle", "tblpPr", "tblOverlap", "bidiVisual",
+                "tblStyleRowBandSize", "tblStyleColBandSize", "tblW", "jc",
+                "tblCellSpacing", "tblInd", "tblBorders", "shd", "tblLayout",
+                "tblCellMar", "tblLook", "tblCaption", "tblDescription")
+
+
+def _band_order_tblPr(tbl_el):
+    """Sắp con của w:tblPr theo thứ tự schema OOXML (Word nghiêm với tblPr)."""
+    tblPr = tbl_el.tblPr
+    kids = list(tblPr)
+    rank = {qn("w:%s" % n): i for i, n in enumerate(_TBLPR_ORDER)}
+    known = sorted((k for k in kids if k.tag in rank), key=lambda k: rank[k.tag])
+    unknown = [k for k in kids if k.tag not in rank]
+    for k in kids:
+        tblPr.remove(k)
+    for k in known + unknown:
+        tblPr.append(k)
+
+
+def build_header_band_table(doc, form_id):
+    """Tái dụng 4 paragraph header dọc thành w:tbl không viền 2 cột.
+
+    Trả về (tbl_element, [các w:p đã di chuyển]) hoặc None khi mẫu không nằm
+    trong HEADER_BAND_FORMS. raise ValueError khi mẫu nằm trong allowlist mà
+    cấu trúc nguồn lệch khỏi dạng chuẩn (không bao giờ bỏ im).
+    """
+    label = HEADER_BAND_FORMS.get(form_id)
+    if not label:
+        return None
+    body = doc.element.body
+    children = list(body.iterchildren())
+    anchor = None
+    for i, el in enumerate(children):
+        if el.tag != qn("w:p"):
+            continue
+        from docx.text.paragraph import Paragraph
+        if _hdr_is_label(Paragraph(el, doc).text, label):
+            anchor = i
+            break
+    if anchor is None:
+        raise ValueError("[hdr2col] %s: không tìm thấy ô %r trong nguồn"
+                         % (form_id, label))
+    # vị trí chèn bảng — phải khoá TRƯỚC khi di chuyển 4 paragraph vào ô
+    insert_at = children.index(children[anchor])
+    window = children[anchor:anchor + 4]
+    if len(window) < 4 or any(el.tag != qn("w:p") for el in window):
+        raise ValueError("[hdr2col] %s: 4 paragraph header không liền khối"
+                         % form_id)
+    from docx.text.paragraph import Paragraph
+    texts = [Paragraph(el, doc).text for el in window]
+    checks = (_hdr_is_motto(texts[1]), _hdr_is_so(texts[2]), _hdr_is_date(texts[3]))
+    if not all(checks):
+        raise ValueError("[hdr2col] %s: cấu trúc header lệch dạng chuẩn "
+                         "(quốc hiệu/Số/ngày ký khớp: %r): %r"
+                         % (form_id, checks, [t[:60] for t in texts]))
+
+    # --- dựng bảng 2x2 rồi DI CHUYỂN paragraph gốc vào ô ---
+    tbl = doc.add_table(rows=2, cols=2)
+    tbl.autofit = False
+    tbl_el = tbl._tbl
+    total = _band_usable_width_twips(doc)
+    left = int(round(total * HEADER_BAND_LEFT_RATIO))
+    widths = (left, total - left)
+    for ci, w in enumerate(widths):
+        tbl.columns[ci].width = w * 635          # twips -> EMU
+    # layout fixed + tcW KhỚP gridCol: Word lấy tcW của hàng đầu để chia cột
+    for ri in range(2):
+        for ci, w in enumerate(widths):
+            cell = tbl.rows[ri].cells[ci]
+            tcPr = cell._tc.get_or_add_tcPr()
+            tcW = tcPr.find(qn("w:tcW"))
+            if tcW is None:
+                tcW = OxmlElement("w:tcW")
+                tcPr.insert(0, tcW)
+            tcW.set(qn("w:type"), "dxa")
+            tcW.set(qn("w:w"), str(w))
+    if tbl_el.tblPr.find(qn("w:tblLayout")) is None:
+        layout = OxmlElement("w:tblLayout")
+        layout.set(qn("w:type"), "fixed")
+        tbl_el.tblPr.append(layout)
+    tblW = tbl_el.tblPr.find(qn("w:tblW"))
+    if tblW is not None:
+        tblW.set(qn("w:type"), "dxa")
+        tblW.set(qn("w:w"), str(total))
+    _band_set_borders_none(tbl_el)
+    _band_order_tblPr(tbl_el)
+
+    for ri in range(2):
+        for ci in range(2):
+            src = window[ri * 2 + ci]
+            tc = tbl.rows[ri].cells[ci]._tc
+            for p in tc.findall(qn("w:p")):
+                tc.remove(p)
+            tc.append(src)                       # di chuyển (không copy)
+            _hdr_para_align(src, _HEADER_BAND_ALIGN[(ri, ci)])
+    _restyle_national_motto(window[1], form_id)
+
+    parent = body                       # 4 paragraph là con trực tiếp của body
+    parent.insert(insert_at, tbl_el)
+    tbl_el.set(HEADER_BAND_TEMP_ATTR, form_id)
+    return tbl_el, window
+
+
+def _pop_header_band(table):
+    """Đọc + xoá thuộc tính tạm của bảng header 2-band; trả form_id hoặc None."""
+    el = table._tbl
+    raw = el.get(HEADER_BAND_TEMP_ATTR)
+    if raw is None:
+        return None
+    del el.attrib[HEADER_BAND_TEMP_ATTR]
+    return raw
+
+
+def _tag_header_band_slots(table, form_id, add_field, unmatched):
+    """Gắn the cho 2 ô băng dưới: "Số: …" và "……, ngày … tháng … năm …".
+
+    Dùng ĐÚNG bộ rule R qua _assign_para_slots với section_ctx rỗng — giống
+    hệt ngữ cảnh các paragraph này ở đầu tài liệu trước khi tái dụng, nên
+    key/label trong form_maps KHÔNG đổi."""
+    for ri, ci, where in ((1, 0, "hdr[1][0]"), (1, 1, "hdr[1][1]")):
+        para = cell_first_para(tr_cells(table, ri)[ci])
+        if para is None:
+            continue
+        full, _runs, groups = para_dot_groups(para)
+        if not groups:
+            continue
+        assignments = _assign_para_slots(full, groups, add_field, unmatched,
+                                        form_id, where)
+        apply_tags_to_para(para, assignments)
+
+
+# ---------------------------------------------------------------------------
 # Quy trình chính
 # ---------------------------------------------------------------------------
 
@@ -1835,6 +2272,9 @@ def process_form(path, titles, coverage):
     # fallback khai báo inline REBUILD_TABLES)
     ext = load_form_spec(form_id)
     rebuild_list_tables(doc, form_id, ext)
+    # Việc 2 (2026-08-28): tái dụng header dọc thành bảng 2-band không viền
+    # TRƯỚC khi gắn the — các mẫu trong HEADER_BAND_FORMS, lệch dạng phải fail loud.
+    build_header_band_table(doc, form_id)
     fields = []          # [{key,label,(type)}]
     dyn_tables = []
     section_specs = []   # metadata cấu trúc của kind mới (fixed-matrix, ...)
@@ -1938,71 +2378,20 @@ def process_form(path, titles, coverage):
                     section_ctx = fold(re.sub(r"\s+", " ", t))[:400]
                 pending_label = t if t.endswith(":") else ""
                 continue
-            assignments = []
-            prev_end = 0
-            gi = 0
-            while gi < len(groups):
-                g_start, g_end = groups[gi]
-                label = full[prev_end:g_start]
-                lab = norm_label(label)
-                # trường hợp đặc biệt: "……, ngày ……tháng ……năm ……" (ký tên, có slot đầu dòng)
-                if not lab.strip() and re.match(r"[,.]?\s*ngay\b", fold(full[g_end:g_end + 30])):
-                    names = ["dia_diem_ky", "ngay_ky_vb", "thang_ky_vb", "nam_ky_vb"]
-                    take = min(len(names), len(groups) - gi)
-                    for j in range(take):
-                        s, e = groups[gi + j]
-                        assignments.append((s, e, "{%s}" % names[j]))
-                        add_field(names[j], label if j == 0 else "")
-                    prev_end = groups[gi + take - 1][1]
-                    gi += take
-                    continue
-                if not lab.strip() and pending_label:
-                    # slot ở đoạn riêng, nhãn nằm ở paragraph trước kết thúc bằng ":"
-                    lab = norm_label(pending_label)
-                matched = None
-                for pat, key, grps, ctx in R:
-                    if pat and re.search(pat, lab):
-                        if ctx and not re.search(ctx, section_ctx):
-                            continue
-                        if grps:
-                            need = len(grps)
-                            avail = len(groups) - gi
-                            take = min(need, avail)
-                            last_ai = None
-                            for j in range(take):
-                                s, e = groups[gi + j]
-                                if grps[j] == "":
-                                    # nhóm nối tiếp (vd …/… trong ngày tháng): kéo dài tag trước
-                                    # phủ luôn đoạn này thay vì để nguyên dấu chấm lửng
-                                    if last_ai is not None:
-                                        ps_, pe_, pt_ = assignments[last_ai]
-                                        assignments[last_ai] = (ps_, e, pt_)
-                                    continue
-                                assignments.append((s, e, "{%s}" % grps[j]))
-                                last_ai = len(assignments) - 1
-                                add_field(grps[j], label if j == 0 else "")
-                            prev_end = groups[min(gi + take - 1, len(groups) - 1)][1]
-                            gi += take
-                        elif key:
-                            assignments.append((g_start, g_end, "{%s}" % key))
-                            add_field(key, label)
-                            prev_end = g_end
-                            gi += 1
-                        else:  # nhóm checkbox: bỏ qua không gắn the
-                            prev_end = g_end
-                            gi += 1
-                        matched = True
-                        break
-                if not matched:
-                    unmatched.append({"form": form_id, "where": f"p[{bi}]",
-                                      "label": label.strip()[:100]})
-                    prev_end = g_end
-                    gi += 1
+            assignments = _assign_para_slots(
+                full, groups, add_field, unmatched, form_id, f"p[{bi}]",
+                section_ctx=section_ctx, pending_label=pending_label)
             apply_tags_to_para(para, assignments)
         elif child.tag == qn("w:tbl"):
             tbl_idx += 1
             from docx.table import Table
             table = Table(child, doc)
+            if _pop_header_band(table) is not None:
+                # Bảng header 2-band (Việc 2): cấu trúc biết trước, the gắn
+                # riêng cho 2 ô băng dưới; KHÔNG đi qua detect_dynamic để
+                # không bị nhận nhầm là bảng danh sách.
+                _tag_header_band_slots(table, form_id, add_field, unmatched)
+                continue
             grid_info = _pop_grid_meta(table)
             if grid_info is not None:
                 # Bảng dựng từ kind mới (fixed-matrix / nested-grid /

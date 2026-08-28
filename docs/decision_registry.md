@@ -184,3 +184,32 @@ Các packet **chưa được đóng DECIDED** vì còn thiếu thông tin/biên 
   mô tả “Sản phẩm khác” khi số lượng > 0, chưa chốt max/placeholder.
 - D4, D2 và D7 có thể mở phần kỹ thuật tương ứng theo các lựa chọn đã đủ,
   nhưng không tự động đóng các packet khác còn phụ thuộc source evidence.
+
+## Owner response checkpoint — 2026-08-28 (lần 2, cùng ngày)
+
+Owner ra lệnh mở các nhóm bảng blocked bằng NGUỒN PHÁP LÝ MỚI (thay việc chờ
+bản gốc giấy — trả lời D1.3/D1.5/D3.3=B cũ):
+
+- **Nguồn chuẩn được phép dùng:** Nghị định 168/2025/NĐ-CP (30/6/2025) +
+  **Thông tư 68/2025/TT-BTC** (biểu mẫu phụ lục I/II chính là các mẫu trong
+  app). Owner cho phép Lead/agent **tự tra cứu trên mạng** và **hỏi owner bất
+  cứ thông tin pháp lý nào** cần. Mọi spec bắt buộc trích dẫn điều/dòng nguồn
+  vào `source_evidence`.
+- **Phạm vi mở (5 nhóm):** (1) nguồn vốn PLI_M03/M04/M05/M12; (2) thuế
+  PLII_M02 (D5.2 — danh mục chỉ tiêu theo mẫu II.2 TT 68); (3) M09 rebuild
+  14 cột (D3.1=A decontaminate + D3.2=A); (4) M72 N2–N5 + N-tail (D2.9/D7.4=A);
+  (5) thuế fixed-matrix PLI_M17/M19/M23/M25 (D5.1=A).
+- **Use case mới:** "Thay đổi nội dung đăng ký hộ kinh doanh" (PLII_M02, do
+  chủ hộ ký) — data-only, Điều 100/101 NĐ 168.
+- **Layout header:** tên DN/HKD TRÁI + khối quốc hiệu PHẢI cùng band; dòng
+  "Số:" TRÁI / ngày-tháng-năm PHẢI — theo bản Word gốc Phụ lục II Mẫu 2 /
+  Phụ lục I Mẫu 13. Sửa qua spec + Lead regen, cấm sửa tay generated; visual
+  re-shoot (UI + DOCX qua Word) bắt buộc.
+- **Defect hunt (lệnh bổ sung trong ngày):** các lớp lỗi như "M09 nhảy mục
+  6→8 (mất mục 7)", "thiếu checkbox 3 tháng phương thức đóng BHXH", "bảng
+  ngành nghề" phải được **identify tận gốc rồi loại bỏ** trước khi bàn giao —
+  mở Wave D2 census/audit hệ thống, không vá tay từng mẫu.
+- Lưu ý nguồn pháp lý đang theo dõi: TT 121/2026/TT-BTC (hiệu lực 21/8/2026)
+  sửa đổi TT 68/2025, thay 09 biểu mẫu — các lane rebuild phải kiểm tra mẫu
+  của mình có thuộc số bị thay không, ưu tiên bản hiện hành, ghi rõ trong
+  spec; mơ hồ thì hỏi owner.

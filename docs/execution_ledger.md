@@ -243,6 +243,21 @@ Còn mở không chặn: lone surrogate/U+FFFE-U+FFFF không strip trong safe_es
 | X6 visual | Lead | — | phiếu mẫu thật + owner duyệt hình (máy dev không có Excel/LibreOffice — mở bằng Excel là việc owner) | ⏳ |
 | Phát sinh từ owner | — | — | (1) thiếu use case "Thay đổi nội dung đăng ký hộ kinh doanh" (PLII_M02) trong use_cases.json; (2) header mẫu phải xếp TÊN DN trái + quốc hiệu phải như bản Word gốc (Mẫu 2/13); (3) mở bảng blocked bằng nguồn NĐ 168/2025 + TT 68 (owner khuyến khích tự tra cứu + hỏi owner khi cần) | ⏳ handoff |
 
+## Wave Lead-tiếp-quản @ main 178ba3a→355e133 (2026-08-28, lệnh owner: use case + header + rollout TT 68 + X6)
+
+| Task | Owner | Commit/evidence | Trạng thái |
+|---|---|---|---|
+| XÁC MINH đầu tiên | Lead | HEAD ≥ 9f136be; worktree chỉ main; commit edit tồn đọng handoff (`178ba3a`); runner 46/0/0 | ✅ |
+| Use case "Thay đổi nội dung đăng ký hộ kinh doanh" (PLII_M02) | Lead | `85fa95b`: +1 case (27→28) theo Điều 100/101 NĐ 168 (đọc nguyên văn); pin P3-UC1 sync theo bằng chứng; allowlist +1 `85fa95b`→`eaa50f0` (2 suite đỏ ảo H7 khi chưa cân — đúng tiền lệ) | ✅ |
+| Fix lớp lỗi checkbox dẹt thành text | Lead | `ba64f29`: gốc rễ = process_checkboxes chỉ gắn the khi khớp whitelist CHK_RULES ("3 thang..." ≠ "03 thang..."). Rule `0?3/0?6` + fallback `_auto_chk_key` (mọi □/☐ đều được gắn the). Regen 4 mẫu, 6 glyph → 6 chk; sandbox pass 0 glyph; visual re-shoot 4/4 (0 marker, 0 page error, M01 render đúng "3 tháng một lần") `generated_ho_so/_visual_layout/chkfix/` | ✅ |
+| Census đánh số mục + chuỗi companion | Lead | `ba64f29`+`355e133`: `tools/census/numbering_audit.py` (JUMP/CHAIN/GLUE). Phân loại: CHAIN GAP M03→M06 (6→8), M04→M08 (7→10), M05→M09 (6→8) — đúng phạm vi lane rebuild; GLUE chữ chú thích 23 mẫu — lớp extractor V3, chờ đợt riêng; 0 JUMP ngoài vùng nhiễm M09 | ✅ census / ⏳ fix qua lanes |
+| X6 phiếu Excel mẫu PLI_M72 | Lead | `generated_ho_so/_visual_layout/excel/PLI_M72_phieu_mau.xlsx` + preview HTML; reload-kiểm openpyxl PASS (protection ON, sheet ẩn ___map, 65 hàng). **NOT RUN: mở bằng Excel thật — máy dev không có Excel, chờ owner duyệt hình** | ⏳ chờ owner |
+| Lanes song song (SOP mục 6, tối đa 3) | 3 lane agent | BASE `eaa50f0`: `agent/hdr2col` (Việc 2 header 2 band) · `agent/cap-von` (Việc 3a nguồn vốn M03/M04/M05/M12 + 3b thuế PLII_M02) · `agent/m09-rebuild` (Việc 3c M09 14 cột + fix mất mục 7). Lead tự wire form-domain.js khi merge (PLAN 6.4). Batch 2: M72 N2–N5 + thuế M17/M19/M23/M25 | ⏳ đang chạy |
+| Owner response 2026-08-28 (lần 2) | Lead | docs/decision_registry.md: nguồn TT 68/NĐ 168 + 5 nhóm mở + defect hunt + lưu ý TT 121/2026/TT-BTC sửa TT 68 (thay 09 biểu mẫu — lane phải kiểm tra) | ✅ |
+
+**Gate giữa wave (355e133):** runner **46/0/0 VERDICT PASS**; `git status` sạch;
+deep idempotency 17/0; manifest GATE PASS 87/87; visual re-shoot chkfix 4/4.
+
 ## R3–R7 (khung — chi tiết hóa khi mở wave)
 
 | Wave | Điều kiện mở | Ghi chú |

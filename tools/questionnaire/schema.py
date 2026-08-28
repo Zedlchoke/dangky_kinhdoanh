@@ -35,6 +35,14 @@ AUTOFILLS = {None, "vsic"}  # ô xám "app tự làm" theo quy ước màu PLAN 
 
 FILE_VERSION = 1
 
+# --- Hằng RENDER dùng chung export/import (wave X2/X3) -----------------------
+# Ô ví dụ điền mẫu được render "PREFIX + example" (chữ mờ ở cột ghi chú);
+# ô select kèm ghi chú cách chọn. excel_import cần CÁC DẠNG ĐÃ RENDER này để
+# không nhầm chuỗi tĩnh của app với dữ liệu khách gõ (bộ lọc UNKNOWN_CELL).
+EXAMPLE_PREFIX = "ví dụ: "
+SELECT_NOTE = "Chọn một dòng trong danh sách ▾"
+DATE_NOTE = "dd/mm/yyyy"
+
 
 class QuestionnaireError(ValueError):
     """Lỗi cấu trúc/registry questionnaire — builder import phải fail-loud."""

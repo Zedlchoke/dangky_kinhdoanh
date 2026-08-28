@@ -77,6 +77,9 @@ SUITES: list[dict] = [
     {"name": "test_questionnaire",        "type": "module", "target": "tools.test_questionnaire"},
     # --- Excel X2 (2026-08-28): xuất phiếu xlsx ---
     {"name": "test_excel_export",         "type": "module", "target": "tools.test_excel_export"},
+    # --- Excel X4 (2026-08-28): round-trip + negative ---
+    {"name": "test_excel_roundtrip",      "type": "module", "target": "tools.test_excel_roundtrip"},
+    {"name": "test_excel_negative",       "type": "module", "target": "tools.test_excel_negative"},
     # --- Python ---
     {"name": "p1_b_verify_m72",           "type": "module", "target": "tools.census.p1_b_verify_m72",
      "requires": ["python-docx"]},

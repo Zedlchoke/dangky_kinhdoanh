@@ -54,7 +54,8 @@ from typing import Any
 from openpyxl import load_workbook
 from openpyxl.utils.cell import coordinate_to_tuple
 
-from tools.questionnaire.schema import TRANSFORMS
+from tools.questionnaire.schema import (
+    DATE_NOTE, EXAMPLE_PREFIX, SELECT_NOTE, TRANSFORMS)
 
 # ---------------------------------------------------------------------------
 # Hằng số hợp đồng (export ra — bridge X5 so code theo đúng chuỗi này)
@@ -394,15 +395,24 @@ def _json_canon(value: Any) -> str:
 
 
 def _static_texts(questionnaire: dict) -> set[str]:
-    """Chuỗi tĩnh app tự render — để không nhầm label với ô khách gõ."""
+    """Chuỗi tĩnh app tự render — để không nhầm label với ô khách gõ.
+
+    [Tích hợp X4] Cần thêm CÁC DẠNG ĐÃ RENDER của chuỗi tĩnh: ví dụ điền mẫu
+    được exporter ghi thành `EXAMPLE_PREFIX + example`, ô select kèm
+    `SELECT_NOTE` — hằng render định nghĩa ở tools/questionnaire/schema.py
+    (lớp X1, nguồn contract dùng chung, không import chéo X2<->X3).
+    """
     out = {_norm_label(str(questionnaire.get("title", ""))),
-           _norm_label(str(questionnaire.get("doc_id", "")))}
+           _norm_label(str(questionnaire.get("doc_id", ""))),
+           _norm_label(SELECT_NOTE), _norm_label(DATE_NOTE)}
     for q in questionnaire.get("questions", []):
         if not isinstance(q, dict):
             continue
         for name in ("group", "text", "example"):
             if q.get(name):
                 out.add(_norm_label(str(q[name])))
+                if name == "example":
+                    out.add(_norm_label(EXAMPLE_PREFIX + str(q[name])))
         for opt in q.get("options") or []:
             if isinstance(opt, dict):
                 for name in ("label", "value"):

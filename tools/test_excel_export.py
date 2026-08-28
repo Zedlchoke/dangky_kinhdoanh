@@ -23,9 +23,10 @@ Contract chốt cứng (lane x3-import + bridge X5 code đối xứng, KHÔNG đ
      cho `select`, luôn "X" cho `mark`; `showDropDown` KHÔNG bật (attribute
      OOXML nghịch dấu — bật là mất mũi tên); bảng lặp áp cho cả cột.
 
-[XM] Sheet ẩn `___map`: A1 marker, B1 JSON thông tin file, bảng
+[XM] Sheet ẩn `___map`: A1 marker, hàng 1–2 metadata `key=value`
+     (questionnaire_version BẮT BUỘC cho excel_import), bảng
      `MAP_COLUMNS` với MỘT dòng cho MỖI target `data_key` (question_id, key,
-     when_json, transform, row_group, layout, ô điền, hàng đầu/cuối) — X3
+     when, transform, row_group, layout, ô điền, hàng đầu/cuối) — X3
      dịch ngược ô → key mà không phải dò lại layout.
 
 [XR] Round-trip đọc lại bằng openpyxl: text tiếng Việt, protection, fill,
@@ -212,7 +213,7 @@ def validations(ws) -> dict:
 
 
 def map_rows(mp) -> list[dict]:
-    """Đọc bảng map như X3 sẽ đọc: header theo tên cột, JSON parse when_json.
+    """Đọc bảng map như X3 sẽ đọc: header theo tên cột, JSON parse when.
 
     openpyxl BỎ chuỗi rỗng khi ghi (ô không có giá trị) -> đọc lại là None;
     chuẩn hóa None -> "" cho cột chữ để điều kiện so sánh không phụ thuộc giá
@@ -228,10 +229,22 @@ def map_rows(mp) -> list[dict]:
         for c, name in enumerate(MAP_COLUMNS):
             value = mp.cell(row=r, column=c + 1).value
             row_dict[name] = "" if value is None else value
-        row_dict["when"] = json.loads(row_dict["when_json"])
+        row_dict["when"] = json.loads(row_dict["when"])
         rows.append(row_dict)
         r += 1
     return rows
+
+
+def map_meta(mp) -> dict:
+    """Đọc metadata `key=value` TRƯỚC header — y cơ chế tools/excel_import."""
+    meta = {}
+    for r in range(1, MAP_HEADER_ROW):
+        for c in range(1, mp.max_column + 1):
+            text = str(mp.cell(row=r, column=c).value or "")
+            key, sep, val = text.partition("=")
+            if sep and key.strip():
+                meta.setdefault(key.strip(), val.strip())
+    return meta
 
 
 def filled_cells(ws) -> set:
@@ -515,19 +528,19 @@ def xd_mark_and_range(tmp):
 # [XM] Sheet map ẩn cho X3
 # ---------------------------------------------------------------------------
 
-@check("[XM1] sheet ẩn '___map': marker + JSON head (doc_id, version, sheet)")
+@check("[XM1] sheet ẩn '___map': marker + metadata key=value (X3 đòi "
+      "questionnaire_version)")
 def xm_header(tmp):
     wb, ws, mp = open_book(write_tmp(tmp, meta={"case_id": "PLI-1"}))
     assert wb.sheetnames == [SHEET_NAME, MAP_SHEET], wb.sheetnames
     assert mp.sheet_state == "hidden", mp.sheet_state
     assert mp["A1"].value == MAP_MARKER, mp["A1"].value
-    head = json.loads(mp["B1"].value)
-    assert head["doc_id"] == "X2_DEMO"
-    assert head["questionnaire_version"] == 1
-    assert head["map_version"] == MAP_VERSION == 1
-    assert head["sheet"] == SHEET_NAME
-    assert head["case_id"] == "PLI-1"
-    assert head["first_body_row"] == FIRST_BODY_ROW
+    meta = map_meta(mp)
+    assert meta["doc_id"] == "X2_DEMO", meta
+    assert meta["questionnaire_version"] == "1"
+    assert meta["map_version"] == str(MAP_VERSION) == "1"
+    assert meta["sheet"] == SHEET_NAME
+    assert meta["case_id"] == "PLI-1"
     assert mp.protection.sheet is True, "map cũng phải khóa"
 
 
@@ -538,38 +551,44 @@ def xm_rows(tmp):
     expected = 0
     for q in FIXTURE["questions"]:
         dk = q["data_key"]
-        expected += len(dk) if isinstance(dk, list) else 1
-    assert len(rows) == expected == 10, "%d != %d" % (len(rows), expected)
+        n = len(dk) if isinstance(dk, list) else 1
+        # [X4] MỖI ô điền một dòng map — câu bảng nhân REPEAT_ROWS
+        expected += n * (REPEAT_ROWS if q.get("row_group") else 1)
+    assert len(rows) == expected, "%d != %d" % (len(rows), expected)
 
     by_id = {r["question_id"]: r for r in rows}
     loai = by_id["q_loai"]
-    assert loai["data_key"] == "dn.loai_hinh" and loai["type"] == "select"
+    assert loai["key"] == "dn.loai_hinh" and loai["type"] == "select"
     assert loai["cell"] == "B%d" % ROW_Q_LOAI
     assert loai["cell_row"] == ROW_Q_LOAI and loai["row_last"] == ROW_Q_LOAI
     assert loai["layout"] == "single" and loai["cell_col"] == COL_FILL
     assert loai["when"] == {} and loai["transform"] == ""
     assert loai["required"] == "yes" and loai["repeatable"] == ""
 
-    # câu 2 target: 2 dòng, when_json parse lại đúng, thứ tự giữ theo file
+    # câu 2 target: 2 dòng, when parse lại đúng, thứ tự giữ theo file
     ngay = [r for r in rows if r["question_id"] == "q_ngay_sinh"]
-    assert [r["data_key"] for r in ngay] == ["ngay_sinh", "nam_sinh"]
+    assert [r["key"] for r in ngay] == ["ngay_sinh", "nam_sinh"]
     assert [r["transform"] for r in ngay] == ["date_day", "date_year"]
     assert all(r["when"] == {} for r in ngay)
     assert all(r["cell"] == "B%d" % ROW_NGAY_SINH for r in ngay)
 
-    # target có when: JSON string ổn định (sort_keys) và đọc lại thành dict
+    # target có when: JSON đọc lại thành dict đúng; [X4] mỗi ô điền một dòng
+    # -> 2 nhánh × REPEAT_ROWS dòng, theo thứ tự file (DNTN rồi CTCP)
     ten = [r for r in rows if r["question_id"] == "q_nganh_ten"]
-    assert len(ten) == 2
+    assert len(ten) == 2 * REPEAT_ROWS
     assert [r["when"] for r in ten] == [
-        {"dn.loai_hinh": ["DNTN"]}, {"dn.loai_hinh": ["CTCP"]}]
+        {"dn.loai_hinh": ["DNTN"]}] * REPEAT_ROWS + [
+        {"dn.loai_hinh": ["CTCP"]}] * REPEAT_ROWS
     assert all(r["layout"] == "table" for r in ten)
     assert all(r["row_group"] == "nganh" for r in ten)
     assert all(r["repeatable"] == "yes" for r in ten)
     assert all(r["multi_key"] == "yes" for r in ten)
-    # ô điền của bảng = hàng dữ liệu ĐẦU TIÊN, row_last = hàng thứ REPEAT_ROWS
+    # mỗi dòng map = đúng một ô: cột B từ hàng đầu tới hàng cuối bảng
+    assert [r["cell_row"] for r in ten] == list(
+        range(ROW_TABLE_FIRST, ROW_TABLE_LAST + 1)) * 2
+    assert all(r["row_last"] == r["cell_row"] for r in ten)
     assert ten[0]["cell"] == "B%d" % ROW_TABLE_FIRST
-    assert ten[0]["cell_row"] == ROW_TABLE_FIRST
-    assert ten[0]["row_last"] == ROW_TABLE_LAST
+    assert ten[-1]["cell"] == "B%d" % ROW_TABLE_LAST
     # cột xám autofill cũng được map (X3 biết cột nào app tự điền)
     ma = [r for r in rows if r["question_id"] == "q_nganh_ma"][0]
     assert ma["cell_col"] == COL_FILL + 1 and ma["autofill"] == "vsic"
@@ -753,15 +772,16 @@ def x2_pli_m72(tmp):
     assert ws["A1"].value == questionnaire["title"]
     assert "PLI-2026-0007" in ws["A2"].value
 
-    # tổng target key của phiếu thật = số dòng map
+    # tổng ô điền của phiếu thật = số dòng map ([X4] bảng nhân REPEAT_ROWS)
     rows = map_rows(mp)
     expected = sum(
-        len(q["data_key"]) if isinstance(q["data_key"], list) else 1
+        (len(q["data_key"]) if isinstance(q["data_key"], list) else 1) *
+        (REPEAT_ROWS if q.get("row_group") else 1)
         for q in questionnaire["questions"])
     assert len(rows) == expected, "%d != %d" % (len(rows), expected)
 
     # dropdown loại hình: đủ 5 label theo thứ tự artifact
-    loai_row = next(r for r in rows if r["data_key"] == "dn.loai_hinh")
+    loai_row = next(r for r in rows if r["key"] == "dn.loai_hinh")
     dv_by_sqref = validations(ws)
     dv = dv_by_sqref["B%d" % loai_row["cell_row"]]
     labels = [o["label"] for o in questionnaire["questions"][0]["options"]]
@@ -771,7 +791,8 @@ def x2_pli_m72(tmp):
     nganh = [r for r in rows if r["row_group"] == "nganh"]
     cols = sorted({r["cell_col"] for r in nganh})
     assert cols == [2, 3, 4], cols
-    first, last = nganh[0]["cell_row"], nganh[0]["row_last"]
+    first, last = min(r["cell_row"] for r in nganh), \
+        max(r["cell_row"] for r in nganh)
     assert last - first + 1 == REPEAT_ROWS
     ma_cols = {r["cell_col"] for r in nganh if r["autofill"] == "vsic"}
     assert len(ma_cols) == 1, ma_cols

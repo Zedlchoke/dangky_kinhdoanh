@@ -360,7 +360,9 @@ class Bridge:
         try:
             from tools.excel_import import import_questionnaire  # noqa: E402
 
-            return import_questionnaire(q, path)
+            # Contract X3: import_questionnaire(path, questionnaire) — path
+            # file khách điền TRƯỚC, questionnaire (đã đọc ở trên) sau.
+            return import_questionnaire(path, q)
         except Exception as exc:  # noqa: BLE001
             # module excel_import tự trả lỗi có cấu trúc; nhánh này chỉ còn lại
             # lỗi bất thường của chính Bridge (không ném exception ra webview).

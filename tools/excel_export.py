@@ -45,11 +45,11 @@ nghịch dấu — đặt True sẽ LÀM MẤT mũi tên trong Excel. Ô `mark` 
 (PLAN E2 — bỏ dấu chấm nghìn, tách ngày/tháng/năm).
 
 Sheet `MAP_SHEET` (ẩn) = bảng metadata máy đọc cho X3, KHÔNG dò lại layout:
-  A1 = `MAP_MARKER`                    B1 = JSON thông tin file (doc_id,
-      version, sheet, hàng nội dung đầu…)
+  A1 = `MAP_MARKER`; hàng 1–2 = metadata dạng `key=value` (questionnaire_
+  version BẮT BUỘC cho tools/excel_import, kèm doc_id/sheet/cluster/…).
   hàng 3 = header `MAP_COLUMNS`; hàng 4+ = MỘT dòng cho MỖI target
   `data_key` (câu nhiều key / nhiều `when` → nhiều dòng): question_id, nhóm,
-  type, key, `when_json` (JSON string), transform, row_group, layout
+  type, key, `when` (JSON string), transform, row_group, layout
   ("single"/"table"), ô điền đầu (vd "B12"), hàng đầu/cuối vùng điền,
   repeatable, autofill, required, version, multi_key.
   Lưu ý khi đọc: ô map không có giá trị đọc lại là None (openpyxl bỏ chuỗi
@@ -73,6 +73,8 @@ from openpyxl.utils import get_column_letter
 from openpyxl.worksheet.datavalidation import DataValidation
 
 from tools.questionnaire.schema import TYPES as QUESTION_TYPES
+from tools.questionnaire.schema import DATE_NOTE as DATE_NOTE_RENDER
+from tools.questionnaire.schema import SELECT_NOTE as SELECT_NOTE_RENDER
 
 __all__ = [
     "ExcelExportError", "MAP_COLUMNS", "MAP_MARKER", "MAP_SHEET",
@@ -120,16 +122,21 @@ COLUMN_WIDTHS = {"A": 44, "B": 30, "C": 30, "D": 14, "E": 16, "F": 16,
                  "G": 16}
 
 # Header bảng map trên MAP_SHEET — thứ tự cố định, X3 đọc theo tên cột.
+# [Tích hợp X4] Cột "key"/"when" đặt tên đúng contract tools/excel_import.py
+# (MAP_COLUMNS bên reader đòi question_id|key|cell, when là JSON string).
 MAP_COLUMNS = (
-    "question_id", "group", "type", "data_key", "when_json", "transform",
+    "question_id", "group", "type", "key", "when", "transform",
     "row_group", "layout", "cell", "cell_row", "cell_col", "row_last",
     "repeatable", "autofill", "required", "version", "multi_key",
 )
 MAP_HEADER_ROW = 3            # hàng header của bảng map
 MAP_FIRST_ROW = 4             # dòng map đầu tiên
 
-DATE_NOTE = "dd/mm/yyyy"
-SELECT_NOTE = "Chọn một dòng trong danh sách ▾"
+DATE_NOTE = DATE_NOTE_RENDER
+# SELECT_NOTE/DATE_NOTE là hằng render dùng chung — định nghĩa ở
+# tools/questionnaire/schema.py (lớp X1) để excel_import nhận diện đúng
+# chuỗi tĩnh (bộ lọc UNKNOWN_CELL) mà không import chéo X2<->X3.
+SELECT_NOTE = SELECT_NOTE_RENDER
 MAX_FORMULA_LEN = 255         # giới hạn formula1 của DataValidation (Excel)
 
 GUIDE_LINES = (
@@ -365,8 +372,8 @@ def _map_entry(item: dict, target: dict, row: int, col: int, row_last: int,
         "question_id": item["question_id"],
         "group": item["group"],
         "type": item["type"],
-        "data_key": target["key"],
-        "when_json": json.dumps(when, ensure_ascii=True, sort_keys=True),
+        "key": target["key"],
+        "when": json.dumps(when, ensure_ascii=True, sort_keys=True),
         "transform": target.get("transform") or "",
         "row_group": item.get("row_group") or "",
         "layout": layout,
@@ -452,8 +459,12 @@ def _write_table(ws, row: int, items: list[dict],
                                    get_column_letter(col), last_data_row),
                 _dropdown_formula(item))
         for target in _targets(item):
-            entries.append(_map_entry(item, target, first_data_row, col,
-                                      last_data_row, "table"))
+            # [Tích hợp X4] X3 đòi MỖI ô điền MỘT dòng map ("Mỗi hàng sau =
+            # MỘT ô điền") — bảng N hàng phải phát N dòng/branch, không gom
+            # vùng hàng vào một dòng (row_last chỉ là cột thông tin thêm).
+            for data_row in range(first_data_row, last_data_row + 1):
+                entries.append(_map_entry(item, target, data_row, col,
+                                          data_row, "table"))
     return entries, last_data_row
 
 
@@ -524,23 +535,24 @@ def _write_map(wb: Workbook, questionnaire: dict, meta: dict,
     ws = wb.create_sheet(MAP_SHEET)
     ws.sheet_state = "hidden"
 
+    # Metadata DẠNG `key=value` ở các hàng TRƯỚC header — tools/excel_import
+    # quét `key=value` trên mọi ô trước hàng header và BẮT BUỘC có
+    # `questionnaire_version` (BAD_HEADER nếu thiếu). Marker ở A1 không chứa
+    # '=' nên không bị đọc nhầm là metadata.
     ws.cell(row=1, column=1, value=MAP_MARKER)
-    head = ws.cell(row=1, column=2, value=json.dumps(
-        {
-            "doc_id": questionnaire.get("doc_id"),
-            "title": questionnaire.get("title"),
-            "cluster": questionnaire.get("cluster"),
-            "questionnaire_version": questionnaire.get("questionnaire_version"),
-            "map_version": MAP_VERSION,
-            "sheet": SHEET_NAME,
-            "generator": "tools/excel_export.py",
-            "first_body_row": FIRST_BODY_ROW,
-            "repeat_rows": REPEAT_ROWS,
-            "case_id": meta.get("case_id") or "",
-            "today": meta.get("today") or "",
-        },
-        ensure_ascii=True, sort_keys=True))
-    head.alignment = _wrap()
+    meta_rows = [
+        ("questionnaire_version",
+         str(questionnaire.get("questionnaire_version") or "")),
+        ("doc_id", str(questionnaire.get("doc_id") or "")),
+        ("sheet", SHEET_NAME),
+        ("cluster", str(questionnaire.get("cluster") or "")),
+        ("map_version", str(MAP_VERSION)),
+        ("case_id", str(meta.get("case_id") or "")),
+        ("today", str(meta.get("today") or "")),
+    ]
+    for index, (mkey, mval) in enumerate(meta_rows):
+        ws.cell(row=1, column=2 + index,
+                value="%s=%s" % (mkey, mval)).alignment = _wrap()
 
     for offset, name in enumerate(MAP_COLUMNS):
         cell = ws.cell(row=MAP_HEADER_ROW, column=1 + offset, value=name)

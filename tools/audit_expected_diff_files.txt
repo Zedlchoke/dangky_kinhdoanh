@@ -204,3 +204,6 @@ app_web/test_p3_a11y.js
 
 # --- P3.4: checklist smoke platform Windows (docs-only, NOT RUN chua tung chay) ---
 docs/platform_smoke_checklist.md
+
+# --- P4: Review Gate Excel — bao cao cho owner (docs-only, khong implement) ---
+docs/p4_excel_review_gate.md

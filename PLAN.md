@@ -78,7 +78,7 @@ tests, manifests tại HEAD (trọng tài cuối nếu docs stale).
 ```
 (1) Owner xác định khách muốn làm dịch vụ nào
 (2) Owner CHỌN thủ tục trong app
-(3) App XUẤT file Excel riêng cho thủ tục đó — đẹp, dễ dùng, câu hỏi đời thường
+(3) App XUẤT file Excel riêng cho thủ tục đó — đẹp, dễ dùng, câu hỏi đời thường(nhưng vẫn giữ tính chuyên nghiệp)
 (4) Khách nhận file, tự điền (app không cần chạy)
 (5) Owner nạp file Excel vào app
 (6) App tự điền toàn bộ thông tin vào biểu mẫu + liệt kê ô CÒN THIẾU
@@ -219,13 +219,68 @@ file: bảng "Giấy tờ bạn cần chuẩn bị" từ `ho_so_bao_gom` (khi DE
 - PASS → ghi `CORE_APP_DONE`. Nếu Excel đã được mở + hoàn thành → audit thêm
   luồng Excel → `FULL_PRODUCT_DONE`.
 
-## 6. Quy tắc điều phối (bất biến)
+## 6. SOP vận hành worktree & sub-agent (bắt buộc)
+
+### 6.1 Worktree lane (coding)
+
+```bash
+# Tạo (chạy từ ROOT repo, KHÔNG bao giờ code trực tiếp trong worktree của lane khác):
+git worktree add ../dangky_kinhdoanh-worktrees/<lane> -b agent/<lane> <BASE_COMMIT>
+cd ../dangky_kinhdoanh-worktrees/<lane>
+```
+
+- Đặt tên: `<lane>` = `p3-fix-draft`, `p3-fix-export`, `p3-fix-a11y`…;
+  branch `agent/<lane>`.
+- Lane commit nhỏ, message rõ, kết thúc bằng `Co-Authored-By: Claude
+  <noreply@anthropic.com>`; KHÔNG push, KHÔNG merge, KHÔNG đụng repo chính
+  sau khi tạo worktree.
+- Mỗi lane nhận brief có đủ 5 mục: BASE commit · **file ownership exact**
+  (được tạo/sửa) · **forbidden files** · test gate (suite phải xanh, tính cả
+  baseline suites) · format báo cáo cuối (LANE/BASE/HEAD/DIFF/TESTS/FINDINGS/
+  NOTES).
+- Lane KHÔNG regen global (sandbox temp ĐƯỢC — pattern `bfm.OUT_TPL/OUT_DATA`
+  như `tools/test_r3b1_people_specs.py`); KHÔNG chạy release_runner.
+
+### 6.2 Sub-agent auditor (read-only)
+
+- Audito KHÔNG sửa code — chỉ được ghi vào `generated_ho_so/_visual_layout/
+  <thư_mục_evidence>/` (gitignored) + script tạm `/tmp/`.
+- Recipe đã kiểm chứng: `python3 -m http.server <port>` từ ROOT +
+  Playwright/Chromium headless + `app_web/dev/snapshot.html?doc=<FORM_ID>
+  &sel=<dntn|tnhh_1tv|tnhh_2tv|ctcp|dhdn>&values=<json>`; full-page screenshot
+  + DOM probe sau render; kill server khi xong.
+- Nếu audito phiên trước mất transcript → spawn audito MỚI với brief hẹp
+  (đọc evidence có sẵn, không chụp lại nếu không cần).
+
+### 6.3 Merge SOP (CHỈ Lead, tuần tự)
+
+```
+review diff lane → git merge --no-ff agent/<lane> (message ghi evidence)
+→ targeted battery → Lead regen batch nếu lane đổi spec (chạy pipeline đầy đủ
+build_form_maps → tag_m72_sections → docx_to_blocks, chạy ×2 zero-diff,
+so member-level cho docx) → sửa pin/tripwire test thành trạng thái mới
+(không nới) → census manifest nếu counts đổi → allowlist exact-set cân
+(= =) → full release runner → ledger + checkpoint report.
+```
+
+- Conflict-guard/export/rename: theo tiền lệ đã ghi trong ledger (M06
+  `ds_thanh_vien_tnhh`, `nganh_sua_doi_chi_tiet`) — cùng loop name khác
+  contract là FAIL-loud đúng thiết kế, sửa bằng tên loop riêng chứ không nới
+  guard.
+
+### 6.4 Khi nào được spawn
+
+- KHÔNG spawn khi main bẩn chưa phân loại xong.
+- Tối đa 3 lane song song, không chồng file; `form-domain.js` chỉ một lane
+  sở hữu tại một thời điểm.
+- Việc độc lập đọc-đơn (audit visual, đếm evidence) → 1 agent riêng, brief hẹp.
+- Lead tự làm: regen, census, allowlist, ledger, merge, mọi thay đổi
+  `app_web/ui/render.js`/`form-domain.js` khi >1 lane cần.
+
+## 7. Quy tắc điều phối (bất biến)
 
 - Lead giữ main, là người DUY NHẤT regen global artifacts (build_form_maps →
   tag_m72_sections → docx_to_blocks → census manifest) và merge lane.
-- Không spawn agent khi main bẩn chưa phân loại; tối đa 3 lane song song,
-  không chồng file; mỗi lane nhận base commit + ownership + forbidden files +
-  gate + format báo cáo.
 - Targeted tests khi sửa; release runner đầy đủ tại checkpoint; visual pilot
   form bị ảnh hưởng trước, batch tại gate. **Visual re-shoot sau mọi regen là
   BẮT BUỘC** (bài học P2: bắt 2 regression mà 38 suite xanh không thấy).
@@ -234,7 +289,7 @@ file: bảng "Giấy tờ bạn cần chuẩn bị" từ `ho_so_bao_gom` (khi DE
 - Mỗi phase kết thúc commit sạch + cập nhật ledger; **phase mới chỉ mở theo
   lệnh owner**. PASS/FAIL/NOT RUN trung thực — chỉ PASS khi chạy thật.
 
-## 7. Evidence contract mỗi checkpoint
+## 8. Evidence contract mỗi checkpoint
 
 HEAD/base + commit list · exact diff allowlist · command/exit code/PASS-FAIL-
 NOT RUN · generator lần hai zero diff (ngoại lệ đã classification) · visual

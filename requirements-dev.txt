@@ -13,3 +13,11 @@ lxml==6.1.1
 # Version chính xác sẽ khóa tại R6 build manifest khi owner cung cấp
 # môi trường Windows đích; hiện chưa cài ở máy dev này nên KHÔNG pin mù.
 pywebview>=5.0 ; platform_system != "Linux"
+
+# Excel wave X2 — xuất phiếu thu thập thông tin .xlsx cho khách
+# (tools/excel_export.py, PLAN.md mục 4.4; X3 nạp phiếu dùng chung version).
+# Version đã probe trên chính máy này (P4.3 + X2): protection bật và giữ
+# nguyên sau round-trip (sheet=True, ô điền locked=False), DataValidation
+# list tiếng Việt, JSON metadata trong ô — đọc lại đúng. openpyxl thuần
+# Python nên máy sạch (P6) chỉ cần pip cài đúng version này.
+openpyxl==3.1.5

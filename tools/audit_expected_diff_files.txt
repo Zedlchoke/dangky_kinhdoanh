@@ -190,3 +190,8 @@ app_web/test_form_grid_meta.js
 # --- P2 rename M06 loop: sync 2 suite dem/contract cu ---
 app_web/test_acceptance.js
 app_web/test_loop_prod.js
+
+# --- PLAN v3 + SOP: docs-only Lead (ea112ed) ---
+# docs/leader_handoff_p3.md: ban luu prompt ban giao Lead P3 (docs-only,
+# khong dung production/generated; bo sot khi can exact-set o commit ea112ed).
+docs/leader_handoff_p3.md

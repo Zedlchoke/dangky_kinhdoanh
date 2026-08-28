@@ -584,8 +584,9 @@ fs.readFileSync(path.join(ROOT, 'app_web', 'main.py'), 'utf8').split('\n')
   });
 check('P3-S4b: app_web/main.py KHONG print gia tri nhay cam',
   pyPrintHits.length === 0, JSON.stringify(pyPrintHits));
-/* Lỗi render trả về UI có mang giá trị người dùng không? (ExportTotalsError
- * nhúng `stored %r` — mức INFORMATIONAL: hiển thị trong panel lỗi, không log) */
+/* Lỗi render trả về UI có mang giá trị người dùng không? (trước P3.2
+ * ExportTotalsError nhúng giá trị stored/computed và main.py nối repr(exc) —
+ * giờ cả hai đã lọc, check này khoá lại bằng quét nguồn) */
 checkSec('P3-S4c: thong bao loi export KHONG nhung gia tri nguoi dung (stored %r)',
   (() => {
     const dr = fs.readFileSync(path.join(ROOT, 'tools', 'docx_render.py'), 'utf8');

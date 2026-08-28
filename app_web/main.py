@@ -76,6 +76,19 @@ def _sanitize_name(value, fallback: str = "ho_so", limit: int = 255) -> str:
     return safe.strip() or fallback
 
 
+def _safe_error(exc: BaseException, limit: int = 160) -> str:
+    """Message lỗi an toàn để trả về UI: một dòng, đã cắt ngắn, KHÔNG repr.
+
+    Dùng repr() (hoặc str() chưa lọc) của exception khi đưa vào errors[] là
+    có thể lộ giá trị người dùng (F-P3-SEC-LOG) — Bridge chỉ trả loại lỗi và
+    message đã lọc; mã lỗi/row của ExportTotalsError vẫn giữ để debug.
+    """
+    text = " ".join(str(exc).split())
+    if len(text) > limit:
+        text = text[:limit].rstrip() + "..."
+    return text or type(exc).__name__
+
+
 def _nest(data: dict) -> dict:
     """Chuyển key phẳng dạng 'a.b.c' thành dict lồng nhau vì engine render
     (tools/docx_render._lookup) tra cứu theo đường dẫn lồng nhau."""
@@ -216,7 +229,11 @@ class Bridge:
                                tables_meta=(fmap.get("section_specs") or None))
                 files.append(out_file.name)
             except Exception as exc:  # noqa: BLE001
-                errors.append("%s: lỗi render %r" % (fid, exc))
+                # KHÔNG nhúng repr(exception) vào errors[] trả về UI: message
+                # gốc có thể mang giá trị người dùng (F-P3-SEC-LOG) — chỉ trả
+                # loại lỗi + message đã lọc.
+                errors.append("%s: lỗi render %s: %s"
+                              % (fid, type(exc).__name__, _safe_error(exc)))
 
         zip_path = None
         if files and not errors:

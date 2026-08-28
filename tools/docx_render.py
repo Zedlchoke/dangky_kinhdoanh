@@ -523,8 +523,13 @@ def recompute_totals(data: dict, tables_meta: list,
                 problems.append({
                     "code": "EXPORT_TOTALS_RECOMPUTE_CONFLICT",
                     "semantic_key": sem, "row": total.get("target_row"),
-                    "detail": "%s: stored %r != computed %r"
-                              % (total.get("target_tag"), stored, computed),
+                    # detail KHÔNG nhúng stored/computed (P3.2/F-P3-SEC-LOG):
+                    # message này đi thẳng vào errors[] trả về UI, còn giá trị
+                    # người dùng thì không. Hàng + tag đủ để định vị ô lệch;
+                    # giá trị thật vẫn nằm trong problems[i] để debug nội bộ.
+                    "detail": "%s: tổng lưu khác tổng tính lại "
+                              "(đã lọc giá trị khỏi thông báo)"
+                              % (total.get("target_tag"),),
                     "stored": stored, "computed": computed})
             # luôn lấy kết quả tính lại — draft không được quyết định tổng
             _set_nested(data, target, computed)

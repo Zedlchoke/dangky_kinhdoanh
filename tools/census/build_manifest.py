@@ -61,6 +61,10 @@ EVOLVED_FORMS = {
     # hdr2col merge 084444d (2026-08-28): 4 paragraph header dọc (ô tên /
     # quốc hiệu / Số: / ngày ký) -> 1 w:tbl header band 2x2 (Việc 2 — lệnh
     # owner). summary_counts.p giảm 3-4, table 0 -> 1 ở TOÀN BỘ 22 mẫu census.
+    # m09-rebuild merge cfdefcd + Lead chèn mục 7 (11861b6): decontaminate
+    # D3.1=A xóa vùng nhiễm p103-p222 (~104 paragraph), bảng 14 cột thay
+    # grid phẳng; summary_counts.p 178 -> 74.
+    "PLI_M09": "m09-rebuild: decontaminate 14-cot + chen muc 7 (D3.1/D3.2=A)",
     "PLII_M02": "hdr2col: 4 p header -> w:tbl header band (band:header)",
     "PLII_M03": "hdr2col: 4 p header -> w:tbl header band (band:header)",
     "PLII_M04": "hdr2col: 4 p header -> w:tbl header band (band:header)",

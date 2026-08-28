@@ -2760,17 +2760,17 @@
     "loop": 1
    },
    "summary_counts_recount": {
-    "p": 178,
+    "p": 74,
     "chk": 14,
     "table": 0,
     "loop": 1
    },
    "detector": {
-    "p_signatures": 3,
-    "list_hints": 1,
+    "p_signatures": 2,
+    "list_hints": 0,
     "hits": [
      {
-      "block": 7,
+      "block": 8,
       "stt": true,
       "list_hint": false,
       "excerpt": "STT"
@@ -2779,19 +2779,7 @@
       "block": 87,
       "stt": true,
       "list_hint": false,
-      "excerpt": "STTTên thành viênSố, ngày cấp, nơi cấp"
-     },
-     {
-      "block": 155,
-      "stt": true,
-      "list_hint": false,
       "excerpt": "STT"
-     },
-     {
-      "block": 189,
-      "stt": false,
-      "list_hint": true,
-      "excerpt": "4 Nếu doanh nghiệp xác định được chủ sở hữu hưởng lợi của doanh nghiệp theo quy định tại điểm b khoản 1 Điều 1"
      }
     ],
     "classifications": [],

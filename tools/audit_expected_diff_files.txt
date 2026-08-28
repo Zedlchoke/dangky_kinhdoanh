@@ -217,3 +217,7 @@ tools/test_questionnaire.py
 # (regen bang: python3 -X utf8 -m tools.questionnaire.build_questionnaire;
 # regen di cung dot regen template theo PLAN 4.5 — diff review nhu generated).
 app/data/questionnaire/PLI_M72.json
+
+# --- Excel X2: xuat phieu xlsx (protection/dropdown/mau) + pin openpyxl ---
+tools/excel_export.py
+tools/test_excel_export.py

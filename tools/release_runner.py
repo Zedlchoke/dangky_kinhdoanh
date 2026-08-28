@@ -75,6 +75,8 @@ SUITES: list[dict] = [
     {"name": "test_p3_a11y",              "type": "node", "target": "app_web/test_p3_a11y.js"},
     # --- Excel X1 (2026-08-28): lớp questionnaire (PLAN.md mục 4) ---
     {"name": "test_questionnaire",        "type": "module", "target": "tools.test_questionnaire"},
+    # --- Excel X2 (2026-08-28): xuất phiếu xlsx ---
+    {"name": "test_excel_export",         "type": "module", "target": "tools.test_excel_export"},
     # --- Python ---
     {"name": "p1_b_verify_m72",           "type": "module", "target": "tools.census.p1_b_verify_m72",
      "requires": ["python-docx"]},

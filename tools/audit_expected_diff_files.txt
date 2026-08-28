@@ -201,3 +201,6 @@ app_web/test_p3_e2e.js
 app_web/test_p3_draft.js
 app_web/test_p3_security.js
 app_web/test_p3_a11y.js
+
+# --- P3.4: checklist smoke platform Windows (docs-only, NOT RUN chua tung chay) ---
+docs/platform_smoke_checklist.md

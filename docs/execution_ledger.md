@@ -231,6 +231,18 @@ Còn mở không chặn: lone surrogate/U+FFFE-U+FFFF không strip trong safe_es
 | P4.4 effort/risk + E1–E6 | Lead | §4: X1–X6 ~9–13 phiên, mỗi wave commit sạch; §5: E1–E6 kèm khuyến nghị; **lệnh chờ owner: `Bắt đầu Excel` hoặc `Để sau`** | ⏳ chờ owner |
 | Gate P4 (docs-only) | Lead | commit `b72a155` (+allowlist 1 entry có chú thích); H7 56/0 tại HEAD; full runner tái xác minh tại HEAD docs-only | ✅ |
 
+## Wave Excel X1–X5 @ main 114e7fa→9f136be (2026-08-28, lệnh owner "Bắt đầu Excel" + duyệt E1–E6)
+
+| Wave | Owner | Commit | Evidence | Trạng thái |
+|---|---|---|---|---|
+| X1 questionnaire | Lead | `114e7fa` | schema v1 + builder fail-loud + cụm 24 câu owner duyệt (E6); artifact `app/data/questionnaire/PLI_M72.json` generated ×2 zero-diff; test_questionnaire 10/0; runner 43/0/0 | ✅ |
+| X2 xuất .xlsx | Lane x2-export | `cc1c221`→merge `fae9a6a` | write_questionnaire protection/dropdown/quy ước vàng–xám + sheet map; pin openpyxl==3.1.5; test_excel_export 25/0 | ✅ |
+| X3 nạp .xlsx | Lane x3-import | `3191fa8`→merge `550d611` | import_questionnaire(path, q) fail-loud 8 mã lỗi riêng; selftest 6/0 + probe 32 assertion | ✅ |
+| X5 UI + bridge | Lane x5-ui | `df2e666`→merge `a5b0b73` | 2 nút + Bridge.export/import_questionnaire (sanitize doc_id, _safe_error); dom 58/0, e2e 38/0, a11y 36/0 | ✅ |
+| X4 tích hợp + round-trip/negative | Lead | `3d5457d`+`9f136be` | Căn 3 lệch lane (map contract key/when+metadata key=value; bảng N hàng = N dòng map; bridge đảo (path, q)) + hằng render về lớp X1; test_excel_roundtrip 4/0 (giữ 100% giá trị, đổi nhánh when, deterministic theo nội dung ô), test_excel_negative 9/0 (data=None khi fail); runner **46/0/0 VERDICT PASS** @ 9f136be | ✅ |
+| X6 visual | Lead | — | phiếu mẫu thật + owner duyệt hình (máy dev không có Excel/LibreOffice — mở bằng Excel là việc owner) | ⏳ |
+| Phát sinh từ owner | — | — | (1) thiếu use case "Thay đổi nội dung đăng ký hộ kinh doanh" (PLII_M02) trong use_cases.json; (2) header mẫu phải xếp TÊN DN trái + quốc hiệu phải như bản Word gốc (Mẫu 2/13); (3) mở bảng blocked bằng nguồn NĐ 168/2025 + TT 68 (owner khuyến khích tự tra cứu + hỏi owner khi cần) | ⏳ handoff |
+
 ## R3–R7 (khung — chi tiết hóa khi mở wave)
 
 | Wave | Điều kiện mở | Ghi chú |

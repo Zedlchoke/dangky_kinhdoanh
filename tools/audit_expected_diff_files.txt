@@ -228,3 +228,6 @@ tools/excel_import.py
 # --- Excel X4: round-trip + negative (gate PLAN 4.4) ---
 tools/test_excel_roundtrip.py
 tools/test_excel_negative.py
+
+# --- Handoff Lead kế tiếp (docs-only): Excel X6 + rollout bảng + header ---
+docs/leader_handoff_excel_next.md

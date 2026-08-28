@@ -20,6 +20,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import sys
 import time
 import traceback
@@ -48,6 +49,44 @@ def _as_dict(obj):
     if isinstance(obj, str):
         return json.loads(obj)
     return obj
+
+
+# Ký tự điều khiển (NUL, BEL, ESC, …) không được nằm trong tên thư mục/file.
+_NAME_CTRL_RE = re.compile(r"[\x00-\x1f\x7f]")
+
+
+def _sanitize_name(value, fallback: str = "ho_so", limit: int = 255) -> str:
+    """Làm sạch tên lấy từ payload trước khi ghép vào đường dẫn export.
+
+    `case_id` và `forms[].id` đến thẳng từ Bridge nên KHÔNG được tin:
+    '../x' hoặc '..\\x' ghi thoát ra ngoài generated_ho_so, NUL/ký tự điều
+    khiển làm mkdir ném exception (ValueError: embedded null character),
+    tên quá dài vượt giới hạn filesystem (OSError: File name too long).
+    Quy tắc: '/' và '\\' coi là phân cách và thay bằng '_', bỏ segment
+    rỗng/'.',/'..', bỏ ký tự điều khiển, rút gọn còn tối đa `limit` byte
+    UTF-8 (không cắt giữa codepoint, bỏ surrogate không mã hoá được).
+    Kết quả rỗng -> dùng `fallback`. Tên hợp lệ giữ nguyên 100%.
+    """
+    text = "_".join(p for p in re.split(r"[/\\]+", str(value or ""))
+                    if p not in ("", ".", ".."))
+    text = _NAME_CTRL_RE.sub("", text).strip()
+    if not text:
+        return fallback
+    safe = text.encode("utf-8", "ignore")[:limit].decode("utf-8", "ignore")
+    return safe.strip() or fallback
+
+
+def _safe_error(exc: BaseException, limit: int = 160) -> str:
+    """Message lỗi an toàn để trả về UI: một dòng, đã cắt ngắn, KHÔNG repr.
+
+    Dùng repr() (hoặc str() chưa lọc) của exception khi đưa vào errors[] là
+    có thể lộ giá trị người dùng (F-P3-SEC-LOG) — Bridge chỉ trả loại lỗi và
+    message đã lọc; mã lỗi/row của ExportTotalsError vẫn giữ để debug.
+    """
+    text = " ".join(str(exc).split())
+    if len(text) > limit:
+        text = text[:limit].rstrip() + "..."
+    return text or type(exc).__name__
 
 
 def _nest(data: dict) -> dict:
@@ -155,8 +194,18 @@ class Bridge:
             return {"ok": False, "errors": ["không đọc được form_maps.json: %r" % (exc,)]}
 
         ts = time.strftime("%Y%m%d_%H%M%S")
+        # case_id là giá trị người dùng: phải sanitize TRƯỚC khi ghép đường
+        # dẫn (F-P3-SEC-PATH). `limit` để dành 16 byte cho đuôi "_%Y%m%d_%H%M%S"
+        # nên "%s_%s" không bao giờ vượt giới hạn 255 byte của filesystem.
+        case_id = _sanitize_name(case_id, "ho_so", 255 - 1 - len(ts))
         out_dir = ROOT / "generated_ho_so" / ("%s_%s" % (case_id, ts))
-        out_dir.mkdir(parents=True, exist_ok=True)
+        try:
+            out_dir.mkdir(parents=True, exist_ok=True)
+        except Exception as exc:  # noqa: BLE001
+            # không để exception (đĩa đầy, tên lạ, quyền…) bay ra ngoài Bridge
+            return {"ok": False, "errors": [
+                "EXPORT_DIR_CREATE_FAILED: không tạo được thư mục export "
+                "(%s: %s)" % (out_dir.name, type(exc).__name__)]}
 
         # import engine render từ thư mục gốc dự án
         from tools.docx_render import write_rendered  # noqa: E402
@@ -169,7 +218,9 @@ class Bridge:
                 errors.append("%s: không có trong form_maps.json" % fid)
                 continue
             template = APP_DIR / fmap["template"]
-            out_file = out_dir / ("%s.docx" % fid)
+            # sanitize CHỈ phần dùng để đặt tên file; key tra cứu maps ở trên
+            # giữ nguyên id gốc (fid lạ phải rơi vào nhánh errors như cũ).
+            out_file = out_dir / ("%s.docx" % _sanitize_name(fid, "form", 250))
             try:
                 # R2: section_specs (metadata bảng kind mới) -> recompute tổng
                 # lúc export, fail-loud nếu stored lệch computed. Form không có
@@ -178,7 +229,11 @@ class Bridge:
                                tables_meta=(fmap.get("section_specs") or None))
                 files.append(out_file.name)
             except Exception as exc:  # noqa: BLE001
-                errors.append("%s: lỗi render %r" % (fid, exc))
+                # KHÔNG nhúng repr(exception) vào errors[] trả về UI: message
+                # gốc có thể mang giá trị người dùng (F-P3-SEC-LOG) — chỉ trả
+                # loại lỗi + message đã lọc.
+                errors.append("%s: lỗi render %s: %s"
+                              % (fid, type(exc).__name__, _safe_error(exc)))
 
         zip_path = None
         if files and not errors:

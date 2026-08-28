@@ -14,7 +14,8 @@
  *     khiển, tên >255 byte — chạy đường export THẬT (Bridge.export của
  *     app_web/main.py, dựng module `webview` giả để import được trên máy
  *     không có pywebview) và đo xem thư mục đích có thoát ra ngoài repo hay
- *     không. Production CHƯA sanitize -> ghi KNOWN-FINDING, KHÔNG fix.
+ *     không. Production sanitize qua _sanitize_name() (lane P3.2, commit
+ *     "fix(P3.2 export)") -> case này là check PASS/FAIL, không còn finding.
  *  4. Log: quét tĩnh app_web/ui/*.js + app_web/main.py — không được in giá trị
  *     nhạy cảm (MST/CCCD/họ tên) vào console.
  *
@@ -378,9 +379,10 @@ check('P3-S2c: ky tu XML dac biet (& < >) duoc escape trong w:t',
 // ======================================================================
 section('3. Export: ten ho so chua ../ ..\\ NUL control >255 byte');
 /* Production main.py:
+ *   case_id = _sanitize_name(case_id, "ho_so", 255 - 1 - len(ts))
  *   out_dir = ROOT / "generated_ho_so" / ("%s_%s" % (case_id, ts))
- *   out_file = out_dir / ("%s.docx" % fid)
- * không có bước sanitize -> kiểm chứng bằng cách chạy thật. */
+ *   out_file = out_dir / ("%s.docx" % _sanitize_name(fid, "form", 250))
+ * kiểm chứng bằng cách chạy thật qua Bridge.export. */
 const mainSrc = fs.readFileSync(path.join(ROOT, 'app_web', 'main.py'), 'utf8');
 const hasSanitize = /(sanitize|secure_filename|basename|\bname\b\s*=|re\.sub|\.replace\(["']\.\.)/
   .test(mainSrc.split('def export').slice(1).join('def export'));
@@ -582,8 +584,9 @@ fs.readFileSync(path.join(ROOT, 'app_web', 'main.py'), 'utf8').split('\n')
   });
 check('P3-S4b: app_web/main.py KHONG print gia tri nhay cam',
   pyPrintHits.length === 0, JSON.stringify(pyPrintHits));
-/* Lỗi render trả về UI có mang giá trị người dùng không? (ExportTotalsError
- * nhúng `stored %r` — mức INFORMATIONAL: hiển thị trong panel lỗi, không log) */
+/* Lỗi render trả về UI có mang giá trị người dùng không? (trước P3.2
+ * ExportTotalsError nhúng giá trị stored/computed và main.py nối repr(exc) —
+ * giờ cả hai đã lọc, check này khoá lại bằng quét nguồn) */
 checkSec('P3-S4c: thong bao loi export KHONG nhung gia tri nguoi dung (stored %r)',
   (() => {
     const dr = fs.readFileSync(path.join(ROOT, 'tools', 'docx_render.py'), 'utf8');

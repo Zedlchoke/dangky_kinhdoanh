@@ -321,7 +321,8 @@ def prt_conflict_codes():
     codes = {p["code"] for p in raised.problems}
     assert codes == {"EXPORT_TOTALS_RECOMPUTE_CONFLICT"}, codes
     detail = str(raised)
-    assert "tong_so" in detail and "12345" in detail, detail
+    # [P3.2/F-P3-SEC-LOG] detail lọc giá trị người dùng; tag hàng vẫn giữ.
+    assert "tong_so" in detail and "12345" not in detail, detail
 
     data_soft = draft({total_key("gia_tri_vnd"): "12345"})
     soft = recompute_totals(data_soft, [PRODUCT_META], strict=False)

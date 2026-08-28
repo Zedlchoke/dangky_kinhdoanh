@@ -223,8 +223,10 @@ def ts_conflict_fails_loud(sandbox):
     codes = {p["code"] for p in raised.problems}
     assert codes == {"EXPORT_TOTALS_RECOMPUTE_CONFLICT"}, codes
     detail = str(raised)
-    assert "tong_cong" in detail and "777" in detail, \
-        "thông báo phải nêu hàng + giá trị: %s" % detail
+    # [P3.2/F-P3-SEC-LOG] detail KHÔNG được nhúng giá trị người dùng
+    # (giá trị thật vẫn nằm ở problems[i]["stored"/"computed"] để debug).
+    assert "tong_cong" in detail and "777" not in detail, \
+        "thông báo phải nêu hàng nhưng lọc giá trị: %s" % detail
 
 
 @check("[TS3] strict=False: chi ghi report, van dung so tinh lai")

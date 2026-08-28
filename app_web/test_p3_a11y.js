@@ -14,6 +14,10 @@
  *      (hoặc >= 3:1 với chữ lớn theo WCAG 1.4.3).
  *   G6 zoom 200% (body.style.zoom): không chồng chữ ở vùng đầu trang
  *      PLI_M02 + PLI_M01.
+ *   G7 (P3.3) app shell thật: mở index.html + app.js (KHÔNG phải snapshot),
+ *      đo #tabs[role=tablist]: role=tab + đúng 1 aria-selected=true; roving
+ *      tabindex; ArrowLeft/Right di chuyển focus và aria-selected theo focus;
+ *      không focus trap trong thanh tab.
  *
  * Mỗi gate ghi PASS/FAIL riêng. FAIL là FINDING của production (báo Lead) —
  * lane này KHÔNG sửa CSS/production, nên gate có cờ FINDING vẫn để suite
@@ -471,6 +475,143 @@ async function gateZoom(page, doc, injectFault) {
   await page.evaluate(() => { document.body.style.zoom = ''; });
 }
 
+/* G7 (P3.3): APP SHELL THẬT — index.html + app.js (bootstrap DOMContentLoaded),
+ * KHÔNG phải snapshot harness. Serve ROOT bằng chính http.server của suite;
+ * ?mock=1 là chế độ mock được app.js hỗ trợ sẵn (loadCases/getBlocks đọc dữ liệu
+ * local, không cần bridge pywebview) nên tab xuất hiện mà không phải dựng API giả.
+ * Đo trên #tabs[role=tablist] (đã có aria-label sẵn trong index.html):
+ *   G7.1 mỗi tab role=tab, đúng 1 tab aria-selected=true
+ *   G7.2 roving tabindex: đúng 1 tab tabindex=0, còn lại -1
+ *   G7.3 ArrowLeft/ArrowRight di chuyển focus + aria-selected theo focus
+ *   G7.4 không focus trap trong thanh tab (Tab/Shift+Tab phải thoát ra được) */
+async function gateShell(page) {
+  section('G7 [shell] app that index.html: tablist, aria-selected, roving tabindex, arrow, khong trap');
+  await page.addInitScript(function () {
+    /* app.js đã guard null-safe (`window.pywebview && window.pywebview.api`);
+     * đặt TRƯỚC script app để không phụ thuộc sự kiện pywebviewready. */
+    window.pywebview = { api: null };
+  });
+  await page.goto('http://127.0.0.1:' + PORT + '/app_web/ui/index.html?mock=1');
+
+  let ready = true, waitErr = '';
+  try {
+    await page.waitForSelector('#tabs [role="tab"]', { timeout: 20000 });
+    await page.waitForFunction(function () {
+      return document.querySelectorAll('#tabs [role="tab"]').length >= 1 &&
+        !!document.querySelector('#tabs [aria-selected="true"]');
+    }, { timeout: 20000 });
+  } catch (e) {
+    ready = false;
+    waitErr = String(e && e.message || e).split('\n')[0];
+  }
+
+  const m = await page.evaluate(function () {
+    const list = document.querySelector('#tabs[role="tablist"]');
+    const tabs = Array.prototype.slice.call(
+      document.querySelectorAll('#tabs [role="tab"]'));
+    const sel = tabs.filter(function (t) {
+      return t.getAttribute('aria-selected') === 'true'; }).length;
+    const unsel = tabs.filter(function (t) {
+      return t.getAttribute('aria-selected') === 'false'; }).length;
+    return {
+      ready: true,
+      tablist: !!list,
+      tablistLabel: list ? (list.getAttribute('aria-label') || '').trim() : '',
+      n: tabs.length,
+      oddChildren: Array.prototype.filter.call(
+        document.querySelectorAll('#tabs > *'),
+        function (el) { return el.getAttribute('role') !== 'tab'; }).length,
+      selected: sel, unselected: unsel,
+      roving0: tabs.filter(function (t) {
+        return t.getAttribute('tabindex') === '0'; }).length,
+      rovingMinus: tabs.filter(function (t) {
+        return t.getAttribute('tabindex') === '-1'; }).length,
+      ids: tabs.map(function (t) { return t.getAttribute('data-doc-id'); })
+    };
+  }).catch(function () { return { ready: false }; });
+  m.ready = m.ready === true && ready;
+  if (!m.ready) m.waitErr = waitErr;
+
+  check('G7.1[shell] #tabs la tablist co aria-label, ' + m.n +
+      ' tab role=tab, dung 1 aria-selected=true',
+    m.ready && m.tablist && !!m.tablistLabel && m.n >= 1 &&
+      m.selected === 1 && m.unselected === m.n - 1 && m.oddChildren === 0,
+    JSON.stringify(m), 'F-P3-A11Y-SHELL-TAB');
+
+  check('G7.2[shell] roving tabindex: dung 1 tab tabindex=0, con lai -1',
+    m.ready && m.n >= 1 && m.roving0 === 1 && m.rovingMinus === m.n - 1,
+    'roving0=' + m.roving0 + ' roving-1=' + m.rovingMinus + ' n=' + m.n,
+    'F-P3-A11Y-SHELL-ROVING');
+
+  /* G7.3: focus tab đang chọn rồi bấm mũi tên bằng BÀN PHÍM; focus và
+   * aria-selected phải cùng chuyển sang tab kề (và wrap vòng). */
+  let arrow = { ok: false };
+  if (m.ready && m.n >= 1) {
+    arrow = await page.evaluate(function (ids) {
+      const tabs = Array.prototype.slice.call(
+        document.querySelectorAll('#tabs [role="tab"]'));
+      tabs[0].focus();
+      return { first: document.activeElement.getAttribute('data-doc-id'), n: tabs.length };
+    }, m.ids);
+    await page.keyboard.press('ArrowRight');
+    const right = await page.evaluate(function () {
+      const tabs = Array.prototype.slice.call(
+        document.querySelectorAll('#tabs [role="tab"]'));
+      const sel = tabs.filter(function (t) {
+        return t.getAttribute('aria-selected') === 'true'; })[0];
+      return {
+        focus: document.activeElement && document.activeElement.closest &&
+          document.activeElement.closest('#tabs')
+          ? document.activeElement.getAttribute('data-doc-id') : null,
+        selected: sel ? sel.getAttribute('data-doc-id') : null,
+        inTabs: !!(document.activeElement && document.activeElement.closest &&
+          document.activeElement.closest('#tabs'))
+      };
+    });
+    await page.keyboard.press('ArrowLeft');
+    const left = await page.evaluate(function () {
+      return document.activeElement && document.activeElement.closest &&
+        document.activeElement.closest('#tabs')
+        ? document.activeElement.getAttribute('data-doc-id') : null;
+    });
+    arrow.ok = right.inTabs && right.focus && right.selected &&
+      right.focus === right.selected &&
+      right.focus !== arrow.first && left === arrow.first;
+    arrow.right = right;
+    arrow.backTo = left;
+  }
+  check('G7.3[shell] ArrowRight/ArrowLeft di chuyen focus + aria-selected theo focus',
+    arrow.ok, JSON.stringify(arrow), 'F-P3-A11Y-SHELL-ARROW');
+
+  /* G7.4: từ tab cuối Tab phải THOÁT khỏi #tabs; từ tab đầu Shift+Tab phải
+   * thoát theo chiều ngược lại — không giữ focus trong thanh tab. */
+  let trap = { fwd: null, back: null };
+  if (m.ready && m.n >= 1) {
+    await page.evaluate(function () {
+      const tabs = document.querySelectorAll('#tabs [role="tab"]');
+      tabs[tabs.length - 1].focus();
+    });
+    await page.keyboard.press('Tab');
+    trap.fwd = await page.evaluate(function () {
+      return !!(document.activeElement && document.activeElement.closest &&
+        document.activeElement.closest('#tabs'));
+    });
+    await page.evaluate(function () {
+      const t = document.querySelector('#tabs [role="tab"]');
+      if (t) t.focus();
+    });
+    await page.keyboard.press('Shift+Tab');
+    trap.back = await page.evaluate(function () {
+      return !!(document.activeElement && document.activeElement.closest &&
+        document.activeElement.closest('#tabs'));
+    });
+  }
+  check('G7.4[shell] khong focus trap trong thanh tab (Tab/Shift+Tab thoat duoc)',
+    m.ready && trap.fwd === false && trap.back === false,
+    JSON.stringify(trap) + ' (true = con nam trong #tabs)',
+    'F-P3-A11Y-SHELL-TRAP');
+}
+
 // ------------------------------------------------------------------ main
 
 (async () => {
@@ -522,6 +663,7 @@ async function gateZoom(page, doc, injectFault) {
       await gateZoom(page, doc, false);
       await gateZoom(page, doc, true);   // tự kiểm chứng detector
     }
+    await gateShell(page);               // P3.3: app shell thật (index.html)
     await browser.close();
   } catch (e) {
     failed++; broke = true;
@@ -549,29 +691,44 @@ async function gateZoom(page, doc, injectFault) {
   };
   const fv = findLine(css, /\.fld:focus-visible/);
   const ffocus = findLine(css, /\.fld:focus,/);
-  if (fv > 0 && ffocus > fv) {
-    console.log('EVID  G2: app_web/ui/style.css:' + fv + ' khai .fld:focus-visible '
-      + '{outline:2px solid #2f6fbf} nhung style.css:' + ffocus + ' khai '
-      + '.fld:focus{outline:none} (cu the nhu nhau,nam sau thang => outline none)');
-  } else {
-    console.log('EVID  G2: khong tim thay cap rule focus/focus-visible (fv=' + fv +
-      ', ffocus=' + ffocus + ')');
+  /* rule .fld:focus kết thúc ở '}' đầu tiên: còn outline:none bên trong không */
+  let ffOutlineNone = false;
+  if (ffocus > 0) {
+    for (let i = ffocus; i < css.length && i < ffocus + 6; i++) {
+      if (/^\s*\}/.test(css[i])) break;
+      if (/^\s*outline:\s*none\s*;/.test(css[i])) { ffOutlineNone = true; break; }
+    }
   }
-  const btnNoLabel = findLine(rd, /class="btn-row-add" data-act="add"/);
+  console.log('EVID  G2: app_web/ui/style.css:' + fv + ' khai .fld:focus-visible '
+    + '{outline:2px solid #2f6fbf}; style.css:' + ffocus + ' khai .fld:focus' +
+    (ffocus > 0 && ffocus > fv
+      ? (ffOutlineNone
+        ? ' (VAN con outline:none => de len rule focus-visible)'
+        : ' khong con outline:none => :focus-visible duoc ap dung (da sua '
+          + 'F-P3-A11Y-FOCUS)')
+      : ' (khong xac dinh duoc thu tu rule, fv=' + fv + ', ffocus=' + ffocus + ')'));
+  const btnAdd = findLine(rd, /class="btn-row-add" data-act="add"/);
+  const btnHasAria = btnAdd > 0 &&
+    /aria-label/.test(rd.slice(btnAdd - 1, btnAdd + 3).join('\n'));
   console.log('EVID  G4.3: app_web/ui/render.js:' +
-    (btnNoLabel > 0 ? btnNoLabel : -1) +
-    ' sinh nut add/dup/del/clear chi co title= , khong co aria-label=');
-  const chkNoLabel = findLine(rd, /type="checkbox" class="chk-box" data-key=/);
-  console.log('EVID  G4.6: app_web/ui/render.js:' +
-    (chkNoLabel > 0 ? chkNoLabel : -1) +
-    ' sinh checkbox .chk-box (block chk / run.input.chk) khong co aria-label');
+    (btnAdd > 0 ? btnAdd : -1) +
+    ' sinh nut add/dup/del/clear/up/down ' +
+    (btnHasAria ? 'CO aria-label (da sua F-P3-A11Y-BUTTON)'
+                : 'chi co title= , khong co aria-label='));
+  const chkEmit = findLine(rd, /return '<input type="checkbox" class="chk-box"/);
+  const chkEnh = findLine(rd, /function enhanceChkLabels/);
+  console.log('EVID  G4.6: app_web/ui/render.js:' + (chkEmit > 0 ? chkEmit : -1) +
+    ' giu nguyen chuoi attribute checkbox .chk-box (contract pin boi test_dom + '
+    + 'test_layout_l2_render); aria-label gan o buoc enhancement DOM render.js:'
+    + (chkEnh > 0 ? chkEnh : -1) + ' enhanceChkLabels()' +
+    (chkEnh > 0 ? '' : ' (KHONG tim thay enhanceChkLabels)'));
   const enh = findLine(ap, /function enhanceEditableGrids/);
   const enhHasColcount = enh > 0 &&
     /aria-colcount/.test(ap.slice(enh - 1, enh + 20).join('\n'));
   console.log('EVID  G4.2: app_web/ui/app.js:' + enh +
-    ' enhanceEditableGrids() them role=grid + aria-rowindex/aria-rowindex cho '
-    + 'table.loop-table khi chay trong app that, NHUNG khong them aria-colcount'
-    + (enhHasColcount ? '' : ' (xac nhan: khong co aria-colcount trong ham)') +
+    ' enhanceEditableGrids() them role=grid + aria-colcount/aria-rowcount/'
+    + 'aria-rowindex cho table.loop-table khi chay trong app that' +
+    (enhHasColcount ? '' : ' (chua co aria-colcount)') +
     '; harness snapshot.html khong nap app.js nen do duoc la output renderer.');
 
   console.log('-'.repeat(64));

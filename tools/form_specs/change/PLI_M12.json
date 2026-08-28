@@ -2,7 +2,7 @@
   "form_id": "PLI_M12",
   "group": "change",
   "note": "Thong bao thay doi nganh, nghe kinh doanh - template co BA luoi nganh ke nhau (muc 1 bo sung / muc 2 bo khoi danh sach / muc 3 sua doi chi tiet), deu mat khi convert. Theo wave1_contract_inventory muc 2: loop khac nghia KHONG duoc gop vao ds_nganh -> moi luoi mot loop rieng. Row contract da agent 2B chot tren template that (python-docx): nganh_bo_sung = STT{_stt} | ten_nganh | ma_nganh | la_nganh_chinh(X); nganh_xoa_bo = STT{_stt} | ten_nganh | ma_nganh | ghi_chu (cot 4 la Ghi chu, KHONG co cot nganh chinh); nganh_sua_doi_chi_tiet = STT{_stt} | ten_nganh | ma_nganh | la_nganh_chinh(X). Ba danh sach doc lap -> GRID_META minRows 0, duplicateKeys [], requirePrimary false (khong ap requirePrimary/vsic duplicate-rule cua ds_nganh).",
-  "gap_nghiepvu": "(1) Ten loop 'nganh_sua_doi_chi_tiet' do agent 2B chot (PLAN.md chi dat ten nganh_bo_sung/nganh_xoa_bo); da ghi contract trong 'note'. (2) PLAN.md q#3 dua lieu loop 'nganh_truoc_thay_doi' nhung template M12 KHONG co luoi truoc-thay-doi (da kiem python-docx) - khong tao spec, khong suy dien; can Lead quyet nguon du lieu neu van can. (3) Grid muc 2 (bo nganh) khong co cot nganh chinh tren template - cot thu 4 la 'Ghi chu' -> map {ghi_chu}; requirePrimary/PRIMARY_INDUSTRY_REQUIRED khong ap dung cho grid nay. || Wave R3B1 (2026-08-27): them entry nested-grid 'ndd_uy_quyen_sau_thay_doi' (D2.1=A discriminator loai_dong, D2.4=A chu_ky outputOnly, D2.7=min1/max null). GAP con lai: 2 nhom cot header ghep block B145 ('Tổng giá trị vốn được đại diện', 'Thời điểm đại diện phần vốn') CHUA du evidence de khai tag canonical - dung policy 'absence, khong mislabel' cua FORM_TABLE_CONTRACTS['PLI_M02']; doan '____________________' cuoi block B145 duoc GIU LAI (trim keep_from) vi khac ky phan cach/ke trong cua nguon; min/max rows chi ghi form_maps side (spec v1 khong co truong).",
+  "gap_nghiepvu": "(1) Ten loop 'nganh_sua_doi_chi_tiet' do agent 2B chot (PLAN.md chi dat ten nganh_bo_sung/nganh_xoa_bo); da ghi contract trong 'note'. (2) PLAN.md q#3 dua lieu loop 'nganh_truoc_thay_doi' nhung template M12 KHONG co luoi truoc-thay-doi (da kiem python-docx) - khong tao spec, khong suy dien; can Lead quyet nguon du lieu neu van can. (3) Grid muc 2 (bo nganh) khong co cot nganh chinh tren template - cot thu 4 la 'Ghi chu' -> map {ghi_chu}; requirePrimary/PRIMARY_INDUSTRY_REQUIRED khong ap dung cho grid nay. || Wave R3B1 (2026-08-27): them entry nested-grid 'ndd_uy_quyen_sau_thay_doi' (D2.1=A discriminator loai_dong, D2.4=A chu_ky outputOnly, D2.7=min1/max null). GAP con lai: 2 nhom cot header ghep block B145 ('Tổng giá trị vốn được đại diện', 'Thời điểm đại diện phần vốn') CHUA du evidence de khai tag canonical - dung policy 'absence, khong mislabel' cua FORM_TABLE_CONTRACTS['PLI_M02']; doan '____________________' cuoi block B145 duoc GIU LAI (trim keep_from) vi khac ky phan cach/ke trong cua nguon; min/max rows chi ghi form_maps side (spec v1 khong co truong). || Wave cap-von (2026-08-28, task 3a): them entry fixed-matrix 'nguon_von_dieule_sau_thay_doi' (D1.1=A; owner + Lead 2026-08-28: dung theo bieu mau HIEN HANH TT 121/2026/TT-BTC Phu luc Mau 12 — thay Mau 12 Phu luc I TT 68, bang 'Nguồn vốn điều lệ sau khi thay đổi' KHONG doi) — khong thay doi entry nguoi dai dien cua R3B1. 3 section von/co phan khac cua M12 van missing_grid, khong thuoc nhom 'Nguon von dieu le' — liet ke trong legal_status.question cua entry moi.",
   "tables": [
     {
       "spec": {
@@ -129,6 +129,86 @@
       },
       "trim": ["^sttchu so huu/thanh vien cong ty tnhh"],
       "keep_from": "____________________"
+    },
+    {
+      "kind": "fixed-matrix",
+      "spec": {
+        "id": "nguon_von_dieule_sau_thay_doi",
+        "kind": "fixed-matrix",
+        "section_id": "nguon_von_dieule_sau_thay_doi",
+        "semantic_key": "nguon_von_dieu_le_sau_thay_doi",
+        "columns": [
+          {
+            "header": "Loại nguồn vốn",
+            "tag": null,
+            "input_type": "readonly"
+          },
+          {
+            "header": "Số tiền (bằng số; VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)",
+            "tag": "so_tien_vnd_va_tuong_duong",
+            "input_type": "money"
+          },
+          {
+            "header": "Tỷ lệ (%)",
+            "tag": "ty_le",
+            "input_type": "percent"
+          }
+        ],
+        "fixed_rows": [
+          {
+            "id": "von_ngan_sach_nha_nuoc",
+            "label": "Vốn ngân sách nhà nước"
+          },
+          {
+            "id": "von_tu_nhan",
+            "label": "Vốn tư nhân"
+          },
+          {
+            "id": "von_nuoc_ngoai",
+            "label": "Vốn nước ngoài"
+          },
+          {
+            "id": "von_khac",
+            "label": "Vốn khác"
+          },
+          {
+            "id": "tong_cong",
+            "label": "Tổng cộng",
+            "output_only": true
+          }
+        ],
+        "totals": [
+          {
+            "formula": "sum(so_tien_vnd_va_tuong_duong)",
+            "target_row": "tong_cong",
+            "target_tag": "so_tien_vnd_va_tuong_duong"
+          },
+          {
+            "formula": "sum(ty_le)",
+            "target_row": "tong_cong",
+            "target_tag": "ty_le"
+          }
+        ]
+      },
+      "pos": "after",
+      "anchor": "^nguon von dieu le sau khi thay doi von dieu le",
+      "no_default_drops": true,
+      "drop_until": "^tai san gop von sau khi thay doi von dieu le",
+      "drop": [
+        "^loai nguon von$",
+        "^so tien \\(bang so; vnd",
+        "^ty le \\(%\\)$",
+        "^von ngan sach nha nuoc$",
+        "^von tu nhan$",
+        "^von nuoc ngoai$",
+        "^von khac$",
+        "^tong cong$"
+      ],
+      "legal_status": {
+        "blocked": false,
+        "ref": "Owner 2026-08-28 (docs/leader_handoff_excel_next.md Việc 4.1) + cảnh báo Lead cùng ngày: dựng theo biểu mẫu HIỆN HÀNH; ngữ cảnh riêng của M12, KHÔNG dùng chung data với mẫu thành lập (census manifest notes). NGUỒN HIỆN HÀNH: **TT 121/2026/TT-BTC** (hiệu lực 21/8/2026) — Điều 1 khoản 1 điểm g THAY THẾ Mẫu số 12 Phụ lục I của TT 68/2025/TT-BTC; Phụ lục đó, Mẫu số 12 'Giấy đề nghị đăng ký thay đổi nội dung Giấy chứng nhận đăng ký doanh nghiệp/Thông báo thay đổi nội dung đăng ký doanh nghiệp', khối 'ĐĂNG KÝ THAY ĐỔI VỐN ĐIỀU LỆ, PHẦN VỐN GÓP, TỶ LỆ PHẦN VỐN GÓP' → mục '1. Đăng ký thay đổi vốn điều lệ của công ty:' → bảng 'Nguồn vốn điều lệ sau khi thay đổi vốn điều lệ:' (trang 5 của mẫu = trang 54/70 của 121-btc.signed.pdf trên Cổng VTCP Chính phủ) — bảng 3 cột 'Loại nguồn vốn | Số tiền (bằng số; VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có) | Tỷ lệ (%)' với 5 dòng 'Vốn ngân sách nhà nước / Vốn tư nhân / Vốn nước ngoài / Vốn khác / Tổng cộng', GIỐNG HỆT Phụ lục I TT 68/2025 (đã đối chiếu trực tiếp bản gốc). BẢN REGEN TRONG REPO (khớp từng dòng): 02_thay_doi_thong_tin_doanh_nghiep/PL1_Mau_12_tach_tu_file_full.docx p60-p76 (p60 heading, p61 'Loại nguồn vốn', p62 'Số tiền (bằng số; VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)', p63 'Tỷ lệ (%)', p64/67/70/73/76 nhãn 5 dòng; 2 paragraph rỗng sau mỗi nhãn = 2 ô giá trị), mốc kết thúc p79 'Tài sản góp vốn sau khi thay đổi vốn điều lệ:'. Census: app/data/table_specs/manifest.json PLI_M12/nguon_von_dieule_sau_thay_doi (fixed-matrix, missing_grid, semantic_key=nguon_von_dieu_le_sau_thay_doi, fixed_rows đúng 5 dòng, required_columns loai_nguon_von|so_tien_vnd_va_tuong_duong|ty_le) — row id + tag lấy ĐÚNG manifest.",
+        "question": "(a) D1.1=A: cross-field 'Tổng cộng == Vốn điều lệ sau khi thay đổi (mục 1 khối thay đổi vốn điều lệ)' blocking — form_maps PLI_M12 hiện CHƯA có key số cho 'Vốn điều lệ sau khi thay đổi' (chỉ có von_dieu_le_chu/gia_tri_ntte/thoi_diem_thay_doi_von/hinh_thuc_tang_giam_von) -> Lead phải chốt valueKey khi wire FORM_TABLE_CONTRACTS, không suy diễn. (b) NGUYÊN NHÂN PHẠM VI: 3 section fixed-matrix khác của M12 vẫn missing_grid và KHÔNG thuộc nhóm 'Nguồn vốn điều lệ' của lane này — 'Tài sản góp vốn sau khi thay đổi vốn điều lệ' (p79-p108, packet D1.2), 'Thông tin về cổ phần (chỉ kê khai đối với công ty cổ phần)' (p111-p143, packet D1.4) và 'Tài sản góp vốn sau khi thay đổi vốn đầu tư' (p195-p224). LƯU Ý: bản gốc Phụ lục I Mẫu 12 (dangkykinhdoanh.gov.vn) IN SẴN lỗi chính tả 'Cổ phần ưu đã biểu quyết' / 'Cổ phần ưu đã cổ tức' (thiếu 'i') — nguồn repo trung thành với bản gốc, không phải lỗi sao chép; nếu sửa thì phải là quyết định owner riêng. (c) Tên chính thức của Mẫu 12 theo danh mục Phụ lục I (TT 121/2026): 'Giấy đề nghị đăng ký thay đổi nội dung Giấy chứng nhận đăng ký doanh nghiệp/Thông báo thay đổi nội dung đăng ký doanh nghiệp'. Ô HEADER trang 1: bản TT 121/2026 CÓ band 'TÊN DOANH NGHIỆP ____________' TRÁI + khối quốc hiệu PHẢI (cùng band), rồi 'Số: …' TRÁI / '…, ngày … tháng … năm …' PHẢI — nguồn trong repo THIẾU ô 'TÊN DOANH NGHIỆP' (hdr2col census của Lead đã phát hiện) -> đúng Việc 2 (layout header) của Lead, lane này KHÔNG có capability chèn paragraph nên không dựng được, cần Lead/owner xử lý khi regen theo TT 121. (d) Ô '% tự tính theo giá trị' chưa có formula trong v1 -> ty_le là ô nhập percent, tổng cột = sum(ty_le) (tiền lệ F2)."
+      }
     }
   ]
 }

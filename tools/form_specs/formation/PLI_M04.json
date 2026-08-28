@@ -2,7 +2,7 @@
   "form_id": "PLI_M04",
   "group": "formation",
   "note": "Mau thanh lap (TNHH 2TV+ / CTCP). Luoi nganh mat khi convert, cau truc giong PLI_M01.",
-  "gap_nghiepvu": "Template con lai 4 cot (khong co 'Chi tiet hoat dong') -> spec 4 cot khop template that. Nguon that cua mau nay trong repo la file chuyen doi 06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn/DN_PL1_Mau_04_*.docx (form_maps.file xac nhan) - anchor/drop da kiem ca tren nguon va tren template.  Chua bat requirePrimary cho la_nganh_chinh - agent 2A xac nhan voi Lead truoc khi bat.",
+  "gap_nghiepvu": "Template con lai 4 cot (khong co 'Chi tiet hoat dong') -> spec 4 cot khop template that. Nguon that cua mau nay trong repo la file chuyen doi 06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn/DN_PL1_Mau_04_*.docx (form_maps.file xac nhan) - anchor/drop da kiem ca tren nguon va tren template.  Chua bat requirePrimary cho la_nganh_chinh - agent 2A xac nhan voi Lead truoc khi bat. || Wave cap-von (2026-08-28, task 3a): them BA entry fixed-matrix phan von/cophan (nguon_von_dieule muc 6, co_cau_loai_co_phan muc 7, co_phan_duoc_quyen_chao_ban) - D1.1=A + owner + Lead 2026-08-28: dung theo bieu mau HIEN HANH TT 121/2026/TT-BTC Phu luc Mau 04 — thay Mau 04 Phu luc I TT 68, ba bang von/co phan KHONG doi (mo D1.5/D3.3). D1.4=A (gia tri = so luong x menh gia) chua khai duoc: menh gia la TRUONG LE tai p131 (da map {menh_gia_co_phan}) khong phai cot bang - chi tiet trong legal_status. Chi tiet gap + nguon trong legal_status tung entry.",
   "tables": [
     {
       "spec": {
@@ -54,6 +54,261 @@
         "Mã ngành",
         "Ngành, nghề kinh doanh chính"
       ]
+    },
+    {
+      "kind": "fixed-matrix",
+      "spec": {
+        "id": "nguon_von_dieule",
+        "kind": "fixed-matrix",
+        "section_id": "nguon_von_dieule",
+        "semantic_key": "nguon_von_dieu_le",
+        "columns": [
+          {
+            "header": "Loại nguồn vốn",
+            "tag": null,
+            "input_type": "readonly"
+          },
+          {
+            "header": "Số tiền (bằng số; VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)",
+            "tag": "so_tien_vnd_va_tuong_duong",
+            "input_type": "money"
+          },
+          {
+            "header": "Tỷ lệ (%)",
+            "tag": "ty_le",
+            "input_type": "percent"
+          }
+        ],
+        "fixed_rows": [
+          {
+            "id": "von_ngan_sach_nha_nuoc",
+            "label": "Vốn ngân sách nhà nước"
+          },
+          {
+            "id": "von_tu_nhan",
+            "label": "Vốn tư nhân"
+          },
+          {
+            "id": "von_nuoc_ngoai",
+            "label": "Vốn nước ngoài"
+          },
+          {
+            "id": "von_khac",
+            "label": "Vốn khác"
+          },
+          {
+            "id": "tong_cong",
+            "label": "Tổng cộng",
+            "output_only": true
+          }
+        ],
+        "totals": [
+          {
+            "formula": "sum(so_tien_vnd_va_tuong_duong)",
+            "target_row": "tong_cong",
+            "target_tag": "so_tien_vnd_va_tuong_duong"
+          },
+          {
+            "formula": "sum(ty_le)",
+            "target_row": "tong_cong",
+            "target_tag": "ty_le"
+          }
+        ]
+      },
+      "pos": "after",
+      "anchor": "^6\\. nguon von dieu le",
+      "no_default_drops": true,
+      "drop_until": "^7\\. thong tin ve co phan",
+      "drop": [
+        "^loai nguon von$",
+        "^so tien \\(bang so; vnd",
+        "^ty le \\(%\\)$",
+        "^von ngan sach nha nuoc$",
+        "^von tu nhan$",
+        "^von nuoc ngoai$",
+        "^von khac$",
+        "^tong cong$"
+      ],
+      "legal_status": {
+        "blocked": false,
+        "ref": "Owner 2026-08-28 (docs/leader_handoff_excel_next.md Việc 4.1) + cảnh báo Lead cùng ngày: dựng theo biểu mẫu HIỆN HÀNH. NGUỒN HIỆN HÀNH: **TT 121/2026/TT-BTC** (hiệu lực 21/8/2026) — Điều 1 khoản 1 điểm d THAY THẾ Mẫu số 04 Phụ lục I của TT 68/2025/TT-BTC; Phụ lục đó, Mẫu số 04 'Giấy đề nghị đăng ký doanh nghiệp - Công ty cổ phần', mục '6. Nguồn vốn điều lệ:' trang 5 của mẫu (trang 36/70 của 121-btc.signed.pdf trên Cổng VTCP Chính phủ) — bảng 3 cột 'Loại nguồn vốn | Số tiền (bằng số; VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có) | Tỷ lệ (%)' và 5 dòng 'Vốn ngân sách nhà nước / Vốn tư nhân / Vốn nước ngoài / Vốn khác / Tổng cộng', KHÔNG đổi so với Phụ lục I TT 68/2025/TT-BTC (đã đối chiếu trực tiếp bản gốc). BẢN REGEN TRONG REPO (khớp từng dòng): 06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn/DN_PL1_Mau_04_giay_de_nghi_dang_ky_doanh_nghiep_cong_ty_co_phan.docx p111-p127 (p111 heading, p112-p114 header 3 cột, p115/118/121/124/127 nhãn 5 dòng; 2 paragraph rỗng sau mỗi nhãn = 2 ô giá trị). Census: app/data/table_specs/manifest.json PLI_M04/nguon_von_dieule (fixed-matrix, missing_grid, semantic_key=nguon_von_dieu_le, fixed_rows đúng 5 dòng, required_columns loai_nguon_von|so_tien_vnd_va_tuong_duong|ty_le) — row id + tag lấy ĐÚNG manifest.",
+        "question": "(a) GAP PHẦN ĐUÔI BỊ CẮT (chốt D1.5=B, nay mở theo owner 2026-08-28 nhưng CHƯA có dữ liệu): nguồn docx trong repo KẾT THÚC ngay sau 'Tổng số' của cổ phần được quyền chào bán (187 paragraph, 0 w:tbl), trong khi biểu mẫu hiện hành TT 121/2026/TT-BTC Phụ lục Mẫu số 04 (trang 5-9 của mẫu = trang PDF 36-40) còn TIẾP theo: mục 8 'Cổ đông sáng lập' (Mẫu số 7, gửi kèm), mục 9 'Cổ đông là nhà đầu tư nước ngoài' (Mẫu số 8, gửi kèm), mục 10 'Người đại diện theo pháp luật', mục 11 'Thông tin đăng ký thuế' (11.1 Giám đốc/TGĐ → 11.9 phương pháp tính thuế GTGT), mục 12 'Thông tin về việc đóng bảo hiểm xã hội', mục 13 'Thông tin về chủ sở hữu hưởng lợi của doanh nghiệp' (mới: kê khai theo Mẫu số 10 của TT 121 — 18 cột, thay câu hỏi 'Có/Không' của bản TT 68) + cam kết NĐT nước ngoài theo Điều 7 NĐ 296/2026/NĐ-CP. Generator v1 KHÔNG có capability chèn mục mới -> các mục đó CẦN OWNER: khôi phục nguồn gốc Phụ lục I Mẫu 04 theo TT 121/2026 (hoặc mở capability spec chèn section mới). (b) D1.1=A: cross-field 'Tổng cộng == Vốn điều lệ (mục 5, key von_dieu_le)' blocking + PERCENT_SUM warning -> Lead wire ở FORM_TABLE_CONTRACTS. (c) Ô '% tự tính theo giá trị' chưa có formula trong v1 -> ty_le là ô nhập percent, tổng cột = sum(ty_le) (tiền lệ F2)."
+      }
+    },
+    {
+      "kind": "fixed-matrix",
+      "spec": {
+        "id": "co_cau_loai_co_phan",
+        "kind": "fixed-matrix",
+        "section_id": "co_cau_loai_co_phan",
+        "semantic_key": "co_cau_loai_co_phan",
+        "columns": [
+          {
+            "header": "Loại cổ phần",
+            "tag": null,
+            "input_type": "readonly"
+          },
+          {
+            "header": "Số lượng",
+            "tag": "so_luong",
+            "input_type": "money"
+          },
+          {
+            "header": "Giá trị (bằng số, VNĐ)",
+            "tag": "gia_tri_vnd",
+            "input_type": "money"
+          },
+          {
+            "header": "Tỉ lệ so với vốn điều lệ (%)",
+            "tag": "ty_le_so_von_dieule",
+            "input_type": "percent"
+          }
+        ],
+        "fixed_rows": [
+          {
+            "id": "co_phan_pho_thong",
+            "label": "Cổ phần phổ thông"
+          },
+          {
+            "id": "cp_uu_dai_bieu_quyet",
+            "label": "Cổ phần ưu đãi biểu quyết"
+          },
+          {
+            "id": "cp_uu_dai_co_tuc",
+            "label": "Cổ phần ưu đãi cổ tức"
+          },
+          {
+            "id": "cp_uu_dai_hoan_lai",
+            "label": "Cổ phần ưu đãi hoàn lại"
+          },
+          {
+            "id": "cp_uu_dai_khac",
+            "label": "Các cổ phần ưu đãi khác"
+          },
+          {
+            "id": "tong_so",
+            "label": "Tổng số",
+            "output_only": true
+          }
+        ],
+        "totals": [
+          {
+            "formula": "sum(so_luong)",
+            "target_row": "tong_so",
+            "target_tag": "so_luong"
+          },
+          {
+            "formula": "sum(gia_tri_vnd)",
+            "target_row": "tong_so",
+            "target_tag": "gia_tri_vnd"
+          },
+          {
+            "formula": "sum(ty_le_so_von_dieule)",
+            "target_row": "tong_so",
+            "target_tag": "ty_le_so_von_dieule"
+          }
+        ]
+      },
+      "pos": "after",
+      "anchor": "^7\\. thong tin ve co phan",
+      "no_default_drops": true,
+      "drop_until": "^thong tin ve co phan duoc quyen chao ban",
+      "drop": [
+        "^stt$",
+        "^loai co phan$",
+        "^so luong$",
+        "^gia tri \\(bang so, vnd\\)$",
+        "^ti le so voi von dieu le \\(%\\)$",
+        "^\\d$",
+        "^co phan pho thong$",
+        "^co phan uu dai bieu quyet$",
+        "^co phan uu dai co tuc$",
+        "^co phan uu dai hoan lai$",
+        "^cac co phan uu dai khac$",
+        "^tong so$"
+      ],
+      "legal_status": {
+        "blocked": false,
+        "ref": "Owner 2026-08-28 (docs/leader_handoff_excel_next.md Việc 4.1) + D1.1=A, D1.4=A (docs/decision_registry.md packet D1). NGUỒN HIỆN HÀNH: **TT 121/2026/TT-BTC** (hiệu lực 21/8/2026) — Điều 1 khoản 1 điểm d thay Mẫu số 04 Phụ lục I TT 68/2025; Phụ lục đó, Mẫu số 04, mục '7. Thông tin về cổ phần:' trang 5 của mẫu (trang 36/70 của 121-btc.signed.pdf): dòng 'Mệnh giá cổ phần (VNĐ): …' in như MỘT DÒNG RIÊNG ngay dưới heading mục, rồi bảng 5 cột 'STT | Loại cổ phần | Số lượng | Giá trị (bằng số, VNĐ) | Tỉ lệ so với vốn điều lệ (%)' với 6 dòng '1 Cổ phần phổ thông / 2 Cổ phần ưu đãi biểu quyết / 3 Cổ phần ưu đãi cổ tức / 4 Cổ phần ưu đãi hoàn lại / 5 Các cổ phần ưu đãi khác / Tổng số (không có STT)' — cấu trúc này GIỐNG HỆT Phụ lục I TT 68/2025 (đã đối chiếu bản gốc). BẢN REGEN TRONG REPO: DN_PL1_Mau_04_*.docx p130-p163 (p130 heading, p131 'Mệnh giá cổ phần (VNĐ): …' TRƯỜNG LẺ của mục, p132-p136 header 5 cột, p137/142/147/152/157 STT 1..5, p138/143/148/153/158 nhãn 5 loại cổ phần, p162 'Tổng số'). Census: app/data/table_specs/manifest.json PLI_M04/co_cau_loai_co_phan (fixed-matrix, missing_grid, semantic_key=co_cau_loai_co_phan, fixed_rows 6 dòng, required_columns menh_gia_co_phan|stt|loai_co_phan|so_luong|gia_tri_vnd|ty_le_so_von_dieule). Header cột + nhãn dòng khớp nguyên văn biểu mẫu và khớp fixture F3 (app_web/ui/form-domain.js PLI_M04).",
+        "question": "(a) D1.4=A CHƯA KHAI ĐƯỢC product(so_luong, menh_gia_co_phan): trên biểu mẫu 'Mệnh giá cổ phần (VNĐ)' là TRƯỜNG LẺ của mục (p131, ĐÃ map thành input {menh_gia_co_phan} trong template/blocks hiện hành; bản gốc Phụ lục I Mẫu 04 cũng in 'Mệnh giá cổ phần (VNĐ):' như một dòng riêng ngay dưới heading mục 7) chứ KHÔNG phải cột của bảng; formula product() của contract v1 chỉ nhận tag CỘT. Thêm cột mệnh giá sẽ (i) lệch biểu mẫu TT 68 và (ii) tạo key thứ hai cho cùng số liệu menh_gia_co_phan (hai nguồn sự thật). Nên: giữ tổng 'Giá trị' = sum(gia_tri_vnd) như fixture F3, và Lead wire rule runtime product-with-key (giá trị dòng = so_luong × menh_gia_co_phan) hoặc mở rộng contract v1 cho thừa số ngoài cột. (b) Cột STT 1..5 in sẵn của mẫu không tái lập được ở fixed-matrix v1 (chỉ được 1 cột tag=null ở chỉ số 0 làm nhãn) — khai thiếu, gap cho Lead/B2 (manifest required_columns có 'stt'); bản gốc in STT 1..5 và dòng 'Tổng số' KHÔNG có STT (khớp việc bỏ cột STT). (c) D1.1=A: cross-field 'Tổng số (giá trị VNĐ) == Vốn điều lệ (mục 5, key von_dieu_le)' blocking + PERCENT_SUM warning -> Lead wire ở FORM_TABLE_CONTRACTS (fixture F3 đã khai). (d) Mệnh giá cổ phần (p131) được GIỮ NGUYÊN (không drop) nên bảng mới được chèn ngay sau heading mục 7, dòng mệnh giá nằm dưới bảng — khác thứ tự trình bày của mẫu gốc; cần visual re-shoot khi Lead regen (hoặc Lead chuyển anchor xuống sau p131 nếu muốn giữ thứ tự). (e) Chính văn bản gốc dùng chữ 'Tỉ lệ' (không phải 'Tỷ lệ') cho cột này — giữ nguyên văn."
+      }
+    },
+    {
+      "kind": "fixed-matrix",
+      "spec": {
+        "id": "co_phan_duoc_quyen_chao_ban",
+        "kind": "fixed-matrix",
+        "section_id": "co_phan_duoc_quyen_chao_ban",
+        "semantic_key": "co_phan_duoc_quyen_chao_ban",
+        "columns": [
+          {
+            "header": "Loại cổ phần được quyền chào bán",
+            "tag": null,
+            "input_type": "readonly"
+          },
+          {
+            "header": "Số lượng",
+            "tag": "so_luong",
+            "input_type": "money"
+          }
+        ],
+        "fixed_rows": [
+          {
+            "id": "co_phan_pho_thong",
+            "label": "Cổ phần phổ thông"
+          },
+          {
+            "id": "cp_uu_dai_bieu_quyet",
+            "label": "Cổ phần ưu đãi biểu quyết"
+          },
+          {
+            "id": "cp_uu_dai_co_tuc",
+            "label": "Cổ phần ưu đãi cổ tức"
+          },
+          {
+            "id": "cp_uu_dai_hoan_lai",
+            "label": "Cổ phần ưu đãi hoàn lại"
+          },
+          {
+            "id": "cp_uu_dai_khac",
+            "label": "Cổ phần ưu đãi khác"
+          },
+          {
+            "id": "tong_so",
+            "label": "Tổng số",
+            "output_only": true
+          }
+        ],
+        "totals": [
+          {
+            "formula": "sum(so_luong)",
+            "target_row": "tong_so",
+            "target_tag": "so_luong"
+          }
+        ]
+      },
+      "pos": "after",
+      "anchor": "^thong tin ve co phan duoc quyen chao ban",
+      "no_default_drops": true,
+      "drop_until": "(?!)",
+      "drop": [
+        "^stt$",
+        "^loai co phan duoc quyen chao ban$",
+        "^so luong$",
+        "^\\d$",
+        "^co phan pho thong$",
+        "^co phan uu dai bieu quyet$",
+        "^co phan uu dai co tuc$",
+        "^co phan uu dai hoan lai$",
+        "^cac co phan uu dai khac$",
+        "^co phan uu dai khac$",
+        "^tong so$"
+      ],
+      "legal_status": {
+        "blocked": false,
+        "ref": "Owner 2026-08-28 (docs/leader_handoff_excel_next.md Việc 4.1) + D1.1=A. NGUỒN HIỆN HÀNH: **TT 121/2026/TT-BTC** (hiệu lực 21/8/2026, Điều 1 khoản 1 điểm d thay Mẫu số 04 Phụ lục I TT 68/2025), Phụ lục, Mẫu số 04, khối 'Thông tin về cổ phần được quyền chào bán:' (KHÔNG đánh số mục, nằm ngay sau bảng mục 7, trang 5 của mẫu = trang 36/70 của 121-btc.signed.pdf): bảng 3 cột 'STT | Loại cổ phần được quyền chào bán | Số lượng', các dòng '1 Cổ phần phổ thông / 2 Cổ phần ưu đãi biểu quyết / 3 Cổ phần ưu đãi cổ tức / 4 Cổ phần ưu đãi hoàn lại / 5 Cổ phần ưu đãi khác / Tổng số' — GIỐNG HỆT Phụ lục I TT 68/2025 (đã đối chiếu bản gốc). BẢN REGEN TRONG REPO: DN_PL1_Mau_04_*.docx p166-p185 (p166 heading, p167-p169 header 3 cột, p170/173/176/179/182 STT 1..5, p171/174/177/180/183 nhãn 5 loại cổ phần, p185 'Tổng số'). Census: app/data/table_specs/manifest.json PLI_M04/co_phan_duoc_quyen_chao_ban (fixed-matrix, missing_grid, semantic_key=co_phan_duoc_quyen_chao_ban, fixed_rows 6 dòng, required_columns stt|loai_co_phan_chao_ban|so_luong).",
+        "question": "(a) Cột STT 1..5 in sẵn không tái lập được ở fixed-matrix v1 — khai thiếu, gap cho Lead/B2. (b) drop_until='(?!)' là regex KHÔNG BAO GIỜ khớp: đây là mục CUỐI của nguồn (nguồn bị cắt sau 'Tổng số', D1.5=B) nên cần mốc scoped để drop không chạy toàn văn bản; phần đuôi biểu mẫu (mục 8 → 13) CẦN OWNER khôi phục nguồn gốc Phụ lục I Mẫu 04. (c) Tag cột dùng 'so_luong' (giống cơ cấu cổ phần) — manifest gọi 'loai_co_phan_chao_ban' cho CỘT NHÃN, tương ứng cột tag=null ở chỉ số 0 của contract v1. (d) Nhãn dòng 5 giữ NGUYÊN VĂN 'Cổ phần ưu đãi khác' (KHÔNG có chữ 'Các') theo đúng bản gốc Phụ lục I Mẫu 04 và nguồn trong repo — khác với bảng mục 7 in 'Các cổ phần ưu đãi khác'; đây là khác biệt có thật giữa hai bảng trên biểu mẫu, không phải lỗi sao chép."
+      }
     }
   ]
 }

@@ -250,6 +250,63 @@
      "loop": "ds_nganh"
     }
    ]
+  },
+  {
+   "kind": "fixed-matrix",
+   "spec": {
+    "id": "a7_thue_chi_tieu_cu_moi",
+    "kind": "fixed-matrix",
+    "section_id": "a7_thue_chi_tieu_cu_moi",
+    "semantic_key": "thue_chi_tieu_cu_moi",
+    "columns": [
+     {
+      "header": "Chỉ tiêu",
+      "tag": null,
+      "input_type": "readonly"
+     },
+     {
+      "header": "Thông tin đăng ký cũ",
+      "tag": "thong_tin_dang_ky_cu",
+      "input_type": "text"
+     },
+     {
+      "header": "Thông tin đăng ký mới",
+      "tag": "thong_tin_dang_ky_moi",
+      "input_type": "text"
+     }
+    ],
+    "fixed_rows": [
+     {
+      "id": "chi_tieu_5_1_dia_chi_nhan_thong_bao_thue",
+      "label": "- Chỉ tiêu 5.1: Địa chỉ nhận thông báo thuế"
+     },
+     {
+      "id": "chi_tieu_5_2_tong_so_lao_dong",
+      "label": "- Chỉ tiêu 5.2: Tổng số lao động"
+     },
+     {
+      "id": "chi_tieu_khac",
+      "label": "-….."
+     }
+    ],
+    "totals": []
+   },
+   "pos": "after",
+   "anchor": "^dang ky bo sung, thay doi cac chi tieu dang ky thue nhu sau",
+   "no_default_drops": true,
+   "drop_until": "^b\\. dang ky cap nhat, bo sung, hieu dinh thong tin dang ky ho kinh doanh",
+   "drop": [
+    "^chi tieu$",
+    "^thong tin dang ky cu$",
+    "^thong tin dang ky moi$",
+    "^- chi tieu 5\\.",
+    "^-[.…]{3,}$"
+   ],
+   "legal_status": {
+    "blocked": false,
+    "ref": "Owner 2026-08-28 (docs/leader_handoff_excel_next.md Việc 4.2: 'Thuế PLII_M02 (D5.2) — lấy danh mục chỉ tiêu từ TT 68, đúng mẫu II.2'). KIỂM TRA HIỆU LỰC 2026-08-28: **TT 121/2026/TT-BTC** (hiệu lực 21/8/2026) chỉ THAY 09 biểu mẫu tại PHỤ LỤC I của TT 68/2025/TT-BTC (Điều 1 khoản 1 điểm a-i: Mẫu số 1, 2, 3, 4, 5, 10, 12, 27, 30) và bãi bỏ Mẫu số 11 (khoản 2) — KHÔNG đụng Phụ lục II -> Mẫu II.2 vẫn áp dụng TT 68/2025/TT-BTC nguyên trạng. NGUỒN: Phụ lục II TT 68/2025/TT-BTC, Mẫu số 2 'Giấy đề nghị đăng ký thay đổi nội dung đăng ký hộ kinh doanh', phần A khối 'ĐĂNG KÝ THAY ĐỔI NỘI DUNG ĐĂNG KÝ THUẾ' — dòng lệnh 'Đăng ký bổ sung, thay đổi các chỉ tiêu đăng ký thuế như sau:' + bảng 3 cột 'Chỉ tiêu | Thông tin đăng ký cũ | Thông tin đăng ký mới'. Bản dùng trong repo: 06_ho_kinh_doanh_va_chuyen_doi/01_mau_ho_kinh_doanh/PL2_Mau_02_giay_de_nghi_dang_ky_thay_doi_noi_dung_dang_ky_ho_kinh_doanh.docx p112-p118 (p112 heading khối, p113 dòng lệnh, p114 'Chỉ tiêu', p115 'Thông tin đăng ký cũ', p116 'Thông tin đăng ký mới', p117 dòng in sẵn '- Chỉ tiêu 5.1: Địa chỉ nhận thông báo thuế', p118 dòng tiếp diễn '-…..'), mốc kết thúc p126 'B. ĐĂNG KÝ CẬP NHẬT, BỔ SUNG, HIỆU ĐÍNH…'. Census: app/data/table_specs/manifest.json PLII_M02/a7_thue_chi_tieu_cu_moi (fixed-matrix, missing_grid, semantic_key=thue_chi_tieu_cu_moi, required_columns chi_tieu|thong_tin_dang_ky_cu|thong_tin_dang_ky_moi, evidence blocks B095-B099). DANH MỤC CHỈ TIÊU, CITE TỪNG DÒNG của chính Mẫu II.2 — phần C mục 5 'Thông tin đăng ký thuế' (p154-p165) là nơi mẫu II.2 định nghĩa các chỉ tiêu thuế mà bảng cũ/mới tham chiếu qua số '5.1': (1) dòng 5.1 'Địa chỉ nhận thông báo thuế (chỉ kê khai nếu địa chỉ nhận thông báo thuế khác địa chỉ trụ sở)' — p157-p158, và dòng này ĐƯỢC IN SẴN ở p117; (2) dòng 5.2 'Tổng số lao động' — p164-p165, chữ 'Tổng số lao động' nguyên văn p165; (3) dòng '-…..' — p118, dòng tiếp diễn của mẫu để kê chỉ tiêu khác. Đối chiếu bản Word gốc Phụ lục II trên mạng: phần A của Mẫu II.2 chỉ in 1 dòng mẫu (5.1) + dòng '-….', và phần C mục 5 chỉ có ĐÚNG 2 chỉ tiêu 5.1/5.2 — spec này không thêm chỉ tiêu nào ngoài 2 chỉ tiêu đó.",
+    "question": "(a) SỐ MỤC 6 VÀ '6.1 GIÁM ĐỐC/TỔNG GIÁM ĐỐC' TRONG SCREENSHOT CỦA OWNER KHÔNG PHẢI CỦA PLII_M02: đã đối chiếu bản gốc Phụ lục II Mẫu 2 TT 68/2025/TT-BTC — mẫu KHÔNG dùng đánh số 1..9 như Phụ lục I mà chỉ có 3 mục lớn A/B/C; 'Thông tin đăng ký thuế' ở đây là mục 5 của phần C (p154) với ĐÚNG 2 chỉ tiêu 5.1/5.2, và mẫu KHÔNG hề có chỉ tiêu nào về Giám đốc/Tổng giám đốc (hộ kinh doanh không có chức danh này). Cấu trúc 'STT | Các chỉ tiêu thông tin đăng ký thuế' + 'Thông tin về Giám đốc/Tổng giám đốc (nếu có)' là của PHỤ LỤC I (biểu mẫu doanh nghiệp, mục thuế 8/9/11) — thấy nguyên vẹn trong chính repo tại PLI_M12 p242-p306 ('THÔNG BÁO THAY ĐỔI THÔNG TIN ĐĂNG KÝ THUẾ', chỉ tiêu 1..9) và thuộc phần đuôi BỊ CẮT của PLI_M03 (mục 9)/M04 (mục 11)/M05 (mục 8). CẦN OWNER xác nhận lại: nếu muốn bảng chỉ tiêu kiểu Phụ lục I thì đó là việc của mẫu PLI, không phải PLII_M02. (b) SECTION c5_thue_chi_tieu_cap_doi (phần C mục 5) CỐ TÌNH KHÔNG dựng trong đợt này: 7 ô của nó ĐÃ được map thành input paragraph sẵn có ({dia_chi_chi_tiet},{xa_phuong},{tinh_thanh},{dien_thoai_lien_he},{fax},{email_tru_so} cho 5.1 và {so_lao_dong} cho 5.2 — blocks B118-B124, form_maps.fields PLII_M02). Rebuild thành w:tbl sẽ tạo bộ key mới '<sem>.<row>.<tag>' SONG SONG với 7 key cũ = hai nguồn sự thật cho cùng ô (đúng tiền lệ gap W1 đã ghi ở tools/form_specs/formation/PLI_M01.json). Cần capability 'register-only/already-mapped' của Lead/B2 trước khi dựng. (c) Cột nhãn 'Chỉ tiêu' trên mẫu là cột VIẾT TAY (nguồn chỉ in sẵn dòng 5.1 + dòng '-…..') — contract v1 chỉ cho cột nhãn tag=null readonly nên 3 dòng được in cứng; dòng 'chi_tieu_khac' giữ nguyên văn '-….' của mẫu. Nếu owner muốn hộ tự gõ tên chỉ tiêu thì cần nới contract v1 cho phép cột nhãn text. (d) KHÔNG có totals: bảng này không có cột số."
+   }
   }
  ]
 }

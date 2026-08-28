@@ -443,6 +443,20 @@ def t_m02_working_template_regions():
 def t_m02_spec_occurrence_identity():
     raw = spec_json()
     entries = raw.get("tables") or []
+    # [Đổi pin — lane cap-von 2026-08-28] file có thêm entry fixed-matrix thuế
+    # 'a7_thue_chi_tieu_cu_moi' (D5.2, owner 2026-08-28) — entry đó KHÔNG thuộc
+    # nhóm ngành, không dùng occurrence, nên chỉ kiểm 4 entry ngành bên dưới.
+    nganh_entries = [e for e in entries
+                     if e["spec"]["id"].startswith(("nganh_", "ds_nganh"))]
+    fixed_matrix = [e for e in entries
+                    if (e["spec"].get("kind")) == "fixed-matrix"]
+    assert [e["spec"]["id"] for e in fixed_matrix] == \
+        ["a7_thue_chi_tieu_cu_moi"], \
+        "PLII_M02: entry fixed-matrix ngoài dự kiến %r" % \
+        [e["spec"]["id"] for e in fixed_matrix]
+    assert len(entries) == len(nganh_entries) + len(fixed_matrix), \
+        "PLII_M02: xuất hiện entry lạ ngoài ngành/thuế"
+    entries = nganh_entries
     occ_ids = []
     for e in entries:
         occs = e.get("occurrences")

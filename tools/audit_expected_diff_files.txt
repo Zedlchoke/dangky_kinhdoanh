@@ -317,3 +317,9 @@ tools/census/table_coverage_audit.py
 tools/test_table_coverage_audit.py
 docs/table_coverage_current.json
 docs/table_coverage_current.md
+
+# --- Wave D batch 1 fix-extractor (Lead 2026-09-02, merge agent/fix-extractor) ---
+# Test pin extractor: GLUE superscript đã tách đúng tại BASE (heuristic phẳng
+# numbering_audit stale); STT-glue/digit-run + chain-gap pin về template/nguồn
+# (BLOCKED_OWNER — tự mở khi template lane sửa).
+tools/test_extractor_footnote_glue.py

@@ -323,3 +323,12 @@ docs/table_coverage_current.md
 # numbering_audit stale); STT-glue/digit-run + chain-gap pin về template/nguồn
 # (BLOCKED_OWNER — tự mở khi template lane sửa).
 tools/test_extractor_footnote_glue.py
+
+# --- Wave D batch 1 (Lead 2026-09-02): fix-industry + fix-docx-layout ---
+# Test mới của hai lane (pin root cause Class 9/14 và Class 7/4/8).
+app_web/test_industry_input_negative.js
+app_web/test_validation_contact.js
+tools/test_docx_layout_signatures.py
+app_web/test_docx_layout_ui.js
+# test_domain.js: fix-industry cập nhật cap FIELD_META (ghim "thiếu 4 key" cũ)
+app_web/test_domain.js

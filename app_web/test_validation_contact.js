@@ -238,15 +238,16 @@ section('D. PLI_M07: cột so_cccd của ds_co_dong_sang_lap (root fix ở GRID_
     cccdErrs('').length === 0);
 
   // Không hồi quy: các bảng người dùng chung vẫn validate so_cccd khi có rác
-  const doc2 = loadProd('PLI_M01');
-  const st2 = { values: {}, checks: {}, loops: { ds_thanh_vien: [
+  // (PLI_M06 blocks chứa loop ds_thanh_vien_tnhh với cột so_cccd)
+  const doc2 = loadProd('PLI_M06');
+  const st2 = { values: {}, checks: {}, loops: { ds_thanh_vien_tnhh: [
     { _row_id: 'rtv1', ho_ten: 'A', so_cccd: 'rac chu', von_dong_gop: '1000' }
   ] } };
-  const tvErrs = FD.validateDocument('PLI_M01', doc2.blocks, st2, {})
+  const tvErrs = FD.validateDocument('PLI_M06', doc2.blocks, st2, {})
     .filter(e => e.code === 'CCCD');
-  check('D ds_thanh_vien.so_cccd rác -> CCCD blocking (cùng meta dùng chung)',
+  check('D ds_thanh_vien_tnhh.so_cccd rác -> CCCD blocking (cùng meta dùng chung)',
     tvErrs.length === 1 &&
-      tvErrs[0].key === 'loop:ds_thanh_vien:rtv1:so_cccd',
+      tvErrs[0].key === 'loop:ds_thanh_vien_tnhh:rtv1:so_cccd',
     JSON.stringify(tvErrs));
 }
 

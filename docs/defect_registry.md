@@ -13,7 +13,7 @@
 | Class/gap | Trạng thái hiện tại | Evidence mới |
 |---|---|---|
 | 1 Checkbox dẹt | FIXED, cần giữ regression | runner suites liên quan PASS; blocks glyph census cần đưa thành gate cuối |
-| 2 Đứt đánh số | **MEASURED (Wave D batch 1)** | M05→M09 OK; M03→M06 + M04→M08 = mất ở BƯỚC TÁCH NGUỒN (bản gốc full CÓ mục 7/8–9, có nguyên văn — extractor lane đã dẫn para 847/1161–1162); fix batch 2 qua splitter/source + Lead regen |
+| 2 Đứt đánh số | **FIXED (Wave D batch 2, `fe0c680`)** | dòng pointer mục 7 (M03) + mục 8–9 (M04) khôi phục qua spec `inserts pos:"end"` — nguyên văn para 847/1161/1162 bản gốc full; numbering gate exit 0 (3/3 chain OK, 0 JUMP, 0 GLUE). Phần đuôi mục 8–13 (thuế/BHXH/CSHHL) là D1.3/D1.5/D3.3 OPEN — owner packet có bằng chứng delta 116→226 dòng |
 | 3 Footnote GLUE | **RESOLVED census-level (Wave D batch 1)** | 50/50 hit là superscript đã tách đúng từ BASE; `numbering_audit` giờ vertAlign-aware → **0 unresolved**; test pin `tools/test_extractor_footnote_glue.py` |
 | 4 Header hai band | **PASS + lock test (Wave D batch 1)** | UI band đúng trái/phải (`test_docx_layout_ui.js` 16/0); DOCX pinned `test_header_layout` 11/11 |
 | 5 | Gộp vào Class 9 | — |

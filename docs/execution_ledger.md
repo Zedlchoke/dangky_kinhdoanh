@@ -335,3 +335,15 @@ thay AppleScript TCC.
 4. PLI_M12 chk kép `chk_khong` (Class 15 mới).
 Sau batch 2: regen ×2 zero-diff, census/L1/numbering gate kỳ vọng xanh hết (ngoài
 owner exception), runner full.
+
+## Wave D batch 2 — source/template @ main 56c11bf→fe0c680 (2026-09-03, Lead trực tiếp)
+
+| Task | Owner | Evidence | Trạng thái |
+|---|---|---|---|
+| Điều tra nguồn chain-gap | Lead | delta đo được: `DN_PL1_Mau_03/04` (116/149 dòng) vs bản gốc full (226/260 dòng) — mất TOÀN BỘ đuôi mục 8–11/10–13 (NĐDPL, thuế, BHXH, CSHHL, cam kết, ký, footnote). Nguyên văn mục 7/8–9: para 847/1161/1162 `_Bieu_mau_PL_I_II_full.docx` | ✅ |
+| Quyết định phạm vi | Lead | KHÔNG swap nguồn đầy đủ — phần đuôi thuộc D1.3/D1.5/D3.3 OPEN (owner). Khôi phục CHỈ dòng pointer trong chuỗi hiện hành qua cơ chế spec `inserts` (mở rộng `pos:"end"`, pipeline-native, không sửa tay template) | ✅ trung thực phạm vi |
+| Regen M03/M04 + chain gate | Lead | `numbering_audit --gate` **exit 0**: 3/3 chain OK (7→8, 9→10, 6→7), 0 JUMP, 0 GLUE unresolved; pin `CHAIN_FORMS` cập nhật main_last 7/9 | ✅ Class 2 CLOSED |
+| Class 15 chk kép M12 | Lead | root cause: heuristic ưu tiên seg_after cho mọi glyph → "Có □ Không □" cả hai về `chk_khong`. Fix surgical: chỉ can thiệp khi legacy sinh key TRÙNG trong cùng paragraph (quy ước before/after + dedup); deep idempotency **17/0** — mọi form khác byte-giữ-nguyên; block18 = `chk_co`/`chk_khong` | ✅ Class 15 FIXED |
+| M09 4 khối ký | Lead | đối chiếu nguồn: 4 đoạn @para 111/139/165/218 đều trong vùng nhiễm p102→hết (D3.1=A owner đã duyệt decontaminate); khối ký thật @89 có trong blocks → **by-design, không phải defect**; allowlist pin ghi vĩnh viễn lý do | ✅ CLOSED |
+| STT-glue/digit-run 4+2 vị trí | Lead | PLII_M02 #69/#122 = header 2 lưới thành viên (blocker owner "ghim occurrence" — template KHÔNG có bảng thành viên, 4 loop blocks chỉ là ngành); PLI_M72 #109/#112 = N2–N5 (blocker D2.9). Coverage a4/c7 "PARTIAL_COLUMNS" là over-bridge của tool → adjudication ghi vào registry | ⏳ owner packet |
+| Checkpoint | Lead | runner **46 PASS / 0 FAIL / 0 NOT RUN** @ `fe0c680`; tree sạch; form_maps.js/json sync | ✅ **BATCH 2 ĐÓNG** |

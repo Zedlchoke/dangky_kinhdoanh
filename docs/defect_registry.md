@@ -5,6 +5,35 @@
 > lỗi: bằng chứng → gốc rễ → cách sửa → trạng thái. Một lớp lỗi = một fix hệ
 > thống + test/census chống hồi quy, KHÔNG sửa từng file generated.
 
+## Audit reconciliation — 2026-08-30 @ `6ae63c2`
+
+> Bảng này là trạng thái hiện hành, ưu tiên hơn các nhãn `IN FIX/OPEN` lịch sử
+> bên dưới. Chi tiết kế hoạch xử lý nằm trong `PLAN.md` v4.
+
+| Class/gap | Trạng thái hiện tại | Evidence mới |
+|---|---|---|
+| 1 Checkbox dẹt | FIXED, cần giữ regression | runner suites liên quan PASS; blocks glyph census cần đưa thành gate cuối |
+| 2 Đứt đánh số | PARTIAL | M05→M09 đã 6→7; M03→M06 và M04→M08 còn CHAIN GAP |
+| 3 Footnote GLUE | OPEN, blocking P5R | `numbering_audit`: 23/87 form còn GLUE |
+| 4 Header hai band | IMPLEMENTED, chờ visual current-HEAD | 22 mẫu đã regen; evidence cũ có nhưng cần re-shoot sau các merge mới |
+| 5 | Gộp vào Class 9 | — |
+| 6 Số mồ côi/bảng thuế PLII_M03–M06 | OPEN, chờ owner mở scope | Word/PDF evidence cũ; chưa có rebuild table chính thức |
+| 7 Khoảng trống chữ ký | OPEN | chưa có test đo khoảng trống UI + Word output |
+| 8 Dấu X rơi dòng | OPEN | chưa có test checked/unchecked trên DOCX output |
+| 9 `undefined`/`6` trong bảng ngành | OPEN, ưu tiên cao | chưa có test tái hiện draft/autosave state; source hiện không có string literal `"undefined"` |
+| 10 Verifier PLII_M02 table-region | OPEN, gate đỏ | template có 6 bảng và form_maps đủ 4 industry loops, nhưng 2 verifier chỉ map được 3 region |
+| 11 Manifest/coverage drift | OPEN, blocking rollout | manifest còn status snapshot cũ; override/section IDs chưa reconcile với specs/form_maps hiện hành |
+| 12 L1 structural regression | OPEN | newline 263 < 293; 4 STT-glue + 2 digit-run tại PLII_M02/PLI_M72 |
+| 13 Visual evidence freshness | NOT RUN ở HEAD hiện tại | không có browser backend trong phiên audit; Poppler không có; ảnh cũ không đủ đóng gate sau merge mới |
+
+Audit handoff đầy đủ, gồm exact 23 form GLUE và ranh giới structural/visual:
+`docs/whole_app_audit_2026-08-30.md`.
+
+Release runner audit: 43 PASS / 3 FAIL trong sandbox; a11y fail do bind localhost
+EPERM nhưng chạy ngoài sandbox đạt 36/36, nên còn hai FAIL verifier/region cần sửa
+thật. Không gọi release xanh cho tới khi full runner chạy ở môi trường phù hợp đạt
+0 FAIL/0 critical NOT RUN.
+
 ## Class 1 — Checkbox dẹt thành text (BHXH "3 tháng một lần")
 
 - **Bằng chứng:** owner báo thiếu checkbox "3 tháng" cho phương thức đóng

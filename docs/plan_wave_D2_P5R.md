@@ -1,5 +1,12 @@
 # PLAN — Wave D2 hoàn tất lỗi + Audit chuyên trách + P5R (bản vận hành chi tiết)
 
+> **Lưu ý 2026-08-29:** tài liệu này giữ lại brief/worktree recipe lịch sử.
+> Trạng thái, thứ tự gate và phạm vi hiện hành đã được thay bằng `PLAN.md` v4
+> tại `main@6ae63c2`. Không chạy D2-A/C từ checkpoint `34b95a9` nguyên xi.
+> Việc đầu tiên hiện tại là PLAN v4 Wave A (gỡ hai verifier PLII_M02) rồi Wave B
+> (coverage matrix 111/111); chỉ sau đó mới tái sử dụng brief worker phù hợp từ
+> tài liệu này.
+
 > **Bản kế hoạch duy nhất cho phần còn lại**, do lệnh owner 2026-08-28:
 > "viết PLAN hoàn chỉnh phần lỗi còn lại và phase tìm lỗi nữa… PLAN phải chi
 > tiết, chỉn chu, có hướng dẫn tạo worktree và cho worker làm. Sau đó có

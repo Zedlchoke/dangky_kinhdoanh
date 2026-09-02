@@ -317,3 +317,21 @@ chờ owner/pháp lý 41; không phải bảng 13. Chi tiết từng dòng trong
 **Chuyển sang Wave D:** 3 lane batch 1 theo PLAN 6.6 + F1 vào fix-industry (cùng
 file ownership form-domain.js). Word PDF visual: Wave F dùng computer-use GUI
 thay AppleScript TCC.
+
+## Wave D batch 1 — 3 lane @ main 65c7346→cc2349e (2026-09-02, Lead merge)
+
+| Lane | HEAD | Deliverable | Kết quả |
+|---|---|---|---|
+| fix-extractor | `2c6c5a8` | KHÔNG đổi extractor — chứng minh extractor compliant tại BASE: GLUE 50/50 hit là superscript tách đúng; newline 309→263 toàn bộ hợp lệ (511/511 w:br giữ trọn); STT/digit-run + chain-gap BLOCKED_OWNER có evidence nguồn (bản gốc full CÓ mục 7/8–9, mất ở bước tách); test pin 12/12 | ✅ merged |
+| Lead census | sau merge | `numbering_audit` GLUE vertAlign-aware → **0 unresolved** (50 block phân loại đúng); `check_layout_l1` baseline 263 kèm comment bằng chứng | ✅ |
+| fix-industry | `74ce895` | Class 9: applyVsicPick sai key + binding INDEX → _row_id + normalize nullish + export guard (36 test). Class 14: 4 key contact FIELD_META + phone/website + cccd (110 test, đủ 20 form). 3 pin cũ sửa có căn cứ | ✅ merged |
+| fix-docx-layout | `299f986` | Class 7 PLI_M70 render-layer `_ensure_signature_space` (T0–T2 đỏ→xanh); Class 8 CLOSED không phải defect (44 chk đo, 0/44 lệch); Class 4 band PASS + lock test 16/0; page-break baseline pin | ✅ merged |
+| Checkpoint | Lead | runner **46 PASS / 0 FAIL / 0 NOT RUN** @ `cc2349e`; allowlist +5 (4 test mới + test_domain.js pin); worktrees dọn sạch; không cần regen (extractor/generator unchanged; docx_render là render layer) | ✅ **BATCH 1 ĐÓNG** |
+
+**Sang batch 2 (template/source + generator, Lead ownership regen):**
+1. Chain-gap mục 7 (PLI_M03) + mục 8–9 (PLI_M04) — đã có nguyên văn nguồn.
+2. PLI_M09 thiếu 4 khối chữ ký (nguồn 5, template 1) — cùng class mất ở tách nguồn.
+3. STT-glue/digit-run PLII_M02 #69/#122 + PLI_M72 #109/#112 — rebuild w:tbl.
+4. PLI_M12 chk kép `chk_khong` (Class 15 mới).
+Sau batch 2: regen ×2 zero-diff, census/L1/numbering gate kỳ vọng xanh hết (ngoài
+owner exception), runner full.

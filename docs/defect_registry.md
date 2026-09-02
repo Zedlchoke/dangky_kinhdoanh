@@ -13,19 +13,20 @@
 | Class/gap | Trạng thái hiện tại | Evidence mới |
 |---|---|---|
 | 1 Checkbox dẹt | FIXED, cần giữ regression | runner suites liên quan PASS; blocks glyph census cần đưa thành gate cuối |
-| 2 Đứt đánh số | PARTIAL | M05→M09 đã 6→7; M03→M06 và M04→M08 còn CHAIN GAP |
-| 3 Footnote GLUE | OPEN, blocking P5R | `numbering_audit`: 23/87 form còn GLUE |
-| 4 Header hai band | IMPLEMENTED, chờ visual current-HEAD | 22 mẫu đã regen; evidence cũ có nhưng cần re-shoot sau các merge mới |
+| 2 Đứt đánh số | **MEASURED (Wave D batch 1)** | M05→M09 OK; M03→M06 + M04→M08 = mất ở BƯỚC TÁCH NGUỒN (bản gốc full CÓ mục 7/8–9, có nguyên văn — extractor lane đã dẫn para 847/1161–1162); fix batch 2 qua splitter/source + Lead regen |
+| 3 Footnote GLUE | **RESOLVED census-level (Wave D batch 1)** | 50/50 hit là superscript đã tách đúng từ BASE; `numbering_audit` giờ vertAlign-aware → **0 unresolved**; test pin `tools/test_extractor_footnote_glue.py` |
+| 4 Header hai band | **PASS + lock test (Wave D batch 1)** | UI band đúng trái/phải (`test_docx_layout_ui.js` 16/0); DOCX pinned `test_header_layout` 11/11 |
 | 5 | Gộp vào Class 9 | — |
 | 6 Số mồ côi/bảng thuế PLII_M03–M06 | OPEN, chờ owner mở scope | Word/PDF evidence cũ; chưa có rebuild table chính thức |
-| 7 Khoảng trống chữ ký | OPEN | chưa có test đo khoảng trống UI + Word output |
-| 8 Dấu X rơi dòng | OPEN | chưa có test checked/unchecked trên DOCX output |
-| 9 `undefined`/`6` trong bảng ngành | OPEN, ưu tiên cao | chưa có test tái hiện draft/autosave state; source hiện không có string literal `"undefined"` |
+| 7 Khoảng trống chữ ký | **FIXED render-layer (Wave D batch 1)** | PLI_M70 2/87 vị trí thiếu dòng trống — `_ensure_signature_space` chèn lúc render; test T0–T2 đỏ→xanh; PLI_M09 thiếu 4 khối ký = BLOCKED_OWNER (mất ở tách nguồn, chờ regen) |
+| 8 Dấu X rơi dòng | **CLOSED — không phải defect (Wave D batch 1)** | đo 44 chk × 87 mẫu: 0/44 trường hợp X tách khỏi label khi nguồn để cùng dòng; dòng "X"/"□" một mình là thiết kế bản giấy (khớp audit 128 đoạn); test khóa T3–T5 |
+| 9 `undefined`/`6` trong bảng ngành | **FIXED (Wave D batch 1, `74ce895`)** | root cause: applyVsicPick đọc sai key (`ma_nganh` vs `ma`) + ghi ô theo INDEX + normalize bỏ sót; fix normalize/_row_id-binding/export guard; 36 test mới |
 | 10 Verifier PLII_M02 table-region | **FIXED (Wave A, `cdb39f9`)** | classifier theo semantic header (band/thuế "Chỉ tiêu"/industry); đối chiếu theo THỨ TỰ vùng (bắt thiếu/thừa/đảo); selftest negative mutation trong verifier; `test_industry_household` 13/0, `p1_c` VERIFY PASS |
 | 11 Manifest/coverage drift | **MEASURED (Wave B, merge `9aa755e`)** | ma trận 111/111 tại `docs/table_coverage_current.{json,md}`; gate 2 chiều exit 1 với **42 drift**: 12 `missing_grid_vs_evidence` (census stale — capital M03/M04/M05/M12, thuế+member PLII_M02) + 30 `implemented_missing_evidence` (already_complete nhưng thiếu runtime contract — chủ yếu nhóm chk; cần adjudicate cơ chế chk-token trước khi refresh manifest). Backlog thật: **26 section cần làm** (20 MISSING + 6 PARTIAL); 41 BLOCKED_OWNER; override 22/22 resolve OK |
-| 12 L1 structural regression | OPEN | newline 263 < 293; 4 STT-glue + 2 digit-run tại PLII_M02/PLI_M72 |
-| 13 Visual evidence freshness | **UI: RUN @ Wave C (87/87 PASS)**; Word PDF: NOT RUN | UI Playwright 87/87 (0 marker/undefined/overlap, keyboard 3070 tab-stop, 3 viewport + zoom 200%); DOCX structural 87/87. Word AppleScript bị TCC chặn (-1712/-609) → Wave F xử lý bằng GUI-drive, không giả PASS |
-| 14 Validation gap khối liên hệ (Wave C F1, mới) | OPEN, ưu tiên cao | 20 form: `email_khac`/`dien_thoai_khac`/`fax`/`website` không có rule trong FIELD_META trong khi `email_tru_so` có `type: email` (đã Lead spot-check `form-domain.js:103`); PLI_M07 `so_cccd` trong loop nhận rác không lỗi → rác in thẳng DOCX. Danh sách: PLII_M08/10/11/12/14/16/19/20/21/22/23/25/28, PLI_M07/47/50/51/52/53/76 |
+| 12 L1 structural regression | **PARTIAL (Wave D batch 1)** | newline 309→263 toàn bộ hợp lệ (0 mất dữ liệu) — baseline census cập nhật 263; còn 4 STT-glue + 2 digit-run = BLOCKED_OWNER template (PLII_M02 #69/#122, PLI_M72 #109/#112) → batch 2 |
+| 13 Visual evidence freshness | **UI: RUN @ Wave C (87/87 PASS)**; Word PDF: NOT RUN | UI Playwright 87/87 (0 marker/undefined/overlap, keyboard 3070 tab-stop, 3 viewport + zoom 200%); DOCX structural 87/87. Word AppleScript bị TCC chặn (-1712/-609); computer-use cũng bị chặn (accessibility/screen recording denied) → cần owner cấp quyền hoặc chấp nhận NOT RUN |
+| 14 Validation gap khối liên hệ (Wave C F1) | **FIXED (Wave D batch 1, `74ce895`)** | 4 key vào FIELD_META dùng chung + type phone/website + so_cccd type `cccd` 7 grid meta + validateGridLoop per-type; 110 test mới phủ đủ 20 form |
+| 15 PLI_M12 chk kép "Có □/Không □" (Wave D phát hiện phụ) | OPEN, batch 2 | 2 ô cùng dòng nguồn map CẢ HAI vào `chk_khong` — tick một in X ở cả hai chỗ; fix mapping ở spec/generator rồi Lead regen |
 
 Audit handoff đầy đủ, gồm exact 23 form GLUE và ranh giới structural/visual:
 `docs/whole_app_audit_2026-08-30.md`.

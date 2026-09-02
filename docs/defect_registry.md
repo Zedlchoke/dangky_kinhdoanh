@@ -24,7 +24,8 @@
 | 10 Verifier PLII_M02 table-region | **FIXED (Wave A, `cdb39f9`)** | classifier theo semantic header (band/thuế "Chỉ tiêu"/industry); đối chiếu theo THỨ TỰ vùng (bắt thiếu/thừa/đảo); selftest negative mutation trong verifier; `test_industry_household` 13/0, `p1_c` VERIFY PASS |
 | 11 Manifest/coverage drift | **MEASURED (Wave B, merge `9aa755e`)** | ma trận 111/111 tại `docs/table_coverage_current.{json,md}`; gate 2 chiều exit 1 với **42 drift**: 12 `missing_grid_vs_evidence` (census stale — capital M03/M04/M05/M12, thuế+member PLII_M02) + 30 `implemented_missing_evidence` (already_complete nhưng thiếu runtime contract — chủ yếu nhóm chk; cần adjudicate cơ chế chk-token trước khi refresh manifest). Backlog thật: **26 section cần làm** (20 MISSING + 6 PARTIAL); 41 BLOCKED_OWNER; override 22/22 resolve OK |
 | 12 L1 structural regression | OPEN | newline 263 < 293; 4 STT-glue + 2 digit-run tại PLII_M02/PLI_M72 |
-| 13 Visual evidence freshness | NOT RUN ở HEAD hiện tại | không có browser backend trong phiên audit; Poppler không có; ảnh cũ không đủ đóng gate sau merge mới |
+| 13 Visual evidence freshness | **UI: RUN @ Wave C (87/87 PASS)**; Word PDF: NOT RUN | UI Playwright 87/87 (0 marker/undefined/overlap, keyboard 3070 tab-stop, 3 viewport + zoom 200%); DOCX structural 87/87. Word AppleScript bị TCC chặn (-1712/-609) → Wave F xử lý bằng GUI-drive, không giả PASS |
+| 14 Validation gap khối liên hệ (Wave C F1, mới) | OPEN, ưu tiên cao | 20 form: `email_khac`/`dien_thoai_khac`/`fax`/`website` không có rule trong FIELD_META trong khi `email_tru_so` có `type: email` (đã Lead spot-check `form-domain.js:103`); PLI_M07 `so_cccd` trong loop nhận rác không lỗi → rác in thẳng DOCX. Danh sách: PLII_M08/10/11/12/14/16/19/20/21/22/23/25/28, PLI_M07/47/50/51/52/53/76 |
 
 Audit handoff đầy đủ, gồm exact 23 form GLUE và ranh giới structural/visual:
 `docs/whole_app_audit_2026-08-30.md`.

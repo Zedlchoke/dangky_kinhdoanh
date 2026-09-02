@@ -302,3 +302,18 @@ visual NOT RUN — xử lý ở Wave B/C/D theo PLAN v4.
 **Con số công bố sau Gate B:** cần làm thật **26 section** (20 MISSING + 6 PARTIAL);
 chờ owner/pháp lý 41; không phải bảng 13. Chi tiết từng dòng trong
 `docs/table_coverage_current.md`.
+
+## Wave C — whole-app audit read-only @ 9e9ba0d (detached, 2026-09-02, whole-app-auditor)
+
+| Task | Owner | Evidence | Trạng thái |
+|---|---|---|---|
+| Auditor read-only, detached worktree | Lead | worktree @ 9e9ba0d, git status sạch, 0 commit; evidence ghi vào `generated_ho_so/_visual_layout/whole_app_audit/` (gitignored) | ✅ |
+| UI quét 87/87 | auditor | Playwright + snapshot.html: DOM hygiene @1280 (0 `undefined/null/NaN`, 0 marker leak, 0 overlap/cut, 0 console error) + 768/375 + zoom 150/200% + keyboard (3070 tab stop, 0 mất outline) + aria; 4 data states (rỗng/hợp lệ/invalid/legacy/large) qua engine validate/migrate thật | ✅ 87/87 |
+| DOCX/Word | auditor | sinh DOCX 87/87 + structural scan document.xml (0 marker, số bảng == coverage matrix); **Word PDF visual NOT RUN** — TCC Automation chặn AppleEvent (-1712/-609), blocker môi trường, xử lý ở Wave F bằng GUI-drive | ✅ structural / ⏳ visual |
+| Use case 28/28 + M72 5/5 + ZIP 5 đại diện + Excel | auditor | 28/28 mở form + luồng chính; M72 5 variant không trộn (structural); ZIP đủ 4 table kind; Excel PLI_M72 round-trip PASS | ✅ |
+| Finding mới F1 | auditor | **20 form validation gap** khối liên hệ + CCCD M07 (Class 14 mới trong defect registry) — rác in được vào DOCX | ❌ chuyển Wave D fix-industry |
+| Verdict Gate C | Lead | 87/87 form + 28/28 use case đều có verdict (thành phần Word visual = NOT RUN trung thực) | ✅ **GATE C PASS (có NOT RUN có lý do)** |
+
+**Chuyển sang Wave D:** 3 lane batch 1 theo PLAN 6.6 + F1 vào fix-industry (cùng
+file ownership form-domain.js). Word PDF visual: Wave F dùng computer-use GUI
+thay AppleScript TCC.

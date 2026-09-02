@@ -87,7 +87,9 @@ PAGEBREAK_BASELINE = {"PLI_M12": [9, 0]}
 # — đúng cơ chế bản giấy dùng cho 39 title ký nằm sát nội dung trên.
 MIN_SPACING_BEFORE = 120
 
-_PARA_RE = re.compile(r"<w:p[ >/].*?</w:p>|<w:p[^>]*/>", re.S)
+# NHÁNH có cặp đóng đứng TRƯỚC ([ >] loại '/') để "<w:p/>" không bị nuốt
+# chung với paragraph kế tiếp.
+_PARA_RE = re.compile(r"<w:p[ >].*?</w:p>|<w:p[^>]*/>", re.S)
 _CELL_RE = re.compile(r"<w:tc[ >].*?</w:tc>|<w:tc/>", re.S)
 _TBL_RE = re.compile(r"<w:tbl[ >].*?</w:tbl>", re.S)
 _SPACING_RE = re.compile(r'<w:spacing[^>]*w:before="(\d+)"')

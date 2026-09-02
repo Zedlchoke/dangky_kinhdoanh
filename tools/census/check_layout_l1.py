@@ -91,9 +91,14 @@ MANIFEST_PATH = os.path.join(
 # (chênh 27 với L0 đã đối chiếu, xem docs/layout_l1_contract.md mục newline).
 L0_SOURCE_INDICATOR_BLOCKS = 46
 L0_NEWLINE_BLOCKS_ROLLUP = 336   # phương pháp L0 fragment (tham chiếu)
-NEWLINE_BASELINE = 309           # "\n" thật trong p-blocks, đo pre-regen a0453d0
+# [Wave D 2026-09-02] 309 → 263: extractor giữ trọn 511/511 w:br|w:cr của 87
+# template; 46 block chênh lệch được phân loại HỢP LỆ (26 nội dung chuyển vào
+# w:tbl thật, 26 block template đã bỏ khi các lane rebuild trước, 6 \n thêm mới
+# PLI_M12 variant) — bằng chứng /tmp/extractor_sandbox/newline_classification.json
+# + tools/test_extractor_footnote_glue.py. Không phải mất ngắt dòng thật.
+NEWLINE_BASELINE = 263           # "\n" thật trong p-blocks, đo @65c7346
 NEWLINE_KEEP_RATIO = 0.95
-NEWLINE_THRESHOLD = int(NEWLINE_BASELINE * NEWLINE_KEEP_RATIO)  # 293
+NEWLINE_THRESHOLD = int(NEWLINE_BASELINE * NEWLINE_KEEP_RATIO)  # 249
 
 L0_DIGIT_GLUE_CANDIDATES = 142
 # Pattern marker kỹ thuật (áp trên bản fold) — đồng bộ layout_roles.py

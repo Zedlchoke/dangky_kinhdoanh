@@ -64,6 +64,16 @@ def runtext(blk):
     return "".join(parts)
 
 
+# [Wave D 2026-09-02] GLUE phát hiện theo run-level vertAlign-aware (dùng cùng
+# logic check_layout_l1.unresolved_glue_count): run superscript chỉ gồm chữ số
+# đứng sau run chữ = marker chú thích đã tách ĐÚNG, không còn dính. Heuristic
+# phẳng trên text nối vẫn giữ lại ở đây chỉ để ĐẾM phần đã phân loại (transparency)
+# — bằng chứng: 50/50 hit phẳng tại 6ae63c2 đều là superscript đã tách đúng
+# (tools/test_extractor_footnote_glue.py, /tmp/extractor_sandbox).
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from check_layout_l1 import unresolved_glue_count  # noqa: E402
+
+
 def extract_sequences(blocks):
     """Trả về list các chuỗi đánh số top-level liên tiếp (restart = chuỗi mới)."""
     seq = []
@@ -94,13 +104,17 @@ def audit_form(fid, blocks):
                 "where": "%s | %s" % (ta[:48], tb[:48]),
             })
     glue = []
+    glue_sup_resolved = 0
     for blk in blocks:
         if blk.get("t") != "p":
             continue
         txt = runtext(blk).strip()
         if GLUE.search(txt):
-            glue.append(txt[:60])
-    return nums, issues, glue
+            if unresolved_glue_count(blk) > 0:
+                glue.append(txt[:60])
+            else:
+                glue_sup_resolved += 1
+    return nums, issues, glue, glue_sup_resolved
 
 
 def main():
@@ -113,12 +127,14 @@ def main():
     for path in sorted(glob.glob(os.path.join(BLOCKS, "*.json"))):
         fid = os.path.basename(path)[:-5]
         blocks = json.loads(open(path, encoding="utf-8").read())["blocks"]
-        nums, issues, glue = audit_form(fid, blocks)
+        nums, issues, glue, sup_resolved = audit_form(fid, blocks)
         entry = {}
         if issues:
             entry["issues"] = issues
         if glue:
             entry["glue_footnote"] = glue
+        if sup_resolved:
+            entry["glue_sup_resolved"] = sup_resolved
         if entry:
             report[fid] = entry
 
@@ -151,8 +167,10 @@ def main():
 
     n_issue = sum(1 for v in report.values() if "issues" in v)
     n_glue = sum(1 for v in report.values() if "glue_footnote" in v)
-    print("numbering_audit: %s forms scanned, %s forms có JUMP, %s forms có GLUE"
-          % (full["forms_scanned"], n_issue, n_glue))
+    n_sup = sum(v.get("glue_sup_resolved", 0) for v in report.values())
+    print("numbering_audit: %s forms scanned, %s forms có JUMP, %s forms có "
+          "GLUE chưa phân loại (%s block đã phân loại superscript)"
+          % (full["forms_scanned"], n_issue, n_glue, n_sup))
     for key, ch in chains.items():
         if isinstance(ch, dict):
             print("  chain %-16s main_last=%s comp_first=%s %s"

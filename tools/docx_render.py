@@ -303,6 +303,10 @@ def render(template_path: str | os.PathLike, data: dict,
                     xml = _apply_conditions(xml, payload)
                     xml = _expand_loops(xml, payload)
                     xml = _subst_vars(xml, payload)
+                    if name == "word/document.xml":
+                        # Class 7: chèn dòng trống cho vùng ký THÀNH PHẦN
+                        # CUỐI — sau khi conditions/loops đã chốt cấu trúc.
+                        xml = _ensure_signature_space(xml)
                     raw = xml.encode("utf-8")
                 zi = zipfile.ZipInfo(info.filename, date_time=info.date_time)
                 zi.compress_type = zipfile.ZIP_DEFLATED
@@ -553,6 +557,74 @@ def recompute_totals(data: dict, tables_meta: list,
     if problems and strict:
         raise ExportTotalsError(problems)
     return report
+
+
+# ---------------------------------------------------------------------------
+# Class 7 (defect_registry.md): khoảng trống vùng chữ ký
+#
+# Bản giấy nguồn LUÔN tách dòng tiêu đề vùng ký khỏi nội dung phía trên bằng
+# ít nhất một dòng trống, hoặc bằng w:spacing w:before=120 ngay trên đoạn
+# title (đo tại BASE: 84 title ký nguồn — 39 case sát nội dung đều có
+# spacing 120, 44 case còn lại có 1-2 đoạn trống, 1 outlier 9). Generator
+# (blocks -> template) có chỗ làm RƠI dòng trống đó (vd PLI_M70: cặp
+# "NGƯỜI NỘP/NGƯỜI NHẬN (Ký và ghi họ tên)" bị bó vào ô bảng, không còn
+# dòng trống lẫn spacing -> in ra không có chỗ ký). Blocks là generated
+# NÊN KHÔNG sửa generated blocks: xử lý NGAY TRƯỚC KHI XUẤT — với mọi
+# paragraph document.xml chứa marker title ký "(Ký…"/"(Đã ký…)", nếu
+# KHÔNG có đoạn trống liền trước trong cùng container (body/ô bảng) và
+# KHÔNG có spacing before >= 120 thì chèn một paragraph rỗng ngay trước.
+# Chỉ THÊM khoảng trống, không đổi chữ/số đoạn có nội dung.
+# ---------------------------------------------------------------------------
+
+_SIG_TITLE_RE = re.compile(r"\((?:Ký|Đã ký)")
+_SIG_MIN_SPACE_TWIPS = 120
+_SIG_SPACING_RE = re.compile(r'<w:spacing[^>]*w:before="(\d+)"')
+# token quét tuần tự: biên container (ô bảng/bảng) hoặc một paragraph.
+# NHÁNH có cặp đóng phải đứng TRƯỚC ([ >] loại luôn '/'), nếu không
+# "<w:p/>" sẽ bị nhánh đầu nuốt chung với paragraph kế tiếp.
+_SIG_TOKEN_RE = re.compile(
+    r"<w:tc[ >]|</w:tc>|<w:tbl[ >]|</w:tbl>"
+    r"|<w:p[ >].*?</w:p>|<w:p[^>]*/>", re.S)
+_SIG_T_RE = re.compile(r"<w:t[^>]*>([^<]*)</w:t>")
+
+
+def _ensure_signature_space(xml: str) -> str:
+    """Bảo đảm mỗi title vùng ký có >=1 dòng trống phía trên trong cùng
+    container (hoặc spacing before đủ). Trả XML mới; không đổi nội dung chữ.
+    Chỉ chạy cho word/document.xml (header/footer không có vùng ký)."""
+    bm = _BODY_RE.search(xml)
+    if not bm:
+        return xml
+    body = bm.group(2)
+    out: list[str] = []
+    pos = 0
+    # prev_empty: phần tử liền trước TRONG CÙNG container là đoạn rỗng?
+    prev_empty = False
+    for m in _SIG_TOKEN_RE.finditer(body):
+        tok = m.group(0)
+        if tok.startswith("<w:tc") or tok in ("</w:tc>", "</w:tbl>") \
+                or tok.startswith("<w:tbl"):
+            # sang container khác / có bảng chen giữa -> reset
+            out.append(body[pos:m.end()])
+            pos = m.end()
+            prev_empty = False
+            continue
+        text = "".join(_SIG_T_RE.findall(tok))
+        if _SIG_TITLE_RE.search(text):
+            sp = _SIG_SPACING_RE.search(tok)
+            has_space = bool(sp and int(sp.group(1)) >= _SIG_MIN_SPACE_TWIPS)
+            if not prev_empty and not has_space:
+                out.append(body[pos:m.start()])
+                out.append("<w:p/>")
+                out.append(tok)
+                pos = m.end()
+                prev_empty = False
+                continue
+        out.append(body[pos:m.end()])
+        pos = m.end()
+        prev_empty = text.strip() == ""
+    out.append(body[pos:])
+    return xml[:bm.start(2)] + "".join(out) + xml[bm.end(2):]
 
 
 # ---------------------------------------------------------------------------

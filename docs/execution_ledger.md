@@ -270,3 +270,19 @@ deep idempotency 17/0; manifest GATE PASS 87/87; visual re-shoot chkfix 4/4.
 | R5 visual QA | R4 PASS | cần LibreOffice/Word hoặc renderer được owner chấp thuận |
 | R6 Windows package | R5 PASS | cần môi trường Windows sạch của owner để smoke |
 | R7 independent audit | R6 PASS | auditor mới read-only; APP_DONE 10 điều kiện |
+
+## Wave A — PLAN v4 baseline xanh @ main 6ae63c2→cdb39f9 (2026-09-02, Lead)
+
+| Task | Owner | Evidence | Trạng thái |
+|---|---|---|---|
+| Phân loại 4 tài liệu dirty + commit riêng | Lead | `eb9e723` (PLAN v4, defect reconciliation, D2/P5R ghi lịch sử, audit handoff) — nhất quán với source đã kiểm: 2 FAIL verifier thật, a11y phụ thuộc môi trường | ✅ |
+| Tái hiện baseline | Lead | runner **44 PASS / 2 FAIL / 0 NOT RUN** trên máy dev (a11y bind OK ở đây): `p1_c_verify_plii_m02` + `test_industry_household` — đúng AUD-002/003 | ✅ |
+| Root cause AUD-002/003 | Lead | classifier bảng theo VỊ TRÍ (skip mù bảng đầu `first_tbl_seen`, mốc thuế `tax_start`) ăn nhầm bảng ngành thật sau khi template có 6 bảng: p1_c mất `nganh_bo_sung`, household mất `nganh_hien_tai`. Production template/form_maps ĐÚNG — không sửa template (PLAN A.2) | ✅ |
+| Fix semantic classifier + mutation test | Lead | `cdb39f9`: `classify_table` (band/thuế "Chỉ tiêu"/industry theo nội dung header) dùng chung 1 nguồn cho cả 2 gate; đối chiếu theo THỨ TỪ vùng (bắt thiếu/thừa/đảo — sorted cũ không bắt được đảo); selftest negative mutation (band/thuế chen giữa, thiếu, đảo, ngoài vùng) chạy mỗi lần verifier | ✅ |
+| Preflight a11y trong runner | Lead | `build_cmd` preflight `bind_localhost`: sandbox cấm bind → critical NOT RUN có lý do (không FAIL giả); release chính thức vẫn bắt buộc a11y ở môi trường hỗ trợ. Đã test cả 2 nhánh | ✅ |
+| Cân allowlist H7 | Lead | +`docs/whole_app_audit_2026-08-30.md` (commit eb9e723 đưa vào range diff baseline..HEAD); H7 56/0 | ✅ |
+| Full runner checkpoint | Lead | **46 PASS / 0 FAIL / 0 NOT RUN — VERDICT PASS** @ `cdb39f9`; `git diff --check` 0; git status sạch | ✅ **GATE A PASS** |
+
+**Còn OPEN sau Gate A (không thuộc Wave A):** Class 3 footnote GLUE 23 form,
+Class 11 coverage drift, Class 12 L1 (newline 263 + STT/digit-run), Class 13
+visual NOT RUN — xử lý ở Wave B/C/D theo PLAN v4.

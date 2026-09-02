@@ -21,7 +21,7 @@
 | 7 Khoảng trống chữ ký | OPEN | chưa có test đo khoảng trống UI + Word output |
 | 8 Dấu X rơi dòng | OPEN | chưa có test checked/unchecked trên DOCX output |
 | 9 `undefined`/`6` trong bảng ngành | OPEN, ưu tiên cao | chưa có test tái hiện draft/autosave state; source hiện không có string literal `"undefined"` |
-| 10 Verifier PLII_M02 table-region | OPEN, gate đỏ | template có 6 bảng và form_maps đủ 4 industry loops, nhưng 2 verifier chỉ map được 3 region |
+| 10 Verifier PLII_M02 table-region | **FIXED (Wave A, `cdb39f9`)** | classifier theo semantic header (band/thuế "Chỉ tiêu"/industry); đối chiếu theo THỨ TỰ vùng (bắt thiếu/thừa/đảo); selftest negative mutation trong verifier; `test_industry_household` 13/0, `p1_c` VERIFY PASS |
 | 11 Manifest/coverage drift | OPEN, blocking rollout | manifest còn status snapshot cũ; override/section IDs chưa reconcile với specs/form_maps hiện hành |
 | 12 L1 structural regression | OPEN | newline 263 < 293; 4 STT-glue + 2 digit-run tại PLII_M02/PLI_M72 |
 | 13 Visual evidence freshness | NOT RUN ở HEAD hiện tại | không có browser backend trong phiên audit; Poppler không có; ảnh cũ không đủ đóng gate sau merge mới |
@@ -33,6 +33,12 @@ Release runner audit: 43 PASS / 3 FAIL trong sandbox; a11y fail do bind localhos
 EPERM nhưng chạy ngoài sandbox đạt 36/36, nên còn hai FAIL verifier/region cần sửa
 thật. Không gọi release xanh cho tới khi full runner chạy ở môi trường phù hợp đạt
 0 FAIL/0 critical NOT RUN.
+
+> **Cập nhật Wave A 2026-09-02 (`cdb39f9`):** runner có preflight `bind_localhost`
+> → a11y NOT RUN có lý do khi môi trường cấm bind (không còn FAIL giả); release
+> chính thức vẫn bắt buộc a11y ở môi trường hỗ trợ. Trên máy dev cho phép bind:
+> **46 PASS / 0 FAIL / 0 NOT RUN — VERDICT PASS**. Class 10 FIXED như bảng trên.
+> Class 3/11/12/13 vẫn OPEN đúng trạng thái.
 
 ## Class 1 — Checkbox dẹt thành text (BHXH "3 tháng một lần")
 

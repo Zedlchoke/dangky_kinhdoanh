@@ -69,9 +69,27 @@ check('round-trip: format(parse(x)) ổn định',
   check('getLoopMeta(ds_thanh_vien).minRowsFilled === 2', !!lv && lv.minRowsFilled === 2);
   check('LOOP_META ds_thanh_vien có von_dong_gop là moneyTag',
     !!(lv && lv.moneyTags.indexOf('von_dong_gop') >= 0));
-  // tương thích ngược: key cũ không metadata vẫn được collect và không lỗi
-  check('metadata KHÔNG đổi key cũ (đếm số entry pilot <= 20)',
-    Object.keys(D.FIELD_META).length > 0 && Object.keys(D.FIELD_META).length <= 20);
+  // tương thích ngược: key cũ không metadata vẫn được collect và không lỗi.
+  // [Lane fix-industry, Class 14] Pin cũ là "đếm entry <= 20"; red test
+  // (test_validation_contact.js) chứng minh cap đó ghim đúng HÀNH VI LỖI
+  // (4 field liên hệ dùng chung email_khac/dien_thoai_khac/fax/website bị
+  // thiếu metadata -> rác in thẳng vào DOCX ở 20 form). Pin mới giữ đúng Ý
+  // ĐỊNH tương thích ngược: 18 key pilot cũ còn NGUYÊN (đúng label/type)
+  // + cho phép đúng 4 key được mandate thêm (cap <= 30).
+  const PILOT_KEYS = ['dn.ten_tieng_viet', 'dn.ten_nuoc_ngoai', 'dn.ten_viet_tat',
+    'von_dieu_le', 'von_kinh_doanh', 'chu_hkd.ho_ten', 'ndd.ho_ten',
+    'gd.ho_ten', 'kt.ho_ten', 'chu_hkd.so_cccd', 'ndd.so_cccd', 'ndd.email',
+    'email_tru_so', 'dn.ma_so_dn', 'dn_goc.ma_so_dn', 'hkd_cd.ma_so_thue',
+    'csbt.ma_so_thue', 'so_lao_dong'];
+  check('metadata KHÔNG đổi key cũ (18 key pilot giữ nguyên key/label/type)',
+    PILOT_KEYS.every(k => {
+      const pm = D.getFieldMeta(k);
+      return !!pm && pm.key === k && typeof pm.label === 'string' &&
+        typeof pm.type === 'string';
+    }));
+  check('metadata: tổng entry pilot + 4 key liên hệ (Class 14) <= 30',
+    Object.keys(D.FIELD_META).length === 22,
+    String(Object.keys(D.FIELD_META).length));
 }
 
 // ------------------------------------------------------------- 3. collectKeys

@@ -101,6 +101,15 @@
     'ndd.so_cccd':       { key: 'ndd.so_cccd', label: 'Số định danh cá nhân người đại diện', type: 'cccd' },
     'ndd.email':         { key: 'ndd.email', label: 'Thư điện tử người đại diện', type: 'email', inputMode: 'email' },
     'email_tru_so':      { key: 'email_tru_so', label: 'Thư điện tử trụ sở chính', type: 'email', inputMode: 'email' },
+    /* Class 14 (Wave C finding F1, 20 form PLII_M08/10/11/12/14/16/19/20/21/
+     * 22/23/25/28 + PLI_M07/47/50/51/52/53/76): 4 field liên hệ của
+     * contact-block template dùng chung KHÔNG có rule nào -> rác in thẳng
+     * vào DOCX. Sửa ở ĐÚNG LỚP - metadata dùng chung, KHÔNG liệt kê tay
+     * từng form: mọi blocks chứa key này tự được validateDocument kiểm. */
+    'email_khac':        { key: 'email_khac', label: 'Thư điện tử khác', type: 'email', inputMode: 'email' },
+    'dien_thoai_khac':   { key: 'dien_thoai_khac', label: 'Điện thoại khác', type: 'phone', inputMode: 'tel' },
+    'fax':               { key: 'fax', label: 'Fax', type: 'phone', inputMode: 'tel' },
+    'website':           { key: 'website', label: 'Website', type: 'website', inputMode: 'url' },
     'dn.ma_so_dn':       { key: 'dn.ma_so_dn', label: 'Mã số doanh nghiệp/Mã số thuế chủ sở hữu', type: 'mst' },
     'dn_goc.ma_so_dn':   { key: 'dn_goc.ma_so_dn', label: 'Mã số doanh nghiệp bị chia/tách/hợp nhất', type: 'mst' },
     'hkd_cd.ma_so_thue': { key: 'hkd_cd.ma_so_thue', label: 'Mã số thuế hộ kinh doanh chuyển đổi', type: 'mst' },
@@ -148,7 +157,7 @@
         { tag: 'ho_ten', type: 'text', required: true },
         { tag: 'ngay_sinh', type: 'text' },
         { tag: 'gioi_tinh', type: 'text' },
-        { tag: 'so_cccd', type: 'text' },
+        { tag: 'so_cccd', type: 'cccd' },
         { tag: 'quoc_tich', type: 'text' },
         { tag: 'dan_toc', type: 'text' },
         { tag: 'dia_chi', type: 'text' },
@@ -174,7 +183,7 @@
         { tag: 'ho_ten', type: 'text', required: true },
         { tag: 'ngay_sinh', type: 'text' },
         { tag: 'gioi_tinh', type: 'text' },
-        { tag: 'so_cccd', type: 'text' },
+        { tag: 'so_cccd', type: 'cccd' },
         { tag: 'quoc_tich', type: 'text' },
         { tag: 'dan_toc', type: 'text' },
         { tag: 'dia_chi', type: 'text' },
@@ -201,7 +210,7 @@
         { tag: 'ho_ten', type: 'text', required: true },
         { tag: 'ngay_sinh', type: 'text' },
         { tag: 'gioi_tinh', type: 'text' },
-        { tag: 'so_cccd', type: 'text' },
+        { tag: 'so_cccd', type: 'cccd' },
         { tag: 'quoc_tich', type: 'text' },
         { tag: 'dan_toc', type: 'text' },
         { tag: 'dia_chi', type: 'text' },
@@ -224,7 +233,7 @@
         { tag: 'ho_ten', type: 'text', required: true },
         { tag: 'ngay_sinh', type: 'text' },
         { tag: 'gioi_tinh', type: 'text' },
-        { tag: 'so_cccd', type: 'text' },
+        { tag: 'so_cccd', type: 'cccd' },
         { tag: 'quoc_tich', type: 'text' },
         /* P2A (D2.3=A): cột Dân tộc của PLI_M07 trước đây không được gắn the
          * trong khai báo inline (manifest loop_audit.missing_cols col 6) ->
@@ -297,7 +306,7 @@
       columns: [
         { tag: 'ho_ten', type: 'text', required: true },
         { tag: 'ngay_sinh', type: 'text' },
-        { tag: 'so_cccd', type: 'text' },
+        { tag: 'so_cccd', type: 'cccd' },
         { tag: 'gioi_tinh', type: 'text' },
         { tag: 'quoc_tich', type: 'text' },
         { tag: 'dan_toc', type: 'text' },
@@ -593,7 +602,7 @@
             { tag: 'ho_ten', type: 'text', required: true },
             { tag: 'ngay_sinh', type: 'text' },
             { tag: 'gioi_tinh', type: 'text' },
-            { tag: 'so_cccd', type: 'text' },
+            { tag: 'so_cccd', type: 'cccd' },
             { tag: 'chuc_danh', type: 'text' },
             { tag: 'dia_chi', type: 'text' },
             { tag: 'quoc_gia', type: 'text' }
@@ -624,7 +633,7 @@
             { tag: 'quoc_tich', type: 'text' },
             { tag: 'noi_o_hien_tai', type: 'text' },
             { tag: 'noi_thuong_tru', type: 'text' },
-            { tag: 'so_cccd', type: 'text' },
+            { tag: 'so_cccd', type: 'cccd' },
             { tag: 'ghi_chu', type: 'text' }
           ],
           duplicateKeys: ['so_cccd'],
@@ -781,10 +790,29 @@
     return 'r' + _idSeq + '_' + Math.random().toString(36).slice(2, 8);
   }
 
+  /* _row_id dùng được: chuỗi khác rỗng và không phải chữ 'NaN'/'undefined'
+   * (draft hỏng/producer lạ có thể chứa id rác - Class 9: row id NaN).
+   * Id chuỗi lạ khác (vd 'member-stable-1') vẫn GIỮ nguyên - id chỉ cần
+   * ổn định trong phiên, không bắt buộc đúng pattern của makeRowId. */
+  function isUsableRowId(id) {
+    return typeof id === 'string' && id !== '' &&
+      id !== 'NaN' && id !== 'undefined';
+  }
+
   /* Đảm bảo mọi row trong store.loops có _row_id (mutate tại chỗ).
    * Đồng thời migration canonical: ds_nganh_kinh_doanh -> ds_nganh khi chưa
    * có ds_nganh (giữ nguyên dữ liệu); KHÔNG đụng nganh_bo_sung/nganh_xoa_bo/
-   * nganh_truoc_thay_doi. */
+   * nganh_truoc_thay_doi.
+   * Class 9 (defect registry: ô Tên ngành 'undefined', Mã ngành '6') - chuẩn
+   * hoá AN TOÀN ngay ở lớp dữ liệu, mọi chỗ hiển thị/binding/export chỉ cần
+   * đọc store:
+   *  - row KHÔNG phải object (null/scalar/mảng từ draft legacy hỏng) -> thay
+   *    bằng dòng object rỗng {giữ số dòng và thứ tự; scalar không thể map an
+   *    toàn vào tag nào nên bỏ dữ liệu thay vì chế ngữ nghĩa};
+   *  - giá trị nullish (undefined/null) trong row -> chuỗi rỗng (JSON round
+   *    trip khôi phục draft không bao giờ tái sinh 'undefined' khi binding);
+   *  - _row_id thiếu/rác ('NaN', 'undefined', số, rỗng) -> gán id mới hợp lệ
+   *    (id chỉ có ý nghĩa kỹ thuật trong phiên, không mất dữ liệu kê khai). */
   function normalizeStoreLoops(store) {
     if (!store || typeof store !== 'object') return store;
     var loops = store.loops = store.loops || {};
@@ -804,8 +832,16 @@
         loops[name] = [];
         return;
       }
-      rows.forEach(function (r) {
-        if (r && typeof r === 'object' && !r._row_id) r._row_id = makeRowId();
+      rows.forEach(function (r, ix) {
+        if (!r || typeof r !== 'object' || Array.isArray(r)) {
+          r = {};          // row scalar/null/mảng: bỏ rác, giữ dòng + thứ tự
+          rows[ix] = r;    // rồi chạy tiếp chuẩn hoá như row thường (có id)
+        }
+        Object.keys(r).forEach(function (k) {
+          if (k.charAt(0) === '_') return; // field nội bộ xử lý riêng dưới
+          if (r[k] === undefined || r[k] === null) r[k] = '';
+        });
+        if (!isUsableRowId(r._row_id)) r._row_id = makeRowId();
       });
     });
     return store;
@@ -849,6 +885,15 @@
   // ---------------------------------------------------------------- validators
 
   var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  /* Điện thoại/fax: chỉ chữ số sau khi bỏ dấu ngăn cách (khoảng trắng, chấm,
+   * gạch nối, ngoặc, dấu +); dài 8-15 số (số VN 9-10 số, có đầu số quốc tế).
+   * Class 14: 'dt: (028) 3825abc' / 'khong co so' phải là lỗi. */
+  var PHONE_STRIP_RE = /[\s.\-()+]/g;
+  /* Website: có host dạng domain (ít nhất một dấu chấm, TLD chữ cái >= 2),
+   * scheme http(s) tuỳ chọn, port tuỳ chọn, path/query/fragment không có
+   * khoảng trắng. Class 14: 'khong phai url' / 'http://' phải là lỗi. */
+  var WEBSITE_RE =
+    /^(?:https?:\/\/)?[a-z0-9](?:[a-z0-9-]*[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)+(?::\d{1,5})?(?:[\/?#]\S*)?$/i;
 
   function stripSep(s) { return String(s).replace(/[\s.\-]/g, ''); }
 
@@ -874,6 +919,18 @@
     switch (m.type) {
       case 'email':
         if (!EMAIL_RE.test(v)) return err('EMAIL', 'Email không đúng định dạng: ' + v);
+        break;
+      case 'phone': {
+        var digits = v.replace(PHONE_STRIP_RE, '');
+        if (!/^\d{8,15}$/.test(digits))
+          return err('PHONE', 'Số điện thoại/fax không hợp lệ (chỉ gồm chữ số, '
+            + 'có thể ngăn cách bởi khoảng trắng/dấu chấm/gạch/ngoặc): ' + v);
+        break;
+      }
+      case 'website':
+        if (!WEBSITE_RE.test(v))
+          return err('WEBSITE', 'Địa chỉ website không hợp lệ (ví dụ đúng: '
+            + 'www.congty.vn): ' + v);
         break;
       case 'cccd': {
         var d = stripSep(v);
@@ -930,6 +987,11 @@
     return (g.columns || []).filter(function (c) { return c && c.required; })
       .map(function (c) { return c.tag; });
   }
+
+  /* Class 14: các type cột bảng lặp được kiểm chứng nội dung (validateGridLoop
+   * dùng lại validateField cho từng ô CÓ dữ liệu). 'text' và các type hiển thị
+   * (readonly/outputOnly/radio/checkbox) không thuộc danh sách này. */
+  var VALIDATABLE_COL_TYPES = ['cccd', 'email', 'phone', 'website', 'mst'];
 
   function cellStr(r, tag) {
     return String((r || {})[tag] == null ? '' : r[tag]).trim();
@@ -1059,7 +1121,11 @@
     var lm = getLoopMeta(name) || {};
 
     rows.forEach(function (r) {
-      if (r && typeof r === 'object' && !r._row_id) r._row_id = makeRowId();
+      // Class 9: id thiếu/rác ('NaN'...) phải gán lại trước khi làm key lỗi
+      // "loop:<name>:<row_id>:<tag>" - id rác làm lỗi trỏ sai ô trên UI.
+      if (r && typeof r === 'object' && !isUsableRowId(r._row_id)) {
+        r._row_id = makeRowId();
+      }
     });
 
     function errAt(r, tag, code, msg) {
@@ -1122,6 +1188,29 @@
         errAt(r, missing[0], 'ROW_INCOMPLETE',
           label + ' dòng ' + dispIdx(r) + ': thiếu thông tin bắt buộc: ' + missing.join(', '));
       }
+    });
+
+    // Class 14: cột khai type kiểm chứng (cccd/email/phone/website/mst) phải
+    // hợp lệ KHI CÓ dữ liệu - trước đây so_cccd các bảng người rơi về 'text'
+    // nên text rác đi thẳng vào DOCX. Dùng lại validateField để message tiếng
+    // Việt + code đồng bộ với field thường (CCCD/EMAIL/PHONE/WEBSITE/MST).
+    (g.columns || []).forEach(function (col) {
+      if (!col || VALIDATABLE_COL_TYPES.indexOf(col.type) < 0) return;
+      if ((tags || []).indexOf(col.tag) < 0) return; // cột không có trong mẫu
+      rows.forEach(function (r) {
+        var raw = cellStr(r, col.tag);
+        if (!raw) return;
+        var errs = validateField({
+          key: name + '.' + col.tag,
+          label: col.label || col.tag,
+          type: col.type,
+          required: false
+        }, raw, {});
+        if (errs.length) {
+          errAt(r, col.tag, errs[0].code,
+            label + ' dòng ' + dispIdx(r) + ': ' + errs[0].message);
+        }
+      });
     });
 
     // VSIC_INVALID + tự sửa ten_nganh lệch danh mục trước khi báo lỗi

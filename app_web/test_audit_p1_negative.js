@@ -390,6 +390,12 @@ function vsicOf(ma) {
     tags.forEach(function (t) {
       if (t === 'ma_nganh') r[t] = '0111';
       else if (t === 'la_nganh_chinh') r[t] = (j === 0 ? 'X' : '');
+      /* [Lane fix-industry, Class 14] so_cccd dùng giá trị HỢP LỆ (12 số):
+       * fix Class 14 đã cho cột so_cccd type 'cccd' (trước đây 'text' nhận
+       * text rác không lỗi — Wave C finding F1). Rác 'GT-so_cccd-N' giờ ĐÚNG
+       * theo mandate bị flag CCCD blocking -> diff-vs-baseline đỏ oan. Fixture
+       * vẫn giữ rác cho các cột còn lại để tiếp tục dò thay đổi hành vi khác. */
+      else if (t === 'so_cccd') r[t] = '01234567890' + j;
       else r[t] = 'GT-' + t + '-' + j;
     });
     return r;

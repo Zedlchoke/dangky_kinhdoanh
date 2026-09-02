@@ -100,6 +100,29 @@
       return -1;
     },
 
+    /* Class 9 (bảng ngành 'undefined'/'6'): ghi MỘT ô của dòng loop theo
+     * tham chiếu ỔN ĐỊNH - ưu tiên tra dòng bằng _row_id (không đổi nhầm dòng
+     * sau add/delete/reorder/restore draft giữa chừng), fallback index CHỈ khi
+     * index là số hữu hạn >= 0 (key hỏng kiểu loop:x:NaN:tag bị từ chối thay
+     * vì tạo row rác ở index NaN). Giá trị nullish (undefined/null) luôn ghi
+     * thành chuỗi rỗng - store không bao giờ chứa 'undefined'. Trả true nếu
+     * ghi được; thuần (không DOM) để node-test. */
+    setCell: function (store, loop, ref, tag, value) {
+      if (!tag) return false;
+      var rows = GridCtl.rows(store, loop);
+      var i = -1;
+      if (ref && ref.rowId != null) i = GridCtl.findRowIndex(rows, ref.rowId);
+      if (i < 0 && ref && typeof ref.idx === 'number' &&
+          isFinite(ref.idx) && ref.idx >= 0) {
+        i = ref.idx;
+      }
+      if (i < 0 || i >= rows.length) return false;
+      var row = rows[i];
+      if (!row || typeof row !== 'object' || Array.isArray(row)) return false;
+      row[tag] = (value == null) ? '' : value;
+      return true;
+    },
+
     /* Gán _row_id cho mọi row còn thiếu (mutate tại chỗ, idempotent). */
     ensureIds: function (store) {
       var loops = store.loops || {};
@@ -242,7 +265,14 @@
           var clean = {};
           Object.keys(row || {}).forEach(function (k) {
             if (k.charAt(0) === '_') return; // _row_id và field nội bộ khác
-            clean[k] = row[k];
+            var v = row[k];
+            /* Class 9: payload DOCX không bao giờ chứa undefined/null/NaN
+             * (JSON.stringify biến undefined thành missing và NaN thành null
+             * nhưng consumer ghép chuỗi từng thấy chữ 'undefined' in ra văn
+             * bản). Giá trị rỗng hợp lệ trong payload là chuỗi ''. */
+            if (v == null) return;
+            if (typeof v === 'number' && !isFinite(v)) return;
+            clean[k] = v;
           });
           if (Object.prototype.hasOwnProperty.call(clean, 'la_nganh_chinh')) {
             clean.la_nganh_chinh =
@@ -1117,11 +1147,16 @@
   function setKeyValue(key, value) {
     var lk = parseLoopKey(key);
     if (lk) {
+      /* Class 9: key hỏng (index NaN/âm, index >= độ dài hiện tại chỉ nới
+       * đúng số dòng cần) không được tạo row rác - NaN từng lọt qua phép so
+       * sánh `rows.length <= NaN` (luôn false) rồi ném TypeError khi ghi
+       * rows[NaN][tag]. */
+      if (!isFinite(lk.idx) || lk.idx < 0) return;
       var rows = state.store.loops[lk.loop] = state.store.loops[lk.loop] || [];
       while (rows.length <= lk.idx) rows.push({});
-      rows[lk.idx][lk.tag] = value;
+      rows[lk.idx][lk.tag] = value == null ? '' : value;
     } else {
-      state.store.values[key] = value;
+      state.store.values[key] = value == null ? '' : value;
     }
   }
 
@@ -1543,17 +1578,57 @@
 
   /* Chọn 1 kết quả từ popup (chuột hoặc Enter): điền CẢ mã + tên vào cùng
    * dòng, gỡ đỏ, đóng popup. Tên ghi đúng tag của loop theo metadata
-   * autoName.nameTag (vd PLII_M02: ten_nganh_bo_sung/ten_nganh_bo). */
-  function applyVsicPick(inp, item) {
+   * autoName.nameTag (vd PLII_M02: ten_nganh_bo_sung/ten_nganh_bo).
+   * Class 9 - GỐC RỄ ô "Tên ngành = undefined, Mã ngành = 6" (defect
+   * registry): bản cũ đọc item['ma_nganh']/item['ten_nganh'] trong khi entry
+   * danh mục VSIC có shape {ma, ten, cap} -> ghi undefined vào store và gán
+   * el.value = undefined (input hiển thị chữ "undefined"); ô mã giữ nguyên
+   * số người dùng vừa gõ (vd "6"). Sửa ĐÚNG LỚP: map thuần qua
+   * vsicPickValues() (test được) + ghi qua GridCtl.setCell bám _row_id
+   * (reload/reorder giữa chừng không ghi nhầm dòng) + không bao giờ nullish. */
+  function vsicPickValues(item, nameTag) {
+    var tag = nameTag || 'ten_nganh';
+    var out = { ma_nganh: (item && item.ma != null) ? String(item.ma) : '' };
+    out[tag] = (item && item.ten != null) ? String(item.ten) : '';
+    return out;
+  }
+
+  /* Tham chiếu ỔN ĐỊNH của dòng chứa ô input: _row_id từ <tr> cha (ưu tiên)
+   * + index trong data-key (fallback). Index chỉ là dự phòng vì nó được đóng
+   * băng lúc render - sau add/delete/reorder có thể trỏ sai dòng. */
+  function rowRefOfInput(inp) {
     var lk = parseLoopKey(inp.getAttribute('data-key'));
-    if (!lk || !item) return;
-    var gm = GridCtl.meta(lk.loop, state.activeDocId);
-    var nameTag = (gm && gm.autoName && gm.autoName.nameTag) || 'ten_nganh';
-    ['ma_nganh', nameTag].forEach(function (t) {
-      var key = 'loop:' + lk.loop + ':' + lk.idx + ':' + t;
-      setKeyValue(key, item[t]);
-      loopCellDom(key, item[t], t === 'ma_nganh' ? inp : null);
+    if (!lk) return null;
+    var tr = inp.closest ? inp.closest('tr[data-row-id]') : null;
+    var rowId = tr ? tr.getAttribute('data-row-id') : null;
+    return {
+      loop: lk.loop,
+      idx: lk.idx,
+      rowId: (rowId == null || rowId === '') ? null : rowId
+    };
+  }
+
+  /* Ghi các cặp {tag: giá trị} vào ĐÚNG dòng của input (theo _row_id) và
+   * đồng bộ MỌI ô DOM cùng data-key (kể cả chính inp - nếu chỉ cập nhật store
+   * mà ô mã còn hiển thị số vừa gõ thì display lệch store: đúng cảnh "Mã
+   * ngành = 6" trong ảnh owner). exceptEl tùy chọn để bỏ một ô (vd ô đang
+   * focus ở luồng nhập khác). */
+  function writeLoopCells(inp, pairs, exceptEl) {
+    var ref = rowRefOfInput(inp);
+    if (!ref) return;
+    Object.keys(pairs).forEach(function (t) {
+      var v = pairs[t];
+      var key = 'loop:' + ref.loop + ':' + ref.idx + ':' + t;
+      GridCtl.setCell(state.store, ref.loop, ref, t, v);
+      loopCellDom(key, v == null ? '' : v, exceptEl);
     });
+  }
+
+  function applyVsicPick(inp, item) {
+    if (!item) return;
+    var gm = GridCtl.meta((rowRefOfInput(inp) || {}).loop, state.activeDocId);
+    var nameTag = (gm && gm.autoName && gm.autoName.nameTag) || 'ten_nganh';
+    writeLoopCells(inp, vsicPickValues(item, nameTag), null);
     inp.classList.remove('invalid');
     inp.removeAttribute('aria-invalid');
     hideVsic();
@@ -1571,13 +1646,19 @@
     if (inp.getAttribute('data-tag') !== 'ma_nganh') return false;
     var lk = parseLoopKey(inp.getAttribute('data-key'));
     if (!lk) return false;
-    // tên điền cùng dòng theo đúng tag của loop (autoName trong metadata)
+    // tên điền cùng dòng theo đúng tag của loop (autoName trong metadata);
+    // ghi qua GridCtl.setCell bám _row_id (Class 9: index trong data-key bị
+    // đóng băng lúc render, reorder/delete giữa chừng thì trỏ sai dòng)
     var gm = GridCtl.meta(lk.loop, state.activeDocId);
     var nameTag = (gm && gm.autoName && gm.autoName.nameTag) || 'ten_nganh';
     var tenKey = 'loop:' + lk.loop + ':' + lk.idx + ':' + nameTag;
+    var writeTen = function (v) {
+      var p = {}; p[nameTag] = v;
+      writeLoopCells(inp, p, inp); // exceptEl=inp: ô tên khác ô mã đang gõ
+    };
     var res = GridCtl.vsicResolve(state.vsic, inp.value);
     if (res.st === 'empty') {
-      setKeyValue(tenKey, '');
+      writeTen('');
       loopCellDom(tenKey, '', inp);
       inp.classList.remove('invalid');
       inp.removeAttribute('aria-invalid');
@@ -1585,7 +1666,7 @@
       return true;
     }
     if (res.st === 'exact') {
-      setKeyValue(tenKey, res.item.ten);
+      writeTen(res.item.ten);
       loopCellDom(tenKey, res.item.ten, inp);
       inp.classList.remove('invalid');
       inp.removeAttribute('aria-invalid');
@@ -1601,7 +1682,7 @@
       return true;
     }
     // invalid: giữ giá trị để người dùng sửa; không giữ tên cũ
-    setKeyValue(tenKey, '');
+    writeTen('');
     loopCellDom(tenKey, '', inp);
     inp.classList.add('invalid');
     inp.setAttribute('aria-invalid', 'true');
@@ -2371,6 +2452,9 @@
     groupErrorsByDoc: groupErrorsByDoc,
     GridCtl: GridCtl,
     gridMetaForDoc: gridMetaForDoc,
+    /* Class 9: map thuần {ma, ten} (VSIC) -> {ma_nganh, nameTag} - chốt được
+     * trong test việc pick ngành KHÔNG bao giờ sinh 'undefined'. */
+    vsicPickValues: vsicPickValues,
     GridFocus: {
       focusTagOfGrid: focusTagOfGrid,
       nextSelAfterDelete: nextSelAfterDelete,

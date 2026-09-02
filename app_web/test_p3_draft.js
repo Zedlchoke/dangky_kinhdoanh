@@ -295,9 +295,18 @@ Object.keys(BAD).forEach(label => {
     b.ok ? JSON.stringify(b.val.store.loops.ds_nganh) : b.err);
   const c = noThrow(() => FD.migrateDraft({ v: 1, store: { values: {}, checks: {},
     loops: { ds_nganh: [{ ma_nganh: '0111', _row_id: 123 }] } } }));
-  check('P3-D23: _row_id truthy khac chuoi (so) duoc GIU NGUYEN, khong bi ghi de, '
-    + 'khong nem (hop dong: khong đụng id đã có)',
-    c.ok && !!c.val && c.val.store.loops.ds_nganh[0]._row_id === 123,
+  /* [Lane fix-industry, Class 9] Pin cũ ghim "_row_id SỐ được GIỮ NGUYÊN".
+   * Red test (test_industry_input_negative.js S4) chứng minh pin đó ghim đúng
+   * hành vi lỗi Class 9 (defect registry "không sinh row NaN id"): id số gãy
+   * findRowIndex so === với id chuỗi từ DOM data-row-id -> selection/focus/
+   * lỗi trỏ sai dòng. Hợp đồng MỚI (normalizeStoreLoops): id rác (không phải
+   * chuỗi usable) được GÁN LẠI id hợp lệ — vẫn không ném, dữ liệu giữ nguyên. */
+  check('P3-D23: _row_id truthy khac chuoi (so) duoc GAN LAI id hop le, '
+    + 'khong nem, du lieu giu nguyen (Class 9: khong sinh row id NaN/junk)',
+    c.ok && !!c.val &&
+      typeof c.val.store.loops.ds_nganh[0]._row_id === 'string' &&
+      /^r\d+_/.test(c.val.store.loops.ds_nganh[0]._row_id) &&
+      c.val.store.loops.ds_nganh[0].ma_nganh === '0111',
     c.ok ? JSON.stringify(c.val.store.loops.ds_nganh) : c.err);
   /* Nhân rộng lên GridCtl: cùng draft hỏng đi qua ensureIds (app.js gọi trong
    * restoreDraft) — đây là đường UI thật sau khi migrateDraft đã sống. */

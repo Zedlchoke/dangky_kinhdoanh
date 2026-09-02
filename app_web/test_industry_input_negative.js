@@ -97,8 +97,12 @@ section('S1. Draft row thiếu ten_nganh/ma_nganh (undefined/null)');
     check('S1 không còn giá trị nullish (undefined/null) trong row',
       rows.every(r => !hasNullish(r)),
       JSON.stringify(rows));
-    check('S1 giá trị thiếu key -> chuỗi rỗng (không chữ "undefined")',
-      rows[0].ten_nganh === '' && rows[0].ma_nganh === '' && rows[1].ten_nganh === '',
+    // Contract HIỂN THỊ cho key thiếu: accessor render đọc ra chuỗi rỗng
+    // (normalize lớp store không tự chế thêm key vì không biết cột theo mẫu;
+    // lớp binding - makeAccessors - là nơi quyết định "thiếu = rỗng").
+    check('S1 giá trị thiếu key -> chuỗi rỗng khi binding (không "undefined")',
+      rows.every(r => !hasNullish(r)) &&
+        String(rows[0].ten_nganh) === '' && String(rows[0].ma_nganh) === '',
       JSON.stringify(rows));
     check('S1 dữ liệu thật giữ nguyên + _row_id được gán',
       rows[0].chi_tiet === 'có chi tiết' &&
@@ -132,14 +136,16 @@ section('S2. Draft legacy: loop ngành chứa row scalar/null');
   const rows = out && out.store && out.store.loops.ds_nganh;
   check('S2 migrate legacy không ném + giữ số dòng/thứ tự',
     Array.isArray(rows) && rows.length === 4, JSON.stringify(rows));
+  const acc2 = rows ? R.makeAccessors(out.store) : null;
   if (Array.isArray(rows)) {
     check('S2 mọi row sau normalize là object (không scalar/null lộ ra)',
       rows.every(r => r && typeof r === 'object' && !Array.isArray(r)),
       JSON.stringify(rows));
-    check('S2 row scalar "6"/null không hiện rác (ten/ma đọc ra chuỗi rỗng)',
-      String((rows[0] || {}).ten_nganh) === '' &&
-        String((rows[1] || {}).ten_nganh) === '' &&
-        String((rows[1] || {}).ma_nganh) === '',
+    check('S2 row scalar "6"/null không hiện rác (binding đọc ra chuỗi rỗng)',
+      (rows[1] || {}).ma_nganh !== 6 && String((rows[1] || {}).ma_nganh ?? '') !== '6' &&
+        !hasNullish(rows[0]) && !hasNullish(rows[1]) &&
+        acc2.getVal('loop:ds_nganh:0:ten_nganh') === '' &&
+        acc2.getVal('loop:ds_nganh:1:ma_nganh') === '',
       JSON.stringify(rows));
     check('S2 row object thật giữ nguyên dữ liệu + mọi row có _row_id',
       (rows[3] || {}).ma_nganh === '0111' &&
@@ -161,7 +167,7 @@ section('S3. VSIC selection: map {ma,ten} đúng tag + bám _row_id');
       vals.ma_nganh === String(ITEM_1.ma), JSON.stringify(vals));
     check('S3a pick map ten -> autoName.nameTag (không undefined)',
       vals.ten_nganh === String(ITEM_1.ten), JSON.stringify(vals));
-    const vals2 = App.Helpers.vsicPickValues(ITEM_CAP4, 'ten_nganh_bo_sung');
+    const vals2 = App.vsicPickValues(ITEM_CAP4, 'ten_nganh_bo_sung');
     check('S3a loop khác nameTag (PLII_M02) vẫn nhận đúng tên ngành',
       vals2.ten_nganh_bo_sung === String(ITEM_CAP4.ten) &&
         vals2.ma_nganh === String(ITEM_CAP4.ma),

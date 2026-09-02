@@ -781,10 +781,29 @@
     return 'r' + _idSeq + '_' + Math.random().toString(36).slice(2, 8);
   }
 
+  /* _row_id dùng được: chuỗi khác rỗng và không phải chữ 'NaN'/'undefined'
+   * (draft hỏng/producer lạ có thể chứa id rác - Class 9: row id NaN).
+   * Id chuỗi lạ khác (vd 'member-stable-1') vẫn GIỮ nguyên - id chỉ cần
+   * ổn định trong phiên, không bắt buộc đúng pattern của makeRowId. */
+  function isUsableRowId(id) {
+    return typeof id === 'string' && id !== '' &&
+      id !== 'NaN' && id !== 'undefined';
+  }
+
   /* Đảm bảo mọi row trong store.loops có _row_id (mutate tại chỗ).
    * Đồng thời migration canonical: ds_nganh_kinh_doanh -> ds_nganh khi chưa
    * có ds_nganh (giữ nguyên dữ liệu); KHÔNG đụng nganh_bo_sung/nganh_xoa_bo/
-   * nganh_truoc_thay_doi. */
+   * nganh_truoc_thay_doi.
+   * Class 9 (defect registry: ô Tên ngành 'undefined', Mã ngành '6') - chuẩn
+   * hoá AN TOÀN ngay ở lớp dữ liệu, mọi chỗ hiển thị/binding/export chỉ cần
+   * đọc store:
+   *  - row KHÔNG phải object (null/scalar/mảng từ draft legacy hỏng) -> thay
+   *    bằng dòng object rỗng {giữ số dòng và thứ tự; scalar không thể map an
+   *    toàn vào tag nào nên bỏ dữ liệu thay vì chế ngữ nghĩa};
+   *  - giá trị nullish (undefined/null) trong row -> chuỗi rỗng (JSON round
+   *    trip khôi phục draft không bao giờ tái sinh 'undefined' khi binding);
+   *  - _row_id thiếu/rác ('NaN', 'undefined', số, rỗng) -> gán id mới hợp lệ
+   *    (id chỉ có ý nghĩa kỹ thuật trong phiên, không mất dữ liệu kê khai). */
   function normalizeStoreLoops(store) {
     if (!store || typeof store !== 'object') return store;
     var loops = store.loops = store.loops || {};
@@ -804,8 +823,16 @@
         loops[name] = [];
         return;
       }
-      rows.forEach(function (r) {
-        if (r && typeof r === 'object' && !r._row_id) r._row_id = makeRowId();
+      rows.forEach(function (r, ix) {
+        if (!r || typeof r !== 'object' || Array.isArray(r)) {
+          r = {};          // row scalar/null/mảng: bỏ rác, giữ dòng + thứ tự
+          rows[ix] = r;    // rồi chạy tiếp chuẩn hoá như row thường (có id)
+        }
+        Object.keys(r).forEach(function (k) {
+          if (k.charAt(0) === '_') return; // field nội bộ xử lý riêng dưới
+          if (r[k] === undefined || r[k] === null) r[k] = '';
+        });
+        if (!isUsableRowId(r._row_id)) r._row_id = makeRowId();
       });
     });
     return store;
@@ -1059,7 +1086,11 @@
     var lm = getLoopMeta(name) || {};
 
     rows.forEach(function (r) {
-      if (r && typeof r === 'object' && !r._row_id) r._row_id = makeRowId();
+      // Class 9: id thiếu/rác ('NaN'...) phải gán lại trước khi làm key lỗi
+      // "loop:<name>:<row_id>:<tag>" - id rác làm lỗi trỏ sai ô trên UI.
+      if (r && typeof r === 'object' && !isUsableRowId(r._row_id)) {
+        r._row_id = makeRowId();
+      }
     });
 
     function errAt(r, tag, code, msg) {

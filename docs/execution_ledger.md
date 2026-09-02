@@ -286,3 +286,19 @@ deep idempotency 17/0; manifest GATE PASS 87/87; visual re-shoot chkfix 4/4.
 **Còn OPEN sau Gate A (không thuộc Wave A):** Class 3 footnote GLUE 23 form,
 Class 11 coverage drift, Class 12 L1 (newline 263 + STT/digit-run), Class 13
 visual NOT RUN — xử lý ở Wave B/C/D theo PLAN v4.
+
+## Wave B — coverage matrix 111/111 @ main 1082d75→9aa755e (2026-09-02, coverage-agent)
+
+| Task | Owner | Evidence | Trạng thái |
+|---|---|---|---|
+| Worktree `agent/coverage` @ 1082d75 | Lead | worktree sạch, SOP 6.2 | ✅ |
+| Tool census 2 chiều + selftest + matrix | coverage-agent | `62fb4d6`: đúng 4 file ownership (`table_coverage_audit.py` 1369 dòng, selftest 447 dòng 44/44 PASS, `docs/table_coverage_current.{json,md}` 111 hàng); không đụng production | ✅ |
+| Trạng thái 111 section | coverage-agent | IMPLEMENTED_VERIFIED 31 · PARTIAL_COLUMNS 6 · MISSING_IMPLEMENTATION 20 · BLOCKED_OWNER 41 · NO_TABLE 7 · OUTPUT_ONLY 6 · REMOVED_BY_CURRENT_LAW 0 | ✅ Gate B: 111/111 có status có bằng chứng |
+| Gate hai chiều | Lead xác minh | tool exit 1 thật (42 drift — lần đầu đo exit qua pipe `tail` là sai, đã đo lại trực tiếp): 12 census-stale + 30 thiếu runtime contract; override 22/22 resolve; count 111 PASS | ✅ gate hoạt động, drift là deliverable |
+| Merge + cân allowlist | Lead | merge `--no-ff` → `9aa755e`; allowlist +4 entry; runner **46/0/0 VERDICT PASS** sau merge; tool re-run trên main cùng kết quả (chỉ lệch stamp head) | ✅ |
+| Dọn worktree | Lead | status sạch → `worktree remove` + `branch -d` | ✅ |
+| Chưa làm (có chủ đích) | Lead | KHÔNG refresh production manifest ngay: nhóm 30 `implemented_missing_evidence` cần adjudicate cơ chế chk-token (runtime thật của section chk là chk-token + renderer + CHK_RULES, không phải GRID_META) trước khi lật status — tránh lật ngược 30 dòng already_complete theo heuristic | ⏳ Wave D / owner packet |
+
+**Con số công bố sau Gate B:** cần làm thật **26 section** (20 MISSING + 6 PARTIAL);
+chờ owner/pháp lý 41; không phải bảng 13. Chi tiết từng dòng trong
+`docs/table_coverage_current.md`.

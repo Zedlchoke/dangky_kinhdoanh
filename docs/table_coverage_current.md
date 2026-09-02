@@ -1,6 +1,6 @@
 # Table coverage hiện tại — 111 section / 87 form (Wave B)
 
-Sinh bởi `tools/census/table_coverage_audit.py` tại HEAD `1082d75`. Toàn bộ evidence là structural (đọc manifest/form_maps/blocks/specs/template w:tbl/JS contract). **Không có audit visual** — cột `visual` = NOT RUN (môi trường không có browser).
+Sinh bởi `tools/census/table_coverage_audit.py` tại HEAD `9aa755e`. Toàn bộ evidence là structural (đọc manifest/form_maps/blocks/specs/template w:tbl/JS contract). **Không có audit visual** — cột `visual` = NOT RUN (môi trường không có browser).
 
 ## Totals theo `final_status`
 

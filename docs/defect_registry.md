@@ -22,7 +22,7 @@
 | 8 Dấu X rơi dòng | OPEN | chưa có test checked/unchecked trên DOCX output |
 | 9 `undefined`/`6` trong bảng ngành | OPEN, ưu tiên cao | chưa có test tái hiện draft/autosave state; source hiện không có string literal `"undefined"` |
 | 10 Verifier PLII_M02 table-region | **FIXED (Wave A, `cdb39f9`)** | classifier theo semantic header (band/thuế "Chỉ tiêu"/industry); đối chiếu theo THỨ TỰ vùng (bắt thiếu/thừa/đảo); selftest negative mutation trong verifier; `test_industry_household` 13/0, `p1_c` VERIFY PASS |
-| 11 Manifest/coverage drift | OPEN, blocking rollout | manifest còn status snapshot cũ; override/section IDs chưa reconcile với specs/form_maps hiện hành |
+| 11 Manifest/coverage drift | **MEASURED (Wave B, merge `9aa755e`)** | ma trận 111/111 tại `docs/table_coverage_current.{json,md}`; gate 2 chiều exit 1 với **42 drift**: 12 `missing_grid_vs_evidence` (census stale — capital M03/M04/M05/M12, thuế+member PLII_M02) + 30 `implemented_missing_evidence` (already_complete nhưng thiếu runtime contract — chủ yếu nhóm chk; cần adjudicate cơ chế chk-token trước khi refresh manifest). Backlog thật: **26 section cần làm** (20 MISSING + 6 PARTIAL); 41 BLOCKED_OWNER; override 22/22 resolve OK |
 | 12 L1 structural regression | OPEN | newline 263 < 293; 4 STT-glue + 2 digit-run tại PLII_M02/PLI_M72 |
 | 13 Visual evidence freshness | NOT RUN ở HEAD hiện tại | không có browser backend trong phiên audit; Poppler không có; ảnh cũ không đủ đóng gate sau merge mới |
 

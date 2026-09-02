@@ -72,7 +72,7 @@ SUITES: list[dict] = [
     {"name": "test_p3_e2e",               "type": "node", "target": "app_web/test_p3_e2e.js"},
     {"name": "test_p3_draft",             "type": "node", "target": "app_web/test_p3_draft.js"},
     {"name": "test_p3_security",          "type": "node", "target": "app_web/test_p3_security.js"},
-    {"name": "test_p3_a11y",              "type": "node", "target": "app_web/test_p3_a11y.js"},
+    {"name": "test_p3_a11y",              "type": "node", "target": "app_web/test_p3_a11y.js", "preflight": "bind_localhost"},
     # --- Excel X1 (2026-08-28): lớp questionnaire (PLAN.md mục 4) ---
     {"name": "test_questionnaire",        "type": "module", "target": "tools.test_questionnaire"},
     # --- Excel X2 (2026-08-28): xuất phiếu xlsx ---
@@ -144,11 +144,45 @@ def check_deps() -> tuple[dict[str, str | None], list[str]]:
     return have, errors
 
 
+def _preflight_bind_localhost() -> str | None:
+    """Trả về lý do NOT RUN nếu tiến trình không được bind 127.0.0.1.
+
+    Suite a11y cần HTTP server localhost; sandbox/CI có thể cấm bind (EPERM).
+    Khi bị cấm: critical NOT RUN có lý do — KHÔNG ghi product FAIL giả
+    (PLAN v4 Wave A bước 4). Release chính thức vẫn bắt buộc chạy a11y ở môi
+    trường hỗ trợ, nên critical NOT RUN vẫn làm verdict FAIL.
+    """
+    import socket
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    try:
+        s.bind(("127.0.0.1", 0))
+    except OSError as exc:
+        return ("preflight bind 127.0.0.1 bị chặn (%s) — môi trường không cho "
+                "chạy a11y; chạy lại runner ngoài sandbox/môi trường cho phép"
+                % exc)
+    finally:
+        s.close()
+    return None
+
+
+PREFLIGHTS = {
+    "bind_localhost": _preflight_bind_localhost,
+}
+
+
 def build_cmd(suite: dict, deps: dict) -> tuple[list[str] | None, str | None]:
     """Trả về (argv, reason_not_run)."""
     missing = [r for r in suite.get("requires", []) if deps.get(r) is None]
     if missing:
         return None, "thiếu dependency: %s" % ", ".join(missing)
+    pf_name = suite.get("preflight")
+    if pf_name:
+        pf = PREFLIGHTS.get(pf_name)
+        if pf is None:
+            return None, "preflight không rõ: %r" % pf_name
+        reason = pf()
+        if reason:
+            return None, reason
     if suite["type"] == "node":
         return [deps["node"] or "node", suite["target"]], None
     if suite["type"] == "module":

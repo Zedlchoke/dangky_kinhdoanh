@@ -303,3 +303,9 @@ app/templates/PLI_M05.docx
 
 # --- PLAN vận hành Wave D2 + P5R (lệnh owner 2026-08-28) ---
 docs/plan_wave_D2_P5R.md
+
+# --- PLAN v4 checkpoint audit (Lead 2026-09-02, commit eb9e723) ---
+# docs/whole_app_audit_2026-08-30.md: bàn giao audit whole-app tại 6ae63c2
+# (kết quả runner/layout/numbering + AUD-001..011). Docs-only, không đụng
+# generated. PLAN v4/defect_registry/D2-P5R đã có entry từ checkpoint trước.
+docs/whole_app_audit_2026-08-30.md

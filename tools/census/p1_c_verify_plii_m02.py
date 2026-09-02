@@ -161,6 +161,86 @@ def region_spans(seq):
     return spans
 
 
+def classify_table(tbl) -> str:
+    """Wave A (PLAN v4): phân loại bảng theo NỘI DUNG header, không theo vị
+    trí trong tài liệu. Trả về:
+      'band'     — header band (tên hộ/doanh nghiệp + quốc hiệu);
+      'tax'      — bảng thuế a7 (header 'Chỉ tiêu');
+      'industry' — bảng ngành.
+    """
+    if not tbl.rows or not tbl.rows[0].cells:
+        return "industry"
+    c0 = fold(tbl.rows[0].cells[0].text)
+    if c0.startswith(("ten ho kinh doanh", "ten doanh nghiep")):
+        return "band"
+    if c0.startswith("chi tieu"):
+        return "tax"
+    return "industry"
+
+
+def industry_owner_sequence(spans, tbl_entries):
+    """Phép đối chiếu THEO THỨ TỰ vùng (Wave A, thay skip theo vị trí).
+
+    tbl_entries: [(tbl_idx, cls)] theo thứ tự tài liệu. Bảng industry phải
+    nằm trong đúng 1 vùng và xuất hiện đúng thứ tự vùng trong tài liệu —
+    bắt được thiếu, thừa, ĐẢO region (so sánh sorted sẽ không bắt được đảo)
+    và table_index lệch. Trả về (owners, problems).
+    """
+    owners: list[str] = []
+    problems: list[str] = []
+    for idx, cls in tbl_entries:
+        if cls != "industry":
+            continue
+        owner = next((oid for oid, h, e in spans if h < idx < e), None)
+        if owner is None:
+            problems.append("w:tbl thứ %d nằm ngoài 4 vùng ngành" % idx)
+        else:
+            owners.append(owner)
+    return owners, problems
+
+
+def selftest_table_classification() -> None:
+    """Negative mutations (Wave A bước 3): band/thuế chen giữa các vùng ngành
+    không được làm lệch phép đối chiếu; thiếu/đảo/ngoài vùng phải bị phát
+    hiện."""
+    from docx import Document as _Doc
+    d = _Doc()
+    band = d.add_table(rows=1, cols=2)
+    band.rows[0].cells[0].text = "Tên hộ kinh doanh"
+    band.rows[0].cells[1].text = "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM"
+    tax = d.add_table(rows=1, cols=3)
+    tax.rows[0].cells[0].text = "Chỉ tiêu"
+    ind = d.add_table(rows=1, cols=4)
+    ind.rows[0].cells[0].text = "STT"
+    assert classify_table(band) == "band", "band phải nhận qua nội dung ô"
+    assert classify_table(tax) == "tax", "thuế phải nhận qua header Chỉ tiêu"
+    assert classify_table(ind) == "industry"
+
+    spans = [("nganh_bo_sung", 0, 5), ("nganh_xoa_bo", 6, 10),
+             ("nganh_sua_doi_chi_tiet", 11, 15), ("nganh_hien_tai", 16, 20)]
+    expected = [oid for oid, _h, _e in spans]
+
+    entries = [(1, "industry"), (3, "band"), (7, "industry"), (9, "tax"),
+               (12, "industry"), (18, "industry")]
+    owners, problems = industry_owner_sequence(spans, entries)
+    assert owners == expected, owners
+    assert not problems, problems
+
+    # thiếu bảng vùng đầu → sequence hụt đầu
+    owners2, _p = industry_owner_sequence(
+        spans, [(7, "industry"), (12, "industry"), (18, "industry")])
+    assert owners2 == expected[1:], "thiếu bảng phải lệch sequence: %r" % owners2
+
+    owners3, _p = industry_owner_sequence(
+        spans, [(1, "industry"), (7, "industry"), (18, "industry"),
+                (12, "industry")])
+    assert owners3 != expected, "đảo region phải bị gate thứ tự bắt: %r" % owners3
+
+    _o4, problems4 = industry_owner_sequence(
+        spans, [(1, "industry"), (22, "industry")])
+    assert problems4, "bảng industry ngoài vùng phải ghi problem"
+
+
 def find_source():
     if SOURCE_DIR.is_dir():
         hits = sorted(SOURCE_DIR.glob("PL2_Mau_02*.docx"))
@@ -232,37 +312,32 @@ def audit_working_template_and_maps() -> None:
     if unknown:
         fail("loop lạ ngoài 4 semantic region: %r" % unknown)
 
-    tbl_owner = []
-    first_tbl_seen = False
-    _doc_tables = doc.tables
-    def _is_band_or_tax(tbl_idx):
-        t = _doc_tables[tbl_idx]
-        c0 = fold(t.rows[0].cells[0].text) if t.rows and t.rows[0].cells else ""
-        return (c0.startswith(("ten ho kinh doanh", "ten doanh nghiep"))
-                or c0.startswith("chi tieu"))
+    # [Wave A 2026-09-02] Hủy skip theo vị trí (`first_tbl_seen`, `tax_start`):
+    # band/thuế được nhận qua NỘI DUNG header (classify_table) nên skip mù
+    # bảng đầu tiên/bảng sau mốc thuế đã ăn nhầm bảng ngành thật
+    # (nganh_bo_sung / nganh_hien_tai). Đối chiếu giờ theo THỨ TỰ vùng.
+    tbl_entries = []
     for i, (k, _v) in enumerate(seq):
         if k != "tbl":
             continue
-        if _is_band_or_tax(_v):
-            continue  # bảng header band (hdr2col) + bảng thuế a7 (cap-von)
-        # [Lead sync 2026-08-28] hdr2col (084444d): bảng header band (tên hộ +
-        # quốc hiệu) đứng TRƯỚC mọi vùng ngành — không thuộc vùng nào, loại
-        # khỏi phép đối chiếu 1-1 (đồng bộ test_industry_household).
-        if not first_tbl_seen:
-            first_tbl_seen = True
-            continue
-        owner = next((oid for oid, h, e in spans if h < i < e), None)
-        if owner is None:
-            fail("w:tbl thứ %d nằm ngoài 4 vùng ngành" % i)
-        else:
-            tbl_owner.append(owner)
-    declared = sorted(loop_to_occ[l] for l in fm_loops if l in loop_to_occ)
-    if sorted(tbl_owner) != declared:
-        fail("mất đồng bộ template<->form_maps: bảng ở %r vs khai báo %r"
-             % (sorted(tbl_owner), declared))
+        tbl_entries.append((i, classify_table(doc.tables[_v])))
+    owners, problems = industry_owner_sequence(spans, tbl_entries)
+    for p in problems:
+        fail(p)
+    expected = [oid for oid, _h, _e in spans]
+    if owners != expected:
+        fail("bảng ngành lệch thứ tự/thiếu/thừa so với vùng: %r vs %r"
+             % (owners, expected))
+    else:
+        ok("đủ %d bảng ngành đúng vùng, đúng thứ tự: %r" % (len(owners),
+                                                            owners))
+    fm_declared = sorted(loop_to_occ[l] for l in fm_loops if l in loop_to_occ)
+    if sorted(owners) != fm_declared:
+        fail("mất đồng bộ template<->form_maps: bảng ngành ở %r vs khai báo %r"
+             % (sorted(owners), fm_declared))
     else:
         ok("mỗi dynamic_tables có đúng 1 bảng thật trong vùng tương ứng: %r"
-           % declared)
+           % fm_declared)
 
 
 def audit_blocks() -> list[tuple[str, str, str]]:
@@ -398,6 +473,9 @@ def main() -> int:
     print("P1-C VERIFY PLII_M02 — worktree %s" % ROOT)
     selftest_same_region()
     ok("selftest same_region (negative mutations) PASS")
+    selftest_table_classification()
+    ok("selftest classify_table/industry_owner_sequence (negative mutations) "
+       "PASS")
     audit_source_template()
     audit_working_template_and_maps()
     results = audit_blocks()

@@ -58,6 +58,13 @@ sys.path.insert(0, str(ROOT))
 from docx import Document                      # noqa: E402
 from docx.oxml.ns import qn                   # noqa: E402
 from docx.table import Table                  # noqa: E402
+
+# [Wave A 2026-09-02] Phân loại band/thuế/ngành dùng CHUNG một nguồn sự thật
+# với verifier p1_c — hai gate từng trôi vì mỗi file giữ một heuristic vị trí.
+from tools.census.p1_c_verify_plii_m02 import (  # noqa: E402
+    classify_table,
+    industry_owner_sequence,
+)
 from docx.text.paragraph import Paragraph     # noqa: E402
 
 from tools.docx_render import write_rendered  # noqa: E402
@@ -419,30 +426,26 @@ def t_m02_working_template_regions():
     assert not unknown, \
         "form_maps khai báo loop ngành lạ: %r (chỉ được 4 semantic loop)" % unknown
 
-    tbl_region = []
-    first_tbl_seen = False
-    tax_start = next((i for i, (k, v) in enumerate(seq)
-                      if k == "p" and "dang ky bo sung, thay doi cac chi tieu dang ky thue"
-                      in fold(str(v))), len(seq))
+    # [Wave A 2026-09-02] Hủy skip theo vị trí: band/thuế nhận qua nội dung
+    # header (classify_table — nguồn chung với p1_c), đối chiếu theo THỨ TỰ
+    # vùng để bắt thiếu/thừa/đảo. Skip mù bảng đầu + mốc thuế từng ăn nhầm
+    # bảng ngành thật (nganh_bo_sung / nganh_hien_tai sau rebuild).
+    tbl_entries = []
+    tables_in_order = body_tables(doc)
     for i, (k, _v) in enumerate(seq):
         if k != "tbl":
             continue
-        # hdr2col (084444d): bảng header band đứng TRƯỚC mọi vùng ngành —
-        # không thuộc vùng nào, loại khỏi phép đối chiếu 1-1
-        if not first_tbl_seen:
-            first_tbl_seen = True
-            continue
-        # cap-von (fc07c69): bảng thuế a7 sau marker nằm ngoài 4 vùng ngành
-        if i > tax_start:
-            continue
-        owner = next((oid for oid, h, e in spans if h < i < e), None)
-        assert owner is not None, \
-            "w:tbl thứ %d nằm ngoài 4 vùng ngành (phần phụ lục không có bảng)" % i
-        tbl_region.append(owner)
+        tbl_entries.append((i, classify_table(tables_in_order[_v])))
+    owners, problems = industry_owner_sequence(spans, tbl_entries)
+    assert not problems, "; ".join(problems)
+    expected = [oid for oid, _h, _e in spans]
+    assert owners == expected, \
+        "bảng ngành lệch thứ tự/thiếu/thừa so với vùng: %r vs %r" % (owners,
+                                                                     expected)
     declared_regions = sorted(loop_to_occ[l] for l in fm_loops)
-    assert sorted(tbl_region) == declared_regions, \
-        "mất đồng bộ template<->form_maps: bảng nằm ở %r nhưng dynamic_tables " \
-        "khai báo %r" % (sorted(tbl_region), declared_regions)
+    assert sorted(owners) == declared_regions, \
+        "mất đồng bộ template<->form_maps: bảng ngành ở %r nhưng dynamic_tables " \
+        "khai báo %r" % (sorted(owners), declared_regions)
 
 
 @check("spec PLII_M02: 4 entry nganh, occurrence_id ngu ngu nghia, match_heading/nth/end_markers hop le")

@@ -309,3 +309,11 @@ docs/plan_wave_D2_P5R.md
 # (kết quả runner/layout/numbering + AUD-001..011). Docs-only, không đụng
 # generated. PLAN v4/defect_registry/D2-P5R đã có entry từ checkpoint trước.
 docs/whole_app_audit_2026-08-30.md
+
+# --- Wave B coverage matrix (Lead 2026-09-02, merge agent/coverage) ---
+# Tool census coverage 2 chiều + selftest + output matrix 111 section.
+# Drift 42 dòng là deliverable trung thực (KHÔNG sửa manifest để qua gate).
+tools/census/table_coverage_audit.py
+tools/test_table_coverage_audit.py
+docs/table_coverage_current.json
+docs/table_coverage_current.md

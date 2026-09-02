@@ -323,6 +323,11 @@ window.FORM_MAPS = {
     "type": "chk"
    },
    {
+    "key": "chk_co",
+    "label": "Có",
+    "type": "chk"
+   },
+   {
     "key": "chk_khong",
     "label": "Không",
     "type": "chk"
@@ -365,11 +370,6 @@ window.FORM_MAPS = {
    {
     "key": "chk_ht_phu_thuoc",
     "label": "hach toan phu thuoc",
-    "type": "chk"
-   },
-   {
-    "key": "chk_co",
-    "label": "Có",
     "type": "chk"
    },
    {

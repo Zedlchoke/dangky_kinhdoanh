@@ -310,5 +310,47 @@
         "question": "(a) Cột STT 1..5 in sẵn không tái lập được ở fixed-matrix v1 — khai thiếu, gap cho Lead/B2. (b) drop_until='(?!)' là regex KHÔNG BAO GIỜ khớp: đây là mục CUỐI của nguồn (nguồn bị cắt sau 'Tổng số', D1.5=B) nên cần mốc scoped để drop không chạy toàn văn bản; phần đuôi biểu mẫu (mục 8 → 13) CẦN OWNER khôi phục nguồn gốc Phụ lục I Mẫu 04. (c) Tag cột dùng 'so_luong' (giống cơ cấu cổ phần) — manifest gọi 'loai_co_phan_chao_ban' cho CỘT NHÃN, tương ứng cột tag=null ở chỉ số 0 của contract v1. (d) Nhãn dòng 5 giữ NGUYÊN VĂN 'Cổ phần ưu đãi khác' (KHÔNG có chữ 'Các') theo đúng bản gốc Phụ lục I Mẫu 04 và nguồn trong repo — khác với bảng mục 7 in 'Các cổ phần ưu đãi khác'; đây là khác biệt có thật giữa hai bảng trên biểu mẫu, không phải lỗi sao chép."
       }
     }
+  ],
+  "inserts": [
+    {
+      "pos": "end",
+      "runs": [
+        {
+          "text": "8. Cổ đông sáng lập",
+          "b": true
+        },
+        {
+          "text": " ("
+        },
+        {
+          "text": "kê khai theo Mẫu số 7 Phụ lục I ban hành kèm theo Thông tư này",
+          "i": true
+        },
+        {
+          "text": "): Gửi kèm (nếu có)."
+        }
+      ],
+      "note": "Nguyên văn para 1161 (Mẫu số 4 Phụ lục I); mất ở nguồn DN_PL1_Mau_04."
+    },
+    {
+      "pos": "end",
+      "runs": [
+        {
+          "text": "9. Cổ đông là nhà đầu tư nước ngoài",
+          "b": true
+        },
+        {
+          "text": " ("
+        },
+        {
+          "text": "kê khai theo Mẫu số 8 Phụ lục I ban hành kèm theo Thông tư này",
+          "i": true
+        },
+        {
+          "text": "): Gửi kèm (nếu có)."
+        }
+      ],
+      "note": "Nguyên văn para 1162 (Mẫu số 4 Phụ lục I); mất ở nguồn DN_PL1_Mau_04."
+    }
   ]
 }

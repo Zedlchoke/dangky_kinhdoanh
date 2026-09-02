@@ -74,9 +74,15 @@ GLYPH = "\u25a1"  # □ — ô vuông checkbox trên bản giấy nguồn
 # blocks PLI_M09 không chứa 4 đoạn ký cuối mỗi section
 # ("……, ngày……tháng……năm……NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT/…(Ký và ghi họ tên)",
 # body-level trong nguồn; app/data/blocks/PLI_M09.json không có text
-# "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT" lẫn "(Ký" nào) — thuộc extractor/generator
-# (forbidden), Lead regen sau merge. STRICT: nếu regen khôi phục (số missing
-# giảm), test ĐỎ để bắt buộc cập nhật allowlist này.
+# "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT" lẫn "(Ký" nào).
+# [Wave D batch 2 2026-09-03 — GIẢI QUYẾT, KHÔNG khôi phục] Lead đối chiếu
+# nguồn DN_PL1_Mau_09: 4 đoạn ký này nằm tại para 111/139/165/218 — TOÀN BỘ
+# trong vùng nhiễm p102→hết tài liệu (Mẫu 6/variants CTCP bị nạp lẫn), mà
+# decontaminate vùng đó là quyết định owner D3.1=A đã duyệt (spec PLI_M09
+# note + drop_until). Khối ký thật của Mẫu 9 ở para 89 ("CÁC THÀNH VIÊN HỢP
+# DANH (Ký và ghi họ tên từng thành viên)") có trong blocks. → 4 đoạn là
+# by-design đã bỏ; entry allowlist giữ vĩnh viễn với lý do này, KHÔNG phải
+# nợ regen.
 MISSING_SIG_ALLOWLIST = {"PLI_M09": 4}
 
 # Baseline marker ngắt trang explicit theo mẫu (đo tại BASE 65c7346, dữ liệu

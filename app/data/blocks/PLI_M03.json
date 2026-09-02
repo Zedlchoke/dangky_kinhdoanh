@@ -2155,6 +2155,27 @@
      ]
     }
    ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "7. Thành viên công ty:",
+     "b": true
+    },
+    {
+     "text": " ("
+    },
+    {
+     "text": "kê khai theo Mẫu số 6 Phụ lục I ban hành kèm theo Thông tư này",
+     "i": true
+    },
+    {
+     "text": ") Gửi kèm."
+    }
+   ],
+   "role": "section-heading"
   }
  ],
  "v": 3

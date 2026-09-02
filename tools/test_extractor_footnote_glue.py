@@ -85,10 +85,15 @@ STT_GLUE_FORMS = {
 
 # Class 2: chuỗi companion có GAP (numbering_report.continuation_chains).
 CHAIN_FORMS = {
-    "PLI_M03": {"main_last": 6, "comp": "PLI_M06", "comp_first": 8,
-                "missing": "mục 7 (pointer 'Gửi kèm' Mẫu số 6)"},
-    "PLI_M04": {"main_last": 7, "comp": "PLI_M08", "comp_first": 10,
-                "missing": "mục 8-9 (pointer 'Gửi kèm' Mẫu số 7/8)"},
+    # [Wave D batch 2 2026-09-03] main_last 6→7 / 7→9: dòng pointer mất ở
+    # bước tách nguồn đã được Lead khôi phục qua spec inserts (pos="end",
+    # nguyên văn para 847/1161/1162 của _Bieu_mau_PL_I_II_full.docx) + regen.
+    # Vùng missing rỗng — test giữ độ cứng: heading blocks==template,
+    # mục cuối tồn tại, companion bắt đầu đúng số kế tiếp.
+    "PLI_M03": {"main_last": 7, "comp": "PLI_M06", "comp_first": 8,
+                "missing": ""},
+    "PLI_M04": {"main_last": 9, "comp": "PLI_M08", "comp_first": 10,
+                "missing": ""},
 }
 
 

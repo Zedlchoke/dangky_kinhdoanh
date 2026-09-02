@@ -135,5 +135,27 @@
         "question": "(a) GAP PHẦN ĐUÔI BỊ CẮT (chốt D1.3=B, nay mở theo owner 2026-08-28 nhưng CHƯA có dữ liệu): nguồn docx trong repo KẾT THÚC ở p127 'Tổng cộng' (130 paragraph, 0 w:tbl), trong khi Phụ lục I Mẫu 03 TT 68/2025/TT-BTC (đối chiếu bản Word gốc trên dangkykinhdoanh.gov.vn) còn TIẾP theo mục 6: mục 7 'Thành viên công ty' (kê khai theo Mẫu số 6 Phụ lục I, gửi kèm), mục 8 'Người đại diện theo pháp luật', mục 9 'Thông tin đăng ký thuế' (bảng STT | Các chỉ tiêu, 9.1 Giám đốc/TGĐ → 9.9 phương pháp tính thuế GTGT), mục 10 'Thông tin về việc đóng bảo hiểm xã hội' (hàng tháng / 3 tháng / 6 tháng một lần), mục 11 'Thông tin về chủ sở hữu hưởng lợi'. Generator v1 (tools/build_form_maps.py) chỉ DỰNG LẠI bảng tại anchor/drop/trim của đoạn đã có, KHÔNG có capability chèn paragraph/mục mới -> spec này chỉ phủ mục 6 có thật trên nguồn; 5 mục còn lại CẦN OWNER: khôi phục nguồn gốc Phụ lục I Mẫu 03 rồi mở census lại (hoặc mở capability spec chèn section mới). (b) D1.1=A: dòng 'Tổng cộng' output_only + totals sum() 2 cột; cross-field đối chiếu 'Tổng cộng == Vốn điều lệ (mục 5, key von_dieu_le)' blocking + PERCENT_SUM warning chưa có slot cross_field_rules trong contract v1 -> Lead wire ở FORM_TABLE_CONTRACTS (giống fixture F2 đã khai). (c) Fixture F2 (app_web/ui/form-domain.js PLI_M03) khai cột nhãn với tag 'loai_nguon_von' inputType readonly, còn generator v1 bắt buộc cột nhãn là tag=null ở chỉ số 0 -> khi Lead wire form_maps.section_specs phải thống nhất 1 cách khai (không đăng ký 2 key cho cùng ô nhãn). (d) drop_until='(?!)' là regex KHÔNG BAO GIỜ khớp: mục này là mục CUỐI của nguồn (không có heading kế) nên cần mốc scoped để drop không chạy toàn văn bản. (e) Ô '% tự tính theo giá trị' chưa có formula trong v1 -> ty_le là ô nhập percent, tổng cột = sum(ty_le) (tiền lệ F2)."
       }
     }
+  ],
+  "inserts": [
+    {
+      "pos": "end",
+      "runs": [
+        {
+          "text": "7. Thành viên công ty:",
+          "b": true
+        },
+        {
+          "text": " ("
+        },
+        {
+          "text": "kê khai theo Mẫu số 6 Phụ lục I ban hành kèm theo Thông tư này",
+          "i": true
+        },
+        {
+          "text": ") Gửi kèm."
+        }
+      ],
+      "note": "Nguyên văn _Bieu_mau_PL_I_II_full.docx para 847 (Mẫu số 3 Phụ lục I TT 68/2025/TT-BTC); dòng mất ở nguồn DN_PL1_Mau_03 khi convert (Wave D batch 2, gate chain M03->M06 6->8 thiếu 7)."
+    }
   ]
 }

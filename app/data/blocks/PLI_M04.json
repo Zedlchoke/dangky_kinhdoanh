@@ -2722,6 +2722,48 @@
      ]
     }
    ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "8. Cổ đông sáng lập",
+     "b": true
+    },
+    {
+     "text": " ("
+    },
+    {
+     "text": "kê khai theo Mẫu số 7 Phụ lục I ban hành kèm theo Thông tư này",
+     "i": true
+    },
+    {
+     "text": "): Gửi kèm (nếu có)."
+    }
+   ],
+   "role": "section-heading"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "9. Cổ đông là nhà đầu tư nước ngoài",
+     "b": true
+    },
+    {
+     "text": " ("
+    },
+    {
+     "text": "kê khai theo Mẫu số 8 Phụ lục I ban hành kèm theo Thông tư này",
+     "i": true
+    },
+    {
+     "text": "): Gửi kèm (nếu có)."
+    }
+   ],
+   "role": "section-heading"
   }
  ],
  "v": 3

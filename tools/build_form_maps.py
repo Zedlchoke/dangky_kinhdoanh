@@ -1025,15 +1025,18 @@ def load_form_spec(form_id):
                 "[form_specs] %s (%s): truong root khong duoc phep: %s"
                 % (form_id, path_used, sorted(extra_root)))
         for ins in raw.get("inserts") or []:
-            if not isinstance(ins, dict) or not ins.get("anchor") \
-                    or not ins.get("runs"):
+            if not isinstance(ins, dict) or not ins.get("runs"):
                 raise ValueError(
-                    "[form_specs] %s (%s): insert phải có anchor + runs: %r"
+                    "[form_specs] %s (%s): insert phải có runs: %r"
                     % (form_id, path_used, ins))
-            if ins.get("pos", "after") not in ("after", "before"):
+            if ins.get("pos", "after") not in ("after", "before", "end"):
                 raise ValueError(
-                    "[form_specs] %s (%s): insert.pos phải after|before: %r"
+                    "[form_specs] %s (%s): insert.pos phải after|before|end: %r"
                     % (form_id, path_used, ins.get("pos")))
+            if ins.get("pos") != "end" and not ins.get("anchor"):
+                raise ValueError(
+                    "[form_specs] %s (%s): insert after/before phải có anchor: %r"
+                    % (form_id, path_used, ins))
         specs_by_id = {}
         entries = []
         for e in raw.get("tables") or []:
@@ -1591,20 +1594,31 @@ def rebuild_list_tables(doc, form_id, ext=None):
     # không bao giờ chèn mù).
     from docx.text.paragraph import Paragraph as _Paragraph
     for ins in (ext or {}).get("inserts") or []:
-        hits = [p for p in _body_paragraphs(doc)
-                if re.search(ins["anchor"], _para_folded(p))]
-        if len(hits) != 1:
-            raise SystemExit(
-                "[rebuild] insert anchor '%s' khớp %d paragraph (mong 1) "
-                "cho %s" % (ins["anchor"], len(hits), form_id))
         if not ins.get("runs"):
             raise SystemExit("[rebuild] insert thiếu runs: %r" % ins)
         new_p = OxmlElement("w:p")
-        if ins.get("pos", "after") == "before":
-            hits[0]._p.addprevious(new_p)
+        if ins.get("pos") == "end":
+            # [Wave D batch 2] pos="end": nối dòng nguồn bị mất ở CUỐI mẫu
+            # (sau bảng cuối) — anchor không áp dụng vì đoạn cuối tài liệu có
+            # thể là bảng/spacer. Thứ tự khai báo trong spec = thứ tự tài liệu.
+            sect_pr = doc.element.body.find(qn("w:sectPr"))
+            if sect_pr is not None:
+                sect_pr.addprevious(new_p)
+            else:
+                doc.element.body.append(new_p)
+            np = _Paragraph(new_p, doc.element.body)
         else:
-            hits[0]._p.addnext(new_p)
-        np = _Paragraph(new_p, hits[0]._parent)
+            hits = [p for p in _body_paragraphs(doc)
+                    if re.search(ins["anchor"], _para_folded(p))]
+            if len(hits) != 1:
+                raise SystemExit(
+                    "[rebuild] insert anchor '%s' khớp %d paragraph (mong 1) "
+                    "cho %s" % (ins["anchor"], len(hits), form_id))
+            if ins.get("pos", "after") == "before":
+                hits[0]._p.addprevious(new_p)
+            else:
+                hits[0]._p.addnext(new_p)
+            np = _Paragraph(new_p, hits[0]._parent)
         for r in ins["runs"]:
             run = np.add_run(r.get("text", ""))
             if r.get("b"):
@@ -1885,24 +1899,86 @@ def process_checkboxes(doc, form_id, add_field, unmatched):
             last_label = fold(full)
             continue
         assignments = []
-        for k, i in enumerate(pos):
+        used_names: set = set()
+
+        def _assign_legacy(k, i, seen):
+            """Heuristic gốc (trước Wave D): ưu tiên chữ sau ô -> trước ô ->
+            paragraph trước đó. Giữ NGUYÊN cho mọi paragraph không có trùng
+            key (deep idempotency: artifact form khác phải byte-giữ-nguyên)."""
             seg_after = full[i + 1: pos[k + 1] if k + 1 < len(pos) else len(full)]
             seg_before = full[0:i] if k == 0 else full[pos[k - 1] + 1:i]
             label_raw = (seg_after or seg_before or last_label).strip()
             name = None
-            # ưu tiên: chữ ngay sau ô -> chữ trước ô -> paragraph trước đó
-            for cand in (seg_after, seg_before, last_label if not seg_after.strip() else ""):
+            for cand in (seg_after, seg_before,
+                         last_label if not seg_after.strip() else ""):
                 if cand and cand.strip():
                     name = match_chk(fold(cand))
                     if name:
                         break
             if name is None:
-                # fallback: không bỏ sót ô nào — key sinh từ nhãn (norm_label
-                # để bỏ đánh số đầu dòng/gạch đầu dòng trước khi slug)
                 label_folded = norm_label(label_raw) if label_raw else ""
                 if label_folded.strip():
-                    name = _auto_chk_key(fold(label_folded), seen_auto)
+                    name = _auto_chk_key(fold(label_folded), seen)
+            return i, name, label_raw
+
+        def _label_letters(s):
+            return any(ch.isalpha() for ch in s)
+
+        def _assign_convention(k, i, seen, pair_mode):
+            """[Class 15] Quy ước theo CẢ ĐOẠN: "A □ B □" (nhãn TRƯỚC ô) vs
+            "□ A □ B" (nhãn SAU ô). "Trống" = không còn CHỮ cái (số chú thích
+            không phải nhãn). Nhãn trước ô lấy đuôi sau ':'/';' để không ăn
+            rule từ mổ xẻ câu dài. Dedup trong đoạn: key đã dùng -> candidate
+            kế, hết -> auto key (tự _2). Chỉ chạy khi legacy sinh key TRÙNG
+            trong cùng paragraph (vd PLI_M12 'Có □ Không □' -> chk_khong ×2:
+            tick một in X ở cả hai chỗ trên DOCX)."""
+            seg_after = full[i + 1: pos[k + 1] if k + 1 < len(pos) else len(full)]
+            seg_before = full[0:i] if k == 0 else full[pos[k - 1] + 1:i]
+            if pair_mode == "before":
+                parts = re.split(r"[:;]", seg_before)
+                tail = re.sub(r"^[\s\d\.\)\]]+", "",
+                              parts[-1] if parts else seg_before)
+                if tail.strip():
+                    seg_before = tail
+            primary, secondary = {
+                "before": (seg_before, seg_after),
+                "after": (seg_after, seg_before),
+                "mixed": (seg_after, seg_before),
+            }[pair_mode]
+            label_raw = (primary or secondary or last_label).strip()
+            name = None
+            for cand in (primary, secondary,
+                         last_label if not primary.strip() else ""):
+                if cand and cand.strip():
+                    name = match_chk(fold(cand))
+                    if name and name not in used_names:
+                        break
+                    name = None
+            if name is None:
+                label_folded = norm_label(label_raw) if label_raw else ""
+                if label_folded.strip():
+                    name = _auto_chk_key(fold(label_folded), seen)
+            return i, name, label_raw
+
+        legacy = [_assign_legacy(k, i, seen_auto) for k, i in enumerate(pos)]
+        legacy_names = [n for _i, n, _l in legacy if n]
+        if len(legacy_names) == len(set(legacy_names)):
+            chosen = legacy
+        else:
+            first_i = pos[0]
+            before_txt = full[0:first_i]
+            after_last = full[pos[-1] + 1:]
+            if _label_letters(before_txt) and not _label_letters(after_last):
+                pair_mode = "before"
+            elif _label_letters(after_last) and not _label_letters(before_txt):
+                pair_mode = "after"
+            else:
+                pair_mode = "mixed"
+            chosen = [_assign_convention(k, i, seen_auto, pair_mode)
+                      for k, i in enumerate(pos)]
+        for i, name, label_raw in chosen:
             if name:
+                used_names.add(name)
                 assignments.append((i, i + 1, "{chk_%s}" % name))
                 add_field("chk_%s" % name, label_raw, type_="chk")
             else:

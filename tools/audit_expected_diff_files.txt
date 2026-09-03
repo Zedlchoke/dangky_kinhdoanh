@@ -358,3 +358,8 @@ tools/test_member_grids_rebuild.py
 tools/form_specs/change/PLI_M72.json
 # app/templates/PLI_M72.docx: P2 rebuild 4 lưới N2-N5 — regen có chủ đích
 app/templates/PLI_M72.docx
+# [P2 pin sync 2026-09-03] sync pin 9 suite sau merge P1/P2/P3: p1_b_verify_m72
+# chấp nhận 5 entry spec + 9 w:tbl template; test_m72_conditional_export chấp
+# nhận số w:tbl theo biến thể (TNHH_2TV=2, CTCP=3, DHDN=2)
+tools/census/p1_b_verify_m72.py
+tools/test_m72_conditional_export.py

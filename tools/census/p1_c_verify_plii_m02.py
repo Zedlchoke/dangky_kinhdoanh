@@ -14,10 +14,11 @@ Audit độc lập trên 3 tầng artifact, KHÔNG qua generator:
    chỉ số block.
 
 Đồng thời kiểm tra contract occurrences trong
-tools/form_specs/household/PLII_M02.json: đủ 4 occurrence_id ngữ nghĩa
-(nganh_bo_sung, nganh_xoa_bo, nganh_sua_doi_chi_tiet, nganh_hien_tai),
-match_heading khớp đúng nth lần trong template, end_markers tồn tại,
-sync_group=null (PLAN mục A cấm auto-sync giữa các loop khác nghĩa).
+tools/form_specs/household/PLII_M02.json: đủ 6 occurrence_id ngữ nghĩa
+(4 ngành: nganh_bo_sung, nganh_xoa_bo, nganh_sua_doi_chi_tiet,
+nganh_hien_tai + 2 thành viên hộ gia đình P2: tv_hgd_sau_thay_doi,
+tv_hgd_cap_doi), match_heading khớp đúng nth lần trong template, end_markers
+tồn tại, sync_group=null (PLAN mục A cấm auto-sync giữa các loop khác nghĩa).
 
 Lưu ý R0 triage (2026-08-26): match_heading trong spec lưu TEXT THƯỜNG
 (vd '1. bo sung nganh, nghe kinh doanh') trong khi bảng REGIONS ở đây dùng
@@ -58,8 +59,22 @@ SOURCE_DIR = ROOT / "06_ho_kinh_doanh_va_chuyen_doi" / "01_mau_ho_kinh_doanh"
 
 LOOP_CARRIER_HIEN_TAI = "ds_nganh"  # bảng C.3 giữ loop production từ Wave 2C
 
+# [P2 pin sync 2026-09-03] P2 rebuild them 2 luoi thanh vien ho gia dinh
+# (nested-grid) vao PLII_M02: tv_hgd_sau_thay_doi (dau Muc A) +
+# tv_hgd_cap_doi (Muc C.7) -> 4 vung nganh + 2 vung thanh vien = 6 vung ngu
+# nghia, sap theo thu tu document (region_spans yeu cau heading tang dan).
+MEMBER_REGION_IDS = {"tv_hgd_sau_thay_doi", "tv_hgd_cap_doi"}
+TV_HGD_HDRS = ["STT", "Họ tên", "Ngày, tháng, năm sinh",
+               "Số định danh cá nhân", "Giới tính", "Quốc tịch", "Dân tộc",
+               "Nơi thường trú", "Nơi ở hiện tại", "Chữ ký"]
+
 # (occurrence_id, heading_folded_regex, end_markers, headers, loop_name)
 REGIONS = [
+    ("tv_hgd_sau_thay_doi",
+     r"^danh sach cac thanh vien ho gia dinh dang ky ho kinh doanh sau khi "
+     r"thay doi",
+     [r"^dang ky thay doi von kinh doanh"], TV_HGD_HDRS,
+     "tv_hgd_sau_thay_doi"),
     ("nganh_bo_sung", r"^1\. bo sung nganh, nghe kinh doanh",
      [r"^2\. bo nganh, nghe kinh doanh"],
      ["STT", "Tên ngành, nghề kinh doanh được bổ sung", "Mã ngành",
@@ -77,6 +92,9 @@ REGIONS = [
      [r"^4\. von kinh doanh"],
      ["STT", "Tên ngành", "Mã ngành", "Ngành, nghề kinh doanh chính"],
      LOOP_CARRIER_HIEN_TAI),
+    ("tv_hgd_cap_doi",
+     r"^7\. thong tin ve cac thanh vien ho gia dinh dang ky ho kinh doanh",
+     [r"^chu ho kinh doanh \(ky"], TV_HGD_HDRS, "tv_hgd_cap_doi"),
 ]
 
 _problems: list[str] = []
@@ -102,9 +120,13 @@ def same_region(paras: list[str], pattern_audit: str, pattern_spec: str) -> bool
 
     So theo hành vi trên danh sách paragraph (đã fold), không so chuỗi
     pattern — spec lưu plain text, REGIONS dùng regex có anchor.
+    [P2 pin sync 2026-09-03] entry nested-grid (tv_hgd_*) lưu match_heading
+    dạng tiếng Việt CÓ dấu -> fold pattern trước khi so khớp với paras đã
+    fold; pattern đã fold sẵn đi qua fold() không đổi nên 4 vùng ngành giữ
+    nguyên hành vi.
     """
     hits_a = [t for t in paras if re.search(pattern_audit, t)]
-    hits_s = [t for t in paras if re.search(pattern_spec, t)]
+    hits_s = [t for t in paras if re.search(fold(pattern_spec), t)]
     return hits_a == hits_s
 
 
@@ -193,7 +215,9 @@ def industry_owner_sequence(spans, tbl_entries):
             continue
         owner = next((oid for oid, h, e in spans if h < idx < e), None)
         if owner is None:
-            problems.append("w:tbl thứ %d nằm ngoài 4 vùng ngành" % idx)
+            # [P2 pin sync 2026-09-03] đối chiếu trên 6 vùng (4 nganh + 2 tv_hgd)
+            problems.append("w:tbl thứ %d nằm ngoài 6 vùng ngành/thành viên"
+                            % idx)
         else:
             owners.append(owner)
     return owners, problems
@@ -286,6 +310,21 @@ def audit_source_template() -> None:
             ok("%s: heading '%s...' có ở nguồn, lưới đã mất (rebuild bởi "
                "generator)" % (occ_id, texts and "3. nganh"))
             continue
+        if occ_id in MEMBER_REGION_IDS:
+            # [P2 pin sync 2026-09-03] nguồn mất cả 2 lưới thành viên hộ gia
+            # đình khi convert: tiêu đề cột bị dán thành 1 đoạn (glued
+            # 'sttho ten...chu ky') — lưới thật được generator rebuild vào
+            # app/templates + blocks (P2); ở nguồn chỉ pin đủ 10 tiêu đề cột.
+            glued = " ".join(texts)
+            missing_hdr = [hf for hf in hdr_folds if hf not in glued]
+            if missing_hdr:
+                fail("%s: nguồn thiếu tiêu đề cột (glued): %s"
+                     % (occ_id, missing_hdr))
+            else:
+                ok("%s: nguồn còn đủ %d tiêu đề cột dán 1 đoạn (glued) — "
+                   "lưới được generator rebuild (P2)"
+                   % (occ_id, len(hdr_folds)))
+            continue
         if extra:
             fail("%s: vùng chứa paragraph lạ %r" % (occ_id, extra[:3]))
         if matched != set(range(len(hdrs))):
@@ -310,7 +349,8 @@ def audit_working_template_and_maps() -> None:
     loop_to_occ = {lp: oid for oid, _h, _e, _hd, lp in REGIONS}
     unknown = [l for l in fm_loops if l not in loop_to_occ]
     if unknown:
-        fail("loop lạ ngoài 4 semantic region: %r" % unknown)
+        # [P2 pin sync 2026-09-03] 6 semantic region (4 nganh + 2 tv_hgd)
+        fail("loop lạ ngoài 6 semantic region: %r" % unknown)
 
     # [Wave A 2026-09-02] Hủy skip theo vị trí (`first_tbl_seen`, `tax_start`):
     # band/thuế được nhận qua NỘI DUNG header (classify_table) nên skip mù
@@ -444,7 +484,8 @@ def audit_spec_contract() -> None:
     if set(seen) != want_ids:
         fail("occurrence_id %r != %r" % (sorted(seen), sorted(want_ids)))
         return
-    ok("đủ 4 occurrence_id ngữ nghĩa: %r" % sorted(seen))
+    # [P2 pin sync 2026-09-03] 6 occurrence_id ngữ nghĩa (4 ngành + 2 tv_hgd)
+    ok("đủ %d occurrence_id ngữ nghĩa: %r" % (len(REGIONS), sorted(seen)))
 
     doc = Document(str(WORKING_TMPL))
     paras = [fold(re.sub(r"\s+", " ", Paragraph(child, doc).text)).strip()
@@ -456,15 +497,20 @@ def audit_spec_contract() -> None:
             fail("%s: match_heading lệch chuẩn audit" % oid)
         if occ.get("nth") != 1:
             fail("%s: nth != 1" % oid)
-        n_hit = sum(1 for t in paras if re.search(occ["match_heading"], t))
+        # [P2 pin sync 2026-09-03] match_heading nested-grid có dấu -> fold
+        n_hit = sum(1 for t in paras
+                    if re.search(fold(occ["match_heading"]), t))
         if n_hit != occ.get("nth"):
             fail("%s: heading khớp %d lần != nth" % (oid, n_hit))
         for m in occ.get("end_markers") or []:
             if not any(re.search(m, t) for t in paras):
                 fail("%s: end_marker %r không có trong template" % (oid, m))
-        if seen[oid]["spec"].get("loop") != lp:
-            fail("%s: entry spec.loop %r != %r" % (
-                oid, seen[oid]["spec"].get("loop"), lp))
+        # [P2 pin sync 2026-09-03] entry nested-grid không có spec.loop —
+        # tên loop trùng spec.id (semantic_key) theo convention P2.
+        got_loop = (seen[oid]["spec"].get("loop")
+                    or seen[oid]["spec"].get("id"))
+        if got_loop != lp:
+            fail("%s: entry spec.loop %r != %r" % (oid, got_loop, lp))
     if not _problems:
         ok("contract hợp lệ: heading/nth/end_markers/sync_group/loop khớp")
 
@@ -492,9 +538,13 @@ def main() -> int:
     print("-" * 72)
     print("Tong: %d DONE / %d MISSING / %d tong so region ngang"
           % (done, missing, len(results)))
-    print("Cau tra loi Lead: template CO vung thu 4 (nganh_hien_tai) = bang "
-          "nganh Muc C.3 cap doi/dang ky lai; day la w:tbl duy nhat cua mau "
-          "sau rebuild, da co loop %s tu Wave 2C." % LOOP_CARRIER_HIEN_TAI)
+    # [P2 pin sync 2026-09-03] sau rebuild P2, mẫu có 6 w:tbl thật: 4 bảng
+    # ngành + 2 lưới thành viên hộ gia đình (tv_hgd_sau_thay_doi B069,
+    # tv_hgd_cap_doi B122); band/thuế được classify_table loại riêng.
+    print("Cau tra loi Lead: template CO 6 vung ngu nghia = 4 vung nganh "
+          "(bo_sung/xoa_bo/sua_doi_chi_tiet/hien_tai=Muc C.3, loop %s tu "
+          "Wave 2C) + 2 luoi thanh vien ho gia dinh tv_hgd_sau_thay_doi/"
+          "tv_hgd_cap_doi rebuild boi lane P2." % LOOP_CARRIER_HIEN_TAI)
     if _problems:
         print("VERIFY: FAIL — %d mâu thuẫn:" % len(_problems))
         for p in _problems:

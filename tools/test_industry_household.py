@@ -5,6 +5,8 @@ nhận đăng ký hộ kinh doanh) - production.
 
 P1-C (2026-08-26) mở rộng cho PLII_M02 — 4 semantic loop ngành theo PLAN mục A:
   nganh_bo_sung / nganh_xoa_bo / nganh_sua_doi_chi_tiet / nganh_hien_tai.
+[P2 pin sync 2026-09-03] P2 rebuild thêm 2 lưới thành viên hộ gia đình
+  (tv_hgd_sau_thay_doi, tv_hgd_cap_doi) -> 6 semantic region cho PLII_M02.
 Mỗi nghiệp vụ được test ĐỘC LẬP: vùng tồn tại, đúng cột, dữ liệu không trộn
 giữa các loop (draft tách key). Các test post-integration chạy capability
 probe TRƯỚC khi assert: artifact chưa có loop tương ứng thì ghi nhận
@@ -83,7 +85,19 @@ EXPECTED_COLS = [(1, "ten_nganh"), (2, "ma_nganh"), (3, "la_nganh_chinh")]
 # giữ tên loop canonical ds_nganh (dùng chung PLI_M02/PLII_M07) kèm metadata
 # occurrence_id=nganh_hien_tai; match_heading là literal prefix sau fold.
 SPEC_PATH = ROOT / "tools" / "form_specs" / "household" / "PLII_M02.json"
+# [P2 pin sync 2026-09-03] P2 rebuild thêm 2 lưới thành viên hộ gia đình
+# (nested-grid) vào PLII_M02: tv_hgd_sau_thay_doi (đầu Mục A) và
+# tv_hgd_cap_doi (Mục C.7) -> 6 semantic region (4 ngành + 2 thành viên),
+# sắp theo thứ tự document (region_spans yêu cầu heading tăng dần).
+MEMBER_REGION_IDS = {"tv_hgd_sau_thay_doi", "tv_hgd_cap_doi"}
+TV_HGD_HEADERS = ["STT", "Họ tên", "Ngày, tháng, năm sinh",
+                  "Số định danh cá nhân", "Giới tính", "Quốc tịch", "Dân tộc",
+                  "Nơi thường trú", "Nơi ở hiện tại", "Chữ ký"]
 M02_OCCURRENCES = [
+    ("tv_hgd_sau_thay_doi",
+     "Danh sách các thành viên hộ gia đình đăng ký hộ kinh doanh sau khi "
+     "thay đổi",
+     ["^dang ky thay doi von kinh doanh"], TV_HGD_HEADERS),
     ("nganh_bo_sung", "1. bo sung nganh, nghe kinh doanh",
      ["^2\\. bo nganh, nghe kinh doanh"],
      ["STT", "Tên ngành, nghề kinh doanh được bổ sung", "Mã ngành",
@@ -97,6 +111,9 @@ M02_OCCURRENCES = [
      ["STT", "Tên ngành, nghề kinh doanh", "Mã ngành"]),
     ("nganh_hien_tai", "3. nganh, nghe kinh doanh",
      ["^4\\. von kinh doanh"], EXPECTED_HEADERS),
+    ("tv_hgd_cap_doi",
+     "7. Thông tin về các thành viên hộ gia đình đăng ký hộ kinh doanh",
+     ["^chu ho kinh doanh \\(ky"], TV_HGD_HEADERS),
 ]
 
 
@@ -341,15 +358,19 @@ def body_seq(doc):
 
 
 def region_spans(seq):
-    """[(occ_id, start_idx, end_idx)] của 4 vùng ngành theo M02_OCCURRENCES.
+    """[(occ_id, start_idx, end_idx)] của 6 vùng theo M02_OCCURRENCES
+    (4 ngành + 2 thành viên hộ gia đình P2).
 
     Assert khi heading không duy nhất / không theo thứ tự / thiếu end_marker.
+    [P2 pin sync 2026-09-03] heading tv_hgd_* lưu dạng tiếng Việt có dấu
+    (khớp exact spec) -> fold trước khi so khớp seq đã fold; pattern ngành
+    đã fold sẵn đi qua fold() không đổi.
     """
     spans = []
     prev_start = -1
     for occ_id, heading, end_markers, _headers in M02_OCCURRENCES:
         hits = [i for i, (k, t) in enumerate(seq)
-                if k == "p" and re.search(heading, t)]
+                if k == "p" and re.search(fold(heading), t)]
         assert len(hits) == 1, \
             "%s: match_heading %r khớp %d đoạn != 1" % (occ_id, heading,
                                                         len(hits))
@@ -392,6 +413,17 @@ def t_m02_source_regions():
                                                            M02_OCCURRENCES):
         if occ_id == "nganh_hien_tai":
             continue  # nguồn mất cả lưới C.3 -> vùng chỉ còn heading
+        if occ_id in MEMBER_REGION_IDS:
+            # [P2 pin sync 2026-09-03] nguồn mất 2 lưới thành viên hộ gia
+            # đình khi convert: 10 tiêu đề cột dính thành 1 đoạn (glued
+            # 'sttho ten...chu ky'); lưới thật do generator rebuild (P2).
+            glued = " ".join(t for k, t in seq[h + 1:end] if k == "p" and t)
+            hdr_folds_m = [fold(re.sub(r"\s+", " ", hh)).strip()
+                           for hh in headers]
+            missing_m = [hf for hf in hdr_folds_m if hf not in glued]
+            assert not missing_m, \
+                "%s: nguồn thiếu tiêu đề cột (glued): %s" % (occ_id, missing_m)
+            continue
         hdr_folds = [fold(re.sub(r"\s+", " ", hh)).strip() for hh in headers]
         texts = [t for k, t in seq[h + 1:end] if k == "p" and t]
         matched = set()
@@ -409,7 +441,7 @@ def t_m02_source_regions():
                 occ_id, len(matched), len(headers))
 
 
-@check("template lam viec PLII_M02: moi w:tbl nam trong 1 trong 4 vung nganh va dong bo 1-1 voi dynamic_tables")
+@check("template lam viec PLII_M02: moi w:tbl nam trong 1 trong 6 vung (4 nganh + 2 thanh vien P2) va dong bo 1-1 voi dynamic_tables")
 def t_m02_working_template_regions():
     doc = Document(str(template_path("PLII_M02")))
     fm_loops = sorted(t.get("loop") for t in
@@ -418,13 +450,17 @@ def t_m02_working_template_regions():
     seq = body_seq(doc)
     spans = region_spans(seq)
 
+    # [P2 pin sync 2026-09-03] 6 semantic loop: 4 ngành + 2 lưới thành viên
+    # hộ gia đình (tv_hgd_*) do lane P2 rebuild.
     loop_to_occ = {"nganh_bo_sung": "nganh_bo_sung",
                    "nganh_xoa_bo": "nganh_xoa_bo",
                    "nganh_sua_doi_chi_tiet": "nganh_sua_doi_chi_tiet",
-                   LOOP_NAME: "nganh_hien_tai"}
+                   LOOP_NAME: "nganh_hien_tai",
+                   "tv_hgd_sau_thay_doi": "tv_hgd_sau_thay_doi",
+                   "tv_hgd_cap_doi": "tv_hgd_cap_doi"}
     unknown = [l for l in fm_loops if l not in loop_to_occ]
     assert not unknown, \
-        "form_maps khai báo loop ngành lạ: %r (chỉ được 4 semantic loop)" % unknown
+        "form_maps khai báo loop ngành lạ: %r (chỉ được 6 semantic loop)" % unknown
 
     # [Wave A 2026-09-02] Hủy skip theo vị trí: band/thuế nhận qua nội dung
     # header (classify_table — nguồn chung với p1_c), đối chiếu theo THỨ TỰ
@@ -448,24 +484,33 @@ def t_m02_working_template_regions():
         "khai báo %r" % (sorted(owners), declared_regions)
 
 
-@check("spec PLII_M02: 4 entry nganh, occurrence_id ngu ngu nghia, match_heading/nth/end_markers hop le")
+@check("spec PLII_M02: 6 entry (4 nganh + 2 tv_hgd P2), occurrence_id ngu ngu nghia, match_heading/nth/end_markers hop le")
 def t_m02_spec_occurrence_identity():
     raw = spec_json()
     entries = raw.get("tables") or []
     # [Đổi pin — lane cap-von 2026-08-28] file có thêm entry fixed-matrix thuế
     # 'a7_thue_chi_tieu_cu_moi' (D5.2, owner 2026-08-28) — entry đó KHÔNG thuộc
     # nhóm ngành, không dùng occurrence, nên chỉ kiểm 4 entry ngành bên dưới.
+    # [P2 pin sync 2026-09-03] +2 entry nested-grid thành viên hộ gia đình
+    # (tv_hgd_sau_thay_doi, tv_hgd_cap_doi) — lane P2 rebuild; chúng CÓ
+    # occurrences nên được kiểm occurrence contract cùng 4 entry ngành.
     nganh_entries = [e for e in entries
                      if e["spec"]["id"].startswith(("nganh_", "ds_nganh"))]
     fixed_matrix = [e for e in entries
                     if (e["spec"].get("kind")) == "fixed-matrix"]
+    member_entries = [e for e in entries if e["spec"]["id"] in MEMBER_REGION_IDS]
     assert [e["spec"]["id"] for e in fixed_matrix] == \
         ["a7_thue_chi_tieu_cu_moi"], \
         "PLII_M02: entry fixed-matrix ngoài dự kiến %r" % \
         [e["spec"]["id"] for e in fixed_matrix]
-    assert len(entries) == len(nganh_entries) + len(fixed_matrix), \
-        "PLII_M02: xuất hiện entry lạ ngoài ngành/thuế"
-    entries = nganh_entries
+    assert [e["spec"]["id"] for e in member_entries] == \
+        ["tv_hgd_sau_thay_doi", "tv_hgd_cap_doi"], \
+        "PLII_M02: entry thành viên hộ gia đình ngoài dự kiến %r" % \
+        [e["spec"]["id"] for e in member_entries]
+    assert len(entries) == (len(nganh_entries) + len(fixed_matrix)
+                            + len(member_entries)), \
+        "PLII_M02: xuất hiện entry lạ ngoài ngành/thành viên/thuế"
+    entries = nganh_entries + member_entries
     occ_ids = []
     for e in entries:
         occs = e.get("occurrences")
@@ -494,7 +539,7 @@ def t_m02_spec_occurrence_identity():
         assert occ["nth"] == 1, "%s: nth phải là 1 (heading duy nhất)" % occ_id
         assert occ["sync_group"] is None, \
             "%s: sync_group phải null (PLAN A: không auto-sync loop khác nghĩa)" % occ_id
-        hits = sum(1 for t in paras if re.search(occ["match_heading"], t))
+        hits = sum(1 for t in paras if re.search(fold(occ["match_heading"]), t))
         assert hits == occ["nth"], \
             "%s: heading khớp %d lần != nth=%d" % (occ_id, hits, occ["nth"])
         for m in occ["end_markers"]:
@@ -551,13 +596,16 @@ def t_m02_field_key_isolation():
     dupes = sorted({n for n in names if names.count(n) > 1})
     assert not dupes, "dynamic_tables bị trùng loop name: %r" % (dupes,)
     fld_keys = {f["key"] for f in fm.get("fields", [])}
+    # [P2 pin sync 2026-09-03] cột chữ ký (chu_ky) là output-only theo
+    # convention draft: engine tự in, không sinh field input cho người dùng.
+    OUTPUT_ONLY_TAGS = {"chu_ky"}
     seen_keys = set()
     for dt in dts:
         ln = dt["loop"]
         ks = set()
         for c in dt.get("columns", []):
             tg = c.get("tag")
-            if tg:
+            if tg and tg not in OUTPUT_ONLY_TAGS:
                 k = "%s.%s" % (ln, tg)
                 ks.add(k)
                 if ln != LOOP_NAME:
@@ -569,13 +617,14 @@ def t_m02_field_key_isolation():
         seen_keys |= ks
 
 
-@check("render PLII_M02 post-integration: du 4 vung, moi loop nhan dung du lieu cua minh, khong tron du lieu giua cac nghiep vu")
+@check("render PLII_M02 post-integration: du 6 vung (4 nganh + 2 tv_hgd P2), moi loop nhan dung du lieu cua minh, khong tron du lieu giua cac nghiep vu")
 def t_m02_render_isolation():
     fm = form_maps()["PLII_M02"]
     loops = {t.get("loop") for t in fm.get("dynamic_tables") or []}
     # vùng 4 dùng đúng loop production ds_nganh
     required = ({oid for oid, *_ in M02_OCCURRENCES
-                 if oid != "nganh_hien_tai"} | {LOOP_NAME})
+                 if oid not in ("nganh_hien_tai",) and oid not in MEMBER_REGION_IDS}
+                | {LOOP_NAME})
     missing = sorted(required - loops)
     if missing:
         raise EFPI("chưa đủ 4 loop trong form_maps (thiếu %r)" % missing)
@@ -618,8 +667,18 @@ def t_m02_render_isolation():
             continue
         hdr = fold(" ".join(tr_cell_texts(tbl, 0)))
         by_header[hdr] = tbl
-    assert len(by_header) == 4, \
-        "kỳ vọng 4 bảng ngành với 4 header phân biệt, thấy %d" % len(by_header)
+    # [P2 pin sync 2026-09-03] P2 rebuild thêm 2 lưới thành viên hộ gia đình
+    # (tv_hgd_sau_thay_doi, tv_hgd_cap_doi) — cả hai dùng CHUNG 1 header
+    # phân biệt (STT|Họ tên|...|Chữ ký) nên by_header gộp thành 1 khóa:
+    # 4 header ngành + 1 header thành viên = 5 header phân biệt.
+    assert len(by_header) == 5, \
+        "kỳ vọng 5 header phân biệt (4 ngành + 1 thành viên P2), thấy %d" % \
+        len(by_header)
+    tv_hdrs = [h for h in by_header
+               if "ho ten" in h and "chu ky" in h]
+    assert len(tv_hdrs) == 1, \
+        "kỳ vọng đúng 1 header lưới thành viên hộ gia đình (P2), thấy %r" % \
+        tv_hdrs
 
     def rows_of(tbl):
         return [tr_cell_texts(tbl, ri) for ri in range(len(tbl.rows))]

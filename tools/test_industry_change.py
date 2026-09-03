@@ -79,6 +79,10 @@ CONTRACT_XOA_BO = [(0, None), (1, "ten_nganh"), (2, "ma_nganh"), (3, "ghi_chu")]
 EXTRA_LOOPS = {
     "PLI_M02": {"ds_nddpl_uy_quyen_chu_so_huu"},
     "PLI_M12": {"ds_ndd_uy_quyen_sau_thay_doi"},
+    # [P2 pin sync 2026-09-03] P2 rebuild thêm 4 lưới thành viên/cổ đông
+    # (nested-grid) vào PLI_M72: 5 lưới ngành + 4 lưới thành viên = 9 loop.
+    "PLI_M72": {"ds_thanh_vien_tnhh_2tv", "ds_co_dong_sang_lap_ctcp",
+                "ds_co_dong_nuoc_ngoai_ctcp", "ds_thanh_vien_hop_danh_dhdn"},
     "PLI_M15": set(),   # M15 không nằm trong EXPECTED_CONTRACTS; chỉ để tra cứu rõ ràng
 }
 
@@ -432,7 +436,12 @@ def t_m72_spec_occurrences():
     """Hợp đồng occurrences P1 trong spec M72 — PASS ngay trước integration."""
     spec = json.loads(M72_SPEC_PATH.read_text(encoding="utf-8-sig"))
     entries = spec.get("tables") or []
-    assert len(entries) == 1, "M72 spec: kỳ vọng 1 table entry, thấy %d" % len(entries)
+    # [P2 pin sync 2026-09-03] spec M72 giờ có 5 table entry: entry 0 là entry
+    # ngành (5 occurrence), entries 1..4 là 4 entry nested-grid thành viên/
+    # cổ đông do lane P2 rebuild (mỗi entry 1 occurrence, sync_group null).
+    assert len(entries) == 5, \
+        "M72 spec: kỳ vọng 5 table entry (1 ngành + 4 thành viên P2), thấy %d" \
+        % len(entries)
     entry = entries[0]
     occs = entry.get("occurrences") or []
     assert len(occs) == 5, "M72 spec: kỳ vọng 5 occurrences, thấy %d" % len(occs)
@@ -452,6 +461,20 @@ def t_m72_spec_occurrences():
             "%s: thiếu end_markers" % occ["occurrence_id"]
         for pat in occ["end_markers"]:
             re.compile(pat)  # regex hợp lệ
+    # [P2 pin sync 2026-09-03] pin 4 entry thành viên: nested-grid, id = tên
+    # loop, đúng tập/thứ tự 4 lưới P2 theo biến thể.
+    member_ids = ["ds_thanh_vien_tnhh_2tv", "ds_co_dong_sang_lap_ctcp",
+                  "ds_co_dong_nuoc_ngoai_ctcp", "ds_thanh_vien_hop_danh_dhdn"]
+    got_member = [e["occurrences"][0]["occurrence_id"] for e in entries[1:]]
+    assert got_member == member_ids, \
+        "M72 spec: entry thành viên sai %s != %s" % (got_member, member_ids)
+    for e in entries[1:]:
+        assert e.get("spec", {}).get("kind") == "nested-grid", \
+            "M72 spec %s: kind phải nested-grid" % e["occurrences"][0]["occurrence_id"]
+        assert len(e.get("occurrences") or []) == 1, \
+            "M72 spec: entry thành viên kỳ vọng 1 occurrence"
+        assert e["occurrences"][0]["sync_group"] is None, \
+            "M72 spec: sync_group entry thành viên phải null"
     # cấu hình bảng gốc phải được giữ nguyên qua lần chuyển sang occurrences
     assert entry["spec"]["loop"] == "ds_nganh"
     assert entry["pos"] == "after" and entry["no_default_drops"] is True
@@ -466,12 +489,15 @@ def t_m72_spec_occurrences():
 
 def assert_m72_five_loop_contract(blocks: dict, form_maps: dict) -> None:
     """Contract SAU INTEGRATE: blocks+form_maps PLI_M72 có đủ 5 loop occurrence,
-    mỗi loop 4 cột STT|ten_nganh|ma_nganh|la_nganh_chinh."""
+    mỗi loop 4 cột STT|ten_nganh|ma_nganh|la_nganh_chinh.
+    [P2 pin sync 2026-09-03] exact-set mở rộng: +4 lưới thành viên/cổ đông
+    (nested-grid P2) -> 9 loop block trên PLI_M72; contract 4 cột vẫn áp cho
+    đúng 5 occurrence ngành."""
     loops = {b["loop"]: b for b in blocks["blocks"] if b.get("t") == "loop"}
-    assert sorted(loops) == sorted(M72_OCCURRENCE_IDS), \
-        "PLI_M72: kỳ vọng đúng 5 loop occurrence %s, thấy %d loop %s — " \
-        "generator chưa dựng đủ 5 vùng loại hình" % (
-            M72_OCCURRENCE_IDS, len(loops), sorted(loops))
+    want_loops = sorted(EXTRA_LOOPS["PLI_M72"] | set(M72_OCCURRENCE_IDS))
+    assert sorted(loops) == want_loops, \
+        "PLI_M72: kỳ vọng đúng 9 loop (5 ngành + 4 thành viên P2) %s, " \
+        "thấy %d loop %s" % (want_loops, len(loops), sorted(loops))
     fm_dts = {t["loop"]: t for t in (form_maps["PLI_M72"].get("dynamic_tables")
                                      or [])}
     doc = Document(str(TEMPLATES_DIR / "PLI_M72.docx"))

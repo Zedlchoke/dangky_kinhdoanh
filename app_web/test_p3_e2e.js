@@ -367,6 +367,18 @@ check('P3-RP8: section payload khong ro ra field noi bo _*',
 section('4. DOCX export gate qua tools/docx_render.write_rendered');
 const M72_LOOPS = ['ds_nganh_dntn', 'ds_nganh_tnhh_1tv', 'ds_nganh_tnhh_2tv',
   'ds_nganh_ctcp', 'ds_nganh_dhdn'];
+// [P2 pin sync 2026-09-03] P2 rebuild 4 lưới thành viên/cổ đông (nested-grid)
+// trong template M72: mỗi vùng biến thể giờ mang bảng ngành + lưới thành viên
+// riêng -> số w:tbl kỳ vọng theo biến thể: DNTN=1, TNHH_1TV=1 (chỉ bảng
+// ngành), TNHH_2TV=2 (+ds_thanh_vien_tnhh_2tv), CTCP=3 (+2 lưới cổ đông),
+// DHDN=2 (+ds_thanh_vien_hop_danh_dhdn). Không chọn -> 0 bảng (giữ nguyên).
+const M72_EXPECT_TABLES = {
+  ds_nganh_dntn: 1,
+  ds_nganh_tnhh_1tv: 1,
+  ds_nganh_tnhh_2tv: 2,
+  ds_nganh_ctcp: 3,
+  ds_nganh_dhdn: 2
+};
 const M72_ANCHOR = {
   ds_nganh_dntn: 'Chủ doanh nghiệp',
   ds_nganh_tnhh_1tv: 'Thông tin về chủ sở hữu',
@@ -446,7 +458,8 @@ M72_LOOPS.forEach(l => {
     label: 'M72/' + sel,
     expect_present: [M72_ANCHOR[l]],
     expect_absent: M72_LOOPS.filter(x => x !== l).map(x => M72_ANCHOR[x]),
-    expect_tables: 1, expect_anchor_of: M72_LOOPS
+    // [P2 pin sync 2026-09-03] so w:tbl ky vong theo bien the (member grids)
+    expect_tables: M72_EXPECT_TABLES[l], expect_anchor_of: M72_LOOPS
   });
 });
 addRender('PLI_M72', m72Data(''), {
@@ -603,20 +616,23 @@ check('P3-DX6: PLI_M02 giu du bang nganh {_stt} da thay bang so 1/2 (khong con _
   JSON.stringify({ tokens: (byLabel['PLI_M02'] || {}).tokens,
     stt: (byLabel['PLI_M02'] || {}).stt_tokens }));
 
-// M72: 5 sel khác nhau -> mỗi bản chỉ chứa bảng ngành của đúng 1 biến thể
+// M72: 5 sel khác nhau -> mỗi bản chứa bảng ngành của đúng 1 biến thể.
+// Số w:tbl kỳ vọng theo biến thể: xem M72_EXPECT_TABLES (pin sync P2 above).
 const m72Detail = RESULTS
   .filter(r => (r.label || '').indexOf('M72/') === 0)
   .map(r => ({
     l: r.label,
     tables: r.tables,
+    want_tables: (r.label && M72_EXPECT_TABLES[
+      'ds_nganh_' + r.label.split('/')[1].toLowerCase()]) || 0,
     markers_sot: Object.keys(r.markers || {}).filter(k => r.markers[k] > 0),
     anchor_on: Object.keys(r.present || {}).filter(k => r.present[k]),
     anchor_vang: Object.keys(r.absent || {}).filter(k => r.absent[k])
   }));
-check('P3-DX7: M72 render 5 lan sel khac nhau — moi ban dung 1 bang + dung 1 anchor',
+check('P3-DX7: M72 render 5 lan sel khac nhau — dung so bang theo bien the + dung 1 anchor',
   M72_LOOPS.every(l => {
     const r = byLabel['M72/' + l.replace('ds_nganh_', '').toUpperCase()] || {};
-    if (r.error || r.tables !== 1) return false;
+    if (r.error || r.tables !== M72_EXPECT_TABLES[l]) return false;
     // marker loop bi engine tieu thu khi render: KHONG con marker nao sot
     if (M72_LOOPS.some(x => (r.markers || {})[x] > 0)) return false;
     // dung anchor cua bien the duoc chon, 4 anchor con lai phai VANG

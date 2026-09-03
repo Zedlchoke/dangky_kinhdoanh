@@ -13,8 +13,9 @@ Với từng loại hình v (dntn / tnhh_1tv / tnhh_2tv / ctcp / dhdn):
     3. luật footnote: tnhh_1tv -> dòng 'Ghi tên...' thứ nhất có mặt;
        tnhh_2tv -> '2 Ghi tên...'; ctcp -> '3 Ghi tên...'; dntn/dhdn ->
        KHÔNG dòng ghi chú nào;
-    4. body còn ĐÚNG 1 w:tbl, chứa 3 dòng dữ liệu STT 1/2/3 và đúng một X,
-       header giữ nguyên 4 cột;
+    4. body còn ĐÚNG số w:tbl theo biến thể (P2 member grids: TNHH_2TV=2,
+       CTCP=3, DHDN=2 — [P2 pin sync 2026-09-03]); bảng ĐẦU là bảng ngành
+       4 cột chứa 3 dòng dữ liệu STT 1/2/3 và đúng một X;
     5. LEFTOVER_RE (từ tools.docx_render) tìm 0 tag sót trong document.xml;
     6. file mở được bằng python-docx; CondTagError KHÔNG xảy ra.
 Thêm case KHÔNG chọn flag nào -> chỉ còn 'Mẫu số 72' + tiêu đề chung,
@@ -96,6 +97,17 @@ LOOP_ROWS = [
                   "trong các cửa hàng chuyên doanh", "ma_nganh": "4751",
      "la_nganh_chinh": ""},
 ]
+
+# [P2 pin sync 2026-09-03] P2 rebuild 4 lưới thành viên/cổ đông (nested-grid)
+# trong template M72 — mỗi vùng biến thể giờ có bảng ngành + lưới thành viên:
+# DNTN/TNHH_1TV=1 bảng, TNHH_2TV=2, CTCP=3, DHDN=2 khi biến thể được chọn.
+EXPECTED_TABLES = {
+    "loai_hinh_dntn": 1,
+    "loai_hinh_tnhh_1tv": 1,
+    "loai_hinh_tnhh_2tv": 2,
+    "loai_hinh_ctcp": 3,
+    "loai_hinh_dhdn": 2,
+}
 
 _results: list[tuple[bool, str]] = []
 
@@ -219,11 +231,14 @@ def run_variant_case(variant: dict, out_path: Path) -> None:
             "%s: KHÔNG được có dòng ghi chú chân trang nào, thấy %r" % (
                 label, note_lines)
 
-    # 4. body còn ĐÚNG 1 w:tbl: header 4 cột + 3 dòng dữ liệu STT 1/2/3, 1 X
+    # 4. body còn đúng số w:tbl theo biến thể [P2 pin sync 2026-09-03]:
+    #    bảng ĐẦU là bảng ngành (header 4 cột + 3 dòng dữ liệu STT 1/2/3, 1 X),
+    #    các bảng sau là lưới thành viên/cổ đông P2 (rỗng vì payload không có)
     doc = Document(str(out_path))
     tables = body_tables(doc)
-    assert len(tables) == 1, \
-        "%s: kỳ vọng còn đúng 1 w:tbl, thấy %d" % (label, len(tables))
+    want_tbls = EXPECTED_TABLES[variant["flag"]]
+    assert len(tables) == want_tbls, \
+        "%s: kỳ vọng %d w:tbl, thấy %d" % (label, want_tbls, len(tables))
     tbl = tables[0]
     texts = [tr_cell_texts(tbl, ri) for ri in range(len(tbl.rows))]
     assert fold_join(texts[0]) == fold_join(HDR_NGANH), \

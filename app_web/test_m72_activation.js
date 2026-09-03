@@ -16,7 +16,8 @@
  *     (store key riêng, chỉ trạng thái active đổi).
  *  7. Draft migrateDraft round-trip giữ dữ liệu đúng section kèm _row_id;
  *     checks trong draft lái lại trạng thái active.
- *  8. PLI_M72 không hồi quy structural: blocks vẫn 5 loop + 146 paragraph (L1FIX tách 2 heading glue),
+ *  8. PLI_M72 không hồi quy structural: blocks 9 loop (5 ngành + 4 thành viên P2)
+ *     + 126 paragraph [P2 pin sync 2026-09-03] sau rebuild member grids,
  *     mỗi loop mang cond đúng flag loai_hinh_*; KHÔNG có ô chọn loại hình
  *     trong văn bản; artifact (app/data, tools) nguyên vẹn theo git.
  *  N9 (negative). Mutate meta form-scoped (fixture) KHÔNG lan sang GRID_META
@@ -448,9 +449,13 @@ check('S0. fixture KHONG anh huong resolver production (isolation)',
     });
   });
   const loopNames = (M72.blocks || []).filter(b => b.t === 'loop').map(b => b.loop);
-  check('8. blocks PLI_M72: dung 5 loop dung ten (structural khong doi)',
+  // [P2 pin sync 2026-09-03] P2 rebuild them 4 luoi thanh vien/co dong
+  // (nested-grid) vao blocks PLI_M72: 5 luoi nganh + 4 luoi thanh vien = 9.
+  const M72_MEMBER_LOOPS = ['ds_thanh_vien_tnhh_2tv', 'ds_co_dong_sang_lap_ctcp',
+    'ds_co_dong_nuoc_ngoai_ctcp', 'ds_thanh_vien_hop_danh_dhdn'];
+  check('8. blocks PLI_M72: dung 9 loop dung ten (5 nganh + 4 thanh vien P2)',
     JSON.stringify(loopNames.slice().sort()) ===
-      JSON.stringify(M72_LOOPS.slice().sort()));
+      JSON.stringify(M72_LOOPS.concat(M72_MEMBER_LOOPS).slice().sort()));
   // P1.2 Option D: moi loop block phai mang cond dung flag bien te cua no
   // (converter gan tu marker {?flag}/{/flag}), khop FORM_SELECTOR_META.
   const flagByValue8 = {};
@@ -464,8 +469,10 @@ check('S0. fixture KHONG anh huong resolver production (isolation)',
       return !!lb && !!want && Array.isArray(lb.cond) && lb.cond.length === 1 &&
         lb.cond[0] === want;
     }));
-  check('8. blocks PLI_M72: 144 paragraph nhu evidence audit',
-    counts.p === 146, 'p=' + counts.p);
+  // [P2 pin sync 2026-09-03] P2 rebuild member grids lam blocks P thay doi:
+  // 146 -> 126 paragraph (toc dot '5. Nganh...' don gian hoa khi gan 9 loop).
+  check('8. blocks PLI_M72: 126 paragraph sau rebuild member grids (P2)',
+    counts.p === 126, 'p=' + counts.p);
   check('8. blocks PLI_M72: VAN khong co o chon loai hinh (0 chk, 0 key loai_hinh)',
     chkBlocks === 0 && loaiHinhKeys === 0);
 

@@ -18,7 +18,8 @@ B. TEMPLATE app/templates/PLI_M72.docx — cau truc that sau P1.2:
    - MISSING_HEADING / HEADING_NOT_ADJACENT : dung 5 heading
      '5. Ngành, nghề kinh doanh' dung thu tu, moi heading dung ngay truoc
      bang cua no;
-   - TABLE_COUNT_MISMATCH : dung 5 w:tbl top-level;
+   - TABLE_COUNT_MISMATCH : dung 9 w:tbl top-level (5 nganh + 4 thanh vien/
+      co dong — [P2 pin sync 2026-09-03]);
    - WRONG_LOOP_ORDER : bang thu k chua dung cap {#EXPECTED_IDS[k]}...{/...};
    - LOOP_TAG_CROSS_CONTAMINATION : khong loop tag cua bien the khac lot vao;
    - HEADER_MISSING_COL : header 4 o fold-match
@@ -66,6 +67,75 @@ TEMPLATE_PATH = ROOT / "app" / "templates" / "PLI_M72.docx"
 
 EXPECTED_IDS = ["ds_nganh_dntn", "ds_nganh_tnhh_1tv", "ds_nganh_tnhh_2tv",
                 "ds_nganh_ctcp", "ds_nganh_dhdn"]
+
+# [P2 pin sync 2026-09-03] P2 rebuild 4 luoi thanh vien/co dong (nested-grid)
+# trong template M72: 9 w:tbl top-level = 5 bang nganh + 4 luoi thanh vien,
+# moi luoi nam trong vung section_cond cua dung bien the.
+EXPECTED_TABLE_LOOPS = [
+    "ds_nganh_dntn", "ds_nganh_tnhh_1tv", "ds_nganh_tnhh_2tv",
+    "ds_thanh_vien_tnhh_2tv",
+    "ds_nganh_ctcp", "ds_co_dong_sang_lap_ctcp", "ds_co_dong_nuoc_ngoai_ctcp",
+    "ds_nganh_dhdn", "ds_thanh_vien_hop_danh_dhdn",
+]
+# cac bang nganh (giu checklist heading-adjacent + header 4 o cua P1.2)
+INDUSTRY_TABLE_INDEXES = [0, 1, 2, 4, 7]
+# header (da fold) cua 4 luoi thanh vien — pin chinh xac tung o
+MEMBER_HEADERS_FOLD = {
+    "ds_thanh_vien_tnhh_2tv": [
+        "stt", "ten thanh vien", "quoc tich",
+        "so giay to phap ly cua ca nhan/to chuc",
+        "dia chi lien lac doi voi ca nhan; dia chi tru so chinh doi voi to chuc",
+        "phan von gop (vnd va gia tri tuong duong theo don vi tien nuoc ngoai, neu co)",
+        "ty le (%)", "ghi chu (neu co)"],
+    "ds_co_dong_sang_lap_ctcp": [
+        "stt", "ten co dong", "quoc tich",
+        "so giay to phap ly cua ca nhan/to chuc",
+        "dia chi lien lac doi voi ca nhan; dia chi tru so chinh doi voi to chuc",
+        "loai co phan", "so co phan",
+        "gia tri co phan (vnd va gia tri tuong duong theo don vi tien nuoc ngoai, neu co)",
+        "ty le (%)", "ghi chu (neu co)"],
+    "ds_co_dong_nuoc_ngoai_ctcp": [
+        "stt", "ten co dong", "quoc tich",
+        "so giay to phap ly cua ca nhan/to chuc",
+        "dia chi lien lac doi voi ca nhan; dia chi tru so chinh doi voi to chuc",
+        "loai co phan", "so co phan",
+        "gia tri co phan (vnd va gia tri tuong duong theo don vi tien nuoc ngoai, neu co)",
+        "ty le (%)", "ghi chu (neu co)"],
+    "ds_thanh_vien_hop_danh_dhdn": [
+        "stt", "ten thanh vien hop danh", "quoc tich",
+        "so dinh danh ca nhan/so ho chieu/ho chieu nuoc ngoai hoac giay to co "
+        "gia tri thay the ho chieu nuoc ngoai",
+        "dia chi lien lac",
+        "phan von gop (vnd va gia tri tuong duong theo don vi tien nuoc ngoai, neu co)",
+        "ty le (%)"],
+}
+# tag cot tren hang khuon {_stt} cua 4 luoi thanh vien (ngoai {_stt})
+MEMBER_COL_TAGS = {
+    "ds_thanh_vien_tnhh_2tv": ["ten_thanh_vien", "quoc_tich",
+                               "so_gtpl_ca_nhan_to_chuc", "dia_chi_lien_lac",
+                               "phan_von_gop", "ty_le", "ghi_chu"],
+    "ds_co_dong_sang_lap_ctcp": ["ten_co_dong", "quoc_tich", "so_gtpl",
+                                 "dia_chi_lien_lac", "loai_co_phan",
+                                 "so_co_phan", "gia_tri_co_phan", "ty_le",
+                                 "ghi_chu"],
+    "ds_co_dong_nuoc_ngoai_ctcp": ["ten_co_dong", "quoc_tich", "so_gtpl",
+                                   "dia_chi_lien_lac", "loai_co_phan",
+                                   "so_co_phan", "gia_tri_co_phan", "ty_le",
+                                   "ghi_chu"],
+    "ds_thanh_vien_hop_danh_dhdn": ["ten_thanh_vien_hop_danh", "quoc_tich",
+                                    "so_dinh_danh_ho_chieu",
+                                    "dia_chi_lien_lac", "phan_von_gop",
+                                    "ty_le"],
+}
+# so w:tbl / dung thu tu loop trong moi vung section chinh (P2)
+SECTION_TABLE_LOOPS = {
+    "loai_hinh_dntn": ["ds_nganh_dntn"],
+    "loai_hinh_tnhh_1tv": ["ds_nganh_tnhh_1tv"],
+    "loai_hinh_tnhh_2tv": ["ds_nganh_tnhh_2tv", "ds_thanh_vien_tnhh_2tv"],
+    "loai_hinh_ctcp": ["ds_nganh_ctcp", "ds_co_dong_sang_lap_ctcp",
+                       "ds_co_dong_nuoc_ngoai_ctcp"],
+    "loai_hinh_dhdn": ["ds_nganh_dhdn", "ds_thanh_vien_hop_danh_dhdn"],
+}
 
 # ---------------------------------------------------------------------------
 # Hop dong P1.2 Option D: 16 marker dieu kien tren template that
@@ -303,39 +373,53 @@ def analyze_document_xml(xml: str) -> list[tuple[str, str]]:
             "kỳ vọng đúng 5 heading %r, thấy %d tại %s"
             % (HEADING_TEXT, len(heading_idx), heading_idx))
 
-    # ---- 2. 5 w:tbl top-level --------------------------------------------
+    # ---- 2. [P2 pin sync 2026-09-03] 9 w:tbl top-level (5 nganh + 4 TV/CD) -
     tbl_idx = [i for i, el in enumerate(children) if el.tag == q("w:tbl")]
     tbls = [children[i] for i in tbl_idx]
-    if len(tbls) != 5:
+    if len(tbls) != len(EXPECTED_TABLE_LOOPS):
         add("TABLE_COUNT_MISMATCH",
-            "kỳ vọng đúng 5 w:tbl top-level, thấy %d" % len(tbls))
+            "kỳ vọng đúng %d w:tbl top-level, thấy %d"
+            % (len(EXPECTED_TABLE_LOOPS), len(tbls)))
 
-    # heading đứng NGAY TRƯỚC bảng tương ứng
-    for k, ti in enumerate(tbl_idx):
+    # heading '5. Ngành...' đứng NGAY TRƯỚC đúng 5 BẢNG NGÀNH; 4 lưới thành
+    # viên nằm tiếp sau bảng ngành của cùng biến thể (không có heading riêng)
+    for k in INDUSTRY_TABLE_INDEXES:
+        if k >= len(tbl_idx):
+            continue
+        ti = tbl_idx[k]
         prev = children[ti - 1] if ti > 0 else None
         if (prev is None or prev.tag != q("w:p")
                 or fold(one_line(el_text(prev))) != fold(HEADING_TEXT)):
             add("HEADING_NOT_ADJACENT",
                 "bảng %d không đứng ngay sau heading %r" % (k, HEADING_TEXT))
 
-    # ---- 3+4. từng bảng: header 4 ô + hàng khuôn {_stt} + loop đúng biến thể
-    for k, tbl in enumerate(tbls[:5]):
-        want_id = EXPECTED_IDS[k]
+    # ---- 3+4. từng bảng: header + hàng khuôn {_stt} + loop đúng biến thể ---
+    # [P2 pin sync 2026-09-03] áp cho cả 9 bảng: 5 bảng nganh giữ header 4 ô
+    # P1.2; 4 lưới thành viên pin header/tag cột riêng theo MEMBER_*.
+    for k, tbl in enumerate(tbls[:len(EXPECTED_TABLE_LOOPS)]):
+        want_id = EXPECTED_TABLE_LOOPS[k]
+        want_member = want_id in MEMBER_HEADERS_FOLD
+        want_hdrs = (MEMBER_HEADERS_FOLD.get(want_id)
+                     if want_member else HEADERS_FOLD)
+        want_cols = (MEMBER_COL_TAGS.get(want_id)
+                     if want_member else COL_TAGS)
         rows = tbl.findall(q("w:tr"))
 
         hdr_cells = ([one_line(el_text(tc))
                       for tc in rows[0].findall(q("w:tc"))] if rows else [])
         got_hdr = [fold(c) for c in hdr_cells]
-        if len(got_hdr) != 4:
-            add("HEADER_MISSING_COL",
-                "bảng %d (%s): hàng đầu có %d ô != 4" % (k, want_id,
-                                                         len(got_hdr)))
-        else:
-            for ci, (g, w) in enumerate(zip(got_hdr, HEADERS_FOLD)):
-                if g != w:
-                    add("HEADER_MISSING_COL",
-                        "bảng %d (%s): ô header %d = %r != %r"
-                        % (k, want_id, ci, g, w))
+        if got_hdr != want_hdrs:
+            if len(got_hdr) != len(want_hdrs):
+                add("HEADER_MISSING_COL",
+                    "bảng %d (%s): hàng đầu có %d ô != %d" % (k, want_id,
+                                                              len(got_hdr),
+                                                              len(want_hdrs)))
+            else:
+                for ci, (g, w) in enumerate(zip(got_hdr, want_hdrs)):
+                    if g != w:
+                        add("HEADER_MISSING_COL",
+                            "bảng %d (%s): ô header %d = %r != %r"
+                            % (k, want_id, ci, g, w))
 
         text_all = el_text(tbl)
         opens = re.findall(r"\{#([A-Za-z0-9_]+)\}", text_all)
@@ -356,7 +440,7 @@ def analyze_document_xml(xml: str) -> list[tuple[str, str]]:
                 "bảng %d (%s): không có hàng khuôn {_stt}" % (k, want_id))
         else:
             rt = el_text(rows[khuon[0]])
-            missing_cols = [c for c in COL_TAGS if "{%s}" % c not in rt]
+            missing_cols = [c for c in want_cols if "{%s}" % c not in rt]
             if missing_cols:
                 add("TABLE_ROW_MISSING_COL",
                     "bảng %d (%s): hàng khuôn thiếu tag cột %s"
@@ -411,25 +495,28 @@ def analyze_document_xml(xml: str) -> list[tuple[str, str]]:
 
     if stack_err is None:
         mains, foots = pairs[:5], pairs[5:]
-        # mỗi vùng CHÍNH [open, close): đúng 1 w:tbl loop đúng biến thể
+        # mỗi vùng CHÍNH [open, close): đúng các w:tbl loop theo biến thể
+        # [P2 pin sync 2026-09-03] vùng TNHH_2TV chứa thêm lưới thành viên,
+        # CTCP chứa thêm 2 lưới cổ đông, DHDN chứa thêm lưới thành viên HD.
         for j, (name, oi, ci) in enumerate(mains):
             inside_tbls = [el for el in children[oi + 1:ci]
                            if el.tag == q("w:tbl")]
-            want_loop = FLAG_TO_LOOP.get(name)
-            if len(inside_tbls) != 1:
-                add("COND_SECTION_MISMATCH",
-                    "vùng chính #%d {?%s}: %d w:tbl trong vùng != 1"
-                    % (j, name, len(inside_tbls)))
-            elif want_loop is None:
+            want_loops = SECTION_TABLE_LOOPS.get(name)
+            if want_loops is None:
                 add("COND_SECTION_MISMATCH",
                     "flag ?%s không có trong section_cond options" % name)
+            elif len(inside_tbls) != len(want_loops):
+                add("COND_SECTION_MISMATCH",
+                    "vùng chính #%d {?%s}: %d w:tbl trong vùng != %d"
+                    % (j, name, len(inside_tbls), len(want_loops)))
             else:
-                got = re.findall(r"\{#([A-Za-z0-9_]+)\}",
-                                 el_text(inside_tbls[0]))
-                if got != [want_loop]:
-                    add("COND_SECTION_MISMATCH",
-                        "vùng {?%s} bọc bảng loop %s != [%s]"
-                        % (name, got, want_loop))
+                for n, tbl_el in enumerate(inside_tbls):
+                    got = re.findall(r"\{#([A-Za-z0-9_]+)\}",
+                                     el_text(tbl_el))
+                    if got != [want_loops[n]]:
+                        add("COND_SECTION_MISMATCH",
+                            "vùng {?%s} bảng #%d loop %s != [%s]"
+                            % (name, n, got, want_loops[n]))
             # marker mở đứng ngay trước anchor '(TÊN ...)' của đúng biến thể
             nxt = children[oi + 1] if oi + 1 < len(children) else None
             want_anchor = VARIANT_ANCHOR_FOLD.get(name)
@@ -500,7 +587,7 @@ def mutate_blank_header_cell(xml: str) -> str:
 
 
 def mutate_swap_loops(xml: str) -> str:
-    """(b) hoán đổi tên loop: bảng 0 (dntn) <-> bảng 3 (ctcp)."""
+    """(b) hoán đổi tên loop: bảng 0 (dntn) <-> bảng 4 (ctcp)."""
     xml = xml.replace("{#ds_nganh_dntn}", "{#ds_nganh_ctcp}")
     xml = xml.replace("{/ds_nganh_dntn}", "{/ds_nganh_ctcp}")
     return xml
@@ -553,12 +640,16 @@ def show_issues(label: str, issues: list) -> None:
 # Các check
 # ---------------------------------------------------------------------------
 
-@check("spec JSON: 5 occurrence + section_cond 5 option khop 1-1 theo thu tu")
+@check("spec JSON: entry nganh 5 occurrence + 4 entry thanh vien P2 + "
+       "section_cond 5 option khop 1-1 theo thu tu")
 def t_spec_contract():
     raw = SPEC_PATH.read_text(encoding="utf-8-sig")
     data = json.loads(raw)
     entries = data.get("tables") or []
-    assert len(entries) == 1, "ky vong 1 table entry, thay %d" % len(entries)
+    # [P2 pin sync 2026-09-03] spec M72 gio co 5 table entry: 1 entry nganh
+    # (5 occurrence, sync_group chung) + 4 entry nested-grid thanh vien/co dong
+    # (moi entry 1 occurrence, sync_group=null) do lane P2 rebuild them.
+    assert len(entries) == 5, "ky vong 5 table entry, thay %d" % len(entries)
     occs = entries[0].get("occurrences") or []
     assert [o["occurrence_id"] for o in occs] == EXPECTED_IDS, \
         "occurrence_id sai thu tu/sai ten: %s" % [o.get("occurrence_id")
@@ -576,6 +667,26 @@ def t_spec_contract():
     assert ent["pos"] == "after" and ent["no_default_drops"] is True
     assert ent["drop_until"] == "^6\\. von"
     assert len(ent["headers"]) == 4
+
+    # P2: 4 entry thanh vien — pin contract nested-grid moi
+    member_ids = [lid for lid in EXPECTED_TABLE_LOOPS if lid not in EXPECTED_IDS]
+    got_member_ids = [e["occurrences"][0]["occurrence_id"] for e in entries[1:]]
+    assert got_member_ids == member_ids, \
+        "entry thanh vien sai thu tu/sai ten: %s" % got_member_ids
+    for e in entries[1:]:
+        oid = e["occurrences"][0]["occurrence_id"]
+        assert e.get("spec", {}).get("kind") == "nested-grid", \
+            "%s: spec.kind phai nested-grid" % oid
+        assert e.get("spec", {}).get("id") == oid, \
+            "%s: spec.id phai = occurrence_id (ten loop)" % oid
+        assert len(e.get("occurrences") or []) == 1, \
+            "%s: ky vong 1 occurrence" % oid
+        o = e["occurrences"][0]
+        assert o["nth"] == 1, "%s: nth != 1" % oid
+        assert o["sync_group"] is None, \
+            "%s: sync_group phai null (khong auto-sync giua cac luoi khac nghia)" % oid
+        for pat in o["end_markers"]:
+            re.compile(pat)
 
     # P1.2: section_consistency giua occurrences va section_cond
     sc = data.get("section_cond") or {}
@@ -614,7 +725,7 @@ def t_source_regions():
 
 
 @check("TEMPLATE cau truc that: analyze_document_xml tra ve 0 issue "
-       "(5 heading + 5 w:tbl + 16 marker dieu kien)")
+       "(5 heading + 9 w:tbl + 16 marker dieu kien)")
 def t_template_structure():
     xml = template_document_xml()
     issues = analyze_document_xml(xml)

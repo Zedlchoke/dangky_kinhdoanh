@@ -1,7 +1,7 @@
 {
  "meta": {
   "tool": "tools/census/table_coverage_audit.py",
-  "head": "9aa755e",
+  "head": "68a1b95",
   "expected_sections": 111,
   "n_forms": 87,
   "n_sections": 111,

@@ -114,6 +114,17 @@ SUITES: list[dict] = [
     {"name": "build_manifest_deep",       "type": "module", "target": "tools.census.build_manifest",
      "args": ["--deep"]},
     {"name": "build_layout_manifest",     "type": "module", "target": "tools.census.build_layout_manifest"},
+    # [Wave E 2026-09-03] Census gates vào runner theo finding auditor:
+    # numbering (exit 0 sau batch 2) là release-critical; L1 (còn 4 STT-glue +
+    # 2 digit-run BLOCKED_OWNER member grids — packet P2) và coverage (42 drift
+    # đo được — packet P1/P2) là DIAGNOSTIC critical=False: hiển thị FAIL thật
+    # trong runner mà không chặn checkpoint cho tới owner chốt.
+    {"name": "numbering_audit_gate",      "type": "module", "target": "tools.census.numbering_audit",
+     "args": ["--gate"]},
+    {"name": "check_layout_l1",           "type": "module", "target": "tools.census.check_layout_l1",
+     "critical": False},
+    {"name": "table_coverage_audit",      "type": "module", "target": "tools.census.table_coverage_audit",
+     "critical": False},
     {"name": "compileall",                "type": "compileall", "target": "app_web app_tk tools",
      "args": ["app_web", "app_tk", "tools"]},
 ]
@@ -286,10 +297,12 @@ def main() -> int:
     print("=" * 78)
     print("Tổng: %d PASS / %d FAIL / %d NOT RUN (trong đó critical NOT RUN: %d)"
           % (n_pass, n_fail, n_nr, n_nr_crit))
-    verdict = "PASS" if (n_fail == 0 and n_nr_crit == 0 and suites) else "FAIL"
+    verdict = "PASS" if (not crit_fail and n_nr_crit == 0 and suites) else "FAIL"
     print("VERDICT: %s%s" % (
         verdict,
-        "" if verdict == "PASS" else "  (FAIL hoặc critical NOT RUN đều làm verdict=FAIL)"))
+        "" if verdict == "PASS" else
+        "  (critical FAIL hoặc critical NOT RUN đều làm verdict=FAIL; "
+        "FAIL noncritical = diagnostic, không chặn)"))
     print("=" * 78)
 
     if args.json:

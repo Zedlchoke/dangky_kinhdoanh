@@ -1429,21 +1429,156 @@
    "role": "body"
   },
   {
-   "t": "p",
-   "align": "left",
-   "runs": [
+   "t": "loop",
+   "loop": "tv_hgd_sau_thay_doi",
+   "headerRows": [
+    0
+   ],
+   "cols": [
     {
-     "text": "STTHọ tênNgày, tháng, năm sinhSố định danh cá nhânGiới tínhQuốc tịchDân tộcNơi thường trúNơi ở hiện tạiChữ ký"
+     "col": 1,
+     "tag": "ho_ten"
     },
     {
-     "text": "12345678910",
-     "b": true
+     "col": 2,
+     "tag": "ngay_sinh"
+    },
+    {
+     "col": 3,
+     "tag": "so_cccd"
+    },
+    {
+     "col": 4,
+     "tag": "gioi_tinh"
+    },
+    {
+     "col": 5,
+     "tag": "quoc_tich"
+    },
+    {
+     "col": 6,
+     "tag": "dan_toc"
+    },
+    {
+     "col": 7,
+     "tag": "noi_thuong_tru"
+    },
+    {
+     "col": 8,
+     "tag": "noi_o_hien_tai"
+    },
+    {
+     "col": 9,
+     "tag": "chu_ky"
     }
    ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
+   "blankRows": 5,
+   "rows": [
+    {
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "STT",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Họ tên",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Ngày, tháng, năm sinh",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Số định danh cá nhân",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Giới tính",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Quốc tịch",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Dân tộc",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Nơi thường trú",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Nơi ở hiện tại",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Chữ ký",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
+    }
+   ]
   },
   {
    "t": "p",
@@ -2753,16 +2888,161 @@
    "role": "section-heading"
   },
   {
+   "t": "loop",
+   "loop": "tv_hgd_cap_doi",
+   "headerRows": [
+    0
+   ],
+   "cols": [
+    {
+     "col": 1,
+     "tag": "ho_ten"
+    },
+    {
+     "col": 2,
+     "tag": "ngay_sinh"
+    },
+    {
+     "col": 3,
+     "tag": "so_cccd"
+    },
+    {
+     "col": 4,
+     "tag": "gioi_tinh"
+    },
+    {
+     "col": 5,
+     "tag": "quoc_tich"
+    },
+    {
+     "col": 6,
+     "tag": "dan_toc"
+    },
+    {
+     "col": 7,
+     "tag": "noi_thuong_tru"
+    },
+    {
+     "col": 8,
+     "tag": "noi_o_hien_tai"
+    },
+    {
+     "col": 9,
+     "tag": "chu_ky"
+    }
+   ],
+   "blankRows": 5,
+   "rows": [
+    {
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "STT",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Họ tên",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Ngày, tháng, năm sinh",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Số định danh cá nhân",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Giới tính",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Quốc tịch",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Dân tộc",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Nơi thường trú",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Nơi ở hiện tại",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Chữ ký",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
+    }
+   ]
+  },
+  {
    "t": "p",
    "align": "left",
    "runs": [
-    {
-     "text": "STTHọ tênNgày, tháng, năm sinhSố định danh cá nhânGiới tínhQuốc tịchDân tộcNơi thường trúNơi ở hiện tạiChữ ký"
-    },
-    {
-     "text": "12345678910",
-     "b": true
-    },
     {
      "text": "Hộ kinh doanh cam kết về tính hợp pháp, chính xác, trung thực và hoàn toàn chịu trách nhiệm trước pháp luật về nội dung của Giấy đề nghị này."
     }

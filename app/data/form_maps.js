@@ -5743,6 +5743,34 @@ window.FORM_MAPS = {
     "label": "la_nganh_chinh"
    },
    {
+    "key": "ds_thanh_vien_tnhh_2tv.ten_thanh_vien",
+    "label": "ten_thanh_vien"
+   },
+   {
+    "key": "ds_thanh_vien_tnhh_2tv.quoc_tich",
+    "label": "quoc_tich"
+   },
+   {
+    "key": "ds_thanh_vien_tnhh_2tv.so_gtpl_ca_nhan_to_chuc",
+    "label": "so_gtpl_ca_nhan_to_chuc"
+   },
+   {
+    "key": "ds_thanh_vien_tnhh_2tv.dia_chi_lien_lac",
+    "label": "dia_chi_lien_lac"
+   },
+   {
+    "key": "ds_thanh_vien_tnhh_2tv.phan_von_gop",
+    "label": "phan_von_gop"
+   },
+   {
+    "key": "ds_thanh_vien_tnhh_2tv.ty_le",
+    "label": "ty_le"
+   },
+   {
+    "key": "ds_thanh_vien_tnhh_2tv.ghi_chu",
+    "label": "ghi_chu"
+   },
+   {
     "key": "ds_nganh_ctcp.ten_nganh",
     "label": "ten_nganh"
    },
@@ -5763,6 +5791,78 @@ window.FORM_MAPS = {
     "label": "Tổng số cổ phần:"
    },
    {
+    "key": "ds_co_dong_sang_lap_ctcp.ten_co_dong",
+    "label": "ten_co_dong"
+   },
+   {
+    "key": "ds_co_dong_sang_lap_ctcp.quoc_tich",
+    "label": "quoc_tich"
+   },
+   {
+    "key": "ds_co_dong_sang_lap_ctcp.so_gtpl",
+    "label": "so_gtpl"
+   },
+   {
+    "key": "ds_co_dong_sang_lap_ctcp.dia_chi_lien_lac",
+    "label": "dia_chi_lien_lac"
+   },
+   {
+    "key": "ds_co_dong_sang_lap_ctcp.loai_co_phan",
+    "label": "loai_co_phan"
+   },
+   {
+    "key": "ds_co_dong_sang_lap_ctcp.so_co_phan",
+    "label": "so_co_phan"
+   },
+   {
+    "key": "ds_co_dong_sang_lap_ctcp.gia_tri_co_phan",
+    "label": "gia_tri_co_phan"
+   },
+   {
+    "key": "ds_co_dong_sang_lap_ctcp.ty_le",
+    "label": "ty_le"
+   },
+   {
+    "key": "ds_co_dong_sang_lap_ctcp.ghi_chu",
+    "label": "ghi_chu"
+   },
+   {
+    "key": "ds_co_dong_nuoc_ngoai_ctcp.ten_co_dong",
+    "label": "ten_co_dong"
+   },
+   {
+    "key": "ds_co_dong_nuoc_ngoai_ctcp.quoc_tich",
+    "label": "quoc_tich"
+   },
+   {
+    "key": "ds_co_dong_nuoc_ngoai_ctcp.so_gtpl",
+    "label": "so_gtpl"
+   },
+   {
+    "key": "ds_co_dong_nuoc_ngoai_ctcp.dia_chi_lien_lac",
+    "label": "dia_chi_lien_lac"
+   },
+   {
+    "key": "ds_co_dong_nuoc_ngoai_ctcp.loai_co_phan",
+    "label": "loai_co_phan"
+   },
+   {
+    "key": "ds_co_dong_nuoc_ngoai_ctcp.so_co_phan",
+    "label": "so_co_phan"
+   },
+   {
+    "key": "ds_co_dong_nuoc_ngoai_ctcp.gia_tri_co_phan",
+    "label": "gia_tri_co_phan"
+   },
+   {
+    "key": "ds_co_dong_nuoc_ngoai_ctcp.ty_le",
+    "label": "ty_le"
+   },
+   {
+    "key": "ds_co_dong_nuoc_ngoai_ctcp.ghi_chu",
+    "label": "ghi_chu"
+   },
+   {
     "key": "ds_nganh_dhdn.ten_nganh",
     "label": "ten_nganh"
    },
@@ -5773,6 +5873,30 @@ window.FORM_MAPS = {
    {
     "key": "ds_nganh_dhdn.la_nganh_chinh",
     "label": "la_nganh_chinh"
+   },
+   {
+    "key": "ds_thanh_vien_hop_danh_dhdn.ten_thanh_vien_hop_danh",
+    "label": "ten_thanh_vien_hop_danh"
+   },
+   {
+    "key": "ds_thanh_vien_hop_danh_dhdn.quoc_tich",
+    "label": "quoc_tich"
+   },
+   {
+    "key": "ds_thanh_vien_hop_danh_dhdn.so_dinh_danh_ho_chieu",
+    "label": "so_dinh_danh_ho_chieu"
+   },
+   {
+    "key": "ds_thanh_vien_hop_danh_dhdn.dia_chi_lien_lac",
+    "label": "dia_chi_lien_lac"
+   },
+   {
+    "key": "ds_thanh_vien_hop_danh_dhdn.phan_von_gop",
+    "label": "phan_von_gop"
+   },
+   {
+    "key": "ds_thanh_vien_hop_danh_dhdn.ty_le",
+    "label": "ty_le"
    }
   ],
   "dynamic_tables": [
@@ -5858,8 +5982,47 @@ window.FORM_MAPS = {
     "sync_group": "ds_nganh_pli_m72"
    },
    {
-    "id": "ds_nganh",
+    "id": "ds_thanh_vien_tnhh_2tv",
     "table_index": 3,
+    "template_row": 6,
+    "loop": "ds_thanh_vien_tnhh_2tv",
+    "columns": [
+     {
+      "col": 1,
+      "tag": "ten_thanh_vien"
+     },
+     {
+      "col": 2,
+      "tag": "quoc_tich"
+     },
+     {
+      "col": 3,
+      "tag": "so_gtpl_ca_nhan_to_chuc"
+     },
+     {
+      "col": 4,
+      "tag": "dia_chi_lien_lac"
+     },
+     {
+      "col": 5,
+      "tag": "phan_von_gop"
+     },
+     {
+      "col": 6,
+      "tag": "ty_le"
+     },
+     {
+      "col": 7,
+      "tag": "ghi_chu"
+     }
+    ],
+    "header_row": 0,
+    "semantic_key": "ds_thanh_vien_tnhh_2tv",
+    "occurrence_id": "ds_thanh_vien_tnhh_2tv"
+   },
+   {
+    "id": "ds_nganh",
+    "table_index": 4,
     "header_row": 0,
     "template_row": 5,
     "loop": "ds_nganh_ctcp",
@@ -5885,8 +6048,102 @@ window.FORM_MAPS = {
     "sync_group": "ds_nganh_pli_m72"
    },
    {
+    "id": "ds_co_dong_sang_lap_ctcp",
+    "table_index": 5,
+    "template_row": 6,
+    "loop": "ds_co_dong_sang_lap_ctcp",
+    "columns": [
+     {
+      "col": 1,
+      "tag": "ten_co_dong"
+     },
+     {
+      "col": 2,
+      "tag": "quoc_tich"
+     },
+     {
+      "col": 3,
+      "tag": "so_gtpl"
+     },
+     {
+      "col": 4,
+      "tag": "dia_chi_lien_lac"
+     },
+     {
+      "col": 5,
+      "tag": "loai_co_phan"
+     },
+     {
+      "col": 6,
+      "tag": "so_co_phan"
+     },
+     {
+      "col": 7,
+      "tag": "gia_tri_co_phan"
+     },
+     {
+      "col": 8,
+      "tag": "ty_le"
+     },
+     {
+      "col": 9,
+      "tag": "ghi_chu"
+     }
+    ],
+    "header_row": 0,
+    "semantic_key": "ds_co_dong_sang_lap_ctcp",
+    "occurrence_id": "ds_co_dong_sang_lap_ctcp"
+   },
+   {
+    "id": "ds_co_dong_nuoc_ngoai_ctcp",
+    "table_index": 6,
+    "template_row": 6,
+    "loop": "ds_co_dong_nuoc_ngoai_ctcp",
+    "columns": [
+     {
+      "col": 1,
+      "tag": "ten_co_dong"
+     },
+     {
+      "col": 2,
+      "tag": "quoc_tich"
+     },
+     {
+      "col": 3,
+      "tag": "so_gtpl"
+     },
+     {
+      "col": 4,
+      "tag": "dia_chi_lien_lac"
+     },
+     {
+      "col": 5,
+      "tag": "loai_co_phan"
+     },
+     {
+      "col": 6,
+      "tag": "so_co_phan"
+     },
+     {
+      "col": 7,
+      "tag": "gia_tri_co_phan"
+     },
+     {
+      "col": 8,
+      "tag": "ty_le"
+     },
+     {
+      "col": 9,
+      "tag": "ghi_chu"
+     }
+    ],
+    "header_row": 0,
+    "semantic_key": "ds_co_dong_nuoc_ngoai_ctcp",
+    "occurrence_id": "ds_co_dong_nuoc_ngoai_ctcp"
+   },
+   {
     "id": "ds_nganh",
-    "table_index": 4,
+    "table_index": 7,
     "header_row": 0,
     "template_row": 5,
     "loop": "ds_nganh_dhdn",
@@ -5910,6 +6167,605 @@ window.FORM_MAPS = {
     "semantic_key": "ds_nganh_dhdn",
     "occurrence_id": "ds_nganh_dhdn",
     "sync_group": "ds_nganh_pli_m72"
+   },
+   {
+    "id": "ds_thanh_vien_hop_danh_dhdn",
+    "table_index": 8,
+    "template_row": 6,
+    "loop": "ds_thanh_vien_hop_danh_dhdn",
+    "columns": [
+     {
+      "col": 1,
+      "tag": "ten_thanh_vien_hop_danh"
+     },
+     {
+      "col": 2,
+      "tag": "quoc_tich"
+     },
+     {
+      "col": 3,
+      "tag": "so_dinh_danh_ho_chieu"
+     },
+     {
+      "col": 4,
+      "tag": "dia_chi_lien_lac"
+     },
+     {
+      "col": 5,
+      "tag": "phan_von_gop"
+     },
+     {
+      "col": 6,
+      "tag": "ty_le"
+     }
+    ],
+    "header_row": 0,
+    "semantic_key": "ds_thanh_vien_hop_danh_dhdn",
+    "occurrence_id": "ds_thanh_vien_hop_danh_dhdn"
+   }
+  ],
+  "section_specs": [
+   {
+    "kind": "nested-grid",
+    "id": "ds_thanh_vien_tnhh_2tv",
+    "semantic_key": "ds_thanh_vien_tnhh_2tv",
+    "section_id": "thanh_vien_tnhhh_hai_tv_tro_len",
+    "table_index": 3,
+    "loop": "ds_thanh_vien_tnhh_2tv",
+    "header_rows": [
+     [
+      {
+       "text": "STT",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 0
+      },
+      {
+       "text": "Tên thành viên",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 1
+      },
+      {
+       "text": "Quốc tịch",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 2
+      },
+      {
+       "text": "Số Giấy tờ pháp lý của cá nhân/tổ chức",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 3
+      },
+      {
+       "text": "Địa chỉ liên lạc đối với cá nhân; địa chỉ trụ sở chính đối với tổ chức",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 4
+      },
+      {
+       "text": "Phần vốn góp (VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 5
+      },
+      {
+       "text": "Tỷ lệ (%)",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 6
+      },
+      {
+       "text": "Ghi chú (nếu có)",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 7
+      }
+     ]
+    ],
+    "header_texts": [
+     [
+      "STT",
+      "Tên thành viên",
+      "Quốc tịch",
+      "Số Giấy tờ pháp lý của cá nhân/tổ chức",
+      "Địa chỉ liên lạc đối với cá nhân; địa chỉ trụ sở chính đối với tổ chức",
+      "Phần vốn góp (VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)",
+      "Tỷ lệ (%)",
+      "Ghi chú (nếu có)"
+     ]
+    ],
+    "width": 8,
+    "columns": [
+     {
+      "col_index": 1,
+      "tag": "ten_thanh_vien",
+      "required": true,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 2,
+      "tag": "quoc_tich",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 3,
+      "tag": "so_gtpl_ca_nhan_to_chuc",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 4,
+      "tag": "dia_chi_lien_lac",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 5,
+      "tag": "phan_von_gop",
+      "required": false,
+      "input_type": "money",
+      "output_only": false
+     },
+     {
+      "col_index": 6,
+      "tag": "ty_le",
+      "required": false,
+      "input_type": "percent",
+      "output_only": false
+     },
+     {
+      "col_index": 7,
+      "tag": "ghi_chu",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     }
+    ],
+    "stt": {
+     "mode": "generated",
+     "col_index": 0
+    },
+    "discriminator": null,
+    "totals": []
+   },
+   {
+    "kind": "nested-grid",
+    "id": "ds_co_dong_sang_lap_ctcp",
+    "semantic_key": "ds_co_dong_sang_lap_ctcp",
+    "section_id": "co_dong_sang_lap_cp",
+    "table_index": 5,
+    "loop": "ds_co_dong_sang_lap_ctcp",
+    "header_rows": [
+     [
+      {
+       "text": "STT",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 0
+      },
+      {
+       "text": "Tên cổ đông",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 1
+      },
+      {
+       "text": "Quốc tịch",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 2
+      },
+      {
+       "text": "Số Giấy tờ pháp lý của cá nhân/tổ chức",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 3
+      },
+      {
+       "text": "Địa chỉ liên lạc đối với cá nhân; địa chỉ trụ sở chính đối với tổ chức",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 4
+      },
+      {
+       "text": "Loại cổ phần",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 5
+      },
+      {
+       "text": "Số cổ phần",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 6
+      },
+      {
+       "text": "Giá trị cổ phần (VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 7
+      },
+      {
+       "text": "Tỷ lệ (%)",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 8
+      },
+      {
+       "text": "Ghi chú (nếu có)",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 9
+      }
+     ]
+    ],
+    "header_texts": [
+     [
+      "STT",
+      "Tên cổ đông",
+      "Quốc tịch",
+      "Số Giấy tờ pháp lý của cá nhân/tổ chức",
+      "Địa chỉ liên lạc đối với cá nhân; địa chỉ trụ sở chính đối với tổ chức",
+      "Loại cổ phần",
+      "Số cổ phần",
+      "Giá trị cổ phần (VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)",
+      "Tỷ lệ (%)",
+      "Ghi chú (nếu có)"
+     ]
+    ],
+    "width": 10,
+    "columns": [
+     {
+      "col_index": 1,
+      "tag": "ten_co_dong",
+      "required": true,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 2,
+      "tag": "quoc_tich",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 3,
+      "tag": "so_gtpl",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 4,
+      "tag": "dia_chi_lien_lac",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 5,
+      "tag": "loai_co_phan",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 6,
+      "tag": "so_co_phan",
+      "required": false,
+      "input_type": "money",
+      "output_only": false
+     },
+     {
+      "col_index": 7,
+      "tag": "gia_tri_co_phan",
+      "required": false,
+      "input_type": "money",
+      "output_only": false
+     },
+     {
+      "col_index": 8,
+      "tag": "ty_le",
+      "required": false,
+      "input_type": "percent",
+      "output_only": false
+     },
+     {
+      "col_index": 9,
+      "tag": "ghi_chu",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     }
+    ],
+    "stt": {
+     "mode": "generated",
+     "col_index": 0
+    },
+    "discriminator": null,
+    "totals": []
+   },
+   {
+    "kind": "nested-grid",
+    "id": "ds_co_dong_nuoc_ngoai_ctcp",
+    "semantic_key": "ds_co_dong_nuoc_ngoai_ctcp",
+    "section_id": "co_dong_nuoc_ngoai_cp",
+    "table_index": 6,
+    "loop": "ds_co_dong_nuoc_ngoai_ctcp",
+    "header_rows": [
+     [
+      {
+       "text": "STT",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 0
+      },
+      {
+       "text": "Tên cổ đông",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 1
+      },
+      {
+       "text": "Quốc tịch",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 2
+      },
+      {
+       "text": "Số Giấy tờ pháp lý của cá nhân/tổ chức",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 3
+      },
+      {
+       "text": "Địa chỉ liên lạc đối với cá nhân; địa chỉ trụ sở chính đối với tổ chức",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 4
+      },
+      {
+       "text": "Loại cổ phần",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 5
+      },
+      {
+       "text": "Số cổ phần",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 6
+      },
+      {
+       "text": "Giá trị cổ phần (VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 7
+      },
+      {
+       "text": "Tỷ lệ (%)",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 8
+      },
+      {
+       "text": "Ghi chú (nếu có)",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 9
+      }
+     ]
+    ],
+    "header_texts": [
+     [
+      "STT",
+      "Tên cổ đông",
+      "Quốc tịch",
+      "Số Giấy tờ pháp lý của cá nhân/tổ chức",
+      "Địa chỉ liên lạc đối với cá nhân; địa chỉ trụ sở chính đối với tổ chức",
+      "Loại cổ phần",
+      "Số cổ phần",
+      "Giá trị cổ phần (VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)",
+      "Tỷ lệ (%)",
+      "Ghi chú (nếu có)"
+     ]
+    ],
+    "width": 10,
+    "columns": [
+     {
+      "col_index": 1,
+      "tag": "ten_co_dong",
+      "required": true,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 2,
+      "tag": "quoc_tich",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 3,
+      "tag": "so_gtpl",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 4,
+      "tag": "dia_chi_lien_lac",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 5,
+      "tag": "loai_co_phan",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 6,
+      "tag": "so_co_phan",
+      "required": false,
+      "input_type": "money",
+      "output_only": false
+     },
+     {
+      "col_index": 7,
+      "tag": "gia_tri_co_phan",
+      "required": false,
+      "input_type": "money",
+      "output_only": false
+     },
+     {
+      "col_index": 8,
+      "tag": "ty_le",
+      "required": false,
+      "input_type": "percent",
+      "output_only": false
+     },
+     {
+      "col_index": 9,
+      "tag": "ghi_chu",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     }
+    ],
+    "stt": {
+     "mode": "generated",
+     "col_index": 0
+    },
+    "discriminator": null,
+    "totals": []
+   },
+   {
+    "kind": "nested-grid",
+    "id": "ds_thanh_vien_hop_danh_dhdn",
+    "semantic_key": "ds_thanh_vien_hop_danh_dhdn",
+    "section_id": "thanh_vien_hop_danh",
+    "table_index": 8,
+    "loop": "ds_thanh_vien_hop_danh_dhdn",
+    "header_rows": [
+     [
+      {
+       "text": "STT",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 0
+      },
+      {
+       "text": "Tên thành viên hợp danh",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 1
+      },
+      {
+       "text": "Quốc tịch",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 2
+      },
+      {
+       "text": "Số định danh cá nhân/Số Hộ chiếu/Hộ chiếu nước ngoài hoặc giấy tờ có giá trị thay thế hộ chiếu nước ngoài",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 3
+      },
+      {
+       "text": "Địa chỉ liên lạc",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 4
+      },
+      {
+       "text": "Phần vốn góp (VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 5
+      },
+      {
+       "text": "Tỷ lệ (%)",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 6
+      }
+     ]
+    ],
+    "header_texts": [
+     [
+      "STT",
+      "Tên thành viên hợp danh",
+      "Quốc tịch",
+      "Số định danh cá nhân/Số Hộ chiếu/Hộ chiếu nước ngoài hoặc giấy tờ có giá trị thay thế hộ chiếu nước ngoài",
+      "Địa chỉ liên lạc",
+      "Phần vốn góp (VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)",
+      "Tỷ lệ (%)"
+     ]
+    ],
+    "width": 7,
+    "columns": [
+     {
+      "col_index": 1,
+      "tag": "ten_thanh_vien_hop_danh",
+      "required": true,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 2,
+      "tag": "quoc_tich",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 3,
+      "tag": "so_dinh_danh_ho_chieu",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 4,
+      "tag": "dia_chi_lien_lac",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 5,
+      "tag": "phan_von_gop",
+      "required": false,
+      "input_type": "money",
+      "output_only": false
+     },
+     {
+      "col_index": 6,
+      "tag": "ty_le",
+      "required": false,
+      "input_type": "percent",
+      "output_only": false
+     }
+    ],
+    "stt": {
+     "mode": "generated",
+     "col_index": 0
+    },
+    "discriminator": null,
+    "totals": []
    }
   ]
  },
@@ -6725,6 +7581,38 @@ window.FORM_MAPS = {
     "label": "Quốc tịch:"
    },
    {
+    "key": "tv_hgd_sau_thay_doi.ho_ten",
+    "label": "ho_ten"
+   },
+   {
+    "key": "tv_hgd_sau_thay_doi.ngay_sinh",
+    "label": "ngay_sinh"
+   },
+   {
+    "key": "tv_hgd_sau_thay_doi.so_cccd",
+    "label": "so_cccd"
+   },
+   {
+    "key": "tv_hgd_sau_thay_doi.gioi_tinh",
+    "label": "gioi_tinh"
+   },
+   {
+    "key": "tv_hgd_sau_thay_doi.quoc_tich",
+    "label": "quoc_tich"
+   },
+   {
+    "key": "tv_hgd_sau_thay_doi.dan_toc",
+    "label": "dan_toc"
+   },
+   {
+    "key": "tv_hgd_sau_thay_doi.noi_thuong_tru",
+    "label": "noi_thuong_tru"
+   },
+   {
+    "key": "tv_hgd_sau_thay_doi.noi_o_hien_tai",
+    "label": "noi_o_hien_tai"
+   },
+   {
     "key": "von_kd_moi",
     "label": "Vốn kinh doanh sau khi thay đổi (bằng số, bằng chữ, VNĐ):"
    },
@@ -6813,6 +7701,38 @@ window.FORM_MAPS = {
     "label": "Tổng số lao động:"
    },
    {
+    "key": "tv_hgd_cap_doi.ho_ten",
+    "label": "ho_ten"
+   },
+   {
+    "key": "tv_hgd_cap_doi.ngay_sinh",
+    "label": "ngay_sinh"
+   },
+   {
+    "key": "tv_hgd_cap_doi.so_cccd",
+    "label": "so_cccd"
+   },
+   {
+    "key": "tv_hgd_cap_doi.gioi_tinh",
+    "label": "gioi_tinh"
+   },
+   {
+    "key": "tv_hgd_cap_doi.quoc_tich",
+    "label": "quoc_tich"
+   },
+   {
+    "key": "tv_hgd_cap_doi.dan_toc",
+    "label": "dan_toc"
+   },
+   {
+    "key": "tv_hgd_cap_doi.noi_thuong_tru",
+    "label": "noi_thuong_tru"
+   },
+   {
+    "key": "tv_hgd_cap_doi.noi_o_hien_tai",
+    "label": "noi_o_hien_tai"
+   },
+   {
     "key": "chk_khong_kd_tai_tru_so",
     "label": "Không kinh doanh tại trụ sở (đánh dấu X vào ô này nếu hộ kinh doanh không có địa điểm kinh doanh cố định)",
     "type": "chk"
@@ -6835,8 +7755,55 @@ window.FORM_MAPS = {
   ],
   "dynamic_tables": [
    {
-    "id": "ds_nganh_bo_sung",
+    "id": "tv_hgd_sau_thay_doi",
     "table_index": 1,
+    "template_row": 6,
+    "loop": "tv_hgd_sau_thay_doi",
+    "columns": [
+     {
+      "col": 1,
+      "tag": "ho_ten"
+     },
+     {
+      "col": 2,
+      "tag": "ngay_sinh"
+     },
+     {
+      "col": 3,
+      "tag": "so_cccd"
+     },
+     {
+      "col": 4,
+      "tag": "gioi_tinh"
+     },
+     {
+      "col": 5,
+      "tag": "quoc_tich"
+     },
+     {
+      "col": 6,
+      "tag": "dan_toc"
+     },
+     {
+      "col": 7,
+      "tag": "noi_thuong_tru"
+     },
+     {
+      "col": 8,
+      "tag": "noi_o_hien_tai"
+     },
+     {
+      "col": 9,
+      "tag": "chu_ky"
+     }
+    ],
+    "header_row": 0,
+    "semantic_key": "tv_hgd_sau_thay_doi",
+    "occurrence_id": "tv_hgd_sau_thay_doi"
+   },
+   {
+    "id": "ds_nganh_bo_sung",
+    "table_index": 2,
     "header_row": 0,
     "template_row": 5,
     "loop": "nganh_bo_sung",
@@ -6862,7 +7829,7 @@ window.FORM_MAPS = {
    },
    {
     "id": "ds_nganh_xoa_bo",
-    "table_index": 2,
+    "table_index": 3,
     "header_row": 0,
     "template_row": 5,
     "loop": "nganh_xoa_bo",
@@ -6888,7 +7855,7 @@ window.FORM_MAPS = {
    },
    {
     "id": "ds_nganh_sua_chi_tiet",
-    "table_index": 3,
+    "table_index": 4,
     "header_row": 0,
     "template_row": 5,
     "loop": "nganh_sua_doi_chi_tiet",
@@ -6909,7 +7876,7 @@ window.FORM_MAPS = {
    },
    {
     "id": "ds_nganh",
-    "table_index": 5,
+    "table_index": 6,
     "header_row": 0,
     "template_row": 5,
     "loop": "ds_nganh",
@@ -6932,15 +7899,220 @@ window.FORM_MAPS = {
     ],
     "semantic_key": "nganh_hien_tai",
     "occurrence_id": "nganh_hien_tai"
+   },
+   {
+    "id": "tv_hgd_cap_doi",
+    "table_index": 7,
+    "template_row": 6,
+    "loop": "tv_hgd_cap_doi",
+    "columns": [
+     {
+      "col": 1,
+      "tag": "ho_ten"
+     },
+     {
+      "col": 2,
+      "tag": "ngay_sinh"
+     },
+     {
+      "col": 3,
+      "tag": "so_cccd"
+     },
+     {
+      "col": 4,
+      "tag": "gioi_tinh"
+     },
+     {
+      "col": 5,
+      "tag": "quoc_tich"
+     },
+     {
+      "col": 6,
+      "tag": "dan_toc"
+     },
+     {
+      "col": 7,
+      "tag": "noi_thuong_tru"
+     },
+     {
+      "col": 8,
+      "tag": "noi_o_hien_tai"
+     },
+     {
+      "col": 9,
+      "tag": "chu_ky"
+     }
+    ],
+    "header_row": 0,
+    "semantic_key": "tv_hgd_cap_doi",
+    "occurrence_id": "tv_hgd_cap_doi"
    }
   ],
   "section_specs": [
+   {
+    "kind": "nested-grid",
+    "id": "tv_hgd_sau_thay_doi",
+    "semantic_key": "tv_hgd_sau_thay_doi",
+    "section_id": "a4_tv_hgd_sau_thay_doi",
+    "table_index": 1,
+    "loop": "tv_hgd_sau_thay_doi",
+    "header_rows": [
+     [
+      {
+       "text": "STT",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 0
+      },
+      {
+       "text": "Họ tên",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 1
+      },
+      {
+       "text": "Ngày, tháng, năm sinh",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 2
+      },
+      {
+       "text": "Số định danh cá nhân",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 3
+      },
+      {
+       "text": "Giới tính",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 4
+      },
+      {
+       "text": "Quốc tịch",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 5
+      },
+      {
+       "text": "Dân tộc",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 6
+      },
+      {
+       "text": "Nơi thường trú",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 7
+      },
+      {
+       "text": "Nơi ở hiện tại",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 8
+      },
+      {
+       "text": "Chữ ký",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 9
+      }
+     ]
+    ],
+    "header_texts": [
+     [
+      "STT",
+      "Họ tên",
+      "Ngày, tháng, năm sinh",
+      "Số định danh cá nhân",
+      "Giới tính",
+      "Quốc tịch",
+      "Dân tộc",
+      "Nơi thường trú",
+      "Nơi ở hiện tại",
+      "Chữ ký"
+     ]
+    ],
+    "width": 10,
+    "columns": [
+     {
+      "col_index": 1,
+      "tag": "ho_ten",
+      "required": true,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 2,
+      "tag": "ngay_sinh",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 3,
+      "tag": "so_cccd",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 4,
+      "tag": "gioi_tinh",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 5,
+      "tag": "quoc_tich",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 6,
+      "tag": "dan_toc",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 7,
+      "tag": "noi_thuong_tru",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 8,
+      "tag": "noi_o_hien_tai",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 9,
+      "tag": "chu_ky",
+      "required": false,
+      "input_type": "outputOnly",
+      "output_only": true
+     }
+    ],
+    "stt": {
+     "mode": "generated",
+     "col_index": 0
+    },
+    "discriminator": null,
+    "totals": []
+   },
    {
     "kind": "fixed-matrix",
     "id": "a7_thue_chi_tieu_cu_moi",
     "semantic_key": "thue_chi_tieu_cu_moi",
     "section_id": "a7_thue_chi_tieu_cu_moi",
-    "table_index": 4,
+    "table_index": 5,
     "columns": [
      {
       "col": 0,
@@ -6987,6 +8159,164 @@ window.FORM_MAPS = {
       "output_only": false
      }
     ],
+    "totals": []
+   },
+   {
+    "kind": "nested-grid",
+    "id": "tv_hgd_cap_doi",
+    "semantic_key": "tv_hgd_cap_doi",
+    "section_id": "c7_tv_hgd_cap_doi",
+    "table_index": 7,
+    "loop": "tv_hgd_cap_doi",
+    "header_rows": [
+     [
+      {
+       "text": "STT",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 0
+      },
+      {
+       "text": "Họ tên",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 1
+      },
+      {
+       "text": "Ngày, tháng, năm sinh",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 2
+      },
+      {
+       "text": "Số định danh cá nhân",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 3
+      },
+      {
+       "text": "Giới tính",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 4
+      },
+      {
+       "text": "Quốc tịch",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 5
+      },
+      {
+       "text": "Dân tộc",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 6
+      },
+      {
+       "text": "Nơi thường trú",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 7
+      },
+      {
+       "text": "Nơi ở hiện tại",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 8
+      },
+      {
+       "text": "Chữ ký",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 9
+      }
+     ]
+    ],
+    "header_texts": [
+     [
+      "STT",
+      "Họ tên",
+      "Ngày, tháng, năm sinh",
+      "Số định danh cá nhân",
+      "Giới tính",
+      "Quốc tịch",
+      "Dân tộc",
+      "Nơi thường trú",
+      "Nơi ở hiện tại",
+      "Chữ ký"
+     ]
+    ],
+    "width": 10,
+    "columns": [
+     {
+      "col_index": 1,
+      "tag": "ho_ten",
+      "required": true,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 2,
+      "tag": "ngay_sinh",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 3,
+      "tag": "so_cccd",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 4,
+      "tag": "gioi_tinh",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 5,
+      "tag": "quoc_tich",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 6,
+      "tag": "dan_toc",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 7,
+      "tag": "noi_thuong_tru",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 8,
+      "tag": "noi_o_hien_tai",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 9,
+      "tag": "chu_ky",
+      "required": false,
+      "input_type": "outputOnly",
+      "output_only": true
+     }
+    ],
+    "stt": {
+     "mode": "generated",
+     "col_index": 0
+    },
+    "discriminator": null,
     "totals": []
    }
   ]

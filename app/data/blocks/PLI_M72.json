@@ -2019,159 +2019,128 @@
    ]
   },
   {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "STT"
-    }
+   "t": "loop",
+   "loop": "ds_thanh_vien_tnhh_2tv",
+   "headerRows": [
+    0
    ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body",
-   "cond": [
-    "loai_hinh_tnhh_2tv"
-   ]
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
+   "cols": [
     {
-     "text": "Tên thành viên"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body",
-   "cond": [
-    "loai_hinh_tnhh_2tv"
-   ]
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "Quốc tịch"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body",
-   "cond": [
-    "loai_hinh_tnhh_2tv"
-   ]
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "Số Giấy tờ pháp lý của cá nhân/tổ chức"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body",
-   "cond": [
-    "loai_hinh_tnhh_2tv"
-   ]
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "Địa chỉ liên lạc đối với cá nhân; địa chỉ trụ sở chính đối với tổ chức"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body",
-   "cond": [
-    "loai_hinh_tnhh_2tv"
-   ]
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "Phần vốn góp"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body",
-   "cond": [
-    "loai_hinh_tnhh_2tv"
-   ]
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "("
+     "col": 1,
+     "tag": "ten_thanh_vien"
     },
     {
-     "text": "VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có",
-     "i": true
+     "col": 2,
+     "tag": "quoc_tich"
     },
     {
-     "text": ")"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body",
-   "cond": [
-    "loai_hinh_tnhh_2tv"
-   ]
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "Tỷ lệ ("
+     "col": 3,
+     "tag": "so_gtpl_ca_nhan_to_chuc"
     },
     {
-     "text": "%",
-     "i": true
+     "col": 4,
+     "tag": "dia_chi_lien_lac"
     },
     {
-     "text": ")"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body",
-   "cond": [
-    "loai_hinh_tnhh_2tv"
-   ]
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
+     "col": 5,
+     "tag": "phan_von_gop"
+    },
     {
-     "text": "Ghi chú (nếu có)"
+     "col": 6,
+     "tag": "ty_le"
+    },
+    {
+     "col": 7,
+     "tag": "ghi_chu"
     }
    ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "note",
+   "blankRows": 5,
+   "rows": [
+    {
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "STT",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Tên thành viên",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Quốc tịch",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Số Giấy tờ pháp lý của cá nhân/tổ chức",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Địa chỉ liên lạc đối với cá nhân; địa chỉ trụ sở chính đối với tổ chức",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Phần vốn góp (VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Tỷ lệ (%)",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Ghi chú (nếu có)",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
+    }
+   ],
    "cond": [
     "loai_hinh_tnhh_2tv"
    ]
@@ -2889,17 +2858,156 @@
    ]
   },
   {
-   "t": "p",
-   "align": "center",
-   "runs": [
+   "t": "loop",
+   "loop": "ds_co_dong_sang_lap_ctcp",
+   "headerRows": [
+    0
+   ],
+   "cols": [
     {
-     "text": "STTTên cổ đôngQuốc tịchSố Giấy tờ pháp lý của cá nhân/tổ chứcĐịa chỉ liên lạc đối với cá nhân; địa chỉ trụ sở chính đối với tổ chứcLoại cổ phầnSố cổ phầnGiá trị cổ phần"
+     "col": 1,
+     "tag": "ten_co_dong"
+    },
+    {
+     "col": 2,
+     "tag": "quoc_tich"
+    },
+    {
+     "col": 3,
+     "tag": "so_gtpl"
+    },
+    {
+     "col": 4,
+     "tag": "dia_chi_lien_lac"
+    },
+    {
+     "col": 5,
+     "tag": "loai_co_phan"
+    },
+    {
+     "col": 6,
+     "tag": "so_co_phan"
+    },
+    {
+     "col": 7,
+     "tag": "gia_tri_co_phan"
+    },
+    {
+     "col": 8,
+     "tag": "ty_le"
+    },
+    {
+     "col": 9,
+     "tag": "ghi_chu"
     }
    ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body",
+   "blankRows": 5,
+   "rows": [
+    {
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "STT",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Tên cổ đông",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Quốc tịch",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Số Giấy tờ pháp lý của cá nhân/tổ chức",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Địa chỉ liên lạc đối với cá nhân; địa chỉ trụ sở chính đối với tổ chức",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Loại cổ phần",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Số cổ phần",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Giá trị cổ phần (VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Tỷ lệ (%)",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Ghi chú (nếu có)",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
+    }
+   ],
    "cond": [
     "loai_hinh_ctcp"
    ]
@@ -2909,38 +3017,7 @@
    "align": "left",
    "runs": [
     {
-     "text": "("
-    },
-    {
-     "text": "VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có",
-     "i": true
-    },
-    {
-     "text": ")Tỷ lệ ("
-    },
-    {
-     "text": "%",
-     "i": true
-    },
-    {
-     "text": ")Ghi chú (nếu có)"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body",
-   "cond": [
-    "loai_hinh_ctcp"
-   ]
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "8. Cổ đông là nhà đầu tư nước ngoài: ",
-     "b": true
+     "text": "8. Cổ đông là nhà đầu tư nước ngoài:"
     }
    ],
    "format": {
@@ -2952,17 +3029,156 @@
    ]
   },
   {
-   "t": "p",
-   "align": "center",
-   "runs": [
+   "t": "loop",
+   "loop": "ds_co_dong_nuoc_ngoai_ctcp",
+   "headerRows": [
+    0
+   ],
+   "cols": [
     {
-     "text": "STTTên cổ đôngQuốc tịchSố Giấy tờ pháp lý của cá nhân/tổ chứcĐịa chỉ liên lạc đối với cá nhân; địa chỉ trụ sở chính đối với tổ chứcLoại cổ phầnSố cổ phầnGiá trị cổ phần"
+     "col": 1,
+     "tag": "ten_co_dong"
+    },
+    {
+     "col": 2,
+     "tag": "quoc_tich"
+    },
+    {
+     "col": 3,
+     "tag": "so_gtpl"
+    },
+    {
+     "col": 4,
+     "tag": "dia_chi_lien_lac"
+    },
+    {
+     "col": 5,
+     "tag": "loai_co_phan"
+    },
+    {
+     "col": 6,
+     "tag": "so_co_phan"
+    },
+    {
+     "col": 7,
+     "tag": "gia_tri_co_phan"
+    },
+    {
+     "col": 8,
+     "tag": "ty_le"
+    },
+    {
+     "col": 9,
+     "tag": "ghi_chu"
     }
    ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body",
+   "blankRows": 5,
+   "rows": [
+    {
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "STT",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Tên cổ đông",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Quốc tịch",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Số Giấy tờ pháp lý của cá nhân/tổ chức",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Địa chỉ liên lạc đối với cá nhân; địa chỉ trụ sở chính đối với tổ chức",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Loại cổ phần",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Số cổ phần",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Giá trị cổ phần (VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Tỷ lệ (%)",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Ghi chú (nếu có)",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
+    }
+   ],
    "cond": [
     "loai_hinh_ctcp"
    ]
@@ -3656,143 +3872,114 @@
    ]
   },
   {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "STT"
-    }
+   "t": "loop",
+   "loop": "ds_thanh_vien_hop_danh_dhdn",
+   "headerRows": [
+    0
    ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body",
-   "cond": [
-    "loai_hinh_dhdn"
-   ]
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
+   "cols": [
     {
-     "text": "Tên thành viên hợp danh"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body",
-   "cond": [
-    "loai_hinh_dhdn"
-   ]
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "Quốc tịch"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body",
-   "cond": [
-    "loai_hinh_dhdn"
-   ]
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "Số định danh cá nhân/Số Hộ chiếu/Hộ chiếu nước ngoài hoặc giấy tờ có giá trị thay thế hộ chiếu nước ngoài"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body",
-   "cond": [
-    "loai_hinh_dhdn"
-   ]
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "Địa chỉ liên lạc"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body",
-   "cond": [
-    "loai_hinh_dhdn"
-   ]
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "Phần vốn góp"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body",
-   "cond": [
-    "loai_hinh_dhdn"
-   ]
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "("
+     "col": 1,
+     "tag": "ten_thanh_vien_hop_danh"
     },
     {
-     "text": "VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có",
-     "i": true
+     "col": 2,
+     "tag": "quoc_tich"
     },
     {
-     "text": ")"
+     "col": 3,
+     "tag": "so_dinh_danh_ho_chieu"
+    },
+    {
+     "col": 4,
+     "tag": "dia_chi_lien_lac"
+    },
+    {
+     "col": 5,
+     "tag": "phan_von_gop"
+    },
+    {
+     "col": 6,
+     "tag": "ty_le"
     }
    ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body",
-   "cond": [
-    "loai_hinh_dhdn"
-   ]
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
+   "blankRows": 5,
+   "rows": [
     {
-     "text": "Tỷ lệ ("
-    },
-    {
-     "text": "%",
-     "i": true
-    },
-    {
-     "text": ")"
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "STT",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Tên thành viên hợp danh",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Quốc tịch",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Số định danh cá nhân/Số Hộ chiếu/Hộ chiếu nước ngoài hoặc giấy tờ có giá trị thay thế hộ chiếu nước ngoài",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Địa chỉ liên lạc",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Phần vốn góp (VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Tỷ lệ (%)",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
     }
    ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body",
    "cond": [
     "loai_hinh_dhdn"
    ]

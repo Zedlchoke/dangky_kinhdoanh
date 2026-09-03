@@ -307,6 +307,107 @@
     "ref": "Owner 2026-08-28 (docs/leader_handoff_excel_next.md Việc 4.2: 'Thuế PLII_M02 (D5.2) — lấy danh mục chỉ tiêu từ TT 68, đúng mẫu II.2'). KIỂM TRA HIỆU LỰC 2026-08-28: **TT 121/2026/TT-BTC** (hiệu lực 21/8/2026) chỉ THAY 09 biểu mẫu tại PHỤ LỤC I của TT 68/2025/TT-BTC (Điều 1 khoản 1 điểm a-i: Mẫu số 1, 2, 3, 4, 5, 10, 12, 27, 30) và bãi bỏ Mẫu số 11 (khoản 2) — KHÔNG đụng Phụ lục II -> Mẫu II.2 vẫn áp dụng TT 68/2025/TT-BTC nguyên trạng. NGUỒN: Phụ lục II TT 68/2025/TT-BTC, Mẫu số 2 'Giấy đề nghị đăng ký thay đổi nội dung đăng ký hộ kinh doanh', phần A khối 'ĐĂNG KÝ THAY ĐỔI NỘI DUNG ĐĂNG KÝ THUẾ' — dòng lệnh 'Đăng ký bổ sung, thay đổi các chỉ tiêu đăng ký thuế như sau:' + bảng 3 cột 'Chỉ tiêu | Thông tin đăng ký cũ | Thông tin đăng ký mới'. Bản dùng trong repo: 06_ho_kinh_doanh_va_chuyen_doi/01_mau_ho_kinh_doanh/PL2_Mau_02_giay_de_nghi_dang_ky_thay_doi_noi_dung_dang_ky_ho_kinh_doanh.docx p112-p118 (p112 heading khối, p113 dòng lệnh, p114 'Chỉ tiêu', p115 'Thông tin đăng ký cũ', p116 'Thông tin đăng ký mới', p117 dòng in sẵn '- Chỉ tiêu 5.1: Địa chỉ nhận thông báo thuế', p118 dòng tiếp diễn '-…..'), mốc kết thúc p126 'B. ĐĂNG KÝ CẬP NHẬT, BỔ SUNG, HIỆU ĐÍNH…'. Census: app/data/table_specs/manifest.json PLII_M02/a7_thue_chi_tieu_cu_moi (fixed-matrix, missing_grid, semantic_key=thue_chi_tieu_cu_moi, required_columns chi_tieu|thong_tin_dang_ky_cu|thong_tin_dang_ky_moi, evidence blocks B095-B099). DANH MỤC CHỈ TIÊU, CITE TỪNG DÒNG của chính Mẫu II.2 — phần C mục 5 'Thông tin đăng ký thuế' (p154-p165) là nơi mẫu II.2 định nghĩa các chỉ tiêu thuế mà bảng cũ/mới tham chiếu qua số '5.1': (1) dòng 5.1 'Địa chỉ nhận thông báo thuế (chỉ kê khai nếu địa chỉ nhận thông báo thuế khác địa chỉ trụ sở)' — p157-p158, và dòng này ĐƯỢC IN SẴN ở p117; (2) dòng 5.2 'Tổng số lao động' — p164-p165, chữ 'Tổng số lao động' nguyên văn p165; (3) dòng '-…..' — p118, dòng tiếp diễn của mẫu để kê chỉ tiêu khác. Đối chiếu bản Word gốc Phụ lục II trên mạng: phần A của Mẫu II.2 chỉ in 1 dòng mẫu (5.1) + dòng '-….', và phần C mục 5 chỉ có ĐÚNG 2 chỉ tiêu 5.1/5.2 — spec này không thêm chỉ tiêu nào ngoài 2 chỉ tiêu đó.",
     "question": "(a) SỐ MỤC 6 VÀ '6.1 GIÁM ĐỐC/TỔNG GIÁM ĐỐC' TRONG SCREENSHOT CỦA OWNER KHÔNG PHẢI CỦA PLII_M02: đã đối chiếu bản gốc Phụ lục II Mẫu 2 TT 68/2025/TT-BTC — mẫu KHÔNG dùng đánh số 1..9 như Phụ lục I mà chỉ có 3 mục lớn A/B/C; 'Thông tin đăng ký thuế' ở đây là mục 5 của phần C (p154) với ĐÚNG 2 chỉ tiêu 5.1/5.2, và mẫu KHÔNG hề có chỉ tiêu nào về Giám đốc/Tổng giám đốc (hộ kinh doanh không có chức danh này). Cấu trúc 'STT | Các chỉ tiêu thông tin đăng ký thuế' + 'Thông tin về Giám đốc/Tổng giám đốc (nếu có)' là của PHỤ LỤC I (biểu mẫu doanh nghiệp, mục thuế 8/9/11) — thấy nguyên vẹn trong chính repo tại PLI_M12 p242-p306 ('THÔNG BÁO THAY ĐỔI THÔNG TIN ĐĂNG KÝ THUẾ', chỉ tiêu 1..9) và thuộc phần đuôi BỊ CẮT của PLI_M03 (mục 9)/M04 (mục 11)/M05 (mục 8). CẦN OWNER xác nhận lại: nếu muốn bảng chỉ tiêu kiểu Phụ lục I thì đó là việc của mẫu PLI, không phải PLII_M02. (b) SECTION c5_thue_chi_tieu_cap_doi (phần C mục 5) CỐ TÌNH KHÔNG dựng trong đợt này: 7 ô của nó ĐÃ được map thành input paragraph sẵn có ({dia_chi_chi_tiet},{xa_phuong},{tinh_thanh},{dien_thoai_lien_he},{fax},{email_tru_so} cho 5.1 và {so_lao_dong} cho 5.2 — blocks B118-B124, form_maps.fields PLII_M02). Rebuild thành w:tbl sẽ tạo bộ key mới '<sem>.<row>.<tag>' SONG SONG với 7 key cũ = hai nguồn sự thật cho cùng ô (đúng tiền lệ gap W1 đã ghi ở tools/form_specs/formation/PLI_M01.json). Cần capability 'register-only/already-mapped' của Lead/B2 trước khi dựng. (c) Cột nhãn 'Chỉ tiêu' trên mẫu là cột VIẾT TAY (nguồn chỉ in sẵn dòng 5.1 + dòng '-…..') — contract v1 chỉ cho cột nhãn tag=null readonly nên 3 dòng được in cứng; dòng 'chi_tieu_khac' giữ nguyên văn '-….' của mẫu. Nếu owner muốn hộ tự gõ tên chỉ tiêu thì cần nới contract v1 cho phép cột nhãn text. (d) KHÔNG có totals: bảng này không có cột số."
    }
+  },
+  {
+   "kind": "nested-grid",
+   "pos": "after",
+   "anchor": "danh sach cac thanh vien ho gia dinh dang ky ho kinh doanh sau khi thay doi",
+   "no_default_drops": true,
+   "drop": ["^sttho ten"],
+   "spec": {
+    "id": "tv_hgd_sau_thay_doi",
+    "kind": "nested-grid",
+    "section_id": "a4_tv_hgd_sau_thay_doi",
+    "semantic_key": "tv_hgd_sau_thay_doi",
+    "stt": {"mode": "generated", "col_index": 0},
+    "header_rows": [[
+     {"text": "STT"},
+     {"text": "Họ tên"},
+     {"text": "Ngày, tháng, năm sinh"},
+     {"text": "Số định danh cá nhân"},
+     {"text": "Giới tính"},
+     {"text": "Quốc tịch"},
+     {"text": "Dân tộc"},
+     {"text": "Nơi thường trú"},
+     {"text": "Nơi ở hiện tại"},
+     {"text": "Chữ ký"}
+    ]],
+    "columns": [
+     {"header": "Họ tên", "tag": "ho_ten", "col_index": 1, "input_type": "text", "required": true},
+     {"header": "Ngày, tháng, năm sinh", "tag": "ngay_sinh", "col_index": 2, "input_type": "text"},
+     {"header": "Số định danh cá nhân", "tag": "so_cccd", "col_index": 3, "input_type": "text"},
+     {"header": "Giới tính", "tag": "gioi_tinh", "col_index": 4, "input_type": "text"},
+     {"header": "Quốc tịch", "tag": "quoc_tich", "col_index": 5, "input_type": "text"},
+     {"header": "Dân tộc", "tag": "dan_toc", "col_index": 6, "input_type": "text"},
+     {"header": "Nơi thường trú", "tag": "noi_thuong_tru", "col_index": 7, "input_type": "text"},
+     {"header": "Nơi ở hiện tại", "tag": "noi_o_hien_tai", "col_index": 8, "input_type": "text"},
+     {"header": "Chữ ký", "tag": "chu_ky", "col_index": 9, "input_type": "outputOnly", "output_only": true}
+    ],
+    "totals": []
+   },
+   "occurrences": [{
+    "occurrence_id": "tv_hgd_sau_thay_doi",
+    "match_heading": "Danh sách các thành viên hộ gia đình đăng ký hộ kinh doanh sau khi thay đổi",
+    "nth": 1,
+    "sync_group": null,
+    "end_markers": ["^dang ky thay doi von kinh doanh"]
+   }],
+   "legal_status": {
+    "blocked": false,
+    "ref": "Owner P2=A 2026-09-03 (docs/owner_decision_packet_2026-09-03.md mục P2: 'mở rebuild theo mẫu hiện hành (nested-grid, D2.1/D2.9)'; namespacing key D2.9=A). Nguồn 06_ho_kinh_doanh_va_chuyen_doi/01_mau_ho_kinh_doanh/PL2_Mau_02_*.docx P78 heading 'Danh sách các thành viên hộ gia đình đăng ký hộ kinh doanh sau khi thay đổi2:' + P79 header dán chữ 'STTHọ tên…Chữ ký' kèm digit-run '12345678910' — 10 CỘT VẬT LÝ đếm từ digit-run và CHÂN TRANG chính thức của mẫu P179: 'kê khai số định danh cá nhân thì chỉ kê khai các cột số 1, 2, 3, 4, 5, 10, không phải kê khai các cột số 6, 7, 8, 9' => 1=STT, 2=Họ tên, 3=Ngày sinh, 4=CCCD, 5=Giới tính, 6=Quốc tịch, 7=Dân tộc, 8=Nơi thường trú, 9=Nơi ở hiện tại, 10=Chữ ký. Tập tag = required_columns của census manifest section a4_tv_hgd_sau_thay_doi (semantic_key=tv_hgd_sau_thay_doi); chu_ky outputOnly theo D2.4=A. Cùng tập cột ds_tv_ho_gia_dinh của M02/M01 nhưng ngữ cảnh A.4 (sau thay đổi) -> key riêng, không auto-sync.",
+    "question": "Template KHÔNG có w:tbl ở vùng này (nguồn đã mất bảng khi convert); P1-C/chk coverage từng adjudicate a4 'PARTIAL_COLUMNS' là over-bridge. Gate pin cũ (test_industry_household t_m02_* + census p1_c_verify_plii_m02) GHIM hiện trạng 4 vùng ngành + 1 fixed-matrix — sau regen sẽ đỏ ở các assert đó; Lead sync pin khi merge (quyết định coordinator lane fix-member-grids 2026-09-03: 'Đóng băng test, báo Lead')."
+   }
+  },
+  {
+   "kind": "nested-grid",
+   "pos": "after",
+   "anchor": "7\\. thong tin ve cac thanh vien ho gia dinh dang ky ho kinh doanh",
+   "no_default_drops": true,
+   "trim": ["^sttho ten"],
+   "keep_from": "Hộ kinh doanh cam kết",
+   "spec": {
+    "id": "tv_hgd_cap_doi",
+    "kind": "nested-grid",
+    "section_id": "c7_tv_hgd_cap_doi",
+    "semantic_key": "tv_hgd_cap_doi",
+    "stt": {"mode": "generated", "col_index": 0},
+    "header_rows": [[
+     {"text": "STT"},
+     {"text": "Họ tên"},
+     {"text": "Ngày, tháng, năm sinh"},
+     {"text": "Số định danh cá nhân"},
+     {"text": "Giới tính"},
+     {"text": "Quốc tịch"},
+     {"text": "Dân tộc"},
+     {"text": "Nơi thường trú"},
+     {"text": "Nơi ở hiện tại"},
+     {"text": "Chữ ký"}
+    ]],
+    "columns": [
+     {"header": "Họ tên", "tag": "ho_ten", "col_index": 1, "input_type": "text", "required": true},
+     {"header": "Ngày, tháng, năm sinh", "tag": "ngay_sinh", "col_index": 2, "input_type": "text"},
+     {"header": "Số định danh cá nhân", "tag": "so_cccd", "col_index": 3, "input_type": "text"},
+     {"header": "Giới tính", "tag": "gioi_tinh", "col_index": 4, "input_type": "text"},
+     {"header": "Quốc tịch", "tag": "quoc_tich", "col_index": 5, "input_type": "text"},
+     {"header": "Dân tộc", "tag": "dan_toc", "col_index": 6, "input_type": "text"},
+     {"header": "Nơi thường trú", "tag": "noi_thuong_tru", "col_index": 7, "input_type": "text"},
+     {"header": "Nơi ở hiện tại", "tag": "noi_o_hien_tai", "col_index": 8, "input_type": "text"},
+     {"header": "Chữ ký", "tag": "chu_ky", "col_index": 9, "input_type": "outputOnly", "output_only": true}
+    ],
+    "totals": []
+   },
+   "occurrences": [{
+    "occurrence_id": "tv_hgd_cap_doi",
+    "match_heading": "7. Thông tin về các thành viên hộ gia đình đăng ký hộ kinh doanh",
+    "nth": 1,
+    "sync_group": null,
+    "end_markers": ["^chu ho kinh doanh \\(ky"]
+   }],
+   "legal_status": {
+    "blocked": false,
+    "ref": "Owner P2=A 2026-09-03 (docs/owner_decision_packet_2026-09-03.md mục P2; D2.9=A). Nguồn P169 heading '7. Thông tin về các thành viên hộ gia đình đăng ký hộ kinh doanh9:' + P170 header dán chữ 'STTHọ tên…Chữ ký12345678910' DÍNH KÈM câu cam kết 'Hộ kinh doanh cam kết về tính hợp pháp, chính xác, trung thực…' — 10 cột như a4 (chứng minh digit-run + chân trang P179). Trim keep_from giữ nguyên văn câu cam kết pháp lý; digit-run + header dán bị loại. Tập tag = required_columns census manifest section c7_tv_hgd_cap_doi (semantic_key=tv_hgd_cap_doi, notes 'chu_ky outputOnly'); khác ngữ cảnh với a4 (C.7 cấp đổi/đăng ký lại) và KHÔNG sync_group (PLAN A: dữ liệu độc lập). Chân trang 9: chỉ kê khai khi chủ thể thành lập là các thành viên hộ gia đình và kê khai cả thông tin của chủ hộ.",
+    "question": "Như entry tv_hgd_sau_thay_doi: gate pin cũ đỏ sau regen, Lead sync khi merge."
+   }
   }
  ]
 }

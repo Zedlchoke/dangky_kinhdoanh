@@ -13,7 +13,7 @@
       {"occurrence_id": "ds_nganh_dhdn", "value": "DHDN", "flag": "loai_hinh_dhdn"}
     ]
   },
-  "gap_nghiepvu": "Spec da khai bao DU 5 occurrence (contract P1: ds_nganh_dntn / tnhh_1tv / tnhh_2tv / ctcp / dhdn, sync_group=ds_nganh_pli_m72). Generator hien tai CHUA ho tro 'occurrences' (build_form_maps.py chi cham anchor lan dau) nen khi chua integrate chi occurrence 1 duoc rebuild thanh bang loop; 4 vung con lai van la paragraph tan du STT/Ten nganh/Ma nganh. Cac heading 5 vung GIONG HET text nhau ('5. Nganh, nghe kinh doanh') -> nth=1..5 la dinh danh duy nhat; end marker chung '^6\\. von' vi muc '6.' moi phan deu bat dau bang 'Von' (dau tu/dieu le). Khoang trang giua heading va muc '6.' o cac vung 2-5 chi con 3 paragraph tieu de cot (cot thu 4 mat ca o nguon); rieng vung 1 (DNTN) con du 4 paragraph tieu de ke ca 'Nganh, nghe kinh doanh chinh'. Cac luoi thanh vien/co dong nested-grid BLOCKED khong nam trong occurrences nay - giu nguyen.",
+  "gap_nghiepvu": "Spec da khai bao DU 5 occurrence (contract P1: ds_nganh_dntn / tnhh_1tv / tnhh_2tv / ctcp / dhdn, sync_group=ds_nganh_pli_m72) + 4 entry nested-grid thanh vien/co dong N2-N5 (Owner P2=A 2026-09-03, D2.9=A prefix theo variant, D7.4=A). Cac heading 5 vung GIONG HET text nhau ('5. Nganh, nghe kinh doanh') -> nth=1..5 la dinh danh duy nhat; end marker chung '^6\\. von' vi muc '6.' moi phan deu bat dau bang 'Von' (dau tu/dieu le). Khoang trang giua heading va muc '6.' o cac vung 2-5 chi con 3 paragraph tieu de cot (cot thu 4 mat ca o nguon); rieng vung 1 (DNTN) con du 4 paragraph tieu de ke ca 'Nganh, nghe kinh doanh chinh'. [P2=A] 4 luoi thanh vien/co dong duoc rebuild nested-grid: ds_thanh_vien_tnhh_2tv (N2, 8 cot), ds_co_dong_sang_lap_ctcp (N3, 10 cot), ds_co_dong_nuoc_ngoai_ctcp (N4, 10 cot), ds_thanh_vien_hop_danh_dhdn (N5, 7 cot). Nguon docx KHONG co w:tbl nao o cac vung nay (header con la paragraph don/dan chu); so cot dem tu header that: '(VNĐ và giá trị tương đương...)' la chu thich cot Phan von gop/Gia tri co phan (gop 1 cot, dung convention PLI_M06 'Phần vốn góp (VNĐ)'), khong phai cot vat ly rieng. Khong khai cond_flag spec-level: toan bo tung variant DA duoc boc boi cap marker {?loai_hinh_*} template-level (contract P1.2 Option D, tools/tag_m72_sections.py); them marker cung flag se lam existing_markers() cua tagger lech sequence KyVong -> tagger tu choi chay (fail-loud dung yc). CTCP dan chu 2 tang: P146 = '(VNĐ…)Tỷ lệ (%)Ghi chú (nếu có)8. Cổ đông là nhà đầu tư nước ngoài:' (trim tach heading 8 — khong co chu so chan trang); P148 = '(VNĐ…)…9. Người đại diện theo pháp luật của công ty3:' GIU NGUYEN VAN vi run '3' la SUPERSCRIPT chan trang (trim se tao glue moi 'y3:' — rule (d)); N4 pos=before head=P148 de ban chen dung sau heading 8 va truoc dong heading 9.",
   "tables": [
     {
       "spec": {
@@ -73,6 +73,204 @@
           "end_markers": ["^6\\. von"]
         }
       ]
+    },
+    {
+      "kind": "nested-grid",
+      "pos": "after",
+      "anchor": "^7\\. danh sach thanh vien:",
+      "no_default_drops": true,
+      "drop": ["^stt$", "^ten thanh vien$", "^quoc tich$",
+               "^so giay to phap ly", "^dia chi lien lac doi voi ca nhan",
+               "^phan von gop$", "^\\(vnd va gia tri tuong duong",
+               "^ty le", "^ghi chu"],
+      "spec": {
+        "id": "ds_thanh_vien_tnhh_2tv",
+        "kind": "nested-grid",
+        "section_id": "thanh_vien_tnhhh_hai_tv_tro_len",
+        "semantic_key": "ds_thanh_vien_tnhh_2tv",
+        "stt": {"mode": "generated", "col_index": 0},
+        "header_rows": [[
+          {"text": "STT"},
+          {"text": "Tên thành viên"},
+          {"text": "Quốc tịch"},
+          {"text": "Số Giấy tờ pháp lý của cá nhân/tổ chức"},
+          {"text": "Địa chỉ liên lạc đối với cá nhân; địa chỉ trụ sở chính đối với tổ chức"},
+          {"text": "Phần vốn góp (VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)"},
+          {"text": "Tỷ lệ (%)"},
+          {"text": "Ghi chú (nếu có)"}
+        ]],
+        "columns": [
+          {"header": "Tên thành viên", "tag": "ten_thanh_vien", "col_index": 1, "input_type": "text", "required": true},
+          {"header": "Quốc tịch", "tag": "quoc_tich", "col_index": 2, "input_type": "text"},
+          {"header": "Số Giấy tờ pháp lý của cá nhân/tổ chức", "tag": "so_gtpl_ca_nhan_to_chuc", "col_index": 3, "input_type": "text"},
+          {"header": "Địa chỉ liên lạc đối với cá nhân; địa chỉ trụ sở chính đối với tổ chức", "tag": "dia_chi_lien_lac", "col_index": 4, "input_type": "text"},
+          {"header": "Phần vốn góp (VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)", "tag": "phan_von_gop", "col_index": 5, "input_type": "money"},
+          {"header": "Tỷ lệ (%)", "tag": "ty_le", "col_index": 6, "input_type": "percent"},
+          {"header": "Ghi chú (nếu có)", "tag": "ghi_chu", "col_index": 7, "input_type": "text"}
+        ],
+        "totals": []
+      },
+      "occurrences": [{
+        "occurrence_id": "ds_thanh_vien_tnhh_2tv",
+        "match_heading": "7. Danh sách thành viên",
+        "nth": 1,
+        "sync_group": null,
+        "end_markers": ["^8\\. nguoi dai dien"]
+      }],
+      "legal_status": {
+        "blocked": false,
+        "ref": "Owner P2=A 2026-09-03 (docs/owner_decision_packet_2026-09-03.md P2: 'mở rebuild theo mẫu hiện hành (nested-grid, D2.1/D2.9)'; D2.9=A key prefix theo variant; D7.4=A). Nguon 05_cong_bo_cung_cap_thong_tin/PL1_Mau_72_*.docx P96 '7. Danh sách thành viên:' + 9 header paragraph roi P97-P105 (STT|Tên thành viên|Quốc tịch|Số GTPL|Địa chỉ|Phần vốn góp|(VNĐ và giá trị tương đương…)|Tỷ lệ (%)|Ghi chú (nếu có)). SO COT = 8: '(VNĐ và giá trị tương đương…)' la chu thich cot Phan von gop (gop 1 cot) — dung chuan census manifest section thanh_vien_tnhhh_hai_tv_tro_len (required_columns: stt|ten_thanh_vien|quoc_tich|so_gtpl_ca_nhan_to_chuc|dia_chi_lien_lac|phan_von_gop|ty_le|ghi_chu) va cung cach voi PLI_M06 'Phần vốn góp (VNĐ)' (D2.2=A). Key draft = D2.9-A prefix variant tnhh_2tv (manifest semantic_key cu ds_thanh_vien_tnhh_cong_bo bo vi D2.9=A chot prefix theo variant; draft M72 rong nen khong migration). sync_group=null: 4 luoi nguoi co tap cot khac nhau, khong dong bo duoc.",
+        "question": "Chua co quyet dinh totals/doi chieu von dieu le (PLAN muc B/C census legal_questions) — totals=[] theo contract v1."
+      }
+    },
+    {
+      "kind": "nested-grid",
+      "pos": "after",
+      "anchor": "^7\\. co dong sang lap:",
+      "no_default_drops": true,
+      "drop": ["^sttten co dong"],
+      "trim": ["^\\(vnd va gia tri tuong duong.*8\\. co dong"],
+      "keep_from": "8\\. Cổ đông là nhà đầu tư nước ngoài",
+      "spec": {
+        "id": "ds_co_dong_sang_lap_ctcp",
+        "kind": "nested-grid",
+        "section_id": "co_dong_sang_lap_cp",
+        "semantic_key": "ds_co_dong_sang_lap_ctcp",
+        "stt": {"mode": "generated", "col_index": 0},
+        "header_rows": [[
+          {"text": "STT"},
+          {"text": "Tên cổ đông"},
+          {"text": "Quốc tịch"},
+          {"text": "Số Giấy tờ pháp lý của cá nhân/tổ chức"},
+          {"text": "Địa chỉ liên lạc đối với cá nhân; địa chỉ trụ sở chính đối với tổ chức"},
+          {"text": "Loại cổ phần"},
+          {"text": "Số cổ phần"},
+          {"text": "Giá trị cổ phần (VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)"},
+          {"text": "Tỷ lệ (%)"},
+          {"text": "Ghi chú (nếu có)"}
+        ]],
+        "columns": [
+          {"header": "Tên cổ đông", "tag": "ten_co_dong", "col_index": 1, "input_type": "text", "required": true},
+          {"header": "Quốc tịch", "tag": "quoc_tich", "col_index": 2, "input_type": "text"},
+          {"header": "Số Giấy tờ pháp lý của cá nhân/tổ chức", "tag": "so_gtpl", "col_index": 3, "input_type": "text"},
+          {"header": "Địa chỉ liên lạc đối với cá nhân; địa chỉ trụ sở chính đối với tổ chức", "tag": "dia_chi_lien_lac", "col_index": 4, "input_type": "text"},
+          {"header": "Loại cổ phần", "tag": "loai_co_phan", "col_index": 5, "input_type": "text"},
+          {"header": "Số cổ phần", "tag": "so_co_phan", "col_index": 6, "input_type": "money"},
+          {"header": "Giá trị cổ phần (VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)", "tag": "gia_tri_co_phan", "col_index": 7, "input_type": "money"},
+          {"header": "Tỷ lệ (%)", "tag": "ty_le", "col_index": 8, "input_type": "percent"},
+          {"header": "Ghi chú (nếu có)", "tag": "ghi_chu", "col_index": 9, "input_type": "text"}
+        ],
+        "totals": []
+      },
+      "occurrences": [{
+        "occurrence_id": "ds_co_dong_sang_lap_ctcp",
+        "match_heading": "7. Cổ đông sáng lập",
+        "nth": 1,
+        "sync_group": null,
+        "end_markers": ["^10\\. noi dang ky"]
+      }],
+      "legal_status": {
+        "blocked": false,
+        "ref": "Owner P2=A 2026-09-03 (P2 + D2.9=A + D7.4=A). Nguon P144 '7. Cổ đông sáng lập:' + 2 paragraph dan chu P145 ('STTTên cổ đông…Giá trị cổ phần') va P146 ('(VNĐ…)Tỷ lệ (%)Ghi chú (nếu có)8. Cổ đông là nhà đầu tư nước ngoài:' — row2 header DAN CHU voi heading muc 8). 10 cot: 'Giá trị cổ phần (VNĐ…)' gop 1 cot theo census manifest section co_dong_sang_lap_cp (required_columns 10: stt|ten_co_dong|quoc_tich|so_gtpl|dia_chi_lien_lac|loai_co_phan|so_co_phan|gia_tri_co_phan|ty_le|ghi_chu). Trim pattern '*8\\. co dong' CHI khop P146 (heading 8 khong co chu so chan trang — an toan ve run structure); keep_from tach heading 8 ve dung vi tri; P148 (heading 9 co SUPERSCRIPT '3') duoc entry ds_co_dong_nuoc_ngoai_ctcp xu ly rieng de khong lam phang run. end_marker keo dai den '^10\\. noi dang ky' de vung trim/drop phu ca 2 paragraph dan; scan contamination SACH vi ca 2 paragraph deu bat dau '(vnd…' (khong khop NUMBERED_HEADING).",
+        "question": "So co phan trong Gia tri co phan chua co computed/totals (census legal_questions 'Cột Giá trị cổ phần có quy đổi ngoại tệ — computed totals đối chiếu vốn điều lệ') — de roadmap W2 product(), totals=[] theo contract v1."
+      }
+    },
+    {
+      "kind": "nested-grid",
+      "pos": "before",
+      "anchor": "^\\(vnd va gia tri tuong duong theo don vi tien nuoc ngoai, neu co\\)ty le",
+      "no_default_drops": true,
+      "drop": ["^sttten co dong"],
+      "spec": {
+        "id": "ds_co_dong_nuoc_ngoai_ctcp",
+        "kind": "nested-grid",
+        "section_id": "co_dong_nuoc_ngoai_cp",
+        "semantic_key": "ds_co_dong_nuoc_ngoai_ctcp",
+        "stt": {"mode": "generated", "col_index": 0},
+        "header_rows": [[
+          {"text": "STT"},
+          {"text": "Tên cổ đông"},
+          {"text": "Quốc tịch"},
+          {"text": "Số Giấy tờ pháp lý của cá nhân/tổ chức"},
+          {"text": "Địa chỉ liên lạc đối với cá nhân; địa chỉ trụ sở chính đối với tổ chức"},
+          {"text": "Loại cổ phần"},
+          {"text": "Số cổ phần"},
+          {"text": "Giá trị cổ phần (VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)"},
+          {"text": "Tỷ lệ (%)"},
+          {"text": "Ghi chú (nếu có)"}
+        ]],
+        "columns": [
+          {"header": "Tên cổ đông", "tag": "ten_co_dong", "col_index": 1, "input_type": "text", "required": true},
+          {"header": "Quốc tịch", "tag": "quoc_tich", "col_index": 2, "input_type": "text"},
+          {"header": "Số Giấy tờ pháp lý của cá nhân/tổ chức", "tag": "so_gtpl", "col_index": 3, "input_type": "text"},
+          {"header": "Địa chỉ liên lạc đối với cá nhân; địa chỉ trụ sở chính đối với tổ chức", "tag": "dia_chi_lien_lac", "col_index": 4, "input_type": "text"},
+          {"header": "Loại cổ phần", "tag": "loai_co_phan", "col_index": 5, "input_type": "text"},
+          {"header": "Số cổ phần", "tag": "so_co_phan", "col_index": 6, "input_type": "money"},
+          {"header": "Giá trị cổ phần (VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)", "tag": "gia_tri_co_phan", "col_index": 7, "input_type": "money"},
+          {"header": "Tỷ lệ (%)", "tag": "ty_le", "col_index": 8, "input_type": "percent"},
+          {"header": "Ghi chú (nếu có)", "tag": "ghi_chu", "col_index": 9, "input_type": "text"}
+        ],
+        "totals": []
+      },
+      "occurrences": [{
+        "occurrence_id": "ds_co_dong_nuoc_ngoai_ctcp",
+        "match_heading": "(VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)Tỷ lệ (%)Ghi chú (nếu có)9. Người đại diện",
+        "nth": 1,
+        "sync_group": null,
+        "end_markers": ["^10\\. noi dang ky"]
+      }],
+      "legal_status": {
+        "blocked": false,
+        "ref": "Owner P2=A 2026-09-03 (P2 + D2.9=A + D7.4=A). Nguon P147 (row1 dan chu 'STTTên cổ đông…') va P148 ('(VNĐ…)Tỷ lệ (%)Ghi chú (nếu có)9. Người đại diện theo pháp luật của công ty3:' — row2 DAN CHU heading muc 9). Cung cau truc 10 cot voi co_dong_sang_lap (census section co_dong_nuoc_ngoai_cp, required_columns giong het). P148 DUOC GIU NGUYEN VAN (khong trim, khong drop): run chua so '3' la SUPERSCRIPT cua chan trang '3 Ghi tên…' trong nguon — trim se lam phang run va tao GLUE MOI 'y3:' (rule (d) check_layout_l1); doi lai bang N4 chen ban TRUOC paragraph nay (pos=before, head=P148 qua prefix match rieng co duoi '9. Người đại diện') -> bang nam dung duoi heading 8 va TRUOC dong heading 9; dong dan chu (gom heading 9 gan san) giu nguyen run structure giong he thong BASE (junk 1 dong con lai, gap da ghi cho Lead: trim giu vertAlign thuoc ownership build_form_maps).",
+        "question": "Row2 header goc co 3 o con ((VNĐ…)|Tỷ lệ (%)|Ghi chú) — theo chuan census chi 'Gia tri co phan' la 1 cot va Tỷ lệ/Ghi chú la cot doc lap, nen header phang 1 hang 10 cot khong mat cot nao; header 2 hang nested de roadmap (D2.3=B precedent). Dong con lai '(VNĐ…)…9. Người đại diện…ty3:' can engine trim-bao-toan-vertAlign (BLOCKER_OWNERSHIP build_form_maps) moi sach duoc."
+      }
+    },
+    {
+      "kind": "nested-grid",
+      "pos": "after",
+      "anchor": "^7\\. danh sach thanh vien hop danh:",
+      "no_default_drops": true,
+      "drop": ["^stt$", "^ten thanh vien hop danh$", "^quoc tich$",
+               "^so dinh danh ca nhan", "^dia chi lien lac$",
+               "^phan von gop$", "^\\(vnd va gia tri tuong duong",
+               "^ty le"],
+      "spec": {
+        "id": "ds_thanh_vien_hop_danh_dhdn",
+        "kind": "nested-grid",
+        "section_id": "thanh_vien_hop_danh",
+        "semantic_key": "ds_thanh_vien_hop_danh_dhdn",
+        "stt": {"mode": "generated", "col_index": 0},
+        "header_rows": [[
+          {"text": "STT"},
+          {"text": "Tên thành viên hợp danh"},
+          {"text": "Quốc tịch"},
+          {"text": "Số định danh cá nhân/Số Hộ chiếu/Hộ chiếu nước ngoài hoặc giấy tờ có giá trị thay thế hộ chiếu nước ngoài"},
+          {"text": "Địa chỉ liên lạc"},
+          {"text": "Phần vốn góp (VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)"},
+          {"text": "Tỷ lệ (%)"}
+        ]],
+        "columns": [
+          {"header": "Tên thành viên hợp danh", "tag": "ten_thanh_vien_hop_danh", "col_index": 1, "input_type": "text", "required": true},
+          {"header": "Quốc tịch", "tag": "quoc_tich", "col_index": 2, "input_type": "text"},
+          {"header": "Số định danh cá nhân/Số Hộ chiếu/Hộ chiếu nước ngoài hoặc giấy tờ có giá trị thay thế hộ chiếu nước ngoài", "tag": "so_dinh_danh_ho_chieu", "col_index": 3, "input_type": "text"},
+          {"header": "Địa chỉ liên lạc", "tag": "dia_chi_lien_lac", "col_index": 4, "input_type": "text"},
+          {"header": "Phần vốn góp (VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)", "tag": "phan_von_gop", "col_index": 5, "input_type": "money"},
+          {"header": "Tỷ lệ (%)", "tag": "ty_le", "col_index": 6, "input_type": "percent"}
+        ],
+        "totals": []
+      },
+      "occurrences": [{
+        "occurrence_id": "ds_thanh_vien_hop_danh_dhdn",
+        "match_heading": "7. Danh sách thành viên hợp danh",
+        "nth": 1,
+        "sync_group": null,
+        "end_markers": ["^8\\. noi dang ky"]
+      }],
+      "legal_status": {
+        "blocked": false,
+        "ref": "Owner P2=A 2026-09-03 (P2 + D2.9=A + D7.4=A). Nguon P176 '7. Danh sách thành viên hợp danh:' + 8 header paragraph P177-P185 (STT|Tên thành viên hợp danh|Quốc tịch|Số định danh cá nhân/Số Hộ chiếu…|Địa chỉ liên lạc|Phần vốn góp|(VNĐ…)|Tỷ lệ (%)) — KHONG co cot Ghi chu. 7 cot theo census manifest section thanh_vien_hop_danh (required_columns: stt|ten_thanh_vien_hop_danh|quoc_tich|so_dinh_danh_ho_chieu|dia_chi_lien_lac|phan_von_gop|ty_le). '(VNĐ…)' gop vao cot Phan von gop nhu N2. match_heading '7. Danh sách thành viên hợp danh' KHONG khop heading '7. Danh sách thành viên:' TNHH2TV (prefix 'hop danh' khong thuoc doan van do).",
+        "question": "Khong co cot Chữ ký/Ghi chú o nguon (khac M09 14 cot) — trung thanh nguon M72; neu owner muon chuan hoa theo Mau 9 thi mo quyet dinh rieng."
+      }
     }
   ]
 }

@@ -76,6 +76,7 @@
     {
       "spec": {
         "id": "ndd_uy_quyen_sau_thay_doi",
+        "width_policy": "content",
         "kind": "nested-grid",
         "section_id": "ndd_uy_quyen_sau_thay_doi",
         "semantic_key": "ds_ndd_uy_quyen_sau_thay_doi",

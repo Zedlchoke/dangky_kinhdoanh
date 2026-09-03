@@ -7,6 +7,7 @@
     {
       "spec": {
         "id": "ndd_pl_uy_quyen_chu_so_huu_moi",
+        "width_policy": "content",
         "kind": "nested-grid",
         "section_id": "ndd_pl_uy_quyen_chu_so_huu_moi",
         "semantic_key": "ds_nddpl_uy_quyen_chu_so_huu_moi",

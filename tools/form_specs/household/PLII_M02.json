@@ -316,6 +316,7 @@
    "drop": ["^sttho ten"],
    "spec": {
     "id": "tv_hgd_sau_thay_doi",
+    "width_policy": "content",
     "kind": "nested-grid",
     "section_id": "a4_tv_hgd_sau_thay_doi",
     "semantic_key": "tv_hgd_sau_thay_doi",
@@ -367,6 +368,7 @@
    "keep_from": "Hộ kinh doanh cam kết",
    "spec": {
     "id": "tv_hgd_cap_doi",
+    "width_policy": "content",
     "kind": "nested-grid",
     "section_id": "c7_tv_hgd_cap_doi",
     "semantic_key": "tv_hgd_cap_doi",

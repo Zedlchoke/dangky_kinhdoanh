@@ -31,6 +31,7 @@
     {
       "spec": {
         "id": "nddpl_uy_quyen_chu_so_huu",
+        "width_policy": "content",
         "kind": "nested-grid",
         "section_id": "nddpl_uy_quyen_chu_so_huu",
         "semantic_key": "ds_nddpl_uy_quyen_chu_so_huu",

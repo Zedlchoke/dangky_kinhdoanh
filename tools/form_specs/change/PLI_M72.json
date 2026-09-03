@@ -133,6 +133,7 @@
       "keep_from": "8\\. Cổ đông là nhà đầu tư nước ngoài",
       "spec": {
         "id": "ds_co_dong_sang_lap_ctcp",
+        "width_policy": "content",
         "kind": "nested-grid",
         "section_id": "co_dong_sang_lap_cp",
         "semantic_key": "ds_co_dong_sang_lap_ctcp",
@@ -183,6 +184,7 @@
       "drop": ["^sttten co dong"],
       "spec": {
         "id": "ds_co_dong_nuoc_ngoai_ctcp",
+        "width_policy": "content",
         "kind": "nested-grid",
         "section_id": "co_dong_nuoc_ngoai_cp",
         "semantic_key": "ds_co_dong_nuoc_ngoai_ctcp",

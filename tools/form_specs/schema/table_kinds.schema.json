@@ -20,14 +20,23 @@
     "thêm `product(<tag>[, <tag>...])` bên cạnh `sum(<tag>)`. Không đổi field nào",
     "khác nên vẫn tương thích v1 (version không bump — contract docs đang LOCKED).",
     "Engine hai phía bắt buộc cùng ngữ nghĩa: tools/docx_render.py",
-    "(_TOTALS_FORMULA_RE) và app_web/ui/fixed-matrix.js (productFormula())."
+    "(_TOTALS_FORMULA_RE) và app_web/ui/fixed-matrix.js (productFormula()).",
+    "",
+    "Lane C (2026-09-03, WLAY-008): mở rộng ADDITIVE cho mọi kind:",
+    "spec.width_policy = \"content\" — opt-in tái phân bổ width bảng >= 10 cột",
+    "theo nội dung header (weight = max(len(fold(header)),4), sàn 567 twips,",
+    "tổng width giữ nguyên, KHÔNG đổi số cột). Thiếu/giá trị khác = hành vi",
+    "cũ chia đều (regen không trôi với template đã commit). Generator:",
+    "build_form_maps._maybe_widen_table; evidence từng bảng: tools/",
+    "phase5r_table_policies.json; test: tools/test_phase5r_tables.py."
   ],
   "version": "v1",
   "owner_lane": "B2 generator + DOCX/export",
   "spec_fields_common": {
     "id": "string khớp [A-Za-z0-9_.]+ — duy nhất trong file spec",
     "section_id": "tùy chọn; định danh theo app/data/table_specs/manifest.json (mặc định = id)",
-    "semantic_key": "key draft/export — với kind dùng occurrences thì semantic_key = occurrence_id"
+    "semantic_key": "key draft/export — với kind dùng occurrences thì semantic_key = occurrence_id",
+    "width_policy": "tùy chọn (Lane C WLAY-008); 'content' = tái phân bổ width bảng rộng (>=10 cột) theo nội dung header; mặc định (thiếu) chia đều như cũ"
   },
   "kind_default": "list",
   "entry_common_fields": {

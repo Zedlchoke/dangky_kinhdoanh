@@ -343,11 +343,16 @@ def render(template_path: str | os.PathLike, data: dict,
                         # Phase 5R2 (WLAY-003): keepNext/keepLines/cantSplit
                         # cho cụm ký — chống tách title/instr qua trang.
                         xml = _keep_signature_blocks(xml)
-                        # Class 7 + Phase 5R2 (WLAY-004): chèn dòng trống cho
+                        # Phase 5R2 (WLAY-004): chèn dòng trống cho
                         # vùng ký (trên title) và BẢO ĐẢM VÙNG VIẾT dưới mỗi
                         # instruction — sau khi conditions/loops đã chốt
                         # cấu trúc.
                         xml = _ensure_signature_space(xml, form_id)
+                        # Phase 5R Lane C (WLAY-008/C2): pin chất lượng
+                        # bảng — tblHeader hàng header thật, cantSplit mọi
+                        # hàng, tblW = tổng grid (pct giữ nguyên). Đặt CUỐI
+                        # để pin cả bảng 1x2 chữ ký sinh phía trên.
+                        xml = _pin_table_quality(xml)
                     raw = xml.encode("utf-8")
                 zi = zipfile.ZipInfo(info.filename, date_time=info.date_time)
                 zi.compress_type = zipfile.ZIP_DEFLATED
@@ -1179,6 +1184,251 @@ def _horizontal_signature_tables(xml: str, form_id: str | None) -> str:
         new_body = body[:s] + tbl + body[e:]
         return xml[:bm.start(2)] + new_body + xml[bm.end(2):]
     return xml
+
+
+# ---------------------------------------------------------------------------
+# Phase 5R Lane C (WLAY-008/C2): pin chất lượng bảng lúc render
+#
+# Với MỌI bảng trong body (không chỉ bảng rộng), render must guarantee:
+#   (a) tblHeader  — hàng tiêu đề thật lặp lại khi bảng tràn trang. "Header
+#       thật" = hàng 0 có chữ và KHÔNG phải band quốc hiệu (heuristic
+#       is_header_band_table của docx_to_blocks: ô đầu "TÊN DOANH NGHIỆP"/
+#       "TÊN HỘ KINH DOANH" + cả bảng chứa khối quốc hiệu). Hàng tier-2 của
+#       header nhiều tầng (có ô vMerge-continuation) cũng được mark để Word
+#       repeat CẢ KHỐI header (w:tblHeader chỉ có tác dụng với các hàng đầu
+#       liên tiếp).
+#   (b) cantSplit  — mọi hàng (kể cả bảng lồng) không bị xẻ qua trang. Hàng
+#       cao hơn 1 trang Word tự xử (cantSplit vẫn an toàn theo spec OOXML).
+#   (c) tblW       — bảng khai width dxa ĐÚNG tổng gridCol; thiếu/sai/type
+#       auto -> set; type="pct" giữ nguyên.
+#
+# Idempotent: mọi lần chèn đều kiểm tra tồn tại trước; bảng đã đủ pin -> xml
+# trả về NGUYÊN byte. Không đụng nội dung pháp lý/số hàng/cột.
+# ---------------------------------------------------------------------------
+
+_TRPR_ORDER = ("w:cnfStyle", "w:divId", "w:gridBefore", "w:gridAfter",
+               "w:wBefore", "w:wAfter", "w:cantSplit", "w:trHeight",
+               "w:tblHeader", "w:tblCellSpacing", "w:jc", "w:hidden")
+_TRPR_INDEX = {name: i for i, name in enumerate(_TRPR_ORDER)}
+_TR_TOKEN_RE = re.compile(r"<w:tr[ >]|</w:tr>|<w:tbl[ >]|</w:tbl>")
+# band quốc hiệu (replicate docx_to_blocks.is_header_band_table ở lớp xml)
+_BAND_FIRST_CELL = ("TÊN DOANH NGHIỆP", "TÊN HỘ KINH DOANH")
+_BAND_MOTTO = "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM"
+_VMERGE_CONTINUE_RE = re.compile(
+    r'<w:vMerge(?:\s+w:val="(?:continue|true)")?\s*/>')
+
+
+def _row_visible_text(seg: str) -> str:
+    texts = re.findall(r"<w:t(?:\s[^>]*)?>([^<]*)</w:t>", seg)
+    return "".join(texts).strip()
+
+
+def _trpr_add_props(row_seg: str, props: list[str]) -> str:
+    """Chèn các property (vd '<w:cantSplit/>') vào trPr của hàng, đặt đúng
+    vị trí theo thứ tự schema CT_TrPr. Đã có property thì bỏ qua."""
+    need = [p for p in props if p not in row_seg]
+    if not need:
+        return row_seg
+    m = re.match(r"<w:tr((?:\s[^>]*)?)>", row_seg)
+    if not m:
+        return row_seg
+    open_tag = m.group(0)
+    rest = row_seg[m.end():]
+
+    def _order(p: str) -> int:
+        return _TRPR_INDEX.get(
+            "w:" + re.match(r"<w:(\w+)", p).group(1), 99)
+
+    need.sort(key=_order)
+    if rest.startswith("<w:trPr>"):
+        inner_end = rest.index("</w:trPr>")
+        inner = rest[len("<w:trPr>"):inner_end]
+        tail = rest[inner_end:]
+        for p in need:
+            tag = "w:" + re.match(r"<w:(\w+)", p).group(1)
+            idx = _TRPR_INDEX.get(tag, 99)
+            placed = False
+            for ex in re.finditer(r"<w:(\w+)[ />]", inner):
+                ex_tag = "w:" + ex.group(1)
+                if _TRPR_INDEX.get(ex_tag, 99) > idx:
+                    inner = inner[:ex.start()] + p + inner[ex.start():]
+                    placed = True
+                    break
+            if not placed:
+                inner = inner + p
+        return open_tag + "<w:trPr>" + inner + tail
+    return open_tag + "<w:trPr>" + "".join(need) + "</w:trPr>" + rest
+
+
+def _pin_tblw(seg: str) -> str:
+    """tblW type='dxa' w:w = tổng gridCol (missing/auto/sai -> set; pct giữ)."""
+    grid_m = re.search(r"<w:tblGrid>(.*?)</w:tblGrid>", seg, re.S)
+    if not grid_m:
+        return seg
+    cols = [int(w) for w in re.findall(
+        r'<w:gridCol[^>]*w:w="(\d+)"', grid_m.group(1))]
+    if not cols:
+        return seg
+    total = sum(cols)
+    tw = re.search(r"<w:tblW\b[^>]*?/>", seg)
+    if tw:
+        old = tw.group(0)
+        if 'w:type="pct"' in old:
+            return seg
+        mw = re.search(r'w:w="(\d+)"', old)
+        if mw and int(mw.group(1)) == total and 'w:type="dxa"' in old:
+            return seg  # đã đúng -> nguyên byte
+        new = '<w:tblW w:w="%d" w:type="dxa"/>' % total
+        return seg[:tw.start()] + new + seg[tw.end():]
+    # thiếu -> chèn vào tblPr trước phần tử đầu thuộc nhóm sau tblW
+    new = '<w:tblW w:w="%d" w:type="dxa"/>' % total
+    tblpr = re.search(r"<w:tblPr/>|<w:tblPr>.*?</w:tblPr>", seg, re.S)
+    if not tblpr:
+        return seg
+    old = tblpr.group(0)
+    if old == "<w:tblPr/>":
+        return seg[:tblpr.start()] + "<w:tblPr>" + new + "</w:tblPr>" + \
+            seg[tblpr.end():]
+    insert_at = None
+    for ex in re.finditer(r"<w:(\w+)[ />]", old):
+        if ex.group(1) in ("tblJc", "tblBorders", "tblLayout", "tblCellMar",
+                           "tblLook", "tblCaption", "tblDescription"):
+            insert_at = ex.start()
+            break
+    if insert_at is None:
+        insert_at = len(old) - len("</w:tblPr>")
+    new_pr = old[:insert_at] + new + old[insert_at:]
+    return seg[:tblpr.start()] + new_pr + seg[tblpr.end():]
+
+
+def _header_row_count(seg: str, rows: list[str]) -> int:
+    """Số hàng đầu được mark tblHeader: 0 nếu không phải header thật; nếu
+    header thật thì + các hàng tier tiếp theo đang vMerge-continuation."""
+    if len(rows) < 2:
+        return 0
+    if not _row_visible_text(rows[0]):
+        return 0
+    first = _row_visible_text(rows[0])
+    if any(k in first for k in _BAND_FIRST_CELL) and _BAND_MOTTO in seg:
+        return 0  # band layout quốc hiệu — không phải header cột
+    n = 1
+    for row in rows[1:3]:
+        if _VMERGE_CONTINUE_RE.search(row):
+            n += 1
+        else:
+            break
+    return n
+
+
+def _pin_one_table(seg: str, top_level: bool) -> str:
+    """Pin một bảng (đệ quy cho bảng lồng): tblW + cantSplit/tblHeader."""
+    # 1. tblW (mọi tầng bảng đều đáng pin)
+    seg = _pin_tblw(seg)
+    # 2. đếm hàng header trước khi biến đổi chuỗi
+    n_hdr = _header_row_count(seg, _direct_tbl_rows(seg)) if top_level else 0
+    # 3. xử lý ngược thứ tự để offset không trôi; bảng lồng được đệ quy trước
+    spans = _direct_tbl_rows_spans(seg)
+    for s, e in reversed(spans):
+        row = seg[s:e]
+        # bảng lồng bên trong ô -> pin đệ quy (chỉ cantSplit + tblW)
+        for ns, ne in _iter_tbls_in(row):
+            inner = row[ns:ne]
+            pinned_inner = _pin_one_table(inner, top_level=False)
+            if pinned_inner != inner:
+                row = row[:ns] + pinned_inner + row[ne:]
+        props = ["<w:cantSplit/>"]
+        if n_hdr and _row_index_of(spans, (s, e)) < n_hdr:
+            props.append("<w:tblHeader/>")
+        new_row = _trpr_add_props(row, props)
+        if new_row != row:
+            seg = seg[:s] + new_row + seg[e:]
+    return seg
+
+
+def _row_index_of(spans: list, span: tuple) -> int:
+    for i, sp in enumerate(spans):
+        if tuple(sp) == span:
+            return i
+    return -1
+
+
+def _iter_tbls_in(seg: str):
+    """(start, end) bảng lồng NGAY TRONG seg (depth 1 tương đối)."""
+    pos = 0
+    depth = 0
+    while True:
+        m = re.search(r"<w:tbl[ >]|</w:tbl>", seg[pos:])
+        if not m:
+            return
+        tok = m.group(0)
+        if tok.startswith("<w:tbl"):
+            if depth == 0:
+                start = pos + m.start()
+            depth += 1
+        else:
+            depth -= 1
+            if depth == 0:
+                yield start, pos + m.end()
+        pos += m.end()
+
+
+def _direct_tbl_rows(seg: str) -> list[str]:
+    return [seg[s:e] for s, e in _direct_tbl_rows_spans(seg)]
+
+
+def _direct_tbl_rows_spans(seg: str) -> list[tuple[int, int]]:
+    """(start, end) các hàng TRỰC TIẾP của bảng (seg gồm cả tag mở bảng)."""
+    spans = []
+    pos = 0
+    tbl_depth = 0
+    while True:
+        m = _TR_TOKEN_RE.search(seg, pos)
+        if not m:
+            break
+        tok = m.group(0)
+        if tok.startswith("<w:tbl"):
+            tbl_depth += 1
+            pos = m.end()
+            continue
+        if tok == "</w:tbl>":
+            tbl_depth -= 1
+            pos = m.end()
+            continue
+        if tok.startswith("<w:tr"):
+            if tbl_depth == 1:
+                d = 1
+                scan = m.end()
+                while d:
+                    mm = re.search(r"<w:tr[ >]|</w:tr>", seg[scan:])
+                    d += -1 if mm.group(0) == "</w:tr>" else 1
+                    scan += mm.end()
+                spans.append((m.start(), scan))
+                pos = scan
+                continue
+            pos = m.end()
+            continue
+        pos = m.end()
+    return spans
+
+
+def _pin_table_quality(xml: str) -> str:
+    """WLAY-008/C2: pin tblHeader/cantSplit/tblW cho mọi bảng trong body.
+    Idempotent; không đụng bảng đã đúng (byte-identical)."""
+    bm = _BODY_RE.search(xml)
+    if not bm:
+        return xml
+    body = bm.group(2)
+    out: list[str] = []
+    pos = 0
+    for s, e in _iter_balanced_tbls(body):
+        if s < pos:
+            continue  # bảng lồng đã nằm trong span cha đã xử lý
+        seg = body[s:e]
+        out.append(body[pos:s])
+        out.append(_pin_one_table(seg, top_level=True))
+        pos = e
+    out.append(body[pos:])
+    return xml[:bm.start(2)] + "".join(out) + xml[bm.end(2):]
 
 
 # ---------------------------------------------------------------------------

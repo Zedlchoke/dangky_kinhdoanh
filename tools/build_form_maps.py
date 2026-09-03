@@ -661,7 +661,7 @@ def _json_spec(raw_spec, form_id="<form>"):
     """
     kind = raw_spec.get("kind") or KIND_LIST
     if kind == KIND_LIST:
-        return {
+        out = {
             "id": raw_spec["id"],
             "kind": KIND_LIST,
             "detect": set(raw_spec.get("detect") or []),
@@ -670,6 +670,10 @@ def _json_spec(raw_spec, form_id="<form>"):
             "loop": raw_spec["loop"],
             "fields": list(raw_spec.get("fields") or []),
         }
+        # Lane C (WLAY-008): opt-in tái phân bổ width theo nội dung
+        if raw_spec.get("width_policy"):
+            out["width_policy"] = raw_spec["width_policy"]
+        return out
     return _validate_kind_spec(raw_spec, form_id)
 
 
@@ -751,14 +755,16 @@ def _validate_kind_spec(raw_spec, form_id="<form>"):
                          % (form_id, sid_raw, kind, msg))
 
     # Siết khóa trường theo kind: mọi khoá lạ là lỗi đánh máy -> chặn sớm.
+    # ("width_policy": Lane C WLAY-008 — opt-in 'content' tái phân bổ width
+    # bảng rộng theo nội dung; giá trị khác 'content' bị chặn ở dưới.)
     spec_keys = {
         KIND_FIXED_MATRIX: {"id", "kind", "semantic_key", "section_id",
-                            "columns", "fixed_rows", "totals"},
+                            "columns", "fixed_rows", "totals", "width_policy"},
         KIND_NESTED_GRID: {"id", "kind", "semantic_key", "section_id", "loop",
                            "stt", "header_rows", "columns", "discriminator",
-                           "totals"},
+                           "totals", "width_policy"},
         KIND_OUTPUT_TABLE: {"id", "kind", "semantic_key", "section_id",
-                            "grid"},
+                            "grid", "width_policy"},
     }
     if kind in spec_keys:
         unknown = set(raw_spec) - spec_keys[kind]
@@ -799,6 +805,12 @@ def _validate_kind_spec(raw_spec, form_id="<form>"):
         "section_id": raw_spec.get("section_id") or sid_raw,
         "kind": kind,
     }
+    # Lane C (WLAY-008): width_policy 'content' — chỉ nhận đúng giá trị này
+    wp = raw_spec.get("width_policy")
+    if wp is not None:
+        if wp != WIDTH_POLICY_CONTENT:
+            fail("width_policy chi nhan 'content', nhan %r" % (wp,))
+        common["width_policy"] = wp
     if "section_id" in raw_spec and not (
             isinstance(raw_spec["section_id"], str)
             and _ID_RE.match(raw_spec["section_id"])):
@@ -1127,6 +1139,123 @@ def _set_table_borders(tbl):
     tbl_pr.append(borders)
 
 
+# ---------------------------------------------------------------------------
+# Phase 5R Lane C (WLAY-008/C3): tái phân bổ width theo nội dung cho bảng rộng
+#
+# Bảng >= WIDE_TABLE_MIN_COLS cột do python-docx dựng MẶC ĐỊNH chia đều
+# width (vd 15 cột -> 576 twips/cột ~ 1.0 cm) khiến header dài như "Chủ sở
+# hữu/Thành viên công ty TNHH…" vỡ thành cụm 1-3 ký tự. Builder gọi
+# _maybe_widen_table để phân bổ lại width tỉ lệ độ dài nội dung đại diện
+# (header/nhãn) với sàn MIN_COL_TWIPS (567 = 1 cm, khớp ngưỡng D9 của gate):
+#   - KHÔNG đổi số cột, KHÔNG xóa cột, tổng width giữ nguyên;
+#   - deterministic (regen hai lần ra cùng grid);
+#   - mọi ô (tcW) được đặt khớp span gridSpan để Word không tự chia lại.
+# BẬT/TẮT theo ENTRY: chỉ spec khai "width_policy": "content" mới được tái
+# phân bổ — default là hành vi cũ (chia đều) để regen form chưa flag KHÔNG
+# trôi so với template đã commit (guard ID7 test_generator_deep_idempotency).
+# Flag do lane C đặt trong tools/form_specs/** (tools/
+# phase5r_table_policies.json ghi evidence từng bảng); Lead flip khi regen.
+# Chỉ áp dụng cho bảng >= 10 cột — bảng nhỏ giữ hành vi cũ (zero churn).
+# ---------------------------------------------------------------------------
+
+WIDE_TABLE_MIN_COLS = 10
+MIN_COL_TWIPS = 567  # 1 cm — trùng ngưỡng D9 (tools/phase5_visual_gate.py)
+WIDTH_POLICY_CONTENT = "content"
+
+
+def _content_col_widths(weights: list, total: int,
+                        min_w: int = MIN_COL_TWIPS) -> list:
+    """Phân bổ `total` twips cho các cột theo `weights` (độ dài nội dung).
+
+    Sàn min_w cho mọi cột; phần lẻ làm tròn bù vào cột weight lớn trước
+    (stable theo index) để tổng luôn đúng `total` khi khả thi."""
+    n = len(weights)
+    if n == 0:
+        return []
+    wsum = sum(max(w, 1) for w in weights)
+    raw = [max(min_w, total * max(w, 1) // wsum) for w in weights]
+    rem = total - sum(raw)
+    order = sorted(range(n), key=lambda i: (-max(weights[i], 1), i))
+    guard = 0
+    while rem != 0 and guard <= 4 * total:
+        idx = order[guard % n]
+        step = 1 if rem > 0 else -1
+        if raw[idx] + step >= min_w:
+            raw[idx] += step
+            rem -= step
+        guard += 1
+    return raw
+
+
+def _apply_content_widths(tbl, weights: list) -> None:
+    """Đặt gridCol + tcW (đúng span gridSpan) theo weights; tổng giữ nguyên."""
+    tbl_el = tbl._tbl
+    grid = tbl_el.find(qn("w:tblGrid"))
+    if grid is None:
+        return
+    cols = [el for el in grid.iterchildren() if el.tag == qn("w:gridCol")]
+    if len(cols) != len(weights):
+        return
+    total = sum(int(el.get(qn("w:w")) or 0) for el in cols)
+    if total <= 0:
+        return
+    widths = _content_col_widths(weights, total)
+    for el, w in zip(cols, widths):
+        el.set(qn("w:w"), str(w))
+    for tr in tbl_el.iterchildren(qn("w:tr")):
+        cursor = 0
+        for tc in tr.iterchildren(qn("w:tc")):
+            span = 1
+            tcpr = tc.find(qn("w:tcPr"))
+            if tcpr is not None:
+                gs = tcpr.find(qn("w:gridSpan"))
+                if gs is not None:
+                    span = int(gs.get(qn("w:val")) or 1)
+            end = min(cursor + span, len(widths))
+            w = sum(widths[cursor:end]) if end > cursor else \
+                widths[min(cursor, len(widths) - 1)]
+            if tcpr is None:
+                tcpr = OxmlElement("w:tcPr")
+                tc.insert(0, tcpr)
+            tcw = tcpr.find(qn("w:tcW"))
+            if tcw is None:
+                # tcW đứng trước gridSpan trong CT_TcPr -> chèn đầu tcPr
+                tcw = OxmlElement("w:tcW")
+                tcpr.insert(0, tcw)
+            tcw.set(qn("w:w"), str(w))
+            tcw.set(qn("w:type"), "dxa")
+            cursor += span
+
+
+def _header_col_weights(header_rows: list, ncols: int) -> list:
+    """Weight mỗi cột vật lý từ header nhiều tầng (text dài nhất phủ cột)."""
+    weights = [4] * ncols
+    occupied = {}
+    for ri, row_cells in enumerate(header_rows):
+        cursor = 0
+        for src in row_cells:
+            cs = src.get("colspan", 1)
+            rs = src.get("rowspan", 1)
+            text = fold(re.sub(r"\s+", " ", src.get("text", ""))).strip()
+            for c in range(cursor, min(cursor + cs, ncols)):
+                key = (ri, c)
+                occupied[key] = text
+                weights[c] = max(weights[c], len(text))
+            # ô rowspan của hàng trên vẫn phủ cột này — trọng số đã tính
+            cursor += cs
+    return weights
+
+
+def _maybe_widen_table(tbl, ncols: int, weights: list,
+                       spec: dict | None = None) -> None:
+    """Phân bổ lại width theo nội dung nếu spec bật width_policy='content'
+    và bảng đủ rộng (>= 10 cột)."""
+    if spec is None or spec.get("width_policy") != WIDTH_POLICY_CONTENT:
+        return
+    if ncols >= WIDE_TABLE_MIN_COLS:
+        _apply_content_widths(tbl, weights)
+
+
 def _col_tags_for_headers(headers, spec):
     tags = {}
     for ci, h in enumerate(headers):
@@ -1176,6 +1305,10 @@ def _build_list_table(doc, headers, spec):
                 txt += "{/%s}" % spec["loop"]
             if txt:
                 row.cells[c].paragraphs[0].add_run(txt)
+    # Lane C (WLAY-008): bảng rộng -> width tỉ lệ nội dung header
+    _maybe_widen_table(
+        tbl, ncols,
+        [max(len(fold(re.sub(r"\s+", " ", h)).strip()), 4) for h in headers])
     return tbl
 
 
@@ -1277,6 +1410,15 @@ def _build_fixed_matrix_table(doc, spec):
                 _cell_set_text(cells[ci], row["label"] if ci == 0 else "")
                 continue
             _cell_set_text(cells[ci], "{%s.%s.%s}" % (sem, row["id"], tag))
+    # Lane C (WLAY-008): bảng rộng -> width tỉ lệ nội dung (cột nhãn lấy
+    # max với nhãn dòng dài nhất)
+    weights = [max(len(fold(re.sub(r"\s+", " ", c["header"])).strip()), 4)
+               for c in cols]
+    if rows:
+        weights[0] = max(weights[0], max(
+            len(fold(re.sub(r"\s+", " ", r.get("label", ""))).strip())
+            for r in rows))
+    _maybe_widen_table(tbl, ncols, weights, spec)
     return tbl
 
 
@@ -1310,6 +1452,9 @@ def _build_nested_grid_table(doc, spec):
             txt += "{/%s}" % spec["loop"]
         if txt:
             _cell_set_text(tpl_row.cells[c], txt)
+    # Lane C (WLAY-008): bảng rộng -> width tỉ lệ nội dung header nhiều tầng
+    _maybe_widen_table(tbl, width,
+                       _header_col_weights(spec["header_rows"], width), spec)
     return tbl
 
 

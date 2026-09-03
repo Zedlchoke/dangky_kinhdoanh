@@ -7,6 +7,7 @@
   {
    "spec": {
     "id": "ds_thanh_vien_hop_danh",
+    "width_policy": "content",
     "kind": "list",
     "detect": [
      "stt",

@@ -26,6 +26,14 @@ import docx  # python-docx
 
 from tools.docx_render import write_rendered
 
+
+def _count_rows(xml: str) -> int:
+    """Đếm w:tr theo MỞ THẬT của tag ('<w:tr>' hoặc '<w:tr ...>'), không
+    lẫn <w:trPr> (Phase 5R Lane C: render pin cantSplit/tblHeader tạo
+    trPr cho mọi hàng — idiom cũ _count_rows(b) đếm dư)."""
+    import re as _re
+    return len(_re.findall(r"<w:tr[ >]", xml))
+
 ROOT = Path(__file__).resolve().parent.parent
 APP = ROOT / "app"
 OUT_DIR = ROOT / "generated_ho_so" / "_audit_engine"
@@ -188,12 +196,12 @@ def t_loop_sizes():
     with zipfile.ZipFile(out1) as z:
         b = z.read("word/document.xml").decode("utf-8")
     assert "Mot" in b and "{#ds}" not in b and "{ho_ten}" not in b
-    assert b.count("<w:tr") == 2, "1 phần tử: phải còn 2 hàng (tiêu đề + dữ liệu)"
+    assert _count_rows(b) == 2, "1 phần tử: phải còn 2 hàng (tiêu đề + dữ liệu)"
     out100 = OUT_DIR / "loop100.docx"
     write_rendered(tpl, {"ds": [{"stt": str(i), "ho_ten": "N%d" % i} for i in range(100)]}, out100)
     with zipfile.ZipFile(out100) as z:
         b = z.read("word/document.xml").decode("utf-8")
-    assert b.count("<w:tr") == 101
+    assert _count_rows(b) == 101
     verify_rendered(out100)
 
 
@@ -207,18 +215,18 @@ def t_loop_bad_items():
         b = z.read("word/document.xml").decode("utf-8")
     # chỉ dict được nhân bản; None/chuỗi/số bị bỏ qua im lặng
     assert "OK" in b and "{#ds}" not in b
-    assert b.count("<w:tr") == 2, "chỉ hàng dict hợp lệ được giữ"
+    assert _count_rows(b) == 2, "chỉ hàng dict hợp lệ được giữ"
     out2 = OUT_DIR / "loopnull.docx"
     write_rendered(tpl, {"ds": None}, out2)
     with zipfile.ZipFile(out2) as z:
         b = z.read("word/document.xml").decode("utf-8")
-    assert b.count("<w:tr") == 1, "giá trị không phải list: hàng khuôn phải bị xóa"
+    assert _count_rows(b) == 1, "giá trị không phải list: hàng khuôn phải bị xóa"
     # thiếu hẳn key cũng vậy
     out3 = OUT_DIR / "loopabsent.docx"
     write_rendered(tpl, {}, out3)
     with zipfile.ZipFile(out3) as z:
         b = z.read("word/document.xml").decode("utf-8")
-    assert b.count("<w:tr") == 1
+    assert _count_rows(b) == 1
 
 
 @check("PLII_M01: 2 loop khac ten trong 1 tai lieu (ds_nganh + ds_tv_ho_gia_dinh)")

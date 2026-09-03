@@ -27,6 +27,7 @@
     {
       "spec": {
         "id": "ds_tv_ho_gia_dinh",
+        "width_policy": "content",
         "detect": ["stt", "ho ten", "chu ky", "quoc tich"],
         "stt_tag": true,
         "cols": [

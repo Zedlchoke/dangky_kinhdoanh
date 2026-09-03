@@ -238,10 +238,12 @@ _SIG_INSTR_FOLD = re.compile(
 
 
 def _sig_lines(page) -> list[dict]:
-    """Gom words thành dòng; đánh dấu title/instruction chữ ký."""
+    """Gom words thành dòng; đánh dấu title/instruction chữ ký. Title nhận
+    theo 2 đường: (a) vocabulary nhãn người ký; (b) dòng CHỮ IN ngắn kề trên
+    instruction (caps-ratio >= 0.6, <= 80 ký tự) — vocabulary không thể liệt
+    kê hết nhãn pháp lý (M14: 'NGƯỜI ĐƯỢC TẶNG CHO/NGƯỜI THỪA KẾ/NGƯỜI MUA')."""
     lines: dict[tuple, list] = {}
     for w in page["words"]:
-        key = (w[7], round(w[1] / 3))     # (block,line) gần đúng theo y-bucket
         lines.setdefault((w[5], w[6]), []).append(w)
     out = []
     for _bk, ws in lines.items():
@@ -252,9 +254,15 @@ def _sig_lines(page) -> list[dict]:
         y0 = min(w[1] for w in ws)
         y1 = max(w[3] for w in ws)
         f = _fold(text)
+        caps = 0.0
+        alpha = [c for c in text if c.isalpha()]
+        if len(alpha) >= 4:
+            caps = sum(c.isupper() for c in alpha) / len(alpha)
         out.append({"text": text, "fold": f, "x0": x0, "x1": x1,
                     "y0": y0, "y1": y1,
-                    "title": bool(_SIG_TITLE_FOLD.match(f)),
+                    "title": bool(_SIG_TITLE_FOLD.match(f))
+                    or (caps >= 0.6 and len(text.strip()) <= 80
+                        and not _SIG_INSTR_FOLD.search(f)),
                     "instr": bool(_SIG_INSTR_FOLD.search(f))})
     return out
 

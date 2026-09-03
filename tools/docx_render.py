@@ -868,6 +868,9 @@ def _keep_signature_blocks(xml: str) -> str:
     # Title para NGAY TRƯỚC instr para được GIỮ LẠI (buffer) đến khi biết
     # token kế tiếp: là instr -> flush với keepNext+keepLines; khác -> flush
     # nguyên trạng. Idempotent: đã có flag thì bytes giữ nguyên.
+    # Kèm theo (5R4): footnote-body ("3 Người đề nghị ký ...") nhận keepLines
+    # — footnote bị xẻ giữa câu sang trang gần trống (PLI_M80 long-boundary
+    # trang 3 còn 3 từ 'dấu vào phần này.').
     out: list[str] = []
     pos = 0
     pending: tuple[int, int, str] | None = None  # (start, end, tok) title treo
@@ -907,6 +910,14 @@ def _keep_signature_blocks(xml: str) -> str:
             pos = m.start()
             pending = (m.start(), m.end(), tok)
             continue
+        # 5R4: footnote-body ("3 Người đề nghị ký ...") — keepLines cả đoạn,
+        # footnote không bị xẻ giữa câu sang trang gần trống
+        if text.strip() and _FOOTNOTE_BODY_RE.match(text.strip()):
+            _flush(False)
+            out.append(body[pos:m.start()])
+            out.append(_ppr_add_flag(tok, "<w:keepLines/>"))
+            pos = m.end()
+            continue
         _flush(False)
         out.append(body[pos:m.end()])
         pos = m.end()
@@ -935,6 +946,10 @@ def _keep_signature_blocks(xml: str) -> str:
 
 # Bảng ký cần khoá hàng: giới hạn số hàng (bảng 1x2 sau WLAY-002 là 1 hàng)
 _SIG_TABLE_MAX_ROWS = 4
+
+# Footnote-body: "3 Người đề nghị ký và ghi họ tên..." — số cuối chú thích
+# đứng NGAY TRƯỚC chữ, không có dấu chấm/ngoặc (tiền lệ layout_roles).
+_FOOTNOTE_BODY_RE = re.compile(r"^\d{1,2}(?![.)])\s+\S")
 
 
 def _iter_balanced_tbls(body: str):

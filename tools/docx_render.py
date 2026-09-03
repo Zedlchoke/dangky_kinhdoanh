@@ -677,8 +677,14 @@ _TRAILING_EMPTY_HAS_CONTENT_RE = re.compile(
 
 
 def _drop_trailing_empty_para(xml: str) -> str:
-    """Xoá paragraph rỗng cuối body (ngay trước sectPr cuối) — gốc rễ trang
-    trắng M72. Không có paragraph rỗng cuối thì trả nguyên xml."""
+    """Xoá TOÀN BỘ chuỗi paragraph rỗng cuối body (ngay trước sectPr cuối)
+    — gốc rễ trang trắng: fix 1 paragraph (Lane A) chưa đủ, PLI_M05 còn 14
+    paragraph rỗng cuối body tràn thành trang trắng. Điều kiện cho TỪNG
+    paragraph bị bỏ: con trực tiếp của body, rỗng hoàn toàn (không w:t chữ,
+    không drawing/pict). w:tbl là span riêng nên không bao giờ đụng paragraph
+    cuối bảng. Pass này chạy TRƯỚC các pass khối ký (5R2) nên spacer vùng
+    viết do _ensure_signature_space chèn KHÔNG bao giờ bị xóa. Không có
+    paragraph rỗng cuối thì trả nguyên xml (byte-identical)."""
     bm = _BODY_RE.search(xml)
     if not bm:
         return xml
@@ -686,18 +692,21 @@ def _drop_trailing_empty_para(xml: str) -> str:
     spans = _split_body_children(body)
     if len(spans) < 2:
         return xml
-    last_s, last_e = spans[-1]
-    if not body[last_s:last_e].startswith("<w:sectPr"):
+    if not body[spans[-1][0]:spans[-1][1]].startswith("<w:sectPr"):
         return xml
-    prev_s, prev_e = spans[-2]
-    seg = body[prev_s:prev_e]
-    if not seg.startswith("<w:p"):
-        return xml  # w:tbl/sectPr — không đụng
-    texts = "".join(re.findall(r"<w:t[^>]*>([^<]*)</w:t>", seg))
-    if texts.strip() or _TRAILING_EMPTY_HAS_CONTENT_RE.search(seg):
-        return xml  # có nội dung -> giữ nguyên
-    new_body = body[:prev_s] + body[prev_e:]
-    return xml[:bm.start(2)] + new_body + xml[bm.end(2):]
+    cut = len(spans) - 1   # span[cut] là phần tử trống đầu tiên sẽ bị bỏ
+    while cut - 1 >= 0:
+        s, e = spans[cut - 1]
+        seg = body[s:e]
+        if not seg.startswith("<w:p"):
+            break  # w:tbl/sectPr — dừng, không đụng
+        texts = "".join(re.findall(r"<w:t[^>]*>([^<]*)</w:t>", seg))
+        if texts.strip() or _TRAILING_EMPTY_HAS_CONTENT_RE.search(seg):
+            break  # có nội dung -> giữ từ đây về sau
+        cut -= 1
+    if cut == len(spans) - 1:
+        return xml  # không có paragraph rỗng cuối nào
+    return xml[:bm.start(2)] + body[:spans[cut][0]] + xml[bm.end(2):]
 
 
 # ---------------------------------------------------------------------------

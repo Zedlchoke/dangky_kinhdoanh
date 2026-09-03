@@ -330,6 +330,9 @@ def render(template_path: str | os.PathLike, data: dict,
                         # Phase 5R1 (WLAY-001): loại marker source-indicator
                         # sau khi conditions/loops/subst đã chốt văn bản.
                         xml = _drop_source_indicators(xml)
+                        # Phase 5R1 (WLAY-007a): bỏ paragraph rỗng cuối body
+                        # (gốc rễ trang trắng M72 TNHH_2TV).
+                        xml = _drop_trailing_empty_para(xml)
                         # Class 7: chèn dòng trống cho vùng ký THÀNH PHẦN
                         # CUỐI — sau khi conditions/loops đã chốt cấu trúc.
                         xml = _ensure_signature_space(xml)
@@ -633,6 +636,51 @@ def _drop_source_indicators(xml: str) -> str:
         return xml
     out.append(body[pos:])
     return xml[:bm.start(2)] + "".join(out) + xml[bm.end(2):]
+
+
+# ---------------------------------------------------------------------------
+# Phase 5R1 (WLAY-007a): trang trắng do paragraph rỗng cuối body
+#
+# Gốc rễ (M72 variant TNHH_2TV, tái hiện từ corpus audit): đuôi body sau
+# render là [...nội dung][footnote có điều kiện][paragraph RỖNG][sectPr].
+# Paragraph rỗng cuối (kế thừa từ bản nguồn, spacing before=120) là con
+# trực tiếp cuối ngay trước sectPr — khi nội dung trước nó lấp vừa đầy
+# trang cuối, nó tự mình tràn sang trang kế và in ra trang TRẮNG 0 ký tự.
+# Điều trị CÓ ĐIỀU KIỆN ngay lúc export (chung cho mọi form, không hard-code
+# theo fixture, không chèn page break): chỉ xoá KHI paragraph đó
+#   (a) là con trực tiếp CUỐI của body đứng ngay trước sectPr cuối, và
+#   (b) rỗng hoàn toàn — không w:t có chữ, không drawing/pict (không giữ
+#       nội dung nào, không đụng paragraph cuối BẢNG vì w:tbl là span riêng).
+# Mất một dòng trống cuối tài liệu không mất nội dung pháp lý; khoảng trống
+# vùng ký đã được _ensure_signature_space bảo đảm độc lập.
+# ---------------------------------------------------------------------------
+
+_TRAILING_EMPTY_HAS_CONTENT_RE = re.compile(
+    r"<w:drawing[ >]|<w:pict[ >]|<w:object[ >]")
+
+
+def _drop_trailing_empty_para(xml: str) -> str:
+    """Xoá paragraph rỗng cuối body (ngay trước sectPr cuối) — gốc rễ trang
+    trắng M72. Không có paragraph rỗng cuối thì trả nguyên xml."""
+    bm = _BODY_RE.search(xml)
+    if not bm:
+        return xml
+    body = bm.group(2)
+    spans = _split_body_children(body)
+    if len(spans) < 2:
+        return xml
+    last_s, last_e = spans[-1]
+    if not body[last_s:last_e].startswith("<w:sectPr"):
+        return xml
+    prev_s, prev_e = spans[-2]
+    seg = body[prev_s:prev_e]
+    if not seg.startswith("<w:p"):
+        return xml  # w:tbl/sectPr — không đụng
+    texts = "".join(re.findall(r"<w:t[^>]*>([^<]*)</w:t>", seg))
+    if texts.strip() or _TRAILING_EMPTY_HAS_CONTENT_RE.search(seg):
+        return xml  # có nội dung -> giữ nguyên
+    new_body = body[:prev_s] + body[prev_e:]
+    return xml[:bm.start(2)] + new_body + xml[bm.end(2):]
 
 
 # ---------------------------------------------------------------------------

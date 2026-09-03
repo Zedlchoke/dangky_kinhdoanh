@@ -31,6 +31,7 @@ from __future__ import annotations
 import io
 import json
 import re
+import shutil
 import sys
 import unicodedata
 import zipfile
@@ -268,6 +269,114 @@ def t_w2_unit_drop():
     texts = [p.text for p in doc.paragraphs]
     assert "Giấy chứng nhận đăng ký doanh nghiệp" in texts, "mat chu that"
     assert not any("MERGEFORMAT" in t for t in texts)
+
+
+# ---------------------------------------------------------------------------
+# W3 — WLAY-007a: PLI_M72 variant TNHH_2TV trang trắng.
+#
+# GỐC RỄ (đã điều tra tại BASE c9d095e + corpus audit
+# generated_ho_so/phase5_word_open_tnhh_2tv_20260903_180918/PLI_M72.docx):
+# đuôi body sau render của mọi variant M72 là
+#   [...nội dung][đường kẻ ký][footnote có điều kiện][paragraph RỖNG][sectPr]
+# paragraph rỗng cuối (spacing before=120, kế thừa từ bản nguồn) là con
+# TRỰC TIẾP cuối của body ngay trước sectPr. Khi nội dung trước nó lấp vừa
+# đầy trang cuối, paragraph rỗng này tự mình tràn sang trang kế -> trang
+# trắng 0 ký tự (reproduce: convert corpus docx trên bằng soffice + pymupdf
+# → 3 trang, chars/page = [577, 641, 0]).
+# FIX OOXML-đúng CÓ ĐIỀU KIỆN tại render: xoá paragraph CUỐI body chỉ khi
+# (a) là con trực tiếp cuối trước sectPr cuối, (b) rỗng hoàn toàn (không
+# text, không drawing/pict). KHÔNG xoá mù paragraph cuối, KHÔNG hard-code
+# page break theo fixture, KHÔNG đụng paragraph cuối BẢNG.
+# ---------------------------------------------------------------------------
+
+W3_SANDBOX = OUT_DIR / "w3_sandbox_pdf"
+
+
+def _render_m72_variant(variant_label: str) -> bytes:
+    from tools.test_m72_conditional_export import (
+        render_payload, VARIANTS, TEMPLATE_PATH,
+    )
+    v = next(x for x in VARIANTS if x["label"] == variant_label)
+    return render(TEMPLATE_PATH, render_payload(v))
+
+
+@check("W3 reproduction: corpus audit tnhh_2tv co trang 3 chars=0")
+def t_w3_reproduction_corpus():
+    """Tái hiện defect từ artifact audit: docx corpus (BASE) convert ra
+    trang trắng 0 ký tự — đây là bằng chứng gốc rễ, dùng thay fixture tự chế."""
+    corpus = Path("/Users/hoangminhlong/orca/dangky_kinhdoanh/generated_ho_so"
+                  "/phase5_word_open_tnhh_2tv_20260903_180918/PLI_M72.docx")
+    if not corpus.exists():
+        return  # corpus không có ở máy chạy test: bỏ qua phần reproduction
+    import subprocess
+    W3_SANDBOX.mkdir(parents=True, exist_ok=True)
+    dst = W3_SANDBOX / "audit_base.docx"
+    shutil.copyfile(corpus, dst)
+    subprocess.run(
+        ["soffice", "--headless", "--norestore",
+         "-env:UserInstallation=file:///tmp/p5r_lo_profile_w3",
+         "--convert-to", "pdf", "--outdir", str(W3_SANDBOX), str(dst)],
+        capture_output=True, timeout=120)
+    import fitz
+    pdf = W3_SANDBOX / "audit_base.pdf"
+    if not pdf.exists():
+        return  # soffice không chạy được ở máy này: bỏ qua, test khác chặn
+    doc = fitz.open(str(pdf))
+    chars = [len("".join(doc[i].get_text("text").split()))
+             for i in range(doc.page_count)]
+    assert any(c < 20 for c in chars), \
+        ("corpus audit khong con trang trang (%s) — reproduction het thoi "
+         "diem dung, hay doi evidence moi" % chars)
+
+
+@check("W3 xml: khong con paragraph rong dung CUOI body truoc sectPr")
+def t_w3_no_trailing_empty_para():
+    from tools.docx_render import _split_body_children
+    for label in ("DNTN", "TNHH_1TV", "TNHH_2TV", "CTCP", "DHDN"):
+        xml = doc_xml(_render_m72_variant(label))
+        body = re.search(r"<w:body>(.*)</w:body>", xml, re.S).group(1)
+        spans = _split_body_children(body)
+        assert spans, "%s: body rong?" % label
+        last = spans[-1]
+        assert body[last[0]:last[1]].startswith("<w:sectPr"), \
+            "%s: span cuối không phải sectPr" % label
+        if len(spans) >= 2:
+            prev = body[spans[-2][0]:spans[-2][1]]
+            texts = "".join(re.findall(r"<w:t[^>]*>([^<]*)</w:t>", prev))
+            if prev.startswith("<w:p"):
+                assert texts.strip(), \
+                    ("%s: paragraph rỗng vẫn nằm cuối body trước sectPr "
+                     "(gốc rễ trang trắng chưa xử lý)" % label)
+
+
+@check("W3 pagination: TNHH_2TV khong trang chars<20; 4 variant khac giu page count")
+def t_w3_pagination():
+    """Đỏ trước khi sửa qua reproduction; sau fix: page count 4 variant
+    DNTN/TNHH_1TV/CTCP/DHDN giữ nguyên (2/2/3/2 đo tại BASE), TNHH_2TV
+    không còn trang trắng (<20 chars)."""
+    import subprocess
+    import fitz
+    W3_SANDBOX.mkdir(parents=True, exist_ok=True)
+    baseline_pages = {"DNTN": 2, "TNHH_1TV": 2, "CTCP": 3, "DHDN": 2}
+    for label in ("DNTN", "TNHH_1TV", "TNHH_2TV", "CTCP", "DHDN"):
+        docx = W3_SANDBOX / ("M72_%s.docx" % label)
+        docx.write_bytes(_render_m72_variant(label))
+        subprocess.run(
+            ["soffice", "--headless", "--norestore",
+             "-env:UserInstallation=file:///tmp/p5r_lo_profile_w3",
+             "--convert-to", "pdf", "--outdir", str(W3_SANDBOX), str(docx)],
+            capture_output=True, timeout=120)
+        pdf = W3_SANDBOX / ("M72_%s.pdf" % label)
+        assert pdf.exists(), "%s: soffice khong tao duoc PDF" % label
+        doc = fitz.open(str(pdf))
+        chars = [len("".join(doc[i].get_text("text").split()))
+                 for i in range(doc.page_count)]
+        assert not any(c < 20 for c in chars), \
+            "%s: con trang trang chars=%s" % (label, chars)
+        if label in baseline_pages:
+            assert doc.page_count == baseline_pages[label], \
+                ("%s: page count %d != baseline %d" %
+                 (label, doc.page_count, baseline_pages[label]))
 
 
 def main() -> int:

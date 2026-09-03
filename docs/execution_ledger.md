@@ -405,3 +405,26 @@ máy Windows. Wave H: chờ P5R đủ điều kiện.
 | Coverage totals | Lead | IV 33 · BLOCKED 37 · NO_TABLE 7 · MISSING 24 · PARTIAL 4 · OUTPUT_ONLY 6 = **111** | ✅ |
 | Word corrupt (Class 16) | Lead | **Mitigated at export layer**: LO normalize trong Bridge.export → user nhận Word-compatible .docx + .pdf; template gốc vẫn corrupt nếu mở trực tiếp | ⏳ mitigated |
 | PDF export | Lead | `payload.format = docx|pdf|both` (mặc định both); LO headless convert; ZIP chứa đúng định dạng; soffice không có → fallback .docx | ✅ `aeb9fad`+ |
+
+## Phase 5R — Word/DOCX Layout Remediation @ main 403ca1a→93d69f0 (2026-09-03/04, Lead + 3 lane)
+
+Baseline dirty Phase 5 WIP được Lead xác minh (targeted tests xanh) và commit
+`b7e4ef4`; gate visual dựng tại `c9d095e` + `18d7101`; baseline RED 455 records
+/ 244 FAIL đo tại `generated_ho_so/_visual_layout/phase5r_gate/baseline_c9d095e/`.
+
+| Task | Owner | Evidence | Trạng thái |
+|---|---|---|---|
+| 5R0 gate visual | Lead | `phase5_fixtures.py` (5 fixture semantic, validator V1–V4 chặn dummy tick tràn, selftest 436/436); `phase5_visual_gate.py` (export Bridge→LO→PDF→PNG từng trang + 12 detector D1–D12 + manifest hash/verdict); `test_phase5_visual_detectors.py` 12/12 hai chiều (docx/pdf tổng hợp, injected defect phải bị bắt); registry `phase5r_expectations.json` | ✅ |
+| Lane A metadata/boundary | `agent/p5r-metadata` (5 commits, merge `c7ff269`) | WLAY-001 `_drop_source_indicators` (44/44 marker body-level, 0 trong bảng, byte-identical khi không marker); WLAY-006 generator `drop_flat_field_code_paras` + guard `_strip_flat_field_code`; WLAY-007a trailing empty (→5R4 mở rộng drop run); WLAY-007b `drop_foreign_annex_tail` cắt banner PHỤ LỤC khác phụ lục; `test_phase5r_metadata` 15/15 đỏ→xanh | ✅ merged |
+| Lead regen sau A | Lead | content-aware save (`save_template_content_aware` — chống churn zip); regen idempotent run4==run5 zero-diff document.xml 87/87; manifest EVOLVED_FORMS +M28/+M80; allowlist H7 sync | ✅ |
+| Lane B signature | `agent/p5r-signature` (merge `4de74b4`) | Census 87 form → registry 78 entry có evidence (2 BLOCKED_OWNER M14/PLII_M17); M70 spec 1x2 + render guard `_horizontal_signature_tables`; `_keep_signature_blocks` keepNext/keepLines/cantSplit; `_ensure_signature_space` vùng viết theo contract (M15 6.4pt→≥40pt); orphan policy (9 trang BLANK baseline biến mất); `test_phase5r_signatures` 6/6 | ✅ merged |
+| Lane C tables | `agent/p5r-tables` (merge bfd680c + lead commit) | Census 12 bảng ≥10 cột; landscape LOẠI bằng evidence (0/87 nguồn landscape); width_policy='content' 12/12 (Lead hoàn tất M10 path legacy + regen); render pin tblHeader/cantSplit/tblW idempotent; M12: 5 matrix materialized OK, 3 BLOCKED_OWNER (`phase5r_table_policies.json`); `test_phase5r_tables` 10/10 | ✅ merged |
+| 5R4 typography/orphan | Lead | Trailing-empty drop TOÀN BỘ run (M05 14 para rỗng → trang trắng); footnote keepLines (M80 xẻ câu); D6 vocabulary generic caps-line (M14 false positive); fix gate stale-move (run kill để evidence cũ bị analyze nhầm) | ✅ |
+| **GATE FINAL** | Lead | `generated_ho_so/_visual_layout/phase5r_gate/final/` — **455/455 records (91 form × 5 fixture) 0 gate-fail, exit 0**; 1607 trang render PNG; D1..D12 = 0; 0 export error; Word 16.16.27 open-direct **91/91 PASS** (`word_open_inventory.json`); runner **54/0/0 VERDICT PASS** @ `93d69f0`; coverage drift=0; L1/numbering/idempotency xanh | ✅ |
+
+**Còn OPEN/BLOCKED sau 5R (trung thực):** WLAY-011 glue = census 553 candidate
+(chủ yếu artifact trích xuất PDF của ô bảng kề nhau — chưa adjudicate từng
+nhóm); WLAY-005 = 3 matrix M12 BLOCKED_OWNER chờ owner; 2 entry orientation
+BLOCKED_OWNER (M14, PLII_M17); min_write_gap 40pt mới pin cho M15 (các form
+khác đo 27.3pt là census); Windows/.exe = NOT RUN. Reviewer verdict trong
+manifest mặc định NOT_REVIEWED — auditor độc lập (Lane D) review thay.

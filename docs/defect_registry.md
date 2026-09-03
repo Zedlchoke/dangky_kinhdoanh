@@ -5,6 +5,28 @@
 > lỗi: bằng chứng → gốc rễ → cách sửa → trạng thái. Một lớp lỗi = một fix hệ
 > thống + test/census chống hồi quy, KHÔNG sửa từng file generated.
 
+## Phase 5R reconciliation — 2026-09-04 @ `93d69f0`
+
+> Trạng thái hiện hành của WLAY-001..012 (audit `word_layout_audit_2026-09-03.md`).
+> Gate bằng chứng: `generated_ho_so/_visual_layout/phase5r_gate/final/` —
+> 455/455 records (91 form × 5 fixture) detector 0, Word open-direct 91/91,
+> runner 54/0/0. Baseline RED cùng gate: `.../baseline_c9d095e/` (244/455 FAIL).
+
+| WLAY | Trạng thái | Fix gốc rễ + bằng chứng |
+|---|---|---|
+| 001 source-indicator lộ 44 form | **CLOSED** | `_drop_source_indicators` (docx_render, body-level, reuse classify_role — UI/DOCX nhất quán); D1=0 trên 455 records; "Mẫu số N" pháp lý giữ nguyên (test pin) |
+| 002 M70 ký 2x1 sập dọc | **CLOSED** | spec W1 rebuild 1x2 không viền (`build_horizontal_signature_tables`) + render guard; PNG gate chứng minh 2 signer cùng hàng; D6 orientation pass |
+| 003 khối ký tách trang | **CLOSED** | `_keep_signature_blocks`: keepNext+keepLines cặp title/instr, cantSplit hàng bảng ký; SIG_SPLIT=0 (M09, PLII_M25, PLI_M14 đã hết) |
+| 004 M15 thiếu vùng viết | **CLOSED** | `_ensure_signature_space` mở rộng: vùng viết dưới MỖI instruction theo `min_write_gap_pt` contract; M15 6.4pt → ≥40pt (đo pymupdf) |
+| 005 M12 matrix phẳng | **PARTIAL / BLOCKED_OWNER** | 5 matrix materialized OK (nguon_von, nganh_bo_sung/xoa_bo/sua_doi, ndd_uy_quyen 8×15 — gap 2 nhóm cột B145 chờ tag); 3 BLOCKED_OWNER chờ owner duyệt cấu trúc: tai_san_gop_von ×2 (D1.2 chỉ chốt B cho M01), co_cau_loai_co_phan_sau_thay_doi (nguồn in sẵn lỗi chính tả "ưu đã biểu quyết") — `tools/phase5r_table_policies.json` |
+| 006 field code lộ M28 | **CLOSED** | generator `drop_flat_field_code_paras` (loại số trang stale của nguồn, không dựng lại field sai vị trí) + guard `_strip_flat_field_code`; grammar đồng bộ 3 nơi (generator/render/detector); D2=0 |
+| 007 trang trắng/boundary thừa | **CLOSED** | `drop_foreign_annex_tail` (M80 không kéo banner PHỤ LỤC II); `_drop_trailing_empty_para` drop TOÀN BỘ run paragraph rỗng cuối body (M72 TNHH_2TV, M05 14 para); D4=0, D5 BLANK=0 trên 455 records |
+| 008 bảng rộng chữ vỡ | **CLOSED (policy)** | census 12 bảng ≥10 cột; landscape LOẠI bằng evidence (0/87 nguồn landscape); split-table chỉ candidate (nguồn in trọn 1 bảng); width_policy='content' 12/12 + render pin tblHeader/cantSplit/tblW; D9=0 |
+| 009 orphan page | **CLOSED (policy)** | policy: trang chỉ chứa instruction ký không title = lỗi; 9 trang BLANK baseline biến mất sau keep-together; 32 combo SPARSE còn lại là census có giải thích (footnote/trang cuối pháp lý) |
+| 010 fixture TEST + tick tràn | **CLOSED** | `phase5_fixtures.py`: 5 fixture semantic giá trị phân biệt theo họ key; validator V1–V4; regression: dummy cũ bị chặn V1 |
+| 011 label/value glue | **OPEN (census)** | fixture semantic đã thay TEST; census 553 candidate toàn corpus — phần lớn là artifact nối ô bảng kề nhau của PDF text extraction; cần adjudicate từng nhóm trước khi sửa run-assembly (không chèn space mù) |
+| 012 gate đánh đồng structural/visual | **CLOSED** | gate tách OPEN_DIRECT (word loop) / STRUCTURAL (detector XML) / VISUAL_LAYOUT (detector PDF + PNG từng trang + reviewer_verdict trong manifest); structural không tự nâng thành visual |
+
 ## Audit reconciliation — 2026-08-30 @ `6ae63c2`
 
 > Bảng này là trạng thái hiện hành, ưu tiên hơn các nhãn `IN FIX/OPEN` lịch sử

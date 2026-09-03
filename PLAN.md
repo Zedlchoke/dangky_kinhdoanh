@@ -1,5 +1,20 @@
 # MASTER PLAN v5 — sửa lỗi và rà soát toàn bộ ứng dụng
 
+> **CHECKPOINT PHASE 5R — 2026-09-04 @ `93d69f0`:** Phase 5R0–5R4 đã chạy xong
+> trên main: gate visual 455/455 records (91 form × 5 fixture semantic) —
+> **detector D1..D12 = 0, 0 trang trắng, 0 export error**; Word 16.16.27 mở
+> trực tiếp **91/91 PASS**; runner **54 PASS / 0 FAIL**; coverage drift=0.
+> Bằng chứng: `generated_ho_so/_visual_layout/phase5r_gate/final/` (manifest +
+> summary + PNG 1607 trang + word_open_inventory). Baseline RED (244/455 FAIL)
+> giữ tại `.../baseline_c9d095e/`.
+>
+> **Trạng thái WLAY:** 001/002/003/004/006/007/008/009/010/012 CLOSED;
+> 005 PARTIAL (3 matrix M12 BLOCKED_OWNER chờ owner); 011 OPEN-census (553
+> glue candidate cần adjudicate). Windows/.exe: NOT RUN. VISUAL_LAYOUT được
+> tuyên bố ở mức detector + review mẫu theo gate; auditor độc lập (Lane D)
+> là điều kiện đóng cuối. KHÔNG mở Phase 6/Excel rollout/Windows packaging
+> cho tới owner duyệt báo cáo Phase 5R.
+
 > **CẬP NHẬT KHẨN PHASE 5R — 2026-09-03:** audit corpus Word mới nhất đã xem
 > **91 DOCX / 264 trang** và kết luận **VISUAL LAYOUT = FAIL**. Word mở trực
 > tiếp 91/91 chỉ là openability PASS. Đã xác nhận source-indicator lộ ở 44 form,

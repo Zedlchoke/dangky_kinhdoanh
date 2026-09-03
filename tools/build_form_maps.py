@@ -2481,6 +2481,291 @@ def drop_foreign_annex_tail(doc, own_pl):
     return n
 
 
+# ---------------------------------------------------------------------------
+# Phase 5R2 (WLAY-002): cụm 2 chữ ký xếp NGANG sinh thành bảng không viền 1x2
+#
+# Bản giấy PLI_M70 (Giấy tiếp nhận hồ sơ) có 2 chữ ký NGƯỜI NỘP / NGƯỜI NHẬN
+# nằm CÙNG HÀNG NGANG (ảnh owner + audit 2026-09-03, docs/
+# word_layout_audit_2026-09-03.md mục WLAY-002) nhưng bản nguồn docx extract
+# được đã sập thành 2 paragraph dọc liên tiếp (title→instr, title→instr) —
+# template sinh ra theo nguồn nên in ra 2 cụm XẾP DỌC (detector D6 của gate đo
+# SIG_ORIENTATION vertical ×5 fixture, registry phase5r_expectations.json pin
+# horizontal).
+#
+# Điều trị ở LỚP GENERATOR (không sửa tay template): khi registry của form pin
+# orientation=horizontal với signers=2 (evidence-based — KHÔNG tự suy từ nguồn
+# vì nguồn M70 chính là bản đã sập dọc), process_form tìm body-level CẶP
+# paragraph ký chạy kề (mỗi paragraph chứa title khớp registry + instruction
+# paren "(Ký…") rồi THAY CẶP bằng bảng không viền 1 hàng × 2 ô; paragraph
+# gốc được giữ nguyên (deepcopy) vào từng ô để bảo toàn font/in-đậm/căn giữa
+# và spacing before=120 — kèm 1 paragraph trống ghi vùng viết trong ô và
+# w:tr/cantSplit để cụm ký không bị cắt qua trang (WLAY-003).
+#
+# Ràng buộc evidence: form KHÔNG có entry horizontal trong registry → hàm là
+# no-op (0 bảng) — sandbox regen demo của test_generator_deep_idempotency và
+# mọi form khác không đổi một byte nào.
+# ---------------------------------------------------------------------------
+
+SIGNATURE_EXPECT_PATH = ROOT / "tools" / "phase5r_expectations.json"
+
+
+def load_signature_expectations(path: Path | None = None) -> dict:
+    """Đọc registry kỳ vọng khối ký (tools/phase5r_expectations.json).
+    File vắng mặt/không parse được -> {} (generator không bao giờ chết vì
+    registry; census của Lane B giữ file luôn tồn tại)."""
+    p = path or SIGNATURE_EXPECT_PATH
+    try:
+        return json.loads(p.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+
+
+def _para_sig_lines(p_el) -> list[str]:
+    """Tách paragraph thành các dòng logic theo w:br (title/instr thường là
+    2 dòng trong 1 paragraph)."""
+    lines: list[str] = []
+    cur: list[str] = []
+    for node in p_el.iter():
+        if node.tag == qn("w:t"):
+            cur.append(node.text or "")
+        elif node.tag == qn("w:br"):
+            lines.append("".join(cur))
+            cur = []
+    lines.append("".join(cur))
+    return [ln for ln in lines if ln.strip()]
+
+
+def _para_is_sig_cluster(p_el, title_folded: str) -> bool:
+    """Paragraph là cụm ký của title đã biết: có dòng đầu khớp title (gập dấu)
+    VÀ có dòng instruction paren '(Ký…'/'(Đã ký…'."""
+    lines = _para_sig_lines(p_el)
+    if not lines:
+        return False
+    has_title = any(
+        re.sub(r"\s+", " ", fold(ln)).strip() == title_folded for ln in lines)
+    if not has_title:
+        return False
+    return any(re.search(r"\((?:ky|da ky)", fold(ln)) for ln in lines)
+
+
+def _body_content_width(body_el) -> int:
+    """Bề rộng vùng chữ (twips) = pgSz.w - pgMar.left - pgMar.right của
+    sectPr cuối; fallback A4 legder mặc định của corpus (12240-3600=8640)."""
+    sect = None
+    for child in body_el.iterchildren():
+        if child.tag == qn("w:sectPr"):
+            sect = child
+    if sect is None:
+        return 8640
+    sz = sect.find(qn("w:pgSz"))
+    mar = sect.find(qn("w:pgMar"))
+    try:
+        w = int(sz.get(qn("w:w"))) if sz is not None else 11906
+        left = int(mar.get(qn("w:left"))) if mar is not None else 1440
+        right = int(mar.get(qn("w:right"))) if mar is not None else 1440
+        return max(2880, w - left - right)
+    except (TypeError, ValueError):
+        return 8640
+
+
+# Token thay bằng .replace (KHÔNG dùng .format cho vùng nhúng XML serialize:
+# paragraph template chứa placeholder {tag} — .format sẽ đọc nhầm là field).
+_SIG_TABLE_TEMPLATE = (
+    '<w:tbl xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">'
+    '<w:tblPr>'
+    '<w:tblW w:w="@@TOTAL_W@@" w:type="dxa"/>'
+    '<w:tblBorders>'
+    '<w:top w:val="nil"/><w:left w:val="nil"/>'
+    '<w:bottom w:val="nil"/><w:right w:val="nil"/>'
+    '<w:insideH w:val="nil"/><w:insideV w:val="nil"/>'
+    '</w:tblBorders>'
+    '<w:tblLayout w:type="fixed"/>'
+    '</w:tblPr>'
+    '<w:tblGrid>@@GRID@@</w:tblGrid>'
+    '<w:tr><w:trPr><w:cantSplit/>'
+    '<w:trHeight w:val="1200" w:hRule="atLeast"/></w:trPr>'
+    '@@CELLS@@</w:tr>'
+    '</w:tbl>'
+)
+
+# Ô ký: tcW dxa + paragraph cụm ký (deepcopy) + 1 paragraph trống exact 240
+# twips làm vùng viết ngay dưới instruction trong ô.
+_SIG_CELL_TEMPLATE = (
+    '<w:tc><w:tcPr><w:tcW w:w="@@CELL_W@@" w:type="dxa"/>'
+    '<w:tcBorders><w:top w:val="nil"/><w:left w:val="nil"/>'
+    '<w:bottom w:val="nil"/><w:right w:val="nil"/></w:tcBorders></w:tcPr>'
+    '@@PARA@@'
+    '<w:p><w:pPr>'
+    '<w:spacing w:before="0" w:after="0" w:line="240" w:lineRule="exact"/>'
+    '</w:pPr></w:p>'
+    '</w:tc>'
+)
+
+
+def build_horizontal_signature_tables(doc, form_id, section_specs=None) -> int:
+    """Hợp nhất cặp cụm ký DỌC thành bảng không viền 1 hàng × 2 ô cho form có
+    registry pin horizontal (WLAY-002).
+
+    Hai dạng nguồn được hỗ trợ:
+      (a) 2 paragraph ký chạy kề ở body-level (nguồn extract thô);
+      (b) bảng 2 hàng × 1 cột do spec rebuild (output-table W1) vừa chèn —
+          mỗi ô chứa đúng 1 cụm ký khớp titles[0]/titles[1].
+    Cả hai được thay bằng MỘT bảng không viền 1x2: mỗi ô giữ paragraph cụm ký
+    (deepcopy) + 1 paragraph trống exact 240 twips làm vùng viết, hàng có
+    cantSplit (chống cắt trang — WLAY-003). Trả số bảng đã tạo (0 = no-op)."""
+    sig = ((load_signature_expectations().get(form_id) or {})
+           .get("signature") or {})
+    if sig.get("orientation") != "horizontal" or sig.get("signers") != 2:
+        return 0
+    titles_folded = [re.sub(r"\s+", " ", fold(t)).strip()
+                     for t in (sig.get("titles") or [])]
+    if len(titles_folded) != 2:
+        return 0
+    body_el = doc.element.body
+    made = 0
+
+    # --- (a) cặp paragraph dọc chạy kề ---
+    children = list(body_el.iterchildren())
+    i = 0
+    while i < len(children) - 1:
+        a, b = children[i], children[i + 1]
+        paired = (
+            a.tag == qn("w:p") and b.tag == qn("w:p")
+            and _para_is_sig_cluster(a, titles_folded[0])
+            and _para_is_sig_cluster(b, titles_folded[1]))
+        if not paired:
+            i += 1
+            continue
+        total_w = _body_content_width(body_el)
+        cell_w = total_w // 2
+        cells = []
+        for p_el in (a, b):
+            cells.append(_SIG_CELL_TEMPLATE
+                         .replace("@@CELL_W@@", str(cell_w))
+                         .replace("@@PARA@@", _ser_element(copy.deepcopy(p_el))))
+        new_tbl = _parse_sig_table(total_w, cell_w, cells)
+        body_el.replace(a, new_tbl)
+        body_el.remove(b)
+        _ensure_para_after(body_el, new_tbl)
+        made += 1
+        children = list(body_el.iterchildren())
+        i += 1
+
+    # --- (b) bảng 2x1 do spec rebuild (output-table W1) ---
+    for tbl_el in list(body_el.iterchildren()):
+        if tbl_el.tag != qn("w:tbl"):
+            continue
+        if not _is_vertical_sig_table(tbl_el, titles_folded):
+            continue
+        total_w = _body_content_width(body_el)
+        cell_w = total_w // 2
+        cells = []
+        labels = []
+        for tr in _tbl_rows(tbl_el):
+            tc = _row_cells(tr)[0]
+            p_el = _cell_sig_para(tc, titles_folded[len(cells)])
+            para = copy.deepcopy(p_el)
+            # Spec builder dựng ô grid từ nhãn thô (mất căn giữa + spacing
+            # before của paragraph nguồn) — khôi phục đúng thuộc tính nguồn
+            # (jc=center, spacing before=120) để ô ký in như bản giấy.
+            _style_sig_para(para)
+            labels.append("\n".join(_para_sig_lines(para)))
+            cells.append(_SIG_CELL_TEMPLATE
+                         .replace("@@CELL_W@@", str(cell_w))
+                         .replace("@@PARA@@", _ser_element(para)))
+        new_tbl = _parse_sig_table(total_w, cell_w, cells)
+        body_el.replace(tbl_el, new_tbl)
+        _ensure_para_after(body_el, new_tbl)
+        made += 1
+        # Đồng bộ metadata section_spec (output-table) theo hình dạng mới để
+        # form_maps không mô tả lệch template (rows 2x1 -> 1x2). Ghép đúng
+        # entry bằng grid labels khớp titles registry (không đoán theo index).
+        if section_specs is not None:
+            want = [re.sub(r"\s+", " ", fold(x)).strip()
+                    for x in titles_folded]
+            for base in section_specs:
+                grid = base.get("grid") or {}
+                lab = [re.sub(r"\s+", " ", fold(x)).strip()
+                       for x in (grid.get("labels") or [])]
+                if (base.get("kind") == "output-table"
+                        and grid.get("rows") == 2 and grid.get("cols") == 1
+                        and [re.sub(r"\s*\(.*$", "", x) for x in lab] == want):
+                    base["grid"] = {"rows": 1, "cols": 2, "labels": labels}
+    return made
+
+
+def _tbl_rows(tbl_el) -> list:
+    return [tr for tr in tbl_el if tr.tag == qn("w:tr")]
+
+
+def _row_cells(tr_el) -> list:
+    return [tc for tc in tr_el if tc.tag == qn("w:tc")]
+
+
+def _is_vertical_sig_table(tbl_el, titles_folded) -> bool:
+    """Bảng 2 hàng × 1 cột, ô hàng i chứa đúng cụm ký titles[i]."""
+    trs = _tbl_rows(tbl_el)
+    if len(trs) != 2:
+        return False
+    for i, tr in enumerate(trs):
+        tcs = _row_cells(tr)
+        if len(tcs) != 1:
+            return False
+        if _cell_sig_para(tcs[0], titles_folded[i]) is None:
+            return False
+    return True
+
+
+def _cell_sig_para(tc_el, title_folded):
+    """Paragraph cụm ký khớp title trong ô (duyệt mọi w:p của ô)."""
+    for p in tc_el.iter(qn("w:p")):
+        if _para_is_sig_cluster(p, title_folded):
+            return p
+    return None
+
+
+def _style_sig_para(p_el) -> None:
+    """Đảm bảo pPr có w:jc=center + w:spacing before=120 (thuộc tính paragraph
+    ký trên bản nguồn; spec builder grid làm rơi)."""
+    pPr = p_el.find(qn("w:pPr"))
+    if pPr is None:
+        pPr = OxmlElement("w:pPr")
+        p_el.insert(0, pPr)
+    if pPr.find(qn("w:spacing")) is None:
+        sp = OxmlElement("w:spacing")
+        sp.set(qn("w:before"), "120")
+        # schema order: spacing đứng trước w:jc — chèn đầu pPr là an toàn cho
+        # 2 thuộc tính này (pStyle/keep* không tồn tại trên ô grid builder).
+        pPr.insert(0, sp)
+    if pPr.find(qn("w:jc")) is None:
+        jc = OxmlElement("w:jc")
+        jc.set(qn("w:val"), "center")
+        pPr.append(jc)
+
+
+def _parse_sig_table(total_w: int, cell_w: int, cells_xml: list[str]):
+    grid = "".join('<w:gridCol w:w="%d"/>' % cell_w for _ in cells_xml)
+    tbl_xml = (_SIG_TABLE_TEMPLATE
+               .replace("@@TOTAL_W@@", str(total_w))
+               .replace("@@GRID@@", grid)
+               .replace("@@CELLS@@", "".join(cells_xml)))
+    from docx.oxml import parse_xml
+    return parse_xml(tbl_xml)
+
+
+def _ensure_para_after(body_el, tbl_el) -> None:
+    """OOXML: sau bảng phải có w:p (không được kề bảng khác/sectPr)."""
+    sib = tbl_el.getnext()
+    if sib is None or sib.tag != qn("w:p"):
+        tbl_el.addnext(OxmlElement("w:p"))
+
+
+def _ser_element(el) -> str:
+    """Serialize lxml element về chuỗi XML (để nhúng vào parse_xml template)."""
+    from lxml import etree
+    return etree.tostring(el, encoding="unicode")
+
+
 def process_form(path, titles, coverage, out_tpl=None):
     form_id, pl, mau = parse_form_id(path)
     rel = path.relative_to(ROOT).as_posix()
@@ -2753,6 +3038,14 @@ def process_form(path, titles, coverage, out_tpl=None):
 
     # ---- checkbox pass (chạy sau khi gắn the slot) ----
     process_checkboxes(doc, form_id, add_field, unmatched)
+
+    # Phase 5R2 (WLAY-002): cụm 2 cụm ký dọc chạy kề của form được registry
+    # pin horizontal -> thay bằng bảng không viền 1x2 (no-op cho form khác).
+    n_sig_tbl = build_horizontal_signature_tables(
+        doc, form_id, section_specs=section_specs)
+    if n_sig_tbl:
+        print("[sig-1x2] %s: %d khoi ky gop thanh bang ngang" % (
+            form_id, n_sig_tbl))
 
     title = titles.get(f"Phu luc {pl}|{mau}", path.stem)
     # out_tpl cho phép sandbox regen ghi chỗ khác (test không đụng

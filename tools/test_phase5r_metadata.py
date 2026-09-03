@@ -91,6 +91,12 @@ def template_xml(fid: str) -> str:
         return z.read("word/document.xml").decode("utf-8")
 
 
+def xml_at(path) -> str:
+    """Đọc word/document.xml từ đường dẫn docx tuyệt đối (sandbox/ kết quả)."""
+    with zipfile.ZipFile(path) as z:
+        return z.read("word/document.xml").decode("utf-8")
+
+
 def wt_texts(xml: str) -> list[str]:
     return re.findall(r"<w:t[^>]*>([^<]*)</w:t>", xml)
 
@@ -205,6 +211,63 @@ def t_w1_render_rest_byte_identical():
         checked += 1
     assert checked == 87 - len(WLAY001_FORMS), \
         "so form kiem tra %d != 87 - 44" % checked
+
+
+# ---------------------------------------------------------------------------
+# W2 — WLAY-006: field code ` PAGE \* MERGEFORMAT 2` phải biến mất khỏi
+# template PLII_M28 SINH RA (sandbox regen → /tmp, không đụng app/templates)
+# ---------------------------------------------------------------------------
+
+W2_SOURCE = (ROOT / "06_ho_kinh_doanh_va_chuyen_doi" / "01_mau_ho_kinh_doanh"
+             / "PL2_Mau_28_thong_bao_ve_viec_ra_soat_thong_tin_dang_ky_ho_"
+               "kinh_doanh_cua_ho_kinh_doanh.docx")
+W2_SANDBOX = OUT_DIR / "w2_sandbox_regen"
+
+
+@check("W2 reproduction: ban nguon PL2_Mau_28 chua literal field code")
+def t_w2_source_has_defect():
+    assert W2_SOURCE.exists(), "khong tim thay file nguon PL2_Mau_28"
+    xml = xml_at(W2_SOURCE)
+    hits = [t for t in wt_texts(xml) if "MERGEFORMAT" in t]
+    assert hits, "ban nguon khong con literal (reproduction het dung luc?)"
+    assert any("PAGE" in t for t in hits), hits
+
+
+@check("W2 sandbox regen PLII_M28: det_field_code tra RONG, noi dung phap ly con")
+def t_w2_sandbox_regen_clean():
+    from tools import build_form_maps as bfm
+    from tools.phase5_visual_gate import det_field_code
+    import shutil
+    if W2_SANDBOX.exists():
+        shutil.rmtree(W2_SANDBOX)
+    meta, _unmatched = bfm.process_form(
+        W2_SOURCE, bfm.load_csv_titles(), None, out_tpl=W2_SANDBOX)
+    assert meta["id"] == "PLII_M28", meta["id"]
+    out_docx = W2_SANDBOX / "PLII_M28.docx"
+    assert out_docx.exists(), "sandbox regen khong ghi ra template"
+    # detector D2 của gate (cùng ngữ pháp với generator drop) phải trả rỗng
+    hits = det_field_code(out_docx)
+    assert hits == [], "sandbox regen van con field code: %r" % hits[:3]
+    # nội dung pháp lý của mẫu phải còn (không nuke cả tài liệu)
+    xml = xml_at(out_docx)
+    joined = fold(" ".join(wt_texts(xml)))
+    assert "mau so 28" in joined, "mat dong 'Mau so 28' phap ly"
+    assert "ra soat thong tin" in joined, "mat ten mau phap ly"
+
+
+@check("W2 unit: drop_flat_field_code_paras chi drop paragraph field code")
+def t_w2_unit_drop():
+    from docx import Document
+    from tools.build_form_maps import drop_flat_field_code_paras
+    doc = Document()
+    doc.add_paragraph(" PAGE   \\* MERGEFORMAT 2")
+    doc.add_paragraph("Giấy chứng nhận đăng ký doanh nghiệp")
+    doc.add_paragraph("")
+    n = drop_flat_field_code_paras(doc)
+    assert n == 1, "phai drop dung 1 paragraph, drop %d" % n
+    texts = [p.text for p in doc.paragraphs]
+    assert "Giấy chứng nhận đăng ký doanh nghiệp" in texts, "mat chu that"
+    assert not any("MERGEFORMAT" in t for t in texts)
 
 
 def main() -> int:

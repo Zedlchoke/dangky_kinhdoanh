@@ -26,6 +26,8 @@ from __future__ import annotations
 import json
 import os
 import re
+import shutil
+import subprocess
 import sys
 import time
 import traceback
@@ -240,12 +242,44 @@ class Bridge:
                 errors.append("%s: lỗi render %s: %s"
                               % (fid, type(exc).__name__, _safe_error(exc)))
 
+        # ------------------------------------------------- PDF export
+        # [Owner decision 2026-09-03] Sản phẩm cuối cho người dùng là PDF,
+        # DOCX chỉ là trung gian. Dùng LibreOffice headless (soffice) chuyển
+        # từng .docx → .pdf; SOFFICE không có → trả errors[] + giữ .docx.
+        soffice = shutil.which("soffice") or "/Applications/LibreOffice.app/Contents/MacOS/soffice"
+        soffice_ok = Path(soffice).exists() if "/" in soffice else bool(shutil.which("soffice"))
+        pdf_files, pdf_errors = [], []
+        if soffice_ok:
+            for name in files:
+                src = out_dir / name
+                pdf_name = name.rsplit(".", 1)[0] + ".pdf"
+                try:
+                    proc = subprocess.run(
+                        [soffice, "--headless", "--norestore",
+                         "--convert-to", "pdf", "--outdir", str(out_dir), str(src)],
+                        capture_output=True, text=True, timeout=60,
+                        env={**os.environ, "HOME": os.environ.get("HOME", "/tmp")})
+                    pdf_path = out_dir / pdf_name
+                    if proc.returncode == 0 and pdf_path.exists() and pdf_path.stat().st_size > 0:
+                        pdf_files.append(pdf_name)
+                    else:
+                        pdf_errors.append("%s: soffice exit=%d" % (pdf_name, proc.returncode))
+                except Exception as exc:
+                    pdf_errors.append("%s: %s: %s" % (pdf_name, type(exc).__name__, _safe_error(exc)))
+            if pdf_errors:
+                errors.extend(pdf_errors)
+        else:
+            errors.append("PDF_EXPORT_UNAVAILABLE: soffice không tìm thấy — "
+                          "file .docx đã được giữ lại làm thay thế")
+
         zip_path = None
         if files and not errors:
+            # ZIP chứa PDF (sản phẩm cuối); soffice hỏng → fallback .docx
+            zip_entries = pdf_files if pdf_files else files
             zip_path = str(out_dir.parent / ("%s.zip" % out_dir.name))
             try:
                 with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as z:
-                    for name in files:
+                    for name in zip_entries:
                         z.write(out_dir / name, name)
             except Exception as exc:  # noqa: BLE001
                 errors.append("lỗi nén ZIP: %r" % (exc,))

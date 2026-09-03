@@ -149,8 +149,15 @@ def d4_contamination():
                       ["PHỤ LỤC II", "BIỂU MẪU SỬ DỤNG TRONG ĐĂNG KÝ HỘ KINH DOANH"])
     hits = det_contamination(bad, {"phu_luc": "Phụ lục I"})
     assert len(hits) == 1, "phải bắt banner khác phụ lục, thấy %r" % hits
+    # form_maps ghi phu_luc là số La Mã thuần ('I') — phải nhận đúng
+    hits = det_contamination(bad, {"phu_luc": "I"})
+    assert len(hits) == 1, "phu_luc='I' phải được chuẩn hoá, thấy %r" % hits
     ok = _write_docx(TMP / "d4_ok.docx", ["PHỤ LỤC I", "BIỂU MẪU..."])
-    assert det_contamination(ok, {"phu_luc": "Phụ lục I"}) == []
+    assert det_contamination(ok, {"phu_luc": "I"}) == []
+    # câu thân bài viện dẫn 'theo Phụ lục II' KHÔNG phải banner — không báo
+    body = _write_docx(TMP / "d4_body.docx",
+                       ["Hồ sơ gồm 01 tờ khai theo mẫu tại Phụ lục II"])
+    assert det_contamination(body, {"phu_luc": "I"}) == []
 
 
 @check("[D9] table grid: cột <1cm và tổng width vượt khổ phải bị bắt")

@@ -131,11 +131,12 @@ def det_markers(docx_path: Path) -> list[str]:
 
 def det_contamination(docx_path: Path, form_meta: dict) -> list[str]:
     """D4: banner phụ lục KHÁC phụ lục của form (VD: form PLI kéo
-    'PHỤ LỤC II ...' của phụ lục kế — PLI_M80). So nhau theo SỐ LA MÃ đầy đủ
-    (không so prefix — 'Phụ lục I' là prefix của 'Phụ lục II')."""
+    'PHỤ LỤC II ...' của phụ lục kế — PLI_M80). form_maps ghi phu_luc là số
+    La Mã thuần ('I'/'II') — chuẩn hoá cả hai phía rồi so SỐ LA MÃ đầy đủ
+    (không so prefix — 'I' là prefix của 'II')."""
     _xml, texts = xml_texts(docx_path)
-    own_m = re.match(r"^phu luc (i{1,3}|iv|v)\b",
-                     _fold(str(form_meta.get("phu_luc") or "")))
+    own_raw = _fold(str(form_meta.get("phu_luc") or ""))
+    own_m = re.match(r"^(?:phu luc )?(i{1,3}|iv|v)$", own_raw)
     if not own_m:
         return []
     own = own_m.group(1)
@@ -484,7 +485,6 @@ HARD_FAIL_KEYS = {
     "D1_source_indicator": 1, "D2_field_code": 1, "D3_markers": 1,
     "D4_contamination": 1, "D12_fixture_violations": 1,
 }
-HARD_FAIL_SIG_CODES = {"SIG_SPLIT", "SIG_ORIENTATION"}
 
 
 def record_verdicts(records: list[dict], allowlist: dict) -> None:
@@ -497,12 +497,11 @@ def record_verdicts(records: list[dict], allowlist: dict) -> None:
             if key in HARD_FAIL_KEYS:
                 fails.append({"detector": key, "detail": val})
             elif key == "D6_signature" and isinstance(val, dict):
+                # detector đã phân ranh giới: res["fails"] chỉ chứa vi phạm
+                # registry/contract (orientation, split, write-space theo
+                # min_write_gap_pt) — toàn bộ là hard; candidates là census.
                 fails += [{"detector": "D6_signature", "detail": f}
-                          for f in val.get("fails", [])
-                          if f.get("code") in HARD_FAIL_SIG_CODES]
-                candidates += [{"detector": "D6_signature", "detail": f}
-                               for f in val.get("fails", [])
-                               if f.get("code") not in HARD_FAIL_SIG_CODES]
+                          for f in val.get("fails", [])]
                 candidates += [{"detector": "D6_signature", "detail": c}
                                for c in val.get("candidates", [])]
             elif key == "D5_blank_sparse":

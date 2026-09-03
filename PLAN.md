@@ -1,18 +1,21 @@
 # MASTER PLAN v5 — sửa lỗi và rà soát toàn bộ ứng dụng
 
-> **CHECKPOINT PHASE 5R — 2026-09-04 @ `93d69f0`:** Phase 5R0–5R4 đã chạy xong
-> trên main: gate visual 455/455 records (91 form × 5 fixture semantic) —
-> **detector D1..D12 = 0, 0 trang trắng, 0 export error**; Word 16.16.27 mở
-> trực tiếp **91/91 PASS**; runner **54 PASS / 0 FAIL**; coverage drift=0.
-> Bằng chứng: `generated_ho_so/_visual_layout/phase5r_gate/final/` (manifest +
-> summary + PNG 1607 trang + word_open_inventory). Baseline RED (244/455 FAIL)
-> giữ tại `.../baseline_c9d095e/`.
+> **CHECKPOINT PHASE 5R — 2026-09-04 @ `f51f218` (sau fix Lane D):** Phase
+> 5R0–5R4 đã chạy xong trên main: gate visual **455/455 records** (91 form ×
+> 5 fixture semantic) — **detector D1..D12 = 0, 0 trang trắng, 0 export
+> error**; Word 16.16.27 mở trực tiếp **91/91 PASS**; runner **57 PASS /
+> 0 FAIL** (3 suite 5R đã vào runner); coverage drift=0. Bằng chứng:
+> `generated_ho_so/_visual_layout/phase5r_gate/final/` (manifest + summary +
+> 1644 trang PNG + word_open_inventory). Baseline RED (244/455 FAIL) giữ tại
+> `.../baseline_c9d095e/`. Auditor độc lập (Lane D): **PASS-WITH-NOTES** —
+> 0 gian lận gate; 3 finding (F1 bug sectPr, F2 regen drift, F3 reviewer
+> sign-off) đã xử lý/ghi nhận tại `f51f218`.
 >
 > **Trạng thái WLAY:** 001/002/003/004/006/007/008/009/010/012 CLOSED;
 > 005 PARTIAL (3 matrix M12 BLOCKED_OWNER chờ owner); 011 OPEN-census (553
-> glue candidate cần adjudicate). Windows/.exe: NOT RUN. VISUAL_LAYOUT được
-> tuyên bố ở mức detector + review mẫu theo gate; auditor độc lập (Lane D)
-> là điều kiện đóng cuối. KHÔNG mở Phase 6/Excel rollout/Windows packaging
+> glue candidate cần adjudicate). Reviewer sign-off 647 candidate + toàn bộ
+> 1644 trang bởi NGƯỜI còn OPEN (gate ghi reviewer_verdict per record).
+> Windows/.exe: NOT RUN. KHÔNG mở Phase 6/Excel rollout/Windows packaging
 > cho tới owner duyệt báo cáo Phase 5R.
 
 > **CẬP NHẬT KHẨN PHASE 5R — 2026-09-03:** audit corpus Word mới nhất đã xem

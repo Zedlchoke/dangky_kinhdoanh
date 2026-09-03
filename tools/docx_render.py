@@ -330,6 +330,9 @@ def render(template_path: str | os.PathLike, data: dict,
                         # Phase 5R1 (WLAY-001): loại marker source-indicator
                         # sau khi conditions/loops/subst đã chốt văn bản.
                         xml = _drop_source_indicators(xml)
+                        # Phase 5R1 (WLAY-006): vô hiệu hoá field code literal
+                        # sót trong template chưa regen.
+                        xml = _strip_flat_field_code(xml)
                         # Phase 5R1 (WLAY-007a): bỏ paragraph rỗng cuối body
                         # (gốc rễ trang trắng M72 TNHH_2TV).
                         xml = _drop_trailing_empty_para(xml)
@@ -681,6 +684,33 @@ def _drop_trailing_empty_para(xml: str) -> str:
         return xml  # có nội dung -> giữ nguyên
     new_body = body[:prev_s] + body[prev_e:]
     return xml[:bm.start(2)] + new_body + xml[bm.end(2):]
+
+
+# ---------------------------------------------------------------------------
+# Phase 5R1 (WLAY-006, guard cuối tại export): field code Word bị làm phẳng
+#
+# Generator (build_form_maps.drop_flat_field_code_paras) đã loại paragraph
+# field code stale lúc SINH template, nhưng template hiện hành chỉ được làm
+# mới bởi Lead regen. Guard này vô hiệu hoá text field code literal CÒN SÓT
+# trong w:t NGAY LÚC RENDER để đường export không bao giờ in chữ rác
+# ' PAGE \\* MERGEFORMAT 2' (đồng bộ ngữ pháp với detector D2 của gate và
+# với FLAT_FIELD_CODE_RE của generator — 3 nơi phải giữ cùng một grammar).
+# Token 'MERGEFORMAT' không phải nội dung pháp lý; chỉ xoá text của w:t,
+# không đổi cấu trúc paragraph.
+# ---------------------------------------------------------------------------
+
+_FLAT_FIELD_CODE_RE = re.compile(
+    r"\b(?:PAGE|NUMPAGES|TOC|HYPERLINK|SEQ|STYLEREF|IF)\s*\\\*|\bMERGEFORMAT\b")
+_WT_RE = re.compile(r"(<w:t[^>]*>)([^<]*)(</w:t>)")
+
+
+def _strip_flat_field_code(xml: str) -> str:
+    """Vô hiệu hoá literal field code trong w:t (giữ tag, xoá text)."""
+    def _repl(m: re.Match) -> str:
+        return (m.group(1) + m.group(3)) if (
+            m.group(2) and _FLAT_FIELD_CODE_RE.search(m.group(2))
+        ) else m.group(0)
+    return _WT_RE.sub(_repl, xml)
 
 
 # ---------------------------------------------------------------------------

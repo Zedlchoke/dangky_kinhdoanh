@@ -453,6 +453,21 @@ def t_w4_all_forms_scan():
                      % (len(bad), dict(list(bad.items())[:5])))
 
 
+@check("W2 render guard: DOCX export cua template CHUA REGEN cung 0 field code")
+def t_w2_render_guard():
+    """Lớp guard cuối tại docx_render (WLAY-006): template hiện hành
+    PLII_M28.docx vẫn còn literal cho tới khi Lead regen — nhưng ĐƯỜNG
+    EXPORT phải sạch ngay từ bây giờ. Đỏ trước khi thêm guard: render PLII_M28
+    còn ' PAGE \\* MERGEFORMAT 2' trong w:t."""
+    from tools.phase5_visual_gate import det_field_code
+    maps = json.loads(MAPS_PATH.read_text(encoding="utf-8"))
+    data = dummy_data_from_map(maps["PLII_M28"])
+    out = OUT_DIR / "PLII_M28_render_guard.docx"
+    write_rendered(TEMPLATES / "PLII_M28.docx", data, out)
+    assert det_field_code(out) == [], \
+        "render PLII_M28 van xuat field code literal"
+
+
 def main() -> int:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     tests = [v for k, v in sorted(globals().items())

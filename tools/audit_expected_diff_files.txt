@@ -285,6 +285,7 @@ tools/census/numbering_audit.py
 tools/census/p1_b_verify_m72.py
 tools/census/p1_c_verify_plii_m02.py
 tools/census/row_contract_inventory.py
+tools/census/t0_b_report.json
 tools/census/table_coverage_audit.py
 tools/docx_render.py
 tools/docx_to_blocks.py

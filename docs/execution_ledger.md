@@ -392,3 +392,16 @@ máy Windows. Wave H: chờ P5R đủ điều kiện.
 | P8a probe | Lead | `osascript` đọc Word OK (16.16.27) — TCC Automation mở | ✅ |
 | **Class 16 phát hiện (BLOCKER G6)** | Lead | Word 16.16 từ chối template M02/M12/M03 ("corrupt"/"unreadable", có recovery, Word từng crash); M01 mở OK; bisect: bỏ band+tax VẪN corrupt; nguồn gốc M12 CŨNG corrupt → lỗi thừa kế từ serialization nguồn convert cũ; LO/lxml/textutil/XSD ECMA-376 đều PASS → gate structural mù. Word-open pilot "10/10" TRÚNG THỰC HÓA lại (user phải bấm OK/Yes hộ) | ❌ OPEN |
 | Hướng xử lý Class 16 | Lead | phiên chuyên trách: recovery-diff (Yes → save repaired → diff XML) HOẶC chuẩn hóa nguồn qua LO round-trip rồi regen; sau đó mới chạy Word-open 87/87 tự động (kèm auto-dismiss dialog qua Accessibility) | ⏳ |
+
+## Wave P-owner lanes — P1/P2/P3 merge + pin sync @ main 5907066→de158c4 (2026-09-03)
+
+| Task | Owner | Evidence | Trạng thái |
+|---|---|---|---|
+| **P1 fix-tails-m0304** (`3aa4989`) | lane | M03 mục 8–11 / M04 mục 10–13 auto-map chuẩn (124/144 fields); thuế/BHXH/CSHL/NĐDPL xác nhận theo nguồn; `test_m0304_tails` 10/0; chk_co/chk_khong trùng BOT↔CSHL → Lead sửa generator | ✅ merged |
+| **P2 fix-member-grids** (`dfb6c14`) | lane | 2 lưới thành viên M02 + 4 lưới M72 N2–N5 — nested-grid; **digit-run + STT-glue = 0**; `test_member_grids_rebuild` 18/0; trim Superscript preservation | ✅ merged |
+| **P3 fix-tax-m0306** (`a282f76`) | lane | **PLII_M03–06 KHÔNG có bảng thuế trong nguồn** — Class 6 premise false; 4 spec PIN BLOCKED; `test_tax_m0306_rebuild` 7/0 | ✅ merged |
+| Pin sync 9 suite | Lead assistant | `de158c4`: 7 files +376/−87; p1_c REGIONS 4→6; p1_b spec 5 entry + 9 w:tbl; m72_export table counts; industry_change EXTRA_LOOPS +4; household M02_OCCURRENCES 4→6; H7 +4 entries | ✅ |
+| **Checkpoint** | Lead | L1 **exit 0** (Class 12 GIẢI QUYẾT) · numbering **exit 0** · idempotency **17/0** · runner **48 PASS / 1 FAIL diagnostic / VERDICT PASS** @ `de158c4` | ✅ **GATES XANH** |
+| Coverage totals | Lead | IV 33 · BLOCKED 37 · NO_TABLE 7 · MISSING 24 · PARTIAL 4 · OUTPUT_ONLY 6 = **111** | ✅ |
+| Word corrupt (Class 16) | Lead | **Mitigated at export layer**: LO normalize trong Bridge.export → user nhận Word-compatible .docx + .pdf; template gốc vẫn corrupt nếu mở trực tiếp | ⏳ mitigated |
+| PDF export | Lead | `payload.format = docx|pdf|both` (mặc định both); LO headless convert; ZIP chứa đúng định dạng; soffice không có → fallback .docx | ✅ `aeb9fad`+ |

@@ -329,12 +329,15 @@ def t_m04_chao_ban_shape():
         "cột 0 phải tag null + readonly: %r" % (col0,)
     assert col1["tag"] == "so_luong", "cột 1 phải tag so_luong: %r" % (col1,)
 
-    # runtime contract (form-domain.js) — evidence cho Lead wire tag sau
+    # runtime contract (form-domain.js) — [Phase 3] Lead ĐÃ wire tag định danh
+    # cột label 'loai_co_phan_chao_ban' (inputType vẫn readonly, không tạo
+    # input) thống nhất convention 3 section anh em; audit runtime-tags nhận
+    # evidence từ tag này.
     src = FORM_DOMAIN_JS.read_text(encoding="utf-8")
     sl = js_section_slice(src, "co_phan_duoc_quyen_chao_ban")
-    assert "tag: null" in sl, \
-        "contract đang không có cột tag: null (Lead đã wire?) — cần cập nhật " \
-        "evidence khi Lead wire tag 'loai_co_phan'"
+    assert "tag: 'loai_co_phan_chao_ban'" in sl, \
+        "contract phải có tag định danh 'loai_co_phan_chao_ban' trên cột " \
+        "label readonly (Lead wire Phase 3)"
     assert "inputType: 'readonly'" in sl, "cột readonly thiếu inputType readonly"
     assert "Loại cổ phần được quyền chào bán" in sl, "thiếu header cột 0"
     assert "stt: { mode: 'none' }" in sl, \

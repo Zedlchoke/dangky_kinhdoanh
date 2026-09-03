@@ -172,10 +172,15 @@ def test_m01_bhxh_census_stale(manifest):
         check("[M01-BHXH-census-stale-documented] manifest có section "
               "bhxh_phuong_thuc_dong", False, "thiếu section")
         return
-    check("[M01-BHXH-census-stale-documented] manifest status == 'partial' "
-          "(hồ sơ census ghi nhận vấn đề — căn cứ cho LEAD_STATUS_OVERRIDES "
-          "sau này)",
-          sec.get("status") == "partial", "status=%r" % sec.get("status"))
+    check("[M01-BHXH-census-stale-documented] manifest status == "
+          "'already_complete' (Lead ĐÃ land LEAD_STATUS_OVERRIDES Phase 3 — "
+          "census 'partial' stale vì ba64f29 đã đủ 3/3 token)",
+          sec.get("status") == "already_complete",
+          "status=%r" % sec.get("status"))
+    ove = json.dumps(sec.get("lead_status_override") or {}, ensure_ascii=False)
+    check("[M01-BHXH-census-stale-documented] override evidence nêu căn cứ "
+          "ba64f29 + tiền lệ PLI_M17",
+          "ba64f29" in ove and "PLI_M17" in ove, "evidence: %s" % ove[:140])
     notes = sec.get("notes") or ""
     check("[M01-BHXH-census-stale-documented] notes census có chứa token "
           "'chk_bc_03_thang'",

@@ -1,0 +1,7 @@
+{
+ "form_id": "PLII_M04",
+ "group": "household",
+ "note": "Danh gia lane fix-tax-m0306 (Owner P3=A, Class 6) tai BASE 5907066: KHONG co bang thue nao trong nguon de rebuild -> tables=[]. EVIDENCE (1) Nguon tach 06_ho_kinh_doanh_va_chuyen_doi/01_mau_ho_kinh_doanh/PL2_Mau_04_*.docx: 20 paragraph P000-P019, 0 w:tbl; noi dung = header 2 band, THONG BAO ve viec cham dut hoat dong, Kinh gui, Ten/MST ho, 2 dong cam ket (thanh toan du no gom ca no thue VA nghia vu tai chinh khac / chia hay chu nhan), khoi ky CHU HO KINH DOANH/NGUOI THUA KE, chan trang — 'no thue' chi xuat hien trong cau cam ket, KHONG co bang hay phan ke khai thue. (2) Nguon day _Bieu_mau_PL_I_II_full.docx: Phu luc II Mau 4 = P5944-P5962, giong het nguon tach; dieu kien doi chieu: Mau 2 cung file CO khoi thue P5836-P5841 — Mau 4 that te KHONG co. (3) Census: form_status=NO_TABLE, detector.template_w_tbl=0. (4) Blocks app/data/blocks/PLII_M04.json: 13 blocks, 0 paragraph so standalone; w:tbl duy nhat = header band 2x2. (5) form_maps: khong loop, khong section_specs. Ket luan: premise Class 6 KHONG tai hien tai BASE; spec PIN BLOCKED bang tables rong; build phai byte-identical.",
+ "gap_nghiepvu": "BLOCKED_OWNER (P3=A, Class 6): nguon PLII_M04 (tach + full + census) KHONG co bang thue nao de rebuild. Neu mau hien hanh that su co bang thue cho Mau II.4, owner can cung cap nguon chinh thuc chua bang do; khi do mo lai spec nay va dung theo header nguon (tien le PLII_M02/a7_thue_chi_tieu_cu_moi).",
+ "tables": []
+}

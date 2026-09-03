@@ -1,0 +1,31 @@
+{
+ "form_id": "PLI_M11",
+ "group": "formation",
+ "note": "Danh sach to chuc so huu tu 25% co phan co quyen bieu quyet tro len (CSHHHLDN - cong dong) cua Mau 11. Migration P3 (2026-09-03) VERBATIM tu khai bao inline tools/build_form_maps.py (DYNAMIC_TABLES id 'ds_to_chuc_cshhl' + REBUILD_TABLES['PLI_M11']) sang file spec theo co che duoc dinh san: 'Cac mau con lai la fallback inline - chuyen dan sang file spec khi cham toi'. KHONG doi hanh vi: detect {stt, ten to chuc, ngay cap} (JSON la mang string, loader chuan hoa thanh set), cols dung 8 cap [regex, tag] theo dung thu tu inline (cot 0 STT tag null, khong stt_tag, khong kind), loop ds_cshhl, fields 6 tag (khong co ghi_chu - giong inline: cot Ghi chu khong dang ky field), pos=after anchor 'danh cho cong ty co phan ke khai', headers 8 chuoi nguyen van. Alias ten cot census manifest (section ds_to_chuc_xd_cshhl, status already_complete) so voi tag production: ma_so_dn_qd_thanh_lap <-> ma_so_dn, dia_chi_tru_so_chinh <-> dia_chi, ty_le_cp_bieu_quyet <-> ty_le - du credit qua col-count 8>=8, khong doi tag production. Regen sau nay phai ra form_maps + template GIONG HET baseline (chung minh bang tools/test_phase3_m04_m11.py [M11-spec-file-parity]).",
+ "tables": [
+  {
+   "spec": {
+    "id": "ds_to_chuc_cshhl",
+    "detect": ["stt", "ten to chuc", "ngay cap"],
+    "cols": [
+     ["^stt$", null],
+     ["ten to chuc", "ten_to_chuc"],
+     ["ma so doanh nghiep|ma so thue", "ma_so_dn"],
+     ["^ngay cap", "ngay_cap"],
+     ["^noi cap", "noi_cap"],
+     ["dia chi", "dia_chi"],
+     ["ty le", "ty_le"],
+     ["ghi chu", "ghi_chu"]
+    ],
+    "loop": "ds_cshhl",
+    "fields": ["ten_to_chuc", "ma_so_dn", "ngay_cap", "noi_cap", "dia_chi",
+               "ty_le"]
+   },
+   "pos": "after",
+   "anchor": "danh cho cong ty co phan ke khai",
+   "headers": ["STT", "Tên tổ chức", "Mã số doanh nghiệp/số QĐ thành lập",
+               "Ngày cấp", "Nơi cấp", "Địa chỉ trụ sở chính",
+               "Tỷ lệ sở hữu cổ phần có quyền biểu quyết (%)", "Ghi chú"]
+  }
+ ]
+}

@@ -22,12 +22,26 @@ evidence), ghi ``docs/table_coverage_current.json`` + ``.md`` rồi:
   * exit != 0 — có drift (in từng dòng). Drift là KẾT QUẢ ĐÚNG của audit,
     KHÔNG sửa manifest/blocks để qua gate.
 
-Hai xử lý evidence cần lưu ý (đều chỉ dùng dữ liệu có sẵn, không suy diễn):
+Bốn xử lý evidence cần lưu ý (đều chỉ dùng dữ liệu có sẵn, không suy diễn):
 
   * chk token trong notes là TIỀN TỐ ('chk_khu_' khớp 'chk_khu_cong_nghiep');
   * section semantic_key có thể khác tên loop implementation ('nganh_bo' vs
     'nganh_xoa_bo') — bridge CHỈ qua tên loop nêu tường minh trong
-    ``LEAD_STATUS_OVERRIDES[..]['evidence']`` của chính section đó.
+    ``LEAD_STATUS_OVERRIDES[..]['evidence']`` của chính section đó;
+  * section scalar/check-token (fixed-matrix làm phẳng thành nhãn + ô □/ô
+    nhập rời, không còn lưới) KHÔNG có GRID_META/contract riêng: runtime
+    operate qua ĐƯỜNG CHUNG blocks->collectKeys->draft/validation của
+    form-domain.js (``b.t === 'chk'`` + ``r.input``) và render.js
+    (``case 'chk'`` + ``data-key``). Audit gán vùng section bằng VỊ TRÍ
+    anchor heading trong blocks phẳng (DFS), đếm input/chk key TRONG VỚI
+    đó, và chỉ credit runtime/draft/validation khi manifest census tự claim
+    already_complete/implemented (chiều verify claim, KHÔNG dùng để nâng
+    manifest missing_grid — gate 1 giữ nguyên độ bảo thủ);
+  * section grid KHÔNG khớp tên trực tiếp nhưng có block loop CÓ TÊN ngay
+    tại/vị trí anchor (không anchor section nào xen giữa, tên có thật ở
+    CẢ blocks L0 VÀ form_maps dynamic_tables) -> positional bridge sang
+    loop đó; 4 tầng (blocks/form_maps/spec/GRID_META) phải tự xác nhận
+    cùng tên loop thì evidence mới đầy đủ.
 
 Chạy:
     python3 -X utf8 -m tools.census.table_coverage_audit
@@ -65,6 +79,9 @@ EXPECTED_SECTIONS = 111
 # ---------------------------------------------------------------- constants
 STAGE_KEYS = ("spec", "template", "form_maps", "blocks", "runtime",
               "draft", "validation")
+# Section scalar/check-token không có lưới: spec/form_maps không áp dụng
+# (implementation vật lý là input/chk key trong blocks vùng anchor).
+SCALAR_STAGE_KEYS = ("template", "blocks", "runtime", "draft", "validation")
 
 FINAL_IMPLEMENTED = "IMPLEMENTED_VERIFIED"
 FINAL_PARTIAL = "PARTIAL_COLUMNS"
@@ -220,7 +237,7 @@ def extract_js_tags(value_text: str) -> list[str]:
 
 def derive_final_status(kind, manifest_status, override_status, stages,
                         required_cols, evidenced_tags, legal_blocker,
-                        override_blocked, removed_by_law):
+                        override_blocked, removed_by_law, scalar_mode=False):
     """Hàm THUẦN suy final_status từ evidence. KHÔNG đọc file.
 
     Tham số
@@ -238,6 +255,11 @@ def derive_final_status(kind, manifest_status, override_status, stages,
     override_blocked  : True khi override ghi status blocked.
     removed_by_law    : True khi source_evidence/notes manifest ghi RÕ văn bản
                         hiện hành đã bỏ mục này (không suy diễn).
+    scalar_mode       : True cho section scalar/check-token (fixed-matrix làm
+                        phẳng thành nhãn + ô □/ô nhập rời): spec/form_maps
+                        không áp dụng, stage bắt buộc = SCALAR_STAGE_KEYS
+                        (template/blocks/runtime/draft/validation) và bằng
+                        chứng blocks là input/chk key vùng anchor.
 
     Quy tắc (thứ tự ưu tiên) — bảo thủ, KHÔNG nâng missing -> implemented
     khi thiếu bất kỳ stage nào:
@@ -263,7 +285,8 @@ def derive_final_status(kind, manifest_status, override_status, stages,
 
     Trả về ``(final_status, missing_stages, detail)``.
     """
-    missing = [k for k in STAGE_KEYS if not stages.get(k)]
+    missing = [k for k in (SCALAR_STAGE_KEYS if scalar_mode else STAGE_KEYS)
+               if not stages.get(k)]
     detail = []
 
     if kind == "output-table" or manifest_status == "output_only":
@@ -277,8 +300,10 @@ def derive_final_status(kind, manifest_status, override_status, stages,
         stages.get("spec") or stages.get("form_maps") or stages.get("runtime")
         or stages.get("blocks_loop"))
     # bằng chứng implementation ở MỌI tầng (chk đã map trong blocks cũng tính:
-    # có vật lý rồi thì không được kết luận "không implementation")
-    impl_evidence = bool(table_evidence or stages.get("blocks_chk"))
+    # có vật lý rồi thì không được kết luận "không implementation"); scalar
+    # mode: input/chk key vùng anchor (stage blocks) là implementation vật lý
+    impl_evidence = bool(table_evidence or stages.get("blocks_chk")
+                         or (scalar_mode and stages.get("blocks")))
 
     if manifest_status == "no_table" and not table_evidence:
         return FINAL_NO_TABLE, [], ["manifest no_table, không tầng nào thấy bảng"]
@@ -413,12 +438,18 @@ def parse_overrides(py_path=BUILD_MANIFEST_PY):
 
 
 def parse_runtime_index():
-    """Scan form-domain.js: GRID_META / FORM_GRID_META / FORM_TABLE_CONTRACTS.
+    """Scan form-domain.js: GRID_META / FORM_GRID_META / FORM_TABLE_CONTRACTS /
+    FIELD_META + marker đường chung input/chk.
 
     Trả dict:
       grid_meta        : {loop: [tags]}
       form_grid_meta   : {form: {loop: [tags]}}
       form_contracts   : {form: [sectionId]}
+      field_meta_keys  : set canonical key của FIELD_META (bản phủ báo cáo)
+      chk_walk_ok      : collectKeys nhặt block chk (b.t === 'chk')
+      input_walk_ok    : collectKeys nhặt run input (r.input.key)
+      render_chk_ok    : render.js có case 'chk'
+      render_input_ok  : render.js có data-key
       domain_text      : stripped lowercase text (presence check validation)
       app_text         : stripped lowercase text gộp app_web/ui/*.js TRỪ
                          form-domain.js (presence check draft)
@@ -476,6 +507,24 @@ def parse_runtime_index():
                 secs[m.group(1)] = fval[m.start():end]
             form_contracts[form] = secs
 
+    # FIELD_META: metadata theo canonical key; key ngoài danh sách vẫn
+    # render/validation cơ bản (fallback text tuỳ chọn) theo ghi chú tường
+    # minh trong form-domain.js -> chỉ dùng làm BẢN PHỦ báo cáo, không must.
+    field_meta_keys = set()
+    body = find_js_block(domain, r"\bvar\s+FIELD_META\s*=")
+    if body:
+        for key, _val in iter_js_entries(body):
+            if key:
+                field_meta_keys.add(key)
+
+    # Đường chung blocks->draft/validation->render cho input/chk key:
+    # collectKeys nhặt b.t==='chk' + r.input (form-domain.js), render.js
+    # render case 'chk' + data-key. Marker literal trong code hiện hành;
+    # strip_js chuẩn hoá string literal sang nháy kép nên regex nhận cả hai.
+    # Marker render.js tính SAU khi gộp app_text (xuống dưới).
+    chk_walk_ok = bool(re.search(r"b\.t\s*===\s*[\"']chk[\"']", domain))
+    input_walk_ok = bool(re.search(r"\.input\.key", domain))
+
     app_parts = []
     if os.path.isdir(APP_JS):
         for name in sorted(os.listdir(APP_JS)):
@@ -484,15 +533,25 @@ def parse_runtime_index():
             with open(os.path.join(APP_JS, name), "r", encoding="utf-8") as f:
                 app_parts.append(strip_js(f.read()))
 
+    app_text = "\n".join(app_parts).lower()
+    render_chk_ok = (("case 'chk'" in app_text)
+                     or ('case "chk"' in app_text))
+    render_input_ok = "data-key" in app_text
+
     return {
         "grid_meta": grid_meta,
         "form_grid_meta": form_grid_meta,
         "form_contracts": form_contracts,
+        "field_meta_keys": field_meta_keys,
+        "chk_walk_ok": chk_walk_ok,
+        "input_walk_ok": input_walk_ok,
+        "render_chk_ok": render_chk_ok,
+        "render_input_ok": render_input_ok,
         "domain_text": domain.lower(),
-        "app_text": "\n".join(app_parts).lower(),
+        "app_text": app_text,
         # corpus app_web/ui nói chung (form-domain + mọi module UI) —
         # presence của section/loop key cho draft/validation theo đề
-        "corpus_text": (domain + "\n" + "\n".join(app_parts)).lower(),
+        "corpus_text": (domain + "\n" + app_text).lower(),
     }
 
 
@@ -570,6 +629,164 @@ def load_spec_docs(form_id):
             except Exception as exc:  # pragma: no cover
                 sys.stderr.write("WARN spec %s: %s\n" % (p, exc))
     return out
+
+
+# ============================================================ layout index
+
+def flatten_blocks(blocks_doc):
+    """DFS phẳng toàn bộ block dict (thứ tự duyệt ổn định) để tính vùng
+    anchor theo VỊ TRÍ. Con đi qua các khoá list: blocks/children/items/
+    region (cùng bộ khoá với iter_block_items)."""
+    out = []
+
+    def walk(x):
+        if isinstance(x, dict):
+            out.append(x)
+            for key in ("blocks", "children", "items", "region"):
+                v = x.get(key)
+                if isinstance(v, list):
+                    for item in v:
+                        walk(item)
+        elif isinstance(x, list):
+            for item in x:
+                walk(item)
+
+    walk((blocks_doc or {}).get("blocks") or [])
+    return out
+
+
+def block_all_text(b):
+    """Text norm của 1 block, ĐỆ QUY qua runs + con (khác block_norm_text
+    chỉ tầng đỉnh) — cần cho anchor nằm trong table/loop (vd header bảng
+    chính là block loop ở PLI_M21)."""
+    parts = []
+
+    def walk(x):
+        if isinstance(x, dict):
+            for r in x.get("runs") or []:
+                t = r.get("text")
+                if t:
+                    parts.append(t)
+            for v in x.values():
+                if isinstance(v, (dict, list)):
+                    walk(v)
+        elif isinstance(x, list):
+            for v in x:
+                walk(v)
+
+    walk(b)
+    return norm_text(" ".join(parts))
+
+
+def anchor_pos_in(seq_texts, heading):
+    """Vị trí block đầu tiên chứa needle heading — cùng cấp cắt
+    40/32/24/16 (tối thiểu 12 ký) với match_blocks. None khi không thấy."""
+    base = norm_text(heading)
+    if not base:
+        return None
+    for cut in (40, 32, 24, 16):
+        needle = base[:cut]
+        if len(needle) < 12:
+            break
+        for i, t in enumerate(seq_texts):
+            if needle in t:
+                return i
+    return None
+
+
+def region_keys_scan(flat_blocks, start, end):
+    """Input keys (run.input.key) + chk keys (block chk) ĐỆ QUY trong vùng
+    [start, end) của blocks phẳng. Trả (inputs, chks) chưa dedupe."""
+    inputs, chks = [], []
+
+    def walk(x):
+        if isinstance(x, dict):
+            if x.get("t") == "chk" and x.get("key"):
+                chks.append(x["key"])
+            inp = x.get("input")
+            if isinstance(inp, dict) and inp.get("key"):
+                inputs.append(inp["key"])
+            for v in x.values():
+                if isinstance(v, (dict, list)):
+                    walk(v)
+        elif isinstance(x, list):
+            for v in x:
+                walk(v)
+
+    for b in flat_blocks[start:end]:
+        walk(b)
+    return inputs, chks
+
+
+def build_layout_index(forms, blocks, blocks_loop_names, form_maps):
+    """Index vị trí theo form: vùng anchor phẳng của từng section + positional
+    loop binding.
+
+    * regions[sid]    = (start, end) trong blocks phẳng: từ block khớp anchor
+      heading của section tới block khớp anchor của section kế tiếp (theo thứ
+      tự vị trí). Vùng = chính claim của census (source_evidence.heading).
+    * pos_loop[sid]   = tên loop gán qua VỊ TRÍ: block loop CÓ TÊN tại/ngay
+      sau anchor top-level (cửa sổ +9 như anon-table rule), tên có thật ở
+      CẢ blocks L0 VÀ form_maps dynamic_tables (chống bịa), và KHÔNG anchor
+      section nào khác nằm giữa anchor và loop (loop đã có chủ thì không
+      được chiếm).
+    """
+    layout = {}
+    for f in forms:
+        fid = f["form_id"]
+        doc = blocks.get(fid)
+        if not doc:
+            continue
+        flat = flatten_blocks(doc)
+        flat_texts = [block_all_text(b) for b in flat]
+        top = doc.get("blocks") or []
+        top_texts = [block_all_text(b) for b in top]
+
+        dt_names = set()
+        for dt in (form_maps.get(fid) or {}).get("dynamic_tables") or []:
+            for k in (dt.get("id"), dt.get("loop")):
+                if k:
+                    dt_names.add(k)
+
+        fpos, tpos = {}, {}
+        for s in f["sections"]:
+            heading = (s.get("source_evidence") or {}).get("heading")
+            if not heading:
+                continue
+            fp = anchor_pos_in(flat_texts, heading)
+            if fp is not None:
+                fpos[s["section_id"]] = fp
+            tp = anchor_pos_in(top_texts, heading)
+            if tp is not None:
+                tpos[s["section_id"]] = tp
+
+        # vùng theo thứ tự vị trí; anchor trùng nhau -> vùng tối thiểu 1 block
+        order = sorted(fpos.items(), key=lambda kv: (kv[1], kv[0]))
+        regions = {}
+        for i, (sid, start) in enumerate(order):
+            end = order[i + 1][1] if i + 1 < len(order) else len(flat)
+            if end <= start:
+                end = start + 1
+            regions[sid] = (start, min(end, len(flat)))
+
+        # positional loop binding (top-level, cửa sổ +9)
+        other_tps = sorted(v for sid, v in tpos.items())
+        pos_loop = {}
+        for sid, ts in tpos.items():
+            for j in range(ts, min(ts + 10, len(top))):
+                b = top[j]
+                if b.get("t") not in ("table", "loop"):
+                    continue
+                nm = b.get("loop") or b.get("name")
+                if (b.get("t") == "loop" and nm
+                        and nm in (blocks_loop_names.get(fid) or set())
+                        and nm in dt_names
+                        and not any(ts < o < j for o in other_tps)):
+                    pos_loop[sid] = nm
+                break
+
+        layout[fid] = {"flat": flat, "regions": regions, "pos_loop": pos_loop}
+    return layout
 
 
 # ============================================================ matching
@@ -828,6 +1045,8 @@ def audit_section(form, section, ctx):
     candidates = {sid, semantic} - {None, ""}
     spec_docs = ctx["spec_docs"].get(fid) or []
     fm_form = (ctx["form_maps"] or {}).get(fid)
+    blocks_doc = (ctx["blocks"] or {}).get(fid)
+    blocks_norm = ctx["blocks_norm"].get(fid, "")
 
     # bridge: tên loop implementation do owner ghi trong override evidence
     bridged = bridge_loop_names(
@@ -835,22 +1054,39 @@ def audit_section(form, section, ctx):
         candidates)
     candidates |= set(bridged)
 
-    # --- spec
-    spec_ev, spec_hits = match_spec(spec_docs, candidates)
-    for h in spec_hits:
-        if h.get("loop"):
-            candidates.add(h["loop"])
+    def match_structural(cands):
+        """spec -> form_maps -> blocks theo candidates (loop tìm thấy ở tầng
+        trên được nạp vào candidates cho tầng dưới, đúng ngữ nghĩa cũ)."""
+        s_ev, s_hits = match_spec(spec_docs, cands)
+        expanded = set(cands)
+        for h in s_hits:
+            if h.get("loop"):
+                expanded.add(h["loop"])
+        m_ev, m_hits = match_form_maps(fm_form, expanded)
+        for h in m_hits:
+            if h.get("loop"):
+                expanded.add(h["loop"])
+        b = match_blocks(blocks_doc, expanded, section, blocks_norm)
+        return s_ev, s_hits, m_ev, m_hits, b, expanded
 
-    # --- form_maps (cần candidates đã có loop từ spec)
-    maps_ev, maps_hits = match_form_maps(fm_form, candidates)
-    for h in maps_hits:
-        if h.get("loop"):
-            candidates.add(h["loop"])
+    # --- pass 1: khớp tên trực tiếp (section_id/semantic/bridge override)
+    spec_ev, spec_hits, maps_ev, maps_hits, bm, candidates = \
+        match_structural(candidates)
 
-    # --- blocks
-    blocks_doc = (ctx["blocks"] or {}).get(fid)
-    blocks_norm = ctx["blocks_norm"].get(fid, "")
-    bm = match_blocks(blocks_doc, candidates, section, blocks_norm)
+    # --- pass 2 (positional bridge): section grid không khớp tên trực tiếp
+    #     nhưng có block loop CÓ TÊN tại/ngay sau anchor heading -> gán loop
+    #     qua VỊ TRÍ (tên phải có thật ở CẢ blocks L0 VÀ form_maps
+    #     dynamic_tables, không anchor section nào xen giữa — xem
+    #     build_layout_index). 4 tầng còn lại phải tự xác nhận cùng tên.
+    positional_bridge = None
+    if not spec_ev and not maps_ev and not bm["loop_ev"]:
+        pos = ((ctx.get("layout") or {}).get(fid) or {}
+               ).get("pos_loop", {}).get(sid)
+        if pos and pos not in candidates:
+            positional_bridge = pos
+            candidates.add(pos)
+            spec_ev, spec_hits, maps_ev, maps_hits, bm, candidates = \
+                match_structural(candidates)
 
     # --- runtime
     runtime_ev, runtime_tags = match_runtime(ctx["runtime"], fid, candidates)
@@ -869,6 +1105,47 @@ def audit_section(form, section, ctx):
                                      ctx["runtime"]["corpus_text"])]
     valid_ev = ("validation: key %s xuất hiện trong app_web/ui (corpus JS)"
                 % ", ".join(valid_hits)) if valid_hits else None
+
+    # --- scalar/check-token crediting: section fixed-matrix bị làm phẳng
+    #     thành nhãn + ô □/ô nhập rời KHÔNG có GRID_META/contract riêng;
+    #     runtime operate qua ĐƯỜNG CHUNG blocks->collectKeys->draft/
+    #     validation (b.t==='chk' + r.input) và render (case 'chk' +
+    #     data-key). Credit CHỈ khi manifest census tự claim already_complete/
+    #     implemented (chiều VERIFY claim) — KHÔNG dùng để nâng manifest
+    #     missing_grid (gate 1 giữ nguyên độ bảo thủ). Vùng keys = VỊ TRÍ
+    #     anchor heading trong blocks phẳng (claim của census).
+    scalar_credited = False
+    region_ev = None
+    rt_idx = ctx["runtime"]
+    runtime_path_ok = bool(rt_idx.get("chk_walk_ok") and
+                           rt_idx.get("input_walk_ok") and
+                           rt_idx.get("render_chk_ok") and
+                           rt_idx.get("render_input_ok"))
+    reg = ((ctx.get("layout") or {}).get(fid) or {}
+           ).get("regions", {}).get(sid)
+    if (reg and not runtime_ev and runtime_path_ok
+            and manifest_status in MANIFEST_IMPLEMENTED_STATUSES
+            and bm["chk_ok"] is not False):
+        ins, chks = region_keys_scan(ctx["flat_blocks"][fid], reg[0], reg[1])
+        uniq_ins, uniq_chks = sorted(set(ins)), sorted(set(chks))
+        if uniq_ins or uniq_chks:
+            n_keys = len(uniq_ins) + len(uniq_chks)
+            fm_keys = rt_idx.get("field_meta_keys") or set()
+            covered = sum(1 for k in uniq_ins if k in fm_keys)
+            region_ev = ("blocks: vùng anchor [%d:%d) chứa %d input key + %d "
+                         "chk key" % (reg[0], reg[1], len(uniq_ins),
+                                      len(uniq_chks)))
+            runtime_ev = ("runtime: đường chung blocks->collectKeys->draft/"
+                          "validation + render (b.t==='chk' + run.input; "
+                          "render 'case chk' + data-key) trên %d key của vùng "
+                          "anchor; FIELD_META phủ %d/%d input key (còn lại "
+                          "fallback text tuỳ chọn — tương thích ngược "
+                          "form-domain)" % (n_keys, covered, len(uniq_ins)))
+            draft_ev = ("draft: %d key vùng anchor nạp draft qua collectKeys "
+                        "đường chung (chk + input)" % n_keys)
+            valid_ev = ("validation: %d key vùng anchor qua validateDocument "
+                        "(FIELD_META hoặc fallback text)" % n_keys)
+            scalar_credited = True
 
     # --- template + docx_render structural
     n_tbl, tbl_err = ctx["template_tables"].get(
@@ -986,7 +1263,8 @@ def audit_section(form, section, ctx):
         "spec": bool(spec_ev),
         "template": template_ok,
         "form_maps": bool(maps_ev),
-        "blocks": bool(bm["loop_ev"] or bm["chk_ev"] or bm["anon_table_ev"]),
+        "blocks": bool(bm["loop_ev"] or bm["chk_ev"] or bm["anon_table_ev"]
+                       or region_ev),
         "blocks_loop": bool(bm["loop_ev"]),
         "blocks_chk": bm["chk_ok"] is True,
         "runtime": bool(runtime_ev),
@@ -1003,6 +1281,7 @@ def audit_section(form, section, ctx):
         legal_blocker=legal_blocker,
         override_blocked=bool(override and override.get("status") == "blocked"),
         removed_by_law=removed_by_law,
+        scalar_mode=scalar_credited,
     )
 
     conflicts = []
@@ -1011,6 +1290,17 @@ def audit_section(form, section, ctx):
             "bridge: override evidence nêu tên implementation (%s) khác "
             "section_id/semantic_key — khớp qua evidence owner, không suy "
             "diễn" % ", ".join(bridged))
+    if positional_bridge:
+        conflicts.append(
+            "positional bridge: loop %s gán cho section qua VỊ TRÍ anchor "
+            "(tên có thật ở blocks L0 + form_maps; không anchor section nào "
+            "xen giữa); các tầng khác tự xác nhận cùng tên loop"
+            % positional_bridge)
+    if scalar_credited:
+        conflicts.append(
+            "scalar/check-token: runtime/draft/validation credit qua đường "
+            "chung chk/input của vùng anchor (không cần GRID_META/contract "
+            "riêng; chỉ chiều verify manifest already_complete)")
     if (manifest_status == "missing_grid" and final_status in
             (FINAL_IMPLEMENTED,)):
         conflicts.append("manifest missing_grid nhưng đủ evidence pipeline")
@@ -1058,7 +1348,7 @@ def audit_section(form, section, ctx):
         ("template", dash(template_ev)),
         ("form_maps", dash(maps_ev)),
         ("blocks", "; ".join(filter(None, [bm["loop_ev"], bm["chk_ev"],
-                                           bm["anon_table_ev"],
+                                           bm["anon_table_ev"], region_ev,
                                            bm["anchor_ev"]])) or "—"),
         ("runtime", dash(runtime_ev)),
         ("draft", dash(draft_ev)),
@@ -1076,6 +1366,8 @@ def audit_section(form, section, ctx):
             "docx_structural_ok": docx_structural_ok,
             "blocks_loop": stages["blocks_loop"],
             "blocks_chk_ok": bm["chk_ok"],
+            "scalar_credited": scalar_credited,
+            "positional_bridge": positional_bridge,
             "legal_blocker": legal_blocker,
             "legal_blocker_source": lb_source,
             "n_legal_questions_form": n_lq,
@@ -1150,8 +1442,12 @@ def build_md(rows, totals, drifts, head_commit):
         ap("| %s | %d |" % (st, totals.get(st, 0)))
     ap("| **Tổng** | **%d** |" % sum(totals.values()))
     ap("")
-    ap("Định nghĩa: `IMPLEMENTED_VERIFIED` = đủ evidence spec + template + "
-       "form_maps + blocks + runtime + draft + validation xuyên pipeline. "
+    ap("Định nghĩa: `IMPLEMENTED_VERIFIED` = đủ evidence xuyên pipeline "
+       "(section lưới: spec + template + form_maps + blocks + runtime + "
+       "draft + validation; section scalar/check-token làm phẳng thành nhãn "
+       "+ ô □/ô nhập rời: template + blocks-keys vùng anchor + runtime/draft/"
+       "validation qua đường chung collectKeys/render — spec/form_maps "
+       "không áp dụng). "
        "`PARTIAL_COLUMNS` = có bảng/runtime nhưng cột vật lý thiếu so với "
        "`required_columns`. `MISSING_IMPLEMENTATION` = khai báo bảng nhưng "
        "thiếu ít nhất một stage (bảo thủ, không nâng khi thiếu evidence). "
@@ -1294,6 +1590,9 @@ def main(argv=None):
                     inv.add(k)
         runtime_inventory[fid] = inv
 
+    # index vị trí: vùng anchor phẳng + positional loop binding theo form
+    layout = build_layout_index(forms, blocks, blocks_loop_names, form_maps)
+
     ctx = {
         "overrides": overrides,
         "form_maps": form_maps,
@@ -1303,6 +1602,8 @@ def main(argv=None):
         "runtime": runtime,
         "template_tables": template_tables,
         "runtime_inventory": runtime_inventory,
+        "layout": layout,
+        "flat_blocks": {fid: e["flat"] for fid, e in layout.items()},
     }
 
     rows, rows_full = [], []
@@ -1333,7 +1634,14 @@ def main(argv=None):
                             "FORM_GRID_META / FORM_TABLE_CONTRACTS index; "
                             "draft & validation = presence key trong corpus "
                             "app_web/ui (form-domain.js + module UI); bridge "
-                            "tên loop chỉ từ evidence của override",
+                            "tên loop chỉ từ evidence của override; "
+                            "positional bridge: loop CÓ TÊN tại/ngay sau "
+                            "anchor (blocks L0 + form_maps cùng xác nhận, "
+                            "không anchor xen giữa); scalar/check-token: "
+                            "runtime/draft/validation qua đường chung "
+                            "collectKeys/render trên input/chk key của VÙNG "
+                            "anchor — chỉ credit manifest already_complete/"
+                            "implemented, không nâng missing_grid",
             "legal_blocker_note": "BLOCKED_OWNER chỉ khi KHÔNG có bằng chứng "
                                   "bảng VÀ (notes ghi blocker HOẶC form có "
                                   "legal_questions) — không suy diễn pháp lý",

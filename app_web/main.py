@@ -242,14 +242,13 @@ class Bridge:
                 errors.append("%s: lỗi render %s: %s"
                               % (fid, type(exc).__name__, _safe_error(exc)))
 
-        # ------------------------------------------------- PDF export
-        # [Owner decision 2026-09-03] Xuất ĐA ĐỊNH DẠNG: payload.format =
-        #   "docx"          — chỉ file Word;
-        #   "pdf"           — chỉ file PDF;
-        #   "both" (mặc định) — cả Word lẫn PDF.
-        # DOCX luôn render (trung gian bắt buộc); PDF dùng LibreOffice
-        # headless (soffice). soffice không có → trả PDF_EXPORT_UNAVAILABLE
-        # + giữ .docx thay thế.
+        # ------------------------------------------------- Word compat + PDF
+        # [Owner decision 2026-09-03] Xuất ĐA ĐỊNH DẠNG + Word compat:
+        #   payload.format = "docx" | "pdf" | "both" (mặc định both)
+        # Bước 1: LO normalize từng .docx (re-save qua LO = fix Word 16.16
+        #         "unreadable content" — Class 16, thủ phạm là serialization
+        #         của nguồn convert cũ, generator giữ nguyên).
+        # Bước 2: LO convert normalized .docx → PDF.
         export_format = str(payload.get("format") or "both").strip().lower()
         if export_format not in ("docx", "pdf", "both"):
             export_format = "both"
@@ -257,6 +256,21 @@ class Bridge:
         want_docx = export_format in ("docx", "both")
         soffice = shutil.which("soffice") or "/Applications/LibreOffice.app/Contents/MacOS/soffice"
         soffice_ok = Path(soffice).exists() if "/" in soffice else bool(shutil.which("soffice"))
+
+        # Bước 1: LO normalize (fix Class 16 — Word compat)
+        if soffice_ok:
+            for name in files:
+                src = out_dir / name
+                try:
+                    proc = subprocess.run(
+                        [soffice, "--headless", "--norestore",
+                         "--convert-to", "docx", "--outdir", str(out_dir), str(src)],
+                        capture_output=True, text=True, timeout=60,
+                        env={**os.environ, "HOME": os.environ.get("HOME", "/tmp")})
+                    # LO ghi đè src — giữ nguyên tên file
+                except Exception:
+                    pass  # normalize fail → giữ file gốc (vẫn đọc được bằng LO)
+
         pdf_files, pdf_errors = [], []
         if want_pdf and not soffice_ok:
             errors.append("PDF_EXPORT_UNAVAILABLE: soffice không tìm thấy — "

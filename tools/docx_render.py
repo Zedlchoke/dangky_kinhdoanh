@@ -25,6 +25,15 @@ import zipfile
 from pathlib import Path
 from xml.sax.saxutils import escape
 
+# Phân loại role paragraph (WLAY-001): module thuần, chỉ cần ROOT trên sys.path.
+# Chạy `python -m tools.docx_render` từ ROOT thì có sẵn; chạy trực tiếp như
+# script thì tự thêm ROOT.
+try:
+    from tools.layout_roles import classify_role, fold
+except ImportError:  # noqa: F401 — python tools/docx_render.py
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+    from tools.layout_roles import classify_role, fold
+
 # Tag biến: {key} hoặc {a.b.c} — chữ/số/gạch dưới/chấm
 TAG_RE = re.compile(r"\{([A-Za-z0-9_][A-Za-z0-9_.]*)\}")
 # Tag mở/đóng bảng lặp
@@ -318,6 +327,9 @@ def render(template_path: str | os.PathLike, data: dict,
                     xml = _expand_loops(xml, payload)
                     xml = _subst_vars(xml, payload)
                     if name == "word/document.xml":
+                        # Phase 5R1 (WLAY-001): loại marker source-indicator
+                        # sau khi conditions/loops/subst đã chốt văn bản.
+                        xml = _drop_source_indicators(xml)
                         # Class 7: chèn dòng trống cho vùng ký THÀNH PHẦN
                         # CUỐI — sau khi conditions/loops đã chốt cấu trúc.
                         xml = _ensure_signature_space(xml)
@@ -571,6 +583,56 @@ def recompute_totals(data: dict, tables_meta: list,
     if problems and strict:
         raise ExportTotalsError(problems)
     return report
+
+
+# ---------------------------------------------------------------------------
+# Phase 5R1 (WLAY-001): role=source-indicator lộ trong DOCX
+#
+# UI (app_web/ui/render.js) đã BỎ role=source-indicator khỏi DOM nhưng đường
+# export DOCX render template nguyên trạng nên marker kỹ thuật do bước tách
+# nguồn sinh ra ("PL1 - Mau so 9: Giấy đề nghị ...") vẫn in ở trang 1 của
+# đúng 44 form (docs/word_layout_audit_2026-09-03.md mục 4, đã xác minh 44/44
+# template chứa marker ở body-level). Marker là metadata của pipeline, KHÔNG
+# phải nội dung pháp lý của biểu mẫu -> xử lý NGAY TRƯỚC KHI XUẤT: với mọi
+# paragraph CON TRỰC TIẾP của <w:body> trong word/document.xml mà
+# classify_role() xếp role 'source-indicator' thì LOẠI paragraph đó.
+#
+# Ràng buộc:
+# - Chỉ word/document.xml, chỉ con trực tiếp của w:body — KHÔNG đụng
+#   header/footer, KHÔNG đụng paragraph trong w:tbl (đã quét BASE: 0 marker
+#   nằm trong bảng).
+# - Dòng pháp lý "Mẫu số N" (role 'form-number') phải GIỮ NGUYÊN — rule
+#   source-indicator của layout_roles đứng trước và chỉ khớp dạng
+#   "PL<d> - Mau so ..." nên không nhầm với form-number (test pin cả hai).
+# - Form không có marker -> XML trả về NGUYÊN BẢN (byte-identical với
+#   pipeline trước khi thêm bước này).
+# ---------------------------------------------------------------------------
+
+def _drop_source_indicators(xml: str) -> str:
+    """Loại paragraph con trực tiếp của w:body có role 'source-indicator'.
+    Trả XML mới; không có marker thì trả nguyên xml (byte-identical).
+    Chỉ chạy cho word/document.xml (header/footer không có marker)."""
+    bm = _BODY_RE.search(xml)
+    if not bm:
+        return xml
+    body = bm.group(2)
+    spans = _split_body_children(body)
+    out: list[str] = []
+    pos = 0
+    dropped = 0
+    for s, e in spans:
+        seg = body[s:e]
+        if not seg.startswith("<w:p"):
+            continue
+        text = "".join(re.findall(r"<w:t[^>]*>([^<]*)</w:t>", seg))
+        if text.strip() and classify_role(fold(text)) == "source-indicator":
+            out.append(body[pos:s])
+            pos = e
+            dropped += 1
+    if not dropped:
+        return xml
+    out.append(body[pos:])
+    return xml[:bm.start(2)] + "".join(out) + xml[bm.end(2):]
 
 
 # ---------------------------------------------------------------------------

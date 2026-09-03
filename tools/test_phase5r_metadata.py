@@ -1,0 +1,228 @@
+# -*- coding: utf-8 -*-
+"""Test Phase 5R lane A (metadata/boundary) — 4 defect WLAY-001/006/007a/007b.
+
+Mỗi test pin defect cụ thể trong docs/word_layout_audit_2026-09-03.md:
+  W1 WLAY-001 — role=source-indicator ("PL1 - Mau so 9: ...") đã bị UI ẩn nhưng
+     còn lộ trong DOCX export ở đúng 44 form. Reproduction trước khi sửa: render
+     template PLI_M09 rồi quét w:t — text "PL1 - Mau so 9: ..." vẫn còn. Fix:
+     docx_render.render() loại paragraph con trực tiếp của w:body mà
+     classify_role() xếp role 'source-indicator'.
+  W2 WLAY-006 — PLII_M28 lộ literal ` PAGE   \\* MERGEFORMAT 2` (field code số
+     trang của bản nguồn bị converter cũ làm phẳng thành w:t, xác minh byte ở
+     file nguồn PL2_Mau_28_*.docx — số "2" stale là số trang của MẪU NGUỒN,
+     không phải nội dung pháp lý của biểu mẫu; field gốc thuộc footer nên
+     dựng lại fldSimple trong thân tài liệu là SAI bố cục -> quyết định LOẠI
+     paragraph, không dựng lại field). Fix: build_form_maps.py drop paragraph
+     field-code trang stale khi sinh template.
+  W3 WLAY-007a — PLI_M72 variant TNHH_2TV có trang trắng (soffice + pymupdf
+     đếm trang có chars < 20). Fix OOXML-đúng có điều kiện, không hard-code
+     theo fixture (chi tiết gốc rễ trong docstring test W3).
+  W4 WLAY-007b — PLI_M80 kéo banner 'PHỤ LỤC II / BIỂU MẪU SỬ DỤNG TRONG ĐĂNG
+     KÝ HỘ KINH DOANH / (Kèm theo Thông tư 68/2025...)' của phụ lục KẾ vào đuôi
+     template (contamination bước tách nguồn). Fix: rule boundary chung trong
+     build_form_maps.py — dừng tách khi gặp banner PHỤ LỤC khác phụ lục của
+     form, chống hồi quy cho mọi form.
+
+Chạy:  python3 -X utf8 tools/test_phase5r_metadata.py
+Exit 0 = PASS / 1 = FAIL.
+"""
+from __future__ import annotations
+
+import io
+import json
+import re
+import sys
+import unicodedata
+import zipfile
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT))
+
+from tools.docx_render import (            # noqa: E402
+    LEFTOVER_RE, dummy_data_from_map, render, write_rendered,
+)
+from tools.layout_roles import classify_role, fold  # noqa: E402
+
+MAPS_PATH = ROOT / "app" / "data" / "form_maps.json"
+TEMPLATES = ROOT / "app" / "templates"
+OUT_DIR = ROOT / "generated_ho_so" / "_test_phase5r_metadata"
+
+# 44 form lộ source-indicator — docs/word_layout_audit_2026-09-03.md mục 4
+WLAY001_FORMS = [
+    "PLII_M01", "PLII_M02", "PLII_M03", "PLII_M04", "PLII_M05", "PLII_M06",
+    "PLII_M07", "PLII_M08", "PLII_M09", "PLII_M10", "PLII_M11", "PLII_M12",
+    "PLII_M13", "PLII_M14", "PLII_M15", "PLII_M16", "PLII_M17", "PLII_M18",
+    "PLII_M19",
+    "PLI_M01", "PLI_M02", "PLI_M05", "PLI_M06", "PLI_M07", "PLI_M08",
+    "PLI_M09", "PLI_M10", "PLI_M11", "PLI_M17", "PLI_M23", "PLI_M25",
+    "PLI_M27", "PLI_M28", "PLI_M29", "PLI_M30", "PLI_M31", "PLI_M32",
+    "PLI_M33", "PLI_M42", "PLI_M43", "PLI_M45", "PLI_M46", "PLI_M47",
+    "PLI_M48",
+]
+
+_results: list[tuple[bool, str]] = []
+
+
+def check(name: str):
+    def deco(fn):
+        def run(*args):
+            try:
+                fn(*args)
+                _results.append((True, name))
+                print("PASS %s" % name)
+            except AssertionError as exc:
+                _results.append((False, "%s: %s" % (name, exc)))
+                print("FAIL %s: %s" % (name, exc))
+            except Exception as exc:  # noqa: BLE001
+                _results.append((False, "%s: exception %r" % (name, exc)))
+                print("FAIL %s: exception %r" % (name, exc))
+        return run
+    return deco
+
+
+def doc_xml(docx_bytes: bytes) -> str:
+    with zipfile.ZipFile(io.BytesIO(docx_bytes)) as z:
+        return z.read("word/document.xml").decode("utf-8")
+
+
+def template_xml(fid: str) -> str:
+    with zipfile.ZipFile(TEMPLATES / ("%s.docx" % fid)) as z:
+        return z.read("word/document.xml").decode("utf-8")
+
+
+def wt_texts(xml: str) -> list[str]:
+    return re.findall(r"<w:t[^>]*>([^<]*)</w:t>", xml)
+
+
+def source_indicator_hits(xml: str) -> list[str]:
+    """Chuẩn detector D1 của tools/phase5_visual_gate.py."""
+    return [t.strip()[:120] for t in wt_texts(xml)
+            if classify_role(fold(t)) == "source-indicator"]
+
+
+# ---------------------------------------------------------------------------
+# W1 — WLAY-001: source-indicator phải bị loại khỏi DOCX, form-number phải GIỮ
+# ---------------------------------------------------------------------------
+
+@check("W1 template_list: dung 44 form trong audit co marker body-level")
+def t_w1_template_list():
+    maps = json.loads(MAPS_PATH.read_text(encoding="utf-8"))
+    found = []
+    for fid in sorted(maps):
+        xml = template_xml(fid)
+        body = re.search(r"<w:body>(.*)</w:body>", xml, re.S).group(1)
+        body_no_tbl = re.sub(r"<w:tbl[ >].*?</w:tbl>", "", body, flags=re.S)
+        if source_indicator_hits(body_no_tbl):
+            found.append(fid)
+    assert set(found) == set(WLAY001_FORMS), (
+        "danh sach form co marker lech audit: chi co %d, thieu %d, du %d"
+        % (len(found),
+           sorted(set(WLAY001_FORMS) - set(found))[:5],
+           sorted(set(found) - set(WLAY001_FORMS))[:5]))
+
+
+@check("W1 render PLI_M09: khong con source-indicator, GIU 'Mau so 9' phap ly")
+def t_w1_render_m09():
+    maps = json.loads(MAPS_PATH.read_text(encoding="utf-8"))
+    fid = "PLI_M09"
+    data = dummy_data_from_map(maps[fid])
+    xml = doc_xml(render(TEMPLATES / ("%s.docx" % fid), data))
+    hits = source_indicator_hits(xml)
+    assert hits == [], ("PLI_M09: con %d source-indicator trong DOCX: %r"
+                        % (len(hits), hits[:3]))
+    # Dòng pháp lý "Mẫu số 9" (role form-number) phải GIỮ NGUYÊN
+    texts = wt_texts(xml)
+    assert any(fold(t) == "mau so 9" for t in texts), \
+        "mat dong phap ly 'Mau so 9' sau khi loai source-indicator"
+    assert any(classify_role(fold(t)) == "form-number" for t in texts), \
+        "khong con paragraph nao mang role form-number"
+
+
+@check("W1 render 44 form audit: 0 source-indicator trong moi DOCX")
+def t_w1_render_all_44():
+    maps = json.loads(MAPS_PATH.read_text(encoding="utf-8"))
+    bad = {}
+    for fid in WLAY001_FORMS:
+        data = dummy_data_from_map(maps[fid])
+        xml = doc_xml(render(TEMPLATES / ("%s.docx" % fid), data))
+        hits = source_indicator_hits(xml)
+        if hits:
+            bad[fid] = hits[:2]
+    assert not bad, ("%d/%d form con source-indicator: %r"
+                     % (len(bad), len(WLAY001_FORMS),
+                        dict(list(bad.items())[:5])))
+
+
+@check("W1 byte-identical: xml khong co marker thi ham loai tra NGUYEN ven")
+def t_w1_byte_identical():
+    from tools import docx_render
+    body = ("<w:p><w:r><w:t>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</w:t></w:r></w:p>"
+            "<w:p><w:r><w:t>Mẫu số 9</w:t></w:r></w:p>"
+            "<w:p><w:r><w:t>PL1 - Mau so 9: Giấy đề nghị</w:t></w:r></w:p>"
+            "<w:p/>")
+    # chỉ 1 marker -> bị loại, 2 paragraph còn lại + self-closing giữ nguyên
+    out = docx_render._drop_source_indicators(
+        "<w:body>%s<w:sectPr/></w:body>" % body)
+    assert "PL1 - Mau so 9" not in out, "marker khong bi loai"
+    assert "Mẫu số 9" in out and "CỘNG HÒA" in out, "mat noi dung khong marker"
+    # xml KHÔNG có marker -> trả về nguyên bản (byte-identical, không rebuild)
+    clean = ("<w:body><w:p><w:r><w:t>Mẫu số 72</w:t></w:r></w:p>"
+             "<w:tbl><w:tr><w:tc><w:p><w:r><w:t>"
+             "PL1 - Mau so 72 trong bang phai GIU (ngoai pham vi body-level)"
+             "</w:t></w:r></w:p></w:tc></w:tr></w:tbl></w:body>")
+    assert docx_render._drop_source_indicators(clean) == clean, \
+        "xml khong marker bi bien doi (mất tính byte-identical)"
+
+
+@check("W1 byte-identical: 43 form khong marker render giong pipeline cu")
+def t_w1_render_rest_byte_identical():
+    """Form KHÔNG có source-indicator phải render byte-identical như pipeline
+    cũ — bằng chứng: tắt `_drop_source_indicators` (đồng nhất với pipeline
+    trước khi thêm bước này) rồi render lại, hai document.xml phải bằng nhau
+    từng byte. Vì bước mới là khác biệt DUY NHẤT giữa hai pipeline nên hai
+    output bằng nhau <=> không có form nào bị đổi output vô cớ."""
+    from tools import docx_render
+    maps = json.loads(MAPS_PATH.read_text(encoding="utf-8"))
+    checked = 0
+    for fid in sorted(maps):
+        xml = template_xml(fid)
+        body = re.search(r"<w:body>(.*)</w:body>", xml, re.S).group(1)
+        body_no_tbl = re.sub(r"<w:tbl[ >].*?</w:tbl>", "", body, flags=re.S)
+        if source_indicator_hits(body_no_tbl):
+            continue
+        tpath = TEMPLATES / ("%s.docx" % fid)
+        data = dummy_data_from_map(maps[fid])
+        with_new = doc_xml(render(tpath, data))
+        orig = docx_render._drop_source_indicators
+        docx_render._drop_source_indicators = lambda x: x
+        try:
+            without_new = doc_xml(render(tpath, data))
+        finally:
+            docx_render._drop_source_indicators = orig
+        assert with_new == without_new, \
+            "%s: render doi output dù khong co source-indicator" % fid
+        checked += 1
+    assert checked == 87 - len(WLAY001_FORMS), \
+        "so form kiem tra %d != 87 - 44" % checked
+
+
+def main() -> int:
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
+    tests = [v for k, v in sorted(globals().items())
+             if k.startswith("t_") and callable(v)]
+    for t in tests:
+        t()
+    passed = sum(1 for ok, _ in _results if ok)
+    failed = len(_results) - passed
+    print("-" * 60)
+    print("test_phase5r_metadata: %d PASS / %d FAIL" % (passed, failed))
+    for ok, name in _results:
+        if not ok:
+            print(" - FAIL:", name)
+    print("Thu muc ket qua:", OUT_DIR)
+    return 0 if failed == 0 else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())

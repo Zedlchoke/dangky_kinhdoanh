@@ -77,15 +77,24 @@ end run
 
 
 def main() -> int:
+    import argparse
     global OPEN_SCRIPT, DISMISS_SCRIPT
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--root", default=str(ROOT / "generated_ho_so"),
+                    help="thư mục gốc chứa các dir DOCX corpus con")
+    ap.add_argument("--pattern", default="phase5_word_open_*",
+                    help="glob tên thư mục corpus con trong --root")
+    ap.add_argument("--inventory", default=str(INVENTORY),
+                    help="đường dẫn inventory.json ghi kết quả")
+    args = ap.parse_args()
     SHOTS.mkdir(parents=True, exist_ok=True)
     open_sc = "/tmp/dkdn_word_open.applescript"
     Path(open_sc).write_text(OPEN_SCRIPT, encoding="utf-8")
     dis_sc = "/tmp/dkdn_word_dismiss.applescript"
     Path(dis_sc).write_text(DISMISS_SCRIPT, encoding="utf-8")
 
-    dirs = sorted(glob.glob(str(ROOT / "generated_ho_so" /
-                                "phase5_word_open_*")))
+    dirs = sorted(glob.glob(str(Path(args.root) / args.pattern)))
+    inv_path = Path(args.inventory)
     jobs = []  # (form_id, variant, path)
     for d in dirs:
         for f in sorted(glob.glob(d + "/*.docx")):
@@ -149,8 +158,8 @@ def main() -> int:
         })
         print("%3d/%d %-10s %-8s %s" % (i + 1, len(jobs), j["form_id"],
                                         j["variant"] or "-", verdict))
-        INVENTORY.parent.mkdir(parents=True, exist_ok=True)
-        INVENTORY.write_text(json.dumps({
+        inv_path.parent.mkdir(parents=True, exist_ok=True)
+        inv_path.write_text(json.dumps({
             "word_version": word_version,
             "generated": datetime.now().isoformat(timespec="seconds"),
             "elapsed_s": round(time.time() - t0, 1),

@@ -95,6 +95,13 @@ EVOLVED_FORMS = {
     "PLI_M05": "cap-von: nguon_von -> w:tbl fixed-matrix",
     "PLI_M12": "cap-von: nguon_von_sau -> w:tbl fixed-matrix",
     "PLII_M02": "cap-von: a7_thue -> w:tbl fixed-matrix",
+
+    # Phase 5R1 (merge c7ff269 + Lead regen): dọn defect bố cục theo audit
+    # 2026-09-03 — generator drop_flat_field_code_paras bỏ 1 p field-code
+    # stale của bản nguồn M28; drop_foreign_annex_tail cắt 3 p banner
+    # "PHỤ LỤC II" của phụ lục kế khỏi đuôi M80 (WLAY-006/WLAY-007b).
+    "PLII_M28": "5R1: drop field code PAGE \\* MERGEFORMAT flatten cua nguon",
+    "PLI_M80": "5R1: cat banner PHU LUC II cua phu luc ke khoi duoi mau",
 }
 
 TABLE_KINDS = ("editable-grid", "fixed-matrix", "nested-grid", "output-table")

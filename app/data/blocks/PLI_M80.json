@@ -834,37 +834,6 @@
     "spaceBeforePt": 6.0
    },
    "role": "footnote"
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "PHỤ LỤC II",
-     "b": true
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "form-title"
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "BIỂU MẪU SỬ DỤNG TRONG ĐĂNG KÝ HỘ KINH DOANH\n"
-    },
-    {
-     "text": "(Kèm theo Thông tư số 68/2025/TT-BTC ngày 01 tháng 7 năm 2025 của Bộ trưởng Bộ Tài chính)",
-     "i": true
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
   }
  ],
  "v": 3

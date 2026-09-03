@@ -141,7 +141,8 @@
       "excerpt": "Đăng ký hộ kinh doanh do tôi là chủ hộ với các nội dung sau:"
      }
     ],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 2
    }
   },
   {
@@ -383,7 +384,8 @@
       "excerpt": "STT"
      }
     ],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 7
    }
   },
   {
@@ -410,7 +412,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -437,7 +440,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -464,7 +468,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -504,7 +509,8 @@
       "verdict": "FALSE_POSITIVE_HEADER_BAND",
       "reason": "hdr2col: w:tbl header 2 band - khong phai bang du lieu."
      }
-    ]
+    ],
+    "template_w_tbl": 0
    }
   },
   {
@@ -585,7 +591,8 @@
       "excerpt": "5. Chủ thể thành lập hộ kinh doanh (ghi một trong các chủ thể sau): Cá nhân/ Các thành viên hộ gia đình"
      }
     ],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 2
    }
   },
   {
@@ -612,7 +619,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -639,7 +647,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -666,7 +675,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -706,7 +716,8 @@
       "verdict": "FALSE_POSITIVE_PROSE",
       "reason": "'bao cao ve cac noi dung sau' la chu thich muc; khong co luoi theo sau."
      }
-    ]
+    ],
+    "template_w_tbl": 0
    }
   },
   {
@@ -733,7 +744,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -760,7 +772,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -787,7 +800,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -814,7 +828,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -841,7 +856,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -886,7 +902,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -931,7 +948,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -958,7 +976,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -985,7 +1004,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -1025,7 +1045,8 @@
       "verdict": "FALSE_POSITIVE_PROSE",
       "reason": "Cau van ve nop ho so moi/gop noi dung thay doi; khong co luoi theo sau."
      }
-    ]
+    ],
+    "template_w_tbl": 0
    }
   },
   {
@@ -1052,7 +1073,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -1079,7 +1101,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -1106,7 +1129,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -1133,7 +1157,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -1160,7 +1185,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -1187,7 +1213,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -1205,7 +1232,7 @@
     "loop": 0
    },
    "summary_counts_recount": {
-    "p": 32,
+    "p": 31,
     "chk": 0,
     "table": 0,
     "loop": 0
@@ -1214,7 +1241,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -1395,7 +1423,8 @@
       "excerpt": "STT"
      }
     ],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 2
    }
   },
   {
@@ -1703,7 +1732,8 @@
       "excerpt": "STT"
      }
     ],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 4
    }
   },
   {
@@ -1846,7 +1876,8 @@
       "excerpt": "STT"
      }
     ],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 2
    }
   },
   {
@@ -2065,7 +2096,8 @@
       "excerpt": "STT"
      }
     ],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 4
    }
   },
   {
@@ -2190,7 +2222,8 @@
       "excerpt": "Đăng ký công ty hợp danh với các nội dung sau:"
      }
     ],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 2
    }
   },
   {
@@ -2355,7 +2388,8 @@
       "excerpt": "STT"
      }
     ],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 1
    }
   },
   {
@@ -2439,7 +2473,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 1
    }
   },
   {
@@ -2591,7 +2626,8 @@
       "excerpt": "STT"
      }
     ],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 1
    }
   },
   {
@@ -2773,7 +2809,8 @@
       "excerpt": "STT"
      }
     ],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 1
    }
   },
   {
@@ -2854,7 +2891,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 1
    }
   },
   {
@@ -2923,7 +2961,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 1
    }
   },
   {
@@ -3280,7 +3319,8 @@
       "excerpt": "STT"
      }
     ],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 5
    }
   },
   {
@@ -3348,7 +3388,8 @@
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
      }
     ],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 1
    }
   },
   {
@@ -3413,7 +3454,8 @@
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
      }
     ],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -3478,7 +3520,8 @@
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
      }
     ],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 1
    }
   },
   {
@@ -3617,7 +3660,8 @@
       "excerpt": "Đánh dấu X nếu là chi nhánh công ty chứng khoán nước ngoài/chi nhánh công ty quản lý quỹ nước ngoài tại Việt Nam và kê k"
      }
     ],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 1
    }
   },
   {
@@ -3657,7 +3701,8 @@
       "verdict": "FALSE_POSITIVE_HEADER_BAND",
       "reason": "hdr2col: w:tbl header 2 band - khong phai bang du lieu."
      }
-    ]
+    ],
+    "template_w_tbl": 0
    }
   },
   {
@@ -3740,7 +3785,8 @@
       "excerpt": "STT"
      }
     ],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 1
    }
   },
   {
@@ -3787,7 +3833,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 1
    }
   },
   {
@@ -3885,7 +3932,8 @@
       "excerpt": "STT"
      }
     ],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 1
    }
   },
   {
@@ -3974,7 +4022,8 @@
       "excerpt": "STT"
      }
     ],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 1
    }
   },
   {
@@ -4001,7 +4050,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -4078,7 +4128,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -4123,7 +4174,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -4150,7 +4202,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -4177,7 +4230,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -4204,7 +4258,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -4244,7 +4299,8 @@
       "verdict": "FALSE_POSITIVE_HEADER_BAND",
       "reason": "hdr2col: w:tbl header 2 band - khong phai bang du lieu."
      }
-    ]
+    ],
+    "template_w_tbl": 0
    }
   },
   {
@@ -4284,7 +4340,8 @@
       "verdict": "FALSE_POSITIVE_HEADER_BAND",
       "reason": "hdr2col: w:tbl header 2 band - khong phai bang du lieu."
      }
-    ]
+    ],
+    "template_w_tbl": 0
    }
   },
   {
@@ -4311,7 +4368,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -4338,7 +4396,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -4365,7 +4424,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -4392,7 +4452,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -4419,7 +4480,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -4446,7 +4508,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -4473,7 +4536,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -4531,7 +4595,8 @@
       "verdict": "FALSE_POSITIVE_PROSE",
       "reason": "'Yeu cầu doanh nghiệp báo cáo về các nội dung sau' la dau muc van ban; vung tuong ung da duoc ghi section noi_dung_yeu_cau_bao_cao (output-table/no_table)."
      }
-    ]
+    ],
+    "template_w_tbl": 0
    }
   },
   {
@@ -4558,7 +4623,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -4611,7 +4677,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -4638,7 +4705,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -4683,7 +4751,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -4728,7 +4797,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -4775,7 +4845,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -4820,7 +4891,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -4884,7 +4956,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -4980,7 +5053,8 @@
       "excerpt": "Có các địa điểm kinh doanh trực thuộc sau đang làm thủ tục chấm dứt hoạt động3:"
      }
     ],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -5039,7 +5113,8 @@
       "excerpt": "(Cơ quan đăng ký kinh doanh cấp tỉnh) thông báo (các) chi nhánh/văn phòng đại diện/địa điểm kinh doanh sau đây của doanh"
      }
     ],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -5107,7 +5182,8 @@
       "excerpt": "Các chi nhánh, văn phòng đại diện, địa điểm kinh doanh sau của doanh nghiệp đang làm thủ tục chấm dứt hoạt động:"
      }
     ],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -5134,7 +5210,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -5196,7 +5273,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 1
    }
   },
   {
@@ -5257,7 +5335,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 1
    }
   },
   {
@@ -5418,7 +5497,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 9
    }
   },
   {
@@ -5445,7 +5525,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -5472,7 +5553,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -5555,7 +5637,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -5582,7 +5665,8 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -5644,7 +5728,8 @@
       "excerpt": "STT"
      }
     ],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -5698,7 +5783,8 @@
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
      }
     ],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   },
   {
@@ -5736,7 +5822,7 @@
     "loop": 0
    },
    "summary_counts_recount": {
-    "p": 42,
+    "p": 40,
     "chk": 0,
     "table": 0,
     "loop": 0
@@ -5752,7 +5838,8 @@
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
      }
     ],
-    "classifications": []
+    "classifications": [],
+    "template_w_tbl": 0
    }
   }
  ]

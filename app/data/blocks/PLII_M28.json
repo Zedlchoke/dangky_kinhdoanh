@@ -577,19 +577,6 @@
     "spaceBeforePt": 6.0
    },
    "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": " PAGE   \\* MERGEFORMAT 2"
-    }
-   ],
-   "format": {
-    "spaceAfterPt": 6.0
-   },
-   "role": "form-subtitle"
   }
  ],
  "v": 3

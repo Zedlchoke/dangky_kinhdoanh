@@ -1,0 +1,2392 @@
+{
+ "generated_by": "t0-b-census",
+ "range": "PLI_M13-M80",
+ "forms": [
+  {
+   "form_id": "PLI_M13",
+   "ten_mau": "Giấy đề nghị đăng ký thay đổi người đại diện theo pháp luật",
+   "blocks": {
+    "stats": {
+     "p": 36,
+     "chk": 0,
+     "table": 1,
+     "loop": 1
+    },
+    "loops": [
+     {
+      "loop": "ds_ndd_pl_sau_thay_doi",
+      "header": [
+       "STT Họ, chữ đệm và tên (ghi bằng chữ in hoa) Ngày, tháng, năm sinh Giới tính Số định danh cá nhân Chức danh Địa chỉ liên lạc Quốc gia"
+      ],
+      "col_tags": [
+       "ho_ten",
+       "ngay_sinh",
+       "gioi_tinh",
+       "so_cccd",
+       "chuc_danh",
+       "dia_chi",
+       "quoc_gia"
+      ],
+      "blankRows": 4
+     }
+    ],
+    "input_key_count": 31,
+    "distinct_input_keys": 26
+   },
+   "template_tables": 2,
+   "source": {
+    "path": "02_thay_doi_thong_tin_doanh_nghiep/PL1_Mau_13_tach_tu_file_full.docx",
+    "tables": [],
+    "para_markers": [],
+    "signature_lines": [
+     "1 Dùng trong trường hợp thay đổi từ người đại diện theo pháp luật này sang người",
+     "2 Ghi thông tin của tất cả người đại diện theo pháp luật trong trường hợp sau kh",
+     "3 - Chủ tịch công ty/Chủ tịch Hội đồng thành viên/Chủ tịch Hội đồng quản trị/ngư",
+     "CHỦ TỊCH CÔNG TY/CHỦ TỊCH HỘI ĐỒNG THÀNH VIÊN/CHỦ TỊCH HỘI ĐỒNG QUẢN TRỊ/NGƯỜI Đ",
+     "GIẤY ĐỀ NGHỊ Đăng ký thay đổi người đại diện theo pháp luật1",
+     "Người đại diện theo pháp luật sau khi thay đổi2:",
+     "Đăng ký thay đổi người đại diện theo pháp luật với các nội dung sau:"
+    ],
+    "decision_headings": []
+   },
+   "duplicate_sources": [],
+   "form_maps": {
+    "fields": 33,
+    "dynamic_tables": [
+     {
+      "id": "ndd_pl_sau_thay_doi",
+      "table_index": 1,
+      "header_row": 0,
+      "template_row": 5,
+      "loop": "ds_ndd_pl_sau_thay_doi",
+      "columns": [
+       {
+        "col": 1,
+        "header": "Họ, chữ đệm và tên (ghi bằng chữ in hoa)",
+        "tag": "ho_ten"
+       },
+       {
+        "col": 2,
+        "header": "Ngày, tháng, năm sinh",
+        "tag": "ngay_sinh"
+       },
+       {
+        "col": 3,
+        "header": "Giới tính",
+        "tag": "gioi_tinh"
+       },
+       {
+        "col": 4,
+        "header": "Số định danh cá nhân",
+        "tag": "so_cccd"
+       },
+       {
+        "col": 5,
+        "header": "Chức danh",
+        "tag": "chuc_danh"
+       },
+       {
+        "col": 6,
+        "header": "Địa chỉ liên lạc",
+        "tag": "dia_chi"
+       },
+       {
+        "col": 7,
+        "header": "Quốc gia",
+        "tag": "quoc_gia"
+       }
+      ],
+      "semantic_key": "ds_ndd_pl_sau_thay_doi",
+      "occurrence_id": "ds_ndd_pl_sau_thay_doi"
+     }
+    ]
+   }
+  },
+  {
+   "form_id": "PLI_M14",
+   "ten_mau": "Giấy đề nghị đăng ký thay đổi chủ doanh nghiệp tư nhân",
+   "blocks": {
+    "stats": {
+     "p": 51,
+     "chk": 3,
+     "table": 1,
+     "loop": 0
+    },
+    "loops": [],
+    "input_key_count": 46,
+    "distinct_input_keys": 23
+   },
+   "template_tables": 1,
+   "source": {
+    "path": "02_thay_doi_thong_tin_doanh_nghiep/PL1_Mau_14_tach_tu_file_full.docx",
+    "tables": [],
+    "para_markers": [],
+    "signature_lines": [
+     "CHỦ DOANH NGHIỆP TƯ NHÂN (Ký và ghi họ tên)2",
+     "NGƯỜI ĐƯỢC TẶNG CHO/ NGƯỜI THỪA KẾ/NGƯỜI MUA (Ký và ghi họ tên)1"
+    ],
+    "decision_headings": []
+   },
+   "duplicate_sources": [],
+   "form_maps": {
+    "fields": 26,
+    "dynamic_tables": null
+   }
+  },
+  {
+   "form_id": "PLI_M15",
+   "ten_mau": "Giấy đề nghị đăng ký thay đổi chủ sở hữu công ty TNHH một thành viên",
+   "blocks": {
+    "stats": {
+     "p": 55,
+     "chk": 2,
+     "table": 1,
+     "loop": 1
+    },
+    "loops": [
+     {
+      "loop": "ds_nddpl_uy_quyen_chu_so_huu_moi",
+      "header": [
+       "STT Tên người đại diện theo pháp luật/người đại diện theo ủy quyền Ngày, tháng, năm sinh Giới tính Số, ngày cấp, cơ quan cấp Giấy tờ pháp lý của cá nhân Quốc tịch Dân tộc Địa chỉ liên lạc Vốn được ủy quyền Chữ ký của người đại diện theo pháp luật/người đại diện theo ủy quyền Ghi chú (nếu có)",
+       "Số Ngày cấp Cơ quan cấp VNĐ Tỷ lệ (%)"
+      ],
+      "col_tags": [
+       "ten_nguoi_dai_dien",
+       "ngay_sinh",
+       "gioi_tinh",
+       "giay_to_so",
+       "giay_to_ngay",
+       "giay_to_co_quan",
+       "quoc_tich",
+       "dan_toc",
+       "dia_chi",
+       "von_duoc_uy_quyen_vnd",
+       "ty_le",
+       "chu_ky",
+       "ghi_chu"
+      ],
+      "blankRows": 5
+     }
+    ],
+    "input_key_count": 41,
+    "distinct_input_keys": 29
+   },
+   "template_tables": 2,
+   "source": {
+    "path": "02_thay_doi_thong_tin_doanh_nghiep/PL1_Mau_15_tach_tu_file_full.docx",
+    "tables": [],
+    "para_markers": [
+     {
+      "i": 50,
+      "kind": "stt_joined",
+      "text": "STTTên người đại diện theo pháp luật/người đại diện theo ủy quyềnNgày, tháng, năm sinhGiới tínhSố, ngày cấp, cơ quan cấp Giấy tờ pháp lý của cá nhân2Quốc tịchDâ"
+     }
+    ],
+    "signature_lines": [
+     "- Thông tin về người đại diện theo pháp luật/người đại diện theo ủy quyền của ch",
+     "3 Không phải kê khai phần này đối với trường hợp kê khai người đại diện theo phá",
+     "6 Nếu chủ sở hữu mới là cá nhân: cá nhân ký trực tiếp vào phần này; nếu chủ sở h",
+     "7 Không có phần này trong trường hợp thay đổi chủ sở hữu công ty TNHH một thành ",
+     "CHỦ SỞ HỮU CŨ (Ký và ghi họ tên)7",
+     "CHỦ SỞ HỮU MỚI (Ký và ghi họ tên)6",
+     "STTTên người đại diện theo pháp luật/người đại diện theo ủy quyềnNgày, tháng, nă"
+    ],
+    "decision_headings": [
+     "Mã số doanh nghiệp/Số Quyết định thành lập: ………………………………………."
+    ]
+   },
+   "duplicate_sources": [],
+   "form_maps": {
+    "fields": 43,
+    "dynamic_tables": [
+     {
+      "id": "ndd_pl_uy_quyen_chu_so_huu_moi",
+      "table_index": 1,
+      "template_row": 7,
+      "loop": "ds_nddpl_uy_quyen_chu_so_huu_moi",
+      "columns": [
+       {
+        "col": 1,
+        "tag": "ten_nguoi_dai_dien"
+       },
+       {
+        "col": 2,
+        "tag": "ngay_sinh"
+       },
+       {
+        "col": 3,
+        "tag": "gioi_tinh"
+       },
+       {
+        "col": 4,
+        "tag": "giay_to_so"
+       },
+       {
+        "col": 5,
+        "tag": "giay_to_ngay"
+       },
+       {
+        "col": 6,
+        "tag": "giay_to_co_quan"
+       },
+       {
+        "col": 7,
+        "tag": "quoc_tich"
+       },
+       {
+        "col": 8,
+        "tag": "dan_toc"
+       },
+       {
+        "col": 9,
+        "tag": "dia_chi"
+       },
+       {
+        "col": 10,
+        "tag": "von_duoc_uy_quyen_vnd"
+       },
+       {
+        "col": 11,
+        "tag": "ty_le"
+       },
+       {
+        "col": 12,
+        "tag": "chu_ky"
+       },
+       {
+        "col": 13,
+        "tag": "ghi_chu"
+       }
+      ],
+      "header_row": 0
+     }
+    ]
+   }
+  },
+  {
+   "form_id": "PLI_M17",
+   "ten_mau": "Giấy đề nghị đăng ký hoạt động chi nhánh/văn phòng đại diện/Thông báo lập địa điểm kinh doanh",
+   "blocks": {
+    "stats": {
+     "p": 96,
+     "chk": 16,
+     "table": 1,
+     "loop": 1
+    },
+    "loops": [
+     {
+      "loop": "ds_nganh",
+      "header": [
+       "STT Tên ngành Mã ngành Ngành, nghề kinh doanh chính"
+      ],
+      "col_tags": [
+       "ten_nganh",
+       "ma_nganh",
+       "la_nganh_chinh"
+      ],
+      "blankRows": 4
+     }
+    ],
+    "input_key_count": 61,
+    "distinct_input_keys": 44
+   },
+   "template_tables": 2,
+   "source": {
+    "path": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_17_giay_de_nghi_dang_ky_hoat_dong_chi_nhanh_van_phong_dai_dien_thong_bao_lap_dia_diem_kinh_doanh.docx",
+    "tables": [],
+    "para_markers": [
+     {
+      "i": 34,
+      "kind": "stt_alone",
+      "text": "STT"
+     },
+     {
+      "i": 67,
+      "kind": "stt_alone",
+      "text": "STT"
+     }
+    ],
+    "signature_lines": [
+     "- Trường hợp thông báo lập địa điểm kinh doanh trực thuộc chi nhánh, người đại d",
+     "4 - Trường hợp đăng ký hoạt động chi nhánh/văn phòng đại diện/địa điểm kinh doan",
+     "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT CỦA DOANH NGHIỆP/NGƯỜI ĐỨNG ĐẦU CHI NHÁNH (Ký và g"
+    ],
+    "decision_headings": []
+   },
+   "duplicate_sources": [],
+   "form_maps": {
+    "fields": 63,
+    "dynamic_tables": [
+     {
+      "id": "ds_nganh",
+      "table_index": 1,
+      "header_row": 0,
+      "template_row": 5,
+      "loop": "ds_nganh",
+      "columns": [
+       {
+        "col": 1,
+        "header": "Tên ngành",
+        "tag": "ten_nganh"
+       },
+       {
+        "col": 2,
+        "header": "Mã ngành",
+        "tag": "ma_nganh"
+       },
+       {
+        "col": 3,
+        "header": "Ngành, nghề kinh doanh chính",
+        "tag": "la_nganh_chinh"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "form_id": "PLI_M18",
+   "ten_mau": "Thông báo về việc lập chi nhánh/văn phòng đại diện ở nước ngoài",
+   "blocks": {
+    "stats": {
+     "p": 46,
+     "chk": 0,
+     "table": 1,
+     "loop": 0
+    },
+    "loops": [],
+    "input_key_count": 40,
+    "distinct_input_keys": 30
+   },
+   "template_tables": 1,
+   "source": {
+    "path": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_18_thong_bao_ve_viec_lap_chi_nhanh_van_phong_dai_dien_o_nuoc_ngoai.docx",
+    "tables": [],
+    "para_markers": [],
+    "signature_lines": [
+     "- Người đại diện theo pháp luật của doanh nghiệp ký trực tiếp vào phần này.",
+     "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT CỦA DOANH NGHIỆP (Ký và ghi họ tên)1"
+    ],
+    "decision_headings": []
+   },
+   "duplicate_sources": [],
+   "form_maps": {
+    "fields": 30,
+    "dynamic_tables": null
+   }
+  },
+  {
+   "form_id": "PLI_M19",
+   "ten_mau": "Giấy đề nghị đăng ký thay đổi nội dung đăng ký hoạt động chi nhánh/văn phòng đại diện/địa điểm kinh doanh",
+   "blocks": {
+    "stats": {
+     "p": 108,
+     "chk": 9,
+     "table": 1,
+     "loop": 1
+    },
+    "loops": [
+     {
+      "loop": "ds_nganh",
+      "header": [
+       "STT Tên ngành Mã ngành Ngành, nghề kinh doanh chính"
+      ],
+      "col_tags": [
+       "ten_nganh",
+       "ma_nganh",
+       "la_nganh_chinh"
+      ],
+      "blankRows": 4
+     }
+    ],
+    "input_key_count": 67,
+    "distinct_input_keys": 45
+   },
+   "template_tables": 2,
+   "source": {
+    "path": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_19_giay_de_nghi_dang_ky_thay_doi_noi_dung_dang_ky_hoat_dong_chi_nhanh_van_phong_dai_dien_dia_diem_k.docx",
+    "tables": [],
+    "para_markers": [
+     {
+      "i": 45,
+      "kind": "stt_alone",
+      "text": "STT"
+     },
+     {
+      "i": 86,
+      "kind": "stt_alone",
+      "text": "STT"
+     }
+    ],
+    "signature_lines": [
+     "- Trường hợp thay đổi nội dung đăng ký hoạt động địa điểm kinh doanh trực thuộc ",
+     "5 - Trường hợp thay đổi nội dung đăng ký hoạt động chi nhánh/văn phòng đại diện/",
+     "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT CỦA DOANH NGHIỆP/ NGƯỜI ĐỨNG ĐẦU CHI NHÁNH (Ký và "
+    ],
+    "decision_headings": []
+   },
+   "duplicate_sources": [],
+   "form_maps": {
+    "fields": 57,
+    "dynamic_tables": [
+     {
+      "id": "ds_nganh",
+      "table_index": 1,
+      "header_row": 0,
+      "template_row": 5,
+      "loop": "ds_nganh",
+      "columns": [
+       {
+        "col": 1,
+        "header": "Tên ngành",
+        "tag": "ten_nganh"
+       },
+       {
+        "col": 2,
+        "header": "Mã ngành",
+        "tag": "ma_nganh"
+       },
+       {
+        "col": 3,
+        "header": "Ngành, nghề kinh doanh chính",
+        "tag": "la_nganh_chinh"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "form_id": "PLI_M21",
+   "ten_mau": "Giấy đề nghị cấp đổi sang Giấy chứng nhận đăng ký doanh nghiệp đối với doanh nghiệp được cấp Giấy chứng nhận đăng ký kinh doanh hoặc Giấy chứng nhận đăng ký kinh doanh và đăng ký thuế",
+   "blocks": {
+    "stats": {
+     "p": 16,
+     "chk": 0,
+     "table": 1,
+     "loop": 1
+    },
+    "loops": [
+     {
+      "loop": "ds_nganh",
+      "header": [
+       "STT Tên ngành Mã ngành Ngành, nghề kinh doanh chính"
+      ],
+      "col_tags": [
+       "ten_nganh",
+       "ma_nganh",
+       "la_nganh_chinh"
+      ],
+      "blankRows": 4
+     }
+    ],
+    "input_key_count": 8,
+    "distinct_input_keys": 8
+   },
+   "template_tables": 2,
+   "source": {
+    "path": "02_thay_doi_thong_tin_doanh_nghiep/PL1_Mau_21_tach_tu_file_full.docx",
+    "tables": [],
+    "para_markers": [
+     {
+      "i": 12,
+      "kind": "stt_alone",
+      "text": "STT"
+     }
+    ],
+    "signature_lines": [
+     "2 Người đại diện theo pháp luật của doanh nghiệp ký trực tiếp vào phần này.",
+     "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT CỦA DOANH NGHIỆP (Ký và ghi họ tên)2"
+    ],
+    "decision_headings": []
+   },
+   "duplicate_sources": [],
+   "form_maps": {
+    "fields": 11,
+    "dynamic_tables": [
+     {
+      "id": "ds_nganh",
+      "table_index": 1,
+      "header_row": 0,
+      "template_row": 5,
+      "loop": "ds_nganh",
+      "columns": [
+       {
+        "col": 1,
+        "header": "Tên ngành",
+        "tag": "ten_nganh"
+       },
+       {
+        "col": 2,
+        "header": "Mã ngành",
+        "tag": "ma_nganh"
+       },
+       {
+        "col": 3,
+        "header": "Ngành, nghề kinh doanh chính",
+        "tag": "la_nganh_chinh"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "form_id": "PLI_M23",
+   "ten_mau": "Giấy đề nghị bổ sung, cập nhật thông tin đăng ký hoạt động đối với chi nhánh/văn phòng đại diện/địa điểm kinh doanh hoạt động theo Giấy phép đầu tư hoặc Giấy chứng nhận đầu tư (đồng thời là Giấy chứng nhận đăng ký kinh doanh) hoặc các giấy tờ có giá trị pháp lý tương đương hoặc Giấy chứng nhận đăng ký hoạt động chi nhánh/văn phòng đại diện do Cơ quan đăng ký đầu tư cấp",
+   "blocks": {
+    "stats": {
+     "p": 76,
+     "chk": 9,
+     "table": 1,
+     "loop": 1
+    },
+    "loops": [
+     {
+      "loop": "ds_nganh",
+      "header": [
+       "STT Tên ngành Mã ngành Ngành, nghề kinh doanh chính"
+      ],
+      "col_tags": [
+       "ten_nganh",
+       "ma_nganh",
+       "la_nganh_chinh"
+      ],
+      "blankRows": 4
+     }
+    ],
+    "input_key_count": 51,
+    "distinct_input_keys": 35
+   },
+   "template_tables": 2,
+   "source": {
+    "path": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_23_giay_de_nghi_bo_sung_cap_nhat_thong_tin_dang_ky_hoat_dong_doi_voi_chi_nhanh_van_phong_dai_dien_d.docx",
+    "tables": [],
+    "para_markers": [
+     {
+      "i": 31,
+      "kind": "stt_alone",
+      "text": "STT"
+     },
+     {
+      "i": 55,
+      "kind": "stt_alone",
+      "text": "STT"
+     }
+    ],
+    "signature_lines": [
+     "2 Người đại diện theo pháp luật của doanh nghiệp/người đứng đầu chi nhánh ký trự",
+     "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT CỦA DOANH NGHIỆP/ NGƯỜI ĐỨNG ĐẦU CHI NHÁNH (Ký và "
+    ],
+    "decision_headings": []
+   },
+   "duplicate_sources": [],
+   "form_maps": {
+    "fields": 47,
+    "dynamic_tables": [
+     {
+      "id": "ds_nganh",
+      "table_index": 1,
+      "header_row": 0,
+      "template_row": 5,
+      "loop": "ds_nganh",
+      "columns": [
+       {
+        "col": 1,
+        "header": "Tên ngành",
+        "tag": "ten_nganh"
+       },
+       {
+        "col": 2,
+        "header": "Mã ngành",
+        "tag": "ma_nganh"
+       },
+       {
+        "col": 3,
+        "header": "Ngành, nghề kinh doanh chính",
+        "tag": "la_nganh_chinh"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "form_id": "PLI_M25",
+   "ten_mau": "Giấy đề nghị bổ sung, cập nhật thông tin đăng ký hoạt động đối với chi nhánh/văn phòng đại diện/địa điểm kinh doanh của doanh nghiệp hoạt động theo Giấy phép thành lập và hoạt động kinh doanh chứng khoán/Chi nhánh công ty chứng khoán nước ngoài/công ty quản lý quỹ nước ngoài tại Việt Nam",
+   "blocks": {
+    "stats": {
+     "p": 74,
+     "chk": 9,
+     "table": 1,
+     "loop": 1
+    },
+    "loops": [
+     {
+      "loop": "ds_nganh",
+      "header": [
+       "STT Tên ngành Mã ngành Ngành, nghề kinh doanh chính"
+      ],
+      "col_tags": [
+       "ten_nganh",
+       "ma_nganh",
+       "la_nganh_chinh"
+      ],
+      "blankRows": 4
+     }
+    ],
+    "input_key_count": 51,
+    "distinct_input_keys": 36
+   },
+   "template_tables": 2,
+   "source": {
+    "path": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_25_giay_de_nghi_bo_sung_cap_nhat_thong_tin_dang_ky_hoat_dong_doi_voi_chi_nhanh_van_phong_dai_dien_d.docx",
+    "tables": [],
+    "para_markers": [
+     {
+      "i": 28,
+      "kind": "stt_alone",
+      "text": "STT"
+     },
+     {
+      "i": 58,
+      "kind": "stt_alone",
+      "text": "STT"
+     }
+    ],
+    "signature_lines": [
+     "2 Người đại diện theo pháp luật của doanh nghiệp/Người đứng đầu chi nhánh ký trự",
+     "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT CỦA DOANH NGHIỆP/NGƯỜI ĐỨNG ĐẦU CHI NHÁNH (Ký và g"
+    ],
+    "decision_headings": []
+   },
+   "duplicate_sources": [],
+   "form_maps": {
+    "fields": 48,
+    "dynamic_tables": [
+     {
+      "id": "ds_nganh",
+      "table_index": 1,
+      "header_row": 0,
+      "template_row": 5,
+      "loop": "ds_nganh",
+      "columns": [
+       {
+        "col": 1,
+        "header": "Tên ngành",
+        "tag": "ten_nganh"
+       },
+       {
+        "col": 2,
+        "header": "Mã ngành",
+        "tag": "ma_nganh"
+       },
+       {
+        "col": 3,
+        "header": "Ngành, nghề kinh doanh chính",
+        "tag": "la_nganh_chinh"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "form_id": "PLI_M26",
+   "ten_mau": "Giấy đề nghị cấp lại Giấy chứng nhận đăng ký doanh nghiệp/Giấy xác nhận thay đổi nội dung đăng ký doanh nghiệp/Giấy chứng nhận đăng ký hoạt động chi nhánh/văn phòng đại diện/Giấy chứng nhận đăng ký địa điểm kinh doanh/Giấy xác nhận thay đổi nội dung đăng ký hoạt động chi nhánh/văn phòng đại diện/địa điểm kinh doanh",
+   "blocks": {
+    "stats": {
+     "p": 19,
+     "chk": 0,
+     "table": 1,
+     "loop": 0
+    },
+    "loops": [],
+    "input_key_count": 11,
+    "distinct_input_keys": 11
+   },
+   "template_tables": 1,
+   "source": {
+    "path": "02_thay_doi_thong_tin_doanh_nghiep/PL1_Mau_26_tach_tu_file_full.docx",
+    "tables": [],
+    "para_markers": [],
+    "signature_lines": [
+     "- Trường hợp đề nghị cấp lại Giấy chứng nhận địa điểm kinh doanh trực thuộc chi ",
+     "1 - Trường hợp đề nghị cấp lại Giấy chứng nhận đăng ký doanh nghiệp, Giấy chứng ",
+     "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT CỦA DOANH NGHIỆP/ NGƯỜI ĐỨNG ĐẦU CHI NHÁNH (Ký và "
+    ],
+    "decision_headings": []
+   },
+   "duplicate_sources": [],
+   "form_maps": {
+    "fields": 11,
+    "dynamic_tables": null
+   }
+  },
+  {
+   "form_id": "PLI_M27",
+   "ten_mau": "Thông báo về việc tạm ngừng kinh doanh/tiếp tục kinh doanh trước thời hạn đã thông báo của doanh nghiệp/chi nhánh /địa điểm kinh doanh/về việc tạm ngừng hoạt động/tiếp tục hoạt động trước thời hạn đã thông báo của văn phòng đại diện",
+   "blocks": {
+    "stats": {
+     "p": 62,
+     "chk": 0,
+     "table": 1,
+     "loop": 0
+    },
+    "loops": [],
+    "input_key_count": 39,
+    "distinct_input_keys": 22
+   },
+   "template_tables": 1,
+   "source": {
+    "path": "04_tam_ngung_cham_dut_giai_the/PL1_Mau_27_thong_bao_ve_viec_tam_ngung_kinh_doanh_tiep_tuc_kinh_doanh_truoc_thoi_han_da_thong_bao_cua_doanh.docx",
+    "tables": [],
+    "para_markers": [],
+    "signature_lines": [
+     "- Trường hợp tạm ngừng kinh doanh/Tiếp tục kinh doanh trước thời hạn đã thông bá",
+     "2 Kê khai thông tin của tất cả người đại diện theo pháp luật của doanh nghiệp.",
+     "3 Số điện thoại của người đại diện theo pháp luật phải trùng với số điện thoại đ",
+     "5 - Trường hợp tạm ngừng kinh doanh/tiếp tục kinh doanh trước thời hạn đã thông ",
+     "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT CỦA DOANH NGHIỆP/ NGƯỜI ĐỨNG ĐẦU CHI NHÁNH (Ký và ",
+     "Thông tin người đại diện theo pháp luật của doanh nghiệp2:"
+    ],
+    "decision_headings": []
+   },
+   "duplicate_sources": [],
+   "form_maps": {
+    "fields": 22,
+    "dynamic_tables": null
+   }
+  },
+  {
+   "form_id": "PLI_M28",
+   "ten_mau": "Thông báo về việc chấm dứt hoạt động chi nhánh/văn phòng đại diện/địa điểm kinh doanh",
+   "blocks": {
+    "stats": {
+     "p": 31,
+     "chk": 0,
+     "table": 1,
+     "loop": 0
+    },
+    "loops": [],
+    "input_key_count": 22,
+    "distinct_input_keys": 20
+   },
+   "template_tables": 1,
+   "source": {
+    "path": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_28_thong_bao_ve_viec_cham_dut_hoat_dong_chi_nhanh_van_phong_dai_dien_dia_diem_kinh_doanh.docx",
+    "tables": [],
+    "para_markers": [],
+    "signature_lines": [
+     "- Trường hợp chấm dứt hoạt động địa điểm kinh doanh trực thuộc chi nhánh, người ",
+     "1 - Trường hợp chấm dứt hoạt động chi nhánh/văn phòng đại diện/địa điểm kinh doa",
+     "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT CỦA DOANH NGHIỆP/ NGƯỜI ĐỨNG ĐẦU CHI NHÁNH (Ký và "
+    ],
+    "decision_headings": []
+   },
+   "duplicate_sources": [
+    "04_tam_ngung_cham_dut_giai_the/PL1_Mau_28_thong_bao_ve_viec_cham_dut_hoat_dong_chi_nhanh_van_phong_dai_dien_dia_diem_kinh_doanh.docx"
+   ],
+   "form_maps": {
+    "fields": 20,
+    "dynamic_tables": null
+   }
+  },
+  {
+   "form_id": "PLI_M29",
+   "ten_mau": "Thông báo về việc chấm dứt hoạt động chi nhánh/văn phòng đại diện ở nước ngoài",
+   "blocks": {
+    "stats": {
+     "p": 24,
+     "chk": 0,
+     "table": 1,
+     "loop": 0
+    },
+    "loops": [],
+    "input_key_count": 19,
+    "distinct_input_keys": 19
+   },
+   "template_tables": 1,
+   "source": {
+    "path": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_29_thong_bao_ve_viec_cham_dut_hoat_dong_chi_nhanh_van_phong_dai_dien_o_nuoc_ngoai.docx",
+    "tables": [],
+    "para_markers": [],
+    "signature_lines": [
+     "1 Người đại diện theo pháp luật của doanh nghiệp ký trực tiếp vào phần này.",
+     "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT CỦA DOANH NGHIỆP (Ký và ghi họ tên)1"
+    ],
+    "decision_headings": []
+   },
+   "duplicate_sources": [
+    "04_tam_ngung_cham_dut_giai_the/PL1_Mau_29_thong_bao_ve_viec_cham_dut_hoat_dong_chi_nhanh_van_phong_dai_dien_o_nuoc_ngoai.docx"
+   ],
+   "form_maps": {
+    "fields": 19,
+    "dynamic_tables": null
+   }
+  },
+  {
+   "form_id": "PLI_M30",
+   "ten_mau": "Thông báo về việc giải thể doanh nghiệp",
+   "blocks": {
+    "stats": {
+     "p": 16,
+     "chk": 0,
+     "table": 1,
+     "loop": 0
+    },
+    "loops": [],
+    "input_key_count": 10,
+    "distinct_input_keys": 10
+   },
+   "template_tables": 1,
+   "source": {
+    "path": "04_tam_ngung_cham_dut_giai_the/PL1_Mau_30_thong_bao_ve_viec_giai_the_doanh_nghiep.docx",
+    "tables": [],
+    "para_markers": [],
+    "signature_lines": [
+     "1 Người đại diện theo pháp luật của doanh nghiệp ký trực tiếp vào phần này.",
+     "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT CỦA DOANH NGHIỆP (Ký và ghi họ tên)1"
+    ],
+    "decision_headings": []
+   },
+   "duplicate_sources": [],
+   "form_maps": {
+    "fields": 10,
+    "dynamic_tables": null
+   }
+  },
+  {
+   "form_id": "PLI_M31",
+   "ten_mau": "Thông báo về việc huỷ bỏ Nghị quyết/Quyết định giải thể doanh nghiệp",
+   "blocks": {
+    "stats": {
+     "p": 17,
+     "chk": 0,
+     "table": 1,
+     "loop": 0
+    },
+    "loops": [],
+    "input_key_count": 11,
+    "distinct_input_keys": 11
+   },
+   "template_tables": 1,
+   "source": {
+    "path": "04_tam_ngung_cham_dut_giai_the/PL1_Mau_31_thong_bao_ve_viec_huy_bo_nghi_quyet_quyet_dinh_giai_the_doanh_nghiep.docx",
+    "tables": [],
+    "para_markers": [],
+    "signature_lines": [
+     "1 Người đại diện theo pháp luật của doanh nghiệp ký trực tiếp vào phần này.",
+     "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT CỦA DOANH NGHIỆP (Ký và ghi họ tên)1"
+    ],
+    "decision_headings": [
+     "PL1 - Mau so 31: Thông báo về việc huỷ bỏ Nghị quyết/Quyết định giải thể doanh nghiệp",
+     "Về việc hủy bỏ Nghị quyết/Quyết định giải thể doanh nghiệp",
+     "Thông báo về việc hủy bỏ Nghị quyết/Quyết định giải thể doanh nghiệp như sau:"
+    ]
+   },
+   "duplicate_sources": [],
+   "form_maps": {
+    "fields": 11,
+    "dynamic_tables": null
+   }
+  },
+  {
+   "form_id": "PLI_M32",
+   "ten_mau": "Giấy đề nghị công bố nội dung đăng ký doanh nghiệp",
+   "blocks": {
+    "stats": {
+     "p": 28,
+     "chk": 0,
+     "table": 1,
+     "loop": 0
+    },
+    "loops": [],
+    "input_key_count": 23,
+    "distinct_input_keys": 22
+   },
+   "template_tables": 1,
+   "source": {
+    "path": "05_cong_bo_cung_cap_thong_tin/PL1_Mau_32_giay_de_nghi_cong_bo_noi_dung_dang_ky_doanh_nghiep.docx",
+    "tables": [],
+    "para_markers": [],
+    "signature_lines": [
+     "3 Người đại diện theo pháp luật của doanh nghiệp ký trực tiếp vào phần này.",
+     "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT CỦA DOANH NGHIỆP (Ký và ghi họ tên)3"
+    ],
+    "decision_headings": []
+   },
+   "duplicate_sources": [],
+   "form_maps": {
+    "fields": 22,
+    "dynamic_tables": null
+   }
+  },
+  {
+   "form_id": "PLI_M33",
+   "ten_mau": "Giấy đề nghị dừng thực hiện thủ tục đăng ký doanh nghiệp",
+   "blocks": {
+    "stats": {
+     "p": 34,
+     "chk": 0,
+     "table": 1,
+     "loop": 0
+    },
+    "loops": [],
+    "input_key_count": 30,
+    "distinct_input_keys": 24
+   },
+   "template_tables": 1,
+   "source": {
+    "path": "05_cong_bo_cung_cap_thong_tin/PL1_Mau_33_giay_de_nghi_dung_thuc_hien_thu_tuc_dang_ky_doanh_nghiep.docx",
+    "tables": [],
+    "para_markers": [],
+    "signature_lines": [
+     "NGƯỜI ĐỀ NGHỊ (Ký và ghi họ tên)3"
+    ],
+    "decision_headings": []
+   },
+   "duplicate_sources": [],
+   "form_maps": {
+    "fields": 24,
+    "dynamic_tables": null
+   }
+  },
+  {
+   "form_id": "PLI_M42",
+   "ten_mau": "Giấy chứng nhận đăng ký hoạt động chi nhánh/văn phòng đại diện",
+   "blocks": {
+    "stats": {
+     "p": 25,
+     "chk": 0,
+     "table": 0,
+     "loop": 0
+    },
+    "loops": [],
+    "input_key_count": 29,
+    "distinct_input_keys": 29
+   },
+   "template_tables": 0,
+   "source": {
+    "path": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_42_giay_chung_nhan_dang_ky_hoat_dong_chi_nhanh_van_phong_dai_dien.docx",
+    "tables": [],
+    "para_markers": [],
+    "signature_lines": [
+     "TRƯỞNG ĐƠN VỊ (Ký, ghi họ tên và đóng dấu)"
+    ],
+    "decision_headings": []
+   },
+   "duplicate_sources": [],
+   "form_maps": {
+    "fields": 29,
+    "dynamic_tables": null
+   }
+  },
+  {
+   "form_id": "PLI_M43",
+   "ten_mau": "Giấy chứng nhận đăng ký địa điểm kinh doanh",
+   "blocks": {
+    "stats": {
+     "p": 25,
+     "chk": 0,
+     "table": 0,
+     "loop": 0
+    },
+    "loops": [],
+    "input_key_count": 28,
+    "distinct_input_keys": 28
+   },
+   "template_tables": 0,
+   "source": {
+    "path": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_43_giay_chung_nhan_dang_ky_dia_diem_kinh_doanh.docx",
+    "tables": [],
+    "para_markers": [],
+    "signature_lines": [
+     "TRƯỞNG ĐƠN VỊ (Ký, ghi họ tên và đóng dấu)"
+    ],
+    "decision_headings": []
+   },
+   "duplicate_sources": [],
+   "form_maps": {
+    "fields": 28,
+    "dynamic_tables": null
+   }
+  },
+  {
+   "form_id": "PLI_M45",
+   "ten_mau": "Giấy xác nhận về việc thay đổi nội dung đăng ký hoạt động chi nhánh/văn phòng đại diện/địa điểm kinh doanh",
+   "blocks": {
+    "stats": {
+     "p": 20,
+     "chk": 0,
+     "table": 0,
+     "loop": 0
+    },
+    "loops": [],
+    "input_key_count": 17,
+    "distinct_input_keys": 17
+   },
+   "template_tables": 0,
+   "source": {
+    "path": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_45_giay_xac_nhan_ve_viec_thay_doi_noi_dung_dang_ky_hoat_dong_chi_nhanh_van_phong_dai_dien_dia_diem.docx",
+    "tables": [],
+    "para_markers": [],
+    "signature_lines": [
+     "TRƯỞNG ĐƠN VỊ (Ký, ghi họ tên và đóng dấu)"
+    ],
+    "decision_headings": []
+   },
+   "duplicate_sources": [],
+   "form_maps": {
+    "fields": 17,
+    "dynamic_tables": null
+   }
+  },
+  {
+   "form_id": "PLI_M46",
+   "ten_mau": "Giấy chứng nhận …/Giấy xác nhận …",
+   "blocks": {
+    "stats": {
+     "p": 11,
+     "chk": 0,
+     "table": 0,
+     "loop": 0
+    },
+    "loops": [],
+    "input_key_count": 1,
+    "distinct_input_keys": 1
+   },
+   "template_tables": 0,
+   "source": {
+    "path": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_46_giay_chung_nhan_giay_xac_nhan.docx",
+    "tables": [],
+    "para_markers": [],
+    "signature_lines": [
+     "1 Không có chữ ký, con dấu tại mục này.",
+     "Ghi chú: Được cấp lại ngày …/…/…… TRƯỞNG ĐƠN VỊ (Ký, ghi họ tên và đóng dấu)",
+     "TRƯỞNG ĐƠN VỊ1 (Đã ký)"
+    ],
+    "decision_headings": []
+   },
+   "duplicate_sources": [],
+   "form_maps": {
+    "fields": 1,
+    "dynamic_tables": null
+   }
+  },
+  {
+   "form_id": "PLI_M47",
+   "ten_mau": "Thông báo về cơ quan thuế quản lý trực tiếp",
+   "blocks": {
+    "stats": {
+     "p": 19,
+     "chk": 0,
+     "table": 0,
+     "loop": 0
+    },
+    "loops": [],
+    "input_key_count": 14,
+    "distinct_input_keys": 14
+   },
+   "template_tables": 0,
+   "source": {
+    "path": "05_cong_bo_cung_cap_thong_tin/PL1_Mau_47_thong_bao_ve_co_quan_thue_quan_ly_truc_tiep.docx",
+    "tables": [],
+    "para_markers": [],
+    "signature_lines": [
+     "TRƯỞNG ĐƠN VỊ (Ký, ghi họ tên và đóng dấu)"
+    ],
+    "decision_headings": []
+   },
+   "duplicate_sources": [],
+   "form_maps": {
+    "fields": 14,
+    "dynamic_tables": null
+   }
+  },
+  {
+   "form_id": "PLI_M48",
+   "ten_mau": "Thông báo về việc sửa đổi, bổ sung hồ sơ đăng ký doanh nghiệp",
+   "blocks": {
+    "stats": {
+     "p": 23,
+     "chk": 0,
+     "table": 0,
+     "loop": 0
+    },
+    "loops": [],
+    "input_key_count": 18,
+    "distinct_input_keys": 17
+   },
+   "template_tables": 0,
+   "source": {
+    "path": "05_cong_bo_cung_cap_thong_tin/PL1_Mau_48_thong_bao_ve_viec_sua_doi_bo_sung_ho_so_dang_ky_doanh_nghiep.docx",
+    "tables": [],
+    "para_markers": [],
+    "signature_lines": [
+     "TRƯỞNG ĐƠN VỊ (Ký, ghi họ tên và đóng dấu)"
+    ],
+    "decision_headings": []
+   },
+   "duplicate_sources": [],
+   "form_maps": {
+    "fields": 17,
+    "dynamic_tables": null
+   }
+  },
+  {
+   "form_id": "PLI_M49",
+   "ten_mau": "Thông báo về việc dừng/từ chối dừng thực hiện thủ tục đăng ký doanh nghiệp",
+   "blocks": {
+    "stats": {
+     "p": 18,
+     "chk": 0,
+     "table": 0,
+     "loop": 0
+    },
+    "loops": [],
+    "input_key_count": 19,
+    "distinct_input_keys": 16
+   },
+   "template_tables": 0,
+   "source": {
+    "path": "05_cong_bo_cung_cap_thong_tin/PL1_Mau_49_thong_bao_ve_viec_dung_tu_choi_dung_thuc_hien_thu_tuc_dang_ky_doanh_nghiep.docx",
+    "tables": [],
+    "para_markers": [],
+    "signature_lines": [
+     "TRƯỞNG ĐƠN VỊ (Ký, ghi họ tên và đóng dấu)"
+    ],
+    "decision_headings": []
+   },
+   "duplicate_sources": [],
+   "form_maps": {
+    "fields": 16,
+    "dynamic_tables": null
+   }
+  },
+  {
+   "form_id": "PLI_M50",
+   "ten_mau": "Thông báo yêu cầu doanh nghiệp báo cáo về việc tuân thủ quy định của Luật Doanh nghiệp",
+   "blocks": {
+    "stats": {
+     "p": 23,
+     "chk": 0,
+     "table": 0,
+     "loop": 0
+    },
+    "loops": [],
+    "input_key_count": 14,
+    "distinct_input_keys": 14
+   },
+   "template_tables": 0,
+   "source": {
+    "path": "05_cong_bo_cung_cap_thong_tin/PL1_Mau_50_thong_bao_yeu_cau_doanh_nghiep_bao_cao_ve_viec_tuan_thu_quy_dinh_cua_luat_doanh_nghiep.docx",
+    "tables": [],
+    "para_markers": [],
+    "signature_lines": [
+     "TRƯỞNG ĐƠN VỊ (Ký, ghi họ tên và đóng dấu)"
+    ],
+    "decision_headings": []
+   },
+   "duplicate_sources": [],
+   "form_maps": {
+    "fields": 14,
+    "dynamic_tables": null
+   }
+  },
+  {
+   "form_id": "PLI_M51",
+   "ten_mau": "Thông báo về việc hiệu đính thông tin trong Giấy chứng nhận đăng ký doanh nghiệp/Giấy xác nhận về việc thay đổi nội dung đăng ký doanh nghiệp/Giấy chứng nhận đăng ký hoạt động chi nhánh/văn phòng đại diện/Giấy chứng nhận đăng ký địa điểm kinh doanh/Giấy xác nhận về việc thay đổi nội dung đăng ký hoạt động chi nhánh/văn phòng đại diện",
+   "blocks": {
+    "stats": {
+     "p": 18,
+     "chk": 0,
+     "table": 0,
+     "loop": 0
+    },
+    "loops": [],
+    "input_key_count": 14,
+    "distinct_input_keys": 14
+   },
+   "template_tables": 0,
+   "source": {
+    "path": "05_cong_bo_cung_cap_thong_tin/PL1_Mau_51_thong_bao_ve_viec_hieu_dinh_thong_tin_trong_giay_chung_nhan_dang_ky_doanh_nghiep_giay_xac_nhan_v.docx",
+    "tables": [],
+    "para_markers": [],
+    "signature_lines": [
+     "Sau khi xem xét lại hồ sơ đăng ký doanh nghiệp của Ông/Bà: …………….là người đại di",
+     "TRƯỞNG ĐƠN VỊ (Ký, ghi họ tên và đóng dấu)"
+    ],
+    "decision_headings": []
+   },
+   "duplicate_sources": [],
+   "form_maps": {
+    "fields": 14,
+    "dynamic_tables": null
+   }
+  },
+  {
+   "form_id": "PLI_M52",
+   "ten_mau": "Thông báo về việc rà soát thông tin đăng ký doanh nghiệp, tình trạng pháp lý của doanh nghiệp",
+   "blocks": {
+    "stats": {
+     "p": 46,
+     "chk": 0,
+     "table": 0,
+     "loop": 0
+    },
+    "loops": [],
+    "input_key_count": 32,
+    "distinct_input_keys": 19
+   },
+   "template_tables": 0,
+   "source": {
+    "path": "05_cong_bo_cung_cap_thong_tin/PL1_Mau_52_thong_bao_ve_viec_ra_soat_thong_tin_dang_ky_doanh_nghiep_tinh_trang_phap_ly_cua_doanh_nghiep.docx",
+    "tables": [],
+    "para_markers": [],
+    "signature_lines": [
+     "- Người đại diện theo pháp luật: ………………………………………………..",
+     "TRƯỞNG ĐƠN VỊ (Ký, ghi họ tên và đóng dấu)"
+    ],
+    "decision_headings": []
+   },
+   "duplicate_sources": [],
+   "form_maps": {
+    "fields": 19,
+    "dynamic_tables": null
+   }
+  },
+  {
+   "form_id": "PLI_M53",
+   "ten_mau": "Thông báo yêu cầu doanh nghiệp tạm ngừng kinh doanh ngành, nghề đầu tư kinh doanh có điều kiện",
+   "blocks": {
+    "stats": {
+     "p": 21,
+     "chk": 0,
+     "table": 0,
+     "loop": 0
+    },
+    "loops": [],
+    "input_key_count": 17,
+    "distinct_input_keys": 16
+   },
+   "template_tables": 0,
+   "source": {
+    "path": "04_tam_ngung_cham_dut_giai_the/PL1_Mau_53_thong_bao_yeu_cau_doanh_nghiep_tam_ngung_kinh_doanh_nganh_nghe_dau_tu_kinh_doanh_co_dieu_kien.docx",
+    "tables": [],
+    "para_markers": [],
+    "signature_lines": [
+     "TRƯỞNG ĐƠN VỊ (Ký, ghi họ tên và đóng dấu)"
+    ],
+    "decision_headings": []
+   },
+   "duplicate_sources": [],
+   "form_maps": {
+    "fields": 16,
+    "dynamic_tables": null
+   }
+  },
+  {
+   "form_id": "PLI_M54",
+   "ten_mau": "Giấy xác nhận về việc doanh nghiệp thông báo tạm ngừng kinh doanh",
+   "blocks": {
+    "stats": {
+     "p": 18,
+     "chk": 0,
+     "table": 0,
+     "loop": 0
+    },
+    "loops": [],
+    "input_key_count": 18,
+    "distinct_input_keys": 18
+   },
+   "template_tables": 0,
+   "source": {
+    "path": "04_tam_ngung_cham_dut_giai_the/PL1_Mau_54_giay_xac_nhan_ve_viec_doanh_nghiep_thong_bao_tam_ngung_kinh_doanh.docx",
+    "tables": [],
+    "para_markers": [],
+    "signature_lines": [
+     "TRƯỞNG ĐƠN VỊ (Ký, ghi họ tên và đóng dấu)"
+    ],
+    "decision_headings": []
+   },
+   "duplicate_sources": [],
+   "form_maps": {
+    "fields": 18,
+    "dynamic_tables": null
+   }
+  },
+  {
+   "form_id": "PLI_M55",
+   "ten_mau": "Giấy xác nhận về việc chi nhánh/địa điểm kinh doanh thông báo tạm ngừng kinh doanh/Về việc văn phòng đại diện thông báo tạm ngừng hoạt động",
+   "blocks": {
+    "stats": {
+     "p": 30,
+     "chk": 0,
+     "table": 0,
+     "loop": 0
+    },
+    "loops": [],
+    "input_key_count": 28,
+    "distinct_input_keys": 22
+   },
+   "template_tables": 0,
+   "source": {
+    "path": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_55_giay_xac_nhan_ve_viec_chi_nhanh_dia_diem_kinh_doanh_thong_bao_tam_ngung_kinh_doanh_ve_viec_van_p.docx",
+    "tables": [],
+    "para_markers": [],
+    "signature_lines": [
+     "TRƯỞNG ĐƠN VỊ (Ký, ghi họ tên và đóng dấu)"
+    ],
+    "decision_headings": []
+   },
+   "duplicate_sources": [
+    "04_tam_ngung_cham_dut_giai_the/PL1_Mau_55_giay_xac_nhan_ve_viec_chi_nhanh_dia_diem_kinh_doanh_thong_bao_tam_ngung_kinh_doanh_ve_viec_van_p.docx"
+   ],
+   "form_maps": {
+    "fields": 22,
+    "dynamic_tables": null
+   }
+  },
+  {
+   "form_id": "PLI_M56",
+   "ten_mau": "Giấy xác nhận về việc doanh nghiệp thông báo tiếp tục kinh doanh trước thời hạn đã thông báo",
+   "blocks": {
+    "stats": {
+     "p": 25,
+     "chk": 0,
+     "table": 0,
+     "loop": 0
+    },
+    "loops": [],
+    "input_key_count": 22,
+    "distinct_input_keys": 20
+   },
+   "template_tables": 0,
+   "source": {
+    "path": "04_tam_ngung_cham_dut_giai_the/PL1_Mau_56_giay_xac_nhan_ve_viec_doanh_nghiep_thong_bao_tiep_tuc_kinh_doanh_truoc_thoi_han_da_thong_bao.docx",
+    "tables": [],
+    "para_markers": [],
+    "signature_lines": [
+     "TRƯỞNG ĐƠN VỊ (Ký, ghi họ tên và đóng dấu)"
+    ],
+    "decision_headings": []
+   },
+   "duplicate_sources": [],
+   "form_maps": {
+    "fields": 20,
+    "dynamic_tables": null
+   }
+  },
+  {
+   "form_id": "PLI_M57",
+   "ten_mau": "Giấy xác nhận chi nhánh/địa điểm kinh doanh thông báo tiếp tục kinh doanh trước thời hạn đã thông báo/Về việc văn phòng đại diện thông báo tiếp tục hoạt dộng trước thời hạn đã thông báo",
+   "blocks": {
+    "stats": {
+     "p": 27,
+     "chk": 0,
+     "table": 0,
+     "loop": 0
+    },
+    "loops": [],
+    "input_key_count": 23,
+    "distinct_input_keys": 19
+   },
+   "template_tables": 0,
+   "source": {
+    "path": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_57_giay_xac_nhan_chi_nhanh_dia_diem_kinh_doanh_thong_bao_tiep_tuc_kinh_doanh_truoc_thoi_han_da_thon.docx",
+    "tables": [],
+    "para_markers": [],
+    "signature_lines": [
+     "TRƯỞNG ĐƠN VỊ (Ký, ghi họ tên và đóng dấu)"
+    ],
+    "decision_headings": []
+   },
+   "duplicate_sources": [
+    "04_tam_ngung_cham_dut_giai_the/PL1_Mau_57_giay_xac_nhan_chi_nhanh_dia_diem_kinh_doanh_thong_bao_tiep_tuc_kinh_doanh_truoc_thoi_han_da_thon.docx"
+   ],
+   "form_maps": {
+    "fields": 19,
+    "dynamic_tables": null
+   }
+  },
+  {
+   "form_id": "PLI_M63",
+   "ten_mau": "Quyết định về việc thu hồi Giấy chứng nhận đăng ký hoạt động chi nhánh, văn phòng đại diện, Giấy chứng nhận đăng ký địa điểm kinh doanh",
+   "blocks": {
+    "stats": {
+     "p": 51,
+     "chk": 0,
+     "table": 0,
+     "loop": 0
+    },
+    "loops": [],
+    "input_key_count": 45,
+    "distinct_input_keys": 38
+   },
+   "template_tables": 0,
+   "source": {
+    "path": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_63_quyet_dinh_ve_viec_thu_hoi_giay_chung_nhan_dang_ky_hoat_dong_chi_nhanh_van_phong_dai_dien_giay_c.docx",
+    "tables": [],
+    "para_markers": [],
+    "signature_lines": [
+     "Số định danh cá nhân: ………………… /Số Chứng minh nhân dân, Hộ chiếu, Hộ chiếu nước n",
+     "TRƯỞNG ĐƠN VỊ (Ký, ghi họ tên và đóng dấu)"
+    ],
+    "decision_headings": [
+     "QUYẾT ĐỊNH",
+     "QUYẾT ĐỊNH:",
+     "Điều 3. Quyết định này có hiệu lực từ ngày ký.",
+     "Điều 4. Quyết định này có hiệu lực từ ngày ký."
+    ]
+   },
+   "duplicate_sources": [],
+   "form_maps": {
+    "fields": 38,
+    "dynamic_tables": null
+   }
+  },
+  {
+   "form_id": "PLI_M66",
+   "ten_mau": "Thông báo về việc chi nhánh/văn phòng đại diện/địa điểm kinh doanh đang làm thủ tục chấm dứt hoạt động",
+   "blocks": {
+    "stats": {
+     "p": 34,
+     "chk": 0,
+     "table": 0,
+     "loop": 0
+    },
+    "loops": [],
+    "input_key_count": 20,
+    "distinct_input_keys": 15
+   },
+   "template_tables": 0,
+   "source": {
+    "path": "04_tam_ngung_cham_dut_giai_the/PL1_Mau_66_thong_bao_ve_viec_chi_nhanh_van_phong_dai_dien_dia_diem_kinh_doanh_dang_lam_thu_tuc_cham_dut_hoa.docx",
+    "tables": [],
+    "para_markers": [],
+    "signature_lines": [
+     "1 Ghi tên của tất cả người đại diện theo pháp luật trong trường hợp công ty có n",
+     "TRƯỞNG ĐƠN VỊ (Ký, ghi họ tên và đóng dấu)",
+     "là người đại diện theo pháp luật."
+    ],
+    "decision_headings": []
+   },
+   "duplicate_sources": [],
+   "form_maps": {
+    "fields": 15,
+    "dynamic_tables": null
+   }
+  },
+  {
+   "form_id": "PLI_M67",
+   "ten_mau": "Thông báo về việc chấm dứt hoạt động chi nhánh/văn phòng đại diện/địa điểm kinh doanh",
+   "blocks": {
+    "stats": {
+     "p": 21,
+     "chk": 0,
+     "table": 0,
+     "loop": 0
+    },
+    "loops": [],
+    "input_key_count": 19,
+    "distinct_input_keys": 16
+   },
+   "template_tables": 0,
+   "source": {
+    "path": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_67_thong_bao_ve_viec_cham_dut_hoat_dong_chi_nhanh_van_phong_dai_dien_dia_diem_kinh_doanh.docx",
+    "tables": [],
+    "para_markers": [],
+    "signature_lines": [
+     "(Cơ quan đăng ký kinh doanh cấp tỉnh) thông báo (các) chi nhánh/văn phòng đại di",
+     "Ghi tên của tất cả người đại diện theo pháp luật trong trường hợp công ty có nhi",
+     "TRƯỞNG ĐƠN VỊ (Ký, ghi họ tên và đóng dấu)"
+    ],
+    "decision_headings": []
+   },
+   "duplicate_sources": [
+    "04_tam_ngung_cham_dut_giai_the/PL1_Mau_67_thong_bao_ve_viec_cham_dut_hoat_dong_chi_nhanh_van_phong_dai_dien_dia_diem_kinh_doanh.docx"
+   ],
+   "form_maps": {
+    "fields": 16,
+    "dynamic_tables": null
+   }
+  },
+  {
+   "form_id": "PLI_M68",
+   "ten_mau": "Thông báo về việc doanh nghiệp đang làm thủ tục giải thể",
+   "blocks": {
+    "stats": {
+     "p": 28,
+     "chk": 0,
+     "table": 0,
+     "loop": 0
+    },
+    "loops": [],
+    "input_key_count": 17,
+    "distinct_input_keys": 16
+   },
+   "template_tables": 0,
+   "source": {
+    "path": "04_tam_ngung_cham_dut_giai_the/PL1_Mau_68_thong_bao_ve_viec_doanh_nghiep_dang_lam_thu_tuc_giai_the.docx",
+    "tables": [],
+    "para_markers": [
+     {
+      "i": 17,
+      "kind": "list_intro",
+      "text": "Các chi nhánh, văn phòng đại diện, địa điểm kinh doanh sau của doanh nghiệp đang làm thủ tục chấm dứt hoạt động:"
+     }
+    ],
+    "signature_lines": [
+     "2 Ghi tên của tất cả người đại diện theo pháp luật trong trường hợp công ty có n",
+     "Là người đại diện theo pháp luật.",
+     "Số định danh cá nhân: .................................../Số Hộ chiếu, Hộ chiếu ",
+     "TRƯỞNG ĐƠN VỊ (Ký, ghi họ tên và đóng dấu)"
+    ],
+    "decision_headings": []
+   },
+   "duplicate_sources": [],
+   "form_maps": {
+    "fields": 16,
+    "dynamic_tables": null
+   }
+  },
+  {
+   "form_id": "PLI_M69",
+   "ten_mau": "Thông báo về việc doanh nghiệp đã giải thể/chấm dứt tồn tại",
+   "blocks": {
+    "stats": {
+     "p": 25,
+     "chk": 0,
+     "table": 0,
+     "loop": 0
+    },
+    "loops": [],
+    "input_key_count": 18,
+    "distinct_input_keys": 17
+   },
+   "template_tables": 0,
+   "source": {
+    "path": "04_tam_ngung_cham_dut_giai_the/PL1_Mau_69_thong_bao_ve_viec_doanh_nghiep_da_giai_the_cham_dut_ton_tai.docx",
+    "tables": [],
+    "para_markers": [],
+    "signature_lines": [
+     "Ghi tên của tất cả người đại diện theo pháp luật trong trường hợp công ty có nhi",
+     "Là người đại diện theo pháp luật.",
+     "Số định danh cá nhân: .........................../Số Hộ chiếu, Hộ chiếu nước ngo",
+     "TRƯỞNG ĐƠN VỊ (Ký, ghi họ tên và đóng dấu)"
+    ],
+    "decision_headings": []
+   },
+   "duplicate_sources": [],
+   "form_maps": {
+    "fields": 17,
+    "dynamic_tables": null
+   }
+  },
+  {
+   "form_id": "PLI_M70",
+   "ten_mau": "Giấy tiếp nhận hồ sơ và hẹn trả kết quả hồ sơ đăng ký doanh nghiệp/chi nhánh/văn phòng đại diện/địa điểm kinh doanh",
+   "blocks": {
+    "stats": {
+     "p": 21,
+     "chk": 0,
+     "table": 1,
+     "loop": 0
+    },
+    "loops": [],
+    "input_key_count": 20,
+    "distinct_input_keys": 17
+   },
+   "template_tables": 1,
+   "source": {
+    "path": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_70_giay_tiep_nhan_ho_so_va_hen_tra_ket_qua_ho_so_dang_ky_doanh_nghiep_chi_nhanh_van_phong_dai_dien.docx",
+    "tables": [],
+    "para_markers": [],
+    "signature_lines": [
+     "NGƯỜI NHẬN (Ký và ghi họ tên)",
+     "NGƯỜI NỘP (Ký và ghi họ tên)"
+    ],
+    "decision_headings": []
+   },
+   "duplicate_sources": [
+    "05_cong_bo_cung_cap_thong_tin/PL1_Mau_70_giay_tiep_nhan_ho_so_va_hen_tra_ket_qua_ho_so_dang_ky_doanh_nghiep_chi_nhanh_van_phong_dai_dien.docx"
+   ],
+   "form_maps": {
+    "fields": 17,
+    "dynamic_tables": null
+   }
+  },
+  {
+   "form_id": "PLI_M71",
+   "ten_mau": "Giấy tiếp nhận hồ sơ và hẹn trả kết quả hồ sơ đăng ký doanh nghiệp/chi nhánh/văn phòng đại diện/địa điểm kinh doanh qua mạng thông tin điện tử",
+   "blocks": {
+    "stats": {
+     "p": 24,
+     "chk": 0,
+     "table": 1,
+     "loop": 0
+    },
+    "loops": [],
+    "input_key_count": 19,
+    "distinct_input_keys": 16
+   },
+   "template_tables": 1,
+   "source": {
+    "path": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_71_giay_tiep_nhan_ho_so_va_hen_tra_ket_qua_ho_so_dang_ky_doanh_nghiep_chi_nhanh_van_phong_dai_dien.docx",
+    "tables": [],
+    "para_markers": [],
+    "signature_lines": [],
+    "decision_headings": []
+   },
+   "duplicate_sources": [
+    "05_cong_bo_cung_cap_thong_tin/PL1_Mau_71_giay_tiep_nhan_ho_so_va_hen_tra_ket_qua_ho_so_dang_ky_doanh_nghiep_chi_nhanh_van_phong_dai_dien.docx"
+   ],
+   "form_maps": {
+    "fields": 16,
+    "dynamic_tables": null
+   }
+  },
+  {
+   "form_id": "PLI_M72",
+   "ten_mau": "Công bố nội dung đăng ký thành lập doanh nghiệp",
+   "blocks": {
+    "stats": {
+     "p": 126,
+     "chk": 0,
+     "table": 0,
+     "loop": 9
+    },
+    "loops": [
+     {
+      "loop": "ds_nganh_dntn",
+      "header": [
+       "STT Tên ngành Mã ngành Ngành, nghề kinh doanh chính"
+      ],
+      "col_tags": [
+       "ten_nganh",
+       "ma_nganh",
+       "la_nganh_chinh"
+      ],
+      "blankRows": 4
+     },
+     {
+      "loop": "ds_nganh_tnhh_1tv",
+      "header": [
+       "STT Tên ngành Mã ngành Ngành, nghề kinh doanh chính"
+      ],
+      "col_tags": [
+       "ten_nganh",
+       "ma_nganh",
+       "la_nganh_chinh"
+      ],
+      "blankRows": 4
+     },
+     {
+      "loop": "ds_nganh_tnhh_2tv",
+      "header": [
+       "STT Tên ngành Mã ngành Ngành, nghề kinh doanh chính"
+      ],
+      "col_tags": [
+       "ten_nganh",
+       "ma_nganh",
+       "la_nganh_chinh"
+      ],
+      "blankRows": 4
+     },
+     {
+      "loop": "ds_thanh_vien_tnhh_2tv",
+      "header": [
+       "STT Tên thành viên Quốc tịch Số Giấy tờ pháp lý của cá nhân/tổ chức Địa chỉ liên lạc đối với cá nhân; địa chỉ trụ sở chính đối với tổ chức Phần vốn góp (VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có) Tỷ lệ (%) Ghi chú (nếu có)"
+      ],
+      "col_tags": [
+       "ten_thanh_vien",
+       "quoc_tich",
+       "so_gtpl_ca_nhan_to_chuc",
+       "dia_chi_lien_lac",
+       "phan_von_gop",
+       "ty_le",
+       "ghi_chu"
+      ],
+      "blankRows": 5
+     },
+     {
+      "loop": "ds_nganh_ctcp",
+      "header": [
+       "STT Tên ngành Mã ngành Ngành, nghề kinh doanh chính"
+      ],
+      "col_tags": [
+       "ten_nganh",
+       "ma_nganh",
+       "la_nganh_chinh"
+      ],
+      "blankRows": 4
+     },
+     {
+      "loop": "ds_co_dong_sang_lap_ctcp",
+      "header": [
+       "STT Tên cổ đông Quốc tịch Số Giấy tờ pháp lý của cá nhân/tổ chức Địa chỉ liên lạc đối với cá nhân; địa chỉ trụ sở chính đối với tổ chức Loại cổ phần Số cổ phần Giá trị cổ phần (VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có) Tỷ lệ (%) Ghi chú (nếu có)"
+      ],
+      "col_tags": [
+       "ten_co_dong",
+       "quoc_tich",
+       "so_gtpl",
+       "dia_chi_lien_lac",
+       "loai_co_phan",
+       "so_co_phan",
+       "gia_tri_co_phan",
+       "ty_le",
+       "ghi_chu"
+      ],
+      "blankRows": 5
+     },
+     {
+      "loop": "ds_co_dong_nuoc_ngoai_ctcp",
+      "header": [
+       "STT Tên cổ đông Quốc tịch Số Giấy tờ pháp lý của cá nhân/tổ chức Địa chỉ liên lạc đối với cá nhân; địa chỉ trụ sở chính đối với tổ chức Loại cổ phần Số cổ phần Giá trị cổ phần (VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có) Tỷ lệ (%) Ghi chú (nếu có)"
+      ],
+      "col_tags": [
+       "ten_co_dong",
+       "quoc_tich",
+       "so_gtpl",
+       "dia_chi_lien_lac",
+       "loai_co_phan",
+       "so_co_phan",
+       "gia_tri_co_phan",
+       "ty_le",
+       "ghi_chu"
+      ],
+      "blankRows": 5
+     },
+     {
+      "loop": "ds_nganh_dhdn",
+      "header": [
+       "STT Tên ngành Mã ngành Ngành, nghề kinh doanh chính"
+      ],
+      "col_tags": [
+       "ten_nganh",
+       "ma_nganh",
+       "la_nganh_chinh"
+      ],
+      "blankRows": 4
+     },
+     {
+      "loop": "ds_thanh_vien_hop_danh_dhdn",
+      "header": [
+       "STT Tên thành viên hợp danh Quốc tịch Số định danh cá nhân/Số Hộ chiếu/Hộ chiếu nước ngoài hoặc giấy tờ có giá trị thay thế hộ chiếu nước ngoài Địa chỉ liên lạc Phần vốn góp (VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có) Tỷ lệ (%)"
+      ],
+      "col_tags": [
+       "ten_thanh_vien_hop_danh",
+       "quoc_tich",
+       "so_dinh_danh_ho_chieu",
+       "dia_chi_lien_lac",
+       "phan_von_gop",
+       "ty_le"
+      ],
+      "blankRows": 5
+     }
+    ],
+    "input_key_count": 120,
+    "distinct_input_keys": 36
+   },
+   "template_tables": 9,
+   "source": {
+    "path": "05_cong_bo_cung_cap_thong_tin/PL1_Mau_72_cong_bo_noi_dung_dang_ky_thanh_lap_doanh_nghiep.docx",
+    "tables": [],
+    "para_markers": [
+     {
+      "i": 14,
+      "kind": "stt_alone",
+      "text": "STT"
+     },
+     {
+      "i": 43,
+      "kind": "stt_alone",
+      "text": "STT"
+     },
+     {
+      "i": 86,
+      "kind": "stt_alone",
+      "text": "STT"
+     },
+     {
+      "i": 97,
+      "kind": "stt_alone",
+      "text": "STT"
+     },
+     {
+      "i": 135,
+      "kind": "stt_alone",
+      "text": "STT"
+     },
+     {
+      "i": 145,
+      "kind": "stt_joined",
+      "text": "STTTên cổ đôngQuốc tịchSố Giấy tờ pháp lý của cá nhân/tổ chứcĐịa chỉ liên lạc đối với cá nhân; địa chỉ trụ sở chính đối với tổ chứcLoại cổ phầnSố cổ phầnGiá trị"
+     },
+     {
+      "i": 147,
+      "kind": "stt_joined",
+      "text": "STTTên cổ đôngQuốc tịchSố Giấy tờ pháp lý của cá nhân/tổ chứcĐịa chỉ liên lạc đối với cá nhân; địa chỉ trụ sở chính đối với tổ chứcLoại cổ phầnSố cổ phầnGiá trị"
+     },
+     {
+      "i": 169,
+      "kind": "stt_alone",
+      "text": "STT"
+     },
+     {
+      "i": 177,
+      "kind": "stt_alone",
+      "text": "STT"
+     }
+    ],
+    "signature_lines": [
+     "(VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)Tỷ lệ (%)Ghi chú",
+     "(hoặc) Số Hộ chiếu, Hộ chiếu nước ngoài, giấy tờ có giá trị thay thế hộ chiếu nư",
+     "2 Ghi tên của tất cả người đại diện theo pháp luật trong trường hợp công ty có n",
+     "3 Ghi tên của tất cả người đại diện theo pháp luật trong trường hợp công ty có n",
+     "8. Người đại diện theo pháp luật của công ty1:",
+     "8. Người đại diện theo pháp luật của công ty2:",
+     "Ghi tên của tất cả người đại diện theo pháp luật trong trường hợp công ty có nhi"
+    ],
+    "decision_headings": []
+   },
+   "duplicate_sources": [],
+   "form_maps": {
+    "fields": 82,
+    "dynamic_tables": [
+     {
+      "id": "ds_nganh",
+      "table_index": 0,
+      "header_row": 0,
+      "template_row": 5,
+      "loop": "ds_nganh_dntn",
+      "columns": [
+       {
+        "col": 1,
+        "header": "Tên ngành",
+        "tag": "ten_nganh"
+       },
+       {
+        "col": 2,
+        "header": "Mã ngành",
+        "tag": "ma_nganh"
+       },
+       {
+        "col": 3,
+        "header": "Ngành, nghề kinh doanh chính",
+        "tag": "la_nganh_chinh"
+       }
+      ],
+      "semantic_key": "ds_nganh_dntn",
+      "occurrence_id": "ds_nganh_dntn",
+      "sync_group": "ds_nganh_pli_m72"
+     },
+     {
+      "id": "ds_nganh",
+      "table_index": 1,
+      "header_row": 0,
+      "template_row": 5,
+      "loop": "ds_nganh_tnhh_1tv",
+      "columns": [
+       {
+        "col": 1,
+        "header": "Tên ngành",
+        "tag": "ten_nganh"
+       },
+       {
+        "col": 2,
+        "header": "Mã ngành",
+        "tag": "ma_nganh"
+       },
+       {
+        "col": 3,
+        "header": "Ngành, nghề kinh doanh chính",
+        "tag": "la_nganh_chinh"
+       }
+      ],
+      "semantic_key": "ds_nganh_tnhh_1tv",
+      "occurrence_id": "ds_nganh_tnhh_1tv",
+      "sync_group": "ds_nganh_pli_m72"
+     },
+     {
+      "id": "ds_nganh",
+      "table_index": 2,
+      "header_row": 0,
+      "template_row": 5,
+      "loop": "ds_nganh_tnhh_2tv",
+      "columns": [
+       {
+        "col": 1,
+        "header": "Tên ngành",
+        "tag": "ten_nganh"
+       },
+       {
+        "col": 2,
+        "header": "Mã ngành",
+        "tag": "ma_nganh"
+       },
+       {
+        "col": 3,
+        "header": "Ngành, nghề kinh doanh chính",
+        "tag": "la_nganh_chinh"
+       }
+      ],
+      "semantic_key": "ds_nganh_tnhh_2tv",
+      "occurrence_id": "ds_nganh_tnhh_2tv",
+      "sync_group": "ds_nganh_pli_m72"
+     },
+     {
+      "id": "ds_thanh_vien_tnhh_2tv",
+      "table_index": 3,
+      "template_row": 6,
+      "loop": "ds_thanh_vien_tnhh_2tv",
+      "columns": [
+       {
+        "col": 1,
+        "tag": "ten_thanh_vien"
+       },
+       {
+        "col": 2,
+        "tag": "quoc_tich"
+       },
+       {
+        "col": 3,
+        "tag": "so_gtpl_ca_nhan_to_chuc"
+       },
+       {
+        "col": 4,
+        "tag": "dia_chi_lien_lac"
+       },
+       {
+        "col": 5,
+        "tag": "phan_von_gop"
+       },
+       {
+        "col": 6,
+        "tag": "ty_le"
+       },
+       {
+        "col": 7,
+        "tag": "ghi_chu"
+       }
+      ],
+      "header_row": 0,
+      "semantic_key": "ds_thanh_vien_tnhh_2tv",
+      "occurrence_id": "ds_thanh_vien_tnhh_2tv"
+     },
+     {
+      "id": "ds_nganh",
+      "table_index": 4,
+      "header_row": 0,
+      "template_row": 5,
+      "loop": "ds_nganh_ctcp",
+      "columns": [
+       {
+        "col": 1,
+        "header": "Tên ngành",
+        "tag": "ten_nganh"
+       },
+       {
+        "col": 2,
+        "header": "Mã ngành",
+        "tag": "ma_nganh"
+       },
+       {
+        "col": 3,
+        "header": "Ngành, nghề kinh doanh chính",
+        "tag": "la_nganh_chinh"
+       }
+      ],
+      "semantic_key": "ds_nganh_ctcp",
+      "occurrence_id": "ds_nganh_ctcp",
+      "sync_group": "ds_nganh_pli_m72"
+     },
+     {
+      "id": "ds_co_dong_sang_lap_ctcp",
+      "table_index": 5,
+      "template_row": 6,
+      "loop": "ds_co_dong_sang_lap_ctcp",
+      "columns": [
+       {
+        "col": 1,
+        "tag": "ten_co_dong"
+       },
+       {
+        "col": 2,
+        "tag": "quoc_tich"
+       },
+       {
+        "col": 3,
+        "tag": "so_gtpl"
+       },
+       {
+        "col": 4,
+        "tag": "dia_chi_lien_lac"
+       },
+       {
+        "col": 5,
+        "tag": "loai_co_phan"
+       },
+       {
+        "col": 6,
+        "tag": "so_co_phan"
+       },
+       {
+        "col": 7,
+        "tag": "gia_tri_co_phan"
+       },
+       {
+        "col": 8,
+        "tag": "ty_le"
+       },
+       {
+        "col": 9,
+        "tag": "ghi_chu"
+       }
+      ],
+      "header_row": 0,
+      "semantic_key": "ds_co_dong_sang_lap_ctcp",
+      "occurrence_id": "ds_co_dong_sang_lap_ctcp"
+     },
+     {
+      "id": "ds_co_dong_nuoc_ngoai_ctcp",
+      "table_index": 6,
+      "template_row": 6,
+      "loop": "ds_co_dong_nuoc_ngoai_ctcp",
+      "columns": [
+       {
+        "col": 1,
+        "tag": "ten_co_dong"
+       },
+       {
+        "col": 2,
+        "tag": "quoc_tich"
+       },
+       {
+        "col": 3,
+        "tag": "so_gtpl"
+       },
+       {
+        "col": 4,
+        "tag": "dia_chi_lien_lac"
+       },
+       {
+        "col": 5,
+        "tag": "loai_co_phan"
+       },
+       {
+        "col": 6,
+        "tag": "so_co_phan"
+       },
+       {
+        "col": 7,
+        "tag": "gia_tri_co_phan"
+       },
+       {
+        "col": 8,
+        "tag": "ty_le"
+       },
+       {
+        "col": 9,
+        "tag": "ghi_chu"
+       }
+      ],
+      "header_row": 0,
+      "semantic_key": "ds_co_dong_nuoc_ngoai_ctcp",
+      "occurrence_id": "ds_co_dong_nuoc_ngoai_ctcp"
+     },
+     {
+      "id": "ds_nganh",
+      "table_index": 7,
+      "header_row": 0,
+      "template_row": 5,
+      "loop": "ds_nganh_dhdn",
+      "columns": [
+       {
+        "col": 1,
+        "header": "Tên ngành",
+        "tag": "ten_nganh"
+       },
+       {
+        "col": 2,
+        "header": "Mã ngành",
+        "tag": "ma_nganh"
+       },
+       {
+        "col": 3,
+        "header": "Ngành, nghề kinh doanh chính",
+        "tag": "la_nganh_chinh"
+       }
+      ],
+      "semantic_key": "ds_nganh_dhdn",
+      "occurrence_id": "ds_nganh_dhdn",
+      "sync_group": "ds_nganh_pli_m72"
+     },
+     {
+      "id": "ds_thanh_vien_hop_danh_dhdn",
+      "table_index": 8,
+      "template_row": 6,
+      "loop": "ds_thanh_vien_hop_danh_dhdn",
+      "columns": [
+       {
+        "col": 1,
+        "tag": "ten_thanh_vien_hop_danh"
+       },
+       {
+        "col": 2,
+        "tag": "quoc_tich"
+       },
+       {
+        "col": 3,
+        "tag": "so_dinh_danh_ho_chieu"
+       },
+       {
+        "col": 4,
+        "tag": "dia_chi_lien_lac"
+       },
+       {
+        "col": 5,
+        "tag": "phan_von_gop"
+       },
+       {
+        "col": 6,
+        "tag": "ty_le"
+       }
+      ],
+      "header_row": 0,
+      "semantic_key": "ds_thanh_vien_hop_danh_dhdn",
+      "occurrence_id": "ds_thanh_vien_hop_danh_dhdn"
+     }
+    ]
+   }
+  },
+  {
+   "form_id": "PLI_M73",
+   "ten_mau": "Công bố thay đổi nội dung đăng ký doanh nghiệp",
+   "blocks": {
+    "stats": {
+     "p": 16,
+     "chk": 0,
+     "table": 0,
+     "loop": 0
+    },
+    "loops": [],
+    "input_key_count": 6,
+    "distinct_input_keys": 6
+   },
+   "template_tables": 0,
+   "source": {
+    "path": "05_cong_bo_cung_cap_thong_tin/PL1_Mau_73_cong_bo_thay_doi_noi_dung_dang_ky_doanh_nghiep.docx",
+    "tables": [],
+    "para_markers": [],
+    "signature_lines": [],
+    "decision_headings": []
+   },
+   "duplicate_sources": [],
+   "form_maps": {
+    "fields": 6,
+    "dynamic_tables": null
+   }
+  },
+  {
+   "form_id": "PLI_M74",
+   "ten_mau": "Công bố nội dung đăng ký doanh nghiệp",
+   "blocks": {
+    "stats": {
+     "p": 16,
+     "chk": 0,
+     "table": 0,
+     "loop": 0
+    },
+    "loops": [],
+    "input_key_count": 8,
+    "distinct_input_keys": 7
+   },
+   "template_tables": 0,
+   "source": {
+    "path": "05_cong_bo_cung_cap_thong_tin/PL1_Mau_74_cong_bo_noi_dung_dang_ky_doanh_nghiep.docx",
+    "tables": [],
+    "para_markers": [],
+    "signature_lines": [],
+    "decision_headings": []
+   },
+   "duplicate_sources": [],
+   "form_maps": {
+    "fields": 7,
+    "dynamic_tables": null
+   }
+  },
+  {
+   "form_id": "PLI_M75",
+   "ten_mau": "Thông báo về việc khôi phục Giấy chứng nhận đăng ký doanh nghiệp/Giấy chứng nhận đăng ký hoạt động chi nhánh, văn phòng đại diện, Giấy chứng nhận đăng ký địa điểm kinh doanh",
+   "blocks": {
+    "stats": {
+     "p": 44,
+     "chk": 0,
+     "table": 0,
+     "loop": 0
+    },
+    "loops": [],
+    "input_key_count": 49,
+    "distinct_input_keys": 29
+   },
+   "template_tables": 0,
+   "source": {
+    "path": "04_tam_ngung_cham_dut_giai_the/PL1_Mau_75_thong_bao_ve_viec_khoi_phuc_giay_chung_nhan_dang_ky_doanh_nghiep_giay_chung_nhan_dang_ky_hoat_do.docx",
+    "tables": [],
+    "para_markers": [],
+    "signature_lines": [
+     "TRƯỞNG ĐƠN VỊ (Ký, ghi họ tên và đóng dấu)"
+    ],
+    "decision_headings": []
+   },
+   "duplicate_sources": [],
+   "form_maps": {
+    "fields": 29,
+    "dynamic_tables": null
+   }
+  },
+  {
+   "form_id": "PLI_M76",
+   "ten_mau": "Thông báo về việc cấp đăng ký doanh nghiệp",
+   "blocks": {
+    "stats": {
+     "p": 21,
+     "chk": 0,
+     "table": 0,
+     "loop": 0
+    },
+    "loops": [],
+    "input_key_count": 13,
+    "distinct_input_keys": 13
+   },
+   "template_tables": 0,
+   "source": {
+    "path": "05_cong_bo_cung_cap_thong_tin/PL1_Mau_76_thong_bao_ve_viec_cap_dang_ky_doanh_nghiep.docx",
+    "tables": [],
+    "para_markers": [],
+    "signature_lines": [],
+    "decision_headings": []
+   },
+   "duplicate_sources": [],
+   "form_maps": {
+    "fields": 13,
+    "dynamic_tables": null
+   }
+  },
+  {
+   "form_id": "PLI_M78",
+   "ten_mau": "Giấy đề nghị cung cấp thông tin đăng ký doanh nghiệp",
+   "blocks": {
+    "stats": {
+     "p": 35,
+     "chk": 0,
+     "table": 0,
+     "loop": 0
+    },
+    "loops": [],
+    "input_key_count": 17,
+    "distinct_input_keys": 16
+   },
+   "template_tables": 0,
+   "source": {
+    "path": "05_cong_bo_cung_cap_thong_tin/PL1_Mau_78_giay_de_nghi_cung_cap_thong_tin_dang_ky_doanh_nghiep.docx",
+    "tables": [],
+    "para_markers": [
+     {
+      "i": 19,
+      "kind": "stt_alone",
+      "text": "STT"
+     }
+    ],
+    "signature_lines": [
+     "Là người đại diện của (nếu có): …………………………………………………………………",
+     "NGƯỜI ĐỀ NGHỊ (Ký và ghi họ tên)1",
+     "Người đề nghị/Người đại diện của tổ chức ký trực tiếp vào phần này."
+    ],
+    "decision_headings": []
+   },
+   "duplicate_sources": [],
+   "form_maps": {
+    "fields": 16,
+    "dynamic_tables": null
+   }
+  },
+  {
+   "form_id": "PLI_M79",
+   "ten_mau": "Giấy đề nghị Cơ quan đăng ký kinh doanh yêu cầu doanh nghiệp thay đổi tên doanh nghiệp, tên chi nhánh, văn phòng đại diện, địa điểm kinh doanh",
+   "blocks": {
+    "stats": {
+     "p": 42,
+     "chk": 0,
+     "table": 0,
+     "loop": 0
+    },
+    "loops": [],
+    "input_key_count": 29,
+    "distinct_input_keys": 25
+   },
+   "template_tables": 0,
+   "source": {
+    "path": "05_cong_bo_cung_cap_thong_tin/PL1_Mau_79_giay_de_nghi_co_quan_dang_ky_kinh_doanh_yeu_cau_doanh_nghiep_thay_doi_ten_doanh_nghiep_ten_chi_n.docx",
+    "tables": [],
+    "para_markers": [],
+    "signature_lines": [
+     "3 Người đề nghị ký và ghi họ tên/Người đại diện của tổ chức ký và ghi họ tên và ",
+     "Họ, chữ đệm và tên người đại diện: ………………………………………………………….",
+     "NGƯỜI ĐỀ NGHỊ/NGƯỜI ĐẠI DIỆN (Ký và ghi họ tên và đóng dấu)3",
+     "Số giấy tờ pháp lý của cá nhân của người đại diện:………………………………………….."
+    ],
+    "decision_headings": [
+     "Mã số doanh nghiệp/Số Quyết định thành lập (nếu có):……………………………………"
+    ]
+   },
+   "duplicate_sources": [],
+   "form_maps": {
+    "fields": 25,
+    "dynamic_tables": null
+   }
+  },
+  {
+   "form_id": "PLI_M80",
+   "ten_mau": "Giấy đề nghị thu hồi giấy tờ do kê khai trong hồ sơ đăng ký doanh nghiệp là giả mạo",
+   "blocks": {
+    "stats": {
+     "p": 40,
+     "chk": 0,
+     "table": 0,
+     "loop": 0
+    },
+    "loops": [],
+    "input_key_count": 27,
+    "distinct_input_keys": 23
+   },
+   "template_tables": 0,
+   "source": {
+    "path": "05_cong_bo_cung_cap_thong_tin/PL1_Mau_80_giay_de_nghi_thu_hoi_giay_to_do_ke_khai_trong_ho_so_dang_ky_doanh_nghiep_la_gia_mao.docx",
+    "tables": [],
+    "para_markers": [],
+    "signature_lines": [
+     "3 Người đề nghị ký và ghi họ tên/Người đại diện của tổ chức ký và ghi họ tên và ",
+     "Họ, chữ đệm và tên người đại diện:…………………………………………………………………",
+     "NGƯỜI ĐỀ NGHỊ/NGƯỜI ĐẠI DIỆN (Ký và ghi họ tên)3",
+     "Số giấy tờ pháp lý của cá nhân của người đại diện:………………………………………………."
+    ],
+    "decision_headings": [
+     "Mã số doanh nghiệp/Số Quyết định thành lập (nếu có):………………………………………….."
+    ]
+   },
+   "duplicate_sources": [],
+   "form_maps": {
+    "fields": 23,
+    "dynamic_tables": null
+   }
+  }
+ ],
+ "forms_without_blocks_in_range": [],
+ "counts": {
+  "forms_with_blocks": 47,
+  "source_files_scanned": 96
+ }
+}

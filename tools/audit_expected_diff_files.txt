@@ -1,32 +1,126 @@
-PLAN.md
-app/data/blocks/PLII_M01.json
-app/data/blocks/PLII_M02.json
-app/data/blocks/PLII_M03.json
-app/data/blocks/PLII_M04.json
-app/data/blocks/PLII_M05.json
-app/data/blocks/PLII_M06.json
-app/data/blocks/PLII_M07.json
-app/data/blocks/PLII_M08.json
-app/data/blocks/PLII_M09.json
-app/data/blocks/PLII_M10.json
-app/data/blocks/PLII_M11.json
-app/data/blocks/PLII_M12.json
-app/data/blocks/PLII_M13.json
-app/data/blocks/PLII_M14.json
-app/data/blocks/PLII_M15.json
-app/data/blocks/PLII_M16.json
-app/data/blocks/PLII_M17.json
-app/data/blocks/PLII_M18.json
-app/data/blocks/PLII_M19.json
-app/data/blocks/PLII_M20.json
-app/data/blocks/PLII_M21.json
-app/data/blocks/PLII_M22.json
-app/data/blocks/PLII_M23.json
-app/data/blocks/PLII_M24.json
-app/data/blocks/PLII_M25.json
-app/data/blocks/PLII_M26.json
-app/data/blocks/PLII_M27.json
-app/data/blocks/PLII_M28.json
+
+.gitignore
+# --- cap-von regen: 3 template lần đầu đổi (nguon_von/co_cau/chao_ban) ---
+# --- Census đánh số mục + chuỗi companion (lệnh owner 2026-08-28) ---
+# --- Excel X1: lop questionnaire (schema + builder + cum dau owner duyet) ---
+# --- Excel X2: xuat phieu xlsx (protection/dropdown/mau) + pin openpyxl ---
+# --- Excel X3: nap phieu xlsx fail-loud, dich question_id -> data_key ---
+# --- Excel X4: round-trip + negative (gate PLAN 4.4) ---
+# --- Fix lớp lỗi checkbox dẹt thành text (lệnh owner 2026-08-28) ---
+# --- Handoff Lead kế tiếp (docs-only): Excel X6 + rollout bảng + header ---
+# --- lane cap-von (merge fc07c69): 3a nguồn vốn TT 121 + 3b thuế PLII_M02 ---
+# --- M09 rebuild + chèn mục 7 (lane m09-rebuild cfdefcd + Lead 11861b6) ---
+# --- Owner decision packet 2026-09-03 (Lead) ---
+# --- Owner P1/P2/P3 lanes (Lead 2026-09-03) ---
+# --- Owner P1=A 2026-09-03: nguồn canonical đầy đủ M03/M04 (tách từ bản gốc) ---
+# --- Owner P3=A 2026-09-03 (lane fix-tax-m0306, Class 6): PLII_M03-M06 KHONG co
+# --- P2 rename M06 loop: sync 2 suite dem/contract cu ---
+# --- P3.1: merge lane p3-e2e @ b61def0 — 4 suite test moi (76c89b8) ---
+# --- P3.4: checklist smoke platform Windows (docs-only, NOT RUN chua tung chay) ---
+# --- P4: Review Gate Excel — bao cao cho owner (docs-only, khong implement) ---
+# --- PLAN v3 + SOP: docs-only Lead (ea112ed) ---
+# --- PLAN v4 checkpoint audit (Lead 2026-09-02, commit eb9e723) ---
+# --- PLAN vận hành Wave D2 + P5R (lệnh owner 2026-08-28) ---
+# --- R3B1 people/ownership regen + Lead P0 recovery (checkpoint 7300ab4) ---
+# --- Use case "Thay đổi nội dung đăng ký hộ kinh doanh" -> PLII_M02 (85fa95b) ---
+# --- Việc 2 header 2 band (merge hdr2col 084444d + Lead regen) ---
+# --- Wave B coverage matrix (Lead 2026-09-02, merge agent/coverage) ---
+# --- Wave D batch 1 (Lead 2026-09-02): fix-industry + fix-docx-layout ---
+# --- Wave D batch 1 fix-extractor (Lead 2026-09-02, merge agent/fix-extractor) ---
+# --- Wave D2 Defect Hunt: so loi he thong (lệnh owner 2026-08-28) ---
+# --- Wave P2 (merge abe6084 P2A / 1691728 P2C / a61cdfb P2D + Lead wire/regen) ---
+# (BLOCKED_OWNER — tự mở khi template lane sửa).
+# (kết quả runner/layout/numbering + AUD-001..011). Docs-only, không đụng
+# (M09 mất mục 7) + GLUE chữ chú thích; inventory mode, gate sau khi các
+# (regen bang: python3 -X utf8 -m tools.questionnaire.build_questionnaire;
+# [P2 pin sync 2026-09-03] sync pin 9 suite sau merge P1/P2/P3: p1_b_verify_m72
+# [Phase 3 2026-09-03] 6 section MISSING/PARTIAL -> IMPLEMENTED_VERIFIED:
+# [Phase 4 2026-09-03] row/blank-row contract: corpus node + python export
+# + inserts chèn dòng mục 7 (nguyên văn TT 121/2026 Mẫu 5 tr.4).
+# + role flip body->section-heading sau L1FIX round 2 (merge 7300ab4).
+# 22 mẫu có ô TÊN DOANH NGHIỆP/TÊN HỘ KINH DOANH: 4 paragraph header dọc ->
+# 4 spec PIN BLOCKED bang tables rong + suite 7 menh de; khong regen artifact.
+# app/data/questionnaire/PLI_M72.json: ARTIFACT GENERATED boi builder
+# app/data/use_cases.json: +1 case theo lệnh owner 2026-08-28 (data-only,
+# app/templates/PLI_M72.docx: P2 rebuild 4 lưới N2-N5 — regen có chủ đích
+# bang thue trong nguon (tach + full + census NO_TABLE + blocks 0 so mo coi) ->
+# Blocks + form_maps + manifest đã có entry; đây là template lần đầu đổi.
+# build_form_maps: rule "0?3/0?6 thang mot lan" + fallback key chk_auto_*
+# chấp nhận 5 entry spec + 9 w:tbl template; test_m72_conditional_export chấp
+# cho mọi ô □/☐ không khớp whitelist — không còn ô nào bị bỏ lại thành
+# corpus + inventory tool (docs/row_contract_inventory.json/.md generated)
+# Điều 100/101 NĐ 168/2025; pin P3-UC1 sync 27 -> 28 trong test_p3_e2e.js).
+# docs/leader_handoff_p3.md: ban luu prompt ban giao Lead P3 (docs-only,
+# docs/whole_app_audit_2026-08-30.md: bàn giao audit whole-app tại 6ae63c2
+# Drift 42 dòng là deliverable trung thực (KHÔNG sửa manifest để qua gate).
+# form_specs/formation/PLI_M09.json: spec 14 cột D3.2=A + decontaminate D3.1=A
+# generated. PLAN v4/defect_registry/D2-P5R đã có entry từ checkpoint trước.
+# khong dung production/generated; bo sot khi can exact-set o commit ea112ed).
+# lane B tests M01/M02 (BHXH chk tokens + fixed-matrix STT semantics), lane C
+# layout/text/fields/tags/idempotent/untouched/negative), Lead sync 2 pin theo
+# Lead sync expectation sau regen (trim-anchor stage, exact-set loop, EVOLVED_FORMS)
+# M04/M11 (menh_gia scalar region, chao_ban shape)
+# migrate PLI_M11 ds_to_chuc_cshhl sang file spec (verbatim zero-diff) + tests
+# nhận số w:tbl theo biến thể (TNHH_2TV=2, CTCP=3, DHDN=2)
+# nhóm rebuild theo TT 68 merge.
+# num/guard), Lead sync pin theo trạng thái đã vá mục 7.
+# numbering_audit stale); STT-glue/digit-run + chain-gap pin về template/nguồn
+# P1: test suite cấu trúc đuôi M03/M04
+# P2: spec change PLI_M72 (4 lưới N2-N5)
+# P2: test suite member grids rebuild M02 + M72
+# regen di cung dot regen template theo PLAN 4.5 — diff review nhu generated).
+# Spec nguồn lane R3B1 + suite của lane
+# Templates/blocks/form_maps: rebuild N1/N6/N7 nested-grid (D2.1/D2.4/D2.7)
+# Test mới của hai lane (pin root cause Class 9/14 và Class 7/4/8).
+# Test pin extractor: GLUE superscript đã tách đúng tại BASE (heuristic phẳng
+# test_domain.js: fix-industry cập nhật cap FIELD_META (ghim "thiếu 4 key" cũ)
+# text thường. Regen 4 mẫu (M01, M02, M15, PLII_M02): 6 glyph -> 6 chk.
+# Tool census coverage 2 chiều + selftest + output matrix 111 section.
+# tools/census/numbering_audit.py: quét 87 blocks bắt lớp lỗi "nhảy mục"
+# tools/test_header_layout.py: suite mới của lane hdr2col (11 mệnh đề census/
+# tools/test_m09_rebuild.py: suite 8 mệnh đề (load/cols/sandbox/decon/blocks/
+# trạng thái post-regen (census đọc band:header; FIELDS chấp nhận +1-shift).
+# w:tbl không viền 2 band (tên trái + quốc hiệu phải; Số trái + ngày phải).
+# Wave B (2026-08-27): B1 runtime wiring + B2 generator/export + B3 gate sync
+# Wave W1 (2026-08-27): publication specs + targeted regen O1/O2
+06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn/PL1_Mau_03_tach_tu_file_full.docx
+06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn/PL1_Mau_04_tach_tu_file_full.docx
+app_web/dev/snapshot.html
+app_web/main.py
+app_web/test_acceptance.js
+app_web/test_docx_layout_ui.js
+app_web/test_domain.js
+app_web/test_fixed_matrix_product.js
+app_web/test_fixed_matrix.js
+app_web/test_form_grid_meta.js
+app_web/test_grid.js
+app_web/test_industry_input_negative.js
+app_web/test_layout_l2_render.js
+app_web/test_loop_prod.js
+app_web/test_m72_activation.js
+app_web/test_nested_grid.js
+app_web/test_output_table.js
+app_web/test_p12_m72_selector.js
+app_web/test_p2_migration.js
+app_web/test_p2a_people_contracts.js
+app_web/test_p2c_capital_contracts.js
+app_web/test_p3_a11y.js
+app_web/test_p3_draft.js
+app_web/test_p3_e2e.js
+app_web/test_p3_security.js
+app_web/test_r3b1_people_contracts.js
+app_web/test_row_contract_corpus.js
+app_web/test_runtime_tables.js
+app_web/test_validation_contact.js
+app_web/test_wiring_gate.js
+app_web/ui/app.js
+app_web/ui/fixed-matrix.js
+app_web/ui/form-domain.js
+app_web/ui/index.html
+app_web/ui/nested-grid.js
+app_web/ui/output-table.js
+app_web/ui/render.js
+app_web/ui/style.css
 app/data/blocks/PLI_M01.json
 app/data/blocks/PLI_M02.json
 app/data/blocks/PLI_M03.json
@@ -86,181 +180,53 @@ app/data/blocks/PLI_M76.json
 app/data/blocks/PLI_M78.json
 app/data/blocks/PLI_M79.json
 app/data/blocks/PLI_M80.json
-app_web/test_p12_m72_selector.js
-app_web/dev/snapshot.html
-app_web/test_layout_l2_render.js
-app_web/test_output_table.js
-app_web/test_fixed_matrix.js
-app_web/test_nested_grid.js
-app_web/test_p2_migration.js
-app_web/test_grid.js
-app_web/ui/fixed-matrix.js
-app_web/ui/nested-grid.js
-app_web/ui/output-table.js
-app_web/ui/app.js
-app_web/ui/form-domain.js
-app_web/ui/render.js
-app_web/ui/style.css
-docs/decision_registry.md
-docs/execution_ledger.md
-docs/layout_l1_contract.md
-docs/p2_component_contracts.md
-docs/p2_dependency_graph.md
-docs/p2_fixture_candidates.md
-docs/product_scope_registry.md
-requirements-dev.txt
-tools/audit_blocks_check.py
-tools/census/check_layout_l1.py
-tools/census/p1_c_verify_plii_m02.py
-tools/docx_to_blocks.py
-tools/layout_role_overrides.json
-tools/layout_roles.py
-tools/release_runner.py
-tools/test_layout_l1_extractor.py
-# Wave B (2026-08-27): B1 runtime wiring + B2 generator/export + B3 gate sync
-app_web/test_runtime_tables.js
-app_web/test_wiring_gate.js
-app_web/ui/index.html
-docs/p2_qa_gate_notes.md
-tools/build_form_maps.py
-tools/docx_render.py
-tools/form_specs/schema/table_kinds.schema.json
-tools/test_export_grid_kinds.py
-tools/test_generator_deep_idempotency.py
-app_web/main.py
-# Wave W1 (2026-08-27): publication specs + targeted regen O1/O2
+app/data/blocks/PLII_M01.json
+app/data/blocks/PLII_M02.json
+app/data/blocks/PLII_M03.json
+app/data/blocks/PLII_M04.json
+app/data/blocks/PLII_M05.json
+app/data/blocks/PLII_M06.json
+app/data/blocks/PLII_M07.json
+app/data/blocks/PLII_M08.json
+app/data/blocks/PLII_M09.json
+app/data/blocks/PLII_M10.json
+app/data/blocks/PLII_M11.json
+app/data/blocks/PLII_M12.json
+app/data/blocks/PLII_M13.json
+app/data/blocks/PLII_M14.json
+app/data/blocks/PLII_M15.json
+app/data/blocks/PLII_M16.json
+app/data/blocks/PLII_M17.json
+app/data/blocks/PLII_M18.json
+app/data/blocks/PLII_M19.json
+app/data/blocks/PLII_M20.json
+app/data/blocks/PLII_M21.json
+app/data/blocks/PLII_M22.json
+app/data/blocks/PLII_M23.json
+app/data/blocks/PLII_M24.json
+app/data/blocks/PLII_M25.json
+app/data/blocks/PLII_M26.json
+app/data/blocks/PLII_M27.json
+app/data/blocks/PLII_M28.json
 app/data/form_maps.js
 app/data/form_maps.json
-app/templates/PLI_M70.docx
-app/templates/PLI_M71.docx
-tools/form_specs/formation/PLI_M01.json
-tools/form_specs/publication/PLI_M70.json
-tools/form_specs/publication/PLI_M71.json
-tools/test_w1_publication_specs.py
-app_web/test_fixed_matrix_product.js
-tools/test_export_totals_product.py
-tools/census/build_manifest.py
+app/data/questionnaire/PLI_M72.json
 app/data/table_specs/manifest.json
-PLAN_excel.md
-app_web/test_m72_activation.js
-
-# --- R3B1 people/ownership regen + Lead P0 recovery (checkpoint 7300ab4) ---
-# Templates/blocks/form_maps: rebuild N1/N6/N7 nested-grid (D2.1/D2.4/D2.7)
-# + role flip body->section-heading sau L1FIX round 2 (merge 7300ab4).
-app/templates/PLI_M02.docx
-app/templates/PLI_M12.docx
-app/templates/PLI_M15.docx
-# Spec nguồn lane R3B1 + suite của lane
-tools/form_specs/core/PLI_M02.json
-tools/form_specs/change/PLI_M12.json
-tools/form_specs/change/PLI_M15.json
-app_web/test_r3b1_people_contracts.js
-tools/test_r3b1_people_specs.py
-# Lead sync expectation sau regen (trim-anchor stage, exact-set loop, EVOLVED_FORMS)
-tools/test_pli_m02_industry.py
-tools/test_industry_change.py
-.gitignore
-
-# --- Wave P2 (merge abe6084 P2A / 1691728 P2C / a61cdfb P2D + Lead wire/regen) ---
+app/data/use_cases.json
 app/templates/PLI_M01.docx
+app/templates/PLI_M02.docx
+app/templates/PLI_M03.docx
+app/templates/PLI_M04.docx
+app/templates/PLI_M05.docx
 app/templates/PLI_M06.docx
 app/templates/PLI_M07.docx
 app/templates/PLI_M08.docx
+app/templates/PLI_M09.docx
 app/templates/PLI_M10.docx
+app/templates/PLI_M12.docx
 app/templates/PLI_M13.docx
-app/templates/PLII_M07.docx
-tools/form_specs/formation/PLI_M06.json
-tools/form_specs/formation/PLI_M07.json
-tools/form_specs/formation/PLI_M08.json
-tools/form_specs/formation/PLI_M10.json
-tools/form_specs/change/PLI_M13.json
-tools/form_specs/household/PLII_M07.json
-tools/form_specs/change/PLI_M17.json
-tools/form_specs/change/PLI_M19.json
-tools/form_specs/change/PLI_M23.json
-tools/form_specs/change/PLI_M25.json
-app_web/test_p2a_people_contracts.js
-app_web/test_p2c_capital_contracts.js
-tools/test_p2a_people_specs.py
-tools/test_p2c_capital_specs.py
-tools/test_p2d_tax_specs.py
-tools/test_industry_household.py
-app_web/test_form_grid_meta.js
-
-# --- P2 rename M06 loop: sync 2 suite dem/contract cu ---
-app_web/test_acceptance.js
-app_web/test_loop_prod.js
-
-# --- PLAN v3 + SOP: docs-only Lead (ea112ed) ---
-# docs/leader_handoff_p3.md: ban luu prompt ban giao Lead P3 (docs-only,
-# khong dung production/generated; bo sot khi can exact-set o commit ea112ed).
-docs/leader_handoff_p3.md
-
-# --- P3.1: merge lane p3-e2e @ b61def0 — 4 suite test moi (76c89b8) ---
-app_web/test_p3_e2e.js
-app_web/test_p3_draft.js
-app_web/test_p3_security.js
-app_web/test_p3_a11y.js
-
-# --- P3.4: checklist smoke platform Windows (docs-only, NOT RUN chua tung chay) ---
-docs/platform_smoke_checklist.md
-
-# --- P4: Review Gate Excel — bao cao cho owner (docs-only, khong implement) ---
-docs/p4_excel_review_gate.md
-
-# --- Excel X1: lop questionnaire (schema + builder + cum dau owner duyet) ---
-tools/questionnaire/schema.py
-tools/questionnaire/build_questionnaire.py
-tools/questionnaire/clusters/thanh_lap_doanh_nghiep.json
-tools/test_questionnaire.py
-# app/data/questionnaire/PLI_M72.json: ARTIFACT GENERATED boi builder
-# (regen bang: python3 -X utf8 -m tools.questionnaire.build_questionnaire;
-# regen di cung dot regen template theo PLAN 4.5 — diff review nhu generated).
-app/data/questionnaire/PLI_M72.json
-
-# --- Excel X2: xuat phieu xlsx (protection/dropdown/mau) + pin openpyxl ---
-tools/excel_export.py
-tools/test_excel_export.py
-
-# --- Excel X3: nap phieu xlsx fail-loud, dich question_id -> data_key ---
-tools/excel_import.py
-
-# --- Excel X4: round-trip + negative (gate PLAN 4.4) ---
-tools/test_excel_roundtrip.py
-tools/test_excel_negative.py
-
-# --- Handoff Lead kế tiếp (docs-only): Excel X6 + rollout bảng + header ---
-docs/leader_handoff_excel_next.md
-
-# --- Use case "Thay đổi nội dung đăng ký hộ kinh doanh" -> PLII_M02 (85fa95b) ---
-# app/data/use_cases.json: +1 case theo lệnh owner 2026-08-28 (data-only,
-# Điều 100/101 NĐ 168/2025; pin P3-UC1 sync 27 -> 28 trong test_p3_e2e.js).
-app/data/use_cases.json
-
-# --- Fix lớp lỗi checkbox dẹt thành text (lệnh owner 2026-08-28) ---
-# build_form_maps: rule "0?3/0?6 thang mot lan" + fallback key chk_auto_*
-# cho mọi ô □/☐ không khớp whitelist — không còn ô nào bị bỏ lại thành
-# text thường. Regen 4 mẫu (M01, M02, M15, PLII_M02): 6 glyph -> 6 chk.
-app/templates/PLII_M02.docx
-
-# --- Census đánh số mục + chuỗi companion (lệnh owner 2026-08-28) ---
-# tools/census/numbering_audit.py: quét 87 blocks bắt lớp lỗi "nhảy mục"
-# (M09 mất mục 7) + GLUE chữ chú thích; inventory mode, gate sau khi các
-# nhóm rebuild theo TT 68 merge.
-tools/census/numbering_audit.py
-
-# --- Wave D2 Defect Hunt: so loi he thong (lệnh owner 2026-08-28) ---
-docs/defect_registry.md
-
-# --- Việc 2 header 2 band (merge hdr2col 084444d + Lead regen) ---
-# 22 mẫu có ô TÊN DOANH NGHIỆP/TÊN HỘ KINH DOANH: 4 paragraph header dọc ->
-# w:tbl không viền 2 band (tên trái + quốc hiệu phải; Số trái + ngày phải).
-# Blocks + form_maps + manifest đã có entry; đây là template lần đầu đổi.
-app/templates/PLII_M03.docx
-app/templates/PLII_M04.docx
-app/templates/PLII_M05.docx
-app/templates/PLII_M06.docx
 app/templates/PLI_M14.docx
+app/templates/PLI_M15.docx
 app/templates/PLI_M17.docx
 app/templates/PLI_M18.docx
 app/templates/PLI_M19.docx
@@ -275,107 +241,121 @@ app/templates/PLI_M30.docx
 app/templates/PLI_M31.docx
 app/templates/PLI_M32.docx
 app/templates/PLI_M33.docx
-
-# tools/test_header_layout.py: suite mới của lane hdr2col (11 mệnh đề census/
-# layout/text/fields/tags/idempotent/untouched/negative), Lead sync 2 pin theo
-# trạng thái post-regen (census đọc band:header; FIELDS chấp nhận +1-shift).
-tools/test_header_layout.py
-
-# --- M09 rebuild + chèn mục 7 (lane m09-rebuild cfdefcd + Lead 11861b6) ---
-# form_specs/formation/PLI_M09.json: spec 14 cột D3.2=A + decontaminate D3.1=A
-# + inserts chèn dòng mục 7 (nguyên văn TT 121/2026 Mẫu 5 tr.4).
-tools/form_specs/formation/PLI_M09.json
-app/templates/PLI_M09.docx
-# tools/test_m09_rebuild.py: suite 8 mệnh đề (load/cols/sandbox/decon/blocks/
-# num/guard), Lead sync pin theo trạng thái đã vá mục 7.
-tools/test_m09_rebuild.py
-
-# --- lane cap-von (merge fc07c69): 3a nguồn vốn TT 121 + 3b thuế PLII_M02 ---
+app/templates/PLI_M70.docx
+app/templates/PLI_M71.docx
+app/templates/PLI_M72.docx
+app/templates/PLII_M02.docx
+app/templates/PLII_M03.docx
+app/templates/PLII_M04.docx
+app/templates/PLII_M05.docx
+app/templates/PLII_M06.docx
+app/templates/PLII_M07.docx
+docs/decision_registry.md
+docs/defect_registry.md
+docs/execution_ledger.md
+docs/layout_l1_contract.md
+docs/leader_handoff_excel_next.md
+docs/leader_handoff_p3.md
+docs/owner_decision_packet_2026-09-03.md
+docs/p2_component_contracts.md
+docs/p2_dependency_graph.md
+docs/p2_fixture_candidates.md
+docs/p2_qa_gate_notes.md
+docs/p4_excel_review_gate.md
+docs/plan_phase5r_word_layout.md
+docs/plan_wave_D2_P5R.md
+docs/platform_smoke_checklist.md
+docs/product_scope_registry.md
+docs/row_contract_inventory.json
+docs/row_contract_inventory.md
+docs/table_coverage_current.json
+docs/table_coverage_current.md
+docs/whole_app_audit_2026-08-30.md
+docs/word_layout_audit_2026-09-03.md
+PLAN_excel.md
+PLAN.md
+requirements-dev.txt
+tools/audit_blocks_check.py
+tools/build_form_maps.py
+tools/census/build_manifest.py
+tools/census/check_layout_l1.py
+tools/census/numbering_audit.py
+tools/census/p1_b_verify_m72.py
+tools/census/p1_c_verify_plii_m02.py
+tools/census/row_contract_inventory.py
+tools/census/table_coverage_audit.py
+tools/docx_render.py
+tools/docx_to_blocks.py
+tools/excel_export.py
+tools/excel_import.py
+tools/form_specs/change/PLI_M12.json
+tools/form_specs/change/PLI_M13.json
+tools/form_specs/change/PLI_M15.json
+tools/form_specs/change/PLI_M17.json
+tools/form_specs/change/PLI_M19.json
+tools/form_specs/change/PLI_M23.json
+tools/form_specs/change/PLI_M25.json
+tools/form_specs/change/PLI_M72.json
+tools/form_specs/core/PLI_M02.json
+tools/form_specs/formation/PLI_M01.json
 tools/form_specs/formation/PLI_M03.json
 tools/form_specs/formation/PLI_M04.json
 tools/form_specs/formation/PLI_M05.json
+tools/form_specs/formation/PLI_M06.json
+tools/form_specs/formation/PLI_M07.json
+tools/form_specs/formation/PLI_M08.json
+tools/form_specs/formation/PLI_M09.json
+tools/form_specs/formation/PLI_M10.json
+tools/form_specs/formation/PLI_M11.json
 tools/form_specs/household/PLII_M02.json
-tools/test_cap_von_specs.py
-# --- cap-von regen: 3 template lần đầu đổi (nguon_von/co_cau/chao_ban) ---
-app/templates/PLI_M03.docx
-app/templates/PLI_M04.docx
-app/templates/PLI_M05.docx
-
-# --- PLAN vận hành Wave D2 + P5R (lệnh owner 2026-08-28) ---
-docs/plan_wave_D2_P5R.md
-
-# --- PLAN v4 checkpoint audit (Lead 2026-09-02, commit eb9e723) ---
-# docs/whole_app_audit_2026-08-30.md: bàn giao audit whole-app tại 6ae63c2
-# (kết quả runner/layout/numbering + AUD-001..011). Docs-only, không đụng
-# generated. PLAN v4/defect_registry/D2-P5R đã có entry từ checkpoint trước.
-docs/whole_app_audit_2026-08-30.md
-
-# --- Wave B coverage matrix (Lead 2026-09-02, merge agent/coverage) ---
-# Tool census coverage 2 chiều + selftest + output matrix 111 section.
-# Drift 42 dòng là deliverable trung thực (KHÔNG sửa manifest để qua gate).
-tools/census/table_coverage_audit.py
-tools/test_table_coverage_audit.py
-docs/table_coverage_current.json
-docs/table_coverage_current.md
-
-# --- Wave D batch 1 fix-extractor (Lead 2026-09-02, merge agent/fix-extractor) ---
-# Test pin extractor: GLUE superscript đã tách đúng tại BASE (heuristic phẳng
-# numbering_audit stale); STT-glue/digit-run + chain-gap pin về template/nguồn
-# (BLOCKED_OWNER — tự mở khi template lane sửa).
-tools/test_extractor_footnote_glue.py
-
-# --- Wave D batch 1 (Lead 2026-09-02): fix-industry + fix-docx-layout ---
-# Test mới của hai lane (pin root cause Class 9/14 và Class 7/4/8).
-app_web/test_industry_input_negative.js
-app_web/test_validation_contact.js
-tools/test_docx_layout_signatures.py
-app_web/test_docx_layout_ui.js
-# test_domain.js: fix-industry cập nhật cap FIELD_META (ghim "thiếu 4 key" cũ)
-app_web/test_domain.js
-
-# --- Owner decision packet 2026-09-03 (Lead) ---
-docs/owner_decision_packet_2026-09-03.md
-
-# --- Owner P1=A 2026-09-03: nguồn canonical đầy đủ M03/M04 (tách từ bản gốc) ---
-06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn/PL1_Mau_03_tach_tu_file_full.docx
-06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn/PL1_Mau_04_tach_tu_file_full.docx
-
-# --- Owner P3=A 2026-09-03 (lane fix-tax-m0306, Class 6): PLII_M03-M06 KHONG co
-# bang thue trong nguon (tach + full + census NO_TABLE + blocks 0 so mo coi) ->
-# 4 spec PIN BLOCKED bang tables rong + suite 7 menh de; khong regen artifact.
 tools/form_specs/household/PLII_M03.json
 tools/form_specs/household/PLII_M04.json
 tools/form_specs/household/PLII_M05.json
 tools/form_specs/household/PLII_M06.json
-tools/test_tax_m0306_rebuild.py
-
-# --- Owner P1/P2/P3 lanes (Lead 2026-09-03) ---
-# P1: test suite cấu trúc đuôi M03/M04
+tools/form_specs/household/PLII_M07.json
+tools/form_specs/publication/PLI_M70.json
+tools/form_specs/publication/PLI_M71.json
+tools/form_specs/schema/table_kinds.schema.json
+tools/layout_role_overrides.json
+tools/layout_roles.py
+tools/phase5_export_corpus.py
+tools/phase5_fixtures.py
+tools/phase5_visual_gate.py
+tools/phase5_word_open_loop.py
+tools/phase5r_expectations.json
+tools/questionnaire/build_questionnaire.py
+tools/questionnaire/clusters/thanh_lap_doanh_nghiep.json
+tools/questionnaire/schema.py
+tools/release_runner.py
+tools/test_cap_von_specs.py
+tools/test_docx_layout_signatures.py
+tools/test_excel_export.py
+tools/test_excel_negative.py
+tools/test_excel_roundtrip.py
+tools/test_export_grid_kinds.py
+tools/test_export_totals_product.py
+tools/test_extractor_footnote_glue.py
+tools/test_generator_deep_idempotency.py
+tools/test_header_layout.py
+tools/test_industry_change.py
+tools/test_industry_household.py
+tools/test_layout_l1_extractor.py
 tools/test_m0304_tails.py
-# P2: test suite member grids rebuild M02 + M72
-tools/test_member_grids_rebuild.py
-# P2: spec change PLI_M72 (4 lưới N2-N5)
-tools/form_specs/change/PLI_M72.json
-# app/templates/PLI_M72.docx: P2 rebuild 4 lưới N2-N5 — regen có chủ đích
-app/templates/PLI_M72.docx
-# [P2 pin sync 2026-09-03] sync pin 9 suite sau merge P1/P2/P3: p1_b_verify_m72
-# chấp nhận 5 entry spec + 9 w:tbl template; test_m72_conditional_export chấp
-# nhận số w:tbl theo biến thể (TNHH_2TV=2, CTCP=3, DHDN=2)
-tools/census/p1_b_verify_m72.py
+tools/test_m09_rebuild.py
 tools/test_m72_conditional_export.py
-
-# [Phase 3 2026-09-03] 6 section MISSING/PARTIAL -> IMPLEMENTED_VERIFIED:
-# lane B tests M01/M02 (BHXH chk tokens + fixed-matrix STT semantics), lane C
-# migrate PLI_M11 ds_to_chuc_cshhl sang file spec (verbatim zero-diff) + tests
-# M04/M11 (menh_gia scalar region, chao_ban shape)
-tools/form_specs/formation/PLI_M11.json
+tools/test_member_grids_rebuild.py
+tools/test_p2a_people_specs.py
+tools/test_p2c_capital_specs.py
+tools/test_p2d_tax_specs.py
 tools/test_phase3_m01_m02.py
 tools/test_phase3_m04_m11.py
-
-# [Phase 4 2026-09-03] row/blank-row contract: corpus node + python export
-# corpus + inventory tool (docs/row_contract_inventory.json/.md generated)
-app_web/test_row_contract_corpus.js
+tools/test_phase5_ui_fixes.py
+tools/test_phase5_visual_detectors.py
+tools/test_phase5r_metadata.py
+tools/test_pli_m02_industry.py
+tools/test_questionnaire.py
+tools/test_r3b1_people_specs.py
 tools/test_row_contract_export.py
-tools/census/row_contract_inventory.py
-docs/row_contract_inventory.json
-docs/row_contract_inventory.md
+tools/test_table_coverage_audit.py
+tools/test_tax_m0306_rebuild.py
+tools/test_w1_publication_specs.py

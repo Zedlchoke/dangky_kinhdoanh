@@ -348,3 +348,13 @@ tools/form_specs/household/PLII_M04.json
 tools/form_specs/household/PLII_M05.json
 tools/form_specs/household/PLII_M06.json
 tools/test_tax_m0306_rebuild.py
+
+# --- Owner P1/P2/P3 lanes (Lead 2026-09-03) ---
+# P1: test suite cấu trúc đuôi M03/M04
+tools/test_m0304_tails.py
+# P2: test suite member grids rebuild M02 + M72
+tools/test_member_grids_rebuild.py
+# P2: spec change PLI_M72 (4 lưới N2-N5)
+tools/form_specs/change/PLI_M72.json
+# app/templates/PLI_M72.docx: P2 rebuild 4 lưới N2-N5 — regen có chủ đích
+app/templates/PLI_M72.docx

@@ -244,12 +244,14 @@ app/templates/PLI_M33.docx
 app/templates/PLI_M70.docx
 app/templates/PLI_M71.docx
 app/templates/PLI_M72.docx
+app/templates/PLI_M80.docx
 app/templates/PLII_M02.docx
 app/templates/PLII_M03.docx
 app/templates/PLII_M04.docx
 app/templates/PLII_M05.docx
 app/templates/PLII_M06.docx
 app/templates/PLII_M07.docx
+app/templates/PLII_M28.docx
 docs/decision_registry.md
 docs/defect_registry.md
 docs/execution_ledger.md

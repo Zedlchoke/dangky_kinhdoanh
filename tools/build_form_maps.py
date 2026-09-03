@@ -2762,7 +2762,7 @@ def process_form(path, titles, coverage, out_tpl=None):
     # don sach thuoc tinh XML tam cua occurrence truoc khi luu template
     _scrub_occurrence_attrs(doc)
     tmp_copy = out_dir / f"{form_id}.docx"
-    doc.save(str(tmp_copy))
+    save_template_content_aware(doc, tmp_copy)
     meta = {
         "id": form_id, "phu_luc": pl, "mau_so": mau,
         "ten_mau": title, "file": rel, "template": f"templates/{form_id}.docx",
@@ -2773,6 +2773,34 @@ def process_form(path, titles, coverage, out_tpl=None):
     if section_specs:
         meta["section_specs"] = section_specs
     return meta, unmatched
+
+
+def save_template_content_aware(doc, out_path: Path) -> bool:
+    """Phase 5R1: ghi template CHỈ khi nội dung zip đổi thật.
+
+    `doc.save()` serialize lại toàn bộ zip với timestamp MỚI mỗi lần chạy nên
+    regen idempotent về nội dung vẫn churn byte toàn bộ 87 template — gate
+    diff-vs-baseline (H7/N9a) mất ý nghĩa. So sánh per-entry decompressed
+    bytes (timestamp nằm ở zip directory, không nằm trong entry bytes) giữa
+    bản mới và file trên đĩa: identical -> KHÔNG ghi, giữ nguyên byte cũ.
+    Trả True nếu đã ghi, False nếu skip."""
+    import io
+
+    buf = io.BytesIO()
+    doc.save(buf)
+    new_bytes = buf.getvalue()
+    if out_path.exists():
+        try:
+            with zipfile.ZipFile(str(out_path)) as old, \
+                    zipfile.ZipFile(io.BytesIO(new_bytes)) as new:
+                on, nn = old.namelist(), new.namelist()
+                if on == nn and all(
+                        old.read(n) == new.read(n) for n in on):
+                    return False
+        except zipfile.BadZipFile:
+            pass  # file cũ hỏng -> ghi đè bằng bản mới
+    out_path.write_bytes(new_bytes)
+    return True
 
 
 # [Owner P1=A 2026-09-03] Nguồn canonical per-form — override first-hit

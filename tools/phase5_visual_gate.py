@@ -149,11 +149,35 @@ def det_contamination(docx_path: Path, form_meta: dict) -> list[str]:
 
 
 def det_table_grid(docx_path: Path) -> list[dict]:
-    """D9: grid width — cột < 1cm hoặc tổng width vượt khổ in được."""
+    """D9: grid width — cột < 1cm hoặc tổng width vượt khổ in được.
+    Bắt <w:tbl> CÓ attribute (regex '<w:tbl>' mù với '<w:tbl xmlns=...>') và
+    DUYỆT CÂN BẰNG để bảng lồng không bị đếm gộp (finditer non-greedy cắt
+    bảng lồng sai); chỉ tính gridCol của TẦNG NGOÀI (grid con là phần của
+    bảng cha)."""
     with zipfile.ZipFile(docx_path) as z:
         xml = z.read("word/document.xml").decode("utf-8")
     issues = []
-    for ti, tbl in enumerate(re.findall(r"<w:tbl>.*?</w:tbl>", xml, re.S)):
+
+    def _balanced_tbls(s: str):
+        pos = 0
+        while True:
+            m = re.search(r"<w:tbl[ >]", s[pos:])
+            if not m:
+                return
+            start = pos + m.start()
+            depth = 1
+            scan = pos + m.end()
+            while depth:
+                mm = re.search(r"<w:tbl[ >]|</w:tbl>", s[scan:])
+                if not mm:
+                    return  # hỏng cấu trúc — bỏ phần còn lại
+                depth += -1 if mm.group(0).startswith("</") else 1
+                scan += mm.end()
+            yield start, scan
+            pos = scan
+
+    for ti, (s, e) in enumerate(_balanced_tbls(xml)):
+        tbl = xml[s:e]
         cols = [int(w) for w in re.findall(
             r'<w:gridCol[^>]*w:w="(\d+)"', tbl)]
         if not cols:

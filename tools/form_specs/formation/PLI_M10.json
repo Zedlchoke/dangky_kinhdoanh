@@ -8,36 +8,100 @@
    "spec": {
     "id": "ds_cshhl",
     "kind": "list",
-    "detect": ["stt", "ho va ten", "gioi tinh", "quyen chi phoi"],
+    "detect": [
+     "stt",
+     "ho va ten",
+     "gioi tinh",
+     "quyen chi phoi"
+    ],
     "stt_tag": true,
     "cols": [
-     ["^stt$", null],
-     ["ho va ten|ho ten|ten co dong", "ho_ten"],
-     ["sinh|nam sinh", "ngay_sinh"],
-     ["gioi tinh", "gioi_tinh"],
-     ["quoc tich|quoc gia", "quoc_tich"],
-     ["dan toc", "dan_toc"],
-     ["thuong tru|noi o|dia chi", "dia_chi"],
-     ["giay to phap ly|dinh danh|cccd|ma so", "so_giay_to"],
-     ["ty le so huu co phan", "ty_le_co_phan"],
-     ["ty le", "ty_le"],
-     ["quyen chi phoi", "quyen_chi_phoi"],
-     ["ghi chu", "ghi_chu"],
-     ["ky ten|chu ky", "chu_ky"]
+     [
+      "^stt$",
+      null
+     ],
+     [
+      "ho va ten|ho ten|ten co dong",
+      "ho_ten"
+     ],
+     [
+      "sinh|nam sinh",
+      "ngay_sinh"
+     ],
+     [
+      "gioi tinh",
+      "gioi_tinh"
+     ],
+     [
+      "quoc tich|quoc gia",
+      "quoc_tich"
+     ],
+     [
+      "dan toc",
+      "dan_toc"
+     ],
+     [
+      "thuong tru|noi o|dia chi",
+      "dia_chi"
+     ],
+     [
+      "giay to phap ly|dinh danh|cccd|ma so",
+      "so_giay_to"
+     ],
+     [
+      "ty le so huu co phan",
+      "ty_le_co_phan"
+     ],
+     [
+      "ty le",
+      "ty_le"
+     ],
+     [
+      "quyen chi phoi",
+      "quyen_chi_phoi"
+     ],
+     [
+      "ghi chu",
+      "ghi_chu"
+     ],
+     [
+      "ky ten|chu ky",
+      "chu_ky"
+     ]
     ],
     "loop": "ds_cshhl",
-    "fields": ["ho_ten", "ngay_sinh", "gioi_tinh", "quoc_tich", "dan_toc",
-               "dia_chi", "so_giay_to", "ty_le", "ty_le_co_phan",
-               "quyen_chi_phoi"]
+    "fields": [
+     "ho_ten",
+     "ngay_sinh",
+     "gioi_tinh",
+     "quoc_tich",
+     "dan_toc",
+     "dia_chi",
+     "so_giay_to",
+     "ty_le",
+     "ty_le_co_phan",
+     "quyen_chi_phoi"
+    ],
+    "width_policy": "content",
+    "notes": " | [5R3 Lead merge bfd680c] width_policy=content ĐÃ SET + regen cùng commit (12 cột tái phân bổ theo nội dung, sàn 567 twips) — xóa blocker policies JSON #ID7."
    },
    "pos": "after",
    "anchor": "^mau so 10$",
    "no_default_drops": true,
-   "headers": ["STT", "Họ và tên", "Ngày, tháng, năm sinh", "Giới tính",
-               "Quốc tịch", "Dân tộc", "Địa chỉ liên lạc",
-               "Giấy tờ pháp lý của cá nhân", "Tỷ lệ sở hữu vốn điều lệ (%)",
-               "Tỷ lệ sở hữu cổ phần có quyền biểu quyết (%)", "Quyền chi phối",
-               "Ghi chú"],
+   "headers": [
+    "STT",
+    "Họ và tên",
+    "Ngày, tháng, năm sinh",
+    "Giới tính",
+    "Quốc tịch",
+    "Dân tộc",
+    "Địa chỉ liên lạc",
+    "Giấy tờ pháp lý của cá nhân",
+    "Tỷ lệ sở hữu vốn điều lệ (%)",
+    "Tỷ lệ sở hữu cổ phần có quyền biểu quyết (%)",
+    "Quyền chi phối",
+    "Ghi chú"
+   ],
    "notes": "P2A (2026-08-27): khac biet so voi khai bao inline = (1) them cot 11 'Quyền chi phối' gan the {quyen_chi_phoi} (D2.5=A, NĐ 168/2025 điểm b khoản 1 Điều 17 qua chân trang 4 của mẫu); (2) detect them token 'quyen chi phoi' de chan som truong hop header thieu cot. Khong doi cot nao khac, khong doi thu tu. QUYET DINH ap dung: D2.5=A (cot rieng, khong gop vao Ghi chú); D2.4=A khong ap dung (nguon khong co cot chu ky cho bang nay) — docs/decision_registry.md packet D2; evidence: census manifest section ds_cshhl_doanh_nghiep + nguon DN_PL1_Mau_09_*.docx P216 (header glue Mau 10) + chan trang 4. Nguon Mau 10 khong con paragraph header nao (bang mat toan bo khi convert) nen khong can trim/drop; no_default_drops=true an toan theo convention R3B1, da xac minh REBUILD_DROP_DEFAULT khong khop paragraph nao trong nguon. LUU Y ky thuat: entry kind=list khong dung co che legal_status.blocked cua loader (chi cho 3 kind moi) nen quyet dinh duoc ghi o notes nay."
   }
  ]

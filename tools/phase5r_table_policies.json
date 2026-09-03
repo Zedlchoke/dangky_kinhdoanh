@@ -57,7 +57,11 @@
    "generator_built": true,
    "policy": "width-redistribute+render-pin",
    "landscape": false,
-   "render_pins": ["tblHeader", "cantSplit", "tblW"],
+   "render_pins": [
+    "tblHeader",
+    "cantSplit",
+    "tblW"
+   ],
    "source_evidence": "06_ho_kinh_doanh_va_chuyen_doi/01_mau_ho_kinh_doanh/PL2_Mau_01_giay_de_nghi_dang_ky_ho_kinh_doanh.docx — muc 7 bảng thành viên hộ gia đình; manifest PLII_M01/m7_thanh_vien_ho_gia_dinh: w:tbl[1] 6r x 10c header 'STT|Họ tên|Ngày, tháng, năm sinh|Số định danh cá nhân|Giới tính|Quốc tịch|Dân tộc|Nơi thường trú|Nơi ở hiện tại|Chữ ký' (blocks B052).",
    "split_candidate": null,
    "notes": "Audit WLAY-008 liệt kê nhóm bảng thành viên; 864 twips/cột ~ 1.52 cm — header dài vỡ dòng. Width theo nội dung sẽ nới 'Họ tên'/'Nơi thường trú' và hẹp 'STT'."
@@ -73,7 +77,11 @@
    "generator_built": true,
    "policy": "width-redistribute+render-pin",
    "landscape": false,
-   "render_pins": ["tblHeader", "cantSplit", "tblW"],
+   "render_pins": [
+    "tblHeader",
+    "cantSplit",
+    "tblW"
+   ],
    "source_evidence": "06_ho_kinh_doanh_va_chuyen_doi/01_mau_ho_kinh_doanh/PL2_Mau_02_*.docx — manifest PLII_M02/a4_tv_hgd_sau_thay_doi: paragraph dính 'STTHọ tênNgày,…Chữ ký' (blocks B072); converter mất lưới, nguồn in 10 dòng trống đánh số.",
    "split_candidate": null,
    "notes": ""
@@ -89,7 +97,11 @@
    "generator_built": true,
    "policy": "width-redistribute+render-pin",
    "landscape": false,
-   "render_pins": ["tblHeader", "cantSplit", "tblW"],
+   "render_pins": [
+    "tblHeader",
+    "cantSplit",
+    "tblW"
+   ],
    "source_evidence": "06_ho_kinh_doanh_va_chuyen_doi/01_mau_ho_kinh_doanh/PL2_Mau_02_*.docx — manifest PLII_M02/c7_tv_hgd_cap_doi: paragraph dính 'STTHọ tên…Chữ ký' (blocks B137).",
    "split_candidate": null,
    "notes": ""
@@ -105,7 +117,11 @@
    "generator_built": true,
    "policy": "width-redistribute+render-pin",
    "landscape": false,
-   "render_pins": ["tblHeader", "cantSplit", "tblW"],
+   "render_pins": [
+    "tblHeader",
+    "cantSplit",
+    "tblW"
+   ],
    "source_evidence": "manifest PLI_M02/nddpl_uy_quyen_chu_so_huu: anchor app/templates/PLI_M02.docx#p140-p144; nguồn DN_PL1_Mau_02_*.docx khối người đại diện theo pháp luật/ủy quyền của DNTN.",
    "split_candidate": null,
    "notes": "min col 617 twips (1.09 cm) — cận ngưỡng 1cm; header 'Số, ngày cấp, cơ quan cấp Giấy tờ pháp lý của cá nhân' 3 cột con vỡ nặng."
@@ -121,7 +137,11 @@
    "generator_built": true,
    "policy": "width-redistribute+render-pin",
    "landscape": false,
-   "render_pins": ["tblHeader", "cantSplit", "tblW"],
+   "render_pins": [
+    "tblHeader",
+    "cantSplit",
+    "tblW"
+   ],
    "source_evidence": "manifest PLI_M06/ds_thanh_vien_tnhh: anchor app/templates/PLI_M06.docx#p0-p3; nguồn DN_PL1_Mau_06_danh_sach_thanh_vien_cong_ty_trach_nhiem_huu_han_hai_thanh_vien_tro_len.docx.",
    "split_candidate": null,
    "notes": ""
@@ -137,7 +157,11 @@
    "generator_built": true,
    "policy": "width-redistribute+render-pin",
    "landscape": false,
-   "render_pins": ["tblHeader", "cantSplit", "tblW"],
+   "render_pins": [
+    "tblHeader",
+    "cantSplit",
+    "tblW"
+   ],
    "source_evidence": "manifest PLI_M07/ds_co_dong_sang_lap: anchor app/templates/PLI_M07.docx#p0-p3; nguồn DN_PL1_Mau_07_danh_sach_co_dong_sang_lap_cong_ty_co_phan.docx.",
    "split_candidate": null,
    "notes": ""
@@ -153,7 +177,11 @@
    "generator_built": true,
    "policy": "width-redistribute+render-pin",
    "landscape": false,
-   "render_pins": ["tblHeader", "cantSplit", "tblW"],
+   "render_pins": [
+    "tblHeader",
+    "cantSplit",
+    "tblW"
+   ],
    "source_evidence": "manifest PLI_M09/ds_thanh_vien_hop_danh: anchor app/templates/PLI_M09.docx#p0-p3 (status partial_columns — gap cột do nguồn, không thuộc lane C); nguồn DN_PL1_Mau_09_danh_sach_thanh_vien_cong_ty_hop_danh.docx.",
    "split_candidate": null,
    "notes": "partial_columns là gap dữ liệu packet P2 (không phải layout); lane C không đụng số cột. width_policy='content' ĐÃ set trong spec — hiệu lực ở Lead regen kế tiếp."
@@ -163,16 +191,21 @@
    "table_index": 0,
    "cols": 12,
    "total_width": 8640,
-   "min_col_width": 720,
+   "min_col_width": 567,
    "loop": "ds_cshhl",
    "spec_ref": "tools/form_specs/formation/PLI_M10.json#ds_cshhl (list)",
    "generator_built": true,
    "policy": "width-redistribute+render-pin",
    "landscape": false,
-   "render_pins": ["tblHeader", "cantSplit", "tblW"],
+   "render_pins": [
+    "tblHeader",
+    "cantSplit",
+    "tblW"
+   ],
    "source_evidence": "manifest PLI_M10/ds_cshhl_doanh_nghiep: anchor app/templates/PLI_M10.docx#p0-p3; nguồn DN_PL1_Mau_10_danh_sach_chu_so_huu_huong_loi_cua_doanh_nghiep.docx.",
    "split_candidate": null,
-   "notes": "width_policy='content' CHƯA set (khác 10 bảng còn lại): regen PLI_M10 bị drift-guard ID7 (test_generator_deep_idempotency — ngoài ownership lane C) so sánh regen với template đã commit; Lead set flag + regen + rebaseline ID7 cùng commit. Render pin vẫn áp dụng đầy đủ từ phía render."
+   "notes": "width_policy='content' ĐÃ SET bởi Lead trong commit regen 5R3 (ID7 tự khớp sau khi commit regen). Render pin áp dụng đầy đủ từ phía render.",
+   "lead_note": "min 720→567: Lead bật width_policy='content' + regen sau merge lane C (cùng commit rebaseline fixture C1a)."
   },
   {
    "form": "PLI_M12",
@@ -185,7 +218,11 @@
    "generator_built": true,
    "policy": "width-redistribute+render-pin",
    "landscape": false,
-   "render_pins": ["tblHeader", "cantSplit", "tblW"],
+   "render_pins": [
+    "tblHeader",
+    "cantSplit",
+    "tblW"
+   ],
    "source_evidence": "manifest PLI_M12/ndd_uy_quyen_sau_thay_doi: header nối dính 14 cột nguồn ('STTChủ sở hữu/Thành viên công ty TNHH…Thời điểm đại diện phần vốn'), N6 rebuild 15 cột; nguồn 02_thay_doi_thong_tin_doanh_nghiep/PL1_Mau_12_tach_tu_file_full.docx p219-p227.",
    "split_candidate": "khóa lặp tự nhiên không tồn tại ở mức spec (2 nhóm cột cuối B145 chưa có tag canonical — BLOCKED_OWNER riêng), nên split-table chỉ khả thi sau khi owner chốt đủ tag; hiện KHÔNG tách.",
    "notes": "Bảng hẹp nhất corpus (576 twips = 1.016 cm, cách ngưỡng D9 567 đúng 9 twips); chính là bảng audit WLAY-008 nêu. Ưu tiên regen kế tiếp."
@@ -201,7 +238,11 @@
    "generator_built": true,
    "policy": "width-redistribute+render-pin",
    "landscape": false,
-   "render_pins": ["tblHeader", "cantSplit", "tblW"],
+   "render_pins": [
+    "tblHeader",
+    "cantSplit",
+    "tblW"
+   ],
    "source_evidence": "manifest PLI_M15/ndd_pl_uy_quyen_chu_so_huu_moi: anchor 02_thay_doi_thong_tin_doanh_nghiep/PL1_Mau_15_tach_tu_file_full.docx#p50 (status partial_columns).",
    "split_candidate": null,
    "notes": ""
@@ -217,7 +258,11 @@
    "generator_built": true,
    "policy": "width-redistribute+render-pin",
    "landscape": false,
-   "render_pins": ["tblHeader", "cantSplit", "tblW"],
+   "render_pins": [
+    "tblHeader",
+    "cantSplit",
+    "tblW"
+   ],
    "source_evidence": "05_cong_bo_cung_cap_thong_tin/PL1_Mau_72_cong_bo_noi_dung_dang_ky_thanh_lap_doanh_nghiep.docx — bảng cổ đông sáng lập CTCP (header 'STT|Tên cổ đông|Quốc tịch|Số Giấy tờ pháp lý của cá nhân/tổ chức|…'); owner mở nhóm M72 N2-N5 (decision_registry 2026-08-28 nhóm 4).",
    "split_candidate": null,
    "notes": "Audit WLAY-008 nêu M72 (bảng thành viên/cổ đông) — 864 twips/cột."
@@ -233,7 +278,11 @@
    "generator_built": true,
    "policy": "width-redistribute+render-pin",
    "landscape": false,
-   "render_pins": ["tblHeader", "cantSplit", "tblW"],
+   "render_pins": [
+    "tblHeader",
+    "cantSplit",
+    "tblW"
+   ],
    "source_evidence": "05_cong_bo_cung_cap_thong_tin/PL1_Mau_72_cong_bo_noi_dung_dang_ky_thanh_lap_doanh_nghiep.docx — bảng cổ đông nước ngoài CTCP; cùng nguồn với tbl5.",
    "split_candidate": null,
    "notes": ""

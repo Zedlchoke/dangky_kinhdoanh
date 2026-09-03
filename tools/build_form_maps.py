@@ -1308,7 +1308,8 @@ def _build_list_table(doc, headers, spec):
     # Lane C (WLAY-008): bảng rộng -> width tỉ lệ nội dung header
     _maybe_widen_table(
         tbl, ncols,
-        [max(len(fold(re.sub(r"\s+", " ", h)).strip()), 4) for h in headers])
+        [max(len(fold(re.sub(r"\s+", " ", h)).strip()), 4) for h in headers],
+        spec)
     return tbl
 
 

@@ -166,7 +166,9 @@ WIDE_TABLE_FIXTURE = [
     ("PLI_M06", 0, 12, 8640, 720, "ds_thanh_vien_tnhh"),
     ("PLI_M07", 0, 11, 8635, 785, "ds_co_dong_sang_lap"),
     ("PLI_M09", 0, 14, 8638, 617, "ds_thanh_vien_hop_danh"),
-    ("PLI_M10", 0, 12, 8640, 720, "ds_cshhl"),
+    # PLI_M10 min 720→567: Lead bật width_policy='content' + regen sau merge
+    # lane C (commit 5R3-lead) — rebaseline census theo thực tế mới.
+    ("PLI_M10", 0, 12, 8640, 567, "ds_cshhl"),
     ("PLI_M12", 4, 15, 8640, 576, "ds_ndd_uy_quyen_sau_thay_doi"),
     ("PLI_M15", 1, 14, 8638, 617, "ds_nddpl_uy_quyen_chu_so_huu_moi"),
     ("PLI_M72", 5, 10, 8640, 864, "ds_co_dong_sang_lap_ctcp"),

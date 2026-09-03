@@ -1,8 +1,13 @@
 # Owner decision packet — 2026-09-03 @ main `2593e3e`
 
+> **RECONCILIATION 2026-09-03 (HEAD `cb148d8`):** P1/P2/P3 ĐÃ TRIỂN KHAI qua
+> 3 lane merge (commits `3aa4989`, `dfb6c14`, `a282f76`) + pin sync `de158c4`.
+> Chi tiết: `docs/execution_ledger.md` § "Wave P-owner lanes". G6 hiện
+> FAIL/BLOCKED chờ Word-open 87/87 verification (Class 16 mitigated qua LO
+> normalize ở export pipeline).
+>
 > Gom TẤT CẢ quyết định đang chờ owner theo đúng format: vấn đề → bằng chứng
-> nguồn → lựa chọn → khuyến nghị → hậu quả. Trong lúc chờ, phần việc không phụ
-> thuộc quyết định đã chạy tới hạn (xem cuối file). Số liệu đo tại HEAD nêu trên.
+> nguồn → lựa chọn → khuyến nghị → hậu quả. Số liệu đo tại HEAD nêu trên.
 
 ## P1 — Phần đuôi bị cắt của PLI_M03/M04 (D1.3/D1.5/D3.3)
 

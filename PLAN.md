@@ -1,10 +1,11 @@
 # MASTER PLAN v4 — sửa lỗi và rà soát toàn bộ ứng dụng
 
-> **Checkpoint audit:** 2026-09-03, `main@cafb72d` (tiến từ checkpoint audit
-> 2026-08-30 `6ae63c2`): Gate A/B/C PASS, Wave D batch 1+2 + Wave E ĐÓNG,
-> P5R assessment 7 PASS / 3 PARTIAL. Chi tiết ledger
-> `docs/execution_ledger.md`; handoff audit `docs/whole_app_audit_2026-08-30.md`.
-> Owner đã quyết P1–P8 ngày 2026-09-03 — xem bảng
+> **Checkpoint:** 2026-09-03, `main@cb148d8` (tiến từ `cafb72d` qua
+> merge P1/P2/P3 lanes + pin sync): runner **48 PASS / 1 diagnostic FAIL /
+> 0 critical NOT RUN**, L1 exit 0 (Class 12 giải quyết), numbering exit 0,
+> idempotency 17/0, PDF export đa định dạng (docx|pdf|both).
+> Chi tiết ledger `docs/execution_ledger.md`; handoff audit
+> `docs/whole_app_audit_2026-08-30.md`; owner decisions
 > `docs/decision_registry.md` § "Owner decisions 2026-09-03".
 >
 > Đây là kế hoạch duy nhất có hiệu lực. Source/tests/manifests tại HEAD là trọng

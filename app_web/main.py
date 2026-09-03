@@ -243,13 +243,26 @@ class Bridge:
                               % (fid, type(exc).__name__, _safe_error(exc)))
 
         # ------------------------------------------------- PDF export
-        # [Owner decision 2026-09-03] Sản phẩm cuối cho người dùng là PDF,
-        # DOCX chỉ là trung gian. Dùng LibreOffice headless (soffice) chuyển
-        # từng .docx → .pdf; SOFFICE không có → trả errors[] + giữ .docx.
+        # [Owner decision 2026-09-03] Xuất ĐA ĐỊNH DẠNG: payload.format =
+        #   "docx"          — chỉ file Word;
+        #   "pdf"           — chỉ file PDF;
+        #   "both" (mặc định) — cả Word lẫn PDF.
+        # DOCX luôn render (trung gian bắt buộc); PDF dùng LibreOffice
+        # headless (soffice). soffice không có → trả PDF_EXPORT_UNAVAILABLE
+        # + giữ .docx thay thế.
+        export_format = str(payload.get("format") or "both").strip().lower()
+        if export_format not in ("docx", "pdf", "both"):
+            export_format = "both"
+        want_pdf = export_format in ("pdf", "both")
+        want_docx = export_format in ("docx", "both")
         soffice = shutil.which("soffice") or "/Applications/LibreOffice.app/Contents/MacOS/soffice"
         soffice_ok = Path(soffice).exists() if "/" in soffice else bool(shutil.which("soffice"))
         pdf_files, pdf_errors = [], []
-        if soffice_ok:
+        if want_pdf and not soffice_ok:
+            errors.append("PDF_EXPORT_UNAVAILABLE: soffice không tìm thấy — "
+                          "chỉ có file .docx" if want_docx else
+                          "PDF_EXPORT_UNAVAILABLE: soffice không tìm thấy")
+        if want_pdf and soffice_ok:
             for name in files:
                 src = out_dir / name
                 pdf_name = name.rsplit(".", 1)[0] + ".pdf"
@@ -268,14 +281,20 @@ class Bridge:
                     pdf_errors.append("%s: %s: %s" % (pdf_name, type(exc).__name__, _safe_error(exc)))
             if pdf_errors:
                 errors.extend(pdf_errors)
-        else:
-            errors.append("PDF_EXPORT_UNAVAILABLE: soffice không tìm thấy — "
-                          "file .docx đã được giữ lại làm thay thế")
+        if export_format == "pdf":
+            # chỉ PDF: xoá .docx trung gian khỏi thư mục export
+            for name in files:
+                (out_dir / name).unlink(missing_ok=True)
 
         zip_path = None
         if files and not errors:
-            # ZIP chứa PDF (sản phẩm cuối); soffice hỏng → fallback .docx
-            zip_entries = pdf_files if pdf_files else files
+            # ZIP chứa đúng định dạng người dùng chọn
+            if export_format == "pdf":
+                zip_entries = pdf_files
+            elif export_format == "docx":
+                zip_entries = files
+            else:
+                zip_entries = files + pdf_files
             zip_path = str(out_dir.parent / ("%s.zip" % out_dir.name))
             try:
                 with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as z:

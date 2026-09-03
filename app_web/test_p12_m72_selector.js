@@ -110,7 +110,9 @@ function selErrs(errs) {
       CANON_VALUES.every(v => specByValue[v] &&
         SEL.options.some(o => o.value === v && o.flag === specByValue[v].flag)));
   check('a5. occurrence_id spec khop 5 loop FORM_GRID_META + activeWhen cua dung loop do',
-    Object.keys(FD.FORM_GRID_META.PLI_M72.loops).length === 5 &&
+    /* [P2 pin sync 2026-09-03] PLI_M72 giờ có 9 loops (5 ngành + 4 member
+     * grid P2=A). Kiểm >= 5 industry loops + mỗi spec option khớp đúng. */
+    Object.keys(FD.FORM_GRID_META.PLI_M72.loops).length >= 5 &&
       (SPEC.options || []).every(o => {
         const gm = FD.FORM_GRID_META.PLI_M72.loops[o.occurrence_id];
         return !!gm && gm.loop === o.occurrence_id &&

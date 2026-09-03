@@ -852,6 +852,17 @@
         if (blockMatchesAnchor(parts[j].b, anchor, 'end')) { end = j; break; }
       }
       if (end < 0) return null; // boundary khai mà không thấy -> fail-closed
+    } else {
+      /* [Wave E fix] Không có boundary tường minh: vùng nguồn kết thúc ở
+       * BẢNG CUỐI của section (block t="table"), không nuốt paragraph mồ côi
+       * sau bảng — dòng mục kế khôi phục từ nguồn ở cuối tài liệu
+       * (PLI_M03 mục 7 / PLI_M04 mục 8-9, batch 2) từng bị .dupe-anchor
+       * ẩn vì span kéo tới EOF. */
+      var lastTbl = -1;
+      for (var j2 = start; j2 < parts.length; j2++) {
+        if (parts[j2].b && parts[j2].b.t === 'table') lastTbl = j2;
+      }
+      if (lastTbl >= 0) end = lastTbl + 1;
     }
     return { start: start, end: end };
   }

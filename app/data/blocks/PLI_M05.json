@@ -1164,7 +1164,7 @@
     },
     {
      "input": {
-      "key": "chk_khong",
+      "key": "chk_co",
       "chk": true
      }
     },
@@ -1173,7 +1173,7 @@
     },
     {
      "input": {
-      "key": "chk_khong",
+      "key": "chk_auto_khong",
       "chk": true
      }
     }
@@ -1382,7 +1382,7 @@
     },
     {
      "input": {
-      "key": "chk_khong",
+      "key": "chk_auto_co_hien_thi_thong_tin_ve_gia_tri_tuong_d",
       "chk": true
      }
     },
@@ -1391,7 +1391,7 @@
     },
     {
      "input": {
-      "key": "chk_khong",
+      "key": "chk_auto_khong_2",
       "chk": true
      }
     }

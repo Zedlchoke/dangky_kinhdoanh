@@ -1673,7 +1673,7 @@
     },
     {
      "input": {
-      "key": "chk_khong",
+      "key": "chk_auto_co",
       "chk": true
      }
     },
@@ -1682,7 +1682,7 @@
     },
     {
      "input": {
-      "key": "chk_khong",
+      "key": "chk_auto_khong",
       "chk": true
      }
     }
@@ -3066,12 +3066,12 @@
   {
    "t": "chk",
    "label": "Có",
-   "key": "chk_khong"
+   "key": "chk_auto_co_2"
   },
   {
    "t": "chk",
    "label": "Không",
-   "key": "chk_khong"
+   "key": "chk_auto_khong_2"
   },
   {
    "t": "p",

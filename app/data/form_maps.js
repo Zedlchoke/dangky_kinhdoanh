@@ -323,12 +323,12 @@ window.FORM_MAPS = {
     "type": "chk"
    },
    {
-    "key": "chk_co",
+    "key": "chk_auto_co",
     "label": "Có",
     "type": "chk"
    },
    {
-    "key": "chk_khong",
+    "key": "chk_auto_khong",
     "label": "Không",
     "type": "chk"
    },
@@ -358,6 +358,26 @@ window.FORM_MAPS = {
     "type": "chk"
    },
    {
+    "key": "chk_auto_co_hien_thi_thong_tin_ve_gia_tri_tuong_d",
+    "label": "Có hiển thị thông tin về giá trị tương đương theo đơn vị tiền tệ nước ngoài trên Giấy chứng nhận đăng ký doanh nghiệp ha",
+    "type": "chk"
+   },
+   {
+    "key": "chk_auto_khong_2",
+    "label": "Không",
+    "type": "chk"
+   },
+   {
+    "key": "chk_auto_co_hien_thi_thong_tin_ve_gia_tri_tuong_d_2",
+    "label": "Có hiển thị thông tin về giá trị tương đương theo đơn vị tiền tệ nước ngoài trên Giấy chứng nhận đăng ký doanh nghiệp ha",
+    "type": "chk"
+   },
+   {
+    "key": "chk_auto_khong_3",
+    "label": "Không",
+    "type": "chk"
+   },
+   {
     "key": "chk_ht_doc_lap",
     "label": "hach toan doc lap",
     "type": "chk"
@@ -370,6 +390,16 @@ window.FORM_MAPS = {
    {
     "key": "chk_ht_phu_thuoc",
     "label": "hach toan phu thuoc",
+    "type": "chk"
+   },
+   {
+    "key": "chk_co",
+    "label": "Có",
+    "type": "chk"
+   },
+   {
+    "key": "chk_khong",
+    "label": "Không",
     "type": "chk"
    },
    {
@@ -1333,7 +1363,12 @@ window.FORM_MAPS = {
     "label": "ghi_chu"
    },
    {
-    "key": "chk_khong",
+    "key": "chk_co",
+    "label": "Có",
+    "type": "chk"
+   },
+   {
+    "key": "chk_auto_khong",
     "label": "Không",
     "type": "chk"
    },
@@ -9317,7 +9352,12 @@ window.FORM_MAPS = {
     "type": "chk"
    },
    {
-    "key": "chk_khong",
+    "key": "chk_auto_co_hien_thi_thong_tin_ve_gia_tri_tuong_d",
+    "label": "Có hiển thị thông tin về giá trị tương đương theo đơn vị tiền tệ nước ngoài trên Giấy chứng nhận đăng ký doanh nghiệp ha",
+    "type": "chk"
+   },
+   {
+    "key": "chk_auto_khong",
     "label": "Không",
     "type": "chk"
    },
@@ -9339,6 +9379,11 @@ window.FORM_MAPS = {
    {
     "key": "chk_co",
     "label": "Có",
+    "type": "chk"
+   },
+   {
+    "key": "chk_khong",
+    "label": "Không",
     "type": "chk"
    },
    {
@@ -10091,7 +10136,12 @@ window.FORM_MAPS = {
     "type": "chk"
    },
    {
-    "key": "chk_khong",
+    "key": "chk_auto_co",
+    "label": "Có",
+    "type": "chk"
+   },
+   {
+    "key": "chk_auto_khong",
     "label": "Không",
     "type": "chk"
    },
@@ -10103,6 +10153,16 @@ window.FORM_MAPS = {
    {
     "key": "chk_auto_chu_tich_cong_ty_giam_doc_hoac_tong_giam",
     "label": "chu tich cong ty, giam doc hoac tong giam doc",
+    "type": "chk"
+   },
+   {
+    "key": "chk_auto_co_2",
+    "label": "Có",
+    "type": "chk"
+   },
+   {
+    "key": "chk_auto_khong_2",
+    "label": "Không",
     "type": "chk"
    },
    {
@@ -10123,6 +10183,11 @@ window.FORM_MAPS = {
    {
     "key": "chk_co",
     "label": "",
+    "type": "chk"
+   },
+   {
+    "key": "chk_khong",
+    "label": "Không",
     "type": "chk"
    },
    {
@@ -11006,7 +11071,22 @@ window.FORM_MAPS = {
     "type": "chk"
    },
    {
-    "key": "chk_khong",
+    "key": "chk_co",
+    "label": "Có",
+    "type": "chk"
+   },
+   {
+    "key": "chk_auto_khong",
+    "label": "Không",
+    "type": "chk"
+   },
+   {
+    "key": "chk_auto_co_hien_thi_thong_tin_ve_gia_tri_tuong_d",
+    "label": "Có hiển thị thông tin về giá trị tương đương theo đơn vị tiền tệ nước ngoài trên Giấy chứng nhận đăng ký doanh nghiệp ha",
+    "type": "chk"
+   },
+   {
+    "key": "chk_auto_khong_2",
     "label": "Không",
     "type": "chk"
    }
@@ -11538,7 +11618,22 @@ window.FORM_MAPS = {
     "type": "chk"
    },
    {
-    "key": "chk_khong",
+    "key": "chk_co",
+    "label": "Có",
+    "type": "chk"
+   },
+   {
+    "key": "chk_auto_khong",
+    "label": "Không",
+    "type": "chk"
+   },
+   {
+    "key": "chk_auto_co_hien_thi_thong_tin_ve_gia_tri_tuong_d",
+    "label": "Có hiển thị thông tin về giá trị tương đương theo đơn vị tiền tệ nước ngoài trên Giấy chứng nhận đăng ký doanh nghiệp ha",
+    "type": "chk"
+   },
+   {
+    "key": "chk_auto_khong_2",
     "label": "Không",
     "type": "chk"
    }
@@ -12075,7 +12170,22 @@ window.FORM_MAPS = {
     "type": "chk"
    },
    {
-    "key": "chk_khong",
+    "key": "chk_co",
+    "label": "Có",
+    "type": "chk"
+   },
+   {
+    "key": "chk_auto_khong",
+    "label": "Không",
+    "type": "chk"
+   },
+   {
+    "key": "chk_auto_co_hien_thi_thong_tin_ve_gia_tri_tuong_d",
+    "label": "Có hiển thị thông tin về giá trị tương đương theo đơn vị tiền tệ nước ngoài trên Giấy chứng nhận đăng ký doanh nghiệp ha",
+    "type": "chk"
+   },
+   {
+    "key": "chk_auto_khong_2",
     "label": "Không",
     "type": "chk"
    }

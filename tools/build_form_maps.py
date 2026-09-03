@@ -1884,11 +1884,26 @@ def _auto_chk_key(label_folded, seen):
 
 
 def process_checkboxes(doc, form_id, add_field, unmatched):
-    """Quét mọi paragraph (cả trong bảng), thay □/☐ bằng the {chk_*}."""
+    """Quét mọi paragraph (cả trong bảng), thay □/☐ bằng the {chk_*}.
+
+    [Wave D batch 2b] 2 PHA để key checkbox là ĐỘC NHẤT tầm FORM mà không
+    làm lệch artifact của form không có lỗi:
+      Pha A (legacy): gán theo heuristic gốc cho MỌI paragraph, chỉ thu thập
+        (không add_field). Paragraph mà legacy sinh key TRÙNG trong đoạn ->
+        đánh dấu repair.
+      Pha B (convention): chỉ paragraph repair được gán lại theo quy ước
+        nhãn trước/sau ô, với exclusion TẦM FORM (key legacy của bất kỳ
+        paragraph nào + key đã gán ở pha B) — hết candidate -> auto key
+        (tự _2). Đây là chỗ vá collision chéo giữa 2 CÂU HỎI khác dùng chung
+        key (vd chk_co của câu đất/QTg-an-ninh và câu BOT trong PLI_M12).
+      Pha C: apply tag + add_field theo thứ tự tài liệu.
+    """
     from docx.text.paragraph import Paragraph
 
     last_label = ""
     seen_auto: dict = {}
+    plans = []  # (para, full, pos, last_label_snapshot, legacy, repair)
+    form_used: set = set()
     for p_el in doc.element.body.iter(qn("w:p")):
         para = Paragraph(p_el, doc)
         full = "".join(r.text for r in para.runs)
@@ -1898,19 +1913,15 @@ def process_checkboxes(doc, form_id, add_field, unmatched):
         if not pos:
             last_label = fold(full)
             continue
-        assignments = []
-        used_names: set = set()
-
-        def _assign_legacy(k, i, seen):
-            """Heuristic gốc (trước Wave D): ưu tiên chữ sau ô -> trước ô ->
-            paragraph trước đó. Giữ NGUYÊN cho mọi paragraph không có trùng
-            key (deep idempotency: artifact form khác phải byte-giữ-nguyên)."""
+        snap = last_label
+        legacy = []
+        for k, i in enumerate(pos):
             seg_after = full[i + 1: pos[k + 1] if k + 1 < len(pos) else len(full)]
             seg_before = full[0:i] if k == 0 else full[pos[k - 1] + 1:i]
-            label_raw = (seg_after or seg_before or last_label).strip()
+            label_raw = (seg_after or seg_before or snap).strip()
             name = None
             for cand in (seg_after, seg_before,
-                         last_label if not seg_after.strip() else ""):
+                         snap if not seg_after.strip() else ""):
                 if cand and cand.strip():
                     name = match_chk(fold(cand))
                     if name:
@@ -1918,20 +1929,34 @@ def process_checkboxes(doc, form_id, add_field, unmatched):
             if name is None:
                 label_folded = norm_label(label_raw) if label_raw else ""
                 if label_folded.strip():
-                    name = _auto_chk_key(fold(label_folded), seen)
-            return i, name, label_raw
-
-        def _label_letters(s):
-            return any(ch.isalpha() for ch in s)
-
-        def _assign_convention(k, i, seen, pair_mode):
-            """[Class 15] Quy ước theo CẢ ĐOẠN: "A □ B □" (nhãn TRƯỚC ô) vs
-            "□ A □ B" (nhãn SAU ô). "Trống" = không còn CHỮ cái (số chú thích
-            không phải nhãn). Nhãn trước ô lấy đuôi sau ':'/';' để không ăn
-            rule từ mổ xẻ câu dài. Dedup trong đoạn: key đã dùng -> candidate
-            kế, hết -> auto key (tự _2). Chỉ chạy khi legacy sinh key TRÙNG
-            trong cùng paragraph (vd PLI_M12 'Có □ Không □' -> chk_khong ×2:
-            tick một in X ở cả hai chỗ trên DOCX)."""
+                    name = _auto_chk_key(fold(label_folded), seen_auto)
+            legacy.append((i, name, label_raw))
+            if name:
+                form_used.add(name)
+        names = [n for _i, n, _l in legacy if n]
+        plans.append((para, full, pos, snap, legacy,
+                      len(names) != len(set(names))))
+    # Pha B — chỉ repair paragraph key-trùng, exclusion tầm form
+    seen_auto_b: dict = {}
+    final = []  # (para, [(i, name, label_raw), ...])
+    for para, full, pos, snap, legacy, repair in plans:
+        if not repair:
+            final.append((para, legacy))
+            continue
+        first_i = pos[0]
+        before_txt = full[0:first_i]
+        after_last = full[pos[-1] + 1:]
+        if any(ch.isalpha() for ch in before_txt) and \
+                not any(ch.isalpha() for ch in after_last):
+            pair_mode = "before"
+        elif any(ch.isalpha() for ch in after_last) and \
+                not any(ch.isalpha() for ch in before_txt):
+            pair_mode = "after"
+        else:
+            pair_mode = "mixed"
+        para_used: set = set()
+        chosen = []
+        for k, i in enumerate(pos):
             seg_after = full[i + 1: pos[k + 1] if k + 1 < len(pos) else len(full)]
             seg_before = full[0:i] if k == 0 else full[pos[k - 1] + 1:i]
             if pair_mode == "before":
@@ -1945,40 +1970,32 @@ def process_checkboxes(doc, form_id, add_field, unmatched):
                 "after": (seg_after, seg_before),
                 "mixed": (seg_after, seg_before),
             }[pair_mode]
-            label_raw = (primary or secondary or last_label).strip()
+            label_raw = (primary or secondary or snap).strip()
             name = None
             for cand in (primary, secondary,
-                         last_label if not primary.strip() else ""):
+                         snap if not primary.strip() else ""):
                 if cand and cand.strip():
                     name = match_chk(fold(cand))
-                    if name and name not in used_names:
+                    # [batch 2b] exclusion TẦM FORM: key trùng với câu hỏi
+                    # khác (legacy hoặc pha B) thì thử candidate kế
+                    if name and name not in para_used and \
+                            name not in form_used:
                         break
                     name = None
             if name is None:
                 label_folded = norm_label(label_raw) if label_raw else ""
                 if label_folded.strip():
-                    name = _auto_chk_key(fold(label_folded), seen)
-            return i, name, label_raw
-
-        legacy = [_assign_legacy(k, i, seen_auto) for k, i in enumerate(pos)]
-        legacy_names = [n for _i, n, _l in legacy if n]
-        if len(legacy_names) == len(set(legacy_names)):
-            chosen = legacy
-        else:
-            first_i = pos[0]
-            before_txt = full[0:first_i]
-            after_last = full[pos[-1] + 1:]
-            if _label_letters(before_txt) and not _label_letters(after_last):
-                pair_mode = "before"
-            elif _label_letters(after_last) and not _label_letters(before_txt):
-                pair_mode = "after"
-            else:
-                pair_mode = "mixed"
-            chosen = [_assign_convention(k, i, seen_auto, pair_mode)
-                      for k, i in enumerate(pos)]
+                    name = _auto_chk_key(fold(label_folded), seen_auto_b)
+            chosen.append((i, name, label_raw))
+            if name:
+                para_used.add(name)
+                form_used.add(name)
+        final.append((para, chosen))
+    # Pha C — apply + đăng ký field theo thứ tự tài liệu
+    for para, chosen in final:
+        assignments = []
         for i, name, label_raw in chosen:
             if name:
-                used_names.add(name)
                 assignments.append((i, i + 1, "{chk_%s}" % name))
                 add_field("chk_%s" % name, label_raw, type_="chk")
             else:

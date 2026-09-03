@@ -339,3 +339,12 @@ docs/owner_decision_packet_2026-09-03.md
 # --- Owner P1=A 2026-09-03: nguồn canonical đầy đủ M03/M04 (tách từ bản gốc) ---
 06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn/PL1_Mau_03_tach_tu_file_full.docx
 06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn/PL1_Mau_04_tach_tu_file_full.docx
+
+# --- Owner P3=A 2026-09-03 (lane fix-tax-m0306, Class 6): PLII_M03-M06 KHONG co
+# bang thue trong nguon (tach + full + census NO_TABLE + blocks 0 so mo coi) ->
+# 4 spec PIN BLOCKED bang tables rong + suite 7 menh de; khong regen artifact.
+tools/form_specs/household/PLII_M03.json
+tools/form_specs/household/PLII_M04.json
+tools/form_specs/household/PLII_M05.json
+tools/form_specs/household/PLII_M06.json
+tools/test_tax_m0306_rebuild.py

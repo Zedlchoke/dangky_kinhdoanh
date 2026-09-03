@@ -3824,8 +3824,9 @@
      "status": "already_complete",
      "source_evidence": {
       "template": "app/templates/PLI_M23.docx",
-      "heading": "6. Thông tin đăng ký thuế:",
-      "anchor": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_23_....docx#p55-p105"
+      "heading": "7. Thông tin đăng ký thuế:",
+      "anchor": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_23_....docx#p55-p105",
+      "heading_note": "Numbering nguồn gốc là mục 6, sau P1 source swap đã đúng thành mục 7. section_id giữ '6_1_6' để JOIN spec/tests."
      },
      "notes": "6 chỉ tiêu. Đã map: địa chỉ nhận TB thuế, năm tài chính (ap_dung_tu), lao động. THIẾU: 2 hình thức hạch toán, 5 dự án BOT..., 6 phương pháp thuế GTGT.",
      "semantic_key": "chi_tieu_thue_bo_sung_cn",

@@ -379,6 +379,80 @@ def t_w3_pagination():
                  (label, doc.page_count, baseline_pages[label]))
 
 
+# ---------------------------------------------------------------------------
+# W4 — WLAY-007b: banner PHỤ LỤC của phụ lục KẾ lọt vào đuôi PLI_M80.
+#
+# Reproduction trước khi sửa: file nguồn
+# 05_cong_bo_cung_cap_thong_tin/PL1_Mau_80_*.docx (bước tách auto-extract
+# vượt ranh giới) chứa 3 đoạn cuối 'PHỤ LỤC II' / 'BIỂU MẪU SỬ DỤNG TRONG
+# ĐĂNG KÝ HỘ KINH DOANH' / '(Kèm theo Thông tư số 68/2025...)' — template
+# sinh ra in contaminated sang trang cuối. Fix: rule boundary chung
+# drop_foreign_annex_tail() trong build_form_maps.process_form — dừng tách
+# khi gặp banner PHỤ LỤC <roman khác>; chống hồi quy cho MỌI form bằng
+# sandbox regen toàn bộ rồi scan banner lạ.
+# ---------------------------------------------------------------------------
+
+W4_SANDBOX = OUT_DIR / "w4_sandbox_regen"
+
+
+@check("W4 reproduction: nguon PL1_M80 chua banner PHU LUC II")
+def t_w4_source_has_banner():
+    src = (ROOT / "05_cong_bo_cung_cap_thong_tin" /
+           "PL1_Mau_80_giay_de_nghi_thu_hoi_giay_to_do_ke_khai_trong_ho_so_"
+           "dang_ky_doanh_nghiep_la_gia_mao.docx")
+    assert src.exists(), "khong tim thay nguon PL1_M80"
+    xml = xml_at(src)
+    assert any("PHỤ LỤC II" in t for t in wt_texts(xml)), \
+        "nguon khong con banner (reproduction het dung luc)"
+
+
+@check("W4 sandbox regen PLI_M80: det_contamination tra RONG, mat banner la")
+def t_w4_m80_regen_clean():
+    from tools import build_form_maps as bfm
+    from tools.phase5_visual_gate import det_contamination
+    W4_SANDBOX.mkdir(parents=True, exist_ok=True)
+    src = (ROOT / "05_cong_bo_cung_cap_thong_tin" /
+           "PL1_Mau_80_giay_de_nghi_thu_hoi_giay_to_do_ke_khai_trong_ho_so_"
+           "dang_ky_doanh_nghiep_la_gia_mao.docx")
+    meta, _ = bfm.process_form(src, bfm.load_csv_titles(), None,
+                               out_tpl=W4_SANDBOX)
+    assert meta["id"] == "PLI_M80", meta["id"]
+    out = W4_SANDBOX / "PLI_M80.docx"
+    assert out.exists()
+    hits = det_contamination(out, {"phu_luc": "Phụ lục I"})
+    assert hits == [], "PLI_M80 sandbox regen van contamination: %r" % hits
+    xml = xml_at(out)
+    assert not any("PHỤ LỤC II" in t for t in wt_texts(xml)), \
+        "banner 'PHỤ LỤC II' van trong template regen"
+    # nội dung pháp lý đuôi mẫu (footnote 3) phải còn
+    assert any("Người đề nghị ký và ghi họ tên" in t for t in wt_texts(xml)), \
+        "mat footnote phap ly cua M80 sau khi cat duoi"
+
+
+@check("W4 chong hoi quy: sandbox regen TOAN BO form, 0 banner phu luc khac")
+def t_w4_all_forms_scan():
+    from tools import build_form_maps as bfm
+    W4_SANDBOX.mkdir(parents=True, exist_ok=True)
+    titles = bfm.load_csv_titles()
+    bad = {}
+    seen = 0
+    for path in bfm.iter_docx_files():
+        meta, _ = bfm.process_form(path, titles, None, out_tpl=W4_SANDBOX)
+        seen += 1
+        out = W4_SANDBOX / ("%s.docx" % meta["id"])
+        xml = xml_at(out)
+        own = (meta.get("phu_luc") or "").upper()
+        for t in wt_texts(xml):
+            m = re.match(r"^\s*PHỤ LỤC\s*(I{1,3}|IV|V|VI{1,3}|IX|X|XI{0,3})\s*$",
+                         t, re.IGNORECASE)
+            if m and m.group(1).upper() != own.upper():
+                bad[meta["id"]] = t.strip()[:60]
+                break
+    assert seen >= 87, "regen qua it form (%d)" % seen
+    assert not bad, ("%d form van chua banner phu luc khac: %r"
+                     % (len(bad), dict(list(bad.items())[:5])))
+
+
 def main() -> int:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     tests = [v for k, v in sorted(globals().items())

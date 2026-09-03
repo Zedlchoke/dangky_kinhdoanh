@@ -332,3 +332,6 @@ tools/test_docx_layout_signatures.py
 app_web/test_docx_layout_ui.js
 # test_domain.js: fix-industry cập nhật cap FIELD_META (ghim "thiếu 4 key" cũ)
 app_web/test_domain.js
+
+# --- Owner decision packet 2026-09-03 (Lead) ---
+docs/owner_decision_packet_2026-09-03.md

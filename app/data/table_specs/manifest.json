@@ -5330,7 +5330,7 @@
      "status": "already_complete",
      "source_evidence": {
       "template": "app/templates/PLI_M72.docx",
-      "heading": "STTTên cổ đôngQuốc tịch...Loại cổ phầnSố cổ phầnGiá trị cổ phần",
+      "heading": "7. Cổ đông sáng lập:",
       "anchor": "05_cong_bo_cung_cap_thong_tin/PL1_Mau_72_....docx#p1751-p1753"
      },
      "notes": "Header nối 'STTTên cổ đông...' (detector stt_joined ×2).",
@@ -5358,7 +5358,7 @@
      "status": "already_complete",
      "source_evidence": {
       "template": "app/templates/PLI_M72.docx",
-      "heading": "...8. Cổ đông là nhà đầu tư nước ngoài: STTTên cổ đông...",
+      "heading": "8. Cổ đông là nhà đầu tư nước ngoài:",
       "anchor": "05_cong_bo_cung_cap_thong_tin/PL1_Mau_72_....docx#p1753-p1755"
      },
      "notes": "Header nối thứ 2; cột giá trị cổ phần có chú thích đơn vị tiền.",

@@ -480,6 +480,37 @@
           required: true, minRows: 1,
           activeWhen: { valueOf: { key: 'dn.loai_hinh', equals: ['DHDN'] } },
           semanticKey: 'ds_nganh_dhdn', syncGroup: 'ds_nganh_pli_m72'
+        }),
+        /* [Owner P2=A 2026-09-03] 4 lưới thành viên/cổ đông nested-grid
+         * rebuild từ P2 lane — activeWhen theo đúng variant, syncGroup
+         * riêng từng loại vì cột và semantic khác nhau. */
+        ds_thanh_vien_tnhh_2tv: mkGrid(GRID_META.ds_nganh, {
+          label: 'Danh sách thành viên (Công ty TNHH hai thành viên trở lên)',
+          required: true, minRows: 2,
+          activeWhen: { valueOf: { key: 'dn.loai_hinh', equals: ['TNHH_2TV'] } },
+          semanticKey: 'ds_thanh_vien_tnhh_2tv',
+          syncGroup: 'ds_thanh_vien_tnhh_2tv'
+        }),
+        ds_co_dong_sang_lap_ctcp: mkGrid(GRID_META.ds_nganh, {
+          label: 'Danh sách cổ đông sáng lập (Công ty cổ phần)',
+          required: false, minRows: 0,
+          activeWhen: { valueOf: { key: 'dn.loai_hinh', equals: ['CTCP'] } },
+          semanticKey: 'ds_co_dong_sang_lap_ctcp',
+          syncGroup: 'ds_co_dong_sang_lap_ctcp'
+        }),
+        ds_co_dong_nuoc_ngoai_ctcp: mkGrid(GRID_META.ds_nganh, {
+          label: 'Danh sách cổ đông là nhà đầu tư nước ngoài (Công ty cổ phần)',
+          required: false, minRows: 0,
+          activeWhen: { valueOf: { key: 'dn.loai_hinh', equals: ['CTCP'] } },
+          semanticKey: 'ds_co_dong_nuoc_ngoai_ctcp',
+          syncGroup: 'ds_co_dong_nuoc_ngoai_ctcp'
+        }),
+        ds_thanh_vien_hop_danh_dhdn: mkGrid(GRID_META.ds_nganh, {
+          label: 'Danh sách thành viên hợp danh (Công ty hợp danh)',
+          required: true, minRows: 2,
+          activeWhen: { valueOf: { key: 'dn.loai_hinh', equals: ['DHDN'] } },
+          semanticKey: 'ds_thanh_vien_hop_danh_dhdn',
+          syncGroup: 'ds_thanh_vien_hop_danh_dhdn'
         })
       }
     },

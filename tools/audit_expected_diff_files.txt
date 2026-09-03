@@ -1,5 +1,7 @@
 
 .gitignore
+# --- 5R2 laneB signature (00c9c6b): contract khoi ky + census 87 form ---
+# --- 5R2 laneC tables (f370277): pin bảng render + census bảng rộng + width_policy + census matrix PLI_M12 ---
 # --- cap-von regen: 3 template lần đầu đổi (nguon_von/co_cau/chao_ban) ---
 # --- Census đánh số mục + chuỗi companion (lệnh owner 2026-08-28) ---
 # --- Excel X1: lop questionnaire (schema + builder + cum dau owner duyet) ---
@@ -245,6 +247,7 @@ app/templates/PLI_M70.docx
 app/templates/PLI_M71.docx
 app/templates/PLI_M72.docx
 app/templates/PLI_M80.docx
+app/templates/PLII_M01.docx
 app/templates/PLII_M02.docx
 app/templates/PLII_M03.docx
 app/templates/PLII_M04.docx
@@ -278,6 +281,7 @@ PLAN_excel.md
 PLAN.md
 requirements-dev.txt
 tools/audit_blocks_check.py
+tools/audit_engine_test.py
 tools/build_form_maps.py
 tools/census/build_manifest.py
 tools/census/check_layout_l1.py
@@ -300,6 +304,7 @@ tools/form_specs/change/PLI_M23.json
 tools/form_specs/change/PLI_M25.json
 tools/form_specs/change/PLI_M72.json
 tools/form_specs/core/PLI_M02.json
+tools/form_specs/core/PLII_M01.json
 tools/form_specs/formation/PLI_M01.json
 tools/form_specs/formation/PLI_M03.json
 tools/form_specs/formation/PLI_M04.json
@@ -326,6 +331,7 @@ tools/phase5_fixtures.py
 tools/phase5_visual_gate.py
 tools/phase5_word_open_loop.py
 tools/phase5r_expectations.json
+tools/phase5r_table_policies.json
 tools/questionnaire/build_questionnaire.py
 tools/questionnaire/clusters/thanh_lap_doanh_nghiep.json
 tools/questionnaire/schema.py
@@ -355,6 +361,8 @@ tools/test_phase3_m04_m11.py
 tools/test_phase5_ui_fixes.py
 tools/test_phase5_visual_detectors.py
 tools/test_phase5r_metadata.py
+tools/test_phase5r_signatures.py
+tools/test_phase5r_tables.py
 tools/test_pli_m02_industry.py
 tools/test_questionnaire.py
 tools/test_r3b1_people_specs.py
@@ -362,10 +370,3 @@ tools/test_row_contract_export.py
 tools/test_table_coverage_audit.py
 tools/test_tax_m0306_rebuild.py
 tools/test_w1_publication_specs.py
-# --- 5R2 laneB signature (00c9c6b): contract khoi ky + census 87 form ---
-tools/test_phase5r_signatures.py
-# --- 5R2 laneC tables (f370277): pin bảng render + census bảng rộng + width_policy + census matrix PLI_M12 ---
-tools/audit_engine_test.py
-tools/form_specs/core/PLII_M01.json
-tools/phase5r_table_policies.json
-tools/test_phase5r_tables.py

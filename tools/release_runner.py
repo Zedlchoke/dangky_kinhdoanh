@@ -124,7 +124,7 @@ SUITES: list[dict] = [
     {"name": "check_layout_l1",           "type": "module", "target": "tools.census.check_layout_l1",
      "critical": False},
     {"name": "table_coverage_audit",      "type": "module", "target": "tools.census.table_coverage_audit",
-     "critical": False},
+     "args": ["--no-write"], "critical": False},
     {"name": "compileall",                "type": "compileall", "target": "app_web app_tk tools",
      "args": ["app_web", "app_tk", "tools"]},
 ]

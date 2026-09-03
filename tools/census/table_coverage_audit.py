@@ -1345,10 +1345,14 @@ def main(argv=None):
         ("rows", rows_full),
     ])
     os.makedirs(os.path.dirname(OUT_JSON), exist_ok=True)
-    with open(OUT_JSON, "w", encoding="utf-8") as f:
-        json.dump(payload, f, ensure_ascii=False, indent=1)
-    with open(OUT_MD, "w", encoding="utf-8") as f:
-        f.write(build_md(rows, totals, drifts, head))
+    # [Wave E] --no-write: runner chỉ cần verdict drift, không ghi đè file
+    # docs (stamp head đổi mỗi commit -> làm bẩn tree sau mỗi lần runner).
+    no_write = "--no-write" in (argv if argv is not None else sys.argv[1:])
+    if not no_write:
+        with open(OUT_JSON, "w", encoding="utf-8") as f:
+            json.dump(payload, f, ensure_ascii=False, indent=1)
+        with open(OUT_MD, "w", encoding="utf-8") as f:
+            f.write(build_md(rows, totals, drifts, head))
 
     print("sections: %d | forms: %d | head: %s" % (len(rows), len(forms), head))
     print("totals:", dict(totals))

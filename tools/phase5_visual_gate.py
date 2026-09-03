@@ -205,7 +205,8 @@ _SIG_TITLE_FOLD = re.compile(
     r"chu so huu|chu so huu moi|chu so huu cu|dai dien cac thanh vien khong "
     r"yeu cau thanh lap|hội đồng thanh vien|hoi dong thanh vien|chu tich "
     r"hoi dong thanh vien|chu tich hoi dong thanh vien|tong giam doc|"
-    r"nguoi chuyen doi|dai dien phap luat cua to chuc|to chuc|ca nhan)\b")
+    r"cac thanh vien hop danh|nguoi chuyen doi|dai dien phap luat cua to "
+    r"chuc|to chuc|ca nhan)\b")
 _SIG_INSTR_FOLD = re.compile(
     r"\((ky va ghi ro ho ten|ky ghi ro ho ten|ky va ghi ho ten|ky ten|"
     r"ky, ghi ro ho ten|ky, ho ten|ky ho ten|da ky|ky, ho ten, dong dau|"

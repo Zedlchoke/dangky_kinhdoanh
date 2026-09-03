@@ -1,0 +1,19 @@
+{
+ "comment": "Phase 5R signature expectation registry — mỗi entry: form -> contract khối ký đo được từ nguồn/owner. Lane B (5R2) mở rộng census 87 form; chỉ form có bằng chứng nguồn mới được thêm.",
+ "PLI_M70": {
+  "signature": {
+   "orientation": "horizontal",
+   "signers": 2,
+   "titles": ["NGƯỜI NỘP", "NGƯỜI NHẬN"],
+   "evidence": "WLAY-002 audit 2026-09-03: bản giấy NGƯỜI NỘP / NGƯỜI NHẬN nằm cùng hàng; template hiện sinh 2 cụm xếp dọc (2x1). Owner decision pending trong Phase 5R2 census."
+  }
+ },
+ "PLI_M15": {
+  "signature": {
+   "orientation": "vertical",
+   "signers": 2,
+   "min_write_gap_pt": 40,
+   "evidence": "WLAY-004: CHỦ SỞ HỮU MỚI / CHỦ SỞ HỮU CŨ xếp dọc là đúng hướng, nhưng hiện không có vùng viết giữa hai cụm."
+  }
+ }
+}

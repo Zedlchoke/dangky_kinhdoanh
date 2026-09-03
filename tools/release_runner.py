@@ -105,6 +105,12 @@ SUITES: list[dict] = [
     #     underline, chu_hkd.ho_ten M01, LO normalize outdir tạm) ---
     {"name": "test_phase5_ui_fixes",      "type": "module", "target": "tools.test_phase5_ui_fixes",
      "requires": ["python-docx"]},
+    # --- Phase 5R0 (2026-09-03): gate visual — fixture semantic + detector
+    #     hai chiều (bắt injected defect, qua nội dung hợp lệ). Suite synthetic
+    #     này phải xanh tuyệt đối: nó là điều kiện tin gate corpus RED/GREEN.
+    {"name": "test_phase5_visual_detectors", "type": "module",
+     "target": "tools.test_phase5_visual_detectors", "requires": ["python-docx"]},
+    {"name": "phase5_fixtures_selftest",  "type": "module", "target": "tools.phase5_fixtures"},
     {"name": "test_industry_household",   "type": "module", "target": "tools.test_industry_household",
      "requires": ["python-docx"]},
     {"name": "test_contract_release",     "type": "module", "target": "tools.test_contract_release",

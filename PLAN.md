@@ -1,16 +1,53 @@
 # MASTER PLAN v4 — sửa lỗi và rà soát toàn bộ ứng dụng
 
-> **Checkpoint:** 2026-09-03, `main@cb148d8` (tiến từ `cafb72d` qua
-> merge P1/P2/P3 lanes + pin sync): runner **48 PASS / 1 diagnostic FAIL /
-> 0 critical NOT RUN**, L1 exit 0 (Class 12 giải quyết), numbering exit 0,
-> idempotency 17/0, PDF export đa định dạng (docx|pdf|both).
-> Chi tiết ledger `docs/execution_ledger.md`; handoff audit
-> `docs/whole_app_audit_2026-08-30.md`; owner decisions
-> `docs/decision_registry.md` § "Owner decisions 2026-09-03".
+> **Checkpoint:** 2026-09-03 (buổi 2), `main@28df5cb` sau Phase 3+4:
+> coverage **111/111 drift=0** — `IMPLEMENTED_VERIFIED` 64→**76**, MISSING
+> 7→**0**, PARTIAL 4→**0**, BLOCKED_OWNER 22, NO_TABLE 7, OUTPUT_ONLY 6;
+> runner **51 PASS / 0 FAIL / 0 NOT RUN** (thêm 2 suite row-contract);
+> manifest census **tái lập được từ generator** (HEADING_OVERRIDES gỡ 3
+> hand-fix Phase 2); row/blank-row contract implement + corpus + inventory
+> machine-readable (`docs/row_contract_inventory.json`). Word/WebView2/
+> Windows visual: **NOT RUN** (Phase 5+ OPEN).
+> Chi tiết ledger `docs/execution_ledger.md`; owner decisions
+> `docs/decision_registry.md` (thêm Q-P4-1 min_rows nested-grid).
 >
 > Đây là kế hoạch duy nhất có hiệu lực. Source/tests/manifests tại HEAD là trọng
 > tài kỹ thuật; nội dung pháp lý phải đối chiếu văn bản đang có hiệu lực. Các kế
 > hoạch/checkpoint cũ chỉ là lịch sử trong `docs/execution_ledger.md`.
+
+## 0. Checkpoint Phase 3+4 (2026-09-03, buổi 2) — kết quả thật
+
+**Phase 3 — 2 MISSING + 4 PARTIAL xử lý đúng bản chất (đều không phải bảng
+thiếu thật, không thêm field mới, không sửa generated bằng tay):**
+
+| Section | Root cause | Fix |
+|---|---|---|
+| PLI_M01/bhxh_phuong_thuc_dong | Census stale: notes than thiếu `chk_bc_03_thang` nhưng ba64f29 đã đủ 3/3 token | Override already_complete; audit scalar_credited verify region keys (tiền lệ PLI_M17) |
+| PLI_M11/ds_to_chuc_xd_cshhl | Spec chỉ tồn tại inline trong build_form_maps | File spec `formation/PLI_M11.json` verbatim (regen zero-diff chứng minh bằng full run) |
+| PLI_M01+M02 tai_san_gop_von, PLI_M04 co_cau/chao_ban | `stt` là số thứ tự in sẵn của fixed-matrix | Detector credit `stt` khi fixed-matrix có fixed_rows evidence (+ selftest 38→51, positive+negative) |
+| PLI_M04/co_cau_loai_co_phan | `menh_gia_co_phan` là dòng scalar riêng (TT 121), không phải cột | Detector credit exact-match scalar vùng anchor |
+| PLI_M04/co_phan_duoc_quyen_chao_ban | Cột label readonly thiếu tag định danh (lệch convention anh em) | Wire tag `loai_co_phan_chao_ban` trong runtime contract (inputType giữ readonly) |
+
+Phát hiện quan trọng phụ: manifest.json từng bị sửa tay 3 heading ở Phase 2 →
+regen mất fix. Đưa về `HEADING_OVERRIDES` trong build_manifest.py — manifest
+tái lập được lại từ generator+fragments (delta chỉ còn override mới).
+
+**Phase 4 — row/blank-row contract:**
+
+- Gap thật đã vá: hàng MỌI ô tróng trong store đi thẳng vào DOCX → filter ở
+  `GridCtl.exportLoops` (JS) + guard `_expand_loops` (Python last-mile),
+  `{_stt}` đánh lại trên dữ liệu; draft round-trip giữ nguyên row (blank sống
+  trong draft, chỉ lọc ở export); dòng chỉ có discriminator không bị mất.
+- Fixed legal row ≠ blank row: fixed-matrix in đủ dòng pháp định khi rỗng
+  (FM1), blankRows in sẵn của bản giấy không bị lọc — corpus pin cả hai.
+- Inventory: `tools/census/row_contract_inventory.py` → JSON/MD (11 global
+  grids, 18 form-scoped, 14 section contracts, 42 dynamic_tables, 21
+  section_specs, 42 blankRows blocks; policies/gaps/test-coverage; gate count).
+- BLOCKED_OWNER Q-P4-1: `min_rows` 3 nested-grid khai mà không tầng nào
+  enforce — chờ owner chốt semantics (không tự chọn).
+
+**Không đổi:** Word/WebView2/Windows/.exe chưa chạy thật — mọi tuyên bố
+visual/Word là NOT RUN; Phase 5+ giữ nguyên thứ tự mở.
 
 ## 1. Mục tiêu
 
@@ -337,6 +374,10 @@ riêng trước khi ghi `FULL_PRODUCT_DONE`.
 5. “Ngành nghề chính” trên UI cần hình ô vuông như giấy hay chấp nhận radio tròn?
 6. Excel là pilot PLI_M72 hay phải rollout cho mọi thủ tục trước `FULL_PRODUCT_DONE`?
 7. `app_tk` là legacy-supported hay deprecated?
+8. [Phase 4] `min_rows=1` của 3 nested-grid ủy quyền (PLI_M02/M12/M15): enforce
+   vô điều kiện (sẽ chặn hồ sơ KHÔNG ủy quyền) / chỉ khi section có dữ liệu /
+   xóa khai báo? Chi tiết `docs/decision_registry.md` Q-P4-1; đang giữ
+   BLOCKED_OWNER, chưa enforce.
 
 ## 6. SOP dùng worker/sub-agent
 

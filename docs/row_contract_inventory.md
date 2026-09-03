@@ -1,6 +1,6 @@
 # Row/blank-row contract inventory (Phase 4)
 
-Sinh bởi `tools/census/row_contract_inventory.py` tại HEAD `4e18f1a`.
+Sinh bởi `tools/census/row_contract_inventory.py` tại HEAD `28df5cb`.
 
 | họ contract | số entry |
 |---|---|

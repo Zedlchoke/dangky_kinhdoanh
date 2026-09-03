@@ -1,7 +1,7 @@
 {
  "meta": {
   "tool": "tools/census/row_contract_inventory.py",
-  "head": "4e18f1a",
+  "head": "28df5cb",
   "expected_counts": {
    "global_grids": 11,
    "section_contracts": 14,

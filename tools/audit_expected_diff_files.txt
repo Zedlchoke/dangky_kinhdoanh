@@ -335,3 +335,7 @@ app_web/test_domain.js
 
 # --- Owner decision packet 2026-09-03 (Lead) ---
 docs/owner_decision_packet_2026-09-03.md
+
+# --- Owner P1=A 2026-09-03: nguồn canonical đầy đủ M03/M04 (tách từ bản gốc) ---
+06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn/PL1_Mau_03_tach_tu_file_full.docx
+06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn/PL1_Mau_04_tach_tu_file_full.docx

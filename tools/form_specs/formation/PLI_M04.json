@@ -1,7 +1,7 @@
 {
   "form_id": "PLI_M04",
   "group": "formation",
-  "note": "Mau thanh lap (TNHH 2TV+ / CTCP). Luoi nganh mat khi convert, cau truc giong PLI_M01. || [Owner P1=A 2026-09-03] insert pos:end (batch 2) SUPERSEDED: nguồn canonical đổi sang bản tách đầy đủ (SOURCE_OVERRIDES), dòng mục 7/8-9 có sẵn trong nguồn — inserts rỗng tránh trùng dòng. || [Owner P1=A 2026-09-03] drop_until chốt tại mục kế trên nguồn ĐẦY ĐỦ (nguon_von_dieule M03 -> ^7. thanh vien cong ty; co_phan_duoc_quyen_chao_ban M04 -> ^8. co dong sang lap) — đuôi mục 8+ thuộc phạm vi implement tail của lane fix-tails-m0304, không thuộc vùng bảng.",
+  "note": "Mau thanh lap (TNHH 2TV+ / CTCP). Luoi nganh mat khi convert, cau truc giong PLI_M01. || [Owner P1=A 2026-09-03] insert pos:end (batch 2) SUPERSEDED: nguồn canonical đổi sang bản tách đầy đủ (SOURCE_OVERRIDES), dòng mục 7/8-9 có sẵn trong nguồn — inserts rỗng tránh trùng dòng. || [Owner P1=A 2026-09-03] drop_until chốt tại mục kế trên nguồn ĐẦY ĐỦ (nguon_von_dieule M03 -> ^7. thanh vien cong ty; co_phan_duoc_quyen_chao_ban M04 -> ^8. co dong sang lap) — đuôi mục 8+ thuộc phạm vi implement tail của lane fix-tails-m0304, không thuộc vùng bảng. || [fix-tails-m0304 2026-09-03] Audit đuôi mục 10-13: cấu trúc khớp nguồn đầy đủ, 39 key đuôi (27 slot + 12 chk) đủ trên form_maps/template/blocks; suite tools/test_m0304_tails khóa cấu trúc; chung hạn chế chk_co/chk_khong (BOT 11.8 + CSHHL 13) và chk_gt_* mục 1 như note PLI_M03. Riêng M04: (a) nguồn in '1.6' thay vì '11.6' (mục năm tài chính) — giữ nguyên văn nguồn; (b) dòng 'Số nhà/phòng…' 11.3 kết thúc '…' 1 ký tự nên không sinh slot input (các dòng khác '………') — dòng địa chỉ đuôi duy nhất thiếu input, chờ nguồn hoặc generator; (c) đã xóa drop chết '^cac co phan uu dai khac$' khỏi entry co_phan_duoc_quyen_chao_ban (nhãn nguồn KHÔNG có 'Các' — behavior-neutral, regen identity kiểm chứng).",
   "gap_nghiepvu": "Template con lai 4 cot (khong co 'Chi tiet hoat dong') -> spec 4 cot khop template that. Nguon that cua mau nay trong repo la file chuyen doi 06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn/DN_PL1_Mau_04_*.docx (form_maps.file xac nhan) - anchor/drop da kiem ca tren nguon va tren template.  Chua bat requirePrimary cho la_nganh_chinh - agent 2A xac nhan voi Lead truoc khi bat. || Wave cap-von (2026-08-28, task 3a): them BA entry fixed-matrix phan von/cophan (nguon_von_dieule muc 6, co_cau_loai_co_phan muc 7, co_phan_duoc_quyen_chao_ban) - D1.1=A + owner + Lead 2026-08-28: dung theo bieu mau HIEN HANH TT 121/2026/TT-BTC Phu luc Mau 04 — thay Mau 04 Phu luc I TT 68, ba bang von/co phan KHONG doi (mo D1.5/D3.3). D1.4=A (gia tri = so luong x menh gia) chua khai duoc: menh gia la TRUONG LE tai p131 (da map {menh_gia_co_phan}) khong phai cot bang - chi tiet trong legal_status. Chi tiet gap + nguon trong legal_status tung entry.",
   "tables": [
     {
@@ -300,7 +300,6 @@
         "^co phan uu dai bieu quyet$",
         "^co phan uu dai co tuc$",
         "^co phan uu dai hoan lai$",
-        "^cac co phan uu dai khac$",
         "^co phan uu dai khac$",
         "^tong so$"
       ],

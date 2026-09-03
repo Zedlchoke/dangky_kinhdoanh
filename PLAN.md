@@ -1,4 +1,16 @@
-# MASTER PLAN v4 — sửa lỗi và rà soát toàn bộ ứng dụng
+# MASTER PLAN v5 — sửa lỗi và rà soát toàn bộ ứng dụng
+
+> **CẬP NHẬT KHẨN PHASE 5R — 2026-09-03:** audit corpus Word mới nhất đã xem
+> **91 DOCX / 264 trang** và kết luận **VISUAL LAYOUT = FAIL**. Word mở trực
+> tiếp 91/91 chỉ là openability PASS. Đã xác nhận source-indicator lộ ở 44 form,
+> chữ ký sai cột/tách trang/thiếu vùng viết, field code lộ, trang trắng hoặc
+> boundary thừa, fixed matrix phẳng/thiếu và bảng rộng khó đọc.
+>
+> Báo cáo bằng chứng: `docs/word_layout_audit_2026-09-03.md`.
+> Kế hoạch sửa có hiệu lực: `docs/plan_phase5r_word_layout.md`.
+> Mọi kết luận layout/Word trong các checkpoint cũ chỉ là lịch sử và bị
+> supersede bởi Phase 5R. Không mở Phase 6 cho tới khi Definition of Done Phase
+> 5R đạt trên commit sạch và auditor độc lập xác minh.
 
 > **Checkpoint:** 2026-09-03 (buổi 2), `main@28df5cb` sau Phase 3+4:
 > coverage **111/111 drift=0** — `IMPLEMENTED_VERIFIED` 64→**76**, MISSING
@@ -7,7 +19,9 @@
 > manifest census **tái lập được từ generator** (HEADING_OVERRIDES gỡ 3
 > hand-fix Phase 2); row/blank-row contract implement + corpus + inventory
 > machine-readable (`docs/row_contract_inventory.json`). Word/WebView2/
-> Windows visual: **NOT RUN** (Phase 5+ OPEN).
+> Windows visual: **NOT RUN** (Phase 5+ OPEN). Sau checkpoint này, corpus WIP
+> 91 DOCX đã được mở/render: open-direct **PASS 91/91**, nhưng audit bố cục
+> **FAIL**; xem cập nhật Phase 5R phía trên.
 > Chi tiết ledger `docs/execution_ledger.md`; owner decisions
 > `docs/decision_registry.md` (thêm Q-P4-1 min_rows nested-grid).
 >
@@ -46,8 +60,9 @@ tái lập được lại từ generator+fragments (delta chỉ còn override m�
 - BLOCKED_OWNER Q-P4-1: `min_rows` 3 nested-grid khai mà không tầng nào
   enforce — chờ owner chốt semantics (không tự chọn).
 
-**Không đổi:** Word/WebView2/Windows/.exe chưa chạy thật — mọi tuyên bố
-visual/Word là NOT RUN; Phase 5+ giữ nguyên thứ tự mở.
+**Trạng thái lịch sử tại checkpoint Phase 4:** Word/WebView2/Windows/.exe khi
+đó chưa chạy thật. Trạng thái Word/layout mới nhất nằm trong Phase 5R phía trên;
+WebView2/Windows/.exe vẫn **NOT RUN**.
 
 ## 1. Mục tiêu
 

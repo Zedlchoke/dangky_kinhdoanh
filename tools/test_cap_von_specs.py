@@ -342,9 +342,14 @@ def t_scope_exact():
         "PLI_M12": {"nganh_bo_sung", "nganh_xoa_bo", "nganh_sua_doi_chi_tiet",
                     "ndd_uy_quyen_sau_thay_doi",
                     "nguon_von_dieule_sau_thay_doi"},
+        # [Phase 5 2026-09-03] +2 nested-grid thành viên tv_hgd_* (P2 member
+        # grid rebuild, commit dfb6c14, suite test_member_grids_rebuild PASS,
+        # census override already_complete) — pin stale được cập nhật theo
+        # quyết định ĐÃ MERGE; bảng thuế a7_* và 4 loop ngành giữ nguyên.
         "PLII_M02": {"ds_nganh_bo_sung", "ds_nganh_xoa_bo",
                      "ds_nganh_sua_chi_tiet", "ds_nganh",
-                     "a7_thue_chi_tieu_cu_moi"},
+                     "a7_thue_chi_tieu_cu_moi",
+                     "tv_hgd_sau_thay_doi", "tv_hgd_cap_doi"},
     }
     for fid, want_ids in want.items():
         raw = raw_spec(fid)
@@ -767,17 +772,20 @@ def t_plii_m02_tax():
         "PLII_M02: không được rebuild phần C mục 5 khi 7 ô đã map sẵn (W1 gap)"
 
 
-@check("[D5.2] PLII_M02: 4 loop nganh + pin occurrence giu nguyen")
+@check("[D5.2] PLII_M02: 4 loop nganh + 2 grid thanh vien — pin occurrence giu nguyen")
 def t_plii_m02_industry_untouched():
     raw = raw_spec("PLII_M02")
     ids = []
     for e in raw["tables"]:
         for o in (e.get("occurrences") or []):
             ids.append(o["occurrence_id"])
+    # [Phase 5 2026-09-03] pin mở rộng theo merge dfb6c14 (owner-P2 member
+    # grid rebuild, test_member_grids_rebuild PASS): 4 occurrence ngành PHẢI
+    # VẪN ĐỦ nguyên + 2 occurrence thành viên tv_hgd_* — exact-set 6.
     assert sorted(ids) == sorted(["nganh_bo_sung", "nganh_xoa_bo",
-                                  "nganh_sua_doi_chi_tiet",
-                                  "nganh_hien_tai"]), \
-        "4 occurrence ngành của PLII_M02 bị đổi: %r" % ids
+                                  "nganh_sua_doi_chi_tiet", "nganh_hien_tai",
+                                  "tv_hgd_sau_thay_doi", "tv_hgd_cap_doi"]), \
+        "occurrence PLII_M02 bị đổi: %r" % ids
 
 
 # ---------------------------------------------------------------------------

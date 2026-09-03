@@ -120,6 +120,25 @@ class Bridge:
     """Các method Python mà JS gọi qua window.pywebview.api."""
 
     # ------------------------------------------------------------- danh mục
+    # [Phase 5] Dữ liệu chung app/data mà UI cần qua Bridge. pywebview load
+    # UI qua internal server CHỈ phục vụ app_web — fetch('../app/data/..')
+    # 404 và UI âm thầm rơi vào mock/vsic_mini.json (15/794 mã, 9 tên sai,
+    # thiếu 455 ngành cấp 4) → tên ngành kê khai thiếu/không chính thức
+    # (bug owner quan sát Phase 5). Danh sách CHỈ ĐỌC, allowlist cứng:
+    # không có route dữ liệu nào khác qua cửa này.
+    READ_ONLY_DATA_FILES = ("nganh_vsic.json",)
+
+    def read_data_json(self, name):
+        name = str(name or "")
+        if name not in self.READ_ONLY_DATA_FILES:
+            return {"ok": False, "error": "FILE_NOT_ALLOWED"}
+        try:
+            with open(APP_DIR / "data" / name, encoding="utf-8") as f:
+                return {"ok": True, "name": name, "data": json.load(f)}
+        except Exception:
+            # không nhúng repr(exception) (F-P3-SEC-LOG)
+            return {"ok": False, "error": "READ_FAILED"}
+
     def list_cases(self):
         with open(APP_DIR / "data" / "use_cases.json", encoding="utf-8") as f:
             return json.load(f)
@@ -258,18 +277,40 @@ class Bridge:
         soffice_ok = Path(soffice).exists() if "/" in soffice else bool(shutil.which("soffice"))
 
         # Bước 1: LO normalize (fix Class 16 — Word compat)
+        # [Phase 5 fix] normalize cũ chạy `--outdir out_dir` TRÙNG thư mục
+        # nguồn -> LibreOffice không tự ghi đè file đang convert -> BƯỚC NÀY
+        # ÂM THẦM FAIL TỪ ĐẦU (except: pass nuốt lỗi) và Word 16.16 nhận file
+        # RAW của write_rendered = "file is corrupt" (đã tái hiện + chụp
+        # dialog). Sửa: convert vào thư mục tạm rồi thay file; fail → báo
+        # errors[] (không nuốt) vì file không normalize KHÔNG mở được bằng
+        # Word 16.16.
         if soffice_ok:
+            norm_dir = out_dir / "_lo_norm"
             for name in files:
                 src = out_dir / name
                 try:
+                    shutil.rmtree(norm_dir, ignore_errors=True)
+                    norm_dir.mkdir(parents=True, exist_ok=True)
                     proc = subprocess.run(
                         [soffice, "--headless", "--norestore",
-                         "--convert-to", "docx", "--outdir", str(out_dir), str(src)],
+                         "--convert-to", "docx", "--outdir", str(norm_dir),
+                         str(src)],
                         capture_output=True, text=True, timeout=60,
                         env={**os.environ, "HOME": os.environ.get("HOME", "/tmp")})
-                    # LO ghi đè src — giữ nguyên tên file
+                    normalized = norm_dir / name
+                    if (proc.returncode == 0 and normalized.exists()
+                            and normalized.stat().st_size > 0):
+                        shutil.move(str(normalized), str(src))
+                    else:
+                        errors.append(
+                            "%s: LO normalize thất bại (exit=%s) — giữ file "
+                            "gốc, Word 16.16 có thể từ chối mở" %
+                            (name, proc.returncode))
                 except Exception:
-                    pass  # normalize fail → giữ file gốc (vẫn đọc được bằng LO)
+                    errors.append("%s: LO normalize exception — giữ file gốc"
+                                  % name)
+                finally:
+                    shutil.rmtree(norm_dir, ignore_errors=True)
 
         pdf_files, pdf_errors = [], []
         if want_pdf and not soffice_ok:

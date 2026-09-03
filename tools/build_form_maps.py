@@ -2510,6 +2510,20 @@ def process_form(path, titles, coverage):
             full, runs, groups = para_dot_groups(para)
             if not groups:
                 t = full.strip()
+                # [Phase 5 fix bug owner] Tab-slot: dòng "Tôi là1 (ghi họ tên
+                # bằng chữ in hoa): \t" của PLI_M01 dùng tab-stop thay nhóm
+                # dấu chấm dẫn -> rule chu_hkd.ho_ten không có nhóm để gắn,
+                # ô TEN CHỦ DOANH NGHIỆP bị thiếu hoàn toàn trong app và
+                # trống trong DOCX export (M02/M03/PLII_M01 dùng dấu chấm
+                # nên không bao giờ vào nhánh này). Chỉ áp cho ĐÚNG nhãn này
+                # khi có tab — zero collateral với paragraph khác.
+                if ("\t" in full and t and
+                        re.search(r"toi ?la.*ghi ho ten bang chu in hoa",
+                                  norm_label(t))):
+                    ti_ = full.rfind("\t")
+                    apply_tags_to_para(para, [(ti_, ti_ + 1,
+                                               "{chu_hkd.ho_ten}")])
+                    add_field("chu_hkd.ho_ten", t)
                 if t and len(fold(t)) >= 8:
                     section_ctx = fold(re.sub(r"\s+", " ", t))[:400]
                 pending_label = t if t.endswith(":") else ""

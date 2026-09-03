@@ -138,7 +138,13 @@
      "i": true
     },
     {
-     "text": "): \t"
+     "text": "): "
+    },
+    {
+     "input": {
+      "key": "chu_hkd.ho_ten",
+      "w": 27
+     }
     }
    ],
    "format": {

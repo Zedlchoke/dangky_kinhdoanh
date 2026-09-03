@@ -3,3 +3,4 @@ __pycache__/
 generated_ho_so/
 .webview_deps/
 .DS_Store
+.v2c/

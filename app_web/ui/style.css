@@ -330,6 +330,11 @@ table.hdr-band td { vertical-align: bottom; }
   font-size: 12pt;
   width: 100%;
   border: none;
+  /* [Phase 5 fix bug owner] border:none + background:transparent khiến ô
+   * EDITABLE rỗng VÔ HÌNH (cell như ô chết) trong khi ô [readonly] lại nổi
+   * nền xám — người dùng gõ vào ô readonly (không gõ được) và bỏ qua ô nhập
+   * thật. Underline như .fld để ô nhập luôn nhận diện được. */
+  border-bottom: 1px solid #9db3cc;
   border-radius: 3px;
   background: transparent;
   padding: 0 2px;
@@ -339,8 +344,9 @@ td.stt { text-align: center; min-width: 26px; }
 
 /* bảng lặp: ô tick trong cột (cols[].type = checkbox/radio) */
 .loop-chk, .loop-radio { accent-color: #2f6fbf; cursor: pointer; vertical-align: middle; }
-/* bảng lặp: ô chỉ đọc (cols[].type = readonly) */
-.loop-fld[readonly] { background: #f2f2f2; color: #555; }
+/* bảng lặp: ô chỉ đọc (cols[].type = readonly) — nền xám, KHÔNG underline
+ * (tương phản với ô editable có underline). */
+.loop-fld[readonly] { background: #f2f2f2; color: #555; border-bottom-color: transparent; }
 
 /* dòng bảng lặp đang chọn */
 tr.row-sel td { background: #eaf2ff; }

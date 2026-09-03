@@ -10305,6 +10305,10 @@ window.FORM_MAPS = {
     "label": "Kính gửi: (Cơ quan đăng ký kinh doanh cấp tỉnh)"
    },
    {
+    "key": "chu_hkd.ho_ten",
+    "label": "Tôi là1 (ghi họ tên bằng chữ in hoa):"
+   },
+   {
     "key": "ngay_sinh",
     "label": "Ngày, tháng, năm sinh:"
    },

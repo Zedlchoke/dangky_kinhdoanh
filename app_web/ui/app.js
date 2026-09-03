@@ -2418,15 +2418,45 @@
     wireEvents();
     loadCases();
 
-    // danh mục VSIC: thử đọc dữ liệu chung (read-only), mock có bản rút gọn dự phòng
+    // [Phase 5] danh mục VSIC: Bridge-first (xem comment ở loadVsicList).
     var vsicUrl = '../app/data/nganh_vsic.json';
-    var loadVsic = fetch(vsicUrl)
-      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
-      .catch(function () {
-        return fetch('mock/vsic_mini.json').then(function (r) { return r.ok ? r.json() : { nganh: [] }; });
+    function vsicFromBridge() {
+      var a = api();
+      if (!(a && typeof a.read_data_json === 'function')) return null;
+      return a.read_data_json('nganh_vsic.json').then(function (r) {
+        if (!(r && r.ok && r.data && r.data.nganh && r.data.nganh.length))
+          throw new Error('bridge vsic empty');
+        return r.data;
       });
-    loadVsic.then(function (j) { state.vsic = j.nganh || []; })
-      .catch(function () { state.vsic = []; });
+    }
+    function vsicFromHttp() {
+      return fetch(vsicUrl).then(function (r) {
+        if (!r.ok) throw new Error(r.status); return r.json();
+      }).catch(function () {
+        return fetch('mock/vsic_mini.json').then(function (r) {
+          return r.ok ? r.json() : { nganh: [] };
+        });
+      });
+    }
+    function applyVsic(j) {
+      state.vsic = (j && j.nganh) || [];
+      if (state.vsic.length && state.vsic.length < 100) {
+        console.warn('[VSIC] đang dùng danh mục RÚT GỌN (' + state.vsic.length +
+          ' mã) — tên ngành có thể thiếu hoặc không chính thức.');
+      }
+    }
+    function loadVsicList() {
+      var viaBridge = null;
+      try { viaBridge = vsicFromBridge(); } catch (e) { viaBridge = null; }
+      var p = viaBridge ? viaBridge.catch(vsicFromHttp) : vsicFromHttp();
+      return p.then(applyVsic).catch(function () { applyVsic({ nganh: [] }); });
+    }
+    loadVsicList();
+    /* api() chỉ sẵn sàng sau pywebviewready — nạp lại qua Bridge để thay
+     * kết quả fallback (fetch/mock) nếu lần đầu chạy trước khi api có. */
+    window.addEventListener('pywebviewready', function () {
+      loadVsicList();
+    }, { once: true });
 
     // phục hồi bản nháp tự lưu (chờ docs nạp xong, tối đa 5s)
     try {

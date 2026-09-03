@@ -101,6 +101,10 @@ SUITES: list[dict] = [
     # --- Phase 4 (2026-09-03): row/blank-row contract ở lớp engine DOCX ---
     {"name": "test_row_contract_export",  "type": "module", "target": "tools.test_row_contract_export",
      "requires": ["python-docx"]},
+    # --- Phase 5 (2026-09-03): fix bug owner (VSIC Bridge-first, loop-fld
+    #     underline, chu_hkd.ho_ten M01, LO normalize outdir tạm) ---
+    {"name": "test_phase5_ui_fixes",      "type": "module", "target": "tools.test_phase5_ui_fixes",
+     "requires": ["python-docx"]},
     {"name": "test_industry_household",   "type": "module", "target": "tools.test_industry_household",
      "requires": ["python-docx"]},
     {"name": "test_contract_release",     "type": "module", "target": "tools.test_contract_release",

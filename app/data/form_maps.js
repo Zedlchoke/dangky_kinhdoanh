@@ -10733,7 +10733,7 @@ window.FORM_MAPS = {
   "phu_luc": "I",
   "mau_so": 3,
   "ten_mau": "Giấy đề nghị đăng ký doanh nghiệp - Công ty trách nhiệm hữu hạn hai thành viên trở lên",
-  "file": "06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn/DN_PL1_Mau_03_giay_de_nghi_dang_ky_doanh_nghiep_cong_ty_trach_nhiem_huu_han_hai_thanh_vien_tro_len.docx",
+  "file": "06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn/PL1_Mau_03_tach_tu_file_full.docx",
   "template": "templates/PLI_M03.docx",
   "fields": [
    {
@@ -10981,6 +10981,122 @@ window.FORM_MAPS = {
     "label": "von_tu_nhan.ty_le"
    },
    {
+    "key": "ma_so_du_an",
+    "label": "Mã số dự án:"
+   },
+   {
+    "key": "co_quan_cap",
+    "label": "Cơ quan cấp:"
+   },
+   {
+    "key": "ndd.ho_ten",
+    "label": "Họ, chữ đệm và tên (ghi bằng chữ in hoa):"
+   },
+   {
+    "key": "ndd.ngay_sinh",
+    "label": "Ngày, tháng, năm sinh:"
+   },
+   {
+    "key": "ndd.thang_sinh",
+    "label": ""
+   },
+   {
+    "key": "ndd.nam_sinh",
+    "label": ""
+   },
+   {
+    "key": "ndd.gioi_tinh",
+    "label": "Giới tính:"
+   },
+   {
+    "key": "ndd.so_cccd",
+    "label": "Số định danh cá nhân:"
+   },
+   {
+    "key": "ndd.chuc_vu",
+    "label": "Chức danh:"
+   },
+   {
+    "key": "dien_thoai_lien_he",
+    "label": "Điện thoại (nếu có):"
+   },
+   {
+    "key": "gd.ho_ten",
+    "label": "Họ, chữ đệm và tên Giám đốc/Tổng giám đốc:"
+   },
+   {
+    "key": "gd.ngay_sinh",
+    "label": "Ngày, tháng, năm sinh:"
+   },
+   {
+    "key": "gd.thang_sinh",
+    "label": ""
+   },
+   {
+    "key": "gd.nam_sinh",
+    "label": ""
+   },
+   {
+    "key": "gd.gioi_tinh",
+    "label": "Giới tính:"
+   },
+   {
+    "key": "gd.so_cccd",
+    "label": "Số định danh cá nhân:"
+   },
+   {
+    "key": "gd.dien_thoai",
+    "label": "Điện thoại:"
+   },
+   {
+    "key": "kt.ho_ten",
+    "label": "Họ, chữ đệm và tên Kế toán trưởng/Phụ trách kế toán:"
+   },
+   {
+    "key": "kt.ngay_sinh",
+    "label": "Ngày, tháng, năm sinh:"
+   },
+   {
+    "key": "kt.thang_sinh",
+    "label": ""
+   },
+   {
+    "key": "kt.nam_sinh",
+    "label": ""
+   },
+   {
+    "key": "kt.gioi_tinh",
+    "label": "Giới tính:"
+   },
+   {
+    "key": "kt.so_cccd",
+    "label": "Số định danh cá nhân:"
+   },
+   {
+    "key": "kt.dien_thoai",
+    "label": "Điện thoại:"
+   },
+   {
+    "key": "ngay_bd",
+    "label": "Ngày bắt đầu hoạt động6 (trường hợp doanh nghiệp dự kiến bắt đầu hoạt động kể từ ngày được cấp Giấy chứng nhận đăng ký d"
+   },
+   {
+    "key": "thang_bd",
+    "label": ""
+   },
+   {
+    "key": "nam_bd",
+    "label": ""
+   },
+   {
+    "key": "ap_dung_tu",
+    "label": "Áp dụng từ ngày"
+   },
+   {
+    "key": "so_lao_dong",
+    "label": "Tổng số lao động (dự kiến):"
+   },
+   {
     "key": "chk_tt_thanh_lap_moi",
     "label": "thanh lap moi",
     "type": "chk"
@@ -11071,7 +11187,7 @@ window.FORM_MAPS = {
     "type": "chk"
    },
    {
-    "key": "chk_co",
+    "key": "chk_auto_co",
     "label": "Có",
     "type": "chk"
    },
@@ -11088,6 +11204,66 @@ window.FORM_MAPS = {
    {
     "key": "chk_auto_khong_2",
     "label": "Không",
+    "type": "chk"
+   },
+   {
+    "key": "chk_ht_doc_lap",
+    "label": "hach toan doc lap",
+    "type": "chk"
+   },
+   {
+    "key": "chk_ht_hop_nhat",
+    "label": "Có báo cáo tài chính hợp nhất",
+    "type": "chk"
+   },
+   {
+    "key": "chk_ht_phu_thuoc",
+    "label": "hach toan phu thuoc",
+    "type": "chk"
+   },
+   {
+    "key": "chk_co",
+    "label": "Có",
+    "type": "chk"
+   },
+   {
+    "key": "chk_khong",
+    "label": "Không",
+    "type": "chk"
+   },
+   {
+    "key": "chk_gtgt_khoan_tru",
+    "label": "khau tru",
+    "type": "chk"
+   },
+   {
+    "key": "chk_gtgt_truc_tiep_tren_gtgt",
+    "label": "truc tiep tren gtgt",
+    "type": "chk"
+   },
+   {
+    "key": "chk_gtgt_truc_tiep_doanh_so",
+    "label": "truc tiep tren doanh so",
+    "type": "chk"
+   },
+   {
+    "key": "chk_gtgt_khong_phai_nop",
+    "label": "khong phai nop thue gtgt",
+    "type": "chk"
+   },
+   {
+    "key": "chk_bc_hang_thang",
+    "label": "Hàng tháng",
+    "type": "chk"
+   },
+   {
+    "key": "chk_bc_03_thang",
+    "label": "03 tháng một lần",
+    "type": "chk"
+   },
+   {
+    "key": "chk_bc_06_thang",
+    "label": "06 tháng một lần",
     "type": "chk"
    }
   ],
@@ -11200,7 +11376,7 @@ window.FORM_MAPS = {
   "phu_luc": "I",
   "mau_so": 4,
   "ten_mau": "Giấy đề nghị đăng ký doanh nghiệp - Công ty cổ phần",
-  "file": "06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn/DN_PL1_Mau_04_giay_de_nghi_dang_ky_doanh_nghiep_cong_ty_co_phan.docx",
+  "file": "06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn/PL1_Mau_04_tach_tu_file_full.docx",
   "template": "templates/PLI_M04.docx",
   "fields": [
    {
@@ -11528,6 +11704,122 @@ window.FORM_MAPS = {
     "label": "cp_uu_dai_khac.so_luong"
    },
    {
+    "key": "ma_so_du_an",
+    "label": "Mã số dự án:"
+   },
+   {
+    "key": "co_quan_cap",
+    "label": "Cơ quan cấp:"
+   },
+   {
+    "key": "ndd.ho_ten",
+    "label": "Họ, chữ đệm và tên (ghi bằng chữ in hoa):"
+   },
+   {
+    "key": "ndd.ngay_sinh",
+    "label": "Ngày, tháng, năm sinh:"
+   },
+   {
+    "key": "ndd.thang_sinh",
+    "label": ""
+   },
+   {
+    "key": "ndd.nam_sinh",
+    "label": ""
+   },
+   {
+    "key": "ndd.gioi_tinh",
+    "label": "Giới tính:"
+   },
+   {
+    "key": "ndd.so_cccd",
+    "label": "Số định danh cá nhân:"
+   },
+   {
+    "key": "ndd.chuc_vu",
+    "label": "Chức danh:"
+   },
+   {
+    "key": "dien_thoai_lien_he",
+    "label": "Điện thoại (nếu có):"
+   },
+   {
+    "key": "gd.ho_ten",
+    "label": "Họ, chữ đệm và tên Giám đốc/Tổng giám đốc:"
+   },
+   {
+    "key": "gd.ngay_sinh",
+    "label": "Ngày, tháng, năm sinh:"
+   },
+   {
+    "key": "gd.thang_sinh",
+    "label": ""
+   },
+   {
+    "key": "gd.nam_sinh",
+    "label": ""
+   },
+   {
+    "key": "gd.gioi_tinh",
+    "label": "Giới tính:"
+   },
+   {
+    "key": "gd.so_cccd",
+    "label": "Số định danh cá nhân:"
+   },
+   {
+    "key": "gd.dien_thoai",
+    "label": "Điện thoại:"
+   },
+   {
+    "key": "kt.ho_ten",
+    "label": "Họ, chữ đệm và tên Kế toán trưởng/Phụ trách kế toán:"
+   },
+   {
+    "key": "kt.ngay_sinh",
+    "label": "Ngày, tháng, năm sinh:"
+   },
+   {
+    "key": "kt.thang_sinh",
+    "label": ""
+   },
+   {
+    "key": "kt.nam_sinh",
+    "label": ""
+   },
+   {
+    "key": "kt.gioi_tinh",
+    "label": "Giới tính:"
+   },
+   {
+    "key": "kt.so_cccd",
+    "label": "Số định danh cá nhân:"
+   },
+   {
+    "key": "kt.dien_thoai",
+    "label": "Điện thoại:"
+   },
+   {
+    "key": "ngay_bd",
+    "label": "Ngày bắt đầu hoạt động6 (trường hợp doanh nghiệp dự kiến bắt đầu hoạt động kể từ ngày được cấp Giấy chứng nhận đăng ký d"
+   },
+   {
+    "key": "thang_bd",
+    "label": ""
+   },
+   {
+    "key": "nam_bd",
+    "label": ""
+   },
+   {
+    "key": "ap_dung_tu",
+    "label": "Áp dụng từ ngày"
+   },
+   {
+    "key": "so_lao_dong",
+    "label": "Tổng số lao động (dự kiến):"
+   },
+   {
     "key": "chk_tt_thanh_lap_moi",
     "label": "thanh lap moi",
     "type": "chk"
@@ -11618,7 +11910,7 @@ window.FORM_MAPS = {
     "type": "chk"
    },
    {
-    "key": "chk_co",
+    "key": "chk_auto_co",
     "label": "Có",
     "type": "chk"
    },
@@ -11635,6 +11927,66 @@ window.FORM_MAPS = {
    {
     "key": "chk_auto_khong_2",
     "label": "Không",
+    "type": "chk"
+   },
+   {
+    "key": "chk_ht_doc_lap",
+    "label": "hach toan doc lap",
+    "type": "chk"
+   },
+   {
+    "key": "chk_ht_hop_nhat",
+    "label": "Có báo cáo tài chính hợp nhất",
+    "type": "chk"
+   },
+   {
+    "key": "chk_ht_phu_thuoc",
+    "label": "hach toan phu thuoc",
+    "type": "chk"
+   },
+   {
+    "key": "chk_co",
+    "label": "Có",
+    "type": "chk"
+   },
+   {
+    "key": "chk_khong",
+    "label": "Không",
+    "type": "chk"
+   },
+   {
+    "key": "chk_gtgt_khoan_tru",
+    "label": "khau tru",
+    "type": "chk"
+   },
+   {
+    "key": "chk_gtgt_truc_tiep_tren_gtgt",
+    "label": "truc tiep tren gtgt",
+    "type": "chk"
+   },
+   {
+    "key": "chk_gtgt_truc_tiep_doanh_so",
+    "label": "truc tiep tren doanh so",
+    "type": "chk"
+   },
+   {
+    "key": "chk_gtgt_khong_phai_nop",
+    "label": "khong phai nop thue gtgt",
+    "type": "chk"
+   },
+   {
+    "key": "chk_bc_hang_thang",
+    "label": "Hàng tháng",
+    "type": "chk"
+   },
+   {
+    "key": "chk_bc_03_thang",
+    "label": "03 tháng một lần",
+    "type": "chk"
+   },
+   {
+    "key": "chk_bc_06_thang",
+    "label": "06 tháng một lần",
     "type": "chk"
    }
   ],

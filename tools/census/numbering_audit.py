@@ -31,6 +31,7 @@ import json
 import os
 import re
 import sys
+import unicodedata
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 BLOCKS = os.path.join(ROOT, "app", "data", "blocks")
@@ -139,13 +140,26 @@ def main():
             report[fid] = entry
 
     # B. chuỗi companion
+    # [Owner P1=A 2026-09-03] main form có PHẦN ĐUÔI sau mục pointer ("Gửi
+    # kèm") — đăng ký thuế/BHXH/CSGHL (M03 mục 8–11, M04 mục 10–13). Chuỗi
+    # companion nối TIẾP SAU MỤC POINTER, không phải sau max: main_last =
+    # số của mục "Gửi kèm" cuối cùng; không thấy pointer → fallback max
+    # (hành vi cũ, form chưa có đuôi).
     chains = {}
     for main_id, comp_id in sorted(CONTINUATION_CHAINS.items()):
         try:
-            main_last = max(extract_sequences(
+            seq = extract_sequences(
                 json.loads(open(os.path.join(BLOCKS, main_id + ".json"),
-                                encoding="utf-8").read())["blocks"]),
-                default=(0, ""), key=lambda t: t[0])[0]
+                                encoding="utf-8").read())["blocks"])
+
+            def _fold(s):
+                nfkd = unicodedata.normalize("NFD", s.lower())
+                return re.sub(r"\s+", " ", "".join(
+                    c for c in nfkd
+                    if unicodedata.category(c) != "Mn").replace("đ", "d"))
+            pointers = [n for n, t in seq if re.search(r"gui kem", _fold(t))]
+            max_last = max(seq, default=(0, ""), key=lambda t: t[0])[0]
+            main_last = pointers[-1] if pointers else max_last
             comp_first = min(extract_sequences(
                 json.loads(open(os.path.join(BLOCKS, comp_id + ".json"),
                                 encoding="utf-8").read())["blocks"]),
@@ -155,7 +169,8 @@ def main():
             continue
         ok = comp_first == main_last + 1
         chains["%s->%s" % (main_id, comp_id)] = {
-            "main_last": main_last, "comp_first": comp_first, "ok": ok}
+            "main_last": main_last, "comp_first": comp_first,
+            "main_max": max_last, "ok": ok}
 
     os.makedirs(OUT_DIR, exist_ok=True)
     out_path = os.path.join(OUT_DIR, "numbering_report.json")

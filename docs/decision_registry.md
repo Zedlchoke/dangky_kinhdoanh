@@ -13,6 +13,21 @@
   lập khác vẫn chạy: layout, P2 platform, spec/test).
 - Migration impact = thay đổi bắt buộc lên draft/blocks/form_maps khi áp dụng.
 
+## Owner decisions 2026-09-03 (trả lời packet `docs/owner_decision_packet_2026-09-03.md`)
+
+| Packet | Quyết định | Ghi chú triển khai |
+|---|---|---|
+| P1 (D1.3/D1.5/D3.3 — đuôi M03/M04) | **DECIDED: A** | khôi phục phần đuôi đầy đủ + implement input theo source chính thức hiện hành → lane `fix-tails-m0304` |
+| P2 (member grids PLII_M02 ×2 + PLI_M72 N2–N5) | **DECIDED: A** | rebuild → lane `fix-member-grids` |
+| P3 (bảng thuế PLII_M03–M06) | **DECIDED: A** | rebuild → lane `fix-tax-m0306` |
+| P4 (PLI_M11) | **DECIDED CÓ ĐIỀU KIỆN** | chỉ gỡ sau khi đối chiếu văn bản chính thức hiệu lực + ghi source evidence; chưa chứng minh được → giữ BLOCKED_OWNER, không tự gỡ |
+| P5 (AUD-010 hình thức "ngành chính") | **DECIDED: B** | control ô vuông, giữ radio semantics + keyboard/ARIA; DOCX xuất `X` |
+| P6 (Excel rollout) | **DECIDED: C** | theo cụm: M72 → hộ kinh doanh → thay đổi ngành → thuế; Google Forms ngoài scope wave này |
+| P7 (app_tk) | Deprecated sau khi pywebview Windows smoke PASS | Wave G |
+| P8a (Word visual) | Owner đã cấp quyền — probe OK (Word 16.16.27, exit 0) | chạy 87/87 khi pipeline ổn |
+| P8b (Windows) | Chờ máy/VM sạch; giữ NOT RUN | Wave G |
+| Push remote | KHÔNG push cho tới lệnh owner | toàn bộ |
+
 ## Đã DECIDED trước registry
 
 | ID | Quyết định | Ngày | Evidence |

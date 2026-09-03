@@ -2671,8 +2671,26 @@ def process_form(path, titles, coverage):
     return meta, unmatched
 
 
+# [Owner P1=A 2026-09-03] Nguồn canonical per-form — override first-hit
+# aliasing (backlog W2 #5): PLI_M03/M04 dùng bản tách từ bản gốc ĐẦY ĐỦ
+# (PL1_Mau_NN_tach_tu_file_full.docx) thay cho bản convert DN_* bị cắt
+# phần đuôi mục 8–11/10–13 (delta 116→226 / 149→260 dòng — packet P1).
+SOURCE_OVERRIDES = {
+    "PLI_M03": ("06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn/"
+                "PL1_Mau_03_tach_tu_file_full.docx"),
+    "PLI_M04": ("06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn/"
+                "PL1_Mau_04_tach_tu_file_full.docx"),
+}
+
+
 def find_source(form_id):
     """Tìm file nguồn docx của một form_id (quét các thư mục nguồn)."""
+    if form_id in SOURCE_OVERRIDES:
+        p = ROOT / SOURCE_OVERRIDES[form_id]
+        if p.exists():
+            return p
+        raise SystemExit("SOURCE_OVERRIDES[%s] khong ton tai: %s"
+                         % (form_id, p))
     for path in iter_docx_files():
         if path.name.startswith("~$") or path.name.startswith("_"):
             continue

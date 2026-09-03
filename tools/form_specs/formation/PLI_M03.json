@@ -1,7 +1,7 @@
 {
   "form_id": "PLI_M03",
   "group": "formation",
-  "note": "Mau thanh lap (TNHH 2TV+ / CTCP). Luoi nganh mat khi convert, cau truc giong PLI_M01.",
+  "note": "Mau thanh lap (TNHH 2TV+ / CTCP). Luoi nganh mat khi convert, cau truc giong PLI_M01. || [Owner P1=A 2026-09-03] insert pos:end (batch 2) SUPERSEDED: nguồn canonical đổi sang bản tách đầy đủ (SOURCE_OVERRIDES), dòng mục 7/8-9 có sẵn trong nguồn — inserts rỗng tránh trùng dòng. || [Owner P1=A 2026-09-03] drop_until chốt tại mục kế trên nguồn ĐẦY ĐỦ (nguon_von_dieule M03 -> ^7. thanh vien cong ty; co_phan_duoc_quyen_chao_ban M04 -> ^8. co dong sang lap) — đuôi mục 8+ thuộc phạm vi implement tail của lane fix-tails-m0304, không thuộc vùng bảng.",
   "gap_nghiepvu": "Template con lai 4 cot (khong co 'Chi tiet hoat dong') -> spec 4 cot khop template that. Nguon that cua mau nay trong repo la file chuyen doi 06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn/DN_PL1_Mau_03_*.docx (form_maps.file xac nhan) - anchor/drop da kiem ca tren nguon va tren template.  Chua bat requirePrimary cho la_nganh_chinh - agent 2A xac nhan voi Lead truoc khi bat. || Wave cap-von (2026-08-28, task 3a): them entry fixed-matrix 'nguon_von_dieule' (D1.1=A; owner + Lead 2026-08-28: dung theo bieu mau HIEN HANH TT 121/2026/TT-BTC Phu luc Mau 03 — thay Mau 03 Phu luc I TT 68, bang 'Nguồn vốn điều lệ' KHONG doi - mo D1.3/D3.3). Chi tiet gap + nguon trong legal_status cua entry.",
   "tables": [
     {
@@ -118,7 +118,7 @@
       "pos": "after",
       "anchor": "^6\\. nguon von dieu le",
       "no_default_drops": true,
-      "drop_until": "(?!)",
+      "drop_until": "^7\\. thanh vien cong ty",
       "drop": [
         "^loai nguon von$",
         "^so tien \\(bang so; vnd",
@@ -136,26 +136,5 @@
       }
     }
   ],
-  "inserts": [
-    {
-      "pos": "end",
-      "runs": [
-        {
-          "text": "7. Thành viên công ty:",
-          "b": true
-        },
-        {
-          "text": " ("
-        },
-        {
-          "text": "kê khai theo Mẫu số 6 Phụ lục I ban hành kèm theo Thông tư này",
-          "i": true
-        },
-        {
-          "text": ") Gửi kèm."
-        }
-      ],
-      "note": "Nguyên văn _Bieu_mau_PL_I_II_full.docx para 847 (Mẫu số 3 Phụ lục I TT 68/2025/TT-BTC); dòng mất ở nguồn DN_PL1_Mau_03 khi convert (Wave D batch 2, gate chain M03->M06 6->8 thiếu 7)."
-    }
-  ]
+  "inserts": []
 }

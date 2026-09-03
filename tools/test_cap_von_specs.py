@@ -69,7 +69,9 @@ FORMS = {
         "group": "formation", "mau": 3, "pl": "I",
         "semantic_key": "nguon_von_dieu_le",
         "anchor_fold": "6. nguon von dieu le",
-        "drop_until": "(?!)",                    # mục cuối của nguồn bị cắt
+        # [Owner P1=A 2026-09-03] nguồn canonical giờ là bản ĐẦY ĐỦ (tách từ
+        # _Bieu_mau_PL_I_II_full) — vùng bảng mục 6 kết thúc tại mục 7
+        "drop_until": "^7\\. thanh vien cong ty",
         "columns": [None, "so_tien_vnd_va_tuong_duong", "ty_le"],
         "rows": ["von_ngan_sach_nha_nuoc", "von_tu_nhan", "von_nuoc_ngoai",
                  "von_khac", "tong_cong"],
@@ -112,7 +114,8 @@ FORMS = {
         "group": "formation", "mau": 4, "pl": "I",
         "semantic_key": "co_phan_duoc_quyen_chao_ban",
         "anchor_fold": "thong tin ve co phan duoc quyen chao ban",
-        "drop_until": "(?!)",
+        # [Owner P1=A 2026-09-03] nguồn đầy đủ — vùng kết thúc tại mục 8
+        "drop_until": "^8\\. co dong sang lap",
         "columns": [None, "so_luong"],
         "rows": ["co_phan_pho_thong", "cp_uu_dai_bieu_quyet", "cp_uu_dai_co_tuc",
                  "cp_uu_dai_hoan_lai", "cp_uu_dai_khac", "tong_so"],

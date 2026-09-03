@@ -1,8 +1,11 @@
 # MASTER PLAN v4 — sửa lỗi và rà soát toàn bộ ứng dụng
 
-> **Checkpoint audit:** 2026-08-30, `main@6ae63c2`, đồng bộ `origin/main`;
-> kết quả máy và danh sách bàn giao chi tiết tại
-> `docs/whole_app_audit_2026-08-30.md`.
+> **Checkpoint audit:** 2026-09-03, `main@cafb72d` (tiến từ checkpoint audit
+> 2026-08-30 `6ae63c2`): Gate A/B/C PASS, Wave D batch 1+2 + Wave E ĐÓNG,
+> P5R assessment 7 PASS / 3 PARTIAL. Chi tiết ledger
+> `docs/execution_ledger.md`; handoff audit `docs/whole_app_audit_2026-08-30.md`.
+> Owner đã quyết P1–P8 ngày 2026-09-03 — xem bảng
+> `docs/decision_registry.md` § "Owner decisions 2026-09-03".
 >
 > Đây là kế hoạch duy nhất có hiệu lực. Source/tests/manifests tại HEAD là trọng
 > tài kỹ thuật; nội dung pháp lý phải đối chiếu văn bản đang có hiệu lực. Các kế

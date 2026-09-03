@@ -106,6 +106,25 @@ SECTION_STATUSES = (
 )
 NO_TABLE_SECTION_KINDS = ("prose-block", "scalar-fields")
 
+# Heading reconcile (Phase 3 phát hiện): các fix heading của Phase 2 (commits
+# 0aedd80/b9d9d48/a54b0ca) từng sửa TRỰC TIẾP manifest.json — vi phạm bất biến
+# "không sửa tay generated artifact" và làm manifest không tái lập được. Fix
+# được đưa về generator: áp lên source_evidence của fragment lúc build.
+HEADING_OVERRIDES = {
+    ("PLI_M23", "thue_chi_tieu_6_1_6"): {
+        "heading": "7. Thông tin đăng ký thuế:",
+        "heading_note": "Numbering nguồn gốc là mục 6, sau P1 source swap đã "
+                        "đúng thành mục 7. section_id giữ '6_1_6' để JOIN "
+                        "spec/tests.",
+    },
+    ("PLI_M72", "co_dong_sang_lap_cp"): {
+        "heading": "7. Cổ đông sáng lập:",
+    },
+    ("PLI_M72", "co_dong_nuoc_ngoai_cp"): {
+        "heading": "8. Cổ đông là nhà đầu tư nước ngoài:",
+    },
+}
+
 RECLASSIFICATIONS = {
     ("PLII_M17", "ho_so_bao_gom"): {
         "kind": "prose-block", "status": "no_table",
@@ -259,6 +278,17 @@ LEAD_STATUS_OVERRIDES = {
                     "'tài sản khác' là ô mô tả text; regen template + "
                     "section_specs; suite P2C 16 PASS, runtime contract wired.",
     },
+    ("PLI_M01", "bhxh_phuong_thuc_dong"): {
+        "status": "already_complete",
+        "evidence": "Phase 3 (2026-09-03): census stale — notes than thiếu "
+                    "chk_bc_03_thang nhưng ba64f29 (fix checkbox det rule "
+                    "0?3/0?6 thang) đã đủ 3/3 token chk_bc_hang_thang/"
+                    "chk_bc_03_thang/chk_bc_06_thang trong vùng anchor mục 7 "
+                    "(test_phase3_m01_m02 PASS); cùng kiến trúc nhóm chk qua "
+                    "đường chung như tiền lệ PLI_M17 phuong_thuc_dong_bhxh "
+                    "(P2D D5.1=A) — không khai spec/grid riêng để tránh 2 "
+                    "nguồn sự thật; audit scalar_credited tự verify region keys.",
+    },
     ("PLI_M02", "nguon_von_dieule"): {
         "status": "already_complete",
         "evidence": "P2C D1.1=A: 5 dòng + Tổng cộng output_only, cùng key "
@@ -353,6 +383,11 @@ def normalize_section(fid, sec):
         if "status" in rc:
             out["status"] = rc["status"]
         out["lead_reclassification"] = {"reason": rc["reason"]}
+    ho = HEADING_OVERRIDES.get((fid, out.get("section_id")))
+    if ho is not None:
+        se = dict(out.get("source_evidence") or {})
+        se.update(ho)
+        out["source_evidence"] = se
     return out
 
 

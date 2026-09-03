@@ -1652,7 +1652,12 @@
             { id: 'tong_so', label: 'Tổng số', output_only: true }
           ],
           columns: [
-            { tag: null, inputType: 'readonly',
+            /* [Phase 3] tag định danh cột label (inputType vẫn readonly,
+             * không tạo input) — thống nhất convention 3 section anh em
+             * (co_cau 'loai_co_phan', M05 'loai_nguon_von', M01 tai_san
+             * 'loai_tai_san_gop_von'); census required column tên đúng
+             * 'loai_co_phan_chao_ban'. */
+            { tag: 'loai_co_phan_chao_ban', inputType: 'readonly',
               header: 'Loại cổ phần được quyền chào bán' },
             { tag: 'so_luong', inputType: 'money', header: 'Số lượng' }
           ],

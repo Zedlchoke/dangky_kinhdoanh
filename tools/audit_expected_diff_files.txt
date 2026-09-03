@@ -363,3 +363,11 @@ app/templates/PLI_M72.docx
 # nhận số w:tbl theo biến thể (TNHH_2TV=2, CTCP=3, DHDN=2)
 tools/census/p1_b_verify_m72.py
 tools/test_m72_conditional_export.py
+
+# [Phase 3 2026-09-03] 6 section MISSING/PARTIAL -> IMPLEMENTED_VERIFIED:
+# lane B tests M01/M02 (BHXH chk tokens + fixed-matrix STT semantics), lane C
+# migrate PLI_M11 ds_to_chuc_cshhl sang file spec (verbatim zero-diff) + tests
+# M04/M11 (menh_gia scalar region, chao_ban shape)
+tools/form_specs/formation/PLI_M11.json
+tools/test_phase3_m01_m02.py
+tools/test_phase3_m04_m11.py

@@ -25,12 +25,13 @@ from tools.census.table_coverage_audit import (  # noqa: E402
     bridge_loop_names,
     check_section_count,
     derive_final_status,
+    find_js_block,
+    fixed_matrix_extra_evidence,
     iter_js_entries,
     legal_blocker_flags,
     match_blocks,
     resolve_override_keys,
     strip_js,
-    find_js_block,
 )
 
 RESULTS = []
@@ -421,6 +422,65 @@ def test_match_blocks_chk_prefix():
           bm3["chk_ok"] is None)
 
 
+def test_fixed_matrix_credit():
+    """Phase 3: credit semantic cho fixed-matrix — STT in sẵn + scalar dòng
+    riêng trong vùng anchor (menh_gia_co_phan của PLI_M04)."""
+    # Dương: stt được credit khi fixed-matrix có fixed_rows evidence
+    extra, notes = fixed_matrix_extra_evidence(
+        kind="fixed-matrix", required_cols=["stt", "loai_tai_san", "ty_le"],
+        n_fixed_rows=7, region_input_keys=[])
+    check("fixed-matrix credit: stt được credit khi có fixed_rows=7",
+          extra == {"stt"} and len(notes) == 1,
+          "got %s / %s" % (extra, notes))
+
+    # Dương: scalar vùng anchor được credit CHỈ khớp EXACT tên required
+    extra2, notes2 = fixed_matrix_extra_evidence(
+        kind="fixed-matrix",
+        required_cols=["stt", "menh_gia_co_phan", "so_luong"],
+        n_fixed_rows=6, region_input_keys=["menh_gia_co_phan"])
+    check("fixed-matrix credit: scalar vùng anchor exact-match được credit",
+          extra2 == {"stt", "menh_gia_co_phan"} and len(notes2) == 2,
+          "got %s / %s" % (extra2, notes2))
+
+    # ÂM: editable-grid KHÔNG được credit stt (chỉ fixed-matrix)
+    extra3, notes3 = fixed_matrix_extra_evidence(
+        kind="editable-grid", required_cols=["stt", "ten"],
+        n_fixed_rows=5, region_input_keys=[])
+    check("âm: editable-grid có fixed_rows KHÔNG được credit stt",
+          extra3 == set() and notes3 == [], "got %s / %s" % (extra3, notes3))
+
+    # ÂM: fixed-matrix KHÔNG có fixed_rows evidence -> không credit stt
+    extra4, _ = fixed_matrix_extra_evidence(
+        kind="fixed-matrix", required_cols=["stt"],
+        n_fixed_rows=0, region_input_keys=[])
+    check("âm: fixed-matrix không có fixed_rows -> không credit stt",
+          extra4 == set(), "got %s" % extra4)
+
+    # ÂM: khớp MỘT PHẦN tên không được chấp nhận (ty_le_co_phan ≠ ty_le)
+    extra5, _ = fixed_matrix_extra_evidence(
+        kind="fixed-matrix", required_cols=["ty_le"],
+        n_fixed_rows=0, region_input_keys=["ty_le_co_phan"])
+    check("âm: scalar vùng anchor chỉ exact-match, không khớp con",
+          extra5 == set(), "got %s" % extra5)
+
+    # ÂM: scalar ngoài required không được credit
+    extra6, _ = fixed_matrix_extra_evidence(
+        kind="fixed-matrix", required_cols=["so_luong"],
+        n_fixed_rows=0, region_input_keys=["menh_gia_co_phan"])
+    check("âm: key vùng anchor không nằm trong required -> không credit",
+          extra6 == set(), "got %s" % extra6)
+
+    # Tích hợp derive: đủ pipeline + evidenced đủ (nhờ credit) -> IMPLEMENTED
+    st, _, _ = derive_final_status(
+        kind="fixed-matrix", manifest_status="already_complete",
+        override_status="already_complete", stages=stage_arg(),
+        required_cols=["menh_gia_co_phan", "stt", "so_luong"],
+        evidenced_tags=["menh_gia_co_phan", "stt", "so_luong"],
+        legal_blocker=False, override_blocked=False, removed_by_law=False)
+    check("tích hợp: fixed-matrix đủ cột sau credit -> IMPLEMENTED_VERIFIED",
+          st == FINAL_IMPLEMENTED, "got %s" % st)
+
+
 def main():
     print("== selftest tools/test_table_coverage_audit.py ==")
     test_implemented()
@@ -437,6 +497,7 @@ def main():
     test_bridge_loop_names()
     test_legal_blocker_flags()
     test_match_blocks_chk_prefix()
+    test_fixed_matrix_credit()
     fails = [r for r in RESULTS if not r[1]]
     print("\nTOTAL: %d | PASS: %d | FAIL: %d"
           % (len(RESULTS), len(RESULTS) - len(fails), len(fails)))

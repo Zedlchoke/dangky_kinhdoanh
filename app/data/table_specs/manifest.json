@@ -1337,7 +1337,7 @@
       "ba_thang_mot_lan",
       "sau_thang_mot_lan"
      ],
-     "status": "partial",
+     "status": "already_complete",
      "source_evidence": {
       "template": "app/templates/PLI_M01.docx",
       "heading": "7. Thông tin về việc đóng bảo hiểm xã hội6:",
@@ -1348,7 +1348,10 @@
       ]
      },
      "notes": "3 phương thức cố định nhưng ô '□ 3 tháng một lần' là ký tự □ literal KHÔNG có token (blocks không có chk_bc_03_thang, trong khi M02/M06/M08/M09 đều có). Cần bổ sung binding.",
-     "semantic_key": "phuong_thuc_dong_bhxh_dntn"
+     "semantic_key": "phuong_thuc_dong_bhxh_dntn",
+     "lead_status_override": {
+      "evidence": "Phase 3 (2026-09-03): census stale — notes than thiếu chk_bc_03_thang nhưng ba64f29 (fix checkbox det rule 0?3/0?6 thang) đã đủ 3/3 token chk_bc_hang_thang/chk_bc_03_thang/chk_bc_06_thang trong vùng anchor mục 7 (test_phase3_m01_m02 PASS); cùng kiến trúc nhóm chk qua đường chung như tiền lệ PLI_M17 phuong_thuc_dong_bhxh (P2D D5.1=A) — không khai spec/grid riêng để tránh 2 nguồn sự thật; audit scalar_credited tự verify region keys."
+     }
     }
    ],
    "legal_questions": [

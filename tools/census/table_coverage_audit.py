@@ -41,7 +41,12 @@ Bốn xử lý evidence cần lưu ý (đều chỉ dùng dữ liệu có sẵn,
     tại/vị trí anchor (không anchor section nào xen giữa, tên có thật ở
     CẢ blocks L0 VÀ form_maps dynamic_tables) -> positional bridge sang
     loop đó; 4 tầng (blocks/form_maps/spec/GRID_META) phải tự xác nhận
-    cùng tên loop thì evidence mới đầy đủ.
+    cùng tên loop thì evidence mới đầy đủ;
+  * fixed-matrix credit (Phase 3): ``stt`` là số thứ tự IN SẴN của dòng pháp
+    định (spec drop ^stt$ + fixed_rows / runtime ``stt: {mode}``) và scalar
+    dòng riêng trong vùng anchor (vd menh_gia_co_phan) được credit vào
+    evidenced tags CHỈ với kind='fixed-matrix', khớp EXACT — xem
+    :func:`fixed_matrix_extra_evidence`. Kind lưới editable không được credit.
 
 Chạy:
     python3 -X utf8 -m tools.census.table_coverage_audit
@@ -327,6 +332,44 @@ def derive_final_status(kind, manifest_status, override_status, stages,
         return FINAL_IMPLEMENTED, [], detail or ["đủ evidence xuyên pipeline"]
     return (FINAL_MISSING, missing,
             ["thiếu stage: " + ", ".join(missing)])
+
+
+def fixed_matrix_extra_evidence(kind, required_cols, n_fixed_rows,
+                                region_input_keys):
+    """(THUẦN) Credit semantic bổ sung RIÊNG cho kind='fixed-matrix'.
+
+    Hai lớp bằng chứng hợp lệ (đều phải có sẵn trong dữ liệu, không suy diễn):
+
+    1. ``stt`` — số thứ tự IN SẴN của dòng pháp định: fixed-matrix in STT theo
+       thứ tự dòng cố định khi xuất (spec drop ``^stt$`` + khai ``fixed_rows``;
+       runtime contract khai ``stt: {mode: ...}``). STT không phải input cột
+       nên KHÔNG được đòi tag input — credit khi ``n_fixed_rows >= 1``.
+    2. Scalar dòng riêng nằm trong vùng anchor của mục (vd ``menh_gia_co_phan``
+       của PLI_M04 — "Mệnh giá cổ phần (VNĐ): …" in như MỘT DÒNG RIÊNG, không
+       phải cột ma trận): credit khi key khớp EXACT một required column. Không
+       khớp con (``ty_le_co_phan`` KHÔNG credit ``ty_le``) và key ngoài
+       required không được credit.
+
+    Kind khác fixed-matrix (editable-grid/nested-grid/...) KHÔNG được credit
+    — trả (set(), []).
+
+    Trả ``(extra_tags: set, notes: list[str])``.
+    """
+    if kind != "fixed-matrix":
+        return set(), []
+    req = set(required_cols)
+    extra, notes = set(), []
+    if n_fixed_rows >= 1 and "stt" in req:
+        extra.add("stt")
+        notes.append(
+            "credit stt: số thứ tự in sẵn của fixed-matrix (%d dòng pháp "
+            "định, xuất theo thứ tự dòng — không phải input cột)"
+            % n_fixed_rows)
+    for k in sorted(set(region_input_keys) & req):
+        extra.add(k)
+        notes.append("credit scalar vùng anchor: input key '%s' là dòng riêng "
+                     "của mục (không phải cột ma trận)" % k)
+    return extra, notes
 
 
 _RE_BRIDGE_TOKEN = re.compile(r"[a-z][a-z0-9_]{2,}")
@@ -826,7 +869,8 @@ def match_form_maps(fm_form, candidates):
                          "id": dt.get("id"), "loop": dt.get("loop"),
                          "tags": tags,
                          "table_index": dt.get("table_index"),
-                         "n_cols_total": n_total + leading})
+                         "n_cols_total": n_total + leading,
+                         "n_fixed_rows": len(dt.get("fixed_rows") or [])})
     for i, ss in enumerate(fm_form.get("section_specs") or []):
         ids = {ss.get("id"), ss.get("section_id"), ss.get("semantic_key")}
         if ids & candidates:
@@ -837,7 +881,8 @@ def match_form_maps(fm_form, candidates):
                          "loop": ss.get("loop") or ss.get("id"),
                          "tags": tags,
                          "table_index": ss.get("table_index"),
-                         "n_cols_total": n_total + leading})
+                         "n_cols_total": n_total + leading,
+                         "n_fixed_rows": len(ss.get("fixed_rows") or [])})
     if not hits:
         return None, []
     ev = "; ".join(
@@ -877,6 +922,7 @@ def match_spec(spec_docs, candidates):
                     "loop": sp.get("loop"),
                     "tags": tags,
                     "n_cols_total": len(tags) + n_untagged,
+                    "n_fixed_rows": len(sp.get("fixed_rows") or []),
                 })
     if not hits:
         return None, []
@@ -1217,10 +1263,36 @@ def audit_section(form, section, ctx):
     evidenced_tags = None
     missing_cols = None
     name_variant_notes = []
+
+    # --- fixed-matrix semantic credit (Phase 3): STT in sẵn của dòng pháp
+    #     định + scalar dòng riêng trong vùng anchor (vd menh_gia_co_phan).
+    #     Bằng chứng fixed_rows: spec/form_maps (n_fixed_rows) hoặc runtime
+    #     contract khai 'fixed_rows:'; scalar: input key exact trong vùng
+    #     anchor theo VỊ TRÍ (claim census), CHỈ kind='fixed-matrix'.
+    fm_fixed_rows = 0
+    for h in spec_hits + maps_hits:
+        fm_fixed_rows = max(fm_fixed_rows, h.get("n_fixed_rows") or 0)
+    fm_contract = (ctx["runtime"].get("form_contracts") or {}).get(fid) or {}
+    if isinstance(fm_contract.get(sid), str) and \
+            re.search(r"fixed_rows\s*:", fm_contract[sid]):
+        fm_fixed_rows = max(fm_fixed_rows, 1)
+    fm_region_keys = []
+    if kind == "fixed-matrix":
+        fm_reg = ((ctx.get("layout") or {}).get(fid) or {}
+                  ).get("regions", {}).get(sid)
+        if fm_reg:
+            fm_ins, _ = region_keys_scan(ctx["flat_blocks"][fid],
+                                         fm_reg[0], fm_reg[1])
+            fm_region_keys = sorted(set(fm_ins))
+    fm_extra, fm_notes = fixed_matrix_extra_evidence(
+        kind=kind, required_cols=required_cols, n_fixed_rows=fm_fixed_rows,
+        region_input_keys=fm_region_keys)
+
     if tag_lists or col_count:
         flat = set()
         for lst in tag_lists:
             flat.update(lst)
+        flat |= fm_extra
 
         def tag_matches(col, tag):
             if tag == col or tag.endswith("_" + col) or col in tag:
@@ -1283,8 +1355,17 @@ def audit_section(form, section, ctx):
         removed_by_law=removed_by_law,
         scalar_mode=scalar_credited,
     )
+    if fm_extra:
+        detail = detail + fm_notes
 
     conflicts = []
+    if fm_extra:
+        conflicts.append(
+            "fixed-matrix credit (semantic, có bằng chứng): %s — STT in sẵn/"
+            "scalar dòng riêng không phải input cột; evidence: fixed_rows=%s, "
+            "scalar vùng anchor %s" % (", ".join(sorted(fm_extra)),
+                                       fm_fixed_rows or "runtime-contract",
+                                       fm_region_keys or "[]"))
     if bridged:
         conflicts.append(
             "bridge: override evidence nêu tên implementation (%s) khác "

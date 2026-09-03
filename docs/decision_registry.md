@@ -228,3 +228,25 @@ bản gốc giấy — trả lời D1.3/D1.5/D3.3=B cũ):
   sửa đổi TT 68/2025, thay 09 biểu mẫu — các lane rebuild phải kiểm tra mẫu
   của mình có thuộc số bị thay không, ưu tiên bản hiện hành, ghi rõ trong
   spec; mơ hồ thì hỏi owner.
+
+## Owner questions Phase 4 — row/blank-row contract (2026-09-03, session Phase 4)
+
+**Q-P4-1. `min_rows` của 3 nested-grid — enforce hay bỏ khai báo?**
+- Hiện trạng: `spec.min_rows: 1` khai tại PLI_M02 `nddpl_uy_quyen_chu_so_huu`,
+  PLI_M12 `ndd_uy_quyen_sau_thay_doi`, PLI_M15 `ndd_pl_uy_quyen_chu_so_huu_moi`
+  nhưng KHÔNG tầng nào enforce (nested-grid.js `validate()` không đọc;
+  `rowOpMeta` chỉ đọc `max_rows`) — inventory: `docs/row_contract_inventory.json`
+  gaps[0].
+- Câu hỏi: (a) nếu enforce vô điều kiện (filled < min_rows → blocking) thì hồ
+  sơ KHÔNG ủy quyền (section trống hợp lệ) sẽ bị chặn export — có đúng nghiệp
+  vụ không? hay (b) chỉ enforce khi section đã có ít nhất 1 dòng có dữ liệu
+  (khi đó min_rows=1 gần như hiển nhiên, chỉ còn ý nghĩa với min_rows ≥ 2),
+  hay (c) xóa khai báo để tránh ảo tưởng đã có ràng buộc?
+- Mặc định nếu owner chưa trả lời: giữ nguyên khai báo, KHÔNG enforce, giữ
+  BLOCKED_OWNER cho gap này (không tự chọn semantics).
+
+**Q-P4-2 (đã chốt, ghi nhận lại trong scope Phase 4).** Blank row: dòng MỌI ô
+trống không trở thành business data — lọc ở export (JS `exportLoops` +
+Python `_expand_loops` guard), draft giữ nguyên; blank rows IN SẴN của bản giấy
+(blocks `blankRows`) là cấu trúc pháp định, không lọc. Đã implement + corpus
+test (test_row_contract_corpus / test_row_contract_export).

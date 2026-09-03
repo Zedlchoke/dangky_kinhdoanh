@@ -205,12 +205,21 @@ function mkRow(tags, j) {
   check('H3.5 selector inactive (chua chon loai hinh) -> payload rong (khong sot token)',
     exSelNone.ds_nganh_dntn.length === 0,
     JSON.stringify(exSelNone.ds_nganh_dntn));
-  // Chọn đúng biến thể -> giữ nguyên dòng (hành vi active-theo-selector)
+  // Chọn đúng biến thể -> giữ nguyên dòng CÓ DỮ LIỆU (hành vi
+  // active-theo-selector). [Phase 4 row/blank-row contract] dòng MỌI ô trống
+  // KHÔNG còn được xuất thành business data kể cả khi grid active — hành vi
+  // pass-through blank row cũ (test cũ assert length===1 với row rỗng) bị
+  // thay đổi CÓ CHỦ ĐÍCH theo Phase 4; corpus: app_web/test_row_contract_corpus.js
   const stOnDntn = { values: { 'dn.loai_hinh': 'DNTN' }, checks: {},
     loops: { ds_nganh_dntn: [{ _row_id: FD.makeRowId(),
-      ten_nganh: '', ma_nganh: '', la_nganh_chinh: '' }] } };
-  check('H3.5b selector DNTN -> payload giu nguyen dong',
+      ten_nganh: 'Công ty TNHH A', ma_nganh: '0111', la_nganh_chinh: '' }] } };
+  check('H3.5b selector DNTN -> payload giu nguyen dong co du lieu',
     G.exportLoops(stOnDntn, ['PLI_M72']).ds_nganh_dntn.length === 1);
+  const stOnDntnBlank = { values: { 'dn.loai_hinh': 'DNTN' }, checks: {},
+    loops: { ds_nganh_dntn: [{ _row_id: FD.makeRowId(),
+      ten_nganh: '', ma_nganh: '', la_nganh_chinh: '' }] } };
+  check('H3.5b-Phase4 selector active nhung row MOI O TRONG -> payload rong (blank khong thanh business data)',
+    G.exportLoops(stOnDntnBlank, ['PLI_M72']).ds_nganh_dntn.length === 0);
 
   // Grid không có activeWhen: không bao giờ bị lọc
   const stOld = { values: {}, checks: {}, loops: { ds_thanh_vien:

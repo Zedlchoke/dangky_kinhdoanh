@@ -1,0 +1,1506 @@
+{
+ "meta": {
+  "tool": "tools/census/row_contract_inventory.py",
+  "head": "4e18f1a",
+  "expected_counts": {
+   "global_grids": 11,
+   "section_contracts": 14,
+   "dynamic_tables": 42,
+   "section_specs": 21
+  },
+  "counts": {
+   "global_grids": 11,
+   "form_grids": 18,
+   "section_contracts": 14,
+   "dynamic_tables": 42,
+   "section_specs": 21,
+   "blocks_blank_rows": 42
+  },
+  "gate": "PASS"
+ },
+ "policies": {
+  "blank_row": "Dòng MỌI ô trống (bỏ key nội bộ _*) không trở thành business data: GridCtl.exportLoops (app.js) lọc trước, _expand_loops (docx_render.py) guard last-mile; {_stt} đánh lại trên dòng dữ liệu in ra.",
+  "blank_helper_ui": "UI render tối thiểu 1 dòng trống helper cho grid cho-phép-thêm (render.js renderLoop/nested) — dòng ảo KHÔNG nằm trong store cho tới khi người dùng gõ.",
+  "partial_row": "Dòng điền một phần được GIỮ (không âm thầm mất); validator chặn theo contract: ROW_INCOMPLETE (thiếu cột required), MIN_ROWS, INDUSTRY_REQUIRED, MAX_ROWS (warn).",
+  "fixed_legal_row": "fixed-matrix in ĐỦ dòng pháp định bất kể ô nhập trống (kể cả dòng Tổng output_only, tổng recompute strict fail-loud). blankRows của blocks là hàng trắng IN SẴN theo bản giấy — không bị lọc, không bị đếm là dữ liệu.",
+  "inactive_variant": "M72: grid inactive-theo-selector (valueOf dn.loai_hinh) -> payload rỗng cho grid đó; block DOCX {?flag} của variant sai bị drop.",
+  "stt": "STT KHÔNG lưu: suy từ thứ tự mảng sau lọc — engine {_stt} 1-based; fixed-matrix chỉ khi spec.stt.mode='generated'.",
+  "draft": "store.loops[loop] là mảng — thứ tự + _row_id bảo toàn qua draft save/load; blank row SỐNG trong draft, chỉ lọc ở export; migrateDraft v1->v2 additive.",
+  "grid_ops": "add/delete/reorder/duplicate/clear scope theo tên loop (GridCtl); policy theo kind: fixed-matrix/output-table F/F/F, nested-grid + editable-grid T/T/T; duplicate bỏ duplicateKeys + _row_id; confirm xóa dòng có dữ liệu."
+ },
+ "gaps": [
+  {
+   "id": "nested_grid_min_rows_declared_not_enforced",
+   "detail": "spec.min_rows=1 khai tại 3 nested-grid (PLI_M02 nddpl_uy_quyen_chu_so_huu, PLI_M12 ndd_uy_quyen_sau_thay_doi, PLI_M15 ndd_pl_uy_quyen_chu_so_huu_moi) nhưng KHÔNG tầng nào enforce (nested-grid.js validate không đọc; rowOpMeta chỉ đọc max_rows). Nghĩa nghiệp vụ chưa chốt: (a) bắt buộc ≥1 dòng khi section ĐANG trống sẽ chặn export hợp lệ của hồ sơ không ủy quyền; (b) enforce khi section có dữ liệu thì min_rows=1 là hiển nhiên. -> BLOCKED_OWNER, xem docs/decision_registry.md câu hỏi owner Phase 4."
+  }
+ ],
+ "test_coverage": {
+  "blank_only_row_not_exported": [
+   "app_web/test_row_contract_corpus.js R1",
+   "tools/test_row_contract_export.py [RC1]"
+  ],
+  "one_row_and_order": [
+   "app_web/test_row_contract_corpus.js R2",
+   "tools/test_row_contract_export.py [RC2]"
+  ],
+  "partial_row_kept": [
+   "app_web/test_row_contract_corpus.js R3",
+   "tools/test_row_contract_export.py [RC3]"
+  ],
+  "grid_ops_isolation": [
+   "app_web/test_row_contract_corpus.js R4",
+   "app_web/test_grid.js B (add/delete/reorder/duplicate/clear)"
+  ],
+  "draft_roundtrip": [
+   "app_web/test_row_contract_corpus.js R5/R8",
+   "app_web/test_p3_draft.js D1-D30"
+  ],
+  "stt_computed": [
+   "app_web/test_grid.js B (STT đánh lại theo mảng)",
+   "tools/test_row_contract_export.py [RC2]/[RC4]"
+  ],
+  "m72_variant_isolation": [
+   "app_web/test_row_contract_corpus.js R7/R8",
+   "app_web/test_m72_activation.js",
+   "tools/test_m72_conditional_export.py"
+  ],
+  "fixed_matrix_rows_and_totals": [
+   "tools/test_row_contract_export.py [FM1-FM3]",
+   "tools/test_export_grid_kinds.py [TS1-TS6]"
+  ],
+  "no_marker_leftover": [
+   "tools/test_row_contract_export.py [RC5]",
+   "tools/test_acceptance_docx.py"
+  ]
+ },
+ "global_grids": [
+  {
+   "form_id": "*",
+   "grid_id": "ds_co_dong_nn",
+   "kind": "editable-grid",
+   "variant_activeWhen": null,
+   "min_rows_filled": "0",
+   "required": "false",
+   "require_primary": "false",
+   "duplicate_keys": [],
+   "source_evidence": "app_web/ui/form-domain.js GRID_META.ds_co_dong_nn"
+  },
+  {
+   "form_id": "*",
+   "grid_id": "ds_co_dong_sang_lap",
+   "kind": "editable-grid",
+   "variant_activeWhen": null,
+   "min_rows_filled": "1",
+   "required": "false",
+   "require_primary": "false",
+   "duplicate_keys": [
+    "so_cccd"
+   ],
+   "source_evidence": "app_web/ui/form-domain.js GRID_META.ds_co_dong_sang_lap"
+  },
+  {
+   "form_id": "*",
+   "grid_id": "ds_cshhl",
+   "kind": "editable-grid",
+   "variant_activeWhen": null,
+   "min_rows_filled": "0",
+   "required": "false",
+   "require_primary": "false",
+   "duplicate_keys": [
+    "so_giay_to",
+    "ma_so_dn"
+   ],
+   "source_evidence": "app_web/ui/form-domain.js GRID_META.ds_cshhl"
+  },
+  {
+   "form_id": "*",
+   "grid_id": "ds_nganh",
+   "kind": "editable-grid",
+   "variant_activeWhen": null,
+   "min_rows_filled": "1",
+   "required": "true",
+   "require_primary": "true",
+   "duplicate_keys": [
+    "ma_nganh"
+   ],
+   "source_evidence": "app_web/ui/form-domain.js GRID_META.ds_nganh"
+  },
+  {
+   "form_id": "*",
+   "grid_id": "ds_thanh_vien",
+   "kind": "editable-grid",
+   "variant_activeWhen": null,
+   "min_rows_filled": "2",
+   "required": "false",
+   "require_primary": "false",
+   "duplicate_keys": [
+    "so_cccd"
+   ],
+   "source_evidence": "app_web/ui/form-domain.js GRID_META.ds_thanh_vien"
+  },
+  {
+   "form_id": "*",
+   "grid_id": "ds_thanh_vien_hop_danh",
+   "kind": "editable-grid",
+   "variant_activeWhen": null,
+   "min_rows_filled": "2",
+   "required": "false",
+   "require_primary": "false",
+   "duplicate_keys": [
+    "so_cccd"
+   ],
+   "source_evidence": "app_web/ui/form-domain.js GRID_META.ds_thanh_vien_hop_danh"
+  },
+  {
+   "form_id": "*",
+   "grid_id": "ds_thanh_vien_tnhh",
+   "kind": "editable-grid",
+   "variant_activeWhen": null,
+   "min_rows_filled": "2",
+   "required": "false",
+   "require_primary": "false",
+   "duplicate_keys": [
+    "so_cccd"
+   ],
+   "source_evidence": "app_web/ui/form-domain.js GRID_META.ds_thanh_vien_tnhh"
+  },
+  {
+   "form_id": "*",
+   "grid_id": "ds_tv_ho_gia_dinh",
+   "kind": "editable-grid",
+   "variant_activeWhen": null,
+   "min_rows_filled": "0",
+   "required": "false",
+   "require_primary": "false",
+   "duplicate_keys": [
+    "so_cccd"
+   ],
+   "source_evidence": "app_web/ui/form-domain.js GRID_META.ds_tv_ho_gia_dinh"
+  },
+  {
+   "form_id": "*",
+   "grid_id": "nganh_bo_sung",
+   "kind": "editable-grid",
+   "variant_activeWhen": null,
+   "min_rows_filled": "0",
+   "required": "false",
+   "require_primary": "false",
+   "duplicate_keys": [],
+   "source_evidence": "app_web/ui/form-domain.js GRID_META.nganh_bo_sung"
+  },
+  {
+   "form_id": "*",
+   "grid_id": "nganh_sua_doi_chi_tiet",
+   "kind": "editable-grid",
+   "variant_activeWhen": null,
+   "min_rows_filled": "0",
+   "required": "false",
+   "require_primary": "false",
+   "duplicate_keys": [],
+   "source_evidence": "app_web/ui/form-domain.js GRID_META.nganh_sua_doi_chi_tiet"
+  },
+  {
+   "form_id": "*",
+   "grid_id": "nganh_xoa_bo",
+   "kind": "editable-grid",
+   "variant_activeWhen": null,
+   "min_rows_filled": "0",
+   "required": "false",
+   "require_primary": "false",
+   "duplicate_keys": [],
+   "source_evidence": "app_web/ui/form-domain.js GRID_META.nganh_xoa_bo"
+  }
+ ],
+ "form_grids": [
+  {
+   "form_id": "PLII_M02",
+   "grid_id": "ds_nganh",
+   "kind": "editable-grid",
+   "variant_activeWhen": null,
+   "min_rows_filled": "0",
+   "required": "false",
+   "source_evidence": "app_web/ui/form-domain.js FORM_GRID_META.PLII_M02.loops.ds_nganh"
+  },
+  {
+   "form_id": "PLII_M02",
+   "grid_id": "nganh_bo_sung",
+   "kind": "editable-grid",
+   "variant_activeWhen": null,
+   "min_rows_filled": "0",
+   "required": "false",
+   "source_evidence": "app_web/ui/form-domain.js FORM_GRID_META.PLII_M02.loops.nganh_bo_sung"
+  },
+  {
+   "form_id": "PLII_M02",
+   "grid_id": "nganh_sua_doi_chi_tiet",
+   "kind": "editable-grid",
+   "variant_activeWhen": null,
+   "min_rows_filled": "0",
+   "required": "false",
+   "source_evidence": "app_web/ui/form-domain.js FORM_GRID_META.PLII_M02.loops.nganh_sua_doi_chi_tiet"
+  },
+  {
+   "form_id": "PLII_M02",
+   "grid_id": "nganh_xoa_bo",
+   "kind": "editable-grid",
+   "variant_activeWhen": null,
+   "min_rows_filled": "0",
+   "required": "false",
+   "source_evidence": "app_web/ui/form-domain.js FORM_GRID_META.PLII_M02.loops.nganh_xoa_bo"
+  },
+  {
+   "form_id": "PLII_M02",
+   "grid_id": "tv_hgd_cap_doi",
+   "kind": "editable-grid",
+   "variant_activeWhen": null,
+   "min_rows_filled": null,
+   "required": null,
+   "source_evidence": "app_web/ui/form-domain.js FORM_GRID_META.PLII_M02.loops.tv_hgd_cap_doi"
+  },
+  {
+   "form_id": "PLII_M02",
+   "grid_id": "tv_hgd_sau_thay_doi",
+   "kind": "editable-grid",
+   "variant_activeWhen": null,
+   "min_rows_filled": null,
+   "required": null,
+   "source_evidence": "app_web/ui/form-domain.js FORM_GRID_META.PLII_M02.loops.tv_hgd_sau_thay_doi"
+  },
+  {
+   "form_id": "PLII_M07",
+   "grid_id": "ds_thanh_vien_hkd_gcn",
+   "kind": "editable-grid",
+   "variant_activeWhen": null,
+   "min_rows_filled": "0",
+   "required": "false",
+   "source_evidence": "app_web/ui/form-domain.js FORM_GRID_META.PLII_M07.loops.ds_thanh_vien_hkd_gcn"
+  },
+  {
+   "form_id": "PLI_M09",
+   "grid_id": "ds_thanh_vien_hop_danh",
+   "kind": "editable-grid",
+   "variant_activeWhen": null,
+   "min_rows_filled": null,
+   "required": null,
+   "source_evidence": "app_web/ui/form-domain.js FORM_GRID_META.PLI_M09.loops.ds_thanh_vien_hop_danh"
+  },
+  {
+   "form_id": "PLI_M13",
+   "grid_id": "ds_ndd_pl_sau_thay_doi",
+   "kind": "editable-grid",
+   "variant_activeWhen": null,
+   "min_rows_filled": "1",
+   "required": "false",
+   "source_evidence": "app_web/ui/form-domain.js FORM_GRID_META.PLI_M13.loops.ds_ndd_pl_sau_thay_doi"
+  },
+  {
+   "form_id": "PLI_M72",
+   "grid_id": "ds_co_dong_nuoc_ngoai_ctcp",
+   "kind": "editable-grid",
+   "variant_activeWhen": "CTCP",
+   "min_rows_filled": "0",
+   "required": "false",
+   "source_evidence": "app_web/ui/form-domain.js FORM_GRID_META.PLI_M72.loops.ds_co_dong_nuoc_ngoai_ctcp"
+  },
+  {
+   "form_id": "PLI_M72",
+   "grid_id": "ds_co_dong_sang_lap_ctcp",
+   "kind": "editable-grid",
+   "variant_activeWhen": "CTCP",
+   "min_rows_filled": "0",
+   "required": "false",
+   "source_evidence": "app_web/ui/form-domain.js FORM_GRID_META.PLI_M72.loops.ds_co_dong_sang_lap_ctcp"
+  },
+  {
+   "form_id": "PLI_M72",
+   "grid_id": "ds_nganh_ctcp",
+   "kind": "editable-grid",
+   "variant_activeWhen": "CTCP",
+   "min_rows_filled": "1",
+   "required": "true",
+   "source_evidence": "app_web/ui/form-domain.js FORM_GRID_META.PLI_M72.loops.ds_nganh_ctcp"
+  },
+  {
+   "form_id": "PLI_M72",
+   "grid_id": "ds_nganh_dhdn",
+   "kind": "editable-grid",
+   "variant_activeWhen": "DHDN",
+   "min_rows_filled": "1",
+   "required": "true",
+   "source_evidence": "app_web/ui/form-domain.js FORM_GRID_META.PLI_M72.loops.ds_nganh_dhdn"
+  },
+  {
+   "form_id": "PLI_M72",
+   "grid_id": "ds_nganh_dntn",
+   "kind": "editable-grid",
+   "variant_activeWhen": "DNTN",
+   "min_rows_filled": "1",
+   "required": "true",
+   "source_evidence": "app_web/ui/form-domain.js FORM_GRID_META.PLI_M72.loops.ds_nganh_dntn"
+  },
+  {
+   "form_id": "PLI_M72",
+   "grid_id": "ds_nganh_tnhh_1tv",
+   "kind": "editable-grid",
+   "variant_activeWhen": "TNHH_1TV",
+   "min_rows_filled": "1",
+   "required": "true",
+   "source_evidence": "app_web/ui/form-domain.js FORM_GRID_META.PLI_M72.loops.ds_nganh_tnhh_1tv"
+  },
+  {
+   "form_id": "PLI_M72",
+   "grid_id": "ds_nganh_tnhh_2tv",
+   "kind": "editable-grid",
+   "variant_activeWhen": "TNHH_2TV",
+   "min_rows_filled": "1",
+   "required": "true",
+   "source_evidence": "app_web/ui/form-domain.js FORM_GRID_META.PLI_M72.loops.ds_nganh_tnhh_2tv"
+  },
+  {
+   "form_id": "PLI_M72",
+   "grid_id": "ds_thanh_vien_hop_danh_dhdn",
+   "kind": "editable-grid",
+   "variant_activeWhen": "DHDN",
+   "min_rows_filled": "2",
+   "required": "true",
+   "source_evidence": "app_web/ui/form-domain.js FORM_GRID_META.PLI_M72.loops.ds_thanh_vien_hop_danh_dhdn"
+  },
+  {
+   "form_id": "PLI_M72",
+   "grid_id": "ds_thanh_vien_tnhh_2tv",
+   "kind": "editable-grid",
+   "variant_activeWhen": "TNHH_2TV",
+   "min_rows_filled": "2",
+   "required": "true",
+   "source_evidence": "app_web/ui/form-domain.js FORM_GRID_META.PLI_M72.loops.ds_thanh_vien_tnhh_2tv"
+  }
+ ],
+ "section_contracts": [
+  {
+   "form_id": "PLII_M02",
+   "section_id": "a7_thue_chi_tieu_cu_moi",
+   "kind": "fixed-matrix",
+   "allow_add": "false",
+   "allow_delete": "false",
+   "allow_reorder": "false",
+   "stt_mode": "none",
+   "min_rows": null,
+   "totals": 0,
+   "cross_field_rules": 0,
+   "export_row_policy": "fixed legal rows luôn in",
+   "source_evidence": "app_web/ui/form-domain.js FORM_TABLE_CONTRACTS.PLII_M02.a7_thue_chi_tieu_cu_moi"
+  },
+  {
+   "form_id": "PLI_M01",
+   "section_id": "tai_san_gop_von_von_dau_tu",
+   "kind": "fixed-matrix",
+   "allow_add": "false",
+   "allow_delete": "false",
+   "allow_reorder": "false",
+   "stt_mode": "none",
+   "min_rows": null,
+   "totals": 2,
+   "cross_field_rules": 0,
+   "export_row_policy": "fixed legal rows luôn in",
+   "source_evidence": "app_web/ui/form-domain.js FORM_TABLE_CONTRACTS.PLI_M01.tai_san_gop_von_von_dau_tu"
+  },
+  {
+   "form_id": "PLI_M02",
+   "section_id": "nddpl_uy_quyen_chu_so_huu",
+   "kind": "nested-grid",
+   "allow_add": "true",
+   "allow_delete": "true",
+   "allow_reorder": "true",
+   "stt_mode": null,
+   "min_rows": "1",
+   "totals": 0,
+   "cross_field_rules": 0,
+   "export_row_policy": "selector-inactive -> rỗng; blank row bị lọc",
+   "source_evidence": "app_web/ui/form-domain.js FORM_TABLE_CONTRACTS.PLI_M02.nddpl_uy_quyen_chu_so_huu"
+  },
+  {
+   "form_id": "PLI_M02",
+   "section_id": "nguon_von_dieule",
+   "kind": "fixed-matrix",
+   "allow_add": "false",
+   "allow_delete": "false",
+   "allow_reorder": "false",
+   "stt_mode": "none",
+   "min_rows": null,
+   "totals": 2,
+   "cross_field_rules": 0,
+   "export_row_policy": "fixed legal rows luôn in",
+   "source_evidence": "app_web/ui/form-domain.js FORM_TABLE_CONTRACTS.PLI_M02.nguon_von_dieule"
+  },
+  {
+   "form_id": "PLI_M02",
+   "section_id": "tai_san_gop_von_von_dieu_le",
+   "kind": "fixed-matrix",
+   "allow_add": "false",
+   "allow_delete": "false",
+   "allow_reorder": "false",
+   "stt_mode": "none",
+   "min_rows": null,
+   "totals": 2,
+   "cross_field_rules": 0,
+   "export_row_policy": "fixed legal rows luôn in",
+   "source_evidence": "app_web/ui/form-domain.js FORM_TABLE_CONTRACTS.PLI_M02.tai_san_gop_von_von_dieu_le"
+  },
+  {
+   "form_id": "PLI_M03",
+   "section_id": "nguon_von_dieule",
+   "kind": "fixed-matrix",
+   "allow_add": "false",
+   "allow_delete": "false",
+   "allow_reorder": "false",
+   "stt_mode": "none",
+   "min_rows": null,
+   "totals": 2,
+   "cross_field_rules": 0,
+   "export_row_policy": "fixed legal rows luôn in",
+   "source_evidence": "app_web/ui/form-domain.js FORM_TABLE_CONTRACTS.PLI_M03.nguon_von_dieule"
+  },
+  {
+   "form_id": "PLI_M04",
+   "section_id": "co_cau_loai_co_phan",
+   "kind": "fixed-matrix",
+   "allow_add": "false",
+   "allow_delete": "false",
+   "allow_reorder": "false",
+   "stt_mode": "generated",
+   "min_rows": null,
+   "totals": 2,
+   "cross_field_rules": 0,
+   "export_row_policy": "fixed legal rows luôn in",
+   "source_evidence": "app_web/ui/form-domain.js FORM_TABLE_CONTRACTS.PLI_M04.co_cau_loai_co_phan"
+  },
+  {
+   "form_id": "PLI_M04",
+   "section_id": "co_phan_duoc_quyen_chao_ban",
+   "kind": "fixed-matrix",
+   "allow_add": "false",
+   "allow_delete": "false",
+   "allow_reorder": "false",
+   "stt_mode": "none",
+   "min_rows": null,
+   "totals": 1,
+   "cross_field_rules": 0,
+   "export_row_policy": "fixed legal rows luôn in",
+   "source_evidence": "app_web/ui/form-domain.js FORM_TABLE_CONTRACTS.PLI_M04.co_phan_duoc_quyen_chao_ban"
+  },
+  {
+   "form_id": "PLI_M05",
+   "section_id": "nguon_von_dieule",
+   "kind": "fixed-matrix",
+   "allow_add": "false",
+   "allow_delete": "false",
+   "allow_reorder": "false",
+   "stt_mode": "none",
+   "min_rows": null,
+   "totals": 2,
+   "cross_field_rules": 0,
+   "export_row_policy": "fixed legal rows luôn in",
+   "source_evidence": "app_web/ui/form-domain.js FORM_TABLE_CONTRACTS.PLI_M05.nguon_von_dieule"
+  },
+  {
+   "form_id": "PLI_M12",
+   "section_id": "nguon_von_dieule_sau_thay_doi",
+   "kind": "fixed-matrix",
+   "allow_add": "false",
+   "allow_delete": "false",
+   "allow_reorder": "false",
+   "stt_mode": "none",
+   "min_rows": null,
+   "totals": 2,
+   "cross_field_rules": 0,
+   "export_row_policy": "fixed legal rows luôn in",
+   "source_evidence": "app_web/ui/form-domain.js FORM_TABLE_CONTRACTS.PLI_M12.nguon_von_dieule_sau_thay_doi"
+  },
+  {
+   "form_id": "PLI_M12",
+   "section_id": "ndd_uy_quyen_sau_thay_doi",
+   "kind": "nested-grid",
+   "allow_add": "true",
+   "allow_delete": "true",
+   "allow_reorder": "true",
+   "stt_mode": null,
+   "min_rows": "1",
+   "totals": 0,
+   "cross_field_rules": 0,
+   "export_row_policy": "selector-inactive -> rỗng; blank row bị lọc",
+   "source_evidence": "app_web/ui/form-domain.js FORM_TABLE_CONTRACTS.PLI_M12.ndd_uy_quyen_sau_thay_doi"
+  },
+  {
+   "form_id": "PLI_M15",
+   "section_id": "ndd_pl_uy_quyen_chu_so_huu_moi",
+   "kind": "nested-grid",
+   "allow_add": "true",
+   "allow_delete": "true",
+   "allow_reorder": "true",
+   "stt_mode": null,
+   "min_rows": "1",
+   "totals": 0,
+   "cross_field_rules": 0,
+   "export_row_policy": "selector-inactive -> rỗng; blank row bị lọc",
+   "source_evidence": "app_web/ui/form-domain.js FORM_TABLE_CONTRACTS.PLI_M15.ndd_pl_uy_quyen_chu_so_huu_moi"
+  },
+  {
+   "form_id": "PLI_M70",
+   "section_id": "chu_ky_nguoi_nop_nguoi_nhan",
+   "kind": "output-table",
+   "allow_add": "false",
+   "allow_delete": "false",
+   "allow_reorder": "false",
+   "stt_mode": null,
+   "min_rows": null,
+   "totals": 0,
+   "cross_field_rules": 0,
+   "export_row_policy": "grid tĩnh luôn in dù payload rỗng",
+   "source_evidence": "app_web/ui/form-domain.js FORM_TABLE_CONTRACTS.PLI_M70.chu_ky_nguoi_nop_nguoi_nhan"
+  },
+  {
+   "form_id": "PLI_M71",
+   "section_id": "chu_ky_co_quan_cap_tinh",
+   "kind": "output-table",
+   "allow_add": "false",
+   "allow_delete": "false",
+   "allow_reorder": "false",
+   "stt_mode": null,
+   "min_rows": null,
+   "totals": 0,
+   "cross_field_rules": 0,
+   "export_row_policy": "grid tĩnh luôn in dù payload rỗng",
+   "source_evidence": "app_web/ui/form-domain.js FORM_TABLE_CONTRACTS.PLI_M71.chu_ky_co_quan_cap_tinh"
+  }
+ ],
+ "dynamic_tables": [
+  {
+   "form_id": "PLII_M01",
+   "id": "ds_nganh_nghe",
+   "loop": "ds_nganh",
+   "kind": "editable-grid",
+   "occurrence_id": null,
+   "table_index": 0,
+   "n_columns": 3,
+   "source_evidence": "app/data/form_maps.json PLII_M01.dynamic_tables[0]"
+  },
+  {
+   "form_id": "PLII_M01",
+   "id": "ds_tv_ho_gia_dinh",
+   "loop": "ds_tv_ho_gia_dinh",
+   "kind": "editable-grid",
+   "occurrence_id": null,
+   "table_index": 1,
+   "n_columns": 9,
+   "source_evidence": "app/data/form_maps.json PLII_M01.dynamic_tables[1]"
+  },
+  {
+   "form_id": "PLII_M02",
+   "id": "tv_hgd_sau_thay_doi",
+   "loop": "tv_hgd_sau_thay_doi",
+   "kind": "editable-grid",
+   "occurrence_id": "tv_hgd_sau_thay_doi",
+   "table_index": 1,
+   "n_columns": 9,
+   "source_evidence": "app/data/form_maps.json PLII_M02.dynamic_tables[0]"
+  },
+  {
+   "form_id": "PLII_M02",
+   "id": "ds_nganh_bo_sung",
+   "loop": "nganh_bo_sung",
+   "kind": "editable-grid",
+   "occurrence_id": "nganh_bo_sung",
+   "table_index": 2,
+   "n_columns": 3,
+   "source_evidence": "app/data/form_maps.json PLII_M02.dynamic_tables[1]"
+  },
+  {
+   "form_id": "PLII_M02",
+   "id": "ds_nganh_xoa_bo",
+   "loop": "nganh_xoa_bo",
+   "kind": "editable-grid",
+   "occurrence_id": "nganh_xoa_bo",
+   "table_index": 3,
+   "n_columns": 3,
+   "source_evidence": "app/data/form_maps.json PLII_M02.dynamic_tables[2]"
+  },
+  {
+   "form_id": "PLII_M02",
+   "id": "ds_nganh_sua_chi_tiet",
+   "loop": "nganh_sua_doi_chi_tiet",
+   "kind": "editable-grid",
+   "occurrence_id": "nganh_sua_doi_chi_tiet",
+   "table_index": 4,
+   "n_columns": 2,
+   "source_evidence": "app/data/form_maps.json PLII_M02.dynamic_tables[3]"
+  },
+  {
+   "form_id": "PLII_M02",
+   "id": "ds_nganh",
+   "loop": "ds_nganh",
+   "kind": "editable-grid",
+   "occurrence_id": "nganh_hien_tai",
+   "table_index": 6,
+   "n_columns": 3,
+   "source_evidence": "app/data/form_maps.json PLII_M02.dynamic_tables[4]"
+  },
+  {
+   "form_id": "PLII_M02",
+   "id": "tv_hgd_cap_doi",
+   "loop": "tv_hgd_cap_doi",
+   "kind": "editable-grid",
+   "occurrence_id": "tv_hgd_cap_doi",
+   "table_index": 7,
+   "n_columns": 9,
+   "source_evidence": "app/data/form_maps.json PLII_M02.dynamic_tables[5]"
+  },
+  {
+   "form_id": "PLII_M07",
+   "id": "ds_nganh",
+   "loop": "ds_nganh",
+   "kind": "editable-grid",
+   "occurrence_id": null,
+   "table_index": 0,
+   "n_columns": 3,
+   "source_evidence": "app/data/form_maps.json PLII_M07.dynamic_tables[0]"
+  },
+  {
+   "form_id": "PLII_M07",
+   "id": "m7_danh_sach_thanh_vien_hgd",
+   "loop": "ds_thanh_vien_hkd_gcn",
+   "kind": "editable-grid",
+   "occurrence_id": "ds_thanh_vien_hkd_gcn",
+   "table_index": 1,
+   "n_columns": 6,
+   "source_evidence": "app/data/form_maps.json PLII_M07.dynamic_tables[1]"
+  },
+  {
+   "form_id": "PLI_M01",
+   "id": "ds_nganh",
+   "loop": "ds_nganh",
+   "kind": "editable-grid",
+   "occurrence_id": null,
+   "table_index": 0,
+   "n_columns": 3,
+   "source_evidence": "app/data/form_maps.json PLI_M01.dynamic_tables[0]"
+  },
+  {
+   "form_id": "PLI_M02",
+   "id": "ds_nganh_vsic",
+   "loop": "ds_nganh",
+   "kind": "editable-grid",
+   "occurrence_id": null,
+   "table_index": 0,
+   "n_columns": 4,
+   "source_evidence": "app/data/form_maps.json PLI_M02.dynamic_tables[0]"
+  },
+  {
+   "form_id": "PLI_M02",
+   "id": "nddpl_uy_quyen_chu_so_huu",
+   "loop": "ds_nddpl_uy_quyen_chu_so_huu",
+   "kind": "editable-grid",
+   "occurrence_id": null,
+   "table_index": 1,
+   "n_columns": 13,
+   "source_evidence": "app/data/form_maps.json PLI_M02.dynamic_tables[1]"
+  },
+  {
+   "form_id": "PLI_M03",
+   "id": "ds_nganh",
+   "loop": "ds_nganh",
+   "kind": "editable-grid",
+   "occurrence_id": null,
+   "table_index": 0,
+   "n_columns": 3,
+   "source_evidence": "app/data/form_maps.json PLI_M03.dynamic_tables[0]"
+  },
+  {
+   "form_id": "PLI_M04",
+   "id": "ds_nganh",
+   "loop": "ds_nganh",
+   "kind": "editable-grid",
+   "occurrence_id": null,
+   "table_index": 0,
+   "n_columns": 3,
+   "source_evidence": "app/data/form_maps.json PLI_M04.dynamic_tables[0]"
+  },
+  {
+   "form_id": "PLI_M05",
+   "id": "ds_nganh",
+   "loop": "ds_nganh",
+   "kind": "editable-grid",
+   "occurrence_id": null,
+   "table_index": 0,
+   "n_columns": 3,
+   "source_evidence": "app/data/form_maps.json PLI_M05.dynamic_tables[0]"
+  },
+  {
+   "form_id": "PLI_M06",
+   "id": "ds_thanh_vien_tnhh",
+   "loop": "ds_thanh_vien_tnhh",
+   "kind": "editable-grid",
+   "occurrence_id": null,
+   "table_index": 0,
+   "n_columns": 11,
+   "source_evidence": "app/data/form_maps.json PLI_M06.dynamic_tables[0]"
+  },
+  {
+   "form_id": "PLI_M07",
+   "id": "ds_co_dong_sang_lap",
+   "loop": "ds_co_dong_sang_lap",
+   "kind": "editable-grid",
+   "occurrence_id": null,
+   "table_index": 0,
+   "n_columns": 10,
+   "source_evidence": "app/data/form_maps.json PLI_M07.dynamic_tables[0]"
+  },
+  {
+   "form_id": "PLI_M08",
+   "id": "ds_co_dong_nn",
+   "loop": "ds_co_dong_nn",
+   "kind": "editable-grid",
+   "occurrence_id": null,
+   "table_index": 0,
+   "n_columns": 7,
+   "source_evidence": "app/data/form_maps.json PLI_M08.dynamic_tables[0]"
+  },
+  {
+   "form_id": "PLI_M09",
+   "id": "ds_thanh_vien_hop_danh",
+   "loop": "ds_thanh_vien_hop_danh",
+   "kind": "editable-grid",
+   "occurrence_id": null,
+   "table_index": 0,
+   "n_columns": 13,
+   "source_evidence": "app/data/form_maps.json PLI_M09.dynamic_tables[0]"
+  },
+  {
+   "form_id": "PLI_M10",
+   "id": "ds_cshhl",
+   "loop": "ds_cshhl",
+   "kind": "editable-grid",
+   "occurrence_id": null,
+   "table_index": 0,
+   "n_columns": 11,
+   "source_evidence": "app/data/form_maps.json PLI_M10.dynamic_tables[0]"
+  },
+  {
+   "form_id": "PLI_M11",
+   "id": "ds_to_chuc_cshhl",
+   "loop": "ds_cshhl",
+   "kind": "editable-grid",
+   "occurrence_id": null,
+   "table_index": 0,
+   "n_columns": 7,
+   "source_evidence": "app/data/form_maps.json PLI_M11.dynamic_tables[0]"
+  },
+  {
+   "form_id": "PLI_M12",
+   "id": "nganh_bo_sung",
+   "loop": "nganh_bo_sung",
+   "kind": "editable-grid",
+   "occurrence_id": null,
+   "table_index": 1,
+   "n_columns": 3,
+   "source_evidence": "app/data/form_maps.json PLI_M12.dynamic_tables[0]"
+  },
+  {
+   "form_id": "PLI_M12",
+   "id": "nganh_xoa_bo",
+   "loop": "nganh_xoa_bo",
+   "kind": "editable-grid",
+   "occurrence_id": null,
+   "table_index": 2,
+   "n_columns": 3,
+   "source_evidence": "app/data/form_maps.json PLI_M12.dynamic_tables[1]"
+  },
+  {
+   "form_id": "PLI_M12",
+   "id": "nganh_sua_doi_chi_tiet",
+   "loop": "nganh_sua_doi_chi_tiet",
+   "kind": "editable-grid",
+   "occurrence_id": null,
+   "table_index": 3,
+   "n_columns": 3,
+   "source_evidence": "app/data/form_maps.json PLI_M12.dynamic_tables[2]"
+  },
+  {
+   "form_id": "PLI_M12",
+   "id": "ndd_uy_quyen_sau_thay_doi",
+   "loop": "ds_ndd_uy_quyen_sau_thay_doi",
+   "kind": "editable-grid",
+   "occurrence_id": null,
+   "table_index": 4,
+   "n_columns": 14,
+   "source_evidence": "app/data/form_maps.json PLI_M12.dynamic_tables[3]"
+  },
+  {
+   "form_id": "PLI_M13",
+   "id": "ndd_pl_sau_thay_doi",
+   "loop": "ds_ndd_pl_sau_thay_doi",
+   "kind": "editable-grid",
+   "occurrence_id": "ds_ndd_pl_sau_thay_doi",
+   "table_index": 1,
+   "n_columns": 7,
+   "source_evidence": "app/data/form_maps.json PLI_M13.dynamic_tables[0]"
+  },
+  {
+   "form_id": "PLI_M15",
+   "id": "ndd_pl_uy_quyen_chu_so_huu_moi",
+   "loop": "ds_nddpl_uy_quyen_chu_so_huu_moi",
+   "kind": "editable-grid",
+   "occurrence_id": null,
+   "table_index": 1,
+   "n_columns": 13,
+   "source_evidence": "app/data/form_maps.json PLI_M15.dynamic_tables[0]"
+  },
+  {
+   "form_id": "PLI_M17",
+   "id": "ds_nganh",
+   "loop": "ds_nganh",
+   "kind": "editable-grid",
+   "occurrence_id": null,
+   "table_index": 1,
+   "n_columns": 3,
+   "source_evidence": "app/data/form_maps.json PLI_M17.dynamic_tables[0]"
+  },
+  {
+   "form_id": "PLI_M19",
+   "id": "ds_nganh",
+   "loop": "ds_nganh",
+   "kind": "editable-grid",
+   "occurrence_id": null,
+   "table_index": 1,
+   "n_columns": 3,
+   "source_evidence": "app/data/form_maps.json PLI_M19.dynamic_tables[0]"
+  },
+  {
+   "form_id": "PLI_M21",
+   "id": "ds_nganh",
+   "loop": "ds_nganh",
+   "kind": "editable-grid",
+   "occurrence_id": null,
+   "table_index": 1,
+   "n_columns": 3,
+   "source_evidence": "app/data/form_maps.json PLI_M21.dynamic_tables[0]"
+  },
+  {
+   "form_id": "PLI_M23",
+   "id": "ds_nganh",
+   "loop": "ds_nganh",
+   "kind": "editable-grid",
+   "occurrence_id": null,
+   "table_index": 1,
+   "n_columns": 3,
+   "source_evidence": "app/data/form_maps.json PLI_M23.dynamic_tables[0]"
+  },
+  {
+   "form_id": "PLI_M25",
+   "id": "ds_nganh",
+   "loop": "ds_nganh",
+   "kind": "editable-grid",
+   "occurrence_id": null,
+   "table_index": 1,
+   "n_columns": 3,
+   "source_evidence": "app/data/form_maps.json PLI_M25.dynamic_tables[0]"
+  },
+  {
+   "form_id": "PLI_M72",
+   "id": "ds_nganh",
+   "loop": "ds_nganh_dntn",
+   "kind": "editable-grid",
+   "occurrence_id": "ds_nganh_dntn",
+   "table_index": 0,
+   "n_columns": 3,
+   "source_evidence": "app/data/form_maps.json PLI_M72.dynamic_tables[0]"
+  },
+  {
+   "form_id": "PLI_M72",
+   "id": "ds_nganh",
+   "loop": "ds_nganh_tnhh_1tv",
+   "kind": "editable-grid",
+   "occurrence_id": "ds_nganh_tnhh_1tv",
+   "table_index": 1,
+   "n_columns": 3,
+   "source_evidence": "app/data/form_maps.json PLI_M72.dynamic_tables[1]"
+  },
+  {
+   "form_id": "PLI_M72",
+   "id": "ds_nganh",
+   "loop": "ds_nganh_tnhh_2tv",
+   "kind": "editable-grid",
+   "occurrence_id": "ds_nganh_tnhh_2tv",
+   "table_index": 2,
+   "n_columns": 3,
+   "source_evidence": "app/data/form_maps.json PLI_M72.dynamic_tables[2]"
+  },
+  {
+   "form_id": "PLI_M72",
+   "id": "ds_thanh_vien_tnhh_2tv",
+   "loop": "ds_thanh_vien_tnhh_2tv",
+   "kind": "editable-grid",
+   "occurrence_id": "ds_thanh_vien_tnhh_2tv",
+   "table_index": 3,
+   "n_columns": 7,
+   "source_evidence": "app/data/form_maps.json PLI_M72.dynamic_tables[3]"
+  },
+  {
+   "form_id": "PLI_M72",
+   "id": "ds_nganh",
+   "loop": "ds_nganh_ctcp",
+   "kind": "editable-grid",
+   "occurrence_id": "ds_nganh_ctcp",
+   "table_index": 4,
+   "n_columns": 3,
+   "source_evidence": "app/data/form_maps.json PLI_M72.dynamic_tables[4]"
+  },
+  {
+   "form_id": "PLI_M72",
+   "id": "ds_co_dong_sang_lap_ctcp",
+   "loop": "ds_co_dong_sang_lap_ctcp",
+   "kind": "editable-grid",
+   "occurrence_id": "ds_co_dong_sang_lap_ctcp",
+   "table_index": 5,
+   "n_columns": 9,
+   "source_evidence": "app/data/form_maps.json PLI_M72.dynamic_tables[5]"
+  },
+  {
+   "form_id": "PLI_M72",
+   "id": "ds_co_dong_nuoc_ngoai_ctcp",
+   "loop": "ds_co_dong_nuoc_ngoai_ctcp",
+   "kind": "editable-grid",
+   "occurrence_id": "ds_co_dong_nuoc_ngoai_ctcp",
+   "table_index": 6,
+   "n_columns": 9,
+   "source_evidence": "app/data/form_maps.json PLI_M72.dynamic_tables[6]"
+  },
+  {
+   "form_id": "PLI_M72",
+   "id": "ds_nganh",
+   "loop": "ds_nganh_dhdn",
+   "kind": "editable-grid",
+   "occurrence_id": "ds_nganh_dhdn",
+   "table_index": 7,
+   "n_columns": 3,
+   "source_evidence": "app/data/form_maps.json PLI_M72.dynamic_tables[7]"
+  },
+  {
+   "form_id": "PLI_M72",
+   "id": "ds_thanh_vien_hop_danh_dhdn",
+   "loop": "ds_thanh_vien_hop_danh_dhdn",
+   "kind": "editable-grid",
+   "occurrence_id": "ds_thanh_vien_hop_danh_dhdn",
+   "table_index": 8,
+   "n_columns": 6,
+   "source_evidence": "app/data/form_maps.json PLI_M72.dynamic_tables[8]"
+  }
+ ],
+ "section_specs": [
+  {
+   "form_id": "PLII_M02",
+   "id": "tv_hgd_sau_thay_doi",
+   "loop": "tv_hgd_sau_thay_doi",
+   "kind": "nested-grid",
+   "semantic_key": "tv_hgd_sau_thay_doi",
+   "stt_mode": "generated",
+   "n_fixed_rows": null,
+   "table_index": 1,
+   "min_rows": null,
+   "source_evidence": "app/data/form_maps.json PLII_M02.section_specs[0]"
+  },
+  {
+   "form_id": "PLII_M02",
+   "id": "a7_thue_chi_tieu_cu_moi",
+   "loop": null,
+   "kind": "fixed-matrix",
+   "semantic_key": "thue_chi_tieu_cu_moi",
+   "stt_mode": null,
+   "n_fixed_rows": 3,
+   "table_index": 5,
+   "min_rows": null,
+   "source_evidence": "app/data/form_maps.json PLII_M02.section_specs[1]"
+  },
+  {
+   "form_id": "PLII_M02",
+   "id": "tv_hgd_cap_doi",
+   "loop": "tv_hgd_cap_doi",
+   "kind": "nested-grid",
+   "semantic_key": "tv_hgd_cap_doi",
+   "stt_mode": "generated",
+   "n_fixed_rows": null,
+   "table_index": 7,
+   "min_rows": null,
+   "source_evidence": "app/data/form_maps.json PLII_M02.section_specs[2]"
+  },
+  {
+   "form_id": "PLI_M01",
+   "id": "tai_san_gop_von_von_dau_tu",
+   "loop": null,
+   "kind": "fixed-matrix",
+   "semantic_key": "co_cau_tai_san_gop_von_dau_tu",
+   "stt_mode": null,
+   "n_fixed_rows": 7,
+   "table_index": 1,
+   "min_rows": null,
+   "source_evidence": "app/data/form_maps.json PLI_M01.section_specs[0]"
+  },
+  {
+   "form_id": "PLI_M02",
+   "id": "nddpl_uy_quyen_chu_so_huu",
+   "loop": "ds_nddpl_uy_quyen_chu_so_huu",
+   "kind": "nested-grid",
+   "semantic_key": "ds_nddpl_uy_quyen_chu_so_huu",
+   "stt_mode": "generated",
+   "n_fixed_rows": null,
+   "table_index": 1,
+   "min_rows": null,
+   "source_evidence": "app/data/form_maps.json PLI_M02.section_specs[0]"
+  },
+  {
+   "form_id": "PLI_M02",
+   "id": "nguon_von_dieule",
+   "loop": null,
+   "kind": "fixed-matrix",
+   "semantic_key": "nguon_von_dieu_le",
+   "stt_mode": null,
+   "n_fixed_rows": 5,
+   "table_index": 2,
+   "min_rows": null,
+   "source_evidence": "app/data/form_maps.json PLI_M02.section_specs[1]"
+  },
+  {
+   "form_id": "PLI_M02",
+   "id": "tai_san_gop_von_von_dieu_le",
+   "loop": null,
+   "kind": "fixed-matrix",
+   "semantic_key": "co_cau_tai_san_gop_von_dieu_le",
+   "stt_mode": null,
+   "n_fixed_rows": 7,
+   "table_index": 3,
+   "min_rows": null,
+   "source_evidence": "app/data/form_maps.json PLI_M02.section_specs[2]"
+  },
+  {
+   "form_id": "PLI_M03",
+   "id": "nguon_von_dieule",
+   "loop": null,
+   "kind": "fixed-matrix",
+   "semantic_key": "nguon_von_dieu_le",
+   "stt_mode": null,
+   "n_fixed_rows": 5,
+   "table_index": 1,
+   "min_rows": null,
+   "source_evidence": "app/data/form_maps.json PLI_M03.section_specs[0]"
+  },
+  {
+   "form_id": "PLI_M04",
+   "id": "nguon_von_dieule",
+   "loop": null,
+   "kind": "fixed-matrix",
+   "semantic_key": "nguon_von_dieu_le",
+   "stt_mode": null,
+   "n_fixed_rows": 5,
+   "table_index": 1,
+   "min_rows": null,
+   "source_evidence": "app/data/form_maps.json PLI_M04.section_specs[0]"
+  },
+  {
+   "form_id": "PLI_M04",
+   "id": "co_cau_loai_co_phan",
+   "loop": null,
+   "kind": "fixed-matrix",
+   "semantic_key": "co_cau_loai_co_phan",
+   "stt_mode": null,
+   "n_fixed_rows": 6,
+   "table_index": 2,
+   "min_rows": null,
+   "source_evidence": "app/data/form_maps.json PLI_M04.section_specs[1]"
+  },
+  {
+   "form_id": "PLI_M04",
+   "id": "co_phan_duoc_quyen_chao_ban",
+   "loop": null,
+   "kind": "fixed-matrix",
+   "semantic_key": "co_phan_duoc_quyen_chao_ban",
+   "stt_mode": null,
+   "n_fixed_rows": 6,
+   "table_index": 3,
+   "min_rows": null,
+   "source_evidence": "app/data/form_maps.json PLI_M04.section_specs[2]"
+  },
+  {
+   "form_id": "PLI_M05",
+   "id": "nguon_von_dieule",
+   "loop": null,
+   "kind": "fixed-matrix",
+   "semantic_key": "nguon_von_dieu_le",
+   "stt_mode": null,
+   "n_fixed_rows": 5,
+   "table_index": 1,
+   "min_rows": null,
+   "source_evidence": "app/data/form_maps.json PLI_M05.section_specs[0]"
+  },
+  {
+   "form_id": "PLI_M12",
+   "id": "nguon_von_dieule_sau_thay_doi",
+   "loop": null,
+   "kind": "fixed-matrix",
+   "semantic_key": "nguon_von_dieu_le_sau_thay_doi",
+   "stt_mode": null,
+   "n_fixed_rows": 5,
+   "table_index": 0,
+   "min_rows": null,
+   "source_evidence": "app/data/form_maps.json PLI_M12.section_specs[0]"
+  },
+  {
+   "form_id": "PLI_M12",
+   "id": "ndd_uy_quyen_sau_thay_doi",
+   "loop": "ds_ndd_uy_quyen_sau_thay_doi",
+   "kind": "nested-grid",
+   "semantic_key": "ds_ndd_uy_quyen_sau_thay_doi",
+   "stt_mode": "generated",
+   "n_fixed_rows": null,
+   "table_index": 4,
+   "min_rows": null,
+   "source_evidence": "app/data/form_maps.json PLI_M12.section_specs[1]"
+  },
+  {
+   "form_id": "PLI_M15",
+   "id": "ndd_pl_uy_quyen_chu_so_huu_moi",
+   "loop": "ds_nddpl_uy_quyen_chu_so_huu_moi",
+   "kind": "nested-grid",
+   "semantic_key": "ds_nddpl_uy_quyen_chu_so_huu_moi",
+   "stt_mode": "generated",
+   "n_fixed_rows": null,
+   "table_index": 1,
+   "min_rows": null,
+   "source_evidence": "app/data/form_maps.json PLI_M15.section_specs[0]"
+  },
+  {
+   "form_id": "PLI_M70",
+   "id": "chu_ky_nguoi_nop_nguoi_nhan",
+   "loop": null,
+   "kind": "output-table",
+   "semantic_key": "chu_ky_tiep_nhan_ho_so",
+   "stt_mode": null,
+   "n_fixed_rows": null,
+   "table_index": 0,
+   "min_rows": null,
+   "source_evidence": "app/data/form_maps.json PLI_M70.section_specs[0]"
+  },
+  {
+   "form_id": "PLI_M71",
+   "id": "chu_ky_co_quan_cap_tinh",
+   "loop": null,
+   "kind": "output-table",
+   "semantic_key": "chu_ky_cqb_m71",
+   "stt_mode": null,
+   "n_fixed_rows": null,
+   "table_index": 0,
+   "min_rows": null,
+   "source_evidence": "app/data/form_maps.json PLI_M71.section_specs[0]"
+  },
+  {
+   "form_id": "PLI_M72",
+   "id": "ds_thanh_vien_tnhh_2tv",
+   "loop": "ds_thanh_vien_tnhh_2tv",
+   "kind": "nested-grid",
+   "semantic_key": "ds_thanh_vien_tnhh_2tv",
+   "stt_mode": "generated",
+   "n_fixed_rows": null,
+   "table_index": 3,
+   "min_rows": null,
+   "source_evidence": "app/data/form_maps.json PLI_M72.section_specs[0]"
+  },
+  {
+   "form_id": "PLI_M72",
+   "id": "ds_co_dong_sang_lap_ctcp",
+   "loop": "ds_co_dong_sang_lap_ctcp",
+   "kind": "nested-grid",
+   "semantic_key": "ds_co_dong_sang_lap_ctcp",
+   "stt_mode": "generated",
+   "n_fixed_rows": null,
+   "table_index": 5,
+   "min_rows": null,
+   "source_evidence": "app/data/form_maps.json PLI_M72.section_specs[1]"
+  },
+  {
+   "form_id": "PLI_M72",
+   "id": "ds_co_dong_nuoc_ngoai_ctcp",
+   "loop": "ds_co_dong_nuoc_ngoai_ctcp",
+   "kind": "nested-grid",
+   "semantic_key": "ds_co_dong_nuoc_ngoai_ctcp",
+   "stt_mode": "generated",
+   "n_fixed_rows": null,
+   "table_index": 6,
+   "min_rows": null,
+   "source_evidence": "app/data/form_maps.json PLI_M72.section_specs[2]"
+  },
+  {
+   "form_id": "PLI_M72",
+   "id": "ds_thanh_vien_hop_danh_dhdn",
+   "loop": "ds_thanh_vien_hop_danh_dhdn",
+   "kind": "nested-grid",
+   "semantic_key": "ds_thanh_vien_hop_danh_dhdn",
+   "stt_mode": "generated",
+   "n_fixed_rows": null,
+   "table_index": 8,
+   "min_rows": null,
+   "source_evidence": "app/data/form_maps.json PLI_M72.section_specs[3]"
+  }
+ ],
+ "blocks_blank_rows": [
+  {
+   "form_id": "PLII_M01",
+   "loop": "ds_tv_ho_gia_dinh",
+   "blank_rows_printed": 4,
+   "policy": "fixed legal blank rows in sẵn theo bản giấy — luôn in, không là dữ liệu"
+  },
+  {
+   "form_id": "PLII_M01",
+   "loop": "ds_nganh",
+   "blank_rows_printed": 4,
+   "policy": "fixed legal blank rows in sẵn theo bản giấy — luôn in, không là dữ liệu"
+  },
+  {
+   "form_id": "PLII_M02",
+   "loop": "tv_hgd_cap_doi",
+   "blank_rows_printed": 5,
+   "policy": "fixed legal blank rows in sẵn theo bản giấy — luôn in, không là dữ liệu"
+  },
+  {
+   "form_id": "PLII_M02",
+   "loop": "ds_nganh",
+   "blank_rows_printed": 4,
+   "policy": "fixed legal blank rows in sẵn theo bản giấy — luôn in, không là dữ liệu"
+  },
+  {
+   "form_id": "PLII_M02",
+   "loop": "nganh_sua_doi_chi_tiet",
+   "blank_rows_printed": 4,
+   "policy": "fixed legal blank rows in sẵn theo bản giấy — luôn in, không là dữ liệu"
+  },
+  {
+   "form_id": "PLII_M02",
+   "loop": "nganh_xoa_bo",
+   "blank_rows_printed": 4,
+   "policy": "fixed legal blank rows in sẵn theo bản giấy — luôn in, không là dữ liệu"
+  },
+  {
+   "form_id": "PLII_M02",
+   "loop": "nganh_bo_sung",
+   "blank_rows_printed": 4,
+   "policy": "fixed legal blank rows in sẵn theo bản giấy — luôn in, không là dữ liệu"
+  },
+  {
+   "form_id": "PLII_M02",
+   "loop": "tv_hgd_sau_thay_doi",
+   "blank_rows_printed": 5,
+   "policy": "fixed legal blank rows in sẵn theo bản giấy — luôn in, không là dữ liệu"
+  },
+  {
+   "form_id": "PLII_M07",
+   "loop": "ds_thanh_vien_hkd_gcn",
+   "blank_rows_printed": 4,
+   "policy": "fixed legal blank rows in sẵn theo bản giấy — luôn in, không là dữ liệu"
+  },
+  {
+   "form_id": "PLII_M07",
+   "loop": "ds_nganh",
+   "blank_rows_printed": 4,
+   "policy": "fixed legal blank rows in sẵn theo bản giấy — luôn in, không là dữ liệu"
+  },
+  {
+   "form_id": "PLI_M01",
+   "loop": "ds_nganh",
+   "blank_rows_printed": 4,
+   "policy": "fixed legal blank rows in sẵn theo bản giấy — luôn in, không là dữ liệu"
+  },
+  {
+   "form_id": "PLI_M02",
+   "loop": "ds_nddpl_uy_quyen_chu_so_huu",
+   "blank_rows_printed": 5,
+   "policy": "fixed legal blank rows in sẵn theo bản giấy — luôn in, không là dữ liệu"
+  },
+  {
+   "form_id": "PLI_M02",
+   "loop": "ds_nganh",
+   "blank_rows_printed": 4,
+   "policy": "fixed legal blank rows in sẵn theo bản giấy — luôn in, không là dữ liệu"
+  },
+  {
+   "form_id": "PLI_M03",
+   "loop": "ds_nganh",
+   "blank_rows_printed": 4,
+   "policy": "fixed legal blank rows in sẵn theo bản giấy — luôn in, không là dữ liệu"
+  },
+  {
+   "form_id": "PLI_M04",
+   "loop": "ds_nganh",
+   "blank_rows_printed": 4,
+   "policy": "fixed legal blank rows in sẵn theo bản giấy — luôn in, không là dữ liệu"
+  },
+  {
+   "form_id": "PLI_M05",
+   "loop": "ds_nganh",
+   "blank_rows_printed": 4,
+   "policy": "fixed legal blank rows in sẵn theo bản giấy — luôn in, không là dữ liệu"
+  },
+  {
+   "form_id": "PLI_M06",
+   "loop": "ds_thanh_vien_tnhh",
+   "blank_rows_printed": 4,
+   "policy": "fixed legal blank rows in sẵn theo bản giấy — luôn in, không là dữ liệu"
+  },
+  {
+   "form_id": "PLI_M07",
+   "loop": "ds_co_dong_sang_lap",
+   "blank_rows_printed": 4,
+   "policy": "fixed legal blank rows in sẵn theo bản giấy — luôn in, không là dữ liệu"
+  },
+  {
+   "form_id": "PLI_M08",
+   "loop": "ds_co_dong_nn",
+   "blank_rows_printed": 4,
+   "policy": "fixed legal blank rows in sẵn theo bản giấy — luôn in, không là dữ liệu"
+  },
+  {
+   "form_id": "PLI_M09",
+   "loop": "ds_thanh_vien_hop_danh",
+   "blank_rows_printed": 4,
+   "policy": "fixed legal blank rows in sẵn theo bản giấy — luôn in, không là dữ liệu"
+  },
+  {
+   "form_id": "PLI_M10",
+   "loop": "ds_cshhl",
+   "blank_rows_printed": 4,
+   "policy": "fixed legal blank rows in sẵn theo bản giấy — luôn in, không là dữ liệu"
+  },
+  {
+   "form_id": "PLI_M11",
+   "loop": "ds_cshhl",
+   "blank_rows_printed": 4,
+   "policy": "fixed legal blank rows in sẵn theo bản giấy — luôn in, không là dữ liệu"
+  },
+  {
+   "form_id": "PLI_M12",
+   "loop": "ds_ndd_uy_quyen_sau_thay_doi",
+   "blank_rows_printed": 5,
+   "policy": "fixed legal blank rows in sẵn theo bản giấy — luôn in, không là dữ liệu"
+  },
+  {
+   "form_id": "PLI_M12",
+   "loop": "nganh_sua_doi_chi_tiet",
+   "blank_rows_printed": 4,
+   "policy": "fixed legal blank rows in sẵn theo bản giấy — luôn in, không là dữ liệu"
+  },
+  {
+   "form_id": "PLI_M12",
+   "loop": "nganh_xoa_bo",
+   "blank_rows_printed": 4,
+   "policy": "fixed legal blank rows in sẵn theo bản giấy — luôn in, không là dữ liệu"
+  },
+  {
+   "form_id": "PLI_M12",
+   "loop": "nganh_bo_sung",
+   "blank_rows_printed": 4,
+   "policy": "fixed legal blank rows in sẵn theo bản giấy — luôn in, không là dữ liệu"
+  },
+  {
+   "form_id": "PLI_M13",
+   "loop": "ds_ndd_pl_sau_thay_doi",
+   "blank_rows_printed": 4,
+   "policy": "fixed legal blank rows in sẵn theo bản giấy — luôn in, không là dữ liệu"
+  },
+  {
+   "form_id": "PLI_M15",
+   "loop": "ds_nddpl_uy_quyen_chu_so_huu_moi",
+   "blank_rows_printed": 5,
+   "policy": "fixed legal blank rows in sẵn theo bản giấy — luôn in, không là dữ liệu"
+  },
+  {
+   "form_id": "PLI_M17",
+   "loop": "ds_nganh",
+   "blank_rows_printed": 4,
+   "policy": "fixed legal blank rows in sẵn theo bản giấy — luôn in, không là dữ liệu"
+  },
+  {
+   "form_id": "PLI_M19",
+   "loop": "ds_nganh",
+   "blank_rows_printed": 4,
+   "policy": "fixed legal blank rows in sẵn theo bản giấy — luôn in, không là dữ liệu"
+  },
+  {
+   "form_id": "PLI_M21",
+   "loop": "ds_nganh",
+   "blank_rows_printed": 4,
+   "policy": "fixed legal blank rows in sẵn theo bản giấy — luôn in, không là dữ liệu"
+  },
+  {
+   "form_id": "PLI_M23",
+   "loop": "ds_nganh",
+   "blank_rows_printed": 4,
+   "policy": "fixed legal blank rows in sẵn theo bản giấy — luôn in, không là dữ liệu"
+  },
+  {
+   "form_id": "PLI_M25",
+   "loop": "ds_nganh",
+   "blank_rows_printed": 4,
+   "policy": "fixed legal blank rows in sẵn theo bản giấy — luôn in, không là dữ liệu"
+  },
+  {
+   "form_id": "PLI_M72",
+   "loop": "ds_thanh_vien_hop_danh_dhdn",
+   "blank_rows_printed": 5,
+   "policy": "fixed legal blank rows in sẵn theo bản giấy — luôn in, không là dữ liệu"
+  },
+  {
+   "form_id": "PLI_M72",
+   "loop": "ds_nganh_dhdn",
+   "blank_rows_printed": 4,
+   "policy": "fixed legal blank rows in sẵn theo bản giấy — luôn in, không là dữ liệu"
+  },
+  {
+   "form_id": "PLI_M72",
+   "loop": "ds_co_dong_nuoc_ngoai_ctcp",
+   "blank_rows_printed": 5,
+   "policy": "fixed legal blank rows in sẵn theo bản giấy — luôn in, không là dữ liệu"
+  },
+  {
+   "form_id": "PLI_M72",
+   "loop": "ds_co_dong_sang_lap_ctcp",
+   "blank_rows_printed": 5,
+   "policy": "fixed legal blank rows in sẵn theo bản giấy — luôn in, không là dữ liệu"
+  },
+  {
+   "form_id": "PLI_M72",
+   "loop": "ds_nganh_ctcp",
+   "blank_rows_printed": 4,
+   "policy": "fixed legal blank rows in sẵn theo bản giấy — luôn in, không là dữ liệu"
+  },
+  {
+   "form_id": "PLI_M72",
+   "loop": "ds_thanh_vien_tnhh_2tv",
+   "blank_rows_printed": 5,
+   "policy": "fixed legal blank rows in sẵn theo bản giấy — luôn in, không là dữ liệu"
+  },
+  {
+   "form_id": "PLI_M72",
+   "loop": "ds_nganh_tnhh_2tv",
+   "blank_rows_printed": 4,
+   "policy": "fixed legal blank rows in sẵn theo bản giấy — luôn in, không là dữ liệu"
+  },
+  {
+   "form_id": "PLI_M72",
+   "loop": "ds_nganh_tnhh_1tv",
+   "blank_rows_printed": 4,
+   "policy": "fixed legal blank rows in sẵn theo bản giấy — luôn in, không là dữ liệu"
+  },
+  {
+   "form_id": "PLI_M72",
+   "loop": "ds_nganh_dntn",
+   "blank_rows_printed": 4,
+   "policy": "fixed legal blank rows in sẵn theo bản giấy — luôn in, không là dữ liệu"
+  }
+ ]
+}

@@ -65,6 +65,8 @@ SUITES: list[dict] = [
     {"name": "test_fixed_matrix",         "type": "node", "target": "app_web/test_fixed_matrix.js"},
     {"name": "test_nested_grid",          "type": "node", "target": "app_web/test_nested_grid.js"},
     {"name": "test_p2_migration",         "type": "node", "target": "app_web/test_p2_migration.js"},
+    # --- Phase 4 (2026-09-03): row/blank-row contract corpus ---
+    {"name": "test_row_contract_corpus",  "type": "node", "target": "app_web/test_row_contract_corpus.js"},
     # --- Wave B (2026-08-27): B1 runtime wiring + B3 wiring gate ---
     {"name": "test_runtime_tables",       "type": "node", "target": "app_web/test_runtime_tables.js"},
     {"name": "test_wiring_gate",          "type": "node", "target": "app_web/test_wiring_gate.js"},
@@ -95,6 +97,9 @@ SUITES: list[dict] = [
     {"name": "test_generator_deep_idempotency", "type": "module",
      "target": "tools.test_generator_deep_idempotency", "requires": ["python-docx"]},
     {"name": "test_export_grid_kinds",    "type": "module", "target": "tools.test_export_grid_kinds",
+     "requires": ["python-docx"]},
+    # --- Phase 4 (2026-09-03): row/blank-row contract ở lớp engine DOCX ---
+    {"name": "test_row_contract_export",  "type": "module", "target": "tools.test_row_contract_export",
      "requires": ["python-docx"]},
     {"name": "test_industry_household",   "type": "module", "target": "tools.test_industry_household",
      "requires": ["python-docx"]},

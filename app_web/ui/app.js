@@ -282,6 +282,16 @@
             clean.la_nganh_chinh = '';
           }
           return clean;
+        }).filter(function (clean) {
+          /* PHASE 4 row/blank-row contract: dòng MỌI ô trống (không còn giá
+           * trị dữ liệu sau khi bỏ field nội bộ _*) KHÔNG trở thành business
+           * data — không xuất thành hàng DOCX. Draft giữ nguyên dòng
+           * (round-trip không mất row); chỉ đường export lọc. Dòng chỉ có
+           * discriminator (vd loai_dong) vẫn được giữ — không âm thầm mất
+           * cấu trúc dòng. */
+          return Object.keys(clean).some(function (k) {
+            return String(clean[k]).trim() !== '';
+          });
         });
       });
       GridCtl.lastExportConflicts = conflicts;

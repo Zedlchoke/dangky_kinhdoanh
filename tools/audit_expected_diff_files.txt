@@ -371,3 +371,11 @@ tools/test_m72_conditional_export.py
 tools/form_specs/formation/PLI_M11.json
 tools/test_phase3_m01_m02.py
 tools/test_phase3_m04_m11.py
+
+# [Phase 4 2026-09-03] row/blank-row contract: corpus node + python export
+# corpus + inventory tool (docs/row_contract_inventory.json/.md generated)
+app_web/test_row_contract_corpus.js
+tools/test_row_contract_export.py
+tools/census/row_contract_inventory.py
+docs/row_contract_inventory.json
+docs/row_contract_inventory.md

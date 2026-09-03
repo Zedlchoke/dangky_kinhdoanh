@@ -114,13 +114,27 @@ def _expand_loops(xml: str, data: dict) -> str:
         out.append(xml[pos : m.start()])
         items = data.get(name)
         if isinstance(items, list):
+            printed = 0  # PHASE 4: {_stt} đếm trên dòng dữ liệu, sau khi lọc
             for idx, item in enumerate(items):
                 if not isinstance(item, dict):
                     continue
+                # PHASE 4 row/blank-row contract (last-mile guard): dòng loop
+                # mà MỌI giá trị dữ liệu trống (bỏ key nội bộ _) không trở
+                # thành business data — không in hàng DOCX. Đường export JS
+                # (GridCtl.exportLoops) đã lọc trước; guard này chặn payload
+                # gọi render trực tiếp. Dòng chỉ có discriminator/structural
+                # key (giá trị khác rỗng) vẫn được in — không mất cấu trúc.
+                if not any(
+                    (str(v).strip() != "") if v is not None else False
+                    for k, v in item.items()
+                    if not k.startswith("_")
+                ):
+                    continue
+                printed += 1
                 r = row.replace("{#%s}" % name, "").replace("{/%s}" % name, "")
                 # Biến engine {_stt}: số thứ tự 1-based của dòng dữ liệu
                 # (thay trước khi quét tag thường để dữ liệu không ghi đè)
-                r = r.replace("{_stt}", str(idx + 1))
+                r = r.replace("{_stt}", str(printed))
                 # Thay tag cột theo dữ liệu dòng; tag lồng nhau để lượt sau xử lý
                 r = TAG_RE.sub(
                     lambda mm: (

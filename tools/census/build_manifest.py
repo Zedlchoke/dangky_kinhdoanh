@@ -304,6 +304,20 @@ LEAD_STATUS_OVERRIDES = {
         "evidence": "P1 integrate: loop rieng nganh_sua_doi_chi_tiet (3 cot, khong co nganh chinh theo template); "
                     "suite household 13 PASS.",
     },
+    # --- Owner P1/P2/P3 (2026-09-03): lanes merged, evidence verified ---
+    ("PLII_M02", "a4_tv_hgd_sau_thay_doi"): {"status": "already_complete", "evidence": "P2 member grid rebuild 10 cột; test_member_grids_rebuild PASS."},
+    ("PLII_M02", "a7_thue_chi_tieu_cu_moi"): {"status": "already_complete", "evidence": "cap-von D5.2=A fixed-matrix 3 cột."},
+    ("PLII_M02", "c7_tv_hgd_cap_doi"): {"status": "already_complete", "evidence": "P2 member grid rebuild 10 cột."},
+    ("PLI_M03", "nguon_von_dieule"): {"status": "already_complete", "evidence": "cap-von D1.1=A fixed-matrix 3 cột."},
+    ("PLI_M04", "nguon_von_dieule"): {"status": "already_complete", "evidence": "cap-von D1.1=A fixed-matrix."},
+    ("PLI_M04", "co_cau_loai_co_phan"): {"status": "already_complete", "evidence": "cap-von D1.4=A fixed-matrix."},
+    ("PLI_M04", "co_phan_duoc_quyen_chao_ban"): {"status": "already_complete", "evidence": "cap-von D1.4=A fixed-matrix."},
+    ("PLI_M05", "nguon_von_dieule"): {"status": "already_complete", "evidence": "cap-von D1.1=A fixed-matrix."},
+    ("PLI_M12", "nguon_von_dieule_sau_thay_doi"): {"status": "already_complete", "evidence": "cap-von D1.1=A fixed-matrix."},
+    ("PLI_M72", "thanh_vien_tnhhh_hai_tv_tro_len"): {"status": "already_complete", "evidence": "P2 member grid rebuild 8 cột."},
+    ("PLI_M72", "thanh_vien_hop_danh"): {"status": "already_complete", "evidence": "P2 member grid rebuild 7 cột."},
+    ("PLI_M72", "co_dong_sang_lap_cp"): {"status": "already_complete", "evidence": "P2 member grid rebuild 10 cột."},
+    ("PLI_M72", "co_dong_nuoc_ngoai_cp"): {"status": "already_complete", "evidence": "P2 member grid rebuild 10 cột."},
 }
 
 CAVEATS = [

@@ -3303,11 +3303,24 @@ def main():
     for path in iter_docx_files():
         if path.name.startswith("~$") or path.name.startswith("_"):
             continue
+        # SOURCE_OVERRIDES là nguồn canonical (vd M03/M04 tách từ bản gốc
+        # đầy đủ): full-run phải BỎ các bản nguồn alias khác cùng form_id,
+        # nếu không first/last-wins sẽ nhặt nhầm bản thô (Lane D F2 — --one
+        # luôn đi qua find_source nên có override, full-run phải như vậy).
+        fid, _, _ = parse_form_id(path)
+        if fid in SOURCE_OVERRIDES and \
+                path.relative_to(ROOT).as_posix() != SOURCE_OVERRIDES[fid]:
+            continue
         meta, unmatched = process_form(path, titles, None)
         all_meta.append(meta)
         all_unmatched.extend(unmatched)
     OUT_DATA.mkdir(parents=True, exist_ok=True)
-    ordered = {m["id"]: m for m in all_meta}
+    # FIRST-WINS theo id (khớp find_source): hai thư mục nguồn alias cùng
+    # một mẫu byte-identical (vd PLI_M70 ở 03_ và 05_) phải giữ path lần
+    # ĐẦU — last-wins làm full-regen lật path so với committed (Lane D F2)
+    ordered: dict = {}
+    for m in all_meta:
+        ordered.setdefault(m["id"], m)
     write_maps(ordered)
     report = {
         "total_forms": len(all_meta),

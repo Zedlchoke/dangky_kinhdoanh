@@ -1501,7 +1501,10 @@
           section_id: 'chu_ky_nguoi_nop_nguoi_nhan',
           semantic_key: 'chu_ky_tiep_nhan_ho_so',
           form_id: 'PLI_M70',
-          grid: { rows: 2, cols: 1, labels: [
+          /* 5R2 (sync Lead sau merge lane B): bảng ký NGANG 1 hàng × 2 cột
+           * (NGƯỜI NỘP | NGƯỜI NHẬN) — khớp template 1x2 + form_maps +
+           * _find_output_grid_block horizontal + cellLabel flat-trải-cột. */
+          grid: { rows: 1, cols: 2, labels: [
             'NGƯỜI NỘP\n(Ký và ghi họ tên)', 'NGƯỜI NHẬN\n(Ký và ghi họ tên)'
           ] },
           inputs: [],

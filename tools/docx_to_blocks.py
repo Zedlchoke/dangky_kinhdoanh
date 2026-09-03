@@ -898,13 +898,22 @@ def _table_block_signature(blk: dict) -> str:
     return "#".join(lines)
 
 
-def _find_output_grid_block(blocks, labels: list, cols: int):
+def _find_output_grid_block(blocks, labels: list, cols: int,
+                            rows_hint: int = 0):
+    """Tìm block bảng khớp lưới output. labels phẳng ("A", "B", ...) theo
+    legacy = N hàng × 1 cột (mỗi hàng nhãn ở ô đầu). rows_hint=1 + cols>1:
+    bảng 1 HÀNG × N CỘT (khối ký ngang PLI_M70 sau 5R2 — cặp signer nằm
+    ngang) -> nhãn trải theo cột trong cùng một hàng."""
     matrix = bool(labels) and all(isinstance(x, list) for x in labels)
+    horizontal = (not matrix and rows_hint == 1 and cols > 1
+                  and len(labels) == cols)
     rows_txt = []
-    for r in range(len(labels)):
+    for r in range(len(labels) if not horizontal else 1):
         if matrix:
             cells = [labels[r][c] if c < len(labels[r]) else ""
                      for c in range(cols)]
+        elif horizontal:
+            cells = [labels[c] if c < len(labels) else "" for c in range(cols)]
         else:
             cells = [labels[r] if (c == 0 and r < len(labels)) else ""
                      for c in range(cols)]
@@ -1092,11 +1101,18 @@ def verify_output_table_spec(blk, spec: dict, sem: str) -> list[str]:
         errs.append("output-table KHÔNG được có input, thấy %s" % inputs[:8])
     labels = grid["labels"]
     matrix = bool(labels) and all(isinstance(x, list) for x in labels)
+    # Bảng ký NGANG (5R2 PLI_M70): grid rows=1, cols>1, labels phẳng đếm đủ
+    # cols -> nhãn trải theo CỘT trong 1 hàng (không phải N hàng × 1 cột).
+    horizontal = (not matrix and int(grid.get("rows", 0) or 0) == 1
+                  and int(grid.get("cols", 1)) > 1
+                  and len(labels) == int(grid["cols"]))
     for ri, row in enumerate(rows):
         for pos, _span, cell in _physical_indexes(row["cells"]):
             if matrix:
                 want = (labels[ri][pos] if ri < len(labels) and
                         pos < len(labels[ri]) else "")
+            elif horizontal:
+                want = labels[pos] if pos < len(labels) else ""
             else:
                 want = (labels[ri] if pos == 0 and ri < len(labels) else "")
             if _fold_txt(_block_row_runs_text(cell)) != _fold_txt(want):
@@ -1145,8 +1161,10 @@ def annotate_and_verify_section_specs(blocks, section_specs) -> int:
             errs = verify_fixed_matrix_spec(blk, payload, sem)
         elif kind == "output-table":
             grid = payload.get("grid", {})
-            _bi, blk = _find_output_grid_block(blocks, grid.get("labels", []),
-                                               int(grid.get("cols", 1)))
+            _bi, blk = _find_output_grid_block(
+                blocks, grid.get("labels", []),
+                int(grid.get("cols", 1)),
+                rows_hint=int(grid.get("rows", 0) or 0))
             if blk is None:
                 problems.append("%s (%s): không tìm thấy lưới output khớp "
                                 "labels %r" % (sid, sem,

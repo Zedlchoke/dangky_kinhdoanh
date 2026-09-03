@@ -809,16 +809,19 @@ const MARKERS = {
           /role="grid"/.test(h) || /output-table/.test(h);
       } },
     { id: 'ot-dimensions-labels',
-      /* [Lead sync] Nhãn pháp lý THẬT của PLI_M70 trong registry là
+      /* [Lead sync 5R2] Nhãn pháp lý THẬT của PLI_M70 trong registry là
        * "NGƯỜI NỘP\n(Ký và ghi họ tên)" / "NGƯỜI NHẬN\n…" — marker đòi hai
-       * VAI TRÒ ký hiện diện (không phụ thuộc fixture text) + bảng >=2 hàng. */
+       * VAI TRÒ ký hiện diện + bảng có >= 2 ô ký. Hướng 1 hàng × 2 cột
+       * (ngang) là layout đã chứng minh bằng nguồn/owner (WLAY-002) — chấp
+       * nhận cả 2 hàng × 1 cột lẫn 1 hàng × 2 cột. */
       desc: 'nhãn pháp lý hai vai trò ký được giữ (NGƯỜI NỘP / NGƯỜI NHẬN) '
-        + 'trên bảng >= 2 hàng',
+        + 'trên bảng >= 2 ô (1x2 ngang hoặc 2x1 dọc)',
       test: function (h) {
-        const rows = h.match(/<tr\b/g) || [];
+        const rows = (h.match(/<tr\b/g) || []).length;
+        const cells = (h.match(/<td\b/g) || []).length;
         return h.indexOf('NGƯỜI NỘP') >= 0 &&
-          h.indexOf('NGƯỜI NHẬN') >= 0 && rows.length >= 2 &&
-          h.indexOf('<table') >= 0;
+          h.indexOf('NGƯỜI NHẬN') >= 0 && cells >= 2 &&
+          (rows >= 2 || cells >= 2) && h.indexOf('<table') >= 0;
       } },
     { id: 'ot-zero-input',
       desc: 'renderer KHÔNG sinh bất kỳ <input>/<textarea>/<select> nào',

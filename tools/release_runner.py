@@ -111,6 +111,14 @@ SUITES: list[dict] = [
     {"name": "test_phase5_visual_detectors", "type": "module",
      "target": "tools.test_phase5_visual_detectors", "requires": ["python-docx"]},
     {"name": "phase5_fixtures_selftest",  "type": "module", "target": "tools.phase5_fixtures"},
+    # --- [Lane D 2026-09-04] 3 suite 5R vào runner: trước đây nằm ngoài
+    #     runner nên bug sectPr (61c8068) và drift regen không lộ qua 54/0/0.
+    {"name": "test_phase5r_metadata",     "type": "module", "target": "tools.test_phase5r_metadata",
+     "requires": ["python-docx"]},
+    {"name": "test_phase5r_signatures",   "type": "module", "target": "tools.test_phase5r_signatures",
+     "requires": ["python-docx"]},
+    {"name": "test_phase5r_tables",       "type": "module", "target": "tools.test_phase5r_tables",
+     "requires": ["python-docx"]},
     {"name": "test_industry_household",   "type": "module", "target": "tools.test_industry_household",
      "requires": ["python-docx"]},
     {"name": "test_contract_release",     "type": "module", "target": "tools.test_contract_release",

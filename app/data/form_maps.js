@@ -3006,7 +3006,7 @@ window.FORM_MAPS = {
   "phu_luc": "I",
   "mau_so": 28,
   "ten_mau": "Thông báo về việc chấm dứt hoạt động chi nhánh/văn phòng đại diện/địa điểm kinh doanh",
-  "file": "04_tam_ngung_cham_dut_giai_the/PL1_Mau_28_thong_bao_ve_viec_cham_dut_hoat_dong_chi_nhanh_van_phong_dai_dien_dia_diem_kinh_doanh.docx",
+  "file": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_28_thong_bao_ve_viec_cham_dut_hoat_dong_chi_nhanh_van_phong_dai_dien_dia_diem_kinh_doanh.docx",
   "template": "templates/PLI_M28.docx",
   "fields": [
    {
@@ -3096,7 +3096,7 @@ window.FORM_MAPS = {
   "phu_luc": "I",
   "mau_so": 29,
   "ten_mau": "Thông báo về việc chấm dứt hoạt động chi nhánh/văn phòng đại diện ở nước ngoài",
-  "file": "04_tam_ngung_cham_dut_giai_the/PL1_Mau_29_thong_bao_ve_viec_cham_dut_hoat_dong_chi_nhanh_van_phong_dai_dien_o_nuoc_ngoai.docx",
+  "file": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_29_thong_bao_ve_viec_cham_dut_hoat_dong_chi_nhanh_van_phong_dai_dien_o_nuoc_ngoai.docx",
   "template": "templates/PLI_M29.docx",
   "fields": [
    {
@@ -3522,7 +3522,7 @@ window.FORM_MAPS = {
   "phu_luc": "I",
   "mau_so": 55,
   "ten_mau": "Giấy xác nhận về việc chi nhánh/địa điểm kinh doanh thông báo tạm ngừng kinh doanh/Về việc văn phòng đại diện thông báo tạm ngừng hoạt động",
-  "file": "04_tam_ngung_cham_dut_giai_the/PL1_Mau_55_giay_xac_nhan_ve_viec_chi_nhanh_dia_diem_kinh_doanh_thong_bao_tam_ngung_kinh_doanh_ve_viec_van_p.docx",
+  "file": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_55_giay_xac_nhan_ve_viec_chi_nhanh_dia_diem_kinh_doanh_thong_bao_tam_ngung_kinh_doanh_ve_viec_van_p.docx",
   "template": "templates/PLI_M55.docx",
   "fields": [
    {
@@ -3620,7 +3620,7 @@ window.FORM_MAPS = {
   "phu_luc": "I",
   "mau_so": 57,
   "ten_mau": "Giấy xác nhận chi nhánh/địa điểm kinh doanh thông báo tiếp tục kinh doanh trước thời hạn đã thông báo/Về việc văn phòng đại diện thông báo tiếp tục hoạt dộng trước thời hạn đã thông báo",
-  "file": "04_tam_ngung_cham_dut_giai_the/PL1_Mau_57_giay_xac_nhan_chi_nhanh_dia_diem_kinh_doanh_thong_bao_tiep_tuc_kinh_doanh_truoc_thoi_han_da_thon.docx",
+  "file": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_57_giay_xac_nhan_chi_nhanh_dia_diem_kinh_doanh_thong_bao_tiep_tuc_kinh_doanh_truoc_thoi_han_da_thon.docx",
   "template": "templates/PLI_M57.docx",
   "fields": [
    {
@@ -3868,7 +3868,7 @@ window.FORM_MAPS = {
   "phu_luc": "I",
   "mau_so": 67,
   "ten_mau": "Thông báo về việc chấm dứt hoạt động chi nhánh/văn phòng đại diện/địa điểm kinh doanh",
-  "file": "04_tam_ngung_cham_dut_giai_the/PL1_Mau_67_thong_bao_ve_viec_cham_dut_hoat_dong_chi_nhanh_van_phong_dai_dien_dia_diem_kinh_doanh.docx",
+  "file": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_67_thong_bao_ve_viec_cham_dut_hoat_dong_chi_nhanh_van_phong_dai_dien_dia_diem_kinh_doanh.docx",
   "template": "templates/PLI_M67.docx",
   "fields": [
    {
@@ -4038,7 +4038,7 @@ window.FORM_MAPS = {
   "phu_luc": "I",
   "mau_so": 71,
   "ten_mau": "Giấy tiếp nhận hồ sơ và hẹn trả kết quả hồ sơ đăng ký doanh nghiệp/chi nhánh/văn phòng đại diện/địa điểm kinh doanh qua mạng thông tin điện tử",
-  "file": "05_cong_bo_cung_cap_thong_tin/PL1_Mau_71_giay_tiep_nhan_ho_so_va_hen_tra_ket_qua_ho_so_dang_ky_doanh_nghiep_chi_nhanh_van_phong_dai_dien.docx",
+  "file": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_71_giay_tiep_nhan_ho_so_va_hen_tra_ket_qua_ho_so_dang_ky_doanh_nghiep_chi_nhanh_van_phong_dai_dien.docx",
   "template": "templates/PLI_M71.docx",
   "fields": [
    {
@@ -12062,1532 +12062,6 @@ window.FORM_MAPS = {
    }
   ]
  },
- "PLI_M03": {
-  "id": "PLI_M03",
-  "phu_luc": "I",
-  "mau_so": 3,
-  "ten_mau": "Giấy đề nghị đăng ký doanh nghiệp - Công ty trách nhiệm hữu hạn hai thành viên trở lên",
-  "file": "06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn/PL1_Mau_03_tach_tu_file_full.docx",
-  "template": "templates/PLI_M03.docx",
-  "fields": [
-   {
-    "key": "dia_diem_ky",
-    "label": ""
-   },
-   {
-    "key": "ngay_ky_vb",
-    "label": ""
-   },
-   {
-    "key": "thang_ky_vb",
-    "label": ""
-   },
-   {
-    "key": "nam_ky_vb",
-    "label": ""
-   },
-   {
-    "key": "co_quan_dkkd",
-    "label": "Kính gửi: (Cơ quan đăng ký kinh doanh cấp tỉnh)"
-   },
-   {
-    "key": "chu_hkd.ho_ten",
-    "label": "Tôi là1 (ghi họ tên bằng chữ in hoa):"
-   },
-   {
-    "key": "ngay_sinh",
-    "label": "Ngày, tháng, năm sinh:"
-   },
-   {
-    "key": "thang_sinh",
-    "label": ""
-   },
-   {
-    "key": "nam_sinh",
-    "label": ""
-   },
-   {
-    "key": "chu_hkd.gioi_tinh",
-    "label": "Giới tính:"
-   },
-   {
-    "key": "chu_hkd.so_cccd",
-    "label": "Số định danh cá nhân:"
-   },
-   {
-    "key": "dia_chi_chi_tiet",
-    "label": "Số nhà/phòng, ngách/hẻm, ngõ/kiệt, đường/phố/đại lộ, tổ/xóm/ấp/thôn:"
-   },
-   {
-    "key": "xa_phuong",
-    "label": "Xã/Phường/Đặc khu:"
-   },
-   {
-    "key": "tinh_thanh",
-    "label": "Tỉnh/Thành phố trực thuộc trung ương:"
-   },
-   {
-    "key": "ndd.quoc_gia",
-    "label": "Quốc gia:"
-   },
-   {
-    "key": "ndd.dien_thoai",
-    "label": "Điện thoại (nếu có):"
-   },
-   {
-    "key": "ndd.email",
-    "label": ""
-   },
-   {
-    "key": "chu_hkd.dan_toc",
-    "label": "Dân tộc:"
-   },
-   {
-    "key": "chu_hkd.quoc_tich",
-    "label": "Quốc tịch:"
-   },
-   {
-    "key": "ngay_cap",
-    "label": "Ngày cấp:"
-   },
-   {
-    "key": "noi_cap",
-    "label": "Nơi cấp:"
-   },
-   {
-    "key": "quoc_gia",
-    "label": "Quốc gia:"
-   },
-   {
-    "key": "dn_goc.ten_doanh_nghiep",
-    "label": "Tên doanh nghiệp (ghi bằng chữ in hoa):"
-   },
-   {
-    "key": "dn_goc.ma_so_dn",
-    "label": "Mã số doanh nghiệp/Mã số thuế:"
-   },
-   {
-    "key": "hkd_cd.ten_hkd",
-    "label": "Tên hộ kinh doanh (ghi bằng chữ in hoa):"
-   },
-   {
-    "key": "hkd_cd.so_gcn",
-    "label": "Số Giấy chứng nhận đăng ký hộ kinh doanh (nếu có):"
-   },
-   {
-    "key": "hkd_cd.ngay_cap",
-    "label": "Ngày cấp:"
-   },
-   {
-    "key": "hkd_cd.noi_cap",
-    "label": "Nơi cấp:"
-   },
-   {
-    "key": "hkd_cd.ma_so_thue",
-    "label": "Mã số thuế của hộ kinh doanh:"
-   },
-   {
-    "key": "hkd_cd.dia_chi",
-    "label": "Địa chỉ trụ sở hộ kinh doanh:"
-   },
-   {
-    "key": "hkd_cd.ten_chu_ho",
-    "label": "Tên chủ hộ kinh doanh:"
-   },
-   {
-    "key": "so_giay_to_ca_nhan",
-    "label": "Số giấy tờ pháp lý của cá nhân (kê khai theo giấy tờ pháp lý của cá nhân được ghi trên Giấy chứng nhận đăng ký thuế của "
-   },
-   {
-    "key": "ngay_het_han",
-    "label": "Ngày hết hạn (nếu có):"
-   },
-   {
-    "key": "csbt.ten",
-    "label": "Tên cơ sở bảo trợ xã hội/quỹ xã hội/quỹ từ thiện (ghi bằng chữ in hoa):"
-   },
-   {
-    "key": "csbt.so_gcn",
-    "label": "Số Giấy chứng nhận đăng ký thành lập (Đối với cơ sở bảo trợ xã hội)/Số Giấy phép thành lập và công nhận điều lệ quỹ (Đối"
-   },
-   {
-    "key": "csbt.ngay_cap",
-    "label": "Ngày cấp: … /… /"
-   },
-   {
-    "key": "csbt.ma_so_thue",
-    "label": "Mã số thuế của cơ sở bảo trợ xã hội/quỹ xã hội/quỹ từ thiện (chỉ kê khai mã số thuế 10 số):"
-   },
-   {
-    "key": "csbt.dia_chi",
-    "label": "Địa chỉ trụ sở chính:"
-   },
-   {
-    "key": "csbt.ten_nguoi_dai_dien",
-    "label": "Tên người đại diện cơ sở bảo trợ xã hội/quỹ xã hội/quỹ từ thiện:"
-   },
-   {
-    "key": "gp_ucsn_so",
-    "label": "Giấy phép thành lập và hoạt động số: … do Ủy ban Chứng khoán Nhà nước cấp ngày:"
-   },
-   {
-    "key": "dn.ten_tieng_viet",
-    "label": "Tên công ty viết bằng tiếng Việt (ghi bằng chữ in hoa):"
-   },
-   {
-    "key": "dn.ten_nuoc_ngoai",
-    "label": "Tên công ty viết bằng tiếng nước ngoài (nếu có):"
-   },
-   {
-    "key": "dn.ten_viet_tat",
-    "label": "Tên công ty viết tắt (nếu có):"
-   },
-   {
-    "key": "dien_thoai_khac",
-    "label": "Điện thoại:"
-   },
-   {
-    "key": "fax",
-    "label": "Số fax (nếu có):"
-   },
-   {
-    "key": "email_tru_so",
-    "label": "Thư điện tử (nếu có):"
-   },
-   {
-    "key": "website",
-    "label": "Website (nếu có):"
-   },
-   {
-    "key": "ds_nganh.ten_nganh",
-    "label": "ten_nganh"
-   },
-   {
-    "key": "ds_nganh.ma_nganh",
-    "label": "ma_nganh"
-   },
-   {
-    "key": "ds_nganh.la_nganh_chinh",
-    "label": "la_nganh_chinh"
-   },
-   {
-    "key": "von_dieu_le",
-    "label": "Vốn điều lệ (bằng số; VNĐ):"
-   },
-   {
-    "key": "von_dieu_le_chu",
-    "label": "Vốn điều lệ (bằng chữ; VNĐ):"
-   },
-   {
-    "key": "gia_tri_ntte",
-    "label": "Giá trị tương đương theo đơn vị tiền nước ngoài (nếu có, bằng số, loại ngoại tệ):"
-   },
-   {
-    "key": "nguon_von_dieu_le.von_khac.so_tien_vnd_va_tuong_duong",
-    "label": "von_khac.so_tien_vnd_va_tuong_duong"
-   },
-   {
-    "key": "nguon_von_dieu_le.von_ngan_sach_nha_nuoc.so_tien_vnd_va_tuong_duong",
-    "label": "von_ngan_sach_nha_nuoc.so_tien_vnd_va_tuong_duong"
-   },
-   {
-    "key": "nguon_von_dieu_le.von_nuoc_ngoai.so_tien_vnd_va_tuong_duong",
-    "label": "von_nuoc_ngoai.so_tien_vnd_va_tuong_duong"
-   },
-   {
-    "key": "nguon_von_dieu_le.von_tu_nhan.so_tien_vnd_va_tuong_duong",
-    "label": "von_tu_nhan.so_tien_vnd_va_tuong_duong"
-   },
-   {
-    "key": "nguon_von_dieu_le.von_khac.ty_le",
-    "label": "von_khac.ty_le"
-   },
-   {
-    "key": "nguon_von_dieu_le.von_ngan_sach_nha_nuoc.ty_le",
-    "label": "von_ngan_sach_nha_nuoc.ty_le"
-   },
-   {
-    "key": "nguon_von_dieu_le.von_nuoc_ngoai.ty_le",
-    "label": "von_nuoc_ngoai.ty_le"
-   },
-   {
-    "key": "nguon_von_dieu_le.von_tu_nhan.ty_le",
-    "label": "von_tu_nhan.ty_le"
-   },
-   {
-    "key": "ma_so_du_an",
-    "label": "Mã số dự án:"
-   },
-   {
-    "key": "co_quan_cap",
-    "label": "Cơ quan cấp:"
-   },
-   {
-    "key": "ndd.ho_ten",
-    "label": "Họ, chữ đệm và tên (ghi bằng chữ in hoa):"
-   },
-   {
-    "key": "ndd.ngay_sinh",
-    "label": "Ngày, tháng, năm sinh:"
-   },
-   {
-    "key": "ndd.thang_sinh",
-    "label": ""
-   },
-   {
-    "key": "ndd.nam_sinh",
-    "label": ""
-   },
-   {
-    "key": "ndd.gioi_tinh",
-    "label": "Giới tính:"
-   },
-   {
-    "key": "ndd.so_cccd",
-    "label": "Số định danh cá nhân:"
-   },
-   {
-    "key": "ndd.chuc_vu",
-    "label": "Chức danh:"
-   },
-   {
-    "key": "dien_thoai_lien_he",
-    "label": "Điện thoại (nếu có):"
-   },
-   {
-    "key": "gd.ho_ten",
-    "label": "Họ, chữ đệm và tên Giám đốc/Tổng giám đốc:"
-   },
-   {
-    "key": "gd.ngay_sinh",
-    "label": "Ngày, tháng, năm sinh:"
-   },
-   {
-    "key": "gd.thang_sinh",
-    "label": ""
-   },
-   {
-    "key": "gd.nam_sinh",
-    "label": ""
-   },
-   {
-    "key": "gd.gioi_tinh",
-    "label": "Giới tính:"
-   },
-   {
-    "key": "gd.so_cccd",
-    "label": "Số định danh cá nhân:"
-   },
-   {
-    "key": "gd.dien_thoai",
-    "label": "Điện thoại:"
-   },
-   {
-    "key": "kt.ho_ten",
-    "label": "Họ, chữ đệm và tên Kế toán trưởng/Phụ trách kế toán:"
-   },
-   {
-    "key": "kt.ngay_sinh",
-    "label": "Ngày, tháng, năm sinh:"
-   },
-   {
-    "key": "kt.thang_sinh",
-    "label": ""
-   },
-   {
-    "key": "kt.nam_sinh",
-    "label": ""
-   },
-   {
-    "key": "kt.gioi_tinh",
-    "label": "Giới tính:"
-   },
-   {
-    "key": "kt.so_cccd",
-    "label": "Số định danh cá nhân:"
-   },
-   {
-    "key": "kt.dien_thoai",
-    "label": "Điện thoại:"
-   },
-   {
-    "key": "ngay_bd",
-    "label": "Ngày bắt đầu hoạt động6 (trường hợp doanh nghiệp dự kiến bắt đầu hoạt động kể từ ngày được cấp Giấy chứng nhận đăng ký d"
-   },
-   {
-    "key": "thang_bd",
-    "label": ""
-   },
-   {
-    "key": "nam_bd",
-    "label": ""
-   },
-   {
-    "key": "ap_dung_tu",
-    "label": "Áp dụng từ ngày"
-   },
-   {
-    "key": "so_lao_dong",
-    "label": "Tổng số lao động (dự kiến):"
-   },
-   {
-    "key": "chk_tt_thanh_lap_moi",
-    "label": "thanh lap moi",
-    "type": "chk"
-   },
-   {
-    "key": "chk_tt_tach_dn",
-    "label": "thanh lap tren co so tach doanh nghiep",
-    "type": "chk"
-   },
-   {
-    "key": "chk_tt_chia_dn",
-    "label": "thanh lap tren co so chia doanh nghiep",
-    "type": "chk"
-   },
-   {
-    "key": "chk_tt_hop_nhat_dn",
-    "label": "thanh lap tren co so hop nhat doanh nghiep",
-    "type": "chk"
-   },
-   {
-    "key": "chk_tt_chuyen_doi_loai_hinh",
-    "label": "thanh lap tren co so chuyen doi loai hinh doanh nghiep",
-    "type": "chk"
-   },
-   {
-    "key": "chk_tt_chuyen_doi_tu_hkd",
-    "label": "thanh lap tren co so chuyen doi tu ho kinh doanh",
-    "type": "chk"
-   },
-   {
-    "key": "chk_tt_chuyen_doi_tu_csbt",
-    "label": "thanh lap tren co so chuyen doi tu co so bao tro xa hoi/quy xa hoi/quy tu thien3",
-    "type": "chk"
-   },
-   {
-    "key": "chk_gt_cmnd",
-    "label": "Chứng minh nhân dân",
-    "type": "chk"
-   },
-   {
-    "key": "chk_gt_cccd",
-    "label": "Căn cước công dân",
-    "type": "chk"
-   },
-   {
-    "key": "chk_gt_ho_chieu",
-    "label": "Hộ chiếu",
-    "type": "chk"
-   },
-   {
-    "key": "chk_gt_loai_khac",
-    "label": "Loại khác (ghi rõ):…………",
-    "type": "chk"
-   },
-   {
-    "key": "chk_dau_tu_dac_biet",
-    "label": "- Doanh nghiệp thực hiện dự án đầu tư được đăng ký đầu tư theo thủ tục đầu tư đặc biệt",
-    "type": "chk"
-   },
-   {
-    "key": "chk_dn_xa_hoi",
-    "label": "Doanh nghiệp xã hội (Đánh dấu X vào ô vuông nếu là doanh nghiệp xã hội và kèm theo hồ sơ phải có Cam kết thực hiện mục t",
-    "type": "chk"
-   },
-   {
-    "key": "chk_ctck",
-    "label": "Công ty chứng khoán/Công ty quản lý quỹ đầu tư chứng khoán/Công ty đầu tư chứng khoán: (Đánh dấu X nếu là Công ty chứng ",
-    "type": "chk"
-   },
-   {
-    "key": "chk_khu_cong_nghiep",
-    "label": "khu cong nghiep",
-    "type": "chk"
-   },
-   {
-    "key": "chk_khu_che_xuat",
-    "label": "khu che xuat",
-    "type": "chk"
-   },
-   {
-    "key": "chk_khu_kinh_te",
-    "label": "khu kinh te",
-    "type": "chk"
-   },
-   {
-    "key": "chk_khu_cong_nghe_cao",
-    "label": "khu cong nghe cao",
-    "type": "chk"
-   },
-   {
-    "key": "chk_auto_co",
-    "label": "Có",
-    "type": "chk"
-   },
-   {
-    "key": "chk_auto_khong",
-    "label": "Không",
-    "type": "chk"
-   },
-   {
-    "key": "chk_auto_co_hien_thi_thong_tin_ve_gia_tri_tuong_d",
-    "label": "Có hiển thị thông tin về giá trị tương đương theo đơn vị tiền tệ nước ngoài trên Giấy chứng nhận đăng ký doanh nghiệp ha",
-    "type": "chk"
-   },
-   {
-    "key": "chk_auto_khong_2",
-    "label": "Không",
-    "type": "chk"
-   },
-   {
-    "key": "chk_ht_doc_lap",
-    "label": "hach toan doc lap",
-    "type": "chk"
-   },
-   {
-    "key": "chk_ht_hop_nhat",
-    "label": "Có báo cáo tài chính hợp nhất",
-    "type": "chk"
-   },
-   {
-    "key": "chk_ht_phu_thuoc",
-    "label": "hach toan phu thuoc",
-    "type": "chk"
-   },
-   {
-    "key": "chk_co",
-    "label": "Có",
-    "type": "chk"
-   },
-   {
-    "key": "chk_khong",
-    "label": "Không",
-    "type": "chk"
-   },
-   {
-    "key": "chk_gtgt_khoan_tru",
-    "label": "khau tru",
-    "type": "chk"
-   },
-   {
-    "key": "chk_gtgt_truc_tiep_tren_gtgt",
-    "label": "truc tiep tren gtgt",
-    "type": "chk"
-   },
-   {
-    "key": "chk_gtgt_truc_tiep_doanh_so",
-    "label": "truc tiep tren doanh so",
-    "type": "chk"
-   },
-   {
-    "key": "chk_gtgt_khong_phai_nop",
-    "label": "khong phai nop thue gtgt",
-    "type": "chk"
-   },
-   {
-    "key": "chk_bc_hang_thang",
-    "label": "Hàng tháng",
-    "type": "chk"
-   },
-   {
-    "key": "chk_bc_03_thang",
-    "label": "03 tháng một lần",
-    "type": "chk"
-   },
-   {
-    "key": "chk_bc_06_thang",
-    "label": "06 tháng một lần",
-    "type": "chk"
-   }
-  ],
-  "dynamic_tables": [
-   {
-    "id": "ds_nganh",
-    "table_index": 0,
-    "header_row": 0,
-    "template_row": 5,
-    "loop": "ds_nganh",
-    "columns": [
-     {
-      "col": 1,
-      "header": "Tên ngành",
-      "tag": "ten_nganh"
-     },
-     {
-      "col": 2,
-      "header": "Mã ngành",
-      "tag": "ma_nganh"
-     },
-     {
-      "col": 3,
-      "header": "Ngành, nghề kinh doanh chính",
-      "tag": "la_nganh_chinh"
-     }
-    ]
-   }
-  ],
-  "section_specs": [
-   {
-    "kind": "fixed-matrix",
-    "id": "nguon_von_dieule",
-    "semantic_key": "nguon_von_dieu_le",
-    "section_id": "nguon_von_dieule",
-    "table_index": 1,
-    "columns": [
-     {
-      "col": 0,
-      "header": "Loại nguồn vốn",
-      "tag": null,
-      "input_type": "readonly",
-      "computed": false,
-      "output_only": false,
-      "required": false
-     },
-     {
-      "col": 1,
-      "header": "Số tiền (bằng số; VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)",
-      "tag": "so_tien_vnd_va_tuong_duong",
-      "input_type": "money",
-      "computed": false,
-      "output_only": false,
-      "required": false
-     },
-     {
-      "col": 2,
-      "header": "Tỷ lệ (%)",
-      "tag": "ty_le",
-      "input_type": "percent",
-      "computed": false,
-      "output_only": false,
-      "required": false
-     }
-    ],
-    "fixed_rows": [
-     {
-      "id": "von_ngan_sach_nha_nuoc",
-      "label": "Vốn ngân sách nhà nước",
-      "output_only": false
-     },
-     {
-      "id": "von_tu_nhan",
-      "label": "Vốn tư nhân",
-      "output_only": false
-     },
-     {
-      "id": "von_nuoc_ngoai",
-      "label": "Vốn nước ngoài",
-      "output_only": false
-     },
-     {
-      "id": "von_khac",
-      "label": "Vốn khác",
-      "output_only": false
-     },
-     {
-      "id": "tong_cong",
-      "label": "Tổng cộng",
-      "output_only": true
-     }
-    ],
-    "totals": [
-     {
-      "formula": "sum(so_tien_vnd_va_tuong_duong)",
-      "target_row": "tong_cong",
-      "target_tag": "so_tien_vnd_va_tuong_duong"
-     },
-     {
-      "formula": "sum(ty_le)",
-      "target_row": "tong_cong",
-      "target_tag": "ty_le"
-     }
-    ]
-   }
-  ]
- },
- "PLI_M04": {
-  "id": "PLI_M04",
-  "phu_luc": "I",
-  "mau_so": 4,
-  "ten_mau": "Giấy đề nghị đăng ký doanh nghiệp - Công ty cổ phần",
-  "file": "06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn/PL1_Mau_04_tach_tu_file_full.docx",
-  "template": "templates/PLI_M04.docx",
-  "fields": [
-   {
-    "key": "dia_diem_ky",
-    "label": ""
-   },
-   {
-    "key": "ngay_ky_vb",
-    "label": ""
-   },
-   {
-    "key": "thang_ky_vb",
-    "label": ""
-   },
-   {
-    "key": "nam_ky_vb",
-    "label": ""
-   },
-   {
-    "key": "co_quan_dkkd",
-    "label": "Kính gửi: (Cơ quan đăng ký kinh doanh cấp tỉnh)"
-   },
-   {
-    "key": "chu_hkd.ho_ten",
-    "label": "Tôi là1 (ghi họ tên bằng chữ in hoa):"
-   },
-   {
-    "key": "ngay_sinh",
-    "label": "Ngày, tháng, năm sinh:"
-   },
-   {
-    "key": "thang_sinh",
-    "label": ""
-   },
-   {
-    "key": "nam_sinh",
-    "label": ""
-   },
-   {
-    "key": "chu_hkd.gioi_tinh",
-    "label": "Giới tính:"
-   },
-   {
-    "key": "chu_hkd.so_cccd",
-    "label": "Số định danh cá nhân:"
-   },
-   {
-    "key": "dia_chi_chi_tiet",
-    "label": "Số nhà/phòng, ngách/hẻm, ngõ/kiệt, đường/phố/đại lộ, tổ/xóm/ấp/thôn:"
-   },
-   {
-    "key": "xa_phuong",
-    "label": "Xã/Phường/Đặc khu:"
-   },
-   {
-    "key": "tinh_thanh",
-    "label": "Tỉnh/Thành phố trực thuộc trung ương:"
-   },
-   {
-    "key": "ndd.quoc_gia",
-    "label": "Quốc gia:"
-   },
-   {
-    "key": "ndd.dien_thoai",
-    "label": "Điện thoại (nếu có):"
-   },
-   {
-    "key": "ndd.email",
-    "label": ""
-   },
-   {
-    "key": "chu_hkd.dan_toc",
-    "label": "Dân tộc:"
-   },
-   {
-    "key": "chu_hkd.quoc_tich",
-    "label": "Quốc tịch:"
-   },
-   {
-    "key": "ngay_cap",
-    "label": "Ngày cấp:"
-   },
-   {
-    "key": "noi_cap",
-    "label": "Nơi cấp:"
-   },
-   {
-    "key": "quoc_gia",
-    "label": "Quốc gia:"
-   },
-   {
-    "key": "dn_goc.ten_doanh_nghiep",
-    "label": "Tên doanh nghiệp (ghi bằng chữ in hoa):"
-   },
-   {
-    "key": "dn_goc.ma_so_dn",
-    "label": "Mã số doanh nghiệp/Mã số thuế:"
-   },
-   {
-    "key": "hkd_cd.ten_hkd",
-    "label": "Tên hộ kinh doanh (ghi bằng chữ in hoa):"
-   },
-   {
-    "key": "hkd_cd.so_gcn",
-    "label": "Số Giấy chứng nhận đăng ký hộ kinh doanh (nếu có):"
-   },
-   {
-    "key": "hkd_cd.ngay_cap",
-    "label": "Ngày cấp:"
-   },
-   {
-    "key": "hkd_cd.noi_cap",
-    "label": "Nơi cấp:"
-   },
-   {
-    "key": "hkd_cd.ma_so_thue",
-    "label": "Mã số thuế của hộ kinh doanh:"
-   },
-   {
-    "key": "hkd_cd.dia_chi",
-    "label": "Địa chỉ trụ sở hộ kinh doanh:"
-   },
-   {
-    "key": "hkd_cd.ten_chu_ho",
-    "label": "Tên chủ hộ kinh doanh:"
-   },
-   {
-    "key": "so_giay_to_ca_nhan",
-    "label": "Số giấy tờ pháp lý của cá nhân (kê khai theo giấy tờ pháp lý của cá nhân được ghi trên Giấy chứng nhận đăng ký thuế của "
-   },
-   {
-    "key": "ngay_het_han",
-    "label": "Ngày hết hạn (nếu có):"
-   },
-   {
-    "key": "csbt.ten",
-    "label": "Tên cơ sở bảo trợ xã hội/quỹ xã hội/quỹ từ thiện (ghi bằng chữ in hoa):"
-   },
-   {
-    "key": "csbt.so_gcn",
-    "label": "Số Giấy chứng nhận đăng ký thành lập (Đối với cơ sở bảo trợ xã hội)/Số Giấy phép thành lập và công nhận điều lệ quỹ (Đối"
-   },
-   {
-    "key": "csbt.ngay_cap",
-    "label": "Ngày cấp: … /… /"
-   },
-   {
-    "key": "csbt.ma_so_thue",
-    "label": "Mã số thuế của cơ sở bảo trợ xã hội/quỹ xã hội/quỹ từ thiện (chỉ kê khai mã số thuế 10 số):"
-   },
-   {
-    "key": "csbt.dia_chi",
-    "label": "Địa chỉ trụ sở chính:"
-   },
-   {
-    "key": "gp_ucsn_so",
-    "label": "Giấy phép thành lập và hoạt động số: … do Ủy ban Chứng khoán Nhà nước cấp ngày:"
-   },
-   {
-    "key": "dn.ten_tieng_viet",
-    "label": "Tên công ty viết bằng tiếng Việt (ghi bằng chữ in hoa):"
-   },
-   {
-    "key": "dn.ten_nuoc_ngoai",
-    "label": "Tên công ty viết bằng tiếng nước ngoài (nếu có):"
-   },
-   {
-    "key": "dn.ten_viet_tat",
-    "label": "Tên công ty viết tắt (nếu có):"
-   },
-   {
-    "key": "dien_thoai_khac",
-    "label": "Điện thoại:"
-   },
-   {
-    "key": "fax",
-    "label": "Số fax (nếu có):"
-   },
-   {
-    "key": "email_tru_so",
-    "label": "Thư điện tử (nếu có):"
-   },
-   {
-    "key": "website",
-    "label": "Website (nếu có):"
-   },
-   {
-    "key": "ds_nganh.ten_nganh",
-    "label": "ten_nganh"
-   },
-   {
-    "key": "ds_nganh.ma_nganh",
-    "label": "ma_nganh"
-   },
-   {
-    "key": "ds_nganh.la_nganh_chinh",
-    "label": "la_nganh_chinh"
-   },
-   {
-    "key": "von_dieu_le",
-    "label": "Vốn điều lệ (bằng số; VNĐ):"
-   },
-   {
-    "key": "von_dieu_le_chu",
-    "label": "Vốn điều lệ (bằng chữ; VNĐ):"
-   },
-   {
-    "key": "gia_tri_ntte",
-    "label": "Giá trị tương đương theo đơn vị tiền nước ngoài (nếu có, bằng số, loại ngoại tệ):"
-   },
-   {
-    "key": "nguon_von_dieu_le.von_khac.so_tien_vnd_va_tuong_duong",
-    "label": "von_khac.so_tien_vnd_va_tuong_duong"
-   },
-   {
-    "key": "nguon_von_dieu_le.von_ngan_sach_nha_nuoc.so_tien_vnd_va_tuong_duong",
-    "label": "von_ngan_sach_nha_nuoc.so_tien_vnd_va_tuong_duong"
-   },
-   {
-    "key": "nguon_von_dieu_le.von_nuoc_ngoai.so_tien_vnd_va_tuong_duong",
-    "label": "von_nuoc_ngoai.so_tien_vnd_va_tuong_duong"
-   },
-   {
-    "key": "nguon_von_dieu_le.von_tu_nhan.so_tien_vnd_va_tuong_duong",
-    "label": "von_tu_nhan.so_tien_vnd_va_tuong_duong"
-   },
-   {
-    "key": "nguon_von_dieu_le.von_khac.ty_le",
-    "label": "von_khac.ty_le"
-   },
-   {
-    "key": "nguon_von_dieu_le.von_ngan_sach_nha_nuoc.ty_le",
-    "label": "von_ngan_sach_nha_nuoc.ty_le"
-   },
-   {
-    "key": "nguon_von_dieu_le.von_nuoc_ngoai.ty_le",
-    "label": "von_nuoc_ngoai.ty_le"
-   },
-   {
-    "key": "nguon_von_dieu_le.von_tu_nhan.ty_le",
-    "label": "von_tu_nhan.ty_le"
-   },
-   {
-    "key": "co_cau_loai_co_phan.co_phan_pho_thong.so_luong",
-    "label": "co_phan_pho_thong.so_luong"
-   },
-   {
-    "key": "co_cau_loai_co_phan.cp_uu_dai_bieu_quyet.so_luong",
-    "label": "cp_uu_dai_bieu_quyet.so_luong"
-   },
-   {
-    "key": "co_cau_loai_co_phan.cp_uu_dai_co_tuc.so_luong",
-    "label": "cp_uu_dai_co_tuc.so_luong"
-   },
-   {
-    "key": "co_cau_loai_co_phan.cp_uu_dai_hoan_lai.so_luong",
-    "label": "cp_uu_dai_hoan_lai.so_luong"
-   },
-   {
-    "key": "co_cau_loai_co_phan.cp_uu_dai_khac.so_luong",
-    "label": "cp_uu_dai_khac.so_luong"
-   },
-   {
-    "key": "co_cau_loai_co_phan.co_phan_pho_thong.gia_tri_vnd",
-    "label": "co_phan_pho_thong.gia_tri_vnd"
-   },
-   {
-    "key": "co_cau_loai_co_phan.cp_uu_dai_bieu_quyet.gia_tri_vnd",
-    "label": "cp_uu_dai_bieu_quyet.gia_tri_vnd"
-   },
-   {
-    "key": "co_cau_loai_co_phan.cp_uu_dai_co_tuc.gia_tri_vnd",
-    "label": "cp_uu_dai_co_tuc.gia_tri_vnd"
-   },
-   {
-    "key": "co_cau_loai_co_phan.cp_uu_dai_hoan_lai.gia_tri_vnd",
-    "label": "cp_uu_dai_hoan_lai.gia_tri_vnd"
-   },
-   {
-    "key": "co_cau_loai_co_phan.cp_uu_dai_khac.gia_tri_vnd",
-    "label": "cp_uu_dai_khac.gia_tri_vnd"
-   },
-   {
-    "key": "co_cau_loai_co_phan.co_phan_pho_thong.ty_le_so_von_dieule",
-    "label": "co_phan_pho_thong.ty_le_so_von_dieule"
-   },
-   {
-    "key": "co_cau_loai_co_phan.cp_uu_dai_bieu_quyet.ty_le_so_von_dieule",
-    "label": "cp_uu_dai_bieu_quyet.ty_le_so_von_dieule"
-   },
-   {
-    "key": "co_cau_loai_co_phan.cp_uu_dai_co_tuc.ty_le_so_von_dieule",
-    "label": "cp_uu_dai_co_tuc.ty_le_so_von_dieule"
-   },
-   {
-    "key": "co_cau_loai_co_phan.cp_uu_dai_hoan_lai.ty_le_so_von_dieule",
-    "label": "cp_uu_dai_hoan_lai.ty_le_so_von_dieule"
-   },
-   {
-    "key": "co_cau_loai_co_phan.cp_uu_dai_khac.ty_le_so_von_dieule",
-    "label": "cp_uu_dai_khac.ty_le_so_von_dieule"
-   },
-   {
-    "key": "menh_gia_co_phan",
-    "label": "Mệnh giá cổ phần (VNĐ):"
-   },
-   {
-    "key": "co_phan_duoc_quyen_chao_ban.co_phan_pho_thong.so_luong",
-    "label": "co_phan_pho_thong.so_luong"
-   },
-   {
-    "key": "co_phan_duoc_quyen_chao_ban.cp_uu_dai_bieu_quyet.so_luong",
-    "label": "cp_uu_dai_bieu_quyet.so_luong"
-   },
-   {
-    "key": "co_phan_duoc_quyen_chao_ban.cp_uu_dai_co_tuc.so_luong",
-    "label": "cp_uu_dai_co_tuc.so_luong"
-   },
-   {
-    "key": "co_phan_duoc_quyen_chao_ban.cp_uu_dai_hoan_lai.so_luong",
-    "label": "cp_uu_dai_hoan_lai.so_luong"
-   },
-   {
-    "key": "co_phan_duoc_quyen_chao_ban.cp_uu_dai_khac.so_luong",
-    "label": "cp_uu_dai_khac.so_luong"
-   },
-   {
-    "key": "ma_so_du_an",
-    "label": "Mã số dự án:"
-   },
-   {
-    "key": "co_quan_cap",
-    "label": "Cơ quan cấp:"
-   },
-   {
-    "key": "ndd.ho_ten",
-    "label": "Họ, chữ đệm và tên (ghi bằng chữ in hoa):"
-   },
-   {
-    "key": "ndd.ngay_sinh",
-    "label": "Ngày, tháng, năm sinh:"
-   },
-   {
-    "key": "ndd.thang_sinh",
-    "label": ""
-   },
-   {
-    "key": "ndd.nam_sinh",
-    "label": ""
-   },
-   {
-    "key": "ndd.gioi_tinh",
-    "label": "Giới tính:"
-   },
-   {
-    "key": "ndd.so_cccd",
-    "label": "Số định danh cá nhân:"
-   },
-   {
-    "key": "ndd.chuc_vu",
-    "label": "Chức danh:"
-   },
-   {
-    "key": "dien_thoai_lien_he",
-    "label": "Điện thoại (nếu có):"
-   },
-   {
-    "key": "gd.ho_ten",
-    "label": "Họ, chữ đệm và tên Giám đốc/Tổng giám đốc:"
-   },
-   {
-    "key": "gd.ngay_sinh",
-    "label": "Ngày, tháng, năm sinh:"
-   },
-   {
-    "key": "gd.thang_sinh",
-    "label": ""
-   },
-   {
-    "key": "gd.nam_sinh",
-    "label": ""
-   },
-   {
-    "key": "gd.gioi_tinh",
-    "label": "Giới tính:"
-   },
-   {
-    "key": "gd.so_cccd",
-    "label": "Số định danh cá nhân:"
-   },
-   {
-    "key": "gd.dien_thoai",
-    "label": "Điện thoại:"
-   },
-   {
-    "key": "kt.ho_ten",
-    "label": "Họ, chữ đệm và tên Kế toán trưởng/Phụ trách kế toán:"
-   },
-   {
-    "key": "kt.ngay_sinh",
-    "label": "Ngày, tháng, năm sinh:"
-   },
-   {
-    "key": "kt.thang_sinh",
-    "label": ""
-   },
-   {
-    "key": "kt.nam_sinh",
-    "label": ""
-   },
-   {
-    "key": "kt.gioi_tinh",
-    "label": "Giới tính:"
-   },
-   {
-    "key": "kt.so_cccd",
-    "label": "Số định danh cá nhân:"
-   },
-   {
-    "key": "kt.dien_thoai",
-    "label": "Điện thoại:"
-   },
-   {
-    "key": "ngay_bd",
-    "label": "Ngày bắt đầu hoạt động6 (trường hợp doanh nghiệp dự kiến bắt đầu hoạt động kể từ ngày được cấp Giấy chứng nhận đăng ký d"
-   },
-   {
-    "key": "thang_bd",
-    "label": ""
-   },
-   {
-    "key": "nam_bd",
-    "label": ""
-   },
-   {
-    "key": "ap_dung_tu",
-    "label": "Áp dụng từ ngày"
-   },
-   {
-    "key": "so_lao_dong",
-    "label": "Tổng số lao động (dự kiến):"
-   },
-   {
-    "key": "chk_tt_thanh_lap_moi",
-    "label": "thanh lap moi",
-    "type": "chk"
-   },
-   {
-    "key": "chk_tt_tach_dn",
-    "label": "thanh lap tren co so tach doanh nghiep",
-    "type": "chk"
-   },
-   {
-    "key": "chk_tt_chia_dn",
-    "label": "thanh lap tren co so chia doanh nghiep",
-    "type": "chk"
-   },
-   {
-    "key": "chk_tt_hop_nhat_dn",
-    "label": "thanh lap tren co so hop nhat doanh nghiep",
-    "type": "chk"
-   },
-   {
-    "key": "chk_tt_chuyen_doi_loai_hinh",
-    "label": "thanh lap tren co so chuyen doi loai hinh doanh nghiep",
-    "type": "chk"
-   },
-   {
-    "key": "chk_tt_chuyen_doi_tu_hkd",
-    "label": "thanh lap tren co so chuyen doi tu ho kinh doanh",
-    "type": "chk"
-   },
-   {
-    "key": "chk_tt_chuyen_doi_tu_csbt",
-    "label": "thanh lap tren co so chuyen doi tu co so bao tro xa hoi/quy xa hoi/quy tu thien3",
-    "type": "chk"
-   },
-   {
-    "key": "chk_gt_cmnd",
-    "label": "Chứng minh nhân dân",
-    "type": "chk"
-   },
-   {
-    "key": "chk_gt_cccd",
-    "label": "Căn cước công dân",
-    "type": "chk"
-   },
-   {
-    "key": "chk_gt_ho_chieu",
-    "label": "Hộ chiếu",
-    "type": "chk"
-   },
-   {
-    "key": "chk_gt_loai_khac",
-    "label": "Loại khác (ghi rõ):…………",
-    "type": "chk"
-   },
-   {
-    "key": "chk_dau_tu_dac_biet",
-    "label": "- Doanh nghiệp thực hiện dự án đầu tư được đăng ký đầu tư theo thủ tục đầu tư đặc biệt",
-    "type": "chk"
-   },
-   {
-    "key": "chk_dn_xa_hoi",
-    "label": "Doanh nghiệp xã hội (Đánh dấu X vào ô vuông nếu là doanh nghiệp xã hội và kèm theo hồ sơ phải có Cam kết thực hiện mục t",
-    "type": "chk"
-   },
-   {
-    "key": "chk_ctck",
-    "label": "Công ty chứng khoán/Công ty quản lý quỹ đầu tư chứng khoán/Công ty đầu tư chứng khoán: (Đánh dấu X nếu là Công ty chứng ",
-    "type": "chk"
-   },
-   {
-    "key": "chk_khu_cong_nghiep",
-    "label": "khu cong nghiep",
-    "type": "chk"
-   },
-   {
-    "key": "chk_khu_che_xuat",
-    "label": "khu che xuat",
-    "type": "chk"
-   },
-   {
-    "key": "chk_khu_kinh_te",
-    "label": "khu kinh te",
-    "type": "chk"
-   },
-   {
-    "key": "chk_khu_cong_nghe_cao",
-    "label": "khu cong nghe cao",
-    "type": "chk"
-   },
-   {
-    "key": "chk_auto_co",
-    "label": "Có",
-    "type": "chk"
-   },
-   {
-    "key": "chk_auto_khong",
-    "label": "Không",
-    "type": "chk"
-   },
-   {
-    "key": "chk_auto_co_hien_thi_thong_tin_ve_gia_tri_tuong_d",
-    "label": "Có hiển thị thông tin về giá trị tương đương theo đơn vị tiền tệ nước ngoài trên Giấy chứng nhận đăng ký doanh nghiệp ha",
-    "type": "chk"
-   },
-   {
-    "key": "chk_auto_khong_2",
-    "label": "Không",
-    "type": "chk"
-   },
-   {
-    "key": "chk_ht_doc_lap",
-    "label": "hach toan doc lap",
-    "type": "chk"
-   },
-   {
-    "key": "chk_ht_hop_nhat",
-    "label": "Có báo cáo tài chính hợp nhất",
-    "type": "chk"
-   },
-   {
-    "key": "chk_ht_phu_thuoc",
-    "label": "hach toan phu thuoc",
-    "type": "chk"
-   },
-   {
-    "key": "chk_co",
-    "label": "Có",
-    "type": "chk"
-   },
-   {
-    "key": "chk_khong",
-    "label": "Không",
-    "type": "chk"
-   },
-   {
-    "key": "chk_gtgt_khoan_tru",
-    "label": "khau tru",
-    "type": "chk"
-   },
-   {
-    "key": "chk_gtgt_truc_tiep_tren_gtgt",
-    "label": "truc tiep tren gtgt",
-    "type": "chk"
-   },
-   {
-    "key": "chk_gtgt_truc_tiep_doanh_so",
-    "label": "truc tiep tren doanh so",
-    "type": "chk"
-   },
-   {
-    "key": "chk_gtgt_khong_phai_nop",
-    "label": "khong phai nop thue gtgt",
-    "type": "chk"
-   },
-   {
-    "key": "chk_bc_hang_thang",
-    "label": "Hàng tháng",
-    "type": "chk"
-   },
-   {
-    "key": "chk_bc_03_thang",
-    "label": "03 tháng một lần",
-    "type": "chk"
-   },
-   {
-    "key": "chk_bc_06_thang",
-    "label": "06 tháng một lần",
-    "type": "chk"
-   }
-  ],
-  "dynamic_tables": [
-   {
-    "id": "ds_nganh",
-    "table_index": 0,
-    "header_row": 0,
-    "template_row": 5,
-    "loop": "ds_nganh",
-    "columns": [
-     {
-      "col": 1,
-      "header": "Tên ngành",
-      "tag": "ten_nganh"
-     },
-     {
-      "col": 2,
-      "header": "Mã ngành",
-      "tag": "ma_nganh"
-     },
-     {
-      "col": 3,
-      "header": "Ngành, nghề kinh doanh chính",
-      "tag": "la_nganh_chinh"
-     }
-    ]
-   }
-  ],
-  "section_specs": [
-   {
-    "kind": "fixed-matrix",
-    "id": "nguon_von_dieule",
-    "semantic_key": "nguon_von_dieu_le",
-    "section_id": "nguon_von_dieule",
-    "table_index": 1,
-    "columns": [
-     {
-      "col": 0,
-      "header": "Loại nguồn vốn",
-      "tag": null,
-      "input_type": "readonly",
-      "computed": false,
-      "output_only": false,
-      "required": false
-     },
-     {
-      "col": 1,
-      "header": "Số tiền (bằng số; VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)",
-      "tag": "so_tien_vnd_va_tuong_duong",
-      "input_type": "money",
-      "computed": false,
-      "output_only": false,
-      "required": false
-     },
-     {
-      "col": 2,
-      "header": "Tỷ lệ (%)",
-      "tag": "ty_le",
-      "input_type": "percent",
-      "computed": false,
-      "output_only": false,
-      "required": false
-     }
-    ],
-    "fixed_rows": [
-     {
-      "id": "von_ngan_sach_nha_nuoc",
-      "label": "Vốn ngân sách nhà nước",
-      "output_only": false
-     },
-     {
-      "id": "von_tu_nhan",
-      "label": "Vốn tư nhân",
-      "output_only": false
-     },
-     {
-      "id": "von_nuoc_ngoai",
-      "label": "Vốn nước ngoài",
-      "output_only": false
-     },
-     {
-      "id": "von_khac",
-      "label": "Vốn khác",
-      "output_only": false
-     },
-     {
-      "id": "tong_cong",
-      "label": "Tổng cộng",
-      "output_only": true
-     }
-    ],
-    "totals": [
-     {
-      "formula": "sum(so_tien_vnd_va_tuong_duong)",
-      "target_row": "tong_cong",
-      "target_tag": "so_tien_vnd_va_tuong_duong"
-     },
-     {
-      "formula": "sum(ty_le)",
-      "target_row": "tong_cong",
-      "target_tag": "ty_le"
-     }
-    ]
-   },
-   {
-    "kind": "fixed-matrix",
-    "id": "co_cau_loai_co_phan",
-    "semantic_key": "co_cau_loai_co_phan",
-    "section_id": "co_cau_loai_co_phan",
-    "table_index": 2,
-    "columns": [
-     {
-      "col": 0,
-      "header": "Loại cổ phần",
-      "tag": null,
-      "input_type": "readonly",
-      "computed": false,
-      "output_only": false,
-      "required": false
-     },
-     {
-      "col": 1,
-      "header": "Số lượng",
-      "tag": "so_luong",
-      "input_type": "money",
-      "computed": false,
-      "output_only": false,
-      "required": false
-     },
-     {
-      "col": 2,
-      "header": "Giá trị (bằng số, VNĐ)",
-      "tag": "gia_tri_vnd",
-      "input_type": "money",
-      "computed": false,
-      "output_only": false,
-      "required": false
-     },
-     {
-      "col": 3,
-      "header": "Tỉ lệ so với vốn điều lệ (%)",
-      "tag": "ty_le_so_von_dieule",
-      "input_type": "percent",
-      "computed": false,
-      "output_only": false,
-      "required": false
-     }
-    ],
-    "fixed_rows": [
-     {
-      "id": "co_phan_pho_thong",
-      "label": "Cổ phần phổ thông",
-      "output_only": false
-     },
-     {
-      "id": "cp_uu_dai_bieu_quyet",
-      "label": "Cổ phần ưu đãi biểu quyết",
-      "output_only": false
-     },
-     {
-      "id": "cp_uu_dai_co_tuc",
-      "label": "Cổ phần ưu đãi cổ tức",
-      "output_only": false
-     },
-     {
-      "id": "cp_uu_dai_hoan_lai",
-      "label": "Cổ phần ưu đãi hoàn lại",
-      "output_only": false
-     },
-     {
-      "id": "cp_uu_dai_khac",
-      "label": "Các cổ phần ưu đãi khác",
-      "output_only": false
-     },
-     {
-      "id": "tong_so",
-      "label": "Tổng số",
-      "output_only": true
-     }
-    ],
-    "totals": [
-     {
-      "formula": "sum(so_luong)",
-      "target_row": "tong_so",
-      "target_tag": "so_luong"
-     },
-     {
-      "formula": "sum(gia_tri_vnd)",
-      "target_row": "tong_so",
-      "target_tag": "gia_tri_vnd"
-     },
-     {
-      "formula": "sum(ty_le_so_von_dieule)",
-      "target_row": "tong_so",
-      "target_tag": "ty_le_so_von_dieule"
-     }
-    ]
-   },
-   {
-    "kind": "fixed-matrix",
-    "id": "co_phan_duoc_quyen_chao_ban",
-    "semantic_key": "co_phan_duoc_quyen_chao_ban",
-    "section_id": "co_phan_duoc_quyen_chao_ban",
-    "table_index": 3,
-    "columns": [
-     {
-      "col": 0,
-      "header": "Loại cổ phần được quyền chào bán",
-      "tag": null,
-      "input_type": "readonly",
-      "computed": false,
-      "output_only": false,
-      "required": false
-     },
-     {
-      "col": 1,
-      "header": "Số lượng",
-      "tag": "so_luong",
-      "input_type": "money",
-      "computed": false,
-      "output_only": false,
-      "required": false
-     }
-    ],
-    "fixed_rows": [
-     {
-      "id": "co_phan_pho_thong",
-      "label": "Cổ phần phổ thông",
-      "output_only": false
-     },
-     {
-      "id": "cp_uu_dai_bieu_quyet",
-      "label": "Cổ phần ưu đãi biểu quyết",
-      "output_only": false
-     },
-     {
-      "id": "cp_uu_dai_co_tuc",
-      "label": "Cổ phần ưu đãi cổ tức",
-      "output_only": false
-     },
-     {
-      "id": "cp_uu_dai_hoan_lai",
-      "label": "Cổ phần ưu đãi hoàn lại",
-      "output_only": false
-     },
-     {
-      "id": "cp_uu_dai_khac",
-      "label": "Cổ phần ưu đãi khác",
-      "output_only": false
-     },
-     {
-      "id": "tong_so",
-      "label": "Tổng số",
-      "output_only": true
-     }
-    ],
-    "totals": [
-     {
-      "formula": "sum(so_luong)",
-      "target_row": "tong_so",
-      "target_tag": "so_luong"
-     }
-    ]
-   }
-  ]
- },
  "PLI_M05": {
   "id": "PLI_M05",
   "phu_luc": "I",
@@ -15236,6 +13710,1532 @@ window.FORM_MAPS = {
       "col": 7,
       "header": "Ghi chú",
       "tag": "ghi_chu"
+     }
+    ]
+   }
+  ]
+ },
+ "PLI_M03": {
+  "id": "PLI_M03",
+  "phu_luc": "I",
+  "mau_so": 3,
+  "ten_mau": "Giấy đề nghị đăng ký doanh nghiệp - Công ty trách nhiệm hữu hạn hai thành viên trở lên",
+  "file": "06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn/PL1_Mau_03_tach_tu_file_full.docx",
+  "template": "templates/PLI_M03.docx",
+  "fields": [
+   {
+    "key": "dia_diem_ky",
+    "label": ""
+   },
+   {
+    "key": "ngay_ky_vb",
+    "label": ""
+   },
+   {
+    "key": "thang_ky_vb",
+    "label": ""
+   },
+   {
+    "key": "nam_ky_vb",
+    "label": ""
+   },
+   {
+    "key": "co_quan_dkkd",
+    "label": "Kính gửi: (Cơ quan đăng ký kinh doanh cấp tỉnh)"
+   },
+   {
+    "key": "chu_hkd.ho_ten",
+    "label": "Tôi là1 (ghi họ tên bằng chữ in hoa):"
+   },
+   {
+    "key": "ngay_sinh",
+    "label": "Ngày, tháng, năm sinh:"
+   },
+   {
+    "key": "thang_sinh",
+    "label": ""
+   },
+   {
+    "key": "nam_sinh",
+    "label": ""
+   },
+   {
+    "key": "chu_hkd.gioi_tinh",
+    "label": "Giới tính:"
+   },
+   {
+    "key": "chu_hkd.so_cccd",
+    "label": "Số định danh cá nhân:"
+   },
+   {
+    "key": "dia_chi_chi_tiet",
+    "label": "Số nhà/phòng, ngách/hẻm, ngõ/kiệt, đường/phố/đại lộ, tổ/xóm/ấp/thôn:"
+   },
+   {
+    "key": "xa_phuong",
+    "label": "Xã/Phường/Đặc khu:"
+   },
+   {
+    "key": "tinh_thanh",
+    "label": "Tỉnh/Thành phố trực thuộc trung ương:"
+   },
+   {
+    "key": "ndd.quoc_gia",
+    "label": "Quốc gia:"
+   },
+   {
+    "key": "ndd.dien_thoai",
+    "label": "Điện thoại (nếu có):"
+   },
+   {
+    "key": "ndd.email",
+    "label": ""
+   },
+   {
+    "key": "chu_hkd.dan_toc",
+    "label": "Dân tộc:"
+   },
+   {
+    "key": "chu_hkd.quoc_tich",
+    "label": "Quốc tịch:"
+   },
+   {
+    "key": "ngay_cap",
+    "label": "Ngày cấp:"
+   },
+   {
+    "key": "noi_cap",
+    "label": "Nơi cấp:"
+   },
+   {
+    "key": "quoc_gia",
+    "label": "Quốc gia:"
+   },
+   {
+    "key": "dn_goc.ten_doanh_nghiep",
+    "label": "Tên doanh nghiệp (ghi bằng chữ in hoa):"
+   },
+   {
+    "key": "dn_goc.ma_so_dn",
+    "label": "Mã số doanh nghiệp/Mã số thuế:"
+   },
+   {
+    "key": "hkd_cd.ten_hkd",
+    "label": "Tên hộ kinh doanh (ghi bằng chữ in hoa):"
+   },
+   {
+    "key": "hkd_cd.so_gcn",
+    "label": "Số Giấy chứng nhận đăng ký hộ kinh doanh (nếu có):"
+   },
+   {
+    "key": "hkd_cd.ngay_cap",
+    "label": "Ngày cấp:"
+   },
+   {
+    "key": "hkd_cd.noi_cap",
+    "label": "Nơi cấp:"
+   },
+   {
+    "key": "hkd_cd.ma_so_thue",
+    "label": "Mã số thuế của hộ kinh doanh:"
+   },
+   {
+    "key": "hkd_cd.dia_chi",
+    "label": "Địa chỉ trụ sở hộ kinh doanh:"
+   },
+   {
+    "key": "hkd_cd.ten_chu_ho",
+    "label": "Tên chủ hộ kinh doanh:"
+   },
+   {
+    "key": "so_giay_to_ca_nhan",
+    "label": "Số giấy tờ pháp lý của cá nhân (kê khai theo giấy tờ pháp lý của cá nhân được ghi trên Giấy chứng nhận đăng ký thuế của "
+   },
+   {
+    "key": "ngay_het_han",
+    "label": "Ngày hết hạn (nếu có):"
+   },
+   {
+    "key": "csbt.ten",
+    "label": "Tên cơ sở bảo trợ xã hội/quỹ xã hội/quỹ từ thiện (ghi bằng chữ in hoa):"
+   },
+   {
+    "key": "csbt.so_gcn",
+    "label": "Số Giấy chứng nhận đăng ký thành lập (Đối với cơ sở bảo trợ xã hội)/Số Giấy phép thành lập và công nhận điều lệ quỹ (Đối"
+   },
+   {
+    "key": "csbt.ngay_cap",
+    "label": "Ngày cấp: … /… /"
+   },
+   {
+    "key": "csbt.ma_so_thue",
+    "label": "Mã số thuế của cơ sở bảo trợ xã hội/quỹ xã hội/quỹ từ thiện (chỉ kê khai mã số thuế 10 số):"
+   },
+   {
+    "key": "csbt.dia_chi",
+    "label": "Địa chỉ trụ sở chính:"
+   },
+   {
+    "key": "csbt.ten_nguoi_dai_dien",
+    "label": "Tên người đại diện cơ sở bảo trợ xã hội/quỹ xã hội/quỹ từ thiện:"
+   },
+   {
+    "key": "gp_ucsn_so",
+    "label": "Giấy phép thành lập và hoạt động số: … do Ủy ban Chứng khoán Nhà nước cấp ngày:"
+   },
+   {
+    "key": "dn.ten_tieng_viet",
+    "label": "Tên công ty viết bằng tiếng Việt (ghi bằng chữ in hoa):"
+   },
+   {
+    "key": "dn.ten_nuoc_ngoai",
+    "label": "Tên công ty viết bằng tiếng nước ngoài (nếu có):"
+   },
+   {
+    "key": "dn.ten_viet_tat",
+    "label": "Tên công ty viết tắt (nếu có):"
+   },
+   {
+    "key": "dien_thoai_khac",
+    "label": "Điện thoại:"
+   },
+   {
+    "key": "fax",
+    "label": "Số fax (nếu có):"
+   },
+   {
+    "key": "email_tru_so",
+    "label": "Thư điện tử (nếu có):"
+   },
+   {
+    "key": "website",
+    "label": "Website (nếu có):"
+   },
+   {
+    "key": "ds_nganh.ten_nganh",
+    "label": "ten_nganh"
+   },
+   {
+    "key": "ds_nganh.ma_nganh",
+    "label": "ma_nganh"
+   },
+   {
+    "key": "ds_nganh.la_nganh_chinh",
+    "label": "la_nganh_chinh"
+   },
+   {
+    "key": "von_dieu_le",
+    "label": "Vốn điều lệ (bằng số; VNĐ):"
+   },
+   {
+    "key": "von_dieu_le_chu",
+    "label": "Vốn điều lệ (bằng chữ; VNĐ):"
+   },
+   {
+    "key": "gia_tri_ntte",
+    "label": "Giá trị tương đương theo đơn vị tiền nước ngoài (nếu có, bằng số, loại ngoại tệ):"
+   },
+   {
+    "key": "nguon_von_dieu_le.von_khac.so_tien_vnd_va_tuong_duong",
+    "label": "von_khac.so_tien_vnd_va_tuong_duong"
+   },
+   {
+    "key": "nguon_von_dieu_le.von_ngan_sach_nha_nuoc.so_tien_vnd_va_tuong_duong",
+    "label": "von_ngan_sach_nha_nuoc.so_tien_vnd_va_tuong_duong"
+   },
+   {
+    "key": "nguon_von_dieu_le.von_nuoc_ngoai.so_tien_vnd_va_tuong_duong",
+    "label": "von_nuoc_ngoai.so_tien_vnd_va_tuong_duong"
+   },
+   {
+    "key": "nguon_von_dieu_le.von_tu_nhan.so_tien_vnd_va_tuong_duong",
+    "label": "von_tu_nhan.so_tien_vnd_va_tuong_duong"
+   },
+   {
+    "key": "nguon_von_dieu_le.von_khac.ty_le",
+    "label": "von_khac.ty_le"
+   },
+   {
+    "key": "nguon_von_dieu_le.von_ngan_sach_nha_nuoc.ty_le",
+    "label": "von_ngan_sach_nha_nuoc.ty_le"
+   },
+   {
+    "key": "nguon_von_dieu_le.von_nuoc_ngoai.ty_le",
+    "label": "von_nuoc_ngoai.ty_le"
+   },
+   {
+    "key": "nguon_von_dieu_le.von_tu_nhan.ty_le",
+    "label": "von_tu_nhan.ty_le"
+   },
+   {
+    "key": "ma_so_du_an",
+    "label": "Mã số dự án:"
+   },
+   {
+    "key": "co_quan_cap",
+    "label": "Cơ quan cấp:"
+   },
+   {
+    "key": "ndd.ho_ten",
+    "label": "Họ, chữ đệm và tên (ghi bằng chữ in hoa):"
+   },
+   {
+    "key": "ndd.ngay_sinh",
+    "label": "Ngày, tháng, năm sinh:"
+   },
+   {
+    "key": "ndd.thang_sinh",
+    "label": ""
+   },
+   {
+    "key": "ndd.nam_sinh",
+    "label": ""
+   },
+   {
+    "key": "ndd.gioi_tinh",
+    "label": "Giới tính:"
+   },
+   {
+    "key": "ndd.so_cccd",
+    "label": "Số định danh cá nhân:"
+   },
+   {
+    "key": "ndd.chuc_vu",
+    "label": "Chức danh:"
+   },
+   {
+    "key": "dien_thoai_lien_he",
+    "label": "Điện thoại (nếu có):"
+   },
+   {
+    "key": "gd.ho_ten",
+    "label": "Họ, chữ đệm và tên Giám đốc/Tổng giám đốc:"
+   },
+   {
+    "key": "gd.ngay_sinh",
+    "label": "Ngày, tháng, năm sinh:"
+   },
+   {
+    "key": "gd.thang_sinh",
+    "label": ""
+   },
+   {
+    "key": "gd.nam_sinh",
+    "label": ""
+   },
+   {
+    "key": "gd.gioi_tinh",
+    "label": "Giới tính:"
+   },
+   {
+    "key": "gd.so_cccd",
+    "label": "Số định danh cá nhân:"
+   },
+   {
+    "key": "gd.dien_thoai",
+    "label": "Điện thoại:"
+   },
+   {
+    "key": "kt.ho_ten",
+    "label": "Họ, chữ đệm và tên Kế toán trưởng/Phụ trách kế toán:"
+   },
+   {
+    "key": "kt.ngay_sinh",
+    "label": "Ngày, tháng, năm sinh:"
+   },
+   {
+    "key": "kt.thang_sinh",
+    "label": ""
+   },
+   {
+    "key": "kt.nam_sinh",
+    "label": ""
+   },
+   {
+    "key": "kt.gioi_tinh",
+    "label": "Giới tính:"
+   },
+   {
+    "key": "kt.so_cccd",
+    "label": "Số định danh cá nhân:"
+   },
+   {
+    "key": "kt.dien_thoai",
+    "label": "Điện thoại:"
+   },
+   {
+    "key": "ngay_bd",
+    "label": "Ngày bắt đầu hoạt động6 (trường hợp doanh nghiệp dự kiến bắt đầu hoạt động kể từ ngày được cấp Giấy chứng nhận đăng ký d"
+   },
+   {
+    "key": "thang_bd",
+    "label": ""
+   },
+   {
+    "key": "nam_bd",
+    "label": ""
+   },
+   {
+    "key": "ap_dung_tu",
+    "label": "Áp dụng từ ngày"
+   },
+   {
+    "key": "so_lao_dong",
+    "label": "Tổng số lao động (dự kiến):"
+   },
+   {
+    "key": "chk_tt_thanh_lap_moi",
+    "label": "thanh lap moi",
+    "type": "chk"
+   },
+   {
+    "key": "chk_tt_tach_dn",
+    "label": "thanh lap tren co so tach doanh nghiep",
+    "type": "chk"
+   },
+   {
+    "key": "chk_tt_chia_dn",
+    "label": "thanh lap tren co so chia doanh nghiep",
+    "type": "chk"
+   },
+   {
+    "key": "chk_tt_hop_nhat_dn",
+    "label": "thanh lap tren co so hop nhat doanh nghiep",
+    "type": "chk"
+   },
+   {
+    "key": "chk_tt_chuyen_doi_loai_hinh",
+    "label": "thanh lap tren co so chuyen doi loai hinh doanh nghiep",
+    "type": "chk"
+   },
+   {
+    "key": "chk_tt_chuyen_doi_tu_hkd",
+    "label": "thanh lap tren co so chuyen doi tu ho kinh doanh",
+    "type": "chk"
+   },
+   {
+    "key": "chk_tt_chuyen_doi_tu_csbt",
+    "label": "thanh lap tren co so chuyen doi tu co so bao tro xa hoi/quy xa hoi/quy tu thien3",
+    "type": "chk"
+   },
+   {
+    "key": "chk_gt_cmnd",
+    "label": "Chứng minh nhân dân",
+    "type": "chk"
+   },
+   {
+    "key": "chk_gt_cccd",
+    "label": "Căn cước công dân",
+    "type": "chk"
+   },
+   {
+    "key": "chk_gt_ho_chieu",
+    "label": "Hộ chiếu",
+    "type": "chk"
+   },
+   {
+    "key": "chk_gt_loai_khac",
+    "label": "Loại khác (ghi rõ):…………",
+    "type": "chk"
+   },
+   {
+    "key": "chk_dau_tu_dac_biet",
+    "label": "- Doanh nghiệp thực hiện dự án đầu tư được đăng ký đầu tư theo thủ tục đầu tư đặc biệt",
+    "type": "chk"
+   },
+   {
+    "key": "chk_dn_xa_hoi",
+    "label": "Doanh nghiệp xã hội (Đánh dấu X vào ô vuông nếu là doanh nghiệp xã hội và kèm theo hồ sơ phải có Cam kết thực hiện mục t",
+    "type": "chk"
+   },
+   {
+    "key": "chk_ctck",
+    "label": "Công ty chứng khoán/Công ty quản lý quỹ đầu tư chứng khoán/Công ty đầu tư chứng khoán: (Đánh dấu X nếu là Công ty chứng ",
+    "type": "chk"
+   },
+   {
+    "key": "chk_khu_cong_nghiep",
+    "label": "khu cong nghiep",
+    "type": "chk"
+   },
+   {
+    "key": "chk_khu_che_xuat",
+    "label": "khu che xuat",
+    "type": "chk"
+   },
+   {
+    "key": "chk_khu_kinh_te",
+    "label": "khu kinh te",
+    "type": "chk"
+   },
+   {
+    "key": "chk_khu_cong_nghe_cao",
+    "label": "khu cong nghe cao",
+    "type": "chk"
+   },
+   {
+    "key": "chk_auto_co",
+    "label": "Có",
+    "type": "chk"
+   },
+   {
+    "key": "chk_auto_khong",
+    "label": "Không",
+    "type": "chk"
+   },
+   {
+    "key": "chk_auto_co_hien_thi_thong_tin_ve_gia_tri_tuong_d",
+    "label": "Có hiển thị thông tin về giá trị tương đương theo đơn vị tiền tệ nước ngoài trên Giấy chứng nhận đăng ký doanh nghiệp ha",
+    "type": "chk"
+   },
+   {
+    "key": "chk_auto_khong_2",
+    "label": "Không",
+    "type": "chk"
+   },
+   {
+    "key": "chk_ht_doc_lap",
+    "label": "hach toan doc lap",
+    "type": "chk"
+   },
+   {
+    "key": "chk_ht_hop_nhat",
+    "label": "Có báo cáo tài chính hợp nhất",
+    "type": "chk"
+   },
+   {
+    "key": "chk_ht_phu_thuoc",
+    "label": "hach toan phu thuoc",
+    "type": "chk"
+   },
+   {
+    "key": "chk_co",
+    "label": "Có",
+    "type": "chk"
+   },
+   {
+    "key": "chk_khong",
+    "label": "Không",
+    "type": "chk"
+   },
+   {
+    "key": "chk_gtgt_khoan_tru",
+    "label": "khau tru",
+    "type": "chk"
+   },
+   {
+    "key": "chk_gtgt_truc_tiep_tren_gtgt",
+    "label": "truc tiep tren gtgt",
+    "type": "chk"
+   },
+   {
+    "key": "chk_gtgt_truc_tiep_doanh_so",
+    "label": "truc tiep tren doanh so",
+    "type": "chk"
+   },
+   {
+    "key": "chk_gtgt_khong_phai_nop",
+    "label": "khong phai nop thue gtgt",
+    "type": "chk"
+   },
+   {
+    "key": "chk_bc_hang_thang",
+    "label": "Hàng tháng",
+    "type": "chk"
+   },
+   {
+    "key": "chk_bc_03_thang",
+    "label": "03 tháng một lần",
+    "type": "chk"
+   },
+   {
+    "key": "chk_bc_06_thang",
+    "label": "06 tháng một lần",
+    "type": "chk"
+   }
+  ],
+  "dynamic_tables": [
+   {
+    "id": "ds_nganh",
+    "table_index": 0,
+    "header_row": 0,
+    "template_row": 5,
+    "loop": "ds_nganh",
+    "columns": [
+     {
+      "col": 1,
+      "header": "Tên ngành",
+      "tag": "ten_nganh"
+     },
+     {
+      "col": 2,
+      "header": "Mã ngành",
+      "tag": "ma_nganh"
+     },
+     {
+      "col": 3,
+      "header": "Ngành, nghề kinh doanh chính",
+      "tag": "la_nganh_chinh"
+     }
+    ]
+   }
+  ],
+  "section_specs": [
+   {
+    "kind": "fixed-matrix",
+    "id": "nguon_von_dieule",
+    "semantic_key": "nguon_von_dieu_le",
+    "section_id": "nguon_von_dieule",
+    "table_index": 1,
+    "columns": [
+     {
+      "col": 0,
+      "header": "Loại nguồn vốn",
+      "tag": null,
+      "input_type": "readonly",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     },
+     {
+      "col": 1,
+      "header": "Số tiền (bằng số; VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)",
+      "tag": "so_tien_vnd_va_tuong_duong",
+      "input_type": "money",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     },
+     {
+      "col": 2,
+      "header": "Tỷ lệ (%)",
+      "tag": "ty_le",
+      "input_type": "percent",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     }
+    ],
+    "fixed_rows": [
+     {
+      "id": "von_ngan_sach_nha_nuoc",
+      "label": "Vốn ngân sách nhà nước",
+      "output_only": false
+     },
+     {
+      "id": "von_tu_nhan",
+      "label": "Vốn tư nhân",
+      "output_only": false
+     },
+     {
+      "id": "von_nuoc_ngoai",
+      "label": "Vốn nước ngoài",
+      "output_only": false
+     },
+     {
+      "id": "von_khac",
+      "label": "Vốn khác",
+      "output_only": false
+     },
+     {
+      "id": "tong_cong",
+      "label": "Tổng cộng",
+      "output_only": true
+     }
+    ],
+    "totals": [
+     {
+      "formula": "sum(so_tien_vnd_va_tuong_duong)",
+      "target_row": "tong_cong",
+      "target_tag": "so_tien_vnd_va_tuong_duong"
+     },
+     {
+      "formula": "sum(ty_le)",
+      "target_row": "tong_cong",
+      "target_tag": "ty_le"
+     }
+    ]
+   }
+  ]
+ },
+ "PLI_M04": {
+  "id": "PLI_M04",
+  "phu_luc": "I",
+  "mau_so": 4,
+  "ten_mau": "Giấy đề nghị đăng ký doanh nghiệp - Công ty cổ phần",
+  "file": "06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn/PL1_Mau_04_tach_tu_file_full.docx",
+  "template": "templates/PLI_M04.docx",
+  "fields": [
+   {
+    "key": "dia_diem_ky",
+    "label": ""
+   },
+   {
+    "key": "ngay_ky_vb",
+    "label": ""
+   },
+   {
+    "key": "thang_ky_vb",
+    "label": ""
+   },
+   {
+    "key": "nam_ky_vb",
+    "label": ""
+   },
+   {
+    "key": "co_quan_dkkd",
+    "label": "Kính gửi: (Cơ quan đăng ký kinh doanh cấp tỉnh)"
+   },
+   {
+    "key": "chu_hkd.ho_ten",
+    "label": "Tôi là1 (ghi họ tên bằng chữ in hoa):"
+   },
+   {
+    "key": "ngay_sinh",
+    "label": "Ngày, tháng, năm sinh:"
+   },
+   {
+    "key": "thang_sinh",
+    "label": ""
+   },
+   {
+    "key": "nam_sinh",
+    "label": ""
+   },
+   {
+    "key": "chu_hkd.gioi_tinh",
+    "label": "Giới tính:"
+   },
+   {
+    "key": "chu_hkd.so_cccd",
+    "label": "Số định danh cá nhân:"
+   },
+   {
+    "key": "dia_chi_chi_tiet",
+    "label": "Số nhà/phòng, ngách/hẻm, ngõ/kiệt, đường/phố/đại lộ, tổ/xóm/ấp/thôn:"
+   },
+   {
+    "key": "xa_phuong",
+    "label": "Xã/Phường/Đặc khu:"
+   },
+   {
+    "key": "tinh_thanh",
+    "label": "Tỉnh/Thành phố trực thuộc trung ương:"
+   },
+   {
+    "key": "ndd.quoc_gia",
+    "label": "Quốc gia:"
+   },
+   {
+    "key": "ndd.dien_thoai",
+    "label": "Điện thoại (nếu có):"
+   },
+   {
+    "key": "ndd.email",
+    "label": ""
+   },
+   {
+    "key": "chu_hkd.dan_toc",
+    "label": "Dân tộc:"
+   },
+   {
+    "key": "chu_hkd.quoc_tich",
+    "label": "Quốc tịch:"
+   },
+   {
+    "key": "ngay_cap",
+    "label": "Ngày cấp:"
+   },
+   {
+    "key": "noi_cap",
+    "label": "Nơi cấp:"
+   },
+   {
+    "key": "quoc_gia",
+    "label": "Quốc gia:"
+   },
+   {
+    "key": "dn_goc.ten_doanh_nghiep",
+    "label": "Tên doanh nghiệp (ghi bằng chữ in hoa):"
+   },
+   {
+    "key": "dn_goc.ma_so_dn",
+    "label": "Mã số doanh nghiệp/Mã số thuế:"
+   },
+   {
+    "key": "hkd_cd.ten_hkd",
+    "label": "Tên hộ kinh doanh (ghi bằng chữ in hoa):"
+   },
+   {
+    "key": "hkd_cd.so_gcn",
+    "label": "Số Giấy chứng nhận đăng ký hộ kinh doanh (nếu có):"
+   },
+   {
+    "key": "hkd_cd.ngay_cap",
+    "label": "Ngày cấp:"
+   },
+   {
+    "key": "hkd_cd.noi_cap",
+    "label": "Nơi cấp:"
+   },
+   {
+    "key": "hkd_cd.ma_so_thue",
+    "label": "Mã số thuế của hộ kinh doanh:"
+   },
+   {
+    "key": "hkd_cd.dia_chi",
+    "label": "Địa chỉ trụ sở hộ kinh doanh:"
+   },
+   {
+    "key": "hkd_cd.ten_chu_ho",
+    "label": "Tên chủ hộ kinh doanh:"
+   },
+   {
+    "key": "so_giay_to_ca_nhan",
+    "label": "Số giấy tờ pháp lý của cá nhân (kê khai theo giấy tờ pháp lý của cá nhân được ghi trên Giấy chứng nhận đăng ký thuế của "
+   },
+   {
+    "key": "ngay_het_han",
+    "label": "Ngày hết hạn (nếu có):"
+   },
+   {
+    "key": "csbt.ten",
+    "label": "Tên cơ sở bảo trợ xã hội/quỹ xã hội/quỹ từ thiện (ghi bằng chữ in hoa):"
+   },
+   {
+    "key": "csbt.so_gcn",
+    "label": "Số Giấy chứng nhận đăng ký thành lập (Đối với cơ sở bảo trợ xã hội)/Số Giấy phép thành lập và công nhận điều lệ quỹ (Đối"
+   },
+   {
+    "key": "csbt.ngay_cap",
+    "label": "Ngày cấp: … /… /"
+   },
+   {
+    "key": "csbt.ma_so_thue",
+    "label": "Mã số thuế của cơ sở bảo trợ xã hội/quỹ xã hội/quỹ từ thiện (chỉ kê khai mã số thuế 10 số):"
+   },
+   {
+    "key": "csbt.dia_chi",
+    "label": "Địa chỉ trụ sở chính:"
+   },
+   {
+    "key": "gp_ucsn_so",
+    "label": "Giấy phép thành lập và hoạt động số: … do Ủy ban Chứng khoán Nhà nước cấp ngày:"
+   },
+   {
+    "key": "dn.ten_tieng_viet",
+    "label": "Tên công ty viết bằng tiếng Việt (ghi bằng chữ in hoa):"
+   },
+   {
+    "key": "dn.ten_nuoc_ngoai",
+    "label": "Tên công ty viết bằng tiếng nước ngoài (nếu có):"
+   },
+   {
+    "key": "dn.ten_viet_tat",
+    "label": "Tên công ty viết tắt (nếu có):"
+   },
+   {
+    "key": "dien_thoai_khac",
+    "label": "Điện thoại:"
+   },
+   {
+    "key": "fax",
+    "label": "Số fax (nếu có):"
+   },
+   {
+    "key": "email_tru_so",
+    "label": "Thư điện tử (nếu có):"
+   },
+   {
+    "key": "website",
+    "label": "Website (nếu có):"
+   },
+   {
+    "key": "ds_nganh.ten_nganh",
+    "label": "ten_nganh"
+   },
+   {
+    "key": "ds_nganh.ma_nganh",
+    "label": "ma_nganh"
+   },
+   {
+    "key": "ds_nganh.la_nganh_chinh",
+    "label": "la_nganh_chinh"
+   },
+   {
+    "key": "von_dieu_le",
+    "label": "Vốn điều lệ (bằng số; VNĐ):"
+   },
+   {
+    "key": "von_dieu_le_chu",
+    "label": "Vốn điều lệ (bằng chữ; VNĐ):"
+   },
+   {
+    "key": "gia_tri_ntte",
+    "label": "Giá trị tương đương theo đơn vị tiền nước ngoài (nếu có, bằng số, loại ngoại tệ):"
+   },
+   {
+    "key": "nguon_von_dieu_le.von_khac.so_tien_vnd_va_tuong_duong",
+    "label": "von_khac.so_tien_vnd_va_tuong_duong"
+   },
+   {
+    "key": "nguon_von_dieu_le.von_ngan_sach_nha_nuoc.so_tien_vnd_va_tuong_duong",
+    "label": "von_ngan_sach_nha_nuoc.so_tien_vnd_va_tuong_duong"
+   },
+   {
+    "key": "nguon_von_dieu_le.von_nuoc_ngoai.so_tien_vnd_va_tuong_duong",
+    "label": "von_nuoc_ngoai.so_tien_vnd_va_tuong_duong"
+   },
+   {
+    "key": "nguon_von_dieu_le.von_tu_nhan.so_tien_vnd_va_tuong_duong",
+    "label": "von_tu_nhan.so_tien_vnd_va_tuong_duong"
+   },
+   {
+    "key": "nguon_von_dieu_le.von_khac.ty_le",
+    "label": "von_khac.ty_le"
+   },
+   {
+    "key": "nguon_von_dieu_le.von_ngan_sach_nha_nuoc.ty_le",
+    "label": "von_ngan_sach_nha_nuoc.ty_le"
+   },
+   {
+    "key": "nguon_von_dieu_le.von_nuoc_ngoai.ty_le",
+    "label": "von_nuoc_ngoai.ty_le"
+   },
+   {
+    "key": "nguon_von_dieu_le.von_tu_nhan.ty_le",
+    "label": "von_tu_nhan.ty_le"
+   },
+   {
+    "key": "co_cau_loai_co_phan.co_phan_pho_thong.so_luong",
+    "label": "co_phan_pho_thong.so_luong"
+   },
+   {
+    "key": "co_cau_loai_co_phan.cp_uu_dai_bieu_quyet.so_luong",
+    "label": "cp_uu_dai_bieu_quyet.so_luong"
+   },
+   {
+    "key": "co_cau_loai_co_phan.cp_uu_dai_co_tuc.so_luong",
+    "label": "cp_uu_dai_co_tuc.so_luong"
+   },
+   {
+    "key": "co_cau_loai_co_phan.cp_uu_dai_hoan_lai.so_luong",
+    "label": "cp_uu_dai_hoan_lai.so_luong"
+   },
+   {
+    "key": "co_cau_loai_co_phan.cp_uu_dai_khac.so_luong",
+    "label": "cp_uu_dai_khac.so_luong"
+   },
+   {
+    "key": "co_cau_loai_co_phan.co_phan_pho_thong.gia_tri_vnd",
+    "label": "co_phan_pho_thong.gia_tri_vnd"
+   },
+   {
+    "key": "co_cau_loai_co_phan.cp_uu_dai_bieu_quyet.gia_tri_vnd",
+    "label": "cp_uu_dai_bieu_quyet.gia_tri_vnd"
+   },
+   {
+    "key": "co_cau_loai_co_phan.cp_uu_dai_co_tuc.gia_tri_vnd",
+    "label": "cp_uu_dai_co_tuc.gia_tri_vnd"
+   },
+   {
+    "key": "co_cau_loai_co_phan.cp_uu_dai_hoan_lai.gia_tri_vnd",
+    "label": "cp_uu_dai_hoan_lai.gia_tri_vnd"
+   },
+   {
+    "key": "co_cau_loai_co_phan.cp_uu_dai_khac.gia_tri_vnd",
+    "label": "cp_uu_dai_khac.gia_tri_vnd"
+   },
+   {
+    "key": "co_cau_loai_co_phan.co_phan_pho_thong.ty_le_so_von_dieule",
+    "label": "co_phan_pho_thong.ty_le_so_von_dieule"
+   },
+   {
+    "key": "co_cau_loai_co_phan.cp_uu_dai_bieu_quyet.ty_le_so_von_dieule",
+    "label": "cp_uu_dai_bieu_quyet.ty_le_so_von_dieule"
+   },
+   {
+    "key": "co_cau_loai_co_phan.cp_uu_dai_co_tuc.ty_le_so_von_dieule",
+    "label": "cp_uu_dai_co_tuc.ty_le_so_von_dieule"
+   },
+   {
+    "key": "co_cau_loai_co_phan.cp_uu_dai_hoan_lai.ty_le_so_von_dieule",
+    "label": "cp_uu_dai_hoan_lai.ty_le_so_von_dieule"
+   },
+   {
+    "key": "co_cau_loai_co_phan.cp_uu_dai_khac.ty_le_so_von_dieule",
+    "label": "cp_uu_dai_khac.ty_le_so_von_dieule"
+   },
+   {
+    "key": "menh_gia_co_phan",
+    "label": "Mệnh giá cổ phần (VNĐ):"
+   },
+   {
+    "key": "co_phan_duoc_quyen_chao_ban.co_phan_pho_thong.so_luong",
+    "label": "co_phan_pho_thong.so_luong"
+   },
+   {
+    "key": "co_phan_duoc_quyen_chao_ban.cp_uu_dai_bieu_quyet.so_luong",
+    "label": "cp_uu_dai_bieu_quyet.so_luong"
+   },
+   {
+    "key": "co_phan_duoc_quyen_chao_ban.cp_uu_dai_co_tuc.so_luong",
+    "label": "cp_uu_dai_co_tuc.so_luong"
+   },
+   {
+    "key": "co_phan_duoc_quyen_chao_ban.cp_uu_dai_hoan_lai.so_luong",
+    "label": "cp_uu_dai_hoan_lai.so_luong"
+   },
+   {
+    "key": "co_phan_duoc_quyen_chao_ban.cp_uu_dai_khac.so_luong",
+    "label": "cp_uu_dai_khac.so_luong"
+   },
+   {
+    "key": "ma_so_du_an",
+    "label": "Mã số dự án:"
+   },
+   {
+    "key": "co_quan_cap",
+    "label": "Cơ quan cấp:"
+   },
+   {
+    "key": "ndd.ho_ten",
+    "label": "Họ, chữ đệm và tên (ghi bằng chữ in hoa):"
+   },
+   {
+    "key": "ndd.ngay_sinh",
+    "label": "Ngày, tháng, năm sinh:"
+   },
+   {
+    "key": "ndd.thang_sinh",
+    "label": ""
+   },
+   {
+    "key": "ndd.nam_sinh",
+    "label": ""
+   },
+   {
+    "key": "ndd.gioi_tinh",
+    "label": "Giới tính:"
+   },
+   {
+    "key": "ndd.so_cccd",
+    "label": "Số định danh cá nhân:"
+   },
+   {
+    "key": "ndd.chuc_vu",
+    "label": "Chức danh:"
+   },
+   {
+    "key": "dien_thoai_lien_he",
+    "label": "Điện thoại (nếu có):"
+   },
+   {
+    "key": "gd.ho_ten",
+    "label": "Họ, chữ đệm và tên Giám đốc/Tổng giám đốc:"
+   },
+   {
+    "key": "gd.ngay_sinh",
+    "label": "Ngày, tháng, năm sinh:"
+   },
+   {
+    "key": "gd.thang_sinh",
+    "label": ""
+   },
+   {
+    "key": "gd.nam_sinh",
+    "label": ""
+   },
+   {
+    "key": "gd.gioi_tinh",
+    "label": "Giới tính:"
+   },
+   {
+    "key": "gd.so_cccd",
+    "label": "Số định danh cá nhân:"
+   },
+   {
+    "key": "gd.dien_thoai",
+    "label": "Điện thoại:"
+   },
+   {
+    "key": "kt.ho_ten",
+    "label": "Họ, chữ đệm và tên Kế toán trưởng/Phụ trách kế toán:"
+   },
+   {
+    "key": "kt.ngay_sinh",
+    "label": "Ngày, tháng, năm sinh:"
+   },
+   {
+    "key": "kt.thang_sinh",
+    "label": ""
+   },
+   {
+    "key": "kt.nam_sinh",
+    "label": ""
+   },
+   {
+    "key": "kt.gioi_tinh",
+    "label": "Giới tính:"
+   },
+   {
+    "key": "kt.so_cccd",
+    "label": "Số định danh cá nhân:"
+   },
+   {
+    "key": "kt.dien_thoai",
+    "label": "Điện thoại:"
+   },
+   {
+    "key": "ngay_bd",
+    "label": "Ngày bắt đầu hoạt động6 (trường hợp doanh nghiệp dự kiến bắt đầu hoạt động kể từ ngày được cấp Giấy chứng nhận đăng ký d"
+   },
+   {
+    "key": "thang_bd",
+    "label": ""
+   },
+   {
+    "key": "nam_bd",
+    "label": ""
+   },
+   {
+    "key": "ap_dung_tu",
+    "label": "Áp dụng từ ngày"
+   },
+   {
+    "key": "so_lao_dong",
+    "label": "Tổng số lao động (dự kiến):"
+   },
+   {
+    "key": "chk_tt_thanh_lap_moi",
+    "label": "thanh lap moi",
+    "type": "chk"
+   },
+   {
+    "key": "chk_tt_tach_dn",
+    "label": "thanh lap tren co so tach doanh nghiep",
+    "type": "chk"
+   },
+   {
+    "key": "chk_tt_chia_dn",
+    "label": "thanh lap tren co so chia doanh nghiep",
+    "type": "chk"
+   },
+   {
+    "key": "chk_tt_hop_nhat_dn",
+    "label": "thanh lap tren co so hop nhat doanh nghiep",
+    "type": "chk"
+   },
+   {
+    "key": "chk_tt_chuyen_doi_loai_hinh",
+    "label": "thanh lap tren co so chuyen doi loai hinh doanh nghiep",
+    "type": "chk"
+   },
+   {
+    "key": "chk_tt_chuyen_doi_tu_hkd",
+    "label": "thanh lap tren co so chuyen doi tu ho kinh doanh",
+    "type": "chk"
+   },
+   {
+    "key": "chk_tt_chuyen_doi_tu_csbt",
+    "label": "thanh lap tren co so chuyen doi tu co so bao tro xa hoi/quy xa hoi/quy tu thien3",
+    "type": "chk"
+   },
+   {
+    "key": "chk_gt_cmnd",
+    "label": "Chứng minh nhân dân",
+    "type": "chk"
+   },
+   {
+    "key": "chk_gt_cccd",
+    "label": "Căn cước công dân",
+    "type": "chk"
+   },
+   {
+    "key": "chk_gt_ho_chieu",
+    "label": "Hộ chiếu",
+    "type": "chk"
+   },
+   {
+    "key": "chk_gt_loai_khac",
+    "label": "Loại khác (ghi rõ):…………",
+    "type": "chk"
+   },
+   {
+    "key": "chk_dau_tu_dac_biet",
+    "label": "- Doanh nghiệp thực hiện dự án đầu tư được đăng ký đầu tư theo thủ tục đầu tư đặc biệt",
+    "type": "chk"
+   },
+   {
+    "key": "chk_dn_xa_hoi",
+    "label": "Doanh nghiệp xã hội (Đánh dấu X vào ô vuông nếu là doanh nghiệp xã hội và kèm theo hồ sơ phải có Cam kết thực hiện mục t",
+    "type": "chk"
+   },
+   {
+    "key": "chk_ctck",
+    "label": "Công ty chứng khoán/Công ty quản lý quỹ đầu tư chứng khoán/Công ty đầu tư chứng khoán: (Đánh dấu X nếu là Công ty chứng ",
+    "type": "chk"
+   },
+   {
+    "key": "chk_khu_cong_nghiep",
+    "label": "khu cong nghiep",
+    "type": "chk"
+   },
+   {
+    "key": "chk_khu_che_xuat",
+    "label": "khu che xuat",
+    "type": "chk"
+   },
+   {
+    "key": "chk_khu_kinh_te",
+    "label": "khu kinh te",
+    "type": "chk"
+   },
+   {
+    "key": "chk_khu_cong_nghe_cao",
+    "label": "khu cong nghe cao",
+    "type": "chk"
+   },
+   {
+    "key": "chk_auto_co",
+    "label": "Có",
+    "type": "chk"
+   },
+   {
+    "key": "chk_auto_khong",
+    "label": "Không",
+    "type": "chk"
+   },
+   {
+    "key": "chk_auto_co_hien_thi_thong_tin_ve_gia_tri_tuong_d",
+    "label": "Có hiển thị thông tin về giá trị tương đương theo đơn vị tiền tệ nước ngoài trên Giấy chứng nhận đăng ký doanh nghiệp ha",
+    "type": "chk"
+   },
+   {
+    "key": "chk_auto_khong_2",
+    "label": "Không",
+    "type": "chk"
+   },
+   {
+    "key": "chk_ht_doc_lap",
+    "label": "hach toan doc lap",
+    "type": "chk"
+   },
+   {
+    "key": "chk_ht_hop_nhat",
+    "label": "Có báo cáo tài chính hợp nhất",
+    "type": "chk"
+   },
+   {
+    "key": "chk_ht_phu_thuoc",
+    "label": "hach toan phu thuoc",
+    "type": "chk"
+   },
+   {
+    "key": "chk_co",
+    "label": "Có",
+    "type": "chk"
+   },
+   {
+    "key": "chk_khong",
+    "label": "Không",
+    "type": "chk"
+   },
+   {
+    "key": "chk_gtgt_khoan_tru",
+    "label": "khau tru",
+    "type": "chk"
+   },
+   {
+    "key": "chk_gtgt_truc_tiep_tren_gtgt",
+    "label": "truc tiep tren gtgt",
+    "type": "chk"
+   },
+   {
+    "key": "chk_gtgt_truc_tiep_doanh_so",
+    "label": "truc tiep tren doanh so",
+    "type": "chk"
+   },
+   {
+    "key": "chk_gtgt_khong_phai_nop",
+    "label": "khong phai nop thue gtgt",
+    "type": "chk"
+   },
+   {
+    "key": "chk_bc_hang_thang",
+    "label": "Hàng tháng",
+    "type": "chk"
+   },
+   {
+    "key": "chk_bc_03_thang",
+    "label": "03 tháng một lần",
+    "type": "chk"
+   },
+   {
+    "key": "chk_bc_06_thang",
+    "label": "06 tháng một lần",
+    "type": "chk"
+   }
+  ],
+  "dynamic_tables": [
+   {
+    "id": "ds_nganh",
+    "table_index": 0,
+    "header_row": 0,
+    "template_row": 5,
+    "loop": "ds_nganh",
+    "columns": [
+     {
+      "col": 1,
+      "header": "Tên ngành",
+      "tag": "ten_nganh"
+     },
+     {
+      "col": 2,
+      "header": "Mã ngành",
+      "tag": "ma_nganh"
+     },
+     {
+      "col": 3,
+      "header": "Ngành, nghề kinh doanh chính",
+      "tag": "la_nganh_chinh"
+     }
+    ]
+   }
+  ],
+  "section_specs": [
+   {
+    "kind": "fixed-matrix",
+    "id": "nguon_von_dieule",
+    "semantic_key": "nguon_von_dieu_le",
+    "section_id": "nguon_von_dieule",
+    "table_index": 1,
+    "columns": [
+     {
+      "col": 0,
+      "header": "Loại nguồn vốn",
+      "tag": null,
+      "input_type": "readonly",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     },
+     {
+      "col": 1,
+      "header": "Số tiền (bằng số; VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)",
+      "tag": "so_tien_vnd_va_tuong_duong",
+      "input_type": "money",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     },
+     {
+      "col": 2,
+      "header": "Tỷ lệ (%)",
+      "tag": "ty_le",
+      "input_type": "percent",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     }
+    ],
+    "fixed_rows": [
+     {
+      "id": "von_ngan_sach_nha_nuoc",
+      "label": "Vốn ngân sách nhà nước",
+      "output_only": false
+     },
+     {
+      "id": "von_tu_nhan",
+      "label": "Vốn tư nhân",
+      "output_only": false
+     },
+     {
+      "id": "von_nuoc_ngoai",
+      "label": "Vốn nước ngoài",
+      "output_only": false
+     },
+     {
+      "id": "von_khac",
+      "label": "Vốn khác",
+      "output_only": false
+     },
+     {
+      "id": "tong_cong",
+      "label": "Tổng cộng",
+      "output_only": true
+     }
+    ],
+    "totals": [
+     {
+      "formula": "sum(so_tien_vnd_va_tuong_duong)",
+      "target_row": "tong_cong",
+      "target_tag": "so_tien_vnd_va_tuong_duong"
+     },
+     {
+      "formula": "sum(ty_le)",
+      "target_row": "tong_cong",
+      "target_tag": "ty_le"
+     }
+    ]
+   },
+   {
+    "kind": "fixed-matrix",
+    "id": "co_cau_loai_co_phan",
+    "semantic_key": "co_cau_loai_co_phan",
+    "section_id": "co_cau_loai_co_phan",
+    "table_index": 2,
+    "columns": [
+     {
+      "col": 0,
+      "header": "Loại cổ phần",
+      "tag": null,
+      "input_type": "readonly",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     },
+     {
+      "col": 1,
+      "header": "Số lượng",
+      "tag": "so_luong",
+      "input_type": "money",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     },
+     {
+      "col": 2,
+      "header": "Giá trị (bằng số, VNĐ)",
+      "tag": "gia_tri_vnd",
+      "input_type": "money",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     },
+     {
+      "col": 3,
+      "header": "Tỉ lệ so với vốn điều lệ (%)",
+      "tag": "ty_le_so_von_dieule",
+      "input_type": "percent",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     }
+    ],
+    "fixed_rows": [
+     {
+      "id": "co_phan_pho_thong",
+      "label": "Cổ phần phổ thông",
+      "output_only": false
+     },
+     {
+      "id": "cp_uu_dai_bieu_quyet",
+      "label": "Cổ phần ưu đãi biểu quyết",
+      "output_only": false
+     },
+     {
+      "id": "cp_uu_dai_co_tuc",
+      "label": "Cổ phần ưu đãi cổ tức",
+      "output_only": false
+     },
+     {
+      "id": "cp_uu_dai_hoan_lai",
+      "label": "Cổ phần ưu đãi hoàn lại",
+      "output_only": false
+     },
+     {
+      "id": "cp_uu_dai_khac",
+      "label": "Các cổ phần ưu đãi khác",
+      "output_only": false
+     },
+     {
+      "id": "tong_so",
+      "label": "Tổng số",
+      "output_only": true
+     }
+    ],
+    "totals": [
+     {
+      "formula": "sum(so_luong)",
+      "target_row": "tong_so",
+      "target_tag": "so_luong"
+     },
+     {
+      "formula": "sum(gia_tri_vnd)",
+      "target_row": "tong_so",
+      "target_tag": "gia_tri_vnd"
+     },
+     {
+      "formula": "sum(ty_le_so_von_dieule)",
+      "target_row": "tong_so",
+      "target_tag": "ty_le_so_von_dieule"
+     }
+    ]
+   },
+   {
+    "kind": "fixed-matrix",
+    "id": "co_phan_duoc_quyen_chao_ban",
+    "semantic_key": "co_phan_duoc_quyen_chao_ban",
+    "section_id": "co_phan_duoc_quyen_chao_ban",
+    "table_index": 3,
+    "columns": [
+     {
+      "col": 0,
+      "header": "Loại cổ phần được quyền chào bán",
+      "tag": null,
+      "input_type": "readonly",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     },
+     {
+      "col": 1,
+      "header": "Số lượng",
+      "tag": "so_luong",
+      "input_type": "money",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     }
+    ],
+    "fixed_rows": [
+     {
+      "id": "co_phan_pho_thong",
+      "label": "Cổ phần phổ thông",
+      "output_only": false
+     },
+     {
+      "id": "cp_uu_dai_bieu_quyet",
+      "label": "Cổ phần ưu đãi biểu quyết",
+      "output_only": false
+     },
+     {
+      "id": "cp_uu_dai_co_tuc",
+      "label": "Cổ phần ưu đãi cổ tức",
+      "output_only": false
+     },
+     {
+      "id": "cp_uu_dai_hoan_lai",
+      "label": "Cổ phần ưu đãi hoàn lại",
+      "output_only": false
+     },
+     {
+      "id": "cp_uu_dai_khac",
+      "label": "Cổ phần ưu đãi khác",
+      "output_only": false
+     },
+     {
+      "id": "tong_so",
+      "label": "Tổng số",
+      "output_only": true
+     }
+    ],
+    "totals": [
+     {
+      "formula": "sum(so_luong)",
+      "target_row": "tong_so",
+      "target_tag": "so_luong"
      }
     ]
    }

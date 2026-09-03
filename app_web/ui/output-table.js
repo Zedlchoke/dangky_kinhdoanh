@@ -67,6 +67,9 @@
     if (!Array.isArray(labels)) return '';
     var rowLabel = labels[row];
     if (Array.isArray(rowLabel)) return rowLabel[col] == null ? '' : rowLabel[col];
+    // flat labels đếm ĐỦ cols -> trải theo CỘT (bảng 1 hàng × N cột, khối ký
+    // ngang 5R2 PLI_M70) — đồng bộ điều kiện horizontal của _find_output_grid_block
+    if (labels.length === cols) return labels[col] == null ? '' : labels[col];
     return col === 0 ? rowLabel : '';
   }
 

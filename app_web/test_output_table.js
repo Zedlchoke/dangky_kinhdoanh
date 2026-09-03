@@ -35,7 +35,9 @@ function gridCellTexts(document) {
 }
 
 const m70Labels = (() => {
+  // 5R2: bảng ký PLI_M70 là 1 HÀNG × 2 CỘT (NGƯỜI NỘP | NGƯỜI NHẬN ngang)
   const cells = gridCellTexts(loadProduction('PLI_M70'))
+    .flatMap(text => text.split('\n'))
     .filter(text => text.includes('NGƯỜI'));
   assert.strictEqual(cells.length, 2, 'PLI_M70 signature grid cells');
   cells.forEach((text, index) => {
@@ -54,7 +56,7 @@ const m70Contract = {
   kind: 'output-table',
   section_id: 'chu_ky_nguoi_nop_nguoi_nhan',
   semantic_key: 'chu_ky_tiep_nhan_ho_so',
-  grid: { rows: 2, cols: 1, labels: m70Labels }
+  grid: { rows: 1, cols: 2, labels: m70Labels }
 };
 const m71Contract = {
   kind: 'output-table',
@@ -69,7 +71,7 @@ assert.ok(m70Html.includes('data-component="output-table"'));
 assert.ok(m70Html.includes('data-output-only="true"'));
 assert.ok(m70Html.includes('data-section-id="chu_ky_nguoi_nop_nguoi_nhan"'));
 assert.ok(m70Html.includes('NGƯỜI NỘP') && m70Html.includes('NGƯỜI NHẬN'));
-assert.strictEqual((m70Html.match(/<tr\b/g) || []).length, 2);
+assert.strictEqual((m70Html.match(/<tr\b/g) || []).length, 1);
 assert.strictEqual((m70Html.match(/<td\b/g) || []).length, 2);
 assert.strictEqual((m70Html.match(/<input\b/gi) || []).length, 0);
 assert.strictEqual(JSON.stringify(m70Contract), m70Before,

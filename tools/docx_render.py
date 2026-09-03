@@ -706,7 +706,10 @@ def _drop_trailing_empty_para(xml: str) -> str:
         cut -= 1
     if cut == len(spans) - 1:
         return xml  # không có paragraph rỗng cuối nào
-    return xml[:bm.start(2)] + body[:spans[cut][0]] + xml[bm.end(2):]
+    # chỉ bỏ span[cut..len-2]; span CUỐI (sectPr) phải được GIỮ — bug
+    # 61c8068: slice body[:spans[cut][0]] đã cắt mất sectPr (Lane D F1)
+    return (xml[:bm.start(2)] + body[:spans[cut][0]] +
+            body[spans[-1][0]:] + xml[bm.end(2):])
 
 
 # ---------------------------------------------------------------------------

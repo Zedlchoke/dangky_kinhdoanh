@@ -399,9 +399,9 @@ section('3. output-table: không input nào nhưng grid vẫn xuất hiện');
     check(fid + ': blocks chữ ký nguồn bị thay bằng grid (.dupe-anchor)',
       (out.match(/class="dupe-anchor"/g) || []).length >= 1);
     if (fid === 'PLI_M70') {
-      check('O1: 2 hàng x 1 cột (biến thể người nộp/người nhận)',
-        comp.indexOf('aria-rowcount="2"') >= 0 &&
-        comp.indexOf('aria-colcount="1"') >= 0);
+      check('O1: 1 hàng x 2 cột (người nộp | người nhận ngang — 5R2)',
+        comp.indexOf('aria-rowcount="1"') >= 0 &&
+        comp.indexOf('aria-colcount="2"') >= 0);
       check('O1: nhãn lấy đúng text chữ ký của blocks nguồn',
         comp.indexOf('NGƯỜI NỘP<br>(Ký và ghi họ tên)') >= 0 &&
         comp.indexOf('NGƯỜI NHẬN<br>(Ký và ghi họ tên)') >= 0);
@@ -678,10 +678,13 @@ section('7. fixture production đủ đặc tính khó nhất của từng kind'
     String(sub).replace(/\s+/g, ''),
     JSON.stringify([o2spec.grid.labels[0][0], sub]));
   const m70 = loadBlocks('PLI_M70');
-  const sigs = tableCellTexts(m70.blocks).filter(t =>
-    t.indexOf('NGƯỜI') >= 0);
+  // 5R2: bảng ký PLI_M70 là 1 hàng × 2 cột — so theo Ô (mỗi ô 1 signer)
+  const sigs = (m70.blocks || []).filter(b => b.t === 'table')
+    .flatMap(b => (b.rows || []).flatMap(row =>
+      (row.cells || []).map(cellTextOf)))
+    .filter(t => t.indexOf('NGƯỜI') >= 0);
   const o1spec = FD.getSectionContract('PLI_M70', 'chu_ky_nguoi_nop_nguoi_nhan').spec;
-  check('O1: 2 ô ký khớp 2 ô của w:tbl output-table PLI_M70',
+  check('O1: 2 ô ký khớp 2 ô của w:tbl output-table PLI_M70 (1x2)',
     sigs.length === 2 && o1spec.grid.labels.every((lb, i) =>
       String(lb).replace(/\s+/g, '') === String(sigs[i]).replace(/\s+/g, '')),
     JSON.stringify(sigs));

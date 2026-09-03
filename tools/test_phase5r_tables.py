@@ -159,20 +159,20 @@ def census_all_templates() -> list[dict]:
 
 WIDE_TABLE_FIXTURE = [
     # form, table_index, cols, total_width, min_col_width, loop
-    ("PLII_M01", 1, 10, 8640, 864, "ds_tv_ho_gia_dinh"),
-    ("PLII_M02", 1, 10, 8640, 864, "tv_hgd_sau_thay_doi"),
-    ("PLII_M02", 7, 10, 8640, 864, "tv_hgd_cap_doi"),
-    ("PLI_M02", 1, 14, 8638, 617, "ds_nddpl_uy_quyen_chu_so_huu"),
-    ("PLI_M06", 0, 12, 8640, 720, "ds_thanh_vien_tnhh"),
-    ("PLI_M07", 0, 11, 8635, 785, "ds_co_dong_sang_lap"),
-    ("PLI_M09", 0, 14, 8638, 617, "ds_thanh_vien_hop_danh"),
-    # PLI_M10 min 720→567: Lead bật width_policy='content' + regen sau merge
-    # lane C (commit 5R3-lead) — rebaseline census theo thực tế mới.
+    # (5R3-lead rebaseline sau regen width_policy 12/12: min col chạm sàn
+    #  567 twips = 1cm, cột dài nội dung nhận width lớn hơn — đo thực tế)
+    ("PLII_M01", 1, 10, 8640, 567, "ds_tv_ho_gia_dinh"),
+    ("PLII_M02", 1, 10, 8640, 567, "tv_hgd_sau_thay_doi"),
+    ("PLII_M02", 7, 10, 8640, 567, "tv_hgd_cap_doi"),
+    ("PLI_M02", 1, 14, 8638, 567, "ds_nddpl_uy_quyen_chu_so_huu"),
+    ("PLI_M06", 0, 12, 8640, 567, "ds_thanh_vien_tnhh"),
+    ("PLI_M07", 0, 11, 8635, 567, "ds_co_dong_sang_lap"),
+    ("PLI_M09", 0, 14, 8638, 567, "ds_thanh_vien_hop_danh"),
     ("PLI_M10", 0, 12, 8640, 567, "ds_cshhl"),
-    ("PLI_M12", 4, 15, 8640, 576, "ds_ndd_uy_quyen_sau_thay_doi"),
-    ("PLI_M15", 1, 14, 8638, 617, "ds_nddpl_uy_quyen_chu_so_huu_moi"),
-    ("PLI_M72", 5, 10, 8640, 864, "ds_co_dong_sang_lap_ctcp"),
-    ("PLI_M72", 6, 10, 8640, 864, "ds_co_dong_nuoc_ngoai_ctcp"),
+    ("PLI_M12", 4, 15, 8640, 567, "ds_ndd_uy_quyen_sau_thay_doi"),
+    ("PLI_M15", 1, 14, 8638, 567, "ds_nddpl_uy_quyen_chu_so_huu_moi"),
+    ("PLI_M72", 5, 10, 8640, 567, "ds_co_dong_sang_lap_ctcp"),
+    ("PLI_M72", 6, 10, 8640, 567, "ds_co_dong_nuoc_ngoai_ctcp"),
 ]
 
 _EXPECTED_TABLE_COUNT = 76   # số bảng có w:tblGrid trên toàn corpus

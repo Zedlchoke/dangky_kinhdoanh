@@ -25,6 +25,15 @@ import zipfile
 from pathlib import Path
 from xml.sax.saxutils import escape
 
+# Phân loại role paragraph (WLAY-001): module thuần, chỉ cần ROOT trên sys.path.
+# Chạy `python -m tools.docx_render` từ ROOT thì có sẵn; chạy trực tiếp như
+# script thì tự thêm ROOT.
+try:
+    from tools.layout_roles import classify_role, fold
+except ImportError:  # noqa: F401 — python tools/docx_render.py
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+    from tools.layout_roles import classify_role, fold
+
 # Tag biến: {key} hoặc {a.b.c} — chữ/số/gạch dưới/chấm
 TAG_RE = re.compile(r"\{([A-Za-z0-9_][A-Za-z0-9_.]*)\}")
 # Tag mở/đóng bảng lặp
@@ -318,6 +327,15 @@ def render(template_path: str | os.PathLike, data: dict,
                     xml = _expand_loops(xml, payload)
                     xml = _subst_vars(xml, payload)
                     if name == "word/document.xml":
+                        # Phase 5R1 (WLAY-001): loại marker source-indicator
+                        # sau khi conditions/loops/subst đã chốt văn bản.
+                        xml = _drop_source_indicators(xml)
+                        # Phase 5R1 (WLAY-006): vô hiệu hoá field code literal
+                        # sót trong template chưa regen.
+                        xml = _strip_flat_field_code(xml)
+                        # Phase 5R1 (WLAY-007a): bỏ paragraph rỗng cuối body
+                        # (gốc rễ trang trắng M72 TNHH_2TV).
+                        xml = _drop_trailing_empty_para(xml)
                         # Class 7: chèn dòng trống cho vùng ký THÀNH PHẦN
                         # CUỐI — sau khi conditions/loops đã chốt cấu trúc.
                         xml = _ensure_signature_space(xml)
@@ -571,6 +589,128 @@ def recompute_totals(data: dict, tables_meta: list,
     if problems and strict:
         raise ExportTotalsError(problems)
     return report
+
+
+# ---------------------------------------------------------------------------
+# Phase 5R1 (WLAY-001): role=source-indicator lộ trong DOCX
+#
+# UI (app_web/ui/render.js) đã BỎ role=source-indicator khỏi DOM nhưng đường
+# export DOCX render template nguyên trạng nên marker kỹ thuật do bước tách
+# nguồn sinh ra ("PL1 - Mau so 9: Giấy đề nghị ...") vẫn in ở trang 1 của
+# đúng 44 form (docs/word_layout_audit_2026-09-03.md mục 4, đã xác minh 44/44
+# template chứa marker ở body-level). Marker là metadata của pipeline, KHÔNG
+# phải nội dung pháp lý của biểu mẫu -> xử lý NGAY TRƯỚC KHI XUẤT: với mọi
+# paragraph CON TRỰC TIẾP của <w:body> trong word/document.xml mà
+# classify_role() xếp role 'source-indicator' thì LOẠI paragraph đó.
+#
+# Ràng buộc:
+# - Chỉ word/document.xml, chỉ con trực tiếp của w:body — KHÔNG đụng
+#   header/footer, KHÔNG đụng paragraph trong w:tbl (đã quét BASE: 0 marker
+#   nằm trong bảng).
+# - Dòng pháp lý "Mẫu số N" (role 'form-number') phải GIỮ NGUYÊN — rule
+#   source-indicator của layout_roles đứng trước và chỉ khớp dạng
+#   "PL<d> - Mau so ..." nên không nhầm với form-number (test pin cả hai).
+# - Form không có marker -> XML trả về NGUYÊN BẢN (byte-identical với
+#   pipeline trước khi thêm bước này).
+# ---------------------------------------------------------------------------
+
+def _drop_source_indicators(xml: str) -> str:
+    """Loại paragraph con trực tiếp của w:body có role 'source-indicator'.
+    Trả XML mới; không có marker thì trả nguyên xml (byte-identical).
+    Chỉ chạy cho word/document.xml (header/footer không có marker)."""
+    bm = _BODY_RE.search(xml)
+    if not bm:
+        return xml
+    body = bm.group(2)
+    spans = _split_body_children(body)
+    out: list[str] = []
+    pos = 0
+    dropped = 0
+    for s, e in spans:
+        seg = body[s:e]
+        if not seg.startswith("<w:p"):
+            continue
+        text = "".join(re.findall(r"<w:t[^>]*>([^<]*)</w:t>", seg))
+        if text.strip() and classify_role(fold(text)) == "source-indicator":
+            out.append(body[pos:s])
+            pos = e
+            dropped += 1
+    if not dropped:
+        return xml
+    out.append(body[pos:])
+    return xml[:bm.start(2)] + "".join(out) + xml[bm.end(2):]
+
+
+# ---------------------------------------------------------------------------
+# Phase 5R1 (WLAY-007a): trang trắng do paragraph rỗng cuối body
+#
+# Gốc rễ (M72 variant TNHH_2TV, tái hiện từ corpus audit): đuôi body sau
+# render là [...nội dung][footnote có điều kiện][paragraph RỖNG][sectPr].
+# Paragraph rỗng cuối (kế thừa từ bản nguồn, spacing before=120) là con
+# trực tiếp cuối ngay trước sectPr — khi nội dung trước nó lấp vừa đầy
+# trang cuối, nó tự mình tràn sang trang kế và in ra trang TRẮNG 0 ký tự.
+# Điều trị CÓ ĐIỀU KIỆN ngay lúc export (chung cho mọi form, không hard-code
+# theo fixture, không chèn page break): chỉ xoá KHI paragraph đó
+#   (a) là con trực tiếp CUỐI của body đứng ngay trước sectPr cuối, và
+#   (b) rỗng hoàn toàn — không w:t có chữ, không drawing/pict (không giữ
+#       nội dung nào, không đụng paragraph cuối BẢNG vì w:tbl là span riêng).
+# Mất một dòng trống cuối tài liệu không mất nội dung pháp lý; khoảng trống
+# vùng ký đã được _ensure_signature_space bảo đảm độc lập.
+# ---------------------------------------------------------------------------
+
+_TRAILING_EMPTY_HAS_CONTENT_RE = re.compile(
+    r"<w:drawing[ >]|<w:pict[ >]|<w:object[ >]")
+
+
+def _drop_trailing_empty_para(xml: str) -> str:
+    """Xoá paragraph rỗng cuối body (ngay trước sectPr cuối) — gốc rễ trang
+    trắng M72. Không có paragraph rỗng cuối thì trả nguyên xml."""
+    bm = _BODY_RE.search(xml)
+    if not bm:
+        return xml
+    body = bm.group(2)
+    spans = _split_body_children(body)
+    if len(spans) < 2:
+        return xml
+    last_s, last_e = spans[-1]
+    if not body[last_s:last_e].startswith("<w:sectPr"):
+        return xml
+    prev_s, prev_e = spans[-2]
+    seg = body[prev_s:prev_e]
+    if not seg.startswith("<w:p"):
+        return xml  # w:tbl/sectPr — không đụng
+    texts = "".join(re.findall(r"<w:t[^>]*>([^<]*)</w:t>", seg))
+    if texts.strip() or _TRAILING_EMPTY_HAS_CONTENT_RE.search(seg):
+        return xml  # có nội dung -> giữ nguyên
+    new_body = body[:prev_s] + body[prev_e:]
+    return xml[:bm.start(2)] + new_body + xml[bm.end(2):]
+
+
+# ---------------------------------------------------------------------------
+# Phase 5R1 (WLAY-006, guard cuối tại export): field code Word bị làm phẳng
+#
+# Generator (build_form_maps.drop_flat_field_code_paras) đã loại paragraph
+# field code stale lúc SINH template, nhưng template hiện hành chỉ được làm
+# mới bởi Lead regen. Guard này vô hiệu hoá text field code literal CÒN SÓT
+# trong w:t NGAY LÚC RENDER để đường export không bao giờ in chữ rác
+# ' PAGE \\* MERGEFORMAT 2' (đồng bộ ngữ pháp với detector D2 của gate và
+# với FLAT_FIELD_CODE_RE của generator — 3 nơi phải giữ cùng một grammar).
+# Token 'MERGEFORMAT' không phải nội dung pháp lý; chỉ xoá text của w:t,
+# không đổi cấu trúc paragraph.
+# ---------------------------------------------------------------------------
+
+_FLAT_FIELD_CODE_RE = re.compile(
+    r"\b(?:PAGE|NUMPAGES|TOC|HYPERLINK|SEQ|STYLEREF|IF)\s*\\\*|\bMERGEFORMAT\b")
+_WT_RE = re.compile(r"(<w:t[^>]*>)([^<]*)(</w:t>)")
+
+
+def _strip_flat_field_code(xml: str) -> str:
+    """Vô hiệu hoá literal field code trong w:t (giữ tag, xoá text)."""
+    def _repl(m: re.Match) -> str:
+        return (m.group(1) + m.group(3)) if (
+            m.group(2) and _FLAT_FIELD_CODE_RE.search(m.group(2))
+        ) else m.group(0)
+    return _WT_RE.sub(_repl, xml)
 
 
 # ---------------------------------------------------------------------------

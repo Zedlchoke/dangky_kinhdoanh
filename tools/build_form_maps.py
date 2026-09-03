@@ -2400,10 +2400,97 @@ def iter_docx_files():
             yield from sorted(d.rglob("*.docx"))
 
 
-def process_form(path, titles, coverage):
+# ---------------------------------------------------------------------------
+# Phase 5R1 (WLAY-006): field code Word bị làm phẳng thành text literal
+#
+# Bản nguồn (vd PL2_Mau_28) chứa số trang dạng field code Word của FOOTER,
+# nhưng converter cũ làm phẳng thành literal ` PAGE   \* MERGEFORMAT 2`
+# trong một w:t ở cuối thân tài liệu — giá trị "2" là số trang CỦA BẢN NGUỒN
+# (stale), không phải nội dung pháp lý của biểu mẫu. Chọn LOẠI paragraph thay
+# vì dựng lại thành <w:fldSimple> vì: (1) field gốc thuộc footer nguồn, dựng
+# lại trong thân tài liệu là SAI bố cục so với mẫu phát hành; (2) giá trị
+# flatten là stale (không tự cập nhật) nên giữ lại sẽ lộ chữ rác như ảnh
+# owner PLII_M28 trang 2 (WLAY-006).
+# Pattern dùng CÙNG ngữ pháp với detector D2 của tools/phase5_visual_gate.py
+# (FIELD_CODE_RE) để gate và generator không lệch nhau.
+# ---------------------------------------------------------------------------
+FLAT_FIELD_CODE_RE = re.compile(
+    r"\b(?:PAGE|NUMPAGES|TOC|HYPERLINK|SEQ|STYLEREF|IF)\s*\\\*|\bMERGEFORMAT\b")
+
+
+def drop_flat_field_code_paras(doc):
+    """Xoá mọi paragraph có text chứa field code Word bị làm phẳng (match
+    ANYWHERE — trùng ngữ pháp detector D2 của gate nên sau regen D2=0 đảm
+    bảo). Token 'MERGEFORMAT' không bao giờ là nội dung pháp lý hợp lệ của
+    biểu mẫu nên không có rủi ro mất chữ thật. Áp cho mọi form (rule chung,
+    không riêng PLII_M28)."""
+    n = 0
+    for p in list(doc.paragraphs):
+        txt = p.text
+        if txt.strip() and FLAT_FIELD_CODE_RE.search(txt):
+            p._p.getparent().remove(p._p)
+            n += 1
+    return n
+
+
+# ---------------------------------------------------------------------------
+# Phase 5R1 (WLAY-007b): banner PHỤ LỤC của phụ lục KẾ lọt vào đuôi mẫu
+#
+# Bước tách nguồn auto-extract (per-form file không có spec riêng) có chỗ
+# vượt ranh giới: PL1_Mau_80 kéo theo cả banner mở đầu phụ lục kế
+# ('PHỤ LỤC II' / 'BIỂU MẪU SỬ DỤNG TRONG ĐĂNG KÝ HỘ KINH DOANH' /
+# '(Kèm theo Thông tư số 68/2025...)') vào cuối tài liệu — template PLI_M80
+# in contaminated sang trang cuối (detector D4 của gate bắt đúng lỗi này).
+# Rule boundary CHUNG cho mọi form PLI/PLII khi extract: gặp body-level
+# paragraph banner "PHỤ LỤC <số la mã>" với số la mã KHÁC phụ lục của form
+# thì CẮT từ paragraph đó đến hết body (giữ lại sectPr cuối). Mọi nội dung
+# sau banner của phụ lục khác đều không thuộc form đang tách.
+# Banner khớp khi TOÀN BỘ text gập dấu là 'phu luc <roman>' (khớp full),
+# nên câu thân viện dẫn '... theo Phụ lục II ...' không bao giờ bị cắt.
+# ---------------------------------------------------------------------------
+ANNEX_BANNER_RE = re.compile(
+    r"^phu luc\s*(i{1,3}|iv|v|vi{1,3}|ix|x|xi{0,3})$")
+
+
+def drop_foreign_annex_tail(doc, own_pl):
+    """Cắt đuôi body từ banner PHỤ LỤC khác phụ lục của form (giữ sectPr).
+    Trả số element đã bỏ; 0 nếu không có contamination."""
+    own = (own_pl or "").strip().upper()
+    body_el = doc.element.body
+    cutoff = None
+    for child in list(body_el):
+        if child.tag != qn("w:p"):
+            continue
+        texts = child.findall(".//" + qn("w:t"))
+        folded = fold(" ".join(
+            (t.text or "") for t in texts).strip())
+        m = ANNEX_BANNER_RE.match(folded)
+        if m and m.group(1).upper() != own:
+            cutoff = child
+            break
+    if cutoff is None:
+        return 0
+    n = 0
+    removing = False
+    for child in list(body_el):
+        if child is cutoff:
+            removing = True
+        if removing and child.tag != qn("w:sectPr"):
+            body_el.remove(child)
+            n += 1
+    return n
+
+
+def process_form(path, titles, coverage, out_tpl=None):
     form_id, pl, mau = parse_form_id(path)
     rel = path.relative_to(ROOT).as_posix()
     doc = Document(str(path))
+    # WLAY-006: bỏ field code số trang bị làm phẳng của bản nguồn TRƯỚC khi
+    # tái dựng/gắn the để không pass nào nhìn thấy nó.
+    drop_flat_field_code_paras(doc)
+    # WLAY-007b: cắt banner PHỤ LỤC khác phụ lục của form lọt vào đuôi
+    # (contamination bước tách nguồn — bài học PLI_M80).
+    drop_foreign_annex_tail(doc, pl)
     # tái dựng bảng danh sách đã mất khi convert (spec từ tools/form_specs/ hoặc
     # fallback khai báo inline REBUILD_TABLES)
     ext = load_form_spec(form_id)
@@ -2668,10 +2755,13 @@ def process_form(path, titles, coverage):
     process_checkboxes(doc, form_id, add_field, unmatched)
 
     title = titles.get(f"Phu luc {pl}|{mau}", path.stem)
-    OUT_TPL.mkdir(parents=True, exist_ok=True)
+    # out_tpl cho phép sandbox regen ghi chỗ khác (test không đụng
+    # app/templates — Lead sẽ regen chính thức)
+    out_dir = out_tpl or OUT_TPL
+    out_dir.mkdir(parents=True, exist_ok=True)
     # don sach thuoc tinh XML tam cua occurrence truoc khi luu template
     _scrub_occurrence_attrs(doc)
-    tmp_copy = OUT_TPL / f"{form_id}.docx"
+    tmp_copy = out_dir / f"{form_id}.docx"
     doc.save(str(tmp_copy))
     meta = {
         "id": form_id, "phu_luc": pl, "mau_so": mau,

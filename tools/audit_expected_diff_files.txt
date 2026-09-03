@@ -364,3 +364,8 @@ tools/test_tax_m0306_rebuild.py
 tools/test_w1_publication_specs.py
 # --- 5R2 laneB signature (00c9c6b): contract khoi ky + census 87 form ---
 tools/test_phase5r_signatures.py
+# --- 5R2 laneC tables (f370277): pin bảng render + census bảng rộng + width_policy + census matrix PLI_M12 ---
+tools/audit_engine_test.py
+tools/form_specs/core/PLII_M01.json
+tools/phase5r_table_policies.json
+tools/test_phase5r_tables.py

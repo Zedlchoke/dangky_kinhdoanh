@@ -435,6 +435,12 @@ def run_export(maps: dict, blocks_all: dict, fixture: str,
         src = r.get("dir")
         if src:
             dst = dst_root / tag
+            # dst còn lại từ lần chạy trước (run bị kill giữa chừng) sẽ biến
+            # shutil.move thành move-VÀO-TRONG (nested) và analyze() đọc PHẢI
+            # file stale — xoá dst trước khi move để evidence luôn là file
+            # của lần chạy hiện hành.
+            if dst.exists():
+                shutil.rmtree(dst)
             shutil.move(src, dst)
             # kèm ZIP nếu có
             zsrc = Path(str(src) + ".zip")

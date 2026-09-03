@@ -26,7 +26,7 @@
 | 12 L1 structural regression | **PARTIAL (Wave D batch 1)** | newline 309→263 toàn bộ hợp lệ (0 mất dữ liệu) — baseline census cập nhật 263; còn 4 STT-glue + 2 digit-run = BLOCKED_OWNER template (PLII_M02 #69/#122, PLI_M72 #109/#112) → batch 2 |
 | 13 Visual evidence freshness | **UI: RUN @ Wave C (87/87 PASS)**; Word PDF: NOT RUN | UI Playwright 87/87 (0 marker/undefined/overlap, keyboard 3070 tab-stop, 3 viewport + zoom 200%); DOCX structural 87/87. Word AppleScript bị TCC chặn (-1712/-609); computer-use cũng bị chặn (accessibility/screen recording denied) → cần owner cấp quyền hoặc chấp nhận NOT RUN |
 | 14 Validation gap khối liên hệ (Wave C F1) | **FIXED (Wave D batch 1, `74ce895`)** | 4 key vào FIELD_META dùng chung + type phone/website + so_cccd type `cccd` 7 grid meta + validateGridLoop per-type; 110 test mới phủ đủ 20 form |
-| 15 PLI_M12 chk kép "Có □/Không □" (Wave D phát hiện phụ) | OPEN, batch 2 | 2 ô cùng dòng nguồn map CẢ HAI vào `chk_khong` — tick một in X ở cả hai chỗ; fix mapping ở spec/generator rồi Lead regen |
+| 15 PLI_M12 chk kép "Có □/Không □" (Wave D phát hiện phụ) | **FIXED (Wave E fix, `2593e3e`)** | generator 2 PHA: legacy toàn form giữ byte + convention chỉ cho đoạn key-trùng với exclusion TẦM FORM; regen 7 form drift (M01/M02/M03/M04/M05/M12/M15); re-audit độc lập: 0 đoạn dup trong 87 blocks, 4 câu hỏi M12 4 cặp key riêng, DOCX 1 key = 1 X; header_layout [FIELDS] 11/0. Ghi nhận OBS: PLII_M06 `co_quan_dkkd`×2 = cùng biến nhắc 2 lần trong 1 câu — by-design |
 
 Audit handoff đầy đủ, gồm exact 23 form GLUE và ranh giới structural/visual:
 `docs/whole_app_audit_2026-08-30.md`.

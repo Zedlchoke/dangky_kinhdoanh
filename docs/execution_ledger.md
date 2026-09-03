@@ -347,3 +347,36 @@ owner exception), runner full.
 | M09 4 khối ký | Lead | đối chiếu nguồn: 4 đoạn @para 111/139/165/218 đều trong vùng nhiễm p102→hết (D3.1=A owner đã duyệt decontaminate); khối ký thật @89 có trong blocks → **by-design, không phải defect**; allowlist pin ghi vĩnh viễn lý do | ✅ CLOSED |
 | STT-glue/digit-run 4+2 vị trí | Lead | PLII_M02 #69/#122 = header 2 lưới thành viên (blocker owner "ghim occurrence" — template KHÔNG có bảng thành viên, 4 loop blocks chỉ là ngành); PLI_M72 #109/#112 = N2–N5 (blocker D2.9). Coverage a4/c7 "PARTIAL_COLUMNS" là over-bridge của tool → adjudication ghi vào registry | ⏳ owner packet |
 | Checkpoint | Lead | runner **46 PASS / 0 FAIL / 0 NOT RUN** @ `fe0c680`; tree sạch; form_maps.js/json sync | ✅ **BATCH 2 ĐÓNG** |
+
+## Wave E — post-fix-auditor độc lập @ fe0c680→2593e3e→db46a6b (2026-09-03)
+
+| Task | Owner | Evidence | Trạng thái |
+|---|---|---|---|
+| Auditor mới read-only, detached | Lead | worktree @ fe0c680; E1 gate chạy độc lập khớp Lead: runner 46/0/0, numbering exit 0, L1 đúng (e)4+(f)2, idempotency 17/0, coverage 42 drift totals nguyên, p1_c PASS, 0 marker/glyph leak 87 blocks + 87 DOCX XML | ✅ |
+| Diff review chống gian lận gate | auditor | 6 pin sửa ĐỀU có căn cứ (P3-D23, FIELD_META cap, N8c, CHAIN_FORMS, MISSING_SIGAllowlist M09 by-design, allowlist entries khớp diff); KHÔNG có assertion luôn-true / hạ threshold / sửa generated tay | ✅ |
+| **Finding F1 (BLOCKER)** | auditor | mục 7/8–9 mới khôi phục bị `.dupe-anchor` ẩn trên UI (section không endMatch nuốt span tới EOF) — DOCX đúng, UI không thấy | ❌ → fix |
+| **Finding F2 (HIGH)** | auditor | Class 15 chỉ fix 1/11 đoạn: dedup per-paragraph còn sót chk_khong×2 (#50/#115) + collision chéo chk_co #18↔#188; form_maps drift generator ở 6 form → test_header_layout [FIELDS] đỏ ngoài runner | ❌ → fix |
+| Fix F1 | Lead | `render.js sectionSpanOfParts`: không có boundary tường minh → span dừng ở BẢNG CUỐI section; re-audit delta: mục 7/8–9 visible đúng vị trí, 3 form fixed-matrix khác 0 dupLeak | ✅ `2593e3e` |
+| Fix F2 | Lead | `process_checkboxes` 2 PHA (legacy toàn form giữ byte + convention chỉ cho đoạn key-trùng, exclusion TẦM FORM) + regen 7 form drift; re-audit delta: 0 đoạn dup trong 87 blocks, 4 câu hỏi Có/Không M12 4 cặp key riêng, DOCX 1 key = 1 X, header_layout [FIELDS] 11/0 | ✅ `2593e3e` |
+| Runner mở rộng | Lead | +3 census suite: numbering (critical, PASS), L1 + coverage (diagnostic noncritical — FAIL hiển thị không chặn); coverage chạy `--no-write` khỏi bẩn tree; verdict đếm đúng cờ critical | ✅ `db46a6b` |
+| Verdict Wave E | Lead | RE-AUDIT DELTA **PASS** (auditor xác minh độc lập cả F1/F2 + gates); các còn lại đều owner-blocked có packet | ✅ **WAVE E ĐÓNG** |
+
+## Wave F — P5R assessment @ db46a6b (trung thực, chưa tuyên bố DONE)
+
+| Gate | Verdict | Ghi chú |
+|---|---|---|
+| G1 Legal/source | **PASS** | specs có legal_status/source_evidence; đuôi M03/M04 chờ P1 packet (không chặn phần đã implement) |
+| G2 Coverage | **PARTIAL** | 111/111 status có bằng chứng; manifest refresh chờ adjudicate chk (packet P1/P2/P4) — 42 drift đã đo và phân loại |
+| G3 Numbering | **PASS** | numbering gate exit 0 (0 JUMP/CHAIN/GLUE unresolved); L1 STT/digit-run = diagnostic FAIL owner-blocked (P2) |
+| G4 UI hygiene | **PASS** | Wave C 87/87 + re-shoot 8 form sau fix: 0 undefined/NaN/marker/overlap/console |
+| G5 Tables | **PASS (implemented set)** | 31 IV + 6 PC qua one-row/round-trip/formula/conflict/DOCX; backlog 26 section chờ owner scope |
+| G6 DOCX/ZIP | **PARTIAL** | structural 87/87 + 0 marker + M72 đúng variant; **Word visual NOT RUN (TCC)** → chờ P8a |
+| G7 Excel | **PASS (pilot)** | M72 round-trip/negative/visual owner-approved; rollout chờ P6 |
+| G8 A11y/viewport | **PASS** | keyboard/3 viewport/zoom 200% Wave C 87/87 |
+| G9 Resilience/security | **PASS** | P3 suites + Class 9/14 fixes; draft xấu/Unicode/path hostile PASS |
+| G10 Release hygiene | **PASS** | runner **47 PASS / 2 FAIL diagnostic / 0 critical NOT RUN — VERDICT PASS**; idempotency 17/0; allowlist cân; tree sạch |
+
+**Kết luận P5R: 7 PASS / 3 PARTIAL — CHƯA tuyên bố CORE_APP_DONE.** Blocker duy
+nhất ngoài scope code: P8a (quyền Word visual) + các owner packet
+`docs/owner_decision_packet_2026-09-03.md`. Wave G (Windows): NOT RUN — không có
+máy Windows. Wave H: chờ P5R đủ điều kiện.

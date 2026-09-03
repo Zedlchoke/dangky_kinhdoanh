@@ -380,3 +380,15 @@ owner exception), runner full.
 nhất ngoài scope code: P8a (quyền Word visual) + các owner packet
 `docs/owner_decision_packet_2026-09-03.md`. Wave G (Windows): NOT RUN — không có
 máy Windows. Wave H: chờ P5R đủ điều kiện.
+
+## Wave P-owner — nhận owner decisions + phát hiện Class 16 (2026-09-03, ongoing)
+
+| Task | Owner | Evidence | Trạng thái |
+|---|---|---|---|
+| Owner decisions P1–P8 | Owner | P1=A, P2=A, P3=A, P4 có điều kiện, P5=B, P6=C, P7, P8a cấp quyền, P8b chờ máy; KHÔNG push | ✅ ghi decision_registry |
+| Đồng bộ checkpoint | Lead | PLAN.md header 6ae63c2→cafb72d; decision registry § Owner decisions | ✅ |
+| Pre-work P1 | Lead | nguồn đầy đủ M03/M04 (tách từ bản gốc) + `SOURCE_OVERRIDES` + drop_until chốt mục kế + xóa inserts superseded + numbering chain so mục POINTER (`Gửi kèm`); regen M03/M04 = 124/144 fields; runner 46/0/0 @ `5907066` | ✅ |
+| Spawn 3 lane P1/P2/P3 | Lead | `fix-tails-m0304` (specs đuôi M03/M04), `fix-member-grids` (2 lưới M02 + N2–N5 M72), `fix-tax-m0306` (bảng thuế PLII_M03–06); ownership không chồng; đang chạy nền | ⏳ |
+| P8a probe | Lead | `osascript` đọc Word OK (16.16.27) — TCC Automation mở | ✅ |
+| **Class 16 phát hiện (BLOCKER G6)** | Lead | Word 16.16 từ chối template M02/M12/M03 ("corrupt"/"unreadable", có recovery, Word từng crash); M01 mở OK; bisect: bỏ band+tax VẪN corrupt; nguồn gốc M12 CŨNG corrupt → lỗi thừa kế từ serialization nguồn convert cũ; LO/lxml/textutil/XSD ECMA-376 đều PASS → gate structural mù. Word-open pilot "10/10" TRÚNG THỰC HÓA lại (user phải bấm OK/Yes hộ) | ❌ OPEN |
+| Hướng xử lý Class 16 | Lead | phiên chuyên trách: recovery-diff (Yes → save repaired → diff XML) HOẶC chuẩn hóa nguồn qua LO round-trip rồi regen; sau đó mới chạy Word-open 87/87 tự động (kèm auto-dismiss dialog qua Accessibility) | ⏳ |

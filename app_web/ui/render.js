@@ -267,11 +267,16 @@
     return s.length > 90 ? s.slice(s.length - 90).trim() : s;
   }
 
-  /* data-field-id + aria-label/inputmode/aria-required từ fieldMeta (nếu có). */
+  /* data-field-id + aria-label/inputmode/aria-required từ fieldMeta (nếu có).
+   * V4 ui-hint (lane 6v-micro): trả thêm hint (FIELD_META.help || label) cho
+   * ô input TEXT hiển thị placeholder mờ khi trống; checkbox/radio chỉ nhận
+   * attrs nên không bao giờ dính placeholder. Key ngoài FIELD_META -> hint
+   * rỗng, render cơ bản như cũ (không đổi store key/validation/aria). */
   function fieldAriaAttrs(key, rctx, runs, idx, fallbackLabel) {
     var m = rctx.fieldMeta ? (rctx.fieldMeta[key] || null) : null;
     var label = (m && m.label) || fallbackLabel || prevStaticText(runs, idx) ||
       (rctx.docId ? rctx.docId + ' - ' : '') + key;
+    var hint = m ? String((m.help != null && m.help !== '') ? m.help : (m.label || '')) : '';
     var attrs = ' data-field-id="' + escapeHtml(nextFieldId(rctx, key)) +
       '" aria-label="' + escapeHtml(label) + '"';
     if (m && m.required) attrs += ' aria-required="true"';
@@ -282,7 +287,12 @@
     } else if (m && m.type === 'email') {
       attrs += ' inputmode="email"';
     }
-    return { attrs: attrs, extraCls: extraCls };
+    return { attrs: attrs, extraCls: extraCls, hint: hint };
+  }
+
+  /* placeholder hint (chỉ khi FIELD_META có help/label) — chuỗi rỗng nếu không. */
+  function placeholderAttr(hint) {
+    return hint ? ' placeholder="' + escapeHtml(hint) + '"' : '';
   }
 
   function renderRun(run, ac, rctx, runs, idx) {
@@ -299,7 +309,7 @@
       var cls = 'fld' + fa.extraCls;
       if (AUTO_KEYS[inp.key] === 'calc') cls += ' calc';
       return '<input type="text" class="' + cls + '" data-key="' + escapeHtml(inp.key) +
-        '" style="width:' + w + 'ch"' + fa.attrs +
+        '" style="width:' + w + 'ch"' + fa.attrs + placeholderAttr(fa.hint) +
         ' value="' + escapeHtml(ac.getVal(inp.key)) + '">';
     }
     if (!run) return '';
@@ -531,7 +541,7 @@
         tds += '<td><input type="text" class="' + cls + '" data-key="' + escapeHtml(key) +
           '" data-tag="' + escapeHtml(tag) + '" data-loop="' + escapeHtml(b.loop) +
           '" data-row="' + i + '"' + (type === 'readonly' ? ' readonly' : '') + fa.attrs +
-          ' value="' + escapeHtml(ac.getVal(key)) + '"></td>';
+          placeholderAttr(fa.hint) + ' value="' + escapeHtml(ac.getVal(key)) + '"></td>';
       }
       var rowId = i < rows.length && rows[i] && rows[i]._row_id
         ? String(rows[i]._row_id) : '';
@@ -918,7 +928,7 @@
         return '<td><input type="text" class="' + cls + '" data-key="' +
           escapeHtml(vkey) + '" data-tag="' + escapeHtml(tag) +
           '" data-fixed-row="' + escapeHtml(String(rowId)) + '" data-section-kind="fixed-matrix"' +
-          fa.attrs + ' value="' + escapeHtml(ac.getVal(vkey)) + '"></td>';
+          fa.attrs + placeholderAttr(fa.hint) + ' value="' + escapeHtml(ac.getVal(vkey)) + '"></td>';
       }).join('');
     }
 
@@ -1033,7 +1043,7 @@
         tds += '<td><input type="text" class="' + cls + '" data-key="' +
           escapeHtml(vkey) + '" data-tag="' + escapeHtml(col.tag) +
           '" data-loop="' + escapeHtml(loop) + '" data-row="' + i + '"' +
-          fa.attrs + ' value="' + escapeHtml(shown) + '"></td>';
+          fa.attrs + placeholderAttr(fa.hint) + ' value="' + escapeHtml(shown) + '"></td>';
       });
       var rid = storeRows[i] && storeRows[i]._row_id ?
         String(storeRows[i]._row_id) : '';

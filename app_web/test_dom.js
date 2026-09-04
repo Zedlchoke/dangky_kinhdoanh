@@ -510,6 +510,68 @@ const D = require('./ui/form-domain.js');
     viaRender.von_dieu_le === '1.000.000.000', viaRender.von_dieu_le);
 }
 
+// ====================== 17. V4 ui-hint: FIELD_META hint -> placeholder
+{
+  // 28 key V4 lane 6v-micro bổ sung (hkd_*/hkd_cd.*/csbt.*/cn.*/ndd.*):
+  // mỗi key phải có label (help tùy chọn) — nền cho placeholder hint.
+  const V4_KEYS = ['hkd_ten_tieng_viet', 'hkd_ten_tieng_viet_2',
+    'hkd_ten_nuoc_ngoai', 'hkd_ten_viet_tat', 'hkd_ma_so', 'hkd_tru_so',
+    'hkd_cd.ten_hkd', 'hkd_cd.ten_chu_ho', 'hkd_cd.so_gcn', 'hkd_cd.dia_chi',
+    'csbt.ten', 'csbt.dia_chi', 'csbt.so_gcn', 'csbt.ten_nguoi_dai_dien',
+    'csbt.ngay_cap', 'cn.ten_tieng_viet', 'cn.ten_nuoc_ngoai',
+    'cn.ten_viet_tat', 'cn.ma_so', 'cn.ma_so_2', 'cn.dia_chi',
+    'ndd.chuc_vu', 'ndd.gioi_tinh', 'ndd.ngay_sinh', 'ndd.thang_sinh',
+    'ndd.nam_sinh', 'ndd.dien_thoai', 'ndd.quoc_gia'];
+  check('V4: FIELD_META co du 28 key hint moi, moi key co label',
+    V4_KEYS.every(k => {
+      const m = D.getFieldMeta(k);
+      return !!m && m.key === k && typeof m.label === 'string' && m.label.length > 0;
+    }));
+  check('V4: khong them required/validation moi cho 28 key (optional, text/phone)',
+    V4_KEYS.every(k => {
+      const m = D.getFieldMeta(k);
+      return m && !m.required && (m.type === 'text' || m.type === 'phone');
+    }));
+
+  const hintDoc = {
+    id: 'T17', ten_mau: 't',
+    blocks: [{
+      t: 'p',
+      runs: [
+        { text: 'Tên hộ kinh doanh (ghi bằng chữ in hoa): ' },
+        { input: { key: 'hkd_ten_tieng_viet_2', w: 40 } }
+      ]
+    }, {
+      t: 'p',
+      runs: [
+        { text: 'Key không có meta: ' },
+        { input: { key: 'khong_co_meta_xyz', w: 20 } }
+      ]
+    }, {
+      t: 'chk', key: 'chk_v4_demo', label: 'ô vuông demo'
+    }]
+  };
+  const hintOpts = { docId: 'PLII_M01', fieldMeta: D.FIELD_META };
+  const hHint = R.renderBlocks(hintDoc, R.newStore(), hintOpts);
+  const inp17 = hHint.match(/<input type="text"[^>]*data-key="hkd_ten_tieng_viet_2"[^>]*>/);
+  check('V4: input hkd_ten_tieng_viet_2 co placeholder="Ghi bang chu in hoa." '
+    + '+ aria-label chua "Ten ho kinh doanh"',
+    !!inp17 && inp17[0].indexOf('placeholder="Ghi bằng chữ in hoa."') >= 0 &&
+      /aria-label="[^"]*Tên hộ kinh doanh[^"]*"/.test(inp17[0]),
+    inp17 ? inp17[0].slice(0, 160) : 'khong tim thay input');
+  const inpNoMeta = hHint.match(/<input type="text"[^>]*data-key="khong_co_meta_xyz"[^>]*>/);
+  check('V4: key ngoai FIELD_META khong co placeholder (render co ban nhu cu)',
+    !!inpNoMeta && inpNoMeta[0].indexOf('placeholder') < 0 &&
+      inpNoMeta[0].indexOf('aria-label=') >= 0);
+  const chk17 = hHint.match(/<input type="checkbox"[^>]*>/);
+  check('V4: checkbox khong bao gio nhan placeholder',
+    !!chk17 && chk17[0].indexOf('placeholder') < 0);
+  // render không fieldMeta (đường cũ app.js trước khi có meta) -> sạch placeholder
+  const hBare = R.renderBlocks(hintDoc, R.newStore());
+  check('V4: render khong fieldMeta -> khong placeholder nao',
+    !/placeholder="/.test(hBare));
+}
+
 // ---------------------------------------------------------------- kết luận
 console.log('-'.repeat(60));
 console.log('Ket qua: %d PASS / %d FAIL', passed, failed);

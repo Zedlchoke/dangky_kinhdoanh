@@ -1413,8 +1413,16 @@ def _landscape_usable_twips(landscape_sect) -> int:
 
 
 def _section_break_para(sect) -> "object":
-    """Paragraph trống mang sectPr trong pPr — cao đúng 1pt (line exact 20)
-    để break không chiếm dòng và không sinh trang trắng."""
+    """Paragraph trống mang sectPr trong pPr — VẼ BẰNG ẨN (w:vanish trên
+    paragraph mark) + line exact 20 twips (1pt).
+
+    w:vanish là kỹ thuật chuẩn Word cho "section break không chiếm dòng":
+    paragraph mark bị ẩn -> Word/LibreOffice thu paragraph về 0 chiều cao,
+    section VẪN áp dụng đầy đủ. Không có nó, khi trang dọc trước bảng đầy
+    đúng hạn, break paragraph bị đẩy sang trang mới (keepNext kéo theo cả
+    nhãn bảng) -> sinh trang gần-trống <20 ký tự (bắt bởi D5 BLANK — tái
+    hiện ở PLI_M72 CTCP fixture minimal: trang 16 ký tự '7. Cổ đông sáng
+    lập:')."""
     p = OxmlElement("w:p")
     ppr = OxmlElement("w:pPr")
     sp = OxmlElement("w:spacing")
@@ -1424,6 +1432,8 @@ def _section_break_para(sect) -> "object":
     sp.set(qn("w:lineRule"), "exact")
     ppr.append(sp)
     rpr = OxmlElement("w:rPr")
+    vanish = OxmlElement("w:vanish")
+    rpr.append(vanish)  # vanish đứng TRƯỚC sz/szCs trong CT_RPr
     for tag in ("w:sz", "w:szCs"):
         el = OxmlElement(tag)
         el.set(qn("w:val"), "2")  # 1pt
@@ -1434,21 +1444,45 @@ def _section_break_para(sect) -> "object":
     return p
 
 
+_TAG_RE = re.compile(r"\{[#/?]?[A-Za-z0-9_.]+\}")
+
+
 def _gap_para_is_light(p_el) -> bool:
-    """Paragraph "nhẹ": không the {tag}, không nhóm dấu chấm dẫn — chỉ nhãn
-    tiêu đề bảng ngắn hoặc rỗng. Nội dung dữ liệu thật thì KHÔNG gộp."""
+    """Paragraph "nhẹ": nhãn/tiêu đề bảng ngắn hoặc rỗng — không nhóm dấu
+    chấm dẫn, không dữ liệu. Tag `{chk_*}` (ô tùy chọn đứng ngay trên bảng
+    nó điều khiển — vd M01 '1. Tình trạng') vẫn tính là nhẹ để đi CÙNG bảng
+    sang trang ngang; tag dữ liệu khác thì KHÔNG."""
     text = re.sub(r"\s+", " ", "".join(
         t.text or "" for t in p_el.iter(qn("w:t")))).strip()
     if not text:
         return True
-    return (len(text) <= 120 and "{" not in text
-            and "…" not in text and ".." not in text)
+    plain = _TAG_RE.sub("", text)
+    if len(plain) > 120 or "…" in plain or ".." in plain:
+        return False
+    for tag in _TAG_RE.findall(text):
+        if not tag.startswith("{chk_"):
+            return False
+    return True
 
 
 def build_landscape_sections(doc, form_id, ext=None) -> int:
     """Bọc mỗi bảng >= 10 cột (hoặc cụm bảng rộng kế nhau) trong section khổ
     ngang; trả số section ngang đã tạo (0 = form không đổi — regen zero-diff
-    cho mọi mẫu không có bảng rộng)."""
+    cho mọi mẫu không có bảng rộng).
+
+    Ranh giới group (để không sinh trang dọc mồ côi — bài học corpus M72
+    CTCP 'trang 16 ký tự' và M06/07/09/10 'trang 6 ký tự'):
+      - GỘP NGƯỢC: nhãn/tiêu đề "nhẹ" ĐỨNG KỀ bảng (chỉ cách nhau bởi
+        paragraph nhẹ) đi CÙNG bảng sang trang ngang — caption in ngay trên
+        bảng của nó, và section break không bao giờ kẹp giữa caption và
+        bảng (nguyên nhân trang mồ côi khi trang dọc trước đó vừa đủ đầy);
+      - BỎ OPEN-BREAK: nếu phía TRƯỚC group (tính cả phần đã gộp ngược) chỉ
+        còn paragraph nhẹ tính từ ĐẦU tài liệu (dạng mẫu-danh-sách: bảng LÀ
+        toàn bộ mẫu, dòng tiêu đề nguồn còn bị _drop_source_indicators bỏ
+        lúc render) thì KHÔNG chèn open-break — section ngang bắt đầu từ
+        đầu tài liệu, được định nghĩa bởi close-break (OOXML: section ĐẦU
+        tài liệu không cần sectPr mở).
+    """
     if ext is not None and ext.get("landscape_section") is False:
         return 0
     body = doc.element.body
@@ -1467,7 +1501,8 @@ def build_landscape_sections(doc, form_id, ext=None) -> int:
     landscape_sect = _landscape_sect_copy(sect)
     usable = _landscape_usable_twips(landscape_sect)
 
-    # gộp các bảng rộng kế nhau (gap chỉ toàn paragraph "nhẹ") thành 1 section
+    # Gộp các bảng rộng kế nhau (gap chỉ toàn paragraph "nhẹ") + gộp ngược
+    # caption đứng kề trên bảng đầu group — lặp tới khi ổn định.
     groups: list[list] = []
     cur = [wide_idx[0]]
     for j in wide_idx[1:]:
@@ -1480,10 +1515,20 @@ def build_landscape_sections(doc, form_id, ext=None) -> int:
             groups.append(cur)
             cur = [j]
     groups.append(cur)
+    for g in groups:
+        while g[0] > 0:
+            prev = children[g[0] - 1]
+            if prev.tag == qn("w:p") and _gap_para_is_light(prev):
+                g.insert(0, g[0] - 1)
+            else:
+                break
 
-    for group in groups:
-        for gi in group:
-            tbl_el = children[gi]
+    made_sections = 0
+    for gi, group in enumerate(groups):
+        for pos in group:
+            if children[pos].tag != qn("w:tbl"):
+                continue  # vị trí caption gộp ngược — không phải bảng
+            tbl_el = children[pos]
             ncols = len(_tbl_grid_cols(tbl_el))
             widths = _content_col_widths(
                 _table_content_weights(tbl_el, ncols), usable,
@@ -1494,13 +1539,34 @@ def build_landscape_sections(doc, form_id, ext=None) -> int:
                     % (form_id, ncols))
             _set_tblw_total(tbl_el, usable)
         first, last = children[group[0]], children[group[-1]]
-        first.addprevious(_section_break_para(copy.deepcopy(sect)))
-        last.addnext(_section_break_para(_landscape_sect_copy(sect)))
-    print("[landscape] %s: %d section ngang (%d bảng >= %d cột, usable %d "
-          "twips, sàn %d)" % (form_id, len(groups), len(wide_idx),
-                              LANDSCAPE_MIN_COLS, usable,
-                              LANDSCAPE_MIN_COL_TWIPS))
-    return len(groups)
+        # phía trước group chỉ toàn paragraph nhẹ tính từ đầu tài liệu ->
+        # section ngang mở đầu tài liệu (không cần open-break)
+        left = children[:group[0]]
+        left_trivial = all(el.tag == qn("w:p") and _gap_para_is_light(el)
+                           for el in left)
+        if not left_trivial:
+            first.addprevious(_section_break_para(copy.deepcopy(sect)))
+        # phía SAU group chỉ còn paragraph nhẹ (mẫu-danh-sách: bảng là nội
+        # dung cuối) -> KHÔNG chèn close-break (paragraph trống mang sectPr
+        # cuối body sẽ bị docx_render._drop_trailing_empty_para xoá lúc
+        # render — mất hẳn landscape, M07); thay vào đó đặt sectPr NGANG
+        # TRỰC TIẾP lên sectPr cuối body.
+        tail = [el for el in children[group[-1] + 1:]
+                if el.tag != qn("w:sectPr")]  # sectPr cuối body không phải nội dung
+        tail_trivial = all(el.tag == qn("w:p") and _gap_para_is_light(el)
+                           for el in tail)
+        if tail_trivial:
+            body.replace(sect, landscape_sect)
+        else:
+            last.addnext(_section_break_para(_landscape_sect_copy(sect)))
+        made_sections += 1
+        print("[landscape] %s: section #%d bảng %d-%d cột vật lý %s, "
+              "open-break=%s" % (form_id, gi + 1, group[0], group[-1],
+                                 [len(_tbl_grid_cols(children[p]))
+                                  for p in group if
+                                  children[p].tag == qn("w:tbl")],
+                                 not left_trivial))
+    return made_sections
 
 
 def _col_tags_for_headers(headers, spec):

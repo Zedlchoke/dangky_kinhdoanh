@@ -13,6 +13,9 @@ C1 (census bảng >= 10 cột, 87 template):
   tools/phase5r_table_policies.json). Mỗi bảng ghi (form, table_index, số
   cột, tổng width, min col width). Kết quả bảng >= 10 cột được EMBED dạng
   fixture (WIDE_TABLE_FIXTURE) — regen làm trôi census sẽ làm test đỏ ngay.
+  [6V-V3/Q-V2 2026-09-04] 12 bảng rộng giờ nằm trong section KHỔ NGANG
+  (pgSz 15840x12240, lề trái/phải 720) với width tái phân bổ theo content,
+  sàn 900 twips, tổng 14400 = khổ in được landscape.
 
 C2 (pin chất lượng bảng ở render — mọi bảng, không chỉ rộng):
   docx_render._pin_table_quality phải, với mọi bảng trong body:
@@ -24,13 +27,13 @@ C2 (pin chất lượng bảng ở render — mọi bảng, không chỉ rộng)
       giữ nguyên).
   Idempotent; bảng đã đúng -> byte-identical.
 
-C3 (WLAY-008 — policy bảng rộng áp dụng ở generator):
+C3 (WLAY-008 + 6V-V3/Q-V2 — policy bảng rộng áp dụng ở generator):
   build_form_maps._content_col_widths phân bổ width theo nội dung
   (weight = max(len(fold(header)), 4), min 567 twips, tổng giữ nguyên);
-  builder chỉ áp cho bảng >= 10 cột. Sandbox regen (out_tpl=/tmp) chứng minh
-  template sinh ra có grid không đều theo nội dung — KHÔNG đụng template
-  production. Landscape bị LOẠI bằng evidence: 0/87 nguồn có
-  w:orient="landscape". Split-table chỉ là candidate (chưa có owner duyệt).
+  builder chỉ áp cho bảng >= 10 cột. [6V-V3/Q-V2 2026-09-04] bảng >= 10 cột
+  còn được BỌC trong section khổ ngang riêng (break ngay trước/sau bảng,
+  phần còn lại giữ dọc, pgSz hoán đổi w/h + orient=landscape) và width tái
+  phân bổ với sàn 900 twips, tổng 14400 = khổ in được landscape.
 
 C4 (WLAY-005 — census matrix PLI_M12):
   5 entry spec M12 (3 lưới ngành + nested-grid NĐD ủy quyền + fixed-matrix
@@ -60,9 +63,14 @@ POLICIES_PATH = ROOT / "tools" / "phase5r_table_policies.json"
 MAPS_PATH = ROOT / "app" / "data" / "form_maps.json"
 TEMPLATES = ROOT / "app" / "templates"
 
-MIN_COL_TWIPS = 567          # 1 cm — trùng ngưỡng D9 của gate
+MIN_COL_TWIPS = 567          # 1 cm — trùng ngưỡng D9 của gate (bảng <10 cột)
 MAX_TOTAL_TWIPS = 16850      # trùng ngưỡng D9 của gate
 WIDE_COLS = 10               # ngưỡng "bảng rộng" của census WLAY-008
+
+# [6V-V3/Q-V2 2026-09-04] contract section ngang cho bảng >= 10 cột — khớp
+# LANDSCAPE_* của tools/build_form_maps.py + MIN_COL_WIDE_TWIPS của D9:
+LANDSCAPE_MIN_COL_TWIPS = 900   # sàn cột bảng rộng (D9 NARROW_COL_WIDE)
+LANDSCAPE_TOTAL_TWIPS = 14400   # Letter landscape 15840 - 2x720 lề
 
 
 # ---------------------------------------------------------------------------
@@ -159,20 +167,21 @@ def census_all_templates() -> list[dict]:
 
 WIDE_TABLE_FIXTURE = [
     # form, table_index, cols, total_width, min_col_width, loop
-    # (5R3-lead rebaseline sau regen width_policy 12/12: min col chạm sàn
-    #  567 twips = 1cm, cột dài nội dung nhận width lớn hơn — đo thực tế)
-    ("PLII_M01", 1, 10, 8640, 567, "ds_tv_ho_gia_dinh"),
-    ("PLII_M02", 1, 10, 8640, 567, "tv_hgd_sau_thay_doi"),
-    ("PLII_M02", 7, 10, 8640, 567, "tv_hgd_cap_doi"),
-    ("PLI_M02", 1, 14, 8638, 567, "ds_nddpl_uy_quyen_chu_so_huu"),
-    ("PLI_M06", 0, 12, 8640, 567, "ds_thanh_vien_tnhh"),
-    ("PLI_M07", 0, 11, 8635, 567, "ds_co_dong_sang_lap"),
-    ("PLI_M09", 0, 14, 8638, 567, "ds_thanh_vien_hop_danh"),
-    ("PLI_M10", 0, 12, 8640, 567, "ds_cshhl"),
-    ("PLI_M12", 4, 15, 8640, 567, "ds_ndd_uy_quyen_sau_thay_doi"),
-    ("PLI_M15", 1, 14, 8638, 567, "ds_nddpl_uy_quyen_chu_so_huu_moi"),
-    ("PLI_M72", 5, 10, 8640, 567, "ds_co_dong_sang_lap_ctcp"),
-    ("PLI_M72", 6, 10, 8640, 567, "ds_co_dong_nuoc_ngoai_ctcp"),
+    # [6V-V3/Q-V2 2026-09-04 rebaseline] 12 bảng rộng bọc section khổ ngang
+    # (usable 14400 twips), width theo content sàn 900 twips — đo thực tế
+    # sau regen 6v-tables (trước Q-V2: total 8635-8640, min 567).
+    ("PLII_M01", 1, 10, 14400, 900, "ds_tv_ho_gia_dinh"),
+    ("PLII_M02", 1, 10, 14400, 900, "tv_hgd_sau_thay_doi"),
+    ("PLII_M02", 7, 10, 14400, 900, "tv_hgd_cap_doi"),
+    ("PLI_M02", 1, 14, 14400, 900, "ds_nddpl_uy_quyen_chu_so_huu"),
+    ("PLI_M06", 0, 12, 14400, 900, "ds_thanh_vien_tnhh"),
+    ("PLI_M07", 0, 11, 14400, 900, "ds_co_dong_sang_lap"),
+    ("PLI_M09", 0, 14, 14400, 900, "ds_thanh_vien_hop_danh"),
+    ("PLI_M10", 0, 12, 14400, 900, "ds_cshhl"),
+    ("PLI_M12", 4, 15, 14400, 900, "ds_ndd_uy_quyen_sau_thay_doi"),
+    ("PLI_M15", 1, 14, 14400, 900, "ds_nddpl_uy_quyen_chu_so_huu_moi"),
+    ("PLI_M72", 5, 10, 14400, 900, "ds_co_dong_sang_lap_ctcp"),
+    ("PLI_M72", 6, 10, 14400, 900, "ds_co_dong_nuoc_ngoai_ctcp"),
 ]
 
 _EXPECTED_TABLE_COUNT = 76   # số bảng có w:tblGrid trên toàn corpus
@@ -266,8 +275,9 @@ def test_c1c_policies_json():
         assert e.get("source_evidence"), "%s#%d thiếu source_evidence" % (
             form, ti)
         assert e.get("spec_ref"), "%s#%d thiếu spec_ref" % (form, ti)
-        assert e.get("landscape") is False, \
-            "%s#%d: không có nguồn landscape nào (0/87) để chọn landscape" % (
+        assert e.get("landscape") is True, \
+            "[6V-V3/Q-V2] %s#%d: bảng >=10 cột phải nằm section khổ ngang " \
+            "(Q-V2 2026-09-04 supersede evidence '0/87 nguồn landscape')" % (
                 form, ti)
         assert e.get("render_pins") == ["tblHeader", "cantSplit", "tblW"], \
             "%s#%d thiếu render_pins" % (form, ti)
@@ -524,8 +534,11 @@ def test_c3b_sandbox_regen():
             if len(grid) < WIDE_COLS:
                 continue
             found_wide = True
-            assert sum(grid) == 8640, "tổng width phải giữ 8640: %s" % (grid,)
-            assert min(grid) >= MIN_COL_TWIPS
+            assert sum(grid) == LANDSCAPE_TOTAL_TWIPS, \
+                "[Q-V2] tổng width phải = khổ in landscape %d: %s" % (
+                    LANDSCAPE_TOTAL_TWIPS, grid)
+            assert min(grid) >= LANDSCAPE_MIN_COL_TWIPS, \
+                "[Q-V2] min col %d < sàn 900 (NARROW_COL_WIDE)" % min(grid)
             assert max(grid) > min(grid), \
                 "%s: grid đều %s — width không phân bổ theo nội dung" % (
                     fid, grid)
@@ -533,6 +546,21 @@ def test_c3b_sandbox_regen():
             texts = re.findall(r"<w:t(?:\s[^>]*)?>([^<]*)</w:t>", seg)
             assert any(len(t) > 20 for t in texts), "thiếu header dài"
         assert found_wide, "%s: sandbox regen mất bảng rộng?" % fid
+        # [6V-V3/Q-V2] section khổ ngang bọc bảng: có pgSz hoán đổi +
+        # orient=landscape + lề trái/phải 720; số sectPr = 1 (cuối) + 2/bảng
+        xml_all = _docx_xml((out / ("%s.docx" % fid)).read_bytes())
+        lands = re.findall(
+            r'<w:pgSz w:w="15840" w:h="12240" w:orient="landscape"/>',
+            xml_all)
+        mar = re.findall(
+            r'<w:pgMar w:top="1440" w:right="720" w:bottom="1440" '
+            r'w:left="720"[^/]*/>', xml_all)
+        n_wide_form = {"PLI_M12": 1, "PLI_M72": 1}[fid]  # số SECTION (gộp)
+        assert len(lands) == n_wide_form, \
+            "%s: mong %d section landscape, thấy %d" % (
+                fid, n_wide_form, len(lands))
+        assert len(mar) == n_wide_form, \
+            "%s: section landscape phải hạ lề trái/phải 720" % fid
     # template production KHÔNG bị sandbox regen đụng (byte trước == sau)
     for fid in ("PLI_M12", "PLI_M72"):
         tpl = ROOT / "app" / maps[fid]["template"]

@@ -462,3 +462,23 @@ kín bằng profile cách ly exit=0, backup profile hỏng
 3. Esc1 (`_count` keys rơi candidates): xử lý khi nâng hard ở V2. Esc4 (FP tiềm ẩn D15): theo dõi qua adjudicate V4.
 
 **Gate V1:** ✅ baseline đỏ khớp audit (mọi lệch có giải thích per-form trong JSON) · ✅ negative mutations 7/7 · ✅ corpus không đụng · ✅ runner không đổi · ✅ ownership sạch. Full runner main sau merge: xem checkpoint docs kế tiếp.
+
+### V2 (phần 1/2) — C4 fixture + C1 glue merged @ main a59c36e→d746390 (2026-09-04, Lead review PASS)
+
+| Task | Owner | Kết quả (Lead kiểm chứng độc lập) | Trạng thái |
+|---|---|---|---|
+| C4 fixture realism | `agent/6v-fixture` (merge `a59c36e`) | ValueFactory default → giá trị TV thật (272 cặp key\|label), D12 giữ; selftest 437/0; subset 11 form: D16 3742→16 (16/16 là FP dòng `_____`); D14 5 form slot-nhan-token XANH | ✅ merged |
+| C1 normalize skeleton glue | `agent/6v-glue` (merge `07cf007`) | rule chèn space quanh {tag} (census 3 ví dụ bản giấy, docstring); regen 81/87 template, regen×2 zero-diff (Lead chạy lại 17/17); 0 non-glue text diff (Lead đối chứng PLII_M08: 4 run, thuần space); D13 subset 10 form tệ nhất = 0 | ✅ merged |
+| D16 grammar v2 (Lead) | Lead `d746390` | bỏ FP dòng toàn gạch dưới (đường điền bản giấy) — pin 355/8846 → 342/8751 + mutation mới; suite 7/7 | ✅ |
+| Kiểm chứng kết hợp | Lead | subset 5 form × 2 fixture export trên main (C4+C1 cùng lúc): **D13 = 0, D16 = 0** | ✅ |
+
+**Phân định 4 suite tranh chấp C1** (Lead chạy trên main@66ba61d): p2a 13/1
+FAIL, r3b1 FAIL (PLI_M12 anchor 137≠144 + 2 BLOCKED), w1 FAIL (PLI_M70 grid),
+member_grids PASS — **giống hệt branch C1 = pre-existing từ 5R**, không do C1.
+Các suite này NGOÀI release_runner (lane-level, known-open) — chuyển thành
+backlog adjudicate ở V4, không chặn V2.
+
+**Trạng thái B:** B1 CLOSED-pending-corpus (D13=0 subset; corpus full chốt ở
+V2-final) · B4 PARTIAL→CLOSED-pending-corpus (value 0 + grammar v2; wrap không
+còn nguồn) · B2 chờ C2 (14 form, đã mở khoá sau C1) · B3 chờ Q-V1 · B5 chờ
+Q-V2 (V3). C2 được phát prompt tiếp theo.

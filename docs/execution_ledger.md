@@ -430,3 +430,21 @@ nhóm); WLAY-005 = 3 matrix M12 BLOCKED_OWNER chờ owner; 2 entry orientation
 BLOCKED_OWNER (M14, PLII_M17); min_write_gap 40pt mới pin cho M15 (các form
 khác đo 27.3pt là census); Windows/.exe = NOT RUN. Reviewer verdict trong
 manifest mặc định NOT_REVIEWED — auditor độc lập (Lane D) review thay.
+
+## Phase 6V — Visual toàn mẫu & tính tỉ mỉ @ main 9dce60e→310f868 (2026-09-04, PLAN v6)
+
+Baseline: audit 3 lớp 2026-09-04 trên HEAD 294604c (B1–B5 visual + I1–I4 hạ
+tầng; số liệu trong PLAN v6 mục 1). Sự kiện gate đỏ giả 56/1 = va chạm profile
+LibreOffice mặc định (worktree song song + .lock/zombie sót) — đã chẩn đoán
+kín bằng profile cách ly exit=0, backup profile hỏng
+`~/Library/.../LibreOffice/4/user.wedged_20260904`.
+
+| Task | Owner | Branch/Worktree | Kết quả & evidence | Trạng thái |
+|---|---|---|---|---|
+| V0.1 profile soffice cách ly + retry + LO_CRASH/LO_PROFILE_BUSY | `agent/6v-infra` | 6v-infra `003c3dd` | helper `_run_soffice` per-call `/tmp/lo_prof_<case>_<pid>`; 4 unit mock + E2E export OK | ✅ merged |
+| V0.2 PNG per-record + assert đĩa==manifest | `agent/6v-infra` | `4b10169` | `<fixture>/<tag>/<FORM>/page-NN.png`; M72 5 biến thể tách 8/3/2/2/4 trang; assert exit 2 khi lệch (test thiếu/thưa 3/3) | ✅ merged |
+| V0.3 summary hai lớp hard-fail/candidates | `agent/6v-infra` | `62ec9e7` | stdout `HARD-FAIL: X` / `CANDIDATES: Y`; summary.json hard_fail_counts + candidate_counts + candidate_ids | ✅ merged |
+| V0.4 preflight runner quét soffice sống | `agent/6v-infra` | `109c1d2` | WARNING `!` dòng đầu + JSON `soffice_preflight_warnings`; không đổi verdict | ✅ merged |
+| V0.5 suite test_export_concurrency + fix out_dir collision cùng giây | `agent/6v-infra` | `fbb775e` | **Gốc rễ thứ 3 của sự kiện 56/1** (agent tự phát hiện): `Bridge.export` mkdir exist_ok=True cho 2 run cùng case_id cùng giây ghi chung out_dir → norm_dir bị xóa dưới chân soffice; fix exist_ok=False + vành đai `_p<pid>`; suite 8 PASS ~20s, 2 bộ profile riêng | ✅ merged |
+| V0-Lead sandbox pid suffix + allowlist | Lead | `5cceeac` | `test_phase5r_signatures` sandbox cố định `/tmp/p5r_laneB_*` khiến 2 runner song song đỏ giả (rmtree lẫn nhau) — pid suffix; allowlist +`tools/test_export_concurrency.py` (H7.4 57/0) | ✅ merged |
+| **GATE V0** | Lead | merge `310f868` | (a) 2 runner song song `--only test_phase5r_signatures` **2 PASS** (exit 0 cả hai); (b) corpuscheck `phase6v/v0_corpuscheck`: 455 records / 0 export error / **PNG claim=disk=1644** (tái lập con số sự kiện 1567/1644); (c)(d) runner full trên main + summary hai lớp — kết quả ghi tại checkpoint dòng này | ✅ |

@@ -179,3 +179,58 @@ thật. Không gọi release xanh cho tới khi full runner chạy ở môi trư
   lên **gate** trong release_runner khi Class 2/3 đóng (EXCEPTIONS rỗng).
 - Census glyph □/☐ = 0 trong mọi block — đã xanh từ `ba64f29`, sẽ ghép vào
   audit suite khi đăng ký gate numbering.
+
+## Class I1 (6V) — Gate đỏ giả: LibreOffice profile mặc định dùng chung [ĐÃ ĐÓNG 6V-V0]
+
+- **Bằng chứng:** 2026-09-04 runner 56/1 trên HEAD 294604c vốn 57/0; isolated
+  profile `-env:UserInstallation` exit=0 mọi phép; `.lock` 03/09 + zombie
+  `(soffice)` 97% CPU giữ profile mặc định; ps thấy soffice của worktree
+  p5r-evidence chạy song song.
+- **Gốc rễ:** `app_web/main.py` gọi soffice qua profile mặc định; 2 tiến trình
+  chồng nhau → exit=1; kill giữa chừng để lock/zombie.
+- **Fix:** `6v-infra 003c3dd` — helper `_run_soffice` profile
+  `/tmp/lo_prof_<case>_<pid>` + retry 1 lần + LO_CRASH/LO_PROFILE_BUSY;
+  suite `test_export_concurrency` chống hồi quy. Gate V0(a) 2 runner song
+  song 2 PASS.
+- **Di sản:** profile hỏng backup `~/Library/Application Support/LibreOffice/
+  4/user.wedged_20260904` (xoá khi V0 ổn định 1 tuần — PLAN v6 mục 7).
+
+## Class I2 (6V) — Evidence PNG M72 ghi đè lẫn nhau (1567/1644) [ĐÃ ĐÓNG 6V-V0]
+
+- **Bằng chứng:** 25 record M72 cùng PNG dir `final/<fixture>/PLI_M72/`;
+  manifest claim 1644, đĩa 1567; long-boundary dhdn claim 14 trang thực chất
+  là 14 trang đầu của ctcp.
+- **Fix:** `6v-infra 4b10169` — PNG `<fixture>/<tag>/<FORM>/` +
+  `assert_png_disk_matches_manifest` exit 2. Corpuscheck V0: claim=disk=1644.
+
+## Class I3 (6V) — Summary gate che candidates sau con số 0 [ĐÃ ĐÓNG 6V-V0]
+
+- **Bằng chứng:** summary in `D9_table_grid: 0` dù det_table_grid bắt
+  NARROW_COL trên corpus final (PLI_M02/M12 cột 566 < sàn 567).
+- **Fix:** `6v-infra 62ec9e7` — summary hai lớp + candidate_ids; corpuscheck
+  V0 hiển thị CANDIDATES: 360 (D9=50, D6=159, D11=201, D5=78) trung thực.
+
+## Class I5 (6V) — out_dir export collision cùng giây [ĐÃ ĐÓNG 6V-V0]
+
+- **Bằng chứng:** suite V5 tái hiện 2/2: 2 worker cùng case_id cùng giây nhận
+  chung out_dir (`mkdir exist_ok=True`), `_lo_norm` bị worker kia xóa dưới
+  chân soffice → exit=0 mà không có file. Gốc rễ thứ 3 của sự kiện 56/1 (agent
+  6v-infra phát hiện khi viết suite concurrency).
+- **Fix:** `6v-infra fbb775e` — `mkdir(exist_ok=False)` + vành đai `_p<pid>`,
+  giữ hành vi tuần tự cũ trong cùng process.
+
+## Class I6 (6V) — Sandbox cố định test_phase5r_signatures đỏ giả khi chạy song song [ĐÃ ĐÓNG 6V-V0]
+
+- **Bằng chứng:** 2 runner `--only test_phase5r_signatures` song song: 1 PASS
+  / 1 FAIL (FileNotFoundError/FileExistsError tại `/tmp/p5r_laneB_*` do 2
+  process rmtree lẫn nhau) — không phải soffice.
+- **Fix:** Lead `5cceeac` — suffix pid cho SANDBOX_TPL/TEST_OUT/sandbox_neg;
+  sau fix 2 runner song song 2 PASS (Gate V0(a)).
+
+## Class I4 (6V) — MIN_COL_TWIPS 567 lệch census 566, candidate vĩnh viễn [OPEN — lane V1]
+
+- **Bằng chứng:** det D9 dùng `< 567` nhưng corpus có bảng min col 566
+  (rebaseline policies min_col 567 "census thực tế" 81b5931); hit rơi vào
+  candidate không chặn.
+- **Kế hoạch:** V1 nâng D9 (bảng ≥10 cột min < 900twips → hard sau V2); số
+  liệu B5 (60 bảng/10 form) trong PLAN v6 mục 1.2.

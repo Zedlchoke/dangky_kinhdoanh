@@ -634,6 +634,12 @@ HANDWRITING_SLOTS = load_handwriting_slots()
 # token nguyên) và không chứa chữ thường.
 _D16_TOKEN = re.compile(r"^[A-Z][A-Z0-9_]*_[0-9]+$")
 _D16_PIECE = re.compile(r"^[A-Z0-9_]*_[A-Z0-9_]*$")
+# [6V-V2/Lead] dòng TOÀN gạch dưới (VD "___________________" — đường điền
+# in sẵn của bản giấy, PLI_M12/M15) KHÔNG phải mảnh token vỡ: mảnh thật
+# luôn có ít nhất 1 ký tự chữ HOA/chữ số (VD "_TAI_1", "NOI_T", "_122").
+# Loại false-positive này để D16 đạt 0 trung thực khi B4 đóng (finding khi
+# Lead review C4: 16/16 hit residual trên subset đều là đường điền).
+_D16_PIECE_HAS_ALNUM = re.compile(r"[A-Z0-9]")
 _D16_MAX_PIECE_LEN = 24   # dài hơn = token nguyên dòng riêng, không phải mảnh
 
 
@@ -655,7 +661,8 @@ def det_token_values(pages: list) -> list[dict]:
             if "_" in s and len(s) <= _D16_MAX_PIECE_LEN \
                     and not any(c.islower() for c in s) \
                     and not _D16_TOKEN.fullmatch(s) \
-                    and _D16_PIECE.fullmatch(s):
+                    and _D16_PIECE.fullmatch(s) \
+                    and _D16_PIECE_HAS_ALNUM.search(s):
                 out.append({"page": p["pno"] + 1, "code": "TOKEN_FRAGMENT",
                             "value": s[:40]})
     return out

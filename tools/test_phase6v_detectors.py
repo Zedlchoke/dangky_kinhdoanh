@@ -60,9 +60,12 @@ PIN = {
     "D15_chk_glyph": {"records": 17, "hits": 191, "forms": 17,
                       "codes": {"BARE_X_PARAGRAPH": 130,
                                 "X_OWN_LINE": 61}},
-    "D16_token_values": {"records": 355, "hits": 8846, "forms": 82,
+    # [6V-V2/Lead] grammar v2: bỏ FP dòng TOÀN gạch dưới (đường điền in sẵn
+    # của bản giấy — finding review C4: 16/16 residual subset là lớp này).
+    # Số cũ grammar v1: 355/8846 (TOKEN_FRAGMENT 5981) — giảm 13 rec/95 hit.
+    "D16_token_values": {"records": 342, "hits": 8751, "forms": 82,
                          "codes": {"TOKEN_VALUE": 2865,
-                                   "TOKEN_FRAGMENT": 5981}},
+                                   "TOKEN_FRAGMENT": 5886}},
     "D9_table_grid": {"records": 50, "hits": 60, "forms": 10,
                       "codes": {"NARROW_COL_WIDE": 60}},
 }
@@ -369,9 +372,11 @@ def test_v1e_d16():
         "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM",
         "Số: 00001/2026",
         "Giấy đề nghị đăng ký doanh nghiệp",
+        "___________________",            # [6V-V2/Lead] đường điền bản giấy
+        "_______________________",
     ])
     assert gate.det_token_values(good) == [], \
-        "text tiếng Việt thường không được bắt"
+        "text tiếng Việt thường/đường điền toàn gạch không được bắt"
 
 
 # ---------------------------------------------------------------------------

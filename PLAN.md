@@ -337,10 +337,10 @@ reviewer_verdict; UI checklist PASS; runner xanh.
 
 | Mã | Câu hỏi | Đề xuất kèm bằng chứng | Cần trước phase |
 |---|---|---|---|
-| **Q-V1** | Chuẩn glyph tick: ☒ ký tự vs bảng 1×1 vẽ ô vuông vs shape? | Bảng 1×1 không viền + X: tương thích Word 16.16 tốt nhất, không phụ thuộc font glyph | V2-C3 |
-| **Q-V2** | Bảng rộng 10–15 cột: (a) landscape chỉ trang chứa bảng; (b) giữ dọc + giảm font ≤8pt + sàn 900twips; (c) giữ nguyên như hiện tại | (a) đọc được nhất; policy cũ loại landscape vì "nguồn 0/87 landscape" — nhưng nguồn in 14 cột thực tế dùng font rất nhỏ; cần owner cân pháp lý vs đọc được | V3 |
-| **Q-V3** | Slot tên form nào template thiếu placeholder: thêm placeholder (lệch bố cục bản giấy 1 chút) hay giữ handwriting? | Thêm placeholder ở (a)/(b) vì mục đích là form điền bằng máy; khác biệt bố cục không đổi cấu trúc pháp định | V2-C2 |
-| **Q-V4** | Fixture realism vs phân biệt D12: chuẩn mới "giá trị thực + chỉ số nhúng" có được duyệt làm chuẩn corpus? | Có — D16 vẫn bắt trùng giá trị nhờ chỉ số | V2-C4 |
+| **Q-V1** | ✅ **ĐÃ CHỐT 2026-09-04**: ô vuông VẼ bằng viền + X bên trong (không phụ thuộc font glyph; Word 16.16 + LO giống nhau); không tick = ô trống; tick cùng dòng nhãn | Bảng 1×1 không viền + X: tương thích Word 16.16 tốt nhất, không phụ thuộc font glyph | V2-C3 — mở khoá |
+| **Q-V2** | ✅ **ĐÃ CHỐT 2026-09-04**: landscape CHỈ trang chứa bảng ≥10 cột + sàn 900twips; số cột không đổi; policy portrait-section 5R bị supersede | (a) đọc được nhất; owner chấp nhận hồ sơ A4 không đồng nhất hướng để ưu tiên đọc được | V3 — mở khoá (sau C2 merge do chung file) |
+| **Q-V3** | (hiện thực hóa theo V2-C2 đang chạy: thêm placeholder cho slot thiếu — C1 đã chuẩn space, C2 chèn key; xác nhận chính thức khi C2 merge) | Thêm placeholder ở (a)/(b) vì mục đích là form điền bằng máy; khác biệt bố cục không đổi cấu trúc pháp định | V2-C2 |
+| **Q-V4** | (đã hiện thực hóa bởi C4 merged `a59c36e`: giá trị thực + chỉ số nhúng, D12 giữ nguyên 0 vi phạm) | Có — D16 vẫn bắt trùng giá trị nhờ chỉ số | V2-C4 — xong |
 | **Q-V5** | 897 glue candidate WLAY-011 (553 cũ + 303 D13 mới + 41 liên hệ): adjudicate theo đợt auditor hay chốt 1 lượt? | 1 lượt trong V4 bởi auditor/6v-visual | V4 |
 | **Q-V6** | Mở Windows/.exe packaging sau V5? | Chỉ khi G-A..G-F xanh | sau V5 |
 | **Kế thừa** | Q-P4-1 min_rows nested-grid; WLAY-005 3 matrix M12 BLOCKED_OWNER; các câu hỏi M09 (mục 7, chân trang Mẫu 9) | giữ nguyên trạng thái OPEN trong registries | khi liên quan |

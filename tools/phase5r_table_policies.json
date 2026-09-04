@@ -30,15 +30,26 @@
    "_note": "Baseline ĐỎ trên corpus generated_ho_so/_visual_layout/phase6v/v0_corpuscheck (455 record @313b0af): det_table_grid mới bắt NARROW_COL_WIDE 60 bảng / 10 form — khớp ĐÚNG audit 2026-09-04 mục 1.2 B5 (60 bảng / PLII_M01/02, PLI_M02/06/07/09/10/12/15/72); mọi bảng hẹp đều min col 566 twips ~ 1.0cm; NARROW_COL legacy (<10 cột, <566) = 0 — I4 đóng bằng sàn làm tròn xuống.",
    "records": 50,
    "tables_narrow_col_wide": 60,
-   "forms": ["PLI_M02", "PLI_M06", "PLI_M07", "PLI_M09", "PLI_M10", "PLI_M12", "PLI_M15", "PLI_M72", "PLII_M01", "PLII_M02"],
+   "forms": [
+    "PLI_M02",
+    "PLI_M06",
+    "PLI_M07",
+    "PLI_M09",
+    "PLI_M10",
+    "PLI_M12",
+    "PLI_M15",
+    "PLI_M72",
+    "PLII_M01",
+    "PLII_M02"
+   ],
    "tables_narrow_col_legacy": 0
   }
  },
  "policy_values": {
   "width-redistribute+render-pin": "Bảng do generator dựng từ spec (tools/form_specs) >= 10 cột: (a) render pin tblHeader/cantSplit/tblW ngay từ lần render này (docx_render._pin_table_quality); (b) width tái phân bổ theo nội dung khi spec entry khai width_policy='content' (build_form_maps._maybe_widen_table) — hiệu lực ở Lead regen kế tiếp; sandbox regen chứng minh trong test C3b. KHÔNG đổi số cột, KHÔNG xóa cột, tổng width giữ nguyên.",
   "render-pin": "Bảng giữ cấu trúc/width hiện tại (đọc được / < 10 cột); chỉ pin render tblHeader/cantSplit/tblW.",
-  "portrait-section": "Giữ khổ dọc — mọi nguồn 0/87 có w:orient='landscape' nên policy landscape bị LOẠI bằng evidence cho toàn corpus.",
-  "landscape-section": "Chỉ dùng khi nguồn bản giấy là landscape — HIỆN KHÔNG có bảng nào đủ evidence (0/87 nguồn có w:orient='landscape'); policy chưa kích hoạt.",
+  "portrait-section": "SUPERSEDED bởi Q-V2 (decision_registry 2026-09-04): owner chọn landscape CHỈ trang chứa bảng >=10 cột dù nguồn 0/87 có orient=landscape — lý do đọc được được owner chủ động vượt qua evidence 'nguồn 0/87 landscape' của 5R. Ghi chú cũ: 'Giữ khổ dọc — mọi nguồn 0/87 có w:orient=landscape nên policy landscape bị LOẠI bằng evidence cho toàn corpus.'",
+  "landscape-section": "[6V-V3 KÍCH HOẠT theo Q-V2 2026-09-04] bảng >=10 cột: bọc section khổ ngang riêng ngay trước/sau bảng (phần còn lại của form giữ dọc); sàn min col 900 twips; số cột KHÔNG đổi; tổng width 14400 twips = khổ in được Letter landscape (15840 - 2x720). Implement: tools/build_form_maps.py build_landscape_sections — trigger hình học (>=10 cột), không hard-code tên form; veto theo form qua spec 'landscape_section': false. Render pins (tblHeader/cantSplit/tblW) giữ nguyên.",
   "split-table": "Chỉ khi bảng có cột khóa lặp tự nhiên VÀ nguồn/owner chấp nhận tách — hiện chỉ là candidate (không áp dụng): 12 bảng rộng đều là bảng thành viên/cổ đông/người đại diện in TRỌN VẸN MỘT BẢNG trên nguồn; tách sẽ lệch biểu mẫu. Ghi candidate tại 'split_candidate' của từng bảng."
  },
  "width_policy_flag_contract": {
@@ -71,13 +82,13 @@
    "form": "PLII_M01",
    "table_index": 1,
    "cols": 10,
-   "total_width": 8640,
-   "min_col_width": 567,
+   "total_width": 14400,
+   "min_col_width": 900,
    "loop": "ds_tv_ho_gia_dinh",
    "spec_ref": "tools/form_specs/core/PLII_M01.json#ds_tv_ho_gia_dinh (list)",
    "generator_built": true,
-   "policy": "width-redistribute+render-pin",
-   "landscape": false,
+   "policy": "landscape-section",
+   "landscape": true,
    "render_pins": [
     "tblHeader",
     "cantSplit",
@@ -86,19 +97,20 @@
    "source_evidence": "06_ho_kinh_doanh_va_chuyen_doi/01_mau_ho_kinh_doanh/PL2_Mau_01_giay_de_nghi_dang_ky_ho_kinh_doanh.docx — muc 7 bảng thành viên hộ gia đình; manifest PLII_M01/m7_thanh_vien_ho_gia_dinh: w:tbl[1] 6r x 10c header 'STT|Họ tên|Ngày, tháng, năm sinh|Số định danh cá nhân|Giới tính|Quốc tịch|Dân tộc|Nơi thường trú|Nơi ở hiện tại|Chữ ký' (blocks B052).",
    "split_candidate": null,
    "notes": "Audit WLAY-008 liệt kê nhóm bảng thành viên; 864 twips/cột ~ 1.52 cm — header dài vỡ dòng. Width theo nội dung sẽ nới 'Họ tên'/'Nơi thường trú' và hẹp 'STT'.",
-   "lead_note": "5R3-lead rebaseline: regen width_policy 12/12 sau khi path legacy M10 được nối spec (Lane D F2) — min chạm sàn 567."
+   "lead_note": "5R3-lead rebaseline: regen width_policy 12/12 sau khi path legacy M10 được nối spec (Lane D F2) — min chạm sàn 567.",
+   "landscape_sect_note": "[6V-V3/Q-V2 2026-09-04] bảng được bọc section khổ ngang riêng (pgSz 15840x12240 orient=landscape, lề trái/phải 720) ngay trước/sau bảng; width phân bổ lại theo content, sàn 900 twips, tổng 14400 = khổ in được landscape. Số cột KHÔNG đổi."
   },
   {
    "form": "PLII_M02",
    "table_index": 1,
    "cols": 10,
-   "total_width": 8640,
-   "min_col_width": 567,
+   "total_width": 14400,
+   "min_col_width": 900,
    "loop": "tv_hgd_sau_thay_doi",
    "spec_ref": "tools/form_specs/household/PLII_M02.json#tv_hgd_sau_thay_doi (nested-grid)",
    "generator_built": true,
-   "policy": "width-redistribute+render-pin",
-   "landscape": false,
+   "policy": "landscape-section",
+   "landscape": true,
    "render_pins": [
     "tblHeader",
     "cantSplit",
@@ -107,19 +119,20 @@
    "source_evidence": "06_ho_kinh_doanh_va_chuyen_doi/01_mau_ho_kinh_doanh/PL2_Mau_02_*.docx — manifest PLII_M02/a4_tv_hgd_sau_thay_doi: paragraph dính 'STTHọ tênNgày,…Chữ ký' (blocks B072); converter mất lưới, nguồn in 10 dòng trống đánh số.",
    "split_candidate": null,
    "notes": "",
-   "lead_note": "5R3-lead rebaseline: regen width_policy 12/12 sau khi path legacy M10 được nối spec (Lane D F2) — min chạm sàn 567."
+   "lead_note": "5R3-lead rebaseline: regen width_policy 12/12 sau khi path legacy M10 được nối spec (Lane D F2) — min chạm sàn 567.",
+   "landscape_sect_note": "[6V-V3/Q-V2 2026-09-04] bảng được bọc section khổ ngang riêng (pgSz 15840x12240 orient=landscape, lề trái/phải 720) ngay trước/sau bảng; width phân bổ lại theo content, sàn 900 twips, tổng 14400 = khổ in được landscape. Số cột KHÔNG đổi."
   },
   {
    "form": "PLII_M02",
    "table_index": 7,
    "cols": 10,
-   "total_width": 8640,
-   "min_col_width": 567,
+   "total_width": 14400,
+   "min_col_width": 900,
    "loop": "tv_hgd_cap_doi",
    "spec_ref": "tools/form_specs/household/PLII_M02.json#tv_hgd_cap_doi (nested-grid)",
    "generator_built": true,
-   "policy": "width-redistribute+render-pin",
-   "landscape": false,
+   "policy": "landscape-section",
+   "landscape": true,
    "render_pins": [
     "tblHeader",
     "cantSplit",
@@ -128,19 +141,20 @@
    "source_evidence": "06_ho_kinh_doanh_va_chuyen_doi/01_mau_ho_kinh_doanh/PL2_Mau_02_*.docx — manifest PLII_M02/c7_tv_hgd_cap_doi: paragraph dính 'STTHọ tên…Chữ ký' (blocks B137).",
    "split_candidate": null,
    "notes": "",
-   "lead_note": "5R3-lead rebaseline: regen width_policy 12/12 sau khi path legacy M10 được nối spec (Lane D F2) — min chạm sàn 567."
+   "lead_note": "5R3-lead rebaseline: regen width_policy 12/12 sau khi path legacy M10 được nối spec (Lane D F2) — min chạm sàn 567.",
+   "landscape_sect_note": "[6V-V3/Q-V2 2026-09-04] bảng được bọc section khổ ngang riêng (pgSz 15840x12240 orient=landscape, lề trái/phải 720) ngay trước/sau bảng; width phân bổ lại theo content, sàn 900 twips, tổng 14400 = khổ in được landscape. Số cột KHÔNG đổi."
   },
   {
    "form": "PLI_M02",
    "table_index": 1,
    "cols": 14,
-   "total_width": 8638,
-   "min_col_width": 567,
+   "total_width": 14400,
+   "min_col_width": 900,
    "loop": "ds_nddpl_uy_quyen_chu_so_huu",
    "spec_ref": "tools/form_specs/core/PLI_M02.json#nddpl_uy_quyen_chu_so_huu (nested-grid)",
    "generator_built": true,
-   "policy": "width-redistribute+render-pin",
-   "landscape": false,
+   "policy": "landscape-section",
+   "landscape": true,
    "render_pins": [
     "tblHeader",
     "cantSplit",
@@ -149,19 +163,20 @@
    "source_evidence": "manifest PLI_M02/nddpl_uy_quyen_chu_so_huu: anchor app/templates/PLI_M02.docx#p140-p144; nguồn DN_PL1_Mau_02_*.docx khối người đại diện theo pháp luật/ủy quyền của DNTN.",
    "split_candidate": null,
    "notes": "min col 617 twips (1.09 cm) — cận ngưỡng 1cm; header 'Số, ngày cấp, cơ quan cấp Giấy tờ pháp lý của cá nhân' 3 cột con vỡ nặng.",
-   "lead_note": "5R3-lead rebaseline: regen width_policy 12/12 sau khi path legacy M10 được nối spec (Lane D F2) — min chạm sàn 567."
+   "lead_note": "5R3-lead rebaseline: regen width_policy 12/12 sau khi path legacy M10 được nối spec (Lane D F2) — min chạm sàn 567.",
+   "landscape_sect_note": "[6V-V3/Q-V2 2026-09-04] bảng được bọc section khổ ngang riêng (pgSz 15840x12240 orient=landscape, lề trái/phải 720) ngay trước/sau bảng; width phân bổ lại theo content, sàn 900 twips, tổng 14400 = khổ in được landscape. Số cột KHÔNG đổi."
   },
   {
    "form": "PLI_M06",
    "table_index": 0,
    "cols": 12,
-   "total_width": 8640,
-   "min_col_width": 567,
+   "total_width": 14400,
+   "min_col_width": 900,
    "loop": "ds_thanh_vien_tnhh",
    "spec_ref": "tools/form_specs/formation/PLI_M06.json#ds_thanh_vien_tnhh (list)",
    "generator_built": true,
-   "policy": "width-redistribute+render-pin",
-   "landscape": false,
+   "policy": "landscape-section",
+   "landscape": true,
    "render_pins": [
     "tblHeader",
     "cantSplit",
@@ -170,19 +185,20 @@
    "source_evidence": "manifest PLI_M06/ds_thanh_vien_tnhh: anchor app/templates/PLI_M06.docx#p0-p3; nguồn DN_PL1_Mau_06_danh_sach_thanh_vien_cong_ty_trach_nhiem_huu_han_hai_thanh_vien_tro_len.docx.",
    "split_candidate": null,
    "notes": "",
-   "lead_note": "5R3-lead rebaseline: regen width_policy 12/12 sau khi path legacy M10 được nối spec (Lane D F2) — min chạm sàn 567."
+   "lead_note": "5R3-lead rebaseline: regen width_policy 12/12 sau khi path legacy M10 được nối spec (Lane D F2) — min chạm sàn 567.",
+   "landscape_sect_note": "[6V-V3/Q-V2 2026-09-04] bảng được bọc section khổ ngang riêng (pgSz 15840x12240 orient=landscape, lề trái/phải 720) ngay trước/sau bảng; width phân bổ lại theo content, sàn 900 twips, tổng 14400 = khổ in được landscape. Số cột KHÔNG đổi."
   },
   {
    "form": "PLI_M07",
    "table_index": 0,
    "cols": 11,
-   "total_width": 8635,
-   "min_col_width": 567,
+   "total_width": 14400,
+   "min_col_width": 900,
    "loop": "ds_co_dong_sang_lap",
    "spec_ref": "tools/form_specs/formation/PLI_M07.json#ds_co_dong_sang_lap (list)",
    "generator_built": true,
-   "policy": "width-redistribute+render-pin",
-   "landscape": false,
+   "policy": "landscape-section",
+   "landscape": true,
    "render_pins": [
     "tblHeader",
     "cantSplit",
@@ -191,19 +207,20 @@
    "source_evidence": "manifest PLI_M07/ds_co_dong_sang_lap: anchor app/templates/PLI_M07.docx#p0-p3; nguồn DN_PL1_Mau_07_danh_sach_co_dong_sang_lap_cong_ty_co_phan.docx.",
    "split_candidate": null,
    "notes": "",
-   "lead_note": "5R3-lead rebaseline: regen width_policy 12/12 sau khi path legacy M10 được nối spec (Lane D F2) — min chạm sàn 567."
+   "lead_note": "5R3-lead rebaseline: regen width_policy 12/12 sau khi path legacy M10 được nối spec (Lane D F2) — min chạm sàn 567.",
+   "landscape_sect_note": "[6V-V3/Q-V2 2026-09-04] bảng được bọc section khổ ngang riêng (pgSz 15840x12240 orient=landscape, lề trái/phải 720) ngay trước/sau bảng; width phân bổ lại theo content, sàn 900 twips, tổng 14400 = khổ in được landscape. Số cột KHÔNG đổi."
   },
   {
    "form": "PLI_M09",
    "table_index": 0,
    "cols": 14,
-   "total_width": 8638,
-   "min_col_width": 567,
+   "total_width": 14400,
+   "min_col_width": 900,
    "loop": "ds_thanh_vien_hop_danh",
    "spec_ref": "tools/form_specs/formation/PLI_M09.json#ds_thanh_vien_hop_danh (list)",
    "generator_built": true,
-   "policy": "width-redistribute+render-pin",
-   "landscape": false,
+   "policy": "landscape-section",
+   "landscape": true,
    "render_pins": [
     "tblHeader",
     "cantSplit",
@@ -212,19 +229,20 @@
    "source_evidence": "manifest PLI_M09/ds_thanh_vien_hop_danh: anchor app/templates/PLI_M09.docx#p0-p3 (status partial_columns — gap cột do nguồn, không thuộc lane C); nguồn DN_PL1_Mau_09_danh_sach_thanh_vien_cong_ty_hop_danh.docx.",
    "split_candidate": null,
    "notes": "partial_columns là gap dữ liệu packet P2 (không phải layout); lane C không đụng số cột. width_policy='content' ĐÃ set trong spec — hiệu lực ở Lead regen kế tiếp.",
-   "lead_note": "5R3-lead rebaseline: regen width_policy 12/12 sau khi path legacy M10 được nối spec (Lane D F2) — min chạm sàn 567."
+   "lead_note": "5R3-lead rebaseline: regen width_policy 12/12 sau khi path legacy M10 được nối spec (Lane D F2) — min chạm sàn 567.",
+   "landscape_sect_note": "[6V-V3/Q-V2 2026-09-04] bảng được bọc section khổ ngang riêng (pgSz 15840x12240 orient=landscape, lề trái/phải 720) ngay trước/sau bảng; width phân bổ lại theo content, sàn 900 twips, tổng 14400 = khổ in được landscape. Số cột KHÔNG đổi."
   },
   {
    "form": "PLI_M10",
    "table_index": 0,
    "cols": 12,
-   "total_width": 8640,
-   "min_col_width": 567,
+   "total_width": 14400,
+   "min_col_width": 900,
    "loop": "ds_cshhl",
    "spec_ref": "tools/form_specs/formation/PLI_M10.json#ds_cshhl (list)",
    "generator_built": true,
-   "policy": "width-redistribute+render-pin",
-   "landscape": false,
+   "policy": "landscape-section",
+   "landscape": true,
    "render_pins": [
     "tblHeader",
     "cantSplit",
@@ -233,19 +251,20 @@
    "source_evidence": "manifest PLI_M10/ds_cshhl_doanh_nghiep: anchor app/templates/PLI_M10.docx#p0-p3; nguồn DN_PL1_Mau_10_danh_sach_chu_so_huu_huong_loi_cua_doanh_nghiep.docx.",
    "split_candidate": null,
    "notes": "width_policy='content' ĐÃ SET bởi Lead trong commit regen 5R3 (ID7 tự khớp sau khi commit regen). Render pin áp dụng đầy đủ từ phía render.",
-   "lead_note": "5R3-lead rebaseline: regen width_policy 12/12 sau khi path legacy M10 được nối spec (Lane D F2) — min chạm sàn 567."
+   "lead_note": "5R3-lead rebaseline: regen width_policy 12/12 sau khi path legacy M10 được nối spec (Lane D F2) — min chạm sàn 567.",
+   "landscape_sect_note": "[6V-V3/Q-V2 2026-09-04] bảng được bọc section khổ ngang riêng (pgSz 15840x12240 orient=landscape, lề trái/phải 720) ngay trước/sau bảng; width phân bổ lại theo content, sàn 900 twips, tổng 14400 = khổ in được landscape. Số cột KHÔNG đổi."
   },
   {
    "form": "PLI_M12",
    "table_index": 4,
    "cols": 15,
-   "total_width": 8640,
-   "min_col_width": 567,
+   "total_width": 14400,
+   "min_col_width": 900,
    "loop": "ds_ndd_uy_quyen_sau_thay_doi",
    "spec_ref": "tools/form_specs/change/PLI_M12.json#ndd_uy_quyen_sau_thay_doi (nested-grid)",
    "generator_built": true,
-   "policy": "width-redistribute+render-pin",
-   "landscape": false,
+   "policy": "landscape-section",
+   "landscape": true,
    "render_pins": [
     "tblHeader",
     "cantSplit",
@@ -254,19 +273,20 @@
    "source_evidence": "manifest PLI_M12/ndd_uy_quyen_sau_thay_doi: header nối dính 14 cột nguồn ('STTChủ sở hữu/Thành viên công ty TNHH…Thời điểm đại diện phần vốn'), N6 rebuild 15 cột; nguồn 02_thay_doi_thong_tin_doanh_nghiep/PL1_Mau_12_tach_tu_file_full.docx p219-p227.",
    "split_candidate": "khóa lặp tự nhiên không tồn tại ở mức spec (2 nhóm cột cuối B145 chưa có tag canonical — BLOCKED_OWNER riêng), nên split-table chỉ khả thi sau khi owner chốt đủ tag; hiện KHÔNG tách.",
    "notes": "Bảng hẹp nhất corpus (576 twips = 1.016 cm, cách ngưỡng D9 567 đúng 9 twips); chính là bảng audit WLAY-008 nêu. Ưu tiên regen kế tiếp.",
-   "lead_note": "5R3-lead rebaseline: regen width_policy 12/12 sau khi path legacy M10 được nối spec (Lane D F2) — min chạm sàn 567."
+   "lead_note": "5R3-lead rebaseline: regen width_policy 12/12 sau khi path legacy M10 được nối spec (Lane D F2) — min chạm sàn 567.",
+   "landscape_sect_note": "[6V-V3/Q-V2 2026-09-04] bảng được bọc section khổ ngang riêng (pgSz 15840x12240 orient=landscape, lề trái/phải 720) ngay trước/sau bảng; width phân bổ lại theo content, sàn 900 twips, tổng 14400 = khổ in được landscape. Số cột KHÔNG đổi."
   },
   {
    "form": "PLI_M15",
    "table_index": 1,
    "cols": 14,
-   "total_width": 8638,
-   "min_col_width": 567,
+   "total_width": 14400,
+   "min_col_width": 900,
    "loop": "ds_nddpl_uy_quyen_chu_so_huu_moi",
    "spec_ref": "tools/form_specs/change/PLI_M15.json#ndd_pl_uy_quyen_chu_so_huu_moi (nested-grid)",
    "generator_built": true,
-   "policy": "width-redistribute+render-pin",
-   "landscape": false,
+   "policy": "landscape-section",
+   "landscape": true,
    "render_pins": [
     "tblHeader",
     "cantSplit",
@@ -275,19 +295,20 @@
    "source_evidence": "manifest PLI_M15/ndd_pl_uy_quyen_chu_so_huu_moi: anchor 02_thay_doi_thong_tin_doanh_nghiep/PL1_Mau_15_tach_tu_file_full.docx#p50 (status partial_columns).",
    "split_candidate": null,
    "notes": "",
-   "lead_note": "5R3-lead rebaseline: regen width_policy 12/12 sau khi path legacy M10 được nối spec (Lane D F2) — min chạm sàn 567."
+   "lead_note": "5R3-lead rebaseline: regen width_policy 12/12 sau khi path legacy M10 được nối spec (Lane D F2) — min chạm sàn 567.",
+   "landscape_sect_note": "[6V-V3/Q-V2 2026-09-04] bảng được bọc section khổ ngang riêng (pgSz 15840x12240 orient=landscape, lề trái/phải 720) ngay trước/sau bảng; width phân bổ lại theo content, sàn 900 twips, tổng 14400 = khổ in được landscape. Số cột KHÔNG đổi."
   },
   {
    "form": "PLI_M72",
    "table_index": 5,
    "cols": 10,
-   "total_width": 8640,
-   "min_col_width": 567,
+   "total_width": 14400,
+   "min_col_width": 900,
    "loop": "ds_co_dong_sang_lap_ctcp",
    "spec_ref": "tools/form_specs/change/PLI_M72.json#ds_co_dong_sang_lap_ctcp (nested-grid)",
    "generator_built": true,
-   "policy": "width-redistribute+render-pin",
-   "landscape": false,
+   "policy": "landscape-section",
+   "landscape": true,
    "render_pins": [
     "tblHeader",
     "cantSplit",
@@ -296,19 +317,20 @@
    "source_evidence": "05_cong_bo_cung_cap_thong_tin/PL1_Mau_72_cong_bo_noi_dung_dang_ky_thanh_lap_doanh_nghiep.docx — bảng cổ đông sáng lập CTCP (header 'STT|Tên cổ đông|Quốc tịch|Số Giấy tờ pháp lý của cá nhân/tổ chức|…'); owner mở nhóm M72 N2-N5 (decision_registry 2026-08-28 nhóm 4).",
    "split_candidate": null,
    "notes": "Audit WLAY-008 nêu M72 (bảng thành viên/cổ đông) — 864 twips/cột.",
-   "lead_note": "5R3-lead rebaseline: regen width_policy 12/12 sau khi path legacy M10 được nối spec (Lane D F2) — min chạm sàn 567."
+   "lead_note": "5R3-lead rebaseline: regen width_policy 12/12 sau khi path legacy M10 được nối spec (Lane D F2) — min chạm sàn 567.",
+   "landscape_sect_note": "[6V-V3/Q-V2 2026-09-04] bảng được bọc section khổ ngang riêng (pgSz 15840x12240 orient=landscape, lề trái/phải 720) ngay trước/sau bảng; width phân bổ lại theo content, sàn 900 twips, tổng 14400 = khổ in được landscape. Số cột KHÔNG đổi."
   },
   {
    "form": "PLI_M72",
    "table_index": 6,
    "cols": 10,
-   "total_width": 8640,
-   "min_col_width": 567,
+   "total_width": 14400,
+   "min_col_width": 900,
    "loop": "ds_co_dong_nuoc_ngoai_ctcp",
    "spec_ref": "tools/form_specs/change/PLI_M72.json#ds_co_dong_nuoc_ngoai_ctcp (nested-grid)",
    "generator_built": true,
-   "policy": "width-redistribute+render-pin",
-   "landscape": false,
+   "policy": "landscape-section",
+   "landscape": true,
    "render_pins": [
     "tblHeader",
     "cantSplit",
@@ -317,7 +339,8 @@
    "source_evidence": "05_cong_bo_cung_cap_thong_tin/PL1_Mau_72_cong_bo_noi_dung_dang_ky_thanh_lap_doanh_nghiep.docx — bảng cổ đông nước ngoài CTCP; cùng nguồn với tbl5.",
    "split_candidate": null,
    "notes": "",
-   "lead_note": "5R3-lead rebaseline: regen width_policy 12/12 sau khi path legacy M10 được nối spec (Lane D F2) — min chạm sàn 567."
+   "lead_note": "5R3-lead rebaseline: regen width_policy 12/12 sau khi path legacy M10 được nối spec (Lane D F2) — min chạm sàn 567.",
+   "landscape_sect_note": "[6V-V3/Q-V2 2026-09-04] bảng được bọc section khổ ngang riêng (pgSz 15840x12240 orient=landscape, lề trái/phải 720) ngay trước/sau bảng; width phân bổ lại theo content, sàn 900 twips, tổng 14400 = khổ in được landscape. Số cột KHÔNG đổi."
   }
  ],
  "m12_matrix_census": [
@@ -425,5 +448,28 @@
   "tblW": "type=dxa w=tổng gridCol; thiếu/sai/auto -> set; type=pct giữ nguyên",
   "idempotent": true,
   "byte_identical_when_correct": true
+ },
+ "census_totals_v3": {
+  "_note": "VERSION 3 (6V-V3, agent/6v-tables, 2026-09-04) — sau Q-V2: 12 bảng >=10 cột được bọc section khổ ngang + width tái phân bổ theo content, sàn 900 twips, tổng 14400 (khổ in được Letter landscape 15840-2x720). census_totals_v2 phía trên GIỮ NGUYÊN làm lịch sử baseline ĐỎ của V1 (NARROW_COL_WIDE 60 bảng/10 form trên corpus v0_corpuscheck @313b0af — test_phase6v_detectors pin số này).",
+  "date": "2026-09-04",
+  "scope": "87 app/templates/PL*.docx — phép đếm cân bằng <w:tbl> như v1/v2",
+  "decision": "Q-V2 (decision_registry 2026-09-04): landscape CHỈ trang chứa bảng >=10 cột + sàn 900 twips",
+  "floor_wide_table": 900,
+  "landscape_page_twips": {
+   "pgSz": [
+    15840,
+    12240
+   ],
+   "margins_lr": 720,
+   "usable_width": 14400
+  },
+  "templates": 87,
+  "tables_with_grid": 76,
+  "tables_ge_10_cols": 12,
+  "tables_ge10_in_landscape_section": 12,
+  "tables_ge10_min_col_lt_900": 0,
+  "tables_ge10_total_ne_14400": 0,
+  "tables_lt10_min_col_lt_566": 0,
+  "tables_total_over_16850": 0
  }
 }

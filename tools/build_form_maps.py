@@ -1229,7 +1229,39 @@ def _apply_content_widths(tbl, weights: list) -> None:
     total = sum(int(el.get(qn("w:w")) or 0) for el in cols)
     if total <= 0:
         return
-    widths = _content_col_widths(weights, total)
+    _apply_width_list(tbl_el, _content_col_widths(weights, total))
+
+
+def _header_col_weights(header_rows: list, ncols: int) -> list:
+    """Weight mỗi cột vật lý từ header nhiều tầng (text dài nhất phủ cột)."""
+    weights = [4] * ncols
+    occupied = {}
+    for ri, row_cells in enumerate(header_rows):
+        cursor = 0
+        for src in row_cells:
+            cs = src.get("colspan", 1)
+            rs = src.get("rowspan", 1)
+            text = fold(re.sub(r"\s+", " ", src.get("text", ""))).strip()
+            for c in range(cursor, min(cursor + cs, ncols)):
+                key = (ri, c)
+                occupied[key] = text
+                weights[c] = max(weights[c], len(text))
+            # ô rowspan của hàng trên vẫn phủ cột này — trọng số đã tính
+            cursor += cs
+    return weights
+
+
+def _apply_width_list(tbl_el, widths: list) -> bool:
+    """Đặt gridCol + tcW (đúng span gridSpan) theo danh sách width cho trước.
+
+    Trả False khi tblGrid thiếu/lệch số cột — caller phải fail-loud, không
+    bao giờ để bảng rộng lệch lưới âm thầm."""
+    grid = tbl_el.find(qn("w:tblGrid"))
+    if grid is None:
+        return False
+    cols = [el for el in grid.iterchildren() if el.tag == qn("w:gridCol")]
+    if len(cols) != len(widths):
+        return False
     for el, w in zip(cols, widths):
         el.set(qn("w:w"), str(w))
     for tr in tbl_el.iterchildren(qn("w:tr")):
@@ -1255,25 +1287,7 @@ def _apply_content_widths(tbl, weights: list) -> None:
             tcw.set(qn("w:w"), str(w))
             tcw.set(qn("w:type"), "dxa")
             cursor += span
-
-
-def _header_col_weights(header_rows: list, ncols: int) -> list:
-    """Weight mỗi cột vật lý từ header nhiều tầng (text dài nhất phủ cột)."""
-    weights = [4] * ncols
-    occupied = {}
-    for ri, row_cells in enumerate(header_rows):
-        cursor = 0
-        for src in row_cells:
-            cs = src.get("colspan", 1)
-            rs = src.get("rowspan", 1)
-            text = fold(re.sub(r"\s+", " ", src.get("text", ""))).strip()
-            for c in range(cursor, min(cursor + cs, ncols)):
-                key = (ri, c)
-                occupied[key] = text
-                weights[c] = max(weights[c], len(text))
-            # ô rowspan của hàng trên vẫn phủ cột này — trọng số đã tính
-            cursor += cs
-    return weights
+    return True
 
 
 def _maybe_widen_table(tbl, ncols: int, weights: list,
@@ -1284,6 +1298,209 @@ def _maybe_widen_table(tbl, ncols: int, weights: list,
         return
     if ncols >= WIDE_TABLE_MIN_COLS:
         _apply_content_widths(tbl, weights)
+
+
+# ---------------------------------------------------------------------------
+# 6V-V3 (Q-V2 ĐÃ CHỐT 2026-09-04, decision_registry): bảng >= 10 cột được
+# BỌC trong một section KHỔ NGANG riêng — section break đặt ngay TRƯỚC và
+# ngay SAU bảng, phần còn lại của form giữ khổ dọc; SỐ CỘT KHÔNG ĐỔI.
+#
+# Rule HỌC theo hình học bảng (KHÔNG hard-code tên form):
+#   - trigger: bảng body-level có >= LANDSCAPE_MIN_COLS cột vật lý (đúng
+#     phạm vi detector D9 NARROW_COL_WIDE của gate);
+#   - veto: form spec khai "landscape_section": false -> bỏ qua toàn form;
+#   - gộp: hai bảng rộng kế nhau chỉ cách nhau bởi <= 4 paragraph "nhẹ"
+#     (rỗng hoặc nhãn ngắn không the/slot) -> MỘT section ngang chung, tránh
+#     sinh trang dọc gần-trống giữa hai bảng (bài học PLI_M72 t5/t6);
+#   - width: sau landscape, tái phân bổ theo width_policy content với SÀN
+#     900 twips/cột (trùng MIN_COL_WIDE_TWIPS của D9) và TỔNG BẰNG KHỔ IN
+#     ĐƯỢC của section ngang (pgSz hoán đổi w/h, lề trái/phải hạ còn 720
+#     twips = 0.5in nếu nguồn rộng hơn — Letter landscape 15840-1440 = 14400,
+#     đủ cho bảng 15 cột x 900 = 13500);
+#   - paragraph mang sectPr đặt line exact 20 twips (1pt) để section break
+#     không chiếm dòng, không sinh trang trắng (D5 phải 0).
+#
+# OOXML: sectPr trong pPr của một paragraph KẾT THÚC section đó; sectPr cuối
+# body áp cho phần còn lại. Nên: break TRƯỚC bảng copy sectPr dọc gốc (chốt
+# phần dọc trước bảng), break SAU bảng mang sectPr NGANG (pgSz w<->h +
+# orient="landscape"); nội dung sau bảng về lại dọc theo sectPr cuối body.
+# ---------------------------------------------------------------------------
+
+LANDSCAPE_MIN_COLS = WIDE_TABLE_MIN_COLS   # 10 — trùng ngưỡng D9 WIDE_TABLE_COLS
+LANDSCAPE_MIN_COL_TWIPS = 900              # trùng MIN_COL_WIDE_TWIPS của D9
+LANDSCAPE_MARGIN_TWIPS = 720               # lề trái/phải section ngang (0.5in)
+LANDSCAPE_MERGE_MAX_GAP_PARAS = 4          # paragraph "nhẹ" tối đa giữa 2 bảng gộp
+
+
+def _tbl_grid_cols(tbl_el) -> list:
+    grid = tbl_el.find(qn("w:tblGrid"))
+    if grid is None:
+        return []
+    return [el for el in grid.iterchildren() if el.tag == qn("w:gridCol")]
+
+
+def _table_content_weights(tbl_el, ncols: int) -> list:
+    """Weight mỗi cột vật lý từ text thật trong bảng (bỏ the template {...});
+    ô span trải weight của text lên mọi cột nó phủ — cùng ngữ nghĩa
+    _header_col_weights nhưng đọc được từ bảng đã dựng xong."""
+    weights = [4] * ncols
+    for tr in tbl_el.iterchildren(qn("w:tr")):
+        cursor = 0
+        for tc in tr.iterchildren(qn("w:tc")):
+            span = 1
+            tcpr = tc.find(qn("w:tcPr"))
+            if tcpr is not None:
+                gs = tcpr.find(qn("w:gridSpan"))
+                if gs is not None:
+                    span = int(gs.get(qn("w:val")) or 1)
+            text = re.sub(r"\s+", " ", "".join(
+                t.text or "" for t in tc.iter(qn("w:t")))).strip()
+            cursor += span
+            if not text or "{" in text:
+                continue  # ô rỗng / hàng mẫu gắn the — bỏ khỏi weight
+            for c in range(cursor - span, min(cursor, ncols)):
+                weights[c] = max(weights[c], len(text))
+    return weights
+
+
+def _set_tblw_total(tbl_el, total: int) -> None:
+    tblPr = tbl_el.tblPr
+    tblW = tblPr.find(qn("w:tblW"))
+    if tblW is None:
+        tblW = OxmlElement("w:tblW")
+        style = tblPr.find(qn("w:tblStyle"))
+        if style is not None:
+            style.addnext(tblW)
+        else:
+            tblPr.insert(0, tblW)
+    if tblW.get(qn("w:type")) != "pct":  # pct giữ nguyên như render-pin
+        tblW.set(qn("w:type"), "dxa")
+        tblW.set(qn("w:w"), str(total))
+
+
+def _landscape_sect_copy(sect) -> "object":
+    """Bản sectPr khổ ngang: pgSz hoán đổi w/h + orient="landscape"; lề
+    trái/phải hạ về LANDSCAPE_MARGIN_TWIPS nếu nguồn rộng hơn. Trả element
+    MỚI (deepcopy) — không đụng sectPr gốc."""
+    ls = copy.deepcopy(sect)
+    sz = ls.find(qn("w:pgSz"))
+    if sz is None:
+        raise ValueError("[landscape] sectPr nguồn thiếu w:pgSz")
+    w = int(sz.get(qn("w:w")) or 0)
+    h = int(sz.get(qn("w:h")) or 0)
+    if w <= 0 or h <= 0:
+        raise ValueError("[landscape] pgSz nguồn lệch: %sx%s" % (w, h))
+    sz.set(qn("w:w"), str(h))
+    sz.set(qn("w:h"), str(w))
+    sz.set(qn("w:orient"), "landscape")
+    mar = ls.find(qn("w:pgMar"))
+    if mar is not None:
+        for side in ("left", "right"):
+            cur = int(mar.get(qn("w:%s" % side)) or 0)
+            if cur > LANDSCAPE_MARGIN_TWIPS:
+                mar.set(qn("w:%s" % side), str(LANDSCAPE_MARGIN_TWIPS))
+    return ls
+
+
+def _landscape_usable_twips(landscape_sect) -> int:
+    """Khổ in được của section ngang = pgSz.w - lề trái - lề phải."""
+    sz = landscape_sect.find(qn("w:pgSz"))
+    mar = landscape_sect.find(qn("w:pgMar"))
+    w = int(sz.get(qn("w:w")) or 0)
+    left = int(mar.get(qn("w:left")) or 0) if mar is not None else 0
+    right = int(mar.get(qn("w:right")) or 0) if mar is not None else 0
+    return w - left - right
+
+
+def _section_break_para(sect) -> "object":
+    """Paragraph trống mang sectPr trong pPr — cao đúng 1pt (line exact 20)
+    để break không chiếm dòng và không sinh trang trắng."""
+    p = OxmlElement("w:p")
+    ppr = OxmlElement("w:pPr")
+    sp = OxmlElement("w:spacing")
+    sp.set(qn("w:before"), "0")
+    sp.set(qn("w:after"), "0")
+    sp.set(qn("w:line"), "20")
+    sp.set(qn("w:lineRule"), "exact")
+    ppr.append(sp)
+    rpr = OxmlElement("w:rPr")
+    for tag in ("w:sz", "w:szCs"):
+        el = OxmlElement(tag)
+        el.set(qn("w:val"), "2")  # 1pt
+        rpr.append(el)
+    ppr.append(rpr)
+    ppr.append(sect)
+    p.append(ppr)
+    return p
+
+
+def _gap_para_is_light(p_el) -> bool:
+    """Paragraph "nhẹ": không the {tag}, không nhóm dấu chấm dẫn — chỉ nhãn
+    tiêu đề bảng ngắn hoặc rỗng. Nội dung dữ liệu thật thì KHÔNG gộp."""
+    text = re.sub(r"\s+", " ", "".join(
+        t.text or "" for t in p_el.iter(qn("w:t")))).strip()
+    if not text:
+        return True
+    return (len(text) <= 120 and "{" not in text
+            and "…" not in text and ".." not in text)
+
+
+def build_landscape_sections(doc, form_id, ext=None) -> int:
+    """Bọc mỗi bảng >= 10 cột (hoặc cụm bảng rộng kế nhau) trong section khổ
+    ngang; trả số section ngang đã tạo (0 = form không đổi — regen zero-diff
+    cho mọi mẫu không có bảng rộng)."""
+    if ext is not None and ext.get("landscape_section") is False:
+        return 0
+    body = doc.element.body
+    sect = None
+    for child in body.iterchildren():
+        if child.tag == qn("w:sectPr"):
+            sect = child
+    if sect is None:
+        return 0
+    children = list(body.iterchildren())
+    wide_idx = [i for i, el in enumerate(children)
+                if el.tag == qn("w:tbl")
+                and len(_tbl_grid_cols(el)) >= LANDSCAPE_MIN_COLS]
+    if not wide_idx:
+        return 0
+    landscape_sect = _landscape_sect_copy(sect)
+    usable = _landscape_usable_twips(landscape_sect)
+
+    # gộp các bảng rộng kế nhau (gap chỉ toàn paragraph "nhẹ") thành 1 section
+    groups: list[list] = []
+    cur = [wide_idx[0]]
+    for j in wide_idx[1:]:
+        gap = children[cur[-1] + 1:j]
+        if (len(gap) <= LANDSCAPE_MERGE_MAX_GAP_PARAS
+                and all(g.tag == qn("w:p") and _gap_para_is_light(g)
+                        for g in gap)):
+            cur.append(j)
+        else:
+            groups.append(cur)
+            cur = [j]
+    groups.append(cur)
+
+    for group in groups:
+        for gi in group:
+            tbl_el = children[gi]
+            ncols = len(_tbl_grid_cols(tbl_el))
+            widths = _content_col_widths(
+                _table_content_weights(tbl_el, ncols), usable,
+                min_w=LANDSCAPE_MIN_COL_TWIPS)
+            if not _apply_width_list(tbl_el, widths):
+                raise ValueError(
+                    "[landscape] %s: đặt width thất bại cho bảng %d cột"
+                    % (form_id, ncols))
+            _set_tblw_total(tbl_el, usable)
+        first, last = children[group[0]], children[group[-1]]
+        first.addprevious(_section_break_para(copy.deepcopy(sect)))
+        last.addnext(_section_break_para(_landscape_sect_copy(sect)))
+    print("[landscape] %s: %d section ngang (%d bảng >= %d cột, usable %d "
+          "twips, sàn %d)" % (form_id, len(groups), len(wide_idx),
+                              LANDSCAPE_MIN_COLS, usable,
+                              LANDSCAPE_MIN_COL_TWIPS))
+    return len(groups)
 
 
 def _col_tags_for_headers(headers, spec):
@@ -3393,6 +3610,11 @@ def process_form(path, titles, coverage, out_tpl=None):
     n_glue_fix = normalize_skeleton_glue(doc)
     if n_glue_fix:
         print("[glue-fix] %s: chen %d space quanh the" % (form_id, n_glue_fix))
+
+    # [6V-V3/Q-V2] bảng >= 10 cột -> bọc section khổ ngang ngay trước/sau
+    # bảng + phân bổ lại width (sàn 900 twips, tổng khớp khổ in landscape).
+    # No-op (0 đổi byte) cho mọi mẫu không có bảng rộng — drift-guard an toàn.
+    build_landscape_sections(doc, form_id, ext)
 
     title = titles.get(f"Phu luc {pl}|{mau}", path.stem)
     # out_tpl cho phép sandbox regen ghi chỗ khác (test không đụng

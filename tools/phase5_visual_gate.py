@@ -23,6 +23,18 @@ Detector ↔ WLAY:
   D10 fixed-matrix headers      → WLAY-005 (thiếu cột/hàng pháp định)
   D11 label/value glue          → WLAY-011
   D12 fixture exclusivity       → WLAY-010 (validate_fixture)
+  D13 skeleton glue (6V-V1)     → B1 (PLAN 6V mục 1.2): ngày04tháng /
+                                  "):CÔNG TY" / value dính label liên hệ
+                                  ("0900Fax:", "…vnWebsite:")
+  D14 name-slot binding (6V-V1) → B2: slot tên DN/hộ KD trống/gạch/chấm
+                                  (chỉ fixture valid-full; form trong
+                                  registry handwriting_only_slots được miễn)
+  D15 chk glyph (6V-V1)         → B3: tick = "X" trần không ô vuông (chỉ
+                                  fixture choice-variants; X trong cell có
+                                  viền hoặc cạnh glyph ☒ là hợp pháp)
+  D16 token giá trị (6V-V1)     → B4: giá trị LABEL_HOA_N fallback
+                                  (NOI_O_HIEN_TAI_123) + mảnh token Word
+                                  wrap (_HIEN, _TAI_1)
 
 Chạy:
   python3 -X utf8 tools/phase5_visual_gate.py                # full corpus × 5 fixture
@@ -59,7 +71,11 @@ EXPECT_PATH = ROOT / "tools" / "phase5r_expectations.json"
 GATE_ROOT = ROOT / "generated_ho_so" / "_visual_layout" / "phase5r_gate"
 
 # ngưỡng detector (twips = 1/1440 inch; 567 twips = 1 cm)
-MIN_COL_TWIPS = 567          # cột hẹp hơn 1 cm → chữ vỡ (WLAY-008)
+# [6V-V1/D9] sàn legacy làm tròn XUỐNG 566 (I4: census có bảng 566 làm
+# candidate vĩnh viễn ở sàn 567); bảng >=10 cột dùng sàn riêng 900 (B5).
+MIN_COL_TWIPS = 566          # cột hẹp hơn 1 cm (làm tròn xuống) → chữ vỡ
+MIN_COL_WIDE_TWIPS = 900     # bảng >=10 cột: cột < 900 twips không đọc được
+WIDE_TABLE_COLS = 10         # ngưỡng "bảng rộng" (audit B5: 9–15 cột)
 COL_WIDTH_TOLERANCE = 60     # dung sai tổng width vs khổ giấy in
 BLANK_PAGE_CHARS = 20        # < 20 ký tự không trắng = trang trắng
 SPARSE_PAGE_CHARS = 120      # < 120 ký tự = trang thưa (census)
@@ -371,6 +387,51 @@ def det_glue(pages) -> list[dict]:
     return out
 
 
+# [6V-V1] D13 — skeleton glue (lớp B1, PLAN 6V mục 1.2). Rộng hơn D11:
+# D11 chỉ bắt label:value dính qua ':' (ngữ pháp [a-zà-ỹ]:[A-Z…]); D13 bắt
+# thêm (a) ngày/tháng/năm dính số, (b) label đóng ngoặc dính value in hoa,
+# (c) cụm liên hệ template chèn placeholder kề placeholder không separator
+# (VD PLII_M13 "{dien_thoai_khac}Thư điện tử" → "0900000014Fax:").
+_D13_SUBPATTERNS = (
+    # (mã, regex) — case-sensitive như bản in (audit B1 ví dụ đều chữ thường)
+    ("DATE_NUM", re.compile(r"(?:ngày|tháng|năm)\d|\d(?:ngày|tháng|năm)")),
+    ("PAREN_VALUE", re.compile(r"\):[A-ZÀ-Ỹ]")),
+    ("CONTACT_GLUE", re.compile(
+        r"(?:Fax|Website|Thư điện tử|Điện thoại):[A-Za-z0-9]"
+        r"|[a-z0-9.](?:Fax|Website|Thư điện tử|Điện thoại)\b")),
+)
+
+
+def det_skeleton_glue(docx_path: Path, pages: list) -> list[dict]:
+    """D13: skeleton glue — placeholder chèn vào skeleton không space.
+
+    Hai nguồn: PDF text (chủ yếu) + DOCX XML (bắt glue bị PDF wrap che).
+    Match từ XML chỉ tính khi chuỗi khớp KHÔNG xuất hiện trong PDF text
+    (tránh đếm двой một defect)."""
+    pdf_full = "\n".join(p["text"] for p in pages)
+    out = []
+    for p in pages:
+        for code, pat in _D13_SUBPATTERNS:
+            for m in pat.finditer(p["text"]):
+                ctx = p["text"][max(0, m.start() - 30):m.end() + 30]
+                out.append({"page": p["pno"] + 1, "code": code,
+                            "snippet": ctx.replace("\n", " ")[:80]})
+    if docx_path is not None and docx_path.exists():
+        _xml, texts = xml_texts(docx_path)
+        xml_full = " ".join(texts)
+        seen_xml = set()
+        for code, pat in _D13_SUBPATTERNS:
+            for m in pat.finditer(xml_full):
+                frag = m.group(0)
+                if frag in pdf_full or frag in seen_xml:
+                    continue   # đã bắt ở PDF (hoặc trùng lặp trong XML)
+                seen_xml.add(frag)
+                ctx = xml_full[max(0, m.start() - 30):m.end() + 30]
+                out.append({"page": 0, "code": code, "source": "docx",
+                            "snippet": ctx.replace("\n", " ")[:80]})
+    return out
+
+
 def det_fixed_matrix_headers(pdf_text: str, form_map: dict) -> list[str]:
     """D10: header cột của fixed-matrix phải xuất hiện trong PDF text."""
     missing = []
@@ -504,6 +565,10 @@ def analyze(maps, blocks_all, fixture: str, dirs: list[Path],
                 glues = det_glue(pages)
                 rec["detectors"]["D11_glue"] = glues[:40]
                 rec["detectors"]["D11_glue_count"] = len(glues)
+                # [6V-V1] D13 skeleton glue (PDF + XML), rộng hơn D11
+                skel = det_skeleton_glue(docx_path, pages)
+                rec["detectors"]["D13_skeleton_glue"] = skel[:40]
+                rec["detectors"]["D13_glue_count"] = len(skel)
                 # fixture exclusivity (D12)
                 fdata = build_fixture(fid, maps[fid], fixture,
                                       blocks_all.get(fid), ValueFactory())

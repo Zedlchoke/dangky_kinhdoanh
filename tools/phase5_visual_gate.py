@@ -39,6 +39,7 @@ import argparse
 import hashlib
 import json
 import re
+import shutil
 import sys
 import zipfile
 from datetime import datetime
@@ -465,7 +466,11 @@ def analyze(maps, blocks_all, fixture: str, dirs: list[Path],
             template = ROOT / "app" / maps[fid]["template"]
             rec = {
                 "form": fid, "fixture": fixture,
-                "variant": "m72" if d.name.startswith("p5r_") and "m72" in d.name else "",
+                # d.name là tag batch ("main" | "m72_*") — dùng làm variant
+                # thật (điều kiện startswith("p5r_") cũ không bao giờ đúng vì
+                # p5r_ là case_id, không phải tên thư mục đích).
+                "tag": d.name,
+                "variant": "m72" if d.name.startswith("m72_") else "",
                 "dir": str(d),
                 "docx": str(docx_path), "pdf": str(pdf_path),
                 "template": maps[fid]["template"],
@@ -506,8 +511,16 @@ def analyze(maps, blocks_all, fixture: str, dirs: list[Path],
                     maps[fid], blocks_all.get(fid) or {}, fdata, fixture)
                 # render PNG
                 if render_pages:
-                    pdir = out_root / fixture / fid
+                    # [V0-I2] PNG THEO RECORD: <fixture>/<tag>/<FORM>/ với tag
+                    # là tên batch ("main" | "m72_*"). Trước đây 5 biến thể M72
+                    # ghi chung <fixture>/PLI_M72/ → ghi đè lẫn nhau: manifest
+                    # claim 1644 trang, đĩa 1567 file, 4/5 biến thể trỏ ảnh
+                    # nhầm. d.name chính là tag (dst_root/tag trong run_export).
+                    pdir = out_root / fixture / d.name / fid
+                    if pdir.exists():
+                        shutil.rmtree(pdir)
                     pdir.mkdir(parents=True, exist_ok=True)
+                    rec["png_dir"] = str(pdir)
                     for p in pages:
                         name = pdir / ("page-%02d.png" % (p["pno"] + 1))
                         p["pixmap"].save(str(name))
@@ -562,6 +575,43 @@ def record_verdicts(records: list[dict], allowlist: dict) -> None:
         rec["gate_fails"] = fails
         rec["gate_candidates"] = candidates
         rec["gate_verdict"] = "FAIL" if fails else "PASS_CANDIDATE_REVIEW"
+
+
+def assert_png_disk_matches_manifest(out_root: Path, records: list[dict],
+                                     fixtures: list[str]) -> dict:
+    """[V0-I2] Evidence phải khớp đĩa: Σ len(pages) trong manifest == số file
+    page-*.png vật lý dưới cây từng fixture — lệch 1 file cũng FAIL.
+
+    Sự kiện 1567/1644 (manifest claim 1644 trang, đĩa chỉ 1567 file vì 5
+    biến thể M72 render ghi đè chung 1 thư mục) phải chết ngay tại gate với
+    báo cáo path-mismatch chi tiết: tổng claim, tổng thật, từng thư mục lệch
+    (claim bao nhiêu / đĩa bao nhiêu).
+    """
+    claimed = 0
+    per_dir_claim: dict[str, int] = {}
+    for r in records:
+        pages = r.get("pages") or []
+        claimed += len(pages)
+        pdir = r.get("png_dir")
+        if pdir:
+            per_dir_claim[pdir] = per_dir_claim.get(pdir, 0) + len(pages)
+    disk = 0
+    per_dir_disk: dict[str, int] = {}
+    for fixture in fixtures:
+        froot = out_root / fixture
+        if not froot.exists():
+            continue
+        for png in froot.rglob("page-*.png"):
+            parent = str(png.parent)
+            per_dir_disk[parent] = per_dir_disk.get(parent, 0) + 1
+            disk += 1
+    mismatches = []
+    for d in sorted(set(per_dir_claim) | set(per_dir_disk)):
+        c, a = per_dir_claim.get(d, 0), per_dir_disk.get(d, 0)
+        if c != a:
+            mismatches.append({"dir": d, "claimed": c, "disk": a})
+    return {"claimed": claimed, "disk": disk, "mismatches": mismatches,
+            "ok": claimed == disk and not mismatches}
 
 
 def main() -> int:
@@ -623,6 +673,13 @@ def main() -> int:
         "export_errors": export_errors,
         "records": all_records,
     }
+    # [V0-I2] assert đĩa == manifest NGAY trong run render (không đợi auditor
+    # đếm tay): lệch 1 file PNG cũng FAIL gate với path-mismatch chi tiết.
+    png_assert = None
+    if not args.no_render:
+        png_assert = assert_png_disk_matches_manifest(
+            out_root, all_records, fixtures)
+        manifest["png_disk_assert"] = png_assert
     mpath = out_root / "manifest.json"
     mpath.write_text(json.dumps(manifest, ensure_ascii=False, indent=1),
                      encoding="utf-8")
@@ -645,8 +702,15 @@ def main() -> int:
     (out_root / "summary.json").write_text(
         json.dumps(summary, ensure_ascii=False, indent=1), encoding="utf-8")
     print(json.dumps(summary, ensure_ascii=False, indent=1))
+    if png_assert is not None:
+        print("PNG-DISK-ASSERT: claimed=%d disk=%d ok=%s"
+              % (png_assert["claimed"], png_assert["disk"], png_assert["ok"]))
+        for mm in png_assert["mismatches"]:
+            print("  PATH-MISMATCH %s claimed=%d disk=%d"
+                  % (mm["dir"], mm["claimed"], mm["disk"]))
     print("manifest:", mpath)
-    return 2 if (n_fail or export_errors) else 0
+    png_bad = png_assert is not None and not png_assert["ok"]
+    return 2 if (n_fail or export_errors or png_bad) else 0
 
 
 if __name__ == "__main__":

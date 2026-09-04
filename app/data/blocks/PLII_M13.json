@@ -177,7 +177,13 @@
    "align": "left",
    "runs": [
     {
-     "text": "Tên hộ kinh doanh: …………………………………………………………........................."
+     "text": "Tên hộ kinh doanh: "
+    },
+    {
+     "input": {
+      "key": "hkd_ten_tieng_viet_2",
+      "w": 17
+     }
     }
    ],
    "format": {

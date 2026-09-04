@@ -540,7 +540,13 @@
      "i": true
     },
     {
-     "text": "): ………………………………………….."
+     "text": "): "
+    },
+    {
+     "input": {
+      "key": "dn.ten_tieng_viet",
+      "w": 33
+     }
     }
    ],
    "format": {

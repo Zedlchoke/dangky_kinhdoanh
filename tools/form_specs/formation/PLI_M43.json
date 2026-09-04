@@ -1,0 +1,14 @@
+{
+  "form_id": "PLI_M43",
+  "group": "formation",
+  "note": "[6V-V2/C2] B2/D14 goc re (c): nhom cham sau 'Tên doanh nghiệp/chi nhánh (ghi bằng chữ in hoa):' ton tai nhung khong khop rule nao. Muc 4 'Thông tin về doanh nghiệp/chi nhánh chủ quản' dùng họ dn.* ({dn.ma_so_dn}, {dn.dia_chi_tru_so}) nen key chuan la {dn.ten_tieng_viet} (38 form dang dung).",
+  "name_slots": [
+    {
+      "anchor": "^ten doanh nghiep/chi nhanh \\(ghi bang chu in hoa\\):",
+      "key": "dn.ten_tieng_viet",
+      "mode": "slot",
+      "slot_no": 1,
+      "label": "Tên doanh nghiệp/chi nhánh (ghi bằng chữ in hoa):"
+    }
+  ]
+}

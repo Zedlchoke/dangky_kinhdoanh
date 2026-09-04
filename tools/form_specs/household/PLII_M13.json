@@ -1,0 +1,14 @@
+{
+  "form_id": "PLII_M13",
+  "group": "household",
+  "note": "[6V-V2/C2] B2/D14 goc re (c): nhom cham sau 'Tên hộ kinh doanh:' ton tai nhung khong khop rule nao (rule ^ten ho kinh doanh$ yeu cau ket dong). name_slots mode=slot gan {hkd_ten_tieng_viet_2} vao nhom cham 1 — cung co che tag slot thuong, dung convention PLII_M02. Slot ke 'Mã số hộ kinh doanh' da co key {hkd_ma_so}.",
+  "name_slots": [
+    {
+      "anchor": "^ten ho kinh doanh:",
+      "key": "hkd_ten_tieng_viet_2",
+      "mode": "slot",
+      "slot_no": 1,
+      "label": "Tên hộ kinh doanh:"
+    }
+  ]
+}

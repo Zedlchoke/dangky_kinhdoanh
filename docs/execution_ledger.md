@@ -498,3 +498,7 @@ Q-V2 (V3). C2 được phát prompt tiếp theo.
 nhận toàn corpus ở gate V3-final) · B4 CLOSED (full corpus 0) · B5 → V3.
 Còn lại cho V4: D6 candidate 157, D5 68, WLAY-011 adjudicate, D15/D9 chốt
 sau V3. Runner chính thức sau merge: xem dòng checkpoint kế tiếp.
+
+**Runner chính thức sau V2-final (main @ HEAD): 58 PASS / 0 FAIL / 0 NOT RUN**
+(57/1 tạm thời do lane C2 bỏ sót allowlist 14 file — runner H7.4 bắt đúng,
+Lead bổ sung `ea6e7f0`+1; tái chạy 58/0.)

@@ -519,6 +519,98 @@ def det_name_slot(pages: list, form: str,
 HANDWRITING_SLOTS = load_handwriting_slots()
 
 
+# [6V-V1] D15 — chk glyph (lớp B3). Chạy trên fixture choice-variants với
+# form có field type=chk. Tick hợp pháp = X trong ô vuông: glyph ☒ trong
+# cùng paragraph, HOẶC X nằm trong w:tc có viền hiển thị (tcBorders/
+# tblBorders val single/thick/…). "X" trần trong paragraph thường, X trong
+# cell KHÔNG viền, X cạnh glyph ô trống ☐, và "X" rơi dòng riêng (PDF) đều
+# là finding. Câu hướng dẫn "(đánh dấu X vào ô thích hợp)" có X giữa câu —
+# loại bằng rule vị trí (X chỉ tính ở ĐẦU/CUỐI paragraph) + từ khoá hướng
+# dẫn đứng kề.
+_D15_INSTR_PREV = re.compile(
+    r"(?:danh dau|danh dau x|dau|chon|nhap|ky hieu|bao cao)\s*$")
+_D15_INSTR_NEXT = re.compile(r"^(vao|o vuong|o nay|o thich hop)\b")
+_D15_VISIBLE_BORDER = re.compile(
+    r'<w:(?:tcBorders|tblBorders)[^>]*>.*?w:val="(?:single|thick|double|'
+    r"dotted|dashed|inset|outset|wave|dotDash|dotDotDash|triple|thinThick)"
+    r'.*?</w:(?:tcBorders|tblBorders)>', re.S)
+_D15_TICK_START = re.compile(r"^X(?=$|\s|[,.;)])")
+_D15_TICK_END = re.compile(r"(?:(?<=^)|(?<=\s)|(?<=[,.;(:]))X$")
+# glue cuối dòng "Thành lập mớiX". KHÔNG có rule glued-ĐẦU: "Xã/Phường…"
+# là label tiếng Việt thật (bắt giả "Xã…"), tick thực không có dạng đó
+_D15_TICK_GLUED_END = re.compile(r"[A-Za-zÀ-ỹ0-9]X$")
+
+
+def _d15_open_context(xml: str, pos: int, tag: str) -> tuple[int, int] | None:
+    """(start, end) của tag mở chứa `pos` chưa đóng (w:tc/w:tbl), hoặc None."""
+    opens: list[int] = []
+    for mm in re.finditer(r"<%s[ >]|</%s>" % (tag, tag), xml[:pos]):
+        if mm.group(0).startswith("</"):
+            if opens:
+                opens.pop()
+        else:
+            opens.append(mm.start())
+    if not opens:
+        return None
+    start = opens[-1]
+    end = xml.find("</%s>" % tag, pos)
+    return (start, end if end != -1 else len(xml))
+
+
+def det_chk_glyph(docx_path: Path, pages: list,
+                  form_meta: dict) -> list[dict]:
+    """D15: tick checkbox phải là X TRONG ô vuông (PLAN 6V 5.1.3)."""
+    fields = form_meta.get("fields") or []
+    if not any(f.get("type") == "chk" for f in fields):
+        return []
+    with zipfile.ZipFile(docx_path) as z:
+        xml = z.read("word/document.xml").decode("utf-8")
+    issues = []
+    for pm in re.finditer(r"<w:p[ >].*?</w:p>", xml, re.S):
+        ptxt = re.sub(r"<[^>]+>", "", pm.group(0)).strip()
+        if not ptxt or "X" not in ptxt:
+            continue
+        ftxt = _fold(ptxt)
+        words = ftxt.split()
+        tick = False
+        if _D15_TICK_START.search(ptxt):
+            nxt = words[1] if len(words) > 1 else ""
+            tick = not (nxt and _D15_INSTR_NEXT.match(nxt))
+        if not tick and (_D15_TICK_END.search(ptxt)
+                         or _D15_TICK_GLUED_END.search(ptxt)):
+            prev = words[-2] if (len(words) > 1 and words[-1] == "x") \
+                else (words[-1][:-1] if words and words[-1].endswith("x")
+                      else "")
+            tick = not (prev and _D15_INSTR_PREV.search(prev + " "))
+        if not tick:
+            continue
+        if "☒" in ptxt:
+            continue  # glyph tick hợp pháp
+        pstart = pm.start()
+        cell = _d15_open_context(xml, pstart, "w:tc")
+        code = "BARE_X_PARAGRAPH"
+        if cell is not None:
+            tbl = _d15_open_context(xml, cell[0] + 1, "w:tbl")
+            scope = xml[(tbl[0] if tbl else cell[0]):cell[1]]
+            if _D15_VISIBLE_BORDER.search(scope):
+                continue  # X trong cell có viền = ô vuông hợp pháp
+            code = "BARE_X_BORDERLESS_CELL"
+        if "☐" in ptxt or "□" in ptxt:
+            code = "X_BESIDE_EMPTY_BOX"
+        issues.append({"code": code, "paragraph": ptxt[:70]})
+    # PDF: "X" rơi dòng riêng (XML cùng paragraph nhưng PDF wrap tách dòng)
+    for p in pages:
+        for ln in p["text"].split("\n"):
+            if ln.strip() == "X":
+                issues.append({"page": p["pno"] + 1, "code": "X_OWN_LINE",
+                               "paragraph": ""})
+    return issues
+
+
+# nạp 1 lần sau khi hàm load đã định nghĩa (registry adjudicate ở C2/V4)
+HANDWRITING_SLOTS = load_handwriting_slots()
+
+
 def det_fixed_matrix_headers(pdf_text: str, form_map: dict) -> list[str]:
     """D10: header cột của fixed-matrix phải xuất hiện trong PDF text."""
     missing = []
@@ -661,6 +753,11 @@ def analyze(maps, blocks_all, fixture: str, dirs: list[Path],
                 rec["detectors"]["D14_name_slot"] = (
                     det_name_slot(pages, fid, HANDWRITING_SLOTS)
                     if fixture == "valid-full" else [])
+                # [6V-V1] D15 chk glyph — contract fixture choice-variants
+                # (mọi nhóm loại trừ có đúng 1 lựa chọn được tick)
+                rec["detectors"]["D15_chk_glyph"] = (
+                    det_chk_glyph(docx_path, pages, maps[fid])
+                    if fixture == "choice-variants" else [])
                 # fixture exclusivity (D12)
                 fdata = build_fixture(fid, maps[fid], fixture,
                                       blocks_all.get(fid), ValueFactory())

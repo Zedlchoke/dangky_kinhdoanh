@@ -1,7 +1,7 @@
 {
- "generated": "2026-09-04 17:49:55",
+ "generated": "2026-09-04 21:05:15",
  "corpus": {
-  "path": "/Users/hoangminhlong/orca/dangky_kinhdoanh-worktrees/6v-detectors/generated_ho_so/_visual_layout/phase6v/v0_corpuscheck",
+  "path": "generated_ho_so/_visual_layout/phase6v/v0_corpuscheck",
   "records": 455,
   "note": "v0_corpuscheck render post-V0 @313b0af; template giống hệt audit-HEAD 294604c (git diff rỗng với app/templates) — mọi lệch số audit là khác biệt grammar/đơn vị đếm, bảng per_form để đối chiếu"
  },
@@ -1559,8 +1559,8 @@
    }
   },
   "D16_token_values": {
-   "records": 355,
-   "hits": 8846,
+   "records": 342,
+   "hits": 8751,
    "forms": [
     "PLII_M01",
     "PLII_M02",
@@ -1649,23 +1649,19 @@
    "per_fixture": {
     "choice-variants": {
      "records": 86,
-     "hits": 1351
-    },
-    "empty-paper": {
-     "records": 13,
-     "hits": 19
+     "hits": 1332
     },
     "long-boundary": {
      "records": 86,
-     "hits": 5707
+     "hits": 5688
     },
     "valid-full": {
      "records": 86,
-     "hits": 1351
+     "hits": 1332
     },
     "valid-minimal": {
      "records": 84,
-     "hits": 418
+     "hits": 399
     }
    },
    "per_form": {
@@ -2008,11 +2004,11 @@
      ]
     },
     "PLI_M01": {
-     "records": 5,
-     "hits": 135,
+     "records": 4,
+     "hits": 130,
      "codes": {
-      "TOKEN_FRAGMENT": 24,
-      "TOKEN_VALUE": 111
+      "TOKEN_VALUE": 111,
+      "TOKEN_FRAGMENT": 19
      },
      "samples": [
       "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
@@ -2023,11 +2019,11 @@
      ]
     },
     "PLI_M02": {
-     "records": 5,
-     "hits": 792,
+     "records": 4,
+     "hits": 787,
      "codes": {
-      "TOKEN_FRAGMENT": 568,
-      "TOKEN_VALUE": 224
+      "TOKEN_VALUE": 224,
+      "TOKEN_FRAGMENT": 563
      },
      "samples": [
       "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
@@ -2038,11 +2034,11 @@
      ]
     },
     "PLI_M03": {
-     "records": 5,
-     "hits": 132,
+     "records": 4,
+     "hits": 127,
      "codes": {
-      "TOKEN_FRAGMENT": 6,
-      "TOKEN_VALUE": 126
+      "TOKEN_VALUE": 126,
+      "TOKEN_FRAGMENT": 1
      },
      "samples": [
       "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
@@ -2053,11 +2049,11 @@
      ]
     },
     "PLI_M04": {
-     "records": 5,
-     "hits": 162,
+     "records": 4,
+     "hits": 157,
      "codes": {
-      "TOKEN_FRAGMENT": 6,
-      "TOKEN_VALUE": 156
+      "TOKEN_VALUE": 156,
+      "TOKEN_FRAGMENT": 1
      },
      "samples": [
       "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
@@ -2083,10 +2079,10 @@
      ]
     },
     "PLI_M06": {
-     "records": 5,
-     "hits": 469,
+     "records": 4,
+     "hits": 464,
      "codes": {
-      "TOKEN_FRAGMENT": 421,
+      "TOKEN_FRAGMENT": 416,
       "TOKEN_VALUE": 48
      },
      "samples": [
@@ -2112,10 +2108,10 @@
      ]
     },
     "PLI_M08": {
-     "records": 5,
-     "hits": 405,
+     "records": 4,
+     "hits": 400,
      "codes": {
-      "TOKEN_FRAGMENT": 261,
+      "TOKEN_FRAGMENT": 256,
       "TOKEN_VALUE": 144
      },
      "samples": [
@@ -2127,10 +2123,10 @@
      ]
     },
     "PLI_M09": {
-     "records": 5,
-     "hits": 599,
+     "records": 4,
+     "hits": 594,
      "codes": {
-      "TOKEN_FRAGMENT": 581,
+      "TOKEN_FRAGMENT": 576,
       "TOKEN_VALUE": 18
      },
      "samples": [
@@ -2142,38 +2138,36 @@
      ]
     },
     "PLI_M11": {
-     "records": 5,
-     "hits": 9,
+     "records": 4,
+     "hits": 4,
      "codes": {
-      "TOKEN_FRAGMENT": 5,
       "TOKEN_VALUE": 4
      },
      "samples": [
-      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
-      "TOKEN_FRAGMENT: {\"page\": 1, \"code\": \"TOKEN_FRAGMENT\", \"value\": \"__________________\"}"
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}"
      ]
     },
     "PLI_M12": {
-     "records": 5,
-     "hits": 985,
+     "records": 4,
+     "hits": 950,
      "codes": {
-      "TOKEN_FRAGMENT": 933,
-      "TOKEN_VALUE": 52
+      "TOKEN_VALUE": 52,
+      "TOKEN_FRAGMENT": 898
      },
      "samples": [
       "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
       "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
-      "TOKEN_FRAGMENT: {\"page\": 2, \"code\": \"TOKEN_FRAGMENT\", \"value\": \"___________________\"}",
       "TOKEN_VALUE: {\"page\": 3, \"code\": \"TOKEN_VALUE\", \"value\": \"TEN_DOANH_NGHIEP_VIET_BA_3\"}",
-      "TOKEN_VALUE: {\"page\": 4, \"code\": \"TOKEN_VALUE\", \"value\": \"XAPHUONGDAC_KHU_14\"}"
+      "TOKEN_VALUE: {\"page\": 4, \"code\": \"TOKEN_VALUE\", \"value\": \"XAPHUONGDAC_KHU_14\"}",
+      "TOKEN_VALUE: {\"page\": 4, \"code\": \"TOKEN_VALUE\", \"value\": \"TINHTHANH_PHO_TRUC_THUO_15\"}"
      ]
     },
     "PLI_M13": {
-     "records": 5,
-     "hits": 171,
+     "records": 4,
+     "hits": 166,
      "codes": {
-      "TOKEN_FRAGMENT": 69,
-      "TOKEN_VALUE": 102
+      "TOKEN_VALUE": 102,
+      "TOKEN_FRAGMENT": 64
      },
      "samples": [
       "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
@@ -2184,10 +2178,9 @@
      ]
     },
     "PLI_M14": {
-     "records": 5,
-     "hits": 55,
+     "records": 4,
+     "hits": 50,
      "codes": {
-      "TOKEN_FRAGMENT": 5,
       "TOKEN_VALUE": 50
      },
      "samples": [
@@ -2199,11 +2192,11 @@
      ]
     },
     "PLI_M15": {
-     "records": 5,
-     "hits": 625,
+     "records": 4,
+     "hits": 620,
      "codes": {
-      "TOKEN_FRAGMENT": 549,
-      "TOKEN_VALUE": 76
+      "TOKEN_VALUE": 76,
+      "TOKEN_FRAGMENT": 544
      },
      "samples": [
       "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
@@ -2214,11 +2207,11 @@
      ]
     },
     "PLI_M17": {
-     "records": 5,
-     "hits": 63,
+     "records": 4,
+     "hits": 58,
      "codes": {
-      "TOKEN_FRAGMENT": 6,
-      "TOKEN_VALUE": 57
+      "TOKEN_VALUE": 57,
+      "TOKEN_FRAGMENT": 1
      },
      "samples": [
       "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
@@ -2990,5 +2983,6 @@
   "PLI_M74",
   "PLI_M75",
   "PLI_M76"
- ]
+ ],
+ "grammar_version": "D16 v2 (6V-V2/Lead d746390: bỏ FP dòng toàn gạch dưới — 342/8751; v1 cũ 355/8846 chỉ còn giá trị lịch sử trong git)"
 }

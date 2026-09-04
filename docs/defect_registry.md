@@ -227,7 +227,11 @@ thật. Không gọi release xanh cho tới khi full runner chạy ở môi trư
 - **Fix:** Lead `5cceeac` — suffix pid cho SANDBOX_TPL/TEST_OUT/sandbox_neg;
   sau fix 2 runner song song 2 PASS (Gate V0(a)).
 
-## Class I4 (6V) — MIN_COL_TWIPS 567 lệch census 566, candidate vĩnh viễn [OPEN — lane V1]
+## Class I4 (6V) — MIN_COL_TWIPS 567 lệch census 566, candidate vĩnh viễn [ĐÃ ĐÓNG 6V-V1 — auditor finding F1 sửa nhãn]
+
+> Sàn legacy làm tròn xuống 566 đã merge tại `5b941f9` (D9 hai tầng);
+> NARROW_COL legacy = 0 trên corpus (scoreboard v2). Phần "bảng ≥10 cột
+> < 900twips" thuộc B5 — phase V3.
 
 - **Bằng chứng:** det D9 dùng `< 567` nhưng corpus có bảng min col 566
   (rebaseline policies min_col 567 "census thực tế" 81b5931); hit rơi vào

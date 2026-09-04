@@ -370,3 +370,5 @@ tools/test_row_contract_export.py
 tools/test_table_coverage_audit.py
 tools/test_tax_m0306_rebuild.py
 tools/test_w1_publication_specs.py
+# --- [6V-V0 2026-09-04] merge lane 6v-infra: suite concurrency export (Lead) ---
+tools/test_export_concurrency.py

@@ -687,18 +687,19 @@
    "align": "left",
    "runs": [
     {
-     "text": "Chủ hộ kinh doanh chết hoặc bị Tòa án tuyên bố đã chết, mất tích, bị hạn chế hoặc mất năng lực hành vi dân sự, có khó khăn trong nhận thức, làm chủ hành vi"
+     "input": {
+      "key": "chk_auto_chu_ho_kinh_doanh_chet_hoac_bi_toa_an_tu",
+      "chk": true
+     }
+    },
+    {
+     "text": " Chủ hộ kinh doanh chết hoặc bị Tòa án tuyên bố đã chết, mất tích, bị hạn chế hoặc mất năng lực hành vi dân sự, có khó khăn trong nhận thức, làm chủ hành vi"
     }
    ],
    "format": {
     "spaceBeforePt": 6.0
    },
    "role": "body"
-  },
-  {
-   "t": "chk",
-   "label": "",
-   "key": "chk_auto_chu_ho_kinh_doanh_chet_hoac_bi_toa_an_tu"
   },
   {
    "t": "p",

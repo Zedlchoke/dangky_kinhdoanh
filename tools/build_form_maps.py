@@ -2621,6 +2621,147 @@ def process_checkboxes(doc, form_id, add_field, unmatched):
 
 
 # ---------------------------------------------------------------------------
+# [6V-V2/B3r] Gộp paragraph {chk_*} đứng một mình vào paragraph nhãn —
+# mini-lane 6v-chkline (Q-V1 "tick cùng dòng nhãn")
+#
+# Gốc rễ residue D15 X_OWN_LINE (16 form, corpus v3): nguồn docx scrape đặt
+# ô □ và nhãn option thành HAI paragraph riêng. Sát thực tế là nhãn TRƯỚC,
+# ô SAU (M05 p1: 'Thành lập mới' / dòng sau 'X'); PLI_M12 còn cho thấy nguồn
+# có sẵn ô dính SAU nhãn trong cùng paragraph ('Có báo cáo tài chính hợp
+# nhất {chk_ht_hop_nhat}') — tức chiều 'nhãn ... ô' là layout gốc của các
+# mẫu này, và docx_to_blocks cũng mượn nhãn của paragraph TRƯỚC cho chk
+# đứng một mình (quy ước ghép cặp prev xuyên suốt form_maps + blocks UI).
+# Sau khi process_checkboxes gắn the, paragraph ô chỉ còn '{chk_*}' nên
+# render C3 (ô vuông viền w:bdr + X) in X TRÊN DÒNG RIÊNG.
+#
+# Pass GỘP the vào paragraph nhãn kề trong CÙNG container (body/ô bảng):
+#   - ghép cặp THEO NỘI DUNG (data-driven, không hard-code form): label đã
+#     đăng ký của field chk (với ô đứng một mình process_checkboxes gắn
+#     label = fold(paragraph kề)) được so fold()[:120] với 2 paragraph kề —
+#     đảm bảo ô lands cạnh ĐÚNG nhãn của nó, không phải nhãn của chk khác;
+#   - KHÔNG PHÂN BIỆT nhãn nằm TRƯỚC hay SAU ô: the luôn chèn vào ĐẦU
+#     paragraph nhãn ('{chk} nhãn') — đúng layout form gốc '☐ nhãn', đúng
+#     pattern inline sẵn có của nguồn ('{chk_gt_cmnd} Chứng minh nhân dân')
+#     và an toàn wrap: ô là 'từ' đầu dòng nên LUÔN có chữ nhãn theo sau
+#     cùng dòng. Chiều ô-cuối-dòng ('nhãn {chk}') bị thực nghiệm bắt lỗi
+#     wrap mồ côi: PLI_M05 p1 nhãn 54 ký tự 'Thành lập trên cơ sở chuyển
+#     đổi loại hình doanh nghiệp' + ô vượt dòng in → X rơi dòng riêng
+#     (X_OWN_LINE) — box-first không thể rơi vì Word wrap ngắt tại ranh
+#     giới từ, ô đứng đầu luôn dính với từ nhãn đầu tiên;
+#   - paragraph ô (sau khi rút the) bị XOÁ — trừ khi nó mang w:sectPr
+#     (section break) hay là paragraph cuối của ô bảng (cell phải giữ ≥1
+#     w:p): khi đó LIỆT KÊ 'kept' kèm lý do, Lead/owner adjudicate.
+# Nhãn giữ nguyên style; run the mới copy rPr của run kề vị trí chèn nên
+# ô vuông render đúng font/kích thước của nhãn. Sau gộp, docx_to_blocks
+# vẫn sinh block chk cùng label (paragraph '{chk} nhãn' parse thành
+# {"t":"chk","label":nhãn,key} — đúng như nhãn-mượn-đứng-trước đã làm).
+# Idempotent: pipeline luôn build từ nguồn pristine; template đã gộp
+# không còn paragraph chk-đứng-một-mình nên pass no-op khi chạy lại.
+# ---------------------------------------------------------------------------
+
+_CHK_OWN_PARA_RE = re.compile(r"^\s*\{(chk_[A-Za-z0-9_.]+)\}\s*$")
+
+
+def _para_text_xml(p_el):
+    """Toàn bộ text w:t của paragraph (lxml element)."""
+    return "".join(t.text or "" for t in p_el.iter(qn("w:t")))
+
+
+def _chk_adjacent_para(p_el, side):
+    """Paragraph w:p kề NGAY trước/sau trong cùng container; None khi kề là
+    phần tử khác loại (w:tbl/None) — không vượt ranh giới ô bảng."""
+    el = p_el.getprevious() if side == "prev" else p_el.getnext()
+    if el is None or el.tag != qn("w:p"):
+        return None
+    return el
+
+
+def _chk_insert_tag_run(p_el, tag, where):
+    """Chèn run '{tag} ' (where='start') / ' {tag}' (where='end') vào
+    paragraph mang rPr của run kề vị trí chèn (giữ style paragraph nhãn)."""
+    runs = p_el.findall(qn("w:r"))
+    ref = (runs[0] if where == "start" else runs[-1]) if runs else None
+    new_r = OxmlElement("w:r")
+    ref_rpr = ref.find(qn("w:rPr")) if ref is not None else None
+    if ref_rpr is not None:
+        new_r.append(copy.deepcopy(ref_rpr))
+    w_t = OxmlElement("w:t")
+    w_t.set(qn("xml:space"), "preserve")
+    w_t.text = "{%s} " % tag if where == "start" else " {%s}" % tag
+    new_r.append(w_t)
+    if ref is not None:
+        ref.addnext(new_r) if where == "end" else ref.addprevious(new_r)
+    elif where == "start":
+        ppr = p_el.find(qn("w:pPr"))
+        (ppr.addnext(new_r) if ppr is not None else p_el.insert(0, new_r))
+    else:
+        p_el.append(new_r)
+
+
+def merge_chk_own_paragraphs(doc, form_id, fields):
+    """Gộp paragraph chỉ chứa đúng 1 the {chk_*} vào paragraph nhãn kề.
+
+    Trả về (merged, kept): merged = [{form,key,side,label}] các the đã gộp
+    (side = phía paragraph nhãn được ghép: prev|next; the luôn vào ĐẦU
+    paragraph nhãn); kept = [{form,key,reason}] các the KHÔNG gộp được —
+    không tự để yên, Lead/owner adjudicate theo lý do từng mục."""
+    labels = {f["key"]: f["label"] for f in fields
+              if f.get("type") == "chk" and f.get("key")}
+    merged, kept = [], []
+    if not labels:
+        return merged, kept
+    for p_el in list(doc.element.body.iter(qn("w:p"))):
+        mm = _CHK_OWN_PARA_RE.match(_para_text_xml(p_el))
+        if not mm:
+            continue
+        key = mm.group(1)
+        label = labels.get(key) or ""
+        want = fold(label).strip()[:120]
+        ppr = p_el.find(qn("w:pPr"))
+        if ppr is not None and ppr.find(qn("w:sectPr")) is not None:
+            kept.append({"form": form_id, "key": key,
+                         "reason": "paragraph chk mang w:sectPr — rút the "
+                                   "sẽ xóa/mất ranh giới section"})
+            continue
+        cands = []
+        for side, el in (("prev", _chk_adjacent_para(p_el, "prev")),
+                         ("next", _chk_adjacent_para(p_el, "next"))):
+            if el is None:
+                continue
+            txt = _para_text_xml(el)
+            if not txt.strip() or "{chk_" in txt:
+                continue
+            if want and fold(txt).strip()[:120] == want:
+                cands.append((side, el, txt))
+        if not cands:
+            kept.append({"form": form_id, "key": key,
+                         "reason": "label %r khong khop paragraph ke nao "
+                                   "(trong/sau)" % label[:60]})
+            continue
+        # prev thắng khi cả hai kề cùng khớp (quy ước label→ô của nguồn);
+        # the LUÔN vào đầu paragraph nhãn (box-first — an toàn wrap, xem
+        # comment khối [6V-V2/B3r])
+        side, label_el, label_txt = cands[0]
+        parent = p_el.getparent()
+        if parent.tag == qn("w:tc") and not any(
+                c is not p_el and c.tag == qn("w:p")
+                for c in parent.iterchildren()):
+            kept.append({"form": form_id, "key": key,
+                         "reason": "chk la paragraph cuoi cung cua o bang — "
+                                   "khong the xoa (cell can >=1 w:p)"})
+            continue
+        _chk_insert_tag_run(label_el, key, "start")
+        parent.remove(p_el)
+        merged.append({"form": form_id, "key": key, "side": side,
+                       "label": label_txt.strip()[:80]})
+    return merged, kept
+
+
+# Log gộp chk toàn run — main() gập vào coverage report (đối chiếu Lead)
+_CHK_MERGE_LOG = []
+
+
+# ---------------------------------------------------------------------------
 # Header 2-band (Việc 2 — lệnh owner 2026-08-28)
 #
 # Hiện trạng nguồn docx scrape được xếp DỌC: "TÊN …/-----", "CỘNG HÒA …/Độc lập
@@ -3655,6 +3796,25 @@ def process_form(path, titles, coverage, out_tpl=None):
     # ---- checkbox pass (chạy sau khi gắn the slot) ----
     process_checkboxes(doc, form_id, add_field, unmatched)
 
+    # [6V-V2/B3r] gộp paragraph {chk_*} đứng một mình vào paragraph nhãn kề
+    # (Q-V1 tick cùng dòng nhãn) — chạy SAU chk pass (the đã tồn tại), TRƯỚC
+    # name-slot/glue/landscape để the mới di chuyển được chuẩn hóa space
+    # cùng lượt với các the khác.
+    chk_merged, chk_kept = merge_chk_own_paragraphs(doc, form_id, fields)
+    if chk_merged or chk_kept:
+        _CHK_MERGE_LOG.extend(chk_merged)
+        _CHK_MERGE_LOG.extend(chk_kept)
+        n_prev = sum(1 for m in chk_merged if m["side"] == "prev")
+        n_next = len(chk_merged) - n_prev
+        print("[chk-merge] %s: %d the gop vao DAU paragraph nhan "
+              "(nhan truoc o: %d / nhan sau o: %d)%s" % (
+                  form_id, len(chk_merged), n_prev, n_next,
+                  "" if not chk_kept
+                  else ", %d KHONG gop duoc" % len(chk_kept)))
+        for k in chk_kept:
+            print("  [chk-merge][kept] %s %s: %s"
+                  % (k["form"], k["key"], k["reason"]))
+
     # Phase 5R2 (WLAY-002): cụm 2 cụm ký dọc chạy kề của form được registry
     # pin horizontal -> thay bằng bảng không viền 1x2 (no-op cho form khác).
     n_sig_tbl = build_horizontal_signature_tables(
@@ -3817,6 +3977,12 @@ def main():
         "unmatched_slots": len(all_unmatched),
         "forms_without_any_field": [m["id"] for m in all_meta if not m["fields"]],
         "sample_unmatched": all_unmatched[:400],
+        # [6V-V2/B3r] chứng từ gộp paragraph chk-đứng-một-mình (Q-V1):
+        # mọi mục kept PHẢI được Lead/owner adjudicate trước khi CLOSE B3.
+        "chk_own_paragraph": {
+            "merged": sum(1 for e in _CHK_MERGE_LOG if "side" in e),
+            "unmerged": [e for e in _CHK_MERGE_LOG if "side" not in e],
+        },
     }
     rep_path = ROOT / "generated_ho_so" / "_coverage_report.json"
     rep_path.parent.mkdir(exist_ok=True)

@@ -2,7 +2,8 @@
 """Release test runner chinh thuc cua du an (R0.4 — master plan checkpoint d882793).
 
 Liệt kê TOÀN BỘ suite Node/Python bắt buộc trong "Bộ regression release tối
-thiểu" (PLAN.md). Mỗi suite chạy đúng một lần, ghi exit code thật và phân loại:
+thiểu" (PLAN.md) — 58 suite kể từ 6V-V0 (+test_export_concurrency). Mỗi suite
+chạy đúng một lần, ghi exit code thật và phân loại:
 
   PASS     — exit code 0.
   FAIL     — exit code != 0.
@@ -119,6 +120,10 @@ SUITES: list[dict] = [
      "requires": ["python-docx"]},
     {"name": "test_phase5r_tables",       "type": "module", "target": "tools.test_phase5r_tables",
      "requires": ["python-docx"]},
+    # --- [6V-V0 2026-09-04] concurrency export: 2 process export song song
+    #     qua profile soffice cách ly — chống hồi quy gate đỏ giả 56/1.
+    {"name": "test_export_concurrency",   "type": "module",
+     "target": "tools.test_export_concurrency", "requires": ["python-docx"]},
     {"name": "test_industry_household",   "type": "module", "target": "tools.test_industry_household",
      "requires": ["python-docx"]},
     {"name": "test_contract_release",     "type": "module", "target": "tools.test_contract_release",
@@ -204,6 +209,34 @@ PREFLIGHTS = {
 }
 
 
+def preflight_soffice_scan() -> list[str]:
+    """[V0-I1] Quét tiến trình soffice đang sống ngay đầu run.
+
+    Soffice chạy chồng nhau trên CÙNG profile mặc định → thằng sau exit=1;
+    run bị kill giữa chừng để lại .lock/zombie → mọi lời gọi sau đều exit=1
+    (gate đỏ giả 56/1 ngày 2026-09-04). Từ 6V-V0 mọi lời gọi export đã dùng
+    profile cách ly /tmp riêng, nhưng tiến trình soffice sống (của run khác,
+    của người dùng, hoặc zombie sót) vẫn là tín hiệu đỏ-giả cần thấy NGAY.
+    Chỉ WARNING — không làm FAIL verdict.
+    """
+    warnings: list[str] = []
+    try:
+        proc = subprocess.run(["ps", "-axo", "pid=,command="],
+                              capture_output=True, text=True, timeout=10)
+        for line in (proc.stdout or "").splitlines():
+            parts = line.strip().split(None, 1)
+            if len(parts) < 2:
+                continue
+            pid, cmd = parts
+            exe = cmd.split()[0] if cmd.split() else ""
+            if "soffice" in Path(exe).name.lower():
+                warnings.append("pid=%s: %s" % (pid, cmd[:160]))
+    except Exception as exc:  # noqa: BLE001
+        warnings.append("không quét được ps (%s) — xác nhận tay: ps ax | grep soffice"
+                        % exc)
+    return warnings
+
+
 def build_cmd(suite: dict, deps: dict) -> tuple[list[str] | None, str | None]:
     """Trả về (argv, reason_not_run)."""
     missing = [r for r in suite.get("requires", []) if deps.get(r) is None]
@@ -285,6 +318,21 @@ def main() -> int:
         print("Không có suite khớp --only=%r" % args.only)
         return 2
 
+    # [V0-I1] preflight soffice: phải là NHỮNG DÒNG ĐẦU output để người chạy
+    # thấy ngay — cảnh báo không đổi verdict.
+    soffice_live = preflight_soffice_scan()
+    if soffice_live:
+        print("!" * 78)
+        print("WARNING: %d tiến trình soffice đang sống — mọi suite export có"
+              " thể ĐỎ GIẢ (va chạm profile LibreOffice, sự kiện 56/1 ngày"
+              " 2026-09-04). Chờ/kết thúc trước khi tin kết luận FAIL:" %
+              len(soffice_live))
+        for w in soffice_live:
+            print("  soffice sống: %s" % w)
+        print("!" * 78)
+    else:
+        print("soffice-preflight: không thấy tiến trình soffice sống")
+
     print("=" * 78)
     print("RELEASE TEST RUNNER — root %s" % ROOT)
     print("deps: node=%s python-docx=%s" % (
@@ -333,6 +381,7 @@ def main() -> int:
             "root": str(ROOT),
             "deps": {k: v for k, v in deps.items()},
             "env_errors": env_errors,
+            "soffice_preflight_warnings": soffice_live,
             "results": results,
             "summary": {
                 "pass": n_pass, "fail": n_fail, "not_run": n_nr,

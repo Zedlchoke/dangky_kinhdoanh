@@ -55,6 +55,7 @@ from __future__ import annotations
 
 import io
 import json
+import os
 import re
 import subprocess
 import sys
@@ -69,8 +70,12 @@ from tools.layout_roles import fold   # noqa: E402
 MAPS_PATH = ROOT / "app" / "data" / "form_maps.json"
 BLOCKS_DIR = ROOT / "app" / "data" / "blocks"
 EXPECT_PATH = ROOT / "tools" / "phase5r_expectations.json"
-SANDBOX_TPL = Path("/tmp/p5r_laneB_sandbox_tpl")
-TEST_OUT = Path("/tmp/p5r_laneB_sig_tests")
+# [6V-V0/Lead] suffix pid: 2 process chạy cùng suite song song (2 runner
+# song song — gate V0(a)) phải 2 sandbox RỜI NHAU; path cố định cũ khiến
+# process này rmtree sandbox của process kia → FileNotFoundError/
+# FileExistsError đỏ giả (không phải lỗi soffice — V0-I1 đã đóng lớp đó).
+SANDBOX_TPL = Path("/tmp/p5r_laneB_sandbox_tpl_p%d" % os.getpid())
+TEST_OUT = Path("/tmp/p5r_laneB_sig_tests_p%d" % os.getpid())
 
 # ---------------------------------------------------------------------------
 # Ngữ pháp census (mở rộng có chủ đích của gate D6 — ghi trong docstring)
@@ -368,7 +373,7 @@ def test_b2_no_collateral():
     from tools import build_form_maps as bfm
     import shutil
     maps = json.loads(MAPS_PATH.read_text(encoding="utf-8"))
-    out = Path("/tmp/p5r_laneB_sandbox_neg")
+    out = Path("/tmp/p5r_laneB_sandbox_neg_p%d" % os.getpid())
     if out.exists():
         shutil.rmtree(out)
     titles = bfm.load_csv_titles()

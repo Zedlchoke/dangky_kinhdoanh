@@ -69,6 +69,8 @@ MAPS_PATH = ROOT / "app" / "data" / "form_maps.json"
 BLOCKS_DIR = ROOT / "app" / "data" / "blocks"
 EXPECT_PATH = ROOT / "tools" / "phase5r_expectations.json"
 GATE_ROOT = ROOT / "generated_ho_so" / "_visual_layout" / "phase5r_gate"
+# [6V-V1/D14] registry slot tên điền tay theo bản giấy (PLAN 6V Q-V3/C2)
+HANDWRITING_SLOTS_PATH = ROOT / "tools" / "phase6v_handwriting_slots.json"
 
 # ngưỡng detector (twips = 1/1440 inch; 567 twips = 1 cm)
 # [6V-V1/D9] sàn legacy làm tròn XUỐNG 566 (I4: census có bảng 566 làm
@@ -432,6 +434,91 @@ def det_skeleton_glue(docx_path: Path, pages: list) -> list[dict]:
     return out
 
 
+# [6V-V1] D14 — name-slot binding (lớp B2). Chỉ chạy trên fixture
+# valid-full: mọi form có slot tên dưới tiêu đề ("(Tên hộ kinh doanh)",
+# "Tên hộ kinh doanh (ghi bằng chữ in hoa):", …) phải NHẬN giá trị
+# non-empty không phải dòng gạch/chấm (-----, ……, ____). Form nằm trong
+# registry handwriting_only_slots (điền tay theo bản giấy) được miễn.
+_D14_INLINE = re.compile(
+    r"^(?:\d+[.\s]+)?ten (?:ho kinh doanh|doanh nghiep)[^:]{0,70}:(.*)$")
+_D14_PAREN = re.compile(
+    r"^([^()]{0,40})\(\s*ten\s+(?:ho kinh doanh|doanh nghiep)\s*\)\s*(.*)$")
+# từ nối = dấu hiệu mention trong câu, không phải slot dưới tiêu đề
+_D14_NOISE = re.compile(r"\b(cua|ve|cho|voi|tren|theo|yeu cau|dien)\b")
+_D14_FILLER = re.compile(r"[.\-–—…_·\s]")
+_D14_NEXT_LABEL = re.compile(r"ma so|:$|ma so thue")
+
+
+def load_handwriting_slots(path: Path = HANDWRITING_SLOTS_PATH) -> dict:
+    if path.exists():
+        return json.loads(path.read_text(encoding="utf-8"))
+    return {"forms": {}}
+
+
+def det_name_slot(pages: list, form: str,
+                  registry: dict | None = None) -> list[dict]:
+    """D14: slot tên DN/hộ KD không nhận giá trị ở valid-full.
+
+    Phạm vi: trang 1 (vùng "dưới tiêu đề"). Hai dạng slot:
+    inline  "Tên … (ghi bằng chữ in hoa):<giá trị>"
+    paren   "(Tên …)" đứng dòng riêng — giá trị ở phần còn lại của dòng
+            hoặc dòng kế (dòng kế là label khác → slot trống).
+    Giá trị hợp lệ = có ≥2 ký tự chữ sau khi bỏ gạch/chấm/nền. Dòng
+    "TÊN HỘ KINH DOANH" in hoa đơn thuần là header band (không phải slot)
+    — grammar yêu cầu ':' hoặc ngoặc nên tự loại."""
+    if not pages:
+        return []
+    reg_forms = ((registry or {}).get("forms") or {})
+    lines = pages[0]["text"].split("\n")
+    issues = []
+    for i, raw in enumerate(lines):
+        s = raw.strip()
+        if not s:
+            continue
+        f = _fold(s)
+        mi = _D14_INLINE.match(f)
+        mp = _D14_PAREN.match(f)
+        rest = None
+        kind = None
+        if mi and not _D14_NOISE.search(f[:f.find(":")]):
+            kind, rest = "inline", mi.group(1).strip()
+        elif mp and not _D14_NOISE.search(mp.group(1)):
+            suf = mp.group(2)
+            cut = re.search(r"ma so|ma so thue", suf)
+            kind, rest = "paren", (suf[:cut.start()] if cut else suf).strip()
+        if kind is None:
+            continue
+        slot_label = re.sub(r":.*$", ":", s)[:60]
+        if form in reg_forms:
+            continue  # handwriting theo bản giấy — đã adjudicate (C2/V4)
+        bound = False
+        if rest and any(c.isalpha() for c in _D14_FILLER.sub("", rest)) \
+                and not _D14_NEXT_LABEL.search(_fold(rest)):
+            bound = True
+        else:
+            # giá trị có thể nằm dòng kế (title-block); dừng nếu dòng kế là
+            # label khác ("Trụ sở…:") hoặc header band
+            for j in range(i + 1, min(i + 5, len(lines))):
+                s2 = lines[j].strip()
+                if not s2 or set(s2) <= set(".-–—…_· "):
+                    continue
+                f2 = _fold(s2)
+                if _D14_NEXT_LABEL.search(f2) or f2 == ("cong hoa xa hoi "
+                                                        "chu nghia viet nam"):
+                    break
+                if any(c.isalpha() for c in _D14_FILLER.sub("", s2)):
+                    bound = True
+                break
+        if not bound:
+            issues.append({"page": 1, "kind": kind, "slot": slot_label,
+                           "value": (rest or "")[:40]})
+    return issues
+
+
+# nạp 1 lần sau khi hàm load đã định nghĩa (registry adjudicate ở C2/V4)
+HANDWRITING_SLOTS = load_handwriting_slots()
+
+
 def det_fixed_matrix_headers(pdf_text: str, form_map: dict) -> list[str]:
     """D10: header cột của fixed-matrix phải xuất hiện trong PDF text."""
     missing = []
@@ -569,6 +656,11 @@ def analyze(maps, blocks_all, fixture: str, dirs: list[Path],
                 skel = det_skeleton_glue(docx_path, pages)
                 rec["detectors"]["D13_skeleton_glue"] = skel[:40]
                 rec["detectors"]["D13_glue_count"] = len(skel)
+                # [6V-V1] D14 name-slot binding — contract fixture
+                # valid-full (đầy đủ dữ liệu mới có quyền đòi slot bound)
+                rec["detectors"]["D14_name_slot"] = (
+                    det_name_slot(pages, fid, HANDWRITING_SLOTS)
+                    if fixture == "valid-full" else [])
                 # fixture exclusivity (D12)
                 fdata = build_fixture(fid, maps[fid], fixture,
                                       blocks_all.get(fid), ValueFactory())

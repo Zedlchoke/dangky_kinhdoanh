@@ -1,0 +1,17 @@
+{
+ "version": 1,
+ "date": "2026-09-04",
+ "owner": "PLAN 6V V2-C2 (agent/6v-nameslot) — V1 (agent/6v-detectors) chỉ tạo cấu trúc RỖNG",
+ "purpose": "Registry form có slot tên điền TAY theo bản giấy (không nhận dữ liệu máy). D14 (tools/phase5_visual_gate.det_name_slot) miễn trừ form nằm trong 'forms' — form phải kèm lý do pháp lý và ảnh nguồn bản giấy. Việc adjudication form nào thuộc registry là của lane C2/V4, KHÔNG phải V1.",
+ "schema": {
+  "forms": {
+   "<FORM_ID>": {
+    "slot_label": "label slot đúng như bản in (VD '(Tên hộ kinh doanh)')",
+    "reason": "lý do pháp lý — VD 'bản giấy TT 68/2025/TT-BTC thiết kế điền tay'",
+    "source_evidence": "path ảnh/docx bản giấy gốc",
+    "decided_by": "owner/lead + ngày"
+   }
+  }
+ },
+ "forms": {}
+}

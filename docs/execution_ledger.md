@@ -482,3 +482,19 @@ backlog adjudicate ở V4, không chặn V2.
 V2-final) · B4 PARTIAL→CLOSED-pending-corpus (value 0 + grammar v2; wrap không
 còn nguồn) · B2 chờ C2 (14 form, đã mở khoá sau C1) · B3 chờ Q-V1 · B5 chờ
 Q-V2 (V3). C2 được phát prompt tiếp theo.
+
+### V2 (phần 2/2) + audit đêm — C2 + C3 merged, V2 ĐÓNG @ main 12b9615→6214ae3 (2026-09-04/05)
+
+| Task | Owner | Kết quả (Lead kiểm chứng độc lập) | Trạng thái |
+|---|---|---|---|
+| Corpus scoreboard full 455 record @9fb707c | `agent/6v-corpus` | gate exit 0, 0 export error, PNG 1663/1663 khớp; **D13 323/1104/77→0, D16 342/8751/82→0, D11 201→0** (C4+C1 toàn corpus); D14 14→13 (PLI_M71 tự xanh do C1 sửa paren-glue); D15/D9 giữ đúng chờ C3/V3; v0-rerun khớp pin (apples-to-apples) | ✅ |
+| Auditor độc lập V0→C4/C1 | `auditor/6v-core` (report `docs/audits/6v/v2-core-audit.md`) | **OVERALL PASS** — Q1–Q4 PASS, Q5 PASS-WITH-NOTES; 0 BLOCKER/MAJOR; 4 finding (F1 nhãn I4, F2 JSON stale, F3 transient run_export NIT, F4 PNG-assert ngoài runner NIT); đã cherry-pick-revert test chứng minh test đỏ thật | ✅ F1/F2 xử `6214ae3`; F3/F4 theo dõi |
+| C2 name-slot 14 form | `agent/6v-nameslot` (merge `12b9615`) | engine name_slots data-driven + 14 spec + regen; Lead rerun evidence: 14/14 D14=0, slot render tên thật; idempotency 17/17 | ✅ merged |
+| C3 chk glyph (Q-V1) | `agent/6v-chk` (merge `27d7b90`) | run w:bdr 4 cạnh + X (không font-glyph), UI vuông hóa; Lead rerun: suite 7/7 pin giữ, D15 subset = 0 hit (cả 2 lớp), test_dom 58/0 | ✅ merged |
+| Auditor findings F1–F4 | Lead `6214ae3` | F1 nhãn I4 ĐÃ ĐÓNG; F2 rebaseline JSON + grammar_version; F3 (transient FileNotFoundError run_export 2-fixtures-1-process, không tái hiện, cùng vùng I5) + F4 (tái chạy PNG-assert đĩa==manifest ở V5 trước khi CLOSE I2) — theo dõi | ✅ |
+
+**Trạng thái B sau V2 (định lượng):** B1 CLOSED (full corpus 0) · B2 CLOSED
+(14/14 form, subset = full scope) · B3 CLOSED-pending-corpus (subset 0; xác
+nhận toàn corpus ở gate V3-final) · B4 CLOSED (full corpus 0) · B5 → V3.
+Còn lại cho V4: D6 candidate 157, D5 68, WLAY-011 adjudicate, D15/D9 chốt
+sau V3. Runner chính thức sau merge: xem dòng checkpoint kế tiếp.

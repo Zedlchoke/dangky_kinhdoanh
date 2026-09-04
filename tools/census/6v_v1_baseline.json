@@ -1,0 +1,2994 @@
+{
+ "generated": "2026-09-04 17:49:55",
+ "corpus": {
+  "path": "/Users/hoangminhlong/orca/dangky_kinhdoanh-worktrees/6v-detectors/generated_ho_so/_visual_layout/phase6v/v0_corpuscheck",
+  "records": 455,
+  "note": "v0_corpuscheck render post-V0 @313b0af; template giống hệt audit-HEAD 294604c (git diff rỗng với app/templates) — mọi lệch số audit là khác biệt grammar/đơn vị đếm, bảng per_form để đối chiếu"
+ },
+ "detectors": {
+  "D13_skeleton_glue": {
+   "records": 323,
+   "hits": 1104,
+   "forms": [
+    "PLII_M01",
+    "PLII_M02",
+    "PLII_M03",
+    "PLII_M04",
+    "PLII_M05",
+    "PLII_M06",
+    "PLII_M07",
+    "PLII_M08",
+    "PLII_M10",
+    "PLII_M11",
+    "PLII_M12",
+    "PLII_M13",
+    "PLII_M14",
+    "PLII_M15",
+    "PLII_M16",
+    "PLII_M17",
+    "PLII_M18",
+    "PLII_M19",
+    "PLII_M20",
+    "PLII_M21",
+    "PLII_M22",
+    "PLII_M23",
+    "PLII_M24",
+    "PLII_M25",
+    "PLII_M26",
+    "PLII_M27",
+    "PLII_M28",
+    "PLI_M01",
+    "PLI_M02",
+    "PLI_M03",
+    "PLI_M04",
+    "PLI_M06",
+    "PLI_M08",
+    "PLI_M09",
+    "PLI_M11",
+    "PLI_M12",
+    "PLI_M13",
+    "PLI_M14",
+    "PLI_M15",
+    "PLI_M17",
+    "PLI_M18",
+    "PLI_M19",
+    "PLI_M21",
+    "PLI_M23",
+    "PLI_M25",
+    "PLI_M26",
+    "PLI_M27",
+    "PLI_M28",
+    "PLI_M29",
+    "PLI_M30",
+    "PLI_M31",
+    "PLI_M32",
+    "PLI_M33",
+    "PLI_M42",
+    "PLI_M43",
+    "PLI_M45",
+    "PLI_M47",
+    "PLI_M48",
+    "PLI_M49",
+    "PLI_M50",
+    "PLI_M51",
+    "PLI_M53",
+    "PLI_M54",
+    "PLI_M55",
+    "PLI_M56",
+    "PLI_M57",
+    "PLI_M63",
+    "PLI_M66",
+    "PLI_M67",
+    "PLI_M70",
+    "PLI_M71",
+    "PLI_M72",
+    "PLI_M75",
+    "PLI_M76",
+    "PLI_M78",
+    "PLI_M79",
+    "PLI_M80"
+   ],
+   "audit_expectation": "~303 hit / ~55 form (B1) — mọi fixture",
+   "per_fixture": {
+    "choice-variants": {
+     "records": 80,
+     "hits": 296
+    },
+    "empty-paper": {
+     "records": 15,
+     "hits": 23
+    },
+    "long-boundary": {
+     "records": 80,
+     "hits": 296
+    },
+    "valid-full": {
+     "records": 80,
+     "hits": 296
+    },
+    "valid-minimal": {
+     "records": 68,
+     "hits": 193
+    }
+   },
+   "per_form": {
+    "PLII_M01": {
+     "records": 4,
+     "hits": 20,
+     "codes": {
+      "DATE_NUM": 4,
+      "PAREN_VALUE": 10,
+      "CONTACT_GLUE": 6
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"-------- DIA_DIEM_KY_2, ngày 04tháng THANG_KY_",
+      "PAREN_VALUE: {\"page\": 1, \"code\": \"PAREN_VALUE\", \"snippet\": \"iếng Việt (ghi bằng chữ in hoa):CÔNG TY CỔ ",
+      "PAREN_VALUE: {\"page\": 1, \"code\": \"PAREN_VALUE\", \"snippet\": \"bằng tiếng nước ngoài (nếu  có):TEN_HO_KINH",
+      "PAREN_VALUE: {\"page\": 1, \"code\": \"PAREN_VALUE\", \"snippet\": \"hộ kinh doanh viết tắt (nếu có):ANPHAT11 2.",
+      "CONTACT_GLUE: {\"page\": 2, \"code\": \"CONTACT_GLUE\", \"snippet\": \"g: TINHTHANH_PHO_TRUC_THUO_15 Điện thoại:0"
+     ]
+    },
+    "PLII_M02": {
+     "records": 5,
+     "hits": 39,
+     "codes": {
+      "PAREN_VALUE": 10,
+      "CONTACT_GLUE": 25,
+      "DATE_NUM": 4
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"Số: 00001/2026 DIA_DIEM_KY_2, ngày04  thángTHA",
+      "PAREN_VALUE: {\"page\": 2, \"code\": \"PAREN_VALUE\", \"snippet\": \"ên (ghi họ tên bằng chữ in hoa):BÙI NGỌC LA",
+      "CONTACT_GLUE: {\"page\": 2, \"code\": \"CONTACT_GLUE\", \"snippet\": \"ng:TINHTHANH_PHO_TRUC_THUO_15 Điện thoại:0",
+      "CONTACT_GLUE: {\"page\": 2, \"code\": \"CONTACT_GLUE\", \"snippet\": \"C_THUO_15 Điện thoại:0900000014Fax (nếu có",
+      "CONTACT_GLUE: {\"page\": 2, \"code\": \"CONTACT_GLUE\", \"snippet\": \"có):contact16@congty.example.vnWebsite (nế"
+     ]
+    },
+    "PLII_M03": {
+     "records": 4,
+     "hits": 8,
+     "codes": {
+      "DATE_NUM": 4,
+      "PAREN_VALUE": 4
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"Số: 00001/2026 DIA_DIEM_KY_2, ngày04  thángTHA",
+      "PAREN_VALUE: {\"page\": 1, \"code\": \"PAREN_VALUE\", \"snippet\": \"inh doanh (ghi bằng chữ in hoa):CÔNG TY TNH"
+     ]
+    },
+    "PLII_M04": {
+     "records": 4,
+     "hits": 4,
+     "codes": {
+      "DATE_NUM": 4
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"Số: 00001/2026 DIA_DIEM_KY_2, ngày04  thángTHA"
+     ]
+    },
+    "PLII_M05": {
+     "records": 4,
+     "hits": 4,
+     "codes": {
+      "DATE_NUM": 4
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"Số: 00001/2026 DIA_DIEM_KY_2, ngày04  thángTHA"
+     ]
+    },
+    "PLII_M06": {
+     "records": 4,
+     "hits": 4,
+     "codes": {
+      "DATE_NUM": 4
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"Số: 00001/2026 DIA_DIEM_KY_2, ngày04  thángTHA"
+     ]
+    },
+    "PLII_M07": {
+     "records": 4,
+     "hits": 40,
+     "codes": {
+      "DATE_NUM": 24,
+      "PAREN_VALUE": 10,
+      "CONTACT_GLUE": 6
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"INH_DOANH_12 Đăng ký lần đầu, ngày10tháng11năm",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"OANH_12 Đăng ký lần đầu, ngày10tháng11năm2024 ",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \" Đăng ký lần đầu, ngày10tháng11năm2024 Đăng ký",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"DANG_KY_THAY_DOI_LAN_THU_12,  ngày14tháng03năm",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"KY_THAY_DOI_LAN_THU_12,  ngày14tháng03năm2021 "
+     ]
+    },
+    "PLII_M08": {
+     "records": 4,
+     "hits": 18,
+     "codes": {
+      "DATE_NUM": 12,
+      "CONTACT_GLUE": 6
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"Số: 00001/2026 DIA_DIEM_KY_2, ngày04thángTHANG",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"0001/2026 DIA_DIEM_KY_2, ngày04thángTHANG_KY_V",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"_KY_2, ngày04thángTHANG_KY_VB_4nămNAM_KY_VB_5 ",
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \"  Hà Nội Điện thoại: 0900000014Fax: 024.00",
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \"tử: contact10@congty.example.vnWebsite: ht"
+     ]
+    },
+    "PLII_M10": {
+     "records": 4,
+     "hits": 15,
+     "codes": {
+      "DATE_NUM": 12,
+      "CONTACT_GLUE": 3
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"Số: 00001/2026 DIA_DIEM_KY_2, ngày04thángTHANG",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"0001/2026 DIA_DIEM_KY_2, ngày04thángTHANG_KY_V",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"_KY_2, ngày04thángTHANG_KY_VB_4nămNAM_KY_VB_5 ",
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \"tử: contact10@congty.example.vnWebsite: ht"
+     ]
+    },
+    "PLII_M11": {
+     "records": 4,
+     "hits": 18,
+     "codes": {
+      "DATE_NUM": 12,
+      "CONTACT_GLUE": 6
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"Số: 00001/2026 DIA_DIEM_KY_2, ngày04thángTHANG",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"0001/2026 DIA_DIEM_KY_2, ngày04thángTHANG_KY_V",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"_KY_2, ngày04thángTHANG_KY_VB_4nămNAM_KY_VB_5 ",
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \"  Hà Nội Điện thoại: 0900000014Fax: 024.00",
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \"tử: contact10@congty.example.vnWebsite:htt"
+     ]
+    },
+    "PLII_M12": {
+     "records": 5,
+     "hits": 26,
+     "codes": {
+      "CONTACT_GLUE": 11,
+      "DATE_NUM": 15
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"Số: 00001/2026 DIA_DIEM_KY_2, ngày04thángTHANG",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"0001/2026 DIA_DIEM_KY_2, ngày04thángTHANG_KY_V",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"_KY_2, ngày04thángTHANG_KY_VB_4nămNAM_KY_VB_5 ",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"m việc sốCAN_CU_QUYET_DINH_SO_6ngày  04/......",
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \"  Hà Nội Điện thoại: 0900000014Fax:024.000"
+     ]
+    },
+    "PLII_M13": {
+     "records": 4,
+     "hits": 18,
+     "codes": {
+      "DATE_NUM": 12,
+      "CONTACT_GLUE": 6
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"Số: 00001/2026 DIA_DIEM_KY_2, ngày04thángTHANG",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"0001/2026 DIA_DIEM_KY_2, ngày04thángTHANG_KY_V",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"_KY_2, ngày04thángTHANG_KY_VB_4nămNAM_KY_VB_5 ",
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \"H_DOA_13 Điện thoại: 0900000014Thư điện tử",
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \"N_TAI_18 Điện thoại: 0900000014Thư điện tử"
+     ]
+    },
+    "PLII_M14": {
+     "records": 5,
+     "hits": 27,
+     "codes": {
+      "CONTACT_GLUE": 11,
+      "DATE_NUM": 12,
+      "PAREN_VALUE": 4
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"Số: 00001/2026 DIA_DIEM_KY_2, ngày04thángTHANG",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"0001/2026 DIA_DIEM_KY_2, ngày04thángTHANG_KY_V",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"_KY_2, ngày04thángTHANG_KY_VB_4nămNAM_KY_VB_5 ",
+      "PAREN_VALUE: {\"page\": 1, \"code\": \"PAREN_VALUE\", \"snippet\": \"inh doanh (ghi bằng chữ in hoa):CÔNG TY TNH",
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \"H_DOA_13 Điện thoại: 0900000014Fax:024.000"
+     ]
+    },
+    "PLII_M15": {
+     "records": 4,
+     "hits": 24,
+     "codes": {
+      "DATE_NUM": 24
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"Số: 00001/2026 DIA_DIEM_KY_2, ngày04thángTHANG",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"0001/2026 DIA_DIEM_KY_2, ngày04thángTHANG_KY_V",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"_KY_2, ngày04thángTHANG_KY_VB_4nămNAM_KY_VB_5 ",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"DANG_KY_THAY_DOI_LAN_THU_12,  ngày14tháng03năm",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"KY_THAY_DOI_LAN_THU_12,  ngày14tháng03năm2021 "
+     ]
+    },
+    "PLII_M16": {
+     "records": 5,
+     "hits": 32,
+     "codes": {
+      "CONTACT_GLUE": 16,
+      "DATE_NUM": 12,
+      "PAREN_VALUE": 4
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"Số: 00001/2026 DIA_DIEM_KY_2, ngày04thángTHANG",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"0001/2026 DIA_DIEM_KY_2, ngày04thángTHANG_KY_V",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"_KY_2, ngày04thángTHANG_KY_VB_4nămNAM_KY_VB_5 ",
+      "PAREN_VALUE: {\"page\": 1, \"code\": \"PAREN_VALUE\", \"snippet\": \"inh doanh (ghi bằng chữ in hoa):CÔNG TY TNH",
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \"nh:_TRU_SO_CUA_HO_KINH_DOA_13 Điện thoại:0"
+     ]
+    },
+    "PLII_M17": {
+     "records": 5,
+     "hits": 26,
+     "codes": {
+      "CONTACT_GLUE": 14,
+      "DATE_NUM": 12
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"Số: 00001/2026 DIA_DIEM_KY_2, ngày04thángTHANG",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"0001/2026 DIA_DIEM_KY_2, ngày04thángTHANG_KY_V",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"_KY_2, ngày04thángTHANG_KY_VB_4nămNAM_KY_VB_5 ",
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \"  Hà Nội Điện thoại: 0900000014Fax:024.000",
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \"i: 0900000014Fax:024.00000009 Thư điện tử:"
+     ]
+    },
+    "PLII_M18": {
+     "records": 5,
+     "hits": 34,
+     "codes": {
+      "CONTACT_GLUE": 22,
+      "DATE_NUM": 12
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"Số: 00001/2026 DIA_DIEM_KY_2, ngày04thángTHANG",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"0001/2026 DIA_DIEM_KY_2, ngày04thángTHANG_KY_V",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"_KY_2, ngày04thángTHANG_KY_VB_4nămNAM_KY_VB_5 ",
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \"quận Nam Từ Liêm, TP.  Hà Nội Điện thoại:0",
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \".  Hà Nội Điện thoại:0900000014Fax:024.000"
+     ]
+    },
+    "PLII_M19": {
+     "records": 4,
+     "hits": 18,
+     "codes": {
+      "DATE_NUM": 12,
+      "CONTACT_GLUE": 6
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"Số: 00001/2026 DIA_DIEM_KY_2, ngày04thángTHANG",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"0001/2026 DIA_DIEM_KY_2, ngày04thángTHANG_KY_V",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"_KY_2, ngày04thángTHANG_KY_VB_4nămNAM_KY_VB_5 ",
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \"  Hà Nội Điện thoại: 0900000014Fax: 024.00",
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \"tử: contact10@congty.example.vnWebsite:htt"
+     ]
+    },
+    "PLII_M20": {
+     "records": 5,
+     "hits": 40,
+     "codes": {
+      "CONTACT_GLUE": 16,
+      "DATE_NUM": 20,
+      "PAREN_VALUE": 4
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"Số: 00001/2026 DIA_DIEM_KY_2, ngày04thángTHANG",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"0001/2026 DIA_DIEM_KY_2, ngày04thángTHANG_KY_V",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"_KY_2, ngày04thángTHANG_KY_VB_4nămNAM_KY_VB_5 ",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"ký tạm ngừng kinh doanh kể từ ngày15 đến hết n",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"nh doanh kể từ ngày15 đến hết ngày16 Lý do tạm"
+     ]
+    },
+    "PLII_M21": {
+     "records": 4,
+     "hits": 18,
+     "codes": {
+      "DATE_NUM": 12,
+      "CONTACT_GLUE": 6
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"Số: 00001/2026 DIA_DIEM_KY_2, ngày04thángTHANG",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"0001/2026 DIA_DIEM_KY_2, ngày04thángTHANG_KY_V",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"_KY_2, ngày04thángTHANG_KY_VB_4nămNAM_KY_VB_5 ",
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \"  Hà Nội Điện thoại: 0900000014Fax:024.000",
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \"tử: contact10@congty.example.vnWebsite:htt"
+     ]
+    },
+    "PLII_M22": {
+     "records": 4,
+     "hits": 15,
+     "codes": {
+      "DATE_NUM": 12,
+      "CONTACT_GLUE": 3
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"Số: 00001/2026 DIA_DIEM_KY_2, ngày04thángTHANG",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"0001/2026 DIA_DIEM_KY_2, ngày04thángTHANG_KY_V",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"_KY_2, ngày04thángTHANG_KY_VB_4nămNAM_KY_VB_5 ",
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \"tử: contact10@congty.example.vnWebsite:htt"
+     ]
+    },
+    "PLII_M23": {
+     "records": 4,
+     "hits": 15,
+     "codes": {
+      "DATE_NUM": 12,
+      "CONTACT_GLUE": 3
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"Số: 00001/2026 DIA_DIEM_KY_2, ngày04thángTHANG",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"0001/2026 DIA_DIEM_KY_2, ngày04thángTHANG_KY_V",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"_KY_2, ngày04thángTHANG_KY_VB_4nămNAM_KY_VB_5 ",
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \"tử: contact10@congty.example.vnWebsite: ht"
+     ]
+    },
+    "PLII_M24": {
+     "records": 4,
+     "hits": 23,
+     "codes": {
+      "DATE_NUM": 16,
+      "PAREN_VALUE": 4,
+      "CONTACT_GLUE": 3
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"Số: 00001/2026 DIA_DIEM_KY_2, ngày04thángTHANG",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"0001/2026 DIA_DIEM_KY_2, ngày04thángTHANG_KY_V",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"_KY_2, ngày04thángTHANG_KY_VB_4nămNAM_KY_VB_5 ",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"định sốCAN_CU_QUYET_DINH_SO_6 ngày04  thángTHA",
+      "PAREN_VALUE: {\"page\": 1, \"code\": \"PAREN_VALUE\", \"snippet\": \"inh doanh (ghi bằng chữ in hoa):CÔNG TY TNH"
+     ]
+    },
+    "PLII_M25": {
+     "records": 5,
+     "hits": 23,
+     "codes": {
+      "CONTACT_GLUE": 11,
+      "DATE_NUM": 12
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"Số: 00001/2026 DIA_DIEM_KY_2, ngày04thángTHANG",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"0001/2026 DIA_DIEM_KY_2, ngày04thángTHANG_KY_V",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"_KY_2, ngày04thángTHANG_KY_VB_4nămNAM_KY_VB_5 ",
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \"Hà Nội Điện thoại: 0900000014 Fax:024.0000",
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \": 0900000014 Fax:024.00000009 Thư điện tử:"
+     ]
+    },
+    "PLII_M26": {
+     "records": 4,
+     "hits": 21,
+     "codes": {
+      "DATE_NUM": 12,
+      "CONTACT_GLUE": 9
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"Số: 00001/2026 DIA_DIEM_KY_2, ngày04thángTHANG",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"0001/2026 DIA_DIEM_KY_2, ngày04thángTHANG_KY_V",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"_KY_2, ngày04thángTHANG_KY_VB_4nămNAM_KY_VB_5 ",
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \"quận Nam Từ Liêm, TP.  Hà Nội Điện thoại:0",
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \" Hà Nội Điện thoại:0900000014 Fax:024.0000"
+     ]
+    },
+    "PLII_M27": {
+     "records": 5,
+     "hits": 20,
+     "codes": {
+      "CONTACT_GLUE": 8,
+      "DATE_NUM": 12
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"Số: 00001/2026 DIA_DIEM_KY_2, ngày04thángTHANG",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"0001/2026 DIA_DIEM_KY_2, ngày04thángTHANG_KY_V",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"_KY_2, ngày04thángTHANG_KY_VB_4nămNAM_KY_VB_5 ",
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \"ở hiện tại: NOI_O_HIEN_TAI_18 Điện thoại:0",
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \"EN_TAI_18 Điện thoại:0900000014Thư điện tử"
+     ]
+    },
+    "PLII_M28": {
+     "records": 4,
+     "hits": 18,
+     "codes": {
+      "DATE_NUM": 12,
+      "CONTACT_GLUE": 6
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"Số: 00001/2026 DIA_DIEM_KY_2, ngày04thángTHANG",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"0001/2026 DIA_DIEM_KY_2, ngày04thángTHANG_KY_V",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"_KY_2, ngày04thángTHANG_KY_VB_4nămNAM_KY_VB_5 ",
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \"Hà Nội Điện thoại: 0900000014 Fax:024.0000",
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \": contact10@congty.example.vn Website:http"
+     ]
+    },
+    "PLI_M01": {
+     "records": 4,
+     "hits": 10,
+     "codes": {
+      "DATE_NUM": 4,
+      "CONTACT_GLUE": 6
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"-------- DIA_DIEM_KY_2, ngày 04tháng THANG_KY_",
+      "CONTACT_GLUE: {\"page\": 6, \"code\": \"CONTACT_GLUE\", \"snippet\": \"h danh cá nhân: 0800000000061 Điện thoại:0",
+      "CONTACT_GLUE: {\"page\": 6, \"code\": \"CONTACT_GLUE\", \"snippet\": \"h danh cá nhân: 0600000000041 Điện thoại:0"
+     ]
+    },
+    "PLI_M02": {
+     "records": 4,
+     "hits": 10,
+     "codes": {
+      "DATE_NUM": 4,
+      "CONTACT_GLUE": 6
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"-------- DIA_DIEM_KY_2, ngày 04tháng THANG_KY_",
+      "CONTACT_GLUE: {\"page\": 13, \"code\": \"CONTACT_GLUE\", \"snippet\": \"h danh cá nhân: 0800000000061 Điện thoại:",
+      "CONTACT_GLUE: {\"page\": 13, \"code\": \"CONTACT_GLUE\", \"snippet\": \"h danh cá nhân: 0600000000041 Điện thoại:"
+     ]
+    },
+    "PLI_M03": {
+     "records": 4,
+     "hits": 10,
+     "codes": {
+      "DATE_NUM": 4,
+      "CONTACT_GLUE": 6
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"-------- DIA_DIEM_KY_2, ngày 04tháng THANG_KY_",
+      "CONTACT_GLUE: {\"page\": 7, \"code\": \"CONTACT_GLUE\", \"snippet\": \"h danh cá nhân: 0800000000061 Điện thoại:0",
+      "CONTACT_GLUE: {\"page\": 7, \"code\": \"CONTACT_GLUE\", \"snippet\": \"h danh cá nhân: 0600000000041 Điện thoại:0"
+     ]
+    },
+    "PLI_M04": {
+     "records": 4,
+     "hits": 10,
+     "codes": {
+      "DATE_NUM": 4,
+      "CONTACT_GLUE": 6
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"-------- DIA_DIEM_KY_2, ngày 04tháng THANG_KY_",
+      "CONTACT_GLUE: {\"page\": 8, \"code\": \"CONTACT_GLUE\", \"snippet\": \"nh danh cá nhân:0800000000061 Điện thoại:0",
+      "CONTACT_GLUE: {\"page\": 9, \"code\": \"CONTACT_GLUE\", \"snippet\": \"nh danh cá nhân:0600000000041 Điện thoại:0"
+     ]
+    },
+    "PLI_M06": {
+     "records": 3,
+     "hits": 6,
+     "codes": {
+      "CONTACT_GLUE": 6
+     },
+     "samples": [
+      "CONTACT_GLUE: {\"page\": 3, \"code\": \"CONTACT_GLUE\", \"snippet\": \"h danh cá nhân: 0800000000061 Điện thoại:0",
+      "CONTACT_GLUE: {\"page\": 3, \"code\": \"CONTACT_GLUE\", \"snippet\": \"h danh cá nhân: 0600000000041 Điện thoại:0"
+     ]
+    },
+    "PLI_M08": {
+     "records": 3,
+     "hits": 6,
+     "codes": {
+      "CONTACT_GLUE": 6
+     },
+     "samples": [
+      "CONTACT_GLUE: {\"page\": 3, \"code\": \"CONTACT_GLUE\", \"snippet\": \"nh danh cá nhân:0800000000061 Điện thoại:0",
+      "CONTACT_GLUE: {\"page\": 3, \"code\": \"CONTACT_GLUE\", \"snippet\": \"nh danh cá nhân:0600000000041 Điện thoại:0"
+     ]
+    },
+    "PLI_M09": {
+     "records": 3,
+     "hits": 6,
+     "codes": {
+      "CONTACT_GLUE": 6
+     },
+     "samples": [
+      "CONTACT_GLUE: {\"page\": 5, \"code\": \"CONTACT_GLUE\", \"snippet\": \"h danh cá nhân: 0800000000061 Điện thoại:0",
+      "CONTACT_GLUE: {\"page\": 5, \"code\": \"CONTACT_GLUE\", \"snippet\": \"h danh cá nhân: 0600000000041 Điện thoại:0"
+     ]
+    },
+    "PLI_M11": {
+     "records": 4,
+     "hits": 12,
+     "codes": {
+      "DATE_NUM": 12
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"t  (%) Ghi chú DIA_DIEM_KY_2, ngày04thángTHANG",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \") Ghi chú DIA_DIEM_KY_2, ngày04thángTHANG_KY_V",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"_KY_2, ngày04thángTHANG_KY_VB_4nămNAM_KY_VB_5 "
+     ]
+    },
+    "PLI_M12": {
+     "records": 4,
+     "hits": 10,
+     "codes": {
+      "DATE_NUM": 4,
+      "CONTACT_GLUE": 6
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"Số: 00001/2026 DIA_DIEM_KY_2, ngày04 thángTHAN",
+      "CONTACT_GLUE: {\"page\": 18, \"code\": \"CONTACT_GLUE\", \"snippet\": \"h danh cá nhân: 0800000000061 Điện thoại:",
+      "CONTACT_GLUE: {\"page\": 18, \"code\": \"CONTACT_GLUE\", \"snippet\": \"h danh cá nhân: 0600000000041 Điện thoại:"
+     ]
+    },
+    "PLI_M13": {
+     "records": 4,
+     "hits": 4,
+     "codes": {
+      "DATE_NUM": 4
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"Số: 00001/2026 DIA_DIEM_KY_2, ngày04  thángTHA"
+     ]
+    },
+    "PLI_M14": {
+     "records": 4,
+     "hits": 4,
+     "codes": {
+      "DATE_NUM": 4
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"Số: 00001/2026 DIA_DIEM_KY_2, ngày04  thángTHA"
+     ]
+    },
+    "PLI_M15": {
+     "records": 4,
+     "hits": 4,
+     "codes": {
+      "DATE_NUM": 4
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"Số: 00001/2026 DIA_DIEM_KY_2, ngày04  thángTHA"
+     ]
+    },
+    "PLI_M17": {
+     "records": 4,
+     "hits": 7,
+     "codes": {
+      "DATE_NUM": 4,
+      "CONTACT_GLUE": 3
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"Số: 00001/2026 DIA_DIEM_KY_2, ngày04  thángTHA",
+      "CONTACT_GLUE: {\"page\": 3, \"code\": \"CONTACT_GLUE\", \"snippet\": \"h danh cá nhân: 0600000000041 Điện thoại:0"
+     ]
+    },
+    "PLI_M18": {
+     "records": 4,
+     "hits": 4,
+     "codes": {
+      "DATE_NUM": 4
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"Số: 00001/2026 DIA_DIEM_KY_2, ngày04  thángTHA"
+     ]
+    },
+    "PLI_M19": {
+     "records": 4,
+     "hits": 10,
+     "codes": {
+      "DATE_NUM": 4,
+      "CONTACT_GLUE": 6
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"Số: 00001/2026 DIA_DIEM_KY_2, ngày04  thángTHA",
+      "CONTACT_GLUE: {\"page\": 2, \"code\": \"CONTACT_GLUE\", \"snippet\": \"ó): contact16@congty.example.vnWebsite (nế",
+      "CONTACT_GLUE: {\"page\": 4, \"code\": \"CONTACT_GLUE\", \"snippet\": \"h danh cá nhân: 0600000000041 Điện thoại:0"
+     ]
+    },
+    "PLI_M21": {
+     "records": 4,
+     "hits": 4,
+     "codes": {
+      "DATE_NUM": 4
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"Số: 00001/2026 DIA_DIEM_KY_2, ngày04  thángTHA"
+     ]
+    },
+    "PLI_M23": {
+     "records": 4,
+     "hits": 13,
+     "codes": {
+      "DATE_NUM": 4,
+      "PAREN_VALUE": 6,
+      "CONTACT_GLUE": 3
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"Số: 00001/2026 DIA_DIEM_KY_2, ngày04  thángTHA",
+      "PAREN_VALUE: {\"page\": 1, \"code\": \"PAREN_VALUE\", \"snippet\": \"bằng tiếng nước  ngoài (nếu có):TEN_DIA_DIE",
+      "CONTACT_GLUE: {\"page\": 2, \"code\": \"CONTACT_GLUE\", \"snippet\": \"ó): contact16@congty.example.vnWebsite (nế",
+      "PAREN_VALUE: {\"page\": 5, \"code\": \"PAREN_VALUE\", \"snippet\": \"bằng tiếng nước ngoài (nếu  có):TEN_DIA_DIE"
+     ]
+    },
+    "PLI_M25": {
+     "records": 4,
+     "hits": 10,
+     "codes": {
+      "DATE_NUM": 4,
+      "PAREN_VALUE": 3,
+      "CONTACT_GLUE": 3
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"Số: 00001/2026 DIA_DIEM_KY_2, ngày04  thángTHA",
+      "PAREN_VALUE: {\"page\": 1, \"code\": \"PAREN_VALUE\", \"snippet\": \"bằng tiếng nước ngoài (nếu  có):TEN_DIA_DIE",
+      "CONTACT_GLUE: {\"page\": 2, \"code\": \"CONTACT_GLUE\", \"snippet\": \"ó): contact16@congty.example.vnWebsite (nế"
+     ]
+    },
+    "PLI_M26": {
+     "records": 4,
+     "hits": 4,
+     "codes": {
+      "DATE_NUM": 4
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"Số: 00001/2026 DIA_DIEM_KY_2, ngày04  thángTHA"
+     ]
+    },
+    "PLI_M27": {
+     "records": 4,
+     "hits": 20,
+     "codes": {
+      "DATE_NUM": 20
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"Số: 00001/2026 DIA_DIEM_KY_2, ngày04  thángTHA",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"áo tạm ngừng kinh doanh kể từ ngày15 đến hết n",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"nh doanh kể từ ngày15 đến hết ngày16 Lý do tạm",
+      "DATE_NUM: {\"page\": 2, \"code\": \"DATE_NUM\", \"snippet\": \"báo tiếp tục kinh doanh kể từ ngày15 Lý do tiế",
+      "DATE_NUM: {\"page\": 2, \"code\": \"DATE_NUM\", \"snippet\": \"báo tiếp tục kinh doanh kể từ ngày15 đối với c"
+     ]
+    },
+    "PLI_M28": {
+     "records": 4,
+     "hits": 7,
+     "codes": {
+      "DATE_NUM": 4,
+      "CONTACT_GLUE": 3
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"Số: 00001/2026 DIA_DIEM_KY_2, ngày04  thángTHA",
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \"ó): contact16@congty.example.vnWebsite (nế"
+     ]
+    },
+    "PLI_M29": {
+     "records": 4,
+     "hits": 11,
+     "codes": {
+      "DATE_NUM": 4,
+      "PAREN_VALUE": 4,
+      "CONTACT_GLUE": 3
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"Số: 00001/2026 DIA_DIEM_KY_2, ngày04  thángTHA",
+      "PAREN_VALUE: {\"page\": 1, \"code\": \"PAREN_VALUE\", \"snippet\": \"iếng Việt (ghi bằng chữ in hoa):CÔNG  TY CỔ",
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \"ó): contact16@congty.example.vnWebsite (nế"
+     ]
+    },
+    "PLI_M30": {
+     "records": 4,
+     "hits": 4,
+     "codes": {
+      "DATE_NUM": 4
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"Số: 00001/2026 DIA_DIEM_KY_2, ngày04  thángTHA"
+     ]
+    },
+    "PLI_M31": {
+     "records": 4,
+     "hits": 4,
+     "codes": {
+      "DATE_NUM": 4
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"Số: 00001/2026 DIA_DIEM_KY_2, ngày04  thángTHA"
+     ]
+    },
+    "PLI_M32": {
+     "records": 4,
+     "hits": 8,
+     "codes": {
+      "DATE_NUM": 8
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"Số: 00001/2026 DIA_DIEM_KY_2, ngày04  thángTHA",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \" thứDANG_KY_THAY_DOI_LAN_THU_12ngày14/03/2021 "
+     ]
+    },
+    "PLI_M33": {
+     "records": 4,
+     "hits": 4,
+     "codes": {
+      "DATE_NUM": 4
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"Số: 00001/2026 DIA_DIEM_KY_2, ngày04  thángTHA"
+     ]
+    },
+    "PLI_M42": {
+     "records": 4,
+     "hits": 27,
+     "codes": {
+      "DATE_NUM": 24,
+      "CONTACT_GLUE": 3
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"HVAN_PHON_15 Đăng ký lần đầu, ngày10tháng11năm",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"PHON_15 Đăng ký lần đầu, ngày10tháng11năm2024 ",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \" Đăng ký lần đầu, ngày10tháng11năm2024 Đăng ký",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"ứ:  DANG_KY_THAY_DOI_LAN_THU_12ngày14tháng03nă",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"NG_KY_THAY_DOI_LAN_THU_12ngày14tháng03năm2021 "
+     ]
+    },
+    "PLI_M43": {
+     "records": 4,
+     "hits": 27,
+     "codes": {
+      "DATE_NUM": 24,
+      "CONTACT_GLUE": 3
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"HVAN_PHON_15 Đăng ký lần đầu, ngày10tháng11năm",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"PHON_15 Đăng ký lần đầu, ngày10tháng11năm2024 ",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \" Đăng ký lần đầu, ngày10tháng11năm2024 Đăng ký",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"ứ:  DANG_KY_THAY_DOI_LAN_THU_12ngày14tháng03nă",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"NG_KY_THAY_DOI_LAN_THU_12ngày14tháng03năm2021 "
+     ]
+    },
+    "PLI_M45": {
+     "records": 3,
+     "hits": 3,
+     "codes": {
+      "CONTACT_GLUE": 3
+     },
+     "samples": [
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \"tử: contact10@congty.example.vnWebsite: ht"
+     ]
+    },
+    "PLI_M47": {
+     "records": 3,
+     "hits": 3,
+     "codes": {
+      "CONTACT_GLUE": 3
+     },
+     "samples": [
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \"tử: contact10@congty.example.vnWebsite: ht"
+     ]
+    },
+    "PLI_M48": {
+     "records": 4,
+     "hits": 7,
+     "codes": {
+      "DATE_NUM": 4,
+      "CONTACT_GLUE": 3
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"..................... đã nhận ngày13 của Ông/B",
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \"tử: contact10@congty.example.vnWebsite: ht"
+     ]
+    },
+    "PLI_M49": {
+     "records": 3,
+     "hits": 3,
+     "codes": {
+      "CONTACT_GLUE": 3
+     },
+     "samples": [
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \"tử: contact10@congty.example.vnWebsite: ht"
+     ]
+    },
+    "PLI_M50": {
+     "records": 3,
+     "hits": 3,
+     "codes": {
+      "CONTACT_GLUE": 3
+     },
+     "samples": [
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \"tử: contact10@congty.example.vnWebsite: ht"
+     ]
+    },
+    "PLI_M51": {
+     "records": 3,
+     "hits": 3,
+     "codes": {
+      "CONTACT_GLUE": 3
+     },
+     "samples": [
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \"tử: contact10@congty.example.vnWebsite: ht"
+     ]
+    },
+    "PLI_M53": {
+     "records": 3,
+     "hits": 3,
+     "codes": {
+      "CONTACT_GLUE": 3
+     },
+     "samples": [
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \"tử: contact10@congty.example.vnWebsite: ht"
+     ]
+    },
+    "PLI_M54": {
+     "records": 4,
+     "hits": 11,
+     "codes": {
+      "DATE_NUM": 8,
+      "CONTACT_GLUE": 3
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"h, tạm ngừng hoạt động kể từ  ngày15 đến hết n",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"ạt động kể từ  ngày15 đến hết ngày16 Lý do tạm",
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \"tử: contact10@congty.example.vnWebsite: ht"
+     ]
+    },
+    "PLI_M55": {
+     "records": 4,
+     "hits": 19,
+     "codes": {
+      "DATE_NUM": 16,
+      "CONTACT_GLUE": 3
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"áo tạm ngừng kinh doanh kể từ ngày15 đến hết n",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"nh doanh kể từ ngày15 đến hết ngày16 đối với c",
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \"tử: contact10@congty.example.vnWebsite: ht",
+      "DATE_NUM: {\"page\": 2, \"code\": \"DATE_NUM\", \"snippet\": \"báo tạm ngừng hoạt động kể từ ngày15 đến hết n",
+      "DATE_NUM: {\"page\": 2, \"code\": \"DATE_NUM\", \"snippet\": \"oạt động kể từ ngày15 đến hết ngày16 đối với v"
+     ]
+    },
+    "PLI_M56": {
+     "records": 4,
+     "hits": 11,
+     "codes": {
+      "DATE_NUM": 8,
+      "CONTACT_GLUE": 3
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"c thời hạn đã thông báo kể từ ngày15  - Nếu do",
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \"tử: contact10@congty.example.vnWebsite: ht",
+      "DATE_NUM: {\"page\": 2, \"code\": \"DATE_NUM\", \"snippet\": \" thời hạn đã  thông báo kể từ ngày15 Lý do: LY"
+     ]
+    },
+    "PLI_M57": {
+     "records": 3,
+     "hits": 3,
+     "codes": {
+      "CONTACT_GLUE": 3
+     },
+     "samples": [
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \"tử: contact10@congty.example.vnWebsite: ht"
+     ]
+    },
+    "PLI_M63": {
+     "records": 4,
+     "hits": 33,
+     "codes": {
+      "DATE_NUM": 24,
+      "PAREN_VALUE": 3,
+      "CONTACT_GLUE": 6
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"E_CUA_CHI_26 Đăng ký lần đầu, ngày10tháng11năm",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"_CHI_26 Đăng ký lần đầu, ngày10tháng11năm2024 ",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \" Đăng ký lần đầu, ngày10tháng11năm2024 Đăng ký",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"DANG_KY_THAY_DOI_LAN_THU_12,  ngày14tháng03năm",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"KY_THAY_DOI_LAN_THU_12,  ngày14tháng03năm2021 "
+     ]
+    },
+    "PLI_M66": {
+     "records": 4,
+     "hits": 4,
+     "codes": {
+      "PAREN_VALUE": 4
+     },
+     "samples": [
+      "PAREN_VALUE: {\"page\": 1, \"code\": \"PAREN_VALUE\", \"snippet\": \"nh doanh (ghi bằng chữ in  hoa):CÔNG TY CỔ "
+     ]
+    },
+    "PLI_M67": {
+     "records": 3,
+     "hits": 6,
+     "codes": {
+      "CONTACT_GLUE": 6
+     },
+     "samples": [
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \"Điện thoại (nếu có): 0900000015Fax (nếu có",
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \"ó): contact16@congty.example.vnWebsite (nế"
+     ]
+    },
+    "PLI_M70": {
+     "records": 5,
+     "hits": 12,
+     "codes": {
+      "CONTACT_GLUE": 8,
+      "PAREN_VALUE": 4
+     },
+     "samples": [
+      "PAREN_VALUE: {\"page\": 1, \"code\": \"PAREN_VALUE\", \"snippet\": \"an đăng ký kinh doanh cấp tỉnh):Phòng Đăng ",
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \"quận Nam Từ Liêm, TP.  Hà Nội Điện thoại:0",
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \"tử: contact10@congty.example.vnWebsite:htt"
+     ]
+    },
+    "PLI_M71": {
+     "records": 5,
+     "hits": 20,
+     "codes": {
+      "CONTACT_GLUE": 16,
+      "PAREN_VALUE": 4
+     },
+     "samples": [
+      "PAREN_VALUE: {\"page\": 1, \"code\": \"PAREN_VALUE\", \"snippet\": \"an đăng ký kinh doanh cấp tỉnh):Phòng Đăng ",
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \"quận Nam Từ Liêm, TP.  Hà Nội Điện thoại:0",
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \"0900000014Số fax:024.00000009 Thư điện tử:",
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \" tử:contact10@congty.example.vnWebsite:htt",
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \"000012 Điện thoại: 0900000014 Thư điện tử:"
+     ]
+    },
+    "PLI_M72": {
+     "records": 17,
+     "hits": 20,
+     "codes": {
+      "PAREN_VALUE": 14,
+      "CONTACT_GLUE": 6
+     },
+     "samples": [
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \" tử: contact9@congty.example.vnWebsite: ht"
+     ]
+    },
+    "PLI_M75": {
+     "records": 5,
+     "hits": 75,
+     "codes": {
+      "CONTACT_GLUE": 16,
+      "DATE_NUM": 48,
+      "PAREN_VALUE": 11
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"uế:010280018 Đăng ký lần đầu, ngày10tháng11năm",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"0280018 Đăng ký lần đầu, ngày10tháng11năm2024 ",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \" Đăng ký lần đầu, ngày10tháng11năm2024 Đăng ký",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"DANG_KY_THAY_DOI_LAN_THU_12,  ngày14tháng03năm",
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"KY_THAY_DOI_LAN_THU_12,  ngày14tháng03năm2021 "
+     ]
+    },
+    "PLI_M76": {
+     "records": 5,
+     "hits": 17,
+     "codes": {
+      "CONTACT_GLUE": 13,
+      "PAREN_VALUE": 4
+     },
+     "samples": [
+      "PAREN_VALUE: {\"page\": 1, \"code\": \"PAREN_VALUE\", \"snippet\": \"an đăng ký kinh doanh cấp tỉnh):Phòng Đăng ",
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \"quận Nam Từ Liêm, TP.  Hà Nội Điện thoại:0",
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \"0900000014Số fax:024.00000009 Thư điện tử:",
+      "CONTACT_GLUE: {\"page\": 1, \"code\": \"CONTACT_GLUE\", \"snippet\": \" tử:contact10@congty.example.vnWebsite:htt"
+     ]
+    },
+    "PLI_M78": {
+     "records": 4,
+     "hits": 8,
+     "codes": {
+      "DATE_NUM": 4,
+      "PAREN_VALUE": 4
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"-------- DIA_DIEM_KY_2, ngày 04tháng THANG_KY_",
+      "PAREN_VALUE: {\"page\": 1, \"code\": \"PAREN_VALUE\", \"snippet\": \"là (ghi họ tên bằng chữ in hoa):BÙI NGỌC LA"
+     ]
+    },
+    "PLI_M79": {
+     "records": 4,
+     "hits": 12,
+     "codes": {
+      "DATE_NUM": 4,
+      "PAREN_VALUE": 8
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"Số: 00001/2026 DIA_DIEM_KY_2, ngày04 thángTHAN",
+      "PAREN_VALUE: {\"page\": 1, \"code\": \"PAREN_VALUE\", \"snippet\": \"là (ghi họ tên bằng chữ in hoa):BÙI NGỌC LA",
+      "PAREN_VALUE: {\"page\": 2, \"code\": \"PAREN_VALUE\", \"snippet\": \"nh nghiệp (ghi bằng chữ in hoa):CÔNG TY TNH"
+     ]
+    },
+    "PLI_M80": {
+     "records": 4,
+     "hits": 4,
+     "codes": {
+      "DATE_NUM": 4
+     },
+     "samples": [
+      "DATE_NUM: {\"page\": 1, \"code\": \"DATE_NUM\", \"snippet\": \"Số: 00001/2026 DIA_DIEM_KY_2, ngày04 thángTHAN"
+     ]
+    }
+   }
+  },
+  "D14_name_slot": {
+   "records": 14,
+   "hits": 14,
+   "forms": [
+    "PLII_M08",
+    "PLII_M10",
+    "PLII_M11",
+    "PLII_M12",
+    "PLII_M13",
+    "PLII_M19",
+    "PLII_M21",
+    "PLII_M22",
+    "PLII_M23",
+    "PLII_M25",
+    "PLII_M27",
+    "PLII_M28",
+    "PLI_M43",
+    "PLI_M71"
+   ],
+   "audit_expectation": "~37/72 form có slot (B2); 48/87 bind đúng",
+   "per_fixture": {
+    "valid-full": {
+     "records": 14,
+     "hits": 14
+    }
+   },
+   "per_form": {
+    "PLII_M08": {
+     "records": 1,
+     "hits": 1,
+     "codes": {
+      "paren": 1
+     },
+     "samples": [
+      "paren: {\"page\": 1, \"kind\": \"paren\", \"slot\": \"(Tên hộ kinh doanh)\", \"value\": \"\"}"
+     ]
+    },
+    "PLII_M10": {
+     "records": 1,
+     "hits": 1,
+     "codes": {
+      "paren": 1
+     },
+     "samples": [
+      "paren: {\"page\": 1, \"kind\": \"paren\", \"slot\": \"(Tên hộ kinh doanh)\", \"value\": \"\"}"
+     ]
+    },
+    "PLII_M11": {
+     "records": 1,
+     "hits": 1,
+     "codes": {
+      "paren": 1
+     },
+     "samples": [
+      "paren: {\"page\": 1, \"kind\": \"paren\", \"slot\": \"(Tên hộ kinh doanh)\", \"value\": \"\"}"
+     ]
+    },
+    "PLII_M12": {
+     "records": 1,
+     "hits": 1,
+     "codes": {
+      "paren": 1
+     },
+     "samples": [
+      "paren: {\"page\": 1, \"kind\": \"paren\", \"slot\": \"(Tên hộ kinh doanh)\", \"value\": \"\"}"
+     ]
+    },
+    "PLII_M13": {
+     "records": 1,
+     "hits": 1,
+     "codes": {
+      "inline": 1
+     },
+     "samples": [
+      "inline: {\"page\": 1, \"kind\": \"inline\", \"slot\": \"Tên hộ kinh doanh:\", \"value\": \"\"}"
+     ]
+    },
+    "PLII_M19": {
+     "records": 1,
+     "hits": 1,
+     "codes": {
+      "paren": 1
+     },
+     "samples": [
+      "paren: {\"page\": 1, \"kind\": \"paren\", \"slot\": \"(Tên hộ kinh doanh)\", \"value\": \"\"}"
+     ]
+    },
+    "PLII_M21": {
+     "records": 1,
+     "hits": 1,
+     "codes": {
+      "paren": 1
+     },
+     "samples": [
+      "paren: {\"page\": 1, \"kind\": \"paren\", \"slot\": \"(Tên hộ kinh doanh)\", \"value\": \"\"}"
+     ]
+    },
+    "PLII_M22": {
+     "records": 1,
+     "hits": 1,
+     "codes": {
+      "paren": 1
+     },
+     "samples": [
+      "paren: {\"page\": 1, \"kind\": \"paren\", \"slot\": \"(Tên hộ kinh doanh)\", \"value\": \"\"}"
+     ]
+    },
+    "PLII_M23": {
+     "records": 1,
+     "hits": 1,
+     "codes": {
+      "paren": 1
+     },
+     "samples": [
+      "paren: {\"page\": 1, \"kind\": \"paren\", \"slot\": \"(Tên hộ kinh doanh)\", \"value\": \"\"}"
+     ]
+    },
+    "PLII_M25": {
+     "records": 1,
+     "hits": 1,
+     "codes": {
+      "paren": 1
+     },
+     "samples": [
+      "paren: {\"page\": 1, \"kind\": \"paren\", \"slot\": \"(Tên hộ kinh doanh)\", \"value\": \"\"}"
+     ]
+    },
+    "PLII_M27": {
+     "records": 1,
+     "hits": 1,
+     "codes": {
+      "inline": 1
+     },
+     "samples": [
+      "inline: {\"page\": 1, \"kind\": \"inline\", \"slot\": \"Tên hộ kinh doanh:\", \"value\": \"……………………………………………………"
+     ]
+    },
+    "PLII_M28": {
+     "records": 1,
+     "hits": 1,
+     "codes": {
+      "paren": 1
+     },
+     "samples": [
+      "paren: {\"page\": 1, \"kind\": \"paren\", \"slot\": \"(Tên hộ kinh doanh)\", \"value\": \"\"}"
+     ]
+    },
+    "PLI_M43": {
+     "records": 1,
+     "hits": 1,
+     "codes": {
+      "inline": 1
+     },
+     "samples": [
+      "inline: {\"page\": 1, \"kind\": \"inline\", \"slot\": \"Tên doanh nghiệp/chi nhánh (ghi bằng chữ in hoa):\","
+     ]
+    },
+    "PLI_M71": {
+     "records": 1,
+     "hits": 1,
+     "codes": {
+      "paren": 1
+     },
+     "samples": [
+      "paren: {\"page\": 1, \"kind\": \"paren\", \"slot\": \"(Tên doanh nghiệp) ……………… Mã số doanh nghiệp (nếu có"
+     ]
+    }
+   }
+  },
+  "D15_chk_glyph": {
+   "records": 17,
+   "hits": 191,
+   "forms": [
+    "PLII_M01",
+    "PLII_M02",
+    "PLI_M01",
+    "PLI_M02",
+    "PLI_M03",
+    "PLI_M04",
+    "PLI_M05",
+    "PLI_M06",
+    "PLI_M08",
+    "PLI_M09",
+    "PLI_M12",
+    "PLI_M14",
+    "PLI_M15",
+    "PLI_M17",
+    "PLI_M19",
+    "PLI_M23",
+    "PLI_M25"
+   ],
+   "audit_expectation": "mọi form có field type=chk (B3)",
+   "per_fixture": {
+    "choice-variants": {
+     "records": 17,
+     "hits": 191
+    }
+   },
+   "per_form": {
+    "PLII_M01": {
+     "records": 1,
+     "hits": 5,
+     "codes": {
+      "BARE_X_PARAGRAPH": 5
+     },
+     "samples": [
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X Không kinh doanh tại trụ sở (đánh dấu X vào ô",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X Phương pháp kê khai\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X Phương pháp khoán\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X Cá nhân\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X Các thành viên hộ gia đình\"}"
+     ]
+    },
+    "PLII_M02": {
+     "records": 1,
+     "hits": 7,
+     "codes": {
+      "BARE_X_PARAGRAPH": 5,
+      "X_OWN_LINE": 2
+     },
+     "samples": [
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X Không kinh doanh tại trụ sở (đánh dấu X vào ô",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X Cá nhân\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X Các thành viên hộ gia đình\"}"
+     ]
+    },
+    "PLI_M01": {
+     "records": 1,
+     "hits": 15,
+     "codes": {
+      "BARE_X_PARAGRAPH": 11,
+      "X_OWN_LINE": 4
+     },
+     "samples": [
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X Căn cước công dân\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X Căn cước công dân\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"- Doanh nghiệp thực hiện dự án đầu tư được đăng",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X Doanh nghiệp xã hội (Đánh dấu X vào ô vuông n"
+     ]
+    },
+    "PLI_M02": {
+     "records": 1,
+     "hits": 29,
+     "codes": {
+      "BARE_X_PARAGRAPH": 19,
+      "X_OWN_LINE": 10
+     },
+     "samples": [
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X\"}"
+     ]
+    },
+    "PLI_M03": {
+     "records": 1,
+     "hits": 25,
+     "codes": {
+      "BARE_X_PARAGRAPH": 17,
+      "X_OWN_LINE": 8
+     },
+     "samples": [
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X\"}"
+     ]
+    },
+    "PLI_M04": {
+     "records": 1,
+     "hits": 25,
+     "codes": {
+      "BARE_X_PARAGRAPH": 17,
+      "X_OWN_LINE": 8
+     },
+     "samples": [
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X\"}"
+     ]
+    },
+    "PLI_M05": {
+     "records": 1,
+     "hits": 13,
+     "codes": {
+      "BARE_X_PARAGRAPH": 9,
+      "X_OWN_LINE": 4
+     },
+     "samples": [
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X Căn cước công dân\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X Căn cước công dân\"}"
+     ]
+    },
+    "PLI_M06": {
+     "records": 1,
+     "hits": 7,
+     "codes": {
+      "BARE_X_PARAGRAPH": 5,
+      "X_OWN_LINE": 2
+     },
+     "samples": [
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"Không X\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X 03 tháng một lần\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X Không\"}"
+     ]
+    },
+    "PLI_M08": {
+     "records": 1,
+     "hits": 7,
+     "codes": {
+      "BARE_X_PARAGRAPH": 5,
+      "X_OWN_LINE": 2
+     },
+     "samples": [
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"Không X\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X 03 tháng một lần\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X Không\"}"
+     ]
+    },
+    "PLI_M09": {
+     "records": 1,
+     "hits": 7,
+     "codes": {
+      "BARE_X_PARAGRAPH": 5,
+      "X_OWN_LINE": 2
+     },
+     "samples": [
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"Không X\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X 03 tháng một lần\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X Không\"}"
+     ]
+    },
+    "PLI_M12": {
+     "records": 1,
+     "hits": 14,
+     "codes": {
+      "BARE_X_PARAGRAPH": 9,
+      "X_OWN_LINE": 5
+     },
+     "samples": [
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"- Doanh nghiệp có Giấy chứng nhận quyền sử dụng",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X Đồng thời thay đổi địa chỉ nhận thông báo thu",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X\"}"
+     ]
+    },
+    "PLI_M14": {
+     "records": 1,
+     "hits": 6,
+     "codes": {
+      "BARE_X_PARAGRAPH": 3,
+      "X_OWN_LINE": 3
+     },
+     "samples": [
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X\"}",
+      "X_OWN_LINE: {\"page\": 1, \"code\": \"X_OWN_LINE\", \"paragraph\": \"\"}",
+      "X_OWN_LINE: {\"page\": 1, \"code\": \"X_OWN_LINE\", \"paragraph\": \"\"}"
+     ]
+    },
+    "PLI_M15": {
+     "records": 1,
+     "hits": 5,
+     "codes": {
+      "BARE_X_PARAGRAPH": 3,
+      "X_OWN_LINE": 2
+     },
+     "samples": [
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"- Doanh nghiệp có Giấy chứng nhận quyền sử dụng",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X\"}",
+      "X_OWN_LINE: {\"page\": 2, \"code\": \"X_OWN_LINE\", \"paragraph\": \"\"}",
+      "X_OWN_LINE: {\"page\": 2, \"code\": \"X_OWN_LINE\", \"paragraph\": \"\"}"
+     ]
+    },
+    "PLI_M17": {
+     "records": 1,
+     "hits": 9,
+     "codes": {
+      "BARE_X_PARAGRAPH": 6,
+      "X_OWN_LINE": 3
+     },
+     "samples": [
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"Không X\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X 03 tháng một lần\"}"
+     ]
+    },
+    "PLI_M19": {
+     "records": 1,
+     "hits": 5,
+     "codes": {
+      "BARE_X_PARAGRAPH": 3,
+      "X_OWN_LINE": 2
+     },
+     "samples": [
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"Không X\"}",
+      "X_OWN_LINE: {\"page\": 2, \"code\": \"X_OWN_LINE\", \"paragraph\": \"\"}",
+      "X_OWN_LINE: {\"page\": 5, \"code\": \"X_OWN_LINE\", \"paragraph\": \"\"}"
+     ]
+    },
+    "PLI_M23": {
+     "records": 1,
+     "hits": 6,
+     "codes": {
+      "BARE_X_PARAGRAPH": 4,
+      "X_OWN_LINE": 2
+     },
+     "samples": [
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"Không X\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X Đề nghị Quý Cơ quan cấp Giấy chứng nhận đăng ",
+      "X_OWN_LINE: {\"page\": 3, \"code\": \"X_OWN_LINE\", \"paragraph\": \"\"}"
+     ]
+    },
+    "PLI_M25": {
+     "records": 1,
+     "hits": 6,
+     "codes": {
+      "BARE_X_PARAGRAPH": 4,
+      "X_OWN_LINE": 2
+     },
+     "samples": [
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"Không X\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X\"}",
+      "BARE_X_PARAGRAPH: {\"code\": \"BARE_X_PARAGRAPH\", \"paragraph\": \"X Đề nghị Quý Cơ quan cấp Giấy chứng nhận đăng ",
+      "X_OWN_LINE: {\"page\": 3, \"code\": \"X_OWN_LINE\", \"paragraph\": \"\"}"
+     ]
+    }
+   }
+  },
+  "D16_token_values": {
+   "records": 355,
+   "hits": 8846,
+   "forms": [
+    "PLII_M01",
+    "PLII_M02",
+    "PLII_M03",
+    "PLII_M04",
+    "PLII_M05",
+    "PLII_M06",
+    "PLII_M07",
+    "PLII_M08",
+    "PLII_M10",
+    "PLII_M11",
+    "PLII_M12",
+    "PLII_M13",
+    "PLII_M14",
+    "PLII_M15",
+    "PLII_M16",
+    "PLII_M17",
+    "PLII_M18",
+    "PLII_M19",
+    "PLII_M20",
+    "PLII_M21",
+    "PLII_M22",
+    "PLII_M23",
+    "PLII_M24",
+    "PLII_M25",
+    "PLII_M26",
+    "PLII_M27",
+    "PLII_M28",
+    "PLI_M01",
+    "PLI_M02",
+    "PLI_M03",
+    "PLI_M04",
+    "PLI_M05",
+    "PLI_M06",
+    "PLI_M07",
+    "PLI_M08",
+    "PLI_M09",
+    "PLI_M11",
+    "PLI_M12",
+    "PLI_M13",
+    "PLI_M14",
+    "PLI_M15",
+    "PLI_M17",
+    "PLI_M18",
+    "PLI_M19",
+    "PLI_M21",
+    "PLI_M23",
+    "PLI_M25",
+    "PLI_M26",
+    "PLI_M27",
+    "PLI_M28",
+    "PLI_M29",
+    "PLI_M30",
+    "PLI_M31",
+    "PLI_M32",
+    "PLI_M33",
+    "PLI_M42",
+    "PLI_M43",
+    "PLI_M45",
+    "PLI_M47",
+    "PLI_M48",
+    "PLI_M49",
+    "PLI_M50",
+    "PLI_M51",
+    "PLI_M52",
+    "PLI_M53",
+    "PLI_M54",
+    "PLI_M55",
+    "PLI_M56",
+    "PLI_M57",
+    "PLI_M63",
+    "PLI_M66",
+    "PLI_M67",
+    "PLI_M68",
+    "PLI_M69",
+    "PLI_M70",
+    "PLI_M71",
+    "PLI_M72",
+    "PLI_M75",
+    "PLI_M76",
+    "PLI_M78",
+    "PLI_M79",
+    "PLI_M80"
+   ],
+   "audit_expectation": "~938 hit / ~73 form (B4) — mạnh ở long-boundary",
+   "per_fixture": {
+    "choice-variants": {
+     "records": 86,
+     "hits": 1351
+    },
+    "empty-paper": {
+     "records": 13,
+     "hits": 19
+    },
+    "long-boundary": {
+     "records": 86,
+     "hits": 5707
+    },
+    "valid-full": {
+     "records": 86,
+     "hits": 1351
+    },
+    "valid-minimal": {
+     "records": 84,
+     "hits": 418
+    }
+   },
+   "per_form": {
+    "PLII_M01": {
+     "records": 4,
+     "hits": 434,
+     "codes": {
+      "TOKEN_VALUE": 49,
+      "TOKEN_FRAGMENT": 385
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"THANG_KY_VB_4\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"GIOI_TINH_11\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DAN_TOC_19\"}"
+     ]
+    },
+    "PLII_M02": {
+     "records": 4,
+     "hits": 879,
+     "codes": {
+      "TOKEN_VALUE": 70,
+      "TOKEN_FRAGMENT": 809
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_FRAGMENT: {\"page\": 1, \"code\": \"TOKEN_FRAGMENT\", \"value\": \"_MA_SO_HO_KINH_DOANH_12\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"TEN_HO_KINH_DOANH_VIET_B_10\"}",
+      "TOKEN_VALUE: {\"page\": 2, \"code\": \"TOKEN_VALUE\", \"value\": \"GIOI_TINH_11\"}"
+     ]
+    },
+    "PLII_M03": {
+     "records": 4,
+     "hits": 14,
+     "codes": {
+      "TOKEN_VALUE": 14
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"LY_DO_TAM_NGUNG_20\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"LY_DO_TIEP_TUC_KINH_DOAN_22\"}"
+     ]
+    },
+    "PLII_M04": {
+     "records": 4,
+     "hits": 8,
+     "codes": {
+      "TOKEN_VALUE": 8
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}"
+     ]
+    },
+    "PLII_M05": {
+     "records": 4,
+     "hits": 11,
+     "codes": {
+      "TOKEN_VALUE": 11
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"LY_DO_DE_NGHI_THU_HOI_23\"}"
+     ]
+    },
+    "PLII_M06": {
+     "records": 4,
+     "hits": 29,
+     "codes": {
+      "TOKEN_VALUE": 29
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"GIOI_TINH_11\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DAN_TOC_19\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"XAPHUONGDAC_KHU_14\"}"
+     ]
+    },
+    "PLII_M07": {
+     "records": 4,
+     "hits": 206,
+     "codes": {
+      "TOKEN_FRAGMENT": 161,
+      "TOKEN_VALUE": 45
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DANG_KY_THAY_DOI_LAN_THU_12\"}",
+      "TOKEN_VALUE: {\"page\": 2, \"code\": \"TOKEN_VALUE\", \"value\": \"DAN_TOC_19\"}",
+      "TOKEN_VALUE: {\"page\": 2, \"code\": \"TOKEN_VALUE\", \"value\": \"NOI_THUONG_TRU_17\"}",
+      "TOKEN_VALUE: {\"page\": 2, \"code\": \"TOKEN_VALUE\", \"value\": \"NOI_O_HIEN_TAI_18\"}",
+      "TOKEN_FRAGMENT: {\"page\": 2, \"code\": \"TOKEN_FRAGMENT\", \"value\": \"NOI_O_H\"}"
+     ]
+    },
+    "PLII_M08": {
+     "records": 4,
+     "hits": 10,
+     "codes": {
+      "TOKEN_VALUE": 10
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"TEN_CO_QUAN_THUE_QUAN_LY_12\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NOI_NHAN__CO_QUAN_QUAN_29\"}"
+     ]
+    },
+    "PLII_M10": {
+     "records": 4,
+     "hits": 16,
+     "codes": {
+      "TOKEN_VALUE": 13,
+      "TOKEN_FRAGMENT": 3
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"SAU_KHI_XEM_XET_LAI_HO_S_12\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"VE_VIEC_13\"}",
+      "TOKEN_FRAGMENT: {\"page\": 1, \"code\": \"TOKEN_FRAGMENT\", \"value\": \"_MA_SO_HO_KINH_DOANH_12\"}",
+      "TOKEN_VALUE: {\"page\": 2, \"code\": \"TOKEN_VALUE\", \"value\": \"NOI_NHAN__CO_QUAN_QUAN_29\"}"
+     ]
+    },
+    "PLII_M11": {
+     "records": 4,
+     "hits": 7,
+     "codes": {
+      "TOKEN_VALUE": 7
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 2, \"code\": \"TOKEN_VALUE\", \"value\": \"NOI_NHAN__CO_QUAN_QUAN_29\"}"
+     ]
+    },
+    "PLII_M12": {
+     "records": 4,
+     "hits": 19,
+     "codes": {
+      "TOKEN_VALUE": 19
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"VE_VIEC_13\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"CAN_CU_QUYET_DINH_SO_6\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"CAN_CU_QUYET_DINH_SO_6\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"CAN_CU_QUYET_DINH_SO_6\"}"
+     ]
+    },
+    "PLII_M13": {
+     "records": 4,
+     "hits": 13,
+     "codes": {
+      "TOKEN_VALUE": 13
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NOI_O_HIEN_TAI_18\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"LY_DO_CHAM_DUT_TON_TAI__15\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NOI_NHAN__CO_QUAN_QUAN_29\"}"
+     ]
+    },
+    "PLII_M14": {
+     "records": 4,
+     "hits": 13,
+     "codes": {
+      "TOKEN_VALUE": 13
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"CAN_CU_QUYET_DINH_SO_6\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"CAN_CU_QUYET_DINH_SO_6\"}",
+      "TOKEN_VALUE: {\"page\": 2, \"code\": \"TOKEN_VALUE\", \"value\": \"NOI_NHAN__CO_QUAN_QUAN_29\"}"
+     ]
+    },
+    "PLII_M15": {
+     "records": 4,
+     "hits": 19,
+     "codes": {
+      "TOKEN_VALUE": 19
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"CAN_CU_QUYET_DINH_SO_6\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"CAN_CU_QUYET_DINH_SO_6\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DANG_KY_THAY_DOI_LAN_THU_12\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NOI_CAP_14\"}"
+     ]
+    },
+    "PLII_M16": {
+     "records": 4,
+     "hits": 13,
+     "codes": {
+      "TOKEN_VALUE": 13
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"CAN_CU_QUYET_DINH_SO_6\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"VE_VIEC_13\"}",
+      "TOKEN_VALUE: {\"page\": 2, \"code\": \"TOKEN_VALUE\", \"value\": \"NOI_NHAN__CO_QUAN_QUAN_29\"}"
+     ]
+    },
+    "PLII_M17": {
+     "records": 4,
+     "hits": 7,
+     "codes": {
+      "TOKEN_VALUE": 7
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NOI_NHAN__CO_QUAN_QUAN_29\"}"
+     ]
+    },
+    "PLII_M18": {
+     "records": 4,
+     "hits": 11,
+     "codes": {
+      "TOKEN_VALUE": 11
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DA_NHAN_CUA_ONGBA_12\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NOI_NHAN__CO_QUAN_QUAN_29\"}"
+     ]
+    },
+    "PLII_M19": {
+     "records": 4,
+     "hits": 10,
+     "codes": {
+      "TOKEN_VALUE": 10
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"CAN_CU_QUYET_DINH_SO_6\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"LY_DO_DE_NGHI_THU_HOI_23\"}"
+     ]
+    },
+    "PLII_M20": {
+     "records": 4,
+     "hits": 7,
+     "codes": {
+      "TOKEN_VALUE": 7
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NOI_NHAN__CO_QUAN_QUAN_29\"}"
+     ]
+    },
+    "PLII_M21": {
+     "records": 4,
+     "hits": 7,
+     "codes": {
+      "TOKEN_VALUE": 7
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"CAN_CU_QUYET_DINH_SO_6\"}"
+     ]
+    },
+    "PLII_M22": {
+     "records": 4,
+     "hits": 10,
+     "codes": {
+      "TOKEN_VALUE": 10
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"CAN_CU_QUYET_DINH_SO_6\"}",
+      "TOKEN_VALUE: {\"page\": 2, \"code\": \"TOKEN_VALUE\", \"value\": \"NOI_NHAN__CO_QUAN_QUAN_29\"}"
+     ]
+    },
+    "PLII_M23": {
+     "records": 4,
+     "hits": 10,
+     "codes": {
+      "TOKEN_VALUE": 10
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"CAN_CU_QUYET_DINH_SO_6\"}",
+      "TOKEN_VALUE: {\"page\": 2, \"code\": \"TOKEN_VALUE\", \"value\": \"NOI_NHAN__CO_QUAN_QUAN_29\"}"
+     ]
+    },
+    "PLII_M24": {
+     "records": 4,
+     "hits": 4,
+     "codes": {
+      "TOKEN_VALUE": 4
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}"
+     ]
+    },
+    "PLII_M25": {
+     "records": 4,
+     "hits": 10,
+     "codes": {
+      "TOKEN_VALUE": 10
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"SAU_KHI_XEM_XET_LAI_HO_S_12\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NOI_NHAN__CO_QUAN_QUAN_29\"}"
+     ]
+    },
+    "PLII_M26": {
+     "records": 4,
+     "hits": 10,
+     "codes": {
+      "TOKEN_VALUE": 10
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"VE_VIEC_13\"}",
+      "TOKEN_VALUE: {\"page\": 2, \"code\": \"TOKEN_VALUE\", \"value\": \"NOI_NHAN__CO_QUAN_QUAN_29\"}"
+     ]
+    },
+    "PLII_M27": {
+     "records": 4,
+     "hits": 13,
+     "codes": {
+      "TOKEN_VALUE": 13
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DAN_TOC_19\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NOI_THUONG_TRU_17\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NOI_O_HIEN_TAI_18\"}"
+     ]
+    },
+    "PLII_M28": {
+     "records": 4,
+     "hits": 4,
+     "codes": {
+      "TOKEN_VALUE": 4
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}"
+     ]
+    },
+    "PLI_M01": {
+     "records": 5,
+     "hits": 135,
+     "codes": {
+      "TOKEN_FRAGMENT": 24,
+      "TOKEN_VALUE": 111
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"THANG_KY_VB_4\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"GIOI_TINH_11\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"XAPHUONGDAC_KHU_14\"}"
+     ]
+    },
+    "PLI_M02": {
+     "records": 5,
+     "hits": 792,
+     "codes": {
+      "TOKEN_FRAGMENT": 568,
+      "TOKEN_VALUE": 224
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"THANG_KY_VB_4\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"GIOI_TINH_11\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"XAPHUONGDAC_KHU_14\"}"
+     ]
+    },
+    "PLI_M03": {
+     "records": 5,
+     "hits": 132,
+     "codes": {
+      "TOKEN_FRAGMENT": 6,
+      "TOKEN_VALUE": 126
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"THANG_KY_VB_4\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"GIOI_TINH_11\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"XAPHUONGDAC_KHU_14\"}"
+     ]
+    },
+    "PLI_M04": {
+     "records": 5,
+     "hits": 162,
+     "codes": {
+      "TOKEN_FRAGMENT": 6,
+      "TOKEN_VALUE": 156
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"THANG_KY_VB_4\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"GIOI_TINH_11\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"XAPHUONGDAC_KHU_14\"}"
+     ]
+    },
+    "PLI_M05": {
+     "records": 4,
+     "hits": 41,
+     "codes": {
+      "TOKEN_VALUE": 40,
+      "TOKEN_FRAGMENT": 1
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"TEN_HO_KINH_DOANH_GHI_B_6\"}",
+      "TOKEN_VALUE: {\"page\": 2, \"code\": \"TOKEN_VALUE\", \"value\": \"SO_GIAY_CHUNG_NHAN_DANG__7\"}",
+      "TOKEN_VALUE: {\"page\": 2, \"code\": \"TOKEN_VALUE\", \"value\": \"NOI_CAP_9\"}",
+      "TOKEN_VALUE: {\"page\": 2, \"code\": \"TOKEN_VALUE\", \"value\": \"NGAY_HET_HAN_NEU_CO_22\"}"
+     ]
+    },
+    "PLI_M06": {
+     "records": 5,
+     "hits": 469,
+     "codes": {
+      "TOKEN_FRAGMENT": 421,
+      "TOKEN_VALUE": 48
+     },
+     "samples": [
+      "TOKEN_FRAGMENT: {\"page\": 1, \"code\": \"TOKEN_FRAGMENT\", \"value\": \"_TI\"}",
+      "TOKEN_FRAGMENT: {\"page\": 1, \"code\": \"TOKEN_FRAGMENT\", \"value\": \"_5\"}",
+      "TOKEN_FRAGMENT: {\"page\": 1, \"code\": \"TOKEN_FRAGMENT\", \"value\": \"N_\"}",
+      "TOKEN_FRAGMENT: {\"page\": 1, \"code\": \"TOKEN_FRAGMENT\", \"value\": \"C_\"}",
+      "TOKEN_FRAGMENT: {\"page\": 1, \"code\": \"TOKEN_FRAGMENT\", \"value\": \"N_\"}"
+     ]
+    },
+    "PLI_M07": {
+     "records": 4,
+     "hits": 288,
+     "codes": {
+      "TOKEN_FRAGMENT": 288
+     },
+     "samples": [
+      "TOKEN_FRAGMENT: {\"page\": 1, \"code\": \"TOKEN_FRAGMENT\", \"value\": \"_TI\"}",
+      "TOKEN_FRAGMENT: {\"page\": 1, \"code\": \"TOKEN_FRAGMENT\", \"value\": \"_1\"}",
+      "TOKEN_FRAGMENT: {\"page\": 1, \"code\": \"TOKEN_FRAGMENT\", \"value\": \"N_\"}",
+      "TOKEN_FRAGMENT: {\"page\": 1, \"code\": \"TOKEN_FRAGMENT\", \"value\": \"C_\"}",
+      "TOKEN_FRAGMENT: {\"page\": 1, \"code\": \"TOKEN_FRAGMENT\", \"value\": \"SO_\"}"
+     ]
+    },
+    "PLI_M08": {
+     "records": 5,
+     "hits": 405,
+     "codes": {
+      "TOKEN_FRAGMENT": 261,
+      "TOKEN_VALUE": 144
+     },
+     "samples": [
+      "TOKEN_FRAGMENT: {\"page\": 1, \"code\": \"TOKEN_FRAGMENT\", \"value\": \"TEN_C\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"D_47\"}",
+      "TOKEN_FRAGMENT: {\"page\": 1, \"code\": \"TOKEN_FRAGMENT\", \"value\": \"QUOC_\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"GIA_48\"}",
+      "TOKEN_FRAGMENT: {\"page\": 1, \"code\": \"TOKEN_FRAGMENT\", \"value\": \"MA_SO\"}"
+     ]
+    },
+    "PLI_M09": {
+     "records": 5,
+     "hits": 599,
+     "codes": {
+      "TOKEN_FRAGMENT": 581,
+      "TOKEN_VALUE": 18
+     },
+     "samples": [
+      "TOKEN_FRAGMENT: {\"page\": 2, \"code\": \"TOKEN_FRAGMENT\", \"value\": \"_TI\"}",
+      "TOKEN_FRAGMENT: {\"page\": 2, \"code\": \"TOKEN_FRAGMENT\", \"value\": \"_4\"}",
+      "TOKEN_FRAGMENT: {\"page\": 2, \"code\": \"TOKEN_FRAGMENT\", \"value\": \"N_\"}",
+      "TOKEN_FRAGMENT: {\"page\": 2, \"code\": \"TOKEN_FRAGMENT\", \"value\": \"C_\"}",
+      "TOKEN_FRAGMENT: {\"page\": 2, \"code\": \"TOKEN_FRAGMENT\", \"value\": \"VON_DO\"}"
+     ]
+    },
+    "PLI_M11": {
+     "records": 5,
+     "hits": 9,
+     "codes": {
+      "TOKEN_FRAGMENT": 5,
+      "TOKEN_VALUE": 4
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_FRAGMENT: {\"page\": 1, \"code\": \"TOKEN_FRAGMENT\", \"value\": \"__________________\"}"
+     ]
+    },
+    "PLI_M12": {
+     "records": 5,
+     "hits": 985,
+     "codes": {
+      "TOKEN_FRAGMENT": 933,
+      "TOKEN_VALUE": 52
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_FRAGMENT: {\"page\": 2, \"code\": \"TOKEN_FRAGMENT\", \"value\": \"___________________\"}",
+      "TOKEN_VALUE: {\"page\": 3, \"code\": \"TOKEN_VALUE\", \"value\": \"TEN_DOANH_NGHIEP_VIET_BA_3\"}",
+      "TOKEN_VALUE: {\"page\": 4, \"code\": \"TOKEN_VALUE\", \"value\": \"XAPHUONGDAC_KHU_14\"}"
+     ]
+    },
+    "PLI_M13": {
+     "records": 5,
+     "hits": 171,
+     "codes": {
+      "TOKEN_FRAGMENT": 69,
+      "TOKEN_VALUE": 102
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_FRAGMENT: {\"page\": 1, \"code\": \"TOKEN_FRAGMENT\", \"value\": \"GIOI_TI\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NH_36\"}",
+      "TOKEN_FRAGMENT: {\"page\": 1, \"code\": \"TOKEN_FRAGMENT\", \"value\": \"QUOC_\"}"
+     ]
+    },
+    "PLI_M14": {
+     "records": 5,
+     "hits": 55,
+     "codes": {
+      "TOKEN_FRAGMENT": 5,
+      "TOKEN_VALUE": 50
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"GIOI_TINH_11\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"XAPHUONGDAC_KHU_14\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"TINHTHANH_PHO_TRUC_THUO_15\"}"
+     ]
+    },
+    "PLI_M15": {
+     "records": 5,
+     "hits": 625,
+     "codes": {
+      "TOKEN_FRAGMENT": 549,
+      "TOKEN_VALUE": 76
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"GIOI_TINH_11\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"XAPHUONGDAC_KHU_14\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"TINHTHANH_PHO_TRUC_THUO_15\"}"
+     ]
+    },
+    "PLI_M17": {
+     "records": 5,
+     "hits": 63,
+     "codes": {
+      "TOKEN_FRAGMENT": 6,
+      "TOKEN_VALUE": 57
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"XAPHUONGDAC_KHU_14\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"TINHTHANH_PHO_TRUC_THUO_15\"}",
+      "TOKEN_VALUE: {\"page\": 2, \"code\": \"TOKEN_VALUE\", \"value\": \"GIOI_TINH_11\"}"
+     ]
+    },
+    "PLI_M18": {
+     "records": 4,
+     "hits": 38,
+     "codes": {
+      "TOKEN_VALUE": 38
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NOI_CAP_14\"}",
+      "TOKEN_VALUE: {\"page\": 2, \"code\": \"TOKEN_VALUE\", \"value\": \"GIOI_TINH_11\"}",
+      "TOKEN_VALUE: {\"page\": 2, \"code\": \"TOKEN_VALUE\", \"value\": \"XAPHUONGDAC_KHU_14\"}"
+     ]
+    },
+    "PLI_M19": {
+     "records": 4,
+     "hits": 67,
+     "codes": {
+      "TOKEN_VALUE": 66,
+      "TOKEN_FRAGMENT": 1
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"MA_SO_CHI_NHANHVAN_PHON_15\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"MA_SO_CHI_NHANHVAN_PHON_15\"}",
+      "TOKEN_VALUE: {\"page\": 2, \"code\": \"TOKEN_VALUE\", \"value\": \"TEN_DIA_DIEM_KINH_DOANH__10\"}"
+     ]
+    },
+    "PLI_M21": {
+     "records": 4,
+     "hits": 10,
+     "codes": {
+      "TOKEN_VALUE": 9,
+      "TOKEN_FRAGMENT": 1
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}"
+     ]
+    },
+    "PLI_M23": {
+     "records": 4,
+     "hits": 46,
+     "codes": {
+      "TOKEN_VALUE": 45,
+      "TOKEN_FRAGMENT": 1
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"MA_SO_CHI_NHANHVAN_PHON_15\"}",
+      "TOKEN_VALUE: {\"page\": 2, \"code\": \"TOKEN_VALUE\", \"value\": \"NOI_CAP_14\"}",
+      "TOKEN_VALUE: {\"page\": 2, \"code\": \"TOKEN_VALUE\", \"value\": \"XAPHUONGDAC_KHU_14\"}"
+     ]
+    },
+    "PLI_M25": {
+     "records": 4,
+     "hits": 55,
+     "codes": {
+      "TOKEN_VALUE": 54,
+      "TOKEN_FRAGMENT": 1
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"MA_SO_CHI_NHANHVAN_PHON_15\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"XAPHUONGDAC_KHU_14\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"TINHTHANH_PHO_TRUC_THUO_15\"}"
+     ]
+    },
+    "PLI_M26": {
+     "records": 4,
+     "hits": 14,
+     "codes": {
+      "TOKEN_VALUE": 14
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"MA_SO_CHI_NHANHVAN_PHON_15\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"LY_DO_DE_NGHI_THU_HOI_23\"}"
+     ]
+    },
+    "PLI_M27": {
+     "records": 4,
+     "hits": 47,
+     "codes": {
+      "TOKEN_VALUE": 47
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"LY_DO_TAM_NGUNG_20\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"GIOI_TINH_16\"}",
+      "TOKEN_VALUE: {\"page\": 2, \"code\": \"TOKEN_VALUE\", \"value\": \"MA_SO_CHI_NHANHVAN_PHON_15\"}"
+     ]
+    },
+    "PLI_M28": {
+     "records": 4,
+     "hits": 23,
+     "codes": {
+      "TOKEN_VALUE": 23
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"SO_GIAY_CHUNG_NHAN_DANG__17\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"MA_SO_CHI_NHANHVAN_PHON_15\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"XAPHUONGDAC_KHU_14\"}"
+     ]
+    },
+    "PLI_M29": {
+     "records": 4,
+     "hits": 14,
+     "codes": {
+      "TOKEN_VALUE": 14
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"TEN_DIA_DIEM_KINH_DOANH__10\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NOI_CAP_14\"}"
+     ]
+    },
+    "PLI_M30": {
+     "records": 4,
+     "hits": 11,
+     "codes": {
+      "TOKEN_VALUE": 11
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"SO_GIAY_CHUNG_NHAN_DANG__17\"}"
+     ]
+    },
+    "PLI_M31": {
+     "records": 4,
+     "hits": 14,
+     "codes": {
+      "TOKEN_VALUE": 14
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"SO_GIAY_CHUNG_NHAN_DANG__17\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"VE_VIEC_13\"}"
+     ]
+    },
+    "PLI_M32": {
+     "records": 4,
+     "hits": 14,
+     "codes": {
+      "TOKEN_VALUE": 14
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"GIOI_TINH_11\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NOI_CAP_14\"}"
+     ]
+    },
+    "PLI_M33": {
+     "records": 4,
+     "hits": 38,
+     "codes": {
+      "TOKEN_VALUE": 38
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"GIOI_TINH_11\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"XAPHUONGDAC_KHU_14\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"TINHTHANH_PHO_TRUC_THUO_15\"}"
+     ]
+    },
+    "PLI_M42": {
+     "records": 3,
+     "hits": 9,
+     "codes": {
+      "TOKEN_VALUE": 9
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"MA_SO_CHI_NHANHVAN_PHON_15\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"TEN_DIA_DIEM_KINH_DOANH__10\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"GIOI_TINH_11\"}"
+     ]
+    },
+    "PLI_M43": {
+     "records": 3,
+     "hits": 9,
+     "codes": {
+      "TOKEN_VALUE": 9
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"MA_SO_CHI_NHANHVAN_PHON_15\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"TEN_DIA_DIEM_KINH_DOANH__10\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"GIOI_TINH_11\"}"
+     ]
+    },
+    "PLI_M45": {
+     "records": 4,
+     "hits": 18,
+     "codes": {
+      "TOKEN_VALUE": 18
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"THANG_KY_VB_4\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"MA_SO_CHI_NHANHVAN_PHON_15\"}",
+      "TOKEN_VALUE: {\"page\": 2, \"code\": \"TOKEN_VALUE\", \"value\": \"NOI_NHAN__CO_QUAN_QUAN_29\"}"
+     ]
+    },
+    "PLI_M47": {
+     "records": 4,
+     "hits": 18,
+     "codes": {
+      "TOKEN_VALUE": 18
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"THANG_KY_VB_4\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"TEN_CO_QUAN_THUE_QUAN_LY_12\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NOI_NHAN__CO_QUAN_QUAN_29\"}"
+     ]
+    },
+    "PLI_M48": {
+     "records": 4,
+     "hits": 18,
+     "codes": {
+      "TOKEN_VALUE": 18
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"THANG_KY_VB_4\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"SAU_KHI_XEM_XET_LAI_HO_S_12\"}",
+      "TOKEN_VALUE: {\"page\": 2, \"code\": \"TOKEN_VALUE\", \"value\": \"NOI_NHAN__CO_QUAN_QUAN_29\"}"
+     ]
+    },
+    "PLI_M49": {
+     "records": 4,
+     "hits": 18,
+     "codes": {
+      "TOKEN_VALUE": 18
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"THANG_KY_VB_4\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"SO_GIAY_TO_PHAP_LY_CUA_C_21\"}",
+      "TOKEN_VALUE: {\"page\": 2, \"code\": \"TOKEN_VALUE\", \"value\": \"NOI_NHAN__CO_QUAN_QUAN_29\"}"
+     ]
+    },
+    "PLI_M50": {
+     "records": 4,
+     "hits": 18,
+     "codes": {
+      "TOKEN_VALUE": 18
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"THANG_KY_VB_4\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"CAN_CU_QUYET_DINH_SO_6\"}",
+      "TOKEN_VALUE: {\"page\": 2, \"code\": \"TOKEN_VALUE\", \"value\": \"NOI_NHAN__CO_QUAN_QUAN_29\"}"
+     ]
+    },
+    "PLI_M51": {
+     "records": 4,
+     "hits": 15,
+     "codes": {
+      "TOKEN_VALUE": 15
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"THANG_KY_VB_4\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_VALUE: {\"page\": 2, \"code\": \"TOKEN_VALUE\", \"value\": \"NOI_NHAN__CO_QUAN_QUAN_29\"}"
+     ]
+    },
+    "PLI_M52": {
+     "records": 4,
+     "hits": 18,
+     "codes": {
+      "TOKEN_VALUE": 18
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"THANG_KY_VB_4\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_VALUE: {\"page\": 2, \"code\": \"TOKEN_VALUE\", \"value\": \"TINH_TRANG_PHAP_LY_19\"}",
+      "TOKEN_VALUE: {\"page\": 3, \"code\": \"TOKEN_VALUE\", \"value\": \"NOI_NHAN__CO_QUAN_QUAN_29\"}"
+     ]
+    },
+    "PLI_M53": {
+     "records": 4,
+     "hits": 24,
+     "codes": {
+      "TOKEN_VALUE": 24
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"THANG_KY_VB_4\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"CAN_CU_QUYET_DINH_SO_6\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"CAN_CU_QUYET_DINH_SO_6\"}"
+     ]
+    },
+    "PLI_M54": {
+     "records": 4,
+     "hits": 18,
+     "codes": {
+      "TOKEN_VALUE": 18
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"THANG_KY_VB_4\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"LY_DO_TAM_NGUNG_20\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NOI_NHAN__CO_QUAN_QUAN_29\"}"
+     ]
+    },
+    "PLI_M55": {
+     "records": 4,
+     "hits": 24,
+     "codes": {
+      "TOKEN_VALUE": 24
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"THANG_KY_VB_4\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"MA_SO_CHI_NHANHVAN_PHON_15\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"LY_DO_TAM_NGUNG_20\"}"
+     ]
+    },
+    "PLI_M56": {
+     "records": 4,
+     "hits": 21,
+     "codes": {
+      "TOKEN_VALUE": 21
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"THANG_KY_VB_4\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_VALUE: {\"page\": 2, \"code\": \"TOKEN_VALUE\", \"value\": \"MA_SO_CHI_NHANHVAN_PHON_15\"}",
+      "TOKEN_VALUE: {\"page\": 2, \"code\": \"TOKEN_VALUE\", \"value\": \"LY_DO_18\"}"
+     ]
+    },
+    "PLI_M57": {
+     "records": 4,
+     "hits": 18,
+     "codes": {
+      "TOKEN_VALUE": 18
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"THANG_KY_VB_4\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"MA_SO_CHI_NHANHVAN_PHON_15\"}",
+      "TOKEN_VALUE: {\"page\": 2, \"code\": \"TOKEN_VALUE\", \"value\": \"NOI_NHAN__CO_QUAN_QUAN_29\"}"
+     ]
+    },
+    "PLI_M63": {
+     "records": 4,
+     "hits": 33,
+     "codes": {
+      "TOKEN_VALUE": 33
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"THANG_KY_VB_4\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"CAN_CU_KHAC_NEU_CO_7\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"MA_SOMA_SO_THUE_CUA_CHI_26\"}"
+     ]
+    },
+    "PLI_M66": {
+     "records": 4,
+     "hits": 27,
+     "codes": {
+      "TOKEN_VALUE": 27
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"THANG_KY_VB_4\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NOI_CAP_14\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"MA_SOMA_SO_THUE_CUA_CHI_26\"}"
+     ]
+    },
+    "PLI_M67": {
+     "records": 4,
+     "hits": 18,
+     "codes": {
+      "TOKEN_VALUE": 18
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"THANG_KY_VB_4\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"MA_SO_CHI_NHANHVAN_PHON_15\"}",
+      "TOKEN_VALUE: {\"page\": 2, \"code\": \"TOKEN_VALUE\", \"value\": \"NOI_NHAN__CO_QUAN_QUAN_29\"}"
+     ]
+    },
+    "PLI_M68": {
+     "records": 4,
+     "hits": 21,
+     "codes": {
+      "TOKEN_VALUE": 21
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"THANG_KY_VB_4\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"SO_GIAY_CHUNG_NHAN_DANG__17\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"MA_SO_CHI_NHANHVAN_PHON_15\"}"
+     ]
+    },
+    "PLI_M69": {
+     "records": 4,
+     "hits": 24,
+     "codes": {
+      "TOKEN_VALUE": 24
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"THANG_KY_VB_4\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"SO_GIAY_CHUNG_NHAN_DANG__17\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"LY_DO_GIAI_THE_14\"}"
+     ]
+    },
+    "PLI_M70": {
+     "records": 4,
+     "hits": 21,
+     "codes": {
+      "TOKEN_VALUE": 21
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"MA_HO_SO_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"THANG_KY_VB_4\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"VE_VIEC_13\"}"
+     ]
+    },
+    "PLI_M71": {
+     "records": 4,
+     "hits": 22,
+     "codes": {
+      "TOKEN_VALUE": 22
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"THANG_KY_VB_4\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DA_NHAN_CUA_ONGBA_12\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"VE_VIEC_13\"}"
+     ]
+    },
+    "PLI_M72": {
+     "records": 20,
+     "hits": 1208,
+     "codes": {
+      "TOKEN_FRAGMENT": 896,
+      "TOKEN_VALUE": 312
+     },
+     "samples": [
+      "TOKEN_FRAGMENT: {\"page\": 1, \"code\": \"TOKEN_FRAGMENT\", \"value\": \"LA_NGANH_CHI\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NH_196\"}",
+      "TOKEN_FRAGMENT: {\"page\": 1, \"code\": \"TOKEN_FRAGMENT\", \"value\": \"LA_NGANH_CHI\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NH_199\"}",
+      "TOKEN_FRAGMENT: {\"page\": 1, \"code\": \"TOKEN_FRAGMENT\", \"value\": \"LA_NGANH_CHI\"}"
+     ]
+    },
+    "PLI_M75": {
+     "records": 4,
+     "hits": 41,
+     "codes": {
+      "TOKEN_VALUE": 41
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"THANG_KY_VB_4\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"CAN_CU_QUYET_DINH_SO_6\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"THANG_KY_VB_4\"}"
+     ]
+    },
+    "PLI_M76": {
+     "records": 4,
+     "hits": 15,
+     "codes": {
+      "TOKEN_VALUE": 15
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"THANG_KY_VB_4\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"VE_VIEC_13\"}"
+     ]
+    },
+    "PLI_M78": {
+     "records": 4,
+     "hits": 18,
+     "codes": {
+      "TOKEN_VALUE": 18
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"THANG_KY_VB_4\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"GIOI_TINH_11\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NOI_CAP_14\"}"
+     ]
+    },
+    "PLI_M79": {
+     "records": 4,
+     "hits": 18,
+     "codes": {
+      "TOKEN_VALUE": 18
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NOI_CAP_14\"}",
+      "TOKEN_VALUE: {\"page\": 2, \"code\": \"TOKEN_VALUE\", \"value\": \"NGAY_HET_HAN_NEU_CO_22\"}",
+      "TOKEN_VALUE: {\"page\": 2, \"code\": \"TOKEN_VALUE\", \"value\": \"LY_DO_DE_NGHI_THU_HOI_23\"}"
+     ]
+    },
+    "PLI_M80": {
+     "records": 4,
+     "hits": 18,
+     "codes": {
+      "TOKEN_VALUE": 18
+     },
+     "samples": [
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"DIA_DIEM_KY_2\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NAM_KY_VB_5\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"GIOI_TINH_11\"}",
+      "TOKEN_VALUE: {\"page\": 1, \"code\": \"TOKEN_VALUE\", \"value\": \"NOI_CAP_14\"}",
+      "TOKEN_VALUE: {\"page\": 2, \"code\": \"TOKEN_VALUE\", \"value\": \"NGAY_HET_HAN_NEU_CO_22\"}"
+     ]
+    }
+   }
+  },
+  "D9_table_grid": {
+   "records": 50,
+   "hits": 60,
+   "forms": [
+    "PLII_M01",
+    "PLII_M02",
+    "PLI_M02",
+    "PLI_M06",
+    "PLI_M07",
+    "PLI_M09",
+    "PLI_M10",
+    "PLI_M12",
+    "PLI_M15",
+    "PLI_M72"
+   ],
+   "audit_expectation": "~60 bảng / ~10 form (B5) — PLII_M01/02, PLI_M02/06/07/09/10/12/15/72",
+   "per_fixture": {
+    "choice-variants": {
+     "records": 10,
+     "hits": 12
+    },
+    "empty-paper": {
+     "records": 10,
+     "hits": 12
+    },
+    "long-boundary": {
+     "records": 10,
+     "hits": 12
+    },
+    "valid-full": {
+     "records": 10,
+     "hits": 12
+    },
+    "valid-minimal": {
+     "records": 10,
+     "hits": 12
+    }
+   },
+   "per_form": {
+    "PLII_M01": {
+     "records": 5,
+     "hits": 5,
+     "codes": {
+      "NARROW_COL_WIDE": 5
+     },
+     "samples": [
+      "NARROW_COL_WIDE: {\"table\": 1, \"code\": \"NARROW_COL_WIDE\", \"cols\": [[0, 566], [1, 568], [4, 630], [5, 630], ["
+     ]
+    },
+    "PLII_M02": {
+     "records": 5,
+     "hits": 10,
+     "codes": {
+      "NARROW_COL_WIDE": 10
+     },
+     "samples": [
+      "NARROW_COL_WIDE: {\"table\": 1, \"code\": \"NARROW_COL_WIDE\", \"cols\": [[0, 566], [1, 568], [4, 630], [5, 630], [",
+      "NARROW_COL_WIDE: {\"table\": 7, \"code\": \"NARROW_COL_WIDE\", \"cols\": [[0, 566], [1, 568], [4, 630], [5, 630], ["
+     ]
+    },
+    "PLI_M02": {
+     "records": 5,
+     "hits": 5,
+     "codes": {
+      "NARROW_COL_WIDE": 5
+     },
+     "samples": [
+      "NARROW_COL_WIDE: {\"table\": 1, \"code\": \"NARROW_COL_WIDE\", \"cols\": [[0, 566], [1, 792], [2, 568], [3, 566], ["
+     ]
+    },
+    "PLI_M06": {
+     "records": 5,
+     "hits": 5,
+     "codes": {
+      "NARROW_COL_WIDE": 5
+     },
+     "samples": [
+      "NARROW_COL_WIDE: {\"table\": 0, \"code\": \"NARROW_COL_WIDE\", \"cols\": [[0, 566], [1, 568], [2, 646], [3, 568], ["
+     ]
+    },
+    "PLI_M07": {
+     "records": 5,
+     "hits": 5,
+     "codes": {
+      "NARROW_COL_WIDE": 5
+     },
+     "samples": [
+      "NARROW_COL_WIDE: {\"table\": 0, \"code\": \"NARROW_COL_WIDE\", \"cols\": [[0, 567], [3, 566], [5, 568], [6, 566], ["
+     ]
+    },
+    "PLI_M09": {
+     "records": 5,
+     "hits": 5,
+     "codes": {
+      "NARROW_COL_WIDE": 5
+     },
+     "samples": [
+      "NARROW_COL_WIDE: {\"table\": 0, \"code\": \"NARROW_COL_WIDE\", \"cols\": [[0, 566], [1, 568], [2, 566], [3, 568], ["
+     ]
+    },
+    "PLI_M10": {
+     "records": 5,
+     "hits": 5,
+     "codes": {
+      "NARROW_COL_WIDE": 5
+     },
+     "samples": [
+      "NARROW_COL_WIDE: {\"table\": 0, \"code\": \"NARROW_COL_WIDE\", \"cols\": [[0, 566], [1, 568], [2, 627], [3, 568], ["
+     ]
+    },
+    "PLI_M12": {
+     "records": 5,
+     "hits": 5,
+     "codes": {
+      "NARROW_COL_WIDE": 5
+     },
+     "samples": [
+      "NARROW_COL_WIDE: {\"table\": 4, \"code\": \"NARROW_COL_WIDE\", \"cols\": [[0, 566], [1, 703], [2, 567], [3, 566], ["
+     ]
+    },
+    "PLI_M15": {
+     "records": 5,
+     "hits": 5,
+     "codes": {
+      "NARROW_COL_WIDE": 5
+     },
+     "samples": [
+      "NARROW_COL_WIDE: {\"table\": 1, \"code\": \"NARROW_COL_WIDE\", \"cols\": [[0, 566], [1, 792], [2, 568], [3, 566], ["
+     ]
+    },
+    "PLI_M72": {
+     "records": 5,
+     "hits": 10,
+     "codes": {
+      "NARROW_COL_WIDE": 10
+     },
+     "samples": [
+      "NARROW_COL_WIDE: {\"table\": 1, \"code\": \"NARROW_COL_WIDE\", \"cols\": [[0, 566], [1, 568], [2, 567], [3, 733], [",
+      "NARROW_COL_WIDE: {\"table\": 2, \"code\": \"NARROW_COL_WIDE\", \"cols\": [[0, 566], [1, 568], [2, 567], [3, 733], ["
+     ]
+    }
+   }
+  }
+ },
+ "d14_forms_with_slot": [
+  "PLII_M01",
+  "PLII_M02",
+  "PLII_M03",
+  "PLII_M04",
+  "PLII_M05",
+  "PLII_M06",
+  "PLII_M07",
+  "PLII_M08",
+  "PLII_M10",
+  "PLII_M11",
+  "PLII_M12",
+  "PLII_M13",
+  "PLII_M14",
+  "PLII_M15",
+  "PLII_M16",
+  "PLII_M19",
+  "PLII_M20",
+  "PLII_M21",
+  "PLII_M22",
+  "PLII_M23",
+  "PLII_M24",
+  "PLII_M25",
+  "PLII_M26",
+  "PLII_M27",
+  "PLII_M28",
+  "PLI_M05",
+  "PLI_M12",
+  "PLI_M13",
+  "PLI_M14",
+  "PLI_M15",
+  "PLI_M17",
+  "PLI_M18",
+  "PLI_M19",
+  "PLI_M21",
+  "PLI_M23",
+  "PLI_M26",
+  "PLI_M27",
+  "PLI_M28",
+  "PLI_M29",
+  "PLI_M30",
+  "PLI_M31",
+  "PLI_M32",
+  "PLI_M42",
+  "PLI_M43",
+  "PLI_M45",
+  "PLI_M47",
+  "PLI_M48",
+  "PLI_M49",
+  "PLI_M50",
+  "PLI_M51",
+  "PLI_M52",
+  "PLI_M53",
+  "PLI_M54",
+  "PLI_M55",
+  "PLI_M56",
+  "PLI_M57",
+  "PLI_M66",
+  "PLI_M68",
+  "PLI_M69",
+  "PLI_M71",
+  "PLI_M72",
+  "PLI_M73",
+  "PLI_M74",
+  "PLI_M75",
+  "PLI_M76"
+ ]
+}

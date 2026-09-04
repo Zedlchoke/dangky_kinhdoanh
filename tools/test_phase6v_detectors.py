@@ -1,0 +1,459 @@
+# -*- coding: utf-8 -*-
+"""test_phase6v_detectors.py — 6V-V1 (agent/6v-detectors): pin baseline ĐỎ
+của D13/D14/D15/D16 + D9 nâng cấp trên corpus v0_corpuscheck, kèm negative
+mutations (docx/pdf tự dựng nhỏ) cho từng detector.
+
+==== Phương pháp ====
+
+V1a (pin baseline — chống "chọn số đẹp"):
+  Chạy 5 detector trên TOÀN BỘ corpus sẵn có
+  generated_ho_so/_visual_layout/phase6v/v0_corpuscheck (455 record, đọc
+  docx/pdf có sẵn — không export, không soffice) và so với số PIN dưới đây,
+  số lấy từ tools/census/6v_v1_baseline.json @ branch 6v-detectors (corpus
+  render post-V0 @313b0af; template giống hệt audit-HEAD 294604c). Corpus
+  không có trên máy (gitignore, chưa export) → check SKIP, KHÔNG đếm vào
+  PASS/FAIL — chạy tools.census.6v_v1_baseline để tái lập.
+
+  Đối chiếu audit 2026-09-04 (PLAN 6V mục 1.2):
+  - D9  60 bảng / 10 form — khớp ĐÚNG B5.
+  - D15 17/17 form có chk — khớp B3 "mọi form có chk".
+  - D13 77 form vs ~55: 55 form date-glue khớp đúng audit; +22 form do
+    grammar rộng hơn (contact "0900Fax:"/"…vnWebsite:", "):CÔNG TY").
+  - D16 82 form vs ~73: +9 form do grammar mảnh-wrap (NOI_T, G_TRU)
+    ngoài ví dụ audit (_HIEN, _TAI_1).
+  - D14 14 form vs ~37: corpus giống hệt audit-HEAD nhưng grammar audit
+    rộng hơn (đếm cả slot nhận token kỹ thuật, slot phụ tiếng nước
+    ngoài/viết tắt, slot ngoài trang 1) — bảng per_form trong
+    tools/census/6v_v1_baseline.json.
+
+V1b–V1f (negative mutations): mỗi detector có cặp positive/negative tự
+dựng (docx zip tối thiểu + pdf pymupdf) — bug phải bắt, bản đúng phải bỏ.
+
+Chạy:  python3 -X utf8 -m tools.test_phase6v_detectors
+Exit 0 = PASS; exit 1 = FAIL.
+"""
+from __future__ import annotations
+
+import json
+import re
+import sys
+import zipfile
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT))
+
+import pymupdf  # noqa: E402
+
+import tools.phase5_visual_gate as gate  # noqa: E402
+
+CORPUS = ROOT / "generated_ho_so" / "_visual_layout" / "phase6v" \
+    / "v0_corpuscheck"
+MAIN_CHECKOUT = ROOT.parent.parent / "dangky_kinhdoanh"
+TMP = Path("/tmp/6v_v1_detectors_test")
+
+# ==== SỐ PIN (baseline @ 6v-detectors, corpus 455 record) ====
+PIN = {
+    "D13_skeleton_glue": {"records": 323, "hits": 1104, "forms": 77},
+    "D14_name_slot": {"records": 14, "hits": 14, "forms": 14,
+                      "forms_with_slot": 65},
+    "D15_chk_glyph": {"records": 17, "hits": 191, "forms": 17,
+                      "codes": {"BARE_X_PARAGRAPH": 130,
+                                "X_OWN_LINE": 61}},
+    "D16_token_values": {"records": 355, "hits": 8846, "forms": 82,
+                         "codes": {"TOKEN_VALUE": 2865,
+                                   "TOKEN_FRAGMENT": 5981}},
+    "D9_table_grid": {"records": 50, "hits": 60, "forms": 10,
+                      "codes": {"NARROW_COL_WIDE": 60}},
+}
+
+_RESULTS: list[tuple[str, bool, str]] = []
+_SKIPPED: list[str] = []
+
+
+def check(name):
+    def deco(fn):
+        def wrapped():
+            try:
+                fn()
+            except AssertionError as exc:
+                _RESULTS.append((name, False, str(exc)))
+            except Exception as exc:  # noqa: BLE001
+                _RESULTS.append((name, False, "%r" % (exc,)))
+            else:
+                _RESULTS.append((name, True, ""))
+        wrapped.__name__ = fn.__name__
+        return wrapped
+    return deco
+
+
+# ---------------------------------------------------------------------------
+# Helpers — docx/pdf tự dựng cho mutations
+# ---------------------------------------------------------------------------
+
+def _min_docx(path: Path, body: str) -> Path:
+    """DOCX tối thiểu: chỉ word/document.xml (detector chỉ regex XML)."""
+    xml = ('<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+           '<w:document xmlns:w="http://schemas.openxmlformats.org/'
+           'wordprocessingml/2006/main"><w:body>%s'
+           "<w:sectPr/></w:body></w:document>" % body)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with zipfile.ZipFile(path, "w") as z:
+        z.writestr("[Content_Types].xml",
+                   '<?xml version="1.0"?><Types xmlns="http://schemas.'
+                   'openxmlformats.org/package/2006/content-types"/>')
+        z.writestr("word/document.xml", xml)
+    return path
+
+
+def _p(text: str) -> str:
+    return "<w:p><w:r><w:t>%s</w:t></w:r></w:p>" % text
+
+
+def _pdf_pages(path: Path, lines: list[str]) -> list[dict]:
+    """PDF 1 trang chứa `lines`; trả pages như gate dùng (pno + text)."""
+    doc = pymupdf.open()
+    page = doc.new_page()
+    for i, ln in enumerate(lines):
+        page.insert_text((50, 80 + 20 * i), ln)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    doc.save(str(path))
+    doc.close()
+    d2 = pymupdf.open(str(path))
+    return [{"pno": p.number, "text": p.get_text("text")} for p in d2]
+
+
+def _tbl(widths: list[int], borders: bool = False) -> str:
+    grid = "".join('<w:gridCol w:w="%d"/>' % w for w in widths)
+    b = ('<w:tblBorders><w:top w:val="single" w:sz="4"/>'
+         "</w:tblBorders>") if borders else ""
+    row = "<w:tr>%s</w:tr>" % "".join(
+        "<w:tc><w:tcPr><w:tcW w:w=\"%d\" w:type=\"dxa\"/>%s</w:tcPr>"
+        "<w:p><w:r><w:t>X</w:t></w:r></w:p></w:tc>" % (
+            w, '<w:tcBorders><w:top w:val="single" w:sz="4"/>'
+            "</w:tcBorders>" if borders else "")
+        for w in widths)
+    return "<w:tbl><w:tblPr><w:tblW w:w=\"0\" w:type=\"auto\"/>%s" \
+        "</w:tblPr><w:tblGrid>%s</w:tblGrid>%s</w:tbl>" % (b, grid, row)
+
+
+# ---------------------------------------------------------------------------
+# V1a — pin baseline trên corpus
+# ---------------------------------------------------------------------------
+
+@check("V1a_pin_baseline_do_corpus")
+def test_v1a_pin():
+    corpus = CORPUS if (CORPUS / "manifest.json").exists() else None
+    if corpus is None and (MAIN_CHECKOUT / CORPUS.relative_to(ROOT)
+                           / "manifest.json").exists():
+        corpus = MAIN_CHECKOUT / CORPUS.relative_to(ROOT)
+    if corpus is None:
+        _SKIPPED.append("V1a_pin_baseline_do_corpus (không có corpus "
+                        "v0_corpuscheck — chạy export corpus hoặc "
+                        "tools.census.6v_v1_baseline để tái lập)")
+        return
+    maps = json.loads((ROOT / "app" / "data" / "form_maps.json")
+                      .read_text(encoding="utf-8"))
+    records = json.loads((corpus / "manifest.json").read_text("utf-8"))[
+        "records"]
+    assert len(records) == 455, "corpus phải 455 record, có %d" % len(records)
+    registry = gate.load_handwriting_slots()
+    got = {k: {"records": 0, "hits": 0, "forms": set(), "codes": {}}
+           for k in PIN}
+    slot_forms = set()
+    for rec in records:
+        root = ROOT if (ROOT / rec["docx"]).exists() else MAIN_CHECKOUT
+        docx, pdf = root / rec["docx"], root / rec["pdf"]
+        d = pymupdf.open(str(pdf))
+        pages = [{"pno": p.number, "text": p.get_text("text")} for p in d]
+
+        for det, issues in (
+                ("D13_skeleton_glue", gate.det_skeleton_glue(docx, pages)),
+                ("D16_token_values", gate.det_token_values(pages)),
+                ("D9_table_grid", gate.det_table_grid(docx))):
+            if issues:
+                got[det]["records"] += 1
+                got[det]["hits"] += len(issues)
+                got[det]["forms"].add(rec["form"])
+                for it in issues:
+                    c = it.get("code", "?")
+                    got[det]["codes"][c] = got[det]["codes"].get(c, 0) + 1
+        if rec["fixture"] == "valid-full":
+            ns = gate.det_name_slot(pages, rec["form"], registry)
+            if _has_slot(pages):
+                slot_forms.add(rec["form"])
+            if ns:
+                got["D14_name_slot"]["records"] += 1
+                got["D14_name_slot"]["hits"] += len(ns)
+                got["D14_name_slot"]["forms"].add(rec["form"])
+        if rec["fixture"] == "choice-variants":
+            cg = gate.det_chk_glyph(docx, pages, maps[rec["form"]])
+            if cg:
+                got["D15_chk_glyph"]["records"] += 1
+                got["D15_chk_glyph"]["hits"] += len(cg)
+                got["D15_chk_glyph"]["forms"].add(rec["form"])
+                for it in cg:
+                    c = it["code"]
+                    got["D15_chk_glyph"]["codes"][c] = \
+                        got["D15_chk_glyph"]["codes"].get(c, 0) + 1
+    for det, pin in PIN.items():
+        g = got[det]
+        assert g["records"] == pin["records"], \
+            "%s records %d != pin %d" % (det, g["records"], pin["records"])
+        assert g["hits"] == pin["hits"], \
+            "%s hits %d != pin %d" % (det, g["hits"], pin["hits"])
+        assert len(g["forms"]) == pin["forms"], \
+            "%s forms %d != pin %d" % (det, len(g["forms"]), pin["forms"])
+        for code, n in pin.get("codes", {}).items():
+            assert g["codes"].get(code) == n, \
+                "%s code %s: %r != pin %d" % (det, code,
+                                              g["codes"].get(code), n)
+    assert len(slot_forms) == PIN["D14_name_slot"]["forms_with_slot"], \
+        "D14 forms có slot %d != pin %d" % (
+            len(slot_forms), PIN["D14_name_slot"]["forms_with_slot"])
+
+
+def _has_slot(pages: list[dict]) -> bool:
+    for raw in pages[0]["text"].split("\n"):
+        f = gate._fold(raw.strip())
+        if not f:
+            continue
+        mi = gate._D14_INLINE.match(f)
+        mp = gate._D14_PAREN.match(f)
+        if (mi and not gate._D14_NOISE.search(f[:f.find(":")])) or \
+                (mp and not gate._D14_NOISE.search(mp.group(1))):
+            return True
+    return False
+
+
+# ---------------------------------------------------------------------------
+# V1b — D13 mutations
+# ---------------------------------------------------------------------------
+
+@check("V1b_d13_mutations")
+def test_v1b_d13():
+    bad = _pdf_pages(TMP / "d13_bad.pdf", [
+        "Hà Nội, ngày04tháng05năm2026",
+        "Tôi là1 (ghi họ tên bằng chữ in hoa):CÔNG TY TEN",
+        "Điện thoại: 0900000014Fax: 024",
+        "Thư điện tử: a@b.vnWebsite: https://x.vn",
+    ])
+    hits = gate.det_skeleton_glue(TMP / "noop.docx", bad)
+    codes = {h["code"] for h in hits}
+    assert "DATE_NUM" in codes and "PAREN_VALUE" in codes \
+        and "CONTACT_GLUE" in codes, "D13 phải bắt cả 3 lớp glue: %r" % hits
+    good = _pdf_pages(TMP / "d13_good.pdf", [
+        "Hà Nội, ngày 04 tháng 05 năm 2026",
+        "Tôi là1 (ghi họ tên bằng chữ in hoa): CÔNG TY TEN",
+        "Điện thoại: 0900000014 Fax: 024",
+        "Thư điện tử: a@b.vn Website: https://x.vn",
+    ])
+    assert gate.det_skeleton_glue(TMP / "noop.docx", good) == [], \
+        "D13 không được bắt bản đúng (có space separator)"
+    # nguồn XML: glue bị PDF wrap che vẫn phải bắt (source=docx)
+    docx = _min_docx(TMP / "d13_xml.docx",
+                     _p("ngày04tháng") + _p("05"))
+    pages = _pdf_pages(TMP / "d13_xml.pdf", ["ngày04", "tháng"])
+    hits = gate.det_skeleton_glue(docx, pages)
+    assert any(h.get("source") == "docx" and h["code"] == "DATE_NUM"
+               for h in hits), "XML-only glue phải bắt với source=docx: %r" \
+        % hits
+
+
+# ---------------------------------------------------------------------------
+# V1c — D14 mutations
+# ---------------------------------------------------------------------------
+
+@check("V1c_d14_mutations")
+def test_v1c_d14():
+    # LƯU Ý: PDF tự dựng bằng font pymupdf mặc định không render dấu tiếng
+    # Việt (ộ → ·) — mutation viết không dấu; detector fold (bỏ dấu) nên
+    # ngữ nghĩa giữ nguyên.
+    # slot trống: dòng kế là label khác → RED
+    bad = _pdf_pages(TMP / "d14_bad.pdf", [
+        "THONG BAO", "(Ten ho kinh doanh)", "Tru so cua ho kinh doanh:"])
+    assert gate.det_name_slot(bad, "TEST", {"forms": {}}), \
+        "slot trống (dòng kế là label) phải RED"
+    # slot nhận gạch/chấm → RED
+    dots = _pdf_pages(TMP / "d14_dots.pdf", [
+        "Ten ho kinh doanh (ghi bang chu in hoa): .............."])
+    assert gate.det_name_slot(dots, "TEST", {"forms": {}}), \
+        "slot chỉ có gạch/chấm phải RED"
+    # slot bound cùng dòng → pass
+    ok1 = _pdf_pages(TMP / "d14_ok1.pdf", [
+        "Ten ho kinh doanh (ghi bang chu in hoa): CONG TY TNHH ABC"])
+    assert gate.det_name_slot(ok1, "TEST", {"forms": {}}) == [], \
+        "slot bound cùng dòng phải pass"
+    # slot bound dòng kế (title-block) → pass
+    ok2 = _pdf_pages(TMP / "d14_ok2.pdf", [
+        "GIAY DE NGHI", "(Ten doanh nghiep)", "CONG TY TNHH ABC"])
+    assert gate.det_name_slot(ok2, "TEST", {"forms": {}}) == [], \
+        "slot bound ở dòng kế phải pass"
+    # mention trong câu (có từ nối) không phải slot → pass
+    noise = _pdf_pages(TMP / "d14_noise.pdf", [
+        "ve viec thay doi cua (ten ho kinh doanh) nhu sau:"])
+    assert gate.det_name_slot(noise, "TEST", {"forms": {}}) == [], \
+        "mention trong câu không phải slot"
+    # form trong registry handwriting → miễn
+    reg = _pdf_pages(TMP / "d14_reg.pdf", [
+        "(Ten ho kinh doanh)", "Tru so cua ho kinh doanh:"])
+    assert gate.det_name_slot(reg, "TEST", {"forms": {"TEST": {
+        "reason": "ban giay dien tay"}}}) == [], \
+        "form trong registry handwriting phải được miễn"
+
+
+# ---------------------------------------------------------------------------
+# V1d — D15 mutations
+# ---------------------------------------------------------------------------
+
+_CHK_META = {"fields": [{"key": "chk_a", "type": "chk"}]}
+_NOCHK_META = {"fields": [{"key": "ten", "type": "text"}]}
+
+
+@check("V1d_d15_mutations")
+def test_v1d_d15():
+    pages = [{"pno": 0, "text": "x"}]
+    # X trần trong paragraph thường → RED
+    d1 = _min_docx(TMP / "d15_bare.docx", _p("X Phương pháp kê khai"))
+    hits = gate.det_chk_glyph(d1, pages, _CHK_META)
+    assert [h["code"] for h in hits] == ["BARE_X_PARAGRAPH"], hits
+    # glue cuối dòng "Thành lập mớiX" → RED
+    d2 = _min_docx(TMP / "d15_glued.docx", _p("Thành lập mớiX"))
+    assert gate.det_chk_glyph(d2, pages, _CHK_META), "glued-end X phải RED"
+    # câu hướng dẫn (X giữa câu) → KHÔNG bắt
+    d3 = _min_docx(TMP / "d15_instr.docx",
+                   _p("1. Tình trạng (đánh dấu X vào ô thích hợp):"))
+    assert gate.det_chk_glyph(d3, pages, _CHK_META) == [], \
+        "câu hướng dẫn không phải tick"
+    # glyph ☒ → hợp pháp
+    d4 = _min_docx(TMP / "d15_glyph.docx", _p("☒ Phương pháp kê khai"))
+    assert gate.det_chk_glyph(d4, pages, _CHK_META) == [], \
+        "tick glyph ☒ phải hợp pháp"
+    # X trong cell CÓ viền → hợp pháp (FP guard)
+    d5 = _min_docx(TMP / "d15_cell.docx", _tbl([900, 3000], borders=True))
+    assert gate.det_chk_glyph(d5, pages, _CHK_META) == [], \
+        "X trong cell có viền phải hợp pháp"
+    # X trong cell KHÔNG viền → RED (bảng dựng 2 cell X → 2 hit cùng mã)
+    d6 = _min_docx(TMP / "d15_cell0.docx", _tbl([900, 3000], borders=False))
+    hits = gate.det_chk_glyph(d6, pages, _CHK_META)
+    assert len(hits) == 2 and {h["code"] for h in hits} == \
+        {"BARE_X_BORDERLESS_CELL"}, hits
+    # form không có chk field → không chạy
+    assert gate.det_chk_glyph(d1, pages, _NOCHK_META) == []
+    # PDF: X rơi dòng riêng
+    pp = _pdf_pages(TMP / "d15_own.pdf", ["Tình trạng:", "X"])
+    d7 = _min_docx(TMP / "d15_own.docx", _p("Tình trạng: X"))
+    hits = gate.det_chk_glyph(d7, pp, _CHK_META)
+    assert any(h["code"] == "X_OWN_LINE" for h in hits), hits
+
+
+# ---------------------------------------------------------------------------
+# V1e — D16 mutations
+# ---------------------------------------------------------------------------
+
+@check("V1e_d16_mutations")
+def test_v1e_d16():
+    bad = _pdf_pages(TMP / "d16_bad.pdf", [
+        "Nơi ở hiện tại: NOI_O_HIEN_TAI_123",
+        "_TAI_1",
+        "NOI_T",
+    ])
+    hits = gate.det_token_values(bad)
+    codes = [h["code"] for h in hits]
+    assert "TOKEN_VALUE" in codes and "TOKEN_FRAGMENT" in codes, hits
+    vals = {h["value"] for h in hits}
+    assert "NOI_O_HIEN_TAI_123" in vals and "_TAI_1" in vals \
+        and "NOI_T" in vals, vals
+    good = _pdf_pages(TMP / "d16_good.pdf", [
+        "Nơi ở hiện tại: Số 25 Nguyễn Huệ, phường Bến Nghé",
+        "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM",
+        "Số: 00001/2026",
+        "Giấy đề nghị đăng ký doanh nghiệp",
+    ])
+    assert gate.det_token_values(good) == [], \
+        "text tiếng Việt thường không được bắt"
+
+
+# ---------------------------------------------------------------------------
+# V1f — D9 mutations (policy 2 tầng)
+# ---------------------------------------------------------------------------
+
+@check("V1f_d9_two_tier_mutations")
+def test_v1f_d9():
+    wide = _min_docx(TMP / "d9_wide.docx",
+                     _tbl([566] + [897] * 9))          # 10 cột, min 566
+    hits = gate.det_table_grid(wide)
+    assert [h["code"] for h in hits] == ["NARROW_COL_WIDE"], \
+        "bảng 10 cột min 566 <900 phải NARROW_COL_WIDE: %r" % hits
+    ok_wide = _min_docx(TMP / "d9_okwide.docx",
+                        _tbl([900] + [900] * 9))       # 10 cột, min = 900
+    assert gate.det_table_grid(ok_wide) == [], \
+        "bảng 10 cột min 900 twips phải pass"
+    legacy = _min_docx(TMP / "d9_legacy.docx",
+                       _tbl([560] + [2000] * 7))       # 8 cột, min 560
+    hits = gate.det_table_grid(legacy)
+    assert [h["code"] for h in hits] == ["NARROW_COL"], \
+        "bảng 8 cột min 560 <566 phải NARROW_COL (legacy): %r" % hits
+    i4 = _min_docx(TMP / "d9_i4.docx",
+                   _tbl([566] + [2000] * 7))           # 8 cột, min đúng 566
+    assert gate.det_table_grid(i4) == [], \
+        "I4: bảng 8 cột min đúng 566 phải pass (sàn làm tròn xuống)"
+
+
+# ---------------------------------------------------------------------------
+# V1g — hợp đồng verdict: detector mới chỉ PHÁT VÀO gate_candidates
+# (PLAN 6V V1: "chưa hard-fail, Lead quyết nâng hard sau V2")
+# ---------------------------------------------------------------------------
+
+@check("V1g_new_detectors_are_candidates_only")
+def test_v1g_verdict_contract():
+    rec = {"form": "TEST", "fixture": "valid-full", "tag": "main",
+           "detectors": {
+               "D13_skeleton_glue": [{"code": "DATE_NUM"}],
+               "D14_name_slot": [{"kind": "paren"}],
+               "D15_chk_glyph": [{"code": "BARE_X_PARAGRAPH"}],
+               "D16_token_values": [{"code": "TOKEN_VALUE"}],
+               "D9_table_grid": [{"code": "NARROW_COL_WIDE"}],
+               # hard-fail cũ phải giữ nguyên hành vi
+               "D1_source_indicator": ["QUỐC HIỆU"],
+           }}
+    gate.record_verdicts([rec], {})
+    fails = {f["detector"] for f in rec["gate_fails"]}
+    cands = {c["detector"] for c in rec["gate_candidates"]}
+    assert fails == {"D1_source_indicator"}, \
+        "chỉ D1 được hard-fail, có %r" % fails
+    for det in ("D13_skeleton_glue", "D14_name_slot", "D15_chk_glyph",
+                "D16_token_values", "D9_table_grid"):
+        assert det in cands, "%s phải nằm gate_candidates" % det
+        assert det not in fails, "%s KHÔNG được hard-fail ở V1" % det
+    assert rec["gate_verdict"] == "FAIL"  # do D1, không phải detector mới
+
+
+# ---------------------------------------------------------------------------
+# Runner
+# ---------------------------------------------------------------------------
+
+def main() -> int:
+    test_v1a_pin()
+    test_v1b_d13()
+    test_v1c_d14()
+    test_v1d_d15()
+    test_v1e_d16()
+    test_v1f_d9()
+    test_v1g_verdict_contract()
+    passed = [r for r in _RESULTS if r[1]]
+    failed = [r for r in _RESULTS if not r[1]]
+    for name, ok, msg in _RESULTS:
+        print("%s %s%s" % ("PASS" if ok else "FAIL", name,
+                           (" — %s" % msg) if msg else ""))
+    for s in _SKIPPED:
+        print("SKIP", s)
+    print("-" * 60)
+    print("Tổng kết: %d PASS / %d FAIL / %d SKIP" % (
+        len(passed), len(failed), len(_SKIPPED)))
+    return 1 if failed else 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+

@@ -15,6 +15,10 @@ Nguyên tắc:
 - Giá trị phân biệt theo họ key (ten/địa chỉ/CCCD/ngày/tháng/số tiền…), mỗi
   giá trị mang đuôi số thứ tự riêng → hai field không bao giờ cùng chuỗi,
   detector glue/đổi-chỗ hoạt động được.
+- Nhánh default của ValueFactory (C4/B4) sinh GIÁ TRỊ TIẾNG VIỆT THỰC theo
+  họ key (nơi ở, địa điểm ký, cơ quan, tên hộ KD…) — KHÔNG còn token kỹ thuật
+  dạng NHAN_HOA_N: giá trị có space nên Word wrap tại space, D16 token/fragment
+  về 0; _selftest chặn hồi quy token.
 - Nhóm loại-trừ (EXCLUSIVE_GROUPS): pattern key + nhóm theo paragraph (các
   chk inline cùng block `p` = cùng câu hỏi). Validator từ chối payload có
   nhóm được chọn >1 — chống hồi quy WLAY-010.
@@ -105,8 +109,169 @@ _DIA_CHI = ["Số {} đường Láng Hạ, phường Láng Hạ, quận Đống 
 _CO_QUAN = ["Phòng Đăng ký kinh doanh - Sở Kế hoạch và Đầu tư thành phố Hà Nội",
             "Phòng Đăng ký kinh doanh - Sở Kế hoạch và Đầu tư thành phố Hồ Chí Minh",
             "Phòng Đăng ký kinh doanh - Sở Kế hoạch và Đầu tư thành phố Hải Phòng",
-            "Phòng Đăng ký kinh doanh - Sở Kế hoạch và Đầu tư thành phố Đà Nẵ"]
+            "Phòng Đăng ký kinh doanh - Sở Kế hoạch và Đầu tư thành phố Đà Nẵng"]
 _QUOC_TICH = ["Việt Nam", "Nhật Bản", "Hàn Quốc", "Singapore", "Pháp"]
+_TINH_TP = ["TP. Hà Nội", "TP. Hồ Chí Minh", "TP. Đà Nẵng", "TP. Hải Phòng",
+            "Tỉnh Bình Dương", "Tỉnh Đồng Nai", "Tỉnh Nghệ An",
+            "Tỉnh Khánh Hòa"]
+_XA_PHUONG = ["Phường Bến Nghé, Quận 1, TP. Hồ Chí Minh",
+              "Phường Láng Hạ, Quận Đống Đa, TP. Hà Nội",
+              "Phường Vĩnh Niệm, Quận Lê Chân, TP. Hải Phòng",
+              "Phường Hoà Cường, Quận Hải Châu, TP. Đà Nẵng",
+              "Phường Tân Kiểng, Quận 7, TP. Hồ Chí Minh",
+              "Phường Mễ Trì, Quận Nam Từ Liêm, TP. Hà Nội"]
+_TEN_HKD = ["HỘ KINH DOANH AN PHÁT {}",
+            "HỘ KINH DOANH TÂN PHÁT {}",
+            "HỘ KINH DOANH HOÀNG LONG {}",
+            "HỘ KINH DOANH THỊNH VƯỜNG {}"]
+_TEN_NUOC_NGOAI = ["An Phat Trading Company Limited {}",
+                   "Binh Minh Investment Development Company Limited {}",
+                   "Hoang Gia Manufacturing and Trading Company Limited {}"]
+_DAN_TOC = ["Kinh", "Tày", "Thái", "Mường", "Nùng", "Khmer", "Hoa", "Ê Đê"]
+_CQ_THUE = ["Chi cục Thuế quận Đống Đa - Cục Thuế thành phố Hà Nội",
+            "Chi cục Thuế khu vực 1 - Cục Thuế thành phố Hồ Chí Minh",
+            "Chi cục Thuế quận Hải Châu - Cục Thuế thành phố Đà Nẵng"]
+# cơ quan cho fallback (noi_cap/noi_nhan/giay_to_co_quan): ĐẢO cấu trúc so
+# với pool _CO_QUAN của nhánh chuyên dụng co_quan_dkkd/co_quan_cap → chuỗi
+# không bao giờ đụng nhau trong cùng form (giá trị phân biệt)
+_CO_QUAN_R = ["Sở Kế hoạch và Đầu tư thành phố Hà Nội - Phòng Đăng ký kinh doanh",
+              "Sở Kế hoạch và Đầu tư thành phố Hồ Chí Minh - Phòng Đăng ký kinh doanh",
+              "Sở Kế hoạch và Đầu tư thành phố Hải Phòng - Phòng Đăng ký kinh doanh",
+              "Sở Kế hoạch và Đầu tư thành phố Đà Nẵng - Phòng Đăng ký kinh doanh"]
+# quốc gia cho key quoc_gia: KHÔNG chứa member của pool quoc_tich (nhánh
+# chuyên dụng) → cùng form có cả hai họ vẫn phân biệt
+_QUOC_GIA = ["Hoa Kỳ", "Thái Lan", "Malaysia", "Đài Loan", "Úc", "Canada"]
+# chức danh cho key chuc_vu: KHÁC pool chuc_danh (nhánh chuyên dụng)
+_CHUC_VU = ["Chủ tịch Hội đồng thành viên", "Thành viên Hội đồng thành viên",
+            "Chủ tịch Hội đồng quản trị", "Thành viên Hội đồng quản trị"]
+_TINH_TRANG = ["Đang hoạt động", "Đã giải thể", "Đang tạm ngừng hoạt động",
+               "Đã chấm dứt hoạt động"]
+_LOAI_CP = ["Cổ phần phổ thông", "Cổ phần ưu đãi cổ tức",
+            "Cổ phần ưu đãi hoàn lại", "Cổ phần ưu đãi khác"]
+_LOAI_TAI_SAN = ["Tiền Việt Nam", "Ngoại tệ tự do chuyển đổi",
+                 "Quyền sử dụng đất", "Máy móc thiết bị", "Tài sản khác"]
+_QUYEN_CHI_PHOI = ["Hoàn toàn quyền chi phối", "Đồng quyền chi phối"]
+
+
+def _fallback_value(f: "ValueFactory", k: str, n: int, lf: str,
+                    raw: str) -> str:
+    """Giá trị tiếng Việt thật cho key KHÔNG thuộc họ chuyên dụng (B4/C4).
+
+    Thay token 'NHAN_HOA_N' cũ: mỗi họ key nhận mẫu câu đọc được, chỉ số n
+    nhúng trong chuỗi (hoặc xoay vòng pool theo n) để hai field không cùng
+    một chuỗi — detector glue/đổi-chỗ vẫn hoạt động. Giá trị không chứa '_'
+    và luôn có chữ thường → Word wrap tại space, D16 (TOKEN_VALUE /
+    TOKEN_FRAGMENT) không còn gì để bắt. Pool xoay qua f._pool chống trùng
+    trong 1 form; pool cho họ có nhánh chuyên dụng kề (_CO_QUAN, _QUOC_TICH,
+    chuc_danh) dùng chuỗi cấu trúc khác để không đụng giá trị của nhánh đó."""
+    # --- ngành chính trong grid: đánh dấu như bản giấy ---
+    if k.endswith("la_nganh_chinh"):
+        return "×"
+    # --- ngày/tháng/năm thành phần + thời điểm ---
+    if "thoi_diem" in k or "thoi_diem" in lf:
+        return f._unique("%02d/%02d/%04d"
+                         % (n % 28 + 1, n % 12 + 1, 2024 + n % 3))
+    if "ngay" in k or "ngay" in lf:
+        return "%02d" % (n % 28 + 1)
+    if "thang" in k or "thang" in lf:
+        return "%02d" % (n % 12 + 1)
+    if "nam" in k and "viet_nam" not in k and "tai_san" not in k:
+        return "20%d" % (20 + n % 7)
+    if "lan_thu" in k:
+        return str(n)
+    # --- mã số / giấy tờ / GCN (đặt trước khối tên: key số không được nuốt) ---
+    if "ma_so" in k or "ma_ho_so" in k:
+        return "01%010d" % n
+    if "giay_to_so" in k or "so_giay_to" in k or "so_gtpl" in k:
+        return "0%d%011d" % (n % 9 + 1, n)
+    if "so_gcn" in k or "gp_ucsn" in k or "giay_phep" in k or \
+            "giay chung nhan" in lf:
+        return "41J8%06d" % n
+    # --- địa danh ---
+    if "dia_diem" in k:
+        return f._pool(_TINH_TP, n)
+    if "tinh_thanh" in k or "thanh_pho" in k:
+        return f._pool(_TINH_TP, n)
+    if "xa_phuong" in k or "phuong_xa" in k:
+        return f._pool(_XA_PHUONG, n)
+    if "noi_o" in k or "thuong_tru" in k or "tru_so" in k:
+        return f._unique(_DIA_CHI[n % len(_DIA_CHI)].format(n * 3))
+    # --- cơ quan (pool đảo — không đụng nhánh co_quan_dkkd/co_quan_cap) ---
+    if "cq_thue" in k or ("thue" in k and "quan_ly" in k):
+        return f._pool(_CQ_THUE, n)
+    if "co_quan" in k or "noi_cap" in k or "noi_nhan" in k or \
+            "giay_to_co_quan" in k:
+        return f._pool(_CO_QUAN_R, n)
+    # --- nhân khẩu học ---
+    if "quoc_gia" in k:
+        return f._pool(_QUOC_GIA, n)
+    if "gioi_tinh" in k:
+        return "Nam" if n % 2 else "Nữ"
+    if "dan_toc" in k:
+        return f._pool(_DAN_TOC, n)
+    if "chuc_vu" in k:
+        return f._pool(_CHUC_VU, n)
+    # --- tên người / tên tổ chức / tên nước ngoài ---
+    if "ong_ba" in k or "chu_ky" in k or "nguoi_dung_dau" in k or \
+            k.endswith("ten_cd") or ("ten" in k and "uy_quyen" in k):
+        return f._unique(_HO_TEN[n % len(_HO_TEN)].format(n))
+    if "ten_nuoc_ngoai" in k or "tieng_nuoc" in k:
+        return f._unique(_TEN_NUOC_NGOAI[n % len(_TEN_NUOC_NGOAI)].format(n))
+    if "ten_hkd" in k or ("ho_kinh_doanh" in k and "ten" in k):
+        return f._unique(_TEN_HKD[n % len(_TEN_HKD)].format(n))
+    if ("to_chuc" in k and ("ten" in k or k.endswith("to_chuc"))) or \
+            k.endswith(".ten") or ("ten" in lf and "doanh nghiep" in lf):
+        return f._unique(_TEN_DN[n % len(_TEN_DN)].format(n))
+    # --- số tiền / tài sản ---
+    if "thoi_han" in k:
+        return "%d năm" % (5 + n % 36)
+    if "loai_tai_san" in k:
+        return f._pool(_LOAI_TAI_SAN, n)
+    if "tang_giam" in k:
+        return "Tăng vốn điều lệ" if n % 2 else "Giảm vốn điều lệ"
+    if k.endswith("_chu") or "bang_chu" in k:
+        return f._unique("Năm trăm triệu Việt Nam đồng chẵn "
+                         "(phần góp số %d)" % n)
+    if "von" in k or "tai_san" in k or "chi_phi" in k:
+        return str(n * 500000000)
+    # --- con số ---
+    if "so_lao_dong" in k:
+        return str(n * 7 + 3)
+    if "so_luong" in k or "so_co_phan" in k:
+        return str(n * 100000)
+    # --- câu chữ khai báo ---
+    if "ly_do" in k:
+        return f._unique(
+            "Lý do được trình bày chi tiết tại hồ sơ đề nghị số %d" % n)
+    if "can_cu" in k:
+        return f._unique("Thông tư số %02d/2026/TT-BKHĐT" % n
+                         if "khac" not in k else
+                         "Quyết định số %04d/2026/QĐ-UBND" % n)
+    if "ve_viec" in k:
+        return f._unique("Đăng ký thay đổi theo đề nghị số %d" % n)
+    if "tinh_trang" in k:
+        return f._pool(_TINH_TRANG, n)
+    if "loai_co_phan" in k:
+        return f._pool(_LOAI_CP, n)
+    if "quyen_chi_phoi" in k:
+        return f._pool(_QUYEN_CHI_PHOI, n)
+    if "thong_tin_dang_ky" in k:
+        cu_moi = "cũ" if k.endswith("cu") else "mới"
+        return f._unique("Thông tin đăng ký %s (bản khai số %d)"
+                         % (cu_moi, n))
+    if "chi_tiet" in k:
+        return f._unique("Chi tiết kèm theo bản kê khai số %d" % n)
+    if k.endswith("luu") or "luu_vb" in k:
+        return f._unique("Lưu hồ sơ gốc số %d" % n)
+    # --- hết họ key biết: dùng nhãn gốc đọc được + số thứ tự ---
+    base = re.sub(r"\s*[:;/].*$", "", raw).strip()
+    base = re.sub(r"[_\s]+", " ", base)
+    if len(base) > 48:
+        base = base[:48].rstrip()
+    if base and any(c.isalpha() for c in base):
+        return f._unique("%s — giá trị minh hoạ số %d"
+                         % (base[0].upper() + base[1:], n))
+    return "Giá trị kê khai số %d" % n
 
 
 class ValueFactory:
@@ -116,10 +281,34 @@ class ValueFactory:
         self.n = 0
         self.vsic = vsic if vsic is not None else load_vsic()
         self._vsic_i = 0
+        self._used: set[str] = set()
 
     def _next(self) -> int:
         self.n += 1
         return self.n
+
+    def _pool(self, pool: list[str], start: int) -> str:
+        """Member pool chưa dùng trong form (giá trị ≥8 ký tự phải phân biệt
+        — test 'giá trị phân biệt'/D12); cạn pool thì gắn chỉ số lượt."""
+        L = len(pool)
+        for i in range(L):
+            cand = pool[(start + i) % L]
+            if len(cand) < 8:
+                return cand
+            if cand not in self._used:
+                self._used.add(cand)
+                return cand
+        cand = "%s (lần %d)" % (pool[start % L], self.n)
+        self._used.add(cand)
+        return cand
+
+    def _unique(self, cand: str) -> str:
+        """Đăng ký giá trị ≥8 ký tự vào memo; trùng thì gắn chỉ số tách."""
+        if len(cand) >= 8:
+            if cand in self._used:
+                cand = "%s (lần %d)" % (cand, self.n)
+            self._used.add(cand)
+        return cand
 
     def _vsic_row(self) -> tuple[str, str]:
         if self.vsic:
@@ -193,9 +382,9 @@ class ValueFactory:
             return "%05d/%d" % (n, 2026)
         if "viet_tat" in k:
             return "ANPHAT%d" % n
-        # mặc định: dùng nhãn để tránh hai field khác nhãn cùng một chuỗi
-        base = _fold(label or key)[:24].upper().replace(" ", "_") or "GIATRI"
-        return "%s_%d" % (re.sub(r"[^0-9A-Z_]", "", base), n)
+        # mặc định (C4/B4): giá trị tiếng Việt thật theo họ key thay token
+        # NHAN_HOA_N cũ; chỉ số n nhúng trong chuỗi giữ tính phân biệt
+        return _fallback_value(self, k, n, _fold(label or ""), label or key)
 
 
 # ---------------------------------------------------------------------------
@@ -401,12 +590,20 @@ def validate_fixture(form_map: dict, blocks, data: dict,
 # ---------------------------------------------------------------------------
 # CLI selftest
 # ---------------------------------------------------------------------------
+# Grammar token D16 (bản sao cục bộ — tránh import ngược phase5_visual_gate):
+# token nguyên = MỘT từ toàn HOA/chữ số/gạch dưới, kết thúc bằng chữ số, có
+# "_" (VD NOI_O_HIEN_TAI_123). C4/B4: nhánh default không được sinh ra kiểu
+# này nữa — check mọi giá trị của mọi form × fixture.
+_SELFTEST_TOKEN = re.compile(r"[A-Z][A-Z0-9_]*_[0-9]+")
+
+
 def _selftest() -> int:
     import sys
     sys.path.insert(0, str(ROOT))
     maps = json.loads((ROOT / "app" / "data" / "form_maps.json")
                       .read_text(encoding="utf-8"))
     ok = fail = 0
+    token_hits: list[str] = []
     for fid in sorted(maps):
         blocks_p = ROOT / "app" / "data" / "blocks" / ("%s.json" % fid)
         blocks = (json.loads(blocks_p.read_text(encoding="utf-8"))
@@ -415,11 +612,28 @@ def _selftest() -> int:
             f = ValueFactory()
             data = build_fixture(fid, maps[fid], fixture, blocks, f)
             errs = validate_fixture(maps[fid], blocks, data, fixture)
+            # (B4/C4) không giá trị nào được là token kỹ thuật LABEL_HOA_N —
+            # quét cả phần ghép chuỗi (long-boundary nối suffix) như PDF thấy
+            for key, val in data.items():
+                hay = " ".join(str(x) for x in
+                               (val if isinstance(val, list) else [val]))
+                for w in hay.replace("/", " / ").split():
+                    if _SELFTEST_TOKEN.fullmatch(w):
+                        token_hits.append("%s/%s [%s] %r"
+                                          % (fid, fixture, key, w[:40]))
             if errs:
                 fail += 1
                 print("FAIL %s/%s: %s" % (fid, fixture, "; ".join(errs)))
             else:
                 ok += 1
+    if token_hits:
+        fail += 1
+        print("FAIL B4 token giá trị (%d): %s" % (len(token_hits),
+                                                  token_hits[:5]))
+    else:
+        ok += 1
+        print("PASS B4: 0 giá trị khớp grammar token D16 trên %d form × %s"
+              % (len(maps), "/".join(FIXTURES)))
     # fixture cũ (dummy tick mọi chk) phải bị validator chặn
     from tools.docx_render import dummy_data_from_map
     old = dummy_data_from_map(maps["PLI_M01"])

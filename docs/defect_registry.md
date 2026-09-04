@@ -234,3 +234,27 @@ thật. Không gọi release xanh cho tới khi full runner chạy ở môi trư
   candidate không chặn.
 - **Kế hoạch:** V1 nâng D9 (bảng ≥10 cột min < 900twips → hard sau V2); số
   liệu B5 (60 bảng/10 form) trong PLAN v6 mục 1.2.
+
+## Class B1–B5 (6V) — 5 lớp lỗi visual còn tái hiện, baseline đo được @ V1 [OPEN — lane V2]
+
+Số liệu baseline ĐỎ chính thức: `tools/census/6v_v1_baseline.json` (455 record
+corpus v0_corpuscheck, detectors D13–D16 + D9 hai tầng; corpus template
+identical audit-HEAD — git diff 294604c..313b0af app/templates rỗng).
+
+- **B1 skeleton glue — D13: 323 rec / 1104 hit / 77 form.** Gốc rễ: template
+  skeleton không space quanh placeholder (PLII_M08 `{dia_diem_ky}, ngày{ngay_ky_vb}tháng…`),
+  kèm contact-glue `{dien_thoai_khac}Thư điện tử` (PLII_M13). Fix lane: V2-C1 (regen skeleton).
+- **B2 name-slot trống — D14: 14 form RED** (PLII_M08/10/11/12/13/19/21/22/23/25/27/28,
+  PLI_M43, PLI_M71; 65 form có slot). 3 gốc rễ (audit): thiếu placeholder /
+  có `{key}` nhưng form_maps thiếu tag / slot literal `……`. Fix lane: V2-C2
+  (scope 14 form; 5 form slot-nhan-token → B4/C4). Con số "~37" audit cũ =
+  heuristic thô, supersede.
+- **B3 tick X trần — D15: 17/17 form có chk RED, 191 hit** (130 BARE_X_PARAGRAPH +
+  61 X_OWN_LINE). Fix lane: V2-C3, chờ owner Q-V1 (glyph chuẩn).
+- **B4 token làm giá trị — D16: 355 rec / 8846 hit / 82 form** (2865 TOKEN_VALUE
+  + 5981 TOKEN_FRAGMENT do Word wrap cột hẹp). Gốc rễ kép: fixture fallback
+  LABEL_HOA_N + bảng hẹp xé token. Fix lane: V2-C4 (fixture realism); phần
+  wrap phụ thuộc B5.
+- **B5 bảng ≥10 cột hẹp — D9 NARROW_COL_WIDE: 60 bảng / 10 form** (PLII_M01/02,
+  PLI_M02/06/07/09/10/12/15/72; mọi bảng min col 566 twips). Fix lane: V3
+  sau owner Q-V2. Sàn legacy mới 566 (đóng I4 — bảng 566 không còn treo).

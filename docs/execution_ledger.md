@@ -448,3 +448,17 @@ kín bằng profile cách ly exit=0, backup profile hỏng
 | V0.5 suite test_export_concurrency + fix out_dir collision cùng giây | `agent/6v-infra` | `fbb775e` | **Gốc rễ thứ 3 của sự kiện 56/1** (agent tự phát hiện): `Bridge.export` mkdir exist_ok=True cho 2 run cùng case_id cùng giây ghi chung out_dir → norm_dir bị xóa dưới chân soffice; fix exist_ok=False + vành đai `_p<pid>`; suite 8 PASS ~20s, 2 bộ profile riêng | ✅ merged |
 | V0-Lead sandbox pid suffix + allowlist | Lead | `5cceeac` | `test_phase5r_signatures` sandbox cố định `/tmp/p5r_laneB_*` khiến 2 runner song song đỏ giả (rmtree lẫn nhau) — pid suffix; allowlist +`tools/test_export_concurrency.py` (H7.4 57/0) | ✅ merged |
 | **GATE V0** | Lead | merge `310f868` | (a) 2 runner song song `--only test_phase5r_signatures` **2 PASS** (exit 0 cả hai); (b) corpuscheck `phase6v/v0_corpuscheck`: 455 records / 0 export error / **PNG claim=disk=1644** (tái lập con số sự kiện 1567/1644); (c)(d) runner full trên main + summary hai lớp — kết quả ghi tại checkpoint dòng này | ✅ |
+
+### V1 — Detector mở rộng + baseline ĐỎ @ main 1bc4c40 (2026-09-04, Lead review PASS)
+
+| Task | Owner | Kết quả & evidence | Trạng thái |
+|---|---|---|---|
+| D13 skeleton glue / D14 name-slot / D15 chk glyph / D16 token value / D9 hai tầng | `agent/6v-detectors` (6 commits, merge `1bc4c40`) | Baseline ĐỎ trên corpus v0_corpuscheck 455 record: **D13 323 rec/1104 hit/77 form** (55 form date-glue khớp audit; +22 form contact/paren cùng gốc rễ B1); **D14 14 form RED** + registry handwriting rỗng; **D15 17/17 form chk RED (191 hit)**; **D16 355 rec/8846 hit/82 form**; **D9 NARROW_COL_WIDE 60 bảng/10 form khớp 100% audit B5, sàn legacy 566 đóng I4**. Suite pin 7/7 + negative mutations; verdict candidates-only (V1g). `tools/census/6v_v1_baseline.json` = bảng per-form đối chiếu audit | ✅ merged |
+| Lead amendment | Lead `f435ee6` | detector_keys legacy +D13–D16 (Esc2); allowlist 4 file (H7.4 57/0); hồi quy test_phase5r_tables 10/0 | ✅ |
+
+**Quyết định Lead khi merge V1:**
+1. **D14 grammar giữ nguyên** (chat, pin): scope V2-C2 = **14 form** (PLII_M08/10/11/12/13/19/21/22/23/25/27/28, PLI_M43, PLI_M71). 5 form "slot nhận token kỹ thuật" (PLI_M05, PLII_M01/07, PLI_M73/74) do **C4** giải quyết (fixture realism → slot hiển thị tên thật; D16 về 0 xác nhận). Con số "~37" của audit 2026-09-04 là heuristic scan thô — bị supersede bởi D14 grammar chặt.
+2. **test_phase6v_detectors CHƯA đăng ký release_runner**: suite phụ thuộc corpus `generated_ho_so` (gitignored, local-only) — đăng ký sẽ làm runner máy-dependent hoặc skip lặng. Lead chạy thủ công tại mỗi merge; xem lại chiến lược corpus ở V5.
+3. Esc1 (`_count` keys rơi candidates): xử lý khi nâng hard ở V2. Esc4 (FP tiềm ẩn D15): theo dõi qua adjudicate V4.
+
+**Gate V1:** ✅ baseline đỏ khớp audit (mọi lệch có giải thích per-form trong JSON) · ✅ negative mutations 7/7 · ✅ corpus không đụng · ✅ runner không đổi · ✅ ownership sạch. Full runner main sau merge: xem checkpoint docs kế tiếp.

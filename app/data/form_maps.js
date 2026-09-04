@@ -3422,6 +3422,10 @@ window.FORM_MAPS = {
    {
     "key": "dn.dia_chi_tru_so",
     "label": "Địa chỉ trụ sở chính của doanh nghiệp/chi nhánh:"
+   },
+   {
+    "key": "dn.ten_tieng_viet",
+    "label": "Tên doanh nghiệp/chi nhánh (ghi bằng chữ in hoa):"
    }
   ]
  },
@@ -4104,6 +4108,10 @@ window.FORM_MAPS = {
    {
     "key": "noi_nhan",
     "label": "Nơi nhận kết quả bản giấy (nếu có):"
+   },
+   {
+    "key": "dn.ten_tieng_viet",
+    "label": "Tên doanh nghiệp (giấy tiếp nhận hồ sơ nộp qua mạng)"
    }
   ],
   "section_specs": [
@@ -8837,6 +8845,10 @@ window.FORM_MAPS = {
    {
     "key": "luu_vb",
     "label": ";\n- Lưu:"
+   },
+   {
+    "key": "hkd_ten_tieng_viet_2",
+    "label": "(Tên hộ kinh doanh)"
    }
   ]
  },
@@ -8929,6 +8941,10 @@ window.FORM_MAPS = {
    {
     "key": "luu_vb",
     "label": ";\n- Lưu:"
+   },
+   {
+    "key": "hkd_ten_tieng_viet_2",
+    "label": "(Tên hộ kinh doanh)"
    }
   ]
  },
@@ -8995,6 +9011,10 @@ window.FORM_MAPS = {
    {
     "key": "luu_vb",
     "label": ";\n- Lưu:"
+   },
+   {
+    "key": "hkd_ten_tieng_viet_2",
+    "label": "(Tên hộ kinh doanh)"
    }
   ]
  },
@@ -9061,6 +9081,10 @@ window.FORM_MAPS = {
    {
     "key": "noi_nhan",
     "label": "Nơi nhận:\n- Như trên;\n- Cơ quan quản lý thuế"
+   },
+   {
+    "key": "hkd_ten_tieng_viet_2",
+    "label": "(Tên hộ kinh doanh)"
    }
   ]
  },
@@ -9163,6 +9187,10 @@ window.FORM_MAPS = {
    {
     "key": "luu_vb",
     "label": ";\n- Lưu:"
+   },
+   {
+    "key": "hkd_ten_tieng_viet_2",
+    "label": "Tên hộ kinh doanh:"
    }
   ]
  },
@@ -9599,6 +9627,10 @@ window.FORM_MAPS = {
    {
     "key": "luu_vb",
     "label": ";\n- Lưu:"
+   },
+   {
+    "key": "hkd_ten_tieng_viet_2",
+    "label": "(Tên hộ kinh doanh)"
    }
   ]
  },
@@ -9751,6 +9783,10 @@ window.FORM_MAPS = {
    {
     "key": "noi_nhan",
     "label": "Nơi nhận:\n- Như trên;\n- Cơ quan quản lý thuế"
+   },
+   {
+    "key": "hkd_ten_tieng_viet_2",
+    "label": "(Tên hộ kinh doanh)"
    }
   ]
  },
@@ -9817,6 +9853,10 @@ window.FORM_MAPS = {
    {
     "key": "luu_vb",
     "label": ";\n- Lưu:"
+   },
+   {
+    "key": "hkd_ten_tieng_viet_2",
+    "label": "(Tên hộ kinh doanh)"
    }
   ]
  },
@@ -9883,6 +9923,10 @@ window.FORM_MAPS = {
    {
     "key": "luu_vb",
     "label": ";\n- Lưu:"
+   },
+   {
+    "key": "hkd_ten_tieng_viet_2",
+    "label": "(Tên hộ kinh doanh)"
    }
   ]
  },
@@ -10015,6 +10059,10 @@ window.FORM_MAPS = {
    {
     "key": "luu_vb",
     "label": ";\n- Lưu:"
+   },
+   {
+    "key": "hkd_ten_tieng_viet_2",
+    "label": "(Tên hộ kinh doanh)"
    }
   ]
  },
@@ -10191,6 +10239,10 @@ window.FORM_MAPS = {
    {
     "key": "ly_do_cham_dut_ton_tai",
     "label": "Lý do chấm dứt hoạt động:"
+   },
+   {
+    "key": "hkd_ten_tieng_viet_2",
+    "label": "Tên hộ kinh doanh:"
    }
   ]
  },
@@ -10273,6 +10325,10 @@ window.FORM_MAPS = {
    {
     "key": "dia_chi_lien_lac",
     "label": "+ Địa chỉ liên lạc:"
+   },
+   {
+    "key": "hkd_ten_tieng_viet_2",
+    "label": "(Tên hộ kinh doanh)"
    }
   ]
  },

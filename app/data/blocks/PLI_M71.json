@@ -338,7 +338,16 @@
      "i": true
     },
     {
-     "text": ") ……………… Mã số doanh nghiệp ("
+     "text": ") "
+    },
+    {
+     "input": {
+      "key": "dn.ten_tieng_viet",
+      "w": 20
+     }
+    },
+    {
+     "text": " Mã số doanh nghiệp ("
     },
     {
      "text": "nếu có",
@@ -350,7 +359,7 @@
     {
      "input": {
       "key": "dn.ma_so_dn",
-      "w": 38
+      "w": 23
      }
     }
    ],

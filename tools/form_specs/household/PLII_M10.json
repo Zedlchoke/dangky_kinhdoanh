@@ -1,0 +1,13 @@
+{
+  "form_id": "PLII_M10",
+  "group": "household",
+  "note": "[6V-V2/C2] B2/D14 goc re (a): ban nguon KHONG co nhom cham sau '(Tên hộ kinh doanh)' (dòng trống trước 'Trụ sở của hộ kinh doanh:') nên grammar rule không có gì để gắn the. name_slots mode=append chèn run ' {hkd_ten_tieng_viet_2}' cuối paragraph — key chuẩn theo convention PLII_M02/M03 đã bind (Q-V3: form điền bằng máy).",
+  "name_slots": [
+    {
+      "anchor": "^\\(?ten ho kinh doanh\\)?\\s*$",
+      "key": "hkd_ten_tieng_viet_2",
+      "mode": "append",
+      "label": "(Tên hộ kinh doanh)"
+    }
+  ]
+}

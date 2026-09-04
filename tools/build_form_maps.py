@@ -1029,8 +1029,10 @@ def load_form_spec(form_id):
         # chỉ cần chấp nhận sự tồn tại, không tham gia rebuild bảng.
         # inserts: chèn paragraph văn bản (hdr2col-era capability, lệnh owner
         # 2026-08-28 — sửa M09 mất mục 7); validate shape fail-loud ở đây.
+        # name_slots: chèn placeholder vào slot tên DN/HKD dưới tiêu đề
+        # (6V-V2/C2, diệt B2/D14) — validate shape fail-loud cùng kiểu.
         allowed_root = {"form_id", "group", "note", "gap_nghiepvu", "tables",
-                        "section_cond", "inserts"}
+                        "section_cond", "inserts", "name_slots"}
         extra_root = set(raw) - allowed_root
         if extra_root:
             raise ValueError(
@@ -1049,6 +1051,32 @@ def load_form_spec(form_id):
                 raise ValueError(
                     "[form_specs] %s (%s): insert after/before phải có anchor: %r"
                     % (form_id, path_used, ins))
+        for ns in raw.get("name_slots") or []:
+            if not isinstance(ns, dict) or not ns.get("anchor") \
+                    or not ns.get("key"):
+                raise ValueError(
+                    "[form_specs] %s (%s): name_slot phải có anchor+key: %r"
+                    % (form_id, path_used, ns))
+            if not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_.]*", ns["key"]):
+                raise ValueError(
+                    "[form_specs] %s (%s): name_slot.key không đúng dạng "
+                    "placeholder: %r" % (form_id, path_used, ns["key"]))
+            if (ns.get("mode") or "slot") not in ("slot", "append"):
+                raise ValueError(
+                    "[form_specs] %s (%s): name_slot.mode phải slot|append: %r"
+                    % (form_id, path_used, ns.get("mode")))
+            slot_no = ns.get("slot_no", 1)
+            if not isinstance(slot_no, int) or isinstance(slot_no, bool) \
+                    or slot_no < 1:
+                raise ValueError(
+                    "[form_specs] %s (%s): name_slot.slot_no phải int >= 1: %r"
+                    % (form_id, path_used, slot_no))
+            unknown_ns = set(ns) - {"anchor", "key", "mode", "slot_no",
+                                    "label", "note"}
+            if unknown_ns:
+                raise ValueError(
+                    "[form_specs] %s (%s): name_slot có trường lạ: %s"
+                    % (form_id, path_used, sorted(unknown_ns)))
         specs_by_id = {}
         entries = []
         for e in raw.get("tables") or []:
@@ -1105,6 +1133,8 @@ def load_form_spec(form_id):
         result = {"entries": entries, "specs_by_id": specs_by_id}
         if raw.get("inserts"):
             result["inserts"] = raw["inserts"]
+        if raw.get("name_slots"):
+            result["name_slots"] = raw["name_slots"]
     _form_spec_cache[form_id] = result
     return result
 
@@ -2033,6 +2063,63 @@ def normalize_skeleton_glue(doc) -> int:
             if new != r.text:
                 r.text = new
     return n_ins
+
+
+# ===========================================================================
+# [6V-V2/C2] Chèn placeholder vào slot tên DN/HKD dưới tiêu đề — PLAN v6 C2,
+# diệt B2 (detector D14)
+# ===========================================================================
+# Bản giấy có 2 dạng slot tên mà grammar rule không gắn được the:
+#   (a) paren "(Tên hộ kinh doanh)" KHÔNG có nhóm chấm vật lý — rule hoạt
+#       động trên nhóm chấm nên không có gì để gắn (VD PLII_M08: dòng trống
+#       trước "Trụ sở của hộ kinh doanh:");
+#   (c) nhóm chấm CÓ nhưng nhãn không khớp rule nào (VD PLII_M13
+#       "Tên hộ kinh doanh: ……": rule ^ten ho kinh doanh$ yêu cầu kết dòng;
+#       PLI_M71 nhóm chấm sau "(Tên doanh nghiệp)" giữa câu).
+# Khai báo data-driven qua form_specs root key "name_slots":
+#   {"anchor": <regex trên text đã fold, phải khớp ĐÚNG 1 paragraph>,
+#    "key": <key placeholder>,
+#    "mode": "slot"|"append",   # slot = gắn the vào nhóm chấm thứ slot_no
+#                               # (cùng cơ chế tag slot thường, đúng convention
+#                               # PLII_M02); append = chèn run " {key}" cuối
+#                               # paragraph cho slot không có nhóm chấm
+#    "slot_no": 1,              # chỉ dùng khi mode=slot
+#    "label": <nhãn form_maps, mặc định = text paragraph>}
+# Anchor khớp 0 hoặc >1 paragraph -> SystemExit (fail-loud, không chèn mù).
+def apply_name_slots(doc, form_id, ext, add_field):
+    n_done = 0
+    for ns in (ext or {}).get("name_slots") or []:
+        anchor, key = ns["anchor"], ns["key"]
+        hits = [p for p in _body_paragraphs(doc)
+                if re.search(anchor, _para_folded(p))]
+        if len(hits) != 1:
+            raise SystemExit(
+                "[name-slot] %s: anchor '%s' khớp %d paragraph (mong 1)"
+                % (form_id, anchor, len(hits)))
+        para = hits[0]
+        mode = ns.get("mode") or "slot"
+        if mode == "slot":
+            slot_no = ns.get("slot_no") or 1
+            full, runs, groups = para_dot_groups(para)
+            if len(groups) < slot_no:
+                raise SystemExit(
+                    "[name-slot] %s: anchor '%s' chỉ có %d nhóm chấm (cần "
+                    "nhóm thứ %d)" % (form_id, anchor, len(groups), slot_no))
+            gs, ge = groups[slot_no - 1]
+            apply_tags_to_para(para, [(gs, ge, "{%s}" % key)])
+        else:  # append — slot không có nhóm chấm vật lý trên bản giấy
+            # paragraph có sẵn space cuối (VD PLII_M08 "(Tên hộ kinh doanh) ")
+            # thì không chèn thêm space nữa — separator chuẩn 1 space.
+            sep = "" if (para.text[-1:].isspace()) else " "
+            run = para.add_run("%s{%s}" % (sep, key))
+            prev = para.runs[-2] if len(para.runs) > 1 else None
+            if prev is not None and prev._r.rPr is not None:
+                run._r.insert(0, copy.deepcopy(prev._r.rPr))
+        add_field(key, ns.get("label") or para.text.strip())
+        print("[name-slot] %s: %s '%s' -> {%s}"
+              % (form_id, mode, anchor[:60], key))
+        n_done += 1
+    return n_done
 
 
 def _assign_para_slots(full, groups, add_field, unmatched, form_id, where,
@@ -3292,6 +3379,12 @@ def process_form(path, titles, coverage, out_tpl=None):
     if n_sig_tbl:
         print("[sig-1x2] %s: %d khoi ky gop thanh bang ngang" % (
             form_id, n_sig_tbl))
+
+    # [6V-V2/C2] chèn placeholder vào slot tên DN/HKD (B2/D14) — khai báo
+    # name_slots trong form_specs; chạy SAU mọi pass gắn the (slot/chk/
+    # header band/bảng ký) và TRƯỚC glue normalize để space quanh the mới
+    # được chuẩn hóa cùng lượt.
+    apply_name_slots(doc, form_id, ext, add_field)
 
     # [6V-V2/C1] chuẩn hóa skeleton glue (B1/D13): chèn space quanh {tag}
     # khi kề word char / ':' / '(' — rule + 3 ví dụ đối chứng bản giấy ở

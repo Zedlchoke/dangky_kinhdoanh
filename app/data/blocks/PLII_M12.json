@@ -161,8 +161,14 @@
    "align": "left",
    "runs": [
     {
-     "text": "(Tên hộ kinh doanh)",
+     "text": "(Tên hộ kinh doanh) ",
      "i": true
+    },
+    {
+     "input": {
+      "key": "hkd_ten_tieng_viet_2",
+      "w": 18
+     }
     }
    ],
    "format": {

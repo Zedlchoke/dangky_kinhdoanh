@@ -422,3 +422,18 @@ app/templates/PLI_M75.docx
 app/templates/PLI_M76.docx
 app/templates/PLI_M78.docx
 app/templates/PLI_M79.docx
+# --- [6V-V2/C2 2026-09-05] merge lane 6v-nameslot: 13 form_specs name-slot + evidence script (Lead review, bo sung allowlist lane bo sot) ---
+tools/form_specs/formation/PLI_M43.json
+tools/form_specs/household/PLII_M08.json
+tools/form_specs/household/PLII_M10.json
+tools/form_specs/household/PLII_M11.json
+tools/form_specs/household/PLII_M12.json
+tools/form_specs/household/PLII_M13.json
+tools/form_specs/household/PLII_M19.json
+tools/form_specs/household/PLII_M21.json
+tools/form_specs/household/PLII_M22.json
+tools/form_specs/household/PLII_M23.json
+tools/form_specs/household/PLII_M25.json
+tools/form_specs/household/PLII_M27.json
+tools/form_specs/household/PLII_M28.json
+tools/phase6v_c2_nameslot_evidence.py

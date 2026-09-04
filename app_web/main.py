@@ -96,6 +96,47 @@ def _safe_error(exc: BaseException, limit: int = 160) -> str:
     return text or type(exc).__name__
 
 
+def _run_soffice(soffice: str, case_id: str, args: list, src_name: str,
+                 timeout: int = 60):
+    """Chạy MỘT lời gọi soffice với LibreOffice profile CÁCH LY per-call.
+
+    Profile mặc định dùng chung mọi tiến trình: 2 soffice chồng nhau (2
+    worktree/2 runner song song) → thằng sau exit=1; run bị kill giữa chừng
+    để lại .lock/zombie → MỌI lời gọi sau qua profile mặc định đều exit=1
+    (gate đỏ giả 56/1 ngày 2026-09-04). Mỗi call dùng profile riêng
+    /tmp/lo_prof_<case_id>_<pid><suffix> (2 run song song → 2 pid → 2
+    profile), dọn bằng shutil.rmtree trong try/finally.
+
+    Exit != 0 ở lần 1 → retry ĐÚNG 1 lần với profile mới (suffix khác).
+    subprocess.TimeoutExpired vẫn ném ra để call-site xử lý như cũ.
+
+    Trả (returncode, error_message): error_message None khi exit 0; sau
+    retry vẫn fail → "LO_PROFILE_BUSY"/"LO_CRASH <file>: stderr=<200 ký tự
+    cuối>" — không còn message mơ hồ "soffice exit=1".
+    """
+    base = _sanitize_name(case_id, "ho_so", 120)
+    rc, tail = 1, ""
+    for suffix in ("", "_retry"):
+        prof = Path("/tmp/lo_prof_%s_%d%s" % (base, os.getpid(), suffix))
+        try:
+            proc = subprocess.run(
+                [soffice, "--headless", "--norestore",
+                 "-env:UserInstallation=file://%s" % prof, *args],
+                capture_output=True, text=True, timeout=timeout,
+                env={**os.environ, "HOME": os.environ.get("HOME", "/tmp")})
+            rc = proc.returncode
+            if rc == 0:
+                return rc, None
+            tail = " ".join(((proc.stderr or "") + " " + (proc.stdout or ""))
+                            .split())[-200:]
+        finally:
+            shutil.rmtree(prof, ignore_errors=True)
+    code = ("LO_PROFILE_BUSY"
+            if re.search(r"lock|another instance|busy", tail, re.I)
+            else "LO_CRASH")
+    return rc, "%s %s: stderr=%s" % (code, src_name, tail)
+
+
 def _nest(data: dict) -> dict:
     """Chuyển key phẳng dạng 'a.b.c' thành dict lồng nhau vì engine render
     (tools/docx_render._lookup) tra cứu theo đường dẫn lồng nhau."""
@@ -291,21 +332,22 @@ class Bridge:
                 try:
                     shutil.rmtree(norm_dir, ignore_errors=True)
                     norm_dir.mkdir(parents=True, exist_ok=True)
-                    proc = subprocess.run(
-                        [soffice, "--headless", "--norestore",
-                         "--convert-to", "docx", "--outdir", str(norm_dir),
+                    _rc, lo_err = _run_soffice(
+                        soffice, case_id,
+                        ["--convert-to", "docx", "--outdir", str(norm_dir),
                          str(src)],
-                        capture_output=True, text=True, timeout=60,
-                        env={**os.environ, "HOME": os.environ.get("HOME", "/tmp")})
+                        src_name=name)
                     normalized = norm_dir / name
-                    if (proc.returncode == 0 and normalized.exists()
+                    if (lo_err is None and normalized.exists()
                             and normalized.stat().st_size > 0):
                         shutil.move(str(normalized), str(src))
                     else:
+                        if lo_err is None:
+                            lo_err = ("LO_NO_OUTPUT %s: convert exit=0 nhưng "
+                                      "không sinh file" % name)
                         errors.append(
-                            "%s: LO normalize thất bại (exit=%s) — giữ file "
-                            "gốc, Word 16.16 có thể từ chối mở" %
-                            (name, proc.returncode))
+                            "%s: LO normalize thất bại (%s) — giữ file gốc, "
+                            "Word 16.16 có thể từ chối mở" % (name, lo_err))
                 except Exception:
                     errors.append("%s: LO normalize exception — giữ file gốc"
                                   % name)
@@ -322,16 +364,20 @@ class Bridge:
                 src = out_dir / name
                 pdf_name = name.rsplit(".", 1)[0] + ".pdf"
                 try:
-                    proc = subprocess.run(
-                        [soffice, "--headless", "--norestore",
-                         "--convert-to", "pdf", "--outdir", str(out_dir), str(src)],
-                        capture_output=True, text=True, timeout=60,
-                        env={**os.environ, "HOME": os.environ.get("HOME", "/tmp")})
+                    _rc, lo_err = _run_soffice(
+                        soffice, case_id,
+                        ["--convert-to", "pdf", "--outdir", str(out_dir),
+                         str(src)],
+                        src_name=pdf_name)
                     pdf_path = out_dir / pdf_name
-                    if proc.returncode == 0 and pdf_path.exists() and pdf_path.stat().st_size > 0:
+                    if (lo_err is None and pdf_path.exists()
+                            and pdf_path.stat().st_size > 0):
                         pdf_files.append(pdf_name)
                     else:
-                        pdf_errors.append("%s: soffice exit=%d" % (pdf_name, proc.returncode))
+                        if lo_err is None:
+                            lo_err = ("LO_NO_OUTPUT %s: convert exit=0 nhưng "
+                                      "không sinh file" % pdf_name)
+                        pdf_errors.append(lo_err)
                 except Exception as exc:
                     pdf_errors.append("%s: %s: %s" % (pdf_name, type(exc).__name__, _safe_error(exc)))
             if pdf_errors:

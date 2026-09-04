@@ -1,696 +1,386 @@
-# MASTER PLAN v5 — sửa lỗi và rà soát toàn bộ ứng dụng
+# MASTER PLAN v6 — VISUAL TOÀN MẪU & TÍNH TỈ MỈ (Phase 6V)
 
-> **CHECKPOINT PHASE 5R — 2026-09-04 @ `f51f218` (sau fix Lane D):** Phase
-> 5R0–5R4 đã chạy xong trên main: gate visual **455/455 records** (91 form ×
-> 5 fixture semantic) — **detector D1..D12 = 0, 0 trang trắng, 0 export
-> error**; Word 16.16.27 mở trực tiếp **91/91 PASS**; runner **57 PASS /
-> 0 FAIL** (3 suite 5R đã vào runner); coverage drift=0. Bằng chứng:
-> `generated_ho_so/_visual_layout/phase5r_gate/final/` (manifest + summary +
-> 1644 trang PNG + word_open_inventory). Baseline RED (244/455 FAIL) giữ tại
-> `.../baseline_c9d095e/`. Auditor độc lập (Lane D): **PASS-WITH-NOTES** —
-> 0 gian lận gate; 3 finding (F1 bug sectPr, F2 regen drift, F3 reviewer
-> sign-off) đã xử lý/ghi nhận tại `f51f218`.
+> **Hiệu lực:** thay thế toàn bộ MASTER PLAN v5 (2026-09-04). Lịch sử v5 nằm
+> trong `docs/execution_ledger.md` và git; mọi con số v5 chỉ còn giá trị tham
+> chiếu. Đây là kế hoạch duy nhất có hiệu lực.
 >
-> **Trạng thái WLAY:** 001/002/003/004/006/007/008/009/010/012 CLOSED;
-> 005 PARTIAL (3 matrix M12 BLOCKED_OWNER chờ owner); 011 OPEN-census (553
-> glue candidate cần adjudicate). Reviewer sign-off 647 candidate + toàn bộ
-> 1644 trang bởi NGƯỜI còn OPEN (gate ghi reviewer_verdict per record).
-> Windows/.exe: NOT RUN. KHÔNG mở Phase 6/Excel rollout/Windows packaging
-> cho tới owner duyệt báo cáo Phase 5R.
-
-> **CẬP NHẬT KHẨN PHASE 5R — 2026-09-03:** audit corpus Word mới nhất đã xem
-> **91 DOCX / 264 trang** và kết luận **VISUAL LAYOUT = FAIL**. Word mở trực
-> tiếp 91/91 chỉ là openability PASS. Đã xác nhận source-indicator lộ ở 44 form,
-> chữ ký sai cột/tách trang/thiếu vùng viết, field code lộ, trang trắng hoặc
-> boundary thừa, fixed matrix phẳng/thiếu và bảng rộng khó đọc.
+> **Mandate owner (2026-09-04):** "sửa visual toàn bộ các mẫu và tăng tính tỉ
+> mỉ của app" — care tuyệt đối với những chi tiết nhỏ nhất, trên cả ba tầng:
+> core (nguồn/generator), visual (trang in), và kết quả xuất (DOCX/PDF/ZIP).
 >
-> Báo cáo bằng chứng: `docs/word_layout_audit_2026-09-03.md`.
-> Kế hoạch sửa có hiệu lực: `docs/plan_phase5r_word_layout.md`.
-> Mọi kết luận layout/Word trong các checkpoint cũ chỉ là lịch sử và bị
-> supersede bởi Phase 5R. Không mở Phase 6 cho tới khi Definition of Done Phase
-> 5R đạt trên commit sạch và auditor độc lập xác minh.
-
-> **Checkpoint:** 2026-09-03 (buổi 2), `main@28df5cb` sau Phase 3+4:
-> coverage **111/111 drift=0** — `IMPLEMENTED_VERIFIED` 64→**76**, MISSING
-> 7→**0**, PARTIAL 4→**0**, BLOCKED_OWNER 22, NO_TABLE 7, OUTPUT_ONLY 6;
-> runner **51 PASS / 0 FAIL / 0 NOT RUN** (thêm 2 suite row-contract);
-> manifest census **tái lập được từ generator** (HEADING_OVERRIDES gỡ 3
-> hand-fix Phase 2); row/blank-row contract implement + corpus + inventory
-> machine-readable (`docs/row_contract_inventory.json`). Word/WebView2/
-> Windows visual: **NOT RUN** (Phase 5+ OPEN). Sau checkpoint này, corpus WIP
-> 91 DOCX đã được mở/render: open-direct **PASS 91/91**, nhưng audit bố cục
-> **FAIL**; xem cập nhật Phase 5R phía trên.
-> Chi tiết ledger `docs/execution_ledger.md`; owner decisions
-> `docs/decision_registry.md` (thêm Q-P4-1 min_rows nested-grid).
->
-> Đây là kế hoạch duy nhất có hiệu lực. Source/tests/manifests tại HEAD là trọng
-> tài kỹ thuật; nội dung pháp lý phải đối chiếu văn bản đang có hiệu lực. Các kế
-> hoạch/checkpoint cũ chỉ là lịch sử trong `docs/execution_ledger.md`.
-
-## 0. Checkpoint Phase 3+4 (2026-09-03, buổi 2) — kết quả thật
-
-**Phase 3 — 2 MISSING + 4 PARTIAL xử lý đúng bản chất (đều không phải bảng
-thiếu thật, không thêm field mới, không sửa generated bằng tay):**
-
-| Section | Root cause | Fix |
-|---|---|---|
-| PLI_M01/bhxh_phuong_thuc_dong | Census stale: notes than thiếu `chk_bc_03_thang` nhưng ba64f29 đã đủ 3/3 token | Override already_complete; audit scalar_credited verify region keys (tiền lệ PLI_M17) |
-| PLI_M11/ds_to_chuc_xd_cshhl | Spec chỉ tồn tại inline trong build_form_maps | File spec `formation/PLI_M11.json` verbatim (regen zero-diff chứng minh bằng full run) |
-| PLI_M01+M02 tai_san_gop_von, PLI_M04 co_cau/chao_ban | `stt` là số thứ tự in sẵn của fixed-matrix | Detector credit `stt` khi fixed-matrix có fixed_rows evidence (+ selftest 38→51, positive+negative) |
-| PLI_M04/co_cau_loai_co_phan | `menh_gia_co_phan` là dòng scalar riêng (TT 121), không phải cột | Detector credit exact-match scalar vùng anchor |
-| PLI_M04/co_phan_duoc_quyen_chao_ban | Cột label readonly thiếu tag định danh (lệch convention anh em) | Wire tag `loai_co_phan_chao_ban` trong runtime contract (inputType giữ readonly) |
-
-Phát hiện quan trọng phụ: manifest.json từng bị sửa tay 3 heading ở Phase 2 →
-regen mất fix. Đưa về `HEADING_OVERRIDES` trong build_manifest.py — manifest
-tái lập được lại từ generator+fragments (delta chỉ còn override mới).
-
-**Phase 4 — row/blank-row contract:**
-
-- Gap thật đã vá: hàng MỌI ô tróng trong store đi thẳng vào DOCX → filter ở
-  `GridCtl.exportLoops` (JS) + guard `_expand_loops` (Python last-mile),
-  `{_stt}` đánh lại trên dữ liệu; draft round-trip giữ nguyên row (blank sống
-  trong draft, chỉ lọc ở export); dòng chỉ có discriminator không bị mất.
-- Fixed legal row ≠ blank row: fixed-matrix in đủ dòng pháp định khi rỗng
-  (FM1), blankRows in sẵn của bản giấy không bị lọc — corpus pin cả hai.
-- Inventory: `tools/census/row_contract_inventory.py` → JSON/MD (11 global
-  grids, 18 form-scoped, 14 section contracts, 42 dynamic_tables, 21
-  section_specs, 42 blankRows blocks; policies/gaps/test-coverage; gate count).
-- BLOCKED_OWNER Q-P4-1: `min_rows` 3 nested-grid khai mà không tầng nào
-  enforce — chờ owner chốt semantics (không tự chọn).
-
-**Trạng thái lịch sử tại checkpoint Phase 4:** Word/WebView2/Windows/.exe khi
-đó chưa chạy thật. Trạng thái Word/layout mới nhất nằm trong Phase 5R phía trên;
-WebView2/Windows/.exe vẫn **NOT RUN**.
-
-## 1. Mục tiêu
-
-Không chỉ sửa các lỗi đã thấy. Wave này phải:
-
-1. đưa release gate về xanh thật;
-2. tái lập danh sách chính xác bảng nào đã có, thiếu, chưa đủ cột hoặc bị block;
-3. quét 87/87 biểu mẫu và mọi use case trên UI, draft, validation, Excel,
-   DOCX/ZIP và accessibility;
-4. sửa lỗi theo gốc rễ, có test chống hồi quy, không vá generated artifact;
-5. audit độc lập sau sửa;
-6. chỉ mở Windows packaging khi mọi gate chất lượng đã xanh.
-
-## 2. Kết quả audit hiện tại
-
-### 2.1 Phần đã làm được
-
-- Base code `main` đồng bộ `origin/main@6ae63c2`; worktree hiện có các cập nhật
-  tài liệu audit chưa commit, không được coi là release-clean cho tới khi Lead
-  review và commit/phân loại.
-- P0/P1/P2/P3 nền kỹ thuật đã merge: bốn table kinds, draft migration,
-  validation, DOCX export, M72 one-variant, accessibility fixes.
-- Excel X1–X6 pilot PLI_M72 đã implement, round-trip/negative test PASS và owner
-  đã duyệt hình phiếu mẫu.
-- Header hai band đã áp dụng cho 22 mẫu.
-- M09 đã rebuild/decontaminate; capital M03/M04/M05/M12 và tax PLII_M02 đã có
-  spec/generated output mới.
-- Manifest structural census vẫn nhận đủ 87 form, 111 section, không còn
-  signature unclassified.
-- Accessibility chạy ngoài sandbox: **36 PASS / 0 FAIL** cho PLI_M01, PLI_M02
-  và app shell.
-
-### 2.2 Gate hiện không xanh
-
-Release runner trong sandbox: **43 PASS / 3 FAIL / 0 NOT RUN**.
-
-- `test_p3_a11y`: FAIL do sandbox không được bind `127.0.0.1`; chạy ngoài
-  sandbox đạt 36/36. Đây là hạn chế môi trường, không phải production defect,
-  nhưng runner cần cơ chế phân loại `NOT RUN`/preflight đúng thay vì báo FAIL mơ hồ.
-- `p1_c_verify_plii_m02`: FAIL do verifier chỉ gán 3/4 bảng ngành vào region sau
-  khi thêm header-band và bảng thuế.
-- `test_industry_household`: cùng lỗi phân loại table/region.
-
-Kiểm tra trực tiếp template `PLII_M02.docx` cho thấy production hiện có **6
-bảng**: 1 header-band, 3 bảng ngành Mục A, 1 bảng thuế, 1 bảng ngành C.3;
-`form_maps` cũng khai đủ 4 dynamic table ngành. Hai FAIL sau nhiều khả năng là
-verifier stale, nhưng phải sửa bằng semantic mapping và negative test, không
-được nới thành “đếm gần đúng”.
-
-Audit lại ngày 2026-08-30 xác nhận các con số trên chưa đổi. Đồng thời:
-
-- `docx_render --test-all`: **87 PASS / 0 FAIL**, chỉ chứng minh sinh package,
-  không phải visual PASS;
-- `p1_b_verify_m72`: **9/0** và conditional export **6/0**;
-- UI visual 87/87 và Word/PDF visual 87/87: **NOT RUN** do thiếu backend/tooling.
-
-### 2.3 Lỗi layout/census đã xác nhận
-
-`check_layout_l1` hiện FAIL:
-
-- newline blocks còn 263, thấp hơn threshold 293; cần phân biệt regression thật
-  với giảm hợp lệ do paragraph đã được chuyển thành bảng;
-- 4 vùng `STT...` bị glue tại PLII_M02 và PLI_M72;
-- 2 digit-run `12345678910` tại PLII_M02.
-
-`numbering_audit --gate` hiện FAIL:
-
-- 23/87 form còn footnote-glue;
-- chain PLI_M03→PLI_M06 thiếu mục 7;
-- chain PLI_M04→PLI_M08 thiếu mục 8–9;
-- PLI_M05→PLI_M09 đã liên tục 6→7.
-
-### 2.4 Danh sách bảng hiện chưa đáng tin
-
-Manifest file vẫn báo 33 form `BLOCKED_LEGAL_REVIEW`, 33 section `missing_grid`,
-5 `partial_columns`, 1 `partial`, 1 `contaminated`. Tuy nhiên source/spec/form
-maps hiện đã triển khai một số section vẫn bị ghi `missing_grid`, ví dụ capital
-M03/M04/M05, tax PLII_M02 và M09.
-
-Nguyên nhân: fragment census và `LEAD_STATUS_OVERRIDES` chưa hòa giải ổn định;
-một số override dùng section ID cũ/không trùng manifest. Vì vậy:
-
-> Không được tuyên bố “còn 33 bảng thiếu”, cũng không được tuyên bố “đã đủ bảng”,
-> cho tới khi tạo lại ma trận coverage 111/111 section từ source hiện tại.
-
-### 2.5 Lỗi/gap người dùng cần điều tra
-
-1. Bảng ngành từng xuất hiện `Tên ngành = undefined`, `Mã ngành = 6`; chưa có
-   test tái hiện trạng thái draft/autosave thật.
-2. Cột “Ngành nghề kinh doanh chính” đang dùng radio tròn. Semantics chọn một là
-   đúng, nhưng hình thức phải đối chiếu mẫu gốc; nếu mẫu dùng ô vuông thì giữ
-   radio semantics nhưng render control vuông và DOCX xuất `X`.
-3. Chữ ký một số mẫu không đủ khoảng trống để ký.
-4. Checkbox DOCX có thể để dấu `X` rơi sang dòng riêng.
-5. PLII_M03–M06 có dấu hiệu bảng thuế bị làm phẳng thành số mồ côi.
-6. Evidence screenshot M09 hiện có được chụp trước rebuild, không dùng làm bằng
-   chứng cho HEAD mới.
-7. Visual/browser audit mới trong phiên lập plan: **NOT RUN** vì không có browser
-   backend. PDF re-render mới: **NOT RUN** vì môi trường thiếu Poppler. Evidence
-   cũ chỉ dùng để lập giả thuyết, không được dùng để đóng gate hiện tại.
-
-## 3. Nguồn pháp lý bắt buộc
-
-Mỗi form/spec phải có `source_evidence` trỏ đúng phiên bản hiệu lực:
-
-- Thông tư 68/2025/TT-BTC về biểu mẫu;
-- Thông tư 121/2026/TT-BTC sửa Thông tư 68, hiệu lực 21-08-2026;
-- Nghị định 168/2025/NĐ-CP về đăng ký doanh nghiệp;
-- Nghị định 296/2026/NĐ-CP sửa Nghị định 168, hiệu lực 23-07-2026.
-
-Trước khi sửa nội dung mẫu, Lead phải lập `form → văn bản → phụ lục/mẫu → phiên
-bản → hiệu lực → source hash/page`. Không dùng bản scan cũ nếu mẫu đã bị thay;
-không tự suy diễn khi hai văn bản xung đột.
-
-## 4. Thứ tự thực hiện
-
-### Wave A — Khôi phục baseline xanh
-
-Lead làm trên main; chưa spawn coding lane.
-
-1. Sửa hai verifier PLII_M02 theo semantic content:
-   - nhận diện header-band bằng `band:header`/nội dung;
-   - nhận diện bảng thuế bằng header “Chỉ tiêu”;
-   - map đúng bốn industry table theo occurrence/heading/form_maps;
-   - fail khi thiếu, thừa, đảo region hoặc table_index lệch.
-2. Không thay production template nếu dump 6 bảng và `form_maps` vẫn khớp.
-3. Thêm negative mutations cho header-band/tax table chen giữa các industry
-   region để verifier không hồi quy.
-4. Cho release runner preflight việc bind localhost:
-   - có quyền → chạy a11y và PASS/FAIL bình thường;
-   - không có quyền → critical `NOT RUN` có lý do, không ghi product FAIL giả;
-   - release chính thức vẫn bắt buộc chạy a11y ở môi trường cho phép.
-5. Chạy full runner ngoài sandbox/CI phù hợp đến **46 PASS / 0 FAIL / 0 NOT RUN**.
-
-**Gate A:** repo sạch, verifier chính xác, runner xanh thật.
-
-### Wave B — Tái lập bảng sự thật 111 section
-
-Tạo một lane census/test riêng; không sửa UI/generator trong lane này.
-
-1. Sinh `docs/table_coverage_current.md` hoặc JSON máy đọc được, một dòng cho
-   từng section:
-   `form_id · section_id · kind · source version · spec · template table ·
-   form_maps · blocks · runtime contract · draft key · validation · DOCX · visual ·
-   final status`.
-2. Status cuối chỉ gồm:
-   - `IMPLEMENTED_VERIFIED`;
-   - `PARTIAL_COLUMNS`;
-   - `MISSING_IMPLEMENTATION`;
-   - `BLOCKED_OWNER`;
-   - `NO_TABLE`;
-   - `OUTPUT_ONLY`;
-   - `REMOVED_BY_CURRENT_LAW`.
-3. Reconcile fragment status, overrides, form specs, form maps và runtime
-   contracts. Override không khớp section ID phải làm gate FAIL.
-4. Gate hai chiều:
-   - spec/form_maps/runtime có nhưng manifest vẫn `missing_grid` → FAIL;
-   - manifest `implemented` nhưng thiếu template/blocks/runtime/export → FAIL.
-5. Refresh totals từ effective statuses; không giữ `33 blocked` chỉ vì snapshot
-   cũ.
-6. Tách header-band khỏi data-table census; tách layout table khỏi business table.
-
-**Gate B:** coverage 111/111 không có dòng mơ hồ; lúc đó mới có con số chính xác
-“còn thiếu bao nhiêu bảng”.
-
-### Wave C — Điều tra toàn ứng dụng, read-only
-
-Sau Gate B, tạo một auditor mới không sửa code. Quét **không sampling**:
-
-#### C1. Phạm vi
-
-- 87 biểu mẫu;
-- toàn bộ use case hiện có trong `use_cases.json`;
-- 5 variant M72;
-- scalar, date, checkbox, dropdown, selector và bốn table kinds;
-- trạng thái rỗng, hợp lệ, lỗi, draft cũ, dữ liệu lớn;
-- flow chọn thủ tục → nhập → validate → save/reload/import → Excel → DOCX/ZIP.
-
-#### C2. UI/UX checklist từng form
-
-- tiêu đề, quốc hiệu, form number, section numbering;
-- field không tràn/chồng/cắt, label đúng ô, focus thấy rõ;
-- không có `undefined`, `null`, `NaN`, giá trị rác hoặc placeholder lọt vào input;
-- button thêm/xóa/nhân bản/lên/xuống hoạt động và có aria-label;
-- radio/checkbox đúng semantics lẫn hình thức nguồn;
-- validation message dễ hiểu, mở đúng tab và focus đúng field;
-- 1280, 768, 375 px; zoom 100/150/200%; keyboard-only;
-- không mất dữ liệu khi đổi form/variant.
-
-#### C3. Table checklist
-
-- đúng số bảng/section theo coverage matrix;
-- đúng header rows, rowspan/colspan và số cột vật lý;
-- nhập đúng **1 dòng** thì UI/draft/DOCX chỉ có đúng dữ liệu 1 dòng; blank rows in
-  không biến thành dữ liệu;
-- thêm/xóa/reorder/duplicate không đổi nhầm bảng cùng semantic key;
-- totals/formula/cross-field đúng; output-only không sửa được;
-- export không nuốt conflict và không trộn dữ liệu các occurrence/variant.
-
-#### C4. DOCX/Word checklist
-
-- render 87/87 bằng Word/LibreOffice, chia batch nhỏ;
-- 0 marker `{...}`, 0 số mồ côi, 0 `X` riêng dòng, 0 trang trắng bất thường;
-- chữ ký có khoảng trống thực tế;
-- header band đúng trái/phải, không viền lộ;
-- bảng đủ viền/cột/page-break; superscript/footnote đúng;
-- M72 chỉ đúng một variant.
-
-#### C5. Đầu ra
-
-`inventory.json` + report gồm `PASS | FAIL | NOT RUN`, screenshot/PDF page và
-reproduction steps cho từng lỗi. Evidence phải tạo từ HEAD hiện tại; ảnh cũ chỉ
-được reuse nếu input hash, renderer và generated form không đổi.
-
-**Gate C:** 87/87 form và mọi use case có verdict; không còn “chưa nhìn”.
-
-### Wave D — Sửa lỗi theo lớp gốc rễ
-
-Chỉ mở lane sau khi C phân nhóm lỗi. Tối đa ba lane song song, file ownership
-không chồng.
-
-#### D1 — Industry input/UI
-
-- Tái hiện `undefined`/`6` từ draft/autosave/legacy migration trước khi sửa.
-- Normalize missing cell về chuỗi rỗng, không stringify `undefined`.
-- Kiểm binding `ma_nganh`/`ten_nganh`, VSIC async selection và row IDs.
-- Quyết định hình vuông/tròn theo source; giữ exclusivity và accessibility.
-- Thêm suite `test_industry_input_negative` phủ mọi loop ngành, reload và export.
-
-#### D2 — Extractor/footnote/numbering
-
-- Tách superscript footnote khỏi chữ nhưng không xóa số nội dung thật.
-- Đưa 23 form GLUE về 0 bằng sandbox regen + negative fixtures.
-- Phân loại newline giảm 309→263: cập nhật metric theo paragraph còn tồn tại nếu
-  conversion-to-table hợp lệ; nếu mất newline thật thì sửa extractor.
-- Xử lý bốn STT-glue/digit-run bằng table implementation hoặc explicit
-  `BLOCKED_OWNER`; không dùng allowlist che lỗi.
-- Reconcile chain M03→M06 và M04→M08 theo mẫu hiện hành.
-
-#### D3 — DOCX/layout
-
-- Signature có tối thiểu khoảng trống theo source và không đẩy footnote sai trang.
-- Checkbox label + `X` cùng dòng; test cả checked/unchecked.
-- Số mồ côi PLII_M03–M06: rebuild bảng thuế theo source hoặc giữ blocker owner;
-  không remap bằng CSS để che cấu trúc thiếu.
-- Header 22 mẫu kiểm cả UI và Word output.
-
-#### D4 — Missing/partial tables
-
-Rollout theo coverage matrix và quyết định pháp lý, ưu tiên:
-
-1. bảng ảnh hưởng trực tiếp thao tác use case đang ship;
-2. partial columns/data-loss;
-3. M72 N2–N5;
-4. admin/branch/attachment tables;
-5. output-only/admin fixed rows.
-
-Mỗi section phải đi xuyên spec → generated template → form_maps → blocks → runtime
-→ draft → validation → DOCX → visual. Không ghi `IMPLEMENTED_VERIFIED` nếu chỉ có
-module/test độc lập.
-
-#### D5 — Documentation truth
-
-Cập nhật đồng thời:
-
-- `docs/decision_registry.md` — đóng quyết định đã implement; ghi nguồn mới;
-- `docs/product_scope_registry.md` — 28 use case hiện tại, Excel không còn “out
-  of scope”, P3/a11y không còn PENDING;
-- `docs/defect_registry.md` — status theo evidence mới;
-- `docs/execution_ledger.md` — checkpoint hiện hành;
-- manifest/coverage totals.
-
-**Gate D mỗi lane:** test đỏ trước → fix → targeted xanh → Lead merge → regen ×2
-zero-diff → census → visual re-shoot → full runner → commit sạch.
-
-### Wave E — Auditor độc lập sau sửa
-
-Auditor mới, read-only, không phải agent đã sửa:
-
-1. kiểm từng defect class và lỗi mới từ Wave C;
-2. review diff để phát hiện nới test, sửa generated bằng tay hoặc override che lỗi;
-3. chạy độc lập release, manifest coverage, numbering, L1, marker/glyph scan;
-4. spot-check UI và Word output từ evidence mới;
-5. verdict từng mục `PASS/PARTIAL/FAIL/NOT RUN`.
-
-Không vào Wave F nếu còn FAIL thuộc scope đã mở.
-
-### Wave F — P5R final whole-app gate
-
-| Gate | PASS khi |
+> **Đầu vào:** audit 3 lớp ngày 2026-09-04 trên HEAD `294604c` (bằng chứng:
+> `/tmp/audit_l2_report.json` khi audit; bản tóm tắt trong mục 1; corpus
+> `generated_ho_so/_visual_layout/phase5r_gate/final/`).
+
+---
+
+## 0. Nguyên tắc bất biến (mọi agent, mọi phase, không ngoại lệ)
+
+1. **Sửa gốc rễ, đúng lớp.** Template chỉ được sinh lại qua generator
+   (`tools/build_form_maps.py` regen); CẤM sửa tay `app/templates/*.docx`.
+   Generated artifact chỉ được thay qua pipeline; `audit_blocks_check` +
+   exact-set gate (`tools/audit_expected_diff_files.txt`) phải xanh sau mỗi
+   merge.
+2. **Detector trước, fix sau.** Mỗi lớp lỗi phải có detector định lượng bắt
+   được lỗi (baseline ĐỎ) TRƯỚC khi fix; fix xong detector phải xanh. Không
+   có lỗi nào được đóng bằng "mắt thường nhìn ổn".
+3. **Evidence tự tái lập được.** Mọi kết luận phải tái tạo từ HEAD sạch bằng
+   lệnh ghi trong evidence (manifest + lệnh + số liệu). Evidence không khớp
+   đĩa (như sự kiện PNG M72 1567/1644) bị coi là evidence THẤT BẠI.
+4. **Regen ×2 zero-diff** sau mỗi thay đổi generator/template; drift-guard
+   ID1/ID7 (`test_generator_deep_idempotency`) là trọng tài.
+5. **Auditor độc lập thật sự.** Auditor không được là agent đã sửa phần tương
+   ứng; không được edit code; chỉ được ghi report vào `docs/audits/`. Có quyền
+   REJECT merge với evidence.
+6. **File ownership không chồng lấn giữa các lane.** Lane không đụng file
+   ngoài ownership (kể cả test file pin trạng thái — báo Lead, không tự sửa;
+   tiền lệ 5R-laneM09).
+7. **Không chạy song song trên cùng profile LibreOffice.** Mọi lane làm việc
+   trong worktree riêng (`dangky_kinhdoanh-worktrees/6v-<lane>`); mọi lời gọi
+   soffice qua profile cách ly (sau V0 là mặc định trong code).
+8. **Luật pháp lý là chuẩn nội dung.** Trước khi sửa nội dung mẫu: đối chiếu
+   TT 68/2025/TT-BTC, TT 121/2026/TT-BTC (hiệu lực 21-08-2026), NĐ 168/2025,
+   NĐ 296/2026. Không tự suy diễn khi xung đột — lên `decision_registry`.
+9. **Sổ sách đồng bộ:** mỗi merge cập nhật `docs/defect_registry.md`,
+   `docs/decision_registry.md` (nếu có quyết định), `docs/execution_ledger.md`
+   (checkpoint phase). Không ghi "đã xong" khi chưa có số liệu.
+10. **Con số trung thực:** summary phải tách bạch `hard-fail` và `candidate`;
+    không bao giờ phát biểu "0 lỗi" khi ý là "0 hard-fail" (bài học G-E2).
+
+---
+
+## 1. Baseline khởi đầu — audit 2026-09-04 @ `294604c`
+
+### 1.1 Đã đóng (không làm lại, chỉ giữ regression guard)
+
+| Hạng mục | Bằng chứng |
 |---|---|
-| G1 Legal/source | 87/87 map đúng TT 68+121 và NĐ 168+296 hiện hành; source evidence resolve được |
-| G2 Coverage | 111/111 section có final status; 0 manifest/spec/runtime drift |
-| G3 Numbering/footnote | 0 JUMP/CHAIN/GLUE ngoài exception owner phê duyệt |
-| G4 UI hygiene | 0 undefined/null/NaN/rác; 0 overlap/cut; controls đúng semantics |
-| G5 Tables | mọi implemented table qua one-row, round-trip, formula, conflict và DOCX tests |
-| G6 DOCX/ZIP | 87/87 mở bằng Word; 0 marker/số mồ côi/X lệch/trang trắng; M72 đúng variant |
-| G7 Excel | pilot PLI_M72 round-trip/negative/visual PASS; phạm vi rollout khác được ghi rõ |
-| G8 A11y/viewport | keyboard, focus, ARIA, contrast, 3 viewport và zoom 200% PASS |
-| G9 Resilience/security | draft xấu, Unicode, path hostile, offline/error handling PASS |
-| G10 Release hygiene | runner 0 FAIL/critical NOT RUN, generator idempotent, allowlist cân, tree sạch |
+| Trang trắng 0/1567 (kể cả 25 record M72 mọi biến thể) | text-scan toàn corpus |
+| M70 chữ ký ngang 1×2 không viền, cantSplit, ~5cm vùng viết | vision + B2 PASS |
+| Orphan signature page 0 (subset B5) | `test_phase5r_signatures` 6/6 PASS |
+| sectPr bug F1 (Lane D) đã sửa | `test_phase5r_metadata` PASS |
+| Gate 57 PASS / 0 FAIL / 0 NOT RUN trên máy sạch | `/tmp/runner_clean2.json` |
+| Word mở trực tiếp 91/91 | `word_open_inventory.json` (5R) |
 
-### Wave G — Windows package
+### 1.2 Còn tái hiện — mục tiêu tiêu diệt của plan này
 
-Chỉ mở khi F đạt 10/10:
+| Mã | Lớp lỗi | Quy mô (đo được) | Gốc rễ đã định danh |
+|---|---|---|---|
+| **B1** | Ngày/tháng/label dính nhau (`ngày04tháng…`, `:CÔNG TY`, `…vnWebsite:`) | 303 hit / 55 form, mọi fixture | Template skeleton không space quanh placeholder (VD PLII_M08: `{dia_diem_ky}, ngày{ngay_ky_vb}tháng{thang_ky_vb}năm{nam_ky_vb}`) |
+| **B2** | Slot tên DN/hộ KD không nhận tên (gạch/chấm/trống) | ~37/72 form có slot tên | 3 gốc rễ: (a) template không có placeholder (PLII_M08); (b) có `{key}` nhưng form_maps thiếu tag (PLII_M02); (c) slot literal `……` trong khi slot cạnh có key (PLII_M13). 48/87 form đã bind đúng |
+| **B3** | Tick checkbox = chữ "X" trần trước nhãn, không ô vuông | mọi form có chk | Render ghi giá trị "X" vào text; template không có ô vuông |
+| **B4** | Giá trị trông như mã kỹ thuật (`NOI_O_HIEN_TAI_123`, `_HIEN`/`_TAI_1` bị wrap xé dòng) | 938 hit / 73 form | Fixture fallback sinh `LABEL_HOA_N` (phase5_fixtures.py:196-198) + token dài rơi cột ~1cm bị Word wrap giữa token |
+| **B5** | Bảng 9–15 cột không đọc được (min col 566 twips ≈ 1.0cm; vision M12: cột hẹp nhất 1–2mm, M09: 2–3mm) | 60 bảng / 10 form (PLII_M01/02, PLI_M02/06/07/09/10/12/15/72) | Policy `min_col 567` rebaseline theo census thực tế (81b5931) → sàn cho phép cái con người không đọc được |
 
-- build `.exe`/installer tái lập;
-- smoke trên Windows sạch không Python;
-- WebView2/dialog/save/import/Excel/DOCX/ZIP/offline;
-- ghi artifact path, hash, size, OS/WebView2 version và verdict.
+### 1.3 Lỗi hạ tầng gate (phải sửa TRƯỚC mọi lane visual)
 
-### Wave H — Final audit và bàn giao
-
-Auditor read-only mới đối chiếu toàn bộ `CORE_APP_DONE`. Nếu Excel được định nghĩa
-là toàn bộ use case thay vì pilot PLI_M72, phải có wave rollout questionnaire
-riêng trước khi ghi `FULL_PRODUCT_DONE`.
-
-## 5. Quyết định owner cần chốt
-
-1. Có mở rebuild bảng thuế PLII_M03–M06 để xử lý số mồ côi không?
-2. PLI_M10 dùng mẫu mới theo TT 121 dù thay contract “Quyền chi phối” cũ?
-3. PLI_M11 đã bị bãi bỏ: gỡ khỏi app/pipeline hay giữ ở trạng thái legacy?
-4. Có mở phần đuôi còn thiếu của M03/M04/M05 theo mẫu hiện hành không?
-5. “Ngành nghề chính” trên UI cần hình ô vuông như giấy hay chấp nhận radio tròn?
-6. Excel là pilot PLI_M72 hay phải rollout cho mọi thủ tục trước `FULL_PRODUCT_DONE`?
-7. `app_tk` là legacy-supported hay deprecated?
-8. [Phase 4] `min_rows=1` của 3 nested-grid ủy quyền (PLI_M02/M12/M15): enforce
-   vô điều kiện (sẽ chặn hồ sơ KHÔNG ủy quyền) / chỉ khi section có dữ liệu /
-   xóa khai báo? Chi tiết `docs/decision_registry.md` Q-P4-1; đang giữ
-   BLOCKED_OWNER, chưa enforce.
-
-## 6. SOP dùng worker/sub-agent
-
-### 6.1 Trình tự spawn bắt buộc
-
-| Thời điểm | Agent được tạo | Điều kiện |
+| Mã | Vấn đề | Hệ quả |
 |---|---|---|
-| Wave A | Không tạo sub-agent | Lead đưa baseline về 46/46 trước |
-| Wave B | `coverage-agent` | main sạch, Gate A PASS |
-| Wave C | `whole-app-auditor` read-only | coverage 111/111 đã commit |
-| Wave D batch 1 | tối đa 3 lane: `fix-industry`, `fix-extractor`, `fix-docx-layout` | inventory Wave C đã phân loại root cause và ownership không chồng |
-| Wave D batch 2 | các lane `fix-missing-<domain>` | batch 1 đã merge sạch; owner đã mở đúng legal scope |
-| Wave E | `post-fix-auditor` read-only mới | mọi coding lane đã merge, main sạch |
-| Wave H | `final-release-auditor` read-only mới | P5R 10/10 và Windows evidence có đủ |
+| **I1** | soffice dùng profile mặc định dùng chung; 2 tiến trình chồng nhau → exit=1; run bị kill giữa chừng để lại `.lock`/zombie → mọi lời gọi sau đều chết | Gate đỏ giả 56/1 (2026-09-04); mất giờ chẩn đoán; nguy cơ tái diễn bất cứ khi nào 2 agent/run song song |
+| **I2** | PNG M72: 25 record ghi chung 1 thư mục `final/<fixture>/PLI_M72/` → ghi đè lẫn nhau | manifest claim 1644 trang, đĩa 1567; 4/5 biến thể trỏ ảnh NHẦM; M72 không audit lại được từ corpus |
+| **I3** | Summary chỉ đếm hard-fail; D9/D10/D11 hits nằm `gate_candidates` → in "D9=0" dù det_table_grid bắt được NARROW_COL trên chính corpus final | Ngôn ngữ "D1..D12=0" gây hiểu sai "không còn finding" |
+| **I4** | `MIN_COL_TWIPS=567` nhưng census có bảng 566 → candidate vĩnh viễn không ai chặn | B5 sống sót qua gate |
 
-Không tạo ba coding agent ngay từ đầu. Coverage và investigation phải hoàn tất
-trước để tránh hai agent sửa cùng một lỗi hoặc dựa vào con số 33 bảng đã stale.
+---
 
-### 6.2 Chuẩn bị worktree
+## 2. Hướng đi
 
-Lead chạy từ root repo:
+Mô hình tổng: **"Hạ tầng tin cậy → Detector phủ sâu → Fix theo lớp → Quyết
+định owner cho cái khó → Quét tỉ mỉ toàn mẫu → Audit độc lập 3 tầng →
+Checkpoint đứng vững."**
 
-```bash
-ROOT_REPO=$(git rev-parse --show-toplevel)
-BASE_COMMIT=$(git rev-parse HEAD)
-WORKTREE_ROOT="${ROOT_REPO%/*}/dangky_kinhdoanh-worktrees"
-
-git status --short
-git worktree list
-git branch --no-merged main
-mkdir -p "$WORKTREE_ROOT"
+```
+V0 Hạ tầng gate      ──gate V0──▶  V1 Detector mở rộng (baseline ĐỎ)
+      │                                    │
+      │                       ┌────────────┼─────────────┬──────────────┐
+      ▼                       ▼            ▼             ▼              ▼
+   (song song)          C4 Fixture    C1 Glue 55f   C2 Name-slot   C3 Chk glyph
+   worktree/lane        (realism)     (regen skel)  (37 form)      (sau Q-V1)
+                              └────────────┴─────────────┴──────────────┘
+                                    merge TUẦN TỰ về main (Lead), mỗi merge:
+                                    regen×2 → census → runner → visual gate
+                                           │
+                                           ▼
+                              V3 Bảng rộng (sau Q-V2 owner)
+                                           ▼
+                              V4 Meticulousness sweep toàn 91 mẫu
+                                           ▼
+                              V5 Audit độc lập 3 tầng + checkpoint final
 ```
 
-Nếu `git status --short` có output chưa phân loại, **DỪNG**. Không dùng
-`reset`, `clean`, `checkout --` hoặc `restore` để ép sạch.
-
-Tạo coding lane:
-
-```bash
-git worktree add "$WORKTREE_ROOT/coverage" \
-  -b agent/coverage "$BASE_COMMIT"
-
-git worktree add "$WORKTREE_ROOT/fix-industry" \
-  -b agent/fix-industry "$BASE_COMMIT"
-
-git worktree add "$WORKTREE_ROOT/fix-extractor" \
-  -b agent/fix-extractor "$BASE_COMMIT"
-
-git worktree add "$WORKTREE_ROOT/fix-docx-layout" \
-  -b agent/fix-docx-layout "$BASE_COMMIT"
-```
-
-Chỉ chạy ba lệnh `fix-*` sau Wave C. Nếu branch/worktree cùng tên đã tồn tại,
-Lead audit branch đó trước; không tái sử dụng mù hoặc xóa để tạo lại.
-
-Auditor read-only nên dùng detached worktree để HEAD không đổi trong lúc chấm:
-
-```bash
-git worktree add --detach "$WORKTREE_ROOT/audit-whole-app" "$BASE_COMMIT"
-git worktree add --detach "$WORKTREE_ROOT/audit-post-fix" "$BASE_COMMIT"
-```
-
-Mỗi auditor chỉ dùng một detached worktree phù hợp phase, không tạo cả hai cùng
-lúc. Auditor chỉ được ghi evidence vào `generated_ho_so/_visual_layout/<wave>/`
-hoặc `/tmp`; report tracked phải trả bản nháp cho Lead review.
-
-### 6.3 Brief bắt buộc trước khi giao agent
-
-Mỗi brief phải có đủ:
-
-1. `BASE_COMMIT` và absolute worktree path;
-2. một mục tiêu hữu hạn;
-3. exact file ownership;
-4. forbidden files/actions;
-5. test/evidence gate;
-6. format báo cáo cuối.
-
-Format trả về:
-
-```text
-LANE:
-BASE:
-HEAD:
-WORKTREE:
-DIFF_ALLOWLIST:
-COMMITS:
-TESTS_PASS:
-TESTS_FAIL:
-TESTS_NOT_RUN:
-EVIDENCE:
-FINDINGS:
-BLOCKERS:
-GIT_STATUS:
-```
-
-### 6.4 Brief `coverage-agent` — Wave B
-
-```text
-Mục tiêu: tạo coverage matrix 111/111 section theo PLAN Wave B.
-
-Ownership:
-- tools/census/table_coverage_audit.py (mới)
-- tests trực tiếp cho audit trên
-- docs/table_coverage_current.md hoặc JSON generated tương ứng
-
-Forbidden:
-- app_web/ui/**, app_web/main.py
-- tools/build_form_maps.py, tools/docx_to_blocks.py, tools/docx_render.py
-- app/templates/**, app/data/blocks/**, form_maps*, manifest hiện hành
-- không regenerate, không sửa production, không chạy full release runner
-
-Gate:
-- 111/111 section có một final status hợp lệ
-- audit hai chiều manifest ↔ spec/form_maps/blocks/runtime/export
-- override không resolve section_id làm test FAIL
-- không tự đổi missing thành implemented nếu chưa có evidence xuyên pipeline
-```
-
-Lead review output, sửa generator census nếu cần, rồi mới regenerate/commit
-manifest và coverage totals trên main.
-
-### 6.5 Brief `whole-app-auditor` — Wave C
-
-```text
-Bạn là auditor read-only. Không sửa code/test/spec/generated và không commit.
-BASE là commit coverage 111/111 đã được Lead cung cấp.
-
-Quét 87/87 form, mọi use case và 5 variant M72 theo PLAN Wave C. Với mỗi form:
-- seed dữ liệu đại diện cho mọi field/table kind;
-- kiểm UI ở 1280/768/375 và zoom 100/150/200;
-- kiểm add/delete/reorder/one-row/draft/validation;
-- xuất DOCX/ZIP, render Word/PDF khi tooling có;
-- ghi PASS/FAIL/NOT RUN, reproduction steps và evidence path.
-
-Chỉ ghi:
-- generated_ho_so/_visual_layout/whole_app_audit/**
-- /tmp/whole_app_audit_*
-
-Đầu ra:
-- inventory.json đủ 87 form
-- use_case_matrix.json
-- bảng lỗi nhóm theo root-cause class
-- top lỗi data-loss/blocking trước, cosmetic sau
-```
-
-Nếu browser/Word/WebView2 không có, ghi `NOT RUN`; không thay bằng suy luận từ
-DOM hoặc ảnh cũ.
-
-### 6.6 Coding lanes Wave D batch 1
-
-#### `fix-industry`
-
-Ownership độc quyền:
-
-- `app_web/ui/app.js`
-- `app_web/ui/form-domain.js`
-- `app_web/test_industry_input_negative.js` và test trực tiếp liên quan
-
-Forbidden:
-
-- `render.js`, `style.css`, `tools/**`, templates/blocks/form_maps/manifest;
-- không sửa test để chấp nhận literal `undefined`, `null`, `NaN` hoặc mã rác;
-- không regenerate, merge, push hoặc chạy release runner.
-
-Gate: test đỏ tái hiện trước; sau fix phủ legacy draft, autosave, add row, VSIC,
-reload, primary selection và export payload cho mọi loop ngành.
-
-#### `fix-extractor`
-
-Ownership độc quyền:
-
-- `tools/docx_to_blocks.py`
-- extractor fixtures/tests mới;
-- `tools/layout_roles.py` hoặc role override chỉ khi brief Lead cho phép rõ.
-
-Forbidden:
-
-- runtime UI, `docx_render.py`, build_form_maps, generated artifacts;
-- không chạy global regen; chỉ sandbox output tạm.
-
-Gate: footnote GLUE 23→0 trong sandbox, không xóa digit nội dung thật; newline
-metric được giải thích bằng test; STT/digit-run có classification rõ.
-
-#### `fix-docx-layout`
-
-Ownership độc quyền:
-
-- `tools/docx_render.py`
-- `app_web/ui/render.js`
-- `app_web/ui/style.css`
-- signature/checkbox/layout tests mới
-
-Forbidden:
-
-- `app.js`, `form-domain.js`, extractor/generator, generated artifacts;
-- không chữa bảng thiếu bằng CSS.
-
-Gate: signature spacing, checkbox X inline, header band và page-break có red→green
-tests; DOCX checked/unchecked đều được kiểm.
-
-Nếu investigation chứng minh một fix cần file của lane khác, agent dừng và báo
-`BLOCKER_OWNERSHIP`; Lead đổi ownership ở batch kế tiếp, không cho sửa chéo.
-
-### 6.7 Coding lanes Wave D batch 2 — missing tables
-
-Chỉ tạo sau coverage matrix và owner decisions. Chia theo domain thay vì loại
-file, ví dụ:
-
-- `fix-missing-people`;
-- `fix-missing-capital-tax`;
-- `fix-missing-admin-output`.
-
-Mỗi lane chỉ sở hữu form-spec files và test sandbox của domain. Các file dùng
-chung `build_form_maps.py`, runtime registry và generated artifacts vẫn do Lead
-sở hữu. Nếu hai domain cần sửa cùng source file dùng chung, chạy tuần tự.
-
-### 6.8 Merge SOP — chỉ Lead
-
-Với từng lane:
-
-1. đọc báo cáo lane và `git diff BASE..HEAD`;
-2. xác minh không có file ngoài allowlist;
-3. chạy targeted tests tại lane;
-4. merge `--no-ff` tuần tự vào main;
-5. chạy targeted tests ngay sau merge;
-6. nếu source/spec/extractor đổi: Lead regenerate pipeline đầy đủ;
-7. chạy generator lần hai, yêu cầu zero diff hoặc member-level classification;
-8. refresh coverage/census/allowlist;
-9. visual re-shoot form ảnh hưởng;
-10. chạy full release runner, `compileall`, `git diff --check`;
-11. commit ledger/report và yêu cầu `git status` sạch trước lane tiếp theo.
-
-Không merge hai lane cùng lúc và không để agent tự merge vào main.
-
-### 6.9 Dọn worktree an toàn
-
-Chỉ Lead dọn sau khi xác nhận lane sạch và commit đã merge:
-
-```bash
-git -C "$WORKTREE_ROOT/fix-industry" status --short
-git merge-base --is-ancestor agent/fix-industry main
-git worktree remove "$WORKTREE_ROOT/fix-industry"
-git branch -d agent/fix-industry
-git worktree prune
-```
-
-Lặp lại với từng lane sau khi thay đúng tên. Nếu `status --short` có output hoặc
-`merge-base --is-ancestor` trả non-zero, **không remove**; báo Lead phân loại.
-
-### 6.10 Quy tắc bất biến
-
-- Lead giữ main, là người duy nhất merge, regenerate global artifacts, cân
-  allowlist và cập nhật ledger.
-- Main bẩn chưa phân loại thì không spawn.
-- Tối đa ba coding lane song song; không hai lane cùng sở hữu `app.js`,
-  `render.js`, `form-domain.js`, `docx_to_blocks.py`, `build_form_maps.py`,
-  `docx_render.py`.
-- Worker không regenerate global, không chạy release runner, không push/merge.
-- Không sửa tay `app/templates`, `app/data/blocks`, `form_maps` hoặc manifest.
-- Targeted tests khi sửa; full runner tại checkpoint; visual pilot trước batch.
-- Mỗi phase kết thúc bằng commit sạch và báo cáo delta, không kể lại toàn lịch sử.
-
-## 7. Evidence contract
-
-Mỗi checkpoint báo:
-
-- base/HEAD/commits/worktree;
-- exact diff allowlist;
-- commands, exit codes, PASS/FAIL/NOT RUN;
-- generator run 1 và run 2 zero-diff/member-level classification;
-- coverage delta 111 section;
-- screenshot/Word/PDF evidence path và tool version;
-- blocker/owner decision;
-- `git status` cuối.
-
-Không được gọi visual, WebView2, Word/PDF hoặc Windows smoke là PASS nếu chưa chạy
-thật trên HEAD hiện tại.
-
-## 8. Điểm bắt đầu cho agent implement
-
-Agent tiếp theo bắt đầu tại **Wave A**, không chạy lại lịch sử P0–P3. Sau Gate A,
-thực hiện Wave B trước khi sửa bảng hàng loạt. Không được dùng con số 33
-`missing_grid` hiện tại để chia lane cho tới khi coverage matrix 111/111 hoàn tất.
+Nguyên lý An Toàn: V0 là điều kiện cần của mọi phase sau (không có evidence
+đúng thì mọi "xanh" sau đó là giả). V1 phải ĐỎ đúng bằng số liệu mục 1.2 —
+đó là định nghĩa "đã bắt được hết lỗi đã biết". V2 mỗi lane có detector riêng
+làm trọng tài. V3 không tự quyết (Q-V2). V4 là vòng "tỉ mỉ" quét từng chi
+tiền nhỏ chưa có tên trong B1–B5. V5 chỉ kết luận khi 3 auditor độc lập
+(core/visual/export) cùng ký.
+
+---
+
+## 3. Tổ chức agent
+
+### 3.1 Agent thực thi (subagent, có worktree riêng)
+
+| Agent | Role | Ownership (được sửa) | CẤM đụng |
+|---|---|---|---|
+| `agent/6v-infra` | Hạ tầng gate & evidence: profile soffice cách ly, PNG per-variant, summary hai lớp, preflight runner, test concurrency | `app_web/main.py` (chỉ đường export/soffice), `tools/phase5_visual_gate.py` (analyze/render/summary), `tools/release_runner.py`, test mới | templates, form_maps, detectors ngữ nghĩa |
+| `agent/6v-detectors` | Detector mở rộng D13–D16 + nâng D9; baseline đỏ pin bằng số liệu audit; negative tests | `tools/phase5_visual_gate.py` (detector + verdict), `tools/phase5r_table_policies.json`, `tools/test_phase6v_detectors.py` | mọi file fix lỗi (detector phải độc lập với fix) |
+| `agent/6v-glue` | Diệt B1: chuẩn hóa space quanh placeholder trong skeleton 55 form qua regen; mở rộng xử lý `{dien_thoai_khac}Thư điện tử` | `tools/build_form_maps.py` (skeleton normalize + regen), allowlist diff, rebaseline census/policies | `app_web/**`, docx_render |
+| `agent/6v-nameslot` | Diệt B2: phân loại chính xác 37 form thành 3 gốc rễ; engine extension chèn placeholder khi template thiếu; tag field form_maps; regen | `tools/build_form_maps.py`, `tools/form_specs/**`, `app/data/form_maps.json` (qua generator), engine spec extension | `app_web/**`, detector files |
+| `agent/6v-chk` | Diệt B3: glyph ô vuông + X theo chuẩn owner chốt (Q-V1); cả UI shape và DOCX | `app_web/ui/**` (render chk), `tools/docx_render.py` (chỗ ghi X), tests | templates trực tiếp, fixture |
+| `agent/6v-fixture` | Diệt B4 phía fixture: ValueFactory fallback → giá trị tiếng Việt thực + chỉ số nhúng (`Nơi ở hiện tại số 123`), giữ tính phân biệt cho D12; selftest cập nhật | `tools/phase5_fixtures.py` | templates, form_maps |
+| `agent/6v-tables` | Diệt B5 theo phương án Q-V2 (landscape trang bảng / giảm font + sàn 900twips / split); width_policy + section orient khi cần | `tools/build_form_maps.py`, `tools/form_specs/**`, policies | quyết định pháp lý (chỉ implement) |
+| `agent/6v-micro` | V4 meticulousness: census chi tiết nhỏ toàn 91 mẫu theo checklist 5.2; fix theo nhóm qua regen | theo nhóm được giao từng đợt (Lead cấp) | tự quyết phạm vi |
+
+Quy tắc spawn: mỗi agent nhận prompt tự chứa (mã lỗi + số liệu + file +
+gate); PHẢI chạy trong worktree riêng; KHÔNG merge tự vào main — Lead merge.
+
+### 3.2 Agent audit độc lập (read-only, không được sửa code; report vào `docs/audits/`)
+
+| Auditor | Phạm vi audit | Câu hỏi trọng tài | Đầu ra |
+|---|---|---|---|
+| `auditor/6v-core` | Sau MỖI merge lane: diff review đúng lớp hay vá symptoms; có nới test/allowlist che lỗi; regen ×2 zero-diff thật; drift-guard; ownership vi phạm | "Fix này có đứng vững khi regen lại từ nguồn không?" | verdict PASS / PASS-WITH-NOTES / FAIL + findings vào `defect_registry` |
+| `auditor/6v-visual` | Corpus PNG/PDF sau mỗi phase: quét census (không sampling) theo checklist 5.2 + đối chiếu detector counts với mắt (vision tooling); ký `reviewer_verdict` per record | "Trang in này có đạt chuẩn một người Ketoan/Phòng ĐKKD đọc không?" | bảng verdict 91 form × fixture; mọi trang trắng/glue/token/tick sai phải có trang+file |
+| `auditor/6v-export` | Kết quả xuất end-to-end: DOCX+PDF+ZIP integrity, manifest == đĩa 100% (kể cả M72), word-open loop 91/91, export 2 lần identical (determinism), concurrency 2 runner song song | "Từ nút Export đến file người dùng cầm — có gì sai không?" | inventory + hash + verdict per artifact |
+| `auditor/6v-release` | MỘT lần cuối (V5): tái lập toàn bộ từ worktree sạch theo đúng lệnh trong evidence; đối chiếu mọi con số checkpoint | "Checkpoint này có đứng vững trên máy khác không?" | báo cáo final ký tên phase |
+
+Auditor KHÔNG dùng chung context với executor (spawn fresh); auditor từ chối
+kết luận khi thiếu evidence (ghi NOT-RUN) — không được đoán.
+
+### 3.3 Vai trò con người
+
+- **Owner:** quyết Q-V1..Q-V6 (mục 6); duyệt checkpoint V5; duyệt mở Windows
+  packaging (ngoài scope plan này).
+- **Lead (main session):** spawn/merge, giữ ownership không chồng, adjudicate
+  xung đột lane-vs-auditor, cập nhật sổ sách, dừng khi auditor FAIL.
+
+---
+
+## 4. Phases
+
+### V0 — Hạ tầng gate tin cậy (`agent/6v-infra`, tuần tự, ~1 buổi)
+
+1. `app_web/main.py`: mọi lời gọi soffice thêm
+   `-env:UserInstallation=file:///tmp/lo_prof_<case_id>` (một profile cách ly
+   mỗi export run; dọn sau run). Exit=1 → retry đúng 1 lần với profile mới;
+   message lỗi phân biệt `LO_PROFILE_BUSY` / `LO_CRASH` thay vì `soffice
+   exit=1` mơ hồ.
+2. `tools/phase5_visual_gate.py`: PNG dir theo record thật
+   (`final/<fixture>/<variant>/<FORM>/page-NN.png`); assert cuối mỗi run:
+   số file PNG == Σ manifest pages (phá ngay sự kiện 1567/1644).
+3. Summary hai lớp: `summary.json` thêm `hard_fails` VÀ `candidates` đếm theo
+   detector + list candidate IDs; chữ in ra gate tách rõ hai con số.
+4. `tools/release_runner.py`: preflight cảnh báo nếu thấy tiến trình soffice
+   của run khác đang sống (giảm chẩn đoán 56/1 về 0 phút).
+5. Suite mới `test_export_concurrency` (đăng ký runner): 2 export chạy song
+   song (2 process, 2 profile) phải 2 PASS, 0 exit=1.
+
+**Gate V0:** (a) 2 runner song song → 2 PASS; (b) PNG disk == manifest 100%
+sau re-render corpus 1 lượt; (c) runner 57/0/0 máy sạch; (d) summary in cả
+hard-fail lẫn candidate. Auditor `6v-core` ký V0.
+
+### V1 — Detector mở rộng + baseline ĐỎ (`agent/6v-detectors`)
+
+Detector mới (đề đăng ký hard-fail; số liệu chốt theo audit 2026-09-04):
+
+- **D13 glue**: `(ngày|tháng|năm)\d` | `\d(ngày|tháng|năm)` | `\):[A-ZÀ-Ỹ]` |
+  `(Fax|Website|Thư điện tử|Điện thoại):` dính giá trị kế. Kỳ vọng baseline
+  ≈ 55 form / 303 hit.
+- **D14 name-slot**: mọi form có slot tên dưới tiêu đề phải (i) chứa giá trị
+  non-empty ở valid-full, HOẶC (ii) nằm trong registry
+  `handwriting_only_slots` (khai báo chủ đích, có lý do pháp lý). Kỳ vọng
+  baseline ≈ 37 form.
+- **D15 chk glyph**: tick phải là X ĐẶT TRONG ô vuông (shape/bảng/ký tự ☒ theo
+  Q-V1); bắt "X trần trước nhãn" và "X rơi dòng riêng". Baseline: mọi form
+  có chk.
+- **D16 token-fragment**: PDF text có dòng chỉ chứa mảnh token (`_HIEN`,
+  `_TAI_1`) hoặc giá trị khớp `^[A-Z][A-Z0-9_]*_[0-9]+$` do fallback sinh.
+  Baseline ≈ 73 form (sẽ về 0 sau C4).
+- **D9 nâng cấp**: bảng ≥10 cột: min col < 900 twips → hard; bảng <10 cột giữ
+  sàn 567; xử lý lệch 566/567 (I4) bằng cách chốt sàn làm tròn xuống 566 cho
+  legacy. Baseline ≈ 60 bảng / 10 form.
+
+Việc: implement + `tools/test_phase6v_detectors.py` (positive + negative
+mutations từng detector) + pin baseline ĐỎ bằng số liệu audit trong test
+(detector chạy trên corpus sẵn có phải ra đúng số — chứng minh không chọn
+số đẹp).
+
+**Gate V1:** baseline ĐỎ khớp số liệu mục 1.2 (chênh lệch phải được giải
+thích từng form); negative tests xanh; runner xanh (detector chỉ báo, chưa
+chặn release tới V2 xong).
+
+### V2 — Fix theo lớp gốc rễ (4 lane song song, merge TUẦN TỰ)
+
+Thứ tự merge do Lead giữ: **C4 → C1 → C2 → C3** (fixture trước để giá trị
+corpus thực tế trước khi chốt lại kỳ vọng detector; mỗi merge re-run V1
+detector để rebaseline số).
+
+- **C4 `agent/6v-fixture`:** nhánh default `ValueFactory.value()` sinh giá trị
+  tiếng Việt thực + chỉ số nhúng theo họ key (địa chỉ → "Số N nhà 123, đường
+  Kinh Dương Vương, phường 4, quận 8"); fallback `LABEL_HOA_N` bị XOÁ. Giữ
+  tính phân biệt D12 bằng chỉ số duy nhất. Selftest fixtures cập nhật. D16
+  phải về 0 sau C4.
+- **C1 `agent/6v-glue`:** normalize skeleton trong pipeline regen: chèn space
+  quanh mọi placeholder khi ngay trước/sau là ký tự word
+  (`{key}` giữa "ngày"/"tháng"/"năm"/nhãn); xử lý cặp placeholder dính
+  `{a}{b}` → separator chuẩn. Regen 55 form + drift-guard ×2 + allowlist diff
+  + rebaseline census/policies/fixture. D13 → 0. Không sửa giá trị user có
+  space có ý nghĩa (chỉ đụng skeleton template).
+- **C2 `agent/6v-nameslot`:** pass phân loại chính xác 37 form (script từ
+  audit làm nền, bắt buộc manual-confirm từng form) → 3 nhóm: (a) thiếu
+  placeholder → engine extension "chèn placeholder vào slot" (mở rộng spec v1,
+  tiền lệ đã ghi trong note PLI_M09) + regen; (b) form_maps thiếu tag → tag
+  field đúng key sẵn có; (c) slot handwriting theo bản giấy → đưa vào
+  `handwriting_only_slots` kèm ảnh nguồn. D14 → 0. Test mỗi form trong nhóm
+  (a)/(b) có case dữ liệu thật in ra tên.
+- **C3 `agent/6v-chk`:** theo Q-V1 (khởi động SAU owner chốt). Implement ô
+  vuông + X: DOCX (bảng 1×1 không viền hoặc ☒ tùy chuẩn chốt — phải ra 1 glyph
+  thống nhất toàn corpus) + UI control shape tương ứng + "X rơi dòng riêng"
+  được phòng bằng keep-together. D15 → 0.
+
+**Gate mỗi lane:** detector tương ứng ĐỎ→XANH trên corpus re-export; regen ×2
+zero-diff; `auditor/6v-core` ký diff; `auditor/6v-visual` ký sample 10 form
+(xử + nguyên vẹn). **Gate V2 tổng:** runner xanh; D13/D14/D16 = 0; D15 = 0
+(nếu Q-V1 đã chốt); corpus mới evidence đầy đủ.
+
+### V3 — Bảng rộng 10–15 cột (`agent/6v-tables`, sau Q-V2)
+
+Phương án do owner chọn trong mục 6. Việc chung bất kể phương án: census 60
+bảng rộng có `width_policy` đúng; header repeat + cantSplit đã có — giữ;
+đo lại bằng D9 mới (≥900twips cho ≥10 cột) và bằng mắt auditor trên TOÀN BỘ
+bảng rộng (không sample). Nếu owner chọn landscape-trang-bảng: mở section
+orient trong generator chỉ cho trang chứa bảng, đối chiếu lại Word 16.16 mở
+không lỗi + PDF page-size đúng.
+
+**Gate V3:** D9 hard = 0 trên corpus; `auditor/6v-visual` verdict
+"readable" từng bảng trong 60 bảng; số cột không đổi so với pháp định.
+
+### V4 — Meticulousness sweep toàn 91 mẫu (`agent/6v-micro` + auditor/6v-visual)
+
+Đây là vòng "chú ý những thứ nhỏ nhất" — quét census, không sampling:
+
+1. **Census chi tiết nhỏ** (script mới `tools/census/6v_micro_census.py`):
+   mọi khác biệt typography trong 91 template: kiểu dòng điền (…… vs ---- vs
+   ____), độ dài gạch, dấu "…"/"..." lẫn lộn, space trước/sau ":" trong nhãn,
+   khoảng trắng đôi, dấu ngoặc thiếu đóng/mở, superscript footnote đúng vị
+   trí, cỡ chữ floor (≥8pt), viền bảng uniform, cell padding, header band
+   trái/phải đúng căn.
+2. **Chuẩn hóa một kiểu duy nhất** cho từng nhóm (chọn theo bản giấy gốc làm
+   chuẩn; khác biệt có chủ đích phải nằm trong registry với lý do).
+3. **Per-page reviewer_verdict 100%:** hoàn tất backlog 5R (647 candidate +
+   toàn bộ trang) bằng auditor/6v-visual — mỗi trang có verdict và người ký.
+4. **UI meticulousness** (phụ, 1 đợt nhỏ): label/input alignment, focus ring,
+   aria-label nút thêm/xóa/duplicate, thông báo lỗi đồng/about, giữ nguyên
+   trạng thái khi đổi form/variant (kế thừa checklist 5R Wave C).
+
+**Gate V4:** micro-census 0 khác biệt không đăng ký; 100% trang có
+reviewer_verdict; UI checklist PASS; runner xanh.
+
+### V5 — Audit độc lập 3 tầng + checkpoint final
+
+1. Re-export corpus full từ HEAD sạch (evidence mới, path
+   `generated_ho_so/_visual_layout/phase6v/final/`).
+2. `auditor/6v-export`: manifest == đĩa; determinism (export 2 lần hash
+   giống); ZIP đúng nội dung; word-open loop 91/91 re-verify; concurrency
+   test lặp lại.
+3. `auditor/6v-visual`: verdict 91×5(+variants) theo checklist 5.2 trên
+   corpus mới.
+4. `auditor/6v-core`: diff toàn phase (V0→V5) — không có vá generated, không
+   nới test, không allowlist vô lý.
+5. `auditor/6v-release`: tái lập từ worktree sạch mọi con số checkpoint.
+6. Lead viết checkpoint mới vào header PLAN này + `execution_ledger`; chỉ ký
+   khi cả 4 auditor ≥ PASS-WITH-NOTES và mọi NOTE có owner-ack.
+
+**Gate V5 (Definition of Done toàn cục):**
+
+| # | Gate | Điều kiện PASS |
+|---|---|---|
+| G-A | Hạ tầng | 2 runner song song 2 PASS; PNG == manifest 100%; summary hai lớp trung thực |
+| G-B | Detector | D1..D16 hard-fail = 0; candidates = 0 chưa adjudicate (mọi candidate có verdict) |
+| G-C | Lỗi B1–B5 | D13/D14/D16 = 0; D15 = 0 (sau Q-V1); D9 hard = 0; bảng rộng verdict "readable" 60/60 |
+| G-D | Evidence | corpus 6V tái lập được từ lệnh trong manifest; word-open 91/91; determinism PASS |
+| G-E | Con người | 100% trang có reviewer_verdict; auditor core/visual/export/release ≥ PASS-WITH-NOTES |
+| G-F | Sổ sách | defect/decision/ledger cập nhật; PLAN checkpoint mới; không debt ẩn |
+
+---
+
+## 5. Tiêu chí "tỉ mỉ" định lượng (checklist judge mọi trang)
+
+### 5.1 Trang in (DOCX/PDF)
+
+1. Không một cặp từ nào dính nhau ngoài chủ đích typography; label–value luôn
+   có separator chuẩn.
+2. Mọi slot điền: hoặc chứa dữ liệu, hoặc là "handwriting-only" đã đăng ký.
+3. Tick = X trong ô vuông, cùng dòng với nhãn, đúng một option trong nhóm
+   loại trừ.
+4. Không token/mã kỹ thuật/mảnh token trong text; không placeholder `{...}`;
+   không "X" rơi dòng.
+5. Bảng: cột ≥ 900twips nếu ≥10 cột (hoặc phương án Q-V2); không chữ vỡ giữa
+   token; header lặp khi sang trang; hàng không xé giữa dòng.
+6. Dòng điền một kiểu toàn corpus; chấm dẫn (dot leader) đều.
+7. Chữ ký: title + instruction + vùng viết ≥ 40pt cùng trang; orientation
+   theo registry.
+8. Trang trắng = 0; trang thưa phải có allowlist lý do.
+9. Quốc hiệu/Số/Ngày (header band) đúng căn trái–phải, không viền lộ.
+10. Footnote/superscript đúng vị trí, không orphan, không dính chữ.
+
+### 5.2 UI (kế thừa + bổ sung)
+
+- Không undefined/null/NaN/rác; control đúng semantics lẫn hình thức nguồn;
+- validation mở đúng tab, focus đúng field, message dễ hiểu;
+- 3 viewport + zoom 200% + keyboard-only không vỡ;
+- không mất dữ liệu khi đổi form/variant/draft reload.
+
+---
+
+## 6. Quyết định owner (BLOCKED cho tới khi chốt — không agent được tự chọn)
+
+| Mã | Câu hỏi | Đề xuất kèm bằng chứng | Cần trước phase |
+|---|---|---|---|
+| **Q-V1** | Chuẩn glyph tick: ☒ ký tự vs bảng 1×1 vẽ ô vuông vs shape? | Bảng 1×1 không viền + X: tương thích Word 16.16 tốt nhất, không phụ thuộc font glyph | V2-C3 |
+| **Q-V2** | Bảng rộng 10–15 cột: (a) landscape chỉ trang chứa bảng; (b) giữ dọc + giảm font ≤8pt + sàn 900twips; (c) giữ nguyên như hiện tại | (a) đọc được nhất; policy cũ loại landscape vì "nguồn 0/87 landscape" — nhưng nguồn in 14 cột thực tế dùng font rất nhỏ; cần owner cân pháp lý vs đọc được | V3 |
+| **Q-V3** | Slot tên form nào template thiếu placeholder: thêm placeholder (lệch bố cục bản giấy 1 chút) hay giữ handwriting? | Thêm placeholder ở (a)/(b) vì mục đích là form điền bằng máy; khác biệt bố cục không đổi cấu trúc pháp định | V2-C2 |
+| **Q-V4** | Fixture realism vs phân biệt D12: chuẩn mới "giá trị thực + chỉ số nhúng" có được duyệt làm chuẩn corpus? | Có — D16 vẫn bắt trùng giá trị nhờ chỉ số | V2-C4 |
+| **Q-V5** | 897 glue candidate WLAY-011 (553 cũ + 303 D13 mới + 41 liên hệ): adjudicate theo đợt auditor hay chốt 1 lượt? | 1 lượt trong V4 bởi auditor/6v-visual | V4 |
+| **Q-V6** | Mở Windows/.exe packaging sau V5? | Chỉ khi G-A..G-F xanh | sau V5 |
+| **Kế thừa** | Q-P4-1 min_rows nested-grid; WLAY-005 3 matrix M12 BLOCKED_OWNER; các câu hỏi M09 (mục 7, chân trang Mẫu 9) | giữ nguyên trạng thái OPEN trong registries | khi liên quan |
+
+---
+
+## 7. Trạng thái kế thừa từ v5 (chỉ giữ gì cần thiết cho 6V)
+
+- **Gate release chuẩn:** runner `tools/release_runner.py` 57 suite — mọi
+  suite mới của 6V PHẢI đăng ký vào đây (không chạy lẻ ngoài runner khi báo
+  cáo release).
+- **Corpus & baseline 5R:** `generated_ho_so/_visual_layout/phase5r_gate/`
+  (final + baseline RED c9d095e) giữ nguyên làm lịch sử; corpus chuẩn của 6V
+  là `phase6v/`.
+- **WLAY:** 001–004, 006–010, 012 CLOSED; 005 PARTIAL (3 matrix M12 chờ
+  owner); 011 OPEN-census (gộp vào Q-V5).
+- **Bộ test trọng tài sẵn có:** `test_generator_deep_idempotency` (drift ID1/
+  ID7), `audit_blocks_check`, exact-set `audit_expected_diff_files.txt`,
+  `test_phase5r_*`, word-open loop (`phase5_word_open_loop.py`),
+  coverage 111/111 drift=0.
+- **Nguồn pháp lý:** TT 68/2025/TT-BTC; TT 121/2026/TT-BTC (HL 21-08-2026);
+  NĐ 168/2025/NĐ-CP; NĐ 296/2026/NĐ-CP (HL 23-07-2026). Mẫu bị thay bởi
+  TT 121: M01–M05, M10, M12, M27, M30 PL I; bỏ M11.
+- **Excel/Windows:** Excel pilot M72 đã duyệt; rollout + Windows packaging
+  nằm NGOÀI plan 6V, mở sau Q-V6.
+- **Sự kiện môi trường 2026-09-04:** gate đỏ giả 56/1 do va chạm profile
+  LibreOffice (worktree song song + lock/zombie); đã xử lý môi trường, HEAD
+  `294604c` runner 57/0/0. Bản backup profile hỏng:
+  `~/Library/Application Support/LibreOffice/4/user.wedged_20260904` (xoá
+  khi V0 ổn định 1 tuần).
+
+---
+
+## 8. Sổ theo dõi & quy ước commit
+
+- Commit message: `6V-<phase>(<lane>): <việc> — <bằng chứng ngắn>` (tiếng
+  Việt không dấu, theo quán thế repo); mọi commit merge lane phải nhắc verdict
+  auditor.
+- `docs/defect_registry.md`: thêm dòng cho B1–B5, I1–I4 (status theo evidence
+  audit 2026-09-04) ngay khi bắt đầu V0; cập nhật mỗi gate.
+- `docs/audits/6v/`: mỗi auditor một thư mục phase (`v0-core.md`,
+  `v2-visual-c1.md`, ...); format: verdict + findings + lệnh tái lập.
+- Checkpoint cuối ghi vào header file này, thay thế dòng hiệu lực.

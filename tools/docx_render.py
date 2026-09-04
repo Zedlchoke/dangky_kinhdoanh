@@ -104,6 +104,115 @@ def _subst_vars(xml: str, data: dict) -> str:
     return TAG_RE.sub(repl, xml)
 
 
+# ---------------------------------------------------------------------------
+# Phase 6V-V2 (C3, Q-V1 đã chốt 2026-09-04): tick checkbox = ô vuông VẼ
+# BẰNG VIỀN + X bên trong
+#
+# Hiện trạng trước lane này: {chk_*} được _subst_vars thay bằng chữ "X" trần
+# (detector D15 bắt 17/17 form có chk: BARE_X_PARAGRAPH + X_OWN_LINE).
+# Quyết định owner (docs/decision_registry.md Q-V1): ô vuông được VẼ bằng
+# viền (run border w:bdr), KHÔNG dùng ký tự ☒/Wingdings (phụ thuộc font);
+# tick = X trong ô, không tick = ô trống (run viền quanh no-break space);
+# tick cùng dòng với nhãn option. w:bdr là character border của OOXML —
+# Word 16.16 và LibreOffice render cùng một hình hộp, không phụ thuộc font.
+#
+# Cơ chế (run-split): {chk_key} nằm trong <w:t> của một run; thay vị trí tag
+# bằng: đóng w:t/w:r đang mở -> chèn run ô vuông (rPr gốc + w:bdr) -> mở lại
+# run với CÙNG rPr gốc để phần text còn lại của w:t giữ nguyên định dạng.
+# Mọi element khác của run (w:br, w:tab, …) giữ nguyên vị trí tương đối.
+# Idempotent: tag đã bị tiêu thụ, render lại cùng template ra cùng bytes.
+#
+# Đặt TRƯỚC _subst_vars (tag bị tiêu thụ ở đây, pass thường không thấy) và
+# SAU _expand_loops (phòng chk tag trong cột bảng lặp — corpus hiện không
+# có, verified census form_maps, nhưng cơ chế phải đúng cho cả trường hợp).
+# ---------------------------------------------------------------------------
+
+_CHK_TAG_RE = re.compile(r"\{(chk_[A-Za-z0-9_.]*)\}")
+_CHK_RUN_RE = re.compile(r"<w:r(?:\s[^>]*)?>.*?</w:r>", re.S)
+_CHK_RPR_RE = re.compile(r"<w:rPr(?:\s[^>]*)?>.*?</w:rPr>", re.S)
+# Ô vuông ~1 ký tự: viền 1pt quanh glyph, đệm 1pt (character border)
+_CHK_BOX_BORDER = ('<w:bdr w:val="single" w:sz="8" w:space="1" '
+                   'w:color="auto"/>')
+_CHK_NBSP = "\u00a0"   # ô trống: run viền quanh no-break space
+
+
+def _chk_box_run(rpr_xml: str, ticked: bool) -> str:
+    """Run ô vuông: rPr gốc + w:bdr (chèn đúng thứ tự schema CT_RPr —
+    w:bdr đứng trước nhóm shd/vertAlign/lang nếu rPr gốc có)."""
+    if rpr_xml:
+        if "<w:bdr" not in rpr_xml:
+            inner = rpr_xml
+            placed = False
+            for name in ("shd", "fitText", "vertAlign", "rtl", "cs", "em",
+                         "lang", "eastAsianLayout", "specVanish", "oMath"):
+                mm = re.search(r"<w:%s[ />]" % name, inner)
+                if mm:
+                    inner = inner[:mm.start()] + _CHK_BOX_BORDER + \
+                        inner[mm.start():]
+                    placed = True
+                    break
+            if not placed:
+                inner = inner[:inner.rfind("</w:rPr>")] + _CHK_BOX_BORDER + \
+                    inner[inner.rfind("</w:rPr>"):]
+            rpr_xml = inner
+    else:
+        rpr_xml = "<w:rPr>" + _CHK_BOX_BORDER + "</w:rPr>"
+    return ('<w:r>%s<w:t xml:space="preserve">%s</w:t></w:r>'
+            % (rpr_xml, "X" if ticked else _CHK_NBSP))
+
+
+def _chk_glyph_boxes(xml: str, data: dict) -> str:
+    """Thay mọi {chk_*} bằng run ô vuông viền: tick -> X trong ô; không
+    tick -> ô trống (nbsp). XML không chứa tag chk -> trả NGUYÊN byte."""
+    if "{chk_" not in xml:
+        return xml
+    out: list[str] = []
+    pos = 0
+    for m in _CHK_RUN_RE.finditer(xml):
+        run = m.group(0)
+        if not _CHK_TAG_RE.search(run):
+            continue
+        rpm = _CHK_RPR_RE.search(run)
+        if rpm:
+            head, body = run[:rpm.end()], run[rpm.end():]
+            rpr = rpm.group(0)
+        else:
+            hm = re.match(r"<w:r(?:\s[^>]*)?>", run)
+            head, body = hm.group(0), run[hm.end():]
+            rpr = ""
+        body = body[:-len("</w:r>")]   # phần tử con, bỏ </w:r> đóng
+
+        def _split_wt(wtm: re.Match) -> str:
+            """Tách text của MỘT w:t quanh các chk tag: literal giữ trong run
+            gốc, mỗi tag thay bằng (đóng run) + run ô vuông + (mở lại run)."""
+            text = wtm.group(1)
+            pieces: list[str] = []
+            parts = _CHK_TAG_RE.split(text)   # lẻ = tên tag
+            for i, part in enumerate(parts):
+                if i % 2 == 0:
+                    if part:
+                        pieces.append(part)
+                    continue
+                val = _lookup(data, part)
+                ticked = val is not None and str(val).strip() != ""
+                pieces.append("</w:t></w:r>")
+                pieces.append(_chk_box_run(rpr, ticked))
+                pieces.append('<w:r>%s<w:t xml:space="preserve">' % rpr)
+            return wtm.group(0)[:wtm.group(0).index(">") + 1] + \
+                "".join(pieces) + "</w:t>"
+
+        new_body = re.sub(r"<w:t(?:\s[^>]*)?>([^<]*)</w:t>", _split_wt, body)
+        if new_body == body:
+            continue   # tag nằm ngoài w:t (sẽ bị D3 bắt như cũ) — không đụng
+        out.append(xml[pos:m.start()])
+        out.append(head + new_body + "</w:r>")
+        pos = m.end()
+    if not out:
+        return xml
+    out.append(xml[pos:])
+    return "".join(out)
+
+
 def _expand_loops(xml: str, data: dict) -> str:
     """Nhân bản/xóa các hàng <w:tr> khuôn của bảng lặp."""
     out: list[str] = []
@@ -144,6 +253,9 @@ def _expand_loops(xml: str, data: dict) -> str:
                 # Biến engine {_stt}: số thứ tự 1-based của dòng dữ liệu
                 # (thay trước khi quét tag thường để dữ liệu không ghi đè)
                 r = r.replace("{_stt}", str(printed))
+                # Phase 6V-V2 (C3/Q-V1): chk tag trong cột bảng lặp (nếu có)
+                # phải thành ô vuông trước khi subst thường ghi X trần
+                r = _chk_glyph_boxes(r, item)
                 # Thay tag cột theo dữ liệu dòng; tag lồng nhau để lượt sau xử lý
                 r = TAG_RE.sub(
                     lambda mm: (
@@ -326,6 +438,9 @@ def render(template_path: str | os.PathLike, data: dict,
                     xml = raw.decode("utf-8")
                     xml = _apply_conditions(xml, payload)
                     xml = _expand_loops(xml, payload)
+                    # Phase 6V-V2 (C3/Q-V1): {chk_*} -> ô vuông viền + X
+                    # (trước subst thường để tag bị tiêu thụ tại đây)
+                    xml = _chk_glyph_boxes(xml, payload)
                     xml = _subst_vars(xml, payload)
                     if name == "word/document.xml":
                         # Phase 5R1 (WLAY-001): loại marker source-indicator

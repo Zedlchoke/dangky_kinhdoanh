@@ -695,12 +695,49 @@ def main() -> int:
             1 for r in all_records
             if any(f["detector"] == key or f["detector"].startswith(key)
                    for f in r.get("gate_fails", [])))
+
+    # [V0-I3] summary HAI LỚP trung thực: hard-fail và candidate là hai con
+    # số khác nhau. Lớp cũ chỉ đếm hard-fail nên in "D9_table_grid: 0" trong
+    # khi det_table_grid vẫn bắt NARROW_COL trên corpus (hit nằm
+    # gate_candidates) — gây hiểu sai "không còn finding" (bài học G-E2).
+    # Detector lấy từ chính gate_fails/gate_candidates nên detector tương lai
+    # (D13+) tự xuất hiện, không phải khai báo lại.
+    hard_fail_counts: dict[str, int] = {}
+    candidate_counts: dict[str, int] = {}
+    candidate_ids: list[str] = []
+    hard_hits = cand_hits = 0
+    for r in all_records:
+        for f in r.get("gate_fails", []):
+            k = f["detector"]
+            hard_fail_counts[k] = hard_fail_counts.get(k, 0) + 1
+            hard_hits += 1
+        has_cand = False
+        for c in r.get("gate_candidates", []):
+            k = c["detector"]
+            candidate_counts[k] = candidate_counts.get(k, 0) + 1
+            cand_hits += 1
+            has_cand = True
+        if has_cand:
+            candidate_ids.append("%s/%s/%s" % (r["fixture"],
+                                               r.get("tag") or "main",
+                                               r["form"]))
     n_fail = sum(1 for r in all_records if r["gate_verdict"] == "FAIL")
+    summary["hard_fail_counts"] = hard_fail_counts
+    summary["hard_fail_hits"] = hard_hits
+    summary["hard_fail_total_records"] = n_fail
+    summary["candidate_counts"] = candidate_counts
+    summary["candidate_hits"] = cand_hits
+    summary["candidate_total_records"] = len(candidate_ids)
+    summary["candidate_ids"] = candidate_ids
     summary["records"] = len(all_records)
     summary["gate_fail_records"] = n_fail
     summary["export_errors"] = len(export_errors)
     (out_root / "summary.json").write_text(
         json.dumps(summary, ensure_ascii=False, indent=1), encoding="utf-8")
+    # Hai dòng riêng, đọc ngay được: không bao giờ chỉ in "0 hard-fail" khi
+    # corpus còn candidate chưa adjudicate (G-E2).
+    print("HARD-FAIL: %d" % summary["hard_fail_total_records"])
+    print("CANDIDATES: %d" % summary["candidate_total_records"])
     print(json.dumps(summary, ensure_ascii=False, indent=1))
     if png_assert is not None:
         print("PNG-DISK-ASSERT: claimed=%d disk=%d ok=%s"

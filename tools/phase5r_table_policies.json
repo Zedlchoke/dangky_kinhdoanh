@@ -13,6 +13,27 @@
   "corpus_tblHeader_before": 0,
   "corpus_cantSplit_before": 1
  },
+ "census_totals_v2": {
+  "_note": "VERSION 2 (6V-V1, agent/6v-detectors, 2026-09-04) — định nghĩa sàn 2 tầng theo PLAN 6V B5+I4: bảng >=10 cột dùng sàn 900 twips (min col < 900 = NARROW_COL_WIDE — không đọc được khi dàn 10-15 cột); bảng <10 cột giữ sàn 1cm nhưng làm tròn XUỐNG 566 (I4: sàn 567 để bảng 566 treo candidate vĩnh viễn). census_totals (v1 phía trên) giữ nguyên làm lịch sử — 'min_col_lt_1cm' của v1 đo theo sàn 567.",
+  "date": "2026-09-04",
+  "scope": "87 app/templates/PL*.docx — phép đếm cân bằng <w:tbl> như v1",
+  "floor_wide_table": 900,
+  "floor_legacy": 566,
+  "templates": 87,
+  "tables_with_grid": 76,
+  "tables_ge_10_cols": 12,
+  "tables_ge10_min_col_lt_900": 12,
+  "tables_lt10_min_col_lt_566": 0,
+  "tables_lt10_min_col_eq_566": 0,
+  "tables_total_over_16850": 0,
+  "corpus_v0_baseline": {
+   "_note": "Baseline ĐỎ trên corpus generated_ho_so/_visual_layout/phase6v/v0_corpuscheck (455 record @313b0af): det_table_grid mới bắt NARROW_COL_WIDE 60 bảng / 10 form — khớp ĐÚNG audit 2026-09-04 mục 1.2 B5 (60 bảng / PLII_M01/02, PLI_M02/06/07/09/10/12/15/72); mọi bảng hẹp đều min col 566 twips ~ 1.0cm; NARROW_COL legacy (<10 cột, <566) = 0 — I4 đóng bằng sàn làm tròn xuống.",
+   "records": 50,
+   "tables_narrow_col_wide": 60,
+   "forms": ["PLI_M02", "PLI_M06", "PLI_M07", "PLI_M09", "PLI_M10", "PLI_M12", "PLI_M15", "PLI_M72", "PLII_M01", "PLII_M02"],
+   "tables_narrow_col_legacy": 0
+  }
+ },
  "policy_values": {
   "width-redistribute+render-pin": "Bảng do generator dựng từ spec (tools/form_specs) >= 10 cột: (a) render pin tblHeader/cantSplit/tblW ngay từ lần render này (docx_render._pin_table_quality); (b) width tái phân bổ theo nội dung khi spec entry khai width_policy='content' (build_form_maps._maybe_widen_table) — hiệu lực ở Lead regen kế tiếp; sandbox regen chứng minh trong test C3b. KHÔNG đổi số cột, KHÔNG xóa cột, tổng width giữ nguyên.",
   "render-pin": "Bảng giữ cấu trúc/width hiện tại (đọc được / < 10 cột); chỉ pin render tblHeader/cantSplit/tblW.",

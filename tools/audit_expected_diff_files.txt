@@ -372,3 +372,8 @@ tools/test_tax_m0306_rebuild.py
 tools/test_w1_publication_specs.py
 # --- [6V-V0 2026-09-04] merge lane 6v-infra: suite concurrency export (Lead) ---
 tools/test_export_concurrency.py
+# --- [6V-V1 2026-09-04] merge lane 6v-detectors: D13-D16 + D9 2 tầng + baseline pin (Lead) ---
+tools/census/6v_v1_baseline.py
+tools/census/6v_v1_baseline.json
+tools/test_phase6v_detectors.py
+tools/phase6v_handwriting_slots.json

@@ -23,6 +23,18 @@ Detector ↔ WLAY:
   D10 fixed-matrix headers      → WLAY-005 (thiếu cột/hàng pháp định)
   D11 label/value glue          → WLAY-011
   D12 fixture exclusivity       → WLAY-010 (validate_fixture)
+  D13 skeleton glue (6V-V1)     → B1 (PLAN 6V mục 1.2): ngày04tháng /
+                                  "):CÔNG TY" / value dính label liên hệ
+                                  ("0900Fax:", "…vnWebsite:")
+  D14 name-slot binding (6V-V1) → B2: slot tên DN/hộ KD trống/gạch/chấm
+                                  (chỉ fixture valid-full; form trong
+                                  registry handwriting_only_slots được miễn)
+  D15 chk glyph (6V-V1)         → B3: tick = "X" trần không ô vuông (chỉ
+                                  fixture choice-variants; X trong cell có
+                                  viền hoặc cạnh glyph ☒ là hợp pháp)
+  D16 token giá trị (6V-V1)     → B4: giá trị LABEL_HOA_N fallback
+                                  (NOI_O_HIEN_TAI_123) + mảnh token Word
+                                  wrap (_HIEN, _TAI_1)
 
 Chạy:
   python3 -X utf8 tools/phase5_visual_gate.py                # full corpus × 5 fixture
@@ -57,9 +69,15 @@ MAPS_PATH = ROOT / "app" / "data" / "form_maps.json"
 BLOCKS_DIR = ROOT / "app" / "data" / "blocks"
 EXPECT_PATH = ROOT / "tools" / "phase5r_expectations.json"
 GATE_ROOT = ROOT / "generated_ho_so" / "_visual_layout" / "phase5r_gate"
+# [6V-V1/D14] registry slot tên điền tay theo bản giấy (PLAN 6V Q-V3/C2)
+HANDWRITING_SLOTS_PATH = ROOT / "tools" / "phase6v_handwriting_slots.json"
 
 # ngưỡng detector (twips = 1/1440 inch; 567 twips = 1 cm)
-MIN_COL_TWIPS = 567          # cột hẹp hơn 1 cm → chữ vỡ (WLAY-008)
+# [6V-V1/D9] sàn legacy làm tròn XUỐNG 566 (I4: census có bảng 566 làm
+# candidate vĩnh viễn ở sàn 567); bảng >=10 cột dùng sàn riêng 900 (B5).
+MIN_COL_TWIPS = 566          # cột hẹp hơn 1 cm (làm tròn xuống) → chữ vỡ
+MIN_COL_WIDE_TWIPS = 900     # bảng >=10 cột: cột < 900 twips không đọc được
+WIDE_TABLE_COLS = 10         # ngưỡng "bảng rộng" (audit B5: 9–15 cột)
 COL_WIDTH_TOLERANCE = 60     # dung sai tổng width vs khổ giấy in
 BLANK_PAGE_CHARS = 20        # < 20 ký tự không trắng = trang trắng
 SPARSE_PAGE_CHARS = 120      # < 120 ký tự = trang thưa (census)
@@ -150,7 +168,10 @@ def det_contamination(docx_path: Path, form_meta: dict) -> list[str]:
 
 
 def det_table_grid(docx_path: Path) -> list[dict]:
-    """D9: grid width — cột < 1cm hoặc tổng width vượt khổ in được.
+    """D9: grid width — [6V-V1] policy 2 tầng: bảng >=10 cột bắt
+    NARROW_COL_WIDE khi min col < 900 twips (không đọc được, B5); bảng
+    <10 cột giữ sàn 1cm (566 twips sau làm tròn xuống I4) → NARROW_COL;
+    tổng width vượt khổ in được → WIDTH_OVERFLOW.
     Bắt <w:tbl> CÓ attribute (regex '<w:tbl>' mù với '<w:tbl xmlns=...>') và
     DUYỆT CÂN BẰNG để bảng lồng không bị đếm gộp (finditer non-greedy cắt
     bảng lồng sai); chỉ tính gridCol của TẦNG NGOÀI (grid con là phần của
@@ -183,11 +204,24 @@ def det_table_grid(docx_path: Path) -> list[dict]:
             r'<w:gridCol[^>]*w:w="(\d+)"', tbl)]
         if not cols:
             continue
-        narrow = [(i, w) for i, w in enumerate(cols) if w < MIN_COL_TWIPS]
         total = sum(cols)
+        # [6V-V1/D9] policy 2 tầng (PLAN 6V B5 + I4):
+        # - bảng >=10 cột: sàn riêng 900 twips — cột 566-899 "1cm giấy" vẫn
+        #   không đọc được khi dàn 10-15 cột (vision M12 1-2mm, M09 2-3mm)
+        #   → NARROW_COL_WIDE;
+        # - bảng <10 cột: sàn legacy làm tròn XUỐNG 566 (I4: sàn 567 để
+        #   bảng census 566 treo candidate vĩnh viễn) → NARROW_COL.
+        if len(cols) >= WIDE_TABLE_COLS:
+            floor = MIN_COL_WIDE_TWIPS
+            code = "NARROW_COL_WIDE"
+        else:
+            floor = MIN_COL_TWIPS
+            code = "NARROW_COL"
+        narrow = [(i, w) for i, w in enumerate(cols) if w < floor]
         if narrow:
-            issues.append({"table": ti, "code": "NARROW_COL",
-                           "cols": narrow, "total": total})
+            issues.append({"table": ti, "code": code,
+                           "cols": narrow, "total": total,
+                           "ncols": len(cols)})
         if total > 16850:  # A4 portrait 11906 + dung sai rộng (landscape 16838)
             issues.append({"table": ti, "code": "WIDTH_OVERFLOW",
                            "total": total, "cols": len(cols)})
@@ -371,6 +405,262 @@ def det_glue(pages) -> list[dict]:
     return out
 
 
+# [6V-V1] D13 — skeleton glue (lớp B1, PLAN 6V mục 1.2). Rộng hơn D11:
+# D11 chỉ bắt label:value dính qua ':' (ngữ pháp [a-zà-ỹ]:[A-Z…]); D13 bắt
+# thêm (a) ngày/tháng/năm dính số, (b) label đóng ngoặc dính value in hoa,
+# (c) cụm liên hệ template chèn placeholder kề placeholder không separator
+# (VD PLII_M13 "{dien_thoai_khac}Thư điện tử" → "0900000014Fax:").
+_D13_SUBPATTERNS = (
+    # (mã, regex) — case-sensitive như bản in (audit B1 ví dụ đều chữ thường)
+    ("DATE_NUM", re.compile(r"(?:ngày|tháng|năm)\d|\d(?:ngày|tháng|năm)")),
+    ("PAREN_VALUE", re.compile(r"\):[A-ZÀ-Ỹ]")),
+    ("CONTACT_GLUE", re.compile(
+        r"(?:Fax|Website|Thư điện tử|Điện thoại):[A-Za-z0-9]"
+        r"|[a-z0-9.](?:Fax|Website|Thư điện tử|Điện thoại)\b")),
+)
+
+
+def det_skeleton_glue(docx_path: Path, pages: list) -> list[dict]:
+    """D13: skeleton glue — placeholder chèn vào skeleton không space.
+
+    Hai nguồn: PDF text (chủ yếu) + DOCX XML (bắt glue bị PDF wrap che).
+    Match từ XML chỉ tính khi chuỗi khớp KHÔNG xuất hiện trong PDF text
+    (tránh đếm двой một defect)."""
+    pdf_full = "\n".join(p["text"] for p in pages)
+    out = []
+    for p in pages:
+        for code, pat in _D13_SUBPATTERNS:
+            for m in pat.finditer(p["text"]):
+                ctx = p["text"][max(0, m.start() - 30):m.end() + 30]
+                out.append({"page": p["pno"] + 1, "code": code,
+                            "snippet": ctx.replace("\n", " ")[:80]})
+    if docx_path is not None and docx_path.exists():
+        _xml, texts = xml_texts(docx_path)
+        xml_full = " ".join(texts)
+        seen_xml = set()
+        for code, pat in _D13_SUBPATTERNS:
+            for m in pat.finditer(xml_full):
+                frag = m.group(0)
+                if frag in pdf_full or frag in seen_xml:
+                    continue   # đã bắt ở PDF (hoặc trùng lặp trong XML)
+                seen_xml.add(frag)
+                ctx = xml_full[max(0, m.start() - 30):m.end() + 30]
+                out.append({"page": 0, "code": code, "source": "docx",
+                            "snippet": ctx.replace("\n", " ")[:80]})
+    return out
+
+
+# [6V-V1] D14 — name-slot binding (lớp B2). Chỉ chạy trên fixture
+# valid-full: mọi form có slot tên dưới tiêu đề ("(Tên hộ kinh doanh)",
+# "Tên hộ kinh doanh (ghi bằng chữ in hoa):", …) phải NHẬN giá trị
+# non-empty không phải dòng gạch/chấm (-----, ……, ____). Form nằm trong
+# registry handwriting_only_slots (điền tay theo bản giấy) được miễn.
+_D14_INLINE = re.compile(
+    r"^(?:\d+[.\s]+)?ten (?:ho kinh doanh|doanh nghiep)[^:]{0,70}:(.*)$")
+_D14_PAREN = re.compile(
+    r"^([^()]{0,40})\(\s*ten\s+(?:ho kinh doanh|doanh nghiep)\s*\)\s*(.*)$")
+# từ nối = dấu hiệu mention trong câu, không phải slot dưới tiêu đề
+_D14_NOISE = re.compile(r"\b(cua|ve|cho|voi|tren|theo|yeu cau|dien)\b")
+_D14_FILLER = re.compile(r"[.\-–—…_·\s]")
+_D14_NEXT_LABEL = re.compile(r"ma so|:$|ma so thue")
+
+
+def load_handwriting_slots(path: Path = HANDWRITING_SLOTS_PATH) -> dict:
+    if path.exists():
+        return json.loads(path.read_text(encoding="utf-8"))
+    return {"forms": {}}
+
+
+def det_name_slot(pages: list, form: str,
+                  registry: dict | None = None) -> list[dict]:
+    """D14: slot tên DN/hộ KD không nhận giá trị ở valid-full.
+
+    Phạm vi: trang 1 (vùng "dưới tiêu đề"). Hai dạng slot:
+    inline  "Tên … (ghi bằng chữ in hoa):<giá trị>"
+    paren   "(Tên …)" đứng dòng riêng — giá trị ở phần còn lại của dòng
+            hoặc dòng kế (dòng kế là label khác → slot trống).
+    Giá trị hợp lệ = có ≥2 ký tự chữ sau khi bỏ gạch/chấm/nền. Dòng
+    "TÊN HỘ KINH DOANH" in hoa đơn thuần là header band (không phải slot)
+    — grammar yêu cầu ':' hoặc ngoặc nên tự loại."""
+    if not pages:
+        return []
+    reg_forms = ((registry or {}).get("forms") or {})
+    lines = pages[0]["text"].split("\n")
+    issues = []
+    for i, raw in enumerate(lines):
+        s = raw.strip()
+        if not s:
+            continue
+        f = _fold(s)
+        mi = _D14_INLINE.match(f)
+        mp = _D14_PAREN.match(f)
+        rest = None
+        kind = None
+        if mi and not _D14_NOISE.search(f[:f.find(":")]):
+            kind, rest = "inline", mi.group(1).strip()
+        elif mp and not _D14_NOISE.search(mp.group(1)):
+            suf = mp.group(2)
+            cut = re.search(r"ma so|ma so thue", suf)
+            kind, rest = "paren", (suf[:cut.start()] if cut else suf).strip()
+        if kind is None:
+            continue
+        slot_label = re.sub(r":.*$", ":", s)[:60]
+        if form in reg_forms:
+            continue  # handwriting theo bản giấy — đã adjudicate (C2/V4)
+        bound = False
+        if rest and any(c.isalpha() for c in _D14_FILLER.sub("", rest)) \
+                and not _D14_NEXT_LABEL.search(_fold(rest)):
+            bound = True
+        else:
+            # giá trị có thể nằm dòng kế (title-block); dừng nếu dòng kế là
+            # label khác ("Trụ sở…:") hoặc header band
+            for j in range(i + 1, min(i + 5, len(lines))):
+                s2 = lines[j].strip()
+                if not s2 or set(s2) <= set(".-–—…_· "):
+                    continue
+                f2 = _fold(s2)
+                if _D14_NEXT_LABEL.search(f2) or f2 == ("cong hoa xa hoi "
+                                                        "chu nghia viet nam"):
+                    break
+                if any(c.isalpha() for c in _D14_FILLER.sub("", s2)):
+                    bound = True
+                break
+        if not bound:
+            issues.append({"page": 1, "kind": kind, "slot": slot_label,
+                           "value": (rest or "")[:40]})
+    return issues
+
+
+# [6V-V1] D15 — chk glyph (lớp B3). Chạy trên fixture choice-variants với
+# form có field type=chk. Tick hợp pháp = X trong ô vuông: glyph ☒ trong
+# cùng paragraph, HOẶC X nằm trong w:tc có viền hiển thị (tcBorders/
+# tblBorders val single/thick/…). "X" trần trong paragraph thường, X trong
+# cell KHÔNG viền, X cạnh glyph ô trống ☐, và "X" rơi dòng riêng (PDF) đều
+# là finding. Câu hướng dẫn "(đánh dấu X vào ô thích hợp)" có X giữa câu —
+# loại bằng rule vị trí (X chỉ tính ở ĐẦU/CUỐI paragraph) + từ khoá hướng
+# dẫn đứng kề.
+_D15_INSTR_PREV = re.compile(
+    r"(?:danh dau|danh dau x|dau|chon|nhap|ky hieu|bao cao)\s*$")
+_D15_INSTR_NEXT = re.compile(r"^(vao|o vuong|o nay|o thich hop)\b")
+_D15_VISIBLE_BORDER = re.compile(
+    r'<w:(?:tcBorders|tblBorders)[^>]*>.*?w:val="(?:single|thick|double|'
+    r"dotted|dashed|inset|outset|wave|dotDash|dotDotDash|triple|thinThick)"
+    r'.*?</w:(?:tcBorders|tblBorders)>', re.S)
+_D15_TICK_START = re.compile(r"^X(?=$|\s|[,.;)])")
+_D15_TICK_END = re.compile(r"(?:(?<=^)|(?<=\s)|(?<=[,.;(:]))X$")
+# glue cuối dòng "Thành lập mớiX". KHÔNG có rule glued-ĐẦU: "Xã/Phường…"
+# là label tiếng Việt thật (bắt giả "Xã…"), tick thực không có dạng đó
+_D15_TICK_GLUED_END = re.compile(r"[A-Za-zÀ-ỹ0-9]X$")
+
+
+def _d15_open_context(xml: str, pos: int, tag: str) -> tuple[int, int] | None:
+    """(start, end) của tag mở chứa `pos` chưa đóng (w:tc/w:tbl), hoặc None."""
+    opens: list[int] = []
+    for mm in re.finditer(r"<%s[ >]|</%s>" % (tag, tag), xml[:pos]):
+        if mm.group(0).startswith("</"):
+            if opens:
+                opens.pop()
+        else:
+            opens.append(mm.start())
+    if not opens:
+        return None
+    start = opens[-1]
+    end = xml.find("</%s>" % tag, pos)
+    return (start, end if end != -1 else len(xml))
+
+
+def det_chk_glyph(docx_path: Path, pages: list,
+                  form_meta: dict) -> list[dict]:
+    """D15: tick checkbox phải là X TRONG ô vuông (PLAN 6V 5.1.3)."""
+    fields = form_meta.get("fields") or []
+    if not any(f.get("type") == "chk" for f in fields):
+        return []
+    with zipfile.ZipFile(docx_path) as z:
+        xml = z.read("word/document.xml").decode("utf-8")
+    issues = []
+    for pm in re.finditer(r"<w:p[ >].*?</w:p>", xml, re.S):
+        ptxt = re.sub(r"<[^>]+>", "", pm.group(0)).strip()
+        if not ptxt or "X" not in ptxt:
+            continue
+        ftxt = _fold(ptxt)
+        words = ftxt.split()
+        tick = False
+        if _D15_TICK_START.search(ptxt):
+            nxt = words[1] if len(words) > 1 else ""
+            tick = not (nxt and _D15_INSTR_NEXT.match(nxt))
+        if not tick and (_D15_TICK_END.search(ptxt)
+                         or _D15_TICK_GLUED_END.search(ptxt)):
+            prev = words[-2] if (len(words) > 1 and words[-1] == "x") \
+                else (words[-1][:-1] if words and words[-1].endswith("x")
+                      else "")
+            tick = not (prev and _D15_INSTR_PREV.search(prev + " "))
+        if not tick:
+            continue
+        if "☒" in ptxt:
+            continue  # glyph tick hợp pháp
+        pstart = pm.start()
+        cell = _d15_open_context(xml, pstart, "w:tc")
+        code = "BARE_X_PARAGRAPH"
+        if cell is not None:
+            tbl = _d15_open_context(xml, cell[0] + 1, "w:tbl")
+            scope = xml[(tbl[0] if tbl else cell[0]):cell[1]]
+            if _D15_VISIBLE_BORDER.search(scope):
+                continue  # X trong cell có viền = ô vuông hợp pháp
+            code = "BARE_X_BORDERLESS_CELL"
+        if "☐" in ptxt or "□" in ptxt:
+            code = "X_BESIDE_EMPTY_BOX"
+        issues.append({"code": code, "paragraph": ptxt[:70]})
+    # PDF: "X" rơi dòng riêng (XML cùng paragraph nhưng PDF wrap tách dòng)
+    for p in pages:
+        for ln in p["text"].split("\n"):
+            if ln.strip() == "X":
+                issues.append({"page": p["pno"] + 1, "code": "X_OWN_LINE",
+                               "paragraph": ""})
+    return issues
+
+
+# nạp 1 lần sau khi hàm load đã định nghĩa (registry adjudicate ở C2/V4)
+HANDWRITING_SLOTS = load_handwriting_slots()
+
+
+# [6V-V1] D16 — token kỹ thuật làm giá trị (lớp B4). Fixture fallback
+# sinh giá trị LABEL_HOA_N (phase5_fixtures ValueFactory nhánh mặc định:
+# nhãn fold → HOA + gạch dưới + chỉ số) — người đọc thấy "NOI_O_HIEN_TAI_
+# 123" thay vì giá trị thật. Token dài trong cột hẹp (~1cm) còn bị Word
+# wrap XÉ GIỮA TOKEN thành các dòng mảnh "_HIEN", "_TAI_1", "NOI_T".
+# Grammar token theo audit B4: ^[A-Z][A-Z0-9_]*_[0-9]+$ (full-match một
+# từ trong PDF text). Mảnh: cả dòng chỉ chứa HOA/chữ số/gạch dưới, có
+# "_", KHÔNG full-match grammar token (đó mới là mảnh vỡ, không phải
+# token nguyên) và không chứa chữ thường.
+_D16_TOKEN = re.compile(r"^[A-Z][A-Z0-9_]*_[0-9]+$")
+_D16_PIECE = re.compile(r"^[A-Z0-9_]*_[A-Z0-9_]*$")
+_D16_MAX_PIECE_LEN = 24   # dài hơn = token nguyên dòng riêng, không phải mảnh
+
+
+def det_token_values(pages: list) -> list[dict]:
+    """D16: giá trị là token kỹ thuật (LABEL_HOA_N) hoặc mảnh token vỡ."""
+    out = []
+    for p in pages:
+        for ln in p["text"].split("\n"):
+            s = ln.strip()
+            if not s:
+                continue
+            # (1) token nguyên: quét từng từ trong dòng
+            for w in s.split():
+                w2 = w.strip(",.;:()“”\"'")
+                if w2 and _D16_TOKEN.fullmatch(w2):
+                    out.append({"page": p["pno"] + 1, "code": "TOKEN_VALUE",
+                                "value": w2[:40]})
+            # (2) mảnh token: cả dòng là mảnh HOA có "_" không phải token
+            if "_" in s and len(s) <= _D16_MAX_PIECE_LEN \
+                    and not any(c.islower() for c in s) \
+                    and not _D16_TOKEN.fullmatch(s) \
+                    and _D16_PIECE.fullmatch(s):
+                out.append({"page": p["pno"] + 1, "code": "TOKEN_FRAGMENT",
+                            "value": s[:40]})
+    return out
+
+
 def det_fixed_matrix_headers(pdf_text: str, form_map: dict) -> list[str]:
     """D10: header cột của fixed-matrix phải xuất hiện trong PDF text."""
     missing = []
@@ -504,6 +794,25 @@ def analyze(maps, blocks_all, fixture: str, dirs: list[Path],
                 glues = det_glue(pages)
                 rec["detectors"]["D11_glue"] = glues[:40]
                 rec["detectors"]["D11_glue_count"] = len(glues)
+                # [6V-V1] D13 skeleton glue (PDF + XML), rộng hơn D11
+                skel = det_skeleton_glue(docx_path, pages)
+                rec["detectors"]["D13_skeleton_glue"] = skel[:40]
+                rec["detectors"]["D13_glue_count"] = len(skel)
+                # [6V-V1] D14 name-slot binding — contract fixture
+                # valid-full (đầy đủ dữ liệu mới có quyền đòi slot bound)
+                rec["detectors"]["D14_name_slot"] = (
+                    det_name_slot(pages, fid, HANDWRITING_SLOTS)
+                    if fixture == "valid-full" else [])
+                # [6V-V1] D15 chk glyph — contract fixture choice-variants
+                # (mọi nhóm loại trừ có đúng 1 lựa chọn được tick)
+                rec["detectors"]["D15_chk_glyph"] = (
+                    det_chk_glyph(docx_path, pages, maps[fid])
+                    if fixture == "choice-variants" else [])
+                # [6V-V1] D16 token giá trị (mọi fixture, mạnh ở
+                # long-boundary nơi token dài bị Word wrap)
+                toks = det_token_values(pages)
+                rec["detectors"]["D16_token_values"] = toks[:60]
+                rec["detectors"]["D16_token_count"] = len(toks)
                 # fixture exclusivity (D12)
                 fdata = build_fixture(fid, maps[fid], fixture,
                                       blocks_all.get(fid), ValueFactory())
@@ -689,7 +998,12 @@ def main() -> int:
     detector_keys = ("D1_source_indicator", "D2_field_code", "D3_markers",
                      "D4_contamination", "D5_blank_sparse", "D6_signature",
                      "D9_table_grid", "D10_matrix_headers", "D11_glue",
-                     "D12_fixture_violations")
+                     "D12_fixture_violations",
+                     # [6V-V1/Lead] detector mới — vẫn candidates (không
+                     # hard) tới khi V2 xong; đếm ở đây để số hard luôn
+                     # hiện diện trong summary ngay khi Lead nâng hard.
+                     "D13_skeleton_glue", "D14_name_slot", "D15_chk_glyph",
+                     "D16_token_values")
     for key in detector_keys:
         summary[key] = sum(
             1 for r in all_records

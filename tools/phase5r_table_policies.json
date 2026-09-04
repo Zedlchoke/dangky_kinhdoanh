@@ -470,6 +470,37 @@
   "tables_ge10_min_col_lt_900": 0,
   "tables_ge10_total_ne_14400": 0,
   "tables_lt10_min_col_lt_566": 0,
-  "tables_total_over_16850": 0
+  "tables_total_over_16850": 0,
+  "corpus_v3_baseline": {
+   "_note": "Gate V3-final (agent/6v-tables, 2026-09-04, worktree 6v-tables @97bed57+): full corpus 455 record (91 form x 5 fixture) tại generated_ho_so/_visual_layout/phase6v/v3_corpuscheck — exit 0, 0 export error, HARD-FAIL 0, PNG claim==disk 1619/1619. Đây là lần xác nhận full-corpus cho cả B3-sau-C3 lẫn B5/V3.",
+   "records": 455,
+   "gate_exit": 0,
+   "hard_fail_records": 0,
+   "D9_table_grid": {
+    "records": 0,
+    "hits": 0,
+    "before_v3": {
+     "records": 50,
+     "hits": 60,
+     "forms": 10,
+     "code": "NARROW_COL_WIDE"
+    }
+   },
+   "D13_skeleton_glue": 0,
+   "D14_name_slot": 0,
+   "D16_token_values": 0,
+   "D15_chk_glyph": {
+    "records": 16,
+    "hits": 16,
+    "_note": "X_OWN_LINE residue lớp C3/B3 — chk tag nằm paragraph riêng khỏi nhãn (layout template gốc), trên choice-variants của 16 form, trong đó 10 form KHÔNG thuộc 10 form landscape (không đụng bởi V3-tables); 6 form landscape còn lại có chk-paragraph byte-identical so với main (đã đối chiếu). 191 hit trên corpus v2 (template pre-C3-regen) -> 16. KHÔNG phải hồi quy của V3; thuộc lane 6v-chk/detectors."
+   },
+   "D6_signature": 155,
+   "D5_blank_sparse": 60,
+   "png_disk_assert": {
+    "claimed": 1619,
+    "disk": 1619,
+    "ok": true
+   }
+  }
  }
 }

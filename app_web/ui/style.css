@@ -344,6 +344,42 @@ td.stt { text-align: center; min-width: 26px; }
 
 /* bảng lặp: ô tick trong cột (cols[].type = checkbox/radio) */
 .loop-chk, .loop-radio { accent-color: #2f6fbf; cursor: pointer; vertical-align: middle; }
+
+/* 6V-V2/C3 (Q-V1): control chọn 1 (radio) hiển thị VUÔNG như ô tick bản
+ * giấy (radio native tròn, lệch hình thức nguồn). CHỈ đổi hình thức bằng
+ * appearance:none — giữ nguyên type/name/aria, store key và validation;
+ * dấu tích vẽ bằng 2 gạch chéo pseudo-element (không phụ thuộc font glyph,
+ * đồng bộ quyết định Q-V1 phía DOCX). */
+.loop-radio, .sel-radio {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 12px;
+  height: 12px;
+  margin: 0 4px 0 0;
+  border: 1px solid #444;
+  border-radius: 0;
+  background: #fff;
+  position: relative;
+  cursor: pointer;
+  vertical-align: middle;
+}
+.loop-radio:checked::before, .loop-radio:checked::after,
+.sel-radio:checked::before, .sel-radio:checked::after {
+  content: "";
+  position: absolute;
+  left: 1px;
+  right: 1px;
+  top: calc(50% - 1px);
+  height: 1.5px;
+  background: #2f6fbf;
+}
+.loop-radio:checked::before, .sel-radio:checked::before { transform: rotate(45deg); }
+.loop-radio:checked::after, .sel-radio:checked::after { transform: rotate(-45deg); }
+.loop-radio:focus-visible, .sel-radio:focus-visible {
+  outline: 2px solid #2f6fbf;
+  outline-offset: 2px;
+}
 /* bảng lặp: ô chỉ đọc (cols[].type = readonly) — nền xám, KHÔNG underline
  * (tương phản với ô editable có underline). */
 .loop-fld[readonly] { background: #f2f2f2; color: #555; border-bottom-color: transparent; }

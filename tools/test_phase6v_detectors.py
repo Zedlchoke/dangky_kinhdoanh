@@ -341,6 +341,25 @@ def test_v1d_d15():
     hits = gate.det_chk_glyph(d6, pages, _CHK_META)
     assert len(hits) == 2 and {h["code"] for h in hits} == \
         {"BARE_X_BORDERLESS_CELL"}, hits
+    # [6V-V2/C3, Q-V1] X trong RUN có w:bdr (ô vuông vẽ viền) → hợp pháp
+    bordered = ('<w:p><w:r><w:rPr><w:rFonts w:ascii="Arial"/>'
+                '<w:bdr w:val="single" w:sz="8" w:space="1" w:color="auto"/>'
+                "</w:rPr><w:t>X</w:t></w:r>"
+                "<w:r><w:t> Phương pháp kê khai</w:t></w:r></w:p>")
+    d8 = _min_docx(TMP / "d15_bordered.docx", bordered)
+    assert gate.det_chk_glyph(d8, pages, _CHK_META) == [], \
+        "X trong run viền (w:bdr) phải hợp pháp (hình thức C3)"
+    # [6V-V2/C3] ô trống (run viền quanh nbsp) cạnh X TRẦN vẫn phải RED —
+    # legality tính theo run chứa tick, không theo paragraph
+    mixed = ('<w:p><w:r><w:rPr><w:bdr w:val="single" w:sz="8" w:space="1" '
+             'w:color="auto"/></w:rPr>'
+             '<w:t xml:space="preserve">\u00a0</w:t></w:r>'
+             "<w:r><w:t>Nhãn</w:t></w:r>"
+             "<w:r><w:t>X</w:t></w:r></w:p>")
+    d9 = _min_docx(TMP / "d15_mixed.docx", mixed)
+    hits = gate.det_chk_glyph(d9, pages, _CHK_META)
+    assert hits and hits[0]["code"] == "BARE_X_PARAGRAPH", \
+        "X trần cạnh ô vuông trống vẫn phải bắt: %r" % hits
     # form không có chk field → không chạy
     assert gate.det_chk_glyph(d1, pages, _NOCHK_META) == []
     # PDF: X rơi dòng riêng

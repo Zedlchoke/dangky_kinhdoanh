@@ -532,13 +532,20 @@ def det_name_slot(pages: list, form: str,
 
 
 # [6V-V1] D15 — chk glyph (lớp B3). Chạy trên fixture choice-variants với
-# form có field type=chk. Tick hợp pháp = X trong ô vuông: glyph ☒ trong
-# cùng paragraph, HOẶC X nằm trong w:tc có viền hiển thị (tcBorders/
-# tblBorders val single/thick/…). "X" trần trong paragraph thường, X trong
-# cell KHÔNG viền, X cạnh glyph ô trống ☐, và "X" rơi dòng riêng (PDF) đều
-# là finding. Câu hướng dẫn "(đánh dấu X vào ô thích hợp)" có X giữa câu —
-# loại bằng rule vị trí (X chỉ tính ở ĐẦU/CUỐI paragraph) + từ khoá hướng
-# dẫn đứng kề.
+# form có field type=chk. Tick hợp pháp = X trong ô vuông, ba hình thức
+# (Q-V1 chốt 2026-09-04: ô vuông VẼ BẰNG VIỀN, không phụ thuộc font glyph):
+#   (a) [6V-V2/C3] X trong RUN có w:bdr (character border — hình thức C3
+#       render sinh ra: run viền quanh "X", tick cùng dòng nhãn);
+#   (b) glyph ☒ trong cùng paragraph (lịch sử, không phụ thuộc font chủ
+#       động sinh);
+#   (c) X nằm trong w:tc có viền hiển thị (tcBorders/tblBorders val
+#       single/thick/…).
+# "X" trần trong paragraph thường, X trong cell KHÔNG viền, X cạnh glyph ô
+# trống ☐, và "X" rơi dòng riêng (PDF) đều là finding. Câu hướng dẫn "(đánh
+# dấu X vào ô thích hợp)" có X giữa câu — loại bằng rule vị trí (X chỉ tính
+# ở ĐẦU/CUỐI paragraph) + từ khoá hướng dẫn đứng kề. Legality (a) tính theo
+# RUN chứa tick, không theo paragraph — ô vuông trống (run viền quanh nbsp)
+# cạnh X trần KHÔNG được che lỗi.
 _D15_INSTR_PREV = re.compile(
     r"(?:danh dau|danh dau x|dau|chon|nhap|ky hieu|bao cao)\s*$")
 _D15_INSTR_NEXT = re.compile(r"^(vao|o vuong|o nay|o thich hop)\b")
@@ -551,6 +558,23 @@ _D15_TICK_END = re.compile(r"(?:(?<=^)|(?<=\s)|(?<=[,.;(:]))X$")
 # glue cuối dòng "Thành lập mớiX". KHÔNG có rule glued-ĐẦU: "Xã/Phường…"
 # là label tiếng Việt thật (bắt giả "Xã…"), tick thực không có dạng đó
 _D15_TICK_GLUED_END = re.compile(r"[A-Za-zÀ-ỹ0-9]X$")
+# [6V-V2/C3] legality (a): run có w:bdr (character border) chứa tick.
+# w:r không lồng nhau -> non-greedy đủ; w:bdr chỉ xuất hiện trong w:rPr của run.
+_D15_RUN_RE = re.compile(r"<w:r(?:\s[^>]*)?>.*?</w:r>", re.S)
+_D15_TICK_IN_TEXT = [_D15_TICK_START, _D15_TICK_END, _D15_TICK_GLUED_END]
+
+
+def _d15_bordered_tick(p_xml: str) -> bool:
+    """True nếu paragraph có run VIỀN (w:bdr trong rPr) mà text của đúng run
+    đó chứa tick X — hình thức C3 (Q-V1): ô vuông vẽ viền quanh X."""
+    for rm in _D15_RUN_RE.finditer(p_xml):
+        rseg = rm.group(0)
+        if "<w:bdr" not in rseg:
+            continue
+        rtext = "".join(re.findall(r"<w:t(?:\s[^>]*)?>([^<]*)</w:t>", rseg))
+        if any(pat.search(rtext) for pat in _D15_TICK_IN_TEXT):
+            return True
+    return False
 
 
 def _d15_open_context(xml: str, pos: int, tag: str) -> tuple[int, int] | None:
@@ -598,6 +622,8 @@ def det_chk_glyph(docx_path: Path, pages: list,
             continue
         if "☒" in ptxt:
             continue  # glyph tick hợp pháp
+        if _d15_bordered_tick(pm.group(0)):
+            continue  # [6V-V2/C3] X trong run viền w:bdr = ô vuông hợp pháp
         pstart = pm.start()
         cell = _d15_open_context(xml, pstart, "w:tc")
         code = "BARE_X_PARAGRAPH"

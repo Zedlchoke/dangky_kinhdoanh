@@ -2,7 +2,8 @@
 """Release test runner chinh thuc cua du an (R0.4 — master plan checkpoint d882793).
 
 Liệt kê TOÀN BỘ suite Node/Python bắt buộc trong "Bộ regression release tối
-thiểu" (PLAN.md). Mỗi suite chạy đúng một lần, ghi exit code thật và phân loại:
+thiểu" (PLAN.md) — 58 suite kể từ 6V-V0 (+test_export_concurrency). Mỗi suite
+chạy đúng một lần, ghi exit code thật và phân loại:
 
   PASS     — exit code 0.
   FAIL     — exit code != 0.
@@ -119,6 +120,10 @@ SUITES: list[dict] = [
      "requires": ["python-docx"]},
     {"name": "test_phase5r_tables",       "type": "module", "target": "tools.test_phase5r_tables",
      "requires": ["python-docx"]},
+    # --- [6V-V0 2026-09-04] concurrency export: 2 process export song song
+    #     qua profile soffice cách ly — chống hồi quy gate đỏ giả 56/1.
+    {"name": "test_export_concurrency",   "type": "module",
+     "target": "tools.test_export_concurrency", "requires": ["python-docx"]},
     {"name": "test_industry_household",   "type": "module", "target": "tools.test_industry_household",
      "requires": ["python-docx"]},
     {"name": "test_contract_release",     "type": "module", "target": "tools.test_contract_release",

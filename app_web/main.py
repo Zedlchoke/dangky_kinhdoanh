@@ -267,7 +267,25 @@ class Bridge:
         case_id = _sanitize_name(case_id, "ho_so", 255 - 1 - len(ts))
         out_dir = ROOT / "generated_ho_so" / ("%s_%s" % (case_id, ts))
         try:
-            out_dir.mkdir(parents=True, exist_ok=True)
+            # exist_ok=False: 2 Bridge.export song song cùng case_id trong
+            # cùng giây (2 runner / 2 worktree) sinh CÙNG đường dẫn vì ts chỉ
+            # chính xác tới giây — mkdir exist_ok=True cũ cho cả 2 ghi CHUNG
+            # thư mục: write_rendered đè nhau, _lo_norm bị xoá dưới chân
+            # soffice đang chạy → exit=0 mà không có file (tái hiện 2/2 trong
+            # test_export_concurrency 2026-09-04). Đụng → nhánh vành đai theo
+            # pid; run đơn hoàn toàn không đổi tên.
+            out_dir.mkdir(parents=True, exist_ok=False)
+        except FileExistsError:
+            out_dir = ROOT / "generated_ho_so" / (
+                "%s_%s_p%d" % (case_id, ts, os.getpid()))
+            try:
+                # cùng process export 2 lần trong cùng giây → tái dùng như
+                # hành vi cũ (tuần tự, không race).
+                out_dir.mkdir(parents=True, exist_ok=True)
+            except Exception as exc:  # noqa: BLE001
+                return {"ok": False, "errors": [
+                    "EXPORT_DIR_CREATE_FAILED: không tạo được thư mục export "
+                    "(%s: %s)" % (out_dir.name, type(exc).__name__)]}
         except Exception as exc:  # noqa: BLE001
             # không để exception (đĩa đầy, tên lạ, quyền…) bay ra ngoài Bridge
             return {"ok": False, "errors": [

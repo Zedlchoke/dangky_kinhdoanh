@@ -80,7 +80,7 @@
      }
     },
     {
-     "text": ", ngày",
+     "text": ", ngày ",
      "i": true
     },
     {
@@ -90,7 +90,7 @@
      }
     },
     {
-     "text": "tháng",
+     "text": " tháng ",
      "i": true
     },
     {
@@ -100,7 +100,7 @@
      }
     },
     {
-     "text": "năm",
+     "text": " năm ",
      "i": true
     },
     {
@@ -336,7 +336,7 @@
      }
     },
     {
-     "text": ", ngày"
+     "text": ", ngày "
     },
     {
      "input": {
@@ -345,7 +345,7 @@
      }
     },
     {
-     "text": "tháng"
+     "text": " tháng "
     },
     {
      "input": {
@@ -354,7 +354,7 @@
      }
     },
     {
-     "text": "năm"
+     "text": " năm "
     },
     {
      "input": {
@@ -366,7 +366,7 @@
    "format": {
     "spaceBeforePt": 6.0
    },
-   "role": "body"
+   "role": "date-line"
   },
   {
    "t": "p",
@@ -435,12 +435,12 @@
      }
     },
     {
-     "text": "Nơi cấp: "
+     "text": " Nơi cấp: "
     },
     {
      "input": {
       "key": "noi_cap",
-      "w": 12
+      "w": 13
      }
     }
    ],

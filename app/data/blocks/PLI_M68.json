@@ -164,12 +164,12 @@
    "align": "left",
    "runs": [
     {
-     "text": "Tên doanh nghiệp:"
+     "text": "Tên doanh nghiệp: "
     },
     {
      "input": {
       "key": "dn.ten_tieng_viet",
-      "w": 16
+      "w": 17
      }
     }
    ],
@@ -368,12 +368,12 @@
    "align": "left",
    "runs": [
     {
-     "text": "Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh:"
+     "text": "Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh: "
     },
     {
      "input": {
       "key": "cn.ten_tieng_viet",
-      "w": 34
+      "w": 35
      }
     }
    ],

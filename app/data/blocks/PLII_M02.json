@@ -81,7 +81,7 @@
          }
         },
         {
-         "text": ", ngày",
+         "text": ", ngày ",
          "i": true
         },
         {
@@ -91,7 +91,7 @@
          }
         },
         {
-         "text": " tháng",
+         "text": " tháng ",
          "i": true
         },
         {
@@ -469,7 +469,7 @@
    "align": "left",
    "runs": [
     {
-     "text": "Số nhà/phòng, ngách/hẻm, ngõ/kiệt, đường/phố/đại lộ, tổ/xóm/ấp/thôn:"
+     "text": "Số nhà/phòng, ngách/hẻm, ngõ/kiệt, đường/phố/đại lộ, tổ/xóm/ấp/thôn: "
     },
     {
      "input": {
@@ -488,7 +488,7 @@
    "align": "left",
    "runs": [
     {
-     "text": "Xã/Phường/Đặc khu:"
+     "text": "Xã/Phường/Đặc khu: "
     },
     {
      "input": {
@@ -507,12 +507,12 @@
    "align": "left",
    "runs": [
     {
-     "text": "Tỉnh/Thành phố trực thuộc trung ương:"
+     "text": "Tỉnh/Thành phố trực thuộc trung ương: "
     },
     {
      "input": {
       "key": "tinh_thanh",
-      "w": 26
+      "w": 27
      }
     }
    ],
@@ -526,28 +526,28 @@
    "align": "left",
    "runs": [
     {
-     "text": "Điện thoại:"
+     "text": "Điện thoại: "
     },
     {
      "input": {
       "key": "dien_thoai_khac",
-      "w": 13
+      "w": 14
      }
     },
     {
-     "text": "Fax"
+     "text": " Fax"
     },
     {
      "text": " (nếu có)",
      "i": true
     },
     {
-     "text": ":"
+     "text": ": "
     },
     {
      "input": {
       "key": "fax",
-      "w": 14
+      "w": 15
      }
     }
    ],
@@ -568,28 +568,28 @@
      "i": true
     },
     {
-     "text": ":"
+     "text": ": "
     },
     {
      "input": {
       "key": "email_tru_so",
-      "w": 18
+      "w": 19
      }
     },
     {
-     "text": "Website"
+     "text": " Website"
     },
     {
      "text": " (nếu có)",
      "i": true
     },
     {
-     "text": ":"
+     "text": ": "
     },
     {
      "input": {
       "key": "website",
-      "w": 16
+      "w": 17
      }
     }
    ],
@@ -726,12 +726,12 @@
      "i": true
     },
     {
-     "text": ":"
+     "text": ": "
     },
     {
      "input": {
       "key": "chu_hkd.ho_ten",
-      "w": 27
+      "w": 28
      }
     }
    ],
@@ -1643,12 +1643,12 @@
    "align": "left",
    "runs": [
     {
-     "text": "Hình thức tăng, giảm vốn:"
+     "text": "Hình thức tăng, giảm vốn: "
     },
     {
      "input": {
       "key": "hinh_thuc_tang_giam_von",
-      "w": 20
+      "w": 21
      }
     }
    ],
@@ -2304,9 +2304,12 @@
      "b": true
     },
     {
+     "text": " "
+    },
+    {
      "input": {
       "key": "hkd_ten_tieng_viet_2",
-      "w": 29
+      "w": 30
      }
     }
    ],
@@ -2334,7 +2337,7 @@
    "align": "left",
    "runs": [
     {
-     "text": "Số nhà/phòng, ngách/hẻm, ngõ/kiệt, đường/phố/đại lộ, tổ/xóm/ấp/thôn:"
+     "text": "Số nhà/phòng, ngách/hẻm, ngõ/kiệt, đường/phố/đại lộ, tổ/xóm/ấp/thôn: "
     },
     {
      "input": {
@@ -2372,12 +2375,12 @@
    "align": "left",
    "runs": [
     {
-     "text": "Tỉnh/Thành phố trực thuộc trung ương:"
+     "text": "Tỉnh/Thành phố trực thuộc trung ương: "
     },
     {
      "input": {
       "key": "tinh_thanh",
-      "w": 26
+      "w": 27
      }
     }
    ],
@@ -2391,16 +2394,16 @@
    "align": "left",
    "runs": [
     {
-     "text": "Điện thoại:"
+     "text": "Điện thoại: "
     },
     {
      "input": {
       "key": "dien_thoai_khac",
-      "w": 13
+      "w": 14
      }
     },
     {
-     "text": "Fax"
+     "text": " Fax"
     },
     {
      "text": " (nếu có)",
@@ -2442,7 +2445,7 @@
      }
     },
     {
-     "text": "Website"
+     "text": " Website"
     },
     {
      "text": " (nếu có)",
@@ -2754,7 +2757,7 @@
      }
     },
     {
-     "text": "Fax "
+     "text": " Fax "
     },
     {
      "text": "(nếu có)",

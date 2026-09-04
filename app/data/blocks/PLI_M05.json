@@ -523,16 +523,16 @@
      }
     },
     {
-     "text": "Nơi cấp: "
+     "text": " Nơi cấp: "
     },
     {
      "input": {
       "key": "noi_cap",
-      "w": 12
+      "w": 13
      }
     },
     {
-     "text": "Ngày hết hạn ("
+     "text": " Ngày hết hạn ("
     },
     {
      "text": "nếu có",
@@ -544,7 +544,7 @@
     {
      "input": {
       "key": "ngay_het_han",
-      "w": 19
+      "w": 20
      }
     }
    ],
@@ -691,7 +691,7 @@
    "align": "left",
    "runs": [
     {
-     "text": "Tên người đại diện cơ sở bảo trợ xã hội/quỹ xã hội/quỹ từ thiện:"
+     "text": "Tên người đại diện cơ sở bảo trợ xã hội/quỹ xã hội/quỹ từ thiện: "
     },
     {
      "input": {
@@ -785,16 +785,16 @@
      }
     },
     {
-     "text": "Nơi cấp: "
+     "text": " Nơi cấp: "
     },
     {
      "input": {
       "key": "noi_cap",
-      "w": 12
+      "w": 13
      }
     },
     {
-     "text": "Ngày hết hạn ("
+     "text": " Ngày hết hạn ("
     },
     {
      "text": "nếu có",
@@ -806,7 +806,7 @@
     {
      "input": {
       "key": "ngay_het_han",
-      "w": 19
+      "w": 20
      }
     }
    ],
@@ -825,6 +825,9 @@
     {
      "text": "Doanh nghiệp thực hiện dự án đầu tư được đăng ký đầu tư theo thủ tục đầu tư đặc biệt",
      "b": true
+    },
+    {
+     "text": " "
     },
     {
      "input": {
@@ -1359,12 +1362,12 @@
      "i": true
     },
     {
-     "text": "):"
+     "text": "): "
     },
     {
      "input": {
       "key": "gia_tri_ntte",
-      "w": 48
+      "w": 49
      }
     }
    ],

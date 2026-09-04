@@ -1935,6 +1935,106 @@ def apply_tags_to_para(para, assignments):
         r.text = "".join(new_runs[ri])
 
 
+# ===========================================================================
+# [6V-V2/C1] Chuẩn hóa skeleton glue — PLAN v6 C1, diệt B1 (detector D13)
+# ===========================================================================
+# Bản nguồn in "ngày…..tháng…..năm……": chỗ trống giữa các chữ là chỗ điền tay
+# bằng mực, nên giấy KHÔNG có space. Generator thay nhóm chấm bằng {key} giữ
+# nguyên độ dính -> render điền giá trị thật thành "ngày04tháng04năm2026",
+# hai từ dính nhau không đọc được (B1: 323 record / 1104 hit / 77 form trên
+# corpus v0_corpuscheck, detector D13).
+#
+# RULE (chốt sau khi census 3 ví dụ bản giấy — repr text nguồn nguyên vẹn):
+#   Chèn MỘT space kề {tag} khi ký tự kề làm giá trị dính vào chữ kế:
+#     - TRƯỚC `{`: word char (chữ/số, gồm tiếng Việt có dấu) hoặc ':'
+#       (nhãn kết thúc, giá trị theo sau — separator "nhãn: giá trị").
+#     - SAU  `}`: word char hoặc '(' (giá trị dính ngoặc mở chú thích).
+#   KHÔNG chèn — không phải lỗi dính từ, giữ nguyên layout khác:
+#     - '/' hai bên: vạch ngày có sẵn dính dấu "/" chủ đích (vd PLI_M32
+#       "{...ngày{dk..ngay}/{dk..thang}/{dk..nam}", PLII_M18 "Ngày{..}/..../....").
+#     - '.', ',', '…', ')', ';': dấu câu đóng — "giá trị," là chính tả chuẩn;
+#       census 87 template: 0 occurrence dấu , . … ) ; liền TRƯỚC placeholder.
+#     - cặp the dính "{a}{b}": '}' '{' không phải word char nên không chèn
+#       (census 87 template hiện không có cặp nào).
+#   3 ví dụ đối chứng bản giấy (nguồn -> template hiện tại -> sau normalize):
+#     1) PLII_M08 <- 06_.../01_mau_ho_kinh_doanh/PL2_Mau_08_*.docx, body:
+#        '……, ngày…..tháng…..năm……'
+#        -> 'ngày{ngay_ky_vb}tháng{thang_ky_vb}năm{nam_ky_vb}'
+#        -> 'ngày {ngay_ky_vb} tháng {thang_ky_vb} năm {nam_ky_vb}'.
+#        Giấy dính vì nhóm chấm tự tạo khoảng trống thị giác; máy điền giá trị
+#        thật cần space tường minh (đúng tinh thần Q-V3: form điền bằng máy).
+#     2) PLII_M01 <- PL2_Mau_01_*.docx: '…tiếng Việt (ghi bằng chữ in
+#        hoa):...........................' KHÔNG space sau ':', nhưng dòng
+#        'Tôi là (ghi họ tên bằng chữ in hoa): ....' CÓ space — giấy không
+#        nhất quán. Điền máy ra '):CÔNG TY…' là D13/PAREN_VALUE -> chuẩn hóa
+#        space sau ':' ("label–value luôn có separator chuẩn", PLAN 5.1.1).
+#     3) PLII_M13 <- PL2_Mau_13_*.docx: 'Điện thoại: ……….............Thư
+#        điện tử (nếu có): …' — nhãn kế dính sát nhóm chấm; điền máy thành
+#        '0900000014Thư điện tử' (D13/CONTACT_GLUE) -> chèn space giữa giá trị
+#        và nhãn kế: '{dien_thoai_khac} Thư điện tử (nếu có): {email…}'.
+# ============================================================================
+_GLUETAG_RE = re.compile(r"\{[/#?]?[A-Za-z_][A-Za-z0-9_.]*\}")
+_GLUED_BEFORE = re.compile(r"[\w:]")   # ký tự liền trước '{' -> chèn space
+_GLUED_AFTER = re.compile(r"[\w(]")    # ký tự liền sau '}' -> chèn space
+
+
+def _iter_all_paragraphs(doc):
+    """Mọi paragraph của body + mọi bảng (lồng nhau). Header/footer của 87
+    template KHÔNG chứa the nào (census 6V-V2/C1) nên không cần duyệt."""
+    yield from doc.paragraphs
+
+    def walk_table(tbl):
+        seen = set()
+        for row in tbl.rows:
+            for cell in row.cells:
+                if cell._tc in seen:
+                    continue
+                seen.add(cell._tc)
+                yield from cell.paragraphs
+                for nested in cell.tables:
+                    yield from walk_table(nested)
+
+    for tbl in doc.tables:
+        yield from walk_table(tbl)
+
+
+def normalize_skeleton_glue(doc) -> int:
+    """Chèn space quanh {tag} khi kề word char / ':' / '(' (rule ghi ở khối
+    comment trên _GLUETAG_RE). Chỉ sửa text của run, không đụng layout.
+    Trả về số space đã chèn."""
+    n_ins = 0
+    for para in _iter_all_paragraphs(doc):
+        runs = list(para.runs)
+        if not runs:
+            continue
+        full = "".join(r.text for r in runs)
+        if "{" not in full:
+            continue
+        ins = []
+        for m in _GLUETAG_RE.finditer(full):
+            if m.start() > 0 and _GLUED_BEFORE.match(full[m.start() - 1]):
+                ins.append(m.start())
+            if m.end() < len(full) and _GLUED_AFTER.match(full[m.end()]):
+                ins.append(m.end())
+        if not ins:
+            continue
+        cmap = []
+        for ri, r in enumerate(runs):
+            for off in range(len(r.text)):
+                cmap.append((ri, off))
+        chunks = [list(r.text) for r in runs]
+        # chèn từ cuối lên đầu để không lệch chỉ số
+        for pos in sorted(set(ins), reverse=True):
+            ri, off = cmap[pos]
+            chunks[ri].insert(off, " ")
+            n_ins += 1
+        for r, ch in zip(runs, chunks):
+            new = "".join(ch)
+            if new != r.text:
+                r.text = new
+    return n_ins
+
+
 def _assign_para_slots(full, groups, add_field, unmatched, form_id, where,
                        section_ctx="", pending_label=""):
     """Gán the cho TẤT CẢ nhóm dấu chấm của MỘT paragraph -> [(s, e, tag)].
@@ -3192,6 +3292,14 @@ def process_form(path, titles, coverage, out_tpl=None):
     if n_sig_tbl:
         print("[sig-1x2] %s: %d khoi ky gop thanh bang ngang" % (
             form_id, n_sig_tbl))
+
+    # [6V-V2/C1] chuẩn hóa skeleton glue (B1/D13): chèn space quanh {tag}
+    # khi kề word char / ':' / '(' — rule + 3 ví dụ đối chứng bản giấy ở
+    # comment khối trên _GLUETAG_RE. Chạy SAU mọi pass gắn the (slot/chk/
+    # header band/bảng ký) để thấy layout the cuối cùng.
+    n_glue_fix = normalize_skeleton_glue(doc)
+    if n_glue_fix:
+        print("[glue-fix] %s: chen %d space quanh the" % (form_id, n_glue_fix))
 
     title = titles.get(f"Phu luc {pl}|{mau}", path.stem)
     # out_tpl cho phép sandbox regen ghi chỗ khác (test không đụng

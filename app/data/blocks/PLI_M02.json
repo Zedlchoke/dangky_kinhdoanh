@@ -57,7 +57,7 @@
      }
     },
     {
-     "text": "tháng ",
+     "text": " tháng ",
      "i": true
     },
     {
@@ -986,16 +986,16 @@
      }
     },
     {
-     "text": "Nơi cấp: "
+     "text": " Nơi cấp: "
     },
     {
      "input": {
       "key": "noi_cap",
-      "w": 12
+      "w": 13
      }
     },
     {
-     "text": "Ngày hết hạn ("
+     "text": " Ngày hết hạn ("
     },
     {
      "text": "nếu có",
@@ -1007,7 +1007,7 @@
     {
      "input": {
       "key": "ngay_het_han",
-      "w": 19
+      "w": 20
      }
     }
    ],
@@ -1238,16 +1238,16 @@
      }
     },
     {
-     "text": "Nơi cấp: "
+     "text": " Nơi cấp: "
     },
     {
      "input": {
       "key": "noi_cap",
-      "w": 12
+      "w": 13
      }
     },
     {
-     "text": "Ngày hết hạn ("
+     "text": " Ngày hết hạn ("
     },
     {
      "text": "nếu có",
@@ -1259,7 +1259,7 @@
     {
      "input": {
       "key": "ngay_het_han",
-      "w": 19
+      "w": 20
      }
     }
    ],
@@ -4272,7 +4272,7 @@
    "align": "left",
    "runs": [
     {
-     "text": "Họ, chữ đệm và tên Giám đốc/Tổng giám đốc:"
+     "text": "Họ, chữ đệm và tên Giám đốc/Tổng giám đốc: "
     },
     {
      "input": {
@@ -4366,12 +4366,12 @@
    "align": "left",
    "runs": [
     {
-     "text": "Điện thoại:"
+     "text": "Điện thoại: "
     },
     {
      "input": {
       "key": "gd.dien_thoai",
-      "w": 13
+      "w": 14
      }
     }
    ],
@@ -4418,7 +4418,7 @@
    "align": "left",
    "runs": [
     {
-     "text": "Họ, chữ đệm và tên Kế toán trưởng/Phụ trách kế toán:"
+     "text": "Họ, chữ đệm và tên Kế toán trưởng/Phụ trách kế toán: "
     },
     {
      "input": {
@@ -4512,12 +4512,12 @@
    "align": "left",
    "runs": [
     {
-     "text": "Điện thoại:"
+     "text": "Điện thoại: "
     },
     {
      "input": {
       "key": "kt.dien_thoai",
-      "w": 13
+      "w": 14
      }
     }
    ],

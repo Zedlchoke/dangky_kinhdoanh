@@ -74,7 +74,7 @@
      }
     },
     {
-     "text": ", ngày",
+     "text": ", ngày ",
      "i": true
     },
     {
@@ -84,7 +84,7 @@
      }
     },
     {
-     "text": "tháng",
+     "text": " tháng ",
      "i": true
     },
     {
@@ -94,7 +94,7 @@
      }
     },
     {
-     "text": "năm",
+     "text": " năm ",
      "i": true
     },
     {
@@ -305,12 +305,12 @@
      }
     },
     {
-     "text": "Dân tộc: "
+     "text": " Dân tộc: "
     },
     {
      "input": {
       "key": "chu_hkd.dan_toc",
-      "w": 12
+      "w": 13
      }
     },
     {
@@ -390,21 +390,21 @@
    "align": "left",
    "runs": [
     {
-     "text": "Điện thoại:"
+     "text": "Điện thoại: "
     },
     {
      "input": {
       "key": "dien_thoai_khac",
-      "w": 13
+      "w": 14
      }
     },
     {
-     "text": "Thư điện tử:"
+     "text": " Thư điện tử: "
     },
     {
      "input": {
       "key": "email_khac",
-      "w": 14
+      "w": 15
      }
     }
    ],
@@ -431,12 +431,12 @@
    "align": "left",
    "runs": [
     {
-     "text": "Lý do chấm dứt hoạt động:"
+     "text": "Lý do chấm dứt hoạt động: "
     },
     {
      "input": {
       "key": "ly_do_cham_dut_ton_tai",
-      "w": 20
+      "w": 21
      }
     }
    ],

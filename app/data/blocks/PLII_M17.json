@@ -80,7 +80,7 @@
      }
     },
     {
-     "text": ", ngày",
+     "text": ", ngày ",
      "i": true
     },
     {
@@ -90,7 +90,7 @@
      }
     },
     {
-     "text": "tháng",
+     "text": " tháng ",
      "i": true
     },
     {
@@ -100,7 +100,7 @@
      }
     },
     {
-     "text": "năm",
+     "text": " năm ",
      "i": true
     },
     {
@@ -174,12 +174,12 @@
    "align": "left",
    "runs": [
     {
-     "text": "Địa chỉ trụ sở:"
+     "text": "Địa chỉ trụ sở: "
     },
     {
      "input": {
       "key": "dn.dia_chi_tru_so",
-      "w": 15
+      "w": 16
      }
     }
    ],
@@ -202,7 +202,7 @@
      }
     },
     {
-     "text": "Fax:"
+     "text": " Fax: "
     },
     {
      "input": {
@@ -221,7 +221,7 @@
    "align": "left",
    "runs": [
     {
-     "text": "Thư điện tử:"
+     "text": "Thư điện tử: "
     },
     {
      "input": {
@@ -230,12 +230,12 @@
      }
     },
     {
-     "text": "Website:"
+     "text": " Website: "
     },
     {
      "input": {
       "key": "website",
-      "w": 12
+      "w": 13
      }
     }
    ],
@@ -258,12 +258,12 @@
      }
     },
     {
-     "text": "/…./…. đã nhận của Ông/Bà"
+     "text": "/…./…. đã nhận của Ông/Bà "
     },
     {
      "input": {
       "key": "ngay_nhan_hs",
-      "w": 20
+      "w": 21
      }
     }
    ],
@@ -277,12 +277,12 @@
    "align": "left",
    "runs": [
     {
-     "text": "Số định danh cá nhân:"
+     "text": "Số định danh cá nhân: "
     },
     {
      "input": {
       "key": "chu_hkd.so_cccd",
-      "w": 18
+      "w": 19
      }
     }
    ],
@@ -305,12 +305,12 @@
      }
     },
     {
-     "text": "Thư điện tử: "
+     "text": " Thư điện tử: "
     },
     {
      "input": {
       "key": "email_khac",
-      "w": 14
+      "w": 15
      }
     }
    ],
@@ -324,12 +324,12 @@
    "align": "left",
    "runs": [
     {
-     "text": "01 bộ hồ sơ số: ..................................về việc"
+     "text": "01 bộ hồ sơ số: ..................................về việc "
     },
     {
      "input": {
       "key": "ve_viec",
-      "w": 36
+      "w": 37
      }
     }
    ],

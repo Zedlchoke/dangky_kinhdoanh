@@ -81,7 +81,7 @@
          }
         },
         {
-         "text": ", ngày",
+         "text": ", ngày ",
          "i": true
         },
         {
@@ -91,7 +91,7 @@
          }
         },
         {
-         "text": " tháng",
+         "text": " tháng ",
          "i": true
         },
         {
@@ -1235,7 +1235,7 @@
    "align": "left",
    "runs": [
     {
-     "text": "Họ, chữ đệm và tên Kế toán trưởng/Phụ trách kế toán:"
+     "text": "Họ, chữ đệm và tên Kế toán trưởng/Phụ trách kế toán: "
     },
     {
      "input": {
@@ -1329,12 +1329,12 @@
    "align": "left",
    "runs": [
     {
-     "text": "Điện thoại:"
+     "text": "Điện thoại: "
     },
     {
      "input": {
       "key": "kt.dien_thoai",
-      "w": 13
+      "w": 14
      }
     }
    ],

@@ -59,7 +59,7 @@
    "align": "left",
    "runs": [
     {
-     "text": "Tên doanh nghiệp viết bằng tiếng Việt:"
+     "text": "Tên doanh nghiệp viết bằng tiếng Việt: "
     },
     {
      "input": {
@@ -78,7 +78,7 @@
    "align": "left",
    "runs": [
     {
-     "text": "Tên doanh nghiệp viết bằng tiếng nước ngoài:"
+     "text": "Tên doanh nghiệp viết bằng tiếng nước ngoài: "
     },
     {
      "input": {
@@ -97,7 +97,7 @@
    "align": "left",
    "runs": [
     {
-     "text": "Tên doanh nghiệp viết tắt:"
+     "text": "Tên doanh nghiệp viết tắt: "
     },
     {
      "input": {

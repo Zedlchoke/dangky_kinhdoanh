@@ -193,7 +193,7 @@
      }
     },
     {
-     "text": "Số fax: "
+     "text": " Số fax: "
     },
     {
      "input": {
@@ -221,12 +221,12 @@
      }
     },
     {
-     "text": "Website: "
+     "text": " Website: "
     },
     {
      "input": {
       "key": "website",
-      "w": 12
+      "w": 13
      }
     }
    ],
@@ -299,7 +299,7 @@
    "align": "left",
    "runs": [
     {
-     "text": "Doanh nghiệp và tất cả các chi nhánh/văn phòng đại diện/địa điểm kinh doanh của doanh nghiệp thông báo tạm ngừng kinh doanh, tạm ngừng hoạt động kể từ ngày"
+     "text": "Doanh nghiệp và tất cả các chi nhánh/văn phòng đại diện/địa điểm kinh doanh của doanh nghiệp thông báo tạm ngừng kinh doanh, tạm ngừng hoạt động kể từ ngày "
     },
     {
      "input": {
@@ -308,12 +308,12 @@
      }
     },
     {
-     "text": " đến hết ngày"
+     "text": " đến hết ngày "
     },
     {
      "input": {
       "key": "den_ngay",
-      "w": 14
+      "w": 15
      }
     }
    ],

@@ -74,7 +74,7 @@
      }
     },
     {
-     "text": ", ngày",
+     "text": ", ngày ",
      "i": true
     },
     {
@@ -84,7 +84,7 @@
      }
     },
     {
-     "text": "tháng",
+     "text": " tháng ",
      "i": true
     },
     {
@@ -94,7 +94,7 @@
      }
     },
     {
-     "text": "năm",
+     "text": " năm ",
      "i": true
     },
     {
@@ -155,7 +155,7 @@
    "align": "left",
    "runs": [
     {
-     "text": "Căn cứ Quyết định số"
+     "text": "Căn cứ Quyết định số "
     },
     {
      "input": {
@@ -164,7 +164,7 @@
      }
     },
     {
-     "text": " ngày"
+     "text": " ngày "
     },
     {
      "input": {
@@ -173,7 +173,7 @@
      }
     },
     {
-     "text": " tháng"
+     "text": " tháng "
     },
     {
      "input": {
@@ -182,7 +182,7 @@
      }
     },
     {
-     "text": " năm"
+     "text": " năm "
     },
     {
      "input": {
@@ -228,7 +228,7 @@
      "i": true
     },
     {
-     "text": ":"
+     "text": ": "
     },
     {
      "input": {
@@ -266,12 +266,12 @@
    "align": "left",
    "runs": [
     {
-     "text": "Trụ sở của hộ kinh doanh:"
+     "text": "Trụ sở của hộ kinh doanh: "
     },
     {
      "input": {
       "key": "hkd_tru_so",
-      "w": 20
+      "w": 21
      }
     }
    ],
@@ -285,12 +285,12 @@
    "align": "left",
    "runs": [
     {
-     "text": "Điện thoại:"
+     "text": "Điện thoại: "
     },
     {
      "input": {
       "key": "dien_thoai_khac",
-      "w": 13
+      "w": 14
      }
     },
     {
@@ -318,7 +318,7 @@
      "i": true
     },
     {
-     "text": "- Tên, trụ sở của hộ kinh doanh;\n- Cơ quan quản lý thuế"
+     "text": "- Tên, trụ sở của hộ kinh doanh;\n- Cơ quan quản lý thuế "
     },
     {
      "input": {
@@ -350,7 +350,7 @@
      }
     },
     {
-     "text": ";\n- ..........;\n- Lưu:"
+     "text": ";\n- ..........;\n- Lưu: "
     },
     {
      "input": {

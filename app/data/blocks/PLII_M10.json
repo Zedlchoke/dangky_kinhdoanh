@@ -80,7 +80,7 @@
      }
     },
     {
-     "text": ", ngày",
+     "text": ", ngày ",
      "i": true
     },
     {
@@ -90,7 +90,7 @@
      }
     },
     {
-     "text": "tháng",
+     "text": " tháng ",
      "i": true
     },
     {
@@ -100,7 +100,7 @@
      }
     },
     {
-     "text": "năm",
+     "text": " năm ",
      "i": true
     },
     {
@@ -283,12 +283,12 @@
      }
     },
     {
-     "text": "Website: "
+     "text": " Website: "
     },
     {
      "input": {
       "key": "website",
-      "w": 12
+      "w": 13
      }
     }
    ],
@@ -343,7 +343,7 @@
      "i": true
     },
     {
-     "text": " đề nghị những nội dung cần sửa đổi, bổ sung trong hồ sơ và lý do sửa đổi, bổ sung như sau:"
+     "text": " đề nghị những nội dung cần sửa đổi, bổ sung trong hồ sơ và lý do sửa đổi, bổ sung như sau: "
     },
     {
      "input": {

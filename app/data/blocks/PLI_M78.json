@@ -51,7 +51,7 @@
      }
     },
     {
-     "text": "tháng ",
+     "text": " tháng ",
      "i": true
     },
     {
@@ -135,7 +135,7 @@
      "i": true
     },
     {
-     "text": "):"
+     "text": "): "
     },
     {
      "input": {

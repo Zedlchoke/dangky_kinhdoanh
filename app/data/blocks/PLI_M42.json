@@ -89,17 +89,17 @@
    "align": "center",
    "runs": [
     {
-     "text": "Đăng ký lần đầu, ngày",
+     "text": "Đăng ký lần đầu, ngày ",
      "i": true
     },
     {
      "input": {
       "key": "dk_lan_dau_ngay",
-      "w": 18
+      "w": 19
      }
     },
     {
-     "text": "tháng",
+     "text": " tháng ",
      "i": true
     },
     {
@@ -109,7 +109,7 @@
      }
     },
     {
-     "text": "năm",
+     "text": " năm ",
      "i": true
     },
     {
@@ -122,7 +122,7 @@
    "format": {
     "spaceBeforePt": 6.0
    },
-   "role": "body"
+   "role": "date-line"
   },
   {
    "t": "p",
@@ -139,7 +139,7 @@
      }
     },
     {
-     "text": "ngày",
+     "text": " ngày ",
      "i": true
     },
     {
@@ -149,7 +149,7 @@
      }
     },
     {
-     "text": "tháng",
+     "text": " tháng ",
      "i": true
     },
     {
@@ -159,7 +159,7 @@
      }
     },
     {
-     "text": "năm",
+     "text": " năm ",
      "i": true
     },
     {
@@ -172,7 +172,7 @@
    "format": {
     "spaceBeforePt": 6.0
    },
-   "role": "body"
+   "role": "date-line"
   },
   {
    "t": "p",
@@ -293,7 +293,7 @@
      }
     },
     {
-     "text": "Số fax: "
+     "text": " Số fax: "
     },
     {
      "input": {
@@ -321,12 +321,12 @@
      }
     },
     {
-     "text": "Website: "
+     "text": " Website: "
     },
     {
      "input": {
       "key": "website",
-      "w": 12
+      "w": 13
      }
     }
    ],
@@ -370,12 +370,12 @@
      }
     },
     {
-     "text": "Giới tính: "
+     "text": " Giới tính: "
     },
     {
      "input": {
       "key": "chu_hkd.gioi_tinh",
-      "w": 13
+      "w": 14
      }
     }
    ],

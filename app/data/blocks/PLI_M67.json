@@ -252,6 +252,9 @@
      "b": true
     },
     {
+     "text": " "
+    },
+    {
      "input": {
       "key": "cn.dia_chi",
       "w": 38
@@ -284,7 +287,7 @@
      }
     },
     {
-     "text": "Fax"
+     "text": " Fax"
     },
     {
      "text": " (nếu có)",
@@ -326,7 +329,7 @@
      }
     },
     {
-     "text": "Website"
+     "text": " Website"
     },
     {
      "text": " (nếu có)",
@@ -376,7 +379,7 @@
    "align": "left",
    "runs": [
     {
-     "text": "Tên chi nhánh:"
+     "text": "Tên chi nhánh: "
     },
     {
      "input": {
@@ -395,7 +398,7 @@
    "align": "left",
    "runs": [
     {
-     "text": "Địa chỉ chi nhánh:"
+     "text": "Địa chỉ chi nhánh: "
     },
     {
      "input": {
@@ -414,12 +417,12 @@
    "align": "left",
    "runs": [
     {
-     "text": "Mã số chi nhánh/Mã số thuế của chi nhánh:"
+     "text": "Mã số chi nhánh/Mã số thuế của chi nhánh: "
     },
     {
      "input": {
       "key": "cn.ma_so",
-      "w": 28
+      "w": 29
      }
     }
    ],

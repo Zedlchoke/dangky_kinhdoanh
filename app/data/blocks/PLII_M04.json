@@ -81,7 +81,7 @@
          }
         },
         {
-         "text": ", ngày",
+         "text": ", ngày ",
          "i": true
         },
         {
@@ -91,7 +91,7 @@
          }
         },
         {
-         "text": " tháng",
+         "text": " tháng ",
          "i": true
         },
         {
@@ -204,7 +204,7 @@
    "align": "left",
    "runs": [
     {
-     "text": "Mã số hộ kinh doanh:"
+     "text": "Mã số hộ kinh doanh: "
     },
     {
      "input": {

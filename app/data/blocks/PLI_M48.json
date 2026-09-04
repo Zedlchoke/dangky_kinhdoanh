@@ -302,12 +302,12 @@
      }
     },
     {
-     "text": "Website: "
+     "text": " Website: "
     },
     {
      "input": {
       "key": "website",
-      "w": 12
+      "w": 13
      }
     }
    ],
@@ -321,12 +321,12 @@
    "align": "left",
    "runs": [
     {
-     "text": "Sau khi xem xét Hồ sơ mã số: ..................... đã nhận ngày"
+     "text": "Sau khi xem xét Hồ sơ mã số: ..................... đã nhận ngày "
     },
     {
      "input": {
       "key": "da_nhan_ngay",
-      "w": 39
+      "w": 40
      }
     }
    ],
@@ -368,7 +368,7 @@
      }
     },
     {
-     "text": "của ("
+     "text": " của ("
     },
     {
      "text": "Tên doanh nghiệp",
@@ -387,7 +387,7 @@
     {
      "input": {
       "key": "dn.ma_so_dn",
-      "w": 37
+      "w": 38
      }
     }
    ],

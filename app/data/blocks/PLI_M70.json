@@ -155,7 +155,7 @@
      "i": true
     },
     {
-     "text": ":"
+     "text": ": "
     },
     {
      "input": {
@@ -193,16 +193,16 @@
    "align": "left",
    "runs": [
     {
-     "text": "Điện thoại:"
+     "text": "Điện thoại: "
     },
     {
      "input": {
       "key": "dien_thoai_khac",
-      "w": 13
+      "w": 14
      }
     },
     {
-     "text": "Số fax:"
+     "text": " Số fax: "
     },
     {
      "input": {
@@ -230,12 +230,12 @@
      }
     },
     {
-     "text": "Website:"
+     "text": " Website: "
     },
     {
      "input": {
       "key": "website",
-      "w": 12
+      "w": 13
      }
     }
    ],
@@ -258,7 +258,7 @@
      }
     },
     {
-     "text": "/…./…. đã nhận của Ông/Bà:"
+     "text": "/…./…. đã nhận của Ông/Bà: "
     },
     {
      "input": {

@@ -80,7 +80,7 @@
      }
     },
     {
-     "text": ", ngày",
+     "text": ", ngày ",
      "i": true
     },
     {
@@ -90,7 +90,7 @@
      }
     },
     {
-     "text": "tháng",
+     "text": " tháng ",
      "i": true
     },
     {
@@ -100,7 +100,7 @@
      }
     },
     {
-     "text": "năm",
+     "text": " năm ",
      "i": true
     },
     {
@@ -255,7 +255,7 @@
      }
     },
     {
-     "text": "Fax: "
+     "text": " Fax: "
     },
     {
      "input": {
@@ -283,12 +283,12 @@
      }
     },
     {
-     "text": "Website: "
+     "text": " Website: "
     },
     {
      "input": {
       "key": "website",
-      "w": 12
+      "w": 13
      }
     }
    ],
@@ -368,7 +368,7 @@
      }
     },
     {
-     "text": ";\n- Lưu:"
+     "text": ";\n- Lưu: "
     },
     {
      "input": {

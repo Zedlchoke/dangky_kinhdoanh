@@ -296,12 +296,12 @@
      }
     },
     {
-     "text": "Website: "
+     "text": " Website: "
     },
     {
      "input": {
       "key": "website",
-      "w": 12
+      "w": 13
      }
     }
    ],
@@ -324,7 +324,7 @@
      }
     },
     {
-     "text": "là người đại diện theo pháp luật."
+     "text": " là người đại diện theo pháp luật."
     }
    ],
    "format": {

@@ -300,7 +300,7 @@
      }
     },
     {
-     "text": "Số fax: "
+     "text": " Số fax: "
     },
     {
      "input": {
@@ -328,12 +328,12 @@
      }
     },
     {
-     "text": "Website: "
+     "text": " Website: "
     },
     {
      "input": {
       "key": "website",
-      "w": 12
+      "w": 13
      }
     }
    ],

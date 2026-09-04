@@ -81,7 +81,7 @@
          }
         },
         {
-         "text": ", ngày",
+         "text": ", ngày ",
          "i": true
         },
         {
@@ -91,7 +91,7 @@
          }
         },
         {
-         "text": " tháng",
+         "text": " tháng ",
          "i": true
         },
         {
@@ -405,7 +405,7 @@
      }
     },
     {
-     "text": "Số fax"
+     "text": " Số fax"
     },
     {
      "text": " ",
@@ -419,12 +419,12 @@
      "i": true
     },
     {
-     "text": "):"
+     "text": "): "
     },
     {
      "input": {
       "key": "fax",
-      "w": 16
+      "w": 17
      }
     }
    ],
@@ -461,7 +461,7 @@
      }
     },
     {
-     "text": "Website"
+     "text": " Website"
     },
     {
      "text": " ",

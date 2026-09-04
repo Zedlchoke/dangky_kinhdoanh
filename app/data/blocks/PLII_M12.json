@@ -80,7 +80,7 @@
      }
     },
     {
-     "text": ", ngày",
+     "text": ", ngày ",
      "i": true
     },
     {
@@ -90,7 +90,7 @@
      }
     },
     {
-     "text": "tháng",
+     "text": " tháng ",
      "i": true
     },
     {
@@ -100,7 +100,7 @@
      }
     },
     {
-     "text": "năm",
+     "text": " năm ",
      "i": true
     },
     {
@@ -227,12 +227,12 @@
    "align": "left",
    "runs": [
     {
-     "text": "Địa chỉ trụ sở:"
+     "text": "Địa chỉ trụ sở: "
     },
     {
      "input": {
       "key": "dn.dia_chi_tru_so",
-      "w": 15
+      "w": 16
      }
     }
    ],
@@ -255,7 +255,7 @@
      }
     },
     {
-     "text": "Fax:"
+     "text": " Fax: "
     },
     {
      "input": {
@@ -274,7 +274,7 @@
    "align": "left",
    "runs": [
     {
-     "text": "Thư điện tử:"
+     "text": "Thư điện tử: "
     },
     {
      "input": {
@@ -283,12 +283,12 @@
      }
     },
     {
-     "text": "Website:"
+     "text": " Website: "
     },
     {
      "input": {
       "key": "website",
-      "w": 12
+      "w": 13
      }
     }
    ],
@@ -302,7 +302,7 @@
    "align": "left",
    "runs": [
     {
-     "text": "Căn cứ kết luận/biên bản làm việc số"
+     "text": "Căn cứ kết luận/biên bản làm việc số "
     },
     {
      "input": {
@@ -311,7 +311,7 @@
      }
     },
     {
-     "text": "ngày "
+     "text": " ngày "
     },
     {
      "input": {
@@ -535,7 +535,7 @@
      "i": true
     },
     {
-     "text": "- Như trên;\n- Cơ quan quản lý thuế"
+     "text": "- Như trên;\n- Cơ quan quản lý thuế "
     },
     {
      "input": {

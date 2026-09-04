@@ -117,7 +117,7 @@
    "align": "left",
    "runs": [
     {
-     "text": "Tên doanh nghiệp viết bằng tiếng nước ngoài:"
+     "text": "Tên doanh nghiệp viết bằng tiếng nước ngoài: "
     },
     {
      "input": {
@@ -139,7 +139,7 @@
    "align": "left",
    "runs": [
     {
-     "text": "Tên doanh nghiệp viết tắt:"
+     "text": "Tên doanh nghiệp viết tắt: "
     },
     {
      "input": {
@@ -279,12 +279,12 @@
      }
     },
     {
-     "text": "Website: "
+     "text": " Website: "
     },
     {
      "input": {
       "key": "website",
-      "w": 12
+      "w": 13
      }
     }
    ],
@@ -446,21 +446,21 @@
      "i": true
     },
     {
-     "text": "):"
+     "text": "): "
     },
     {
      "input": {
       "key": "ho_ten_in_hoa",
-      "w": 28
+      "w": 29
      }
     },
     {
-     "text": "Giới tính:"
+     "text": " Giới tính: "
     },
     {
      "input": {
       "key": "chu_hkd.gioi_tinh",
-      "w": 13
+      "w": 14
      }
     }
    ],
@@ -504,12 +504,12 @@
      }
     },
     {
-     "text": " Quốc tịch:"
+     "text": " Quốc tịch: "
     },
     {
      "input": {
       "key": "chu_hkd.quoc_tich",
-      "w": 13
+      "w": 14
      }
     }
    ],
@@ -590,12 +590,12 @@
    "align": "left",
    "runs": [
     {
-     "text": "Địa chỉ liên lạc:"
+     "text": "Địa chỉ liên lạc: "
     },
     {
      "input": {
       "key": "dia_chi_lien_lac",
-      "w": 16
+      "w": 17
      }
     }
    ],
@@ -1086,12 +1086,12 @@
      }
     },
     {
-     "text": "Giới tính: "
+     "text": " Giới tính: "
     },
     {
      "input": {
       "key": "chu_hkd.gioi_tinh",
-      "w": 13
+      "w": 14
      }
     }
    ],
@@ -1135,12 +1135,12 @@
      }
     },
     {
-     "text": " Quốc tịch:"
+     "text": " Quốc tịch: "
     },
     {
      "input": {
       "key": "chu_hkd.quoc_tich",
-      "w": 13
+      "w": 14
      }
     }
    ],
@@ -1407,12 +1407,12 @@
      }
     },
     {
-     "text": " Giới tính:"
+     "text": " Giới tính: "
     },
     {
      "input": {
       "key": "ndd.gioi_tinh",
-      "w": 13
+      "w": 14
      }
     }
    ],
@@ -2183,21 +2183,21 @@
      "i": true
     },
     {
-     "text": "):"
+     "text": "): "
     },
     {
      "input": {
       "key": "ndd.ho_ten",
-      "w": 29
+      "w": 30
      }
     },
     {
-     "text": " Giới tính:"
+     "text": " Giới tính: "
     },
     {
      "input": {
       "key": "ndd.gioi_tinh",
-      "w": 13
+      "w": 14
      }
     }
    ],
@@ -2214,7 +2214,7 @@
    "align": "left",
    "runs": [
     {
-     "text": "Ngày, tháng, năm sinh:"
+     "text": "Ngày, tháng, năm sinh: "
     },
     {
      "input": {
@@ -2241,12 +2241,12 @@
      }
     },
     {
-     "text": " Quốc tịch:"
+     "text": " Quốc tịch: "
     },
     {
      "input": {
       "key": "chu_hkd.quoc_tich",
-      "w": 13
+      "w": 14
      }
     }
    ],
@@ -2461,12 +2461,12 @@
    "align": "left",
    "runs": [
     {
-     "text": "Tên công ty viết bằng tiếng Việt:"
+     "text": "Tên công ty viết bằng tiếng Việt: "
     },
     {
      "input": {
       "key": "dn.ten_tieng_viet",
-      "w": 24
+      "w": 25
      }
     }
    ],
@@ -2483,12 +2483,12 @@
    "align": "left",
    "runs": [
     {
-     "text": "Tên công ty viết bằng tiếng nước ngoài:"
+     "text": "Tên công ty viết bằng tiếng nước ngoài: "
     },
     {
      "input": {
       "key": "dn.ten_nuoc_ngoai",
-      "w": 27
+      "w": 28
      }
     }
    ],
@@ -2505,12 +2505,12 @@
    "align": "left",
    "runs": [
     {
-     "text": "Tên công ty viết tắt:"
+     "text": "Tên công ty viết tắt: "
     },
     {
      "input": {
       "key": "dn.ten_viet_tat",
-      "w": 18
+      "w": 19
      }
     }
    ],
@@ -3251,21 +3251,21 @@
      "i": true
     },
     {
-     "text": "):"
+     "text": "): "
     },
     {
      "input": {
       "key": "ndd.ho_ten",
-      "w": 29
+      "w": 30
      }
     },
     {
-     "text": "Giới tính:"
+     "text": " Giới tính: "
     },
     {
      "input": {
       "key": "ndd.gioi_tinh",
-      "w": 13
+      "w": 14
      }
     }
    ],
@@ -3309,12 +3309,12 @@
      }
     },
     {
-     "text": " Quốc tịch:"
+     "text": " Quốc tịch: "
     },
     {
      "input": {
       "key": "chu_hkd.quoc_tich",
-      "w": 13
+      "w": 14
      }
     }
    ],
@@ -3529,12 +3529,12 @@
    "align": "left",
    "runs": [
     {
-     "text": "Tên công ty viết bằng tiếng Việt:"
+     "text": "Tên công ty viết bằng tiếng Việt: "
     },
     {
      "input": {
       "key": "dn.ten_tieng_viet",
-      "w": 24
+      "w": 25
      }
     }
    ],
@@ -3551,12 +3551,12 @@
    "align": "left",
    "runs": [
     {
-     "text": "Tên công ty viết bằng tiếng nước ngoài:"
+     "text": "Tên công ty viết bằng tiếng nước ngoài: "
     },
     {
      "input": {
       "key": "dn.ten_nuoc_ngoai",
-      "w": 27
+      "w": 28
      }
     }
    ],
@@ -3573,12 +3573,12 @@
    "align": "left",
    "runs": [
     {
-     "text": "Tên công ty viết tắt:"
+     "text": "Tên công ty viết tắt: "
     },
     {
      "input": {
       "key": "dn.ten_viet_tat",
-      "w": 18
+      "w": 19
      }
     }
    ],
@@ -3726,12 +3726,12 @@
      }
     },
     {
-     "text": "Website: "
+     "text": " Website: "
     },
     {
      "input": {
       "key": "website",
-      "w": 12
+      "w": 13
      }
     }
    ],

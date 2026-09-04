@@ -81,7 +81,7 @@
          }
         },
         {
-         "text": ", ngày",
+         "text": ", ngày ",
          "i": true
         },
         {
@@ -91,7 +91,7 @@
          }
         },
         {
-         "text": " tháng",
+         "text": " tháng ",
          "i": true
         },
         {
@@ -264,21 +264,21 @@
    "align": "left",
    "runs": [
     {
-     "text": "Thông báo tạm ngừng kinh doanh kể từ ngày"
+     "text": "Thông báo tạm ngừng kinh doanh kể từ ngày "
     },
     {
      "input": {
       "key": "tu_ngay",
-      "w": 28
+      "w": 29
      }
     },
     {
-     "text": " đến hết ngày"
+     "text": " đến hết ngày "
     },
     {
      "input": {
       "key": "den_ngay",
-      "w": 14
+      "w": 15
      }
     }
    ],
@@ -809,7 +809,7 @@
    "align": "left",
    "runs": [
     {
-     "text": "Thông báo tiếp tục kinh doanh kể từ ngày"
+     "text": "Thông báo tiếp tục kinh doanh kể từ ngày "
     },
     {
      "input": {
@@ -868,7 +868,7 @@
    "align": "left",
    "runs": [
     {
-     "text": "Thông báo tiếp tục kinh doanh kể từ ngày"
+     "text": "Thông báo tiếp tục kinh doanh kể từ ngày "
     },
     {
      "input": {

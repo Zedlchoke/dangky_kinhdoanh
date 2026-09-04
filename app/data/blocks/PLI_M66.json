@@ -159,12 +159,12 @@
    "align": "left",
    "runs": [
     {
-     "text": "Tên doanh nghiệp:"
+     "text": "Tên doanh nghiệp: "
     },
     {
      "input": {
       "key": "dn.ten_tieng_viet",
-      "w": 16
+      "w": 17
      }
     }
    ],
@@ -268,12 +268,12 @@
    "align": "left",
    "runs": [
     {
-     "text": "Số giấy tờ pháp lý của cá nhân:"
+     "text": "Số giấy tờ pháp lý của cá nhân: "
     },
     {
      "input": {
       "key": "so_giay_to_ca_nhan",
-      "w": 23
+      "w": 24
      }
     }
    ],
@@ -355,12 +355,12 @@
      "i": true
     },
     {
-     "text": "):"
+     "text": "): "
     },
     {
      "input": {
       "key": "cn.ten_tieng_viet",
-      "w": 46
+      "w": 47
      }
     }
    ],
@@ -374,7 +374,7 @@
    "align": "left",
    "runs": [
     {
-     "text": "Mã số/mã số thuế của chi nhánh/văn phòng đại diện/địa điểm kinh doanh:"
+     "text": "Mã số/mã số thuế của chi nhánh/văn phòng đại diện/địa điểm kinh doanh: "
     },
     {
      "input": {
@@ -428,12 +428,12 @@
      }
     },
     {
-     "text": "Nơi cấp: "
+     "text": " Nơi cấp: "
     },
     {
      "input": {
       "key": "noi_cap",
-      "w": 12
+      "w": 13
      }
     }
    ],

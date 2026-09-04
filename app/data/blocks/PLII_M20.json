@@ -74,7 +74,7 @@
      }
     },
     {
-     "text": ", ngày",
+     "text": ", ngày ",
      "i": true
     },
     {
@@ -84,7 +84,7 @@
      }
     },
     {
-     "text": "tháng",
+     "text": " tháng ",
      "i": true
     },
     {
@@ -94,7 +94,7 @@
      }
     },
     {
-     "text": "năm",
+     "text": " năm ",
      "i": true
     },
     {
@@ -168,12 +168,12 @@
    "align": "left",
    "runs": [
     {
-     "text": "Địa chỉ trụ sở:"
+     "text": "Địa chỉ trụ sở: "
     },
     {
      "input": {
       "key": "dn.dia_chi_tru_so",
-      "w": 15
+      "w": 16
      }
     }
    ],
@@ -187,16 +187,16 @@
    "align": "left",
    "runs": [
     {
-     "text": "Điện thoại:"
+     "text": "Điện thoại: "
     },
     {
      "input": {
       "key": "dien_thoai_khac",
-      "w": 13
+      "w": 14
      }
     },
     {
-     "text": "Fax:"
+     "text": " Fax: "
     },
     {
      "input": {
@@ -215,7 +215,7 @@
    "align": "left",
    "runs": [
     {
-     "text": "Thư điện tử:"
+     "text": "Thư điện tử: "
     },
     {
      "input": {
@@ -224,12 +224,12 @@
      }
     },
     {
-     "text": "Website:"
+     "text": " Website: "
     },
     {
      "input": {
       "key": "website",
-      "w": 12
+      "w": 13
      }
     }
    ],
@@ -264,7 +264,7 @@
      "i": true
     },
     {
-     "text": ":"
+     "text": ": "
     },
     {
      "input": {
@@ -286,7 +286,7 @@
    "align": "left",
    "runs": [
     {
-     "text": "Mã số hộ kinh doanh:"
+     "text": "Mã số hộ kinh doanh: "
     },
     {
      "input": {
@@ -319,21 +319,21 @@
    "align": "left",
    "runs": [
     {
-     "text": "Đăng ký tạm ngừng kinh doanh kể từ ngày"
+     "text": "Đăng ký tạm ngừng kinh doanh kể từ ngày "
     },
     {
      "input": {
       "key": "tu_ngay",
-      "w": 27
+      "w": 28
      }
     },
     {
-     "text": " đến hết ngày"
+     "text": " đến hết ngày "
     },
     {
      "input": {
       "key": "den_ngay",
-      "w": 14
+      "w": 15
      }
     }
    ],
@@ -347,12 +347,12 @@
    "align": "left",
    "runs": [
     {
-     "text": "Lý do tạm ngừng kinh doanh:"
+     "text": "Lý do tạm ngừng kinh doanh: "
     },
     {
      "input": {
       "key": "ly_do_tam_ngung",
-      "w": 21
+      "w": 22
      }
     }
    ],
@@ -393,7 +393,7 @@
    "align": "left",
    "runs": [
     {
-     "text": "Lý do tiếp tục kinh doanh:"
+     "text": "Lý do tiếp tục kinh doanh: "
     },
     {
      "input": {

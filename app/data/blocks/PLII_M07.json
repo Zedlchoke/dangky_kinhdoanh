@@ -88,17 +88,17 @@
    "align": "center",
    "runs": [
     {
-     "text": "Đăng ký lần đầu, ngày",
+     "text": "Đăng ký lần đầu, ngày ",
      "i": true
     },
     {
      "input": {
       "key": "dk_lan_dau_ngay",
-      "w": 18
+      "w": 19
      }
     },
     {
-     "text": "tháng",
+     "text": " tháng ",
      "i": true
     },
     {
@@ -108,7 +108,7 @@
      }
     },
     {
-     "text": "năm",
+     "text": " năm ",
      "i": true
     },
     {
@@ -121,7 +121,7 @@
    "format": {
     "spaceBeforePt": 6.0
    },
-   "role": "body"
+   "role": "date-line"
   },
   {
    "t": "p",
@@ -138,7 +138,7 @@
      }
     },
     {
-     "text": ", ngày",
+     "text": ", ngày ",
      "i": true
     },
     {
@@ -148,7 +148,7 @@
      }
     },
     {
-     "text": "tháng",
+     "text": " tháng ",
      "i": true
     },
     {
@@ -158,7 +158,7 @@
      }
     },
     {
-     "text": "năm",
+     "text": " năm ",
      "i": true
     },
     {
@@ -171,7 +171,7 @@
    "format": {
     "spaceBeforePt": 6.0
    },
-   "role": "body"
+   "role": "date-line"
   },
   {
    "t": "p",
@@ -203,12 +203,12 @@
      "i": true
     },
     {
-     "text": ":"
+     "text": ": "
     },
     {
      "input": {
       "key": "hkd_ten_tieng_viet",
-      "w": 38
+      "w": 39
      }
     }
    ],
@@ -229,7 +229,7 @@
      "i": true
     },
     {
-     "text": ":"
+     "text": ": "
     },
     {
      "input": {
@@ -255,7 +255,7 @@
      "i": true
     },
     {
-     "text": ":"
+     "text": ": "
     },
     {
      "input": {
@@ -276,6 +276,9 @@
     {
      "text": "2. Trụ sở của hộ kinh doanh:",
      "b": true
+    },
+    {
+     "text": " "
     },
     {
      "input": {
@@ -303,7 +306,7 @@
      }
     },
     {
-     "text": "Fax:"
+     "text": " Fax: "
     },
     {
      "input": {
@@ -331,12 +334,12 @@
      }
     },
     {
-     "text": "Website:"
+     "text": " Website: "
     },
     {
      "input": {
       "key": "website",
-      "w": 12
+      "w": 13
      }
     }
    ],
@@ -504,7 +507,7 @@
    "align": "left",
    "runs": [
     {
-     "text": "Giới tính:"
+     "text": "Giới tính: "
     },
     {
      "input": {

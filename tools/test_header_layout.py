@@ -352,8 +352,11 @@ def t_layout():
                 (0, 0): src_texts[0],                                  # giữ nguyên
                 (0, 1): motto_two_lines(src_texts[1]),                 # bỏ dòng kẻ
                 (1, 0): "Số: {so_van_ban}",
-                (1, 1): ("{dia_diem_ky}, ngày{ngay_ky_vb} "
-                         "tháng{thang_ky_vb} năm {nam_ky_vb}"),
+                # [6V-V2/C1] pin lại theo skeleton đã normalize glue (B1/D13):
+                # space quanh {ngay_ky_vb}/{thang_ky_vb} — rule tại
+                # build_form_maps.normalize_skeleton_glue
+                (1, 1): ("{dia_diem_ky}, ngày {ngay_ky_vb} "
+                         "tháng {thang_ky_vb} năm {nam_ky_vb}"),
             }
             for (ri, ci), want in expected.items():
                 got = cell_text(tbl.rows[ri].cells[ci])

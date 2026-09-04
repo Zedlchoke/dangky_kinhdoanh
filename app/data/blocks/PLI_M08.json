@@ -765,7 +765,7 @@
    "align": "left",
    "runs": [
     {
-     "text": "Họ, chữ đệm và tên Giám đốc/Tổng giám đốc:"
+     "text": "Họ, chữ đệm và tên Giám đốc/Tổng giám đốc: "
     },
     {
      "input": {
@@ -840,12 +840,12 @@
    "align": "left",
    "runs": [
     {
-     "text": "Số định danh cá nhân:"
+     "text": "Số định danh cá nhân: "
     },
     {
      "input": {
       "key": "gd.so_cccd",
-      "w": 18
+      "w": 19
      }
     }
    ],
@@ -859,12 +859,12 @@
    "align": "left",
    "runs": [
     {
-     "text": "Điện thoại:"
+     "text": "Điện thoại: "
     },
     {
      "input": {
       "key": "gd.dien_thoai",
-      "w": 13
+      "w": 14
      }
     }
    ],
@@ -911,7 +911,7 @@
    "align": "left",
    "runs": [
     {
-     "text": "Họ, chữ đệm và tên Kế toán trưởng/Phụ trách kế toán:"
+     "text": "Họ, chữ đệm và tên Kế toán trưởng/Phụ trách kế toán: "
     },
     {
      "input": {
@@ -986,12 +986,12 @@
    "align": "left",
    "runs": [
     {
-     "text": "Số định danh cá nhân:"
+     "text": "Số định danh cá nhân: "
     },
     {
      "input": {
       "key": "kt.so_cccd",
-      "w": 18
+      "w": 19
      }
     }
    ],
@@ -1005,12 +1005,12 @@
    "align": "left",
    "runs": [
     {
-     "text": "Điện thoại:"
+     "text": "Điện thoại: "
     },
     {
      "input": {
       "key": "kt.dien_thoai",
-      "w": 13
+      "w": 14
      }
     }
    ],
@@ -1124,19 +1124,19 @@
      }
     },
     {
-     "text": "Số fax ("
+     "text": " Số fax ("
     },
     {
      "text": "nếu có",
      "i": true
     },
     {
-     "text": "):"
+     "text": "): "
     },
     {
      "input": {
       "key": "fax",
-      "w": 16
+      "w": 17
      }
     }
    ],
@@ -1157,12 +1157,12 @@
      "i": true
     },
     {
-     "text": "):"
+     "text": "): "
     },
     {
      "input": {
       "key": "email_tru_so",
-      "w": 18
+      "w": 19
      }
     }
    ],

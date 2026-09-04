@@ -74,7 +74,7 @@
      }
     },
     {
-     "text": ", ngày",
+     "text": ", ngày ",
      "i": true
     },
     {
@@ -84,7 +84,7 @@
      }
     },
     {
-     "text": "tháng",
+     "text": " tháng ",
      "i": true
     },
     {
@@ -94,7 +94,7 @@
      }
     },
     {
-     "text": "năm",
+     "text": " năm ",
      "i": true
     },
     {
@@ -221,12 +221,12 @@
    "align": "left",
    "runs": [
     {
-     "text": "Địa chỉ trụ sở:"
+     "text": "Địa chỉ trụ sở: "
     },
     {
      "input": {
       "key": "dn.dia_chi_tru_so",
-      "w": 15
+      "w": 16
      }
     }
    ],
@@ -277,12 +277,12 @@
      }
     },
     {
-     "text": "Website:"
+     "text": " Website: "
     },
     {
      "input": {
       "key": "website",
-      "w": 12
+      "w": 13
      }
     }
    ],

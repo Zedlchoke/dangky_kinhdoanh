@@ -83,7 +83,7 @@
      }
     },
     {
-     "text": ", ngày",
+     "text": ", ngày ",
      "i": true
     },
     {
@@ -93,7 +93,7 @@
      }
     },
     {
-     "text": " tháng",
+     "text": " tháng ",
      "i": true
     },
     {
@@ -204,7 +204,7 @@
      "i": true
     },
     {
-     "text": "):"
+     "text": "): "
     },
     {
      "input": {
@@ -263,7 +263,7 @@
    "align": "left",
    "runs": [
     {
-     "text": "Giới tính:"
+     "text": "Giới tính: "
     },
     {
      "input": {
@@ -435,7 +435,7 @@
    "align": "left",
    "runs": [
     {
-     "text": "Tên tổ chức:"
+     "text": "Tên tổ chức: "
     },
     {
      "input": {
@@ -461,7 +461,7 @@
      "i": true
     },
     {
-     "text": "):"
+     "text": "): "
     },
     {
      "input": {
@@ -480,12 +480,12 @@
    "align": "left",
    "runs": [
     {
-     "text": "Địa chỉ trụ sở chính:"
+     "text": "Địa chỉ trụ sở chính: "
     },
     {
      "input": {
       "key": "dn.dia_chi_tru_so",
-      "w": 18
+      "w": 19
      }
     }
    ],
@@ -518,7 +518,7 @@
    "align": "left",
    "runs": [
     {
-     "text": "Số giấy tờ pháp lý của cá nhân của người đại diện:"
+     "text": "Số giấy tờ pháp lý của cá nhân của người đại diện: "
     },
     {
      "input": {
@@ -608,12 +608,12 @@
      "i": true
     },
     {
-     "text": "):"
+     "text": "): "
     },
     {
      "input": {
       "key": "dn.ten_tieng_viet",
-      "w": 27
+      "w": 28
      }
     }
    ],

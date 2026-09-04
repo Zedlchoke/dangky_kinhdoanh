@@ -193,7 +193,7 @@
      }
     },
     {
-     "text": "Số fax: "
+     "text": " Số fax: "
     },
     {
      "input": {
@@ -221,12 +221,12 @@
      }
     },
     {
-     "text": "Website: "
+     "text": " Website: "
     },
     {
      "input": {
       "key": "website",
-      "w": 12
+      "w": 13
      }
     }
    ],
@@ -303,7 +303,7 @@
      "i": true
     },
     {
-     "text": " Doanh nghiệp và tất cả các chi nhánh/văn phòng đại diện/địa điểm kinh doanh của doanh nghiệp thông báo tiếp tục kinh doanh, tiếp tục hoạt động trước thời hạn đã thông báo kể từ ngày"
+     "text": " Doanh nghiệp và tất cả các chi nhánh/văn phòng đại diện/địa điểm kinh doanh của doanh nghiệp thông báo tiếp tục kinh doanh, tiếp tục hoạt động trước thời hạn đã thông báo kể từ ngày "
     },
     {
      "input": {
@@ -456,7 +456,7 @@
      "i": true
     },
     {
-     "text": "Đăng ký tiếp tục kinh doanh trước thời hạn đã thông báo kể từ ngày"
+     "text": "Đăng ký tiếp tục kinh doanh trước thời hạn đã thông báo kể từ ngày "
     },
     {
      "input": {

@@ -320,16 +320,16 @@
    "align": "left",
    "runs": [
     {
-     "text": "Đăng ký lần đầu, ngày"
+     "text": "Đăng ký lần đầu, ngày "
     },
     {
      "input": {
       "key": "dk_lan_dau_ngay",
-      "w": 18
+      "w": 19
      }
     },
     {
-     "text": "tháng"
+     "text": " tháng "
     },
     {
      "input": {
@@ -338,7 +338,7 @@
      }
     },
     {
-     "text": "năm"
+     "text": " năm "
     },
     {
      "input": {
@@ -350,7 +350,7 @@
    "format": {
     "spaceBeforePt": 6.0
    },
-   "role": "body"
+   "role": "date-line"
   },
   {
    "t": "p",
@@ -366,7 +366,7 @@
      }
     },
     {
-     "text": ", ngày"
+     "text": ", ngày "
     },
     {
      "input": {
@@ -375,7 +375,7 @@
      }
     },
     {
-     "text": "tháng"
+     "text": " tháng "
     },
     {
      "input": {
@@ -384,7 +384,7 @@
      }
     },
     {
-     "text": "năm"
+     "text": " năm "
     },
     {
      "input": {
@@ -396,7 +396,7 @@
    "format": {
     "spaceBeforePt": 6.0
    },
-   "role": "body"
+   "role": "date-line"
   },
   {
    "t": "p",
@@ -429,7 +429,7 @@
      "i": true
     },
     {
-     "text": "):"
+     "text": "): "
     },
     {
      "input": {
@@ -488,7 +488,7 @@
      }
     },
     {
-     "text": "Số fax: "
+     "text": " Số fax: "
     },
     {
      "input": {
@@ -516,12 +516,12 @@
      }
     },
     {
-     "text": "Website: "
+     "text": " Website: "
     },
     {
      "input": {
       "key": "website",
-      "w": 12
+      "w": 13
      }
     }
    ],
@@ -601,12 +601,12 @@
      }
     },
     {
-     "text": " Quốc tịch:"
+     "text": " Quốc tịch: "
     },
     {
      "input": {
       "key": "chu_hkd.quoc_tich",
-      "w": 13
+      "w": 14
      }
     }
    ],
@@ -799,7 +799,7 @@
    "align": "left",
    "runs": [
     {
-     "text": "Mã số doanh nghiệp/Mã số thuế:"
+     "text": "Mã số doanh nghiệp/Mã số thuế: "
     },
     {
      "input": {
@@ -881,7 +881,7 @@
      }
     },
     {
-     "text": "Số fax: "
+     "text": " Số fax: "
     },
     {
      "input": {
@@ -909,12 +909,12 @@
      }
     },
     {
-     "text": "Website: "
+     "text": " Website: "
     },
     {
      "input": {
       "key": "website",
-      "w": 12
+      "w": 13
      }
     }
    ],
@@ -1095,7 +1095,7 @@
      "text": "Cơ quan có thẩm quyền khác"
     },
     {
-     "text": ":",
+     "text": ": ",
      "i": true
     },
     {

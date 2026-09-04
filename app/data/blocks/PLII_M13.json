@@ -80,7 +80,7 @@
      }
     },
     {
-     "text": ", ngày",
+     "text": ", ngày ",
      "i": true
     },
     {
@@ -90,7 +90,7 @@
      }
     },
     {
-     "text": "tháng",
+     "text": " tháng ",
      "i": true
     },
     {
@@ -100,7 +100,7 @@
      }
     },
     {
-     "text": "năm",
+     "text": " năm ",
      "i": true
     },
     {
@@ -237,7 +237,7 @@
      }
     },
     {
-     "text": "Thư điện tử (nếu có): "
+     "text": " Thư điện tử (nếu có): "
     },
     {
      "input": {
@@ -309,12 +309,12 @@
      }
     },
     {
-     "text": "Dân tộc:"
+     "text": " Dân tộc: "
     },
     {
      "input": {
       "key": "chu_hkd.dan_toc",
-      "w": 12
+      "w": 13
      }
     },
     {
@@ -356,12 +356,12 @@
    "align": "left",
    "runs": [
     {
-     "text": "Nơi thường trú:"
+     "text": "Nơi thường trú: "
     },
     {
      "input": {
       "key": "noi_thuong_tru",
-      "w": 15
+      "w": 16
      }
     }
    ],
@@ -403,12 +403,12 @@
      }
     },
     {
-     "text": "Thư điện tử:"
+     "text": " Thư điện tử: "
     },
     {
      "input": {
       "key": "email_khac",
-      "w": 14
+      "w": 15
      }
     }
    ],

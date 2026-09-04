@@ -81,7 +81,7 @@
          }
         },
         {
-         "text": ", ngày",
+         "text": ", ngày ",
          "i": true
         },
         {
@@ -91,7 +91,7 @@
          }
         },
         {
-         "text": " tháng",
+         "text": " tháng ",
          "i": true
         },
         {
@@ -481,7 +481,7 @@
    "align": "left",
    "runs": [
     {
-     "text": "Đăng ký thay đổi lần thứ"
+     "text": "Đăng ký thay đổi lần thứ "
     },
     {
      "input": {
@@ -490,7 +490,7 @@
      }
     },
     {
-     "text": "ngày"
+     "text": " ngày "
     },
     {
      "input": {

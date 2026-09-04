@@ -56,15 +56,20 @@ SIGGAP_FIXTURES = ("valid-full", "long-boundary")
 OUT_ROOT = ROOT / "generated_ho_so" / "_visual_layout" / "phase6v" / "signgap"
 
 
-def _cluster_gaps(pages) -> tuple[list[float], int, list[dict]]:
+def _cluster_gaps(pages) -> tuple[list[float], list[float], list[dict]]:
     """Nhân bản 1:1 vòng lặp write-gap của D6 (det_signatures): với mỗi cụm
     (instruction), tìm dòng chữ kế tiếp trong cùng cột, gap = y0 - instr.y1.
-    Trả (gaps, số cụm không có dòng dưới, danh sách orphan-sparse-item)."""
+    Cụm KHÔNG có dòng dưới (cuối ô bảng / cuối nội dung): gap thay thế =
+    phần giấy còn lại dưới instruction (page_h - instr.y1) — nếu cả đó mà
+    < 40pt thì không còn chỗ ký. Trả (gaps, bottom_gaps_cua_cum_khong_co_duoi,
+    danh sách orphan-sparse-item)."""
     gaps: list[float] = []
-    no_below = 0
+    no_below: list[float] = []
     orphans: list[dict] = []
     for p in pages:
         lines = _sig_lines(p)
+        page_h = p["pixmap"].height / 2.0 if p.get("pixmap") is not None \
+            else None
         # orphan check theo test B5: trang thưa chứa instr không title
         chars = len(re.sub(r"\s+", "", p["text"]))
         if chars < 120:
@@ -79,7 +84,8 @@ def _cluster_gaps(pages) -> tuple[list[float], int, list[dict]]:
                               l["x0"] > instr["x1"] + 60)
                      and not (l["title"] or l["instr"])]
             if not below:
-                no_below += 1
+                # pixmap zoom 2.0 -> height/2 = pt; pdf_pages luôn render
+                no_below.append(round((page_h or 0) - instr["y1"], 1))
                 continue
             nearest = min(below, key=lambda l: l["y0"])
             gaps.append(nearest["y0"] - instr["y1"])
@@ -155,9 +161,12 @@ def main() -> int:
             spacers = _xml_spacers_800(pdf.with_suffix(".docx"))
             # Phân loại trung thực:
             #  - D6-MEASURED: có gap đo được -> mọi gap phải >= 40;
-            #  - D6-UNMEASURABLE: cụm không có dòng chữ dưới (cuối ô bảng/cuối
-            #    tài liệu) — D6 không đo được bằng PDF, kiểm bằng spacer XML
-            #    (>=800 twips) như test B4;
+            #  - D6-UNMEASURABLE: cụm không có dòng chữ dưới trong cùng cột
+            #    (cuối ô bảng / cuối nội dung) — D6 không đo được bằng PDF.
+            #    Đạt nếu MỘI cụm trong nhóm này có (i) spacer XML >= 800 twips
+            #    trong container (ô ký bảng 1x2, như test B4) HOẶC (ii) phần
+            #    giấy còn lại dưới instruction >= 40pt (cụm cuối nội dung —
+            #    vùng viết là phần giấy trống tới hết trang);
             #  - N/A-D6: PDF không có instruction nào trong ngữ pháp D6 — lỗ
             #    hổng vocabulary có sẵn của gate (biến thể "(Ký, ghi họ tên và
             #    đóng dấu)" — test_phase5r_signatures docstring B1 đã ghi nhận
@@ -169,19 +178,23 @@ def main() -> int:
                 status = "D6-UNMEASURABLE"
             else:
                 status = "N/A-D6"
+            unmeas_ok = (
+                spacers >= len(no_below)
+                or (min(no_below) >= SIG_WRITE_PT if no_below else True))
             ok = (not orphans
                   and not [d for d in d5 if d["code"] == "BLANK"]
                   and not write_fails and not write_cands
                   and (status == "N/A-D6"
                        or (min_gap is None or min_gap >= SIG_WRITE_PT))
-                  and (status != "D6-UNMEASURABLE" or spacers >= no_below))
+                  and (status != "D6-UNMEASURABLE" or unmeas_ok))
             if not ok:
                 n_bad += 1
             report["forms"]["%s/%s" % (fid, fixture)] = {
                 "ok": ok, "status": status,
-                "clusters": len(gaps) + no_below,
+                "clusters": len(gaps) + len(no_below),
                 "clusters_measured": len(gaps),
-                "clusters_no_below": no_below,
+                "clusters_no_below": len(no_below),
+                "no_below_bottom_gaps_pt": no_below,
                 "gaps_pt": [round(g, 1) for g in gaps],
                 "min_gap_pt": None if min_gap is None else round(min_gap, 1),
                 "xml_spacers_800": spacers,
@@ -194,10 +207,12 @@ def main() -> int:
                 "det_other_fails": other_fails,
                 "pdf": str(pdf.relative_to(out_root)),
             }
-            print("%-9s %-13s [%s] clusters=%2d (khoang-cuoi=%d) "
-                  "min_gap=%s spacer800=%d pages=%d D5blank=%d orphan=%d "
-                  "D6write(f/c)=%d/%d %s"
-                  % (fid, fixture, status, len(gaps) + no_below, no_below,
+            print("%-9s %-13s [%s] clusters=%2d (khoang-cuoi=%d, "
+                  "bottom_min=%s) min_gap=%s spacer800=%d pages=%d "
+                  "D5blank=%d orphan=%d D6write(f/c)=%d/%d %s"
+                  % (fid, fixture, status, len(gaps) + len(no_below),
+                     len(no_below),
+                     "%.0fpt" % min(no_below) if no_below else "n/a",
                      "n/a" if min_gap is None else "%.1f" % min_gap,
                      spacers, len(pages),
                      len([d for d in d5 if d["code"] == "BLANK"]),

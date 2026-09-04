@@ -998,7 +998,12 @@ def main() -> int:
     detector_keys = ("D1_source_indicator", "D2_field_code", "D3_markers",
                      "D4_contamination", "D5_blank_sparse", "D6_signature",
                      "D9_table_grid", "D10_matrix_headers", "D11_glue",
-                     "D12_fixture_violations")
+                     "D12_fixture_violations",
+                     # [6V-V1/Lead] detector mới — vẫn candidates (không
+                     # hard) tới khi V2 xong; đếm ở đây để số hard luôn
+                     # hiện diện trong summary ngay khi Lead nâng hard.
+                     "D13_skeleton_glue", "D14_name_slot", "D15_chk_glyph",
+                     "D16_token_values")
     for key in detector_keys:
         summary[key] = sum(
             1 for r in all_records

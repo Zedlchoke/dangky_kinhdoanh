@@ -168,7 +168,10 @@ def det_contamination(docx_path: Path, form_meta: dict) -> list[str]:
 
 
 def det_table_grid(docx_path: Path) -> list[dict]:
-    """D9: grid width — cột < 1cm hoặc tổng width vượt khổ in được.
+    """D9: grid width — [6V-V1] policy 2 tầng: bảng >=10 cột bắt
+    NARROW_COL_WIDE khi min col < 900 twips (không đọc được, B5); bảng
+    <10 cột giữ sàn 1cm (566 twips sau làm tròn xuống I4) → NARROW_COL;
+    tổng width vượt khổ in được → WIDTH_OVERFLOW.
     Bắt <w:tbl> CÓ attribute (regex '<w:tbl>' mù với '<w:tbl xmlns=...>') và
     DUYỆT CÂN BẰNG để bảng lồng không bị đếm gộp (finditer non-greedy cắt
     bảng lồng sai); chỉ tính gridCol của TẦNG NGOÀI (grid con là phần của
@@ -201,11 +204,24 @@ def det_table_grid(docx_path: Path) -> list[dict]:
             r'<w:gridCol[^>]*w:w="(\d+)"', tbl)]
         if not cols:
             continue
-        narrow = [(i, w) for i, w in enumerate(cols) if w < MIN_COL_TWIPS]
         total = sum(cols)
+        # [6V-V1/D9] policy 2 tầng (PLAN 6V B5 + I4):
+        # - bảng >=10 cột: sàn riêng 900 twips — cột 566-899 "1cm giấy" vẫn
+        #   không đọc được khi dàn 10-15 cột (vision M12 1-2mm, M09 2-3mm)
+        #   → NARROW_COL_WIDE;
+        # - bảng <10 cột: sàn legacy làm tròn XUỐNG 566 (I4: sàn 567 để
+        #   bảng census 566 treo candidate vĩnh viễn) → NARROW_COL.
+        if len(cols) >= WIDE_TABLE_COLS:
+            floor = MIN_COL_WIDE_TWIPS
+            code = "NARROW_COL_WIDE"
+        else:
+            floor = MIN_COL_TWIPS
+            code = "NARROW_COL"
+        narrow = [(i, w) for i, w in enumerate(cols) if w < floor]
         if narrow:
-            issues.append({"table": ti, "code": "NARROW_COL",
-                           "cols": narrow, "total": total})
+            issues.append({"table": ti, "code": code,
+                           "cols": narrow, "total": total,
+                           "ncols": len(cols)})
         if total > 16850:  # A4 portrait 11906 + dung sai rộng (landscape 16838)
             issues.append({"table": ti, "code": "WIDTH_OVERFLOW",
                            "total": total, "cols": len(cols)})

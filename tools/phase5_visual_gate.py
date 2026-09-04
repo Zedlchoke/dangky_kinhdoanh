@@ -515,10 +515,6 @@ def det_name_slot(pages: list, form: str,
     return issues
 
 
-# nạp 1 lần sau khi hàm load đã định nghĩa (registry adjudicate ở C2/V4)
-HANDWRITING_SLOTS = load_handwriting_slots()
-
-
 # [6V-V1] D15 — chk glyph (lớp B3). Chạy trên fixture choice-variants với
 # form có field type=chk. Tick hợp pháp = X trong ô vuông: glyph ☒ trong
 # cùng paragraph, HOẶC X nằm trong w:tc có viền hiển thị (tcBorders/
@@ -609,6 +605,44 @@ def det_chk_glyph(docx_path: Path, pages: list,
 
 # nạp 1 lần sau khi hàm load đã định nghĩa (registry adjudicate ở C2/V4)
 HANDWRITING_SLOTS = load_handwriting_slots()
+
+
+# [6V-V1] D16 — token kỹ thuật làm giá trị (lớp B4). Fixture fallback
+# sinh giá trị LABEL_HOA_N (phase5_fixtures ValueFactory nhánh mặc định:
+# nhãn fold → HOA + gạch dưới + chỉ số) — người đọc thấy "NOI_O_HIEN_TAI_
+# 123" thay vì giá trị thật. Token dài trong cột hẹp (~1cm) còn bị Word
+# wrap XÉ GIỮA TOKEN thành các dòng mảnh "_HIEN", "_TAI_1", "NOI_T".
+# Grammar token theo audit B4: ^[A-Z][A-Z0-9_]*_[0-9]+$ (full-match một
+# từ trong PDF text). Mảnh: cả dòng chỉ chứa HOA/chữ số/gạch dưới, có
+# "_", KHÔNG full-match grammar token (đó mới là mảnh vỡ, không phải
+# token nguyên) và không chứa chữ thường.
+_D16_TOKEN = re.compile(r"^[A-Z][A-Z0-9_]*_[0-9]+$")
+_D16_PIECE = re.compile(r"^[A-Z0-9_]*_[A-Z0-9_]*$")
+_D16_MAX_PIECE_LEN = 24   # dài hơn = token nguyên dòng riêng, không phải mảnh
+
+
+def det_token_values(pages: list) -> list[dict]:
+    """D16: giá trị là token kỹ thuật (LABEL_HOA_N) hoặc mảnh token vỡ."""
+    out = []
+    for p in pages:
+        for ln in p["text"].split("\n"):
+            s = ln.strip()
+            if not s:
+                continue
+            # (1) token nguyên: quét từng từ trong dòng
+            for w in s.split():
+                w2 = w.strip(",.;:()“”\"'")
+                if w2 and _D16_TOKEN.fullmatch(w2):
+                    out.append({"page": p["pno"] + 1, "code": "TOKEN_VALUE",
+                                "value": w2[:40]})
+            # (2) mảnh token: cả dòng là mảnh HOA có "_" không phải token
+            if "_" in s and len(s) <= _D16_MAX_PIECE_LEN \
+                    and not any(c.islower() for c in s) \
+                    and not _D16_TOKEN.fullmatch(s) \
+                    and _D16_PIECE.fullmatch(s):
+                out.append({"page": p["pno"] + 1, "code": "TOKEN_FRAGMENT",
+                            "value": s[:40]})
+    return out
 
 
 def det_fixed_matrix_headers(pdf_text: str, form_map: dict) -> list[str]:
@@ -758,6 +792,11 @@ def analyze(maps, blocks_all, fixture: str, dirs: list[Path],
                 rec["detectors"]["D15_chk_glyph"] = (
                     det_chk_glyph(docx_path, pages, maps[fid])
                     if fixture == "choice-variants" else [])
+                # [6V-V1] D16 token giá trị (mọi fixture, mạnh ở
+                # long-boundary nơi token dài bị Word wrap)
+                toks = det_token_values(pages)
+                rec["detectors"]["D16_token_values"] = toks[:60]
+                rec["detectors"]["D16_token_count"] = len(toks)
                 # fixture exclusivity (D12)
                 fdata = build_fixture(fid, maps[fid], fixture,
                                       blocks_all.get(fid), ValueFactory())

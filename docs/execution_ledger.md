@@ -502,3 +502,15 @@ sau V3. Runner chính thức sau merge: xem dòng checkpoint kế tiếp.
 **Runner chính thức sau V2-final (main @ HEAD): 58 PASS / 0 FAIL / 0 NOT RUN**
 (57/1 tạm thời do lane C2 bỏ sót allowlist 14 file — runner H7.4 bắt đúng,
 Lead bổ sung `ea6e7f0`+1; tái chạy 58/0.)
+
+### V3 — Bảng rộng landscape @ main 1c111db (2026-09-05, Lead review PASS)
+
+| Task | Owner | Kết quả (Lead kiểm chứng độc lập) | Trạng thái |
+|---|---|---|---|
+| Landscape section bảng ≥10 cột (Q-V2) | `agent/6v-tables` (merge `1c111db`) | 12 bảng/10 form, sàn 900tw, tổng 14400; form_maps/blocks 0 byte đổi; 190/190 trang ngang đo 792×612; word-open 10/10 PASS_OPEN_DIRECT; chống trang mồ côi ranh giới section (commit 97bed57) | ✅ merged |
+| Gate V3-final full corpus | agent + Lead rerun | 455r, exit 0, HARD 0, 0 export error, PNG 1619/1619; **D9 60→0 (B5 CLOSED)**; D13/D14/D16 giữ 0; D5 68→60; D6 157→155 (+1 PLI_M02 WRITE_SPACE 27.4pt do reflow — vào hàng adjudicate V4) | ✅ |
+| D15 residue 16 hit | agent điều tra + Lead verify | **X_OWN_LINE, residue lane C3/B3**: {chk} nằm paragraph riêng (layout template gốc) — M03/M05 Lead đã rerun xác nhận; 6 form landscape có chk-paragraph byte-identical main → KHÔNG phải hồi quy V3. Chuyển mini-lane 6v-chkline | ⏳ mini-lane |
+
+**Runner sau merge: 58 PASS / 0 FAIL / 0 NOT RUN.** B5 CLOSED. B3 còn đúng
+lớp X_OWN_LINE 16 form choice-variants (BARE_X = 0 toàn corpus — cơ chế ô
+vuông của C3 hiệu lực toàn corpus).

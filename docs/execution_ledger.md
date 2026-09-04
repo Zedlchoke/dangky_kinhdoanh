@@ -514,3 +514,15 @@ Lead bổ sung `ea6e7f0`+1; tái chạy 58/0.)
 **Runner sau merge: 58 PASS / 0 FAIL / 0 NOT RUN.** B5 CLOSED. B3 còn đúng
 lớp X_OWN_LINE 16 form choice-variants (BARE_X = 0 toàn corpus — cơ chế ô
 vuông của C3 hiệu lực toàn corpus).
+
+### V2 B3-residue — mini-lane 6v-chkline @ main ea60397 (2026-09-05, Lead review PASS)
+
+| Task | Owner | Kết quả | Trạng thái |
+|---|---|---|---|
+| Gộp 140 chk-own-paragraph vào dòng nhãn (16 form) | `agent/6v-chkline` (merge `ea60397`) | 140/140, box-first (đúng layout gốc "☐ nhãn"); agent tự bắt lỗi wrap ở vòng 1 và tự sửa chiều; Lead rerun D15 = **0/17 form** + probe "X Thành lập mới" same-line; suite 7/7, idempotency 17/17, H7.4 57/0 (lane chạy H7.4 TRƯỚC khi báo — đã học bài C2) | ✅ merged |
+| **B3 CLOSED** | — | D15: 191 → 16 → **0** (subset; full corpus xác nhận ở gate V4-final) | ✅ |
+| Phát hiện ngoài lane "M72 regen drift" | agent báo; Lead kiểm chứng | **FALSE ALARM** — agent chạy thiếu bước `tag_m72_sections` trong pipeline; Lead chạy đủ 3 bước: committed tái lập **340/340 text-run + 5/5 markers**. Ghi nhận quy tắc: regen M72 LUÔN đủ build → tag_m72_sections → docx_to_blocks | ✅ đóng |
+
+**Runner sau merge: 58 PASS / 0 FAIL / 0 NOT RUN.** B1–B5 toàn bộ CLOSED
+(B3 chờ xác nhận full corpus tại V4-final). V4 mở: chỗ ký 40pt (155 cụm),
+micro-census 91 form, FIELD_META hint UI, adjudicate D6-155/D5-60/WLAY-011.

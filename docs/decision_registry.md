@@ -250,3 +250,24 @@ trống không trở thành business data — lọc ở export (JS `exportLoops`
 Python `_expand_loops` guard), draft giữ nguyên; blank rows IN SẴN của bản giấy
 (blocks `blankRows`) là cấu trúc pháp định, không lọc. Đã implement + corpus
 test (test_row_contract_corpus / test_row_contract_export).
+
+## Owner decisions Phase 6V — 2026-09-04 (boss duyệt qua Lead, phê duyệt đề xuất)
+
+**Q-V1 (ĐÃ CHỐT — mở khoá lane C3). Glyph tick checkbox = ô vuông viền + X.**
+- Quyết: ô vuông được VẼ bằng viền (run border hoặc bảng 1×1 — lane C3 chọn
+  cơ chế, ràng buộc: Word 16.16 + LibreOffice render giống nhau, KHÔNG phụ
+  thuộc font glyph đặc biệt như ☒/Wingdings). Tick = X bên trong ô; không
+  tick = ô trống. Tick và nhãn option cùng dòng (diệt lớp X_OWN_LINE khi
+  template layout cho phép inline).
+- Bác: phương án ký tự unicode ☒ (phụ thuộc font) và giữ "X" trần.
+
+**Q-V2 (ĐÃ CHỐT — mở khoá phase V3). Bảng 14–15 cột = landscape CHỈ trang chứa bảng.**
+- Quyết: generator mở section orientation landscape cho đúng trang chứa
+  bảng ≥10 cột (sectPr riêng), phần còn lại của form giữ dọc. Số cột KHÔNG
+  đổi (cấu trúc pháp định). Sau landscape, áp thêm sàn min col 900twips
+  (NARROW_COL_WIDE phải về 0).
+- Ghi chú đánh đổi được owner chấp nhận: hồ sơ A4 không đồng nhất hướng —
+  phương án bị loại bằng evidence "nguồn 0/87 landscape" ở 5R được owner
+  chủ động vượt qua vì ưu tiên đọc được (PLAN v6 Q-V2 đề xuất (a)).
+- Bối cảnh: policy cũ `portrait-section` (phase5r_table_policies.json) bị
+  supersede bởi quyết định này — V3 cập nhật policy file kèm dẫn chứng.

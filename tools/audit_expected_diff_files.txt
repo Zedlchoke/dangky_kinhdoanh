@@ -441,3 +441,8 @@ tools/phase6v_c2_nameslot_evidence.py
 # --- 6V-V2/B3r mini-lane 6v-chkline (merge chk-own-paragraph, Q-V1 tick cung dong nhan):
 # 16 template chk + blocks PLII_M02 (15 form blocks byte-giuu-nguyen) + engine + evidence script ---
 tools/phase6v_b3r_chkline_evidence.py
+
+# --- 6V-V4 lane 6v-micro (micro-census read-only 87 template, PLAN 5.1):
+# script census + JSON ket qua — KHONG sua template/blocks ---
+tools/census/6v_micro_census.py
+tools/census/6v_micro_census.json

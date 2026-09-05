@@ -449,6 +449,15 @@ def render(template_path: str | os.PathLike, data: dict,
                         # Phase 5R1 (WLAY-006): vô hiệu hoá field code literal
                         # sót trong template chưa regen.
                         xml = _strip_flat_field_code(xml)
+                        # 6V-V4b (việc 1a/1b): bó cụm marker/separator + chú
+                        # thích (chống orphan footnote) + bỏ separator đuôi
+                        # mồ côi của biến thể M72 không có chú thích. Chạy
+                        # TRƯỚC _drop_trailing_empty_para: sau khi bỏ
+                        # separator đuôi, các paragraph rỗng còn lại phải
+                        # được pass đó quét tiếp (nếu không, empty para kề
+                        # trên separator tràn thành trang BLANK — tái hiện
+                        # m72_dhdn valid-minimal).
+                        xml = _keep_footnote_notes(xml)
                         # Phase 5R1 (WLAY-007a): bỏ paragraph rỗng cuối body
                         # (gốc rễ trang trắng M72 TNHH_2TV).
                         xml = _drop_trailing_empty_para(xml)
@@ -1068,6 +1077,191 @@ _SIG_TABLE_MAX_ROWS = 4
 # Footnote-body: "3 Người đề nghị ký và ghi họ tên..." — số cuối chú thích
 # đứng NGAY TRƯỚC chữ, không có dấu chấm/ngoặc (tiền lệ layout_roles).
 _FOOTNOTE_BODY_RE = re.compile(r"^\d{1,2}(?![.)])\s+\S")
+
+
+# ---------------------------------------------------------------------------
+# 6V-V4b (việc 1a — adjudicate auditor/6v-visual): cụm marker superscript +
+# chú thích phải keep-together, không orphan
+#
+# Bản giấy nguồn trình bày chú thích dạng "giả-footnote" (không có
+# footnotes.xml): [marker¹ trong đoạn thân][đường kẻ separator][_chú thích_]
+# nằm cuối khối/cuối mẫu. Khi ranh giới trang rơi giữa marker và chú thích,
+# chú thích rơi MỘT MÌNH sang trang kế → trang gần trống vô lý (D5 hit
+# (iii) adjudicate 2026-09-05: PLI_M12 p2, PLI_M80 p3 ×2 fixture,
+# PLI_M02 p33 — vi phạm checklist 5.1-10). Fix 5R4 cũ (keepLines cho
+# footnote-body) chỉ chống XÉ GIỮA CÂU, không chống orphan nguyên đoạn.
+#
+# Điều trị (giữ nguyên văn bản, chỉ thêm thuộc tính — trong giới hạn một
+# đoạn, mọi thứ ở mức body-level; đơn vị bó là CẶP ≤ 2 paragraph, KHÔNG bó
+# atomic cả cụm — cụm atomic lớn tự trở thành trang đứng riêng khi bị đẩy,
+# tái hiện long-boundary PLI_M12):
+#   - separator mở đầu run nhận keepNext (kẻ chân không ở lại trang trước
+#     khi chú thích sang trang — hit PLI_M12 p2, M72 tnhh_2tv p3);
+#   - chú thích ÁP CHÓT nhận keepNext (chú thích cuối không mồ côi một mình
+#     — hit PLI_M02 p33, PLI_M80 p3);
+#   - đoạn ngắn kề TRƯỚC run (marker/separator/đoạn thân ≤ 150 ký tự) nhận
+#     keepNext (title ký đi theo bộ máy chú thích — PLI_M80); đoạn thân dài
+#     KHÔNG kéo để không xê dịch cả trang;
+#   - chú thích cuối nhận keepLines (phòng cụm không kề khối ký).
+#
+# Riêng run CHỈ-GỒM-SEPARATOR đứng cuối body (sau nó không còn đoạn nào có
+# chữ trước sectPr) là separator của chú thích KHÔNG TỒN TẠI ở biến thể
+# đang render (PLI_M72: 5 biến thể dùng chung đuôi separator + chú thích có
+# điều kiện; biến thể dhdn/dntn không có chú thích nào nhưng separator vẫn
+# in — gốc rễ hit D5 valid-minimal/m72_dhdn p3) → BỎ. Điều kiện rất chặt:
+# tail-only + run không chứa chú thích — form thường có chú thích sau
+# separator nên không bao giờ chạm rule này.
+# Idempotent: thuộc tính đã có → bytes giữ nguyên; run không thỏa điều kiện
+# → XML nguyên vẹn.
+# ---------------------------------------------------------------------------
+
+_FN_SEP_RE = re.compile(r"^[_\s]*_{3,}[_\s]*$")
+# chú thích "không mang số" (PLI_M72 tnhh_1tv: ' Ghi tên của tất cả…' không có
+# superscript '1' đứng trước — nguồn gốc để mất) vẫn thuộc bộ máy chú thích
+# khi đứng NGAY SAU separator: separator chỉ tồn tại trong ngữ cảnh chú thích
+# (nhóm d micro-census) nên đoạn ngắn kề sau nó là chú thích/đoạn tiếp nối.
+_FN_NOTEISH_MAX_CHARS = 300
+# đoạn liền TRƯỚC run chỉ được kéo theo (keepNext) khi ngắn cỡ nhãn/marker —
+# kéo đoạn thân dài sẽ xê dịch cả trang (tái hiện: long-boundary M12 +4 trang,
+# p17 sinh trang thưa mới). Separator thì LUÔN bó theo chú thích.
+_FN_PREV_BIND_MAX_CHARS = 150
+
+
+def _footnote_note_runs(xml: str) -> list[tuple[int, int, list[str]]]:
+    """Spans (start, end, kinds) các run chú thích liên tiếp ở body-level.
+    kind mỗi phần tử: 'sep' (chỉ gạch dưới) | 'note' (footnote-body | đoạn
+    ngắn kề sau separator)."""
+    bm = _BODY_RE.search(xml)
+    if not bm:
+        return []
+    body = bm.group(2)
+    spans = _split_body_children(body)
+    runs: list[tuple[int, int, list[str]]] = []
+    cur: list[tuple[int, int, str]] = []
+    for s, e in spans:
+        seg = body[s:e]
+        if not seg.startswith("<w:p"):
+            if cur:
+                runs.append(cur)
+                cur = []
+            continue
+        text = _sig_para_text(seg).strip()
+        if _FN_SEP_RE.match(text) and "_" in text:
+            cur.append((s, e, "sep"))
+            continue
+        if text and (_FOOTNOTE_BODY_RE.match(text) or (
+                cur and cur[-1][2] == "sep" and
+                len(text) <= _FN_NOTEISH_MAX_CHARS)):
+            cur.append((s, e, "note"))
+            continue
+        if cur:
+            runs.append(cur)
+            cur = []
+    if cur:
+        runs.append(cur)
+    return [(r[0][0], r[-1][1], [k for _s, _e, k in r]) for r in runs]
+
+
+def _keep_footnote_notes(xml: str) -> str:
+    """Bó cụm marker/separator + chú thích (keepNext/keepLines) và bỏ
+    separator đuôi mồ côi của biến thể không có chú thích. Xem banner trên.
+
+    Đơn vị bó là CẶP (≤ 2 paragraph), không bó atomic cả run: cụm atomic
+    lớn (sep + 4 chú thích ~600 ký tự) khi không vừa chỗ trống bị đẩy cả
+    khối sang trang mới và TỰ TRANG THÀNH TRANG đứng riêng (tái hiện
+    long-boundary PLI_M12 46→52 trang, p17/p45 trang thưa mới)."""
+    bm = _BODY_RE.search(xml)
+    if not bm:
+        return xml
+    body = bm.group(2)
+    # gom thuộc tính theo MỖI paragraph (một paragraph một edit — giữ đúng
+    # thứ tự schema keepNext trước keepLines), kèm danh sách span bị bỏ
+    props: dict[tuple[int, int], tuple[str, set[str]]] = {}
+    drops: list[tuple[int, int]] = []
+    for start, end, kinds in _footnote_note_runs(xml):
+        members = _run_member_spans(body, start, end)
+        # chỉ separator, không chú thích, và là đuôi tài liệu -> bỏ
+        if "note" not in kinds:
+            tail = body[end:].split("<w:sectPr")[0]
+            tail_texts = "".join(
+                _sig_para_text(m.group(0))
+                for m in re.finditer(r"<w:p[ >].*?</w:p>|<w:p[^>]*/>",
+                                     tail, re.S))
+            if not tail_texts.strip():
+                drops.append((start, end))
+            continue
+
+        def _bind(off_s: int, off_e: int, flags: set[str]) -> None:
+            key = (off_s, off_e)
+            if key in props:
+                props[key][1].update(flags)
+            else:
+                props[key] = (body[off_s:off_e], set(flags))
+
+        # (1) separator mở đầu run giữ chú thích đầu (sep không bao giờ
+        # ở lại trang trước trong khi chú thích sang trang)
+        if kinds[0] == "sep":
+            ms, me = members[0]
+            _bind(ms, me, {"keepNext"})
+        # (2) cặp đuôi: chú thích áp chót giữ chú thích cuối — chú thích
+        # cuối không bao giờ mồ côi một mình (hit PLI_M02 p33, PLI_M80 p3)
+        if len(members) >= 2:
+            ps, pe = members[-2]
+            _bind(ps, pe, {"keepNext"})
+        # (3) separator/đoạn ngắn kề TRƯỚC run (marker/đoạn thân ngắn) giữ
+        # theo chú thích đầu
+        prev = _prev_body_para(body, start)
+        if prev is not None and not (
+                kinds[0] == "sep" and prev[0] == members[0][0]):
+            pseg = prev[2]
+            ptext = _sig_para_text(pseg).strip()
+            if not ptext or len(ptext) <= _FN_PREV_BIND_MAX_CHARS or \
+                    _FN_SEP_RE.match(ptext):
+                _bind(prev[0], prev[1], {"keepNext"})
+        # (4) chú thích cuối mọi run: keepLines (phòng trường hợp cụm không
+        # nằm cạnh khối ký nên _keep_signature_blocks chưa chạm)
+        ls, le = members[-1]
+        _bind(ls, le, {"keepLines"})
+    if not props and not drops:
+        return xml
+    ops: list[tuple[int, int, str | None]] = []
+    for (s, e), (seg, flags) in props.items():
+        new = seg
+        for flag in ("keepLines", "keepNext"):   # chèn ngược -> keepNext trước
+            if "<w:%s/>" % flag in new:
+                continue
+            new = _ppr_add_flag(new, "<w:%s/>" % flag)
+        if new != seg:
+            ops.append((s, e, new))
+    ops += [(s, e, None) for s, e in drops]   # drop: cắt đoạn (seg None)
+    if not ops:
+        return xml
+    ops.sort(key=lambda t: t[0], reverse=True)
+    for s, e, seg in ops:
+        body = body[:s] + (seg or "") + body[e:]
+    return xml[:bm.start(2)] + body + xml[bm.end(2):]
+
+
+def _run_member_spans(body: str, start: int, end: int) -> list[tuple[int, int]]:
+    """(start, end) TUYỆT ĐỐI từng paragraph con của run [start, end) —
+    run chỉ chứa paragraph nên finditer cộng offset là đủ."""
+    base = start
+    return [(base + m.start(), base + m.end())
+            for m in re.finditer(r"<w:p[ >].*?</w:p>|<w:p[^>]*/>",
+                                 body[start:end], re.S)]
+
+
+def _prev_body_para(body: str, pos: int):
+    """Paragraph body-level liền trước offset pos: (start, end, seg) hoặc
+    None (không có / phần tử kế trước là bảng/đầu tài liệu)."""
+    spans = _split_body_children(body[:pos])
+    if not spans:
+        return None
+    s, e = spans[-1]
+    seg = body[s:e]
+    if not seg.startswith("<w:p"):
+        return None
+    return s, e, seg
 
 
 def _iter_balanced_tbls(body: str):

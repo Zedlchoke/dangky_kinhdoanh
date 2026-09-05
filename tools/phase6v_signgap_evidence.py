@@ -97,12 +97,20 @@ def _xml_spacers_800(docx_path: Path) -> int:
     document.xml của file render — bằng chứng bổ sung cho cụm mà D6 không đo
     được bằng PDF (cụm cuối ô bảng / cụm cuối tài liệu, không có dòng chữ
     dưới để đo). Cùng dấu vân tay XML mà test B4 (test_phase5r_signatures)
-    dùng cho M15."""
+    dùng cho M15. Thứ tự attribute w:line/w:lineRule khác nhau giữa XML do
+    build_form_maps sinh (string literal) và do python-docx serialize khi
+    render — quét mọi w:spacing rồi đọc w:line riêng."""
     import zipfile
     with zipfile.ZipFile(docx_path) as z:
         xml = z.read("word/document.xml").decode("utf-8")
-    return sum(1 for v in re.findall(r'w:line="(\d+)" w:lineRule="exact"', xml)
-               if int(v) >= 800)
+    n = 0
+    for tag in re.findall(r"<w:spacing[^>]*>", xml):
+        if 'w:lineRule="exact"' not in tag:
+            continue
+        m = re.search(r'w:line="(\d+)"', tag)
+        if m and int(m.group(1)) >= 800:
+            n += 1
+    return n
 
 
 def main() -> int:

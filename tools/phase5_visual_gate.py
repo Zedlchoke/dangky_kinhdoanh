@@ -82,7 +82,9 @@ COL_WIDTH_TOLERANCE = 60     # dung sai tổng width vs khổ giấy in
 BLANK_PAGE_CHARS = 20        # < 20 ký tự không trắng = trang trắng
 SPARSE_PAGE_CHARS = 120      # < 120 ký tự = trang thưa (census)
 SIG_PAIR_GAP_PT = 25         # title → instruction cùng cụm (≤25pt)
-SIG_WRITE_PT = 40            # vùng viết tối thiểu dưới instruction (WLAY-004)
+# [WAVE v7] sàn vùng ký tay 72pt = 2.54cm (quyết định owner
+# SIGNATURE-USABILITY-SPACE 2026-09-05; trước đây 40pt legacy floor).
+SIG_WRITE_PT = 72
 SIG_TOP_MARGIN_PT = 100      # instruction ở đầu trang → nghi split (WLAY-003)
 
 FIELD_CODE_RE = re.compile(
@@ -241,7 +243,10 @@ def pdf_pages(pdf_path: Path, zoom: float = 2.0):
         text = page.get_text("text")
         words = page.get_text("words")  # (x0,y0,x1,y1,word,block,line,wordno)
         pix = page.get_pixmap(matrix=fitz.Matrix(zoom, zoom))
-        pages.append({"pno": pno, "text": text, "words": words, "pixmap": pix})
+        pages.append({"pno": pno, "text": text, "words": words, "pixmap": pix,
+                      # [WAVE v7/D8] mép dưới trang cho phép đo khoảng viết
+                      # khi KHÔNG có dòng text phía dưới instruction
+                      "page_bottom": float(page.rect.y1)})
     return doc, pages
 
 
@@ -266,17 +271,37 @@ _SIG_TITLE_FOLD = re.compile(
     r"hoi dong thanh vien|chu tich hoi dong thanh vien|tong giam doc|"
     r"cac thanh vien hop danh|nguoi chuyen doi|dai dien phap luat cua to "
     r"chuc|to chuc|ca nhan)\b")
+# [WAVE v7] ngữ pháp D6 ĐỒNG BỘ với grammar census rộng
+# (tools/test_phase5r_signatures.py): thêm biến thể "ký, ghi họ tên và đóng
+# dấu" — trước đây D6 chỉ nhận 215/420 cụm output do grammar hẹp.
 _SIG_INSTR_FOLD = re.compile(
     r"\((ky va ghi ro ho ten|ky ghi ro ho ten|ky va ghi ho ten|ky ten|"
     r"ky, ghi ro ho ten|ky, ho ten|ky ho ten|da ky|ky, ho ten, dong dau|"
-    r"ky ten, dong dau)\b")
+    r"ky ten, dong dau|ky, ghi ho ten va dong dau)\b")
+# [WAVE v7] chỉ thị KHÔNG ngoặc đứng dòng riêng ("Ký, ghi họ tên và đóng dấu"
+# của các giấy chứng nhận; "Ký và ghi họ tên từng thành viên") — census nhận,
+# D6 trước đây bỏ qua. Nhiều dòng cơ quan đã ký số "Đã ký: ..." không khớp.
+_SIG_INSTR_NOPAREN_FOLD = re.compile(
+    r"^(da ky|ky(,| va)? (ghi ro ho ten|ghi ho ten|ten va ghi ro ho ten)"
+    r"( tung thanh vien)?( va)?( dong dau)?)[0-9]{0,2}(:.*)?$")
+
+
+def _sig_is_instr(folded: str) -> bool:
+    return bool(_SIG_INSTR_FOLD.search(folded)
+                or _SIG_INSTR_NOPAREN_FOLD.match(folded))
+
+
+def _sig_is_daky(folded: str) -> bool:
+    """Cụm 'Đã ký' — đã ký số/điện tử: KHÔNG cần vùng viết tay (owner v7)."""
+    return "da ky" in folded
 
 
 def _sig_lines(page) -> list[dict]:
     """Gom words thành dòng; đánh dấu title/instruction chữ ký. Title nhận
     theo 2 đường: (a) vocabulary nhãn người ký; (b) dòng CHỮ IN ngắn kề trên
     instruction (caps-ratio >= 0.6, <= 80 ký tự) — vocabulary không thể liệt
-    kê hết nhãn pháp lý (M14: 'NGƯỜI ĐƯỢC TẶNG CHO/NGƯỜI THỪA KẾ/NGƯỜI MUA')."""
+    kê hết nhãn pháp lý (M14: 'NGƯỜI ĐƯỢC TẶNG CHO/NGƯỜI THỪA KẾ/NGƯỜI MUA').
+    [WAVE v7] instruction nhận cả chỉ thị KHÔNG ngoặc (_sig_is_instr)."""
     lines: dict[tuple, list] = {}
     for w in page["words"]:
         lines.setdefault((w[5], w[6]), []).append(w)
@@ -293,12 +318,13 @@ def _sig_lines(page) -> list[dict]:
         alpha = [c for c in text if c.isalpha()]
         if len(alpha) >= 4:
             caps = sum(c.isupper() for c in alpha) / len(alpha)
+        instr = _sig_is_instr(f)
         out.append({"text": text, "fold": f, "x0": x0, "x1": x1,
                     "y0": y0, "y1": y1,
                     "title": bool(_SIG_TITLE_FOLD.match(f))
-                    or (caps >= 0.6 and len(text.strip()) <= 80
-                        and not _SIG_INSTR_FOLD.search(f)),
-                    "instr": bool(_SIG_INSTR_FOLD.search(f))})
+                    or (caps >= 0.6 and len(text.strip()) <= 80 and not instr),
+                    "instr": instr,
+                    "daky": _sig_is_daky(f)})
     return out
 
 
@@ -329,8 +355,19 @@ def det_signatures(pages, expectations: dict, fid: str) -> dict:
         "title": (c["title"] or {}).get("text"),
         "title_y": (c["title"] or {}).get("y0"),
         "instr": c["instr"]["text"][:60], "instr_y": c["instr"]["y0"],
+        "daky": c["instr"].get("daky", False),
         "x0": c["instr"]["x0"]} for c in clusters],
         "fails": [], "candidates": []}
+
+    # [WAVE v7] coverage == census: form có registry pin signature (signers
+    # >= 1) mà output KHÔNG phát hiện cụm nào = HARD FAIL (khoảng trống không
+    # còn được đo, cụm mất thật). Grammar D6 đã đồng bộ census nên điều kiện
+    # này không còn có mù grammar để che.
+    exp0 = (expectations.get(fid) or {}).get("signature")
+    if exp0 and int(exp0.get("signers") or 0) >= 1 and not clusters:
+        res["fails"].append({
+            "code": "SIG_MISSING", "page": None,
+            "expected_signers": exp0.get("signers")})
 
     # D7 split: instruction ở sát mép trên trang mà không có title cùng trang
     # (cụm không ghép được title trong trang này → title nằm trang trước)
@@ -365,23 +402,25 @@ def det_signatures(pages, expectations: dict, fid: str) -> dict:
                 "code": "SIG_ORIENTATION",
                 "expected": exp["orientation"], "measured": measured,
                 "clusters": len(clusters)})
-    # D8 vùng viết: khoảng dọc từ instr xuống dòng text kế tiếp trong cùng cột.
-    # [6V-V4/signgap] QUYẾT ĐỊNH OWNER (phiên quyết "chỗ ký" 2026-09-05): sàn
-    # vùng viết 40pt áp CHO TOÀN BỘ cụm ký toàn corpus — trước đây chỉ form có
-    # registry pin min_write_gap_pt (thực tế chỉ PLI_M15) bị FAIL, corpus còn
-    # lại rơi về spacer mặc định 24pt của generator (gap đo được 27.3–27.4pt
-    # trên 155 cụm) và chỉ là CANDIDATE. Từ nay gap < 40pt là HARD-FAIL với
-    # mọi form; registry vẫn được phép pin ngưỡng CAO hơn 40 (max, không thấp
-    # hơn); nhánh candidate write-space bỏ hẳn.
+    # D8 vùng viết: khoảng dọc từ instr xuống dòng text kế tiếp trong cùng cột;
+    # KHÔNG có dòng dưới thì đo ĐẾN MÉP DƯỚI TRANG (census 2026-09-05 — trước
+    # đây phép đo bị bỏ qua, che cụm cuối trang).
+    # [6V-V4/signgap] sàn 40pt toàn corpus → [WAVE v7] owner nâng 72pt (2.54cm)
+    # cho cụm CÒN PHẢI KÝ TAY; cụm "Đã ký" KHÔNG áp vùng viết tay nhưng vẫn
+    # chịu keep-together (D7) và vẫn được đo để census. Registry chỉ được pin
+    # CAO hơn 72 (max, không thấp hơn); gap < ngưỡng là HARD-FAIL.
     min_gap = max(SIG_WRITE_PT, float(((expectations.get(fid) or {})
                                        .get("signature") or {})
                                       .get("min_write_gap_pt") or 0))
     for p in pages:
         lines = _sig_lines(p)
+        page_bottom = p.get("page_bottom")
         for c in clusters:
             if c["page"] != p["pno"] + 1:
                 continue
             instr = c["instr"]
+            if instr.get("daky"):
+                continue   # "Đã ký" — không cần chỗ ký tay
             below = [l for l in lines
                      if l["y0"] > instr["y1"] + 2
                      and not (l["x1"] < instr["x0"] - 60 or
@@ -390,11 +429,16 @@ def det_signatures(pages, expectations: dict, fid: str) -> dict:
             if below:
                 nearest = min(below, key=lambda l: l["y0"])
                 gap = nearest["y0"] - instr["y1"]
-                if gap < min_gap:
-                    res["fails"].append({
-                        "code": "SIG_WRITE_SPACE", "page": p["pno"] + 1,
-                        "gap_pt": round(gap, 1),
-                        "instr": instr["text"][:50]})
+            elif page_bottom:
+                gap = page_bottom - instr["y1"]
+            else:
+                continue   # page_bottom thiếu (page fake thiếu field) — bỏ đo
+            if gap < min_gap:
+                res["fails"].append({
+                    "code": "SIG_WRITE_SPACE", "page": p["pno"] + 1,
+                    "gap_pt": round(gap, 1),
+                    "daky": bool(instr.get("daky")),
+                    "instr": instr["text"][:50]})
     return res
 
 

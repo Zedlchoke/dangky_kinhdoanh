@@ -100,7 +100,8 @@ _SIG_INSTR_FOLD_RE = re.compile(
     r"ky, ghi ro ho ten|ky, ho ten|ky ho ten|da ky|ky, ho ten, dong dau|"
     r"ky ten, dong dau|ky, ghi ho ten va dong dau)\b")
 _SIG_INSTR_NOPAREN_RE = re.compile(
-    r"^ky(,| va)? ghi ho ten( va)?( dong dau)?[0-9]{0,2}$")
+    r"^ky(,| va)? (ghi ho ten|ghi ro ho ten)( tung thanh vien)?"
+    r"( va)?( dong dau)?[0-9]{0,2}$")
 
 _results: list[tuple[bool, str]] = []
 
@@ -255,7 +256,7 @@ def _sig_pdf_lines(page) -> list[dict]:
         text = " ".join(w[4] for w in ws)
         f = fold(text)
         out.append({
-            "text": text, "x0": min(w[0] for w in ws),
+            "text": text, "fold": f, "x0": min(w[0] for w in ws),
             "x1": max(w[2] for w in ws), "y0": min(w[1] for w in ws),
             "y1": max(w[3] for w in ws),
             "title": bool(_SIG_TITLE_LINE_RE.match(
@@ -313,11 +314,12 @@ def test_census_registry():
         assert entry.get("keep_together") is True, \
             "%s thiếu keep_together=true" % fid
         assert entry.get("evidence"), "%s thiếu evidence" % fid
-        # [6V-V4/signgap] quyết định owner phiên "chỗ ký" 2026-09-05: sàn
-        # vùng viết 40pt là contract của MỌI entry signature toàn corpus
-        # (trước đây chỉ PLI_M15 pin 40).
-        assert entry.get("min_write_gap_pt") == 40, \
-            "%s min_write_gap_pt=%r != 40 (sàn toàn corpus)" % (
+        # [6V-V4/signgap] sàn 40pt toàn corpus → [WAVE v7 2026-09-05]
+        # QUYẾT ĐỊNH OWNER SIGNATURE-USABILITY-SPACE: sàn ký tay nâng lên
+        # 72pt (2.54cm) cho mọi entry; "Đã ký" do detector/render tự phân
+        # loại theo text nên registry không cần pin riêng.
+        assert entry.get("min_write_gap_pt") == 72, \
+            "%s min_write_gap_pt=%r != 72 (sàn toàn corpus, owner v7)" % (
                 fid, entry.get("min_write_gap_pt"))
 
 
@@ -457,7 +459,8 @@ def test_b3_keep_properties():
 @check("B4_m15_write_space_xml_and_pdf")
 def test_b4_write_space():
     """WLAY-004: M15 — XML có spacer exact-height dưới mỗi instruction;
-    PDF đo gap >= min_write_gap_pt (40pt) cho TỪNG cụm."""
+    PDF đo gap >= min_write_gap_pt (72pt, owner v7) cho TỪNG cụm CÒN PHẢI
+    KÝ TAY; cụm "Đã ký" (chủ sở hữu cũ) không áp vùng viết tay."""
     from tools import docx_render as dr
     from tools.phase5_fixtures import ValueFactory, build_fixture
     maps = json.loads(MAPS_PATH.read_text(encoding="utf-8"))
@@ -469,8 +472,8 @@ def test_b4_write_space():
                               data))
     spacers = [int(m) for m in re.findall(
         r'w:line="(\d+)" w:lineRule="exact"', xml)]
-    assert len(spacers) >= 2, \
-        "M15 cần spacer vùng viết cho >=2 cụm, thấy %r" % (spacers,)
+    assert len(spacers) >= 1, \
+        "M15 cần spacer vùng viết cho cụm ký tay, thấy %r" % (spacers,)
     # PDF measure qua đường production
     out_root = TEST_OUT / "b4_export"
     import shutil
@@ -483,7 +486,8 @@ def test_b4_write_space():
         pdf = next(Path(d).glob("PLI_M15.pdf"))
         doc = fitz.open(str(pdf))
         for page in doc:
-            for instr in [l for l in _sig_pdf_lines(page) if l["instr"]]:
+            for instr in [l for l in _sig_pdf_lines(page) if l["instr"]
+                          and "da ky" not in l["fold"]]:
                 below = [l for l in _sig_pdf_lines(page)
                          if l["y0"] > instr["y1"] + 2
                          and not (l["x1"] < instr["x0"] - 60
@@ -495,8 +499,8 @@ def test_b4_write_space():
         doc.close()
     assert gaps, "không đo được gap nào dưới instruction M15"
     for g in gaps:
-        assert g >= 40.0, \
-            "gap vùng viết M15 = %.1fpt < min_write_gap_pt 40" % g
+        assert g >= 72.0, \
+            "gap vùng viết M15 = %.1fpt < min_write_gap_pt 72 (owner v7)" % g
 
 
 @check("B5_no_orphan_split_signature_page")

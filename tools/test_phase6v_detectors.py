@@ -464,6 +464,135 @@ def test_v1g_verdict_contract():
 
 
 # ---------------------------------------------------------------------------
+# V2 — [WAVE v7] SIGNATURE-USABILITY-SPACE: mutation bắt buộc cho D6/D8
+# (sàn 72pt, grammar census, page-edge, "Đã ký", SIG_MISSING, split,
+# orientation). Mutation PHẢI đỏ trước fix và giữ bất biến sau fix.
+# ---------------------------------------------------------------------------
+
+def _sig_word(blk: int, ln: int, x0: float, y0: float, text: str,
+              y1: float | None = None):
+    w = 6.0 * len(text) + 2
+    return (x0, y0, x0 + w, y1 if y1 is not None else y0 + 12, text,
+            blk, ln, 0)
+
+
+def _sig_page(pno: int, lines: list[tuple[int, float, str]],
+              page_bottom: float = 842.0) -> dict:
+    """lines: [(block, y0, text)] — mỗi phần tử một dòng logic riêng."""
+    words: list[tuple] = []
+    for blk, y0, text in lines:
+        words.append(_sig_word(blk, blk, 100.0, y0, text, y1=y0 + 12))
+    return {"pno": pno, "words": words, "page_bottom": page_bottom}
+
+
+_CLUSTER = [(1, 700.0, "NGƯỜI LẬP BIỂU"), (2, 720.0, "(Ký và ghi họ tên)")]
+
+
+def _sig_expect(orientation=None, signers=1, gap=72):
+    # registry phải key theo FORM ID (det_signatures expectations.get(fid))
+    sig = {"signers": signers, "keep_together": True,
+           "min_write_gap_pt": gap}
+    if orientation:
+        sig["orientation"] = orientation
+    return {"TEST": {"signature": sig}}
+
+
+@check("V2a_d8_write_space_mutations")
+def test_v2a_d8():
+    # gap 71pt < 72 → HARD FAIL
+    p = _sig_page(0, _CLUSTER + [(9, 803.0, "Ghi chú thêm mời người xem")])
+    res = gate.det_signatures([p], _sig_expect(), "TEST")
+    ws = [f for f in res["fails"] if f["code"] == "SIG_WRITE_SPACE"]
+    assert ws and abs(ws[0]["gap_pt"] - 71.0) < 0.5, res["fails"]
+
+    # gap 72pt → PASS
+    p = _sig_page(0, _CLUSTER + [(9, 804.5, "Ghi chú thêm mời người xem")])
+    res = gate.det_signatures([p], _sig_expect(), "TEST")
+    assert not [f for f in res["fails"]
+                if f["code"] == "SIG_WRITE_SPACE"], res["fails"]
+
+    # cụm cuối trang: KHÔNG có dòng dưới vẫn phải đo — tới mép trang
+    # (mutation: mép 802 → gap 70 FAIL; mép 807 → gap 75 PASS; instr y1=732)
+    p = _sig_page(0, _CLUSTER, page_bottom=802.0)
+    res = gate.det_signatures([p], _sig_expect(), "TEST")
+    ws = [f for f in res["fails"] if f["code"] == "SIG_WRITE_SPACE"]
+    assert ws and abs(ws[0]["gap_pt"] - 70.0) < 0.5, \
+        "instruction cuối trang phải được đo đến page edge: %r" % res["fails"]
+    p = _sig_page(0, _CLUSTER, page_bottom=807.0)
+    res = gate.det_signatures([p], _sig_expect(), "TEST")
+    assert not [f for f in res["fails"]
+                if f["code"] == "SIG_WRITE_SPACE"], res["fails"]
+
+    # "Đã ký" KHÔNG bị ép vùng viết tay (owner v7) — gap 30 vẫn PASS
+    daky = [(1, 700.0, "CHỦ SỞ HỮU CŨ"), (2, 720.0, "(Đã ký)"),
+            (9, 762.0, "Ghi chú kế tiếp")]
+    p = _sig_page(0, daky)
+    res = gate.det_signatures([p], _sig_expect(), "TEST")
+    assert not [f for f in res["fails"]
+                if f["code"] == "SIG_WRITE_SPACE"], res["fails"]
+
+    # registry pin CAO hơn sàn (80pt) phải được tôn trọng: gap 75 → FAIL
+    p = _sig_page(0, _CLUSTER + [(9, 797.0, "Ghi chú thêm mời người xem")])
+    res = gate.det_signatures([p], _sig_expect(gap=80), "TEST")
+    assert [f for f in res["fails"] if f["code"] == "SIG_WRITE_SPACE"], \
+        res["fails"]
+
+
+@check("V2b_d6_grammar_coverage_split_orientation_mutations")
+def test_v2b_d6():
+    # 1) "ký, ghi họ tên và đóng dấu" (có ngoặc) phải được nhận diện + đo
+    p = _sig_page(0, [(1, 700.0, "TRƯỞNG PHÒNG"),
+                      (2, 720.0, "(Ký, ghi họ tên và đóng dấu)"),
+                      (9, 745.0, "Ghi chú kế dưới")])
+    res = gate.det_signatures([p], _sig_expect(), "TEST")
+    assert len(res["clusters"]) == 1, res["clusters"]
+    assert [f for f in res["fails"] if f["code"] == "SIG_WRITE_SPACE"], \
+        "cụm đóng dấu gap 25pt phải FAIL: %r" % res["fails"]
+
+    # 2) "Ký và ghi họ tên từng thành viên" KHÔNG ngoặc phải được nhận diện
+    p = _sig_page(0, [(1, 700.0, "CÁC THÀNH VIÊN"),
+                      (2, 720.0, "Ký và ghi họ tên từng thành viên"),
+                      (9, 740.0, "Ghi chú kế dưới")])
+    res = gate.det_signatures([p], _sig_expect(), "TEST")
+    assert len(res["clusters"]) == 1 and \
+        [f for f in res["fails"] if f["code"] == "SIG_WRITE_SPACE"], res
+
+    # 3) chỉ thị dòng riêng "Ký, ghi họ tên và đóng dấu" (không ngoặc) của
+    #    giấy chứng nhận cũng phải được nhận
+    p = _sig_page(0, [(1, 700.0, "GIẤY CHỨNG NHẬN"),
+                      (2, 720.0, "Ký, ghi họ tên và đóng dấu"),
+                      (9, 790.0, "Nơi nhận")])
+    res = gate.det_signatures([p], _sig_expect(), "TEST")
+    assert len(res["clusters"]) == 1, res["clusters"]
+
+    # 4) expected signature nhưng zero detected → SIG_MISSING hard fail
+    p = _sig_page(0, [])
+    res = gate.det_signatures([p], _sig_expect(), "TEST")
+    assert any(f["code"] == "SIG_MISSING" for f in res["fails"]), res["fails"]
+    # form không pin registry: không fail (không đòi cụm ở nơi không có)
+    res = gate.det_signatures([p], {}, "TEST")
+    assert not res["fails"], res["fails"]
+
+    # 5) tách title/instruction qua trang: instruction đầu trang 2 không có
+    #    title cùng trang → SIG_SPLIT
+    p1 = _sig_page(0, [(1, 300.0, "TRANG NỘI DUNG DÀI")])
+    p2 = _sig_page(1, [(2, 40.0, "(Ký và ghi họ tên)")])
+    res = gate.det_signatures([p1, p2], _sig_expect(), "TEST")
+    assert any(f["code"] == "SIG_SPLIT" for f in res["fails"]), res["fails"]
+
+    # 6) sai orientation: registry horizontal, cụm xếp dọc → SIG_ORIENTATION
+    p = _sig_page(0, [(1, 700.0, "NGƯỜI NỘP"),
+                      (2, 720.0, "(Ký và ghi họ tên)"),
+                      (3, 800.0, "NGƯỜI NHẬN"),
+                      (4, 820.0, "(Ký và ghi họ tên)"),
+                      (9, 855.0, "Ghi chú dưới")], page_bottom=900.0)
+    res = gate.det_signatures([p], _sig_expect(orientation="horizontal",
+                                               signers=2), "TEST")
+    assert any(f["code"] == "SIG_ORIENTATION" for f in res["fails"]), \
+        res["fails"]
+
+
+# ---------------------------------------------------------------------------
 # Runner
 # ---------------------------------------------------------------------------
 
@@ -475,6 +604,8 @@ def main() -> int:
     test_v1e_d16()
     test_v1f_d9()
     test_v1g_verdict_contract()
+    test_v2a_d8()
+    test_v2b_d6()
     passed = [r for r in _RESULTS if r[1]]
     failed = [r for r in _RESULTS if not r[1]]
     for name, ok, msg in _RESULTS:

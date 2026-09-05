@@ -1,5 +1,5 @@
 {
- "comment": "Phase 5R signature expectation registry — mỗi entry: form -> contract khối ký đo được từ nguồn/owner. Lane B (5R2) census 87 form từ template XML (phương pháp: tools/test_phase5r_signatures.py). Schema entry.signature: {signers, orientation: horizontal|vertical|none, titles[], min_write_gap_pt?, keep_together: true, evidence}. orientation CHỈ pin khi có bằng chứng (owner/audit cho horizontal; cụm đơn cho vertical); form >=2 signer xếp dọc không có bằng chứng bản giấy hoặc chỉ thị ngoài ngữ pháp detector D6 -> KHÔNG pin orientation (BLOCKED_OWNER/out-of-scope, gate không check orientation form đó). [6V-V4/signgap 2026-09-05] QUYẾT ĐỊNH OWNER (phiên quyết \"chỗ ký\" 2026-09-05): sàn vùng viết 40pt áp CHO TOÀN BỘ cụm ký toàn corpus — min_write_gap_pt=40 trên mọi entry signature (trước đây chỉ PLI_M15 pin 40; corpus còn lại rơi về spacer mặc định 24pt của generator, đo được 27.3–27.4pt trên 155 cụm). Detector D6 đo gap < 40 là HARD-FAIL, không còn candidate.",
+ "comment": "Phase 5R signature expectation registry — mỗi entry: form -> contract khối ký đo được từ nguồn/owner. Lane B (5R2) census 87 form từ template XML (phương pháp: tools/test_phase5r_signatures.py). Schema entry.signature: {signers, orientation: horizontal|vertical|none, titles[], min_write_gap_pt?, keep_together: true, evidence}. orientation CHỈ pin khi có bằng chứng (owner/audit cho horizontal; cụm đơn cho vertical); form >=2 signer xếp dọc không có bằng chứng bản giấy hoặc chỉ thị ngoài ngữ pháp detector D6 -> KHÔNG pin orientation (BLOCKED_OWNER/out-of-scope). [6V-V4/signgap 2026-09-05] sàn vùng viết 40pt toàn corpus. [WAVE v7 2026-09-05] QUYẾT ĐỊNH OWNER SIGNATURE-USABILITY-SPACE: sàn ký tay nâng 40pt -> 72pt (2.54cm) CHO TOÀN BỘ entry (min_write_gap_pt=72); instruction \"Đã ký\" KHÔNG áp vùng viết tay (detector/render tự phân loại theo text instruction, không cần pin riêng); cụm \"ký, ghi họ tên và đóng dấu\" PHẢI đạt >=72pt và nếu nguồn có khoảng trống lớn hơn thì giữ mức lớn hơn (spacer chỉ ép SÀN, không bao giờ thu hẹp).",
  "PLII_M01": {
   "signature": {
    "signers": 1,
@@ -9,7 +9,7 @@
    "keep_together": true,
    "orientation": "vertical",
    "evidence": "census 5R2 template: 1 cụm ký body-level (CHỦ HỘ KINH DOANH) — cụm đơn, detector D6 đo vertical.",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLII_M02": {
@@ -21,7 +21,7 @@
    "keep_together": true,
    "orientation": "vertical",
    "evidence": "census 5R2 template: 1 cụm ký body-level (CHỦ HỘ KINH DOANH) — cụm đơn, detector D6 đo vertical.",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLII_M03": {
@@ -33,7 +33,7 @@
    "keep_together": true,
    "orientation": "vertical",
    "evidence": "census 5R2 template: 1 cụm ký body-level (CHỦ HỘ KINH DOANH) — cụm đơn, detector D6 đo vertical.",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLII_M04": {
@@ -42,7 +42,7 @@
    "keep_together": true,
    "orientation": "vertical",
    "evidence": "census 5R2 template: 1 cụm ký body-level ((không nhãn)) — cụm đơn, detector D6 đo vertical.",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLII_M05": {
@@ -54,7 +54,7 @@
    "keep_together": true,
    "orientation": "vertical",
    "evidence": "census 5R2 template: 1 cụm ký body-level (CHỦ HỘ KINH DOANH) — cụm đơn, detector D6 đo vertical.",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLII_M06": {
@@ -66,7 +66,7 @@
    "keep_together": true,
    "orientation": "vertical",
    "evidence": "census 5R2 template: 1 cụm ký body-level (CHỦ HỘ KINH DOANH) — cụm đơn, detector D6 đo vertical.",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLII_M07": {
@@ -77,7 +77,7 @@
    ],
    "keep_together": true,
    "evidence": "census 5R2 template: 1 cụm ký (TRƯỞNG PHÒNG) với chỉ thị '(Ký, ghi họ tên và đóng dấu)' — ngoài ngữ pháp detector D6 nên không đo orientation được; keep_together vẫn áp ở render (B3).",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLII_M08": {
@@ -88,7 +88,7 @@
    ],
    "keep_together": true,
    "evidence": "census 5R2 template: 1 cụm ký (TRƯỞNG PHÒNG) với chỉ thị '(Ký, ghi họ tên và đóng dấu)' — ngoài ngữ pháp detector D6 nên không đo orientation được; keep_together vẫn áp ở render (B3).",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLII_M09": {
@@ -101,7 +101,7 @@
    "keep_together": true,
    "orientation": "vertical",
    "evidence": "census 5R2 template: 1 cụm ký body-level (TRƯỞNG PHÒNG1) — cụm đơn, detector D6 đo vertical.",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLII_M10": {
@@ -112,7 +112,7 @@
    ],
    "keep_together": true,
    "evidence": "census 5R2 template: 1 cụm ký (TRƯỞNG PHÒNG) với chỉ thị '(Ký, ghi họ tên và đóng dấu)' — ngoài ngữ pháp detector D6 nên không đo orientation được; keep_together vẫn áp ở render (B3).",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLII_M11": {
@@ -123,7 +123,7 @@
    ],
    "keep_together": true,
    "evidence": "census 5R2 template: 1 cụm ký (TRƯỞNG PHÒNG) với chỉ thị '(Ký, ghi họ tên và đóng dấu)' — ngoài ngữ pháp detector D6 nên không đo orientation được; keep_together vẫn áp ở render (B3).",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLII_M12": {
@@ -134,7 +134,7 @@
    ],
    "keep_together": true,
    "evidence": "census 5R2 template: 1 cụm ký (TRƯỞNG PHÒNG) với chỉ thị '(Ký, ghi họ tên và đóng dấu)' — ngoài ngữ pháp detector D6 nên không đo orientation được; keep_together vẫn áp ở render (B3).",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLII_M13": {
@@ -145,7 +145,7 @@
    ],
    "keep_together": true,
    "evidence": "census 5R2 template: 1 cụm ký (TRƯỞNG PHÒNG) với chỉ thị '(Ký, ghi họ tên và đóng dấu)' — ngoài ngữ pháp detector D6 nên không đo orientation được; keep_together vẫn áp ở render (B3).",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLII_M14": {
@@ -156,7 +156,7 @@
    ],
    "keep_together": true,
    "evidence": "census 5R2 template: 1 cụm ký (TRƯỞNG PHÒNG) với chỉ thị '(Ký, ghi họ tên và đóng dấu)' — ngoài ngữ pháp detector D6 nên không đo orientation được; keep_together vẫn áp ở render (B3).",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLII_M15": {
@@ -167,7 +167,7 @@
    ],
    "keep_together": true,
    "evidence": "census 5R2 template: 1 cụm ký (TRƯỞNG PHÒNG) với chỉ thị '(Ký, ghi họ tên và đóng dấu)' — ngoài ngữ pháp detector D6 nên không đo orientation được; keep_together vẫn áp ở render (B3).",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLII_M16": {
@@ -178,7 +178,7 @@
    ],
    "keep_together": true,
    "evidence": "census 5R2 template: 1 cụm ký (TRƯỞNG PHÒNG) với chỉ thị '(Ký, ghi họ tên và đóng dấu)' — ngoài ngữ pháp detector D6 nên không đo orientation được; keep_together vẫn áp ở render (B3).",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLII_M17": {
@@ -190,7 +190,7 @@
    ],
    "keep_together": true,
    "evidence": "census 5R2 template: 2 cụm ký dọc body-level (NGƯỜI NỘP/NGƯỜI NHẬN). Nguồn extract cũng xếp dọc NHƯNG nguồn M70 chứng minh xếp dọc có thể là artifact — BLOCKED_OWNER: cần bản giấy/owner xác nhận trước khi pin horizontal.",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLII_M19": {
@@ -201,7 +201,7 @@
    ],
    "keep_together": true,
    "evidence": "census 5R2 template: 1 cụm ký (TRƯỞNG PHÒNG) với chỉ thị '(Ký, ghi họ tên và đóng dấu)' — ngoài ngữ pháp detector D6 nên không đo orientation được; keep_together vẫn áp ở render (B3).",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLII_M20": {
@@ -212,7 +212,7 @@
    ],
    "keep_together": true,
    "evidence": "census 5R2 template: 1 cụm ký (TRƯỞNG PHÒNG) với chỉ thị '(Ký, ghi họ tên và đóng dấu)' — ngoài ngữ pháp detector D6 nên không đo orientation được; keep_together vẫn áp ở render (B3).",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLII_M21": {
@@ -223,7 +223,7 @@
    ],
    "keep_together": true,
    "evidence": "census 5R2 template: 1 cụm ký (TRƯỞNG PHÒNG) với chỉ thị '(Ký, ghi họ tên và đóng dấu)' — ngoài ngữ pháp detector D6 nên không đo orientation được; keep_together vẫn áp ở render (B3).",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLII_M22": {
@@ -234,7 +234,7 @@
    ],
    "keep_together": true,
    "evidence": "census 5R2 template: 1 cụm ký (TRƯỞNG PHÒNG) với chỉ thị '(Ký, ghi họ tên và đóng dấu)' — ngoài ngữ pháp detector D6 nên không đo orientation được; keep_together vẫn áp ở render (B3).",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLII_M23": {
@@ -245,7 +245,7 @@
    ],
    "keep_together": true,
    "evidence": "census 5R2 template: 1 cụm ký (TRƯỞNG PHÒNG) với chỉ thị '(Ký, ghi họ tên và đóng dấu)' — ngoài ngữ pháp detector D6 nên không đo orientation được; keep_together vẫn áp ở render (B3).",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLII_M24": {
@@ -256,7 +256,7 @@
    ],
    "keep_together": true,
    "evidence": "census 5R2 template: 1 cụm ký (TRƯỞNG PHÒNG) với chỉ thị '(Ký, ghi họ tên và đóng dấu)' — ngoài ngữ pháp detector D6 nên không đo orientation được; keep_together vẫn áp ở render (B3).",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLII_M25": {
@@ -267,7 +267,7 @@
    ],
    "keep_together": true,
    "evidence": "census 5R2 template: 1 cụm ký (TRƯỞNG PHÒNG) với chỉ thị '(Ký, ghi họ tên và đóng dấu)' — ngoài ngữ pháp detector D6 nên không đo orientation được; keep_together vẫn áp ở render (B3).",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLII_M26": {
@@ -278,7 +278,7 @@
    ],
    "keep_together": true,
    "evidence": "census 5R2 template: 1 cụm ký (TRƯỞNG PHÒNG) với chỉ thị '(Ký, ghi họ tên và đóng dấu)' — ngoài ngữ pháp detector D6 nên không đo orientation được; keep_together vẫn áp ở render (B3).",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLII_M27": {
@@ -289,7 +289,7 @@
    ],
    "keep_together": true,
    "evidence": "census 5R2 template: 1 cụm ký (TRƯỞNG PHÒNG) với chỉ thị '(Ký, ghi họ tên và đóng dấu)' — ngoài ngữ pháp detector D6 nên không đo orientation được; keep_together vẫn áp ở render (B3).",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLII_M28": {
@@ -300,7 +300,7 @@
    ],
    "keep_together": true,
    "evidence": "census 5R2 template: 1 cụm ký (TRƯỞNG PHÒNG) với chỉ thị '(Ký, ghi họ tên và đóng dấu)' — ngoài ngữ pháp detector D6 nên không đo orientation được; keep_together vẫn áp ở render (B3).",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M01": {
@@ -312,7 +312,7 @@
    "keep_together": true,
    "orientation": "vertical",
    "evidence": "census 5R2 template: 1 cụm ký body-level (CHỦ DOANH NGHIỆP TƯ NHÂN) — cụm đơn, detector D6 đo vertical.",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M02": {
@@ -321,7 +321,7 @@
    "keep_together": true,
    "orientation": "vertical",
    "evidence": "census 5R2 template: 1 cụm ký body-level ((không nhãn)) — cụm đơn, detector D6 đo vertical.",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M03": {
@@ -330,7 +330,7 @@
    "keep_together": true,
    "orientation": "vertical",
    "evidence": "census 5R2 template: 1 cụm ký body-level ((không nhãn)) — cụm đơn, detector D6 đo vertical.",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M04": {
@@ -339,7 +339,7 @@
    "keep_together": true,
    "orientation": "vertical",
    "evidence": "census 5R2 template: 1 cụm ký body-level ((không nhãn)) — cụm đơn, detector D6 đo vertical.",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M06": {
@@ -348,7 +348,7 @@
    "keep_together": true,
    "orientation": "vertical",
    "evidence": "census 5R2 template: 1 cụm ký body-level ((không nhãn)) — cụm đơn, detector D6 đo vertical.",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M08": {
@@ -357,7 +357,7 @@
    "keep_together": true,
    "orientation": "vertical",
    "evidence": "census 5R2 template: 1 cụm ký body-level ((không nhãn)) — cụm đơn, detector D6 đo vertical.",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M09": {
@@ -369,7 +369,7 @@
    "keep_together": true,
    "orientation": "vertical",
    "evidence": "census 5R2 template: 1 cụm ký body-level (CÁC THÀNH VIÊN HỢP DANH) — cụm đơn, detector D6 đo vertical.",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M11": {
@@ -378,7 +378,7 @@
    "keep_together": true,
    "orientation": "vertical",
    "evidence": "census 5R2 template: 1 cụm ký body-level ((không nhãn)) — cụm đơn, detector D6 đo vertical.",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M12": {
@@ -387,7 +387,7 @@
    "keep_together": true,
    "orientation": "vertical",
    "evidence": "census 5R2 template: 1 cụm ký body-level ((không nhãn)) — cụm đơn, detector D6 đo vertical.",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M13": {
@@ -396,7 +396,7 @@
    "keep_together": true,
    "orientation": "vertical",
    "evidence": "census 5R2 template: 1 cụm ký body-level ((không nhãn)) — cụm đơn, detector D6 đo vertical.",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M14": {
@@ -407,7 +407,7 @@
    ],
    "keep_together": true,
    "evidence": "census 5R2 template: 2 cụm ký dọc body-level (?/CHỦ DOANH NGHIỆP TƯ NHÂN). Nguồn extract cũng xếp dọc NHƯNG nguồn M70 chứng minh xếp dọc có thể là artifact — BLOCKED_OWNER: cần bản giấy/owner xác nhận trước khi pin horizontal.",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M15": {
@@ -419,7 +419,7 @@
    ],
    "keep_together": true,
    "orientation": "vertical",
-   "min_write_gap_pt": 40,
+   "min_write_gap_pt": 72,
    "evidence": "WLAY-004: CHỦ SỞ HỮU MỚI/CŨ xếp dọc là đúng hướng (owner chốt) nhưng không có vùng viết giữa hai cụm (baseline gap 6.4pt). 5R2 render chèn spacer đạt 40pt dưới mỗi instruction."
   }
  },
@@ -429,7 +429,7 @@
    "keep_together": true,
    "orientation": "vertical",
    "evidence": "census 5R2 template: 1 cụm ký body-level ((không nhãn)) — cụm đơn, detector D6 đo vertical.",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M18": {
@@ -441,7 +441,7 @@
    "keep_together": true,
    "orientation": "vertical",
    "evidence": "census 5R2 template: 1 cụm ký body-level (NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT) — cụm đơn, detector D6 đo vertical.",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M19": {
@@ -450,7 +450,7 @@
    "keep_together": true,
    "orientation": "vertical",
    "evidence": "census 5R2 template: 1 cụm ký body-level ((không nhãn)) — cụm đơn, detector D6 đo vertical.",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M21": {
@@ -462,7 +462,7 @@
    "keep_together": true,
    "orientation": "vertical",
    "evidence": "census 5R2 template: 1 cụm ký body-level (NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT) — cụm đơn, detector D6 đo vertical.",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M23": {
@@ -474,7 +474,7 @@
    "keep_together": true,
    "orientation": "vertical",
    "evidence": "census 5R2 template: 1 cụm ký body-level (NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT) — cụm đơn, detector D6 đo vertical.",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M25": {
@@ -486,7 +486,7 @@
    "keep_together": true,
    "orientation": "vertical",
    "evidence": "census 5R2 template: 1 cụm ký body-level (NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT) — cụm đơn, detector D6 đo vertical.",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M26": {
@@ -498,7 +498,7 @@
    "keep_together": true,
    "orientation": "vertical",
    "evidence": "census 5R2 template: 1 cụm ký body-level (NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT) — cụm đơn, detector D6 đo vertical.",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M27": {
@@ -510,7 +510,7 @@
    "keep_together": true,
    "orientation": "vertical",
    "evidence": "census 5R2 template: 1 cụm ký body-level (NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT) — cụm đơn, detector D6 đo vertical.",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M28": {
@@ -522,7 +522,7 @@
    "keep_together": true,
    "orientation": "vertical",
    "evidence": "census 5R2 template: 1 cụm ký body-level (NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT) — cụm đơn, detector D6 đo vertical.",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M29": {
@@ -534,7 +534,7 @@
    "keep_together": true,
    "orientation": "vertical",
    "evidence": "census 5R2 template: 1 cụm ký body-level (NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT) — cụm đơn, detector D6 đo vertical.",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M30": {
@@ -546,7 +546,7 @@
    "keep_together": true,
    "orientation": "vertical",
    "evidence": "census 5R2 template: 1 cụm ký body-level (NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT) — cụm đơn, detector D6 đo vertical.",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M31": {
@@ -558,7 +558,7 @@
    "keep_together": true,
    "orientation": "vertical",
    "evidence": "census 5R2 template: 1 cụm ký body-level (NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT) — cụm đơn, detector D6 đo vertical.",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M32": {
@@ -570,7 +570,7 @@
    "keep_together": true,
    "orientation": "vertical",
    "evidence": "census 5R2 template: 1 cụm ký body-level (NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT) — cụm đơn, detector D6 đo vertical.",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M33": {
@@ -582,7 +582,7 @@
    "keep_together": true,
    "orientation": "vertical",
    "evidence": "census 5R2 template: 1 cụm ký body-level (NGƯỜI ĐỀ NGHỊ) — cụm đơn, detector D6 đo vertical.",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M42": {
@@ -590,7 +590,7 @@
    "signers": 1,
    "keep_together": true,
    "evidence": "census 5R2 template: 1 cụm ký ((không nhãn)) với chỉ thị '(Ký, ghi họ tên và đóng dấu)' — ngoài ngữ pháp detector D6 nên không đo orientation được; keep_together vẫn áp ở render (B3).",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M43": {
@@ -598,7 +598,7 @@
    "signers": 1,
    "keep_together": true,
    "evidence": "census 5R2 template: 1 cụm ký ((không nhãn)) với chỉ thị '(Ký, ghi họ tên và đóng dấu)' — ngoài ngữ pháp detector D6 nên không đo orientation được; keep_together vẫn áp ở render (B3).",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M45": {
@@ -606,7 +606,7 @@
    "signers": 1,
    "keep_together": true,
    "evidence": "census 5R2 template: 1 cụm ký ((không nhãn)) với chỉ thị '(Ký, ghi họ tên và đóng dấu)' — ngoài ngữ pháp detector D6 nên không đo orientation được; keep_together vẫn áp ở render (B3).",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M46": {
@@ -615,7 +615,7 @@
    "keep_together": true,
    "orientation": "vertical",
    "evidence": "census 5R2 template: 1 cụm ký body-level ((không nhãn)) — cụm đơn, detector D6 đo vertical.",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M47": {
@@ -623,7 +623,7 @@
    "signers": 1,
    "keep_together": true,
    "evidence": "census 5R2 template: 1 cụm ký ((không nhãn)) với chỉ thị '(Ký, ghi họ tên và đóng dấu)' — ngoài ngữ pháp detector D6 nên không đo orientation được; keep_together vẫn áp ở render (B3).",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M48": {
@@ -631,7 +631,7 @@
    "signers": 1,
    "keep_together": true,
    "evidence": "census 5R2 template: 1 cụm ký ((không nhãn)) với chỉ thị '(Ký, ghi họ tên và đóng dấu)' — ngoài ngữ pháp detector D6 nên không đo orientation được; keep_together vẫn áp ở render (B3).",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M49": {
@@ -639,7 +639,7 @@
    "signers": 1,
    "keep_together": true,
    "evidence": "census 5R2 template: 1 cụm ký ((không nhãn)) với chỉ thị '(Ký, ghi họ tên và đóng dấu)' — ngoài ngữ pháp detector D6 nên không đo orientation được; keep_together vẫn áp ở render (B3).",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M50": {
@@ -647,7 +647,7 @@
    "signers": 1,
    "keep_together": true,
    "evidence": "census 5R2 template: 1 cụm ký ((không nhãn)) với chỉ thị '(Ký, ghi họ tên và đóng dấu)' — ngoài ngữ pháp detector D6 nên không đo orientation được; keep_together vẫn áp ở render (B3).",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M51": {
@@ -655,7 +655,7 @@
    "signers": 1,
    "keep_together": true,
    "evidence": "census 5R2 template: 1 cụm ký ((không nhãn)) với chỉ thị '(Ký, ghi họ tên và đóng dấu)' — ngoài ngữ pháp detector D6 nên không đo orientation được; keep_together vẫn áp ở render (B3).",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M52": {
@@ -663,7 +663,7 @@
    "signers": 1,
    "keep_together": true,
    "evidence": "census 5R2 template: 1 cụm ký ((không nhãn)) với chỉ thị '(Ký, ghi họ tên và đóng dấu)' — ngoài ngữ pháp detector D6 nên không đo orientation được; keep_together vẫn áp ở render (B3).",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M53": {
@@ -671,7 +671,7 @@
    "signers": 1,
    "keep_together": true,
    "evidence": "census 5R2 template: 1 cụm ký ((không nhãn)) với chỉ thị '(Ký, ghi họ tên và đóng dấu)' — ngoài ngữ pháp detector D6 nên không đo orientation được; keep_together vẫn áp ở render (B3).",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M54": {
@@ -679,7 +679,7 @@
    "signers": 1,
    "keep_together": true,
    "evidence": "census 5R2 template: 1 cụm ký ((không nhãn)) với chỉ thị '(Ký, ghi họ tên và đóng dấu)' — ngoài ngữ pháp detector D6 nên không đo orientation được; keep_together vẫn áp ở render (B3).",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M55": {
@@ -687,7 +687,7 @@
    "signers": 1,
    "keep_together": true,
    "evidence": "census 5R2 template: 1 cụm ký ((không nhãn)) với chỉ thị '(Ký, ghi họ tên và đóng dấu)' — ngoài ngữ pháp detector D6 nên không đo orientation được; keep_together vẫn áp ở render (B3).",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M56": {
@@ -695,7 +695,7 @@
    "signers": 1,
    "keep_together": true,
    "evidence": "census 5R2 template: 1 cụm ký ((không nhãn)) với chỉ thị '(Ký, ghi họ tên và đóng dấu)' — ngoài ngữ pháp detector D6 nên không đo orientation được; keep_together vẫn áp ở render (B3).",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M57": {
@@ -703,7 +703,7 @@
    "signers": 1,
    "keep_together": true,
    "evidence": "census 5R2 template: 1 cụm ký ((không nhãn)) với chỉ thị '(Ký, ghi họ tên và đóng dấu)' — ngoài ngữ pháp detector D6 nên không đo orientation được; keep_together vẫn áp ở render (B3).",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M63": {
@@ -711,7 +711,7 @@
    "signers": 1,
    "keep_together": true,
    "evidence": "census 5R2 template: 1 cụm ký ((không nhãn)) với chỉ thị '(Ký, ghi họ tên và đóng dấu)' — ngoài ngữ pháp detector D6 nên không đo orientation được; keep_together vẫn áp ở render (B3).",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M66": {
@@ -719,7 +719,7 @@
    "signers": 1,
    "keep_together": true,
    "evidence": "census 5R2 template: 1 cụm ký ((không nhãn)) với chỉ thị '(Ký, ghi họ tên và đóng dấu)' — ngoài ngữ pháp detector D6 nên không đo orientation được; keep_together vẫn áp ở render (B3).",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M67": {
@@ -727,7 +727,7 @@
    "signers": 1,
    "keep_together": true,
    "evidence": "census 5R2 template: 1 cụm ký ((không nhãn)) với chỉ thị '(Ký, ghi họ tên và đóng dấu)' — ngoài ngữ pháp detector D6 nên không đo orientation được; keep_together vẫn áp ở render (B3).",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M68": {
@@ -735,7 +735,7 @@
    "signers": 1,
    "keep_together": true,
    "evidence": "census 5R2 template: 1 cụm ký ((không nhãn)) với chỉ thị '(Ký, ghi họ tên và đóng dấu)' — ngoài ngữ pháp detector D6 nên không đo orientation được; keep_together vẫn áp ở render (B3).",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M69": {
@@ -743,7 +743,7 @@
    "signers": 1,
    "keep_together": true,
    "evidence": "census 5R2 template: 1 cụm ký ((không nhãn)) với chỉ thị '(Ký, ghi họ tên và đóng dấu)' — ngoài ngữ pháp detector D6 nên không đo orientation được; keep_together vẫn áp ở render (B3).",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M70": {
@@ -756,7 +756,7 @@
    "keep_together": true,
    "orientation": "horizontal",
    "evidence": "WLAY-002 audit 2026-09-03 (ảnh owner + XML): bản giấy NGƯỜI NỘP/NGƯỜI NHẬN CÙNG HÀNG NGANG; nguồn extract xếp dọc là artifact tách nguồn. 5R2: generator sinh bảng không viền 1x2 khi regen.",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M75": {
@@ -764,7 +764,7 @@
    "signers": 1,
    "keep_together": true,
    "evidence": "census 5R2 template: 1 cụm ký ((không nhãn)) với chỉ thị '(Ký, ghi họ tên và đóng dấu)' — ngoài ngữ pháp detector D6 nên không đo orientation được; keep_together vẫn áp ở render (B3).",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M78": {
@@ -776,7 +776,7 @@
    "keep_together": true,
    "orientation": "vertical",
    "evidence": "census 5R2 template: 1 cụm ký body-level (NGƯỜI ĐỀ NGHỊ) — cụm đơn, detector D6 đo vertical.",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M79": {
@@ -785,7 +785,7 @@
    "keep_together": true,
    "orientation": "vertical",
    "evidence": "census 5R2 template: 1 cụm ký body-level ((không nhãn)) — cụm đơn, detector D6 đo vertical.",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  },
  "PLI_M80": {
@@ -794,7 +794,7 @@
    "keep_together": true,
    "orientation": "vertical",
    "evidence": "census 5R2 template: 1 cụm ký body-level ((không nhãn)) — cụm đơn, detector D6 đo vertical.",
-   "min_write_gap_pt": 40
+   "min_write_gap_pt": 72
   }
  }
 }

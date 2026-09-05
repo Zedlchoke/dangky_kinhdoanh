@@ -902,7 +902,19 @@ def _strip_flat_field_code(xml: str) -> str:
 # Trong bảng: đệm nằm trong ô (row height/spacing trong ô).
 # ---------------------------------------------------------------------------
 
-_SIG_TITLE_RE = re.compile(r"\((?:Ký|Đã ký)")
+# [WAVE v7] title/instruction nhận THÊM chỉ thị KHÔNG ngoặc đứng dòng riêng
+# ("Ký, ghi họ tên và đóng dấu" của giấy chứng nhận; "Ký và ghi họ tên từng
+# thành viên") — trước đây các cụm này không được chèn vùng viết và không
+# keep-together. Anchor ^: chỉ dòng BẮT ĐẦU bằng chỉ thị, không bắt câu
+# narrative có chữ "ký" giữa câu.
+_SIG_TITLE_RE = re.compile(
+    r"\((?:Ký|Đã ký)"
+    r"|^\s*Ký(?:,| và)? ghi (?:rõ )?họ tên(?: từng thành viên)?"
+    r"(?: và đóng dấu)?(?: [0-9]{1,2})?"
+    r"|^\s*Ký, họ tên, đóng dấu")
+# Cụm "Đã ký" (đã ký số/điện tử): KHÔNG cần vùng viết tay (owner v7) —
+# render không chèn spacer vùng viết dưới instruction này.
+_SIG_DAKY_RE = re.compile(r"\(Đã ký\b|^\s*Đã ký\b")
 _SIG_MIN_SPACE_TWIPS = 120
 _SIG_WRITE_DEFAULT_TWIPS = 480      # 2 dòng trống ~ vùng viết tối thiểu
 _SIG_WRITE_SAFETY_TWIPS = 60        # dự phòng sai số metric dòng khi in
@@ -1325,6 +1337,12 @@ def _ensure_signature_space(xml: str, form_id: str | None = None) -> str:
             continue
         text = _sig_para_text(tok)
         if not _SIG_TITLE_RE.search(text):
+            continue
+        # [WAVE v7] "Đã ký" — cụm đã ký số/điện tử: KHÔNG chèn dòng trống
+        # phía trên và KHÔNG chèn vùng viết tay (owner
+        # SIGNATURE-USABILITY-SPACE 2026-09-05); keep-together (pass
+        # _keep_signature_blocks) vẫn áp vì regex title dùng chung.
+        if _SIG_DAKY_RE.search(text):
             continue
         # (a) dòng trống phía trên title — hành vi Class 7 cũ
         prev_empty = False

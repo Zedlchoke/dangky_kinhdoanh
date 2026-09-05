@@ -640,12 +640,19 @@ def det_chk_glyph(docx_path: Path, pages: list,
         if "☐" in ptxt or "□" in ptxt:
             code = "X_BESIDE_EMPTY_BOX"
         issues.append({"code": code, "paragraph": ptxt[:70]})
-    # PDF: "X" rơi dòng riêng (XML cùng paragraph nhưng PDF wrap tách dòng)
-    for p in pages:
-        for ln in p["text"].split("\n"):
-            if ln.strip() == "X":
-                issues.append({"page": p["pno"] + 1, "code": "X_OWN_LINE",
-                               "paragraph": ""})
+    # PDF: "X" rơi dòng riêng (XML cùng paragraph nhưng PDF wrap tách dòng).
+    # [F-V5-2] Chỉ tính khi DOCX còn ÍT NHẤT MỘT X trần bất hợp pháp ở lớp
+    # XML: khi mọi X của hồ sơ đều hợp pháp (glyph ☒, run w:bdr, cell có
+    # viền), một X đứng một mình trên dòng PDF là artifact wrap của ô bảng
+    # có viền (tên ngành dài ép dòng — audit V5 E2E PLI_M01 p4), không phải
+    # lỗi người dùng nhìn thấy. Mutation V1d giữ bất biến: X trần thật thì
+    # cả BARE_X_* lẫn X_OWN_LINE vẫn bị bắt.
+    if issues:
+        for p in pages:
+            for ln in p["text"].split("\n"):
+                if ln.strip() == "X":
+                    issues.append({"page": p["pno"] + 1, "code": "X_OWN_LINE",
+                                   "paragraph": ""})
     return issues
 
 

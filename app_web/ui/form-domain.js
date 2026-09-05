@@ -2530,6 +2530,43 @@
     // loại hình - chưa chọn/giá trị lạ là blocking chặn export.
     validateSelector(docId, getFormSelector(docId), st).forEach(push);
 
+    // F-V5-3 (PLAN v7 F0.4): nhóm loại-trừ chk ở lớp runtime — tối đa MỘT
+    // tick mỗi nhóm. Registry đầy đủ cho fixture nằm ở
+    // tools/phase5_fixtures.py (EXCLUSIVE_GROUPS); runtime chỉ chặn các cặp
+    // mà tick đồng thời vi phạm pháp lý rõ ràng trên mọi mẫu.
+    validateExclusiveChecks(docId, info.keys, st).forEach(push);
+
+    return errors;
+  }
+
+  /* Nhóm loại-trừ chk: tick đồng thời >=2 option trong cùng nhóm là lỗi
+     blocking (mô hình tổ chức công ty: HĐTV/HĐQT HOẶC Chủ tịch công ty). */
+  var EXCLUSIVE_CHK_GROUPS = [
+    {
+      gid: 'mo_hinh_to_chuc',
+      pattern: /^chk_auto_(hoi_dong_thanh_vien_giam_doc_hoac_tong_g|chu_tich_cong_ty_giam_doc_hoac_tong_giam)$/,
+      message: 'Mô hình tổ chức công ty chỉ được chọn một: Hội đồng thành viên/'
+               + 'Hội đồng quản trị HOẶC Chủ tịch công ty',
+    },
+  ];
+
+  function validateExclusiveChecks(docId, keys, store) {
+    var errors = [];
+    var checks = (store && store.checks) || {};
+    EXCLUSIVE_CHK_GROUPS.forEach(function (g) {
+      var ticked = keys.filter(function (k) {
+        return g.pattern.test(k) && checks[k];
+      });
+      if (ticked.length > 1) {
+        errors.push({
+          key: 'chk-group:' + g.gid,
+          docId: docId,
+          code: 'CHK_EXCLUSIVE_CONFLICT',
+          message: g.message + ' (đang chọn ' + ticked.length + ' ô)',
+          severity: 'blocking',
+        });
+      }
+    });
     return errors;
   }
 

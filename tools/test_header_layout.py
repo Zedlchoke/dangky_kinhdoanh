@@ -487,8 +487,21 @@ def t_fields_unchanged():
         for p in bfm.iter_docx_files():
             if p.name.startswith("~$") or p.name.startswith("_"):
                 continue
+            # [v7-F0] Mirror ĐỦ hợp đồng nguồn canonical của generator
+            # (build_form_maps.main()): (1) bỏ bản alias khi form có
+            # SOURCE_OVERRIDES (vd M03/M04 tách từ bản gốc đầy đủ — bản cũ
+            # 83 fields phải bị bỏ, nếu không first-wins nhặt nhầm bản thô);
+            # (2) FIRST-WINS theo id ("Lane D F2") — nguồn PLI_M28 tồn tại
+            # 2 bản byte-identical ở 03_ và 04_ (cùng sha256 69fd5022…);
+            # last-wins của loop cũ tự tạo lệch path 03_→04_ mà full-regen
+            # thật không bao giờ sinh.
+            fid, _, _ = bfm.parse_form_id(p)
+            if fid in bfm.SOURCE_OVERRIDES and \
+                    p.relative_to(bfm.ROOT).as_posix() != \
+                    bfm.SOURCE_OVERRIDES[fid]:
+                continue
             meta, _un = bfm.process_form(p, bfm.load_csv_titles(), None)
-            generated[meta["id"]] = meta
+            generated.setdefault(meta["id"], meta)
         assert set(generated) == set(committed), (
             "tập form lệch: %s" % sorted(set(generated) ^ set(committed))[:5])
         for fid in sorted(generated):

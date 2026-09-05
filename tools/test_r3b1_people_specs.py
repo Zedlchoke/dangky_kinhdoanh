@@ -164,9 +164,12 @@ def t_evidence_manifest():
     assert contam["kind"] == "source-contamination" and \
         contam["status"] == "contaminated"
     # hai lưới thành viên hộ gia đình PLII_M02 cùng tập cột 10 cột
+    # [Pin sync — PLAN v7 F0.5] P2 member-grid rebuild (merge P2A) đã rebuild
+    # 2 lưới này: status missing_grid -> already_complete, giữ đúng 10 cột.
+    # Ownership trạng thái mới: tools/test_member_grids_rebuild.py.
     for sid in ("a4_tv_hgd_sau_thay_doi", "c7_tv_hgd_cap_doi"):
         sec = forms["PLII_M02"][sid]
-        assert sec["kind"] == "editable-grid" and sec["status"] == "missing_grid"
+        assert sec["kind"] == "editable-grid" and sec["status"] == "already_complete"
         assert ",".join(sec["required_columns"]) == (
             "stt,ho_ten,ngay_sinh,so_cccd,gioi_tinh,quoc_tich,dan_toc,"
             "noi_thuong_tru,noi_o_hien_tai,chu_ky")
@@ -261,7 +264,11 @@ def t_no_default_drops_set():
 def t_anchor_unique():
     EXPECTED_ANCHOR_BLOCK = {
         "PLI_M02": 125,       # audit Wave D: blk126 là glue, B125 là heading
-        "PLI_M12": 144,       # blk145 glue
+        # [Pin sync — PLAN v7 F0.5] 144 -> 134: các đợt regen M12 sau anchor
+        # (chk-merge gộp tag về đầu nhãn + glue-fix) làm trượt index blocks;
+        # anchor regex vẫn khớp ĐÚNG 1 block (uniqueness giữ nguyên) và đúng
+        # heading "Tổng giá trị vốn..." — đã đối chiếu fold tại 134.
+        "PLI_M12": 134,
         "PLI_M15": 43,        # blk49 glue — hdr2col (084444d): bảng header
                               # band thay 4 p header -> index dịch 48 -> 43
     }
@@ -395,7 +402,7 @@ def t_sandbox_rebuild_and_convert():
         bfm._form_spec_cache.clear()
 
 
-@check("[BLOCKED] PLII_M02: khong khai spec nguoi; 4 loop nganh giu nguyen + thuế II.2")
+@check("[BLOCKED] PLII_M02 pin sync: 4 nganh + a7 + 2 nested thanh vien (P2 rebuilt)")
 def t_blocked_plii_m02():
     path = ROOT / "tools" / "form_specs" / "household" / "PLII_M02.json"
     raw = json.loads(path.read_text(encoding="utf-8-sig"))
@@ -404,39 +411,50 @@ def t_blocked_plii_m02():
     for e in raw["tables"]:
         sid = e["spec"]["id"]
         kinds.append(e["spec"].get("kind") or "list")
-        # [Đổi pin — lane cap-von 2026-08-28] cho phép thêm entry fixed-matrix
-        # thuế của mẫu II.2 (D5.2, owner 2026-08-28: lấy danh mục chỉ tiêu từ
-        # TT 68); vẫn CẤM entry NGƯỜI (nested-grid thành viên hộ gia đình) vì
-        # packet D2 chưa có quyết định cho 2 lưới đó.
+        # [Đổi pin — lane cap-von 2026-08-28] entry fixed-matrix thuế mẫu II.2
+        # (D5.2, owner 2026-08-28).
+        # [Pin sync — PLAN v7 F0.5] packet D2 ĐÃ có quyết định cho 2 lưới
+        # thành viên hộ gia đình (P2 member-grid rebuild 10 cột, merge P2A;
+        # ownership trạng thái mới: tools/test_member_grids_rebuild.py) nên
+        # pin "nested-grid == 0" stale — cập nhật: đúng 2 nested-grid tv_hgd.
         if sid.startswith("a7_thue_"):
             assert e["spec"].get("kind") == "fixed-matrix", \
                 "entry ngoài nhóm ngành phải là fixed-matrix: %r" % sid
             continue
-        assert sid.startswith(("nganh_", "ds_nganh")), \
-            "PLII_M02 xuất hiện entry ngoài nhóm ngành/thuế: %r" % sid
+        assert sid.startswith(("nganh_", "ds_nganh", "tv_hgd_")), \
+            "PLII_M02 xuất hiện entry ngoài nhóm ngành/thuế/thành viên: %r" % sid
         occs = e.get("occurrences") or []
         ids.extend(o["occurrence_id"] for o in occs)
     want_ids = ["nganh_bo_sung", "nganh_xoa_bo", "nganh_sua_doi_chi_tiet",
-                "nganh_hien_tai"]
+                "nganh_hien_tai", "tv_hgd_sau_thay_doi", "tv_hgd_cap_doi"]
     assert sorted(ids) == sorted(want_ids), (
         "tập occurrence_id PLII_M02 đã đổi -> phải cập nhật "
         "tools/test_industry_household.py + tools/census/p1_c_verify_plii_m02.py "
-        "trước rồi mới thêm 2 lưới thành viên hộ gia đình (hiện %r)" % ids)
-    assert kinds.count("nested-grid") == 0, \
-        "PLII_M02: đã khai lưới thành viên hộ gia đình mà không qua packet D2?"
+        "(hiện %r)" % ids)
+    assert kinds.count("nested-grid") == 2, \
+        "PLII_M02: đúng 2 nested-grid thành viên (P2 rebuild), thấy %d" % \
+        kinds.count("nested-grid")
     assert kinds.count("fixed-matrix") == 1, \
         "PLII_M02: đúng 1 entry fixed-matrix thuế (D5.2), thấy %d" % \
         kinds.count("fixed-matrix")
-    # glue hiện trạng vẫn còn nguyên trong blocks (chưa regen người)
-    # hdr2col (084444d): bảng header band thay 4 p header -> index dịch -3
-    # (B072 -> B069, B129 -> B126)
+    # [Pin sync — PLAN v7 F0.5] Evidence glue cũ ("sttho ten…so dinh danh",
+    # B069/B126) đã biến mất DO DESIGN: P2 member-grid rebuild thay paragraph
+    # glue bằng loop block có header cấu trúc thật. Pin mới: 2 loop tv_hgd
+    # đủ 9 cột dữ liệu (STT generated ở col 0) theo đúng thứ tự required
+    # 10 cột; chuỗi cam kết hộ kinh doanh còn nguyên (tra theo nội dung).
+    loops = {b.get("loop"): b for b in blocks_json("PLII_M02")["blocks"]
+             if b.get("t") == "loop"}
+    want_cols = ["ho_ten", "ngay_sinh", "so_cccd", "gioi_tinh", "quoc_tich",
+                 "dan_toc", "noi_thuong_tru", "noi_o_hien_tai", "chu_ky"]
+    for lname in ("tv_hgd_sau_thay_doi", "tv_hgd_cap_doi"):
+        b = loops.get(lname)
+        assert b, "mất loop %s sau P2 member-grid rebuild" % lname
+        assert [c["tag"] for c in b.get("cols", [])] == want_cols, \
+            "%s: cols lệch evidence 10 cột: %r" % (
+                lname, [c["tag"] for c in b.get("cols", [])])
     folds = block_folds("PLII_M02")
-    assert folds[69].startswith(
-        "sttho tenngay, thang, nam sinhso dinh danh ca nhan"), \
-        "block B069 không còn glue như evidence: %r" % folds[69][:60]
-    assert "12345678910" in folds[69]
-    assert "ho kinh doanh cam ket ve tinh hop phap" in folds[126], \
-        "B126 mất chuỗi cam kết hộ kinh doanh"
+    assert any("ho kinh doanh cam ket ve tinh hop phap" in f for f in folds), \
+        "mất chuỗi cam kết hộ kinh doanh trong blocks"
 
 
 @check("[BLOCKED] PLI_M09: khong spec moi khi nguon con nhiem va chua doi chieu ban goc")
@@ -458,26 +476,36 @@ def t_blocked_pli_m09():
             "PLI_M09 loop lạ: %r" % sp.get("loop")
 
 
-@check("[BLOCKED] PLI_M72: N2-N5 chua khai (spec ghim len(entries)==1 + loader chan section_cond)")
+@check("[BLOCKED] PLI_M72 pin sync: 5 entry (5 occ nganh + 4 nested N2-N5 rebuilt)")
 def t_blocked_pli_m72():
     path = ROOT / "tools" / "form_specs" / "change" / "PLI_M72.json"
     raw = json.loads(path.read_text(encoding="utf-8-sig"))
-    assert len(raw["tables"]) == 1, "PLI_M72 đã thêm entry ngoài 5 occurrence ngành"
+    # [Pin sync — PLAN v7 F0.5] P2 rebuild M72 (merge P2A/P2 pin sync) đã
+    # khai đủ 4 lưới N2-N5: spec 1 -> 5 entry; manifest 4 section nested
+    # missing_grid -> already_complete. Ownership trạng thái mới:
+    # tools/test_member_grids_rebuild.py + test_m72_conditional_export.
+    assert len(raw["tables"]) == 5, "PLI_M72 đổi số entry: %d" % len(raw["tables"])
+    kinds = [(e["spec"].get("kind") or "list") for e in raw["tables"]]
+    assert kinds.count("nested-grid") == 4, \
+        "PLI_M72: đúng 4 nested-grid N2-N5, thấy %d" % kinds.count("nested-grid")
     assert "section_cond" in raw, "mất section_cond (fixture selector phụ thuộc)"
     blocks = blocks_json("PLI_M72")["blocks"]
-    # [Lead sync sau L1FIX regen] index trượt +2 (heading 8./9. tách riêng) —
-    # tra glue header theo nội dung thay vì index tuyệt đối.
-    folds = [fold("".join(str(r.get("text", "")) for r in (b.get("runs") or [])))
-             for b in blocks]
-    glued = [f for f in folds if f.startswith("sttten co dongquoc tich")]
-    assert len(glued) >= 2, \
-        "mất evidence glue header cổ đông (expect >=2, có %d)" % len(glued)
+    # [Pin sync — PLAN v7 F0.5] Evidence "glue header cổ đông >=2" stale do
+    # P2 rebuild thay glue bằng loop block cấu trúc. Pin mới: 4 nested-grid
+    # N2-N5 tồn tại làm loop block, mỗi loop có cột quốc tịch (col 2).
+    loops = {b.get("loop"): b for b in blocks if b.get("t") == "loop"}
+    for lname in ("ds_thanh_vien_tnhh_2tv", "ds_co_dong_sang_lap_ctcp",
+                  "ds_co_dong_nuoc_ngoai_ctcp", "ds_thanh_vien_hop_danh_dhdn"):
+        b = loops.get(lname)
+        assert b, "mất loop N2-N5 %s sau P2 rebuild" % lname
+        tags = [c["tag"] for c in b.get("cols", [])]
+        assert "quoc_tich" in tags, "%s: mất cột quốc tịch: %r" % (lname, tags)
     data = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
     sec = {s["section_id"]: s for f in data["forms"] if f["form_id"] == "PLI_M72"
            for s in f["sections"]}
     for sid in ("thanh_vien_tnhhh_hai_tv_tro_len", "co_dong_sang_lap_cp",
                 "co_dong_nuoc_ngoai_cp", "thanh_vien_hop_danh"):
-        assert sec[sid]["status"] == "missing_grid", "%s đổi trạng thái" % sid
+        assert sec[sid]["status"] == "already_complete", "%s đổi trạng thái" % sid
 
 
 @check("[XAC MINH] loader chi doc 1 file spec cho moi mau (khong nghiengo khi them nhom)")

@@ -603,7 +603,7 @@ def t_sandbox_rebuild():
         bfm._form_spec_cache.clear()
 
 
-@check("[BLOCKED] PLI_M09 van chua co spec (D3 chua kien trung) + PLII_M02 giu nguyen")
+@check("[BLOCKED] PLII_M02 pin sync 7 entry / 6 occurrence (P1+P2 đã adjudicate)")
 def t_blocked_others():
     # [GỠ PIN — Lead 2026-08-28] 'assert not files' cho PLI_M09 lỗi thời:
     # D3.1/D3.2=A + lệnh owner -> spec tồn tại (merge cfdefcd); trạng thái
@@ -613,13 +613,21 @@ def t_blocked_others():
     ids = []
     for e in raw["tables"]:
         ids.extend(o["occurrence_id"] for o in (e.get("occurrences") or []))
+    # [Pin sync — PLAN v7 F0.5, Lead 2026-09-05] Bảng premise→hiện trạng:
+    # pin cũ "4 occurrence ngành + 5 entry" stale vì (a) P1 integrate thêm
+    # loop 'nganh_hien_tai' (coverage a6_1..c3 already_complete), (b) P2
+    # member-grid rebuild thêm 2 nested-grid 'tv_hgd_sau_thay_doi'/
+    # 'tv_hgd_cap_doi' (10 cột, coverage already_complete). 7 entry / 6
+    # occurrence là trạng thái đã adjudicate trong
+    # docs/table_coverage_current.{md,json} — pin mới khóa đúng tập này,
+    # vẫn bắt được drift ngoài danh sách.
     assert sorted(ids) == sorted(["nganh_bo_sung", "nganh_xoa_bo",
-                                  "nganh_sua_doi_chi_tiet", "nganh_hien_tai"]), \
+                                  "nganh_sua_doi_chi_tiet", "nganh_hien_tai",
+                                  "tv_hgd_sau_thay_doi", "tv_hgd_cap_doi"]), \
         "file household/PLII_M02.json (ngoài ownership P2A) đã đổi: %r" % ids
-    # [Đổi pin — lane cap-von 2026-08-28] 4 -> 5 entry: thêm fixed-matrix
-    # 'a7_thue_chi_tieu_cu_moi' (D5.2 thuế mẫu II.2, owner 2026-08-28);
-    # 4 occurrence ngành giữ nguyên như assert phía trên.
-    assert len(raw["tables"]) == 5, "PLII_M02 đổi số entry: %d" % len(raw["tables"])
+    # 7 entry: 4 ngành + 1 fixed-matrix a7 (thuế II.2, cap-von D5.2, không
+    # occurrence) + 2 nested-grid thành viên (P2 rebuild).
+    assert len(raw["tables"]) == 7, "PLII_M02 đổi số entry: %d" % len(raw["tables"])
 
 
 @check("[BLOCKED] khong bia cot chu ky cho bang nguon khong co (PLII_M07/M10/M13)")

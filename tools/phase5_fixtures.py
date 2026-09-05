@@ -68,6 +68,14 @@ EXCLUSIVE_GROUPS = [
     # cặp Có/Không (chk_co/chk_khong hoặc chk_auto_*_co/_khong) — chọn 1;
     # đuôi _2/_3 là lặp câu hỏi giống nhau trong cùng mẫu
     ("co_khong", r"^chk_(auto_)?(co|khong)(_\d+)?$", "chk_khong"),
+    # mô hình tổ chức công ty: Hội đồng thành viên (hoặc Hội đồng quản trị)
+    # / Chủ tịch công ty — hai mô hình quản trị loại-trừ nhau về pháp lý
+    # (F-V5-3: trước đây choice-variants tick cả hai trên M02/M15). Key auto
+    # bị cắt ở 48 ký tự slug nên pattern phải khớp đúng 2 slug này.
+    ("mo_hinh_to_chuc",
+     r"^chk_auto_(hoi_dong_thanh_vien_giam_doc_hoac_tong_g"
+     r"|chu_tich_cong_ty_giam_doc_hoac_tong_giam)$",
+     "chk_auto_hoi_dong_thanh_vien_giam_doc_hoac_tong_g"),
 ]
 
 _GROUP_CACHE: dict = {}

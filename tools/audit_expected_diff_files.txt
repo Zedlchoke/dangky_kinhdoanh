@@ -462,3 +462,13 @@ app/templates/PLI_M46.docx
 app/templates/PLI_M69.docx
 docs/audits/6v/v4-visual-audit.md
 docs/phase6v_d5_sparse_allowlist.json
+# --- [6V-FINAL checkpoint 000e8e2 2026-09-05] 4 audit report 6V commit sau gate trước
+# (H7.4 bắt thiếu); bản v2-core-audit.md là bản Lead phục hồi rút gọn vì report gốc
+# chưa commit trước khi worktree bị dọn — note này phải giữ trong audit cuối (PLAN 0.1).
+docs/audits/6v/v2-core-audit.md
+docs/audits/6v/v5-export-audit.md
+docs/audits/6v/v5-export-audit-inventory.json
+docs/audits/6v/v5-release-audit.md
+# --- [v7-checkpoint 77b992a 2026-09-05] PLAN v7 (owner) + census chữ ký mới làm đầu vào
+# wave SIGNATURE-USABILITY-SPACE + coverage regen tại 000e8e2 (2 file coverage đã có entry) ---
+docs/audits/signature_space_census_2026-09-05.md

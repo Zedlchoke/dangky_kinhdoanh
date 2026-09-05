@@ -7,6 +7,11 @@
 python-docx==1.2.0
 lxml==6.1.1
 
+# Visual gate (tools/phase5_visual_gate.py, tools/phase5_word_open_loop.py)
+# render PNG + đo PDF bằng pymupdf. Version đã dùng bởi mọi corpus gate
+# 5R→6V trên máy này (PLAN v7 F0.3: pin đúng version mà gate đã dùng).
+pymupdf==1.28.2
+
 # Desktop runtime — CHỈ cần khi chạy app_web/main.py hoặc build .exe (R6).
 # Không suite nào trong tools/release_runner.py bắt buộc pywebview;
 # thiếu pywebview phải được báo NOT RUN (không phải PASS ngầm).

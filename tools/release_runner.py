@@ -120,6 +120,17 @@ SUITES: list[dict] = [
      "requires": ["python-docx"]},
     {"name": "test_phase5r_tables",       "type": "module", "target": "tools.test_phase5r_tables",
      "requires": ["python-docx"]},
+    # --- [PLAN v7 F0.6 2026-09-05] 4 suite kế thừa vào runner chính: trước
+    #     đây chạy riêng nên đỏ/không đỏ không thấy qua release gate
+    #     (pin stale đã được Lead sync tại v7-F0 với bảng premise→evidence).
+    {"name": "test_plii_m01_member_stt",  "type": "module",
+     "target": "tools.test_plii_m01_member_stt", "requires": ["python-docx"]},
+    {"name": "test_p2a_people_specs",     "type": "module",
+     "target": "tools.test_p2a_people_specs", "requires": ["python-docx"]},
+    {"name": "test_r3b1_people_specs",    "type": "module",
+     "target": "tools.test_r3b1_people_specs", "requires": ["python-docx"]},
+    {"name": "test_header_layout",        "type": "module",
+     "target": "tools.test_header_layout", "requires": ["python-docx"]},
     # --- [6V-V0 2026-09-04] concurrency export: 2 process export song song
     #     qua profile soffice cách ly — chống hồi quy gate đỏ giả 56/1.
     {"name": "test_export_concurrency",   "type": "module",

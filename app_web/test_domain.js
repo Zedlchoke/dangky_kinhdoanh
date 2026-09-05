@@ -234,6 +234,37 @@ const m06 = loadMock('blocks_PLI_M06.json');
     { values: { email_tru_so: 'sai-email' }, checks: {}, loops: {} }, {});
   check('cùng key 2 chỗ -> chỉ 1 lỗi EMAIL (dedupe)',
     errs.filter(e => e.code === 'EMAIL').length === 1);
+
+  // F-V5-3 (PLAN v7 F0.4): nhóm loại-trừ chk — tick đồng thời 2 mô hình
+  // tổ chức công ty là blocking; tick đúng 1 hoặc tick nhóm khác thì sạch.
+  const KEY_HDTV = 'chk_auto_hoi_dong_thanh_vien_giam_doc_hoac_tong_g';
+  const KEY_CHUTICH = 'chk_auto_chu_tich_cong_ty_giam_doc_hoac_tong_giam';
+  const docChk = {
+    id: 'PLI_M15', ten_mau: 'chk-excl',
+    blocks: [
+      { t: 'chk', key: KEY_HDTV, text: 'Hội đồng thành viên/Giám đốc hoặc Tổng giám đốc' },
+      { t: 'chk', key: KEY_CHUTICH, text: 'Chủ tịch công ty/Giám đốc hoặc Tổng giám đốc' }
+    ]
+  };
+  const both = R.newStore();
+  both.checks[KEY_HDTV] = true;
+  both.checks[KEY_CHUTICH] = true;
+  errs = D.validateDocument('PLI_M15', docChk.blocks, both, {});
+  const excl = errs.find(e => e.code === 'CHK_EXCLUSIVE_CONFLICT');
+  check('tick cả 2 mô hình tổ chức -> CHK_EXCLUSIVE_CONFLICT blocking',
+    !!excl && excl.severity === 'blocking' && excl.docId === 'PLI_M15',
+    JSON.stringify(errs));
+  const one = R.newStore();
+  one.checks[KEY_HDTV] = true;
+  check('tick đúng 1 mô hình -> 0 lỗi excl',
+    !D.validateDocument('PLI_M15', docChk.blocks, one, {})
+      .some(e => e.code === 'CHK_EXCLUSIVE_CONFLICT'));
+  const unrelated = R.newStore();
+  unrelated.checks['chk_co'] = true;
+  unrelated.checks['chk_khong_2'] = true;
+  check('chk ngoài registry không bị chặn (không scope-creep)',
+    !D.validateDocument('PLI_M15', docChk.blocks, unrelated, {})
+      .some(e => e.code === 'CHK_EXCLUSIVE_CONFLICT'));
 }
 
 // -------------------------------------------------------- 6. validateDossier

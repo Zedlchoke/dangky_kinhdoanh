@@ -367,6 +367,16 @@ def test_v1d_d15():
     d7 = _min_docx(TMP / "d15_own.docx", _p("Tình trạng: X"))
     hits = gate.det_chk_glyph(d7, pp, _CHK_META)
     assert any(h["code"] == "X_OWN_LINE" for h in hits), hits
+    # [F-V5-2] mọi X hợp pháp ở XML (cell có viền) + PDF wrap tách X riêng
+    # một dòng → KHÔNG được bắn X_OWN_LINE (artifact ô viền, không phải lỗi)
+    pp2 = _pdf_pages(TMP / "d15_own_legal.pdf", ["Công ty dài tên lắm", "X"])
+    assert gate.det_chk_glyph(d5, pp2, _CHK_META) == [], \
+        "X trong cell viền bị PDF wrap dòng riêng phải được miễn (F-V5-2)"
+    # [F-V5-2 mutation] X trần thật (XML RED) + PDF dòng riêng → vẫn bắt đủ
+    # cả hai lớp: mutation phải chứng minh miễn trừ không che lỗi thật.
+    hits = gate.det_chk_glyph(d7, pp2, _CHK_META)
+    codes = {h["code"] for h in hits}
+    assert "BARE_X_PARAGRAPH" in codes and "X_OWN_LINE" in codes, hits
 
 
 # ---------------------------------------------------------------------------

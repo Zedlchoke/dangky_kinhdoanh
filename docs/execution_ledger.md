@@ -557,3 +557,15 @@ HARD-FAIL 0 · CANDIDATES 71 (chỉ D5_blank_sparse 72 hit).**
 | D5 blank/sparse | 78 | **72 — lớp duy nhất còn, chờ auditor adjudicate** |
 
 (Số trang 1619→1612: reflow sau spacer 40pt — assert đĩa==manifest vẫn ok.)
+
+### V4b + Gate V4-final-2 — ĐẠT G-B TUYỆT ĐỐI @ main d66b26a (2026-09-05)
+
+| Task | Owner | Kết quả | Trạng thái |
+|---|---|---|---|
+| 10 việc fix theo adjudication (D5 6 hit, vỡ token, STT, ngoặc, separator, M12-dot, fixture, census regex, D5 allowlist, Mẫu số registry) | `agent/6v-v4fix` (merge `177cd2f`) | xem commit message từng việc 1–10; lane tự khai manifest (H7.4 57/0) | ✅ merged |
+| Lead rebaseline sau longest-word | Lead `9dad012`+`d66b26a` | WIDE_TABLE_FIXTURE + policies min_col 954/918/909/928 (cố ý); 3 fragment p−1 (M06/M08/M78 gộp đoạn); manifest rebuild; allowlist +2 fragment + dedupe → tables 10/0, manifest_deep exit 0 | ✅ |
+| **Gate V4-final-2 (v4b_corpuscheck)** | Lead | **exit 0 · 455 record · 0 export error · HARD-FAIL 0 · CANDIDATES 0** · PNG 1631/1631 — **G-B đạt: 0 hard + 0 candidate chưa adjudicate**; 3 form từng vỡ token = 0 mảnh vỡ (Lead đo lại) | ✅ |
+| Runner | Lead | **58 PASS / 0 FAIL / 0 NOT RUN** (sau 3 vòng bắt pin-stale/allowlist — gate làm đúng vai trò) | ✅ |
+
+**V4 ĐÓNG.** Tất cả detector D1–D16 = 0 hard + 0 candidate trên toàn corpus.
+Sang V5: auditor/6v-export + auditor/6v-release, sau đó checkpoint đóng 6V.

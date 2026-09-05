@@ -450,3 +450,5 @@ tools/phase6v_signgap_evidence.py
 # script census + JSON ket qua — KHONG sua template/blocks ---
 tools/census/6v_micro_census.py
 tools/census/6v_micro_census.json
+# --- [6V-V4/micro 2026-09-05] Lead bo sung: test_dom +6 assertion V4 placeholder hint (lane bo sot, runner H7.4 bat) ---
+app_web/test_dom.js

@@ -344,44 +344,38 @@
     "loop": 1
    },
    "summary_counts_recount": {
-    "p": 133,
-    "chk": 4,
+    "p": 132,
+    "chk": 3,
     "table": 2,
     "loop": 6
    },
    "detector": {
-    "p_signatures": 1,
+    "p_signatures": 0,
     "list_hints": 4,
     "hits": [
      {
-      "block": 41,
+      "block": 40,
       "stt": false,
       "list_hint": true,
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu về đăng ký hộ kinh doanh với Cơ sở dữ liệu"
      },
      {
-      "block": 57,
+      "block": 56,
       "stt": false,
       "list_hint": true,
       "excerpt": "Trường hợp việc kết nối giữa Cơ sở dữ liệu về đăng ký hộ kinh doanh với Cơ sở dữ liệu quốc gia về dân cư bị gián đoạn th"
      },
      {
-      "block": 68,
+      "block": 67,
       "stt": false,
       "list_hint": true,
       "excerpt": "Danh sách các thành viên hộ gia đình đăng ký hộ kinh doanh sau khi thay đổi2:"
      },
      {
-      "block": 83,
+      "block": 82,
       "stt": false,
       "list_hint": true,
       "excerpt": "Đăng ký bổ sung, thay đổi các chỉ tiêu đăng ký thuế như sau:"
-     },
-     {
-      "block": 107,
-      "stt": true,
-      "list_hint": false,
-      "excerpt": "STT"
      }
     ],
     "classifications": [],
@@ -1395,13 +1389,13 @@
     "loop": 1
    },
    "summary_counts_recount": {
-    "p": 125,
+    "p": 124,
     "chk": 27,
     "table": 1,
     "loop": 1
    },
    "detector": {
-    "p_signatures": 1,
+    "p_signatures": 0,
     "list_hints": 2,
     "hits": [
      {
@@ -1415,12 +1409,6 @@
       "stt": false,
       "list_hint": true,
       "excerpt": "Đăng ký doanh nghiệp tư nhân do tôi làm chủ với các nội dung sau:"
-     },
-     {
-      "block": 83,
-      "stt": true,
-      "list_hint": false,
-      "excerpt": "STT"
      }
     ],
     "classifications": [],
@@ -1686,13 +1674,13 @@
     "loop": 1
    },
    "summary_counts_recount": {
-    "p": 205,
+    "p": 204,
     "chk": 37,
     "table": 2,
     "loop": 2
    },
    "detector": {
-    "p_signatures": 1,
+    "p_signatures": 0,
     "list_hints": 5,
     "hits": [
      {
@@ -1724,12 +1712,6 @@
       "stt": false,
       "list_hint": true,
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
-     },
-     {
-      "block": 166,
-      "stt": true,
-      "list_hint": false,
-      "excerpt": "STT"
      }
     ],
     "classifications": [],
@@ -1842,13 +1824,13 @@
     "loop": 1
    },
    "summary_counts_recount": {
-    "p": 164,
+    "p": 163,
     "chk": 33,
     "table": 1,
     "loop": 1
    },
    "detector": {
-    "p_signatures": 1,
+    "p_signatures": 0,
     "list_hints": 3,
     "hits": [
      {
@@ -1868,12 +1850,6 @@
       "stt": false,
       "list_hint": true,
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
-     },
-     {
-      "block": 120,
-      "stt": true,
-      "list_hint": false,
-      "excerpt": "STT"
      }
     ],
     "classifications": [],
@@ -2056,13 +2032,13 @@
     "loop": 1
    },
    "summary_counts_recount": {
-    "p": 168,
+    "p": 167,
     "chk": 33,
     "table": 3,
     "loop": 1
    },
    "detector": {
-    "p_signatures": 1,
+    "p_signatures": 0,
     "list_hints": 4,
     "hits": [
      {
@@ -2088,12 +2064,6 @@
       "stt": false,
       "list_hint": true,
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
-     },
-     {
-      "block": 126,
-      "stt": true,
-      "list_hint": false,
-      "excerpt": "STT"
      }
     ],
     "classifications": [],
@@ -2360,19 +2330,19 @@
    ],
    "defects": [],
    "summary_counts_fragment": {
-    "p": 92,
+    "p": 91,
     "chk": 14,
     "table": 0,
     "loop": 1
    },
    "summary_counts_recount": {
-    "p": 92,
+    "p": 91,
     "chk": 14,
     "table": 0,
     "loop": 1
    },
    "detector": {
-    "p_signatures": 1,
+    "p_signatures": 0,
     "list_hints": 1,
     "hits": [
      {
@@ -2380,12 +2350,6 @@
       "stt": false,
       "list_hint": true,
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
-     },
-     {
-      "block": 28,
-      "stt": true,
-      "list_hint": false,
-      "excerpt": "STT"
      }
     ],
     "classifications": [],
@@ -2598,19 +2562,19 @@
    ],
    "defects": [],
    "summary_counts_fragment": {
-    "p": 92,
+    "p": 91,
     "chk": 14,
     "table": 0,
     "loop": 1
    },
    "summary_counts_recount": {
-    "p": 92,
+    "p": 91,
     "chk": 14,
     "table": 0,
     "loop": 1
    },
    "detector": {
-    "p_signatures": 1,
+    "p_signatures": 0,
     "list_hints": 1,
     "hits": [
      {
@@ -2618,12 +2582,6 @@
       "stt": false,
       "list_hint": true,
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
-     },
-     {
-      "block": 28,
-      "stt": true,
-      "list_hint": false,
-      "excerpt": "STT"
      }
     ],
     "classifications": [],
@@ -2787,28 +2745,15 @@
     "loop": 1
    },
    "summary_counts_recount": {
-    "p": 74,
+    "p": 72,
     "chk": 14,
     "table": 0,
     "loop": 1
    },
    "detector": {
-    "p_signatures": 2,
+    "p_signatures": 0,
     "list_hints": 0,
-    "hits": [
-     {
-      "block": 8,
-      "stt": true,
-      "list_hint": false,
-      "excerpt": "STT"
-     },
-     {
-      "block": 87,
-      "stt": true,
-      "list_hint": false,
-      "excerpt": "STT"
-     }
-    ],
+    "hits": [],
     "classifications": [],
     "template_w_tbl": 1
    }
@@ -3279,44 +3224,20 @@
     "loop": 3
    },
    "summary_counts_recount": {
-    "p": 210,
+    "p": 206,
     "chk": 15,
     "table": 1,
     "loop": 4
    },
    "detector": {
-    "p_signatures": 4,
+    "p_signatures": 0,
     "list_hints": 1,
     "hits": [
      {
-      "block": 56,
-      "stt": true,
-      "list_hint": false,
-      "excerpt": "STT"
-     },
-     {
-      "block": 75,
-      "stt": true,
-      "list_hint": false,
-      "excerpt": "STT"
-     },
-     {
-      "block": 94,
+      "block": 92,
       "stt": false,
       "list_hint": true,
       "excerpt": "Doanh nghiệp cam kết bảo đảm thanh toán đủ các khoản nợ và các nghĩa vụ tài sản khác sau khi giảm vốn (doanh nghiệp chỉ "
-     },
-     {
-      "block": 119,
-      "stt": true,
-      "list_hint": false,
-      "excerpt": "STT"
-     },
-     {
-      "block": 151,
-      "stt": true,
-      "list_hint": false,
-      "excerpt": "STT"
      }
     ],
     "classifications": [],
@@ -3626,13 +3547,13 @@
     "loop": 1
    },
    "summary_counts_recount": {
-    "p": 96,
+    "p": 95,
     "chk": 16,
     "table": 1,
     "loop": 1
    },
    "detector": {
-    "p_signatures": 1,
+    "p_signatures": 0,
     "list_hints": 3,
     "hits": [
      {
@@ -3648,13 +3569,7 @@
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
      },
      {
-      "block": 52,
-      "stt": true,
-      "list_hint": false,
-      "excerpt": "STT"
-     },
-     {
-      "block": 100,
+      "block": 99,
       "stt": false,
       "list_hint": true,
       "excerpt": "Đánh dấu X nếu là chi nhánh công ty chứng khoán nước ngoài/chi nhánh công ty quản lý quỹ nước ngoài tại Việt Nam và kê k"
@@ -3763,13 +3678,13 @@
     "loop": 1
    },
    "summary_counts_recount": {
-    "p": 108,
+    "p": 107,
     "chk": 9,
     "table": 1,
     "loop": 1
    },
    "detector": {
-    "p_signatures": 1,
+    "p_signatures": 0,
     "list_hints": 1,
     "hits": [
      {
@@ -3777,12 +3692,6 @@
       "stt": false,
       "list_hint": true,
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
-     },
-     {
-      "block": 65,
-      "stt": true,
-      "list_hint": false,
-      "excerpt": "STT"
      }
     ],
     "classifications": [],
@@ -3904,13 +3813,13 @@
     "loop": 1
    },
    "summary_counts_recount": {
-    "p": 76,
+    "p": 75,
     "chk": 9,
     "table": 1,
     "loop": 1
    },
    "detector": {
-    "p_signatures": 1,
+    "p_signatures": 0,
     "list_hints": 2,
     "hits": [
      {
@@ -3924,12 +3833,6 @@
       "stt": false,
       "list_hint": true,
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
-     },
-     {
-      "block": 44,
-      "stt": true,
-      "list_hint": false,
-      "excerpt": "STT"
      }
     ],
     "classifications": [],
@@ -3994,13 +3897,13 @@
     "loop": 1
    },
    "summary_counts_recount": {
-    "p": 74,
+    "p": 73,
     "chk": 9,
     "table": 1,
     "loop": 1
    },
    "detector": {
-    "p_signatures": 1,
+    "p_signatures": 0,
     "list_hints": 2,
     "hits": [
      {
@@ -4014,12 +3917,6 @@
       "stt": false,
       "list_hint": true,
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
-     },
-     {
-      "block": 47,
-      "stt": true,
-      "list_hint": false,
-      "excerpt": "STT"
      }
     ],
     "classifications": [],
@@ -5700,19 +5597,19 @@
    ],
    "defects": [],
    "summary_counts_fragment": {
-    "p": 35,
+    "p": 34,
     "chk": 0,
     "table": 0,
     "loop": 0
    },
    "summary_counts_recount": {
-    "p": 35,
+    "p": 34,
     "chk": 0,
     "table": 0,
     "loop": 0
    },
    "detector": {
-    "p_signatures": 1,
+    "p_signatures": 0,
     "list_hints": 1,
     "hits": [
      {
@@ -5720,12 +5617,6 @@
       "stt": false,
       "list_hint": true,
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
-     },
-     {
-      "block": 19,
-      "stt": true,
-      "list_hint": false,
-      "excerpt": "STT"
      }
     ],
     "classifications": [],

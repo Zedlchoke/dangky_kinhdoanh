@@ -170,18 +170,21 @@ WIDE_TABLE_FIXTURE = [
     # [6V-V3/Q-V2 2026-09-04 rebaseline] 12 bảng rộng bọc section khổ ngang
     # (usable 14400 twips), width theo content sàn 900 twips — đo thực tế
     # sau regen 6v-tables (trước Q-V2: total 8635-8640, min 567).
-    ("PLII_M01", 1, 10, 14400, 900, "ds_tv_ho_gia_dinh"),
-    ("PLII_M02", 1, 10, 14400, 900, "tv_hgd_sau_thay_doi"),
-    ("PLII_M02", 7, 10, 14400, 900, "tv_hgd_cap_doi"),
+    # [6V-V4b 2026-09-05 Lead rebaseline] width_policy longest-word: min_col
+    # một số bảng vượt sàn 900 theo từ dài nhất (954/918/909/928) — cố ý,
+    # diệt vỡ token cột hẹp (adjudicate auditor-visual Phần 3).
+    ("PLII_M01", 1, 10, 14400, 954, "ds_tv_ho_gia_dinh"),
+    ("PLII_M02", 1, 10, 14400, 954, "tv_hgd_sau_thay_doi"),
+    ("PLII_M02", 7, 10, 14400, 954, "tv_hgd_cap_doi"),
     ("PLI_M02", 1, 14, 14400, 900, "ds_nddpl_uy_quyen_chu_so_huu"),
     ("PLI_M06", 0, 12, 14400, 900, "ds_thanh_vien_tnhh"),
-    ("PLI_M07", 0, 11, 14400, 900, "ds_co_dong_sang_lap"),
+    ("PLI_M07", 0, 11, 14400, 918, "ds_co_dong_sang_lap"),
     ("PLI_M09", 0, 14, 14400, 900, "ds_thanh_vien_hop_danh"),
-    ("PLI_M10", 0, 12, 14400, 900, "ds_cshhl"),
+    ("PLI_M10", 0, 12, 14400, 909, "ds_cshhl"),
     ("PLI_M12", 4, 15, 14400, 900, "ds_ndd_uy_quyen_sau_thay_doi"),
     ("PLI_M15", 1, 14, 14400, 900, "ds_nddpl_uy_quyen_chu_so_huu_moi"),
-    ("PLI_M72", 5, 10, 14400, 900, "ds_co_dong_sang_lap_ctcp"),
-    ("PLI_M72", 6, 10, 14400, 900, "ds_co_dong_nuoc_ngoai_ctcp"),
+    ("PLI_M72", 5, 10, 14400, 928, "ds_co_dong_sang_lap_ctcp"),
+    ("PLI_M72", 6, 10, 14400, 928, "ds_co_dong_nuoc_ngoai_ctcp"),
 ]
 
 _EXPECTED_TABLE_COUNT = 76   # số bảng có w:tblGrid trên toàn corpus

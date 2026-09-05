@@ -83,7 +83,7 @@
    "table_index": 1,
    "cols": 10,
    "total_width": 14400,
-   "min_col_width": 900,
+   "min_col_width": 954,
    "loop": "ds_tv_ho_gia_dinh",
    "spec_ref": "tools/form_specs/core/PLII_M01.json#ds_tv_ho_gia_dinh (list)",
    "generator_built": true,
@@ -105,7 +105,7 @@
    "table_index": 1,
    "cols": 10,
    "total_width": 14400,
-   "min_col_width": 900,
+   "min_col_width": 954,
    "loop": "tv_hgd_sau_thay_doi",
    "spec_ref": "tools/form_specs/household/PLII_M02.json#tv_hgd_sau_thay_doi (nested-grid)",
    "generator_built": true,
@@ -127,7 +127,7 @@
    "table_index": 7,
    "cols": 10,
    "total_width": 14400,
-   "min_col_width": 900,
+   "min_col_width": 954,
    "loop": "tv_hgd_cap_doi",
    "spec_ref": "tools/form_specs/household/PLII_M02.json#tv_hgd_cap_doi (nested-grid)",
    "generator_built": true,
@@ -193,7 +193,7 @@
    "table_index": 0,
    "cols": 11,
    "total_width": 14400,
-   "min_col_width": 900,
+   "min_col_width": 918,
    "loop": "ds_co_dong_sang_lap",
    "spec_ref": "tools/form_specs/formation/PLI_M07.json#ds_co_dong_sang_lap (list)",
    "generator_built": true,
@@ -237,7 +237,7 @@
    "table_index": 0,
    "cols": 12,
    "total_width": 14400,
-   "min_col_width": 900,
+   "min_col_width": 909,
    "loop": "ds_cshhl",
    "spec_ref": "tools/form_specs/formation/PLI_M10.json#ds_cshhl (list)",
    "generator_built": true,
@@ -303,7 +303,7 @@
    "table_index": 5,
    "cols": 10,
    "total_width": 14400,
-   "min_col_width": 900,
+   "min_col_width": 928,
    "loop": "ds_co_dong_sang_lap_ctcp",
    "spec_ref": "tools/form_specs/change/PLI_M72.json#ds_co_dong_sang_lap_ctcp (nested-grid)",
    "generator_built": true,
@@ -325,7 +325,7 @@
    "table_index": 6,
    "cols": 10,
    "total_width": 14400,
-   "min_col_width": 900,
+   "min_col_width": 928,
    "loop": "ds_co_dong_nuoc_ngoai_ctcp",
    "spec_ref": "tools/form_specs/change/PLI_M72.json#ds_co_dong_nuoc_ngoai_ctcp (nested-grid)",
    "generator_built": true,
@@ -502,5 +502,8 @@
     "ok": true
    }
   }
- }
+ },
+ "_notes": [
+  "6V-V4b 2026-09-05 Lead rebaseline: min_col_width = longest-word floor (>=900) — diet vo token cot hep (auditor-visual Phan 3)"
+ ]
 }

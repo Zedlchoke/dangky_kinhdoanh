@@ -805,7 +805,7 @@
    "ten_mau": "Danh sách thành viên công ty trách nhiệm hữu hạn hai thành viên trở lên",
    "form_status": "BLOCKED_LEGAL_REVIEW",
    "summary_counts": {
-    "p": 92,
+    "p": 91,
     "chk": 14,
     "table": 0,
     "loop": 1
@@ -1019,7 +1019,7 @@
    "ten_mau": "Danh sách cổ đông là nhà đầu tư nước ngoài",
    "form_status": "BLOCKED_LEGAL_REVIEW",
    "summary_counts": {
-    "p": 92,
+    "p": 91,
     "chk": 14,
     "table": 0,
     "loop": 1

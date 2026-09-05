@@ -24,7 +24,7 @@ L = []
 A = L.append
 A("# HEADER-NAME CENSUS — 87 form đăng ký kinh doanh (Lane C, READ-ONLY)")
 A("")
-A(f"- Generated: {d['generated']}  |  base HEAD: `{d['base_head']}`  |  repo: `/Users/hoangminhlong/orca/dangky_kinhdoanh`")
+A(f"- Generated: {d['generated']}  |  base HEAD: `{d['base_head']}`  |  repo: repo root (tools/census/header_name_census.py)")
 A("- Phạm vi: `word/document.xml` của 87 template `app/templates/<fid>.docx` (KHÔNG đụng `word/header*.xml` — các template không có header part riêng, band nằm trong body).")
 A("- Định nghĩa band: các body element từ đầu tới tiêu đề biểu mẫu (regex ^GIẤY ĐỀ NGHỊ/^ĐƠN/^THÔNG BÁO/^BÁO CÁO/^CÔNG BỐ/^GIẤY TIẾP NHẬN/^GIẤY CHỨNG NHẬN/^GIẤY XÁC NHẬN/^DANH SÁCH/^QUYẾT ĐỊNH... , fold dấu) hoặc 25 element đầu — lấy min. Bảng band 2 cột (tên trái + quốc hiệu phải) tính là band. Dòng logic tách theo `<w:br/>`.")
 A("- Literal lookup: fold hoa/thường + dấu theo 12 pattern nhiệm vụ (\"Họ và tên\" chỉ tính trong band).")

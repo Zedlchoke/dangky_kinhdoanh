@@ -611,3 +611,11 @@ PLAN.md. Tổng commit 6V: V0 310f868 → V1 1bc4c40 → V2 a59c36e/07cf007/
 | SIGNATURE 72pt: registry 78 entry 40→72; D6 grammar sync census + page-edge + "Đã ký" + SIG_MISSING; render spacer 72pt manual-only + noparen clusters; mutations V2a/V2b | Lead | `a2a29d6` | 6v_detectors 10/0; phase5r_signatures 6/0; docx_layout_signatures 8/0; visual_detectors 12/0; 5r_metadata 15/0; 5r_tables 10/0 | owner SIGNATURE-USABILITY-SPACE 2026-09-05 |
 | HEADER-NAME-SYNC: registry binding 20 form; generator bind fail-loud; converter mirror run; render.js span.mirror-fld + app.js mirrorKey; gate D17 HARD; regen 20×(template+blocks) ×2 zero-diff | Lead | `55637db` | test_v7_header_name 8/0; header_layout 11/0; test_dom 69/0; wiring 37/0; coverage drift 0; manifest deep GATE PASS 87/87 | census 216 occurrence; 2 BLOCKED_OWNER (M33, PLII_M06) |
 | D17 hay-folded (wrap trộn quốc hiệu) + E-suite vào runner | Lead | `481f5d6` | 6v_detectors 10/0; v7_header_name 8/0 | corpus phase7v |
+
+### Bổ sung wave v7 (sau audit MINOR-3): 4 commit cuối
+
+- `49fccbe` docs v7: census evidence commit + defect_registry/ledger + owner packet N-v1..N-v4 + verdict 9 form no-signature
+- `9f756f6` evidence v7: corpus phase7v HARD 0 / candidate 0 sau adjudicate; signature coverage 420=420, min gap 72.9pt; ZIP 455/455; Word 16.16.27 open-direct **91/91** (log /tmp/phase7v_word_open.log, tái lập bằng phase5_word_open_loop trên `generated_ho_so/_visual_layout/phase7v/word_open/`)
+- gate-fix v7: audit_blocks_check chấp nhận run mirror (validate shape) + allowlist H7 +8 file wave
+- PLAN v7 checkpoint header + runner cuối **63 PASS / 0 FAIL / 0 NOT RUN — VERDICT PASS** (/tmp/final_v7_final.json)
+- Auditor độc lập (fresh): **PASS-WITH-NOTES — 0 BLOCKER / 0 MAJOR**; report `docs/audits/v7-core-audit.md` (0 BLOCKER/MAJOR, MINOR-1/2/3 đã xử lý tại commit này)

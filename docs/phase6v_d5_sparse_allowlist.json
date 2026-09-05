@@ -6,7 +6,7 @@
  "mechanism": "gate nạp mặc định (tools/phase5_visual_gate.py --allowlist); hit SPARSE khớp (fixture, tag, form, page) — khóa vắng = wildcard — được ghi verdict vào record['d5_adjudicated'] thay vì candidate 'chưa adjudicate'.",
  "count": 64,
  "by_class": {
-  "(i)": 50,
+  "(i)": 55,
   "(ii)": 9
  },
  "blank_pages": [],

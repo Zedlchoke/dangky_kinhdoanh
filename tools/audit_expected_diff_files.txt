@@ -483,3 +483,5 @@ tools/census/header_name_census_report.py
 tools/census/v7_signature_census.py
 tools/header_name_binding.json
 tools/test_v7_header_name.py
+# --- [WAVE v7 2026-09-05] auditor doclat cuoi (fresh, PASS-WITH-NOTES 0 BLOCKER) + MINOR fix ---
+docs/audits/v7-core-audit.md

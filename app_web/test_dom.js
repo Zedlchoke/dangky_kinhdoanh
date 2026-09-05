@@ -572,6 +572,55 @@ const D = require('./ui/form-domain.js');
     !/placeholder="/.test(hBare));
 }
 
+// ------------------------------------- [WAVE v7] HEADER-NAME-SYNC mirror
+{
+  // Band đầu trang với run mirror (converter sinh từ {dn.ten_tieng_viet}
+  // ở ô (0,0) band theo tools/header_name_binding.json): render phải là
+  // span.mirror-fld có data-key + giá trị store — KHÔNG PHẢI input thứ hai.
+  const bandDoc = {
+    id: 'PLI_M32', ten_mau: 'hdr-mirror',
+    blocks: [{
+      t: 'table', band: 'header', widths: null,
+      rows: [
+        { cells: [
+          { runs: [
+            { text: 'TÊN DOANH NGHIỆP\n', b: true },
+            { mirror: { key: 'dn.ten_tieng_viet' } }
+          ] },
+          { runs: [{ text: 'CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM', b: true }] }
+        ] },
+        { cells: [
+          { runs: [{ text: 'Số: ' }, { input: { key: 'so_van_ban', w: 12 } }] },
+          { runs: [{ text: 'ngày…' }] }
+        ] }
+      ]
+    }]
+  };
+  const st = R.newStore();
+  st.values['dn.ten_tieng_viet'] = 'CÔNG TY TNHH MỘT HAI BA';
+  const hBand = R.renderBlocks(bandDoc, st);
+  check('v7: band mirror render span.mirror-fld có data-key',
+    /<span class="mirror-fld" data-key="dn\.ten_tieng_viet">CÔNG TY TNHH MỘT HAI BA<\/span>/.test(hBand),
+    hBand.slice(0, 200));
+  check('v7: mirror KHÔNG sinh input thứ hai cho key',
+    (hBand.match(/<input[^>]*data-key="dn\.ten_tieng_viet"/g) || []).length === 0);
+  check('v7: band row1 slot thường vẫn là input (Số văn bản)',
+    /<input[^>]*data-key="so_van_ban"/.test(hBand));
+
+  // store trống -> span rỗng (blank draft không dữ liệu giả)
+  const hBlank = R.renderBlocks(bandDoc, R.newStore());
+  check('v7: band mirror store trống -> span rỗng',
+    /<span class="mirror-fld" data-key="dn\.ten_tieng_viet"><\/span>/.test(hBlank));
+
+  // run input cùng key trong band KHÔNG nằm registry -> giữ nguyên input
+  // (band chưa bind phải còn thấy được qua gate D17)
+  const unbound = JSON.parse(JSON.stringify(bandDoc));
+  unbound.blocks[0].rows[0].cells[0].runs[1] = { input: { key: 'dn.ten_tieng_viet', w: 30 } };
+  const hUnbound = R.renderBlocks(unbound, st);
+  check('v7: run input (không mirror) trong band vẫn render input',
+    /<input[^>]*data-key="dn\.ten_tieng_viet"/.test(hUnbound));
+}
+
 // ---------------------------------------------------------------- kết luận
 console.log('-'.repeat(60));
 console.log('Ket qua: %d PASS / %d FAIL', passed, failed);

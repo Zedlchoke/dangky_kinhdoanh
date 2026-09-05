@@ -1176,12 +1176,16 @@
     return state.store.values[key] == null ? '' : state.store.values[key];
   }
 
-  /* Một key chung một giá trị: cập nhật mọi input khác cùng data-key. */
+  /* Một key chung một giá trị: cập nhật mọi input khác cùng data-key.
+   * [WAVE v7] span.mirror-fld (band đầu trang mirror read-only của
+   * HEADER-NAME-SYNC) cũng được cập nhật theo store qua textContent —
+   * nhập/xóa ở thân -> band đổi ngay; không phải input nên không tab-stop. */
   function mirrorKey(key, exceptEl) {
     var val = getKeyValue(key);
     document.querySelectorAll('#pages [data-key="' + cssEsc(key) + '"]').forEach(function (el) {
       if (el === exceptEl || el === document.activeElement) return;
       if (el.type === 'checkbox') el.checked = !!val;
+      else if (el.classList && el.classList.contains('mirror-fld')) el.textContent = val;
       else el.value = val;
     });
   }

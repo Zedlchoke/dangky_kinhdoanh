@@ -3357,6 +3357,65 @@ def _tag_header_band_slots(table, form_id, add_field, unmatched):
 
 
 # ---------------------------------------------------------------------------
+# [WAVE v7 HEADER-NAME-SYNC] band đầu trang = mirror read-only của trường
+# canonical ở thân. Registry tools/header_name_binding.json là nguồn chân lý
+# duy nhất (census 2026-09-05: 22 fillable-header-slot; 20 bind + 2
+# BLOCKED_OWNER). Generator thay dòng kẻ '-------' ở ô (0,0) bằng the
+# {key} — render đổ CÙNG giá trị thân vào band; blank draft → band trống
+# (không dữ liệu giả). Converter blocks sẽ biến the này thành run "mirror"
+# (không phải input thứ hai — xem docx_to_blocks).
+# ---------------------------------------------------------------------------
+
+_HEADER_NAME_BINDING_PATH = ROOT / "tools" / "header_name_binding.json"
+_HEADER_NAME_BINDING: dict | None = None
+
+
+def header_name_binding() -> dict:
+    global _HEADER_NAME_BINDING
+    if _HEADER_NAME_BINDING is None:
+        _HEADER_NAME_BINDING = json.loads(
+            _HEADER_NAME_BINDING_PATH.read_text(encoding="utf-8"))
+    return _HEADER_NAME_BINDING
+
+
+_HDR_DASH_LINE_RE = re.compile(r"^[-_.\u2013\u2014\u2026 ]{3,}$")
+
+
+def _bind_header_name_slot(table, form_id):
+    """Thay dòng kẻ điền tay ở ô (0,0) band bằng the {key} của registry.
+
+    Idempotent: ô đã chứa the {key} -> không đổi. Cấu trúc lệch (không tìm
+    thấy dòng kẻ ĐỒNG THỜI không có the) -> raise ValueError (fail loud,
+    đúng hợp đồng của build_header_band_table)."""
+    bind = header_name_binding()["forms"].get(form_id)
+    if not bind:
+        return False
+    key = bind["key"]
+    para = cell_first_para(tr_cells(table, 0)[0])
+    if para is None:
+        raise ValueError("[hdr-name] %s: ô (0,0) band không có paragraph"
+                         % form_id)
+    token = "{%s}" % key
+    if token in para.text:
+        return False   # đã bind (regen lần 2)
+    # Dòng kẻ thường nằm trong CÙNG run với nhãn ('TÊN …' + <w:br/> +
+    # '-------' — 2 w:t), nên thao tác ở mức w:t.
+    for run in para.runs:
+        replaced = False
+        for t_el in run._r.findall(qn("w:t")):
+            txt = t_el.text or ""
+            if _HDR_DASH_LINE_RE.match(txt):
+                t_el.text = token if not replaced else ""
+                t_el.set(qn("xml:space"), "preserve")
+                replaced = True
+        if replaced:
+            return True
+    raise ValueError(
+        "[hdr-name] %s: ô (0,0) không có dòng kẻ '-------' để bind %r "
+        "(sao chép nguồn lệch chuẩn?)" % (form_id, key))
+
+
+# ---------------------------------------------------------------------------
 # Quy trình chính
 # ---------------------------------------------------------------------------
 
@@ -3915,6 +3974,7 @@ def process_form(path, titles, coverage, out_tpl=None):
                 # riêng cho 2 ô băng dưới; KHÔNG đi qua detect_dynamic để
                 # không bị nhận nhầm là bảng danh sách.
                 _tag_header_band_slots(table, form_id, add_field, unmatched)
+                _bind_header_name_slot(table, form_id)   # [WAVE v7] mirror tên chủ thể
                 continue
             grid_info = _pop_grid_meta(table)
             if grid_info is not None:

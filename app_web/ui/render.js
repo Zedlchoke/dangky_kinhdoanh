@@ -297,6 +297,14 @@
 
   function renderRun(run, ac, rctx, runs, idx) {
     rctx = rctx || { fieldMeta: null, docId: '', ids: {} };
+    if (run && run.mirror) {
+      // [WAVE v7 HEADER-NAME-SYNC] band đầu trang = mirror read-only của
+      // trường canonical ở thân. span.mirror-fld có data-key để mirrorKey()
+      // (app.js) cập nhật NGAY khi nhập/xóa; KHÔNG phải input -> không tab-
+      // stop, không đụng validation/draft (một giá trị một lần nhập).
+      return '<span class="mirror-fld" data-key="' + escapeHtml(run.mirror.key) +
+        '">' + escapeHtml(ac.getVal(run.mirror.key)) + '</span>';
+    }
     if (run && run.input) {
       var inp = run.input;
       if (inp.chk !== undefined) {

@@ -31,8 +31,13 @@
       {
        "runs": [
         {
-         "text": "TÊN HỘ KINH DOANH\n-------",
+         "text": "TÊN HỘ KINH DOANH\n",
          "b": true
+        },
+        {
+         "mirror": {
+          "key": "hkd_ten_tieng_viet_2"
+         }
         }
        ],
        "colspan": 1,

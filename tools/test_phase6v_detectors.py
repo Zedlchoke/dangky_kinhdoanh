@@ -592,6 +592,49 @@ def test_v2b_d6():
         res["fails"]
 
 
+@check("V2c_d17_header_name_sync_mutations")
+def test_v2c_d17():
+    reg = {"forms": {"PLI_M32": {"key": "dn.ten_tieng_viet",
+                                 "label": "TÊN DOANH NGHIỆP"}}}
+    val = "CONG TY TNHH A BỘ ĐỘI"
+    # 1) band còn dòng kẻ '-------' → HDR_NAME_UNBOUND
+    p = _sig_page(0, [(1, 700.0, "TÊN DOANH NGHIỆP"),
+                      (2, 720.0, "-------")])
+    hits = gate.det_header_name([p], "PLI_M32", reg, val + "\n" + val)
+    assert [h["code"] for h in hits] == ["HDR_NAME_UNBOUND"], hits
+
+    # 2) band bound + giá trị khớp thân (xuất hiện 2 lần: band + thân) → PASS
+    p = _sig_page(0, [(1, 700.0, "TÊN DOANH NGHIỆP"),
+                      (2, 720.0, val)])
+    hits = gate.det_header_name([p], "PLI_M32", reg, val + "\n" + val)
+    assert hits == [], hits
+
+    # 3) band có giá trị KHÁC thân (chỉ thấy 1 lần — bind nhầm key) → SYNC
+    p = _sig_page(0, [(1, 700.0, "TÊN DOANH NGHIỆP"),
+                      (2, 720.0, "TEN SAI GIA TRI")])
+    hits = gate.det_header_name([p], "PLI_M32", reg, val + "\n" + val)
+    assert [h["code"] for h in hits] == ["HDR_NAME_SYNC"], hits
+
+    # 4) band giá trị trống (token render rỗng trên valid-full là lỗi) → SYNC
+    p = _sig_page(0, [(1, 700.0, "TÊN DOANH NGHIỆP"),
+                      (2, 720.0, "Số: 000001")])
+    hits = gate.det_header_name([p], "PLI_M32", reg, val)
+    assert hits and hits[0]["code"] in ("HDR_NAME_SYNC",
+                                        "HDR_NAME_LABEL_MISSING"), hits
+
+    # 5) form không nằm registry → detector bỏ qua
+    p = _sig_page(0, [(1, 700.0, "TÊN DOANH NGHIỆP"), (2, 720.0, "-------")])
+    assert gate.det_header_name([p], "PLI_M33", reg, "") == []
+
+    # 6) D17 là HARD gate: record_verdicts phải đẩy vào gate_fails
+    rec = {"form": "PLI_M32", "fixture": "valid-full", "tag": "main",
+           "detectors": {"D17_header_name": [{"code": "HDR_NAME_UNBOUND"}]}}
+    gate.record_verdicts([rec], {})
+    assert any(f["detector"] == "D17_header_name"
+               for f in rec["gate_fails"]), rec["gate_fails"]
+    assert rec["gate_verdict"] == "FAIL"
+
+
 # ---------------------------------------------------------------------------
 # Runner
 # ---------------------------------------------------------------------------
@@ -606,6 +649,7 @@ def main() -> int:
     test_v1g_verdict_contract()
     test_v2a_d8()
     test_v2b_d6()
+    test_v2c_d17()
     passed = [r for r in _RESULTS if r[1]]
     failed = [r for r in _RESULTS if not r[1]]
     for name, ok, msg in _RESULTS:

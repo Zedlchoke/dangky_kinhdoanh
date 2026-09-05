@@ -749,6 +749,96 @@ def det_token_values(pages: list) -> list[dict]:
     return out
 
 
+# [WAVE v7] D17 — HEADER-NAME-SYNC: band đầu trang phải mirror đúng giá trị
+# canonical của thân. Registry tools/header_name_binding.json (nguồn chân lý
+# duy nhất, census 2026-09-05). Contract fixture valid-full:
+#   - ô band còn dòng kẻ '-------'            → HDR_NAME_UNBOUND (hard)
+#   - band có giá trị nhưng KHÔNG khớp thân   → HDR_NAME_SYNC (hard)
+#     (đếm số lần xuất hiện của giá trị band trong toàn văn: band + thân
+#     phải >= 2; bind nhầm key cho giá trị khác sẽ chỉ thấy 1 lần)
+# Form không nằm registry: detector bỏ qua (M33/PLII_M06 BLOCKED_OWNER).
+_HEADER_NAME_BINDING_PATH = ROOT / "tools" / "header_name_binding.json"
+
+
+def load_header_name_binding(path: Path = _HEADER_NAME_BINDING_PATH) -> dict:
+    if path.exists():
+        return json.loads(path.read_text(encoding="utf-8"))
+    return {"forms": {}}
+
+
+_HDR_NAME_LABEL_FOLD = re.compile(r"^ten (doanh nghiep|ho kinh doanh)$")
+_HDR_NAME_DASH_FOLD = re.compile(r"^[-_.\u2013\u2014\u2026 ]{3,}$")
+
+
+def _page_lines_of(page) -> list[dict]:
+    lines: dict[tuple, list] = {}
+    for w in page["words"]:
+        lines.setdefault((w[5], w[6]), []).append(w)
+    out = []
+    for _bk, ws in lines.items():
+        ws.sort(key=lambda w: w[0])
+        out.append({
+            "text": " ".join(w[4] for w in ws),
+            "fold": _fold(" ".join(w[4] for w in ws)),
+            "x0": min(w[0] for w in ws), "x1": max(w[2] for w in ws),
+            "y0": min(w[1] for w in ws), "y1": max(w[3] for w in ws),
+        })
+    return out
+
+
+def det_header_name(pages: list, form: str, registry: dict | None = None,
+                    full_text: str | None = None) -> list[dict]:
+    if not pages:
+        return []
+    bind = ((registry or {}).get("forms") or {}).get(form)
+    if not bind:
+        return []
+    label_f = _fold(bind.get("label") or "")
+    lines = _page_lines_of(pages[0])
+    label = None
+    for ln in lines:
+        f = re.sub(r"[0-9]{1,2}$", "", ln["fold"])
+        if f == label_f or (label_f and label_f in f and len(f) <= len(label_f) + 2):
+            label = ln
+            break
+    if label is None:
+        return [{"code": "HDR_NAME_LABEL_MISSING", "page": 1,
+                 "expect": bind.get("label")}]
+    # dòng kế trong cùng cột (x chồng label, ngay dưới)
+    below = [ln for ln in lines
+             if ln["y0"] > label["y1"] - 2
+             and not (ln["x1"] < label["x0"] - 30 or
+                      ln["x0"] > label["x0"] + 420)]
+    below.sort(key=lambda ln: ln["y0"])
+    if not below:
+        return [{"code": "HDR_NAME_SYNC", "page": 1, "value": ""}]
+    first = below[0]
+    if _HDR_NAME_DASH_FOLD.match(first["fold"]):
+        return [{"code": "HDR_NAME_UNBOUND", "page": 1,
+                 "slot": bind.get("label")}]
+    value = first["text"].strip()
+    # gộp thêm dòng kế nếu tên bị wrap (cùng cột, sát dòng trước)
+    for ln in below[1:3]:
+        if ln["y0"] - below[0]["y1"] < 6 and \
+                not (ln["x1"] < label["x0"] - 30 or
+                     ln["x0"] > label["x0"] + 420) and \
+                not _HDR_NAME_DASH_FOLD.match(ln["fold"]):
+            value += " " + ln["text"].strip()
+    hay = re.sub(r"\s+", " ", full_text or
+                 "\n".join(p["text"] for p in pages))
+    needle = re.sub(r"\s+", " ", value).strip()
+    if not needle or not any(c.isalpha() for c in needle):
+        return [{"code": "HDR_NAME_SYNC", "page": 1, "value": value[:60]}]
+    if hay.count(needle) < 2:
+        return [{"code": "HDR_NAME_SYNC", "page": 1, "value": value[:60]}]
+    return []
+
+
+# [WAVE v7] registry band mirror tên chủ thể — nạp 1 lần sau khi loader đã
+# định nghĩa (như HANDWRITING_SLOTS)
+HEADER_NAME_BINDING = load_header_name_binding()
+
+
 def det_fixed_matrix_headers(pdf_text: str, form_map: dict) -> list[str]:
     """D10: header cột của fixed-matrix phải xuất hiện trong PDF text."""
     missing = []
@@ -891,6 +981,12 @@ def analyze(maps, blocks_all, fixture: str, dirs: list[Path],
                 rec["detectors"]["D14_name_slot"] = (
                     det_name_slot(pages, fid, HANDWRITING_SLOTS)
                     if fixture == "valid-full" else [])
+                # [WAVE v7] D17 header-name sync — contract fixture
+                # valid-full (giá trị canonical phải có mặt để đối chiếu)
+                rec["detectors"]["D17_header_name"] = (
+                    det_header_name(pages, fid, HEADER_NAME_BINDING,
+                                    "\n".join(p["text"] for p in pages))
+                    if fixture == "valid-full" else [])
                 # [6V-V1] D15 chk glyph — contract fixture choice-variants
                 # (mọi nhóm loại trừ có đúng 1 lựa chọn được tick)
                 rec["detectors"]["D15_chk_glyph"] = (
@@ -933,6 +1029,10 @@ def analyze(maps, blocks_all, fixture: str, dirs: list[Path],
 HARD_FAIL_KEYS = {
     "D1_source_indicator": 1, "D2_field_code": 1, "D3_markers": 1,
     "D4_contamination": 1, "D12_fixture_violations": 1,
+    # [WAVE v7] HEADER-NAME-SYNC là hard gate (owner: band mirror read-only,
+    # một giá trị một lần nhập) — band còn dòng kẻ hoặc lệch giá trị thân
+    # đều FAIL record.
+    "D17_header_name": 1,
 }
 
 
@@ -1127,7 +1227,7 @@ def main() -> int:
                      # hard) tới khi V2 xong; đếm ở đây để số hard luôn
                      # hiện diện trong summary ngay khi Lead nâng hard.
                      "D13_skeleton_glue", "D14_name_slot", "D15_chk_glyph",
-                     "D16_token_values")
+                     "D16_token_values", "D17_header_name")
     for key in detector_keys:
         summary[key] = sum(
             1 for r in all_records

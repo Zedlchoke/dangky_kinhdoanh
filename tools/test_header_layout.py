@@ -348,8 +348,22 @@ def t_layout():
                 assert got == ALIGN_ENUM[mode], (
                     "%s: ô (%d,%d) align %s != %s" % (fid, ri, ci, got, mode))
             # nội dung từng ô = nguồn (băng 1 phải) / nguồn + the (băng 2)
+            # [WAVE v7 HEADER-NAME-SYNC] form bật binding: dòng kẻ tên ô
+            # (0,0) được generator thay bằng the {key} của registry.
+            src00 = src_texts[0]
+            _bind = bfm.header_name_binding()["forms"].get(fid)
+            if _bind:
+                _lines = []
+                _swapped = False
+                for ln in src00.split("\n"):
+                    if not _swapped and bfm.HEADER_BAND_RULE_RE.match(ln.strip()):
+                        _lines.append("{%s}" % _bind["key"])
+                        _swapped = True
+                    else:
+                        _lines.append(ln)
+                src00 = "\n".join(_lines)
             expected = {
-                (0, 0): src_texts[0],                                  # giữ nguyên
+                (0, 0): src00,
                 (0, 1): motto_two_lines(src_texts[1]),                 # bỏ dòng kẻ
                 (1, 0): "Số: {so_van_ban}",
                 # [6V-V2/C1] pin lại theo skeleton đã normalize glue (B1/D13):
@@ -430,6 +444,21 @@ def t_text_preserved():
                            "%s: ô trái mất dòng kẻ điền tên" % fid)
             expect = list(before)
             expect[1] = "\n".join(motto_lines[:-1])
+            # [WAVE v7 HEADER-NAME-SYNC] form nằm registry mirror: dòng kẻ
+            # điền tên ô trái được generator thay bằng the {key} — norm()
+            # gỡ the nên hai phía phải quy về cùng chữ. Chỉ form BẬT binding
+            # mới áp (M33/PLII_M06 blocked_owner giữ nguyên dòng kẻ).
+            #dash-run đầu tiên trong tài liệu CHÍNH LÀ dòng kẻ của slot tên
+            # (label para đứng trước quốc hiệu/Số/ngày) — visible_text có thể
+            # không giữ \n nên so bằng regex thay vì theo dòng.
+            _dash_run_re = re.compile(r"[-_.\u2013\u2014\u2026]{3,}")
+
+            def _swap_label_rule(text):
+                bind = bfm.header_name_binding()["forms"].get(fid)
+                if not bind:
+                    return text
+                return _dash_run_re.sub("{%s}" % bind["key"], text, count=1)
+            expect[0] = _swap_label_rule(expect[0])
             # Toàn bộ chữ còn lại PHẢI GIỮ NGUYÊN (kể cả dòng kẻ điền tên ô trái)
             assert "".join(norm(t) for t in expect) == \
                 "".join(norm(t) for t in after), (
@@ -445,6 +474,9 @@ def t_text_preserved():
                 plain = visible_text(Document(str(sb.tpl / ("%s.docx" % fid))))
             finally:
                 bfm.HEADER_BAND_FORMS = saved_forms
+            # [WAVE v7] plain (band tắt) còn dòng kẻ tên; band bật đã thay
+            # bằng the — quy đồng trước khi so (chỉ form bật binding).
+            plain = _swap_label_rule(plain)
             assert norm(plain).replace(norm(rule), "", 1) == norm(new_txt), (
                 "%s: text tài liệu đổi ngoài cụm header khi bật header band"
                 % fid)
@@ -469,9 +501,18 @@ def t_motto_underline():
             # dòng kẻ "-----" dưới quốc hiệu phải biến mất
             assert "-----" not in cell_text(tbl.rows[0].cells[1]), (
                 "%s: còn sót dòng kẻ scraped trong ô quốc hiệu" % fid)
-            # ô trái VẪN GIỮ dòng kẻ điền tên
-            assert "-----" in cell_text(tbl.rows[0].cells[0]), (
-                "%s: mất dòng kẻ điền tên ở ô trái" % fid)
+            # ô trái: [hdr2col base] dòng kẻ điền tên phải còn; [WAVE v7]
+            # form BẬT binding mirror thì dòng kẻ được thay bằng the {key}
+            # — kiểm: có dòng kẻ HOẶC the của đúng key registry.
+            c0 = cell_text(tbl.rows[0].cells[0])
+            bind = bfm.header_name_binding()["forms"].get(fid)
+            if bind:
+                assert "{%s}" % bind["key"] in c0, (
+                    "%s: ô trái phải chứa the mirror %s (WAVE v7)"
+                    % (fid, bind["key"]))
+            else:
+                assert "-----" in c0, (
+                    "%s: mất dòng kẻ điền tên ở ô trái" % fid)
         sb.assert_repo_untouched()
 
 
@@ -563,6 +604,11 @@ def t_tags_and_blocks():
             assert src_tags == [], "%s: nguồn docx không được còn the %r" % (fid, src_tags)
             want = ["so_van_ban", "dia_diem_ky", "ngay_ky_vb", "thang_ky_vb",
                     "nam_ky_vb"]
+            # [WAVE v7] form bật binding: ô (0,0) mang thêm the mirror
+            # (quét trước các slot băng dưới trong cùng bảng).
+            _bind = bfm.header_name_binding()["forms"].get(fid)
+            if _bind:
+                want = [_bind["key"]] + want
 
             meta, _un = bfm.process_form(bfm.find_source(fid), {}, None)
             tpl = sb.tpl / ("%s.docx" % fid)
@@ -586,8 +632,20 @@ def t_tags_and_blocks():
             cell_inputs = [r["input"]["key"]
                            for row in first_tbl["rows"] for c in row["cells"]
                            for r in c.get("runs", []) if "input" in r]
-            assert cell_inputs == want, (
+            # [WAVE v7] run mirror của band (0,0) KHÔNG phải input — danh
+            # sách input của converter vẫn là đúng 5 slot băng dưới.
+            want_slots = ["so_van_ban", "dia_diem_ky", "ngay_ky_vb",
+                          "thang_ky_vb", "nam_ky_vb"]
+            assert cell_inputs == want_slots, (
                 "%s: converter mất input trong bảng header: %r" % (fid, cell_inputs))
+            if _bind:
+                mirror_runs = [
+                    r["mirror"]["key"]
+                    for row in first_tbl["rows"] for c in row["cells"]
+                    for r in c.get("runs", []) if "mirror" in r]
+                assert mirror_runs == [_bind["key"]], (
+                    "%s: converter không sinh run mirror cho band: %r"
+                    % (fid, mirror_runs))
             # không mất text toàn tài liệu (docx vs blocks)
             want_txt = re.sub(r"\s+", "",
                               dxtb.collect_docx_text(tpl))

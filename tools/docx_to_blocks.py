@@ -742,6 +742,24 @@ def row_visible_text(row_cells: list[dict]) -> str:
 HEADER_BAND_FIRST_CELL = ("TÊN DOANH NGHIỆP", "TÊN HỘ KINH DOANH")
 HEADER_BAND_MOTTO = "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM"
 
+# [WAVE v7 HEADER-NAME-SYNC] registry band mirror (nguồn chân lý duy nhất
+# do generator ghi/đọc; converter chỉ ĐỌC để biến the {key} ở ô (0,0) band
+# thành run "mirror" — KHÔNG phải input thứ hai theo quyết định owner).
+_HEADER_NAME_BINDING_PATH = ROOT / "tools" / "header_name_binding.json"
+_hdr_name_keys: set | None = None
+
+
+def _header_name_mirror_keys() -> set:
+    global _hdr_name_keys
+    if _hdr_name_keys is None:
+        try:
+            data = json.loads(
+                _HEADER_NAME_BINDING_PATH.read_text(encoding="utf-8"))
+            _hdr_name_keys = {v["key"] for v in data.get("forms", {}).values()}
+        except (OSError, ValueError, KeyError):
+            _hdr_name_keys = set()
+    return _hdr_name_keys
+
 
 def is_header_band_table(grid: list[list[dict]]) -> bool:
     """Bảng header 2 band (hdr2col): ô đầu trái là ô TÊN …, bảng chứa khối
@@ -755,6 +773,27 @@ def is_header_band_table(grid: list[list[dict]]) -> bool:
     all_text = ANY_TAG_RE.sub(
         "", "".join(cell_full_text(rec) for row in grid for rec in row))
     return HEADER_BAND_MOTTO in all_text
+
+
+def _band_first_cell_to_mirror(block: dict) -> None:
+    """[WAVE v7] ô (0,0) band: run input với key thuộc registry mirror ->
+    run {"mirror": {"key": …}} — UI vẽ text read-only đồng bộ store, KHÔNG
+    tạo input/tab-stop/validation thứ hai (quyết định owner
+    HEADER-NAME-SYNC 2026-09-05). Run không nằm registry (band chưa bind)
+    giữ nguyên để gate bắt."""
+    if not block.get("rows"):
+        return
+    mirror_keys = _header_name_mirror_keys()
+    if not mirror_keys:
+        return
+    cells = block["rows"][0].get("cells") or []
+    if not cells:
+        return
+    for run in cells[0].get("runs") or []:
+        inp = run.get("input")
+        if inp and inp.get("key") in mirror_keys:
+            run.pop("input")
+            run["mirror"] = {"key": inp["key"]}
 
 
 def table_block(tbl: Table) -> dict:
@@ -784,6 +823,7 @@ def table_block(tbl: Table) -> dict:
         }
         if is_header_band_table(grid):
             block["band"] = "header"
+            _band_first_cell_to_mirror(block)
         return block
 
     # bảng loop: headerRows = hàng tiêu đề (không trắng) trước hàng khuôn,

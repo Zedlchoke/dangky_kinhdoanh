@@ -1312,7 +1312,9 @@ def _tag_sample_words(tag: str) -> list:
     if _VALUEFACTORY is not None:
         f = _VALUEFACTORY()
         for _ in range(48):
-            words += str(f.value(tag, "")).replace("/", " / ").split()
+            # KHÔNG tách trên '/': ngày "15/07/1982", mã "123/2026" là MỘT
+            # token — '/' chiếm width và phải tính trong longest-word
+            words += str(f.value(tag, "")).split()
     else:
         print("[width-floors] CANH BAO: khong nap duoc ValueFactory — "
               "sàn longest-word cho tag %r về 0 (chỉ còn sàn legacy)" % tag)

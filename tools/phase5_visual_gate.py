@@ -885,6 +885,23 @@ HARD_FAIL_KEYS = {
 }
 
 
+def _d5_sparse_allowed(entries: list[dict], rec: dict, item: dict) -> dict | None:
+    """[6V-V4b việc 9] Tra sparse allowlist theo (fixture, tag, form, page).
+    Khóa vắng mặt trong entry = wildcard. Trả entry adjudicate (có
+    "adjudication" + "reason") hoặc None."""
+    for a in entries:
+        if a.get("form") not in (None, rec.get("form")):
+            continue
+        if a.get("fixture") not in (None, rec.get("fixture")):
+            continue
+        if a.get("tag") not in (None, rec.get("tag")):
+            continue
+        if a.get("page") not in (None, item.get("page")):
+            continue
+        return a
+    return None
+
+
 def record_verdicts(records: list[dict], allowlist: dict) -> None:
     for rec in records:
         fails = []
@@ -916,7 +933,24 @@ def record_verdicts(records: list[dict], allowlist: dict) -> None:
                                    for a in allowed):
                             fails.append({"detector": key, "detail": item})
                     else:
-                        candidates.append({"detector": key, "detail": item})
+                        # [6V-V4b việc 9] SPARSE có thể được adjudicate trước
+                        # (auditor/6v-visual 2026-09-05: 72 hit = 59 (i) + 7
+                        # (ii) + 6 (iii) đã fix) — hit nằm trong
+                        # sparse_pages của allowlist không còn là candidate
+                        # "chưa adjudicate"; verdict ghi vào record để
+                        # summary minh bạch số đã adjudicate.
+                        entry = _d5_sparse_allowed(
+                            allowlist.get("sparse_pages", []), rec, item)
+                        if entry:
+                            rec.setdefault("d5_adjudicated", []).append({
+                                "page": item.get("page"),
+                                "chars": item.get("chars"),
+                                "adjudication": entry.get("adjudication"),
+                                "reason": entry.get("reason"),
+                            })
+                        else:
+                            candidates.append({"detector": key,
+                                               "detail": item})
             else:
                 # D9/D10/D11 census → candidate (chốt policy ở Lane C/5R4)
                 candidates.append({"detector": key, "detail": val})
@@ -970,7 +1004,7 @@ def main() -> int:
     ap.add_argument("--zoom", type=float, default=2.0)
     ap.add_argument("--no-render", action="store_true")
     ap.add_argument("--allowlist", default=str(ROOT / "docs" /
-                                                "phase5r_blank_page_allowlist.json"))
+                                                "phase6v_d5_sparse_allowlist.json"))
     args = ap.parse_args()
 
     fixtures = [f.strip() for f in args.fixtures.split(",") if f.strip()]

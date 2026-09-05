@@ -1,0 +1,487 @@
+{
+ "version": 1,
+ "date": "2026-09-05",
+ "lane": "agent/6v-v4fix (6V-V4b việc 9)",
+ "source_adjudication": "docs/audits/6v/v4-visual-audit.md — 72 hit D5_blank_sparse: 59 (i) + 7 (ii) + 6 (iii) đã fix ở việc 1; allowlist này liệt kê lại các hit (i)/(ii) đo trên corpus v4b_finalcheck (455 record, template+fixture sau V4b, 2026-09-05 tối) + 2 hit mới lớp (ii) do việc 7a (ngày đủ định dạng).",
+ "mechanism": "gate nạp mặc định (tools/phase5_visual_gate.py --allowlist); hit SPARSE khớp (fixture, tag, form, page) — khóa vắng = wildcard — được ghi verdict vào record['d5_adjudicated'] thay vì candidate 'chưa adjudicate'.",
+ "count": 59,
+ "by_class": {
+  "(i)": 50,
+  "(ii)": 9
+ },
+ "blank_pages": [],
+ "sparse_pages": [
+  {
+   "fixture": "empty-paper",
+   "tag": "main",
+   "form": "PLII_M10",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "empty-paper",
+   "tag": "main",
+   "form": "PLII_M17",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "empty-paper",
+   "tag": "main",
+   "form": "PLII_M19",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "empty-paper",
+   "tag": "main",
+   "form": "PLII_M22",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "empty-paper",
+   "tag": "main",
+   "form": "PLII_M23",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "empty-paper",
+   "tag": "main",
+   "form": "PLI_M02",
+   "page": 6,
+   "adjudication": "(ii)",
+   "reason": "đuôi mục địa chủ (Tỉnh/TP, Quốc gia, ĐT/Fax, Email) wrap từ trang trước — adjudicate auditor (ii)"
+  },
+  {
+   "fixture": "empty-paper",
+   "tag": "main",
+   "form": "PLI_M45",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "empty-paper",
+   "tag": "main",
+   "form": "PLI_M48",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "empty-paper",
+   "tag": "main",
+   "form": "PLI_M50",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "empty-paper",
+   "tag": "main",
+   "form": "PLI_M51",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "empty-paper",
+   "tag": "main",
+   "form": "PLI_M53",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "empty-paper",
+   "tag": "main",
+   "form": "PLI_M55",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "empty-paper",
+   "tag": "main",
+   "form": "PLI_M57",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "empty-paper",
+   "tag": "main",
+   "form": "PLI_M70",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "empty-paper",
+   "tag": "m72_dntn",
+   "form": "PLI_M72",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "ô điền/khối 'Nơi đăng ký' cuối form Excel M72 — hợp lệ theo thiết kế (parity adjudicate auditor cho m72_dntn p2)"
+  },
+  {
+   "fixture": "valid-minimal",
+   "tag": "main",
+   "form": "PLII_M07",
+   "page": 3,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "valid-minimal",
+   "tag": "main",
+   "form": "PLII_M10",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "valid-minimal",
+   "tag": "main",
+   "form": "PLII_M17",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "valid-minimal",
+   "tag": "main",
+   "form": "PLII_M19",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "valid-minimal",
+   "tag": "main",
+   "form": "PLII_M22",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "valid-minimal",
+   "tag": "main",
+   "form": "PLII_M23",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "valid-minimal",
+   "tag": "main",
+   "form": "PLI_M42",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "valid-minimal",
+   "tag": "main",
+   "form": "PLI_M43",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "valid-minimal",
+   "tag": "main",
+   "form": "PLI_M45",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "valid-minimal",
+   "tag": "main",
+   "form": "PLI_M48",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "valid-minimal",
+   "tag": "main",
+   "form": "PLI_M50",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "valid-minimal",
+   "tag": "main",
+   "form": "PLI_M52",
+   "page": 3,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "valid-minimal",
+   "tag": "main",
+   "form": "PLI_M53",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "valid-minimal",
+   "tag": "main",
+   "form": "PLI_M70",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "valid-minimal",
+   "tag": "main",
+   "form": "PLI_M75",
+   "page": 3,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "valid-full",
+   "tag": "main",
+   "form": "PLII_M17",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "valid-full",
+   "tag": "main",
+   "form": "PLII_M20",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "valid-full",
+   "tag": "main",
+   "form": "PLII_M22",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "valid-full",
+   "tag": "main",
+   "form": "PLII_M23",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "valid-full",
+   "tag": "main",
+   "form": "PLII_M25",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "valid-full",
+   "tag": "main",
+   "form": "PLI_M42",
+   "page": 2,
+   "adjudication": "(ii)",
+   "reason": "đuôi địa chỉ 'Liêm, TP. Hà Nội' xé cụm qua trang — adjudicate auditor (ii)"
+  },
+  {
+   "fixture": "valid-full",
+   "tag": "main",
+   "form": "PLI_M43",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "valid-full",
+   "tag": "main",
+   "form": "PLI_M52",
+   "page": 3,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "valid-full",
+   "tag": "main",
+   "form": "PLI_M76",
+   "page": 2,
+   "adjudication": "(ii)",
+   "reason": "đuôi câu 'Đề nghị Ông/Bà liên hệ…' wrap qua trang, câu nguyên vẹn — adjudicate auditor (ii)"
+  },
+  {
+   "fixture": "valid-full",
+   "tag": "m72_ctcp",
+   "form": "PLI_M72",
+   "page": 2,
+   "adjudication": "(ii)",
+   "reason": "mục 6 'Tổng số cổ phần' (cặp nhãn+giá trị hoàn chỉnh) wrap qua ranh giới trang do giá trị ngày đủ định dạng dd/mm/yyyy (việc 7a) làm trang 1 kín — hit mới do lane V4b, nội dung nguyên vẹn; chờ polish keepNext khối vốn (owner)"
+  },
+  {
+   "fixture": "valid-full",
+   "tag": "m72_dhdn",
+   "form": "PLI_M72",
+   "page": 3,
+   "adjudication": "(i)",
+   "reason": "ô điền/khối 'Nơi đăng ký' cuối form Excel M72 — hợp lệ theo thiết kế (parity adjudicate auditor cho m72_dntn p2)"
+  },
+  {
+   "fixture": "long-boundary",
+   "tag": "main",
+   "form": "PLII_M08",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "long-boundary",
+   "tag": "main",
+   "form": "PLII_M17",
+   "page": 2,
+   "adjudication": "(ii)",
+   "reason": "đuôi giá trị 'Minh - Phòng ĐKKD' wrap ('Hồ Chí/Minh') — adjudicate auditor (ii)"
+  },
+  {
+   "fixture": "long-boundary",
+   "tag": "main",
+   "form": "PLII_M20",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "long-boundary",
+   "tag": "main",
+   "form": "PLII_M25",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "long-boundary",
+   "tag": "main",
+   "form": "PLII_M27",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "long-boundary",
+   "tag": "main",
+   "form": "PLI_M47",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "long-boundary",
+   "tag": "main",
+   "form": "PLI_M76",
+   "page": 2,
+   "adjudication": "(ii)",
+   "reason": "đuôi câu 'Đề nghị Ông/Bà liên hệ…' wrap qua trang, câu nguyên vẹn — adjudicate auditor (ii)"
+  },
+  {
+   "fixture": "choice-variants",
+   "tag": "main",
+   "form": "PLII_M17",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "choice-variants",
+   "tag": "main",
+   "form": "PLII_M20",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "choice-variants",
+   "tag": "main",
+   "form": "PLII_M22",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "choice-variants",
+   "tag": "main",
+   "form": "PLII_M23",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "choice-variants",
+   "tag": "main",
+   "form": "PLII_M25",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "choice-variants",
+   "tag": "main",
+   "form": "PLI_M42",
+   "page": 2,
+   "adjudication": "(ii)",
+   "reason": "đuôi địa chỉ 'Liêm, TP. Hà Nội' xé cụm qua trang — adjudicate auditor (ii)"
+  },
+  {
+   "fixture": "choice-variants",
+   "tag": "main",
+   "form": "PLI_M43",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "choice-variants",
+   "tag": "main",
+   "form": "PLI_M52",
+   "page": 3,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "choice-variants",
+   "tag": "main",
+   "form": "PLI_M76",
+   "page": 2,
+   "adjudication": "(ii)",
+   "reason": "đuôi câu 'Đề nghị Ông/Bà liên hệ…' wrap qua trang, câu nguyên vẹn — adjudicate auditor (ii)"
+  },
+  {
+   "fixture": "choice-variants",
+   "tag": "m72_ctcp",
+   "form": "PLI_M72",
+   "page": 2,
+   "adjudication": "(ii)",
+   "reason": "mục 6 'Tổng số cổ phần' (cặp nhãn+giá trị hoàn chỉnh) wrap qua ranh giới trang do giá trị ngày đủ định dạng dd/mm/yyyy (việc 7a) làm trang 1 kín — hit mới do lane V4b, nội dung nguyên vẹn; chờ polish keepNext khối vốn (owner)"
+  },
+  {
+   "fixture": "choice-variants",
+   "tag": "m72_dhdn",
+   "form": "PLI_M72",
+   "page": 3,
+   "adjudication": "(i)",
+   "reason": "ô điền/khối 'Nơi đăng ký' cuối form Excel M72 — hợp lệ theo thiết kế (parity adjudicate auditor cho m72_dntn p2)"
+  }
+ ]
+}

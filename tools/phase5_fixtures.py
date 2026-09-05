@@ -357,9 +357,17 @@ class ValueFactory:
             return str(n * 500000000)
         if "ty_le" in k or "phan_tram" in k:
             return str((n * 7) % 100 + 1)
-        if k.endswith("ngay") or "ngay_sinh" in k or "ngay_cap" in k or \
-                "ngay_ky" in k:
+        if k.endswith("ngay") or "ngay_ky" in k:
             return "%02d" % (n % 28 + 1)
+        if "ngay_sinh" in k or "ngay_cap" in k:
+            # [6V-V4b việc 7a] 'Ngày, tháng, năm sinh' / 'Ngày cấp' là
+            # TRƯỜNG NGÀY ĐỦ dd/mm/yyyy theo bản giấy — fixture cũ chỉ điền
+            # số ngày ('Ngày, tháng, năm sinh: 12', 'Ngày cấp 10') không đủ
+            # định dạng ngày. Ngày sinh năm 19xx, ngày cấp năm 20xx.
+            if "ngay_sinh" in k:
+                return "%02d/%02d/19%02d" % (n % 28 + 1, n % 12 + 1,
+                                             70 + n % 30)
+            return "%02d/%02d/20%02d" % (n % 28 + 1, n % 12 + 1, 24 + n % 3)
         if k.endswith("thang"):
             return "%02d" % (n % 12 + 1)
         if k.endswith("nam"):
@@ -454,6 +462,25 @@ def _paragraph_groups(blocks) -> list[list[str]]:
 # Fixture builders
 # ---------------------------------------------------------------------------
 
+# ---------------------------------------------------------------------------
+# [6V-V4b việc 7b] cột chữ ký trong bảng = vùng viết tay theo bản giấy —
+# KHÔNG nhận dữ liệu fixture (adjudicate auditor/6v-visual 2026-09-05,
+# Finding ngoài phạm vi #3: cột 'Chữ ký' PLII_M02 p4 / PLI_M09 p16 bị điền
+# tên + chỉ số trên vùng điền tay). Đây là phần mở rộng bảng của chính sách
+# handwriting-only: registry tools/phase6v_handwriting_slots.json chỉ phủ
+# slot tên dưới tiêu đề (D14 tự chạy, không đụng cột bảng).
+_HANDWRITING_COL_TAG = "chu_ky"
+
+
+def is_handwriting_column(tag: str, label: str = "") -> bool:
+    """Cột bảng chữ ký (vùng viết tay) — fixture để trống."""
+    k = _fold(tag or "")
+    if k == _HANDWRITING_COL_TAG or k.endswith("." + _HANDWRITING_COL_TAG):
+        return True
+    lf = _fold(label or "")
+    return lf == "chu ky" or lf.startswith("chu ky ")
+
+
 def build_fixture(fid: str, form_map: dict, fixture: str,
                   blocks=None, factory: ValueFactory | None = None) -> dict:
     """Sinh data dict cho (form, fixture). Không đụng draft/validation —
@@ -507,8 +534,18 @@ def build_fixture(fid: str, form_map: dict, fixture: str,
     rows_n = 1 if is_minimal else (25 if is_long else 3)
     for t in form_map.get("dynamic_tables", []):
         loop, cols = t["loop"], t.get("columns", [])
-        data[loop] = [{c["tag"]: f.value(c["tag"], c.get("label") or "")
-                       for c in cols} for _ in range(rows_n)]
+        rows = []
+        for _ in range(rows_n):
+            row = {c["tag"]: f.value(c["tag"], c.get("label") or "")
+                   for c in cols}
+            # [6V-V4b việc 7b] cột chữ ký = vùng viết tay: giá trị VẼ RA
+            # rồi MỚI loại — giữ nguyên chuỗi gọi ValueFactory (n) để việc
+            # bỏ cột ký KHÔNG xô lệch giá trị của mọi field phía sau
+            # (xô lệch n đã gây drift pagination toàn corpus, tái hiện
+            # m72_ctcp p2 trang 29 ký tự)
+            rows.append({k: v for k, v in row.items()
+                         if not is_handwriting_column(k)})
+        data[loop] = rows
 
     # ---- fixed-matrix cells (spec-driven) ----
     specs = [s for s in (form_map.get("section_specs") or [])

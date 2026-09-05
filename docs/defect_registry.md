@@ -285,3 +285,62 @@ f=53 form band para_br **chờ owner Q-V8**; g=0 (đúng registry band).
 thông báo chấp thuận điện tử). "Mẫu số N" vị trí M19 phải vs khác trái →
 lane V4b đối chiếu nguồn gốc trong repo rồi đăng ký. Fixture: ngày chỉ số
 ngày + cột "Chữ ký" nhận dữ liệu → lane V4b (policy handwriting-only cột).
+
+## Class 6V-V4b — fix theo adjudication auditor/6v-visual (2026-09-05, lane agent/6v-v4fix)
+
+Base: 960d0b2, worktree `dangky_kinhdoanh-worktrees/6v-v4fix` (nhánh 6v-v4fix).
+Mỗi mục: việc → gốc rễ → fix → evidence. Số liệu trước/sau đo CÙNG môi
+trường (tối 2026-09-05; corpus sáng 07:36 drift 46↔52 trang trên PLI_M12
+long-boundary với template hash GIỐNG NHAU bee134e5 — main repo pass-free
+cũng render 52 trang: drift môi trường LO/metrics, không phải do lane).
+
+1. **D5 6 hit (iii)**: orphan footnote note 4 hit (M12 empty p2, M80
+   empty/minimal p3, M02 long-boundary p33) + M72 spillover 2 hit
+   (tnhh_2tv empty p3, dhdn minimal p3). Fix ở render
+   (`tools/docx_render.py::_keep_footnote_notes`): bó CẶP sep→note đầu +
+   note áp chót→note cuối (keepNext), đoạn ngắn kề trước keepNext, note
+   cuối keepLines; separator đuôi-only của biến thể M72 không có chú thích
+   (dhdn/dntn) bị bỏ. Đơn vị atomic cả cụm BỊ LOẠI vì tự sinh trang đứng
+   riêng (M12 long-boundary 46→52 trang khi thử). Sau fix: 6/6 hit biến
+   mất (p2 M12 = sep+note 173kt; p3 M80 = 2 note; p33→p35 M02 = notes
+   12-13; M72 dhdn minimal 3→2 trang; tnhh_2tv p3 = bộ máy chú thích
+   nguyên khối 219kt). HARD 0.
+2. **Vỡ token cột hẹp (3 spot VIOLATION 5.1-5)**: width_policy content
+   nâng cấp sàn longest-word trong generator (`_content_col_widths` 3 bước
+   + `_table_word_floors` sample 48 giá trị ValueFactory/tag, metric đo từ
+   corpus PDF: digit 135/lower 125/upper 175 tw + lề 216). 10 form bảng
+   rộng regen; M72 4 bảng thành viên/cổ đông khai width_policy content
+   (7-9 cột, CONTENT_POLICY_MIN_COLS=7). Sau fix: PLII_M02 p4 sạch hoàn
+   toàn ('0600000000068' nguyên vẹn, 0 mảnh); PLI_M09 p16 + M72 p2: tên/
+   quốc tịch/địa chỉ hết vỡ, **cột mã 13 chữ số CÒN vỡ** — giới hạn toán
+   học: M09 14 cột × sàn 900 = 12600/14400 (dư 1800 < want 1101 của mã),
+   M72 tnhh 8 cột portrait 8640 thiếu ~300 twips. **CHỜ OWNER**: landscape
+   mở cho bảng 7-9 cột (vượt ngưỡng Q-V2) hoặc font 11pt cột mã hoặc
+   fixture CCCD 12 số (đúng định dạng pháp lý hiện hành — hiện fixture
+   13 số "0%d%011d").
+3. **STT mồ côi 14 form (nhóm e)**: nguồn bị làm phẳng (0 w:tbl — bóc
+   nguồn xác nhận), 'STT' trần body-level = header cột bảng không còn tồn
+   tại → bỏ 18 đoạn trên 14 form (M12×4, M09×2, còn lại 1); caption + số
+   mục giữ nguyên; bảng thật không đụng.
+4. **Ngoặc ')' mồ côi M54/M55/M57 (nhóm b)**: nguồn vốn đã thiếu '('
+   (0 mở/1 đóng) → bổ sung '(' theo chuẩn corpus; sau fix opens=closes=1.
+5. **Separator superscript 31 form (nhóm d)**: bỏ vertAlign khỏi
+   paragraph chỉ-gạch-dưới; sau fix 0/31.
+6. **M12 ASCII-dot (nhóm a — 1 dòng thật)**: 'là:' + 118 chấm ASCII →
+   '…'×34+'.' khớp chính form.
+7. **Fixture**: 'ngay_sinh'/'ngay_cap' → ngày đủ dd/mm/yyyy (sinh 19xx,
+   cấp 20xx); cột 'Chữ ký' (tag chu_ky, 9 bảng) = handwriting-only —
+   fixture để trống, policy `is_handwriting_column` trong phase5_fixtures
+   (D14/registry slot-tiêu đề giữ nguyên). Selftest 437 PASS.
+8. **Census bug**: LIST_MARKER_RE bỏ tiền tố '(' (FP '(i)/(ii)' nhóm b) +
+   base_commit lấy HEAD thật. Rebaseline: b 4→0, d 31→0, e 14→0; c=9
+   (artifact đo — adjudicate 0), f=53 (Q-V8), g=8 (đúng registry band),
+   a=75 (khác VAI TRÒ fill-line — FP lớp, chỉ 1 dòng thật là M12 đã fix;
+   registry fill-line per-family chờ owner đối chiếu bản gốc).
+9. **D5 sparse allowlist**: `docs/phase6v_d5_sparse_allowlist.json` nạp
+   mặc định vào gate (`_d5_sparse_allowed` — khớp fixture/tag/form/page,
+   khóa vắng = wildcard; BLANK giữ hành vi cũ). Mục tiêu: candidate D5
+   "chưa adjudicate" = 0.
+10. **"Mẫu số N" position**: nguồn↔template khớp 4/4 (M19 right; M30/
+    PLII_M02/PLII_M03 trái) → đăng ký per-form trong decision_registry,
+    không sửa; KHÔNG cần báo Lead (không có lệch).

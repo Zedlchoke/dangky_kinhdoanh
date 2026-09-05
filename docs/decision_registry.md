@@ -271,3 +271,9 @@ test (test_row_contract_corpus / test_row_contract_export).
   chủ động vượt qua vì ưu tiên đọc được (PLAN v6 Q-V2 đề xuất (a)).
 - Bối cảnh: policy cũ `portrait-section` (phase5r_table_policies.json) bị
   supersede bởi quyết định này — V3 cập nhật policy file kèm dẫn chứng.
+
+**Q-V8 (ĐÃ CHỐT — boss duyệt 2026-09-05). Band 53 mẫu họ para_br_3lines: GIỮ NGUYÊN theo nguồn gốc + đăng ký registry.**
+- Quyết: 53 form (họ PLII) dùng band "quốc hiệu giữa (3 dòng centered) + Số: centered" được ghi nhận là KHÁC BIỆT CÓ CHỦ ĐÍCH theo văn bản gốc từng mẫu — KHÔNG chuẩn hóa về kiểu 2-cột của 22 form đã làm ở 5R. Hai style song song tồn tại hợp pháp: `band_2col` (22 form, chuẩn 5R) và `band_para_br` (53 form, gốc TT từng mẫu).
+- Bác: ép đồng nhất toàn corpus (mỗi mẫu in theo văn bản pháp lý gốc của nó).
+- Căn cứ: auditor/6v-visual mục Phần 2f (docs/audits/6v/v4-visual-audit.md) — 0 lỗi render, nhất quán nội bộ; thiếu đăng ký → quyết định này chính là đăng ký.
+- Phụ trách: lane 6v-v4fix đối chiếu "Mẫu số N" vị trí per-form với nguồn gốc (finding #2) cùng tinh thần này.

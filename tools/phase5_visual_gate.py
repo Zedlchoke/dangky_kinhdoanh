@@ -812,26 +812,29 @@ def det_header_name(pages: list, form: str, registry: dict | None = None,
     below.sort(key=lambda ln: ln["y0"])
     if not below:
         return [{"code": "HDR_NAME_SYNC", "page": 1, "value": ""}]
-    first = below[0]
-    if _HDR_NAME_DASH_FOLD.match(first["fold"]):
+    if _HDR_NAME_DASH_FOLD.match(below[0]["fold"]):
         return [{"code": "HDR_NAME_UNBOUND", "page": 1,
                  "slot": bind.get("label")}]
-    value = first["text"].strip()
-    # gộp thêm dòng kế nếu tên bị wrap (cùng cột, sát dòng trước)
-    for ln in below[1:3]:
-        if ln["y0"] - below[0]["y1"] < 6 and \
-                not (ln["x1"] < label["x0"] - 30 or
-                     ln["x0"] > label["x0"] + 420) and \
-                not _HDR_NAME_DASH_FOLD.match(ln["fold"]):
-            value += " " + ln["text"].strip()
-    hay = re.sub(r"\s+", " ", full_text or
-                 "\n".join(p["text"] for p in pages))
-    needle = re.sub(r"\s+", " ", value).strip()
-    if not needle or not any(c.isalpha() for c in needle):
-        return [{"code": "HDR_NAME_SYNC", "page": 1, "value": value[:60]}]
-    if hay.count(needle) < 2:
-        return [{"code": "HDR_NAME_SYNC", "page": 1, "value": value[:60]}]
-    return []
+    # Tên dài wrap 2 dòng và PDF gom baseline trái+phải thành một dòng
+    # (chữ quốc hiệu dính vào giá trị band) — tách quốc hiệu đã biết rồi
+    # PASS nếu BẤT KỲ mảnh nào của band khớp thân (xuất hiện >= 2 lần).
+    _motto_folds = ("cong hoa xa hoi chu nghia viet nam",
+                    "doc lap - tu do - hanh phuc")
+    hay = re.sub(r"\s+", " ", _fold(
+        full_text or "\n".join(p["text"] for p in pages)))
+    for ln in below[:3]:
+        f = ln["fold"]
+        if _HDR_NAME_DASH_FOLD.match(f):
+            continue
+        for m in _motto_folds:
+            f = f.replace(m, " ")
+        needle = re.sub(r"\s+", " ", f).strip(" .,-")
+        if not needle or not any(c.isalpha() for c in needle):
+            continue
+        if hay.count(needle) >= 2:
+            return []
+    return [{"code": "HDR_NAME_SYNC", "page": 1,
+             "value": below[0]["text"][:60]}]
 
 
 # [WAVE v7] registry band mirror tên chủ thể — nạp 1 lần sau khi loader đã

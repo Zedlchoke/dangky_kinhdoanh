@@ -1,6 +1,6 @@
 {
  "generated_by": "tools/census/6v_micro_census.py",
- "base_commit": "7e39a78",
+ "base_commit": "a858a88",
  "scope": "app/templates/*.docx (87 template; 91 file corpus = 87 + 4 biến thể render M72)",
  "checklist": "PLAN.md mục 5.1 (tiêu chí tỉ mỉ trang in)",
  "read_only": true,
@@ -118,31 +118,9 @@
    ]
   },
   "b_colon_paren": {
-   "count": 4,
-   "forms": [
-    "PLI_M12",
-    "PLI_M54",
-    "PLI_M55",
-    "PLI_M57"
-   ],
-   "examples": [
-    {
-     "form": "PLI_M12",
-     "detail": "{\"paren_unbalanced\": {\"n_paragraphs\": 1, \"samples\": [\"1 Dùng trong trường hợp (i) thay đổi từ cổ đông là nhà đầu tư nước ngoài này san\"]}}"
-    },
-    {
-     "form": "PLI_M54",
-     "detail": "{\"paren_unbalanced\": {\"n_paragraphs\": 1, \"samples\": [\"Cơ quan đăng ký kinh doanh cấp tỉnh): {co_quan_dkkd}\"]}}"
-    },
-    {
-     "form": "PLI_M55",
-     "detail": "{\"paren_unbalanced\": {\"n_paragraphs\": 1, \"samples\": [\"Cơ quan đăng ký kinh doanh cấp tỉnh): {co_quan_dkkd}\"]}}"
-    },
-    {
-     "form": "PLI_M57",
-     "detail": "{\"paren_unbalanced\": {\"n_paragraphs\": 1, \"samples\": [\"Cơ quan đăng ký kinh doanh cấp tỉnh): {co_quan_dkkd}\"]}}"
-    }
-   ]
+   "count": 0,
+   "forms": [],
+   "examples": []
   },
   "c_font_floor": {
    "count": 9,
@@ -185,111 +163,14 @@
    ]
   },
   "d_superscript_glue": {
-   "count": 31,
-   "forms": [
-    "PLII_M01",
-    "PLII_M02",
-    "PLII_M03",
-    "PLII_M04",
-    "PLII_M05",
-    "PLII_M06",
-    "PLII_M09",
-    "PLII_M18",
-    "PLI_M18",
-    "PLI_M19",
-    "PLI_M21",
-    "PLI_M23",
-    "PLI_M25",
-    "PLI_M26",
-    "PLI_M27",
-    "PLI_M28",
-    "PLI_M29",
-    "PLI_M30",
-    "PLI_M31",
-    "PLI_M32",
-    "PLI_M33",
-    "PLI_M46",
-    "PLI_M66",
-    "PLI_M67",
-    "PLI_M68",
-    "PLI_M69",
-    "PLI_M71",
-    "PLI_M72",
-    "PLI_M78",
-    "PLI_M79",
-    "PLI_M80"
-   ],
-   "examples": [
-    {
-     "form": "PLII_M01",
-     "detail": "{\"superscript_non_digit\": {\"n_runs\": 1, \"samples\": [\"SUP:_______________________________________\"]}, \"superscript_runs_total\": 11}"
-    },
-    {
-     "form": "PLII_M02",
-     "detail": "{\"superscript_non_digit\": {\"n_runs\": 1, \"samples\": [\"SUP:_______________________________________\"]}, \"superscript_runs_total\": 18}"
-    },
-    {
-     "form": "PLII_M03",
-     "detail": "{\"superscript_non_digit\": {\"n_runs\": 1, \"samples\": [\"SUP:_______________________________________\"]}, \"superscript_runs_total\": 2}"
-    },
-    {
-     "form": "PLII_M04",
-     "detail": "{\"superscript_non_digit\": {\"n_runs\": 1, \"samples\": [\"SUP:_______________________________________\"]}, \"superscript_runs_total\": 2}"
-    },
-    {
-     "form": "PLII_M05",
-     "detail": "{\"superscript_non_digit\": {\"n_runs\": 1, \"samples\": [\"SUP:_______________________________________\"]}, \"superscript_runs_total\": 5}"
-    },
-    {
-     "form": "PLII_M06",
-     "detail": "{\"superscript_non_digit\": {\"n_runs\": 1, \"samples\": [\"SUP:_______________________________________\"]}, \"superscript_runs_total\": 6}"
-    }
-   ]
+   "count": 0,
+   "forms": [],
+   "examples": []
   },
   "e_orphan_heading": {
-   "count": 14,
-   "forms": [
-    "PLII_M02",
-    "PLI_M01",
-    "PLI_M02",
-    "PLI_M03",
-    "PLI_M04",
-    "PLI_M06",
-    "PLI_M08",
-    "PLI_M09",
-    "PLI_M12",
-    "PLI_M17",
-    "PLI_M19",
-    "PLI_M23",
-    "PLI_M25",
-    "PLI_M78"
-   ],
-   "examples": [
-    {
-     "form": "PLII_M02",
-     "detail": "{\"n_paragraphs\": 1, \"samples\": [\"STT\"]}"
-    },
-    {
-     "form": "PLI_M01",
-     "detail": "{\"n_paragraphs\": 1, \"samples\": [\"STT\"]}"
-    },
-    {
-     "form": "PLI_M02",
-     "detail": "{\"n_paragraphs\": 1, \"samples\": [\"STT\"]}"
-    },
-    {
-     "form": "PLI_M03",
-     "detail": "{\"n_paragraphs\": 1, \"samples\": [\"STT\"]}"
-    },
-    {
-     "form": "PLI_M04",
-     "detail": "{\"n_paragraphs\": 1, \"samples\": [\"STT\"]}"
-    },
-    {
-     "form": "PLI_M06",
-     "detail": "{\"n_paragraphs\": 1, \"samples\": [\"STT\"]}"
-    }
-   ]
+   "count": 0,
+   "forms": [],
+   "examples": []
   },
   "f_header_band": {
    "count": 53,
@@ -450,15 +331,6 @@
     "empty_runs_below_8pt": 0,
     "paragraph_marks_below_8pt": 2
    },
-   "superscript_glue": {
-    "superscript_non_digit": {
-     "n_runs": 1,
-     "samples": [
-      "SUP:_______________________________________"
-     ]
-    },
-    "superscript_runs_total": 11
-   },
    "band_mechanism": "para_br_3lines"
   },
   "PLII_M02": {
@@ -511,21 +383,6 @@
     "empty_runs_below_8pt": 0,
     "paragraph_marks_below_8pt": 4
    },
-   "superscript_glue": {
-    "superscript_non_digit": {
-     "n_runs": 1,
-     "samples": [
-      "SUP:_______________________________________"
-     ]
-    },
-    "superscript_runs_total": 18
-   },
-   "orphan_heading": {
-    "n_paragraphs": 1,
-    "samples": [
-     "STT"
-    ]
-   },
    "band_mechanism": "table_2col",
    "table_border_pad": {
     "tables": 8,
@@ -564,15 +421,6 @@
      }
     ]
    },
-   "superscript_glue": {
-    "superscript_non_digit": {
-     "n_runs": 1,
-     "samples": [
-      "SUP:_______________________________________"
-     ]
-    },
-    "superscript_runs_total": 2
-   },
    "band_mechanism": "table_2col"
   },
   "PLII_M04": {
@@ -604,15 +452,6 @@
      }
     ]
    },
-   "superscript_glue": {
-    "superscript_non_digit": {
-     "n_runs": 1,
-     "samples": [
-      "SUP:_______________________________________"
-     ]
-    },
-    "superscript_runs_total": 2
-   },
    "band_mechanism": "table_2col"
   },
   "PLII_M05": {
@@ -643,15 +482,6 @@
       "context": "_______________________________________"
      }
     ]
-   },
-   "superscript_glue": {
-    "superscript_non_digit": {
-     "n_runs": 1,
-     "samples": [
-      "SUP:_______________________________________"
-     ]
-    },
-    "superscript_runs_total": 5
    },
    "band_mechanism": "table_2col"
   },
@@ -699,15 +529,6 @@
       "context": "_______________________________________"
      }
     ]
-   },
-   "superscript_glue": {
-    "superscript_non_digit": {
-     "n_runs": 1,
-     "samples": [
-      "SUP:_______________________________________"
-     ]
-    },
-    "superscript_runs_total": 6
    },
    "band_mechanism": "table_2col"
   },
@@ -804,15 +625,6 @@
       "context": "_______________________________________"
      }
     ]
-   },
-   "superscript_glue": {
-    "superscript_non_digit": {
-     "n_runs": 1,
-     "samples": [
-      "SUP:_______________________________________"
-     ]
-    },
-    "superscript_runs_total": 4
    },
    "band_mechanism": "para_br_3lines"
   },
@@ -1194,15 +1006,6 @@
       "context": "01 bộ hồ sơ đăng ký qua mạng thông tin điện tử mã số:.... về việc {ve_"
      }
     ]
-   },
-   "superscript_glue": {
-    "superscript_non_digit": {
-     "n_runs": 1,
-     "samples": [
-      "SUP:_______________________________________"
-     ]
-    },
-    "superscript_runs_total": 3
    },
    "band_mechanism": "para_br_3lines",
    "so_line_jc": "center",
@@ -1636,12 +1439,6 @@
      }
     ]
    },
-   "orphan_heading": {
-    "n_paragraphs": 1,
-    "samples": [
-     "STT"
-    ]
-   },
    "band_mechanism": "para_br_3lines"
   },
   "PLI_M02": {
@@ -1690,12 +1487,6 @@
     "empty_runs_below_8pt": 0,
     "paragraph_marks_below_8pt": 2
    },
-   "orphan_heading": {
-    "n_paragraphs": 1,
-    "samples": [
-     "STT"
-    ]
-   },
    "band_mechanism": "para_br_3lines"
   },
   "PLI_M03": {
@@ -1739,12 +1530,6 @@
      }
     ]
    },
-   "orphan_heading": {
-    "n_paragraphs": 1,
-    "samples": [
-     "STT"
-    ]
-   },
    "band_mechanism": "para_br_3lines"
   },
   "PLI_M04": {
@@ -1786,12 +1571,6 @@
       "style": "DOT_UNICODE",
       "context": "Số Giấy chứng nhận đăng ký thành lập (Đối với cơ sở bảo trợ xã hội)/Số"
      }
-    ]
-   },
-   "orphan_heading": {
-    "n_paragraphs": 1,
-    "samples": [
-     "STT"
     ]
    },
    "band_mechanism": "para_br_3lines"
@@ -1869,12 +1648,6 @@
     "empty_runs_below_8pt": 0,
     "paragraph_marks_below_8pt": 1
    },
-   "orphan_heading": {
-    "n_paragraphs": 1,
-    "samples": [
-     "STT"
-    ]
-   },
    "band_mechanism": "none",
    "header_band": {
     "issue": "no_band"
@@ -1919,12 +1692,6 @@
       "style": "UNDERSCORE",
       "context": "_______________________"
      }
-    ]
-   },
-   "orphan_heading": {
-    "n_paragraphs": 1,
-    "samples": [
-     "STT"
     ]
    },
    "band_mechanism": "none",
@@ -1974,13 +1741,6 @@
     "empty_runs_below_8pt": 0,
     "paragraph_marks_below_8pt": 1
    },
-   "orphan_heading": {
-    "n_paragraphs": 2,
-    "samples": [
-     "STT",
-     "STT"
-    ]
-   },
    "band_mechanism": "none",
    "header_band": {
     "issue": "no_band"
@@ -2022,9 +1782,9 @@
    "fill_style_counts": {
     "DASH": 1,
     "UNDERSCORE": 7,
-    "DOT_UNICODE": 9,
+    "DOT_UNICODE": 10,
     "MIXED": 1,
-    "DOT_ASCII": 4
+    "DOT_ASCII": 3
    },
    "fill_line_style": {
     "styles": [
@@ -2037,9 +1797,9 @@
     "counts": {
      "DASH": 1,
      "UNDERSCORE": 7,
-     "DOT_UNICODE": 9,
+     "DOT_UNICODE": 10,
      "MIXED": 1,
-     "DOT_ASCII": 4
+     "DOT_ASCII": 3
     },
     "samples": [
      {
@@ -2060,26 +1820,10 @@
      }
     ]
    },
-   "colon_paren": {
-    "paren_unbalanced": {
-     "n_paragraphs": 1,
-     "samples": [
-      "1 Dùng trong trường hợp (i) thay đổi từ cổ đông là nhà đầu tư nước ngoài này san"
-     ]
-    }
-   },
    "font_floor": {
     "runs_below_8pt": 0,
     "empty_runs_below_8pt": 0,
     "paragraph_marks_below_8pt": 2
-   },
-   "orphan_heading": {
-    "n_paragraphs": 4,
-    "samples": [
-     "STT",
-     "STT",
-     "STT"
-    ]
    },
    "band_mechanism": "para_br_3lines",
    "so_line_jc": "center",
@@ -2245,12 +1989,6 @@
      }
     ]
    },
-   "orphan_heading": {
-    "n_paragraphs": 1,
-    "samples": [
-     "STT"
-    ]
-   },
    "band_mechanism": "table_2col",
    "table_border_pad": {
     "tables": 2,
@@ -2296,15 +2034,6 @@
       "context": "________________________________________"
      }
     ]
-   },
-   "superscript_glue": {
-    "superscript_non_digit": {
-     "n_runs": 1,
-     "samples": [
-      "SUP:________________________________________"
-     ]
-    },
-    "superscript_runs_total": 3
    },
    "band_mechanism": "table_2col"
   },
@@ -2357,21 +2086,6 @@
      }
     ]
    },
-   "superscript_glue": {
-    "superscript_non_digit": {
-     "n_runs": 1,
-     "samples": [
-      "SUP:________________________________________"
-     ]
-    },
-    "superscript_runs_total": 11
-   },
-   "orphan_heading": {
-    "n_paragraphs": 1,
-    "samples": [
-     "STT"
-    ]
-   },
    "band_mechanism": "table_2col",
    "table_border_pad": {
     "tables": 2,
@@ -2409,15 +2123,6 @@
       "context": "________________________________________"
      }
     ]
-   },
-   "superscript_glue": {
-    "superscript_non_digit": {
-     "n_runs": 1,
-     "samples": [
-      "SUP:________________________________________"
-     ]
-    },
-    "superscript_runs_total": 5
    },
    "band_mechanism": "table_2col",
    "table_border_pad": {
@@ -2471,21 +2176,6 @@
       "style": "UNDERSCORE",
       "context": "________________________________________"
      }
-    ]
-   },
-   "superscript_glue": {
-    "superscript_non_digit": {
-     "n_runs": 1,
-     "samples": [
-      "SUP:________________________________________"
-     ]
-    },
-    "superscript_runs_total": 5
-   },
-   "orphan_heading": {
-    "n_paragraphs": 1,
-    "samples": [
-     "STT"
     ]
    },
    "band_mechanism": "table_2col",
@@ -2542,21 +2232,6 @@
      }
     ]
    },
-   "superscript_glue": {
-    "superscript_non_digit": {
-     "n_runs": 1,
-     "samples": [
-      "SUP:________________________________________"
-     ]
-    },
-    "superscript_runs_total": 5
-   },
-   "orphan_heading": {
-    "n_paragraphs": 1,
-    "samples": [
-     "STT"
-    ]
-   },
    "band_mechanism": "table_2col",
    "table_border_pad": {
     "tables": 2,
@@ -2603,15 +2278,6 @@
      }
     ]
    },
-   "superscript_glue": {
-    "superscript_non_digit": {
-     "n_runs": 1,
-     "samples": [
-      "SUP:________________________________________"
-     ]
-    },
-    "superscript_runs_total": 3
-   },
    "band_mechanism": "table_2col"
   },
   "PLI_M27": {
@@ -2655,15 +2321,6 @@
      }
     ]
    },
-   "superscript_glue": {
-    "superscript_non_digit": {
-     "n_runs": 1,
-     "samples": [
-      "SUP:________________________________________"
-     ]
-    },
-    "superscript_runs_total": 11
-   },
    "band_mechanism": "table_2col"
   },
   "PLI_M28": {
@@ -2694,15 +2351,6 @@
       "context": "________________________________________"
      }
     ]
-   },
-   "superscript_glue": {
-    "superscript_non_digit": {
-     "n_runs": 1,
-     "samples": [
-      "SUP:________________________________________"
-     ]
-    },
-    "superscript_runs_total": 3
    },
    "band_mechanism": "table_2col"
   },
@@ -2735,15 +2383,6 @@
      }
     ]
    },
-   "superscript_glue": {
-    "superscript_non_digit": {
-     "n_runs": 1,
-     "samples": [
-      "SUP:________________________________________"
-     ]
-    },
-    "superscript_runs_total": 3
-   },
    "band_mechanism": "table_2col"
   },
   "PLI_M30": {
@@ -2774,15 +2413,6 @@
       "context": "________________________________________"
      }
     ]
-   },
-   "superscript_glue": {
-    "superscript_non_digit": {
-     "n_runs": 1,
-     "samples": [
-      "SUP:________________________________________"
-     ]
-    },
-    "superscript_runs_total": 3
    },
    "band_mechanism": "table_2col"
   },
@@ -2822,15 +2452,6 @@
       "context": "________________________________________"
      }
     ]
-   },
-   "superscript_glue": {
-    "superscript_non_digit": {
-     "n_runs": 1,
-     "samples": [
-      "SUP:________________________________________"
-     ]
-    },
-    "superscript_runs_total": 3
    },
    "band_mechanism": "table_2col"
   },
@@ -2883,15 +2504,6 @@
      }
     ]
    },
-   "superscript_glue": {
-    "superscript_non_digit": {
-     "n_runs": 1,
-     "samples": [
-      "SUP:________________________________________"
-     ]
-    },
-    "superscript_runs_total": 7
-   },
    "band_mechanism": "table_2col"
   },
   "PLI_M33": {
@@ -2934,15 +2546,6 @@
       "context": "________________________________________"
      }
     ]
-   },
-   "superscript_glue": {
-    "superscript_non_digit": {
-     "n_runs": 1,
-     "samples": [
-      "SUP:________________________________________"
-     ]
-    },
-    "superscript_runs_total": 7
    },
    "band_mechanism": "table_2col"
   },
@@ -3104,15 +2707,6 @@
       "context": "GIẤY CHỨNG NHẬN …/GIẤY XÁC NHẬN …"
      }
     ]
-   },
-   "superscript_glue": {
-    "superscript_non_digit": {
-     "n_runs": 1,
-     "samples": [
-      "SUP:________________________________________"
-     ]
-    },
-    "superscript_runs_total": 3
    },
    "band_mechanism": "para_br_3lines"
   },
@@ -3387,14 +2981,6 @@
    "fill_style_counts": {
     "DASH": 2
    },
-   "colon_paren": {
-    "paren_unbalanced": {
-     "n_paragraphs": 1,
-     "samples": [
-      "Cơ quan đăng ký kinh doanh cấp tỉnh): {co_quan_dkkd}"
-     ]
-    }
-   },
    "band_mechanism": "para_br_3lines",
    "so_line_jc": "center",
    "header_band": {
@@ -3408,14 +2994,6 @@
    ],
    "fill_style_counts": {
     "DASH": 2
-   },
-   "colon_paren": {
-    "paren_unbalanced": {
-     "n_paragraphs": 1,
-     "samples": [
-      "Cơ quan đăng ký kinh doanh cấp tỉnh): {co_quan_dkkd}"
-     ]
-    }
    },
    "band_mechanism": "para_br_3lines",
    "so_line_jc": "center",
@@ -3470,14 +3048,6 @@
    ],
    "fill_style_counts": {
     "DASH": 2
-   },
-   "colon_paren": {
-    "paren_unbalanced": {
-     "n_paragraphs": 1,
-     "samples": [
-      "Cơ quan đăng ký kinh doanh cấp tỉnh): {co_quan_dkkd}"
-     ]
-    }
    },
    "band_mechanism": "para_br_3lines",
    "so_line_jc": "center",
@@ -3575,15 +3145,6 @@
      }
     ]
    },
-   "superscript_glue": {
-    "superscript_non_digit": {
-     "n_runs": 1,
-     "samples": [
-      "SUP:_______________________________________"
-     ]
-    },
-    "superscript_runs_total": 7
-   },
    "band_mechanism": "para_br_3lines",
    "so_line_jc": "center",
    "header_band": {
@@ -3636,15 +3197,6 @@
      }
     ]
    },
-   "superscript_glue": {
-    "superscript_non_digit": {
-     "n_runs": 1,
-     "samples": [
-      "SUP:_______________________________________"
-     ]
-    },
-    "superscript_runs_total": 2
-   },
    "band_mechanism": "para_br_3lines",
    "so_line_jc": "center",
    "header_band": {
@@ -3693,15 +3245,6 @@
      }
     ]
    },
-   "superscript_glue": {
-    "superscript_non_digit": {
-     "n_runs": 1,
-     "samples": [
-      "SUP:_______________________________________"
-     ]
-    },
-    "superscript_runs_total": 5
-   },
    "band_mechanism": "para_br_3lines",
    "so_line_jc": "center",
    "header_band": {
@@ -3749,15 +3292,6 @@
       "context": "Nơi nhận: - Tên, địa chỉ doanh nghiệp;- Cơ quan quản lý thuế tỉnh, thà"
      }
     ]
-   },
-   "superscript_glue": {
-    "superscript_non_digit": {
-     "n_runs": 1,
-     "samples": [
-      "SUP:_______________________________________"
-     ]
-    },
-    "superscript_runs_total": 2
    },
    "band_mechanism": "para_br_3lines",
    "so_line_jc": "center",
@@ -3855,15 +3389,6 @@
      }
     ]
    },
-   "superscript_glue": {
-    "superscript_non_digit": {
-     "n_runs": 1,
-     "samples": [
-      "SUP:_______________________________________"
-     ]
-    },
-    "superscript_runs_total": 2
-   },
    "band_mechanism": "para_br_3lines",
    "so_line_jc": "center",
    "header_band": {
@@ -3904,15 +3429,6 @@
     "runs_below_8pt": 0,
     "empty_runs_below_8pt": 0,
     "paragraph_marks_below_8pt": 2
-   },
-   "superscript_glue": {
-    "superscript_non_digit": {
-     "n_runs": 1,
-     "samples": [
-      "SUP:_______________________________________"
-     ]
-    },
-    "superscript_runs_total": 8
    },
    "band_mechanism": "none",
    "header_band": {
@@ -4128,21 +3644,6 @@
      }
     ]
    },
-   "superscript_glue": {
-    "superscript_non_digit": {
-     "n_runs": 1,
-     "samples": [
-      "SUP:_______________________________________"
-     ]
-    },
-    "superscript_runs_total": 2
-   },
-   "orphan_heading": {
-    "n_paragraphs": 1,
-    "samples": [
-     "STT"
-    ]
-   },
    "band_mechanism": "para_br_3lines"
   },
   "PLI_M79": {
@@ -4185,15 +3686,6 @@
       "context": "1. ………………………………………………………………………………………………………"
      }
     ]
-   },
-   "superscript_glue": {
-    "superscript_non_digit": {
-     "n_runs": 1,
-     "samples": [
-      "SUP:_______________________________________"
-     ]
-    },
-    "superscript_runs_total": 7
    },
    "band_mechanism": "para_br_3lines",
    "so_line_jc": "center",
@@ -4246,15 +3738,6 @@
       "context": "Tên doanh nghiệp/chi nhánh/văn phòng đại diện/địa điểm kinh doanh (ghi"
      }
     ]
-   },
-   "superscript_glue": {
-    "superscript_non_digit": {
-     "n_runs": 1,
-     "samples": [
-      "SUP:_______________________________________"
-     ]
-    },
-    "superscript_runs_total": 7
    },
    "band_mechanism": "para_br_3lines",
    "so_line_jc": "center",

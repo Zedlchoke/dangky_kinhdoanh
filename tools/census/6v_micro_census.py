@@ -42,6 +42,7 @@ import glob
 import json
 import os
 import re
+import subprocess
 import sys
 import zipfile
 import xml.etree.ElementTree as ET
@@ -61,8 +62,12 @@ MAX_EXAMPLES = 6
 FILL_TOKEN_RE = re.compile(r"(\u2026+|\.{3,}|-{3,}|_{3,}|[\u2026.]{3,})")
 SPACE_COLON_RE = re.compile(r"\S[ \t\u00a0]+:")      # "nhãn :" — space trước :
 DOUBLE_SPACE_RE = re.compile(r"\S {2,}(?=\S)")        # space đôi giữa chữ
-# marker danh sách "a)" "b)" đầu từ — không phải ngoặc lệch
-LIST_MARKER_RE = re.compile(r"(^|[\s(>])[a-zà-ỹđ]\)", re.UNICODE)
+# marker danh sách "a)" "b)" đầu từ — không phải ngoặc lệch. KHÔNG nhận "("
+# làm tiền tố: "(i)"/"(ii)" (marker La Mã trong ngoặc) phải giữ NGUYÊN cặp
+# ngoặc để đếm paren tự cân — sub() với tiền tố "(" đã xóa mất ")" của
+# marker và tự tạo paren_unbalanced giả (false-positive PLI_M12, adjudicate
+# auditor/6v-visual 2026-09-05)
+LIST_MARKER_RE = re.compile(r"(^|[\s>])[a-zà-ỹđ]\)", re.UNICODE)
 FOLD_STT = ("stt", "stt.", "stt:", "số tt", "số tt.")
 HEADER_KEYS = ("CƠ QUAN", "CỘNG HÒA")
 MOTTO = "Độc lập - Tự do - Hạnh phúc"
@@ -432,9 +437,19 @@ def main():
     # band mechanism distribution (ngữ cảnh nhóm f, mọi form)
     mech = Counter(e.get("band_mechanism") for e in per_form.values())
 
+    # base_commit lấy HEAD thật lúc chạy (trước đây hard-code 7e39a78 —
+    # rebaseline 6V-V4b phải ghi đúng commit của corpus đang quét)
+    try:
+        _head = subprocess.run(
+            ["git", "rev-parse", "--short", "HEAD"], capture_output=True,
+            text=True, cwd=os.path.dirname(os.path.dirname(
+                os.path.abspath(__file__))), timeout=10).stdout.strip()
+    except Exception:   # noqa: BLE001 — ngoài git thì ghi unknown
+        _head = "unknown"
+
     report = {
         "generated_by": "tools/census/6v_micro_census.py",
-        "base_commit": "7e39a78",
+        "base_commit": _head or "unknown",
         "scope": "app/templates/*.docx (87 template; 91 file corpus = 87 + "
                  "4 biến thể render M72)",
         "checklist": "PLAN.md mục 5.1 (tiêu chí tỉ mỉ trang in)",

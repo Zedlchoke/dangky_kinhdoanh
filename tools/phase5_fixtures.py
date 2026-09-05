@@ -534,12 +534,18 @@ def build_fixture(fid: str, form_map: dict, fixture: str,
     rows_n = 1 if is_minimal else (25 if is_long else 3)
     for t in form_map.get("dynamic_tables", []):
         loop, cols = t["loop"], t.get("columns", [])
-        data[loop] = [
-            {c["tag"]: f.value(c["tag"], c.get("header") or c.get("label") or "")
-             for c in cols
-             if not is_handwriting_column(
-                 c["tag"], c.get("header") or c.get("label") or "")}
-            for _ in range(rows_n)]
+        rows = []
+        for _ in range(rows_n):
+            row = {c["tag"]: f.value(c["tag"], c.get("label") or "")
+                   for c in cols}
+            # [6V-V4b việc 7b] cột chữ ký = vùng viết tay: giá trị VẼ RA
+            # rồi MỚI loại — giữ nguyên chuỗi gọi ValueFactory (n) để việc
+            # bỏ cột ký KHÔNG xô lệch giá trị của mọi field phía sau
+            # (xô lệch n đã gây drift pagination toàn corpus, tái hiện
+            # m72_ctcp p2 trang 29 ký tự)
+            rows.append({k: v for k, v in row.items()
+                         if not is_handwriting_column(k)})
+        data[loop] = rows
 
     # ---- fixed-matrix cells (spec-driven) ----
     specs = [s for s in (form_map.get("section_specs") or [])

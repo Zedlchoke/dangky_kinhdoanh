@@ -526,3 +526,17 @@ vuông của C3 hiệu lực toàn corpus).
 **Runner sau merge: 58 PASS / 0 FAIL / 0 NOT RUN.** B1–B5 toàn bộ CLOSED
 (B3 chờ xác nhận full corpus tại V4-final). V4 mở: chỗ ký 40pt (155 cụm),
 micro-census 91 form, FIELD_META hint UI, adjudicate D6-155/D5-60/WLAY-011.
+
+### V4 (phần 1) — signgap + micro merged @ main 0ca9fdf→HEAD (2026-09-05, Lead review PASS)
+
+| Task | Owner | Kết quả (Lead kiểm chứng độc lập) | Trạng thái |
+|---|---|---|---|
+| Sàn vùng viết 40pt toàn corpus + D6 write-gap → HARD | `agent/6v-signgap` (merge `0ca9fdf`) | registry 78 entry; M70 bake 800twips; evidence 12 form × 2 fixture **0 form-fixture dưới chuẩn** (Lead rerun); H7.4 57/0 (kể cả dọn 1 entry manifest trùng); exception ownership test_phase5_visual_detectors = pin sync D6 hard — Lead duyệt | ✅ merged |
+| Micro-census 7 nhóm + FIELD_META hint UI | `agent/6v-micro` (merge `ceb14be`) | census read-only: a=75 trộn kiểu điền / f=53 band lệch / d=31 sup / e=14 STT lạc đơn / c=9 font<8pt / g=8 viền-pad / b=4 ngoặc (bằng chứng cho đợt fix kế tiếp); UI +28 key meta + placeholder hint; node dom 64/0, domain 65/0, form_flow 38/0 | ✅ merged |
+| Conflict allowlist 2 lane | Lead | union 2 block; lane micro bỏ sót `app_web/test_dom.js` (+6 assertion) → runner H7.4 bắt đúng, Lead bổ sung | ✅ |
+| Runner sau merge | Lead | **58 PASS / 0 FAIL / 0 NOT RUN** | ✅ |
+| Gate V4-final full corpus | Lead (đang chạy) | kỳ vọng: exit 0, D6 write-gap hard = 0, D15 = 0 (xác nhận B3 toàn corpus), D13/D14/D16 giữ 0, PNG==disk | ⏳ |
+
+**Hàng đợi V4 còn lại (từ micro-census):** fix theo nhóm a/f/d/e/c/g/b (cần lane
+tiếp theo sau khi auditor/6v-visual adjudicate mức "lỗi thật vs chủ đích bản
+giấy" — nhóm f=53 phần lớn "so-line không cần phép" theo ghi chú census).

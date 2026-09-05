@@ -472,3 +472,14 @@ docs/audits/6v/v5-release-audit.md
 # --- [v7-checkpoint 77b992a 2026-09-05] PLAN v7 (owner) + census chữ ký mới làm đầu vào
 # wave SIGNATURE-USABILITY-SPACE + coverage regen tại 000e8e2 (2 file coverage đã có entry) ---
 docs/audits/signature_space_census_2026-09-05.md
+# --- [WAVE v7 2026-09-05] HEADER-NAME-SYNC + SIGNATURE-USABILITY-SPACE
+# (registry 1 nguồn chân lý + census/audit evidence + suite E2E mới;
+# các tool census đọc-only chuan hóa vào repo) ---
+docs/audits/header_name_census_2026-09-05.json
+docs/audits/header_name_census_2026-09-05.md
+docs/owner_decision_packet_v7.md
+tools/census/header_name_census.py
+tools/census/header_name_census_report.py
+tools/census/v7_signature_census.py
+tools/header_name_binding.json
+tools/test_v7_header_name.py

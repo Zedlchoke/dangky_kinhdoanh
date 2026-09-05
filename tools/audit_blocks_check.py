@@ -733,6 +733,11 @@ ALLOWED_BLOCK_KEYS = {
     "loop": {"t", "loop", "headerRows", "cols", "blankRows", "rows", "cond"},
 }
 ALLOWED_RUN_KEYS_TEXT = {"text", "b", "i", "u", "vertAlign", "role", "footnoteId"}
+# [WAVE v7 HEADER-NAME-SYNC] run mirror {"mirror": {"key": …}} — band đầu
+# trang mirror read-only của canonical key (converter sinh từ the {key} ở
+# ô (0,0) band theo tools/header_name_binding.json). KHÔNG phải input:
+# mirror không vào draft/validation/tab-stop.
+ALLOWED_RUN_KEYS_MIRROR = {"mirror"}
 ALLOWED_COL_KEYS = {"col", "tag"}
 VALID_ALIGN = {"left", "center", "right"}
 VALID_ROLES = {
@@ -748,7 +753,7 @@ VALID_FORMAT_KEYS = {
 ALLOWED_NAMES = (
     "text/b/i/u/input/colspan/rowspan/label/key/w/loop/headerRows/cols/"
     "blankRows/rows/cells/widths/t/align/id/ten_mau/v/role/format/"
-    "footnotes/vertAlign/footnoteId"
+    "footnotes/vertAlign/footnoteId/mirror"
 )
 
 
@@ -757,12 +762,24 @@ def _check_runs(section, fid, where, runs, errs):
         if not isinstance(r, dict):
             errs.append("%s run#%d: không phải dict: %r" % (where, ri, r))
             continue
-        bad = set(r) - ALLOWED_RUN_KEYS_TEXT - {"input"}
+        bad = set(r) - ALLOWED_RUN_KEYS_TEXT - ALLOWED_RUN_KEYS_MIRROR \
+            - {"input"}
         if bad:
             errs.append(
                 "%s run#%d có trường lạ %s (chỉ cho phép: %s)"
                 % (where, ri, sorted(bad), ALLOWED_NAMES)
             )
+        if "mirror" in r:
+            mir = r["mirror"]
+            if not isinstance(mir, dict) or not isinstance(mir.get("key"), str) \
+                    or not mir["key"].strip() or set(mir) - {"key"}:
+                errs.append(
+                    "%s run#%d mirror phải là {'key': <str>} : %r"
+                    % (where, ri, mir))
+            if "text" in r or "input" in r:
+                errs.append(
+                    "%s run#%d mirror không được lẫn text/input: %r"
+                    % (where, ri, sorted(r)))
         va = r.get("vertAlign")
         if "vertAlign" in r and va not in VALID_VERT_ALIGN:
             errs.append("%s run#%d vertAlign lạ: %r" % (where, ri, va))
@@ -791,7 +808,7 @@ def _check_runs(section, fid, where, runs, errs):
                 errs.append(
                     "%s run#%d input.chk=%r chỉ được true" % (where, ri, inp["chk"])
                 )
-        elif "text" not in r:
+        elif "text" not in r and "mirror" not in r:
             errs.append(
                 "%s run#%d không phải {'text'} lẫn {'input'}: %r" % (where, ri, r)
             )

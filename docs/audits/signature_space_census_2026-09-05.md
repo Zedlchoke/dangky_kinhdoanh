@@ -74,3 +74,38 @@ Các spot-check dùng PNG corpus hiện hữu:
    rỗng mù gây blank page.
 5. Regenerate corpus sau fix, rerun Word-open/ZIP/determinism, rồi human review
    trên đúng hash corpus cuối.
+
+## Post-fix verification — Wave v7 (2026-09-05, corpus phase7v/final)
+
+Fix áp dụng (commits `a2a29d6`, `55637db`, `481f5d6`):
+
+1. Registry `min_write_gap_pt` 40 → **72pt** (2.54cm) toàn 78 entry — quyết
+   định owner SIGNATURE-USABILITY-SPACE trong lệnh wave v7.
+2. Detector D6 grammar đồng bộ census (đóng dấu, không ngoặc, "từng thành
+   viên"); đo đến mép dưới trang khi không có dòng kế; tách "Đã ký";
+   `SIG_MISSING` hard fail.
+3. Render `_ensure_signature_space`: chèn spacer exact-height ép sàn cho cụm
+   còn ký tay (kể cả cụm chỉ thị không ngoặc); skip "Đã ký"; keep-together.
+
+Corpus mới `generated_ho_so/_visual_layout/phase7v/final/` (455 record = 91
+render unit × 5 fixture, xuất từ HEAD sau fix):
+
+- Gate: HARD-FAIL **0**, export error **0**, PNG manifest == đĩa (**1653**,
+  tăng từ 1631 — pagination dời hợp lệ do spacer, KHÔNG pin số trang).
+- Candidates: 5 D5 SPARSE mới → đã adjudicate (chú thích pháp lý dưới vùng
+  ký, cùng lớp (i) — `docs/phase6v_d5_sparse_allowlist.json` 64 entry);
+  sau adjudicate **0 candidate chưa adjudicate**.
+- Coverage: census **420** = detector **420** (100%, per-record khớp);
+  expected-signature-but-zero-detected = **0**.
+- Vùng viết cụm còn ký tay: **410 cụm**, min **72.9pt**, median **119.6pt**,
+  gap < 72pt = **0** (trước fix: min 43.4pt, 185 cụm dưới 72pt). 10 cụm
+  "Đã ký" được đo nhưng không áp sàn viết tay.
+- ZIP validity 455/455. Word 16.16.27 open-direct: chạy lại trên corpus mới
+  (kết quả ghi ở execution_ledger; 6V baseline là 91/91).
+
+Tái lập:
+
+```bash
+python3 -X utf8 -m tools.census.v7_signature_census \
+  --corpus generated_ho_so/_visual_layout/phase7v/final
+```

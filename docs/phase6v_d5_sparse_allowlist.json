@@ -1,10 +1,10 @@
 {
- "version": 1,
+ "version": "1+v7.1",
  "date": "2026-09-05",
  "lane": "agent/6v-v4fix (6V-V4b việc 9)",
  "source_adjudication": "docs/audits/6v/v4-visual-audit.md — 72 hit D5_blank_sparse: 59 (i) + 7 (ii) + 6 (iii) đã fix ở việc 1; allowlist này liệt kê lại các hit (i)/(ii) đo trên corpus v4b_finalcheck (455 record, template+fixture sau V4b, 2026-09-05 tối) + 2 hit mới lớp (ii) do việc 7a (ngày đủ định dạng).",
  "mechanism": "gate nạp mặc định (tools/phase5_visual_gate.py --allowlist); hit SPARSE khớp (fixture, tag, form, page) — khóa vắng = wildcard — được ghi verdict vào record['d5_adjudicated'] thay vì candidate 'chưa adjudicate'.",
- "count": 59,
+ "count": 64,
  "by_class": {
   "(i)": 50,
   "(ii)": 9
@@ -482,6 +482,46 @@
    "page": 3,
    "adjudication": "(i)",
    "reason": "ô điền/khối 'Nơi đăng ký' cuối form Excel M72 — hợp lệ theo thiết kế (parity adjudicate auditor cho m72_dntn p2)"
+  },
+  {
+   "fixture": "empty-paper",
+   "tag": "main",
+   "form": "PLI_M19",
+   "page": 7,
+   "adjudication": "(i)",
+   "reason": "[v7] chú thích pháp lý dưới vùng ký: '- Trường hợp Tòa án hoặc Trọng tài chỉ định… ký trực tiếp vào phần này' — spacer 72pt dời trang, nội dung hợp lệ"
+  },
+  {
+   "fixture": "valid-full",
+   "tag": "main",
+   "form": "PLI_M27",
+   "page": 4,
+   "adjudication": "(i)",
+   "reason": "[v7] chú thích pháp lý dưới vùng ký (Tòa án/Trọng tài chỉ định) — dời trang do spacer 72pt, nội dung hợp lệ"
+  },
+  {
+   "fixture": "choice-variants",
+   "tag": "main",
+   "form": "PLI_M27",
+   "page": 4,
+   "adjudication": "(i)",
+   "reason": "[v7] chú thích pháp lý dưới vùng ký (Tòa án/Trọng tài chỉ định) — dời trang do spacer 72pt, nội dung hợp lệ"
+  },
+  {
+   "fixture": "long-boundary",
+   "tag": "main",
+   "form": "PLI_M17",
+   "page": 7,
+   "adjudication": "(i)",
+   "reason": "[v7] chú thích pháp lý dưới vùng ký (Tòa án/Trọng tài chỉ định) — dời trang do spacer 72pt, nội dung hợp lệ"
+  },
+  {
+   "fixture": "long-boundary",
+   "tag": "main",
+   "form": "PLII_M03",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "[v7] dòng ký + 'Chủ hộ kinh doanh ký trực tiếp vào phần này.' — khối ký hoàn chỉnh + chú thích, dời trang do spacer 72pt"
   }
  ]
 }

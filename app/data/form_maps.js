@@ -3551,7 +3551,7 @@ window.FORM_MAPS = {
    },
    {
     "key": "co_quan_dkkd",
-    "label": "Cơ quan đăng ký kinh doanh cấp tỉnh):"
+    "label": "(Cơ quan đăng ký kinh doanh cấp tỉnh):"
    },
    {
     "key": "dn.dia_chi_tru_so",
@@ -3649,7 +3649,7 @@ window.FORM_MAPS = {
    },
    {
     "key": "co_quan_dkkd",
-    "label": "Cơ quan đăng ký kinh doanh cấp tỉnh):"
+    "label": "(Cơ quan đăng ký kinh doanh cấp tỉnh):"
    },
    {
     "key": "dn.dia_chi_tru_so",
@@ -4440,7 +4440,7 @@ window.FORM_MAPS = {
    },
    {
     "key": "co_quan_dkkd",
-    "label": "Cơ quan đăng ký kinh doanh cấp tỉnh):"
+    "label": "(Cơ quan đăng ký kinh doanh cấp tỉnh):"
    },
    {
     "key": "dn.dia_chi_tru_so",

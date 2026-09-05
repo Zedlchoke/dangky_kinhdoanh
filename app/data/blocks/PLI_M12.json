@@ -1289,19 +1289,6 @@
    "align": "center",
    "runs": [
     {
-     "text": "STT"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
      "text": "Tài sản góp vốn"
     }
    ],
@@ -1572,19 +1559,6 @@
       "key": "menh_gia_co_phan",
       "w": 17
      }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "STT"
     }
    ],
    "format": {
@@ -2498,19 +2472,6 @@
    "align": "center",
    "runs": [
     {
-     "text": "STT"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
      "text": "Tài sản góp vốn"
     }
    ],
@@ -3233,19 +3194,6 @@
     "spaceBeforePt": 6.0
    },
    "role": "form-title"
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "STT"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
   },
   {
    "t": "p",
@@ -4376,7 +4324,7 @@
    "align": "left",
    "runs": [
     {
-     "text": "là:......................................................................................................................"
+     "text": "là:…………………………………………………………………………………………."
     }
    ],
    "format": {

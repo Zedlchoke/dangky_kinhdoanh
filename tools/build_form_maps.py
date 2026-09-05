@@ -2522,6 +2522,80 @@ def normalize_skeleton_glue(doc) -> int:
 #                               # paragraph cho slot không có nhóm chấm
 #    "slot_no": 1,              # chỉ dùng khi mode=slot
 #    "label": <nhãn form_maps, mặc định = text paragraph>}
+# ---------------------------------------------------------------------------
+# 6V-V4b (các việc 3-6 — adjudicate auditor/6v-visual 2026-09-05, ĐÃ ĐỐI
+# CHIẾU nguồn gốc 0x_* trước khi sửa):
+#   3. 'STT' mồ côi 14 form (nhóm e orphan_heading): nguồn đã BỊ LÀM PHẲNG
+#      (bóc nguồn PL2_Mau_02/_Bieu_mau_PL_I_II_full: 0 w:tbl) — 'STT' là
+#      header cột của bảng bản giấy không còn tồn tại, đứng ngay trước
+#      caption 'Các chỉ tiêu thông tin đăng ký thuế' và không gắn bảng nào
+#      → BỎ đoạn 'STT' (caption + các số mục 5.1… giữ nguyên). Chỉ khớp
+#      đúng cặp STT+caption nên không đụng 'STT' trong bảng thật.
+#   4. Ngoặc ')' mồ côi M54/M55/M57 (nhóm b): nguồn vốn đã in
+#      'Cơ quan đăng ký kinh doanh cấp tỉnh): …' (0 mở / 1 đóng — hao hụt
+#      convert; xác nhận 3 file nguồn) trong khi chuẩn toàn corpus là
+#      '(Cơ quan đăng ký kinh doanh cấp tỉnh)' → BỔ SUNG '(' đầu cụm.
+#   5. Separator footnote superscript (nhóm d, 31 form): đường kẻ chỉ-gạch-
+#      dưới mang vertAlign=superscript kế thừa từ nguồn (render ~7pt nhích
+#      baseline) → BỎ vertAlign, separator về paragraph thường đúng vai trò.
+#   6. PLI_M12 (nhóm a fill_line_style, 1 dòng thật): 'là:' + 118 chấm ASCII
+#      giữa các dòng điền unicode '…'×34+'.' cùng vai trò (nguồn để ASCII)
+#      → đổi thành '…'×34+'.' khớp chính form.
+# Mọi khớp đều chặn theo pattern chính xác — 0 match với form khác ngoài
+# đối tượng adjudicate.
+# ---------------------------------------------------------------------------
+
+_V4B_PAREN_RE = re.compile(r"Cơ quan đăng ký kinh doanh cấp tỉnh\):")
+_V4B_SEP_TEXT_RE = re.compile(r"^[_\s]+$")
+_V4B_M12_DOTS_RE = re.compile(r"^là:\.{8,}$")
+
+
+def apply_v4b_source_normalizations(doc, form_id):
+    """Chuẩn hóa nguồn theo adjudicate 6V-V4a (việc 3-6). Trả bộ đếm
+    (n_stt, n_paren, n_sep, n_dots) để log regen."""
+    n_stt = n_paren = n_sep = n_dots = 0
+    paras = _body_paragraphs(doc)
+    for pi, para in enumerate(paras):
+        text = para.text.strip()
+        # (3) 'STT' mồ côi: đoạn body-level TRẦN 'STT' là header cột của
+        # bảng bản giấy bị làm phẳng (bảng thật sau rebuild có 'STT' nằm
+        # trong cell — không bao giờ là body-level); phủ cả biến thể kề
+        # caption thuế (12 form), kề dòng trống (M09) và kề bảng sản phẩm
+        # M78. 14 form nhóm e adjudicate đều rơi vào rule này.
+        if text == "STT":
+            para._p.getparent().remove(para._p)
+            n_stt += 1
+            continue
+        # (4) ngoặc ')' mồ côi trước slot cơ quan ĐKKD
+        if "(" not in text and _V4B_PAREN_RE.search(text):
+            for run in para.runs:
+                if run.text.strip():
+                    run.text = "(" + run.text
+                    break
+            n_paren += 1
+            continue
+        # (5) separator gạch dưới bị superscript
+        if "_" in text and _V4B_SEP_TEXT_RE.match(text):
+            changed = False
+            for run in para.runs:
+                rpr = run._r.rPr
+                if rpr is None:
+                    continue
+                for va in rpr.findall(qn("w:vertAlign")):
+                    rpr.remove(va)
+                    changed = True
+            if changed:
+                n_sep += 1
+            continue
+        # (6) PLI_M12 dòng chấm ASCII
+        if form_id == "PLI_M12" and _V4B_M12_DOTS_RE.match(text):
+            fill = "là:" + "…" * 34 + "."
+            for ri, run in enumerate(para.runs):
+                run.text = fill if ri == 0 else ""
+            n_dots += 1
+    return n_stt, n_paren, n_sep, n_dots
+
+
 # Anchor khớp 0 hoặc >1 paragraph -> SystemExit (fail-loud, không chèn mù).
 def apply_name_slots(doc, form_id, ext, add_field):
     n_done = 0
@@ -3701,6 +3775,14 @@ def process_form(path, titles, coverage, out_tpl=None):
     # Việc 2 (2026-08-28): tái dụng header dọc thành bảng 2-band không viền
     # TRƯỚC khi gắn the — các mẫu trong HEADER_BAND_FORMS, lệch dạng phải fail loud.
     build_header_band_table(doc, form_id)
+    # [6V-V4b] chuẩn hóa nguồn theo adjudicate auditor (việc 3-6: STT mồ
+    # côi, ngoặc ')' mồ côi, separator superscript, M12 chấm ASCII) — chạy
+    # TRƯỚC pass gắn the để slot nhìn thấy văn bản đã chuẩn.
+    n_stt, n_paren, n_sep, n_dots = apply_v4b_source_normalizations(doc, form_id)
+    if n_stt or n_paren or n_sep or n_dots:
+        print("[v4b-norm] %s: STT moi coi -%d, ngoặc '(' +%d, separator "
+              "superscript -%d, dòng chấm ASCII -> unicode %d"
+              % (form_id, n_stt, n_paren, n_sep, n_dots))
     fields = []          # [{key,label,(type)}]
     dyn_tables = []
     section_specs = []   # metadata cấu trúc của kind mới (fixed-matrix, ...)

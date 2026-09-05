@@ -422,20 +422,6 @@
    "align": "center",
    "runs": [
     {
-     "text": "STT",
-     "b": true
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
      "text": "Tên sản phẩm",
      "b": true
     }
@@ -629,8 +615,7 @@
    "align": "left",
    "runs": [
     {
-     "text": "_______________________________________",
-     "vertAlign": "superscript"
+     "text": "_______________________________________"
     }
    ],
    "format": {

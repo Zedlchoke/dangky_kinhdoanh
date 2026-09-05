@@ -2626,19 +2626,6 @@
    "align": "center",
    "runs": [
     {
-     "text": "STT"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
      "text": "Các chỉ tiêu thông tin đăng ký thuế"
     }
    ],
@@ -3117,8 +3104,7 @@
    "align": "left",
    "runs": [
     {
-     "text": "_______________________________________",
-     "vertAlign": "superscript"
+     "text": "_______________________________________"
     }
    ],
    "format": {

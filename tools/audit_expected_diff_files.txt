@@ -214,6 +214,8 @@ app/data/form_maps.js
 app/data/form_maps.json
 app/data/questionnaire/PLI_M72.json
 app/data/table_specs/manifest.json
+app/data/table_specs/fragments/t0_a.json
+app/data/table_specs/fragments/t0_b.json
 app/data/use_cases.json
 app/templates/PLI_M01.docx
 app/templates/PLI_M02.docx

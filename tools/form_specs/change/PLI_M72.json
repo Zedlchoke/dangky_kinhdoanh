@@ -86,6 +86,7 @@
       "spec": {
         "id": "ds_thanh_vien_tnhh_2tv",
         "kind": "nested-grid",
+          "width_policy": "content",
         "section_id": "thanh_vien_tnhhh_hai_tv_tro_len",
         "semantic_key": "ds_thanh_vien_tnhh_2tv",
         "stt": {"mode": "generated", "col_index": 0},
@@ -135,6 +136,7 @@
         "id": "ds_co_dong_sang_lap_ctcp",
         "width_policy": "content",
         "kind": "nested-grid",
+          "width_policy": "content",
         "section_id": "co_dong_sang_lap_cp",
         "semantic_key": "ds_co_dong_sang_lap_ctcp",
         "stt": {"mode": "generated", "col_index": 0},
@@ -186,6 +188,7 @@
         "id": "ds_co_dong_nuoc_ngoai_ctcp",
         "width_policy": "content",
         "kind": "nested-grid",
+          "width_policy": "content",
         "section_id": "co_dong_nuoc_ngoai_cp",
         "semantic_key": "ds_co_dong_nuoc_ngoai_ctcp",
         "stt": {"mode": "generated", "col_index": 0},
@@ -239,6 +242,7 @@
       "spec": {
         "id": "ds_thanh_vien_hop_danh_dhdn",
         "kind": "nested-grid",
+          "width_policy": "content",
         "section_id": "thanh_vien_hop_danh",
         "semantic_key": "ds_thanh_vien_hop_danh_dhdn",
         "stt": {"mode": "generated", "col_index": 0},

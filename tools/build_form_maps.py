@@ -1191,30 +1191,166 @@ def _set_table_borders(tbl):
 WIDE_TABLE_MIN_COLS = 10
 MIN_COL_TWIPS = 567  # 1 cm — trùng ngưỡng D9 (tools/phase5_visual_gate.py)
 WIDTH_POLICY_CONTENT = "content"
+# 6V-V4b (việc 2): bảng 7–9 cột khai báo tường minh width_policy='content'
+# được tái phân bổ theo longest-word (M72 bảng thành viên 7–8 cột portrait —
+# số cột KHÔNG đổi, tổng giữ bằng tổng gridCol hiện có). Bảng không khai báo
+# giữ hành vi cũ (zero churn).
+CONTENT_POLICY_MIN_COLS = 7
 
 
 def _content_col_widths(weights: list, total: int,
-                        min_w: int = MIN_COL_TWIPS) -> list:
+                        min_w: int = MIN_COL_TWIPS,
+                        floors: list | None = None) -> list:
     """Phân bổ `total` twips cho các cột theo `weights` (độ dài nội dung).
 
-    Sàn min_w cho mọi cột; phần lẻ làm tròn bù vào cột weight lớn trước
-    (stable theo index) để tổng luôn đúng `total` khi khả thi."""
+    Sàn min_w cho mọi cột. `floors` (6V-V4b việc 2) là sàn ưu đãi TỪNG CỘT
+    theo longest-word của dữ liệu/nhãn thật — cột họ-tên/quốc tịch/
+    mã-giấy-tờ đủ chứa token dài nhất để Word không xé giữa token. Phân bổ
+    3 bước (deterministic):
+      1) mọi cột bắt đầu ở min_w;
+      2) phần dư chia theo "want" (= floor − min_w) TỈ LỆ và CÓ CAP tại
+         want — cột ưu đãi không ăn quá longest-word của nó;
+      3) dư còn lại (nếu want nhỏ) chia tỉ lệ weights cho mọi cột.
+    Khi tổng min_w + want vượt `total`, bước 2 co tỉ lệ (sàn min_w không
+    bao giờ bị xâm phạm) — bảng 8 cột portrait 8640 có lúc không đủ chứa
+    hết token 13 chữ số: lúc đó break còn lại là giới hạn vật lý, ghi
+    registry."""
     n = len(weights)
     if n == 0:
         return []
-    wsum = sum(max(w, 1) for w in weights)
-    raw = [max(min_w, total * max(w, 1) // wsum) for w in weights]
+    if not floors:
+        # đường legacy (không floors) — GIỮ NGUYÊN hành vi cũ để regen
+        # zero-diff cho mọi bảng chưa khai width_policy content
+        wsum = sum(max(w, 1) for w in weights)
+        raw = [max(min_w, total * max(w, 1) // wsum) for w in weights]
+        rem = total - sum(raw)
+        order = sorted(range(n), key=lambda i: (-max(weights[i], 1), i))
+        guard = 0
+        while rem != 0 and guard <= 4 * total:
+            idx = order[guard % n]
+            step = 1 if rem > 0 else -1
+            if raw[idx] + step >= min_w:
+                raw[idx] += step
+                rem -= step
+            guard += 1
+        return raw
+    fl = [max(min_w, int(f)) for f in floors]
+    raw = [min_w] * n
+    rem = total - min_w * n
+    want = [max(0, fl[i] - min_w) for i in range(n)]
+    wsum_want = sum(want)
+    if rem > 0 and wsum_want > 0:
+        if rem >= wsum_want:
+            for i in range(n):
+                raw[i] += want[i]
+            rem -= wsum_want
+        else:
+            takes = [want[i] * rem // wsum_want for i in range(n)]
+            for i in range(n):
+                raw[i] += takes[i]
+            rem -= sum(takes)
+    if rem > 0:
+        wsum = sum(max(w, 1) for w in weights)
+        raw = [raw[i] + rem * max(w, 1) // wsum for i, w in enumerate(weights)]
     rem = total - sum(raw)
     order = sorted(range(n), key=lambda i: (-max(weights[i], 1), i))
     guard = 0
     while rem != 0 and guard <= 4 * total:
         idx = order[guard % n]
         step = 1 if rem > 0 else -1
-        if raw[idx] + step >= min_w:
+        if raw[idx] + step >= min_w:   # lùi không dưới sàn legacy
             raw[idx] += step
             rem -= step
         guard += 1
     return raw
+
+
+# ---------------------------------------------------------------------------
+# 6V-V4b (việc 2 — adjudicate auditor/6v-visual, violation 5.1-5 "vỡ token
+# giữa từ trong cột hẹp": PLII_M02 p4 "Singapo/re", PLI_M09 p16 "Nguyễ/n",
+# "060000/000023/9", M72 p2): sàn cột theo LONGEST-WORD của dữ liệu/nhãn
+# thật, không chỉ tổng độ dài. Chiều rộng ký tự đo từ corpus PDF (12pt):
+#   chữ số 133.3 tw/char ("14500000000" = 1466 tw), chữ thường có dấu
+#   ~122-127 ("Nguyễn" = 759/6), HOA có dấu ~175 (metric Arial) — làm tròn
+#   an toàn. Cộng lề ô mặc định 108+108 twips.
+# ---------------------------------------------------------------------------
+
+_WW_LOWER_TWIPS = 125
+_WW_UPPER_TWIPS = 175
+_WW_DIGIT_TWIPS = 135
+_WW_OTHER_TWIPS = 70
+_COL_MARGINS_TWIPS = 216 + 30   # lề ô 108×2 + dự phòng hao hụt render
+
+_TAG_WORD_CACHE: dict = {}
+
+# import chịu cả hai chế độ chạy (module `python -m tools.build_form_maps`
+# và script `python tools/build_form_maps.py` — sys.path[0] là tools/)
+try:
+    from tools.phase5_fixtures import ValueFactory as _VALUEFACTORY
+except ImportError:   # noqa: F401 — chạy như script
+    try:
+        from phase5_fixtures import ValueFactory as _VALUEFACTORY
+    except ImportError:
+        _VALUEFACTORY = None
+
+
+def _word_twips(word: str) -> int:
+    return _COL_MARGINS_TWIPS + sum(
+        _WW_DIGIT_TWIPS if c.isdigit()
+        else (_WW_UPPER_TWIPS if c.isupper() else _WW_LOWER_TWIPS)
+        for c in word)
+
+
+def _tag_sample_words(tag: str) -> list:
+    """Từ vựng đại diện của dữ liệu thật cho một tag: 48 mẫu ValueFactory
+    (deterministic — cùng thứ tự gọi luôn ra cùng bộ) — longest-word của
+    dữ liệu corpus để làm sàn cột. Tag dotted (fixed-matrix) dùng nguyên
+    full key: value() tra theo fold(key) chứa tên nhánh."""
+    if tag in _TAG_WORD_CACHE:
+        return _TAG_WORD_CACHE[tag]
+    words: list = []
+    if _VALUEFACTORY is not None:
+        f = _VALUEFACTORY()
+        for _ in range(48):
+            words += str(f.value(tag, "")).replace("/", " / ").split()
+    else:
+        print("[width-floors] CANH BAO: khong nap duoc ValueFactory — "
+              "sàn longest-word cho tag %r về 0 (chỉ còn sàn legacy)" % tag)
+    _TAG_WORD_CACHE[tag] = words
+    return words
+
+
+def _table_word_floors(tbl_el, ncols: int) -> list:
+    """Sàn longest-word (twips) cho từng cột vật lý: max word trong (a) chữ
+    literal trong bảng (nhãn/header), (b) dữ liệu mẫu của tag cột. Ô rỗng
+    và ô chỉ chứa tag không đóng góp word literal."""
+    words: list[list] = [[] for _ in range(ncols)]
+    tags: list[set] = [set() for _ in range(ncols)]
+    for tr in tbl_el.iterchildren(qn("w:tr")):
+        cursor = 0
+        for tc in tr.iterchildren(qn("w:tc")):
+            span = 1
+            tcpr = tc.find(qn("w:tcPr"))
+            if tcpr is not None:
+                gs = tcpr.find(qn("w:gridSpan"))
+                if gs is not None:
+                    span = int(gs.get(qn("w:val")) or 1)
+            text = re.sub(r"\s+", " ", "".join(
+                t.text or "" for t in tc.iter(qn("w:t")))).strip()
+            for c in range(cursor, min(cursor + span, ncols)):
+                plain = _TAG_RE.sub(" ", text).strip()
+                if plain:
+                    words[c] += plain.split()
+                for t in _TAG_RE.findall(text):
+                    tags[c].add(t.strip("{}"))
+            cursor += span
+    floors = []
+    for c in range(ncols):
+        ws = list(words[c])
+        for t in sorted(tags[c]):   # sorted: deterministic
+            ws += _tag_sample_words(t)
+        floors.append(max(((_word_twips(w) for w in ws)), default=0))
+    return floors
 
 
 def _apply_content_widths(tbl, weights: list) -> None:
@@ -1292,12 +1428,29 @@ def _apply_width_list(tbl_el, widths: list) -> bool:
 
 def _maybe_widen_table(tbl, ncols: int, weights: list,
                        spec: dict | None = None) -> None:
-    """Phân bổ lại width theo nội dung nếu spec bật width_policy='content'
-    và bảng đủ rộng (>= 10 cột)."""
+    """Phân bổ lại width theo nội dung nếu spec bật width_policy='content'.
+
+    Bảng >= 10 cột: hành vi 6V-V3 (content widths, sàn MIN_COL_TWIPS ở tầng
+    builder — section ngang sẽ chốt lại bằng sàn 900 + floors ở cuối
+    process_form). Bảng 7–9 cột (6V-V4b việc 2): CHỈ table khai báo tường
+    minh width_policy='content' mới được tái phân bổ theo longest-word —
+    default giữ nguyên lưới (regen zero-diff cho mọi form chưa flag)."""
     if spec is None or spec.get("width_policy") != WIDTH_POLICY_CONTENT:
         return
     if ncols >= WIDE_TABLE_MIN_COLS:
         _apply_content_widths(tbl, weights)
+    elif ncols >= CONTENT_POLICY_MIN_COLS:
+        tbl_el = tbl._tbl
+        grid = tbl_el.find(qn("w:tblGrid"))
+        if grid is None:
+            return
+        total = sum(int(el.get(qn("w:w")) or 0)
+                    for el in grid.iterchildren(qn("w:gridCol")))
+        if total <= 0:
+            return
+        _apply_width_list(tbl_el, _content_col_widths(
+            weights, total, min_w=MIN_COL_TWIPS,
+            floors=_table_word_floors(tbl_el, ncols)))
 
 
 # ---------------------------------------------------------------------------
@@ -1532,7 +1685,8 @@ def build_landscape_sections(doc, form_id, ext=None) -> int:
             ncols = len(_tbl_grid_cols(tbl_el))
             widths = _content_col_widths(
                 _table_content_weights(tbl_el, ncols), usable,
-                min_w=LANDSCAPE_MIN_COL_TWIPS)
+                min_w=LANDSCAPE_MIN_COL_TWIPS,
+                floors=_table_word_floors(tbl_el, ncols))
             if not _apply_width_list(tbl_el, widths):
                 raise ValueError(
                     "[landscape] %s: đặt width thất bại cho bảng %d cột"

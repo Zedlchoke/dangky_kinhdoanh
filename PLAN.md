@@ -1,5 +1,21 @@
 # MASTER PLAN v7 — HOÀN THIỆN TOÀN BỘ SẢN PHẨM SAU PHASE 6V
 
+> **✅ CHECKPOINT WAVE v7 — 2026-09-05 (sau commit `9f756f6`):** hai defect
+> ưu tiên của mandate đã đóng ở mức kỹ thuật + gate hard:
+> (1) **HEADER-NAME-SYNC** — 20/22 slot band bind mirror read-only qua
+> registry `tools/header_name_binding.json`; gate hard `D17_header_name`;
+> PLI_M32 E2E 8/0; 2 slot BLOCKED_OWNER (PLI_M33, PLII_M06 — packet
+> `docs/owner_decision_packet_v7.md` N-v1/N-v2).
+> (2) **SIGNATURE-USABILITY-SPACE** — sàn ký tay 72pt toàn corpus; D6 đồng
+> bộ census (coverage 420/420, expected-but-zero = 0); min gap 72.9pt /
+> median 119.6pt / <72pt = 0; "Đã ký" được đo nhưng không áp sàn; mutation
+> V2a/V2b đủ theo mandate.
+> Corpus mới `generated_ho_so/_visual_layout/phase7v/final/` (455 record):
+> HARD 0 · candidate chưa adjudicate 0 · export error 0 · PNG 1653==đĩa ·
+> ZIP 455/455 · Word 16.16.27 open-direct 91/91. Runner sau wave: xem
+> `docs/execution_ledger.md` wave v7. Human review corpus mới vẫn
+> **NOT_REVIEWED** (O5); Windows vẫn NOT RUN (O6); 22 BLOCKED_OWNER chờ O1.
+
 > **Kế hoạch duy nhất có hiệu lực từ 2026-09-05.** Lịch sử P0→P5R→6V nằm
 > trong `docs/execution_ledger.md`, `docs/defect_registry.md` và git. Không
 > triển khai lại phase đã đóng nếu regression guard vẫn xanh.

@@ -540,3 +540,20 @@ micro-census 91 form, FIELD_META hint UI, adjudicate D6-155/D5-60/WLAY-011.
 **Hàng đợi V4 còn lại (từ micro-census):** fix theo nhóm a/f/d/e/c/g/b (cần lane
 tiếp theo sau khi auditor/6v-visual adjudicate mức "lỗi thật vs chủ đích bản
 giấy" — nhóm f=53 phần lớn "so-line không cần phép" theo ghi chú census).
+
+### Gate V4-final — full corpus @ HEAD 374ea29 (2026-09-05, Lead chạy trực tiếp)
+
+**exit 0 · 455 record · 0 export error · PNG 1612/1612 khớp đĩa ·
+HARD-FAIL 0 · CANDIDATES 71 (chỉ D5_blank_sparse 72 hit).**
+
+| Detector | V0 baseline | V4-final |
+|---|---|---|
+| D13 skeleton glue | 323 rec | **0** |
+| D14 name-slot | 14 rec | **0** |
+| D15 chk glyph | 191 hit | **0** (B3 xác nhận toàn corpus) |
+| D16 token values | 8751 hit | **0** |
+| D9 table grid (WIDE) | 60 bảng | **0** |
+| D6 signature (write-gap nay HARD) | 155 cand @27.3pt | **0 hard + 0 cand** (≥40pt toàn corpus) |
+| D5 blank/sparse | 78 | **72 — lớp duy nhất còn, chờ auditor adjudicate** |
+
+(Số trang 1619→1612: reflow sau spacer 40pt — assert đĩa==manifest vẫn ok.)

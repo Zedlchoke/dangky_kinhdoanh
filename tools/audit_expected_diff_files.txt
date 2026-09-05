@@ -452,3 +452,11 @@ tools/census/6v_micro_census.py
 tools/census/6v_micro_census.json
 # --- [6V-V4/micro 2026-09-05] Lead bo sung: test_dom +6 assertion V4 placeholder hint (lane bo sot, runner H7.4 bat) ---
 app_web/test_dom.js
+# --- 6V-V4b (lane 6v-v4fix, 2026-09-05): 3 template đổi bởi pass separator
+# superscript (việc 5, nhóm d census); audit doc do commit auditor 960d0b2
+# thêm; allowlist D5 sparse mới (việc 9).
+app/templates/PLII_M09.docx
+app/templates/PLI_M46.docx
+app/templates/PLI_M69.docx
+docs/audits/6v/v4-visual-audit.md
+docs/phase6v_d5_sparse_allowlist.json

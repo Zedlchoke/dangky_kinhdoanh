@@ -590,3 +590,14 @@ bản gốc — Q-V8 tinh thần đã chốt giữ nguyên), UI checklist 5.2 đ
 13-chữ-số cột hẹp M09/M72-tnhh (G-C note b — chờ owner) · UI sweep 5.2 ·
 WLAY-005 M12 3 matrix · Q-P4-1 min_rows · suite known-open 5R (p2a/r3b1/w1,
 header_layout PLI_M28) · Q-V6 Windows packaging.
+
+### V5-final — final corpus + ĐÓNG PHASE 6V (2026-09-05)
+
+**Corpus chuẩn bàn giao:** `phase6v/final/` — 455 record, exit 0, HARD 0,
+CANDIDATES 0, PNG 1631/1631 (F6 đóng → G-D PASS: final corpus + word-open
+91/91 thật [export auditor, cùng nội dung HEAD] + determinism PASS + hash
+trong manifest). **G-E human sign-off còn mở — bàn owner** (455/455
+NOT_REVIEWED, đúng thiết kế cần người duyệt). Checkpoint đóng ghi header
+PLAN.md. Tổng commit 6V: V0 310f868 → V1 1bc4c40 → V2 a59c36e/07cf007/
+12b9615/27d790 → B3r ea60397 → V3 1c111db → V4 0ca9fdf/ceb14be → V4b
+177cd2f/9dad012/d66b26a → V5 8ccce9b → final.

@@ -1,5 +1,30 @@
 # MASTER PLAN v6 — VISUAL TOÀN MẪU & TÍNH TỈ MỈ (Phase 6V)
 
+> **✅ CHECKPOINT ĐÓNG PHASE 6V — 2026-09-05 @ `HEAD` (sau V5):** mandate
+> "sửa visual toàn bộ các mẫu + tăng tính tỉ mỉ" hoàn thành ở PHẠM VI KỸ
+> THUẬT. Con số chốt (corpus `generated_ho_so/_visual_layout/phase6v/final/`
+> — 455 record = 91 form × 5 fixture, xuất từ HEAD sạch): **HARD-FAIL 0 ·
+> CANDIDATES 0 · 0 export error · PNG 1631/1631 khớp đĩa**; từ baseline
+> V0: D13 glue 323→0 · D14 slot-tên 14→0 · D15 tick 191→0 · D16 token
+> 8751→0 · D9 bảng-hẹp 60→0 · D6 vùng-ký 155→0 (sàn 40pt HARD toàn corpus)
+> · D5 72→0 sau adjudicate+fix; vỡ token cột hẹp 0; chỗ ký ≥40pt; tick =
+> ☒ trong ô viền. Runner **58 PASS / 0 FAIL / 0 NOT RUN** (2 runner song
+> song 2 PASS). **4 auditor độc lập ≥ PASS-WITH-NOTES, 0 BLOCKER**:
+> core/visual/export/release (`docs/audits/6v/`) — word-open **91/91 thật**
+> (Word 16.16.27), determinism export PASS, ZIP PASS, E2E từ data UI ra PDF
+> đúng slot/đúng ô tick/đủ dòng bảng, tái lập từ worktree sạch 0 số lệch.
+> Quyết định owner đã chốt: Q-V1..Q-V5, Q-V8.
+>
+> **CÒN MỞ (trung thực, không tự đóng):** (1) **G-E human sign-off** —
+> reviewer_verdict 455/455 NOT_REVIEWED: cần NGƯỜI (owner) duyệt từng trang
+> — công cụ đã sẵn (corpus PNG final + app); (2) UI checklist 5.2 sweep đầy
+> đủ (mới có FIELD_META hint +28 key); (3) backlog LOW: F-V5-2/3, vỡ token
+> mã 13-chữ-số (M09/M72-tnhh), micro-census nhóm a=75 registry per-family
+> đối chiếu bản gốc; (4) kế thừa 5R: WLAY-005 M12 matrix, Q-P4-1 min_rows,
+> suite known-open (p2a/r3b1/w1, header_layout PLI_M28); (5) **Q-V6 Windows
+> packaging — chờ owner duyệt mở**. Lịch sử 6V: `docs/execution_ledger.md`
+> mục Phase 6V; lỗi đã đóng: `docs/defect_registry.md` mục 6V.
+
 > **Hiệu lực:** thay thế toàn bộ MASTER PLAN v5 (2026-09-04). Lịch sử v5 nằm
 > trong `docs/execution_ledger.md` và git; mọi con số v5 chỉ còn giá trị tham
 > chiếu. Đây là kế hoạch duy nhất có hiệu lực.

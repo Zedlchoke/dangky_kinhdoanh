@@ -3345,15 +3345,21 @@ _SIG_TABLE_TEMPLATE = (
     '</w:tbl>'
 )
 
-# Ô ký: tcW dxa + paragraph cụm ký (deepcopy) + 1 paragraph trống exact 240
-# twips làm vùng viết ngay dưới instruction trong ô.
+# Ô ký: tcW dxa + paragraph cụm ký (deepcopy) + 1 paragraph trống exact
+# 800 twips (40pt) làm vùng viết ngay dưới instruction trong ô.
+# [6V-V4/signgap] quyết định owner phiên "chỗ ký" 2026-09-05: sàn vùng viết
+# 40pt TOÀN CORPUS. Cụm trong ô bảng 1x2 KHÔNG được chèn spacer lúc render
+# (_ensure_signature_space dừng ở biên ô khi không còn text dưới — đó là
+# đúng ngữ nghĩa "trước nội dung chữ kế tiếp trong cùng container"), nên
+# vùng viết của ô phải bake ngay lúc build: 240 twips (12pt) cũ < 40pt sàn
+# → nâng 800 twips; trHeight 1200 atLeast tự giãn theo nội dung.
 _SIG_CELL_TEMPLATE = (
     '<w:tc><w:tcPr><w:tcW w:w="@@CELL_W@@" w:type="dxa"/>'
     '<w:tcBorders><w:top w:val="nil"/><w:left w:val="nil"/>'
     '<w:bottom w:val="nil"/><w:right w:val="nil"/></w:tcBorders></w:tcPr>'
     '@@PARA@@'
     '<w:p><w:pPr>'
-    '<w:spacing w:before="0" w:after="0" w:line="240" w:lineRule="exact"/>'
+    '<w:spacing w:before="0" w:after="0" w:line="800" w:lineRule="exact"/>'
     '</w:pPr></w:p>'
     '</w:tc>'
 )
@@ -3368,7 +3374,8 @@ def build_horizontal_signature_tables(doc, form_id, section_specs=None) -> int:
       (b) bảng 2 hàng × 1 cột do spec rebuild (output-table W1) vừa chèn —
           mỗi ô chứa đúng 1 cụm ký khớp titles[0]/titles[1].
     Cả hai được thay bằng MỘT bảng không viền 1x2: mỗi ô giữ paragraph cụm ký
-    (deepcopy) + 1 paragraph trống exact 240 twips làm vùng viết, hàng có
+    (deepcopy) + 1 paragraph trống exact 800 twips (40pt, [6V-V4/signgap])
+    làm vùng viết, hàng có
     cantSplit (chống cắt trang — WLAY-003). Trả số bảng đã tạo (0 = no-op)."""
     sig = ((load_signature_expectations().get(form_id) or {})
            .get("signature") or {})

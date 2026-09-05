@@ -43,6 +43,9 @@ Lane B quyền sửa mục signature) CHỈ khi có bằng chứng:
       bảng ký (docx tổng hợp), idempotent, không đụng paragraph thường.
   B4: render M15 phải chèn vùng viết exact-height dưới mỗi instruction; đo
       PDF (pymupdf) gap >= min_write_gap_pt (40pt).
+      [6V-V4/signgap] sàn 40pt giờ là contract TOÀN CORPUS (owner 2026-09-05):
+      mọi entry registry pin min_write_gap_pt=40 (pin B1) và detector D6 đo
+      gap < 40 là HARD-FAIL cho mọi form (không còn candidate).
   B5: policy orphan-signature-page — trang thưa/trắng chứa chỉ thị ký mà
       KHÔNG có title cùng trang là lỗi; đo trên corpus export cục bộ subset
       đại diện. Baseline đỏ: PLII_M25 (long-boundary p2), PLI_M09
@@ -310,6 +313,12 @@ def test_census_registry():
         assert entry.get("keep_together") is True, \
             "%s thiếu keep_together=true" % fid
         assert entry.get("evidence"), "%s thiếu evidence" % fid
+        # [6V-V4/signgap] quyết định owner phiên "chỗ ký" 2026-09-05: sàn
+        # vùng viết 40pt là contract của MỌI entry signature toàn corpus
+        # (trước đây chỉ PLI_M15 pin 40).
+        assert entry.get("min_write_gap_pt") == 40, \
+            "%s min_write_gap_pt=%r != 40 (sàn toàn corpus)" % (
+                fid, entry.get("min_write_gap_pt"))
 
 
 @check("B2_m70_sandbox_regen_1x2_table")

@@ -366,10 +366,16 @@ def det_signatures(pages, expectations: dict, fid: str) -> dict:
                 "expected": exp["orientation"], "measured": measured,
                 "clusters": len(clusters)})
     # D8 vùng viết: khoảng dọc từ instr xuống dòng text kế tiếp trong cùng cột.
-    # Registry khai min_write_gap_pt cho form → thiếu vùng viết là FAIL (P0,
-    # WLAY-004); form chưa có registry chỉ census CANDIDATE.
-    min_gap = float(((expectations.get(fid) or {}).get("signature") or {})
-                    .get("min_write_gap_pt") or 0)
+    # [6V-V4/signgap] QUYẾT ĐỊNH OWNER (phiên quyết "chỗ ký" 2026-09-05): sàn
+    # vùng viết 40pt áp CHO TOÀN BỘ cụm ký toàn corpus — trước đây chỉ form có
+    # registry pin min_write_gap_pt (thực tế chỉ PLI_M15) bị FAIL, corpus còn
+    # lại rơi về spacer mặc định 24pt của generator (gap đo được 27.3–27.4pt
+    # trên 155 cụm) và chỉ là CANDIDATE. Từ nay gap < 40pt là HARD-FAIL với
+    # mọi form; registry vẫn được phép pin ngưỡng CAO hơn 40 (max, không thấp
+    # hơn); nhánh candidate write-space bỏ hẳn.
+    min_gap = max(SIG_WRITE_PT, float(((expectations.get(fid) or {})
+                                       .get("signature") or {})
+                                      .get("min_write_gap_pt") or 0))
     for p in pages:
         lines = _sig_lines(p)
         for c in clusters:
@@ -384,13 +390,11 @@ def det_signatures(pages, expectations: dict, fid: str) -> dict:
             if below:
                 nearest = min(below, key=lambda l: l["y0"])
                 gap = nearest["y0"] - instr["y1"]
-                item = {"code": "SIG_WRITE_SPACE", "page": p["pno"] + 1,
+                if gap < min_gap:
+                    res["fails"].append({
+                        "code": "SIG_WRITE_SPACE", "page": p["pno"] + 1,
                         "gap_pt": round(gap, 1),
-                        "instr": instr["text"][:50]}
-                if min_gap and gap < min_gap:
-                    res["fails"].append(item)
-                elif gap < SIG_WRITE_PT:
-                    res["candidates"].append(item)
+                        "instr": instr["text"][:50]})
     return res
 
 
@@ -892,8 +896,10 @@ def record_verdicts(records: list[dict], allowlist: dict) -> None:
                 fails.append({"detector": key, "detail": val})
             elif key == "D6_signature" and isinstance(val, dict):
                 # detector đã phân ranh giới: res["fails"] chỉ chứa vi phạm
-                # registry/contract (orientation, split, write-space theo
-                # min_write_gap_pt) — toàn bộ là hard; candidates là census.
+                # registry/contract (orientation, split, write-space — sàn 40pt
+                # TOÀN CORPUS theo quyết định owner 2026-09-05 [6V-V4/signgap],
+                # registry chỉ pin cao hơn) — toàn bộ là hard; candidates là
+                # census.
                 fails += [{"detector": "D6_signature", "detail": f}
                           for f in val.get("fails", [])]
                 candidates += [{"detector": "D6_signature", "detail": c}

@@ -229,10 +229,14 @@ def d8_write_space():
     exp = {"fid": {"signature": {"min_write_gap_pt": 40}}}
     res = det_signatures(_pdf_pages(pdf), exp, "fid")
     assert any(f["code"] == "SIG_WRITE_SPACE" for f in res["fails"]), res["fails"]
-    # không registry → chỉ candidate
+    # [6V-V4/signgap] quyết định owner 2026-09-05: sàn 40pt TOÀN CORPUS —
+    # không registry vẫn HARD-FAIL (pin cũ "không registry → chỉ candidate"
+    # mô tả behavior đã supersede); nhánh candidate write-space đã bỏ.
     res2 = det_signatures(_pdf_pages(pdf), {}, "fid")
-    assert not any(f["code"] == "SIG_WRITE_SPACE" for f in res2["fails"])
-    assert any(c["code"] == "SIG_WRITE_SPACE" for c in res2["candidates"])
+    assert any(f["code"] == "SIG_WRITE_SPACE" for f in res2["fails"]), \
+        res2["fails"]
+    assert not any(c["code"] == "SIG_WRITE_SPACE"
+                   for c in res2["candidates"]), res2["candidates"]
 
 
 @check("[D12] fixture: tick tràn nhóm loại-trừ phải bị validator chặn")

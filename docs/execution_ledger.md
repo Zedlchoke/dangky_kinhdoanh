@@ -569,3 +569,24 @@ HARD-FAIL 0 · CANDIDATES 71 (chỉ D5_blank_sparse 72 hit).**
 
 **V4 ĐÓNG.** Tất cả detector D1–D16 = 0 hard + 0 candidate trên toàn corpus.
 Sang V5: auditor/6v-export + auditor/6v-release, sau đó checkpoint đóng 6V.
+
+### V5 — audit độc lập 3 tầng + final corpus (2026-09-05)
+
+| Auditor | Verdict | Điểm chính (Lead đã đọc toàn văn) |
+|---|---|---|
+| `auditor/6v-core` (V2) | **PASS** (0 BLOCKER/MAJOR) | báo cáo gốc mất trong dọn worktree (lỗi Lead) — phục hồi rút gọn `docs/audits/6v/v2-core-audit.md`; F1/F2 fix `6214ae3`; F3 theo dõi; **F4 đóng bởi export auditor** |
+| `auditor/6v-visual` (V4) | **PASS-WITH-NOTES** | `v4-visual-audit.md` (commit `960d0b2`) |
+| `auditor/6v-export` (V5) | **PASS-WITH-NOTES** | **word-open 91/91 THẬT trên corpus 6V (Word 16.16.27)**; determinism PASS (chỉ lệch timestamp metadata); ZIP PASS; PNG==đĩa 455/455 (đóng F4); E2E từ UI-data PASS (tên đúng slot, ☒ đúng, bảng đủ dòng); 2 note LOW (F-V5-2 heuristic D15 khi dòng bảng wrap — không phải lỗi nhìn thấy; F-V5-3 registry nhóm loại-trừ M15) |
+| `auditor/6v-release` (V5) | **PASS-WITH-NOTES** | tái lập từ worktree sạch: 58/0/0 + 7/7 + exit 0, **0 con số lệch** so ledger; repro song song 2 PASS. Gate: G-A PASS · G-B PASS · G-C PASS-WITH-NOTES · G-D PARTIAL (word-open 6V đã có từ export auditor + determinism PASS + final corpus đang chạy — đóng sau) · **G-E CHƯA ĐẠT (reviewer_verdict 455/455 NOT_REVIEWED — cần NGƯỜI duyệt, bàn cho owner)** · G-F PASS-WITH-NOTES |
+
+**Hiệu chỉnh trung thực theo F1 (release auditor):** phát biểu "V4 ĐÓNG"
+(ledger/commit de86570) cần đọc là **"V4 ĐÓNG ở scope detector/G-B"** —
+Gate V4 PLAN còn 3 điều kiện ngoài detector: reviewer_verdict 100% (=G-E,
+bàn owner), micro-census nhóm a=75 registry per-family (chờ owner đối chiếu
+bản gốc — Q-V8 tinh thần đã chốt giữ nguyên), UI checklist 5.2 đầy đủ
+(mới có FIELD_META hint, chưa sweep). Không thay đổi kết luận kỹ thuật.
+
+**Backlog còn lại sau 6V (không chặn):** F-V5-2/3 (LOW) · vỡ token mã
+13-chữ-số cột hẹp M09/M72-tnhh (G-C note b — chờ owner) · UI sweep 5.2 ·
+WLAY-005 M12 3 matrix · Q-P4-1 min_rows · suite known-open 5R (p2a/r3b1/w1,
+header_layout PLI_M28) · Q-V6 Windows packaging.

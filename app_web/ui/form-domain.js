@@ -114,7 +114,56 @@
     'dn_goc.ma_so_dn':   { key: 'dn_goc.ma_so_dn', label: 'Mã số doanh nghiệp bị chia/tách/hợp nhất', type: 'mst' },
     'hkd_cd.ma_so_thue': { key: 'hkd_cd.ma_so_thue', label: 'Mã số thuế hộ kinh doanh chuyển đổi', type: 'mst' },
     'csbt.ma_so_thue':   { key: 'csbt.ma_so_thue', label: 'Mã số thuế cơ sở bảo trợ xã hội/quỹ', type: 'mst' },
-    'so_lao_dong':       { key: 'so_lao_dong', label: 'Tổng số lao động (dự kiến)', type: 'number', inputMode: 'numeric' }
+    'so_lao_dong':       { key: 'so_lao_dong', label: 'Tổng số lao động (dự kiến)', type: 'number', inputMode: 'numeric' },
+    /* [V4 ui-hint lane 6v-micro] Bổ sung meta LABEL + HELP cho các họ key UI
+     * hay gặp mà trước đây chỉ render cơ bản: hộ kinh doanh (hkd_* và
+     * hkd_cd.* — tên/mã số/trụ sở hộ KD), cơ sở bảo trợ xã hội/quỹ (csbt.*),
+     * chi nhánh/văn phòng đại diện/địa điểm kinh doanh (cn.* — PLI_M43...),
+     * người đại diện theo pháp luật (ndd.*). Quy tắc giữ nguyên như comment
+     * trên: KHÔNG đổi key cũ, chỉ THÊM. Mọi key mới đều optional, type 'text'
+     * (riêng ndd.dien_thoai dùng 'phone' nhất quán dien_thoai_khac) — giúp
+     * placeholder/aria trên UI, KHÔNG thêm ràng buộc validation mới. Riêng
+     * hkd_ma_so để 'text' thay vì 'mst' vì mã số hộ KD có thể 12 số, ngoài
+     * dải 10/13 số mà validator mst chấp nhận. */
+    'hkd_ten_tieng_viet': { key: 'hkd_ten_tieng_viet', label: 'Tên hộ kinh doanh viết bằng tiếng Việt', type: 'text',
+                            help: 'Ghi bằng chữ in hoa.' },
+    'hkd_ten_tieng_viet_2': { key: 'hkd_ten_tieng_viet_2', label: 'Tên hộ kinh doanh', type: 'text',
+                              help: 'Ghi bằng chữ in hoa.' },
+    'hkd_ten_nuoc_ngoai': { key: 'hkd_ten_nuoc_ngoai', label: 'Tên hộ kinh doanh bằng tiếng nước ngoài', type: 'text' },
+    'hkd_ten_viet_tat':   { key: 'hkd_ten_viet_tat', label: 'Tên hộ kinh doanh viết tắt', type: 'text' },
+    'hkd_ma_so':          { key: 'hkd_ma_so', label: 'Mã số hộ kinh doanh/Mã số thuế', type: 'text',
+                            help: 'Mã số đăng ký hộ kinh doanh (10 hoặc 12 số); nhập nguyên vẹn.' },
+    'hkd_tru_so':         { key: 'hkd_tru_so', label: 'Trụ sở của hộ kinh doanh', type: 'text',
+                            help: 'Ghi theo giấy tờ địa chính: số nhà, đường/phố, phường/xã, huyện/quận, tỉnh/thành phố.' },
+    'hkd_cd.ten_hkd':     { key: 'hkd_cd.ten_hkd', label: 'Tên hộ kinh doanh chuyển đổi', type: 'text',
+                            help: 'Tên hộ KD đã đăng ký trước khi chuyển đổi; ghi bằng chữ in hoa.' },
+    'hkd_cd.ten_chu_ho':  { key: 'hkd_cd.ten_chu_ho', label: 'Tên chủ hộ kinh doanh', type: 'text' },
+    'hkd_cd.so_gcn':      { key: 'hkd_cd.so_gcn', label: 'Số Giấy chứng nhận đăng ký hộ kinh doanh', type: 'text' },
+    'hkd_cd.dia_chi':     { key: 'hkd_cd.dia_chi', label: 'Địa chỉ trụ sở hộ kinh doanh', type: 'text' },
+    'csbt.ten':               { key: 'csbt.ten', label: 'Tên cơ sở bảo trợ xã hội/quỹ', type: 'text',
+                                help: 'Ghi bằng chữ in hoa.' },
+    'csbt.dia_chi':           { key: 'csbt.dia_chi', label: 'Địa chỉ trụ sở chính cơ sở bảo trợ xã hội/quỹ', type: 'text' },
+    'csbt.so_gcn':            { key: 'csbt.so_gcn', label: 'Số Giấy chứng nhận đăng ký thành lập (cơ sở bảo trợ/quỹ)', type: 'text' },
+    'csbt.ten_nguoi_dai_dien': { key: 'csbt.ten_nguoi_dai_dien', label: 'Tên người đại diện cơ sở bảo trợ xã hội/quỹ', type: 'text' },
+    'csbt.ngay_cap':          { key: 'csbt.ngay_cap', label: 'Ngày cấp Giấy chứng nhận đăng ký (cơ sở bảo trợ/quỹ)', type: 'text',
+                                help: 'Nhập ngày/tháng/năm cấp giấy chứng nhận.' },
+    'cn.ten_tieng_viet': { key: 'cn.ten_tieng_viet', label: 'Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh', type: 'text',
+                           help: 'Ghi bằng chữ in hoa.' },
+    'cn.ten_nuoc_ngoai': { key: 'cn.ten_nuoc_ngoai', label: 'Tên chi nhánh/văn phòng đại diện/địa điểm bằng tiếng nước ngoài', type: 'text' },
+    'cn.ten_viet_tat':   { key: 'cn.ten_viet_tat', label: 'Tên chi nhánh/văn phòng đại diện/địa điểm viết tắt', type: 'text' },
+    'cn.ma_so':          { key: 'cn.ma_so', label: 'Mã số chi nhánh/văn phòng đại diện/địa điểm kinh doanh', type: 'text',
+                           help: 'Mã số do cơ quan đăng ký kinh doanh cấp; hồ sơ mới để trống.' },
+    'cn.ma_so_2':        { key: 'cn.ma_so_2', label: 'Mã số/mã số thuế của chi nhánh/văn phòng đại diện', type: 'text' },
+    'cn.dia_chi':        { key: 'cn.dia_chi', label: 'Địa chỉ chi nhánh/văn phòng đại diện/địa điểm kinh doanh', type: 'text',
+                           help: 'Số nhà, đường/phố, phường/xã, huyện/quận, tỉnh/thành phố.' },
+    'ndd.chuc_vu':    { key: 'ndd.chuc_vu', label: 'Chức danh người đại diện theo pháp luật', type: 'text',
+                        help: 'Ví dụ: Chủ tịch HĐTV, Chủ tịch HĐQT, Giám đốc, Tổng giám đốc.' },
+    'ndd.gioi_tinh':  { key: 'ndd.gioi_tinh', label: 'Giới tính người đại diện', type: 'text' },
+    'ndd.ngay_sinh':  { key: 'ndd.ngay_sinh', label: 'Ngày, tháng, năm sinh người đại diện', type: 'text' },
+    'ndd.thang_sinh': { key: 'ndd.thang_sinh', label: 'Tháng sinh người đại diện', type: 'text' },
+    'ndd.nam_sinh':   { key: 'ndd.nam_sinh', label: 'Năm sinh người đại diện', type: 'text' },
+    'ndd.dien_thoai': { key: 'ndd.dien_thoai', label: 'Điện thoại người đại diện', type: 'phone', inputMode: 'tel' },
+    'ndd.quoc_gia':   { key: 'ndd.quoc_gia', label: 'Quốc gia của người đại diện', type: 'text' }
   };
 
   /* Rule bảng lặp. minRowsFilled: số dòng CÓ DỮ LIỆU tối thiểu (0 = bỏ qua);

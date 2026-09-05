@@ -1,0 +1,4267 @@
+{
+ "generated_by": "tools/census/6v_micro_census.py",
+ "base_commit": "7e39a78",
+ "scope": "app/templates/*.docx (87 template; 91 file corpus = 87 + 4 biến thể render M72)",
+ "checklist": "PLAN.md mục 5.1 (tiêu chí tỉ mỉ trang in)",
+ "read_only": true,
+ "scanned": 87,
+ "band_mechanism_distribution": {
+  "para_br_3lines": 56,
+  "table_2col": 22,
+  "none": 9
+ },
+ "groups": {
+  "a_fill_line_style": {
+   "count": 75,
+   "forms": [
+    "PLII_M01",
+    "PLII_M02",
+    "PLII_M03",
+    "PLII_M04",
+    "PLII_M05",
+    "PLII_M06",
+    "PLII_M07",
+    "PLII_M09",
+    "PLII_M10",
+    "PLII_M11",
+    "PLII_M12",
+    "PLII_M14",
+    "PLII_M15",
+    "PLII_M16",
+    "PLII_M17",
+    "PLII_M18",
+    "PLII_M19",
+    "PLII_M20",
+    "PLII_M21",
+    "PLII_M22",
+    "PLII_M23",
+    "PLII_M24",
+    "PLII_M26",
+    "PLII_M28",
+    "PLI_M01",
+    "PLI_M02",
+    "PLI_M03",
+    "PLI_M04",
+    "PLI_M05",
+    "PLI_M06",
+    "PLI_M08",
+    "PLI_M09",
+    "PLI_M12",
+    "PLI_M13",
+    "PLI_M14",
+    "PLI_M15",
+    "PLI_M17",
+    "PLI_M18",
+    "PLI_M19",
+    "PLI_M21",
+    "PLI_M23",
+    "PLI_M25",
+    "PLI_M26",
+    "PLI_M27",
+    "PLI_M28",
+    "PLI_M29",
+    "PLI_M30",
+    "PLI_M31",
+    "PLI_M32",
+    "PLI_M33",
+    "PLI_M42",
+    "PLI_M43",
+    "PLI_M45",
+    "PLI_M46",
+    "PLI_M48",
+    "PLI_M49",
+    "PLI_M50",
+    "PLI_M52",
+    "PLI_M53",
+    "PLI_M56",
+    "PLI_M63",
+    "PLI_M66",
+    "PLI_M67",
+    "PLI_M68",
+    "PLI_M69",
+    "PLI_M70",
+    "PLI_M71",
+    "PLI_M72",
+    "PLI_M73",
+    "PLI_M74",
+    "PLI_M75",
+    "PLI_M76",
+    "PLI_M78",
+    "PLI_M79",
+    "PLI_M80"
+   ],
+   "examples": [
+    {
+     "form": "PLII_M01",
+     "detail": "trộn 2 style: DASH,UNDERSCORE"
+    },
+    {
+     "form": "PLII_M02",
+     "detail": "trộn 4 style: DASH,DOT_ASCII,DOT_UNICODE,UNDERSCORE"
+    },
+    {
+     "form": "PLII_M03",
+     "detail": "trộn 2 style: DASH,UNDERSCORE"
+    },
+    {
+     "form": "PLII_M04",
+     "detail": "trộn 2 style: DASH,UNDERSCORE"
+    },
+    {
+     "form": "PLII_M05",
+     "detail": "trộn 2 style: DASH,UNDERSCORE"
+    },
+    {
+     "form": "PLII_M06",
+     "detail": "trộn 4 style: DASH,DOT_ASCII,DOT_UNICODE,UNDERSCORE"
+    }
+   ]
+  },
+  "b_colon_paren": {
+   "count": 4,
+   "forms": [
+    "PLI_M12",
+    "PLI_M54",
+    "PLI_M55",
+    "PLI_M57"
+   ],
+   "examples": [
+    {
+     "form": "PLI_M12",
+     "detail": "{\"paren_unbalanced\": {\"n_paragraphs\": 1, \"samples\": [\"1 Dùng trong trường hợp (i) thay đổi từ cổ đông là nhà đầu tư nước ngoài này san\"]}}"
+    },
+    {
+     "form": "PLI_M54",
+     "detail": "{\"paren_unbalanced\": {\"n_paragraphs\": 1, \"samples\": [\"Cơ quan đăng ký kinh doanh cấp tỉnh): {co_quan_dkkd}\"]}}"
+    },
+    {
+     "form": "PLI_M55",
+     "detail": "{\"paren_unbalanced\": {\"n_paragraphs\": 1, \"samples\": [\"Cơ quan đăng ký kinh doanh cấp tỉnh): {co_quan_dkkd}\"]}}"
+    },
+    {
+     "form": "PLI_M57",
+     "detail": "{\"paren_unbalanced\": {\"n_paragraphs\": 1, \"samples\": [\"Cơ quan đăng ký kinh doanh cấp tỉnh): {co_quan_dkkd}\"]}}"
+    }
+   ]
+  },
+  "c_font_floor": {
+   "count": 9,
+   "forms": [
+    "PLII_M01",
+    "PLII_M02",
+    "PLI_M02",
+    "PLI_M06",
+    "PLI_M09",
+    "PLI_M10",
+    "PLI_M12",
+    "PLI_M15",
+    "PLI_M72"
+   ],
+   "examples": [
+    {
+     "form": "PLII_M01",
+     "detail": "{\"runs_below_8pt\": 0, \"empty_runs_below_8pt\": 0, \"paragraph_marks_below_8pt\": 2}"
+    },
+    {
+     "form": "PLII_M02",
+     "detail": "{\"runs_below_8pt\": 0, \"empty_runs_below_8pt\": 0, \"paragraph_marks_below_8pt\": 4}"
+    },
+    {
+     "form": "PLI_M02",
+     "detail": "{\"runs_below_8pt\": 0, \"empty_runs_below_8pt\": 0, \"paragraph_marks_below_8pt\": 2}"
+    },
+    {
+     "form": "PLI_M06",
+     "detail": "{\"runs_below_8pt\": 0, \"empty_runs_below_8pt\": 0, \"paragraph_marks_below_8pt\": 1}"
+    },
+    {
+     "form": "PLI_M09",
+     "detail": "{\"runs_below_8pt\": 0, \"empty_runs_below_8pt\": 0, \"paragraph_marks_below_8pt\": 1}"
+    },
+    {
+     "form": "PLI_M10",
+     "detail": "{\"runs_below_8pt\": 0, \"empty_runs_below_8pt\": 0, \"paragraph_marks_below_8pt\": 1}"
+    }
+   ]
+  },
+  "d_superscript_glue": {
+   "count": 31,
+   "forms": [
+    "PLII_M01",
+    "PLII_M02",
+    "PLII_M03",
+    "PLII_M04",
+    "PLII_M05",
+    "PLII_M06",
+    "PLII_M09",
+    "PLII_M18",
+    "PLI_M18",
+    "PLI_M19",
+    "PLI_M21",
+    "PLI_M23",
+    "PLI_M25",
+    "PLI_M26",
+    "PLI_M27",
+    "PLI_M28",
+    "PLI_M29",
+    "PLI_M30",
+    "PLI_M31",
+    "PLI_M32",
+    "PLI_M33",
+    "PLI_M46",
+    "PLI_M66",
+    "PLI_M67",
+    "PLI_M68",
+    "PLI_M69",
+    "PLI_M71",
+    "PLI_M72",
+    "PLI_M78",
+    "PLI_M79",
+    "PLI_M80"
+   ],
+   "examples": [
+    {
+     "form": "PLII_M01",
+     "detail": "{\"superscript_non_digit\": {\"n_runs\": 1, \"samples\": [\"SUP:_______________________________________\"]}, \"superscript_runs_total\": 11}"
+    },
+    {
+     "form": "PLII_M02",
+     "detail": "{\"superscript_non_digit\": {\"n_runs\": 1, \"samples\": [\"SUP:_______________________________________\"]}, \"superscript_runs_total\": 18}"
+    },
+    {
+     "form": "PLII_M03",
+     "detail": "{\"superscript_non_digit\": {\"n_runs\": 1, \"samples\": [\"SUP:_______________________________________\"]}, \"superscript_runs_total\": 2}"
+    },
+    {
+     "form": "PLII_M04",
+     "detail": "{\"superscript_non_digit\": {\"n_runs\": 1, \"samples\": [\"SUP:_______________________________________\"]}, \"superscript_runs_total\": 2}"
+    },
+    {
+     "form": "PLII_M05",
+     "detail": "{\"superscript_non_digit\": {\"n_runs\": 1, \"samples\": [\"SUP:_______________________________________\"]}, \"superscript_runs_total\": 5}"
+    },
+    {
+     "form": "PLII_M06",
+     "detail": "{\"superscript_non_digit\": {\"n_runs\": 1, \"samples\": [\"SUP:_______________________________________\"]}, \"superscript_runs_total\": 6}"
+    }
+   ]
+  },
+  "e_orphan_heading": {
+   "count": 14,
+   "forms": [
+    "PLII_M02",
+    "PLI_M01",
+    "PLI_M02",
+    "PLI_M03",
+    "PLI_M04",
+    "PLI_M06",
+    "PLI_M08",
+    "PLI_M09",
+    "PLI_M12",
+    "PLI_M17",
+    "PLI_M19",
+    "PLI_M23",
+    "PLI_M25",
+    "PLI_M78"
+   ],
+   "examples": [
+    {
+     "form": "PLII_M02",
+     "detail": "{\"n_paragraphs\": 1, \"samples\": [\"STT\"]}"
+    },
+    {
+     "form": "PLI_M01",
+     "detail": "{\"n_paragraphs\": 1, \"samples\": [\"STT\"]}"
+    },
+    {
+     "form": "PLI_M02",
+     "detail": "{\"n_paragraphs\": 1, \"samples\": [\"STT\"]}"
+    },
+    {
+     "form": "PLI_M03",
+     "detail": "{\"n_paragraphs\": 1, \"samples\": [\"STT\"]}"
+    },
+    {
+     "form": "PLI_M04",
+     "detail": "{\"n_paragraphs\": 1, \"samples\": [\"STT\"]}"
+    },
+    {
+     "form": "PLI_M06",
+     "detail": "{\"n_paragraphs\": 1, \"samples\": [\"STT\"]}"
+    }
+   ]
+  },
+  "f_header_band": {
+   "count": 53,
+   "forms": [
+    "PLII_M08",
+    "PLII_M10",
+    "PLII_M11",
+    "PLII_M12",
+    "PLII_M13",
+    "PLII_M14",
+    "PLII_M15",
+    "PLII_M16",
+    "PLII_M17",
+    "PLII_M18",
+    "PLII_M19",
+    "PLII_M20",
+    "PLII_M21",
+    "PLII_M22",
+    "PLII_M23",
+    "PLII_M24",
+    "PLII_M25",
+    "PLII_M26",
+    "PLII_M27",
+    "PLII_M28",
+    "PLI_M06",
+    "PLI_M07",
+    "PLI_M08",
+    "PLI_M09",
+    "PLI_M10",
+    "PLI_M11",
+    "PLI_M12",
+    "PLI_M45",
+    "PLI_M47",
+    "PLI_M48",
+    "PLI_M49",
+    "PLI_M50",
+    "PLI_M51",
+    "PLI_M52",
+    "PLI_M53",
+    "PLI_M54",
+    "PLI_M55",
+    "PLI_M56",
+    "PLI_M57",
+    "PLI_M63",
+    "PLI_M66",
+    "PLI_M67",
+    "PLI_M68",
+    "PLI_M69",
+    "PLI_M70",
+    "PLI_M71",
+    "PLI_M72",
+    "PLI_M73",
+    "PLI_M74",
+    "PLI_M75",
+    "PLI_M76",
+    "PLI_M79",
+    "PLI_M80"
+   ],
+   "examples": [
+    {
+     "form": "PLII_M08",
+     "detail": "band=para_br_3lines so_line_not_right"
+    },
+    {
+     "form": "PLII_M10",
+     "detail": "band=para_br_3lines so_line_not_right"
+    },
+    {
+     "form": "PLII_M11",
+     "detail": "band=para_br_3lines so_line_not_right"
+    },
+    {
+     "form": "PLII_M12",
+     "detail": "band=para_br_3lines so_line_not_right"
+    },
+    {
+     "form": "PLII_M13",
+     "detail": "band=para_br_3lines so_line_not_right"
+    },
+    {
+     "form": "PLII_M14",
+     "detail": "band=para_br_3lines so_line_not_right"
+    }
+   ]
+  },
+  "g_table_border_pad": {
+   "count": 8,
+   "forms": [
+    "PLII_M02",
+    "PLI_M13",
+    "PLI_M15",
+    "PLI_M17",
+    "PLI_M19",
+    "PLI_M21",
+    "PLI_M23",
+    "PLI_M25"
+   ],
+   "examples": [
+    {
+     "form": "PLII_M02",
+     "detail": "{\"tables\": 8, \"borderless\": 0, \"partial_borders\": 0, \"cell_border_overrides\": 0, \"border_sig_variants\": 2}"
+    },
+    {
+     "form": "PLI_M13",
+     "detail": "{\"tables\": 2, \"borderless\": 0, \"partial_borders\": 0, \"cell_border_overrides\": 0, \"border_sig_variants\": 2}"
+    },
+    {
+     "form": "PLI_M15",
+     "detail": "{\"tables\": 2, \"borderless\": 0, \"partial_borders\": 0, \"cell_border_overrides\": 0, \"border_sig_variants\": 2}"
+    },
+    {
+     "form": "PLI_M17",
+     "detail": "{\"tables\": 2, \"borderless\": 0, \"partial_borders\": 0, \"cell_border_overrides\": 0, \"border_sig_variants\": 2}"
+    },
+    {
+     "form": "PLI_M19",
+     "detail": "{\"tables\": 2, \"borderless\": 0, \"partial_borders\": 0, \"cell_border_overrides\": 0, \"border_sig_variants\": 2}"
+    },
+    {
+     "form": "PLI_M21",
+     "detail": "{\"tables\": 2, \"borderless\": 0, \"partial_borders\": 0, \"cell_border_overrides\": 0, \"border_sig_variants\": 2}"
+    }
+   ]
+  }
+ },
+ "per_form": {
+  "PLII_M01": {
+   "fill_styles": [
+    "DASH",
+    "UNDERSCORE"
+   ],
+   "fill_style_counts": {
+    "DASH": 1,
+    "UNDERSCORE": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "UNDERSCORE"
+    ],
+    "counts": {
+     "DASH": 1,
+     "UNDERSCORE": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc---------"
+     },
+     {
+      "style": "UNDERSCORE",
+      "context": "_______________________________________"
+     }
+    ]
+   },
+   "font_floor": {
+    "runs_below_8pt": 0,
+    "empty_runs_below_8pt": 0,
+    "paragraph_marks_below_8pt": 2
+   },
+   "superscript_glue": {
+    "superscript_non_digit": {
+     "n_runs": 1,
+     "samples": [
+      "SUP:_______________________________________"
+     ]
+    },
+    "superscript_runs_total": 11
+   },
+   "band_mechanism": "para_br_3lines"
+  },
+  "PLII_M02": {
+   "fill_styles": [
+    "DASH",
+    "DOT_ASCII",
+    "DOT_UNICODE",
+    "UNDERSCORE"
+   ],
+   "fill_style_counts": {
+    "DASH": 1,
+    "DOT_UNICODE": 1,
+    "DOT_ASCII": 6,
+    "UNDERSCORE": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_ASCII",
+     "DOT_UNICODE",
+     "UNDERSCORE"
+    ],
+    "counts": {
+     "DASH": 1,
+     "DOT_UNICODE": 1,
+     "DOT_ASCII": 6,
+     "UNDERSCORE": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "TÊN HỘ KINH DOANH-------"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "-….."
+     },
+     {
+      "style": "DOT_ASCII",
+      "context": "......................................................................"
+     },
+     {
+      "style": "UNDERSCORE",
+      "context": "_______________________________________"
+     }
+    ]
+   },
+   "font_floor": {
+    "runs_below_8pt": 0,
+    "empty_runs_below_8pt": 0,
+    "paragraph_marks_below_8pt": 4
+   },
+   "superscript_glue": {
+    "superscript_non_digit": {
+     "n_runs": 1,
+     "samples": [
+      "SUP:_______________________________________"
+     ]
+    },
+    "superscript_runs_total": 18
+   },
+   "orphan_heading": {
+    "n_paragraphs": 1,
+    "samples": [
+     "STT"
+    ]
+   },
+   "band_mechanism": "table_2col",
+   "table_border_pad": {
+    "tables": 8,
+    "borderless": 0,
+    "partial_borders": 0,
+    "cell_border_overrides": 0,
+    "border_sig_variants": 2
+   }
+  },
+  "PLII_M03": {
+   "fill_styles": [
+    "DASH",
+    "UNDERSCORE"
+   ],
+   "fill_style_counts": {
+    "DASH": 1,
+    "UNDERSCORE": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "UNDERSCORE"
+    ],
+    "counts": {
+     "DASH": 1,
+     "UNDERSCORE": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "TÊN HỘ KINH DOANH-------"
+     },
+     {
+      "style": "UNDERSCORE",
+      "context": "_______________________________________"
+     }
+    ]
+   },
+   "superscript_glue": {
+    "superscript_non_digit": {
+     "n_runs": 1,
+     "samples": [
+      "SUP:_______________________________________"
+     ]
+    },
+    "superscript_runs_total": 2
+   },
+   "band_mechanism": "table_2col"
+  },
+  "PLII_M04": {
+   "fill_styles": [
+    "DASH",
+    "UNDERSCORE"
+   ],
+   "fill_style_counts": {
+    "DASH": 1,
+    "UNDERSCORE": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "UNDERSCORE"
+    ],
+    "counts": {
+     "DASH": 1,
+     "UNDERSCORE": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "TÊN HỘ KINH DOANH-------"
+     },
+     {
+      "style": "UNDERSCORE",
+      "context": "_______________________________________"
+     }
+    ]
+   },
+   "superscript_glue": {
+    "superscript_non_digit": {
+     "n_runs": 1,
+     "samples": [
+      "SUP:_______________________________________"
+     ]
+    },
+    "superscript_runs_total": 2
+   },
+   "band_mechanism": "table_2col"
+  },
+  "PLII_M05": {
+   "fill_styles": [
+    "DASH",
+    "UNDERSCORE"
+   ],
+   "fill_style_counts": {
+    "DASH": 1,
+    "UNDERSCORE": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "UNDERSCORE"
+    ],
+    "counts": {
+     "DASH": 1,
+     "UNDERSCORE": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "TÊN HỘ KINH DOANH--------------"
+     },
+     {
+      "style": "UNDERSCORE",
+      "context": "_______________________________________"
+     }
+    ]
+   },
+   "superscript_glue": {
+    "superscript_non_digit": {
+     "n_runs": 1,
+     "samples": [
+      "SUP:_______________________________________"
+     ]
+    },
+    "superscript_runs_total": 5
+   },
+   "band_mechanism": "table_2col"
+  },
+  "PLII_M06": {
+   "fill_styles": [
+    "DASH",
+    "DOT_ASCII",
+    "DOT_UNICODE",
+    "UNDERSCORE"
+   ],
+   "fill_style_counts": {
+    "DASH": 1,
+    "DOT_ASCII": 1,
+    "DOT_UNICODE": 4,
+    "UNDERSCORE": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_ASCII",
+     "DOT_UNICODE",
+     "UNDERSCORE"
+    ],
+    "counts": {
+     "DASH": 1,
+     "DOT_ASCII": 1,
+     "DOT_UNICODE": 4,
+     "UNDERSCORE": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "TÊN HỘ KINH DOANH-------------"
+     },
+     {
+      "style": "DOT_ASCII",
+      "context": "Là chủ hộ kinh doanh1 (Tên hộ kinh doanh) ............................"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "Tôi đề nghị (Cơ quan đăng ký kinh doanh cấp xã) {co_quan_dkkd} dừng th"
+     },
+     {
+      "style": "UNDERSCORE",
+      "context": "_______________________________________"
+     }
+    ]
+   },
+   "superscript_glue": {
+    "superscript_non_digit": {
+     "n_runs": 1,
+     "samples": [
+      "SUP:_______________________________________"
+     ]
+    },
+    "superscript_runs_total": 6
+   },
+   "band_mechanism": "table_2col"
+  },
+  "PLII_M07": {
+   "fill_styles": [
+    "DASH",
+    "DOT_ASCII"
+   ],
+   "fill_style_counts": {
+    "DASH": 2,
+    "DOT_ASCII": 2
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_ASCII"
+    ],
+    "counts": {
+     "DASH": 2,
+     "DOT_ASCII": 2
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP XÃ-----------"
+     },
+     {
+      "style": "DASH",
+      "context": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc---------"
+     },
+     {
+      "style": "DOT_ASCII",
+      "context": "4. Vốn kinh doanh:...................................................."
+     },
+     {
+      "style": "DOT_ASCII",
+      "context": "Họ và tên (ghi bằng chữ in hoa):......................................"
+     }
+    ]
+   },
+   "band_mechanism": "para_br_3lines"
+  },
+  "PLII_M08": {
+   "fill_styles": [
+    "DASH"
+   ],
+   "fill_style_counts": {
+    "DASH": 2
+   },
+   "band_mechanism": "para_br_3lines",
+   "so_line_jc": "center",
+   "header_band": {
+    "issue": "so_line_not_right",
+    "jc": "center"
+   }
+  },
+  "PLII_M09": {
+   "fill_styles": [
+    "DASH",
+    "DOT_UNICODE",
+    "UNDERSCORE"
+   ],
+   "fill_style_counts": {
+    "DASH": 2,
+    "DOT_UNICODE": 1,
+    "UNDERSCORE": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_UNICODE",
+     "UNDERSCORE"
+    ],
+    "counts": {
+     "DASH": 2,
+     "DOT_UNICODE": 1,
+     "UNDERSCORE": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "CƠ QUAN ĐĂNG KÝ KINH DOANH----------------"
+     },
+     {
+      "style": "DASH",
+      "context": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc---------"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "Ghi chú: Được cấp lại ngày {cap_lai_ngay}…TRƯỞNG PHÒNG(Ký, ghi họ tên "
+     },
+     {
+      "style": "UNDERSCORE",
+      "context": "_______________________________________"
+     }
+    ]
+   },
+   "superscript_glue": {
+    "superscript_non_digit": {
+     "n_runs": 1,
+     "samples": [
+      "SUP:_______________________________________"
+     ]
+    },
+    "superscript_runs_total": 4
+   },
+   "band_mechanism": "para_br_3lines"
+  },
+  "PLII_M10": {
+   "fill_styles": [
+    "DASH",
+    "DOT_ASCII"
+   ],
+   "fill_style_counts": {
+    "DASH": 2,
+    "DOT_ASCII": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_ASCII"
+    ],
+    "counts": {
+     "DASH": 2,
+     "DOT_ASCII": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP XÃ----------"
+     },
+     {
+      "style": "DASH",
+      "context": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc---------"
+     },
+     {
+      "style": "DOT_ASCII",
+      "context": "Sau khi xem xét hồ sơ đã nhận ngày {da_nhan_ngay} của Ông/Bà: {ong_ba_"
+     }
+    ]
+   },
+   "band_mechanism": "para_br_3lines",
+   "so_line_jc": "center",
+   "header_band": {
+    "issue": "so_line_not_right",
+    "jc": "center"
+   }
+  },
+  "PLII_M11": {
+   "fill_styles": [
+    "DASH",
+    "DOT_ASCII"
+   ],
+   "fill_style_counts": {
+    "DASH": 2,
+    "DOT_ASCII": 3
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_ASCII"
+    ],
+    "counts": {
+     "DASH": 2,
+     "DOT_ASCII": 3
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP XÃ-----------"
+     },
+     {
+      "style": "DASH",
+      "context": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc---------"
+     },
+     {
+      "style": "DOT_ASCII",
+      "context": "......................................................................"
+     }
+    ]
+   },
+   "band_mechanism": "para_br_3lines",
+   "so_line_jc": "center",
+   "header_band": {
+    "issue": "so_line_not_right",
+    "jc": "center"
+   }
+  },
+  "PLII_M12": {
+   "fill_styles": [
+    "DASH",
+    "DOT_ASCII",
+    "DOT_UNICODE"
+   ],
+   "fill_style_counts": {
+    "DASH": 2,
+    "DOT_ASCII": 3,
+    "DOT_UNICODE": 7
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_ASCII",
+     "DOT_UNICODE"
+    ],
+    "counts": {
+     "DASH": 2,
+     "DOT_ASCII": 3,
+     "DOT_UNICODE": 7
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP XÃ-----------"
+     },
+     {
+      "style": "DASH",
+      "context": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc---------"
+     },
+     {
+      "style": "DOT_ASCII",
+      "context": "Căn cứ kết luận/biên bản làm việc số {can_cu} ngày {ngay_ky_vb}/......"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "Căn cứ Thông báo số … ngày {can_cu} của (Cơ quan đăng ký kinh doanh cấ"
+     }
+    ]
+   },
+   "band_mechanism": "para_br_3lines",
+   "so_line_jc": "center",
+   "header_band": {
+    "issue": "so_line_not_right",
+    "jc": "center"
+   }
+  },
+  "PLII_M13": {
+   "fill_styles": [
+    "DASH"
+   ],
+   "fill_style_counts": {
+    "DASH": 2
+   },
+   "band_mechanism": "para_br_3lines",
+   "so_line_jc": "center",
+   "header_band": {
+    "issue": "so_line_not_right",
+    "jc": "center"
+   }
+  },
+  "PLII_M14": {
+   "fill_styles": [
+    "DASH",
+    "DOT_ASCII",
+    "DOT_UNICODE"
+   ],
+   "fill_style_counts": {
+    "DASH": 2,
+    "DOT_ASCII": 1,
+    "DOT_UNICODE": 9
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_ASCII",
+     "DOT_UNICODE"
+    ],
+    "counts": {
+     "DASH": 2,
+     "DOT_ASCII": 1,
+     "DOT_UNICODE": 9
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP XÃ-----------"
+     },
+     {
+      "style": "DASH",
+      "context": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc---------"
+     },
+     {
+      "style": "DOT_ASCII",
+      "context": "TRƯỞNG PHÒNG ..."
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "Căn cứ Thông báo số {can_cu} ngày {ngay_ky_vb}/…../….. của (Cơ quan đă"
+     }
+    ]
+   },
+   "band_mechanism": "para_br_3lines",
+   "so_line_jc": "center",
+   "header_band": {
+    "issue": "so_line_not_right",
+    "jc": "center"
+   }
+  },
+  "PLII_M15": {
+   "fill_styles": [
+    "DASH",
+    "DOT_ASCII",
+    "DOT_UNICODE"
+   ],
+   "fill_style_counts": {
+    "DASH": 2,
+    "DOT_ASCII": 1,
+    "DOT_UNICODE": 4
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_ASCII",
+     "DOT_UNICODE"
+    ],
+    "counts": {
+     "DASH": 2,
+     "DOT_ASCII": 1,
+     "DOT_UNICODE": 4
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP XÃ-----------"
+     },
+     {
+      "style": "DASH",
+      "context": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc---------"
+     },
+     {
+      "style": "DOT_ASCII",
+      "context": "TRƯỞNG PHÒNG ..."
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "Căn cứ Thông báo số {can_cu} ngày {ngay_ky_vb}/…./….. của (Cơ quan đăn"
+     }
+    ]
+   },
+   "band_mechanism": "para_br_3lines",
+   "so_line_jc": "center",
+   "header_band": {
+    "issue": "so_line_not_right",
+    "jc": "center"
+   }
+  },
+  "PLII_M16": {
+   "fill_styles": [
+    "DASH",
+    "DOT_ASCII",
+    "DOT_UNICODE"
+   ],
+   "fill_style_counts": {
+    "DASH": 2,
+    "DOT_ASCII": 3,
+    "DOT_UNICODE": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_ASCII",
+     "DOT_UNICODE"
+    ],
+    "counts": {
+     "DASH": 2,
+     "DOT_ASCII": 3,
+     "DOT_UNICODE": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP XÃ-----------"
+     },
+     {
+      "style": "DASH",
+      "context": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc---------"
+     },
+     {
+      "style": "DOT_ASCII",
+      "context": "TRƯỞNG PHÒNG ..."
+     },
+     {
+      "style": "DOT_ASCII",
+      "context": "Trên cơ sở đề nghị của ...... (tên cơ quan quản lý thuế) tại Văn bản s"
+     }
+    ]
+   },
+   "band_mechanism": "para_br_3lines",
+   "so_line_jc": "center",
+   "header_band": {
+    "issue": "so_line_not_right",
+    "jc": "center"
+   }
+  },
+  "PLII_M17": {
+   "fill_styles": [
+    "DASH",
+    "DOT_ASCII",
+    "DOT_UNICODE"
+   ],
+   "fill_style_counts": {
+    "DASH": 2,
+    "DOT_UNICODE": 5,
+    "DOT_ASCII": 4
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_ASCII",
+     "DOT_UNICODE"
+    ],
+    "counts": {
+     "DASH": 2,
+     "DOT_UNICODE": 5,
+     "DOT_ASCII": 4
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP XÃ-----------"
+     },
+     {
+      "style": "DASH",
+      "context": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc---------"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "Ngày {ngay_ky_vb}/…./…. đã nhận của Ông/Bà {ngay_nhan_hs}"
+     },
+     {
+      "style": "DOT_ASCII",
+      "context": "01 bộ hồ sơ số: ..................................về việc {ve_viec}"
+     }
+    ]
+   },
+   "band_mechanism": "para_br_3lines",
+   "so_line_jc": "center",
+   "header_band": {
+    "issue": "so_line_not_right",
+    "jc": "center"
+   }
+  },
+  "PLII_M18": {
+   "fill_styles": [
+    "DASH",
+    "DOT_ASCII",
+    "DOT_UNICODE",
+    "UNDERSCORE"
+   ],
+   "fill_style_counts": {
+    "DASH": 2,
+    "DOT_ASCII": 6,
+    "DOT_UNICODE": 3,
+    "UNDERSCORE": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_ASCII",
+     "DOT_UNICODE",
+     "UNDERSCORE"
+    ],
+    "counts": {
+     "DASH": 2,
+     "DOT_ASCII": 6,
+     "DOT_UNICODE": 3,
+     "UNDERSCORE": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP XÃ-----------"
+     },
+     {
+      "style": "DASH",
+      "context": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc---------"
+     },
+     {
+      "style": "DOT_ASCII",
+      "context": "Ngày {ngay_ky_vb}/..../.... đã nhận của Ông/Bà {ngay_nhan_hs}"
+     },
+     {
+      "style": "DOT_ASCII",
+      "context": "01 bộ hồ sơ đăng ký qua mạng thông tin điện tử mã số:.... về việc {ve_"
+     }
+    ]
+   },
+   "superscript_glue": {
+    "superscript_non_digit": {
+     "n_runs": 1,
+     "samples": [
+      "SUP:_______________________________________"
+     ]
+    },
+    "superscript_runs_total": 3
+   },
+   "band_mechanism": "para_br_3lines",
+   "so_line_jc": "center",
+   "header_band": {
+    "issue": "so_line_not_right",
+    "jc": "center"
+   }
+  },
+  "PLII_M19": {
+   "fill_styles": [
+    "DASH",
+    "DOT_ASCII",
+    "DOT_UNICODE"
+   ],
+   "fill_style_counts": {
+    "DASH": 2,
+    "DOT_ASCII": 1,
+    "DOT_UNICODE": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_ASCII",
+     "DOT_UNICODE"
+    ],
+    "counts": {
+     "DASH": 2,
+     "DOT_ASCII": 1,
+     "DOT_UNICODE": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP XÃ-----------"
+     },
+     {
+      "style": "DASH",
+      "context": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc---------"
+     },
+     {
+      "style": "DOT_ASCII",
+      "context": "Yêu cầu (tên hộ kinh doanh):.........................................."
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "Nơi nhận:- Như trên;- {noi_nhan} (Cơ quan quản lý chuyên ngành);- …………"
+     }
+    ]
+   },
+   "band_mechanism": "para_br_3lines",
+   "so_line_jc": "center",
+   "header_band": {
+    "issue": "so_line_not_right",
+    "jc": "center"
+   }
+  },
+  "PLII_M20": {
+   "fill_styles": [
+    "DASH",
+    "DOT_UNICODE"
+   ],
+   "fill_style_counts": {
+    "DASH": 2,
+    "DOT_UNICODE": 3
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_UNICODE"
+    ],
+    "counts": {
+     "DASH": 2,
+     "DOT_UNICODE": 3
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP XÃ-----------"
+     },
+     {
+      "style": "DASH",
+      "context": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc---------"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "Đăng ký tiếp tục kinh doanh kể từ ngày … tháng … năm …"
+     }
+    ]
+   },
+   "band_mechanism": "para_br_3lines",
+   "so_line_jc": "center",
+   "header_band": {
+    "issue": "so_line_not_right",
+    "jc": "center"
+   }
+  },
+  "PLII_M21": {
+   "fill_styles": [
+    "DASH",
+    "DOT_ASCII",
+    "DOT_UNICODE"
+   ],
+   "fill_style_counts": {
+    "DASH": 2,
+    "DOT_ASCII": 1,
+    "DOT_UNICODE": 4
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_ASCII",
+     "DOT_UNICODE"
+    ],
+    "counts": {
+     "DASH": 2,
+     "DOT_ASCII": 1,
+     "DOT_UNICODE": 4
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP XÃ-----------"
+     },
+     {
+      "style": "DASH",
+      "context": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc---------"
+     },
+     {
+      "style": "DOT_ASCII",
+      "context": "- Kết luận/biên bản làm việc ........................................."
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "(Cơ quan đăng ký kinh doanh cấp xã) thông báo Giấy chứng nhận đăng ký "
+     }
+    ]
+   },
+   "band_mechanism": "para_br_3lines",
+   "so_line_jc": "center",
+   "header_band": {
+    "issue": "so_line_not_right",
+    "jc": "center"
+   }
+  },
+  "PLII_M22": {
+   "fill_styles": [
+    "DASH",
+    "DOT_ASCII"
+   ],
+   "fill_style_counts": {
+    "DASH": 2,
+    "DOT_ASCII": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_ASCII"
+    ],
+    "counts": {
+     "DASH": 2,
+     "DOT_ASCII": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP XÃ-----------"
+     },
+     {
+      "style": "DASH",
+      "context": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc---------"
+     },
+     {
+      "style": "DOT_ASCII",
+      "context": "- Kết luận/biên bản làm việc ........................................."
+     }
+    ]
+   },
+   "band_mechanism": "para_br_3lines",
+   "so_line_jc": "center",
+   "header_band": {
+    "issue": "so_line_not_right",
+    "jc": "center"
+   }
+  },
+  "PLII_M23": {
+   "fill_styles": [
+    "DASH",
+    "DOT_ASCII"
+   ],
+   "fill_style_counts": {
+    "DASH": 2,
+    "DOT_ASCII": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_ASCII"
+    ],
+    "counts": {
+     "DASH": 2,
+     "DOT_ASCII": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP XÃ-----------"
+     },
+     {
+      "style": "DASH",
+      "context": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc---------"
+     },
+     {
+      "style": "DOT_ASCII",
+      "context": "- Kết luận/biên bản làm việc về việc.................................."
+     }
+    ]
+   },
+   "band_mechanism": "para_br_3lines",
+   "so_line_jc": "center",
+   "header_band": {
+    "issue": "so_line_not_right",
+    "jc": "center"
+   }
+  },
+  "PLII_M24": {
+   "fill_styles": [
+    "DASH",
+    "DOT_ASCII"
+   ],
+   "fill_style_counts": {
+    "DASH": 2,
+    "DOT_ASCII": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_ASCII"
+    ],
+    "counts": {
+     "DASH": 2,
+     "DOT_ASCII": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP XÃ-----------"
+     },
+     {
+      "style": "DASH",
+      "context": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc---------"
+     },
+     {
+      "style": "DOT_ASCII",
+      "context": "Nơi nhận: - Tên, trụ sở của hộ kinh doanh;- Cơ quan quản lý thuế {noi_"
+     }
+    ]
+   },
+   "band_mechanism": "para_br_3lines",
+   "so_line_jc": "center",
+   "header_band": {
+    "issue": "so_line_not_right",
+    "jc": "center"
+   }
+  },
+  "PLII_M25": {
+   "fill_styles": [
+    "DASH"
+   ],
+   "fill_style_counts": {
+    "DASH": 2
+   },
+   "band_mechanism": "para_br_3lines",
+   "so_line_jc": "center",
+   "header_band": {
+    "issue": "so_line_not_right",
+    "jc": "center"
+   }
+  },
+  "PLII_M26": {
+   "fill_styles": [
+    "DASH",
+    "DOT_ASCII",
+    "DOT_UNICODE"
+   ],
+   "fill_style_counts": {
+    "DASH": 2,
+    "DOT_UNICODE": 8,
+    "DOT_ASCII": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_ASCII",
+     "DOT_UNICODE"
+    ],
+    "counts": {
+     "DASH": 2,
+     "DOT_UNICODE": 8,
+     "DOT_ASCII": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP XÃ-----------"
+     },
+     {
+      "style": "DASH",
+      "context": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc---------"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "Tên hộ kinh doanh: …………………………………………..."
+     },
+     {
+      "style": "DOT_ASCII",
+      "context": "Tên hộ kinh doanh: …………………………………………..."
+     }
+    ]
+   },
+   "band_mechanism": "para_br_3lines",
+   "so_line_jc": "center",
+   "header_band": {
+    "issue": "so_line_not_right",
+    "jc": "center"
+   }
+  },
+  "PLII_M27": {
+   "fill_styles": [
+    "DASH"
+   ],
+   "fill_style_counts": {
+    "DASH": 2
+   },
+   "band_mechanism": "para_br_3lines",
+   "so_line_jc": "center",
+   "header_band": {
+    "issue": "so_line_not_right",
+    "jc": "center"
+   }
+  },
+  "PLII_M28": {
+   "fill_styles": [
+    "DASH",
+    "DOT_ASCII",
+    "DOT_UNICODE",
+    "MIXED"
+   ],
+   "fill_style_counts": {
+    "DASH": 2,
+    "DOT_UNICODE": 6,
+    "MIXED": 1,
+    "DOT_ASCII": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_ASCII",
+     "DOT_UNICODE",
+     "MIXED"
+    ],
+    "counts": {
+     "DASH": 2,
+     "DOT_UNICODE": 6,
+     "MIXED": 1,
+     "DOT_ASCII": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP XÃ-----------"
+     },
+     {
+      "style": "DASH",
+      "context": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc---------"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "- Tên hộ kinh doanh: ……………………………………………………………"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "- Chủ hộ kinh doanh:………….……………………………………………….."
+     }
+    ]
+   },
+   "band_mechanism": "para_br_3lines",
+   "so_line_jc": "center",
+   "header_band": {
+    "issue": "so_line_not_right",
+    "jc": "center"
+   }
+  },
+  "PLI_M01": {
+   "fill_styles": [
+    "DASH",
+    "DOT_UNICODE",
+    "UNDERSCORE"
+   ],
+   "fill_style_counts": {
+    "DASH": 1,
+    "DOT_UNICODE": 5,
+    "UNDERSCORE": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_UNICODE",
+     "UNDERSCORE"
+    ],
+    "counts": {
+     "DASH": 1,
+     "DOT_UNICODE": 5,
+     "UNDERSCORE": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc --------"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "{chk_gt_loai_khac} Loại khác (ghi rõ):…………"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "Số Giấy chứng nhận đăng ký thành lập (Đối với cơ sở bảo trợ xã hội)/Số"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "Áp dụng từ ngày {ap_dung_tu}/…..4"
+     }
+    ]
+   },
+   "orphan_heading": {
+    "n_paragraphs": 1,
+    "samples": [
+     "STT"
+    ]
+   },
+   "band_mechanism": "para_br_3lines"
+  },
+  "PLI_M02": {
+   "fill_styles": [
+    "DASH",
+    "DOT_UNICODE",
+    "UNDERSCORE"
+   ],
+   "fill_style_counts": {
+    "DASH": 1,
+    "DOT_UNICODE": 11,
+    "UNDERSCORE": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_UNICODE",
+     "UNDERSCORE"
+    ],
+    "counts": {
+     "DASH": 1,
+     "DOT_UNICODE": 11,
+     "UNDERSCORE": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc --------"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "- Lý do chuyển đổi loại hình doanh nghiệp: (Quyết định của …/Thành viê"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "{chk_gt_loai_khac} Loại khác (ghi rõ):…………"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "Số Giấy chứng nhận đăng ký thành lập (Đối với cơ sở bảo trợ xã hội)/Số"
+     }
+    ]
+   },
+   "font_floor": {
+    "runs_below_8pt": 0,
+    "empty_runs_below_8pt": 0,
+    "paragraph_marks_below_8pt": 2
+   },
+   "orphan_heading": {
+    "n_paragraphs": 1,
+    "samples": [
+     "STT"
+    ]
+   },
+   "band_mechanism": "para_br_3lines"
+  },
+  "PLI_M03": {
+   "fill_styles": [
+    "DASH",
+    "DOT_UNICODE",
+    "UNDERSCORE"
+   ],
+   "fill_style_counts": {
+    "DASH": 1,
+    "DOT_UNICODE": 11,
+    "UNDERSCORE": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_UNICODE",
+     "UNDERSCORE"
+    ],
+    "counts": {
+     "DASH": 1,
+     "DOT_UNICODE": 11,
+     "UNDERSCORE": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc --------"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "- Lý do chuyển đổi loại hình doanh nghiệp: (Quyết định của …/Thành viê"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "{chk_gt_loai_khac} Loại khác (ghi rõ):…………"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "Số Giấy chứng nhận đăng ký thành lập (Đối với cơ sở bảo trợ xã hội)/Số"
+     }
+    ]
+   },
+   "orphan_heading": {
+    "n_paragraphs": 1,
+    "samples": [
+     "STT"
+    ]
+   },
+   "band_mechanism": "para_br_3lines"
+  },
+  "PLI_M04": {
+   "fill_styles": [
+    "DASH",
+    "DOT_UNICODE",
+    "UNDERSCORE"
+   ],
+   "fill_style_counts": {
+    "DASH": 1,
+    "DOT_UNICODE": 12,
+    "UNDERSCORE": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_UNICODE",
+     "UNDERSCORE"
+    ],
+    "counts": {
+     "DASH": 1,
+     "DOT_UNICODE": 12,
+     "UNDERSCORE": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc --------"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "- Lý do chuyển đổi loại hình doanh nghiệp: (Quyết định của …/Thành viê"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "{chk_gt_loai_khac} Loại khác (ghi rõ):…………"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "Số Giấy chứng nhận đăng ký thành lập (Đối với cơ sở bảo trợ xã hội)/Số"
+     }
+    ]
+   },
+   "orphan_heading": {
+    "n_paragraphs": 1,
+    "samples": [
+     "STT"
+    ]
+   },
+   "band_mechanism": "para_br_3lines"
+  },
+  "PLI_M05": {
+   "fill_styles": [
+    "DASH",
+    "DOT_UNICODE"
+   ],
+   "fill_style_counts": {
+    "DASH": 1,
+    "DOT_UNICODE": 9
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_UNICODE"
+    ],
+    "counts": {
+     "DASH": 1,
+     "DOT_UNICODE": 9
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc --------"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "{dia_diem_ky}, ngày … tháng … năm {ngay_ky_vb}"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "- Lý do chuyển đổi loại hình doanh nghiệp: (Quyết định của …/Thành viê"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "{chk_gt_loai_khac} Loại khác (ghi rõ):…………"
+     }
+    ]
+   },
+   "band_mechanism": "para_br_3lines"
+  },
+  "PLI_M06": {
+   "fill_styles": [
+    "DOT_UNICODE",
+    "UNDERSCORE"
+   ],
+   "fill_style_counts": {
+    "DOT_UNICODE": 1,
+    "UNDERSCORE": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DOT_UNICODE",
+     "UNDERSCORE"
+    ],
+    "counts": {
+     "DOT_UNICODE": 1,
+     "UNDERSCORE": 1
+    },
+    "samples": [
+     {
+      "style": "DOT_UNICODE",
+      "context": "Áp dụng từ ngày {ap_dung_tu}/…..7"
+     },
+     {
+      "style": "UNDERSCORE",
+      "context": "_______________________"
+     }
+    ]
+   },
+   "font_floor": {
+    "runs_below_8pt": 0,
+    "empty_runs_below_8pt": 0,
+    "paragraph_marks_below_8pt": 1
+   },
+   "orphan_heading": {
+    "n_paragraphs": 1,
+    "samples": [
+     "STT"
+    ]
+   },
+   "band_mechanism": "none",
+   "header_band": {
+    "issue": "no_band"
+   }
+  },
+  "PLI_M07": {
+   "fill_styles": [],
+   "fill_style_counts": {},
+   "band_mechanism": "none",
+   "header_band": {
+    "issue": "no_band"
+   }
+  },
+  "PLI_M08": {
+   "fill_styles": [
+    "DOT_UNICODE",
+    "UNDERSCORE"
+   ],
+   "fill_style_counts": {
+    "DOT_UNICODE": 2,
+    "UNDERSCORE": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DOT_UNICODE",
+     "UNDERSCORE"
+    ],
+    "counts": {
+     "DOT_UNICODE": 2,
+     "UNDERSCORE": 1
+    },
+    "samples": [
+     {
+      "style": "DOT_UNICODE",
+      "context": "Số nhà/phòng, ngách/hẻm, ngõ/kiệt, đường/phố/đại lộ, tổ/xóm/ấp/thôn: …"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "Áp dụng từ ngày {ap_dung_tu}/…..7"
+     },
+     {
+      "style": "UNDERSCORE",
+      "context": "_______________________"
+     }
+    ]
+   },
+   "orphan_heading": {
+    "n_paragraphs": 1,
+    "samples": [
+     "STT"
+    ]
+   },
+   "band_mechanism": "none",
+   "header_band": {
+    "issue": "no_band"
+   }
+  },
+  "PLI_M09": {
+   "fill_styles": [
+    "DOT_UNICODE",
+    "UNDERSCORE"
+   ],
+   "fill_style_counts": {
+    "DOT_UNICODE": 1,
+    "UNDERSCORE": 5
+   },
+   "fill_line_style": {
+    "styles": [
+     "DOT_UNICODE",
+     "UNDERSCORE"
+    ],
+    "counts": {
+     "DOT_UNICODE": 1,
+     "UNDERSCORE": 5
+    },
+    "samples": [
+     {
+      "style": "DOT_UNICODE",
+      "context": "Áp dụng từ ngày {ap_dung_tu}/….5"
+     },
+     {
+      "style": "UNDERSCORE",
+      "context": "_________________________"
+     },
+     {
+      "style": "UNDERSCORE",
+      "context": "__________________________"
+     },
+     {
+      "style": "UNDERSCORE",
+      "context": "______________________"
+     }
+    ]
+   },
+   "font_floor": {
+    "runs_below_8pt": 0,
+    "empty_runs_below_8pt": 0,
+    "paragraph_marks_below_8pt": 1
+   },
+   "orphan_heading": {
+    "n_paragraphs": 2,
+    "samples": [
+     "STT",
+     "STT"
+    ]
+   },
+   "band_mechanism": "none",
+   "header_band": {
+    "issue": "no_band"
+   }
+  },
+  "PLI_M10": {
+   "fill_styles": [],
+   "fill_style_counts": {},
+   "font_floor": {
+    "runs_below_8pt": 0,
+    "empty_runs_below_8pt": 0,
+    "paragraph_marks_below_8pt": 1
+   },
+   "band_mechanism": "none",
+   "header_band": {
+    "issue": "no_band"
+   }
+  },
+  "PLI_M11": {
+   "fill_styles": [
+    "UNDERSCORE"
+   ],
+   "fill_style_counts": {
+    "UNDERSCORE": 1
+   },
+   "band_mechanism": "none",
+   "header_band": {
+    "issue": "no_band"
+   }
+  },
+  "PLI_M12": {
+   "fill_styles": [
+    "DASH",
+    "DOT_ASCII",
+    "DOT_UNICODE",
+    "MIXED",
+    "UNDERSCORE"
+   ],
+   "fill_style_counts": {
+    "DASH": 1,
+    "UNDERSCORE": 7,
+    "DOT_UNICODE": 9,
+    "MIXED": 1,
+    "DOT_ASCII": 4
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_ASCII",
+     "DOT_UNICODE",
+     "MIXED",
+     "UNDERSCORE"
+    ],
+    "counts": {
+     "DASH": 1,
+     "UNDERSCORE": 7,
+     "DOT_UNICODE": 9,
+     "MIXED": 1,
+     "DOT_ASCII": 4
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc --------"
+     },
+     {
+      "style": "UNDERSCORE",
+      "context": "___________________"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "…………………………………………………………………………………………."
+     },
+     {
+      "style": "UNDERSCORE",
+      "context": "____________________"
+     }
+    ]
+   },
+   "colon_paren": {
+    "paren_unbalanced": {
+     "n_paragraphs": 1,
+     "samples": [
+      "1 Dùng trong trường hợp (i) thay đổi từ cổ đông là nhà đầu tư nước ngoài này san"
+     ]
+    }
+   },
+   "font_floor": {
+    "runs_below_8pt": 0,
+    "empty_runs_below_8pt": 0,
+    "paragraph_marks_below_8pt": 2
+   },
+   "orphan_heading": {
+    "n_paragraphs": 4,
+    "samples": [
+     "STT",
+     "STT",
+     "STT"
+    ]
+   },
+   "band_mechanism": "para_br_3lines",
+   "so_line_jc": "center",
+   "header_band": {
+    "issue": "so_line_not_right",
+    "jc": "center"
+   }
+  },
+  "PLI_M13": {
+   "fill_styles": [
+    "DASH",
+    "UNDERSCORE"
+   ],
+   "fill_style_counts": {
+    "DASH": 1,
+    "UNDERSCORE": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "UNDERSCORE"
+    ],
+    "counts": {
+     "DASH": 1,
+     "UNDERSCORE": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "TÊN DOANH NGHIỆP-------"
+     },
+     {
+      "style": "UNDERSCORE",
+      "context": "___________________"
+     }
+    ]
+   },
+   "band_mechanism": "table_2col",
+   "table_border_pad": {
+    "tables": 2,
+    "borderless": 0,
+    "partial_borders": 0,
+    "cell_border_overrides": 0,
+    "border_sig_variants": 2
+   }
+  },
+  "PLI_M14": {
+   "fill_styles": [
+    "DASH",
+    "UNDERSCORE"
+   ],
+   "fill_style_counts": {
+    "DASH": 1,
+    "UNDERSCORE": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "UNDERSCORE"
+    ],
+    "counts": {
+     "DASH": 1,
+     "UNDERSCORE": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "TÊN DOANH NGHIỆP-------"
+     },
+     {
+      "style": "UNDERSCORE",
+      "context": "___________________"
+     }
+    ]
+   },
+   "band_mechanism": "table_2col"
+  },
+  "PLI_M15": {
+   "fill_styles": [
+    "DASH",
+    "UNDERSCORE"
+   ],
+   "fill_style_counts": {
+    "DASH": 1,
+    "UNDERSCORE": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "UNDERSCORE"
+    ],
+    "counts": {
+     "DASH": 1,
+     "UNDERSCORE": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "TÊN DOANH NGHIỆP-------"
+     },
+     {
+      "style": "UNDERSCORE",
+      "context": "____________________"
+     }
+    ]
+   },
+   "font_floor": {
+    "runs_below_8pt": 0,
+    "empty_runs_below_8pt": 0,
+    "paragraph_marks_below_8pt": 2
+   },
+   "band_mechanism": "table_2col",
+   "table_border_pad": {
+    "tables": 2,
+    "borderless": 0,
+    "partial_borders": 0,
+    "cell_border_overrides": 0,
+    "border_sig_variants": 2
+   }
+  },
+  "PLI_M17": {
+   "fill_styles": [
+    "DASH",
+    "DOT_UNICODE",
+    "MIXED",
+    "UNDERSCORE"
+   ],
+   "fill_style_counts": {
+    "DASH": 1,
+    "MIXED": 1,
+    "DOT_UNICODE": 3,
+    "UNDERSCORE": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_UNICODE",
+     "MIXED",
+     "UNDERSCORE"
+    ],
+    "counts": {
+     "DASH": 1,
+     "MIXED": 1,
+     "DOT_UNICODE": 3,
+     "UNDERSCORE": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "TÊN DOANH NGHIỆP-------"
+     },
+     {
+      "style": "MIXED",
+      "context": "Áp dụng từ ngày {ap_dung_tu}/.…….3"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "Giấy phép thành lập và hoạt động số: … do Ủy ban Chứng khoán Nhà nước "
+     },
+     {
+      "style": "UNDERSCORE",
+      "context": "_____________________"
+     }
+    ]
+   },
+   "orphan_heading": {
+    "n_paragraphs": 1,
+    "samples": [
+     "STT"
+    ]
+   },
+   "band_mechanism": "table_2col",
+   "table_border_pad": {
+    "tables": 2,
+    "borderless": 0,
+    "partial_borders": 0,
+    "cell_border_overrides": 0,
+    "border_sig_variants": 2
+   }
+  },
+  "PLI_M18": {
+   "fill_styles": [
+    "DASH",
+    "DOT_UNICODE",
+    "UNDERSCORE"
+   ],
+   "fill_style_counts": {
+    "DASH": 1,
+    "DOT_UNICODE": 1,
+    "UNDERSCORE": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_UNICODE",
+     "UNDERSCORE"
+    ],
+    "counts": {
+     "DASH": 1,
+     "DOT_UNICODE": 1,
+     "UNDERSCORE": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "TÊN DOANH NGHIỆP-------"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "a) Ngành, nghề kinh doanh (đối với chi nhánh): …………………………………………….."
+     },
+     {
+      "style": "UNDERSCORE",
+      "context": "________________________________________"
+     }
+    ]
+   },
+   "superscript_glue": {
+    "superscript_non_digit": {
+     "n_runs": 1,
+     "samples": [
+      "SUP:________________________________________"
+     ]
+    },
+    "superscript_runs_total": 3
+   },
+   "band_mechanism": "table_2col"
+  },
+  "PLI_M19": {
+   "fill_styles": [
+    "DASH",
+    "DOT_ASCII",
+    "DOT_UNICODE",
+    "MIXED",
+    "UNDERSCORE"
+   ],
+   "fill_style_counts": {
+    "DASH": 1,
+    "DOT_UNICODE": 8,
+    "MIXED": 1,
+    "DOT_ASCII": 5,
+    "UNDERSCORE": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_ASCII",
+     "DOT_UNICODE",
+     "MIXED",
+     "UNDERSCORE"
+    ],
+    "counts": {
+     "DASH": 1,
+     "DOT_UNICODE": 8,
+     "MIXED": 1,
+     "DOT_ASCII": 5,
+     "UNDERSCORE": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "TÊN DOANH NGHIỆP-------"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "Mã số chi nhánh/văn phòng đại diện/địa điểm kinh doanh hoặc mã số thuế"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "Tên chi nhánh: {cn.ten_tieng_viet} ………………………………………….."
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "Địa chỉ chi nhánh: {cn.dia_chi} ………………………………………….."
+     }
+    ]
+   },
+   "superscript_glue": {
+    "superscript_non_digit": {
+     "n_runs": 1,
+     "samples": [
+      "SUP:________________________________________"
+     ]
+    },
+    "superscript_runs_total": 11
+   },
+   "orphan_heading": {
+    "n_paragraphs": 1,
+    "samples": [
+     "STT"
+    ]
+   },
+   "band_mechanism": "table_2col",
+   "table_border_pad": {
+    "tables": 2,
+    "borderless": 0,
+    "partial_borders": 0,
+    "cell_border_overrides": 0,
+    "border_sig_variants": 2
+   }
+  },
+  "PLI_M21": {
+   "fill_styles": [
+    "DASH",
+    "UNDERSCORE"
+   ],
+   "fill_style_counts": {
+    "DASH": 1,
+    "UNDERSCORE": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "UNDERSCORE"
+    ],
+    "counts": {
+     "DASH": 1,
+     "UNDERSCORE": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "TÊN DOANH NGHIỆP-------"
+     },
+     {
+      "style": "UNDERSCORE",
+      "context": "________________________________________"
+     }
+    ]
+   },
+   "superscript_glue": {
+    "superscript_non_digit": {
+     "n_runs": 1,
+     "samples": [
+      "SUP:________________________________________"
+     ]
+    },
+    "superscript_runs_total": 5
+   },
+   "band_mechanism": "table_2col",
+   "table_border_pad": {
+    "tables": 2,
+    "borderless": 0,
+    "partial_borders": 0,
+    "cell_border_overrides": 0,
+    "border_sig_variants": 2
+   }
+  },
+  "PLI_M23": {
+   "fill_styles": [
+    "DASH",
+    "DOT_UNICODE",
+    "MIXED",
+    "UNDERSCORE"
+   ],
+   "fill_style_counts": {
+    "DASH": 1,
+    "DOT_UNICODE": 1,
+    "MIXED": 1,
+    "UNDERSCORE": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_UNICODE",
+     "MIXED",
+     "UNDERSCORE"
+    ],
+    "counts": {
+     "DASH": 1,
+     "DOT_UNICODE": 1,
+     "MIXED": 1,
+     "UNDERSCORE": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "TÊN DOANH NGHIỆP-------"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh viết bằng tiếng n"
+     },
+     {
+      "style": "MIXED",
+      "context": "Áp dụng từ ngày {ap_dung_tu}/.…….1"
+     },
+     {
+      "style": "UNDERSCORE",
+      "context": "________________________________________"
+     }
+    ]
+   },
+   "superscript_glue": {
+    "superscript_non_digit": {
+     "n_runs": 1,
+     "samples": [
+      "SUP:________________________________________"
+     ]
+    },
+    "superscript_runs_total": 5
+   },
+   "orphan_heading": {
+    "n_paragraphs": 1,
+    "samples": [
+     "STT"
+    ]
+   },
+   "band_mechanism": "table_2col",
+   "table_border_pad": {
+    "tables": 2,
+    "borderless": 0,
+    "partial_borders": 0,
+    "cell_border_overrides": 0,
+    "border_sig_variants": 2
+   }
+  },
+  "PLI_M25": {
+   "fill_styles": [
+    "DASH",
+    "DOT_UNICODE",
+    "MIXED",
+    "UNDERSCORE"
+   ],
+   "fill_style_counts": {
+    "DASH": 1,
+    "DOT_UNICODE": 4,
+    "MIXED": 1,
+    "UNDERSCORE": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_UNICODE",
+     "MIXED",
+     "UNDERSCORE"
+    ],
+    "counts": {
+     "DASH": 1,
+     "DOT_UNICODE": 4,
+     "MIXED": 1,
+     "UNDERSCORE": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "TÊN DOANH NGHIỆP-------"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "Giấy phép thành lập và hoạt động số: … do Ủy ban Chứng khoán Nhà nước "
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "Số nhà/phòng, ngách/hẻm, ngõ/kiệt, đường/phố/đại lộ, tổ/xóm/ấp/thôn: …"
+     },
+     {
+      "style": "MIXED",
+      "context": "Áp dụng từ ngày {ap_dung_tu}/.…….1"
+     }
+    ]
+   },
+   "superscript_glue": {
+    "superscript_non_digit": {
+     "n_runs": 1,
+     "samples": [
+      "SUP:________________________________________"
+     ]
+    },
+    "superscript_runs_total": 5
+   },
+   "orphan_heading": {
+    "n_paragraphs": 1,
+    "samples": [
+     "STT"
+    ]
+   },
+   "band_mechanism": "table_2col",
+   "table_border_pad": {
+    "tables": 2,
+    "borderless": 0,
+    "partial_borders": 0,
+    "cell_border_overrides": 0,
+    "border_sig_variants": 2
+   }
+  },
+  "PLI_M26": {
+   "fill_styles": [
+    "DASH",
+    "DOT_UNICODE",
+    "UNDERSCORE"
+   ],
+   "fill_style_counts": {
+    "DASH": 1,
+    "DOT_UNICODE": 1,
+    "UNDERSCORE": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_UNICODE",
+     "UNDERSCORE"
+    ],
+    "counts": {
+     "DASH": 1,
+     "DOT_UNICODE": 1,
+     "UNDERSCORE": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "TÊN DOANH NGHIỆP-------"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "…………………………………………………………………………………………………………."
+     },
+     {
+      "style": "UNDERSCORE",
+      "context": "________________________________________"
+     }
+    ]
+   },
+   "superscript_glue": {
+    "superscript_non_digit": {
+     "n_runs": 1,
+     "samples": [
+      "SUP:________________________________________"
+     ]
+    },
+    "superscript_runs_total": 3
+   },
+   "band_mechanism": "table_2col"
+  },
+  "PLI_M27": {
+   "fill_styles": [
+    "DASH",
+    "DOT_UNICODE",
+    "UNDERSCORE"
+   ],
+   "fill_style_counts": {
+    "DASH": 1,
+    "DOT_UNICODE": 16,
+    "UNDERSCORE": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_UNICODE",
+     "UNDERSCORE"
+    ],
+    "counts": {
+     "DASH": 1,
+     "DOT_UNICODE": 16,
+     "UNDERSCORE": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "TÊN DOANH NGHIỆP-------"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "…"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "Thông báo tạm ngừng kinh doanh kể từ ngày … tháng … năm … đến hết ngày"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "Thông báo tạm ngừng hoạt động kể từ ngày … tháng … năm … đến hết ngày "
+     }
+    ]
+   },
+   "superscript_glue": {
+    "superscript_non_digit": {
+     "n_runs": 1,
+     "samples": [
+      "SUP:________________________________________"
+     ]
+    },
+    "superscript_runs_total": 11
+   },
+   "band_mechanism": "table_2col"
+  },
+  "PLI_M28": {
+   "fill_styles": [
+    "DASH",
+    "UNDERSCORE"
+   ],
+   "fill_style_counts": {
+    "DASH": 1,
+    "UNDERSCORE": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "UNDERSCORE"
+    ],
+    "counts": {
+     "DASH": 1,
+     "UNDERSCORE": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "TÊN DOANH NGHIỆP-------"
+     },
+     {
+      "style": "UNDERSCORE",
+      "context": "________________________________________"
+     }
+    ]
+   },
+   "superscript_glue": {
+    "superscript_non_digit": {
+     "n_runs": 1,
+     "samples": [
+      "SUP:________________________________________"
+     ]
+    },
+    "superscript_runs_total": 3
+   },
+   "band_mechanism": "table_2col"
+  },
+  "PLI_M29": {
+   "fill_styles": [
+    "DASH",
+    "UNDERSCORE"
+   ],
+   "fill_style_counts": {
+    "DASH": 1,
+    "UNDERSCORE": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "UNDERSCORE"
+    ],
+    "counts": {
+     "DASH": 1,
+     "UNDERSCORE": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "TÊN DOANH NGHIỆP-------"
+     },
+     {
+      "style": "UNDERSCORE",
+      "context": "________________________________________"
+     }
+    ]
+   },
+   "superscript_glue": {
+    "superscript_non_digit": {
+     "n_runs": 1,
+     "samples": [
+      "SUP:________________________________________"
+     ]
+    },
+    "superscript_runs_total": 3
+   },
+   "band_mechanism": "table_2col"
+  },
+  "PLI_M30": {
+   "fill_styles": [
+    "DASH",
+    "UNDERSCORE"
+   ],
+   "fill_style_counts": {
+    "DASH": 1,
+    "UNDERSCORE": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "UNDERSCORE"
+    ],
+    "counts": {
+     "DASH": 1,
+     "UNDERSCORE": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "TÊN DOANH NGHIỆP-------"
+     },
+     {
+      "style": "UNDERSCORE",
+      "context": "________________________________________"
+     }
+    ]
+   },
+   "superscript_glue": {
+    "superscript_non_digit": {
+     "n_runs": 1,
+     "samples": [
+      "SUP:________________________________________"
+     ]
+    },
+    "superscript_runs_total": 3
+   },
+   "band_mechanism": "table_2col"
+  },
+  "PLI_M31": {
+   "fill_styles": [
+    "DASH",
+    "DOT_UNICODE",
+    "UNDERSCORE"
+   ],
+   "fill_style_counts": {
+    "DASH": 1,
+    "DOT_UNICODE": 7,
+    "UNDERSCORE": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_UNICODE",
+     "UNDERSCORE"
+    ],
+    "counts": {
+     "DASH": 1,
+     "DOT_UNICODE": 7,
+     "UNDERSCORE": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "TÊN DOANH NGHIỆP-------"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "Ngày … /… /…, doanh nghiệp đã có Nghị quyết/Quyết định số: …… về việc "
+     },
+     {
+      "style": "UNDERSCORE",
+      "context": "________________________________________"
+     }
+    ]
+   },
+   "superscript_glue": {
+    "superscript_non_digit": {
+     "n_runs": 1,
+     "samples": [
+      "SUP:________________________________________"
+     ]
+    },
+    "superscript_runs_total": 3
+   },
+   "band_mechanism": "table_2col"
+  },
+  "PLI_M32": {
+   "fill_styles": [
+    "DASH",
+    "DOT_ASCII",
+    "DOT_UNICODE",
+    "MIXED",
+    "UNDERSCORE"
+   ],
+   "fill_style_counts": {
+    "DASH": 1,
+    "DOT_ASCII": 2,
+    "DOT_UNICODE": 3,
+    "MIXED": 2,
+    "UNDERSCORE": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_ASCII",
+     "DOT_UNICODE",
+     "MIXED",
+     "UNDERSCORE"
+    ],
+    "counts": {
+     "DASH": 1,
+     "DOT_ASCII": 2,
+     "DOT_UNICODE": 3,
+     "MIXED": 2,
+     "UNDERSCORE": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "TÊN DOANH NGHIỆP-------"
+     },
+     {
+      "style": "DOT_ASCII",
+      "context": "Đăng ký lần đầu ngày......./…..../…..…"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "Đăng ký lần đầu ngày......./…..../…..…"
+     },
+     {
+      "style": "MIXED",
+      "context": "Đăng ký lần đầu ngày......./…..../…..…"
+     }
+    ]
+   },
+   "superscript_glue": {
+    "superscript_non_digit": {
+     "n_runs": 1,
+     "samples": [
+      "SUP:________________________________________"
+     ]
+    },
+    "superscript_runs_total": 7
+   },
+   "band_mechanism": "table_2col"
+  },
+  "PLI_M33": {
+   "fill_styles": [
+    "DASH",
+    "DOT_UNICODE",
+    "UNDERSCORE"
+   ],
+   "fill_style_counts": {
+    "DASH": 1,
+    "DOT_UNICODE": 5,
+    "UNDERSCORE": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_UNICODE",
+     "UNDERSCORE"
+    ],
+    "counts": {
+     "DASH": 1,
+     "DOT_UNICODE": 5,
+     "UNDERSCORE": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "TÊN DOANH NGHIỆP-------"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "Là người ký văn bản đề nghị đăng ký doanh nghiệp đối với Hồ sơ có Giấy"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "Tôi đề nghị Quý Cơ quan dừng thực hiện thủ tục đăng ký doanh nghiệp đố"
+     },
+     {
+      "style": "UNDERSCORE",
+      "context": "________________________________________"
+     }
+    ]
+   },
+   "superscript_glue": {
+    "superscript_non_digit": {
+     "n_runs": 1,
+     "samples": [
+      "SUP:________________________________________"
+     ]
+    },
+    "superscript_runs_total": 7
+   },
+   "band_mechanism": "table_2col"
+  },
+  "PLI_M42": {
+   "fill_styles": [
+    "DASH",
+    "DOT_UNICODE"
+   ],
+   "fill_style_counts": {
+    "DASH": 2,
+    "DOT_UNICODE": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_UNICODE"
+    ],
+    "counts": {
+     "DASH": 2,
+     "DOT_UNICODE": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP TỈNH-------"
+     },
+     {
+      "style": "DASH",
+      "context": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc---------"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "(hoặc) Số Hộ chiếu, Hộ chiếu nước ngoài, giấy tờ có giá trị thay thế h"
+     }
+    ]
+   },
+   "band_mechanism": "para_br_3lines"
+  },
+  "PLI_M43": {
+   "fill_styles": [
+    "DASH",
+    "DOT_UNICODE"
+   ],
+   "fill_style_counts": {
+    "DASH": 2,
+    "DOT_UNICODE": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_UNICODE"
+    ],
+    "counts": {
+     "DASH": 2,
+     "DOT_UNICODE": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP TỈNH-------"
+     },
+     {
+      "style": "DASH",
+      "context": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc---------"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "(hoặc) Số Hộ chiếu, Hộ chiếu nước ngoài, giấy tờ có giá trị thay thế h"
+     }
+    ]
+   },
+   "band_mechanism": "para_br_3lines"
+  },
+  "PLI_M45": {
+   "fill_styles": [
+    "DASH",
+    "DOT_UNICODE",
+    "MIXED"
+   ],
+   "fill_style_counts": {
+    "DASH": 2,
+    "DOT_UNICODE": 2,
+    "MIXED": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_UNICODE",
+     "MIXED"
+    ],
+    "counts": {
+     "DASH": 2,
+     "DOT_UNICODE": 2,
+     "MIXED": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP TỈNH-------"
+     },
+     {
+      "style": "DASH",
+      "context": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc---------"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh (ghi bằng chữ in "
+     },
+     {
+      "style": "MIXED",
+      "context": "Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh (ghi bằng chữ in "
+     }
+    ]
+   },
+   "band_mechanism": "para_br_3lines",
+   "so_line_jc": "center",
+   "header_band": {
+    "issue": "so_line_not_right",
+    "jc": "center"
+   }
+  },
+  "PLI_M46": {
+   "fill_styles": [
+    "DASH",
+    "DOT_UNICODE",
+    "UNDERSCORE"
+   ],
+   "fill_style_counts": {
+    "DOT_UNICODE": 5,
+    "DASH": 2,
+    "UNDERSCORE": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_UNICODE",
+     "UNDERSCORE"
+    ],
+    "counts": {
+     "DOT_UNICODE": 5,
+     "DASH": 2,
+     "UNDERSCORE": 1
+    },
+    "samples": [
+     {
+      "style": "DOT_UNICODE",
+      "context": "PL1 - Mau so 46: Giấy chứng nhận …/Giấy xác nhận …"
+     },
+     {
+      "style": "DASH",
+      "context": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP TỈNH-------"
+     },
+     {
+      "style": "DASH",
+      "context": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc---------"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "GIẤY CHỨNG NHẬN …/GIẤY XÁC NHẬN …"
+     }
+    ]
+   },
+   "superscript_glue": {
+    "superscript_non_digit": {
+     "n_runs": 1,
+     "samples": [
+      "SUP:________________________________________"
+     ]
+    },
+    "superscript_runs_total": 3
+   },
+   "band_mechanism": "para_br_3lines"
+  },
+  "PLI_M47": {
+   "fill_styles": [
+    "DASH"
+   ],
+   "fill_style_counts": {
+    "DASH": 2
+   },
+   "band_mechanism": "para_br_3lines",
+   "so_line_jc": "center",
+   "header_band": {
+    "issue": "so_line_not_right",
+    "jc": "center"
+   }
+  },
+  "PLI_M48": {
+   "fill_styles": [
+    "DASH",
+    "DOT_ASCII",
+    "DOT_UNICODE",
+    "MIXED"
+   ],
+   "fill_style_counts": {
+    "DASH": 2,
+    "DOT_ASCII": 1,
+    "DOT_UNICODE": 2,
+    "MIXED": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_ASCII",
+     "DOT_UNICODE",
+     "MIXED"
+    ],
+    "counts": {
+     "DASH": 2,
+     "DOT_ASCII": 1,
+     "DOT_UNICODE": 2,
+     "MIXED": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP TỈNH-------"
+     },
+     {
+      "style": "DASH",
+      "context": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc---------"
+     },
+     {
+      "style": "DOT_ASCII",
+      "context": "Sau khi xem xét Hồ sơ mã số: ..................... đã nhận ngày {da_nh"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "về việc: {ve_viec} của (Tên doanh nghiệp) ……………… Mã số doanh nghiệp (n"
+     }
+    ]
+   },
+   "band_mechanism": "para_br_3lines",
+   "so_line_jc": "center",
+   "header_band": {
+    "issue": "so_line_not_right",
+    "jc": "center"
+   }
+  },
+  "PLI_M49": {
+   "fill_styles": [
+    "DASH",
+    "DOT_UNICODE"
+   ],
+   "fill_style_counts": {
+    "DASH": 2,
+    "DOT_UNICODE": 12
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_UNICODE"
+    ],
+    "counts": {
+     "DASH": 2,
+     "DOT_UNICODE": 12
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP TỈNH-------"
+     },
+     {
+      "style": "DASH",
+      "context": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc---------"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "(Đối với hồ sơ thành lập mới doanh nghiệp)Ông/Bà: ……………………………………………………"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "Sau khi xem xét Giấy đề nghị dừng thực hiện thủ tục đăng ký doanh nghi"
+     }
+    ]
+   },
+   "band_mechanism": "para_br_3lines",
+   "so_line_jc": "center",
+   "header_band": {
+    "issue": "so_line_not_right",
+    "jc": "center"
+   }
+  },
+  "PLI_M50": {
+   "fill_styles": [
+    "DASH",
+    "DOT_ASCII",
+    "DOT_UNICODE",
+    "MIXED"
+   ],
+   "fill_style_counts": {
+    "DASH": 2,
+    "DOT_UNICODE": 3,
+    "MIXED": 3,
+    "DOT_ASCII": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_ASCII",
+     "DOT_UNICODE",
+     "MIXED"
+    ],
+    "counts": {
+     "DASH": 2,
+     "DOT_UNICODE": 3,
+     "MIXED": 3,
+     "DOT_ASCII": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP TỈNH-------"
+     },
+     {
+      "style": "DASH",
+      "context": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc---------"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "…………………………………………..………………………………………….."
+     },
+     {
+      "style": "MIXED",
+      "context": "…………………………………………..………………………………………….."
+     }
+    ]
+   },
+   "band_mechanism": "para_br_3lines",
+   "so_line_jc": "center",
+   "header_band": {
+    "issue": "so_line_not_right",
+    "jc": "center"
+   }
+  },
+  "PLI_M51": {
+   "fill_styles": [
+    "DASH"
+   ],
+   "fill_style_counts": {
+    "DASH": 2
+   },
+   "band_mechanism": "para_br_3lines",
+   "so_line_jc": "center",
+   "header_band": {
+    "issue": "so_line_not_right",
+    "jc": "center"
+   }
+  },
+  "PLI_M52": {
+   "fill_styles": [
+    "DASH",
+    "DOT_UNICODE",
+    "MIXED"
+   ],
+   "fill_style_counts": {
+    "DASH": 2,
+    "DOT_UNICODE": 3,
+    "MIXED": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_UNICODE",
+     "MIXED"
+    ],
+    "counts": {
+     "DASH": 2,
+     "DOT_UNICODE": 3,
+     "MIXED": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP TỈNH-------"
+     },
+     {
+      "style": "DASH",
+      "context": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc---------"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "- Người đại diện theo pháp luật: ……………………………………………….."
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "- Tên văn phòng đại diện: … {cn.ten_tieng_viet}"
+     }
+    ]
+   },
+   "band_mechanism": "para_br_3lines",
+   "so_line_jc": "center",
+   "header_band": {
+    "issue": "so_line_not_right",
+    "jc": "center"
+   }
+  },
+  "PLI_M53": {
+   "fill_styles": [
+    "DASH",
+    "DOT_UNICODE"
+   ],
+   "fill_style_counts": {
+    "DASH": 2,
+    "DOT_UNICODE": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_UNICODE"
+    ],
+    "counts": {
+     "DASH": 2,
+     "DOT_UNICODE": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP TỈNH-------"
+     },
+     {
+      "style": "DASH",
+      "context": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc---------"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "…………………………………………..tạm ngừng kinh doanh ngành, nghề {tn_nganh_nghe}"
+     }
+    ]
+   },
+   "band_mechanism": "para_br_3lines",
+   "so_line_jc": "center",
+   "header_band": {
+    "issue": "so_line_not_right",
+    "jc": "center"
+   }
+  },
+  "PLI_M54": {
+   "fill_styles": [
+    "DASH"
+   ],
+   "fill_style_counts": {
+    "DASH": 2
+   },
+   "colon_paren": {
+    "paren_unbalanced": {
+     "n_paragraphs": 1,
+     "samples": [
+      "Cơ quan đăng ký kinh doanh cấp tỉnh): {co_quan_dkkd}"
+     ]
+    }
+   },
+   "band_mechanism": "para_br_3lines",
+   "so_line_jc": "center",
+   "header_band": {
+    "issue": "so_line_not_right",
+    "jc": "center"
+   }
+  },
+  "PLI_M55": {
+   "fill_styles": [
+    "DASH"
+   ],
+   "fill_style_counts": {
+    "DASH": 2
+   },
+   "colon_paren": {
+    "paren_unbalanced": {
+     "n_paragraphs": 1,
+     "samples": [
+      "Cơ quan đăng ký kinh doanh cấp tỉnh): {co_quan_dkkd}"
+     ]
+    }
+   },
+   "band_mechanism": "para_br_3lines",
+   "so_line_jc": "center",
+   "header_band": {
+    "issue": "so_line_not_right",
+    "jc": "center"
+   }
+  },
+  "PLI_M56": {
+   "fill_styles": [
+    "DASH",
+    "DOT_UNICODE"
+   ],
+   "fill_style_counts": {
+    "DASH": 2,
+    "DOT_UNICODE": 3
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_UNICODE"
+    ],
+    "counts": {
+     "DASH": 2,
+     "DOT_UNICODE": 3
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP TỈNH-------"
+     },
+     {
+      "style": "DASH",
+      "context": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc---------"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "- Nếu doanh nghiệp thông báo tiếp tục kinh doanh, tiếp tục hoạt động t"
+     }
+    ]
+   },
+   "band_mechanism": "para_br_3lines",
+   "so_line_jc": "center",
+   "header_band": {
+    "issue": "so_line_not_right",
+    "jc": "center"
+   }
+  },
+  "PLI_M57": {
+   "fill_styles": [
+    "DASH"
+   ],
+   "fill_style_counts": {
+    "DASH": 2
+   },
+   "colon_paren": {
+    "paren_unbalanced": {
+     "n_paragraphs": 1,
+     "samples": [
+      "Cơ quan đăng ký kinh doanh cấp tỉnh): {co_quan_dkkd}"
+     ]
+    }
+   },
+   "band_mechanism": "para_br_3lines",
+   "so_line_jc": "center",
+   "header_band": {
+    "issue": "so_line_not_right",
+    "jc": "center"
+   }
+  },
+  "PLI_M63": {
+   "fill_styles": [
+    "DASH",
+    "DOT_ASCII",
+    "DOT_UNICODE"
+   ],
+   "fill_style_counts": {
+    "DASH": 2,
+    "DOT_UNICODE": 5,
+    "DOT_ASCII": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_ASCII",
+     "DOT_UNICODE"
+    ],
+    "counts": {
+     "DASH": 2,
+     "DOT_UNICODE": 5,
+     "DOT_ASCII": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP TỈNH-------"
+     },
+     {
+      "style": "DASH",
+      "context": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc---------"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "TRƯỞNG CƠ QUAN ĐĂNG KÝ KINH DOANH CẤP TỈNH …"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "Căn cứ Thông báo số … ngày {can_cu}./…. của (Cơ quan đăng ký kinh doan"
+     }
+    ]
+   },
+   "band_mechanism": "para_br_3lines",
+   "so_line_jc": "center",
+   "header_band": {
+    "issue": "so_line_not_right",
+    "jc": "center"
+   }
+  },
+  "PLI_M66": {
+   "fill_styles": [
+    "DASH",
+    "DOT_UNICODE",
+    "UNDERSCORE"
+   ],
+   "fill_style_counts": {
+    "DASH": 2,
+    "DOT_UNICODE": 5,
+    "UNDERSCORE": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_UNICODE",
+     "UNDERSCORE"
+    ],
+    "counts": {
+     "DASH": 2,
+     "DOT_UNICODE": 5,
+     "UNDERSCORE": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP TỈNH-------"
+     },
+     {
+      "style": "DASH",
+      "context": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc---------"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "Loại giấy tờ pháp lý của cá nhân:………………………………………"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "- …"
+     }
+    ]
+   },
+   "superscript_glue": {
+    "superscript_non_digit": {
+     "n_runs": 1,
+     "samples": [
+      "SUP:_______________________________________"
+     ]
+    },
+    "superscript_runs_total": 7
+   },
+   "band_mechanism": "para_br_3lines",
+   "so_line_jc": "center",
+   "header_band": {
+    "issue": "so_line_not_right",
+    "jc": "center"
+   }
+  },
+  "PLI_M67": {
+   "fill_styles": [
+    "DASH",
+    "DOT_ASCII",
+    "DOT_UNICODE",
+    "UNDERSCORE"
+   ],
+   "fill_style_counts": {
+    "DASH": 2,
+    "DOT_ASCII": 2,
+    "DOT_UNICODE": 2,
+    "UNDERSCORE": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_ASCII",
+     "DOT_UNICODE",
+     "UNDERSCORE"
+    ],
+    "counts": {
+     "DASH": 2,
+     "DOT_ASCII": 2,
+     "DOT_UNICODE": 2,
+     "UNDERSCORE": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP TỈNH-------"
+     },
+     {
+      "style": "DASH",
+      "context": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc---------"
+     },
+     {
+      "style": "DOT_ASCII",
+      "context": "(Cơ quan đăng ký kinh doanh cấp tỉnh) thông báo (các) chi nhánh/văn ph"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "Nơi nhận: - Tên, địa chỉ doanh nghiệp;- Cơ quan hải quan … (tỉnh, thàn"
+     }
+    ]
+   },
+   "superscript_glue": {
+    "superscript_non_digit": {
+     "n_runs": 1,
+     "samples": [
+      "SUP:_______________________________________"
+     ]
+    },
+    "superscript_runs_total": 2
+   },
+   "band_mechanism": "para_br_3lines",
+   "so_line_jc": "center",
+   "header_band": {
+    "issue": "so_line_not_right",
+    "jc": "center"
+   }
+  },
+  "PLI_M68": {
+   "fill_styles": [
+    "DASH",
+    "DOT_UNICODE",
+    "UNDERSCORE"
+   ],
+   "fill_style_counts": {
+    "DASH": 2,
+    "DOT_UNICODE": 5,
+    "UNDERSCORE": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_UNICODE",
+     "UNDERSCORE"
+    ],
+    "counts": {
+     "DASH": 2,
+     "DOT_UNICODE": 5,
+     "UNDERSCORE": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP TỈNH-------"
+     },
+     {
+      "style": "DASH",
+      "context": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc---------"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "Số định danh cá nhân: {chu_hkd.so_cccd}/Số Hộ chiếu, Hộ chiếu nước ngo"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "Nơi nhận: - Tên, địa chỉ doanh nghiệp;- Cơ quan quản lý thuế tỉnh, thà"
+     }
+    ]
+   },
+   "superscript_glue": {
+    "superscript_non_digit": {
+     "n_runs": 1,
+     "samples": [
+      "SUP:_______________________________________"
+     ]
+    },
+    "superscript_runs_total": 5
+   },
+   "band_mechanism": "para_br_3lines",
+   "so_line_jc": "center",
+   "header_band": {
+    "issue": "so_line_not_right",
+    "jc": "center"
+   }
+  },
+  "PLI_M69": {
+   "fill_styles": [
+    "DASH",
+    "DOT_UNICODE",
+    "UNDERSCORE"
+   ],
+   "fill_style_counts": {
+    "DASH": 2,
+    "DOT_UNICODE": 3,
+    "UNDERSCORE": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_UNICODE",
+     "UNDERSCORE"
+    ],
+    "counts": {
+     "DASH": 2,
+     "DOT_UNICODE": 3,
+     "UNDERSCORE": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP TỈNH-------"
+     },
+     {
+      "style": "DASH",
+      "context": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc---------"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "Số định danh cá nhân: {chu_hkd.so_cccd}/Số Hộ chiếu, Hộ chiếu nước ngo"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "Nơi nhận: - Tên, địa chỉ doanh nghiệp;- Cơ quan quản lý thuế tỉnh, thà"
+     }
+    ]
+   },
+   "superscript_glue": {
+    "superscript_non_digit": {
+     "n_runs": 1,
+     "samples": [
+      "SUP:_______________________________________"
+     ]
+    },
+    "superscript_runs_total": 2
+   },
+   "band_mechanism": "para_br_3lines",
+   "so_line_jc": "center",
+   "header_band": {
+    "issue": "so_line_not_right",
+    "jc": "center"
+   }
+  },
+  "PLI_M70": {
+   "fill_styles": [
+    "DASH",
+    "DOT_UNICODE",
+    "MIXED"
+   ],
+   "fill_style_counts": {
+    "DASH": 2,
+    "DOT_UNICODE": 8,
+    "MIXED": 2
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_UNICODE",
+     "MIXED"
+    ],
+    "counts": {
+     "DASH": 2,
+     "DOT_UNICODE": 8,
+     "MIXED": 2
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP TỈNH-------"
+     },
+     {
+      "style": "DASH",
+      "context": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc---------"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "Ngày {ngay_ky_vb}/…./…. đã nhận của Ông/Bà: {ngay_nhan_hs}"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "Điện thoại: {dien_thoai_khac} Thư điện tử: {email_khac} 01 bộ hồ sơ đă"
+     }
+    ]
+   },
+   "band_mechanism": "para_br_3lines",
+   "so_line_jc": "center",
+   "header_band": {
+    "issue": "so_line_not_right",
+    "jc": "center"
+   }
+  },
+  "PLI_M71": {
+   "fill_styles": [
+    "DASH",
+    "DOT_UNICODE",
+    "UNDERSCORE"
+   ],
+   "fill_style_counts": {
+    "DASH": 2,
+    "DOT_UNICODE": 9,
+    "UNDERSCORE": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_UNICODE",
+     "UNDERSCORE"
+    ],
+    "counts": {
+     "DASH": 2,
+     "DOT_UNICODE": 9,
+     "UNDERSCORE": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP TỈNH-------"
+     },
+     {
+      "style": "DASH",
+      "context": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc---------"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "Ngày {ngay_ky_vb}/…./…. đã nhận của Ông/Bà: {ngay_nhan_hs}"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "01 bộ hồ sơ đăng ký doanh nghiệp/chi nhánh/văn phòng đại diện/địa điểm"
+     }
+    ]
+   },
+   "superscript_glue": {
+    "superscript_non_digit": {
+     "n_runs": 1,
+     "samples": [
+      "SUP:_______________________________________"
+     ]
+    },
+    "superscript_runs_total": 2
+   },
+   "band_mechanism": "para_br_3lines",
+   "so_line_jc": "center",
+   "header_band": {
+    "issue": "so_line_not_right",
+    "jc": "center"
+   }
+  },
+  "PLI_M72": {
+   "fill_styles": [
+    "DOT_UNICODE",
+    "UNDERSCORE"
+   ],
+   "fill_style_counts": {
+    "DOT_UNICODE": 5,
+    "UNDERSCORE": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DOT_UNICODE",
+     "UNDERSCORE"
+    ],
+    "counts": {
+     "DOT_UNICODE": 5,
+     "UNDERSCORE": 1
+    },
+    "samples": [
+     {
+      "style": "DOT_UNICODE",
+      "context": "(hoặc) Số Hộ chiếu, Hộ chiếu nước ngoài, giấy tờ có giá trị thay thế h"
+     },
+     {
+      "style": "UNDERSCORE",
+      "context": "_______________________________________"
+     }
+    ]
+   },
+   "font_floor": {
+    "runs_below_8pt": 0,
+    "empty_runs_below_8pt": 0,
+    "paragraph_marks_below_8pt": 2
+   },
+   "superscript_glue": {
+    "superscript_non_digit": {
+     "n_runs": 1,
+     "samples": [
+      "SUP:_______________________________________"
+     ]
+    },
+    "superscript_runs_total": 8
+   },
+   "band_mechanism": "none",
+   "header_band": {
+    "issue": "no_band"
+   }
+  },
+  "PLI_M73": {
+   "fill_styles": [
+    "DOT_ASCII",
+    "DOT_UNICODE"
+   ],
+   "fill_style_counts": {
+    "DOT_UNICODE": 4,
+    "DOT_ASCII": 2
+   },
+   "fill_line_style": {
+    "styles": [
+     "DOT_ASCII",
+     "DOT_UNICODE"
+    ],
+    "counts": {
+     "DOT_UNICODE": 4,
+     "DOT_ASCII": 2
+    },
+    "samples": [
+     {
+      "style": "DOT_UNICODE",
+      "context": "…………………………………………………………………………………………"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "………………………………………………………………………………..............."
+     },
+     {
+      "style": "DOT_ASCII",
+      "context": "………………………………………………………………………………..............."
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "……………………………………………………………………………………………"
+     }
+    ]
+   },
+   "band_mechanism": "none",
+   "header_band": {
+    "issue": "no_band"
+   }
+  },
+  "PLI_M74": {
+   "fill_styles": [
+    "DOT_ASCII",
+    "DOT_UNICODE"
+   ],
+   "fill_style_counts": {
+    "DOT_UNICODE": 2,
+    "DOT_ASCII": 2
+   },
+   "fill_line_style": {
+    "styles": [
+     "DOT_ASCII",
+     "DOT_UNICODE"
+    ],
+    "counts": {
+     "DOT_UNICODE": 2,
+     "DOT_ASCII": 2
+    },
+    "samples": [
+     {
+      "style": "DOT_UNICODE",
+      "context": "……………………………………………………………………………………………..................."
+     },
+     {
+      "style": "DOT_ASCII",
+      "context": "……………………………………………………………………………………………..................."
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "………………………………………………………………………….........................................."
+     },
+     {
+      "style": "DOT_ASCII",
+      "context": "………………………………………………………………………….........................................."
+     }
+    ]
+   },
+   "band_mechanism": "none",
+   "header_band": {
+    "issue": "no_band"
+   }
+  },
+  "PLI_M75": {
+   "fill_styles": [
+    "DASH",
+    "DOT_ASCII"
+   ],
+   "fill_style_counts": {
+    "DASH": 2,
+    "DOT_ASCII": 4
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_ASCII"
+    ],
+    "counts": {
+     "DASH": 2,
+     "DOT_ASCII": 4
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP TỈNH-------"
+     },
+     {
+      "style": "DASH",
+      "context": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc---------"
+     },
+     {
+      "style": "DOT_ASCII",
+      "context": "Tên, mã số, địa chỉ, tình trạng pháp lý chi nhánh:...................."
+     },
+     {
+      "style": "DOT_ASCII",
+      "context": "Tên, mã số, địa chỉ, tình trạng pháp lý văn phòng đại diện:..........."
+     }
+    ]
+   },
+   "band_mechanism": "para_br_3lines",
+   "so_line_jc": "center",
+   "header_band": {
+    "issue": "so_line_not_right",
+    "jc": "center"
+   }
+  },
+  "PLI_M76": {
+   "fill_styles": [
+    "DASH",
+    "DOT_ASCII"
+   ],
+   "fill_style_counts": {
+    "DASH": 2,
+    "DOT_ASCII": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_ASCII"
+    ],
+    "counts": {
+     "DASH": 2,
+     "DOT_ASCII": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "CƠ QUAN ĐĂNG KÝ KINH DOANHCẤP TỈNH-------"
+     },
+     {
+      "style": "DASH",
+      "context": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc---------"
+     },
+     {
+      "style": "DOT_ASCII",
+      "context": "Sau khi xem xét hồ sơ đăng ký doanh nghiệp qua mạng thông tin điện tử "
+     }
+    ]
+   },
+   "band_mechanism": "para_br_3lines",
+   "so_line_jc": "center",
+   "header_band": {
+    "issue": "so_line_not_right",
+    "jc": "center"
+   }
+  },
+  "PLI_M78": {
+   "fill_styles": [
+    "DASH",
+    "DOT_UNICODE",
+    "UNDERSCORE"
+   ],
+   "fill_style_counts": {
+    "DASH": 1,
+    "DOT_UNICODE": 6,
+    "UNDERSCORE": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_UNICODE",
+     "UNDERSCORE"
+    ],
+    "counts": {
+     "DASH": 1,
+     "DOT_UNICODE": 6,
+     "UNDERSCORE": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc---------"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "Là người đại diện của (nếu có): …………………………………………………………………"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "Tên cá nhân/tổ chức: ……………………………………………………………………………."
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "Giấy chứng nhận đăng ký doanh nghiệp của …"
+     }
+    ]
+   },
+   "superscript_glue": {
+    "superscript_non_digit": {
+     "n_runs": 1,
+     "samples": [
+      "SUP:_______________________________________"
+     ]
+    },
+    "superscript_runs_total": 2
+   },
+   "orphan_heading": {
+    "n_paragraphs": 1,
+    "samples": [
+     "STT"
+    ]
+   },
+   "band_mechanism": "para_br_3lines"
+  },
+  "PLI_M79": {
+   "fill_styles": [
+    "DASH",
+    "DOT_UNICODE",
+    "UNDERSCORE"
+   ],
+   "fill_style_counts": {
+    "DASH": 2,
+    "DOT_UNICODE": 5,
+    "UNDERSCORE": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_UNICODE",
+     "UNDERSCORE"
+    ],
+    "counts": {
+     "DASH": 2,
+     "DOT_UNICODE": 5,
+     "UNDERSCORE": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "TÊN TỔ CHỨC1-------"
+     },
+     {
+      "style": "DASH",
+      "context": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc---------"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "…………………………………………………………………………………………………………."
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "1. ………………………………………………………………………………………………………"
+     }
+    ]
+   },
+   "superscript_glue": {
+    "superscript_non_digit": {
+     "n_runs": 1,
+     "samples": [
+      "SUP:_______________________________________"
+     ]
+    },
+    "superscript_runs_total": 7
+   },
+   "band_mechanism": "para_br_3lines",
+   "so_line_jc": "center",
+   "header_band": {
+    "issue": "so_line_not_right",
+    "jc": "center"
+   }
+  },
+  "PLI_M80": {
+   "fill_styles": [
+    "DASH",
+    "DOT_ASCII",
+    "DOT_UNICODE",
+    "UNDERSCORE"
+   ],
+   "fill_style_counts": {
+    "DASH": 2,
+    "DOT_UNICODE": 6,
+    "DOT_ASCII": 4,
+    "UNDERSCORE": 1
+   },
+   "fill_line_style": {
+    "styles": [
+     "DASH",
+     "DOT_ASCII",
+     "DOT_UNICODE",
+     "UNDERSCORE"
+    ],
+    "counts": {
+     "DASH": 2,
+     "DOT_UNICODE": 6,
+     "DOT_ASCII": 4,
+     "UNDERSCORE": 1
+    },
+    "samples": [
+     {
+      "style": "DASH",
+      "context": "TÊN TỔ CHỨC1-------"
+     },
+     {
+      "style": "DASH",
+      "context": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAMĐộc lập - Tự do - Hạnh phúc---------"
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "Đề nghị thu hồi (Tên giấy tờ đề nghị thu hồi) được cấp lần thứ … (nếu "
+     },
+     {
+      "style": "DOT_UNICODE",
+      "context": "Tên doanh nghiệp/chi nhánh/văn phòng đại diện/địa điểm kinh doanh (ghi"
+     }
+    ]
+   },
+   "superscript_glue": {
+    "superscript_non_digit": {
+     "n_runs": 1,
+     "samples": [
+      "SUP:_______________________________________"
+     ]
+    },
+    "superscript_runs_total": 7
+   },
+   "band_mechanism": "para_br_3lines",
+   "so_line_jc": "center",
+   "header_band": {
+    "issue": "so_line_not_right",
+    "jc": "center"
+   }
+  }
+ }
+}

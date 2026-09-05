@@ -276,6 +276,15 @@ select, .btn {
   padding: 0 3px;
   color: #00379b;
 }
+/* V4 ui-hint (lane 6v-micro): placeholder gợi ý mờ trong ô trống, lấy từ
+ * FIELD_META.help || label (render.js). Italic + xám nhạt để phân biệt rõ
+ * với giá trị thật (màu đậm #00379b); opacity:1 chống việc trình duyệt
+ * hạ mờ thêm lần nữa. Không đụng .fld:focus/.invalid phía dưới. */
+.fld::placeholder, .loop-fld::placeholder, .comp-fld::placeholder {
+  color: #9aa5b1;
+  font-style: italic;
+  opacity: 1;
+}
 /* F-P3-A11Y-FOCUS: KHÔNG tắt outline ở :focus — rule này đứng sau
  * .fld:focus-visible (đầu file) và cùng độ đặc hiệu nên đã che mất chỉ báo
  * focus cho điều hướng bàn phím. Phản hồi focus của ô nhập = nền + viền dưới;

@@ -446,3 +446,7 @@ tools/phase6v_b3r_chkline_evidence.py
 # registry 78 entry min_write_gap_pt=40 + detector D6 gap<40 HARD + pins + evidence script
 # (registry/gate/signature-tests da co trong manifest tu 5R/6V-V1; them moi dung file evidence) ---
 tools/phase6v_signgap_evidence.py
+# --- 6V-V4 lane 6v-micro (micro-census read-only 87 template, PLAN 5.1):
+# script census + JSON ket qua — KHONG sua template/blocks ---
+tools/census/6v_micro_census.py
+tools/census/6v_micro_census.json

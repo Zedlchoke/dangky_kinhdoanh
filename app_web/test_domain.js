@@ -73,9 +73,11 @@ check('round-trip: format(parse(x)) ổn định',
   // [Lane fix-industry, Class 14] Pin cũ là "đếm entry <= 20"; red test
   // (test_validation_contact.js) chứng minh cap đó ghim đúng HÀNH VI LỖI
   // (4 field liên hệ dùng chung email_khac/dien_thoai_khac/fax/website bị
-  // thiếu metadata -> rác in thẳng vào DOCX ở 20 form). Pin mới giữ đúng Ý
-  // ĐỊNH tương thích ngược: 18 key pilot cũ còn NGUYÊN (đúng label/type)
-  // + cho phép đúng 4 key được mandate thêm (cap <= 30).
+  // thiếu metadata -> rác in thẳng vào DOCX ở 20 form). Pin nâng 20 -> 22
+  // khi 4 key liên hệ được mandate. [V4 ui-hint lane 6v-micro] nâng 22 -> 50
+  // khi THÊM 28 key label+help thuần gợi ý UI (hkd_*/hkd_cd.*/csbt.*/cn.*/
+  // ndd.*) — mọi key mới optional, type 'text'/'phone', KHÔNG thêm ràng buộc
+  // validation mới; 18 key pilot dưới đây vẫn là rào tương thích ngược thật.
   const PILOT_KEYS = ['dn.ten_tieng_viet', 'dn.ten_nuoc_ngoai', 'dn.ten_viet_tat',
     'von_dieu_le', 'von_kinh_doanh', 'chu_hkd.ho_ten', 'ndd.ho_ten',
     'gd.ho_ten', 'kt.ho_ten', 'chu_hkd.so_cccd', 'ndd.so_cccd', 'ndd.email',
@@ -87,8 +89,8 @@ check('round-trip: format(parse(x)) ổn định',
       return !!pm && pm.key === k && typeof pm.label === 'string' &&
         typeof pm.type === 'string';
     }));
-  check('metadata: tổng entry pilot + 4 key liên hệ (Class 14) <= 30',
-    Object.keys(D.FIELD_META).length === 22,
+  check('metadata: 22 key gốc + 28 key hint V4 (hkd/csbt/cn/ndd) === 50',
+    Object.keys(D.FIELD_META).length === 50,
     String(Object.keys(D.FIELD_META).length));
 }
 

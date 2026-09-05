@@ -601,3 +601,13 @@ NOT_REVIEWED, đúng thiết kế cần người duyệt). Checkpoint đóng ghi
 PLAN.md. Tổng commit 6V: V0 310f868 → V1 1bc4c40 → V2 a59c36e/07cf007/
 12b9615/27d790 → B3r ea60397 → V3 1c111db → V4 0ca9fdf/ceb14be → V4b
 177cd2f/9dad012/d66b26a → V5 8ccce9b → final.
+
+## Wave v7 — HEADER-NAME-SYNC + SIGNATURE-USABILITY-SPACE @ main 000e8e2→ (2026-09-05)
+
+| Task | Owner | Commit | Gate | Evidence |
+|---|---|---|---|---|
+| Preflight + phân loại dirty state (PLAN v7, coverage regen, census mới) → commit checkpoint docs | Lead | `77b992a` | baseline tái lập: runner 57/1 (H7.4 allowlist thiếu 4 audit artifact — đúng PLAN 0.1), signature 6/0 tuần tự (đỏ giả khi song song = va chạm soffice), legacy 5/0+13/1+8/4+10/1 | /tmp/final_v7_baseline.json |
+| F0 reconcile: allowlist +4 audit artifact + census; pymupdf pin; F-V5-2 (D15 free X-in-bordered-cell, mutation giữ bắt X trần); F-V5-3 (nhóm loại-trừ "mô hình tổ chức" fixture+runtime); 4 legacy suite pin sync theo premise→evidence; +4 legacy suite vào runner | Lead | `f927b96` | H7 57/0; header_layout 11/0 (loop mirror hợp đồng first-wins + SOURCE_OVERRIDES — PLI_M28 2 nguồn byte-identical sha256 69fd5022); p2a 14/0; r3b1 12/0; M01 5/0; detectors 9/0; test_domain 68/0 | PLI_M09 clause (f) đã gỡ đúng hạn |
+| SIGNATURE 72pt: registry 78 entry 40→72; D6 grammar sync census + page-edge + "Đã ký" + SIG_MISSING; render spacer 72pt manual-only + noparen clusters; mutations V2a/V2b | Lead | `a2a29d6` | 6v_detectors 10/0; phase5r_signatures 6/0; docx_layout_signatures 8/0; visual_detectors 12/0; 5r_metadata 15/0; 5r_tables 10/0 | owner SIGNATURE-USABILITY-SPACE 2026-09-05 |
+| HEADER-NAME-SYNC: registry binding 20 form; generator bind fail-loud; converter mirror run; render.js span.mirror-fld + app.js mirrorKey; gate D17 HARD; regen 20×(template+blocks) ×2 zero-diff | Lead | `55637db` | test_v7_header_name 8/0; header_layout 11/0; test_dom 69/0; wiring 37/0; coverage drift 0; manifest deep GATE PASS 87/87 | census 216 occurrence; 2 BLOCKED_OWNER (M33, PLII_M06) |
+| D17 hay-folded (wrap trộn quốc hiệu) + E-suite vào runner | Lead | `481f5d6` | 6v_detectors 10/0; v7_header_name 8/0 | corpus phase7v |

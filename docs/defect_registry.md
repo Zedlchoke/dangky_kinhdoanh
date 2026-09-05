@@ -344,3 +344,61 @@ cũng render 52 trang: drift môi trường LO/metrics, không phải do lane).
 10. **"Mẫu số N" position**: nguồn↔template khớp 4/4 (M19 right; M30/
     PLII_M02/PLII_M03 trái) → đăng ký per-form trong decision_registry,
     không sửa; KHÔNG cần báo Lead (không có lệch).
+
+## Wave v7 — HEADER-NAME-SYNC + SIGNATURE-USABILITY-SPACE (2026-09-05, main 77b992a→)
+
+Base: PLAN v7 (owner ban hành), corpus tham chiếu phase6v/final @ 000e8e2.
+Census đầu vào: `docs/audits/header_name_census_2026-09-05.{json,md}`
+(216 occurrence / 87 form) + `docs/audits/signature_space_census_2026-09-05.md`.
+
+### Class V7-H1 — HEADER-NAME-SYNC [ĐÃ ĐÓNG — hard gate D17]
+
+- **Bằng chứng:** PLI_M32 band đầu trang (ô (0,0) bảng band) là literal
+  `TÊN DOANH NGHIỆP` + dòng kẻ `-------` trong khi thân có input
+  `{dn.ten_tieng_viet}` — nhập tên không cập nhật band ở UI lẫn DOCX.
+- **Census:** 22 fillable-header-slot; 97 legal-title/subtitle; 88
+  output-admin-only (85 đã bind); 9 not-applicable; 65 form không có band.
+- **Fix gốc rễ (4 tầng, 1 registry):** `tools/header_name_binding.json`
+  (nguồn chân lý) → generator `_bind_header_name_slot` (thay dòng kẻ bằng
+  the {key}, fail-loud) → converter `_band_first_cell_to_mirror` (run
+  `mirror`, KHÔNG input thứ hai) → render.js `span.mirror-fld` + app.js
+  `mirrorKey` cập nhật ngay khi nhập/xóa. Gate `D17_header_name` HARD
+  (valid-full): band còn dòng kẻ = HDR_NAME_UNBOUND; giá trị band khác thân
+  = HDR_NAME_SYNC.
+- **Scope:** 20 form bind (16 DN → `dn.ten_tieng_viet` gồm PLI_M32; 4 hộ
+  PLII_M02–05 → `hkd_ten_tieng_viet_2`). Regen 20 template + 20 blocks ×2
+  zero-diff (commit 55637db).
+- **BLOCKED_OWNER:** PLI_M33 (band TÊN DOANH NGHIỆP, thân chỉ có
+  `chu_hkd.ho_ten` — không có trường tên DN để mirror), PLII_M06 (band TÊN
+  HỘ KINH DOANH, thân không có input tên hộ). +3 ô output inline chưa bind
+  (M70 p14, M48 p17, M49 p9). Không tự bind — chờ owner.
+- **Test:** `tools/test_v7_header_name.py` 8/0 (E2E blank/filled/A→B/
+  Unicode/PDF-D17/mutation); V2c mutations; test_dom 69/0 (span mirror,
+  không input thứ hai); header_layout 11/0.
+
+### Class V7-S1 — SIGNATURE-USABILITY-SPACE [ĐÃ ĐÓNG — hard gate D8@72pt]
+
+- **Bằng chứng:** census 2026-09-05: 195/420 cụm output dưới 72pt (185 phải
+  ký tay), minimum 43.4pt — qua sàn cũ 40pt nhưng chật cho ký/họ tên/con
+  dấu. D6 cũ chỉ nhận 215/420 cụm (grammar hẹp) và không đo cụm cuối trang.
+- **Fix gốc rễ:** (1) registry `min_write_gap_pt` 40→72 toàn 78 entry;
+  (2) detector D6 grammar ĐỒNG BỘ census (thêm "ký, ghi họ tên và đóng dấu",
+  chỉ thị không ngoặc, "từng thành viên") + đo đến MÉP DƯỚI TRANG khi không
+  có dòng dưới + tách "Đã ký" (không áp sàn viết tay) + SIG_MISSING hard;
+  (3) render `_ensure_signature_space`: nhận cụm không ngoặc, skip "Đã ký",
+  spacer exact-height ép sàn 72pt (chỉ thêm khoảng — nguồn có khoảng lớn
+  hơn thì giữ nguyên).
+- **Mutation bắt buộc (V2a/V2b):** gap 71 FAIL / 72 PASS / registry pin 80
+  được tôn trọng / cuối trang được đo / "Đã ký" không bị ép / đóng dấu +
+  từng thành viên nhận diện / SIG_MISSING / SIG_SPLIT / SIG_ORIENTATION.
+- **Test:** test_phase6v_detectors 10/0; test_phase5r_signatures 6/0;
+  docx_layout_signatures 8/0; signgap evidence chạy lại trên corpus mới.
+
+### Verdict 9 form không có cụm ký (census nguồn 2026-09-05)
+
+`PLII_M18`, `PLI_M05`, `PLI_M07`*, `PLI_M10`, `PLI_M71`, `PLI_M72`,
+`PLI_M73`, `PLI_M74`, `PLI_M76` → **absence-correct** (nguồn gốc không có
+chỉ thị ký, template khớp nguồn; chi tiết + bằng chứng 3 dòng cuối:
+`docs/audits/header_name_census_2026-09-05.md` mục 4).
+*PLI_M07: nguồn là stub 2 dòng, template tự dựng bảng + cột Chữ ký —
+chiều ngược (template CÓ thêm so với nguồn); nguồn không đủ tái sinh.

@@ -271,3 +271,25 @@ test (test_row_contract_corpus / test_row_contract_export).
   chủ động vượt qua vì ưu tiên đọc được (PLAN v6 Q-V2 đề xuất (a)).
 - Bối cảnh: policy cũ `portrait-section` (phase5r_table_policies.json) bị
   supersede bởi quyết định này — V3 cập nhật policy file kèm dẫn chứng.
+
+## Registry "Mẫu số N" position per form — 6V-V4b (việc 10, 2026-09-05)
+
+**Nguồn: đối chiếu trực tiếp file nguồn 0x_* với template (không sửa gì).**
+Dòng "Mẫu số N" ở đầu mỗi mẫu giữ NGUYÊN vị trí + căn lề theo nguồn gốc —
+không chuẩn hóa "1 kiểu toàn corpus":
+
+| Form | File nguồn | Nguồn (jc / vị trí) | Template | Khớp |
+|---|---|---|---|---|
+| PLI_M19 | 03_chi_nhanh.../PL1_Mau_19_*.docx | right / đoạn [0] | right / [0] | ✅ |
+| PLI_M30 | 04_tam_ngung.../PL1_Mau_30_*.docx | trái (jc=None) / [1] | None / [1] | ✅ |
+| PLII_M02 | 06_ho_kinh_doanh.../PL2_Mau_02_*.docx | trái (jc=None) / [1] | None / [1] | ✅ |
+| PLII_M03 | 06_ho_kinh_doanh.../PL2_Mau_03_*.docx | trái (jc=None) / [1] | None / [1] | ✅ |
+
+Kết luận: nguồn từng mẫu KHÁC NHAU (M19 căn phải; M30/PLII_M02/PLII_M03 căn
+trái) và template khớp nguồn 4/4 → đăng ký per-form như bảng trên; **KHÔNG
+cần báo Lead về lệch nguồn↔template** (không có lệch).
+
+Ghi chú Lead-facing ngoài phạm vi (không sửa trong lane): band quốc hiệu
+PLI_M19 dòng "TÊN DOANH NGHIỆP …----" nguồn jc=center nhưng template căn
+trái — thuộc vùng band đã chốt Q-V8 (giữ theo nguồn gốc); nếu cần soi lại
+thuộc lane band, không thuộc V4b.

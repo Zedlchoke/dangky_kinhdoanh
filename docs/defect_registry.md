@@ -262,3 +262,26 @@ identical audit-HEAD — git diff 294604c..313b0af app/templates rỗng).
 - **B5 bảng ≥10 cột hẹp — D9 NARROW_COL_WIDE: 60 bảng / 10 form** (PLII_M01/02,
   PLI_M02/06/07/09/10/12/15/72; mọi bảng min col 566 twips). Fix lane: V3
   sau owner Q-V2. Sàn legacy mới 566 (đóng I4 — bảng 566 không còn treo).
+
+## Class 6V-V4a — kết quả adjudicate auditor/6v-visual (2026-09-05, docs/audits/6v/v4-visual-audit.md)
+
+**D5 72 hit:** 59 hợp pháp + 7 chấp nhận → lập sparse allowlist; **6 lỗi thật
+→ lane V4b**: orphan footnote note 4 hit (M12 p2, M80 p3×2, M02 p33 —
+keep-with-previous) + M72 spillover 2 hit (tnhh_2tv/dhdn p3 — row tail tràn).
+
+**Spot-check 15 trang: 12 PASS / 3 VIOLATION cùng lớp "vỡ token giữa từ trong
+cột hẹp"** (PLII_M02 p4, PLI_M09 p16, M72 p2: "Nguyễ/n", "Singapo/re",
+"060000/000023/9") → lane V4b: width redistribution theo longest-word cho cột
+tên/quốc tịch/mã-GCTP (không đổi số cột, tổng 14400 giữ nguyên).
+
+**Micro-census adjudicate:** a=1 form thật (M12 dòng ASCII-dot) + registry
+per-family; b=3 form thật (M54/M55/M57 ngoặc ")" mồ côi) + 1 FP census
+regex; c=0 (artifact paragraph-mark — đóng); d=31 form separator superscript
+(cosmetic chuẩn hóa); e=14 form "STT" mồ côi (header bảng bị làm phẳng);
+f=53 form band para_br **chờ owner Q-V8**; g=0 (đúng registry band).
+
+**Finding ngoài phạm vi:** M76 thiếu khối ký — **ĐÃ ĐÓNG bằng nguồn gốc**
+(05_cong_bo.../PL1_Mau_76... không có dòng ký — template đúng nguồn, là
+thông báo chấp thuận điện tử). "Mẫu số N" vị trí M19 phải vs khác trái →
+lane V4b đối chiếu nguồn gốc trong repo rồi đăng ký. Fixture: ngày chỉ số
+ngày + cột "Chữ ký" nhận dữ liệu → lane V4b (policy handwriting-only cột).

@@ -619,3 +619,18 @@ PLAN.md. Tổng commit 6V: V0 310f868 → V1 1bc4c40 → V2 a59c36e/07cf007/
 - gate-fix v7: audit_blocks_check chấp nhận run mirror (validate shape) + allowlist H7 +8 file wave
 - PLAN v7 checkpoint header + runner cuối **63 PASS / 0 FAIL / 0 NOT RUN — VERDICT PASS** (/tmp/final_v7_final.json)
 - Auditor độc lập (fresh): **PASS-WITH-NOTES — 0 BLOCKER / 0 MAJOR**; report `docs/audits/v7-core-audit.md` (0 BLOCKER/MAJOR, MINOR-1/2/3 đã xử lý tại commit này)
+
+## Owner-delegated decision closure v7 — 2026-09-06
+
+Owner yêu cầu Lead tự duyệt toàn bộ packet. Đã chốt N-v1..N-v4 và O1..O8
+trong `docs/owner_decision_packet_v7.md`; 22 section được phân loại 10
+user-input, 11 output-only, 1 removed-by-source-cleanup; Excel P6=C ba cụm
+được phép triển khai; min_rows conditional; mã dài preserve.
+
+Trong khi duyệt, Lead kiểm tra Cổng TTĐT Chính phủ và mở gate pháp lý L-2026:
+TT 121/2026/TT-BTC (hiệu lực 21/08/2026) thay Mẫu I.1–I.5, I.10, I.12,
+I.27, I.30 và bãi bỏ I.11; NĐ 296/2026/NĐ-CP sửa NĐ 168/2025. Vì vậy
+`phase7v`/runner 63 PASS vẫn là baseline kỹ thuật nhưng không phải current-law
+release evidence. F0L phải migrate 9 mẫu + inactive M11 trước F1/F2/F4 và
+corpus cuối. O5 human review và O6 Windows vẫn là evidence outstanding, không
+được giả PASS bằng quyết định tài liệu.

@@ -485,3 +485,6 @@ tools/header_name_binding.json
 tools/test_v7_header_name.py
 # --- [WAVE v7 2026-09-05] auditor doclat cuoi (fresh, PASS-WITH-NOTES 0 BLOCKER) + MINOR fix ---
 docs/audits/v7-core-audit.md
+# --- [OWNER-DELEGATED DECISIONS 2026-09-06] legal backlog đổi thành evidence
+# history; decisions current ở owner packet/decision registry; mở gate L-2026 ---
+docs/legal_review_backlog.md

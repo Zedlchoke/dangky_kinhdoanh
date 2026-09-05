@@ -1,6 +1,18 @@
-# Legal review backlog — 33 form BLOCKED_LEGAL_REVIEW
+# Legal review backlog — lịch sử evidence, đã được decision packet v7 supersede
 
-Trạng thái: **Backlog chờ owner quyết định**. Trích trực tiếp từ
+> **CẬP NHẬT 2026-09-06:** owner đã ủy quyền Lead duyệt. Không dùng các nhãn
+> `OPEN`/`BLOCKED_LEGAL_REVIEW` lịch sử trong file này làm trạng thái điều hành.
+> Quyết định hiện hành nằm tại `docs/owner_decision_packet_v7.md` và
+> `docs/decision_registry.md`. File này chỉ giữ câu hỏi/evidence gốc để audit.
+>
+> Baseline pháp lý cũng đã đổi: Nghị định 168/2025/NĐ-CP đã được sửa bởi
+> Nghị định 296/2026/NĐ-CP; Thông tư 68/2025/TT-BTC đã được sửa bởi Thông tư
+> 121/2026/TT-BTC có hiệu lực 21/08/2026. Mẫu I.1–I.5, I.10, I.12, I.27,
+> I.30 bị thay và I.11 bị bãi bỏ. Evidence 2025 bên dưới phải được tái đối
+> chiếu trước khi implement các form liên quan.
+
+Trạng thái lịch sử tại thời điểm census: **Backlog chờ owner quyết định**;
+quyết định đã được đóng/supersede như note trên. Nội dung dưới đây trích trực tiếp từ
 `app/data/table_specs/manifest.json` (`table-manifest-v1`) — câu hỏi pháp lý
 giữ nguyên văn từ `legal_questions`, bằng chứng trích `source_evidence`,
 `notes`, `defects`. Không suy diễn căn cứ mới.

@@ -6,12 +6,42 @@
 > Evidence gốc giữ nguyên văn trong `docs/legal_review_backlog.md` và
 > `app/data/table_specs/manifest.json` (`legal_questions`) — không suy diễn.
 
+> **Current decision authority:** owner đã ủy quyền Lead tự duyệt packet v7
+> ngày 2026-09-06. Quyết định chi tiết và mapping 22 section nằm tại
+> `docs/owner_decision_packet_v7.md`. Nếu nội dung dưới đây mâu thuẫn với mục
+> đó hoặc vẫn ghi OPEN do lịch sử, packet v7 ngày 2026-09-06 thắng.
+
 ## Cách đọc
 
 - `DECIDED` — đã chốt, có ngày + nguồn quyết định; lane được phép triển khai.
 - `OPEN` — chờ owner; các section liên quan KHÔNG được rollout (các lane độc
   lập khác vẫn chạy: layout, P2 platform, spec/test).
 - Migration impact = thay đổi bắt buộc lên draft/blocks/form_maps khi áp dụng.
+
+## Decision closure — 2026-09-06
+
+Owner đã ủy quyền Lead chốt bundle còn lại. D1–D7 không còn là owner blocker;
+implementation vẫn phải fail-closed theo source hiện hành:
+
+- D1: D1.1=A, D1.2=B cho mọi form (mô tả + attachment metadata, không nested
+  asset list), D1.3/D1.5/D3.3 dùng source current-law, D1.4=A, D1.6=A.
+- D2: D2.1=A; D2.2/D2.3=A ở surface phẳng nhưng đủ toàn bộ cột pháp định;
+  D2.4=A; D2.5=A; D2.6=A; D2.7=min 1 khi active/max null; D2.8=A; D2.9=A.
+- D3: D3.1=A, D3.2=A, D3.3=A; vùng nhiễm M09 phải bị loại có evidence.
+- D4: D4.1=C (copy tường minh một lệnh; dữ liệu đích độc lập sau copy),
+  D4.2=A với migration đọc key cũ.
+- D5: D5.1=A; D5.2 trích exact canonical rows từ PLII_M02 source hiện hành,
+  không tự thêm chỉ tiêu; D5.3=A; D5.4=A.
+- D6: D6.1 grid cho form input có ngữ nghĩa nhiều đơn vị; các form cơ quan
+  phát hành thuộc O1 là output-only; D6.2 phân loại theo O1; D6.3 output-only
+  variable rows lấy từ hồ sơ; D6.4 integer >=0/max null, “sản phẩm khác” bắt
+  buộc mô tả khi SL>0, tên các dòng cố định lấy source; D6.5=A; D6.6 tên tài
+  liệu bắt buộc, số bản/số trang optional.
+- D7: D7.1=A; D7.2=A khi official source có ký hiệu; D7.3=A; D7.4=A.
+
+Legal baseline bắt buộc: NĐ 168/2025 đã sửa bởi NĐ 296/2026 và TT 68/2025 đã
+sửa bởi TT 121/2026. Chi tiết current-law migration, N-v1..N-v4 và exact O1
+mapping nằm tại `docs/owner_decision_packet_v7.md`.
 
 ## Owner decisions 2026-09-03 (trả lời packet `docs/owner_decision_packet_2026-09-03.md`)
 

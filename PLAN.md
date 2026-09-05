@@ -26,6 +26,15 @@
 > tồn tại thành PASS: thiếu quyết định pháp lý, human sign-off hoặc máy Windows
 > thì kết quả cuối bắt buộc là `BLOCKED`/`NOT RUN`, kèm đúng gói tiếp tục.
 
+> **OWNER DECISIONS 2026-09-06:** owner đã ủy quyền Lead tự duyệt toàn bộ
+> packet v7. N-v1..N-v4 và O1..O8 đã chốt tại
+> `docs/owner_decision_packet_v7.md`; không hỏi lại. O5/O6 vẫn là evidence
+> outstanding, không phải decision outstanding. Đồng thời mở gate pháp lý
+> **L-2026**: Thông tư 121/2026/TT-BTC đã thay Mẫu I.1–I.5, I.10, I.12,
+> I.27, I.30 và bãi bỏ I.11 từ 21/08/2026; Nghị định 296/2026/NĐ-CP đã sửa
+> Nghị định 168/2025/NĐ-CP. Mọi corpus hiện có trước migration này chỉ là
+> baseline kỹ thuật, không được dùng để tuyên bố current-law release.
+
 ---
 
 ## 0. Current truth — baseline phải xác minh trước khi sửa
@@ -64,14 +73,17 @@
   sửa regression thật.
 - Excel mới đóng pilot `PLI_M72` (X1–X6, owner đã duyệt hình). Quyết định P6=C
   yêu cầu rollout tiếp theo theo cụm: hộ kinh doanh → thay đổi ngành → thuế.
+- Current-law migration mới mở ngày 2026-09-06: thay/rebuild `PLI_M01`–
+  `PLI_M05`, `PLI_M10`, `PLI_M12`, `PLI_M27`, `PLI_M30` theo Thông tư
+  121/2026/TT-BTC; đưa `PLI_M11` khỏi active catalog với verdict
+  `REMOVED_BY_CURRENT_LAW`. Đây là prerequisite trước corpus/release cuối.
 - Windows/WebView2/.exe smoke S1–S8: **NOT RUN — chưa có evidence Windows**.
 - Defect owner báo sau 6V — **HEADER-NAME-SYNC**: ít nhất `PLI_M32` có
   `dn.ten_tieng_viet` ở thân mẫu nhưng ô header đầu trang vẫn là literal
   `TÊN DOANH NGHIỆP\n-------`; nhập tên phía dưới không cập nhật header UI/
   DOCX. Đây là lỗi binding thật, không phải cosmetic và chưa được 6V detector
   bắt. Owner đã chốt yêu cầu: nhập tên một lần, header phải đồng bộ.
-- Audit lại vùng ký tại đúng corpus Phase 6V ngày 2026-09-05 —
-  **SIGNATURE-USABILITY-SPACE đang OPEN** (chi tiết:
+- Audit vùng ký Phase 6V từng mở defect **SIGNATURE-USABILITY-SPACE** (chi tiết:
   `docs/audits/signature_space_census_2026-09-05.md`):
   - structural census phủ 87/87 template: 78 form có 84 cụm ký; 9 form không
     có cụm ký trong template (`PLII_M18`, `PLI_M05`, `PLI_M07`, `PLI_M10`,
@@ -91,7 +103,10 @@
     chứng minh UX vùng ký đã hoàn tất**;
   - visual spot-check các trang rủi ro `PLII_M02`, `PLI_M15`, `PLI_M46`,
     `PLI_M66`, `PLII_M09` xác nhận khối không bị tách nhưng nhiều vùng 43–57pt
-    khá chật. Human review toàn bộ 1631 PNG vẫn `NOT_REVIEWED`.
+    khá chật;
+  - **đã đóng kỹ thuật ở phase7v:** detector 420/420, min 72.9pt, gap <72pt
+    bằng 0, split/orientation/missing bằng 0. Human review corpus mới vẫn
+    `NOT_REVIEWED`.
 - `docs/product_scope_registry.md`, một phần `docs/legal_review_backlog.md` và
   nhãn OPEN lịch sử trong registries đang stale so với code/ledger hiện tại.
 
@@ -156,18 +171,19 @@ lane production phụ thuộc bắt đầu. Không hỏi lại các quyết đ�
 
 | ID | Việc cần owner chốt/chuẩn bị | Default fail-closed |
 |---|---|---|
-| O1 | Adjudicate 22 section `BLOCKED_OWNER`: user-input, output-only, no-table, removed-by-law hay implement | giữ nguyên BLOCKED; không bịa field/bảng |
-| O2 | WLAY-005/M12: hai matrix `tai_san_gop_von_*` và matrix `co_cau_loai_co_phan_sau_thay_doi`, kể cả chính tả nguồn “ưu đã biểu quyết” | không materialize 3 matrix |
-| O3 | Q-P4-1: ba nested-grid có `min_rows=1` phải enforce khi active, enforce sau khi có dữ liệu, hay bỏ khai báo | giữ declaration nhưng không enforce; status BLOCKED |
-| O4 | Mã định danh dài ở M09/M72: contract dữ liệu hợp pháp và policy layout/font/orientation | không đổi độ dài/format dữ liệu để làm đẹp |
-| O5 | Người ký G-E và cách duyệt toàn corpus cuối | giữ 100% NOT_REVIEWED |
-| O6 | Máy/VM Windows 10/11 sạch, có quyền build/smoke; cho phép mở Q-V6 | Windows/.exe giữ NOT RUN |
-| O7 | Duyệt bộ câu hỏi Excel cho ba cụm còn lại | không phát hành questionnaire cho khách |
-| O8 | Chốt chuẩn UX vùng ký: đề nghị tối thiểu 72pt (2.54cm) cho “ký/ghi họ tên”, và ngưỡng riêng cao hơn nếu phải đóng dấu; xác nhận 9 form không có chữ ký là đúng nguồn | giữ 40pt chỉ là legacy technical floor; không tuyên bố signature UX DONE |
+| L-2026 | Baseline pháp lý sau NĐ 296/2026 + TT 121/2026 | **DECIDED:** migrate 9 mẫu bị thay, bỏ active M11 trước release |
+| O1 | Adjudicate 22 section | **DECIDED:** 10 user-input, 11 output-only, 1 removed-by-source-cleanup; mapping exact trong packet v7 |
+| O2 | WLAY-005/M12 | **DECIDED:** implement từ Mẫu 12 TT 121/2026, computed totals/mismatch blocking |
+| O3 | Q-P4-1 `min_rows` | **DECIDED:** enforce min 1 chỉ khi section active; blank row không tính; max null |
+| O4 | Mã định danh dài M09/M72 | **DECIDED:** preserve string/leading zero; wrap/landscape, không truncate |
+| O5 | Review corpus cuối | **PROCESS DECIDED:** AI review 100% được phép; human evidence vẫn outstanding |
+| O6 | Windows sạch | **AUTHORIZED:** chạy khi có máy; hiện vẫn NOT RUN |
+| O7 | Excel ba cụm còn lại | **DECIDED:** triển khai đủ P6=C, auditor độc lập duyệt artifact |
+| O8 | Vùng ký | **DECIDED + IMPLEMENTED:** manual floor 72pt; “Đã ký” miễn; detector 100% |
 
 22 section phải được xuất tự động từ `docs/table_coverage_current.json`, không
-chép tay rồi bỏ sót. Các form cơ quan nhà nước phát hành phải được owner xác
-định rõ là surface nhập của doanh nghiệp hay output/admin-only.
+chép tay rồi bỏ sót. Áp exact mapping đã duyệt trong packet v7; trạng thái chỉ
+đổi khỏi `BLOCKED_OWNER` sau khi implementation/evidence tương ứng hoàn tất.
 
 ---
 
@@ -241,6 +257,29 @@ Lead thực hiện trước khi thay production:
    release runner gọi bắt buộc; không để suite đỏ nằm ngoài release gate.
 
 **Gate F0:** docs không mâu thuẫn; 4 suite 0 FAIL; runner 0 FAIL; tree sạch.
+
+### F0L — Current-law migration 2026 (mở sau owner-delegated review)
+
+Thực hiện trước F1/F2/F4 và trước khi sinh corpus mới:
+
+1. tải/lưu hash bản ký số chính thức của TT 121/2026 và NĐ 296/2026; lập
+   inventory khác biệt source 2025→2026 cho `PLI_M01`–`PLI_M05`, `PLI_M10`,
+   `PLI_M12`, `PLI_M27`, `PLI_M30`;
+2. migrate spec, canonical fields, use-case, UI/validation, template và
+   questionnaire theo từng khác biệt có evidence; không OCR rồi tin mù—review
+   ảnh trang nguồn và mutation test các field/bảng mới hoặc bị bỏ;
+3. đưa `PLI_M11` khỏi active catalog với `REMOVED_BY_CURRENT_LAW`; giữ alias/
+   migration đọc draft cũ nhưng không cho tạo hồ sơ mới bằng mẫu bị bãi bỏ;
+4. đối chiếu ảnh hưởng NĐ 296/2026, đặc biệt xác thực điện tử và chủ sở hữu
+   hưởng lợi, với M01–M05/M10 và validation hiện hành;
+5. Lead regen generated artifacts ×2 zero-diff, cập nhật census denominator,
+   coverage/manifest/use-case inventory và exact allowlist;
+6. test current-law negative phải đỏ nếu active catalog còn M11, nếu hash
+   source sai, hoặc một trong 9 mẫu vẫn mang fingerprint cấu trúc 2025.
+
+**Gate F0L:** 9 mẫu thay thế khớp source chính thức; M11 inactive; mọi delta có
+mapping/migration/test; runner + coverage + deep idempotency xanh. Corpus
+`phase7v` không được tái sử dụng làm final evidence sau gate này.
 
 ### F1 — Adjudicate và hoàn thiện 22 section
 

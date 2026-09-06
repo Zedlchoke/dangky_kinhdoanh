@@ -2039,6 +2039,12 @@
       openRightPanel();
       toast('<b>Không thể xuất hồ sơ: còn ' + blocking.length +
         ' lỗi bắt buộc phải sửa.</b><br>Xem danh sách ở panel "Kiểm tra lỗi".', 'err', true);
+      /* [F2 2026-09-06] error-focus-first-field: focus ngay trường chặn đầu
+       * tiên (PLAN F2 "error focus đúng field/tab") — tái dùng cơ chế điều
+       * hướng của panel lỗi; lỗi không có field tương ứng (mẫu bắt buộc
+       * chưa chọn) thì bỏ qua, panel đã hiển thị. */
+      var first = blocking.filter(function (e) { return e.key; })[0];
+      if (first && first.docId) navigateToError(first.docId, first.key);
       return;
     }
     var btnBox = toast('Đang xuất hồ sơ…', '', true);

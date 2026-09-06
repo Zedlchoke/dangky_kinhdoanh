@@ -396,7 +396,10 @@
       return '<tr>' + cells + '</tr>';
     }).join('');
     var cls = 'btable' + (b.band === 'header' ? ' hdr-band' : '');
-    return '<table class="' + cls + '"><tbody>' + body + '</tbody></table>';
+    /* [F2 finding 2026-09-06] bảng thường (non-loop) cũng bọc .btable-wrap —
+     * PLI_M70 bảng 2x1 ký nằm dưới .dupe-anchor trước đây trần trụi nên
+     * không cuộn ngang trong web view khi viewport hẹp. */
+    return '<div class="btable-wrap"><table class="' + cls + '"><tbody>' + body + '</tbody></table></div>';
   }
 
   /* Bảng lặp - CONTRACT:

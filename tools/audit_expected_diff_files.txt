@@ -592,3 +592,9 @@ app_web/test_nv3_inline_mirror.js
 # --- [Lead sync 2026-09-06] questionnaire M27 keys theo M27 2026 (grid NĐD +
 # grid đơn vị) + RT9 grid contract + r3b1 M12 anchor 132->89 + policies
 # m12_matrix_census materialized ---
+# --- [F2-fix 2026-09-06] error-focus-first-field (doExport blocking) +
+# btable-wrap cho bảng thường (PLI_M70) — finding từ UI sweep F2 ---
+docs/audits/ui_sweep_f2_2026-09-06.md
+docs/audits/ui_sweep_f2_2026-09-06.json
+app_web/test_p2a_people_contracts.js
+app_web/test_r3b1_people_contracts.js

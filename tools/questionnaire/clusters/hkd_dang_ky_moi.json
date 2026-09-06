@@ -1,0 +1,393 @@
+{
+  "doc_id": "PLII_M01",
+  "title": "Đăng ký hộ kinh doanh lần đầu",
+  "questionnaire_version": 1,
+  "note": "Cụm 1 hộ kinh doanh — P6=C rollout 2026-09-06 (lane final-ui-excel). Mapping form_maps['PLII_M01']. Câu hỏi đời thường trung thành canonical field, không tư vấn pháp lý (O7). chk_* trả 'X' qua type mark; bảng row_group đi theo contract X2/X3 (mỗi ô một dòng map). Bảng thành viên giữ 5 câu thiết yếu (giới hạn MAX_FILL_COLUMN=5 cột của contract X2); quoc_tich/dan_toc/noi_thuong_tru chủ hộ điền bổ sung trong app (surface qua panel còn-thiếu).",
+  "questions": [
+    {
+      "question_id": "q_ho_ten",
+      "group": "Về bạn (chủ hộ kinh doanh)",
+      "text": "Họ và tên của bạn là gì? (bạn ghi thường, app tự in hoa)",
+      "type": "text",
+      "example": "Nguyễn Văn A",
+      "required": true,
+      "version": 1,
+      "data_key": "chu_hkd.ho_ten"
+    },
+    {
+      "question_id": "q_ngay_sinh",
+      "group": "Về bạn (chủ hộ kinh doanh)",
+      "text": "Ngày, tháng, năm sinh của bạn? (dd/mm/yyyy)",
+      "type": "date",
+      "example": "05/12/1985",
+      "version": 1,
+      "data_key": [
+        {
+          "key": "ngay_sinh",
+          "transform": "date_day"
+        },
+        {
+          "key": "thang_sinh",
+          "transform": "date_month"
+        },
+        {
+          "key": "nam_sinh",
+          "transform": "date_year"
+        }
+      ]
+    },
+    {
+      "question_id": "q_gioi_tinh",
+      "group": "Về bạn (chủ hộ kinh doanh)",
+      "text": "Giới tính của bạn?",
+      "type": "select",
+      "options": [
+        {
+          "value": "Nam",
+          "label": "Nam"
+        },
+        {
+          "value": "Nữ",
+          "label": "Nữ"
+        }
+      ],
+      "version": 1,
+      "data_key": "chu_hkd.gioi_tinh"
+    },
+    {
+      "question_id": "q_so_cccd",
+      "group": "Về bạn (chủ hộ kinh doanh)",
+      "text": "Số định danh cá nhân (CCCD) của bạn?",
+      "type": "text",
+      "example": "079085001234",
+      "required": true,
+      "version": 1,
+      "data_key": "chu_hkd.so_cccd"
+    },
+    {
+      "question_id": "q_dan_toc",
+      "group": "Về bạn (chủ hộ kinh doanh)",
+      "text": "Dân tộc của bạn?",
+      "type": "text",
+      "example": "Kinh",
+      "version": 1,
+      "data_key": "chu_hkd.dan_toc"
+    },
+    {
+      "question_id": "q_quoc_tich",
+      "group": "Về bạn (chủ hộ kinh doanh)",
+      "text": "Quốc tịch của bạn?",
+      "type": "text",
+      "example": "Việt Nam",
+      "version": 1,
+      "data_key": "chu_hkd.quoc_tich"
+    },
+    {
+      "question_id": "q_dien_thoai",
+      "group": "Về bạn (chủ hộ kinh doanh)",
+      "text": "Số điện thoại liên hệ của bạn?",
+      "type": "tel",
+      "example": "0901234567",
+      "version": 1,
+      "data_key": "dien_thoai_lien_he"
+    },
+    {
+      "question_id": "q_email",
+      "group": "Về bạn (chủ hộ kinh doanh)",
+      "text": "Email liên hệ (nếu có)?",
+      "type": "email",
+      "version": 1,
+      "data_key": "email_tru_so"
+    },
+    {
+      "question_id": "q_dia_chi_chi_tiet",
+      "group": "Về nơi ở và địa điểm kinh doanh",
+      "text": "Địa điểm kinh doanh ở đâu? (số nhà/phòng, ngách/hẻm, ngõ/kiệt, đường/phố, tổ/xóm/ấp/thôn)",
+      "type": "text",
+      "example": "25 Nguyễn Trãi, Phường Bến Thành",
+      "required": true,
+      "version": 1,
+      "data_key": "dia_chi_chi_tiet"
+    },
+    {
+      "question_id": "q_xa_phuong",
+      "group": "Về nơi ở và địa điểm kinh doanh",
+      "text": "Kinh doanh tại xã/phường/đặc khu nào?",
+      "type": "text",
+      "example": "Phường Bến Thành",
+      "required": true,
+      "version": 1,
+      "data_key": "xa_phuong"
+    },
+    {
+      "question_id": "q_tinh_thanh",
+      "group": "Về nơi ở và địa điểm kinh doanh",
+      "text": "Kinh doanh tại tỉnh/thành phố nào?",
+      "type": "text",
+      "example": "TP. Hồ Chí Minh",
+      "required": true,
+      "version": 1,
+      "data_key": "tinh_thanh"
+    },
+    {
+      "question_id": "q_khong_kd_tai_tru_so",
+      "group": "Về nơi ở và địa điểm kinh doanh",
+      "text": "Hộ bạn có kinh doanh TRỰC TIẾP tại nơi ở không? (đánh X nếu KHÔNG kinh doanh tại trụ sở/nơi ở)",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "Không kinh doanh tại trụ sở"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_khong_kd_tai_tru_so"
+    },
+    {
+      "question_id": "q_ten_hkd",
+      "group": "Về tên hộ kinh doanh",
+      "text": "Bạn muốn đặt tên hộ kinh doanh là gì? (bạn ghi thường, app tự in hoa)",
+      "type": "text",
+      "example": "Hộ kinh doanh bánh ngọt Hải Phòng",
+      "required": true,
+      "version": 1,
+      "data_key": "hkd_ten_tieng_viet"
+    },
+    {
+      "question_id": "q_ten_hkd_nuoc_ngoai",
+      "group": "Về tên hộ kinh doanh",
+      "text": "Có tên tiếng nước ngoài không? (bỏ trống nếu không có)",
+      "type": "text",
+      "version": 1,
+      "data_key": "hkd_ten_tieng_nuoc"
+    },
+    {
+      "question_id": "q_ten_hkd_viet_tat",
+      "group": "Về tên hộ kinh doanh",
+      "text": "Cần tên viết tắt không? (bỏ trống nếu không có)",
+      "type": "text",
+      "version": 1,
+      "data_key": "hkd_ten_viet_tat"
+    },
+    {
+      "question_id": "q_dien_thoai_hkd",
+      "group": "Về ngành nghề, vốn và nhân sự",
+      "text": "Số điện thoại của hộ kinh doanh?",
+      "type": "tel",
+      "version": 1,
+      "data_key": "dien_thoai_khac"
+    },
+    {
+      "question_id": "q_fax",
+      "group": "Về ngành nghề, vốn và nhân sự",
+      "text": "Số fax (nếu có)?",
+      "type": "text",
+      "version": 1,
+      "data_key": "fax"
+    },
+    {
+      "question_id": "q_website",
+      "group": "Về ngành nghề, vốn và nhân sự",
+      "text": "Website (nếu có)?",
+      "type": "text",
+      "version": 1,
+      "data_key": "website"
+    },
+    {
+      "question_id": "q_nganh_ten",
+      "group": "Về ngành nghề, vốn và nhân sự",
+      "text": "Hộ bạn kinh doanh ngành nào? Ghi tên ngành",
+      "type": "text",
+      "example": "Bán lẻ hàng điện tử",
+      "required": true,
+      "repeatable": true,
+      "row_group": "nganh",
+      "version": 1,
+      "data_key": "ds_nganh.ten_nganh"
+    },
+    {
+      "question_id": "q_nganh_ma",
+      "group": "Về ngành nghề, vốn và nhân sự",
+      "text": "Mã ngành (app tra VSIC giúp — không cần điền)",
+      "type": "text",
+      "autofill": "vsic",
+      "repeatable": true,
+      "row_group": "nganh",
+      "version": 1,
+      "data_key": "ds_nganh.ma_nganh"
+    },
+    {
+      "question_id": "q_nganh_chinh",
+      "group": "Về ngành nghề, vốn và nhân sự",
+      "text": "Đây có phải ngành nghề chính không? (đánh X vào đúng một dòng)",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "Ngành chính"
+        }
+      ],
+      "repeatable": true,
+      "row_group": "nganh",
+      "version": 1,
+      "data_key": "ds_nganh.la_nganh_chinh"
+    },
+    {
+      "question_id": "q_von",
+      "group": "Về ngành nghề, vốn và nhân sự",
+      "text": "Hộ bạn đăng ký vốn kinh doanh bao nhiêu? (VNĐ)",
+      "type": "money",
+      "example": "50000000",
+      "version": 1,
+      "data_key": "von_kinh_doanh"
+    },
+    {
+      "question_id": "q_ngay_bd",
+      "group": "Về ngành nghề, vốn và nhân sự",
+      "text": "Ngày dự kiến bắt đầu hoạt động? (dd/mm/yyyy)",
+      "type": "date",
+      "example": "01/10/2026",
+      "version": 1,
+      "data_key": [
+        {
+          "key": "ngay_bd",
+          "transform": "date_day"
+        },
+        {
+          "key": "thang_bd",
+          "transform": "date_month"
+        },
+        {
+          "key": "nam_bd",
+          "transform": "date_year"
+        }
+      ]
+    },
+    {
+      "question_id": "q_so_lao_dong",
+      "group": "Về ngành nghề, vốn và nhân sự",
+      "text": "Dự kiến dùng bao nhiêu lao động (kể cả chủ hộ)?",
+      "type": "integer",
+      "example": "2",
+      "version": 1,
+      "data_key": "so_lao_dong"
+    },
+    {
+      "question_id": "q_tv_hgd_ho_ten",
+      "group": "Về các thành viên hộ gia đình (nếu có)",
+      "text": "Thành viên hộ gia đình — họ và tên? (bỏ trống nếu chủ hộ là một cá nhân)",
+      "type": "text",
+      "repeatable": true,
+      "row_group": "tv_hgd",
+      "version": 1,
+      "data_key": "ds_tv_ho_gia_dinh.ho_ten"
+    },
+    {
+      "question_id": "q_tv_hgd_ngay_sinh",
+      "group": "Về các thành viên hộ gia đình (nếu có)",
+      "text": "Thành viên hộ gia đình — ngày, tháng, năm sinh? (dd/mm/yyyy)",
+      "type": "date",
+      "repeatable": true,
+      "row_group": "tv_hgd",
+      "version": 1,
+      "data_key": "ds_tv_ho_gia_dinh.ngay_sinh"
+    },
+    {
+      "question_id": "q_tv_hgd_so_cccd",
+      "group": "Về các thành viên hộ gia đình (nếu có)",
+      "text": "Thành viên hộ gia đình — số định danh cá nhân?",
+      "type": "text",
+      "example": "079085005678",
+      "repeatable": true,
+      "row_group": "tv_hgd",
+      "version": 1,
+      "data_key": "ds_tv_ho_gia_dinh.so_cccd"
+    },
+    {
+      "question_id": "q_tv_hgd_gioi_tinh",
+      "group": "Về các thành viên hộ gia đình (nếu có)",
+      "text": "Thành viên hộ gia đình — giới tính?",
+      "type": "select",
+      "options": [
+        {
+          "value": "Nam",
+          "label": "Nam"
+        },
+        {
+          "value": "Nữ",
+          "label": "Nữ"
+        }
+      ],
+      "repeatable": true,
+      "row_group": "tv_hgd",
+      "version": 1,
+      "data_key": "ds_tv_ho_gia_dinh.gioi_tinh"
+    },
+    {
+      "question_id": "q_tv_hgd_noi_o",
+      "group": "Về các thành viên hộ gia đình (nếu có)",
+      "text": "Thành viên hộ gia đình — nơi ở hiện tại?",
+      "type": "text",
+      "repeatable": true,
+      "row_group": "tv_hgd",
+      "version": 1,
+      "data_key": "ds_tv_ho_gia_dinh.noi_o_hien_tai"
+    },
+    {
+      "question_id": "q_chu_ho_la_ca_nhan",
+      "group": "Về cách nộp thuế và ủy quyền",
+      "text": "Chủ hộ là một cá nhân? (đánh X nếu đúng)",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "Chủ hộ là cá nhân"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_ct_ca_nhan"
+    },
+    {
+      "question_id": "q_chu_ho_la_ho_gia_dinh",
+      "group": "Về cách nộp thuế và ủy quyền",
+      "text": "Chủ hộ là các thành viên hộ gia đình ủy quyền cho một thành viên? (đánh X nếu đúng)",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "Chủ hộ là hộ gia đình"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_ct_ho_gia_dinh"
+    },
+    {
+      "question_id": "q_pp_ke_khai",
+      "group": "Về cách nộp thuế và ủy quyền",
+      "text": "Hộ bạn chọn phương pháp nộp thuế kê khai? (đánh X nếu đúng)",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "Phương pháp kê khai"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_pp_ke_khai"
+    },
+    {
+      "question_id": "q_pp_khoan",
+      "group": "Về cách nộp thuế và ủy quyền",
+      "text": "Hộ bạn chọn phương pháp nộp thuế khoán? (đánh X nếu đúng)",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "Phương pháp khoán"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_pp_khoan"
+    }
+  ]
+}

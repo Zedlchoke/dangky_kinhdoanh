@@ -88,10 +88,16 @@ BAD_DATE = "BAD_DATE"
 BAD_NUMBER = "BAD_NUMBER"
 """money/integer không parse được sau khi bỏ dấu ngăn cách nghìn."""
 
+BAD_ID_TEXT = "BAD_ID_TEXT"
+"""[O4] Ô text/tel/email nhận GIÁ TRỊ SỐ (Excel tự đổi) hoặc chuỗi dạng số
+khoa học — mã định danh (CCCD/MST/mã số DN) phải là chuỗi Text: giữ số 0 đầu,
+đủ từng chữ số, không scientific notation, không truncate. Fail-loud thay vì
+nhận giá trị đã mất dữ liệu."""
+
 __all__ = [
     "MAP_SHEET", "MAP_COLUMNS",
     "BAD_HEADER", "BAD_VERSION", "UNKNOWN_CELL", "MISSING_REQUIRED",
-    "BAD_SELECT", "BAD_DATE", "BAD_NUMBER",
+    "BAD_SELECT", "BAD_DATE", "BAD_NUMBER", "BAD_ID_TEXT",
     "import_questionnaire",
 ]
 
@@ -450,6 +456,34 @@ def _find_unknown_cells(ws, entries: list[_MapEntry],
 # Đọc giá trị từng ô theo type câu hỏi
 # ---------------------------------------------------------------------------
 
+# [O4] Chuỗi dạng số khoa học: "1.23E+20", "0791e12", "1e5"… — không bao giờ
+# là giá trị hợp lệ của ô mã định danh/điện thoại (excel_export ghi ô Text
+# number_format="@"; gặp dạng này nghĩa là dữ liệu đã bị Excel đổi dạng).
+_SCIENTIFIC_RE = re.compile(r"^[+-]?\d[\d\s.,]*[Ee][+-]?\d+$")
+
+
+def _id_text_guard(entry: "_MapEntry", raw: Any, text: str) -> dict | None:
+    """[O4] Ô text/tel/email chứa giá trị bị Excel đổi thành số -> lỗi.
+
+    Trả dict lỗi BAD_ID_TEXT, hoặc None khi ô giữ đúng chuỗi. openpyxl trả ô
+    số là int/float; số >= 16 chữ số Excel đã làm tròn TRƯỚC khi lưu file nên
+    không thể khôi phục — bắt ở cửa thay vì ghi dữ liệu sai vào draft.
+    """
+    coerced = isinstance(raw, bool) or isinstance(raw, (int, float))
+    scientific = not coerced and bool(_SCIENTIFIC_RE.fullmatch(text))
+    if not (coerced or scientific):
+        return None
+    why = ("ô bị Excel đổi thành số" if coerced
+           else "giá trị dạng số khoa học (%s)" % text)
+    return _err(
+        BAD_ID_TEXT,
+        "Ô %s (%s): %s — mã định danh/số điện thoại phải là CHUỖI (định dạng "
+        "Text): giữ nguyên số 0 đầu và đủ từng chữ số, không rút gọn, không "
+        "dấu gạch, không scientific notation [O4]." % (
+            entry.address, entry.question_id, why),
+        cell=entry.address, question_id=entry.question_id)
+
+
 def _match_option(question: dict, text: str) -> str | None:
     """So ô select/mark với options: khớp label trước, rồi value. Trả value."""
     exact: dict[str, str] = {}
@@ -504,6 +538,12 @@ def _normalize_value(question: dict, entry: _MapEntry, raw: Any
             return "%02d/%02d/%04d" % (day, month, year), None
         if qtype in ("money", "integer"):
             return _parse_number(text, qtype), None
+        if qtype in ("text", "tel", "email"):
+            # [O4] Mã định danh là CHUỖI: ô số (Excel tự đổi -> mất số 0 đầu,
+            # >15 chữ số bị làm tròn) hoặc chuỗi scientific -> fail-loud.
+            bad = _id_text_guard(entry, raw, text)
+            if bad is not None:
+                return None, bad
         # text / tel / email (và type lạ): giữ nguyên văn đã trim.
         return text, None
     except ValueError as exc:

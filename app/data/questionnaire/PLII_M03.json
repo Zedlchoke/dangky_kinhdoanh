@@ -1,0 +1,71 @@
+{
+  "doc_id": "PLII_M03",
+  "title": "Tạm ngừng / tiếp tục kinh doanh (hộ kinh doanh)",
+  "questionnaire_version": 1,
+  "cluster": "hkd_tam_ngung_tiep_tuc",
+  "questions": [
+    {
+      "question_id": "q_hkd_ten",
+      "group": "Về hộ kinh doanh",
+      "text": "Tên hộ kinh doanh của bạn là gì?",
+      "type": "text",
+      "example": "Hộ kinh doanh bánh ngọt Hải Phòng",
+      "required": true,
+      "version": 1,
+      "data_key": "hkd_ten_tieng_viet_2"
+    },
+    {
+      "question_id": "q_hkd_ma_so",
+      "group": "Về hộ kinh doanh",
+      "text": "Mã số hộ kinh doanh (mã số thuế) của bạn?",
+      "type": "text",
+      "example": "0312345678-001",
+      "required": true,
+      "version": 1,
+      "data_key": "hkd_ma_so"
+    },
+    {
+      "question_id": "q_co_quan_dkkd",
+      "group": "Về hộ kinh doanh",
+      "text": "Bạn nộp hồ sơ tại cơ quan đăng ký kinh doanh cấp xã/phường nào?",
+      "type": "text",
+      "example": "UBND Phường Bến Thành",
+      "version": 1,
+      "data_key": "co_quan_dkkd"
+    },
+    {
+      "question_id": "q_tam_ngung_tu_ngay",
+      "group": "Về tạm ngừng kinh doanh",
+      "text": "Nếu tạm ngừng: tạm ngừng kể từ ngày nào? (dd/mm/yyyy)",
+      "type": "date",
+      "example": "01/11/2026",
+      "version": 1,
+      "data_key": "tu_ngay"
+    },
+    {
+      "question_id": "q_tam_ngung_den_ngay",
+      "group": "Về tạm ngừng kinh doanh",
+      "text": "Tạm ngừng đến hết ngày nào? (dd/mm/yyyy)",
+      "type": "date",
+      "version": 1,
+      "data_key": "den_ngay"
+    },
+    {
+      "question_id": "q_ly_do_tam_ngung",
+      "group": "Về tạm ngừng kinh doanh",
+      "text": "Lý do tạm ngừng kinh doanh là gì? (ghi ngắn gọn)",
+      "type": "text",
+      "example": "Chủ hộ đi chữa bệnh",
+      "version": 1,
+      "data_key": "ly_do_tam_ngung"
+    },
+    {
+      "question_id": "q_ly_do_tiep_tuc",
+      "group": "Về tiếp tục kinh doanh",
+      "text": "Nếu tiếp tục kinh doanh trước thời hạn đã đăng ký: lý do là gì? (ghi ngắn gọn)",
+      "type": "text",
+      "version": 1,
+      "data_key": "ly_do_tiep_tuc"
+    }
+  ]
+}

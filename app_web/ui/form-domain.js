@@ -1144,6 +1144,27 @@
     return evalActiveWhen(g.activeWhen, filled.length, st);
   }
 
+  /* O3 export guard: SECTION-contract kind mới đang ACTIVE với store? Thuần,
+   * không DOM. activeWhen đọc từ entry hoặc spec; số dòng business-data của
+   * nested-grid do module tương ứng đếm (blank UI row / dòng chỉ có
+   * discriminator / ô outputOnly-stt không tính). Không khai activeWhen ->
+   * luôn active (hành vi cũ). Dùng chung bởi validateSectionEntry và export
+   * guard (GridCtl.exportLoops) để "dữ liệu cũ của section inactive" không
+   * lọt payload export. */
+  function isActiveSection(entry, rows, st) {
+    if (!entry) return true;
+    var spec = entry.spec || {};
+    var aw = entry.activeWhen || spec.activeWhen || null;
+    if (!aw) return true;
+    var count = 0;
+    if (entry.kind === 'nested-grid') {
+      var NG = p2TableModule('NestedGrid');
+      count = NG && typeof NG.businessRowsOf === 'function'
+        ? NG.businessRowsOf(spec, rows || []).length : 0;
+    }
+    return evalActiveWhen(aw, count, st);
+  }
+
   /* Declarative cross-field rules. Supported contract forms are intentionally
    * small: {rule:'sum', tag|tags, equals|value, severity?, code?, when?} and
    * expression strings such as "sum(ty_le) == 100". Unknown rules are ignored
@@ -2406,7 +2427,19 @@
     } else if (entry.kind === 'nested-grid') {
       var NG = p2TableModule('NestedGrid');
       if (NG && typeof NG.validate === 'function') {
-        NG.validate(spec, (st.loops || {})[spec.semantic_key] || [])
+        var ngRows = (st.loops || {})[spec.semantic_key] || [];
+        /* O3 (owner 2026-09-06): activeWhen khai ở entry hoặc spec quyết định
+         * section có ACTIVE không. Dùng lại evalActiveWhen (MỘT nguồn chân lý
+         * của store) với số dòng business-data do module đếm; section inactive
+         * -> validate không sinh MIN_ROWS/MAX_ROWS. Không khai activeWhen ->
+         * luôn active (hành vi cũ). */
+        var ngAw = entry.activeWhen || spec.activeWhen || null;
+        var ngCtx = null;
+        if (ngAw && typeof NG.businessRowsOf === 'function') {
+          ngCtx = { isActive: evalActiveWhen(
+            ngAw, NG.businessRowsOf(spec, ngRows).length, st) };
+        }
+        NG.validate(spec, ngRows, ngCtx)
           .forEach(function (e) {
             errs.push({
               key: e.key, docId: docId, code: e.code,
@@ -2632,6 +2665,7 @@
   root.evalActiveWhen = evalActiveWhen;
   root.activationModeOf = activationModeOf;
   root.isActiveGrid = isActiveGrid;
+  root.isActiveSection = isActiveSection;
   root.makeRowId = makeRowId;
   root.normalizeStoreLoops = normalizeStoreLoops;
   root.collectKeys = collectKeys;

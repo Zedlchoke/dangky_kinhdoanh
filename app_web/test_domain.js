@@ -176,8 +176,15 @@ const m06 = loadMock('blocks_PLI_M06.json');
   check('M02 trống -> có REQUIRED dn.ten_tieng_viet blocking',
     !!req && req.key === 'dn.ten_tieng_viet' && req.severity === 'blocking' &&
     req.docId === 'PLI_M02');
-  check('M06 trống -> KHÔNG MIN_ROWS (bảng chưa điền)',
-    !errs.some(e => e.code === 'MIN_ROWS') &&
+  // [O3 2026-09-06] min_rows của nested-grid được enforce: section
+  // ds_nddpl_uy_quyen_chu_so_huu của M02 không khai activeWhen -> luôn
+  // active, trống 0 dòng business-data là MIN_ROWS blocking (D2.7=A).
+  // M06 là editable-grid đường legacy: bảng trống không MIN_ROWS (giữ
+  // nguyên hành vi cũ - minRows chỉ chặn khi có dòng nhưng chưa đủ).
+  check('M02 trống -> MIN_ROWS blocking ở section nested-grid (O3)',
+    errs.some(e => e.code === 'MIN_ROWS' && e.severity === 'blocking' &&
+      e.key === 'ds_nddpl_uy_quyen_chu_so_huu' && e.docId === 'PLI_M02'));
+  check('M06 trống -> KHÔNG MIN_ROWS (editable-grid giữ hành vi legacy)',
     !D.validateDocument('PLI_M06', m06.blocks, R.newStore(), {})
       .some(e => e.code === 'MIN_ROWS'));
 
@@ -284,11 +291,14 @@ const m06 = loadMock('blocks_PLI_M06.json');
   const blockingCount = errs.filter(e => e.severity === 'blocking').length;
   check('hồ sơ trống có ít nhất 1 lỗi blocking (chặn export)', blockingCount >= 1);
 
-  // hồ sơ hợp lệ: M02 đủ tên + ds_nganh có ngành chính; M06 2 thành viên 70/30
+  // hồ sơ hợp lệ: M02 đủ tên + ds_nganh có ngành chính + section nested-grid
+  // NĐDPL có >= 1 dòng business-data [O3]; M06 2 thành viên 70/30
   const ok = R.newStore();
   ok.values['dn.ten_tieng_viet'] = 'CONG TY TNHH DEMO';
   ok.loops.ds_nganh = [
     { ma_nganh: '6201', ten_nganh: 'Lập trình máy vi tính', la_nganh_chinh: 'X' }];
+  ok.loops.ds_nddpl_uy_quyen_chu_so_huu = [
+    { loai_dong: 'ndd_pl', ten_nguoi_dai_dien: 'NGUYEN VAN A' }];
   ok.loops.ds_thanh_vien = [
     { ho_ten: 'NGUYEN VAN A', von_dong_gop: '700.000.000', ty_le_von: '70' },
     { ho_ten: 'TRAN THI B', von_dong_gop: '300.000.000', ty_le_von: '30' }

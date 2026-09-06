@@ -1,0 +1,37 @@
+{
+  "doc_id": "PLII_M04",
+  "title": "Chấm dứt hoạt động hộ kinh doanh",
+  "questionnaire_version": 1,
+  "note": "Cụm 1 hộ kinh doanh — P6=C rollout 2026-09-06 (lane final-ui-excel). Mapping form_maps['PLII_M04'] (8 fields, phần còn lại là ngày ký/số văn bản do app tự điền).",
+  "questions": [
+    {
+      "question_id": "q_hkd_ten",
+      "group": "Về hộ kinh doanh",
+      "text": "Tên hộ kinh doanh của bạn là gì?",
+      "type": "text",
+      "example": "Hộ kinh doanh bánh ngọt Hải Phòng",
+      "required": true,
+      "version": 1,
+      "data_key": "hkd_ten_tieng_viet_2"
+    },
+    {
+      "question_id": "q_hkd_ma_so",
+      "group": "Về hộ kinh doanh",
+      "text": "Mã số hộ kinh doanh (mã số thuế) của bạn?",
+      "type": "text",
+      "example": "0312345678-001",
+      "required": true,
+      "version": 1,
+      "data_key": "hkd_ma_so"
+    },
+    {
+      "question_id": "q_co_quan_dkkd",
+      "group": "Về hộ kinh doanh",
+      "text": "Bạn nộp hồ sơ tại cơ quan đăng ký kinh doanh cấp xã/phường nào?",
+      "type": "text",
+      "example": "UBND Phường Bến Thành",
+      "version": 1,
+      "data_key": "co_quan_dkkd"
+    }
+  ]
+}

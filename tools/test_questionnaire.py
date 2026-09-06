@@ -206,8 +206,105 @@ def q4():
     assert sorted(ht["ndd.ho_ten"]) == ["CTCP", "DHDN", "TNHH_2TV"]
 
 
+# ---------------------------------------------------------------------------
+# [O7 2026-09-06] P6=C rollout cụm 1 (hộ kinh doanh) + cụm 3 (thuế):
+# 4 questionnaire mới + manifest blocked-chờ-migration (TT121/2026).
+# ---------------------------------------------------------------------------
+
+CLUSTER_DIR = ROOT / "tools" / "questionnaire" / "clusters"
+OUT_DIR = ROOT / "app" / "data" / "questionnaire"
+NEW_CLUSTER_DOCS = {
+    "hkd_dang_ky_moi.json": "PLII_M01",
+    "hkd_thay_doi_noi_dung.json": "PLII_M02",
+    "hkd_tam_ngung_tiep_tuc.json": "PLII_M03",
+    "hkd_cham_dut.json": "PLII_M04",
+}
+BLOCKED_MANIFEST = CLUSTER_DIR / "blocked_tt121_migration.json"
+
+
+def load_blocked_for_test() -> dict:
+    from tools.questionnaire.build_questionnaire import load_blocked
+    return load_blocked(sorted(CLUSTER_DIR.glob("*.json")), FORM_MAPS)
+
+
+@check("[Q5a] O7: 4 cụm hộ kinh doanh validate sạch + artifact khớp nguồn")
+def q5a():
+    for fname, doc_id in NEW_CLUSTER_DOCS.items():
+        src = json.loads((CLUSTER_DIR / fname).read_text(encoding="utf-8"))
+        assert src["doc_id"] == doc_id, fname
+        assert validate(src, FORM_MAPS) == [], fname
+        artifact = OUT_DIR / (doc_id + ".json")
+        assert artifact.exists(), "thiếu artifact %s" % artifact
+        built = build_one(CLUSTER_DIR / fname, FORM_MAPS, write=False)[1]
+        assert built + "\n" == artifact.read_text(encoding="utf-8"), \
+            "%s: artifact lệch nguồn cluster (cần regen)" % fname
+
+
+@check("[Q5b] O7: cụm thuế — chỉ tiêu đăng ký thuế 5.1/5.2 hỏi giá trị MỚI "
+       "trong PLII_M02, KHÔNG hỏi giá trị cũ")
+def q5b():
+    q = json.loads((OUT_DIR / "PLII_M02.json").read_text(encoding="utf-8"))
+    keys = []
+    for x in q["questions"]:
+        dk = x["data_key"]
+        for t in (dk if isinstance(dk, list) else [dk]):
+            keys.append(t["key"] if isinstance(t, dict) else t)
+    tax_moi = [k for k in keys if k.startswith("thue_chi_tieu_cu_moi.") and
+               k.endswith(".thong_tin_dang_ky_moi")]
+    assert len(tax_moi) >= 2, tax_moi
+    assert not any(k.endswith(".thong_tin_dang_ky_cu") for k in keys), \
+        "không được hỏi khách giá trị CŨ (app tự điền từ hồ sơ)"
+
+
+@check("[Q5c] O7: manifest blocked có lý do + mọi doc_id có trong form_maps")
+def q5c():
+    m = json.loads(BLOCKED_MANIFEST.read_text(encoding="utf-8"))
+    assert m.get("blocked_version") == 1
+    docs = []
+    for e in m["blocked"]:
+        assert e.get("doc_id") in FORM_MAPS, e
+        assert e.get("reason"), e
+        assert "TT121" in e["reason"], e
+        docs.append(e["doc_id"])
+    assert sorted(docs) == ["PLI_M01", "PLI_M02", "PLI_M03", "PLI_M04",
+                            "PLI_M12"], docs
+
+
+@check("[Q5d] O7: form blocked-chờ-migration KHÔNG có artifact questionnaire")
+def q5d():
+    m = json.loads(BLOCKED_MANIFEST.read_text(encoding="utf-8"))
+    for e in m["blocked"]:
+        p = OUT_DIR / (e["doc_id"] + ".json")
+        assert not p.exists(), \
+            "%s bị blocked nhưng có artifact (cấm sinh câu hỏi)" % p
+
+
+@check("[Q5e] O7: builder fail-loud DOC_BLOCKED nếu cluster trỏ form blocked")
+def q5e():
+    import tempfile
+    bad = {
+        "doc_id": "PLI_M12", "title": "cluster lan can form blocked",
+        "questionnaire_version": 1,
+        "questions": [{
+            "question_id": "q_x", "group": "g", "text": "t", "type": "text",
+            "version": 1, "data_key": "so_van_ban"}],
+    }
+    blocked = load_blocked_for_test()
+    with tempfile.TemporaryDirectory() as tmp:
+        p = Path(tmp) / "bad_cluster.json"
+        p.write_text(json.dumps(bad, ensure_ascii=False), encoding="utf-8")
+        try:
+            build_one(p, FORM_MAPS, write=True, blocked=blocked)
+        except QuestionnaireError as exc:
+            assert exc.code == "DOC_BLOCKED", exc.code
+        else:
+            raise AssertionError("builder không chặn form blocked")
+        assert not (Path(tmp) / "PLI_M12.json").exists()
+
+
 def main() -> int:
-    for fn in (q1a, q1b, q1c, q2a, q2b, q2c, q2d, q3a, q3b, q4):
+    for fn in (q1a, q1b, q1c, q2a, q2b, q2c, q2d, q3a, q3b, q4,
+               q5a, q5b, q5c, q5d, q5e):
         fn()
     passed = sum(1 for ok, _ in _results if ok)
     failed = len(_results) - passed

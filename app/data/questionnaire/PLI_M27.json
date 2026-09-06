@@ -72,47 +72,62 @@
     {
       "question_id": "q_nguoi_lien_he",
       "group": "Về người liên hệ",
-      "text": "Họ và tên người liên hệ (cơ quan sẽ in hoa giúp bạn)?",
+      "text": "Người liên hệ (người đại diện theo pháp luật) tên gì?",
       "type": "text",
       "example": "Trần Văn B",
       "version": 20260906,
-      "data_key": "ho_ten_in_hoa_2"
+      "data_key": "ds_ndd_pl_thong_bao_tam_ngung.ho_ten",
+      "row_group": "ds_ndd_pl_thong_bao_tam_ngung",
+      "repeatable": true,
+      "note": "[F1-IN sync 2026-09-06] Mẫu 27 2026: thông tin người liên hệ là khối người đại diện theo pháp luật (Họ tên/ĐT/Email) — key cũ ho_ten_in_hoa_2/dien_thoai_khac hết hiệu lực sau migrate."
     },
     {
       "question_id": "q_dien_thoai_lien_he",
       "group": "Về người liên hệ",
-      "text": "Số điện thoại của người liên hệ?",
+      "text": "Số điện thoại liên hệ của người đó?",
       "type": "tel",
       "example": "0901234567",
       "version": 20260906,
-      "data_key": "dien_thoai_khac"
+      "data_key": "ds_ndd_pl_thong_bao_tam_ngung.dien_thoai",
+      "row_group": "ds_ndd_pl_thong_bao_tam_ngung",
+      "repeatable": true,
+      "note": "[F1-IN sync 2026-09-06] Mẫu 27 2026: thông tin người liên hệ là khối người đại diện theo pháp luật (Họ tên/ĐT/Email) — key cũ ho_ten_in_hoa_2/dien_thoai_khac hết hiệu lực sau migrate."
     },
     {
       "question_id": "q_email_lien_he",
       "group": "Về người liên hệ",
-      "text": "Email của người liên hệ (nếu có)?",
+      "text": "Email liên hệ (nếu có)?",
       "type": "email",
       "example": "kinhdoanh@anphat.vn",
       "version": 20260906,
-      "data_key": "dia_chi_thu_dien_tu"
+      "data_key": "ds_ndd_pl_thong_bao_tam_ngung.email",
+      "row_group": "ds_ndd_pl_thong_bao_tam_ngung",
+      "repeatable": true,
+      "note": "[F1-IN sync 2026-09-06] Mẫu 27 2026: thông tin người liên hệ là khối người đại diện theo pháp luật (Họ tên/ĐT/Email) — key cũ ho_ten_in_hoa_2/dien_thoai_khac hết hiệu lực sau migrate."
     },
     {
       "question_id": "q_cn_ten",
       "group": "Nếu tạm ngừng/tiếp tục tại chi nhánh hoặc địa điểm kinh doanh",
-      "text": "Tên chi nhánh/địa điểm kinh doanh bị ảnh hưởng (nếu có)?",
+      "text": "Chi nhánh/địa điểm nào muốn tạm ngừng? Ghi tên từng nơi",
       "type": "text",
       "example": "Chi nhánh Quận 7",
       "version": 20260906,
-      "data_key": "cn.ten_tieng_viet"
+      "data_key": "don_vi_truc_thuoc_tam_ngung_tiep_tuc.ten_don_vi",
+      "row_group": "don_vi_truc_thuoc_tam_ngung_tiep_tuc",
+      "repeatable": true,
+      "note": "[F1-IN sync 2026-09-06] Mẫu 27 2026: đơn vị tạm ngừng/tiếp tục là lưới (loại đơn vị/tên/mã số/…) — key cũ cn.* hết hiệu lực."
     },
     {
       "question_id": "q_cn_ma_so",
       "group": "Nếu tạm ngừng/tiếp tục tại chi nhánh hoặc địa điểm kinh doanh",
-      "text": "Mã số chi nhánh/địa điểm kinh doanh hoặc mã số thuế chi nhánh (nếu có)?",
+      "text": "Mã số của chi nhánh/địa điểm đó?",
       "type": "text",
       "example": "0312345678-002",
       "version": 20260906,
-      "data_key": "cn.ma_so"
+      "data_key": "don_vi_truc_thuoc_tam_ngung_tiep_tuc.ma_so_don_vi",
+      "row_group": "don_vi_truc_thuoc_tam_ngung_tiep_tuc",
+      "repeatable": true,
+      "note": "[F1-IN sync 2026-09-06] Mẫu 27 2026: đơn vị tạm ngừng/tiếp tục là lưới (loại đơn vị/tên/mã số/…) — key cũ cn.* hết hiệu lực."
     }
   ]
 }

@@ -360,26 +360,36 @@ def rt8():
 @check("[RT9] P6=C cụm thuế — PLI_M27: cặp ngày tạm ngừng, tel số 0 đầu, "
        "mã chi nhánh giữ dấu '-'; không lẫn key cụm khác")
 def rt9():
+    # [Pin sync — F1-IN 2026-09-06] M27 2026: người liên hệ = khối NĐD
+    # (grid ds_ndd_pl_thong_bao_tam_ngung), đơn vị = lưới
+    # don_vi_truc_thuoc_tam_ngung_tiep_tuc — key scalar cũ hết hiệu lực.
     res = fill_and_import(
         {"q_dn_ten": "CÔNG TY TNHH AN PHÁT", "q_dn_ma_so": "0312345678",
          "q_co_quan_dkkd": "Sở Kế hoạch và Đầu tư TP. Hồ Chí Minh",
          "q_tam_ngung_tu_ngay": "01/11/2026",
          "q_tam_ngung_den_ngay": "31/01/2027",
-         "q_ly_do_tam_ngung": "Chủ doanh nghiệp đi chữa bệnh",
-         "q_nguoi_lien_he": "Trần Văn B",
-         "q_dien_thoai_lien_he": "0084901234567",
-         "q_email_lien_he": "kinhdoanh@anphat.vn",
-         "q_cn_ten": "Chi nhánh Quận 7", "q_cn_ma_so": "0312345678-002"},
+         "q_ly_do_tam_ngung": "Chủ doanh nghiệp đi chữa bệnh"},
+        table_rows={
+            "q_nguoi_lien_he": ["Trần Văn B"],
+            "q_dien_thoai_lien_he": ["0084901234567"],
+            "q_email_lien_he": ["kinhdoanh@anphat.vn"],
+            "q_cn_ten": ["Chi nhánh Quận 7"],
+            "q_cn_ma_so": ["0312345678-002"],
+        },
         variant_value="", meta={"case_id": "RT9", "today": "06/09/2026"},
         questionnaire=Q_M27)
     assert res["ok"], res["errors"]
     d = res["data"]
     assert d["tu_ngay"] == "01/11/2026" and d["den_ngay"] == "31/01/2027"
     assert d["ly_do_tam_ngung"] == "Chủ doanh nghiệp đi chữa bệnh"
-    assert d["ho_ten_in_hoa_2"] == "Trần Văn B"
-    assert d["dien_thoai_khac"] == "0084901234567"     # số 0 đầu không mất
-    assert isinstance(d["dien_thoai_khac"], str)
-    assert d["cn.ma_so"] == "0312345678-002"           # giữ nguyên dấu -
+    ndd = d["ds_ndd_pl_thong_bao_tam_ngung"][0]
+    assert ndd["ho_ten"] == "Trần Văn B"
+    assert ndd["dien_thoai"] == "0084901234567"        # số 0 đầu không mất
+    assert isinstance(ndd["dien_thoai"], str)
+    assert ndd["email"] == "kinhdoanh@anphat.vn"
+    dv = d["don_vi_truc_thuoc_tam_ngung_tiep_tuc"][0]
+    assert dv["ten_don_vi"] == "Chi nhánh Quận 7"
+    assert dv["ma_so_don_vi"] == "0312345678-002"      # giữ nguyên dấu -
     assert "von_dieu_le_chu" not in d, "lẫn key cụm thay đổi ngành"
 
 

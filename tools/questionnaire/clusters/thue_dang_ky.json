@@ -1,126 +1,164 @@
 {
-  "cluster_id": "thue_dang_ky",
-  "doc_id": "PLI_M27",
-  "title": "Tạm ngừng / tiếp tục kinh doanh doanh nghiệp (cụm thuế)",
-  "questionnaire_version": 1,
-  "content_version": "2026.09.06",
-  "note": "[P6=C rollout 2026-09-06 — O7 owner pre-approved, KHÔNG tư vấn pháp lý] Cụm 3 'thuế': thủ tục có khai thuế là tạm ngừng/tiếp tục kinh doanh (đối chiếu đã làm trên template thật, python-docx 2026-09-06). Mapping thủ tục → form → questionnaire + verdict: (1) tam_ngung_tiep_tuc_kinh_doanh_dn → PLI_M27 → questionnaire này; (2) các THÀNH PHẦN THUẾ trên PLI_M27 → verdict N/A: template M27 2026 (TT121/2026) KHÔNG còn ô khai thuế nào (chỉ còn nhãn 'Mã số doanh nghiệp/Mã số thuế' làm định danh) — nghĩa vụ khai thuế trước khi tạm ngừng/quyết toán thực hiện ở cơ quan thuế, không có ô nhập trên mẫu để ánh xạ; (3) phần 'THÔNG BÁO THAY ĐỔI THÔNG TIN ĐĂNG KÝ THUẾ' thật sự nằm trên PLI_M12 (mục thuế) → hỏi trong clusters/thay_doi_nganh.json theo nguyên tắc 'mỗi doc một questionnaire'; (4) tham chiếu ngoài cụm: giai_the_doanh_nghiep → PLI_M30 và cham_dut_hoat_dong_cn_vpdd_ddkd → PLI_M28 cũng KHÔNG có ô khai thuế trên template → N/A cùng lý do, questionnaire riêng của các thủ tục đó thuộc wave sau; tam_ngung_tiep_tuc_kinh_doanh_hkd (PLII_M03) đã có cụm hộ kinh doanh (hkd_tam_ngung_tiep_tuc.json). Số văn bản/ngày ký do app tự điền lúc nộp — không hỏi khách. Phiên bản câu hỏi: mỗi question.version = 20260906 (int ×d-m-y của 2026.09.06 — schema đòi int ≥1).",
-  "procedures": [
-    {"id": "tam_ngung_tiep_tuc_kinh_doanh_dn", "form": "PLI_M27", "questionnaire": "thue_dang_ky.json", "verdict": "QUESTIONNAIRE"},
-    {"id": "tam_ngung_tiep_tuc_kinh_doanh_dn:phan_thue", "form": "PLI_M27", "questionnaire": null, "verdict": "N/A", "reason": "Template M27 2026 không còn ô khai thuế (chỉ nhãn MST định danh) — nghĩa vụ khai thuế thực hiện ở cơ quan thuế, không có ô nhập để ánh xạ"},
-    {"id": "giai_the_doanh_nghiep:phan_thue", "form": "PLI_M30", "questionnaire": null, "verdict": "N/A", "reason": "Template M30 2026 không có ô khai thuế (chỉ nhãn MST và Số GCNĐKKD khi không có MST) — cùng lý do M27"},
-    {"id": "thay_doi_thong_tin_dang_ky_thue", "form": "PLI_M12", "questionnaire": "thay_doi_nganh.json", "verdict": "QUESTIONNAIRE", "reason": "Mục THÔNG BÁO THAY ĐỔI THÔNG TIN ĐĂNG KÝ THUẾ nằm trên M12 — mỗi doc một questionnaire, hỏi trong cụm thay đổi ngành"}
-  ],
-  "questions": [
-    {
-      "question_id": "q_dn_ten",
-      "group": "Về doanh nghiệp",
-      "text": "Tên doanh nghiệp của bạn là gì? (chữ in hoa)",
-      "type": "text",
-      "example": "CÔNG TY TNHH THƯƠNG MẠI DỊCH VỤ AN PHÁT",
-      "required": true,
-      "version": 20260906,
-      "data_key": "dn.ten_tieng_viet"
-    },
-    {
-      "question_id": "q_dn_ma_so",
-      "group": "Về doanh nghiệp",
-      "text": "Mã số doanh nghiệp (mã số thuế) của công ty bạn?",
-      "type": "text",
-      "example": "0312345678",
-      "required": true,
-      "version": 20260906,
-      "data_key": "dn.ma_so_dn"
-    },
-    {
-      "question_id": "q_co_quan_dkkd",
-      "group": "Về doanh nghiệp",
-      "text": "Bạn nộp hồ sơ tại cơ quan đăng ký kinh doanh cấp tỉnh nào?",
-      "type": "text",
-      "example": "Sở Kế hoạch và Đầu tư TP. Hồ Chí Minh",
-      "version": 20260906,
-      "data_key": "co_quan_dkkd"
-    },
-    {
-      "question_id": "q_tam_ngung_tu_ngay",
-      "group": "Về tạm ngừng kinh doanh",
-      "text": "Nếu tạm ngừng: công ty tạm ngừng kinh doanh kể từ ngày nào? (dd/mm/yyyy)",
-      "type": "date",
-      "example": "01/11/2026",
-      "version": 20260906,
-      "data_key": "tu_ngay"
-    },
-    {
-      "question_id": "q_tam_ngung_den_ngay",
-      "group": "Về tạm ngừng kinh doanh",
-      "text": "Tạm ngừng đến hết ngày nào? (dd/mm/yyyy — nếu chưa biết ngày tiếp tục thì ghi ngày dự kiến)",
-      "type": "date",
-      "example": "31/01/2027",
-      "version": 20260906,
-      "data_key": "den_ngay"
-    },
-    {
-      "question_id": "q_ly_do_tam_ngung",
-      "group": "Về tạm ngừng kinh doanh",
-      "text": "Lý do tạm ngừng kinh doanh là gì? (ghi ngắn gọn)",
-      "type": "text",
-      "example": "Chủ doanh nghiệp đi chữa bệnh",
-      "version": 20260906,
-      "data_key": "ly_do_tam_ngung"
-    },
-    {
-      "question_id": "q_ly_do_tiep_tuc",
-      "group": "Về tiếp tục kinh doanh trước thời hạn",
-      "text": "Nếu TIẾP TỤC kinh doanh trước thời hạn đã thông báo: lý do là gì? (ghi ngắn gọn, bỏ trống nếu chỉ tạm ngừng)",
-      "type": "text",
-      "example": "Kinh doanh ổn định trở lại sớm hơn dự kiến",
-      "version": 20260906,
-      "data_key": "ly_do_tiep_tuc"
-    },
-    {
-      "question_id": "q_nguoi_lien_he",
-      "group": "Về người liên hệ",
-      "text": "Họ và tên người liên hệ (cơ quan sẽ in hoa giúp bạn)?",
-      "type": "text",
-      "example": "Trần Văn B",
-      "version": 20260906,
-      "data_key": "ho_ten_in_hoa_2"
-    },
-    {
-      "question_id": "q_dien_thoai_lien_he",
-      "group": "Về người liên hệ",
-      "text": "Số điện thoại của người liên hệ?",
-      "type": "tel",
-      "example": "0901234567",
-      "version": 20260906,
-      "data_key": "dien_thoai_khac"
-    },
-    {
-      "question_id": "q_email_lien_he",
-      "group": "Về người liên hệ",
-      "text": "Email của người liên hệ (nếu có)?",
-      "type": "email",
-      "example": "kinhdoanh@anphat.vn",
-      "version": 20260906,
-      "data_key": "dia_chi_thu_dien_tu"
-    },
-    {
-      "question_id": "q_cn_ten",
-      "group": "Nếu tạm ngừng/tiếp tục tại chi nhánh hoặc địa điểm kinh doanh",
-      "text": "Tên chi nhánh/địa điểm kinh doanh bị ảnh hưởng (nếu có)?",
-      "type": "text",
-      "example": "Chi nhánh Quận 7",
-      "version": 20260906,
-      "data_key": "cn.ten_tieng_viet"
-    },
-    {
-      "question_id": "q_cn_ma_so",
-      "group": "Nếu tạm ngừng/tiếp tục tại chi nhánh hoặc địa điểm kinh doanh",
-      "text": "Mã số chi nhánh/địa điểm kinh doanh hoặc mã số thuế chi nhánh (nếu có)?",
-      "type": "text",
-      "example": "0312345678-002",
-      "version": 20260906,
-      "data_key": "cn.ma_so"
-    }
-  ]
+ "cluster_id": "thue_dang_ky",
+ "doc_id": "PLI_M27",
+ "title": "Tạm ngừng / tiếp tục kinh doanh doanh nghiệp (cụm thuế)",
+ "questionnaire_version": 1,
+ "content_version": "2026.09.06",
+ "note": "[P6=C rollout 2026-09-06 — O7 owner pre-approved, KHÔNG tư vấn pháp lý] Cụm 3 'thuế': thủ tục có khai thuế là tạm ngừng/tiếp tục kinh doanh (đối chiếu đã làm trên template thật, python-docx 2026-09-06). Mapping thủ tục → form → questionnaire + verdict: (1) tam_ngung_tiep_tuc_kinh_doanh_dn → PLI_M27 → questionnaire này; (2) các THÀNH PHẦN THUẾ trên PLI_M27 → verdict N/A: template M27 2026 (TT121/2026) KHÔNG còn ô khai thuế nào (chỉ còn nhãn 'Mã số doanh nghiệp/Mã số thuế' làm định danh) — nghĩa vụ khai thuế trước khi tạm ngừng/quyết toán thực hiện ở cơ quan thuế, không có ô nhập trên mẫu để ánh xạ; (3) phần 'THÔNG BÁO THAY ĐỔI THÔNG TIN ĐĂNG KÝ THUẾ' thật sự nằm trên PLI_M12 (mục thuế) → hỏi trong clusters/thay_doi_nganh.json theo nguyên tắc 'mỗi doc một questionnaire'; (4) tham chiếu ngoài cụm: giai_the_doanh_nghiep → PLI_M30 và cham_dut_hoat_dong_cn_vpdd_ddkd → PLI_M28 cũng KHÔNG có ô khai thuế trên template → N/A cùng lý do, questionnaire riêng của các thủ tục đó thuộc wave sau; tam_ngung_tiep_tuc_kinh_doanh_hkd (PLII_M03) đã có cụm hộ kinh doanh (hkd_tam_ngung_tiep_tuc.json). Số văn bản/ngày ký do app tự điền lúc nộp — không hỏi khách. Phiên bản câu hỏi: mỗi question.version = 20260906 (int ×d-m-y của 2026.09.06 — schema đòi int ≥1).",
+ "procedures": [
+  {
+   "id": "tam_ngung_tiep_tuc_kinh_doanh_dn",
+   "form": "PLI_M27",
+   "questionnaire": "thue_dang_ky.json",
+   "verdict": "QUESTIONNAIRE"
+  },
+  {
+   "id": "tam_ngung_tiep_tuc_kinh_doanh_dn:phan_thue",
+   "form": "PLI_M27",
+   "questionnaire": null,
+   "verdict": "N/A",
+   "reason": "Template M27 2026 không còn ô khai thuế (chỉ nhãn MST định danh) — nghĩa vụ khai thuế thực hiện ở cơ quan thuế, không có ô nhập để ánh xạ"
+  },
+  {
+   "id": "giai_the_doanh_nghiep:phan_thue",
+   "form": "PLI_M30",
+   "questionnaire": null,
+   "verdict": "N/A",
+   "reason": "Template M30 2026 không có ô khai thuế (chỉ nhãn MST và Số GCNĐKKD khi không có MST) — cùng lý do M27"
+  },
+  {
+   "id": "thay_doi_thong_tin_dang_ky_thue",
+   "form": "PLI_M12",
+   "questionnaire": "thay_doi_nganh.json",
+   "verdict": "QUESTIONNAIRE",
+   "reason": "Mục THÔNG BÁO THAY ĐỔI THÔNG TIN ĐĂNG KÝ THUẾ nằm trên M12 — mỗi doc một questionnaire, hỏi trong cụm thay đổi ngành"
+  }
+ ],
+ "questions": [
+  {
+   "question_id": "q_dn_ten",
+   "group": "Về doanh nghiệp",
+   "text": "Tên doanh nghiệp của bạn là gì? (chữ in hoa)",
+   "type": "text",
+   "example": "CÔNG TY TNHH THƯƠNG MẠI DỊCH VỤ AN PHÁT",
+   "required": true,
+   "version": 20260906,
+   "data_key": "dn.ten_tieng_viet"
+  },
+  {
+   "question_id": "q_dn_ma_so",
+   "group": "Về doanh nghiệp",
+   "text": "Mã số doanh nghiệp (mã số thuế) của công ty bạn?",
+   "type": "text",
+   "example": "0312345678",
+   "required": true,
+   "version": 20260906,
+   "data_key": "dn.ma_so_dn"
+  },
+  {
+   "question_id": "q_co_quan_dkkd",
+   "group": "Về doanh nghiệp",
+   "text": "Bạn nộp hồ sơ tại cơ quan đăng ký kinh doanh cấp tỉnh nào?",
+   "type": "text",
+   "example": "Sở Kế hoạch và Đầu tư TP. Hồ Chí Minh",
+   "version": 20260906,
+   "data_key": "co_quan_dkkd"
+  },
+  {
+   "question_id": "q_tam_ngung_tu_ngay",
+   "group": "Về tạm ngừng kinh doanh",
+   "text": "Nếu tạm ngừng: công ty tạm ngừng kinh doanh kể từ ngày nào? (dd/mm/yyyy)",
+   "type": "date",
+   "example": "01/11/2026",
+   "version": 20260906,
+   "data_key": "tu_ngay"
+  },
+  {
+   "question_id": "q_tam_ngung_den_ngay",
+   "group": "Về tạm ngừng kinh doanh",
+   "text": "Tạm ngừng đến hết ngày nào? (dd/mm/yyyy — nếu chưa biết ngày tiếp tục thì ghi ngày dự kiến)",
+   "type": "date",
+   "example": "31/01/2027",
+   "version": 20260906,
+   "data_key": "den_ngay"
+  },
+  {
+   "question_id": "q_ly_do_tam_ngung",
+   "group": "Về tạm ngừng kinh doanh",
+   "text": "Lý do tạm ngừng kinh doanh là gì? (ghi ngắn gọn)",
+   "type": "text",
+   "example": "Chủ doanh nghiệp đi chữa bệnh",
+   "version": 20260906,
+   "data_key": "ly_do_tam_ngung"
+  },
+  {
+   "question_id": "q_ly_do_tiep_tuc",
+   "group": "Về tiếp tục kinh doanh trước thời hạn",
+   "text": "Nếu TIẾP TỤC kinh doanh trước thời hạn đã thông báo: lý do là gì? (ghi ngắn gọn, bỏ trống nếu chỉ tạm ngừng)",
+   "type": "text",
+   "example": "Kinh doanh ổn định trở lại sớm hơn dự kiến",
+   "version": 20260906,
+   "data_key": "ly_do_tiep_tuc"
+  },
+  {
+   "question_id": "q_nguoi_lien_he",
+   "group": "Về người liên hệ",
+   "text": "Người liên hệ (người đại diện theo pháp luật) tên gì?",
+   "type": "text",
+   "example": "Trần Văn B",
+   "version": 20260906,
+   "data_key": "ds_ndd_pl_thong_bao_tam_ngung.ho_ten",
+   "row_group": "ds_ndd_pl_thong_bao_tam_ngung",
+   "repeatable": true,
+   "note": "[F1-IN sync 2026-09-06] Mẫu 27 2026: thông tin người liên hệ là khối người đại diện theo pháp luật (Họ tên/ĐT/Email) — key cũ ho_ten_in_hoa_2/dien_thoai_khac hết hiệu lực sau migrate."
+  },
+  {
+   "question_id": "q_dien_thoai_lien_he",
+   "group": "Về người liên hệ",
+   "text": "Số điện thoại liên hệ của người đó?",
+   "type": "tel",
+   "example": "0901234567",
+   "version": 20260906,
+   "data_key": "ds_ndd_pl_thong_bao_tam_ngung.dien_thoai",
+   "row_group": "ds_ndd_pl_thong_bao_tam_ngung",
+   "repeatable": true,
+   "note": "[F1-IN sync 2026-09-06] Mẫu 27 2026: thông tin người liên hệ là khối người đại diện theo pháp luật (Họ tên/ĐT/Email) — key cũ ho_ten_in_hoa_2/dien_thoai_khac hết hiệu lực sau migrate."
+  },
+  {
+   "question_id": "q_email_lien_he",
+   "group": "Về người liên hệ",
+   "text": "Email liên hệ (nếu có)?",
+   "type": "email",
+   "example": "kinhdoanh@anphat.vn",
+   "version": 20260906,
+   "data_key": "ds_ndd_pl_thong_bao_tam_ngung.email",
+   "row_group": "ds_ndd_pl_thong_bao_tam_ngung",
+   "repeatable": true,
+   "note": "[F1-IN sync 2026-09-06] Mẫu 27 2026: thông tin người liên hệ là khối người đại diện theo pháp luật (Họ tên/ĐT/Email) — key cũ ho_ten_in_hoa_2/dien_thoai_khac hết hiệu lực sau migrate."
+  },
+  {
+   "question_id": "q_cn_ten",
+   "group": "Nếu tạm ngừng/tiếp tục tại chi nhánh hoặc địa điểm kinh doanh",
+   "text": "Chi nhánh/địa điểm nào muốn tạm ngừng? Ghi tên từng nơi",
+   "type": "text",
+   "example": "Chi nhánh Quận 7",
+   "version": 20260906,
+   "data_key": "don_vi_truc_thuoc_tam_ngung_tiep_tuc.ten_don_vi",
+   "row_group": "don_vi_truc_thuoc_tam_ngung_tiep_tuc",
+   "repeatable": true,
+   "note": "[F1-IN sync 2026-09-06] Mẫu 27 2026: đơn vị tạm ngừng/tiếp tục là lưới (loại đơn vị/tên/mã số/…) — key cũ cn.* hết hiệu lực."
+  },
+  {
+   "question_id": "q_cn_ma_so",
+   "group": "Nếu tạm ngừng/tiếp tục tại chi nhánh hoặc địa điểm kinh doanh",
+   "text": "Mã số của chi nhánh/địa điểm đó?",
+   "type": "text",
+   "example": "0312345678-002",
+   "version": 20260906,
+   "data_key": "don_vi_truc_thuoc_tam_ngung_tiep_tuc.ma_so_don_vi",
+   "row_group": "don_vi_truc_thuoc_tam_ngung_tiep_tuc",
+   "repeatable": true,
+   "note": "[F1-IN sync 2026-09-06] Mẫu 27 2026: đơn vị tạm ngừng/tiếp tục là lưới (loại đơn vị/tên/mã số/…) — key cũ cn.* hết hiệu lực."
+  }
+ ]
 }

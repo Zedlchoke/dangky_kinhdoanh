@@ -286,7 +286,11 @@ def t_anchor_unique():
         # MỘT w:tbl 2x2 (blocks[0]='[tbl]') nên trượt ròng là -3 (135-3=132);
         # evidence: fold[132] == 'thong tin ve nguoi dai dien theo uy quyen
         # sau khi thay doi:' (đúng heading), anchor khớp template đúng 1.
-        "PLI_M12": 132,
+        # [Pin sync — F1-IN 2026-09-06] 132 -> 89: 3 matrix O2 (tai_san ×2,
+        # co_cau) materialize thành w:tbl thay đoạn paragraph phẳng -> tổng
+        # block M12 giảm mạnh; evidence: fold[89] == heading NĐD ủy quyền,
+        # anchor khớp blocks ĐÚNG 1 (uniqueness giữ nguyên).
+        "PLI_M12": 89,
         "PLI_M15": 43,        # blk49 glue — hdr2col (084444d): bảng header
                               # band thay 4 p header -> index dịch 48 -> 43
     }

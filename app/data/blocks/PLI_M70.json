@@ -330,7 +330,15 @@
      }
     },
     {
-     "text": " của (Tên doanh nghiệp) ……………… Mã số doanh nghiệp ("
+     "text": " của "
+    },
+    {
+     "mirror": {
+      "key": "dn.ten_tieng_viet"
+     }
+    },
+    {
+     "text": " Mã số doanh nghiệp ("
     },
     {
      "text": "nếu có",
@@ -342,7 +350,7 @@
     {
      "input": {
       "key": "dn.ma_so_dn",
-      "w": 38
+      "w": 23
      }
     }
    ],

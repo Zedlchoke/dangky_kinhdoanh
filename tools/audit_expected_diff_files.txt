@@ -576,3 +576,46 @@ tools/questionnaire/clusters/thue_dang_ky.json
 # band_input + converter form-aware + gate E6/E8/header_layout pin + UI test
 # + census F0L regen (23/23 bind, 0 blocked_owner) ---
 app_web/test_nv1_nv2_band_input.js
+# --- [F1-IN 2026-09-06] 10 section user-input O1: specs + runtime + regen
+# (M12 ×3 matrix O2 computed-strict, M27 ×2 grid 2026, M78 requiredIfPositive,
+# M79/80 min3, PLII_M02-c5, M02 radio exclusive) + pin sync suites ---
+tools/form_specs/change/PLI_M12.json
+tools/form_specs/change/PLI_M27.json
+tools/form_specs/publication/PLI_M78.json
+tools/form_specs/publication/PLI_M79.json
+tools/form_specs/publication/PLI_M80.json
+tools/form_specs/household/PLII_M02.json
+tools/test_f1_input_sections.py
+app_web/test_f1_input_ui.js
+app/templates/PLI_M12.docx
+app/templates/PLI_M27.docx
+app/templates/PLI_M78.docx
+app/templates/PLI_M79.docx
+app/templates/PLI_M80.docx
+app/templates/PLII_M02.docx
+app/data/blocks/PLI_M12.json
+app/data/blocks/PLI_M27.json
+app/data/blocks/PLI_M78.json
+app/data/blocks/PLI_M79.json
+app/data/blocks/PLI_M80.json
+app/data/blocks/PLII_M02.json
+app/data/form_maps.json
+app/data/form_maps.js
+# --- [NV3 2026-09-06] N-v3 output mirrors M48/M49/M70: registry output_mirrors
+# + generator _bind_output_mirrors + converter pass tổng quát + tests ---
+tools/test_nv3_output_mirrors.py
+app_web/test_nv3_inline_mirror.js
+app/templates/PLI_M48.docx
+app/templates/PLI_M49.docx
+app/templates/PLI_M70.docx
+app/data/blocks/PLI_M48.json
+app/data/blocks/PLI_M49.json
+app/data/blocks/PLI_M70.json
+# --- [Lead sync 2026-09-06] questionnaire M27 keys theo M27 2026 (grid NĐD +
+# grid đơn vị) + RT9 grid contract + r3b1 M12 anchor 132->89 + policies
+# m12_matrix_census materialized ---
+tools/questionnaire/clusters/thue_dang_ky.json
+app/data/questionnaire/PLI_M27.json
+tools/test_excel_roundtrip.py
+tools/phase5r_table_policies.json
+tools/test_phase5r_tables.py

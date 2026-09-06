@@ -463,6 +463,7 @@ tools/census/6v_micro_census.py
 tools/census/6v_micro_census.json
 # --- [6V-V4/micro 2026-09-05] Lead bo sung: test_dom +6 assertion V4 placeholder hint (lane bo sot, runner H7.4 bat) ---
 app_web/test_dom.js
+app_web/test_full_sweep_inventory.js
 app_web/test_min_rows_o3.js
 app_web/test_nv3_output_name.js
 # --- 6V-V4b (lane 6v-v4fix, 2026-09-05): 3 template đổi bởi pass separator

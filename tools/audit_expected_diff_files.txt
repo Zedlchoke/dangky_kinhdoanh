@@ -510,3 +510,48 @@ app/data/form_maps.json
 app/data/table_specs/manifest.json
 tools/build_form_maps.py
 tools/release_runner.py
+# --- [F0L-integration 2026-09-06] hội nhập wave F0L: nguồn current-law mới
+# của các lane (M12 tách từ file full, M27/M30 thông báo TT 121, cụm chuyển
+# đổi hộ kinh doanh DN_PL1_Mau_01/02/05/07/09/10) — docx nguồn, không phải
+# generated; đã commit ở các merge lane (5002dd9..e268038) nhưng thiếu entry
+# manifest -> H7.4 đỏ ---
+02_thay_doi_thong_tin_doanh_nghiep/PL1_Mau_12_tach_tu_file_full.docx
+04_tam_ngung_cham_dut_giai_the/PL1_Mau_27_thong_bao_ve_viec_tam_ngung_kinh_doanh_tiep_tuc_kinh_doanh_truoc_thoi_han_da_thong_bao_cua_doanh.docx
+04_tam_ngung_cham_dut_giai_the/PL1_Mau_30_thong_bao_ve_viec_giai_the_doanh_nghiep.docx
+06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn/DN_PL1_Mau_01_giay_de_nghi_dang_ky_doanh_nghiep_doanh_nghiep_tu_nhan.docx
+06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn/DN_PL1_Mau_02_giay_de_nghi_dang_ky_doanh_nghiep_cong_ty_trach_nhiem_huu_han_mot_thanh_vien.docx
+06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn/DN_PL1_Mau_05_giay_de_nghi_dang_ky_doanh_nghiep_cong_ty_hop_danh.docx
+06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn/DN_PL1_Mau_07_danh_sach_co_dong_sang_lap_cong_ty_co_phan.docx
+06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn/DN_PL1_Mau_09_danh_sach_thanh_vien_cong_ty_hop_danh.docx
+06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn/DN_PL1_Mau_10_danh_sach_chu_so_huu_huong_loi_cua_doanh_nghiep.docx
+# --- [F0L-integration 2026-09-06] inventory pháp lý L-2026 của các lane
+# (docs/legal_sources_2026/inventory: ND296 impact + 11 mẫu migrate) ---
+docs/legal_sources_2026/inventory/ND296_impact.json
+docs/legal_sources_2026/inventory/PLI_M01.json
+docs/legal_sources_2026/inventory/PLI_M02.json
+docs/legal_sources_2026/inventory/PLI_M03.json
+docs/legal_sources_2026/inventory/PLI_M04.json
+docs/legal_sources_2026/inventory/PLI_M05.json
+docs/legal_sources_2026/inventory/PLI_M07.json
+docs/legal_sources_2026/inventory/PLI_M10.json
+docs/legal_sources_2026/inventory/PLI_M11.json
+docs/legal_sources_2026/inventory/PLI_M12.json
+docs/legal_sources_2026/inventory/PLI_M27.json
+docs/legal_sources_2026/inventory/PLI_M30.json
+# --- [F0L-integration 2026-09-06] suite/machinery current-law của các lane
+# (corpus AI review + inventory test + migration suite + M09 decontam) ---
+tools/corpus_ai_review.py
+tools/test_corpus_ai_review.py
+tools/test_corpus_inventory.py
+tools/test_current_law_migration.py
+tools/test_current_law_migration_m0105.py
+tools/test_m09_decontaminate.py
+# --- [F0L-integration 2026-09-06] cụm tích hợp F0L (commit integ): PLI_M12
+# vào HEADER_BAND/binding (current-law p50) -> regen có chủ đích form_maps +
+# blocks M12 + template M12 (band 2x2 mới, 77 bảng corpus) + tagger lại
+# marker M72; pin sync M10 18 cột/16200 + M12 matrix index +1 + census 23
+# mẫu; fix harness test_loop_prod expandHeaderGrid (colspan 9x9 + expiry
+# rowspan) và collector (b) mirror-run của docx_to_blocks ---
+docs/audits/header_name_census_f0l_2026-09-06.json
+docs/audits/header_name_census_f0l_2026-09-06.md
+tools/census/header_name_census_f0l.py

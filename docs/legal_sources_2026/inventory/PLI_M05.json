@@ -1,0 +1,208 @@
+{
+ "form_id": "PLI_M05",
+ "source_2025": "06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn/DN_PL1_Mau_05_giay_de_nghi_dang_ky_doanh_nghiep_cong_ty_hop_danh.docx",
+ "source_2026": {
+  "van_ban": "Thông tư 121/2026/TT-BTC",
+  "sha256": "87f6989d209310b8c6fbec72a182c476bb83a462ce96d74c5218c26605342faf",
+  "pages": "p42-p48 (7 trang)"
+ },
+ "pdf_page": {
+  "trang1": "p42",
+  "trang2": "p43",
+  "trang3": "p44",
+  "trang4": "p45",
+  "trang5": "p46",
+  "trang6": "p47",
+  "trang7_phuluc": "p48"
+ },
+ "page_inventory": [
+  {
+   "page": "p42",
+   "heading": "Đầu mẫu + 'Chúng tôi1 là các thành viên hợp danh' + 1. Tình trạng thành lập (5 ô) + DN bị hợp nhất + khối HKD (đầu)"
+  },
+  {
+   "page": "p43",
+   "heading": "Mã số HKD/Mã số ĐKHKD/MST (MỚI) + hộp điều kiện + khối BTXH + dự án đặc biệt + DN xã hội"
+  },
+  {
+   "page": "p44",
+   "heading": "2. Tên công ty / 3. Địa chỉ + khu / GCN QSD đất / 4. Ngành nghề / 5. Vốn điều lệ"
+  },
+  {
+   "page": "p45",
+   "heading": "6. Nguồn vốn điều lệ / 7. Thành viên công ty (MỚI trong nguồn: Mẫu số 9, Gửi kèm) + GCNĐKĐT (MỚI wording) / 8. Thông tin đăng ký thuế 8.1-8.3"
+  },
+  {
+   "page": "p46",
+   "heading": "8.3 (tiếp) - 8.9 (hạch toán, năm tài chính, lao động, BOT, GTGT) / 9. Bảo hiểm xã hội + chú thích 4-7"
+  },
+  {
+   "page": "p47",
+   "heading": "Lưu ý BHXH / 10. CSHHL (MỚI khai theo Mẫu số 10) / công bố / cam kết NĐ 296/2026 (chú thích 8) / 'Các thành viên hợp danh cam kết' 3 gạch / CÁC THÀNH VIÊN HỢP DANH (chú thích 9)"
+  },
+  {
+   "page": "p48",
+   "heading": "PHỤ LỤC MỚI: CAM KẾT NĐTNN biến thể HỢP DANH (2 khối cá nhân 1./2., '3. …2', chú thích 1,3/2/4 — KHÔNG có khối tổ chức)"
+  }
+ ],
+ "old_headings": [
+  "(nguồn cũ CHỨA đến mục 6 Nguồn vốn điều lệ rồi DỪNG — thiếu toàn bộ phần đuôi của mẫu)"
+ ],
+ "new_headings": [
+  "7. Thành viên công ty (kê khai theo Mẫu số 9 Phụ lục I ban hành kèm Thông tư này): Gửi kèm.",
+  "8. Thông tin đăng ký thuế (8.1-8.9)",
+  "9. Thông tin về việc đóng bảo hiểm xã hội7:",
+  "10. Thông tin về chủ sở hữu hưởng lợi của doanh nghiệp:",
+  "CÁC THÀNH VIÊN HỢP DANH (Ký và ghi họ tên từng thành viên)9",
+  "Phụ lục CAM KẾT NĐTNN"
+ ],
+ "old_fields": [
+  "hkd_cd.so_gcn",
+  "hkd_cd.ngay_cap",
+  "hkd_cd.noi_cap",
+  "hkd_cd.ma_so_thue",
+  "(không có field nào của mục 7-10 vì nguồn cũ thiếu)"
+ ],
+ "new_fields": [
+  "hkd_ma_so",
+  "gd.* (7)",
+  "kt.* (7)",
+  "dien_thoai_lien_he",
+  "ngay_bd/thang_bd/nam_bd",
+  "ap_dung_tu",
+  "so_lao_dong",
+  "chk_ht_doc_lap/hop_nhat/phu_thuoc",
+  "chk_co/chk_khong (BOT)",
+  "chk_gtgt_* (4)",
+  "chk_bc_* (3)",
+  "co_quan_cap",
+  "ma_so_du_an",
+  "nam_ky_vb/thang_ky_vb (đầu phụ lục)",
+  "ho_ten_in_hoa",
+  "dn.ma_so_dn"
+ ],
+ "old_tables": [
+  "ds_nganh",
+  "nguon_von_dieule"
+ ],
+ "new_tables": [
+  "giống — TT121 p45 bảng Nguồn vốn điều lệ GIỐNG 2025; mục 8 thuế là bảng in (p45-p46) nhưng nguồn dựng dạng paragraph flatten (đồng bộ phong cách nguồn, mọi dòng '……' vẫn sinh slot input)"
+ ],
+ "added": [
+  {
+   "new": "dòng 'Mã số hộ kinh doanh/Mã số đăng ký hộ kinh doanh/Mã số thuế: …' + dòng in nghiêng + hộp điều kiện (thay 3 dòng Số GCN/Ngày cấp/MST)",
+   "evidence": "TT121 p42-p43"
+  },
+  {
+   "new": "mục 7: '7. Thành viên công ty (kê khai theo Mẫu số 9 Phụ lục I ban hành kèm Thông tư này): Gửi kèm.' + GCNĐKĐT '(chỉ kê khai nếu thành viên là nhà đầu tư nước ngoài được cấp Giấy chứng nhận đăng ký đầu tư theo quy định của pháp luật – nếu có):' + Mã số dự án + Ngày cấp/Cơ quan cấp",
+   "evidence": "TT121 p45"
+  },
+  {
+   "new": "mục 8: 8.1-8.9 toàn bộ (GĐ/TGĐ, KTT, địa chỉ nhận TB thuế, ngày BĐHĐ chú thích 4, hạch toán 3 ô, năm tài chính chú thích 5, lao động, BOT Có/Không, GTGT 4 ô chú thích 6)",
+   "evidence": "TT121 p45-p46"
+  },
+  {
+   "new": "mục 9: '9. Thông tin về việc đóng bảo hiểm xã hội7:' + 3 ô phương thức + Lưu ý (chú thích 7)",
+   "evidence": "TT121 p46-p47"
+  },
+  {
+   "new": "mục 10: CSHHL khai theo Mẫu số 10 + câu công bố + 'Xin gửi kèm cam kết…NĐ 296/2026…này8.' (chú thích 8)",
+   "evidence": "TT121 p47"
+  },
+  {
+   "new": "'Các thành viên hợp danh cam kết:' + 3 gạch đầu dòng (gạch 1 có '(trừ trường hợp được sự nhất trí của các thành viên hợp danh còn lại)') + 'CÁC THÀNH VIÊN HỢP DANH' + '(Ký và ghi họ tên từng thành viên)9' + chú thích 9",
+   "evidence": "TT121 p47"
+  },
+  {
+   "new": "PHỤ LỤC CAM KẾT NĐTNN biến thể hợp danh (21 paragraph, 2 khối cá nhân đánh số 1./2., KHÔNG có khối tổ chức — chú thích 4 'Tất cả nhà đầu tư nước ngoài được kê khai tại cam kết ký trực tiếp vào phần này.')",
+   "evidence": "TT121 p48"
+  }
+ ],
+ "removed": [
+  {
+   "old": "Số Giấy chứng nhận đăng ký hộ kinh doanh (nếu có) / Ngày cấp / Mã số thuế của hộ kinh doanh",
+   "evidence": "TT121 p42-p43"
+  }
+ ],
+ "changed": [],
+ "no_delta_vung": [
+  "p42 trang 1: đầu mẫu + 'Chúng tôi1 là các thành viên hợp danh' + 5 ô tình trạng thành lập + khối DN bị hợp nhất — GIỐNG 2025",
+  "Mục 2/3/4/5 (p44) — GIỐNG",
+  "Mục 6 Nguồn vốn điều lệ + bảng (p45) — GIỐNG (entry fixed-matrix nguon_von_dieule KHÔNG đổi, khớp note spec 'bảng KHONG doi')",
+  "Mục 1 khối BTXH (p43) — GIỐNG"
+ ],
+ "canonical_key_impact": {
+  "form_maps": "65 -> 99 fields (+38 -4)",
+  "removed_keys": [
+   "hkd_cd.so_gcn",
+   "hkd_cd.ngay_cap",
+   "hkd_cd.noi_cap",
+   "hkd_cd.ma_so_thue"
+  ],
+  "added_keys": [
+   "ap_dung_tu",
+   "chk_auto_co",
+   "chk_bc_03_thang",
+   "chk_bc_06_thang",
+   "chk_bc_hang_thang",
+   "chk_gtgt_khoan_tru",
+   "chk_gtgt_khong_phai_nop",
+   "chk_gtgt_truc_tiep_doanh_so",
+   "chk_gtgt_truc_tiep_tren_gtgt",
+   "chk_ht_doc_lap",
+   "chk_ht_hop_nhat",
+   "chk_ht_phu_thuoc",
+   "chk_khong",
+   "co_quan_cap",
+   "dien_thoai_lien_he",
+   "gd.dien_thoai",
+   "gd.gioi_tinh",
+   "gd.ho_ten",
+   "gd.nam_sinh",
+   "gd.ngay_sinh",
+   "gd.so_cccd",
+   "gd.thang_sinh",
+   "hkd_ma_so",
+   "ho_ten_in_hoa",
+   "kt.dien_thoai",
+   "kt.gioi_tinh",
+   "kt.ho_ten",
+   "kt.nam_sinh",
+   "kt.ngay_sinh",
+   "kt.so_cccd",
+   "kt.thang_sinh",
+   "ma_so_du_an",
+   "nam_bd",
+   "nam_ky_vb",
+   "ngay_bd",
+   "so_lao_dong",
+   "thang_bd",
+   "thang_ky_vb"
+  ],
+  "note": "M05 từ form thiếu hẳn đuôi thành đủ 10 mục — bộ key mục thuế/BHXH giờ đồng bộ với M01-M04 (gd.*/kt.*/chk_*). 2 dòng 'Họ, chữ đệm và tên (ghi bằng chữ in hoa)' Phụ lục dùng chung ho_ten_in_hoa."
+ },
+ "ui_impact": "M05 thêm form section mục 7-10 (thuế/BHXH/CSHHL/cam kết) — UI cần render thêm các nhóm input này; Phụ lục cam kết NĐTNN dạng declare-only.",
+ "draft_migration": "Draft M05 cũ chỉ có data mục 1-6 + hkd_cd — vẫn hợp lệ; ô mới để trống. hkd_cd.ma_so_thue -> hkd_ma_so.",
+ "validation_impact": "Không validator nào khóa số field M05; entry fixed-matrix nguon_von_dieule anchor '^6\\. nguon von dieu le' + drop_until '(?!)' scoped drop không đụng paragraph mới (drop list chỉ khớp nhãn bảng Nguồn vốn).",
+ "docx_impact": "Source: hkd delta + append 97 paragraph (mục 7 -> hết chú thích + Phụ lục). Mục 8 thuế dựng dạng paragraph flatten (không dựng w:tbl mới vì nguồn M05 không dùng bảng cho phần flatten; mọi dòng có run '……' vẫn sinh slot).",
+ "excel_impact": "Sheet M05 thêm ~38 cột (mục thuế/BHXH/Phụ lục).",
+ "test_evidence": {
+  "fingerprint_2026_must_exist": [
+   "7. Thành viên công ty (kê khai theo Mẫu số 9 Phụ lục I ban hành kèm Thông tư này): Gửi kèm.",
+   "8. Thông tin đăng ký thuế:",
+   "9. Thông tin về việc đóng bảo hiểm xã hội",
+   "10. Thông tin về chủ sở hữu hưởng lợi của doanh nghiệp:",
+   "Các thành viên hợp danh cam kết:",
+   "CÁC THÀNH VIÊN HỢP DANH",
+   "(Ký và ghi họ tên từng thành viên)9",
+   "CAM KẾT",
+   "Mã số hộ kinh doanh/Mã số đăng ký hộ kinh doanh/Mã số thuế",
+   "Trường hợp không khai thác được thông tin về hộ kinh doanh được chuyển đổi"
+  ],
+  "fingerprint_2025_must_disappear": [
+   "Số Giấy chứng nhận đăng ký hộ kinh doanh (nếu có)",
+   "Mã số thuế của hộ kinh doanh"
+  ]
+ },
+ "source_quote": "TT121/2026 p45: '7. Thành viên công ty (kê khai theo Mẫu số 9 Phụ lục I ban hành kèm Thông tư này): Gửi kèm.'; p47: '10. Thông tin về chủ sở hữu hưởng lợi của doanh nghiệp: Doanh nghiệp kê khai thông tin về chủ sở hữu hưởng lợi của doanh nghiệp theo Mẫu số 10 ban hành kèm theo Thông tư này.'"
+}

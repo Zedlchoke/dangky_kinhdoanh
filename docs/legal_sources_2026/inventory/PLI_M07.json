@@ -1,0 +1,94 @@
+{
+ "form_id": "PLI_M07",
+ "source_2025": "06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn/DN_PL1_Mau_07_danh_sach_co_dong_sang_lap_cong_ty_co_phan.docx (TRƯỚC KHI SỬA: stub 2 dòng 'PL1 - Mau so 7…' + 'Mẫu số 7' — KHÔNG phải nguồn chân lý, N-v4)",
+ "source_2026": {
+  "van_ban": "Thông tư 68/2025/TT-BTC",
+  "sha256": "fc10a482b815ed5412fab70c813f5b84c4b78ae62d3f73fa8d6e485a4bdbb6ac",
+  "pages": "p49-p50 (2 trang; M07 KHÔNG bị TT121 thay — Điều 1 TT121 chỉ thay Mẫu 1,2,3,4,5,10,12,27,30 và bãi bỏ Mẫu 11)"
+ },
+ "pdf_page": {
+  "trang1": "p49 (I. Cổ đông sáng lập là cá nhân — bảng 19 cột)",
+  "trang2": "p50 (II. Cổ đông sáng lập là tổ chức: 1. Thông tin cổ đông bảng 14 cột; 2. Thông tin người đại diện bảng 14 cột; chữ ký + chú thích 6-13)"
+ },
+ "page_inventory": [
+  {
+   "page": "p49",
+   "heading": "'Mẫu số 7' góc phải / DANH SÁCH CỔ ĐÔNG SÁNG LẬP CÔNG TY CỔ PHẦN / I. Cổ đông sáng lập là cá nhân / bảng 19 cột: STT|Tên cổ đông sáng lập|Ngày, tháng, năm sinh|Giới tính|Loại giấy tờ, số, ngày cấp, cơ quan cấp GTPNCN¹|Quốc tịch|Dân tộc|Địa chỉ liên lạc|Vốn góp² [Tổng số cổ phần (Số lượng|Giá trị)|Tỷ lệ (%)]|Loại cổ phần [Phổ thông (Số lượng|Giá trị)|…… (Số lượng|Giá trị)]|Loại tài sản, số lượng, giá trị tài sản góp vốn³|Thời hạn góp vốn⁴|Chữ ký của cổ đông sáng lập⁵|Ghi chú (nếu có) / chú thích 1-5"
+  },
+  {
+   "page": "p50",
+   "heading": "II. Cổ đông sáng lập là tổ chức / 1. Thông tin cổ đông (bảng 14 cột: STT|Tên|Địa chỉ trụ sở chính|Số, ngày cấp, nơi cấp GCNĐKDN/QĐ thành lập|Vốn góp⁶|Tỷ lệ⁷|Loại cổ phần phổ thông (SL|GT)|…… (SL|GT)|Loại tài sản⁷|Thời hạn góp vốn⁸|Ghi chú) / 2. Thông tin người đại diện theo pháp luật/ủy quyền (bảng 14 cột: STT|Tên cổ đông|Tên NĐDPL/ủy quyền|Ngày tháng năm sinh|Giới tính|Số, ngày cấp, cơ quan cấp GTPLCN⁹|Quốc tịch|Dân tộc|Địa chỉ liên lạc|Vốn được ủy quyền¹⁰ [Tổng giá trị (bằng số: VND…)|Tỷ lệ¹¹|Thời điểm]|Chữ ký¹²|Ghi chú) / dòng ngày tháng / NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT/CHỦ TỊCH HỘI ĐỒNG QUẢN TRỊ (Ký và ghi họ tên)¹³ / chú thích 6-13"
+  }
+ ],
+ "old_headings": [
+  "(stub — không có heading nào ngoài nhãn file + 'Mẫu số 7')"
+ ],
+ "new_headings": [
+  "DANH SÁCH CỔ ĐÔNG SÁNG LẬP CÔNG TY CỔ PHẦN",
+  "I. Cổ đông sáng lập là cá nhân",
+  "II. Cổ đông sáng lập là tổ chức",
+  "1. Thông tin cổ đông",
+  "2. Thông tin người đại diện theo pháp luật/ủy quyền của cổ đông",
+  "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT/CHỦ TỊCH HỘI ĐỒNG QUẢN TRỊ CỦA CÔNG TY (Ký và ghi họ tên)13",
+  "chú thích 1-13 verbatim bản in"
+ ],
+ "old_fields": [
+  "ds_co_dong_sang_lap.{ho_ten,so_cccd,ngay_sinh,gioi_tinh,quoc_tich,dan_toc,dia_chi,so_co_phan,ty_le}",
+  "dia_diem_ky/ngay_ky_vb/thang_ky_vb/nam_ky_vb (đăng ký nhưng không có paragraph ngày tháng trong template cũ)"
+ ],
+ "new_fields": [
+  "giữ nguyên 9 field loop ds_co_dong_sang_lap (kien truc phang D2.3=A)",
+  "+4 key ngày ký giờ CÓ paragraph đích: dia_diem_ky, ngay_ky_vb, thang_ky_vb, nam_ky_vb"
+ ],
+ "old_tables": [
+  "(template cũ) bảng tái dựng 11 cột — D2.3=A"
+ ],
+ "new_tables": [
+  "bản in thật: I.a 19 cột / II.1 14 cột / II.2 14 cột (p49-p50). Production giữ grid phang 11 cột (D2.3=A; 19 cột nested thuộc D2.3=B roadmap) — cấu trúc ban in đã được ghi ĐẦY ĐỦ vào nguồn (heading, chú thích, cấu trúc mục) làm nguồn chân lý."
+ ],
+ "added": [
+  {
+   "new": "Toàn bộ nội dung văn bản của Mẫu số 7 bản in: tiêu đề, mục I/II.1/II.2, dòng '……, ngày…… tháng…… năm……', block chữ ký NDtPL/Chủ tịch HDQT, 13 chú thích verbatim (p49-p50)",
+   "evidence": "TT68/2025 p49-p50"
+  }
+ ],
+ "removed": [
+  {
+   "old": "stub 2 dòng",
+   "evidence": "stub không phản ánh bản in — N-v4 owner chốt: template tự dựng không được chấp nhận làm nguồn chân lý"
+  }
+ ],
+ "changed": [],
+ "no_delta_vung": [
+  "M07 KHÔNG bị TT 121/2026 thay (p2 TT121: khoản 1 thay Mẫu 1-5,10,12,27,30; khoản 2 bãi bỏ Mẫu 11 — không nhắc Mẫu 7) → so sánh đúng cặp là nguồn stub cũ vs bản in TT 68/2025 (vẫn hiện hành cho M07)."
+ ],
+ "canonical_key_impact": {
+  "removed_keys": [],
+  "added_keys": [
+   "dia_diem_ky",
+   "ngay_ky_vb",
+   "thang_ky_vb",
+   "nam_ky_vb (4 key ngày ký giờ có paragraph đích trong template)"
+  ],
+  "spec": "tools/form_specs/formation/PLI_M07.json: anchor doi '^mau so 7$' -> '^i\\. co dong sang lap la ca nhan$' (luoi chen SAU heading muc I, dung thu tu ban in); headers/cols/fields/loop GIU NGUYEN (D2.3=A)."
+ },
+ "ui_impact": "Grid phang giữ nguyên — UI không đổi; phần văn bản (heading mục II, chú thích) hiển thị thêm dạng static.",
+ "draft_migration": "Không ảnh hưởng draft (loop + keys giữ nguyên; 4 key ngày ký mới để trống).",
+ "validation_impact": "--one PLI_M07 regen OK, 13 fields; GRID_META.ds_co_dong_sang_lap giữ chu_ky outputOnly; landscape section 11 cột giữ nguyên.",
+ "docx_impact": "Source stub -> 25 paragraph (2 dòng gốc + 23 dòng nội dung bản in). Bảng production do REBUILD dựng từ spec (như trước).",
+ "excel_impact": "Thêm 4 cột ngày ký; grid export giữ nguyên.",
+ "test_evidence": {
+  "fingerprint_2026_must_exist": [
+   "DANH SÁCH CỔ ĐÔNG SÁNG LẬP CÔNG TY CỔ PHẦN",
+   "I. Cổ đông sáng lập là cá nhân",
+   "II. Cổ đông sáng lập là tổ chức",
+   "2. Thông tin người đại diện theo pháp luật/ủy quyền của cổ đông",
+   "Kê khai tương tự các cổ đông sáng lập là cá nhân",
+   "Nếu cột số 5 kê khai Số định danh cá nhân thì không phải kê khai các cột số 6, 7"
+  ],
+  "fingerprint_2025_must_disappear": [
+   "(stub: số paragraph trong nguồn phải >= 20; template phải chứa tiêu đề 'DANH SÁCH CỔ ĐÔNG SÁNG LẬP CÔNG TY CỔ PHẦN')"
+  ]
+ },
+ "source_quote": "TT68/2025 p49: 'Mẫu số 7 — DANH SÁCH CỔ ĐÔNG SÁNG LẬP CÔNG TY CỔ PHẦN — I. Cổ đông sáng lập là cá nhân' (bảng 19 cột, chú thích 1-5); p50: 'II. Cổ đông sáng lập là tổ chức — 1. Thông tin cổ đông — 2. Thông tin người đại diện theo pháp luật/ủy quyền của cổ đông' + 'NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT/CHỦ TỊCH HỘI ĐỒNG QUẢN TRỊ CỦA CÔNG TY (Ký và ghi họ tên)13' (chú thích 6-13)."
+}

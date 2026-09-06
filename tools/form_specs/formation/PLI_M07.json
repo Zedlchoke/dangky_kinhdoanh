@@ -29,13 +29,13 @@
                "dan_toc", "dia_chi", "so_co_phan", "ty_le"]
    },
    "pos": "after",
-   "anchor": "^mau so 7$",
+   "anchor": "^i\\. co dong sang lap la ca nhan$",
    "no_default_drops": true,
    "headers": ["STT", "Tên cổ đông sáng lập", "Ngày, tháng, năm sinh",
                "Giới tính", "Số định danh cá nhân/Giấy tờ pháp lý", "Quốc tịch",
                "Dân tộc", "Địa chỉ liên lạc", "Tổng số cổ phần", "Tỷ lệ (%)",
                "Chữ ký"],
-   "notes": "P2A (2026-08-27): header GIU NGUYEN text production (khong doi thu tu) — khac biet duy nhat so voi khai bao inline la cot 6 'Dân tộc' duoc gan the {dan_toc} (rule bi thieu trong cols cua inline) va fields duoc bo sung dan_toc/gioi_tinh. D2.4=A: cot Chữ ký gan {chu_ky} va la outputOnly tai GRID_META.ds_co_dong_sang_lap (khong doi). Kien truc PHANG giong het PLI_M08 (D2.3=A bat buoc cung kien truc). Nguon Mau 7 (DN_PL1_Mau_07_*.docx) khong con paragraph header nao (bang mat toan bo khi convert) nen khong can trim/drop; no_default_drops=true an toan theo convention R3B1, da xac minh REBUILD_DROP_DEFAULT khong khop paragraph nao trong nguon. LUU Y ky thuat: entry kind=list khong dung co che legal_status.blocked cua loader (chi cho 3 kind moi) nen quyet dinh duoc ghi o notes nay."
+   "notes": "P2A (2026-08-27): header GIU NGUYEN text production (khong doi thu tu) — khac biet duy nhat so voi khai bao inline la cot 6 'Dân tộc' duoc gan the {dan_toc} (rule bi thieu trong cols cua inline) va fields duoc bo sung dan_toc/gioi_tinh. D2.4=A: cot Chữ ký gan {chu_ky} va la outputOnly tai GRID_META.ds_co_dong_sang_lap (khong doi). Kien truc PHANG giong het PLI_M08 (D2.3=A bat buoc cung kien truc). Nguon Mau 7 (DN_PL1_Mau_07_*.docx) khong con paragraph header nao (bang mat toan bo khi convert) nen khong can trim/drop; no_default_drops=true an toan theo convention R3B1, da xac minh REBUILD_DROP_DEFAULT khong khop paragraph nao trong nguon. LUU Y ky thuat: entry kind=list khong dung co che legal_status.blocked cua loader (chi cho 3 kind moi) nen quyet dinh duoc ghi o notes nay. || N-v4 (laneA2 F0L 2026-09-06): nguon Mau 7 DUNG LAI tu ban in chinh thuc TT 68/2025 Phu luc I Mau so 7 (trang p49-p50, SHA-256 fc10a482... trong SOURCES.md) — stub 2 dong duoc thay bang noi dung day du: tieu de, muc I (ca nhan), muc II.1/II.2 (to chuc), dong ngay thang, block chu ky NDtPL/Chu tich HDQT, 13 chu thich. Anchor doi tu '^mau so 7$' sang '^i\\. co dong sang lap la ca nhan$' de luoi production chen SAU heading muc I (thu tu dung nhu ban in); header/cols/fields giu nguyen kien truc phang D2.3=A (grid 11 cot production khong doi o wave nay, D2.3=B thuoc roadmap nested-grid)."
   }
  ]
 }

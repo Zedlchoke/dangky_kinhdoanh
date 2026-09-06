@@ -1,0 +1,195 @@
+{
+ "form_id": "PLI_M04",
+ "source_2025": "06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn/PL1_Mau_04_tach_tu_file_full.docx",
+ "source_2026": {
+  "van_ban": "Thông tư 121/2026/TT-BTC",
+  "sha256": "87f6989d209310b8c6fbec72a182c476bb83a462ce96d74c5218c26605342faf",
+  "pages": "p32-p41 (10 trang)"
+ },
+ "pdf_page": {
+  "trang1": "p32",
+  "trang2": "p33",
+  "trang3": "p34",
+  "trang4": "p35",
+  "trang5": "p36",
+  "trang6": "p37",
+  "trang7": "p38",
+  "trang8": "p39",
+  "trang9": "p40",
+  "trang10_phuluc": "p41"
+ },
+ "page_inventory": [
+  {
+   "page": "p32",
+   "heading": "Đầu mẫu + người nộp + hộp SĐDCN"
+  },
+  {
+   "page": "p33",
+   "heading": "1. 7 ô / DN bị chia tách hợp nhất / khối HKD (MỚI Mã số HKD)"
+  },
+  {
+   "page": "p34",
+   "heading": "hộp điều kiện HKD / khối BTXH / dự án đặc biệt / DN xã hội / chk CTCK"
+  },
+  {
+   "page": "p35",
+   "heading": "Giấy phép UCSN ('Uỷ ban') / 2. Tên / 3. Địa chỉ + khu / GCN QSD đất / 4. Ngành nghề / 5. Vốn điều lệ"
+  },
+  {
+   "page": "p36",
+   "heading": "(tiếp 5) / 6. Nguồn vốn điều lệ / 7. Thông tin về cổ phần (Mệnh giá VNĐ + bảng 5 loại + bảng chào bán)"
+  },
+  {
+   "page": "p37",
+   "heading": "(tiếp bảng chào bán) / 8. Cổ đông sáng lập (Mẫu số 7) / 9. Cổ đông NĐTNN (Mẫu số 8) + GCNĐKĐT (MỚI wording) / 10. NĐDPL"
+  },
+  {
+   "page": "p38",
+   "heading": "(tiếp 10 hộp SĐDCN) / 11.1-11.4"
+  },
+  {
+   "page": "p39",
+   "heading": "11.5-11.9 (11.6 NĂM TÀI CHÍNH — bản in 2026 sửa '1.6'->'11.6') + 12. BHXH + chú thích 7-9"
+  },
+  {
+   "page": "p40",
+   "heading": "13. CSHHL (MỚI khai theo Mẫu số 10) + công bố + cam kết NĐ 296/2026 (chú thích 10 mới) + cam kết + chữ ký (chú thích 11)"
+  },
+  {
+   "page": "p41",
+   "heading": "PHỤ LỤC MỚI: CAM KẾT NĐTNN (biến thể CỔ ĐÔNG, đánh số 1./2./'3. …2')"
+  }
+ ],
+ "old_headings": [
+  "13. Thông tin về chủ sở hữu hưởng lợi của doanh nghiệp10: + câu hỏi Có/Không"
+ ],
+ "new_headings": [
+  "13. Thông tin về chủ sở hữu hưởng lợi của doanh nghiệp: + dòng khai theo Mẫu số 10",
+  "Phụ lục CAM KẾT NĐTNN"
+ ],
+ "old_fields": [
+  "hkd_cd.so_gcn",
+  "hkd_cd.ngay_cap",
+  "hkd_cd.noi_cap",
+  "hkd_cd.ma_so_thue"
+ ],
+ "new_fields": [
+  "hkd_ma_so",
+  "ho_ten_in_hoa",
+  "to_chuc.ten",
+  "dn.ma_so_dn"
+ ],
+ "old_tables": [
+  "ds_nganh",
+  "nguon_von_dieule",
+  "co_cau_loai_co_phan",
+  "co_phan_duoc_quyen_chao_ban"
+ ],
+ "new_tables": [
+  "giống — TT121 p36 bảng cổ phần GIỐNG 2025 (Mệnh giá cổ phần (VNĐ))"
+ ],
+ "added": [
+  {
+   "new": "Mã số hộ kinh doanh/Mã số đăng ký hộ kinh doanh/Mã số thuế: …",
+   "evidence": "TT121 p24 (M3), p33 (M4), p42-p43 (M5)"
+  },
+  {
+   "new": "Dòng in nghiêng 'Trường hợp không khai thác được thông tin về hộ kinh doanh…kê khai thêm các nội dung sau:' + hộp điều kiện",
+   "evidence": "TT121 p25 (M3), p34 (M4), p43 (M5)"
+  },
+  {
+   "new": "mục 13 khai theo Mẫu số 10 + cam kết NĐ 296/2026 + chú thích 10 mới",
+   "evidence": "TT121 p40"
+  },
+  {
+   "new": "PHỤ LỤC CAM KẾT NĐTNN biến thể cổ đông (26 paragraph)",
+   "evidence": "TT121 p41"
+  },
+  {
+   "new": "chỉ tiêu '11.6' (mục năm tài chính) — sửa lỗi '1.6' của nguồn cũ",
+   "evidence": "TT121 p39 in rõ '11.6 | Năm tài chính:'"
+  }
+ ],
+ "removed": [
+  {
+   "old": "Số Giấy chứng nhận đăng ký hộ kinh doanh (nếu có): …",
+   "evidence": "TT121 p24/p33/p42: dòng bị bỏ"
+  },
+  {
+   "old": "Ngày cấp: …/…/… Nơi cấp: … (sau Số GCN HKD)",
+   "evidence": "TT121 p24/p33/p42: bị bỏ"
+  },
+  {
+   "old": "Mã số thuế của hộ kinh doanh: …",
+   "evidence": "TT121 p24/p33/p42: gộp vào dòng Mã số HKD/Mã số ĐKHKD/MST"
+  },
+  {
+   "old": "'Doanh nghiệp có chủ sở hữu hưởng lợi không?' + '□ Có' + ' □ Không' (mục 13)",
+   "evidence": "TT121 p40"
+  },
+  {
+   "old": "Chú thích 10 cũ (Điều 18 NĐ 168/2025)",
+   "evidence": "TT121 p40: chú thích 10 định nghĩa lại"
+  },
+  {
+   "old": "paragraph '1.6' (cell mục năm tài chính)",
+   "evidence": "TT121 p39 in '11.6' — lỗi số nguồn hết hiệu lực"
+  }
+ ],
+ "changed": [
+  {
+   "old": "Thông tin về Giấy chứng nhận đăng ký đầu tư (kê khai trong trường hợp cổ đông là nhà đầu tư nước ngoài được cấp Giấy chứng nhận đăng ký đầu tư theo quy định của Luật Đầu tư): (mục 9, p187 nguồn, chứa NBSP 'Đầu\\xa0tư')",
+   "new": "Thông tin về Giấy chứng nhận đăng ký đầu tư (chỉ kê khai nếu cổ đông là nhà đầu tư nước ngoài được cấp Giấy chứng nhận đăng ký đầu tư theo quy định của pháp luật – nếu có):",
+   "evidence": "TT121 p37"
+  },
+  {
+   "old": "…do Ủy ban Chứng khoán Nhà nước cấp ngày…",
+   "new": "…do Uỷ ban Chứng khoán Nhà nước cấp ngày…",
+   "evidence": "TT121 p35"
+  }
+ ],
+ "no_delta_vung": [
+  "p32 trang 1 — GIỐNG 2025",
+  "Mục 1 + khối chia/tách/hợp nhất (p33), khối BTXH + CTCK (p34) — GIỐNG",
+  "Mục 2/3/4/5 (p35), mục 6 Nguồn vốn (p36), mục 7 bảng cổ phần + chào bán (p36-p37) — GIỐNG",
+  "Mục 8 'Cổ đông sáng lập (kê khai theo Mẫu số 7…) Gửi kèm (nếu có).' + mục 9 heading (p37) — GIỐNG",
+  "Mục 10 NĐDPL (p37-p38), 11.1-11.5/11.7-11.9 (p38-p39), 12 BHXH (p39), cam kết + chữ ký + chú thích 11 (p40) — GIỐNG"
+ ],
+ "canonical_key_impact": {
+  "removed_keys": [
+   "hkd_cd.so_gcn",
+   "hkd_cd.ngay_cap",
+   "hkd_cd.noi_cap",
+   "hkd_cd.ma_so_thue"
+  ],
+  "added_keys": [
+   "hkd_ma_so",
+   "ho_ten_in_hoa",
+   "to_chuc.ten",
+   "dn.ma_so_dn"
+  ],
+  "note": "Tổng số field giữ 144; key đuôi 39 nguyên vẹn (test_m0304_tails [INV] PASS). Phụ lục: 2 dòng 'Họ, chữ đệm và tên (ghi bằng chữ in hoa)' dùng chung ho_ten_in_hoa."
+ },
+ "ui_impact": "Mục 13 bỏ radio; thêm Phụ lục cam kết NĐTNN.",
+ "draft_migration": "chk vùng mục 13 bỏ qua; hkd_cd.* -> hkd_ma_so; draft cũ vẫn hợp lệ cho phần còn lại.",
+ "validation_impact": "spec note M04 mục (a) 'nguồn in 1.6 — giữ nguyên văn nguồn' HẾT HIỆU LỰC: bản in 2026 (p39) in 11.6, nguồn đã sửa; test_m0304_tails TAIL_HEADINGS M04 chuyển sang da_sua_so ('1.6' phải MẤT, '11.6' phải CÓ).",
+ "docx_impact": "Source: hkd delta; GCNĐKĐT mục 9 (NBSP); 'Uỷ ban'; paragraph '1.6' -> '11.6'; mục 13 thay câu hỏi; chú thích 10; Phụ lục (26 paragraph).",
+ "excel_impact": "Mất 4 cột hkd_cd.*, thêm hkd_ma_so + ô Phụ lục.",
+ "test_evidence": {
+  "fingerprint_2026_must_exist": [
+   "11.6",
+   "Doanh nghiệp kê khai thông tin về chủ sở hữu hưởng lợi của doanh nghiệp theo Mẫu số 10 ban hành kèm theo Thông tư này",
+   "Xin gửi kèm cam kết của nhà đầu tư nước ngoài",
+   "Mã số hộ kinh doanh/Mã số đăng ký hộ kinh doanh/Mã số thuế",
+   "Trường hợp cổ đông là cá nhân thì kê khai"
+  ],
+  "fingerprint_2025_must_disappear": [
+   "Doanh nghiệp có chủ sở hữu hưởng lợi không?",
+   "1.6",
+   "kê khai trong trường hợp cổ đông là nhà đầu tư nước ngoài được cấp Giấy chứng nhận đăng ký đầu tư theo quy định của Luật Đầu tư",
+   "Số Giấy chứng nhận đăng ký hộ kinh doanh (nếu có)"
+  ],
+  "note_fold_blind": "Delta 'Ủy ban'->'Uỷ ban' (TT121 p14/p26/p35) KHÔNG phát hiện được bằng fold (cùng chuỗi fold 'uy ban') — kiểm bằng raw glyph trong test_current_law_migration_m0105."
+ },
+ "source_quote": "TT121/2026 p39: '11.6 | Năm tài chính: Áp dụng từ ngày ……/……đến ngày ……/……7'; p37: '- Thông tin về Giấy chứng nhận đăng ký đầu tư (chỉ kê khai nếu cổ đông là nhà đầu tư nước ngoài được cấp Giấy chứng nhận đăng ký đầu tư theo quy định của pháp luật – nếu có):'"
+}

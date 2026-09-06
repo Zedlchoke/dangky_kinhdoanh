@@ -2870,7 +2870,7 @@
        6
       ]
      },
-     "notes": "8 cột template khớp TỪNG CỘT với header mẫu gốc (glued nguồn: STT|Tên tổ chức|Mã số DN/số QĐ thành lập|Ngày cấp|Nơi cấp|Địa chỉ trụ sở chính|Tỷ lệ sở hữu CP có quyền biểu quyết|Ghi chú (nếu có)); loop đủ tag 7/7 cột dữ liệu. Không còn vùng bảng khác trong mẫu.",
+     "notes": "8 cột template khớp TỪNG CỘT với header mẫu gốc (glued nguồn: STT|Tên tổ chức|Mã số DN/số QĐ thành lập|Ngày cấp|Nơi cấp|Địa chỉ trụ sở chính|Tỷ lệ sở hữu CP có quyền biểu quyết|Ghi chú (nếu có)); loop đủ tag 7/7 cột dữ liệu. Không còn vùng bảng khác trong mẫu. | [F0L L-2026] Mẫu số 11 Phụ lục I bị BÃI BỎ THEO THÔNG TƯ 121/2026/TT-BTC Điều 1 khoản 2 (hiệu lực 21/08/2026): verdict REMOVED_BY_CURRENT_LAW — không dùng tạo hồ sơ mới; template/form_maps giữ lại chỉ để đọc draft cũ.",
      "loop_audit": {
       "table_index": 0,
       "loop": "ds_cshhl",

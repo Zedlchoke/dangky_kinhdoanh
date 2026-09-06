@@ -4165,6 +4165,9 @@ def process_form(path, titles, coverage, out_tpl=None):
         meta["dynamic_tables"] = dyn_tables
     if section_specs:
         meta["section_specs"] = section_specs
+    # [F0L] stamp trạng thái hiện hành (vd PLI_M11 REMOVED_BY_CURRENT_LAW)
+    if form_id in CURRENT_LAW_STATUS:
+        meta["current_law_status"] = dict(CURRENT_LAW_STATUS[form_id])
     return meta, unmatched
 
 
@@ -4195,6 +4198,21 @@ def save_template_content_aware(doc, out_path: Path) -> bool:
     out_path.write_bytes(new_bytes)
     return True
 
+
+# [F0L — L-2026 owner decision 2026-09-06] Biểu mẫu bị Thông tư
+# 121/2026/TT-BTC thay thế/bãi bỏ. Status được stamp vào entry form_maps
+# để mọi tầng (app, test, coverage, corpus) đọc cùng một marker. "active"
+# (không có entry ở đây) = dùng bình thường. M11 bị bãi bỏ từ 21/08/2026:
+# không cho tạo hồ sơ mới; template/form_maps giữ lại CHỈ để đọc draft cũ.
+CURRENT_LAW_STATUS = {
+    "PLI_M11": {
+        "status": "REMOVED_BY_CURRENT_LAW",
+        "van_ban": "Thông tư 121/2026/TT-BTC Điều 1 khoản 2",
+        "hieu_luc": "2026-08-21",
+        "ghi_chu": "Mẫu số 11 Phụ lục I bị bãi bỏ; không dùng tạo hồ sơ mới, "
+                   "giữ template/form_maps chỉ để đọc draft cũ (alias).",
+    },
+}
 
 # [Owner P1=A 2026-09-03] Nguồn canonical per-form — override first-hit
 # aliasing (backlog W2 #5): PLI_M03/M04 dùng bản tách từ bản gốc ĐẦY ĐỦ

@@ -13768,7 +13768,13 @@
      }
     ]
    }
-  ]
+  ],
+  "current_law_status": {
+   "status": "REMOVED_BY_CURRENT_LAW",
+   "van_ban": "Thông tư 121/2026/TT-BTC Điều 1 khoản 2",
+   "hieu_luc": "2026-08-21",
+   "ghi_chu": "Mẫu số 11 Phụ lục I bị bãi bỏ; không dùng tạo hồ sơ mới, giữ template/form_maps chỉ để đọc draft cũ (alias)."
+  }
  },
  "PLI_M03": {
   "id": "PLI_M03",

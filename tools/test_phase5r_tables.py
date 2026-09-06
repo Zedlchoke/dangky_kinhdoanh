@@ -175,19 +175,19 @@ WIDE_TABLE_FIXTURE = [
     # diệt vỡ token cột hẹp (adjudicate auditor-visual Phần 3).
     ("PLII_M01", 1, 10, 14400, 954, "ds_tv_ho_gia_dinh"),
     ("PLII_M02", 1, 10, 14400, 954, "tv_hgd_sau_thay_doi"),
-    ("PLII_M02", 7, 10, 14400, 954, "tv_hgd_cap_doi"),
+    ("PLII_M02", 8, 10, 14400, 954, "tv_hgd_cap_doi"),
     ("PLI_M02", 1, 14, 14400, 900, "ds_nddpl_uy_quyen_chu_so_huu"),
     ("PLI_M06", 0, 12, 14400, 900, "ds_thanh_vien_tnhh"),
     ("PLI_M07", 0, 11, 14400, 918, "ds_co_dong_sang_lap"),
     ("PLI_M09", 0, 14, 14400, 900, "ds_thanh_vien_hop_danh"),
-    ("PLI_M10", 0, 12, 14400, 909, "ds_cshhl"),
-    ("PLI_M12", 4, 15, 14400, 900, "ds_ndd_uy_quyen_sau_thay_doi"),
+    ("PLI_M10", 0, 18, 16200, 900, "ds_cshhl"),
+    ("PLI_M12", 7, 15, 14400, 900, "ds_ndd_uy_quyen_sau_thay_doi"),
     ("PLI_M15", 1, 14, 14400, 900, "ds_nddpl_uy_quyen_chu_so_huu_moi"),
     ("PLI_M72", 5, 10, 14400, 928, "ds_co_dong_sang_lap_ctcp"),
     ("PLI_M72", 6, 10, 14400, 928, "ds_co_dong_nuoc_ngoai_ctcp"),
 ]
 
-_EXPECTED_TABLE_COUNT = 76   # số bảng có w:tblGrid trên toàn corpus
+_EXPECTED_TABLE_COUNT = 86   # số bảng có w:tblGrid (F1-IN +10: M12x3, M27x3, M78, M79, M80, C5)
 _EXPECTED_TEMPLATE_COUNT = 87
 
 
@@ -576,20 +576,23 @@ def test_c3b_sandbox_regen():
 # ---------------------------------------------------------------------------
 
 # (section_id, template table_index, rows, cols, expect_present)
+# [Pin sync — F1-IN 2026-09-06, O1+O2] +3 fixed-matrix tai_san/co_phan
+# (Mau 12 TT 121/2026) — M12 template giờ 8 bảng; cả 8 matrix matrix-ok.
+# thứ tự bảng theo tài liệu sau F1-IN regen: nguồn vốn(0) -> tài sản VĐL(1)
+# -> cổ phần(2) -> 3 lưới ngành(3-5) -> tài sản VĐT(6) -> người ủy quyền(7)
 M12_SPEC_MATRICES = [
     ("nguon_von_dieule_sau_thay_doi", 0, 6, 3, True),
-    ("nganh_bo_sung", 1, 6, 4, True),
-    ("nganh_xoa_bo", 2, 6, 4, True),
-    ("nganh_sua_doi_chi_tiet", 3, 6, 4, True),
-    ("ndd_uy_quyen_sau_thay_doi", 4, 8, 15, True),
+    ("tai_san_gop_von_sau_thay_doi_vdl", 1, 8, 4, True),
+    ("co_cau_loai_co_phan_sau_thay_doi", 2, 7, 4, True),
+    ("nganh_bo_sung", 3, 6, 4, True),
+    ("nganh_xoa_bo", 4, 6, 4, True),
+    ("nganh_sua_doi_chi_tiet", 5, 6, 4, True),
+    ("tai_san_gop_von_sau_thay_doi_von_dau_tu", 6, 8, 4, True),
+    ("ndd_uy_quyen_sau_thay_doi", 7, 8, 15, True),
 ]
 
-# 3 matrix còn lại của manifest vẫn missing_grid -> BLOCKED_OWNER
-M12_BLOCKED_MATRICES = [
-    "tai_san_gop_von_sau_thay_doi_vdl",
-    "co_cau_loai_co_phan_sau_thay_doi",
-    "tai_san_gop_von_sau_thay_doi_von_dau_tu",
-]
+# 3 matrix BLOCKED_OWNER cũ đã được owner adjudicate (O1) -> rỗng
+M12_BLOCKED_MATRICES = []
 
 
 @check("C4a_m12_spec_matrices_materialized")
@@ -597,7 +600,7 @@ def test_c4a_m12_tables():
     xml = _docx_xml((TEMPLATES / "PLI_M12.docx").read_bytes())
     body = _body_of(xml)
     segs = list(_iter_balanced_tbls(body))
-    assert len(segs) == 5, "M12 phải đúng 5 bảng (census): %d" % len(segs)
+    assert len(segs) == 8, "M12 phải đúng 8 bảng (census, F1-IN +3): %d" % len(segs)
     for sid, ti, rows, cols, _present in M12_SPEC_MATRICES:
         seg = body[segs[ti][0]:segs[ti][1]]
         grid = [int(w) for w in re.findall(

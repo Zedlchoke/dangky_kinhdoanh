@@ -197,6 +197,10 @@ def classify_table(tbl) -> str:
         return "band"
     if c0.startswith("chi tieu"):
         return "tax"
+    # [Pin sync — F1-IN 2026-09-06] bảng thuế C5 cấp đổi (O1): header
+    # 'STT / Các chỉ tiêu thông tin đăng ký thuế'
+    if c0.startswith("stt / cac chi tieu"):
+        return "tax_c5"
     return "industry"
 
 
@@ -211,6 +215,10 @@ def industry_owner_sequence(spans, tbl_entries):
     owners: list[str] = []
     problems: list[str] = []
     for idx, cls in tbl_entries:
+        # [Pin sync — F1-IN 2026-09-06] tax_c5 = bảng thuế C5 cấp đổi (O1):
+        # không thuộc vùng ngành, không phải lỗi
+        if cls in ("tax", "band", "tax_c5"):
+            continue
         if cls != "industry":
             continue
         owner = next((oid for oid, h, e in spans if h < idx < e), None)

@@ -699,9 +699,10 @@ def t_blocked_others():
                                   "nganh_sua_doi_chi_tiet", "nganh_hien_tai",
                                   "tv_hgd_sau_thay_doi", "tv_hgd_cap_doi"]), \
         "file household/PLII_M02.json (ngoài ownership P2A) đã đổi: %r" % ids
-    # 7 entry: 4 ngành + 1 fixed-matrix a7 (thuế II.2, cap-von D5.2, không
-    # occurrence) + 2 nested-grid thành viên (P2 rebuild).
-    assert len(raw["tables"]) == 7, "PLII_M02 đổi số entry: %d" % len(raw["tables"])
+    # [Pin sync — F1-IN 2026-09-06, O1] 8 entry: +c5_thue_chi_tieu_cap_doi
+    # (fixed-matrix Mục C cấp đổi, D5.2=A, không occurrence) — thuộc nhóm 10
+    # section USER-INPUT (docs/owner_decision_packet_v7.md).
+    assert len(raw["tables"]) == 8, "PLII_M02 đổi số entry: %d" % len(raw["tables"])
 
 
 @check("[BLOCKED] khong bia cot chu ky cho bang nguon khong co (PLII_M07/M10/M13)")

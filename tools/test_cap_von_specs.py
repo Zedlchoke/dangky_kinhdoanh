@@ -193,6 +193,16 @@ def check(name: str):
     return deco
 
 
+def cell_text(c):
+    out = ""
+    for r in (c.get("runs") or []):
+        if isinstance(r.get("text"), str):
+            out += r["text"]
+        elif isinstance(r.get("input"), dict):
+            out += "{%s}" % r["input"].get("key", "")
+    return out
+
+
 def fold(text: str) -> str:
     """Chung quy tắc với build_form_maps.fold (thường, bỏ dấu, đ->d)."""
     s = re.sub(r"\s+", " ", text or "").strip()
@@ -339,9 +349,14 @@ def t_scope_exact():
                     "co_phan_duoc_quyen_chao_ban"},
         "PLI_M05": {"ds_nganh", "nguon_von_dieule"},
         # PLI_M12: 3 lưới ngành (2A/2B) + nested-grid người (R3B1) + nguồn vốn
+        # [Pin sync — F1-IN 2026-09-06] +3 fixed-matrix O1/O2 (2 tài sản góp
+        # vốn sau thay đổi + cơ cấu cổ phần, TT 121/2026).
         "PLI_M12": {"nganh_bo_sung", "nganh_xoa_bo", "nganh_sua_doi_chi_tiet",
                     "ndd_uy_quyen_sau_thay_doi",
-                    "nguon_von_dieule_sau_thay_doi"},
+                    "nguon_von_dieule_sau_thay_doi",
+                    "tai_san_gop_von_sau_thay_doi_vdl",
+                    "tai_san_gop_von_sau_thay_doi_von_dau_tu",
+                    "co_cau_loai_co_phan_sau_thay_doi"},
         # [Phase 5 2026-09-03] +2 nested-grid thành viên tv_hgd_* (P2 member
         # grid rebuild, commit dfb6c14, suite test_member_grids_rebuild PASS,
         # census override already_complete) — pin stale được cập nhật theo
@@ -349,7 +364,9 @@ def t_scope_exact():
         "PLII_M02": {"ds_nganh_bo_sung", "ds_nganh_xoa_bo",
                      "ds_nganh_sua_chi_tiet", "ds_nganh",
                      "a7_thue_chi_tieu_cu_moi",
-                     "tv_hgd_sau_thay_doi", "tv_hgd_cap_doi"},
+                     "tv_hgd_sau_thay_doi", "tv_hgd_cap_doi",
+                     # [Pin sync — F1-IN 2026-09-06] +C5 cấp đổi (O1+D5.2=A)
+                     "c5_thue_chi_tieu_cap_doi"},
     }
     for fid, want_ids in want.items():
         raw = raw_spec(fid)
@@ -752,24 +769,43 @@ def t_plii_m02_tax():
         "mẫu II.2 mất chỉ tiêu 5.2"
     assert not any("giam doc" in t for t in window), \
         "mẫu II.2 (hộ kinh doanh) không được có chỉ tiêu Giám đốc/TGĐ"
-    # phần C mục 5 KHÔNG được rebuild: 7 ô đã map sẵn (nguy cơ 2 nguồn sự thật)
+    # [Pin sync — F1-IN 2026-09-06, O1+D5.2=A] phần C mục 5 ĐÃ được rebuild
+    # thành fixed-matrix c5_thue_chi_tieu_cap_doi (owner adjudicate 10 section
+    # USER-INPUT): 5.1/5.2 giờ là the scoped
+    # thue_chi_tieu_cap_doi.chi_tieu_5_*.<tag> — khắc phục defect 7 ô cũ
+    # TRÙNG KEY với trụ sở C.2. Trụ sở C.2 giữ nguyên bộ key của nó.
     blocks = json.loads((BLOCKS_DIR / "PLII_M02.json").read_text(
         encoding="utf-8"))["blocks"]
-    tax_inputs = {"dia_chi_chi_tiet", "xa_phuong", "tinh_thanh",
-                  "dien_thoai_lien_he", "fax", "email_tru_so", "so_lao_dong"}
-    found = set()
+    c5_keys = set()
+    tru_so_keys = set()
+
+    def _walk_runs(runs):
+        for r in runs or []:
+            k = (r.get("input") or {}).get("key") if isinstance(r, dict) else None
+            if not k:
+                continue
+            if k.startswith("thue_chi_tieu_cap_doi."):
+                c5_keys.add(k)
+            elif k in ("dia_chi_chi_tiet", "xa_phuong", "tinh_thanh",
+                       "dien_thoai_khac", "fax", "email_tru_so", "website"):
+                tru_so_keys.add(k)
+
     for b in blocks:
-        for r in (b.get("runs") or []):
-            k = (r.get("input") or {}).get("key")
-            if k in tax_inputs:
-                found.add(k)
-    assert found == tax_inputs, \
-        "7 ô thuế phần C mục 5 phải còn nguyên (thiếu %r)" % (tax_inputs - found)
+        _walk_runs(b.get("runs"))
+        for row in b.get("rows") or []:
+            for c in row.get("cells") or []:
+                _walk_runs(c.get("runs"))
+    assert {"thue_chi_tieu_cap_doi.chi_tieu_5_1_dia_chi_nhan_thong_bao_thue.dia_chi_nhan_thong_bao_thue",
+            "thue_chi_tieu_cap_doi.chi_tieu_5_2_tong_so_lao_dong.so_lao_dong"} <= c5_keys, c5_keys
+    assert "dia_chi_chi_tiet" in tru_so_keys, "mất nhóm trụ sở C.2"
+    # [Pin sync — F1-IN 2026-09-06] entry C5 PHẢI tồn tại (O1 adjudicate:
+    # c5_thue_chi_tieu_cap_doi thuộc nhóm 10 section USER-INPUT; W1 gap cũ
+    # đã được owner mở bằng quyết định O1 — docs/owner_decision_packet_v7.md)
     ext = entries_of("PLII_M02")
-    assert not [e for e in ext["entries"]
-                if ext["specs_by_id"][e["spec"]].get("section_id")
-                in ("c5_thue_chi_tieu_cap_doi",)], \
-        "PLII_M02: không được rebuild phần C mục 5 khi 7 ô đã map sẵn (W1 gap)"
+    assert [e for e in ext["entries"]
+            if ext["specs_by_id"][e["spec"]].get("section_id")
+            == "c5_thue_chi_tieu_cap_doi"], \
+        "PLII_M02: mất entry c5_thue_chi_tieu_cap_doi (O1 USER-INPUT)"
 
 
 @check("[D5.2] PLII_M02: 4 loop nganh + 2 grid thanh vien — pin occurrence giu nguyen")

@@ -426,7 +426,9 @@ def t_blocked_plii_m02():
         # thành viên hộ gia đình (P2 member-grid rebuild 10 cột, merge P2A;
         # ownership trạng thái mới: tools/test_member_grids_rebuild.py) nên
         # pin "nested-grid == 0" stale — cập nhật: đúng 2 nested-grid tv_hgd.
-        if sid.startswith("a7_thue_"):
+        if sid.startswith(("a7_thue_", "c5_thue_")):
+            # [Pin sync — F1-IN 2026-09-06] +c5_thue_chi_tieu_cap_doi (O1:
+            # 10 section USER-INPUT, D5.2=A Mục C cấp đổi)
             assert e["spec"].get("kind") == "fixed-matrix", \
                 "entry ngoài nhóm ngành phải là fixed-matrix: %r" % sid
             continue
@@ -443,8 +445,9 @@ def t_blocked_plii_m02():
     assert kinds.count("nested-grid") == 2, \
         "PLII_M02: đúng 2 nested-grid thành viên (P2 rebuild), thấy %d" % \
         kinds.count("nested-grid")
-    assert kinds.count("fixed-matrix") == 1, \
-        "PLII_M02: đúng 1 entry fixed-matrix thuế (D5.2), thấy %d" % \
+    # [Pin sync — F1-IN 2026-09-06] +c5_thue_chi_tieu_cap_doi (O1) -> 2
+    assert kinds.count("fixed-matrix") == 2, \
+        "PLII_M02: đúng 2 entry fixed-matrix thuế (D5.2 a7 + O1 c5), thấy %d" % \
         kinds.count("fixed-matrix")
     # [Pin sync — PLAN v7 F0.5] Evidence glue cũ ("sttho ten…so dinh danh",
     # B069/B126) đã biến mất DO DESIGN: P2 member-grid rebuild thay paragraph

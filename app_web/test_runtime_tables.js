@@ -88,7 +88,14 @@ const FIXTURES = [
   ['PLI_M05', 'nguon_von_dieule', 'fixed-matrix'],
   ['PLI_M12', 'nguon_von_dieule_sau_thay_doi', 'fixed-matrix'],
   ['PLI_M04', 'co_phan_duoc_quyen_chao_ban', 'fixed-matrix'],
-  ['PLII_M02', 'a7_thue_chi_tieu_cu_moi', 'fixed-matrix']
+  ['PLII_M02', 'a7_thue_chi_tieu_cu_moi', 'fixed-matrix'],
+  /* F1-IN (2026-09-06, O1): +M12 2 tài sản/cổ phần, +C5 cấp đổi PLII_M02,
+   * +M78 sản phẩm cung cấp thông tin (D6.4). */
+  ['PLI_M12', 'tai_san_gop_von_sau_thay_doi_vdl', 'fixed-matrix'],
+  ['PLI_M12', 'tai_san_gop_von_sau_thay_doi_von_dau_tu', 'fixed-matrix'],
+  ['PLI_M12', 'co_cau_loai_co_phan_sau_thay_doi', 'fixed-matrix'],
+  ['PLII_M02', 'c5_thue_chi_tieu_cap_doi', 'fixed-matrix'],
+  ['PLI_M78', 'san_pham_cung_cap_thong_tin', 'fixed-matrix']
 ];
 
 section('6. registry khớp census manifest (không tự chế section/kind)');

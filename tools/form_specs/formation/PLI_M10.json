@@ -1,108 +1,83 @@
 {
  "form_id": "PLI_M10",
  "group": "formation",
- "note": "Danh sach chu so huu huong loi (CSHHL) cua doanh nghiep. Chuyen khai bao inline REBUILD_TABLES['PLI_M10'] sang file spec DUNG DE them cot bi thieu: template production co 11 cot NHUNG KHONG CO cho ke khai QUYEN CHI PHOI. Header mau goc 12 cot (bi glue trong nguon Mau 9, block P216 'STTHọ và tênNgày, tháng, năm sinh...Chủ sở hữu hưởng lợi của doanh nghiệp2...Tỷ lệ sở hữu vốn điều lệTỷ lệ sở hữu cổ phần có quyền biểu quyết3Quyền chi phối4' + chan cot '123456789101112') xac dinh nhom 'Chủ sở hữu hưởng lợi của doanh nghiệp' gom 3 cot con: Tỷ lệ sở hữu vốn điều lệ | Tỷ lệ sở hữu cổ phần có quyền biểu quyết | QUYỀN CHI PHỐI. Chan trang 4 cua mau: 'Nếu doanh nghiệp xác định được chủ sở hữu hưởng lợi của doanh nghiệp theo quy định tại điểm b khoản 1 Điều 17 Nghị định số 168/2025/NĐ-CP thông qua quyền chi phối, doanh nghiệp ghi rõ một trong các quyền chi phối sau: bổ nhiệm, miễn nhiệm hoặc bãi nhiệm...' -> D2.5=A (docs/decision_registry.md packet D2): QUYEN CHI PHOI LA COT RIENG, khong ghi vao Ghi chú.",
- "gap_nghiepvu": "(a) Thu tu cot: spec giu nguyen thu tu cot production (Giấy tờ pháp lý của cá nhân dung SAU Địa chỉ liên lạc) thay vì thu tu mau goc (Số, ngày cấp, cơ quan cấp Giấy tờ pháp lý của cá nhân dung TRƯỚC Quốc tịch) — viec doi thu tu la rename layout pham vi Lead regen, khong co quyet dinh rieng; gap de owner chot khi regen. (b) ALIAS ten tag: manifest required_columns goi so_ngay_cap_co_quan_cap_gtpl/dia_chi_lien_lac/ngay_thang_nam_sinh/ty_le_so_huu_von_dieule/ty_le_co_phan_bieu_quyet, spec giu tag production so_giay_to/dia_chi/ngay_sinh/ty_le/ty_le_co_phan (migration additive); cot MOI dung dung tag canonical quyen_chi_phoi. (c) Cot 'Quyền chi phối' la text tu do (ghi ro mot trong cac quyen chi phoi theo chan trang 4) — UI chua co danh muc chon san (gap mo cho owner). (d) Template production khong co cot Chữ ký cho bang nay va header mau goc 12 cot cung khong co (cot cuoi la 'Ghi chú (nếu có)') nen D2.4=A KHONG ap dung — khong them cot chu_ky de tranh bia noi dung phap ly. (e) fields cua khai bao inline thieu ghi_chu (cot Ghi chú khong duoc dang ky field) — giu nguyen vi nam ngoai pham vi lane P2A; owner xem lai khi regen.",
+ "note": "Danh sach chu so huu huong loi (CSHHL) cua doanh nghiep. | F0L laneA (2026-09-06): MIGRATE SANG CAU TRUC TT 121/2026/TT-BTC (hieu luc 21/08/2026) — Điều 1 khoản 1 điểm e thay Mẫu số 10 Phụ lục I TT 68/2025 bằng Mẫu số 10 Phụ lục TT 121 (ảnh p49, 1 trang ngang, bảng 18 CỘT). Kind doi tu 'list' (12 cot 2025 production) sang 'nested-grid' 4 hang header: 3 hang nhan phap ly (cot 1-8 + cot 18 cao suot 3 hang; group 'Chủ sở hữu hưởng lợi của doanh nghiệp2' spans 9 cot 9-17; hang 2: 'Tỷ lệ sở hữu vốn điều lệ4' spans 3 + 'Tỷ lệ sở hữu cổ phần có quyền biểu quyết5' spans 3 + 3 cot nhan rs2; hang 3: Trực tiếp/Gián tiếp/Tổng x2) + HANG SO '1'..'18' voi 2 CONG THUC '11=9+10' va '14=12+13' (verbatim p49). Cot MOI so voi 2025: 8-10 (Ty le VDL Trực tiếp/Gián tiếp/Tổng), 11-13 (Ty le CP co quyen bieu quyet Trực tiếp/Gian tiep/Tong), 14 Thành viên hợp danh6 (Tích dấu X - fn6), 15 Nhóm cá nhân có quan hệ gia đình/họ hàng7, 16 Kiểm soát doanh nghiệp8, 17 Người quản lý doanh nghiệp3. Cot 2025 MAT: 'Quyền chi phối' (thay bằng 'Kiểm soát doanh nghiệp' - fn8 liệt kê đúng các quyền chi phối cũ), 'Ghi chú', 2 cot ty le don (thay bằng 6 cot trực tiếp/gián tiếp/tổng). Loop giu CANONICAL 'ds_cshhl'; semantic_key 'ds_cshhl_doanh_nghiep' (khop census manifest section).",
+ "gap_nghiepvu": "(a) TRANSCRIPTION RISK: chan trang chu thich 1-9 cua bang 18 cot duoc doc TRUC QUANG tu anh scan 150dpi (p49) va dan vao source docx - chu thich 3,4,5,7 dai va can nguoi proofread doi lai voi 121-btc.signed.pdf truoc release; chu thich 1,2,6,9 ngan, do tin cao. (b) Chu thich 2 2026 dan Dieu 3 ND 296/2026 (khong con Dieu 17 ND 168/2025 nhu 2025) - thay doi co so phap ly xac dinh CSHHL. (c) Ten tag moi (ty_le_von_dieule_truc_tiep/gian_tiep/tong, ty_le_co_phan_truc_tiep/gian_tiep/tong, thanh_vien_hop_danh, nhom_ca_nhan_quan_he, kiem_soat_doanh_nghiep, nguoi_quan_ly_doanh_nghiep) la mo rong tu tag production cu (ty_le, ty_le_co_phan, quyen_chi_phoi) — CAN LEAD/OWNER CHOT lai neu muon alias khac; khong tag nao trung voi tag khac trong cung form. (d) 2025 gap (a) cu 'thu tu cot Giấy tờ pháp lý sau Địa chỉ' KHONG con thuc luong: spec 2026 theo DUNG thu tu mau goc (GTPL cot 5 truoc Quốc tịch cot 6, p49). (e) 2025 gap (d) 'khong co cot Chữ ký' van dung: mau 2026 p49 cung khong co cot chu ky. (f) Hang 'Tong' (11=9+10, 14=12+13) gan the input percent binh thuong — nested-grid v1 khong co totals trong bang; cong thuc chi la nhan tren hang so (deterministic in-an). (g) Nguon docx M10 van la bo khung mat luoi (khong the tai dung w:tbl trong NGUON vi rebuild se tao trung lap bang voi spec) — bang 18 cot duoc SPEC REBUILD dung cau truc 2026 luc regen: header 4 hang + 5 hang trong + hang loop. (h) Cot 15 'Nhóm cá nhân có quan hệ gia đình/họ hàng7' (fn7) yeu cau ghi ro loai quan he + ty le — text tu do, UI chua co danh muc (gap mo cho owner).",
  "tables": [
   {
+   "kind": "nested-grid",
    "spec": {
-    "id": "ds_cshhl",
-    "kind": "list",
-    "detect": [
-     "stt",
-     "ho va ten",
-     "gioi tinh",
-     "quyen chi phoi"
-    ],
-    "stt_tag": true,
-    "cols": [
+    "id": "ds_cshhl_2026",
+    "kind": "nested-grid",
+    "section_id": "ds_cshhl_doanh_nghiep",
+    "semantic_key": "ds_cshhl_doanh_nghiep",
+    "loop": "ds_cshhl",
+    "stt": {"mode": "generated", "col_index": 0},
+    "header_rows": [
      [
-      "^stt$",
-      null
+      {"text": "STT", "rowspan": 3},
+      {"text": "Họ và tên", "rowspan": 3},
+      {"text": "Ngày, tháng, năm sinh", "rowspan": 3},
+      {"text": "Giới tính", "rowspan": 3},
+      {"text": "Số, ngày cấp, cơ quan cấp Giấy tờ pháp lý của cá nhân1", "rowspan": 3},
+      {"text": "Quốc tịch", "rowspan": 3},
+      {"text": "Dân tộc", "rowspan": 3},
+      {"text": "Địa chỉ liên lạc", "rowspan": 3},
+      {"text": "Chủ sở hữu hưởng lợi của doanh nghiệp2", "rowspan": 1, "colspan": 9},
+      {"text": "Người quản lý doanh nghiệp3", "rowspan": 3}
      ],
      [
-      "ho va ten|ho ten|ten co dong",
-      "ho_ten"
+      {"text": "Tỷ lệ sở hữu vốn điều lệ4", "rowspan": 1, "colspan": 3},
+      {"text": "Tỷ lệ sở hữu cổ phần có quyền biểu quyết5", "rowspan": 1, "colspan": 3},
+      {"text": "Thành viên hợp danh6", "rowspan": 2},
+      {"text": "Nhóm cá nhân có quan hệ gia đình/họ hàng7", "rowspan": 2},
+      {"text": "Kiểm soát doanh nghiệp8", "rowspan": 2}
      ],
      [
-      "sinh|nam sinh",
-      "ngay_sinh"
+      {"text": "Trực tiếp", "rowspan": 1},
+      {"text": "Gián tiếp", "rowspan": 1},
+      {"text": "Tổng", "rowspan": 1},
+      {"text": "Trực tiếp", "rowspan": 1},
+      {"text": "Gián tiếp", "rowspan": 1},
+      {"text": "Tổng", "rowspan": 1}
      ],
      [
-      "gioi tinh",
-      "gioi_tinh"
-     ],
-     [
-      "quoc tich|quoc gia",
-      "quoc_tich"
-     ],
-     [
-      "dan toc",
-      "dan_toc"
-     ],
-     [
-      "thuong tru|noi o|dia chi",
-      "dia_chi"
-     ],
-     [
-      "giay to phap ly|dinh danh|cccd|ma so",
-      "so_giay_to"
-     ],
-     [
-      "ty le so huu co phan",
-      "ty_le_co_phan"
-     ],
-     [
-      "ty le",
-      "ty_le"
-     ],
-     [
-      "quyen chi phoi",
-      "quyen_chi_phoi"
-     ],
-     [
-      "ghi chu",
-      "ghi_chu"
-     ],
-     [
-      "ky ten|chu ky",
-      "chu_ky"
+      {"text": "1"}, {"text": "2"}, {"text": "3"}, {"text": "4"}, {"text": "5"},
+      {"text": "6"}, {"text": "7"}, {"text": "8"}, {"text": "9"}, {"text": "10"},
+      {"text": "11=9+10"}, {"text": "12"}, {"text": "13"}, {"text": "14=12+13"},
+      {"text": "15"}, {"text": "16"}, {"text": "17"}, {"text": "18"}
      ]
     ],
-    "loop": "ds_cshhl",
-    "fields": [
-     "ho_ten",
-     "ngay_sinh",
-     "gioi_tinh",
-     "quoc_tich",
-     "dan_toc",
-     "dia_chi",
-     "so_giay_to",
-     "ty_le",
-     "ty_le_co_phan",
-     "quyen_chi_phoi"
+    "columns": [
+     {"header": "Họ và tên", "tag": "ho_ten", "col_index": 1, "input_type": "text", "required": true},
+     {"header": "Ngày, tháng, năm sinh", "tag": "ngay_sinh", "col_index": 2, "input_type": "text"},
+     {"header": "Giới tính", "tag": "gioi_tinh", "col_index": 3, "input_type": "text"},
+     {"header": "Số, ngày cấp, cơ quan cấp Giấy tờ pháp lý của cá nhân1", "tag": "so_giay_to", "col_index": 4, "input_type": "text"},
+     {"header": "Quốc tịch", "tag": "quoc_tich", "col_index": 5, "input_type": "text"},
+     {"header": "Dân tộc", "tag": "dan_toc", "col_index": 6, "input_type": "text"},
+     {"header": "Địa chỉ liên lạc", "tag": "dia_chi", "col_index": 7, "input_type": "text"},
+     {"header": "Trực tiếp", "tag": "ty_le_von_dieule_truc_tiep", "col_index": 8, "input_type": "percent"},
+     {"header": "Gián tiếp", "tag": "ty_le_von_dieule_gian_tiep", "col_index": 9, "input_type": "percent"},
+     {"header": "Tổng", "tag": "ty_le_von_dieule_tong", "col_index": 10, "input_type": "percent"},
+     {"header": "Trực tiếp", "tag": "ty_le_co_phan_truc_tiep", "col_index": 11, "input_type": "percent"},
+     {"header": "Gián tiếp", "tag": "ty_le_co_phan_gian_tiep", "col_index": 12, "input_type": "percent"},
+     {"header": "Tổng", "tag": "ty_le_co_phan_tong", "col_index": 13, "input_type": "percent"},
+     {"header": "Thành viên hợp danh6", "tag": "thanh_vien_hop_danh", "col_index": 14, "input_type": "text"},
+     {"header": "Nhóm cá nhân có quan hệ gia đình/họ hàng7", "tag": "nhom_ca_nhan_quan_he", "col_index": 15, "input_type": "text"},
+     {"header": "Kiểm soát doanh nghiệp8", "tag": "kiem_soat_doanh_nghiep", "col_index": 16, "input_type": "text"},
+     {"header": "Người quản lý doanh nghiệp3", "tag": "nguoi_quan_ly_doanh_nghiep", "col_index": 17, "input_type": "text"}
     ],
-    "width_policy": "content",
-    "notes": " | [5R3 Lead merge bfd680c] width_policy=content ĐÃ SET + regen cùng commit (12 cột tái phân bổ theo nội dung, sàn 567 twips) — xóa blocker policies JSON #ID7."
+    "discriminator": null,
+    "totals": [],
+    "width_policy": "content"
    },
    "pos": "after",
    "anchor": "^mau so 10$",
    "no_default_drops": true,
-   "headers": [
-    "STT",
-    "Họ và tên",
-    "Ngày, tháng, năm sinh",
-    "Giới tính",
-    "Quốc tịch",
-    "Dân tộc",
-    "Địa chỉ liên lạc",
-    "Giấy tờ pháp lý của cá nhân",
-    "Tỷ lệ sở hữu vốn điều lệ (%)",
-    "Tỷ lệ sở hữu cổ phần có quyền biểu quyết (%)",
-    "Quyền chi phối",
-    "Ghi chú"
-   ],
-   "notes": "P2A (2026-08-27): khac biet so voi khai bao inline = (1) them cot 11 'Quyền chi phối' gan the {quyen_chi_phoi} (D2.5=A, NĐ 168/2025 điểm b khoản 1 Điều 17 qua chân trang 4 của mẫu); (2) detect them token 'quyen chi phoi' de chan som truong hop header thieu cot. Khong doi cot nao khac, khong doi thu tu. QUYET DINH ap dung: D2.5=A (cot rieng, khong gop vao Ghi chú); D2.4=A khong ap dung (nguon khong co cot chu ky cho bang nay) — docs/decision_registry.md packet D2; evidence: census manifest section ds_cshhl_doanh_nghiep + nguon DN_PL1_Mau_09_*.docx P216 (header glue Mau 10) + chan trang 4. Nguon Mau 10 khong con paragraph header nao (bang mat toan bo khi convert) nen khong can trim/drop; no_default_drops=true an toan theo convention R3B1, da xac minh REBUILD_DROP_DEFAULT khong khop paragraph nao trong nguon. LUU Y ky thuat: entry kind=list khong dung co che legal_status.blocked cua loader (chi cho 3 kind moi) nen quyet dinh duoc ghi o notes nay."
+   "legal_status": {
+    "blocked": false,
+    "ref": "TT 121/2026/TT-BTC Điều 1 khoản 1 điểm e (ảnh p2) thay Mẫu số 10; cấu trúc 18 cột + hang so 1..18 (11=9+10, 14=12+13) + chan trang chu thich 1-9: anh p49 (121-btc.signed.pdf sha256 87f6989d...). Chu thich 2 dan Dieu 3 ND 296/2026/NĐ-CP; chu thich 3 dan Dieu 17 ND 168/2025 SDBS tai Dieu 3 ND 296/2026. Quyet dinh cu D2.5=A (Quyền chi phối la cot rieng) thay the boi cot 'Kiểm soát doanh nghiệp8' cung noi dung fn8; D2.4=A van khong ap dung (khong co cot chu ky)."
+   }
   }
  ]
 }

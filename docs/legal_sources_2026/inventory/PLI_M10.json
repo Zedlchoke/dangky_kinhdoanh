@@ -1,0 +1,133 @@
+{
+  "form_id": "PLI_M10",
+  "wave": "F0L current-law migration — Lane A",
+  "checked_date": "2026-09-06",
+  "source_2025": "06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn/DN_PL1_Mau_10_danh_sach_chu_so_huu_huong_loi_cua_doanh_nghiep.docx",
+  "source_2026": {
+    "van_ban": "TT 121/2026/TT-BTC",
+    "phan_luc": "Phụ lục, Mẫu số 10 — DANH SÁCH CHỦ SỞ HỮU HƯỞNG LỢI CỦA DOANH NGHIỆP",
+    "pages": "p49",
+    "sha256": "87f6989d209310b8c6fbec72a182c476bb83a462ce96d74c5218c26605342faf",
+    "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/8/121-btc.signed.pdf"
+  },
+  "pdf_page": "p2 (Điều 1 khoản 1 điểm e) + p49 (1 trang ngang)",
+  "page_inventory": [
+    "p49: 'Mẫu số 10' góc phải; tiêu đề 'DANH SÁCH CHỦ SỞ HỮU HƯỞNG LỢI CỦA DOANH NGHIỆP'; bảng 18 cột — header 3 hàng (cột 1-8 + 18 cao suốt; group 'Chủ sở hữu hưởng lợi của doanh nghiệp2' spans cột 9-17; 'Tỷ lệ sở hữu vốn điều lệ4' spans 9-11; 'Tỷ lệ sở hữu cổ phần có quyền biểu quyết5' spans 12-14; Thành viên hợp danh6 / Nhóm cá nhân có quan hệ gia đình/họ hàng7 / Kiểm soát doanh nghiệp8), hàng số 1..18 với công thức '11=9+10' và '14=12+13', 1 hàng trống; dòng ngày tháng; khối chữ ký 'NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT/ CHỦ TỊCH CÔNG TY/CHỦ TỊCH HỘI ĐỒNG THÀNH VIÊN/ CHỦ TỊCH HỘI ĐỒNG QUẢN TRỊ CỦA CÔNG TY (Ký và ghi họ tên)9'; chân trang chú thích 1-9"
+  ],
+  "old_headings": ["Danh sách chủ sở hữu hưởng lợi của doanh nghiệp (2025: bảng 1 hàng tiêu đề 12 cột production: STT, Họ và tên, Ngày/tháng/năm sinh, Giới tính, Quốc tịch, Dân tộc, Địa chỉ liên lạc, Giấy tờ pháp lý của cá nhân, Tỷ lệ sở hữu vốn điều lệ (%), Tỷ lệ sở hữu cổ phần có quyền biểu quyết (%), Quyền chi phối, Ghi chú)"],
+  "new_headings": ["DANH SÁCH CHỦ SỞ HỮU HƯỞNG LỢI CỦA DOANH NGHIỆP (p49) + header 4 hàng: 3 hàng nhãn + hàng số 1..18 (11=9+10, 14=12+13)"],
+  "old_fields": ["ds_cshhl loop 11 tags (2025 production template): ho_ten, ngay_sinh, gioi_tinh, quoc_tich, dan_toc, dia_chi, so_giay_to, ty_le, ty_le_co_phan, quyen_chi_phoi, ghi_chu"],
+  "new_fields": ["ds_cshhl loop 17 tags (nested-grid 18 cột): ho_ten, ngay_sinh, gioi_tinh, so_giay_to, quoc_tich, dan_toc, dia_chi, ty_le_von_dieule_truc_tiep, ty_le_von_dieule_gian_tiep, ty_le_von_dieule_tong, ty_le_co_phan_truc_tiep, ty_le_co_phan_gian_tiep, ty_le_co_phan_tong, thanh_vien_hop_danh, nhom_ca_nhan_quan_he, kiem_soat_doanh_nghiep, nguoi_quan_ly_doanh_nghiep + 4 field trang ký (dia_diem_ky, ngay_ky_vb, thang_ky_vb, nam_ky_vb). Regen --one: 21 fields, 1 bảng động, 18 cột vật lý"],
+  "old_tables": ["Bảng 12 cột 1 hàng tiêu đề (spec list cũ, tools/form_specs/formation/PLI_M10.json trước sửa)"],
+  "new_tables": ["Bảng 18 cột: header 4 hàng (3 nhãn rowspan/colspan + hàng số '1'..'18' với '11=9+10', '14=12+13') + 5 hàng trống + hàng loop {#ds_cshhl} — cấu trúc vật lý khớp p49 (đã dump template sau regen: 10 hàng × 18 cột grid, R3 = hàng số)"],
+  "added": [
+    {
+      "vi_tri_moi": "Cột 9-11 (nhóm 'Tỷ lệ sở hữu vốn điều lệ4')",
+      "noi_dung": "Trực tiếp (9) / Gián tiếp (10) / Tổng (11=9+10)",
+      "evidence": "p49 hàng số '9 | 10 | 11=9+10'"
+    },
+    {
+      "vi_tri_moi": "Cột 12-14 (nhóm 'Tỷ lệ sở hữu cổ phần có quyền biểu quyết5')",
+      "noi_dung": "Trực tiếp (12) / Gián tiếp (13) / Tổng (14=12+13)",
+      "evidence": "p49 hàng số '12 | 13 | 14=12+13'"
+    },
+    {
+      "vi_tri_moi": "Cột 15 'Thành viên hợp danh6'",
+      "noi_dung": "Tích dấu X nếu chủ sở hữu hưởng lợi là thành viên hợp danh (fn6)",
+      "evidence": "p49: 'Thành viên hợp danh6' + chú thích 6 'Tích dấu X nếu chủ sở hữu hưởng lợi là thành viên hợp danh.'"
+    },
+    {
+      "vi_tri_moi": "Cột 16 'Nhóm cá nhân có quan hệ gia đình/họ hàng7'",
+      "noi_dung": "fn7: ghi rõ mối quan hệ gia đình/hợp đồng tại cột 16, tỷ lệ kê khai tại cột 9,10,11 hoặc 12,13,14",
+      "evidence": "p49 chú thích 7"
+    },
+    {
+      "vi_tri_moi": "Cột 17 'Kiểm soát doanh nghiệp8'",
+      "noi_dung": "Cá nhân kiểm soát ghi một hoặc nhiều quyền: bổ nhiệm/miễn nhiệm/bãi nhiệm..., sửa đổi bổ sung điều lệ, thay đổi cơ cấu tổ chức, quyết định chính sách tài chính-đầu tư-hoạt động, tổ chức lại/giải thể",
+      "evidence": "p49 'Kiểm soát doanh nghiệp8' + chú thích 8"
+    },
+    {
+      "vi_tri_moi": "Cột 18 'Người quản lý doanh nghiệp3'",
+      "noi_dung": "Kê khai người quản lý doanh nghiệp (xác định theo Điều 3 NĐ 296/2026 khi không có cá nhân đáp ứng tiêu chí Điều 17 NĐ 168/2025)",
+      "evidence": "p49 'Người quản lý doanh nghiệp3' + chú thích 2, 3"
+    },
+    {
+      "vi_tri_moi": "Hàng số '1'..'18' + 2 công thức; dòng ngày tháng; khối chữ ký; chân trang chú thích 1-9",
+      "noi_dung": "Cấu trúc chân mẫu 2026 đầy đủ (2025 source/template không có gì sau bảng ngoài 2 paragraph rác convert)",
+      "evidence": "p49 toàn trang"
+    }
+  ],
+  "removed": [
+    {
+      "vi_tri_cu": "Cột 'Quyền chi phối' (2025 production, D2.5=A cũ)",
+      "van_ban_cu": "Quyền chi phối (header cột 11 của template 12 cột 2025)",
+      "van_ban_moi": "Không còn cột riêng — nội dung chuyển thành 'Kiểm soát doanh nghiệp8' (cột 17) với fn8 liệt kê đúng nhóm quyền cũ (bổ nhiệm/miễn nhiệm/bãi nhiệm, sửa đổi điều lệ, cơ cấu tổ chức, chính sách tài chính-đầu tư-hoạt động, tổ chức lại/giải thể)",
+      "evidence": "p49 không có cột 'Quyền chi phối'; có 'Kiểm soát doanh nghiệp8'"
+    },
+    {
+      "vi_tri_cu": "Cột 'Ghi chú' (2025 cột 12)",
+      "van_ban_cu": "Ghi chú",
+      "van_ban_moi": "Không có trong 18 cột 2026 (p49)",
+      "evidence": "p49 hàng số kết thúc ở 18 = Người quản lý doanh nghiệp; không có Ghi chú"
+    },
+    {
+      "vi_tri_cu": "2 cột đơn 'Tỷ lệ sở hữu vốn điều lệ (%)' và 'Tỷ lệ sở hữu cổ phần có quyền biểu quyết (%)' (2025)",
+      "van_ban_moi": "Mỗi tỷ lệ tách 3 cột Trực tiếp/Gián tiếp/Tổng",
+      "evidence": "p49 nhóm cột 9-11, 12-14"
+    },
+    {
+      "vi_tri_cu": "2 paragraph rác convert trong source 2025: '15 - Người đại diện theo pháp luật...' và '- Trường hợp đăng ký chuyển đổi loại hình doanh nghiệp...'",
+      "van_ban_moi": "Thay bằng chân mẫu 2026 (ngày tháng + chữ ký + chú thích 1-9) theo p49",
+      "evidence": "p49"
+    }
+  ],
+  "changed": [
+    {
+      "vi_tri_cu_moi": "Chú thích căn cứ pháp lý của bảng (p49 chân trang)",
+      "van_ban_cu": "(2025, chan trang 4 mau) 'Nếu doanh nghiệp xác định được chủ sở hữu hưởng lợi ... theo điểm b khoản 1 Điều 17 Nghị định số 168/2025/NĐ-CP thông qua quyền chi phối ...'",
+      "van_ban_moi": "'2 Chủ sở hữu hưởng lợi của doanh nghiệp được xác định theo quy định tại Điều 3 Nghị định số 296/2026/NĐ-CP.' + '3 Trường hợp không có cá nhân đáp ứng tiêu chí tại khoản 1, khoản 2 Điều 17 Nghị định số 168/2025/NĐ-CP được sửa đổi, bổ sung tại Điều 3 Nghị định số 296/2026/NĐ-CP, doanh nghiệp xác định một cá nhân là người quản lý doanh nghiệp có quyền hạn lớn nhất...'",
+      "evidence": "p49 chú thích 2, 3 — căn cứ CSHHL chuyển sang NĐ 296/2026"
+    },
+    {
+      "vi_tri_cu_moi": "Cột 'Giấy tờ pháp lý của cá nhân' (fn1) + ràng buộc với Quốc tịch/Dân tộc",
+      "van_ban_cu": "không có ràng buộc cột",
+      "van_ban_moi": "'1 Nếu cột số 5 kê khai Số định danh cá nhân thì không phải kê khai các cột số 6, 7.'",
+      "evidence": "p49 chú thích 1"
+    }
+  ],
+  "no_delta_vung": [
+    "7 cột nhận dạng đầu (Họ và tên, Ngày tháng năm sinh, Giới tính, Giấy tờ pháp lý, Quốc tịch, Dân tộc, Địa chỉ liên lạc) GIỐNG 2025 về ý nghĩa — chỉ đổi vị trí vật lý (Giấy tờ pháp lý đứng TRƯỚC Quốc tịch theo mẫu gốc, khác production 2025)"
+  ],
+  "canonical_key_impact": [
+    "- Keys 2025 MẤT khỏi PLI_M10: ty_le, ty_le_co_phan, quyen_chi_phoi, ghi_chu (4 tag cũ của loop ds_cshhl)",
+    "- Keys MỚI: ty_le_von_dieule_truc_tiep, ty_le_von_dieule_gian_tiep, ty_le_von_dieule_tong, ty_le_co_phan_truc_tiep, ty_le_co_phan_gian_tiep, ty_le_co_phan_tong, thanh_vien_hop_danh, nhom_ca_nhan_quan_he, kiem_soat_doanh_nghiep, nguoi_quan_ly_doanh_nghiep + 4 key trang ký (dia_diem_ky/ngay_ky_vb/thang_ky_vb/nam_ky_vb — chung nhóm key ngày ký của các mẫu khác)",
+    "- Keys GIỮ: ho_ten, ngay_sinh, gioi_tinh, so_giay_to, quoc_tich, dan_toc, dia_chi; loop 'ds_cshhl' giữ nguyên (canonical); semantic_key mới 'ds_cshhl_doanh_nghiep' theo census manifest",
+    "- LƯU Ý: PLI_M11 (bị bãi bỏ) cũng dùng loop ds_cshhl — sau khi Lead gỡ M11 khỏi catalog thì loop chỉ còn ở M10"
+  ],
+  "ui_impact": [
+    "UI PLI_M10 phải dựng lại grid danh sách: 17 cột nhập + STT tự sinh; các cột tỷ lệ tách trực tiếp/gián tiếp/tổng (tổng có gợi ý = trực tiếp + gián tiếp theo công thức in trên mẫu); cột Thành viên hợp danh nhập 'X'; dẫn ngữ chú thích 1 (nếu số định danh cá nhân thì không kê khai quốc tịch/dân tộc) và chú thích 6-8."
+  ],
+  "draft_migration": [
+    "Draft cũ ds_cshhl có dữ liệu ty_le/ty_le_co_phan/quyen_chi_phoi/ghi_chu: không suy diễn chuyển vào ô nào trong 6 cột tỷ lệ mới (trực tiếp/gián tiếp phải do người kê khai tách) — đề nghị workflow hiển thị màn hình rà soát; các tag nhận dạng (ho_ten, so_cccd...) giữ nguyên nên phần nhận dạng migrate 1:1."
+  ],
+  "validation_impact": [
+    "Ràng buộc mới có thể thêm theo chú thích 1 (cột 5 = số định danh cá nhân → cột 6,7 quốc tịch/dân tộc trống) — hiện app chưa có cross-field này; công thức '11=9+10'/'14=12+13' là gợi ý hiển thị, không tự động ghi đè giá trị người kê khai (mẫu in công thức, không bắt buộc máy tính)."
+  ],
+  "docx_impact": [
+    "Source DOCX (bo khung mat luoi) đã sửa phần chân mẫu theo p49: thay 2 paragraph rác bằng dòng ngày tháng + khối chữ ký (Ký và ghi họ tên)9 + chú thích 1-9. BẢNG 18 CỘT KHÔNG dựng trong source docx mà do spec nested-grid rebuild lúc regen — lý do: pipeline rebuild chèn bảng mới tại anchor mà không xóa bảng có sẵn trong source, dựng bảng trong source sẽ tạo TRÙNG LẬP bảng. Template regen đã dump xác minh: 10 hàng × 18 cột, R0-R2 header spans đúng, R3 hàng số có '11=9+10'/'14=12+13', R4-R8 trống, R9 loop 17 tag. CHÚ Ý TRANSCRIPTION: chú thích 3,4,5,7 dài, đọc trực quang từ scan 150dpi — cần proofread đối chiếu PDF gốc trước release."
+  ],
+  "excel_impact": [
+    "Export Excel cột ds_cshhl tăng 11 → 17 trường; cột quyen_chi_phoi/ghi_chu ngừng xuất."
+  ],
+  "test_evidence": [
+    "tools/test_current_law_migration.py: (i) fingerprint 2026 — source M10 chứa 'DANH SÁCH CHỦ SỞ HỮU HƯỞNG LỢI CỦA DOANH NGHIỆP', spec M10 có đủ 17 tag + header_rows hàng số chứa '11=9+10' và '14=12+13', template regen 18 cột; (ii) fingerprint 2025 phải MẤT — spec/source/template KHÔNG còn 'Quyền chi phối', KHÔNG còn cột 'Ghi chú' trong bảng ds_cshhl, KHÔNG còn tag 'ty_le'/'ty_le_co_phan' đơn."
+  ],
+  "source_quote": [
+    "p49 tiêu đề: 'DANH SÁCH CHỦ SỞ HỮU HƯỞNG LỢI CỦA DOANH NGHIỆP'",
+    "p49 hàng số: '1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11=9+10 | 12 | 13 | 14=12+13 | 15 | 16 | 17 | 18'",
+    "p49 header nhóm: 'Chủ sở hữu hưởng lợi của doanh nghiệp2' spans; 'Tỷ lệ sở hữu vốn điều lệ4'; 'Tỷ lệ sở hữu cổ phần có quyền biểu quyết5'; 'Thành viên hợp danh6'; 'Nhóm cá nhân có quan hệ gia đình/họ hàng7'; 'Kiểm soát doanh nghiệp8'; 'Người quản lý doanh nghiệp3'",
+    "p49 chú thích 2: 'Chủ sở hữu hưởng lợi của doanh nghiệp được xác định theo quy định tại Điều 3 Nghị định số 296/2026/NĐ-CP.'",
+    "p49 chú thích 6: 'Tích dấu X nếu chủ sở hữu hưởng lợi là thành viên hợp danh.'",
+    "p2, Điều 1 khoản 1 điểm e: 'Thay thế Mẫu số 10 Phụ lục I ban hành kèm theo Thông tư số 68/2025/TT-BTC bằng Mẫu số 10 Phụ lục ban hành kèm theo Thông tư này;'"
+  ]
+}

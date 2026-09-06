@@ -210,10 +210,7 @@ app/data/blocks/PLII_M25.json
 app/data/blocks/PLII_M26.json
 app/data/blocks/PLII_M27.json
 app/data/blocks/PLII_M28.json
-app/data/form_maps.js
-app/data/form_maps.json
 app/data/questionnaire/PLI_M72.json
-app/data/table_specs/manifest.json
 app/data/table_specs/fragments/t0_a.json
 app/data/table_specs/fragments/t0_b.json
 app/data/use_cases.json
@@ -284,7 +281,6 @@ PLAN.md
 requirements-dev.txt
 tools/audit_blocks_check.py
 tools/audit_engine_test.py
-tools/build_form_maps.py
 tools/census/build_manifest.py
 tools/census/check_layout_l1.py
 tools/census/numbering_audit.py
@@ -337,7 +333,6 @@ tools/phase5r_table_policies.json
 tools/questionnaire/build_questionnaire.py
 tools/questionnaire/clusters/thanh_lap_doanh_nghiep.json
 tools/questionnaire/schema.py
-tools/release_runner.py
 tools/test_cap_von_specs.py
 tools/test_docx_layout_signatures.py
 tools/test_excel_export.py
@@ -498,8 +493,8 @@ docs/legal_sources_2026/296_2026_nd-cp_23072026-signed.signed.pdf
 docs/legal_sources_2026/68-btc.pdf
 docs/legal_sources_2026/168nd.signed.pdf
 tools/test_current_law_catalog.py
+app/data/form_maps.js
+app/data/form_maps.json
+app/data/table_specs/manifest.json
 tools/build_form_maps.py
 tools/release_runner.py
-app/data/table_specs/manifest.json
-app/data/form_maps.json
-app/data/form_maps.js

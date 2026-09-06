@@ -431,7 +431,7 @@ window.FORM_MAPS = {
   "dynamic_tables": [
    {
     "id": "nganh_bo_sung",
-    "table_index": 1,
+    "table_index": 2,
     "header_row": 0,
     "template_row": 5,
     "loop": "nganh_bo_sung",
@@ -455,7 +455,7 @@ window.FORM_MAPS = {
    },
    {
     "id": "nganh_xoa_bo",
-    "table_index": 2,
+    "table_index": 3,
     "header_row": 0,
     "template_row": 5,
     "loop": "nganh_xoa_bo",
@@ -479,7 +479,7 @@ window.FORM_MAPS = {
    },
    {
     "id": "nganh_sua_doi_chi_tiet",
-    "table_index": 3,
+    "table_index": 4,
     "header_row": 0,
     "template_row": 5,
     "loop": "nganh_sua_doi_chi_tiet",
@@ -503,7 +503,7 @@ window.FORM_MAPS = {
    },
    {
     "id": "ndd_uy_quyen_sau_thay_doi",
-    "table_index": 4,
+    "table_index": 5,
     "template_row": 7,
     "loop": "ds_ndd_uy_quyen_sau_thay_doi",
     "columns": [
@@ -573,7 +573,7 @@ window.FORM_MAPS = {
     "id": "nguon_von_dieule_sau_thay_doi",
     "semantic_key": "nguon_von_dieu_le_sau_thay_doi",
     "section_id": "nguon_von_dieule_sau_thay_doi",
-    "table_index": 0,
+    "table_index": 1,
     "columns": [
      {
       "col": 0,
@@ -648,7 +648,7 @@ window.FORM_MAPS = {
     "id": "ndd_uy_quyen_sau_thay_doi",
     "semantic_key": "ds_ndd_uy_quyen_sau_thay_doi",
     "section_id": "ndd_uy_quyen_sau_thay_doi",
-    "table_index": 4,
+    "table_index": 5,
     "loop": "ds_ndd_uy_quyen_sau_thay_doi",
     "header_rows": [
      [

@@ -168,7 +168,13 @@ PLII_M07_HEADERS = ["STT", "Tên thành viên", "Quốc tịch", "Nơi ở hiệ
 
 ANCHOR_ENTRIES = {   # entry theo anchor (không occurrence) -> khớp blocks + nguồn
     "PLI_M06": "thong tin ve giay chung nhan dang ky dau tu",
-    "PLI_M07": r"^mau so 7$",
+    # [Pin sync — F0L 2026-09-06] '^mau so 7$' -> '^i\. co dong sang lap la
+    # ca nhan$': premise cũ = M07 stub 2 dòng, entry people anchor vào nhãn
+    # 'Mẫu số 7'. Hiện trạng: N-v4 (laneA2, 0f5e9f4) dựng lại M07 theo TT 68
+    # p49-50 — spec đổi anchor sang heading mục I; evidence: anchor mới khớp
+    # nguồn [3] và blocks [3] đúng 1 lần mỗi bên (verify block_folds +
+    # python-docx tại worktree final-integration).
+    "PLI_M07": r"^i\. co dong sang lap la ca nhan$",
     "PLI_M08": "thong tin ve giay chung nhan dang ky dau tu",
     # [Pin sync — F0L] PLI_M10 chuyển sang anchor tiêu đề 2026 — pin riêng
     # trong t_m10_2026_contract (kind nested-grid, không còn ^mau so 10$).

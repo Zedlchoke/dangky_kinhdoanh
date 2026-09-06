@@ -1,6 +1,8 @@
 {
- "comment": "[WAVE v7 HEADER-NAME-SYNC 2026-09-05] Registry band đầu trang mirror read-only — NGUỒN CHÂN LÝ DUY NHẤT cho generator (bind token vào ô band), converter blocks (run mirror), gate (detector D17) và test UI. Census: docs/audits/ + /tmp/header_name_census.json (216 occurrence / 87 form; 22 fillable-header-slot). Quy tắc owner: tên chủ thể nhập MỘT LẦN ở thân; band là mirror của cùng canonical key; KHÔNG tạo input/tab-stop thứ hai. Mỗi entry: form_id -> {key, label, reason}. cell luôn là '0,0' (ô trái band trên).",
+ "comment": "[WAVE v7 HEADER-NAME-SYNC 2026-09-05] Registry band đầu trang mirror read-only — NGUỒN CHÂN LÝ DUY NHẤT cho generator (bind token vào ô band), converter blocks (run mirror), gate (detector D17) và test UI. Census: docs/audits/ + /tmp/header_name_census.json (216 occurrence / 87 form; 22 fillable-header-slot). [integ(F0L) 2026-09-06: +PLI_M12 (current-law TT 121/2026, ảnh p50) -> 23 fillable-header-slot; 21 bind + 2 BLOCKED_OWNER; census docs phiên bản mới docs/audits/header_name_census_f0l_2026-09-06.*]. Quy tắc owner: tên chủ thể nhập MỘT LẦN ở thân; band là mirror của cùng canonical key; KHÔNG tạo input/tab-stop thứ hai. Mỗi entry: form_id -> {key, label, reason}. cell luôn là '0,0' (ô trái band trên).",
  "forms": {
+  "PLI_M12":  {"key": "dn.ten_tieng_viet",      "label": "TÊN DOANH NGHIỆP",
+               "reason": "[integ(F0L) 2026-09-06] census F0L: band fillable MỚI ở trang đầu sau migrate current-law TT 121/2026/TT-BTC (ảnh p50, L-2026); nguồn mới có khối 4 paragraph header chuẩn, thân có {dn.ten_tieng_viet} (form_maps fields[6]) -> band mirror đúng quy tắc owner. Premise cũ 'nguồn mất ô tên' không còn đúng"},
   "PLI_M13":  {"key": "dn.ten_tieng_viet",      "label": "TÊN DOANH NGHIỆP",
                "reason": "census 2026-09-05: band fillable, thân có {dn.ten_tieng_viet} (verify token + form_maps + blocks)"},
   "PLI_M14":  {"key": "dn.ten_tieng_viet",      "label": "TÊN DOANH NGHIỆP",

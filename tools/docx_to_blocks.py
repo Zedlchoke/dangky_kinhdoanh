@@ -1377,6 +1377,14 @@ def collect_docx_tags(path: Path) -> int:
 
 
 def collect_json_tags(data: dict) -> int:
+    # [integ(F0L) 2026-09-06] đếm thêm run MIRROR. Premise cũ: mỗi the {…}
+    # ở template tương ứng đúng 1 run "input" ở blocks. Hiện trạng: wave v7
+    # (HEADER-NAME-SYNC) biến the ở ô (0,0) band thành run {"mirror": …} —
+    # CỐ ÊN không phải input thứ hai (owner decision), nên side JSON đếm thiếu
+    # đúng 1 cho từng mẫu band -> self-check (b) lệch với mọi mẫu có band
+    # (evidence: tại e268038, seed 20260824 bắt 4/10 mẫu band: PLI_M13,
+    # PLII_M04, PLII_M05, PLI_M27 đều docx=json+1). Đếm mirror làm đối chiếu
+    # 1:1 trở lại chính xác (mirror mất -> (b) vẫn bắt được).
     n = 0
     for b in data["blocks"]:
         if b["t"] in ("p", "table"):
@@ -1384,9 +1392,11 @@ def collect_json_tags(data: dict) -> int:
             if rows is not None:
                 for row in rows:
                     for cell in row["cells"]:
-                        n += sum(1 for r in cell["runs"] if "input" in r)
+                        n += sum(1 for r in cell["runs"]
+                                 if "input" in r or "mirror" in r)
             else:
-                n += sum(1 for r in b["runs"] if "input" in r)
+                n += sum(1 for r in b["runs"]
+                         if "input" in r or "mirror" in r)
         elif b["t"] == "chk":
             n += 1
         elif b["t"] == "loop":

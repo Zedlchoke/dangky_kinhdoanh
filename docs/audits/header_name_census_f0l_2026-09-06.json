@@ -1,0 +1,1014 @@
+{
+ "generated": "2026-09-06",
+ "base_head": "e268038",
+ "base_head_note": "[integ(F0L) 2026-09-06] census band tên chủ thể sau migrate current-law L-2026 (TT 121/2026/TT-BTC). Phiên bản mới — KHÔNG đè docs/audits/header_name_census_2026-09-05.* (vẫn là base cho phần phân loại toàn corpus + no-signature verdicts).",
+ "method": "raw scan bằng tools/census/header_name_census.py (scan_template trên 87 template app/templates/*.docx) + phân loại vùng band theo header_name_binding.json",
+ "forms": {
+  "PLI_M12": {
+   "band_occurrences": [
+    {
+     "para_idx": 0,
+     "line_idx": 0,
+     "table_cell": null,
+     "band_region": "before-band",
+     "text": "TÊN DOANH NGHIỆP",
+     "classification": "fillable-header-slot",
+     "adjudication": "bound",
+     "binding_key": "dn.ten_tieng_viet",
+     "binding_label": "TÊN DOANH NGHIỆP"
+    }
+   ],
+   "band_end_idx": 5,
+   "title_idx": 5,
+   "quoc_hieu_idx": 1,
+   "no_band": false
+  },
+  "PLI_M13": {
+   "band_occurrences": [
+    {
+     "para_idx": 1,
+     "line_idx": 0,
+     "table_cell": "tbl@1.row0.cell0.para0",
+     "band_region": "band-table",
+     "text": "TÊN DOANH NGHIỆP",
+     "classification": "fillable-header-slot",
+     "adjudication": "bound",
+     "binding_key": "dn.ten_tieng_viet",
+     "binding_label": "TÊN DOANH NGHIỆP"
+    }
+   ],
+   "band_end_idx": 3,
+   "title_idx": 3,
+   "quoc_hieu_idx": 1,
+   "no_band": false
+  },
+  "PLI_M14": {
+   "band_occurrences": [
+    {
+     "para_idx": 1,
+     "line_idx": 0,
+     "table_cell": "tbl@1.row0.cell0.para0",
+     "band_region": "band-table",
+     "text": "TÊN DOANH NGHIỆP",
+     "classification": "fillable-header-slot",
+     "adjudication": "bound",
+     "binding_key": "dn.ten_tieng_viet",
+     "binding_label": "TÊN DOANH NGHIỆP"
+    }
+   ],
+   "band_end_idx": 3,
+   "title_idx": 3,
+   "quoc_hieu_idx": 1,
+   "no_band": false
+  },
+  "PLI_M15": {
+   "band_occurrences": [
+    {
+     "para_idx": 1,
+     "line_idx": 0,
+     "table_cell": "tbl@1.row0.cell0.para0",
+     "band_region": "band-table",
+     "text": "TÊN DOANH NGHIỆP",
+     "classification": "fillable-header-slot",
+     "adjudication": "bound",
+     "binding_key": "dn.ten_tieng_viet",
+     "binding_label": "TÊN DOANH NGHIỆP"
+    }
+   ],
+   "band_end_idx": 3,
+   "title_idx": 3,
+   "quoc_hieu_idx": 1,
+   "no_band": false
+  },
+  "PLI_M21": {
+   "band_occurrences": [
+    {
+     "para_idx": 1,
+     "line_idx": 0,
+     "table_cell": "tbl@1.row0.cell0.para0",
+     "band_region": "band-table",
+     "text": "TÊN DOANH NGHIỆP",
+     "classification": "fillable-header-slot",
+     "adjudication": "bound",
+     "binding_key": "dn.ten_tieng_viet",
+     "binding_label": "TÊN DOANH NGHIỆP"
+    }
+   ],
+   "band_end_idx": 3,
+   "title_idx": 3,
+   "quoc_hieu_idx": 1,
+   "no_band": false
+  },
+  "PLI_M26": {
+   "band_occurrences": [
+    {
+     "para_idx": 1,
+     "line_idx": 0,
+     "table_cell": "tbl@1.row0.cell0.para0",
+     "band_region": "band-table",
+     "text": "TÊN DOANH NGHIỆP",
+     "classification": "fillable-header-slot",
+     "adjudication": "bound",
+     "binding_key": "dn.ten_tieng_viet",
+     "binding_label": "TÊN DOANH NGHIỆP"
+    }
+   ],
+   "band_end_idx": 3,
+   "title_idx": 3,
+   "quoc_hieu_idx": 1,
+   "no_band": false
+  },
+  "PLI_M17": {
+   "band_occurrences": [
+    {
+     "para_idx": 2,
+     "line_idx": 0,
+     "table_cell": "tbl@2.row0.cell0.para0",
+     "band_region": "band-table",
+     "text": "TÊN DOANH NGHIỆP",
+     "classification": "fillable-header-slot",
+     "adjudication": "bound",
+     "binding_key": "dn.ten_tieng_viet",
+     "binding_label": "TÊN DOANH NGHIỆP"
+    }
+   ],
+   "band_end_idx": 4,
+   "title_idx": 4,
+   "quoc_hieu_idx": 2,
+   "no_band": false
+  },
+  "PLI_M18": {
+   "band_occurrences": [
+    {
+     "para_idx": 1,
+     "line_idx": 0,
+     "table_cell": "tbl@1.row0.cell0.para0",
+     "band_region": "band-table",
+     "text": "TÊN DOANH NGHIỆP",
+     "classification": "fillable-header-slot",
+     "adjudication": "bound",
+     "binding_key": "dn.ten_tieng_viet",
+     "binding_label": "TÊN DOANH NGHIỆP"
+    }
+   ],
+   "band_end_idx": 3,
+   "title_idx": 3,
+   "quoc_hieu_idx": 1,
+   "no_band": false
+  },
+  "PLI_M19": {
+   "band_occurrences": [
+    {
+     "para_idx": 1,
+     "line_idx": 0,
+     "table_cell": "tbl@1.row0.cell0.para0",
+     "band_region": "band-table",
+     "text": "TÊN DOANH NGHIỆP",
+     "classification": "fillable-header-slot",
+     "adjudication": "bound",
+     "binding_key": "dn.ten_tieng_viet",
+     "binding_label": "TÊN DOANH NGHIỆP"
+    }
+   ],
+   "band_end_idx": 3,
+   "title_idx": 3,
+   "quoc_hieu_idx": 1,
+   "no_band": false
+  },
+  "PLI_M23": {
+   "band_occurrences": [
+    {
+     "para_idx": 2,
+     "line_idx": 0,
+     "table_cell": "tbl@2.row0.cell0.para0",
+     "band_region": "band-table",
+     "text": "TÊN DOANH NGHIỆP",
+     "classification": "fillable-header-slot",
+     "adjudication": "bound",
+     "binding_key": "dn.ten_tieng_viet",
+     "binding_label": "TÊN DOANH NGHIỆP"
+    }
+   ],
+   "band_end_idx": 4,
+   "title_idx": 4,
+   "quoc_hieu_idx": 2,
+   "no_band": false
+  },
+  "PLI_M25": {
+   "band_occurrences": [
+    {
+     "para_idx": 2,
+     "line_idx": 0,
+     "table_cell": "tbl@2.row0.cell0.para0",
+     "band_region": "band-table",
+     "text": "TÊN DOANH NGHIỆP",
+     "classification": "fillable-header-slot",
+     "adjudication": "bound",
+     "binding_key": "dn.ten_tieng_viet",
+     "binding_label": "TÊN DOANH NGHIỆP"
+    }
+   ],
+   "band_end_idx": 4,
+   "title_idx": 4,
+   "quoc_hieu_idx": 2,
+   "no_band": false
+  },
+  "PLI_M28": {
+   "band_occurrences": [
+    {
+     "para_idx": 2,
+     "line_idx": 0,
+     "table_cell": "tbl@2.row0.cell0.para0",
+     "band_region": "band-table",
+     "text": "TÊN DOANH NGHIỆP",
+     "classification": "fillable-header-slot",
+     "adjudication": "bound",
+     "binding_key": "dn.ten_tieng_viet",
+     "binding_label": "TÊN DOANH NGHIỆP"
+    }
+   ],
+   "band_end_idx": 4,
+   "title_idx": 4,
+   "quoc_hieu_idx": 2,
+   "no_band": false
+  },
+  "PLI_M29": {
+   "band_occurrences": [
+    {
+     "para_idx": 2,
+     "line_idx": 0,
+     "table_cell": "tbl@2.row0.cell0.para0",
+     "band_region": "band-table",
+     "text": "TÊN DOANH NGHIỆP",
+     "classification": "fillable-header-slot",
+     "adjudication": "bound",
+     "binding_key": "dn.ten_tieng_viet",
+     "binding_label": "TÊN DOANH NGHIỆP"
+    }
+   ],
+   "band_end_idx": 4,
+   "title_idx": 4,
+   "quoc_hieu_idx": 2,
+   "no_band": false
+  },
+  "PLI_M42": {
+   "band_occurrences": [],
+   "band_end_idx": 5,
+   "title_idx": 5,
+   "quoc_hieu_idx": 3,
+   "no_band": true
+  },
+  "PLI_M43": {
+   "band_occurrences": [],
+   "band_end_idx": 5,
+   "title_idx": 5,
+   "quoc_hieu_idx": 3,
+   "no_band": true
+  },
+  "PLI_M45": {
+   "band_occurrences": [
+    {
+     "para_idx": 14,
+     "line_idx": 0,
+     "table_cell": null,
+     "band_region": "before-band",
+     "text": "Tên doanh nghiệp (ghi bằng chữ in hoa): {dn.ten_tieng_viet}",
+     "classification": "legal-title/subtitle"
+    },
+    {
+     "para_idx": 17,
+     "line_idx": 0,
+     "table_cell": null,
+     "band_region": "before-band",
+     "text": "Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh (ghi bằng chữ in hoa): {cn.ten_tieng_viet}",
+     "classification": "legal-title/subtitle"
+    }
+   ],
+   "band_end_idx": 25,
+   "title_idx": null,
+   "quoc_hieu_idx": 3,
+   "no_band": false
+  },
+  "PLI_M46": {
+   "band_occurrences": [],
+   "band_end_idx": 5,
+   "title_idx": 5,
+   "quoc_hieu_idx": 3,
+   "no_band": true
+  },
+  "PLI_M55": {
+   "band_occurrences": [
+    {
+     "para_idx": 13,
+     "line_idx": 0,
+     "table_cell": null,
+     "band_region": "before-band",
+     "text": "Tên doanh nghiệp (ghi bằng chữ in hoa): {dn.ten_tieng_viet}",
+     "classification": "legal-title/subtitle"
+    }
+   ],
+   "band_end_idx": 16,
+   "title_idx": 16,
+   "quoc_hieu_idx": 2,
+   "no_band": false
+  },
+  "PLI_M57": {
+   "band_occurrences": [
+    {
+     "para_idx": 13,
+     "line_idx": 0,
+     "table_cell": null,
+     "band_region": "before-band",
+     "text": "Tên doanh nghiệp (ghi bằng chữ in hoa): {dn.ten_tieng_viet}",
+     "classification": "legal-title/subtitle"
+    },
+    {
+     "para_idx": 17,
+     "line_idx": 0,
+     "table_cell": null,
+     "band_region": "before-band",
+     "text": "Tên chi nhánh/địa điểm kinh doanh (ghi bằng chữ in hoa): {cn.ten_tieng_viet}",
+     "classification": "legal-title/subtitle"
+    },
+    {
+     "para_idx": 20,
+     "line_idx": 0,
+     "table_cell": null,
+     "band_region": "before-band",
+     "text": "Tên chi nhánh chủ quản: {cn.ten_tieng_viet}",
+     "classification": "legal-title/subtitle"
+    },
+    {
+     "para_idx": 24,
+     "line_idx": 0,
+     "table_cell": null,
+     "band_region": "before-band",
+     "text": "Tên văn phòng đại diện (ghi bằng chữ in hoa): {cn.ten_tieng_viet}",
+     "classification": "legal-title/subtitle"
+    }
+   ],
+   "band_end_idx": 25,
+   "title_idx": null,
+   "quoc_hieu_idx": 2,
+   "no_band": false
+  },
+  "PLI_M63": {
+   "band_occurrences": [],
+   "band_end_idx": 6,
+   "title_idx": 6,
+   "quoc_hieu_idx": 2,
+   "no_band": true
+  },
+  "PLI_M67": {
+   "band_occurrences": [],
+   "band_end_idx": 6,
+   "title_idx": 6,
+   "quoc_hieu_idx": 2,
+   "no_band": true
+  },
+  "PLI_M70": {
+   "band_occurrences": [],
+   "band_end_idx": 6,
+   "title_idx": 6,
+   "quoc_hieu_idx": 2,
+   "no_band": true
+  },
+  "PLI_M71": {
+   "band_occurrences": [],
+   "band_end_idx": 6,
+   "title_idx": 6,
+   "quoc_hieu_idx": 2,
+   "no_band": true
+  },
+  "PLI_M27": {
+   "band_occurrences": [
+    {
+     "para_idx": 2,
+     "line_idx": 0,
+     "table_cell": "tbl@2.row0.cell0.para0",
+     "band_region": "band-table",
+     "text": "TÊN DOANH NGHIỆP",
+     "classification": "fillable-header-slot",
+     "adjudication": "bound",
+     "binding_key": "dn.ten_tieng_viet",
+     "binding_label": "TÊN DOANH NGHIỆP"
+    }
+   ],
+   "band_end_idx": 4,
+   "title_idx": 4,
+   "quoc_hieu_idx": 2,
+   "no_band": false
+  },
+  "PLI_M30": {
+   "band_occurrences": [
+    {
+     "para_idx": 2,
+     "line_idx": 0,
+     "table_cell": "tbl@2.row0.cell0.para0",
+     "band_region": "band-table",
+     "text": "TÊN DOANH NGHIỆP",
+     "classification": "fillable-header-slot",
+     "adjudication": "bound",
+     "binding_key": "dn.ten_tieng_viet",
+     "binding_label": "TÊN DOANH NGHIỆP"
+    }
+   ],
+   "band_end_idx": 4,
+   "title_idx": 4,
+   "quoc_hieu_idx": 2,
+   "no_band": false
+  },
+  "PLI_M31": {
+   "band_occurrences": [
+    {
+     "para_idx": 2,
+     "line_idx": 0,
+     "table_cell": "tbl@2.row0.cell0.para0",
+     "band_region": "band-table",
+     "text": "TÊN DOANH NGHIỆP",
+     "classification": "fillable-header-slot",
+     "adjudication": "bound",
+     "binding_key": "dn.ten_tieng_viet",
+     "binding_label": "TÊN DOANH NGHIỆP"
+    }
+   ],
+   "band_end_idx": 4,
+   "title_idx": 4,
+   "quoc_hieu_idx": 2,
+   "no_band": false
+  },
+  "PLI_M53": {
+   "band_occurrences": [],
+   "band_end_idx": 6,
+   "title_idx": 6,
+   "quoc_hieu_idx": 2,
+   "no_band": true
+  },
+  "PLI_M54": {
+   "band_occurrences": [
+    {
+     "para_idx": 13,
+     "line_idx": 0,
+     "table_cell": null,
+     "band_region": "before-band",
+     "text": "Tên doanh nghiệp (ghi bằng chữ in hoa): {dn.ten_tieng_viet}",
+     "classification": "legal-title/subtitle"
+    }
+   ],
+   "band_end_idx": 25,
+   "title_idx": null,
+   "quoc_hieu_idx": 2,
+   "no_band": false
+  },
+  "PLI_M56": {
+   "band_occurrences": [
+    {
+     "para_idx": 13,
+     "line_idx": 0,
+     "table_cell": null,
+     "band_region": "before-band",
+     "text": "Tên doanh nghiệp (ghi bằng chữ in hoa): {dn.ten_tieng_viet}",
+     "classification": "legal-title/subtitle"
+    },
+    {
+     "para_idx": 17,
+     "line_idx": 0,
+     "table_cell": null,
+     "band_region": "before-band",
+     "text": "+ Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh (ghi bằng chữ in hoa): {cn.ten_tieng_viet}",
+     "classification": "legal-title/subtitle"
+    },
+    {
+     "para_idx": 20,
+     "line_idx": 0,
+     "table_cell": null,
+     "band_region": "before-band",
+     "text": "Tên chi nhánh chủ quản: {cn.ten_tieng_viet}",
+     "classification": "legal-title/subtitle"
+    }
+   ],
+   "band_end_idx": 25,
+   "title_idx": null,
+   "quoc_hieu_idx": 2,
+   "no_band": false
+  },
+  "PLI_M66": {
+   "band_occurrences": [],
+   "band_end_idx": 6,
+   "title_idx": 6,
+   "quoc_hieu_idx": 2,
+   "no_band": true
+  },
+  "PLI_M68": {
+   "band_occurrences": [],
+   "band_end_idx": 6,
+   "title_idx": 6,
+   "quoc_hieu_idx": 2,
+   "no_band": true
+  },
+  "PLI_M69": {
+   "band_occurrences": [],
+   "band_end_idx": 6,
+   "title_idx": 6,
+   "quoc_hieu_idx": 2,
+   "no_band": true
+  },
+  "PLI_M75": {
+   "band_occurrences": [],
+   "band_end_idx": 6,
+   "title_idx": 6,
+   "quoc_hieu_idx": 2,
+   "no_band": true
+  },
+  "PLI_M32": {
+   "band_occurrences": [
+    {
+     "para_idx": 2,
+     "line_idx": 0,
+     "table_cell": "tbl@2.row0.cell0.para0",
+     "band_region": "band-table",
+     "text": "TÊN DOANH NGHIỆP",
+     "classification": "fillable-header-slot",
+     "adjudication": "bound",
+     "binding_key": "dn.ten_tieng_viet",
+     "binding_label": "TÊN DOANH NGHIỆP"
+    }
+   ],
+   "band_end_idx": 4,
+   "title_idx": 4,
+   "quoc_hieu_idx": 2,
+   "no_band": false
+  },
+  "PLI_M33": {
+   "band_occurrences": [
+    {
+     "para_idx": 2,
+     "line_idx": 0,
+     "table_cell": "tbl@2.row0.cell0.para0",
+     "band_region": "band-table",
+     "text": "TÊN DOANH NGHIỆP",
+     "classification": "fillable-header-slot",
+     "adjudication": "blocked_owner",
+     "binding_note": "band fillable nhưng thân CHỈ có chu_hkd.ho_ten (tên người nộp) — không có trường tên DN nào để mirror; bind tên người dưới nhãn TÊN DOANH NGHIỆP là sai pháp lý, tạo field mới cần owner chốt (O-packet v7)"
+    }
+   ],
+   "band_end_idx": 4,
+   "title_idx": 4,
+   "quoc_hieu_idx": 2,
+   "no_band": false
+  },
+  "PLI_M47": {
+   "band_occurrences": [],
+   "band_end_idx": 7,
+   "title_idx": 7,
+   "quoc_hieu_idx": 3,
+   "no_band": true
+  },
+  "PLI_M48": {
+   "band_occurrences": [],
+   "band_end_idx": 7,
+   "title_idx": 7,
+   "quoc_hieu_idx": 3,
+   "no_band": true
+  },
+  "PLI_M49": {
+   "band_occurrences": [],
+   "band_end_idx": 6,
+   "title_idx": 6,
+   "quoc_hieu_idx": 2,
+   "no_band": true
+  },
+  "PLI_M50": {
+   "band_occurrences": [],
+   "band_end_idx": 6,
+   "title_idx": 6,
+   "quoc_hieu_idx": 2,
+   "no_band": true
+  },
+  "PLI_M51": {
+   "band_occurrences": [],
+   "band_end_idx": 6,
+   "title_idx": 6,
+   "quoc_hieu_idx": 2,
+   "no_band": true
+  },
+  "PLI_M52": {
+   "band_occurrences": [],
+   "band_end_idx": 6,
+   "title_idx": 6,
+   "quoc_hieu_idx": 2,
+   "no_band": true
+  },
+  "PLI_M72": {
+   "band_occurrences": [],
+   "band_end_idx": 1,
+   "title_idx": 1,
+   "quoc_hieu_idx": null,
+   "no_band": true
+  },
+  "PLI_M73": {
+   "band_occurrences": [],
+   "band_end_idx": 1,
+   "title_idx": 1,
+   "quoc_hieu_idx": null,
+   "no_band": true
+  },
+  "PLI_M74": {
+   "band_occurrences": [],
+   "band_end_idx": 1,
+   "title_idx": 1,
+   "quoc_hieu_idx": null,
+   "no_band": true
+  },
+  "PLI_M76": {
+   "band_occurrences": [],
+   "band_end_idx": 6,
+   "title_idx": 6,
+   "quoc_hieu_idx": 2,
+   "no_band": true
+  },
+  "PLI_M78": {
+   "band_occurrences": [],
+   "band_end_idx": 3,
+   "title_idx": 3,
+   "quoc_hieu_idx": 1,
+   "no_band": true
+  },
+  "PLI_M79": {
+   "band_occurrences": [],
+   "band_end_idx": 6,
+   "title_idx": 6,
+   "quoc_hieu_idx": 2,
+   "no_band": true
+  },
+  "PLI_M80": {
+   "band_occurrences": [],
+   "band_end_idx": 6,
+   "title_idx": 6,
+   "quoc_hieu_idx": 2,
+   "no_band": true
+  },
+  "PLII_M01": {
+   "band_occurrences": [],
+   "band_end_idx": 4,
+   "title_idx": 4,
+   "quoc_hieu_idx": 2,
+   "no_band": true
+  },
+  "PLII_M02": {
+   "band_occurrences": [
+    {
+     "para_idx": 2,
+     "line_idx": 0,
+     "table_cell": "tbl@2.row0.cell0.para0",
+     "band_region": "band-table",
+     "text": "TÊN HỘ KINH DOANH",
+     "classification": "fillable-header-slot",
+     "adjudication": "bound",
+     "binding_key": "hkd_ten_tieng_viet_2",
+     "binding_label": "TÊN HỘ KINH DOANH"
+    }
+   ],
+   "band_end_idx": 4,
+   "title_idx": 4,
+   "quoc_hieu_idx": 2,
+   "no_band": false
+  },
+  "PLII_M03": {
+   "band_occurrences": [
+    {
+     "para_idx": 2,
+     "line_idx": 0,
+     "table_cell": "tbl@2.row0.cell0.para0",
+     "band_region": "band-table",
+     "text": "TÊN HỘ KINH DOANH",
+     "classification": "fillable-header-slot",
+     "adjudication": "bound",
+     "binding_key": "hkd_ten_tieng_viet_2",
+     "binding_label": "TÊN HỘ KINH DOANH"
+    }
+   ],
+   "band_end_idx": 4,
+   "title_idx": 4,
+   "quoc_hieu_idx": 2,
+   "no_band": false
+  },
+  "PLII_M04": {
+   "band_occurrences": [
+    {
+     "para_idx": 2,
+     "line_idx": 0,
+     "table_cell": "tbl@2.row0.cell0.para0",
+     "band_region": "band-table",
+     "text": "TÊN HỘ KINH DOANH",
+     "classification": "fillable-header-slot",
+     "adjudication": "bound",
+     "binding_key": "hkd_ten_tieng_viet_2",
+     "binding_label": "TÊN HỘ KINH DOANH"
+    }
+   ],
+   "band_end_idx": 4,
+   "title_idx": 4,
+   "quoc_hieu_idx": 2,
+   "no_band": false
+  },
+  "PLII_M05": {
+   "band_occurrences": [
+    {
+     "para_idx": 2,
+     "line_idx": 0,
+     "table_cell": "tbl@2.row0.cell0.para0",
+     "band_region": "band-table",
+     "text": "TÊN HỘ KINH DOANH",
+     "classification": "fillable-header-slot",
+     "adjudication": "bound",
+     "binding_key": "hkd_ten_tieng_viet_2",
+     "binding_label": "TÊN HỘ KINH DOANH"
+    }
+   ],
+   "band_end_idx": 4,
+   "title_idx": 4,
+   "quoc_hieu_idx": 2,
+   "no_band": false
+  },
+  "PLII_M06": {
+   "band_occurrences": [
+    {
+     "para_idx": 2,
+     "line_idx": 0,
+     "table_cell": "tbl@2.row0.cell0.para0",
+     "band_region": "band-table",
+     "text": "TÊN HỘ KINH DOANH",
+     "classification": "fillable-header-slot",
+     "adjudication": "blocked_owner",
+     "binding_note": "band fillable nhưng thân không có input tên hộ — cần owner chốt thêm field hay giữ band điền tay (O-packet v7)"
+    }
+   ],
+   "band_end_idx": 4,
+   "title_idx": 4,
+   "quoc_hieu_idx": 2,
+   "no_band": false
+  },
+  "PLII_M07": {
+   "band_occurrences": [],
+   "band_end_idx": 5,
+   "title_idx": 5,
+   "quoc_hieu_idx": 3,
+   "no_band": true
+  },
+  "PLII_M08": {
+   "band_occurrences": [],
+   "band_end_idx": 7,
+   "title_idx": 7,
+   "quoc_hieu_idx": 3,
+   "no_band": true
+  },
+  "PLII_M09": {
+   "band_occurrences": [],
+   "band_end_idx": 5,
+   "title_idx": 5,
+   "quoc_hieu_idx": 3,
+   "no_band": true
+  },
+  "PLII_M10": {
+   "band_occurrences": [],
+   "band_end_idx": 7,
+   "title_idx": 7,
+   "quoc_hieu_idx": 3,
+   "no_band": true
+  },
+  "PLII_M11": {
+   "band_occurrences": [],
+   "band_end_idx": 7,
+   "title_idx": 7,
+   "quoc_hieu_idx": 3,
+   "no_band": true
+  },
+  "PLII_M12": {
+   "band_occurrences": [],
+   "band_end_idx": 7,
+   "title_idx": 7,
+   "quoc_hieu_idx": 3,
+   "no_band": true
+  },
+  "PLII_M13": {
+   "band_occurrences": [],
+   "band_end_idx": 7,
+   "title_idx": 7,
+   "quoc_hieu_idx": 3,
+   "no_band": true
+  },
+  "PLII_M14": {
+   "band_occurrences": [],
+   "band_end_idx": 7,
+   "title_idx": 7,
+   "quoc_hieu_idx": 3,
+   "no_band": true
+  },
+  "PLII_M15": {
+   "band_occurrences": [],
+   "band_end_idx": 7,
+   "title_idx": 7,
+   "quoc_hieu_idx": 3,
+   "no_band": true
+  },
+  "PLII_M16": {
+   "band_occurrences": [],
+   "band_end_idx": 7,
+   "title_idx": 7,
+   "quoc_hieu_idx": 3,
+   "no_band": true
+  },
+  "PLII_M17": {
+   "band_occurrences": [],
+   "band_end_idx": 7,
+   "title_idx": 7,
+   "quoc_hieu_idx": 3,
+   "no_band": true
+  },
+  "PLII_M18": {
+   "band_occurrences": [],
+   "band_end_idx": 7,
+   "title_idx": 7,
+   "quoc_hieu_idx": 3,
+   "no_band": true
+  },
+  "PLII_M19": {
+   "band_occurrences": [],
+   "band_end_idx": 7,
+   "title_idx": 7,
+   "quoc_hieu_idx": 3,
+   "no_band": true
+  },
+  "PLII_M20": {
+   "band_occurrences": [
+    {
+     "para_idx": 13,
+     "line_idx": 0,
+     "table_cell": null,
+     "band_region": "before-band",
+     "text": "Tên hộ kinh doanh (ghi bằng chữ in hoa): {hkd_ten_tieng_viet_2}\t",
+     "classification": "legal-title/subtitle"
+    }
+   ],
+   "band_end_idx": 25,
+   "title_idx": null,
+   "quoc_hieu_idx": 2,
+   "no_band": false
+  },
+  "PLII_M21": {
+   "band_occurrences": [],
+   "band_end_idx": 6,
+   "title_idx": 6,
+   "quoc_hieu_idx": 2,
+   "no_band": true
+  },
+  "PLII_M22": {
+   "band_occurrences": [],
+   "band_end_idx": 6,
+   "title_idx": 6,
+   "quoc_hieu_idx": 2,
+   "no_band": true
+  },
+  "PLII_M23": {
+   "band_occurrences": [],
+   "band_end_idx": 6,
+   "title_idx": 6,
+   "quoc_hieu_idx": 2,
+   "no_band": true
+  },
+  "PLII_M24": {
+   "band_occurrences": [],
+   "band_end_idx": 6,
+   "title_idx": 6,
+   "quoc_hieu_idx": 2,
+   "no_band": true
+  },
+  "PLII_M25": {
+   "band_occurrences": [],
+   "band_end_idx": 6,
+   "title_idx": 6,
+   "quoc_hieu_idx": 2,
+   "no_band": true
+  },
+  "PLII_M26": {
+   "band_occurrences": [],
+   "band_end_idx": 6,
+   "title_idx": 6,
+   "quoc_hieu_idx": 2,
+   "no_band": true
+  },
+  "PLII_M27": {
+   "band_occurrences": [],
+   "band_end_idx": 6,
+   "title_idx": 6,
+   "quoc_hieu_idx": 2,
+   "no_band": true
+  },
+  "PLII_M28": {
+   "band_occurrences": [],
+   "band_end_idx": 6,
+   "title_idx": 6,
+   "quoc_hieu_idx": 2,
+   "no_band": true
+  },
+  "PLI_M01": {
+   "band_occurrences": [],
+   "band_end_idx": 4,
+   "title_idx": 4,
+   "quoc_hieu_idx": 2,
+   "no_band": true
+  },
+  "PLI_M02": {
+   "band_occurrences": [],
+   "band_end_idx": 4,
+   "title_idx": 4,
+   "quoc_hieu_idx": 2,
+   "no_band": true
+  },
+  "PLI_M05": {
+   "band_occurrences": [],
+   "band_end_idx": 4,
+   "title_idx": 4,
+   "quoc_hieu_idx": 2,
+   "no_band": true
+  },
+  "PLI_M06": {
+   "band_occurrences": [],
+   "band_end_idx": 25,
+   "title_idx": null,
+   "quoc_hieu_idx": null,
+   "no_band": true
+  },
+  "PLI_M07": {
+   "band_occurrences": [],
+   "band_end_idx": 2,
+   "title_idx": 2,
+   "quoc_hieu_idx": null,
+   "no_band": true
+  },
+  "PLI_M08": {
+   "band_occurrences": [],
+   "band_end_idx": 25,
+   "title_idx": null,
+   "quoc_hieu_idx": null,
+   "no_band": true
+  },
+  "PLI_M09": {
+   "band_occurrences": [],
+   "band_end_idx": 25,
+   "title_idx": null,
+   "quoc_hieu_idx": null,
+   "no_band": true
+  },
+  "PLI_M10": {
+   "band_occurrences": [],
+   "band_end_idx": 2,
+   "title_idx": 2,
+   "quoc_hieu_idx": null,
+   "no_band": true
+  },
+  "PLI_M11": {
+   "band_occurrences": [],
+   "band_end_idx": 2,
+   "title_idx": 2,
+   "quoc_hieu_idx": null,
+   "no_band": true
+  },
+  "PLI_M03": {
+   "band_occurrences": [],
+   "band_end_idx": 3,
+   "title_idx": 3,
+   "quoc_hieu_idx": 1,
+   "no_band": true
+  },
+  "PLI_M04": {
+   "band_occurrences": [],
+   "band_end_idx": 3,
+   "title_idx": 3,
+   "quoc_hieu_idx": 1,
+   "no_band": true
+  }
+ },
+ "summary": {
+  "band_region_occurrences": 35,
+  "classification_counts": {
+   "fillable-header-slot": 23,
+   "legal-title/subtitle": 12
+  },
+  "fillable_header_slot": 23,
+  "bound": 21,
+  "blocked_owner": 2,
+  "unadjudicated": 0,
+  "m12_delta": "PLI_M12: needs-owner (2026-09-05) -> BOUND dn.ten_tieng_viet (current-law TT 121/2026, ảnh p50; L-2026)",
+  "migrated_samples_no_new_band": [
+   "PLII_M01",
+   "PLI_M02",
+   "PLI_M03",
+   "PLI_M04",
+   "PLI_M05",
+   "PLI_M27",
+   "PLI_M30"
+  ]
+ }
+}

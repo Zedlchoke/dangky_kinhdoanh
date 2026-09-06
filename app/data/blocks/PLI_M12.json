@@ -3,97 +3,106 @@
  "ten_mau": "Giấy đề nghị đăng ký thay đổi nội dung Giấy chứng nhận đăng ký doanh nghiệp/Thông báo thay đổi nội dung đăng ký doanh nghiệp",
  "blocks": [
   {
-   "t": "p",
-   "align": "center",
-   "runs": [
+   "t": "table",
+   "widths": null,
+   "rows": [
     {
-     "text": "TÊN DOANH NGHIỆP\n---------------",
-     "b": true
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "TÊN DOANH NGHIỆP\n",
+         "b": true
+        },
+        {
+         "mirror": {
+          "key": "dn.ten_tieng_viet"
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\n",
+         "b": true
+        },
+        {
+         "text": "Độc lập - Tự do - Hạnh phúc ",
+         "b": true,
+         "u": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
+    },
+    {
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "Số: "
+        },
+        {
+         "input": {
+          "key": "so_van_ban",
+          "w": 12
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "input": {
+          "key": "dia_diem_ky",
+          "w": 12
+         }
+        },
+        {
+         "text": ", ngày ",
+         "i": true
+        },
+        {
+         "input": {
+          "key": "ngay_ky_vb",
+          "w": 12
+         }
+        },
+        {
+         "text": " tháng ",
+         "i": true
+        },
+        {
+         "input": {
+          "key": "thang_ky_vb",
+          "w": 12
+         }
+        },
+        {
+         "text": " năm ",
+         "i": true
+        },
+        {
+         "input": {
+          "key": "nam_ky_vb",
+          "w": 12
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
     }
    ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "form-subtitle"
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc \n---------------",
-     "b": true
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "national-header"
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "Số: "
-    },
-    {
-     "input": {
-      "key": "so_van_ban",
-      "w": 12
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "right",
-   "runs": [
-    {
-     "input": {
-      "key": "dia_diem_ky",
-      "w": 12
-     }
-    },
-    {
-     "text": ", ngày ",
-     "i": true
-    },
-    {
-     "input": {
-      "key": "ngay_ky_vb",
-      "w": 12
-     }
-    },
-    {
-     "text": " tháng ",
-     "i": true
-    },
-    {
-     "input": {
-      "key": "thang_ky_vb",
-      "w": 12
-     }
-    },
-    {
-     "text": " năm ",
-     "i": true
-    },
-    {
-     "input": {
-      "key": "nam_ky_vb",
-      "w": 12
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "date-line"
+   "band": "header"
   },
   {
    "t": "p",

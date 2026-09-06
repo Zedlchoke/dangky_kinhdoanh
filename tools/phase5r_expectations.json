@@ -317,28 +317,38 @@
  },
  "PLI_M02": {
   "signature": {
-   "signers": 1,
+   "signers": 2,
    "keep_together": true,
    "orientation": "vertical",
-   "evidence": "census 5R2 template: 1 cụm ký body-level ((không nhãn)) — cụm đơn, detector D6 đo vertical.",
+   "evidence": "[Pin sync — F0L 2026-09-06] premise cũ (census 5R2): 1 cụm ký body-level ((không nhãn)) — cụm đơn, detector D6 đo vertical. Hiện trạng: M02 rebuild current-law TT 121/2026 (laneA2, template đổi ở 5002dd9/e268038) có 2 cụm ký body-level '(Ký và ghi họ tên)15' + '(Ký và ghi họ tên)3' — chữ số 15/3 là superscript chân trang; detector census đếm 2 cụm khớp biểu mẫu hiện hành.",
    "min_write_gap_pt": 72
   }
  },
  "PLI_M03": {
   "signature": {
-   "signers": 1,
+   "signers": 2,
    "keep_together": true,
    "orientation": "vertical",
-   "evidence": "census 5R2 template: 1 cụm ký body-level ((không nhãn)) — cụm đơn, detector D6 đo vertical.",
+   "evidence": "[Pin sync — F0L 2026-09-06] premise cũ (census 5R2): 1 cụm ký body-level ((không nhãn)). Hiện trạng: M03 rebuild current-law TT 121/2026 (laneA2) có 2 cụm ký body-level '(Ký và ghi họ tên)11' + '(Ký và ghi họ tên)' — số 11 là superscript chân trang; census đếm 2 khớp biểu mẫu hiện hành.",
    "min_write_gap_pt": 72
   }
  },
  "PLI_M04": {
   "signature": {
-   "signers": 1,
+   "signers": 2,
    "keep_together": true,
    "orientation": "vertical",
-   "evidence": "census 5R2 template: 1 cụm ký body-level ((không nhãn)) — cụm đơn, detector D6 đo vertical.",
+   "evidence": "[Pin sync — F0L 2026-09-06] premise cũ (census 5R2): 1 cụm ký body-level ((không nhãn)). Hiện trạng: M04 rebuild current-law TT 121/2026 (laneA2) có 2 cụm ký body-level '(Ký và ghi họ tên)11' + '(Ký và ghi họ tên)' — số 11 là superscript chân trang; census đếm 2 khớp biểu mẫu hiện hành.",
+   "min_write_gap_pt": 72
+  }
+ },
+ "PLI_M05": {
+  "signature": {
+   "signers": 2,
+   "titles": ["CÁC THÀNH VIÊN HỢP DANH"],
+   "keep_together": true,
+   "orientation": "vertical",
+   "evidence": "[Pin sync — F0L 2026-09-06] premise cũ: M05 KHÔNG có khối ký (census 2026-09-05 verdict absence-correct, không entry). Hiện trạng: M05 rebuild current-law (laneA2 7959236 — dựng đủ mục 7-10 + Phụ lục CAM KẾT p48) có 2 cụm ký: 'CÁC THÀNH VIÊN HỢP DANH' + '(Ký và ghi họ tên từng thành viên)9' và '(Ký và ghi họ tên)'; census đếm 2 khớp biểu mẫu hiện hành.",
    "min_write_gap_pt": 72
   }
  },
@@ -348,6 +358,15 @@
    "keep_together": true,
    "orientation": "vertical",
    "evidence": "census 5R2 template: 1 cụm ký body-level ((không nhãn)) — cụm đơn, detector D6 đo vertical.",
+   "min_write_gap_pt": 72
+  }
+ },
+ "PLI_M07": {
+  "signature": {
+   "signers": 1,
+   "keep_together": true,
+   "orientation": "vertical",
+   "evidence": "[Pin sync — F0L 2026-09-06] premise cũ: M07 stub 2 dòng KHÔNG có khối ký (census 2026-09-05 verdict absence-correct 'nguồn-stub', không entry). Hiện trạng: N-v4 (laneA2 0f5e9f4) dựng lại M07 theo bản in TT 68 p49-50 — có 1 cụm ký body-level '(Ký và ghi họ tên)13' (số 13 là superscript chân trang); census đếm 1 khớp biểu mẫu hiện hành.",
    "min_write_gap_pt": 72
   }
  },

@@ -2063,7 +2063,14 @@
    "align": "left",
    "runs": [
     {
-     "text": "8.4 Ngày bắt đầu hoạt động4 (trường hợp doanh nghiệp dự kiến bắt đầu hoạt động kể từ ngày được cấp Giấy chứng nhận đăng ký doanh nghiệp thì không cần kê khai nội dung này): "
+     "text": "8.4 Ngày bắt đầu hoạt động"
+    },
+    {
+     "text": "4",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": " (trường hợp doanh nghiệp dự kiến bắt đầu hoạt động kể từ ngày được cấp Giấy chứng nhận đăng ký doanh nghiệp thì không cần kê khai nội dung này): "
     },
     {
      "input": {
@@ -2252,7 +2259,14 @@
    "align": "left",
    "runs": [
     {
-     "text": "9. Thông tin về việc đóng bảo hiểm xã hội7:"
+     "text": "9. Thông tin về việc đóng bảo hiểm xã hội"
+    },
+    {
+     "text": "7",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": ":"
     }
    ],
    "format": {
@@ -2372,7 +2386,14 @@
    "align": "left",
    "runs": [
     {
-     "text": "Xin gửi kèm cam kết của nhà đầu tư nước ngoài theo quy định tại Điều 7 Nghị định số 296/2026/NĐ-CP ngày 23/7/2026 của Chính phủ sửa đổi, bổ sung một số điều của Nghị định số 168/2025/NĐ-CP ngày 30/6/2025 của Chính phủ về đăng ký doanh nghiệp tại Phụ lục kèm theo Giấy đề nghị này8."
+     "text": "Xin gửi kèm cam kết của nhà đầu tư nước ngoài theo quy định tại Điều 7 Nghị định số 296/2026/NĐ-CP ngày 23/7/2026 của Chính phủ sửa đổi, bổ sung một số điều của Nghị định số 168/2025/NĐ-CP ngày 30/6/2025 của Chính phủ về đăng ký doanh nghiệp tại Phụ lục kèm theo Giấy đề nghị này"
+    },
+    {
+     "text": "8",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": "."
     }
    ],
    "format": {
@@ -2841,7 +2862,11 @@
    "align": "left",
    "runs": [
     {
-     "text": "NHÀ ĐẦU TƯ NƯỚC NGOÀI4"
+     "text": "NHÀ ĐẦU TƯ NƯỚC NGOÀI"
+    },
+    {
+     "text": "4",
+     "vertAlign": "superscript"
     }
    ],
    "format": {

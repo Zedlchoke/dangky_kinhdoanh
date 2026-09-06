@@ -287,7 +287,14 @@
    "align": "left",
    "runs": [
     {
-     "text": "Doanh nghiệp gửi kèm Thông báo này bản sao sổ đăng ký cổ đông1."
+     "text": "Doanh nghiệp gửi kèm Thông báo này bản sao sổ đăng ký cổ đông"
+    },
+    {
+     "text": "1",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": "."
     }
    ],
    "format": {

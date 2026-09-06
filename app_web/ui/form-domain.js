@@ -726,6 +726,115 @@
           semanticKey: 'ds_thanh_vien_hkd_gcn'
         }
       }
+    },
+    /* F1-IN (2026-09-06, O1 IMPLEMENTED AS USER INPUT): PLI_M27 Mẫu 27 2026
+     * (TT 121/2026) — HAI grid theo census (danh_sach_ndd_pl_thong_bao +
+     * don_vi_tam_ngung_tiep_tuc); phần đơn vị materialize thành 2 loop cùng
+     * entry spec (nguồn in ở 2 vùng rời: mục 1 tạm ngừng / mục 2 tiếp tục —
+     * một bảng vật lý không thể nằm hai chỗ), phân loại đơn vị là CỘT
+     * loai_don_vi thay heading b)/c). Nguồn 2026 của mục NĐD chỉ còn 3
+     * trường (Họ tên / Số điện thoại / Địa chỉ thư điện tử — chân trang 2
+     * cho phép kê khai 01 hoặc nhiều NĐDPL) -> 7 cột required_columns census
+     * 2025 là STALE, đã reconcile trong tools/census/build_manifest.py.
+     * O3: mau khong co selector -> section luon active; NĐD required 1 dòng
+     * (người ký Thông báo), grid đơn vị minRows 0 (chỉ kê khai khi thông báo
+     * áp dụng cho CN/ĐĐKD/VPĐD). */
+    'PLI_M27': {
+      loops: {
+        ds_ndd_pl_thong_bao_tam_ngung: {
+          label: 'Thông tin người đại diện theo pháp luật của doanh nghiệp',
+          minRows: 1, maxRows: null, required: true,
+          allowAdd: true, allowDelete: true, allowReorder: true,
+          confirmDeleteNonEmpty: true, requirePrimary: false,
+          columns: [
+            { tag: 'ho_ten', type: 'text', required: true },
+            { tag: 'dien_thoai', type: 'phone' },
+            { tag: 'email', type: 'email' }
+          ],
+          duplicateKeys: [],
+          outputOnlyTags: [],
+          semanticKey: 'ds_ndd_pl_thong_bao_tam_ngung'
+        },
+        don_vi_truc_thuoc_tam_ngung_tiep_tuc: {
+          label: 'Các chi nhánh/địa điểm kinh doanh/văn phòng đại diện tạm ngừng kinh doanh, hoạt động',
+          minRows: 0, maxRows: null, required: false,
+          allowAdd: true, allowDelete: true, allowReorder: true,
+          confirmDeleteNonEmpty: true, requirePrimary: false,
+          columns: [
+            { tag: 'loai_don_vi', type: 'text', required: true },
+            { tag: 'ten_don_vi', type: 'text', required: true },
+            { tag: 'ma_so_don_vi', type: 'text' },
+            { tag: 'tu_ngay', type: 'text', required: true },
+            { tag: 'den_ngay', type: 'text' },
+            { tag: 'ly_do', type: 'text', required: true },
+            { tag: 'ten_chi_nhanh_chu_quan', type: 'text' },
+            { tag: 'ma_so_chi_nhanh_chu_quan', type: 'text' }
+          ],
+          duplicateKeys: [],
+          outputOnlyTags: [],
+          semanticKey: 'don_vi_truc_thuoc_tam_ngung_tiep_tuc'
+        },
+        don_vi_tiep_tuc_truoc_han: {
+          label: 'Các chi nhánh/địa điểm kinh doanh/văn phòng đại diện tiếp tục kinh doanh, hoạt động trước thời hạn đã thông báo',
+          minRows: 0, maxRows: null, required: false,
+          allowAdd: true, allowDelete: true, allowReorder: true,
+          confirmDeleteNonEmpty: true, requirePrimary: false,
+          columns: [
+            { tag: 'loai_don_vi', type: 'text', required: true },
+            { tag: 'ten_don_vi', type: 'text', required: true },
+            { tag: 'ma_so_don_vi', type: 'text' },
+            { tag: 'tu_ngay', type: 'text', required: true },
+            { tag: 'den_ngay', type: 'text' },
+            { tag: 'ly_do', type: 'text', required: true },
+            { tag: 'ten_chi_nhanh_chu_quan', type: 'text' },
+            { tag: 'ma_so_chi_nhanh_chu_quan', type: 'text' }
+          ],
+          duplicateKeys: [],
+          outputOnlyTags: [],
+          semanticKey: 'don_vi_tiep_tuc_truoc_han'
+        }
+      }
+    },
+    /* F1-IN (2026-09-06, O1 + D6.5=A + D6.6=A): PLI_M79/PLI_M80 — danh mục
+     * "Kèm theo Giấy đề nghị này có:" (3+ dòng, nguồn in 3 dòng đánh số +
+     * dấu …). METADATA ONLY: tên tài liệu bắt buộc, số bản/số trang tuỳ
+     * chọn, KHÔNG upload binary (D6.5=A); 2 cột số_ban/số_trang là mở rộng
+     * dữ liệu theo D6.6=A (nguồn in chỉ có dòng mô tả). */
+    'PLI_M79': {
+      loops: {
+        ds_tai_lieu_kem_theo_m79: {
+          label: 'Tài liệu kèm theo Giấy đề nghị (thay đổi tên xâm phạm quyền sở hữu công nghiệp)',
+          minRows: 3, maxRows: null, required: false,
+          allowAdd: true, allowDelete: true, allowReorder: true,
+          confirmDeleteNonEmpty: true, requirePrimary: false,
+          columns: [
+            { tag: 'mo_ta_tai_lieu', type: 'text', required: true },
+            { tag: 'so_ban', type: 'text' },
+            { tag: 'so_trang', type: 'text' }
+          ],
+          duplicateKeys: [],
+          outputOnlyTags: [],
+          semanticKey: 'ds_tai_lieu_kem_theo_m79'
+        }
+      }
+    },
+    'PLI_M80': {
+      loops: {
+        ds_tai_lieu_kem_theo_m80: {
+          label: 'Tài liệu kèm theo Giấy đề nghị (thu hồi giấy tờ do kê khai giả mạo)',
+          minRows: 3, maxRows: null, required: false,
+          allowAdd: true, allowDelete: true, allowReorder: true,
+          confirmDeleteNonEmpty: true, requirePrimary: false,
+          columns: [
+            { tag: 'mo_ta_tai_lieu', type: 'text', required: true },
+            { tag: 'so_ban', type: 'text' },
+            { tag: 'so_trang', type: 'text' }
+          ],
+          duplicateKeys: [],
+          outputOnlyTags: [],
+          semanticKey: 'ds_tai_lieu_kem_theo_m80'
+        }
+      }
     }
   };
 
@@ -2134,6 +2243,171 @@
           totals: [],
           cross_field_rules: []
         }
+      },
+      /* F1-IN (2026-09-06, O1 IMPLEMENTED AS USER INPUT + O2): hai matrix
+       * "Tài sản góp vốn sau khi thay đổi" của Mẫu 12 TT 121/2026 — NGỮ CẢNH
+       * vốn điều lệ (p81-p111) và vốn đầu tư của chủ DNTN (p197-p226) RIÊNG
+       * BIỆT, KHÔNG dùng chung data (PLAN A). Shape giống hệt M01/M02
+       * tai_san (D1.2 mo ta text, D1.1 tong computed outputOnly). O2: giữ
+       * nguyên chính tả bản in hiện hành, không sửa luật. */
+      {
+        sectionId: 'tai_san_gop_von_sau_thay_doi_vdl',
+        semanticKey: 'co_cau_tai_san_gop_von_sau_thay_doi_vdl',
+        kind: 'fixed-matrix',
+        policy: { allowAdd: false, allowDelete: false, allowReorder: false },
+        anchor: { match: 'tai san gop von sau khi thay doi von dieu le',
+          matchRole: 'body',
+          endMatch: 'thong tin ve co phan', endRole: 'body' },
+        spec: {
+          kind: 'fixed-matrix',
+          section_id: 'tai_san_gop_von_sau_thay_doi_vdl',
+          semantic_key: 'co_cau_tai_san_gop_von_sau_thay_doi_vdl',
+          form_id: 'PLI_M12',
+          stt: { mode: 'none' },
+          fixed_rows: [
+            { id: 'dong_viet_nam', label: 'Đồng Việt Nam' },
+            { id: 'ngoai_te_tu_do_chuyen_doi',
+              label: 'Ngoại tệ tự do chuyển đổi (ghi rõ loại ngoại tệ, số tiền được góp bằng mỗi loại ngoại tệ)' },
+            { id: 'vang', label: 'Vàng' },
+            { id: 'quyen_su_dung_dat', label: 'Quyền sử dụng đất' },
+            { id: 'quyen_so_huu_tri_tue', label: 'Quyền sở hữu trí tuệ' },
+            { id: 'tai_san_khac',
+              label: 'Các tài sản khác (ghi rõ loại tài sản, số lượng và giá trị còn lại của mỗi loại tài sản, có thể lập thành danh mục riêng kèm theo hồ sơ đăng ký doanh nghiệp)' },
+            { id: 'tong_so', label: 'Tổng số', output_only: true }
+          ],
+          columns: [
+            { tag: 'loai_tai_san_gop_von', inputType: 'readonly',
+              header: 'Tài sản góp vốn' },
+            { tag: 'chi_tiet_ngoai_te_tai_san_khac', inputType: 'text',
+              header: 'Ghi rõ loại ngoại tệ, số tiền được góp bằng mỗi loại ngoại tệ / loại tài sản, số lượng và giá trị còn lại của mỗi loại tài sản' },
+            { tag: 'gia_tri_vnd', inputType: 'money',
+              header: 'Giá trị vốn của từng tài sản trong vốn điều lệ (bằng số, VNĐ)' },
+            { tag: 'ty_le', inputType: 'percent', header: 'Tỷ lệ (%)' }
+          ],
+          totals: [
+            { id: 'tong_so', formula: 'sum(gia_tri_vnd)',
+              target_tag: 'gia_tri_vnd' },
+            { id: 'tong_so', formula: 'sum(ty_le)', target_tag: 'ty_le' }
+          ],
+          /* GAP (khác M01/M02): sumEqualsKey "Tổng số == Vốn điều lệ SAU
+           * thay đổi" KHÔNG khai được — form_maps PLI_M12 không có key số
+           * vốn điều lệ (bằng số) sau thay đổi độc lập (von_dieu_le_chu bị
+           * gán chung cho dòng 'đã đăng ký' và 'sau khi thay đổi'). Tính
+           * đúng của ô tổng vẫn được bảo đảm bởi recompute_totals strict
+           * lúc export (mismatch stored/computed -> ExportTotalsError). */
+          cross_field_rules: [
+            { type: 'percentSum', tag: 'ty_le', equals: 100,
+              severity: 'warning', code: 'PERCENT_SUM',
+              message: 'Tổng tỷ lệ tài sản góp vốn (vốn điều lệ sau thay đổi) phải đúng 100% khi đã kê khai.' }
+          ]
+        }
+      },
+      {
+        sectionId: 'tai_san_gop_von_sau_thay_doi_von_dau_tu',
+        semanticKey: 'co_cau_tai_san_gop_von_sau_thay_doi_vdt',
+        kind: 'fixed-matrix',
+        policy: { allowAdd: false, allowDelete: false, allowReorder: false },
+        anchor: { match: 'tai san gop von sau khi thay doi von dau tu',
+          matchRole: 'body',
+          endMatch: 'thong bao thay doi nguoi dai dien theo uy quyen',
+          endRole: 'body' },
+        spec: {
+          kind: 'fixed-matrix',
+          section_id: 'tai_san_gop_von_sau_thay_doi_von_dau_tu',
+          semantic_key: 'co_cau_tai_san_gop_von_sau_thay_doi_vdt',
+          form_id: 'PLI_M12',
+          stt: { mode: 'none' },
+          fixed_rows: [
+            { id: 'dong_viet_nam', label: 'Đồng Việt Nam' },
+            { id: 'ngoai_te_tu_do_chuyen_doi',
+              label: 'Ngoại tệ tự do chuyển đổi (ghi rõ loại ngoại tệ, số tiền được góp bằng mỗi loại ngoại tệ)' },
+            { id: 'vang', label: 'Vàng' },
+            { id: 'quyen_su_dung_dat', label: 'Quyền sử dụng đất' },
+            { id: 'quyen_so_huu_tri_tue', label: 'Quyền sở hữu trí tuệ' },
+            { id: 'tai_san_khac',
+              label: 'Các tài sản khác (ghi rõ loại tài sản, số lượng và giá trị còn lại của mỗi loại tài sản, có thể lập thành danh mục riêng kèm theo hồ sơ đăng ký doanh nghiệp)' },
+            { id: 'tong_so', label: 'Tổng số', output_only: true }
+          ],
+          columns: [
+            { tag: 'loai_tai_san_gop_von', inputType: 'readonly',
+              header: 'Tài sản góp vốn' },
+            { tag: 'chi_tiet_ngoai_te_tai_san_khac', inputType: 'text',
+              header: 'Ghi rõ loại ngoại tệ, số tiền được góp bằng mỗi loại ngoại tệ / loại tài sản, số lượng và giá trị còn lại của mỗi loại tài sản' },
+            { tag: 'gia_tri_vnd', inputType: 'money',
+              header: 'Giá trị vốn của từng tài sản trong vốn đầu tư (bằng số, VNĐ)' },
+            { tag: 'ty_le', inputType: 'percent', header: 'Tỷ lệ (%)' }
+          ],
+          totals: [
+            { id: 'tong_so', formula: 'sum(gia_tri_vnd)',
+              target_tag: 'gia_tri_vnd' },
+            { id: 'tong_so', formula: 'sum(ty_le)', target_tag: 'ty_le' }
+          ],
+          /* GAP: sumEqualsKey "Tổng số == Vốn đầu tư sau khi thay đổi" không
+           * khai được — von_dau_tu_so bị gán chung 'đã đăng ký' (B111) và
+           * 'sau khi thay đổi' (B112) -> đối chiếu sẽ sai ngữ cảnh. Mismatch
+           * computed/stored vẫn chặn export (recompute_totals strict). */
+          cross_field_rules: [
+            { type: 'percentSum', tag: 'ty_le', equals: 100,
+              severity: 'warning', code: 'PERCENT_SUM',
+              message: 'Tổng tỷ lệ tài sản góp vốn (vốn đầu tư sau thay đổi) phải đúng 100% khi đã kê khai.' }
+          ]
+        }
+      },
+      /* F1-IN (2026-09-06, O1 + O2): matrix "Thông tin về cổ phần (chỉ kê
+       * khai đối với công ty cổ phần)" của Mẫu 12 TT 121/2026 (p113-p147) —
+       * shape giống hệt M04 co_cau_loai_co_phan (D1.4=A). O2 GIỮ VERBATIM
+       * chính tả bản in hiện hành: dòng 2 bản in M12 là "Cổ phần ưu đã biểu
+       * quyết" (thiếu 'i' so với M04) — KHÔNG "sửa luật"; row id giữ
+       * canonical cp_uu_dai_bieu_quyet. menh_gia_co_phan là trường lẻ của
+       * mục (giữ nguyên, credit scalar vùng anchor như M04). */
+      {
+        sectionId: 'co_cau_loai_co_phan_sau_thay_doi',
+        semanticKey: 'co_cau_loai_co_phan_sau_thay_doi',
+        kind: 'fixed-matrix',
+        policy: { allowAdd: false, allowDelete: false, allowReorder: false },
+        anchor: { match: 'thong tin ve co phan',
+          matchRole: 'body',
+          endMatch: '2. dang ky thay doi phan von gop', endRole: 'body' },
+        spec: {
+          kind: 'fixed-matrix',
+          section_id: 'co_cau_loai_co_phan_sau_thay_doi',
+          semantic_key: 'co_cau_loai_co_phan_sau_thay_doi',
+          form_id: 'PLI_M12',
+          stt: { mode: 'generated' },
+          fixed_rows: [
+            { id: 'co_phan_pho_thong', label: 'Cổ phần phổ thông' },
+            { id: 'cp_uu_dai_bieu_quyet', label: 'Cổ phần ưu đã biểu quyết' },
+            { id: 'cp_uu_dai_co_tuc', label: 'Cổ phần ưu đãi cổ tức' },
+            { id: 'cp_uu_dai_hoan_lai', label: 'Cổ phần ưu đãi hoàn lại' },
+            { id: 'cp_uu_dai_khac', label: 'Các cổ phần ưu đãi khác' },
+            { id: 'tong_so', label: 'Tổng số', output_only: true }
+          ],
+          columns: [
+            { tag: 'loai_co_phan', inputType: 'readonly',
+              header: 'Loại cổ phần' },
+            { tag: 'so_luong', inputType: 'money', header: 'Số lượng' },
+            { tag: 'gia_tri_vnd', inputType: 'money',
+              header: 'Giá trị (bằng số, VNĐ)' },
+            { tag: 'ty_le_so_von_dieule', inputType: 'percent',
+              header: 'Tỉ lệ so với vốn điều lệ (%)' }
+          ],
+          totals: [
+            { id: 'tong_so', formula: 'sum(so_luong)', target_tag: 'so_luong' },
+            { id: 'tong_so', formula: 'sum(gia_tri_vnd)',
+              target_tag: 'gia_tri_vnd' },
+            { id: 'tong_so', formula: 'sum(ty_le_so_von_dieule)',
+              target_tag: 'ty_le_so_von_dieule' }
+          ],
+          /* GAP: sumEqualsKey gia_tri_vnd == Vốn điều lệ không khai được
+           * (không có key von_dieu_le bằng số ở M12 — xem matrix tài sản
+           * trên); product(so_luong, menh_gia_co_phan) chưa khai được do
+           * mệnh giá là trường lẻ ngoài cột (gap M04 đã ghi). */
+          cross_field_rules: [
+            { type: 'percentSum', tag: 'ty_le_so_von_dieule', equals: 100,
+              severity: 'warning', code: 'PERCENT_SUM',
+              message: 'Tổng tỷ lệ so với vốn điều lệ phải đúng 100% khi đã kê khai.' }
+          ]
+        }
       }]
     },
     /* N7 - nested-grid PLI_M15 (Wave R3B1): người đại diện/theo ủy quyền của
@@ -2242,6 +2516,102 @@
           ],
           totals: [],
           cross_field_rules: []
+        }
+      },
+      /* F1-IN (2026-09-06, O1 + D5.2=A): C5 — "5. Thông tin đăng ký thuế"
+       * của MỤC C ĐĂNG KÝ CẤP ĐỔI (khác ngữ cảnh a7 ở mục A). D5.2=A: chỉ
+       * các chỉ tiêu CÓ NỘI DUNG thật của Mục C được làm row — nguồn Mục C
+       * (p155-p166) in ĐÚNG 2 chỉ tiêu: 5.1 Địa chỉ nhận thông báo thuế
+       * (kèm nhóm địa chỉ/điện thoại/email, chỉ kê khai nếu khác trụ sở) và
+       * 5.2 Tổng số lao động; KHÔNG có dòng '…' ở Mục C. Row id dùng lại 2
+       * tag canonical của a7 (required_columns census). O nhóm địa chỉ của
+       * 5.1 (5 ô nhập cũ trùng key với trụ sở C.2) được gộp vào 1 ô text
+       * 'dia_chi_nhan_thong_bao_thue' — header trích đúng các nhãn con của
+       * nguồn; 2 input trùng key cũ ở vùng này bị thu hồi sau regen. */
+      {
+        sectionId: 'c5_thue_chi_tieu_cap_doi',
+        semanticKey: 'thue_chi_tieu_cap_doi',
+        kind: 'fixed-matrix',
+        policy: { allowAdd: false, allowDelete: false, allowReorder: false },
+        anchor: { match: '5. thong tin dang ky thue', matchRole: 'section-heading',
+          endMatch: '6. chu the thanh lap ho kinh doanh', endRole: 'section-heading' },
+        spec: {
+          kind: 'fixed-matrix',
+          section_id: 'c5_thue_chi_tieu_cap_doi',
+          semantic_key: 'thue_chi_tieu_cap_doi',
+          form_id: 'PLII_M02',
+          stt: { mode: 'none' },
+          fixed_rows: [
+            { id: 'chi_tieu_5_1_dia_chi_nhan_thong_bao_thue',
+              label: '5.1 Địa chỉ nhận thông báo thuế (chỉ kê khai nếu địa chỉ nhận thông báo thuế khác địa chỉ trụ sở):' },
+            { id: 'chi_tieu_5_2_tong_so_lao_dong',
+              label: '5.2 Tổng số lao động' }
+          ],
+          columns: [
+            { tag: null, inputType: 'readonly',
+              header: 'STT / Các chỉ tiêu thông tin đăng ký thuế' },
+            { tag: 'dia_chi_nhan_thong_bao_thue', inputType: 'text',
+              header: 'Địa chỉ nhận thông báo thuế (số nhà/phòng, ngách/hẻm, ngõ/kiệt, đường/phố/đại lộ, tổ/xóm/ấp/thôn; xã/phường/đặc khu; tỉnh/thành phố trực thuộc trung ương; điện thoại; thư điện tử — chỉ kê khai nếu khác địa chỉ trụ sở)' },
+            { tag: 'so_lao_dong', inputType: 'money',
+              header: 'Tổng số lao động' }
+          ],
+          totals: [],
+          cross_field_rules: []
+        }
+      }]
+    },
+    /* F1-IN (2026-09-06, O1 + D6.4): PLI_M78 — "3. Thông tin yêu cầu" của
+     * Giấy đề nghị cung cấp thông tin: fixed-matrix 4 dòng pháp định
+     * (3 sản phẩm cố định theo mẫu + "Sản phẩm khác"), cột Số lượng là số
+     * nguyên >=0 (input_type money = validator >=0 hiện hành; ràng buộc
+     * NGUYÊN chưa có trong contract v1 — gap), max_rows=null (D6.4).
+     * D6.4 mirror tên DN: nguồn in '… của …' — labels giữ nguyên văn 'của …'
+     * (blank pháp định); mirror {dn.ten_tieng_viet} vào ô nhãn bị converter
+     * blocks từ chối fail-loud (verify_fixed_matrix_spec: cột nhãn không
+     * được còn the) — GAP cho Lead: (i) cho phép mirror-token ở ô nhãn
+     * fixed-matrix (verifier + docx_render parity) hoặc (ii) mở rộng
+     * registry mirror. UI không in token kỹ thuật (N-v3).
+     * Dòng 4 "Sản phẩm khác": ô mô tả (ten_san_pham) BẮT BUỘC khi số lượng
+     * > 0 — rule requiredIfPositive (shape thêm ADDITIVE vào
+     * evalSectionCrossFieldRules của lane F1-IN; trước đó slot chỉ hỗ trợ
+     * sum/percentSum/sumEqualsKey). */
+    'PLI_M78': {
+      sections: [{
+        sectionId: 'san_pham_cung_cap_thong_tin',
+        semanticKey: 'ds_san_pham_yeu_cau',
+        kind: 'fixed-matrix',
+        policy: { allowAdd: false, allowDelete: false, allowReorder: false },
+        anchor: { match: '3. thong tin yeu cau', matchRole: 'section-heading',
+          endMatch: 'toi/(ten to chuc) cam ket', endRole: 'body' },
+        spec: {
+          kind: 'fixed-matrix',
+          section_id: 'san_pham_cung_cap_thong_tin',
+          semantic_key: 'ds_san_pham_yeu_cau',
+          form_id: 'PLI_M78',
+          stt: { mode: 'generated' },
+          fixed_rows: [
+            { id: 'sp_gcn_dkdn',
+              label: 'Giấy chứng nhận đăng ký doanh nghiệp của …' },
+            { id: 'sp_lich_su_3_nam',
+              label: 'Thông tin lịch sử 3 năm của doanh nghiệp …' },
+            { id: 'sp_thong_tin_moi_nhat',
+              label: 'Thông tin doanh nghiệp mới nhất của …' },
+            { id: 'san_pham_khac', label: 'Sản phẩm khác' }
+          ],
+          columns: [
+            { tag: null, inputType: 'readonly', header: 'Tên sản phẩm' },
+            { tag: 'ten_san_pham', inputType: 'text',
+              header: 'Tên sản phẩm khác (ghi rõ tên sản phẩm, nếu có)' },
+            { tag: 'so_luong_san_pham', inputType: 'money',
+              header: 'Số lượng sản phẩm' }
+          ],
+          totals: [],
+          cross_field_rules: [
+            { type: 'requiredIfPositive', tag: 'ten_san_pham',
+              whenTag: 'so_luong_san_pham', whenRow: 'san_pham_khac',
+              severity: 'blocking', code: 'DESC_REQUIRED',
+              message: '"Sản phẩm khác" đã kê khai số lượng nhưng thiếu tên/mô tả sản phẩm — bắt buộc ghi rõ khi số lượng > 0 (D6.4).' }
+          ]
         }
       }]
     }
@@ -2363,6 +2733,33 @@
       .forEach(function (ruleRaw) {
         if (!ruleRaw) return;
         var cfg = typeof ruleRaw === 'string' ? { rule: ruleRaw } : ruleRaw;
+        /* F1-IN (2026-09-06, D6.4): shape ADDITIVE — {type:'requiredIfPositive',
+         * tag, whenTag, whenRow, severity?, code?, message?}: ô <tag> của dòng
+         * <whenRow> BẮT BUỘC có dữ liệu khi ô <whenTag> cùng dòng > 0
+         * (vd M78: "Sản phẩm khác" bắt buộc mô tả khi số lượng > 0). Bỏ qua
+         * khi chưa kê khai số lượng (đúng nguyên tắc "khi co ke khai"); nếu
+         * kê khai nhưng thiếu -> blocking. Không đụng các shape cũ. */
+        if (cfg.type === 'requiredIfPositive') {
+          var rqTag = cfg.tag, rqWhenTag = cfg.whenTag || cfg.tag,
+            rqRow = cfg.whenRow;
+          var rqSem = spec.semantic_key || spec.semanticKey;
+          if (!rqTag || !rqWhenTag || !rqRow || !rqSem) return;
+          var rqQtyRaw = (st.values || {})[rqSem + '.' + rqRow + '.' + rqWhenTag];
+          var rqQty = rqQtyRaw == null || String(rqQtyRaw).trim() === '' ?
+            null : parseMoney(rqQtyRaw);
+          if (rqQty == null || rqQty <= 0) return;   // chỉ ràng buộc khi SL > 0
+          var rqDesc = (st.values || {})[rqSem + '.' + rqRow + '.' + rqTag];
+          if (rqDesc != null && String(rqDesc).trim() !== '') return;
+          push({
+            key: rqSem + '.cross_field.' + rqTag,
+            docId: docId,
+            code: cfg.code || 'REQUIRED_IF_POSITIVE',
+            message: cfg.message ||
+              ('Ô "' + rqTag + '" bắt buộc khi "' + rqWhenTag + '" > 0.'),
+            severity: cfg.severity || 'blocking'
+          });
+          return;
+        }
         var text = typeof ruleRaw === 'string' ? ruleRaw : String(cfg.rule || '');
         var m = text.match(
           /^\s*sum\(\s*([^)]+?)\s*\)\s*(==|=|<=|>=|<|>)\s*(-?\d+(?:[.,]\d+)?)\s*$/i);

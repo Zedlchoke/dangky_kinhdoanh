@@ -402,3 +402,12 @@ chỉ thị ký, template khớp nguồn; chi tiết + bằng chứng 3 dòng cu
 `docs/audits/header_name_census_2026-09-05.md` mục 4).
 *PLI_M07: nguồn là stub 2 dòng, template tự dựng bảng + cột Chữ ký —
 chiều ngược (template CÓ thêm so với nguồn); nguồn không đủ tái sinh.
+
+## F0L migration defects — 2026-09-06 @ e268038
+
+| Defect | Trạng thái | Fix gốc rễ + bằng chứng |
+|---|---|---|
+| M10 cột 16 transcribe sai 'Nhóm cá nhân có quan hệ gia đình/**họ hàng**7' | **CLOSED** | Ảnh p49 @350dpi đọc rõ '/hợp đồng7' (fn7: 'quan hệ gia đình... hoặc hợp đồng cùng nhau sở hữu'); sửa spec + inventory; regen template contains 'hợp đồng'; pin t_m10_2026_contract chặn hồi quy |
+| M27/M30 mất khối chữ ký tiêu đề (para trống tại vị trí title) sau edit nguồn lane | **CLOSED** | B1 census_registry bắt titles=[]; khôi phục verbatim TT121 p69 (3 dòng + (Ký và ghi họ tên)6) / p70 (2 dòng + (Ký và ghi họ tên)2); census titles khớp registry; signers=1 |
+| M27 glue superscript chú thích 4/5 (chữ số nằm run thường) | **CLOSED** | Tách run superscript tại source (para 20/34); test_extractor_footnote_glue 12/12 |
+| p2a/r3b1 pin premise 2025 (M10 12 cột 'Quyền chi phối', M12 anchor index, M09 glue, STT-glue extinct) | **CLOSED** | Pin sync có bảng premise→hiện trạng→evidence trong comment test; không bỏ assertion nào |

@@ -634,3 +634,17 @@ I.27, I.30 và bãi bỏ I.11; NĐ 296/2026/NĐ-CP sửa NĐ 168/2025. Vì vậy
 release evidence. F0L phải migrate 9 mẫu + inactive M11 trước F1/F2/F4 và
 corpus cuối. O5 human review và O6 Windows vẫn là evidence outstanding, không
 được giả PASS bằng quyết định tài liệu.
+
+## Wave F0L — current-law migration L-2026 @ main 44f21bc→ (2026-09-06)
+
+| Task | Owner | Commit | Gate | Evidence |
+|---|---|---|---|---|
+| Preflight + baseline: runner 63/0, census 87/87 sig, detectors 10/0, signatures 6/0, H7 57/57 | Lead | — | tất cả khớp checkpoint v7 | /tmp/final_f0l_baseline.json |
+| 4 nguồn pháp lý ký số (TT121 70p, NĐ296 14p, TT68 266p, NĐ168 122p) + SOURCES.md + bản đồ trang | Lead | `0b08187` | SHA-256 4/4 khớp; gate test_current_law_catalog (lead) 5/0 | docs/legal_sources_2026/ |
+| PLI_M11 REMOVED_BY_CURRENT_LAW: generator stamp current_law_status + manifest note + runner +64 suite | Lead | `04f5335`/`1a66f95` | coverage REMOVED 1 / drift 0; runner 64/0 | form_maps.PLI_M11.current_law_status |
+| Lane C merge: M09 decontaminate (129 para), AI-review tooling (hard-guard HUMAN_*), corpus phase8f inventory động, census hardcode audit | Lead | `29c850f` | test_m09_decontaminate 8/8 sau regen; corpus_ai_review 11/0; corpus_inventory 8/0; regen ×2 zero-diff (M09) | branch agent/final-docx |
+| Lane A merge: M10 18 cột (nested-grid 4 hàng header, 11=9+10/14=12+13), M12 band + CSHHL 4→2 mục, M27 NĐD 3 trường + rule dia_chi_thu_dien_tu, M30 sổ ĐKCD, ND296 inventory 22 điều, test_current_law_migration 14 | Lead | `0cd8544`..`2c1e3ef` (merge) | regen ×2; migration tests 14/14 sau chuẩn hóa marker dict | branch agent/final-contracts |
+| Lane B merge: O3 min_rows conditional, O4 mã dài string/leading-zero/BAD_ID_TEXT, N-v3 test, Excel cụm hộ kinh doanh (4 questionnaire) + blocked-TT121 manifest, full-sweep harness | Lead | `ecdbc08` | test_min_rows_o3 25/0; nv3 11/0; questionnaire 15/0; excel roundtrip/negative mở rộng | branch agent/final-ui-excel |
+| Lane A2 merge: M01-M05 + N-v4 M07 rebuild từ TT68 p49-50 (bỏ stub, 13 chú thích) | Lead | `beeae4b`..`0f5e9f4` (merge) | Lead thẩm định chéo M07 vs ảnh p49 (verbatim khớp) | branch agent/final-contracts-m0105 |
+| Lead proofread bắt 2 defect transcribe: M10 cột 16 'họ hàng'→'hợp đồng' (ảnh p49 350dpi); M27/M30 mất dòng tiêu đề khối ký → khôi phục verbatim p69/p70 (Ký và ghi họ tên)6/² | Lead | `e268038` | census titles M27/M30 khớp registry; test_extractor_footnote_glue 12/12 | /tmp/p49_col16_350.png, /tmp/p69_top_250.png |
+| Pin sync theo quy tắc premise→evidence: p2a 14/0 (M10 2026 contract + M09 decontam), r3b1 (M12 anchor 134→135, M09 removed_by_source_cleanup), glue STT_GLUE_FIXED_FORMS, M27 superscript 4/5 tại source | Lead | `6de45d5`/`e268038` | suites xanh từng cái | commit messages |

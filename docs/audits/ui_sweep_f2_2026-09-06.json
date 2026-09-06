@@ -1,0 +1,676 @@
+{
+ "generated": "2026-09-06",
+ "lane": "F2-SWEEP (agent/final-f2-sweep)",
+ "base_head": "3784c32",
+ "pin_sync_commit": "9290f2a",
+ "environment": {
+  "node": "v26.7.0",
+  "python": "3.13",
+  "browser": "chromium-1228 headless qua python playwright 1.61 (cache sẵn, không cài mới)",
+  "node_playwright_for_p3_a11y": "npx cache qua P3_PLAYWRIGHT_DIR (không cài mới)"
+ },
+ "summary": {
+  "node_suites": "38/38 exit 0 (sau pin-sync 2 suite vốn đỏ vì pin premise)",
+  "gate_f2": {
+   "PASS": 13,
+   "NOT RUN": 4,
+   "FAIL": 0
+  }
+ },
+ "entries": [
+  {
+   "id": "suite-01",
+   "item": "node suite test_acceptance",
+   "verdict": "PASS",
+   "command": "node app_web/test_acceptance.js",
+   "exit_code": 0,
+   "numbers": {
+    "summary": "46/0"
+   }
+  },
+  {
+   "id": "suite-02",
+   "item": "node suite test_audit_p1_negative",
+   "verdict": "PASS",
+   "command": "node app_web/test_audit_p1_negative.js",
+   "exit_code": 0,
+   "numbers": {
+    "summary": "39/0"
+   }
+  },
+  {
+   "id": "suite-03",
+   "item": "node suite test_audit_wave_h_negative",
+   "verdict": "PASS",
+   "command": "node app_web/test_audit_wave_h_negative.js",
+   "exit_code": 0,
+   "numbers": {
+    "summary": "57/0"
+   }
+  },
+  {
+   "id": "suite-04",
+   "item": "node suite test_docx_layout_ui",
+   "verdict": "PASS",
+   "command": "node app_web/test_docx_layout_ui.js",
+   "exit_code": 0,
+   "numbers": {
+    "summary": "15/0"
+   }
+  },
+  {
+   "id": "suite-05",
+   "item": "node suite test_dom",
+   "verdict": "PASS",
+   "command": "node app_web/test_dom.js",
+   "exit_code": 0,
+   "numbers": {
+    "summary": "69/0"
+   }
+  },
+  {
+   "id": "suite-06",
+   "item": "node suite test_domain",
+   "verdict": "PASS",
+   "command": "node app_web/test_domain.js",
+   "exit_code": 0,
+   "numbers": {
+    "summary": "69/0"
+   }
+  },
+  {
+   "id": "suite-07",
+   "item": "node suite test_f1_input_ui",
+   "verdict": "PASS",
+   "command": "node app_web/test_f1_input_ui.js",
+   "exit_code": 0,
+   "numbers": {
+    "summary": "13/0"
+   }
+  },
+  {
+   "id": "suite-08",
+   "item": "node suite test_fixed_matrix_product",
+   "verdict": "PASS",
+   "command": "node app_web/test_fixed_matrix_product.js",
+   "exit_code": 0,
+   "numbers": {
+    "summary": "PASS"
+   }
+  },
+  {
+   "id": "suite-09",
+   "item": "node suite test_fixed_matrix",
+   "verdict": "PASS",
+   "command": "node app_web/test_fixed_matrix.js",
+   "exit_code": 0,
+   "numbers": {
+    "summary": "PASS"
+   }
+  },
+  {
+   "id": "suite-10",
+   "item": "node suite test_form_flow",
+   "verdict": "PASS",
+   "command": "node app_web/test_form_flow.js",
+   "exit_code": 0,
+   "numbers": {
+    "summary": "38/0"
+   }
+  },
+  {
+   "id": "suite-11",
+   "item": "node suite test_form_grid_meta",
+   "verdict": "PASS",
+   "command": "node app_web/test_form_grid_meta.js",
+   "exit_code": 0,
+   "numbers": {
+    "summary": "87/0"
+   }
+  },
+  {
+   "id": "suite-12",
+   "item": "node suite test_full_sweep_inventory",
+   "verdict": "PASS",
+   "command": "node app_web/test_full_sweep_inventory.js",
+   "exit_code": 0,
+   "numbers": {
+    "summary": "87/87 form sạch, 0 cần Lead"
+   }
+  },
+  {
+   "id": "suite-13",
+   "item": "node suite test_grid",
+   "verdict": "PASS",
+   "command": "node app_web/test_grid.js",
+   "exit_code": 0,
+   "numbers": {
+    "summary": "110/0"
+   }
+  },
+  {
+   "id": "suite-14",
+   "item": "node suite test_household_shared",
+   "verdict": "PASS",
+   "command": "node app_web/test_household_shared.js",
+   "exit_code": 0,
+   "numbers": {
+    "summary": "10/0"
+   }
+  },
+  {
+   "id": "suite-15",
+   "item": "node suite test_industry_input_negative",
+   "verdict": "PASS",
+   "command": "node app_web/test_industry_input_negative.js",
+   "exit_code": 0,
+   "numbers": {
+    "summary": "36/0"
+   }
+  },
+  {
+   "id": "suite-16",
+   "item": "node suite test_layout_l2_render",
+   "verdict": "PASS",
+   "command": "node app_web/test_layout_l2_render.js",
+   "exit_code": 0,
+   "numbers": {
+    "summary": "77/0"
+   }
+  },
+  {
+   "id": "suite-17",
+   "item": "node suite test_loop_prod",
+   "verdict": "PASS",
+   "command": "node app_web/test_loop_prod.js",
+   "exit_code": 0,
+   "numbers": {
+    "summary": "112/0"
+   }
+  },
+  {
+   "id": "suite-18",
+   "item": "node suite test_m72_activation",
+   "verdict": "PASS",
+   "command": "node app_web/test_m72_activation.js",
+   "exit_code": 0,
+   "numbers": {
+    "summary": "48/0"
+   }
+  },
+  {
+   "id": "suite-19",
+   "item": "node suite test_min_rows_o3",
+   "verdict": "PASS",
+   "command": "node app_web/test_min_rows_o3.js",
+   "exit_code": 0,
+   "numbers": {
+    "summary": "25/0"
+   }
+  },
+  {
+   "id": "suite-20",
+   "item": "node suite test_nested_grid",
+   "verdict": "PASS",
+   "command": "node app_web/test_nested_grid.js",
+   "exit_code": 0,
+   "numbers": {
+    "summary": "PASS"
+   }
+  },
+  {
+   "id": "suite-21",
+   "item": "node suite test_nv1_nv2_band_input",
+   "verdict": "PASS",
+   "command": "node app_web/test_nv1_nv2_band_input.js",
+   "exit_code": 0,
+   "numbers": {
+    "summary": "14/0"
+   }
+  },
+  {
+   "id": "suite-22",
+   "item": "node suite test_nv3_inline_mirror",
+   "verdict": "PASS",
+   "command": "node app_web/test_nv3_inline_mirror.js",
+   "exit_code": 0,
+   "numbers": {
+    "summary": "20/0"
+   }
+  },
+  {
+   "id": "suite-23",
+   "item": "node suite test_nv3_output_name",
+   "verdict": "PASS",
+   "command": "node app_web/test_nv3_output_name.js",
+   "exit_code": 0,
+   "numbers": {
+    "summary": "11/0"
+   }
+  },
+  {
+   "id": "suite-24",
+   "item": "node suite test_output_table",
+   "verdict": "PASS",
+   "command": "node app_web/test_output_table.js",
+   "exit_code": 0,
+   "numbers": {
+    "summary": "PASS"
+   }
+  },
+  {
+   "id": "suite-25",
+   "item": "node suite test_p12_m72_selector",
+   "verdict": "PASS",
+   "command": "node app_web/test_p12_m72_selector.js",
+   "exit_code": 0,
+   "numbers": {
+    "summary": "38/0"
+   }
+  },
+  {
+   "id": "suite-26",
+   "item": "node suite test_p2_migration",
+   "verdict": "PASS",
+   "command": "node app_web/test_p2_migration.js",
+   "exit_code": 0,
+   "numbers": {
+    "summary": "PASS"
+   }
+  },
+  {
+   "id": "suite-27",
+   "item": "node suite test_p20_hardening",
+   "verdict": "PASS",
+   "command": "node app_web/test_p20_hardening.js",
+   "exit_code": 0,
+   "numbers": {
+    "summary": "56/0"
+   }
+  },
+  {
+   "id": "suite-28",
+   "item": "node suite test_p2a_people_contracts",
+   "verdict": "PASS",
+   "command": "node app_web/test_p2a_people_contracts.js",
+   "exit_code": 0,
+   "numbers": {
+    "summary": "92/0 (sau pin-sync 9290f2a)"
+   }
+  },
+  {
+   "id": "suite-29",
+   "item": "node suite test_p2c_capital_contracts",
+   "verdict": "PASS",
+   "command": "node app_web/test_p2c_capital_contracts.js",
+   "exit_code": 0,
+   "numbers": {
+    "summary": "66/0"
+   }
+  },
+  {
+   "id": "suite-30",
+   "item": "node suite test_p3_a11y",
+   "verdict": "PASS",
+   "command": "node app_web/test_p3_a11y.js",
+   "exit_code": 0,
+   "numbers": {
+    "summary": "36/0 chromium thật"
+   }
+  },
+  {
+   "id": "suite-31",
+   "item": "node suite test_p3_draft",
+   "verdict": "PASS",
+   "command": "node app_web/test_p3_draft.js",
+   "exit_code": 0,
+   "numbers": {
+    "summary": "80/0"
+   }
+  },
+  {
+   "id": "suite-32",
+   "item": "node suite test_p3_e2e",
+   "verdict": "PASS",
+   "command": "node app_web/test_p3_e2e.js",
+   "exit_code": 0,
+   "numbers": {
+    "summary": "38/0"
+   }
+  },
+  {
+   "id": "suite-33",
+   "item": "node suite test_p3_security",
+   "verdict": "PASS",
+   "command": "node app_web/test_p3_security.js",
+   "exit_code": 0,
+   "numbers": {
+    "summary": "90/0"
+   }
+  },
+  {
+   "id": "suite-34",
+   "item": "node suite test_r3b1_people_contracts",
+   "verdict": "PASS",
+   "command": "node app_web/test_r3b1_people_contracts.js",
+   "exit_code": 0,
+   "numbers": {
+    "summary": "59/0 (sau pin-sync 9290f2a)"
+   }
+  },
+  {
+   "id": "suite-35",
+   "item": "node suite test_row_contract_corpus",
+   "verdict": "PASS",
+   "command": "node app_web/test_row_contract_corpus.js",
+   "exit_code": 0,
+   "numbers": {
+    "summary": "18/0"
+   }
+  },
+  {
+   "id": "suite-36",
+   "item": "node suite test_runtime_tables",
+   "verdict": "PASS",
+   "command": "node app_web/test_runtime_tables.js",
+   "exit_code": 0,
+   "numbers": {
+    "summary": "194/0"
+   }
+  },
+  {
+   "id": "suite-37",
+   "item": "node suite test_validation_contact",
+   "verdict": "PASS",
+   "command": "node app_web/test_validation_contact.js",
+   "exit_code": 0,
+   "numbers": {
+    "summary": "110/0"
+   }
+  },
+  {
+   "id": "suite-38",
+   "item": "node suite test_wiring_gate",
+   "verdict": "PASS",
+   "command": "node app_web/test_wiring_gate.js",
+   "exit_code": 0,
+   "numbers": {
+    "summary": "37/0"
+   }
+  },
+  {
+   "id": "py-v7-header-name",
+   "item": "tools.test_v7_header_name (HEADER-NAME-SYNC regression DOCX/PDF)",
+   "verdict": "PASS",
+   "command": "python3 -X utf8 -m tools.test_v7_header_name",
+   "exit_code": 0,
+   "numbers": {
+    "summary": "8/0"
+   },
+   "evidence_refs": [
+    "tools/test_v7_header_name.py",
+    "docs/audits/header_name_census_f0l_2026-09-06.json"
+   ]
+  },
+  {
+   "id": "f2-1",
+   "item": "Khoản 1: 28 UC / 87 form / 5 variant M72 / key-control",
+   "verdict": "PASS",
+   "command": "node app_web/test_full_sweep_inventory.js",
+   "exit_code": 0,
+   "numbers": {
+    "forms": 87,
+    "use_cases": 28,
+    "console_error": 0,
+    "console_warn": 0,
+    "declared_input_keys": 2186,
+    "missing_control": 0,
+    "selector_gated_keys_PLI_M72": 36
+   },
+   "evidence_refs": [
+    "app_web/test_full_sweep_inventory.js",
+    "per-form: /tmp/f2sweep/per_form_keys_clean.json"
+   ]
+  },
+  {
+   "id": "f2-2a",
+   "item": "Khoản 2: census band tên chủ thể 23/23 bound",
+   "verdict": "PASS",
+   "command": "đọc docs/audits/header_name_census_f0l_2026-09-06.json (sinh bởi tools/census/header_name_census_f0l.py)",
+   "exit_code": 0,
+   "numbers": {
+    "fillable_header_slot": 23,
+    "bound": 23,
+    "blocked_owner": 0,
+    "unadjudicated": 0,
+    "key_dn.ten_tieng_viet": 21,
+    "key_hkd_ten_tieng_viet_2": 2,
+    "legal_title_band": 12
+   }
+  },
+  {
+   "id": "f2-2b",
+   "item": "Khoản 2: bảng ngành tên+mã+ngành chính",
+   "verdict": "PASS",
+   "command": "node app_web/test_grid.js",
+   "exit_code": 0,
+   "numbers": {
+    "summary": "110/0",
+    "row_contract": [
+     "ma_nganh",
+     "ten_nganh",
+     "chi_tiet",
+     "la_nganh_chinh"
+    ],
+    "notes": "ten_nganh readonly tra VSIC; radio 1 lựa chọn; PRIMARY_INDUSTRY_REQUIRED"
+   },
+   "evidence_refs": [
+    "app_web/test_grid.js",
+    "app_web/test_industry_input_negative.js"
+   ]
+  },
+  {
+   "id": "f2-3a",
+   "item": "Khoản 3: viewport matrix 87 form × 3 size",
+   "verdict": "PASS",
+   "command": "python3 /tmp/f2sweep/browser_sweep.py + /tmp/f2sweep/reprobe3.py (chromium headless, render trong #pages)",
+   "exit_code": 0,
+   "numbers": {
+    "viewports": [
+     "1280x800",
+     "768x1024",
+     "390x844"
+    ],
+    "clean_1280": "79/87",
+    "findings_1280": {
+     "PLI_M70_table_no_btable_wrap": 1,
+     "P.bp_dot_leader_7_forms": 19
+    },
+    "design_note": "768/390 cuộn ngang by design: #scroller overflow:auto + .page-a4 min-width:210mm (style.css:658-661)"
+   }
+  },
+  {
+   "id": "f2-3b",
+   "item": "Khoản 3: zoom 200% (CSS zoom=2, xấp xỉ headless)",
+   "verdict": "PASS",
+   "command": "python3 /tmp/f2sweep/reprobe3.py",
+   "exit_code": 0,
+   "numbers": {
+    "subset": [
+     "PLI_M70",
+     "PLI_M71",
+     "PLI_M12",
+     "PLI_M10",
+     "PLI_M19",
+     "PLII_M11"
+    ],
+    "finding": "cùng class P.bp dot-leader + M70 table; không phát sinh lỗi mới"
+   }
+  },
+  {
+   "id": "f2-3c",
+   "item": "Khoản 3: keyboard-only (Tab-walk, no trap, 0 positive tabindex)",
+   "verdict": "PASS",
+   "command": "python3 /tmp/f2sweep/browser_sweep.py (mock UI, ~230 tabbable)",
+   "exit_code": 0,
+   "numbers": {
+    "tabbable": 227,
+    "tab_presses": 306,
+    "consecutive_repeats": 0,
+    "positive_tabindex": 0
+   }
+  },
+  {
+   "id": "f2-3d",
+   "item": "Khoản 3: focus ring :focus-visible",
+   "verdict": "PASS",
+   "command": "python3 /tmp/f2sweep/browser_sweep.py",
+   "exit_code": 0,
+   "numbers": {
+    "outline": "solid 2px rgb(255,176,0)",
+    "css": "style.css:69 .fld:focus-visible"
+   }
+  },
+  {
+   "id": "f2-3e",
+   "item": "Khoản 3: ARIA accessible name mọi control",
+   "verdict": "PASS",
+   "command": "python3 /tmp/f2sweep/reprobe.py",
+   "exit_code": 0,
+   "numbers": {
+    "controls": 229,
+    "violations": 0,
+    "rule": "aria-label|labelledby|label[for]|label cha|text|title"
+   }
+  },
+  {
+   "id": "f2-3f",
+   "item": "Khoản 3: error focus đúng field + aria-describedby",
+   "verdict": "NOT RUN",
+   "command": "—",
+   "exit_code": null,
+   "numbers": {
+    "reason": "behavior focus-first-error chưa tồn tại trong app.js (chỉ có aria-invalid từng ô ngành + error list rightbar); gap thật vs PLAN F2, chờ Lead"
+   }
+  },
+  {
+   "id": "f2-4",
+   "item": "Khoản 4: đổi form/variant, autosave, save/open JSON, reload draft",
+   "verdict": "PASS",
+   "command": "node app_web/test_form_flow.js && node app_web/test_p3_draft.js && node app_web/test_p3_e2e.js && node app_web/test_dom.js",
+   "exit_code": 0,
+   "numbers": {
+    "form_flow": "38/0",
+    "p3_draft": "80/0",
+    "p3_e2e": "38/0",
+    "dom": "69/0"
+   }
+  },
+  {
+   "id": "f2-5",
+   "item": "Khoản 5: activeWhen — inactive không block + không lọt export",
+   "verdict": "PASS",
+   "command": "node app_web/test_full_sweep_inventory.js (S7) && node app_web/test_m72_activation.js",
+   "exit_code": 0,
+   "numbers": {
+    "S7_inactive_leak": 0,
+    "m72_activation": "48/0 (exportLoops lọc section inactive)"
+   }
+  },
+  {
+   "id": "f2-6",
+   "item": "Khoản 6: fixture empty/minimal/full/long/choice + payload thật",
+   "verdict": "NOT RUN",
+   "command": "—",
+   "exit_code": null,
+   "numbers": {
+    "reason": "harness sweep chỉ render store rỗng + từng option selector; ghép tools/phase5_fixtures.py là việc mới"
+   }
+  },
+  {
+   "id": "f2-7a",
+   "item": "Khoản 7: console + undefined/NaN/value=null",
+   "verdict": "PASS",
+   "command": "node app_web/test_full_sweep_inventory.js (S3/S4) + runtime browser",
+   "exit_code": 0,
+   "numbers": {
+    "console_error_render": 0,
+    "js_errors_runtime": 0,
+    "pageerror": 0,
+    "undefined_NaN_null": "0 (S4 + badTokens=false mọi biến thể)",
+    "note": "404 resource = fallback dự kiến mock (nganh_vsic→vsic_mini, ui_layouts)"
+   }
+  },
+  {
+   "id": "f2-7b",
+   "item": "Khoản 7: overlap elementFromPoint",
+   "verdict": "NOT RUN",
+   "command": "—",
+   "exit_code": null,
+   "numbers": {
+    "reason": "chưa implement trong lane; structural đã phủ S5/S6 + wiring gate"
+   }
+  },
+  {
+   "id": "f2-8",
+   "item": "Khoản 8: HEADER-NAME-SYNC live A→B→blank",
+   "verdict": "PASS",
+   "command": "python3 /tmp/f2sweep/browser_sweep.py + /tmp/f2sweep/reprobe.py (9 form)",
+   "exit_code": 0,
+   "numbers": {
+    "forms": [
+     "PLI_M32",
+     "PLI_M13",
+     "PLI_M27",
+     "PLI_M33",
+     "PLII_M02",
+     "PLII_M06",
+     "PLI_M48",
+     "PLI_M49",
+     "PLI_M70"
+    ],
+    "stale": 0,
+    "blank_clean": true,
+    "kinds": {
+     "mirror": [
+      "PLI_M32",
+      "PLI_M13",
+      "PLI_M27",
+      "PLI_M48",
+      "PLI_M49",
+      "PLI_M70"
+     ],
+     "band_input": [
+      "PLI_M33",
+      "PLII_M02",
+      "PLII_M06"
+     ]
+    }
+   }
+  },
+  {
+   "id": "f2-pin",
+   "item": "Pin-sync JS p2a/r3b1 (premise chết sau F0L/F1-IN)",
+   "verdict": "PASS",
+   "command": "git show 9290f2a",
+   "exit_code": 0,
+   "numbers": {
+    "suites_fixed": [
+     "test_p2a_people_contracts 83/7→92/0",
+     "test_r3b1_people_contracts crash→59/0"
+    ],
+    "root_cause": "lead sync pin python (e268038, 6de45d5) nhưng để đỏ pin JS; app không có bug mới"
+   }
+  },
+  {
+   "id": "f2-webview2",
+   "item": "WebView2 thật (protocol §3.1 chế độ B)",
+   "verdict": "NOT RUN",
+   "command": "—",
+   "exit_code": null,
+   "numbers": {
+    "reason": "cần máy Windows — thuộc F6; Chromium ở đây là mode A"
+   }
+  }
+ ]
+}

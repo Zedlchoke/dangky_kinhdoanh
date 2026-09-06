@@ -173,10 +173,19 @@ SPEC_LOOPS.forEach(({ docId, loop }) => {
     ten_ndd_uy_quyen: docId === 'PLI_M12' ? 'NGUYEN VAN A' : undefined }];
   const errsGood = NestedGrid.validate(jsC.spec, rowsGood);
   const errsEmpty = NestedGrid.validate(jsC.spec, []);
-  check(docId + '/' + loop + ': validate 0 loi cho dong du lieu dung row-type',
-    errsGood.length === 0 && errsEmpty.length === 0,
-    '[]',
-    JSON.stringify(errsGood.map(e => e.code)));
+  /* [Pin sync — O3 2026-09-06] Premise cũ "0 lỗi cho store rỗng" đã chết:
+   * O3 min_rows enforcement (owner decision packet v7; suite
+   * test_min_rows_o3.js) làm NestedGrid.validate() trả MIN_ROWS blocking
+   * cho section ACTIVE thiếu dòng business-data. Pin mới: dòng dữ liệu ĐỦ
+   * vẫn 0 lỗi; store rỗng CHỈ được dính đúng MIN_ROWS (không lỗi group/
+   * discriminator lộ ra). */
+  check(docId + '/' + loop + ': validate dong du lieu dung row-type 0 loi; ' +
+      'rong chi MIN_ROWS (O3)',
+    errsGood.length === 0 &&
+      errsEmpty.every(e => e.code === 'MIN_ROWS'),
+    'errsGood=[]; errsEmpty chi MIN_ROWS',
+    JSON.stringify(errsGood.map(e => e.code)) + ' / ' +
+      JSON.stringify(errsEmpty.map(e => e.code)));
 });
 
 check('PLI_M02/N1: index cot khong doi sot voi before (regression guard)',
@@ -190,10 +199,16 @@ check('PLI_M02/N1: index cot khong doi sot voi before (regression guard)',
 // ===========================================================================
 // 4. anchor trả về vùng đúng trên blocks HIỆN TẠI
 // ===========================================================================
+/* [Pin sync — F0L 2026-09-06] index tuyệt đối trượt sau các regen được Lead
+ * merge: M02 125→124, M15 48→43 (regen batch F0L, commit e268038), M12
+ * 144→89 (blocks M12 dựng lại theo questionnaire 2026 — lead re-anchor
+ * 132→89 trong f1(lead), heading cũ p144 không còn). Pin giữ NGUYÊN mức mạnh
+ * cũ: span.start phải đúng block heading (đối chiếu cả NỘI DUNG heading với
+ * anchor.match để index mới không phải số mẹo). */
 const ANCHOR_EVIDENCE = [
-  { docId: 'PLI_M02', sem: 'ds_nddpl_uy_quyen_chu_so_huu', headingBlock: 125 },
-  { docId: 'PLI_M12', sem: 'ds_ndd_uy_quyen_sau_thay_doi', headingBlock: 144 },
-  { docId: 'PLI_M15', sem: 'ds_nddpl_uy_quyen_chu_so_huu_moi', headingBlock: 48 },
+  { docId: 'PLI_M02', sem: 'ds_nddpl_uy_quyen_chu_so_huu', headingBlock: 124 },
+  { docId: 'PLI_M12', sem: 'ds_ndd_uy_quyen_sau_thay_doi', headingBlock: 89 },
+  { docId: 'PLI_M15', sem: 'ds_nddpl_uy_quyen_chu_so_huu_moi', headingBlock: 43 },
 ];
 ANCHOR_EVIDENCE.forEach(({ docId, sem, headingBlock }) => {
   const c = FD.getSectionContract(docId, sem);
@@ -206,8 +221,12 @@ ANCHOR_EVIDENCE.forEach(({ docId, sem, headingBlock }) => {
     'span hop le', JSON.stringify(span));
   check(docId + ': anchor tro dung block heading theo evidence audit (' +
       headingBlock + ')',
-    !!span && span.start === headingBlock,
-    String(headingBlock), span && String(span.start));
+    !!span && span.start === headingBlock &&
+      R.normText(plainText(blocks[span.start])).replace(/\s+/g, ' ')
+        .indexOf(R.normText(c.anchor.match).replace(/\s+/g, ' ')) >= 0,
+    String(headingBlock) + ' + heading chua "' + c.anchor.match + '"',
+    span && (span.start + ': ' +
+      R.normText(plainText(blocks[span.start])).slice(0, 80)));
 });
 
 // ===========================================================================
@@ -252,8 +271,16 @@ check('PLII_M02: hai luoi tv_hgd khong ke thua syncGroup (khong auto-sync)',
 check('PLI_M09: chua dang ky contract nao cho nguoi hop danh (D3 chua kien trung)',
   FD.sectionContractsOf('PLI_M09').length === 0 &&
     FD.sectionContractForLoop('PLI_M09', 'ds_thanh_vien_hop_danh') === null);
-check('PLII_M02: CHUA co contract table cho tv_hgd_* (metadata san sang, spec blocked)',
-  !FD.FORM_TABLE_CONTRACTS.PLII_M02 &&
+/* [Pin sync — F0L 2026-09-06] Premise cũ "PLII_M02 CHƯA có contract table
+ * NÀO" đã chết: F1-IN (D5.2=A, 2026-09-06) đăng ký 2 fixed-matrix thuế
+ * a7_thue_chi_tieu_cu_moi + c5_thue_chi_tieu_cap_doi cho PLII_M02. Ý pin
+ * gốc — hai lưới tv_hgd_* vẫn là editable-grid metadata-only, KHÔNG có
+ * table contract — giữ nguyên và ghim chặt hơn: mọi section contract
+ * PLII_M02 phải thuộc {a7, c5}. */
+check('PLII_M02: tv_hgd_* van KHONG co contract table (chi a7/c5 fixed-matrix)',
+  (FD.FORM_TABLE_CONTRACTS.PLII_M02 || { sections: [] }).sections.every(s =>
+    ['a7_thue_chi_tieu_cu_moi', 'c5_thue_chi_tieu_cap_doi']
+      .indexOf(s.sectionId) >= 0) &&
     FD.sectionContractForLoop('PLII_M02', 'tv_hgd_sau_thay_doi') === null &&
     FD.sectionContractForLoop('PLII_M02', 'tv_hgd_cap_doi') === null);
 const M72_PEOPLE = ['ds_thanh_vien_tnhh_cong_bo', 'ds_co_dong_sang_lap_cong_bo',
@@ -270,10 +297,18 @@ check('PLI_M72: N2-N5 van khong contract, con grid nganh san co khong anh huong'
   const m09folds = BLOCKS.PLI_M09.map(b => fold(plainText(b)));
   const m72folds = BLOCKS.PLI_M72.map(b => fold(plainText(b)));
   const m02folds = BLOCKS.PLII_M02.map(b => fold(plainText(b)));
-  check('PLI_M09: region nhiem (B087/B132/B163) con nguyen nhu evidence',
-    m09folds[87].indexOf(fold('STTTên thành viênSố, ngày cấp, nơi cấp')) === 0 &&
-      m09folds[132].indexOf(fold('Giấy chứng nhận đăng ký doanh nghiệp')) === 0 &&
-      m09folds[163].indexOf(fold('Phần vốn góp')) === 0);
+  /* [Pin sync — F0L 2026-09-06] Premise cũ "region nhiễm M09 (B087/B132/B163)
+   * còn nguyên" đã CHẾT: verdict O1 REMOVED_BY_SOURCE_CLEANUP (commit
+   * 6de45d5, gate tools.test_m09_decontaminate; pin python đã Lead sync trước
+   * — tools/test_p2a_people_specs.py "[F0L] nguon M09 sach nhiem"). Pin JS
+   * chuyển sang pin DECONTAM: nguồn M09 phải KHÔNG còn header glue Mẫu 10,
+   * và manifest ghi đúng trạng thái removed_by_source_cleanup. */
+  const M09_GLUE = ['STTTên thành viênSố, ngày cấp, nơi cấp',
+    'Giấy chứng nhận đăng ký doanh nghiệp', 'Phần vốn góp'];
+  check('PLI_M09: nguon DA DECONTAM — khong con header glue Mau 10 (O1 ' +
+      'REMOVED_BY_SOURCE_CLEANUP)',
+    M09_GLUE.every(g => m09folds.every(f =>
+      f.indexOf(fold(g)) !== 0)));
   /* [Lead sync sau L1FIX regen] blocks M72 tăng 2 heading section (149→151)
    * nên index tuyệt đối trượt — tra theo NỘI DUNG glue thay vì index. */
   const m72glued = m72folds.filter(f =>
@@ -282,25 +317,33 @@ check('PLI_M72: N2-N5 van khong contract, con grid nganh san co khong anh huong'
     m72glued.length >= 2);
   const m02glued1 = m02folds.filter(f =>
     f.indexOf(fold('STTHọ tênNgày, tháng, năm sinh')) === 0);
+  /* [Pin sync — F0L] `> 0` cũ đã chết: sau regen, đoạn cam kết BẮT ĐẦU bằng
+   * "Hộ kinh doanh cam kết về tính hợp pháp…" (indexOf === 0 tại blk 112) —
+   * pin `>= 0` giữ ý gốc: đoạn text cam kết không bị mất khỏi blocks. */
   const m02glued2 = m02folds.some(f =>
-    f.indexOf(fold('Hộ kinh doanh cam kết về tính hợp pháp')) > 0);
-  check('PLII_M02: 2 paragraph glue thanh vien ho gia dinh con nguyen (tra theo text)',
+    f.indexOf(fold('Hộ kinh doanh cam kết về tính hợp pháp')) >= 0);
+  check('PLII_M02: paragraph glue thanh vien ho gia dinh + cam ket con nguyen (tra theo text)',
     m02glued1.length >= 1 && m02glued2);
 }
 
-// manifest vẫn ghi nhận các section này là missing_grid (không tự suy)
+// manifest: trạng thái census hiện hành của các bảng người
 {
   const secs = {};
   MANIFEST.forms.forEach(f => {
     secs[f.form_id] = {};
     f.sections.forEach(s => { secs[f.form_id][s.section_id] = s; });
   });
-  check('manifest: cac bang BLOCKED van missing_grid/partial_columns (khong suy dien)',
+  /* [Pin sync — F0L 2026-09-06] Premise cũ "M72 N2-N5 missing_grid" đã chết:
+   * 4 bảng người PLI_M72 được wire (FORM_GRID_META.PLI_M72 4 loop người) và
+   * census chốt already_complete; M09 vung_nhiem chuyển contaminated →
+   * removed_by_source_cleanup (6de45d5); M09 hop_danh giữ partial_columns. */
+  check('manifest: M72 4 bang nguoi already_complete; M09 hop_danh ' +
+      'partial_columns + vung_nhiem removed_by_source_cleanup',
     ['thanh_vien_tnhhh_hai_tv_tro_len', 'co_dong_sang_lap_cp',
       'co_dong_nuoc_ngoai_cp', 'thanh_vien_hop_danh']
-      .every(sid => secs.PLI_M72[sid].status === 'missing_grid') &&
+      .every(sid => secs.PLI_M72[sid].status === 'already_complete') &&
       secs.PLI_M09.ds_thanh_vien_hop_danh.status === 'partial_columns' &&
-      secs.PLI_M09.vung_nhiem_mau_6789_10.status === 'contaminated');
+      secs.PLI_M09.vung_nhiem_mau_6789_10.status === 'removed_by_source_cleanup');
 }
 
 // ---------------------------------------------------------------------------

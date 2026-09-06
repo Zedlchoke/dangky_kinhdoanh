@@ -34,6 +34,19 @@ VALID_STATUS = ("NO_TABLE", "TABLE_COMPLETE", "BLOCKED_LEGAL_REVIEW")
 # Form da chu dong tien hoa SAU census qua wave P1 (regenerate lam thay doi
 # p/loop counts). Khong phai drift ro rang; moi dong la mot quyet dinh integrate.
 EVOLVED_FORMS = {
+    # F1-IN regen 2026-09-06 (O1: 10 section USER-INPUT): 3 grid M27 (NDD +
+    # 2 don_vi), fixed-matrix M78, tai_lieu M79/M80; M07 chi thay doi do LANE
+    # KHAC (F0L N-v4 rebuild PLI_M07 truoc do) — gia tri ghi de nhan dien.
+    "PLI_M07": "F1-IN baseline: F0L N-v4 rebuild M07 (muc I/II + chu ky + 13 chu thich)",
+    "PLI_M78":
+        "F1-IN O1+D6.4: san_pham_cung_cap_thong_tin -> w:tbl fixed-matrix 4 dong",
+    "PLI_M79":
+        "F1-IN O1+D6.5: tai_lieu_kem_theo_de_nghi -> loop ds_tai_lieu_kem_theo_m79",
+    "PLI_M80":
+        "F1-IN O1+D6.5: tai_lieu_kem_theo_thu_hoi -> loop ds_tai_lieu_kem_theo_m80",
+    "PLI_M27":
+        "F1-IN O1: +3 loop (ds_ndd_pl_thong_bao_tam_ngung, "
+        "don_vi_truc_thuoc_tam_ngung_tiep_tuc, don_vi_tiep_tuc_truoc_han)",
     "PLI_M72": "P1: 1 loop -> 5 occurrence ds_nganh_*",
     "PLII_M02": "P1: them 3 loop Muc A (bo_sung/xoa_bo/sua_doi)",
     # W1 regen 2026-08-27 (commit d48eb7d): chu ky tro thanh w:tbl that
@@ -136,6 +149,48 @@ HEADING_OVERRIDES = {
     },
     ("PLI_M72", "co_dong_nuoc_ngoai_cp"): {
         "heading": "8. Cổ đông là nhà đầu tư nước ngoài:",
+    },
+}
+
+# [F1-IN 2026-09-06] Ghi đè EVIDENCE census stale cho section lane F1-IN
+# (O1 adjudicate 22 section — docs/owner_decision_packet_v7.md). Chỉ sửa
+# metadata mô tả (notes / required_columns) khi NGUỒN HIỆN HÀNH đã đổi so
+# với snapshot census T0; KHÔNG đụng status (status đi qua
+# LEAD_STATUS_OVERRIDES riêng). Shape additive như HEADING_OVERRIDES.
+SECTION_EVIDENCE_OVERRIDES = {
+    # Mẫu 2 2026 in '- Mô hình tổ chức công ty:' với 2 ô □; template/blocks
+    # hiện hành đã map thành cặp chk_auto_* (ô vuông viền Q-V1, radio
+    # chọn-1 qua EXCLUSIVE_CHK_GROUPS). required_columns census
+    # (hd_tv_giam_doc|chu_tich_cong_ty_giam_doc) là tên hóa planned, không
+    # khớp key thật.
+    ("PLI_M02", "mo_hinh_to_chuc_cong_ty"): {
+        "required_columns": [
+            "chk_auto_hoi_dong_thanh_vien_giam_doc_hoac_tong_g",
+            "chk_auto_chu_tich_cong_ty_giam_doc_hoac_tong_giam",
+        ],
+        "notes": "O1 IMPLEMENTED AS USER INPUT: chọn-1 radio semantics qua "
+                 "cặp chk_auto_* (blocks B130-B131; Q-V1 ô vuông viền + X; "
+                 "chọn 2 -> CHK_EXCLUSIVE_CONFLICT blocking tại "
+                 "EXCLUSIVE_CHK_GROUPS nhóm mo_hinh_to_chuc). Census T0 stale "
+                 "(ghi 'ô □ literal, không token' — đã regen theo TT121).",
+    },
+    # Mẫu 27 2026 (TT 121/2026) mục NĐD chỉ còn 3 trường: Họ, chữ đệm và
+    # tên / Số điện thoại / Địa chỉ thư điện tử (chan trang 2: kê khai 01
+    # hoặc nhiều NĐDPL). required_columns 7 cột của census T0 (ngày sinh/
+    # giới tính/số định danh/địa chỉ liên lạc) đã bị văn bản hiện hành bỏ.
+    ("PLI_M27", "danh_sach_ndd_pl_thong_bao"): {
+        "required_columns": ["stt", "ho_ten", "dien_thoai", "email"],
+        "notes": "O1 IMPLEMENTED AS USER INPUT: grid nhiều dòng NĐDPL theo "
+                 "Mẫu 27 2026 (3 trường); loop ds_ndd_pl_thong_bao_tam_ngung; "
+                 "minRows 1 (footnote 2). required_columns 7 cột 2025 stale.",
+    },
+    # Census T0 gộp cả header bảng vào heading (dạng '...: STT | Tên sản
+    # phẩm | ...') khiến anchor không khớp blocks/template thật. Heading
+    # thật của nguồn: '3. Thông tin yêu cầu:' (p19).
+    ("PLI_M78", "san_pham_cung_cap_thong_tin"): {
+        "heading": "3. Thông tin yêu cầu:",
+        "heading_note": "Census T0 ghép mô tả cột vào heading; tách lại để "
+                        "anchor khớp blocks/template (F1-IN 2026-09-06).",
     },
 }
 
@@ -367,6 +422,74 @@ LEAD_STATUS_OVERRIDES = {
     ("PLI_M72", "thanh_vien_hop_danh"): {"status": "already_complete", "evidence": "P2 member grid rebuild 7 cột."},
     ("PLI_M72", "co_dong_sang_lap_cp"): {"status": "already_complete", "evidence": "P2 member grid rebuild 10 cột."},
     ("PLI_M72", "co_dong_nuoc_ngoai_cp"): {"status": "already_complete", "evidence": "P2 member grid rebuild 10 cột."},
+    # --- F1-IN (2026-09-06, O1 adjudicate: 10 section IMPLEMENTED AS USER
+    # INPUT) — specs tools/form_specs + regen + runtime contracts + suites
+    # tools/test_f1_input_sections.py / app_web/test_f1_input_ui.js ---
+    ("PLI_M02", "mo_hinh_to_chuc_cong_ty"): {
+        "status": "already_complete",
+        "evidence": "O1: chọn-1 radio qua cặp chk_auto_* (Q-V1 ô vuông viền "
+                    "+ X; EXCLUSIVE_CHK_GROUPS mo_hinh_to_chuc chặn tick "
+                    "đôi); scalar/check-token đường chung collectKeys.",
+    },
+    ("PLI_M12", "tai_san_gop_von_sau_thay_doi_vdl"): {
+        "status": "already_complete",
+        "evidence": "O1+O2 fixed-matrix 7 dòng (TT121 Mẫu 12 p81-p111), tổng "
+                    "computed outputOnly; loop riêng don_vi_truc_thuoc_tam_"
+                    "ngung_tiep_tuc thuộc M27. Suite test_f1_input_sections.",
+    },
+    ("PLI_M12", "tai_san_gop_von_sau_thay_doi_von_dau_tu"): {
+        "status": "already_complete",
+        "evidence": "O1+O2 fixed-matrix 7 dòng (TT121 Mẫu 12 p197-p226, ngữ "
+                    "cảnh vốn đầu tư DNTN riêng); suite "
+                    "test_f1_input_sections.",
+    },
+    ("PLI_M12", "co_cau_loai_co_phan_sau_thay_doi"): {
+        "status": "already_complete",
+        "evidence": "O1+O2 fixed-matrix 6 dòng (TT121 Mẫu 12 p113-p147, "
+                    "verbatim 'Cổ phần ưu đã biểu quyết' theo bản in; "
+                    "menh_gia_co_phan scalar vùng anchor); "
+                    "test_f1_input_sections.",
+    },
+    ("PLI_M27", "danh_sach_ndd_pl_thong_bao"): {
+        "status": "already_complete",
+        "evidence": "O1 grid nhiều dòng NĐDPL 3 trường 2026; loop riêng "
+                    "ds_ndd_pl_thong_bao_tam_ngung; minRows1 (footnote 2); "
+                    "test_f1_input_sections + test_f1_input_ui.",
+    },
+    ("PLI_M27", "don_vi_tam_ngung_tiep_tuc"): {
+        "status": "already_complete",
+        "evidence": "O1 editable-grid đơn vị (loai_don_vi là cột thay heading "
+                    "b/c); 2 occurrence cùng entry spec: loop riêng "
+                    "don_vi_truc_thuoc_tam_ngung_tiep_tuc (mục 1) + "
+                    "don_vi_tiep_tuc_truoc_han (mục 2); "
+                    "test_f1_input_sections + test_f1_input_ui.",
+    },
+    ("PLI_M78", "san_pham_cung_cap_thong_tin"): {
+        "status": "already_complete",
+        "evidence": "O1+D6.4 fixed-matrix 4 dòng (3 sản phẩm cố định verbatim "
+                    "'của …' + Sản phẩm khác; SL >=0; mô tả bắt buộc khi "
+                    "SL>0 qua requiredIfPositive DESC_REQUIRED); "
+                    "test_f1_input_sections + test_f1_input_ui.",
+    },
+    ("PLI_M79", "tai_lieu_kem_theo_de_nghi"): {
+        "status": "already_complete",
+        "evidence": "O1+D6.5/D6.6 editable-grid 3+ dòng metadata only "
+                    "(mo_ta_tai_lieu required, so_ban/so_trang optional, "
+                    "không upload); loop ds_tai_lieu_kem_theo_m79; "
+                    "test_f1_input_sections + test_f1_input_ui.",
+    },
+    ("PLI_M80", "tai_lieu_kem_theo_thu_hoi"): {
+        "status": "already_complete",
+        "evidence": "O1+D6.5/D6.6 editable-grid như M79; loop "
+                    "ds_tai_lieu_kem_theo_m80; test_f1_input_sections.",
+    },
+    ("PLII_M02", "c5_thue_chi_tieu_cap_doi"): {
+        "status": "already_complete",
+        "evidence": "O1+D5.2=A fixed-matrix 2 chỉ tiêu thật của Mục C cấp đổi "
+                    "(5.1 địa chỉ nhận thông báo thuế / 5.2 tổng số lao "
+                    "động; nguồn Mục C không có dòng '…'); row id canonical "
+                    "a7; test_f1_input_sections.",
+    },
 }
 
 CAVEATS = [
@@ -407,6 +530,20 @@ def normalize_section(fid, sec):
         se = dict(out.get("source_evidence") or {})
         se.update(ho)
         out["source_evidence"] = se
+    # [F1-IN] evidence override (notes / required_columns) — metadata mô tả
+    # stale của census T0 khi nguồn hiện hành đã đổi; status không đụng.
+    eo = SECTION_EVIDENCE_OVERRIDES.get((fid, out.get("section_id")))
+    if eo is not None:
+        if "required_columns" in eo:
+            out["required_columns"] = list(eo["required_columns"])
+        if "notes" in eo:
+            out["notes"] = eo["notes"]
+        # heading/heading_note merge vào source_evidence như HEADING_OVERRIDES
+        se_keys = {"heading", "heading_note"} & set(eo)
+        if se_keys:
+            se = dict(out.get("source_evidence") or {})
+            se.update({k: eo[k] for k in se_keys})
+            out["source_evidence"] = se
     return out
 
 

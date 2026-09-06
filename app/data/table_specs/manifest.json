@@ -141,8 +141,7 @@
       "excerpt": "Đăng ký hộ kinh doanh do tôi là chủ hộ với các nội dung sau:"
      }
     ],
-    "classifications": [],
-    "template_w_tbl": 2
+    "classifications": []
    }
   },
   {
@@ -293,14 +292,17 @@
       "chi_tieu_5_1_dia_chi_nhan_thong_bao_thue",
       "chi_tieu_5_2_tong_so_lao_dong"
      ],
-     "status": "missing_grid",
+     "status": "already_complete",
      "source_evidence": {
       "template": "app/templates/PLII_M02.docx",
       "heading": "5. Thông tin đăng ký thuế:",
       "anchor": "paragraph rời 'STT'(B122)+'Các chỉ tiêu thông tin đăng ký thuế'(B123); hàng 5.1 địa chỉ nhận thông báo thuế kèm nhóm địa chỉ/điện thoại/email (B124-B130); hàng 5.2 tổng số lao động {so_lao_dong} (B131-B132)"
      },
      "notes": "Section 'STT|Các chỉ tiêu đăng ký thuế' PLAN D đã liệt kê cho PLII_M02; nằm trong phần cấp đổi, khác ngữ cảnh với a7.",
-     "semantic_key": "thue_chi_tieu_cap_doi"
+     "semantic_key": "thue_chi_tieu_cap_doi",
+     "lead_status_override": {
+      "evidence": "O1+D5.2=A fixed-matrix 2 chỉ tiêu thật của Mục C cấp đổi (5.1 địa chỉ nhận thông báo thuế / 5.2 tổng số lao động; nguồn Mục C không có dòng '…'); row id canonical a7; test_f1_input_sections."
+     }
     },
     {
      "section_id": "c7_tv_hgd_cap_doi",
@@ -344,9 +346,9 @@
     "loop": 1
    },
    "summary_counts_recount": {
-    "p": 132,
+    "p": 122,
     "chk": 3,
-    "table": 2,
+    "table": 3,
     "loop": 6
    },
    "detector": {
@@ -378,8 +380,7 @@
       "excerpt": "Đăng ký bổ sung, thay đổi các chỉ tiêu đăng ký thuế như sau:"
      }
     ],
-    "classifications": [],
-    "template_w_tbl": 7
+    "classifications": []
    }
   },
   {
@@ -406,8 +407,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -434,8 +434,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -462,8 +461,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -503,8 +501,7 @@
       "verdict": "FALSE_POSITIVE_HEADER_BAND",
       "reason": "hdr2col: w:tbl header 2 band - khong phai bang du lieu."
      }
-    ],
-    "template_w_tbl": 0
+    ]
    }
   },
   {
@@ -585,8 +582,7 @@
       "excerpt": "5. Chủ thể thành lập hộ kinh doanh (ghi một trong các chủ thể sau): Cá nhân/ Các thành viên hộ gia đình"
      }
     ],
-    "classifications": [],
-    "template_w_tbl": 2
+    "classifications": []
    }
   },
   {
@@ -613,8 +609,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -641,8 +636,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -669,8 +663,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -710,8 +703,7 @@
       "verdict": "FALSE_POSITIVE_PROSE",
       "reason": "'bao cao ve cac noi dung sau' la chu thich muc; khong co luoi theo sau."
      }
-    ],
-    "template_w_tbl": 0
+    ]
    }
   },
   {
@@ -738,8 +730,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -766,8 +757,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -794,8 +784,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -822,8 +811,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -850,8 +838,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -896,8 +883,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -942,8 +928,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -970,8 +955,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -998,8 +982,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -1039,8 +1022,7 @@
       "verdict": "FALSE_POSITIVE_PROSE",
       "reason": "Cau van ve nop ho so moi/gop noi dung thay doi; khong co luoi theo sau."
      }
-    ],
-    "template_w_tbl": 0
+    ]
    }
   },
   {
@@ -1067,8 +1049,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -1095,8 +1076,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -1123,8 +1103,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -1151,8 +1130,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -1179,8 +1157,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -1207,8 +1184,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -1235,8 +1211,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -1389,14 +1364,14 @@
     "loop": 1
    },
    "summary_counts_recount": {
-    "p": 124,
+    "p": 123,
     "chk": 27,
     "table": 1,
     "loop": 1
    },
    "detector": {
     "p_signatures": 0,
-    "list_hints": 2,
+    "list_hints": 3,
     "hits": [
      {
       "block": 15,
@@ -1409,10 +1384,15 @@
       "stt": false,
       "list_hint": true,
       "excerpt": "Đăng ký doanh nghiệp tư nhân do tôi làm chủ với các nội dung sau:"
+     },
+     {
+      "block": 31,
+      "stt": false,
+      "list_hint": true,
+      "excerpt": "Trường hợp không khai thác được thông tin về hộ kinh doanh được chuyển đổi từ Cơ sở dữ liệu về đăng ký hộ kinh doanh hoặ"
      }
     ],
-    "classifications": [],
-    "template_w_tbl": 2
+    "classifications": []
    }
   },
   {
@@ -1520,10 +1500,10 @@
      "title": "- Mô hình tổ chức công ty (HĐTV-GĐ/TGĐ vs Chủ tịch công ty-GĐ/TGĐ)",
      "kind": "fixed-matrix",
      "required_columns": [
-      "hd_tv_giam_doc",
-      "chu_tich_cong_ty_giam_doc"
+      "chk_auto_hoi_dong_thanh_vien_giam_doc_hoac_tong_g",
+      "chk_auto_chu_tich_cong_ty_giam_doc_hoac_tong_giam"
      ],
-     "status": "missing_grid",
+     "status": "already_complete",
      "source_evidence": {
       "template": "app/templates/PLI_M02.docx",
       "heading": "- Mô hình tổ chức công ty:",
@@ -1533,8 +1513,11 @@
        149
       ]
      },
-     "notes": "2 lựa chọn cố định dạng ô □ literal, không có token/chk key nào trong blocks.",
-     "semantic_key": "mo_hinh_to_chuc_cty_tnmv"
+     "notes": "O1 IMPLEMENTED AS USER INPUT: chọn-1 radio semantics qua cặp chk_auto_* (blocks B130-B131; Q-V1 ô vuông viền + X; chọn 2 -> CHK_EXCLUSIVE_CONFLICT blocking tại EXCLUSIVE_CHK_GROUPS nhóm mo_hinh_to_chuc). Census T0 stale (ghi 'ô □ literal, không token' — đã regen theo TT121).",
+     "semantic_key": "mo_hinh_to_chuc_cty_tnmv",
+     "lead_status_override": {
+      "evidence": "O1: chọn-1 radio qua cặp chk_auto_* (Q-V1 ô vuông viền + X; EXCLUSIVE_CHK_GROUPS mo_hinh_to_chuc chặn tick đôi); scalar/check-token đường chung collectKeys."
+     }
     },
     {
      "section_id": "nguon_von_dieule",
@@ -1674,14 +1657,14 @@
     "loop": 1
    },
    "summary_counts_recount": {
-    "p": 204,
-    "chk": 37,
+    "p": 230,
+    "chk": 35,
     "table": 2,
     "loop": 2
    },
    "detector": {
     "p_signatures": 0,
-    "list_hints": 5,
+    "list_hints": 6,
     "hits": [
      {
       "block": 16,
@@ -1696,26 +1679,31 @@
       "excerpt": "Đăng ký công ty trách nhiệm hữu hạn một thành viên do tôi là người đại diện theo pháp luật/Chủ tịch công ty/Chủ tịch Hội"
      },
      {
-      "block": 68,
+      "block": 42,
+      "stt": false,
+      "list_hint": true,
+      "excerpt": "Trường hợp không khai thác được thông tin về hộ kinh doanh được chuyển đổi từ Cơ sở dữ liệu về đăng ký hộ kinh doanh hoặ"
+     },
+     {
+      "block": 67,
       "stt": false,
       "list_hint": true,
       "excerpt": "Công ty chứng khoán/Công ty quản lý quỹ đầu tư chứng khoán/Công ty đầu tư chứng khoán: (Đánh dấu X nếu là Công ty chứng "
      },
      {
-      "block": 101,
+      "block": 100,
       "stt": false,
       "list_hint": true,
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
      },
      {
-      "block": 156,
+      "block": 155,
       "stt": false,
       "list_hint": true,
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
      }
     ],
-    "classifications": [],
-    "template_w_tbl": 4
+    "classifications": []
    }
   },
   {
@@ -1824,14 +1812,14 @@
     "loop": 1
    },
    "summary_counts_recount": {
-    "p": 163,
-    "chk": 33,
+    "p": 189,
+    "chk": 31,
     "table": 1,
     "loop": 1
    },
    "detector": {
     "p_signatures": 0,
-    "list_hints": 3,
+    "list_hints": 4,
     "hits": [
      {
       "block": 15,
@@ -1840,20 +1828,25 @@
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
      },
      {
-      "block": 67,
+      "block": 41,
+      "stt": false,
+      "list_hint": true,
+      "excerpt": "Trường hợp không khai thác được thông tin về hộ kinh doanh được chuyển đổi từ Cơ sở dữ liệu về đăng ký hộ kinh doanh hoặ"
+     },
+     {
+      "block": 66,
       "stt": false,
       "list_hint": true,
       "excerpt": "Công ty chứng khoán/Công ty quản lý quỹ đầu tư chứng khoán/Công ty đầu tư chứng khoán: (Đánh dấu X nếu là Công ty chứng "
      },
      {
-      "block": 110,
+      "block": 109,
       "stt": false,
       "list_hint": true,
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
      }
     ],
-    "classifications": [],
-    "template_w_tbl": 2
+    "classifications": []
    }
   },
   {
@@ -2032,14 +2025,14 @@
     "loop": 1
    },
    "summary_counts_recount": {
-    "p": 167,
-    "chk": 33,
+    "p": 193,
+    "chk": 31,
     "table": 3,
     "loop": 1
    },
    "detector": {
     "p_signatures": 0,
-    "list_hints": 4,
+    "list_hints": 5,
     "hits": [
      {
       "block": 15,
@@ -2054,20 +2047,25 @@
       "excerpt": "Đăng ký công ty cổ phần do tôi là người đại diện theo pháp luật/Chủ tịch Hội đồng quản trị với các nội dung sau2:"
      },
      {
-      "block": 67,
+      "block": 41,
+      "stt": false,
+      "list_hint": true,
+      "excerpt": "Trường hợp không khai thác được thông tin về hộ kinh doanh được chuyển đổi từ Cơ sở dữ liệu về đăng ký hộ kinh doanh hoặ"
+     },
+     {
+      "block": 66,
       "stt": false,
       "list_hint": true,
       "excerpt": "Công ty chứng khoán/Công ty quản lý quỹ đầu tư chứng khoán/Công ty đầu tư chứng khoán: (Đánh dấu X nếu là Công ty chứng "
      },
      {
-      "block": 116,
+      "block": 115,
       "stt": false,
       "list_hint": true,
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
      }
     ],
-    "classifications": [],
-    "template_w_tbl": 4
+    "classifications": []
    }
   },
   {
@@ -2176,24 +2174,29 @@
     "loop": 1
    },
    "summary_counts_recount": {
-    "p": 55,
-    "chk": 17,
+    "p": 130,
+    "chk": 29,
     "table": 1,
     "loop": 1
    },
    "detector": {
     "p_signatures": 0,
-    "list_hints": 1,
+    "list_hints": 2,
     "hits": [
      {
       "block": 7,
       "stt": false,
       "list_hint": true,
       "excerpt": "Đăng ký công ty hợp danh với các nội dung sau:"
+     },
+     {
+      "block": 22,
+      "stt": false,
+      "list_hint": true,
+      "excerpt": "Trường hợp không khai thác được thông tin về hộ kinh doanh được chuyển đổi từ Cơ sở dữ liệu về đăng ký hộ kinh doanh hoặ"
      }
     ],
-    "classifications": [],
-    "template_w_tbl": 2
+    "classifications": []
    }
   },
   {
@@ -2352,8 +2355,7 @@
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
      }
     ],
-    "classifications": [],
-    "template_w_tbl": 1
+    "classifications": []
    }
   },
   {
@@ -2428,7 +2430,7 @@
     "loop": 1
    },
    "summary_counts_recount": {
-    "p": 2,
+    "p": 25,
     "chk": 0,
     "table": 0,
     "loop": 1
@@ -2437,8 +2439,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 1
+    "classifications": []
    }
   },
   {
@@ -2584,8 +2585,7 @@
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
      }
     ],
-    "classifications": [],
-    "template_w_tbl": 1
+    "classifications": []
    }
   },
   {
@@ -2754,8 +2754,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 1
+    "classifications": []
    }
   },
   {
@@ -2849,8 +2848,7 @@
       "excerpt": "8 Cá nhân kiểm soát ghi một hoặc nhiều các quyền sau: Quyền bổ nhiệm, miễn nhiệm hoặc bãi nhiệm đa số hoặc tất cả thành "
      }
     ],
-    "classifications": [],
-    "template_w_tbl": 1
+    "classifications": []
    }
   },
   {
@@ -2919,8 +2917,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 1
+    "classifications": []
    }
   },
   {
@@ -3094,7 +3091,7 @@
       "gia_tri_vnd",
       "ty_le"
      ],
-     "status": "missing_grid",
+     "status": "already_complete",
      "source_evidence": {
       "template": "app/templates/PLI_M12.docx",
       "heading": "Tài sản góp vốn sau khi thay đổi vốn điều lệ:",
@@ -3105,7 +3102,10 @@
       ]
      },
      "notes": "6 dòng cố định + Tổng số, paragraph rời, không input.",
-     "semantic_key": "co_cau_tai_san_gop_von_sau_thay_doi_vdl"
+     "semantic_key": "co_cau_tai_san_gop_von_sau_thay_doi_vdl",
+     "lead_status_override": {
+      "evidence": "O1+O2 fixed-matrix 7 dòng (TT121 Mẫu 12 p81-p111), tổng computed outputOnly; loop riêng don_vi_truc_thuoc_tam_ngung_tiep_tuc thuộc M27. Suite test_f1_input_sections."
+     }
     },
     {
      "section_id": "co_cau_loai_co_phan_sau_thay_doi",
@@ -3119,7 +3119,7 @@
       "gia_tri_vnd",
       "ty_le_so_von_dieule"
      ],
-     "status": "missing_grid",
+     "status": "already_complete",
      "source_evidence": {
       "template": "app/templates/PLI_M12.docx",
       "heading": "Thông tin về cổ phần (chỉ kê khai đối với công ty cổ phần):",
@@ -3138,7 +3138,10 @@
       "cp_uu_dai_khac",
       "tong_so"
      ],
-     "semantic_key": "co_cau_loai_co_phan_sau_thay_doi"
+     "semantic_key": "co_cau_loai_co_phan_sau_thay_doi",
+     "lead_status_override": {
+      "evidence": "O1+O2 fixed-matrix 6 dòng (TT121 Mẫu 12 p113-p147, verbatim 'Cổ phần ưu đã biểu quyết' theo bản in; menh_gia_co_phan scalar vùng anchor); test_f1_input_sections."
+     }
     },
     {
      "section_id": "tai_san_gop_von_sau_thay_doi_von_dau_tu",
@@ -3151,7 +3154,7 @@
       "gia_tri_vnd",
       "ty_le"
      ],
-     "status": "missing_grid",
+     "status": "already_complete",
      "source_evidence": {
       "template": "app/templates/PLI_M12.docx",
       "heading": "Tài sản góp vốn sau khi thay đổi vốn đầu tư:",
@@ -3162,7 +3165,10 @@
       ]
      },
      "notes": "Ngữ cảnh vốn đầu tư RIÊNG (DNTN) - PLAN yêu cầu không dùng chung data với ngữ cảnh vốn điều lệ. Paragraph rời, không input.",
-     "semantic_key": "co_cau_tai_san_gop_von_sau_thay_doi_vdt"
+     "semantic_key": "co_cau_tai_san_gop_von_sau_thay_doi_vdt",
+     "lead_status_override": {
+      "evidence": "O1+O2 fixed-matrix 7 dòng (TT121 Mẫu 12 p197-p226, ngữ cảnh vốn đầu tư DNTN riêng); suite test_f1_input_sections."
+     }
     },
     {
      "section_id": "ndd_uy_quyen_sau_thay_doi",
@@ -3237,9 +3243,9 @@
     "loop": 3
    },
    "summary_counts_recount": {
-    "p": 205,
+    "p": 159,
     "chk": 15,
-    "table": 1,
+    "table": 4,
     "loop": 4
    },
    "detector": {
@@ -3247,14 +3253,13 @@
     "list_hints": 1,
     "hits": [
      {
-      "block": 93,
+      "block": 65,
       "stt": false,
       "list_hint": true,
       "excerpt": "Doanh nghiệp cam kết bảo đảm thanh toán đủ các khoản nợ và các nghĩa vụ tài sản khác sau khi giảm vốn (doanh nghiệp chỉ "
      }
     ],
-    "classifications": [],
-    "template_w_tbl": 5
+    "classifications": []
    }
   },
   {
@@ -3322,8 +3327,7 @@
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
      }
     ],
-    "classifications": [],
-    "template_w_tbl": 1
+    "classifications": []
    }
   },
   {
@@ -3388,8 +3392,7 @@
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
      }
     ],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -3454,8 +3457,7 @@
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
      }
     ],
-    "classifications": [],
-    "template_w_tbl": 1
+    "classifications": []
    }
   },
   {
@@ -3588,8 +3590,7 @@
       "excerpt": "Đánh dấu X nếu là chi nhánh công ty chứng khoán nước ngoài/chi nhánh công ty quản lý quỹ nước ngoài tại Việt Nam và kê k"
      }
     ],
-    "classifications": [],
-    "template_w_tbl": 1
+    "classifications": []
    }
   },
   {
@@ -3629,8 +3630,7 @@
       "verdict": "FALSE_POSITIVE_HEADER_BAND",
       "reason": "hdr2col: w:tbl header 2 band - khong phai bang du lieu."
      }
-    ],
-    "template_w_tbl": 0
+    ]
    }
   },
   {
@@ -3707,8 +3707,7 @@
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
      }
     ],
-    "classifications": [],
-    "template_w_tbl": 1
+    "classifications": []
    }
   },
   {
@@ -3755,8 +3754,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 1
+    "classifications": []
    }
   },
   {
@@ -3848,8 +3846,7 @@
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
      }
     ],
-    "classifications": [],
-    "template_w_tbl": 1
+    "classifications": []
    }
   },
   {
@@ -3932,8 +3929,7 @@
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
      }
     ],
-    "classifications": [],
-    "template_w_tbl": 1
+    "classifications": []
    }
   },
   {
@@ -3960,8 +3956,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -3977,20 +3972,20 @@
      "required_columns": [
       "stt",
       "ho_ten",
-      "ngay_thang_nam_sinh",
-      "gioi_tinh",
-      "so_dinh_danh_ca_nhan",
       "dien_thoai",
-      "dia_chi_lien_he"
+      "email"
      ],
-     "status": "missing_grid",
+     "status": "already_complete",
      "source_evidence": {
       "template": "app/templates/PLI_M27.docx",
       "heading": "Thông tin người đại diện theo pháp luật của doanh nghiệp2:",
       "anchor": "04_tam_ngung_cham_dut_giai_the/PL1_Mau_27_....docx#p17-p25"
      },
-     "notes": "Nguồn liệt kê '1. Họ tên...' rồi '2. Họ tên...' rồi '…'; chân trang 2 yêu cầu ghi tất cả NĐDPL. Blocks chỉ có 1 bộ field (ho_ten_in_hoa_2 lặp 2 lần).",
-     "semantic_key": "ds_ndd_pl_thong_bao_tam_ngung"
+     "notes": "O1 IMPLEMENTED AS USER INPUT: grid nhiều dòng NĐDPL theo Mẫu 27 2026 (3 trường); loop ds_ndd_pl_thong_bao_tam_ngung; minRows 1 (footnote 2). required_columns 7 cột 2025 stale.",
+     "semantic_key": "ds_ndd_pl_thong_bao_tam_ngung",
+     "lead_status_override": {
+      "evidence": "O1 grid nhiều dòng NĐDPL 3 trường 2026; loop riêng ds_ndd_pl_thong_bao_tam_ngung; minRows1 (footnote 2); test_f1_input_sections + test_f1_input_ui."
+     }
     },
     {
      "section_id": "don_vi_tam_ngung_tiep_tuc",
@@ -4004,7 +3999,7 @@
       "den_ngay",
       "ly_do"
      ],
-     "status": "missing_grid",
+     "status": "already_complete",
      "source_evidence": {
       "template": "app/templates/PLI_M27.docx",
       "heading": "b) Đối với chi nhánh/địa điểm kinh doanh: ... đối với chi nhánh/địa điểm kinh doanh sau:",
@@ -4014,6 +4009,9 @@
      "semantic_key": "don_vi_truc_thuoc_tam_ngung_tiep_tuc",
      "lead_reclassification": {
       "reason": "6 khoi don vi (tam ngung/tiep tuc x CN/VPDD/DDKD) moi khoi 1 bo cn.*; ban chat danh sach don vi -> editable-grid du kien, cho quyet dinh 1-nhieu."
+     },
+     "lead_status_override": {
+      "evidence": "O1 editable-grid đơn vị (loai_don_vi là cột thay heading b/c); 2 occurrence cùng entry spec: loop riêng don_vi_truc_thuoc_tam_ngung_tiep_tuc (mục 1) + don_vi_tiep_tuc_truoc_han (mục 2); test_f1_input_sections + test_f1_input_ui."
      }
     }
    ],
@@ -4029,17 +4027,16 @@
     "loop": 0
    },
    "summary_counts_recount": {
-    "p": 57,
+    "p": 32,
     "chk": 0,
     "table": 1,
-    "loop": 0
+    "loop": 3
    },
    "detector": {
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -4084,8 +4081,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -4112,8 +4108,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -4140,8 +4135,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -4168,8 +4162,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -4209,8 +4202,7 @@
       "verdict": "FALSE_POSITIVE_HEADER_BAND",
       "reason": "hdr2col: w:tbl header 2 band - khong phai bang du lieu."
      }
-    ],
-    "template_w_tbl": 0
+    ]
    }
   },
   {
@@ -4250,8 +4242,7 @@
       "verdict": "FALSE_POSITIVE_HEADER_BAND",
       "reason": "hdr2col: w:tbl header 2 band - khong phai bang du lieu."
      }
-    ],
-    "template_w_tbl": 0
+    ]
    }
   },
   {
@@ -4278,8 +4269,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -4306,8 +4296,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -4334,8 +4323,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -4362,8 +4350,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -4390,8 +4377,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -4418,8 +4404,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -4446,8 +4431,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -4505,8 +4489,7 @@
       "verdict": "FALSE_POSITIVE_PROSE",
       "reason": "'Yeu cầu doanh nghiệp báo cáo về các nội dung sau' la dau muc van ban; vung tuong ung da duoc ghi section noi_dung_yeu_cau_bao_cao (output-table/no_table)."
      }
-    ],
-    "template_w_tbl": 0
+    ]
    }
   },
   {
@@ -4533,8 +4516,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -4587,8 +4569,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -4615,8 +4596,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -4661,8 +4641,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -4707,8 +4686,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -4755,8 +4733,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -4801,8 +4778,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -4866,8 +4842,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -4963,8 +4938,7 @@
       "excerpt": "Có các địa điểm kinh doanh trực thuộc sau đang làm thủ tục chấm dứt hoạt động3:"
      }
     ],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -5023,8 +4997,7 @@
       "excerpt": "(Cơ quan đăng ký kinh doanh cấp tỉnh) thông báo (các) chi nhánh/văn phòng đại diện/địa điểm kinh doanh sau đây của doanh"
      }
     ],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -5092,8 +5065,7 @@
       "excerpt": "Các chi nhánh, văn phòng đại diện, địa điểm kinh doanh sau của doanh nghiệp đang làm thủ tục chấm dứt hoạt động:"
      }
     ],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -5120,8 +5092,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -5183,8 +5154,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 1
+    "classifications": []
    }
   },
   {
@@ -5245,8 +5215,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 1
+    "classifications": []
    }
   },
   {
@@ -5407,8 +5376,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 9
+    "classifications": []
    }
   },
   {
@@ -5435,8 +5403,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -5463,8 +5430,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -5547,8 +5513,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -5575,8 +5540,7 @@
     "p_signatures": 0,
     "list_hints": 0,
     "hits": [],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -5594,14 +5558,18 @@
       "ten_san_pham",
       "so_luong_san_pham"
      ],
-     "status": "missing_grid",
+     "status": "already_complete",
      "source_evidence": {
       "template": "app/templates/PLI_M78.docx",
-      "heading": "3. Thông tin yêu cầu: STT | Tên sản phẩm | Số lượng sản phẩm",
-      "anchor": "05_cong_bo_cung_cap_thong_tin/PL1_Mau_78_....docx#p19-p33"
+      "heading": "3. Thông tin yêu cầu:",
+      "anchor": "05_cong_bo_cung_cap_thong_tin/PL1_Mau_78_....docx#p19-p33",
+      "heading_note": "Census T0 ghép mô tả cột vào heading; tách lại để anchor khớp blocks/template (F1-IN 2026-09-06)."
      },
      "notes": "PLAN mục F. 4 hàng cố định: 1 GCNĐKDN của…, 2 Thông tin lịch sử 3 năm của DN…, 3 Thông tin DN mới nhất của…, 4 Sản phẩm khác (+ dòng mô tả '……'). Blocks KHÔNG có key nào cho sản phẩm/số lượng (fm_fields=17 đều là thông tin người yêu cầu/biên lai). Hybrid fixed rows + ô mô tả cho hàng 4.",
-     "semantic_key": "ds_san_pham_yeu_cau"
+     "semantic_key": "ds_san_pham_yeu_cau",
+     "lead_status_override": {
+      "evidence": "O1+D6.4 fixed-matrix 4 dòng (3 sản phẩm cố định verbatim 'của …' + Sản phẩm khác; SL >=0; mô tả bắt buộc khi SL>0 qua requiredIfPositive DESC_REQUIRED); test_f1_input_sections + test_f1_input_ui."
+     }
     }
    ],
    "legal_questions": [
@@ -5616,9 +5584,9 @@
     "loop": 0
    },
    "summary_counts_recount": {
-    "p": 34,
+    "p": 23,
     "chk": 0,
-    "table": 0,
+    "table": 1,
     "loop": 0
    },
    "detector": {
@@ -5632,8 +5600,7 @@
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
      }
     ],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -5650,14 +5617,17 @@
       "stt",
       "mo_ta_tai_lieu"
      ],
-     "status": "missing_grid",
+     "status": "already_complete",
      "source_evidence": {
       "template": "app/templates/PLI_M79.docx",
       "heading": "Kèm theo Giấy đề nghị này có:",
       "anchor": "05_cong_bo_cung_cap_thong_tin/PL1_Mau_79_....docx#p32-p36"
      },
      "notes": "Bảng hành chính không header; 3 dòng đánh số + dấu '…' → số dòng biến thiên. Blocks không có key nào.",
-     "semantic_key": "ds_tai_lieu_kem_theo_m79"
+     "semantic_key": "ds_tai_lieu_kem_theo_m79",
+     "lead_status_override": {
+      "evidence": "O1+D6.5/D6.6 editable-grid 3+ dòng metadata only (mo_ta_tai_lieu required, so_ban/so_trang optional, không upload); loop ds_tai_lieu_kem_theo_m79; test_f1_input_sections + test_f1_input_ui."
+     }
     }
    ],
    "legal_questions": [
@@ -5671,10 +5641,10 @@
     "loop": 0
    },
    "summary_counts_recount": {
-    "p": 42,
+    "p": 38,
     "chk": 0,
     "table": 0,
-    "loop": 0
+    "loop": 1
    },
    "detector": {
     "p_signatures": 0,
@@ -5687,8 +5657,7 @@
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
      }
     ],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   },
   {
@@ -5705,14 +5674,17 @@
       "stt",
       "mo_ta_tai_lieu"
      ],
-     "status": "missing_grid",
+     "status": "already_complete",
      "source_evidence": {
       "template": "app/templates/PLI_M80.docx",
       "heading": "Kèm theo Giấy đề nghị này có:",
       "anchor": "05_cong_bo_cung_cap_thong_tin/PL1_Mau_80_....docx#p30-p34"
      },
      "notes": "Giống M79; blocks không có key nào cho danh sách.",
-     "semantic_key": "ds_tai_lieu_kem_theo_m80"
+     "semantic_key": "ds_tai_lieu_kem_theo_m80",
+     "lead_status_override": {
+      "evidence": "O1+D6.5/D6.6 editable-grid như M79; loop ds_tai_lieu_kem_theo_m80; test_f1_input_sections."
+     }
     }
    ],
    "legal_questions": [
@@ -5726,10 +5698,10 @@
     "loop": 0
    },
    "summary_counts_recount": {
-    "p": 40,
+    "p": 36,
     "chk": 0,
     "table": 0,
-    "loop": 0
+    "loop": 1
    },
    "detector": {
     "p_signatures": 0,
@@ -5742,8 +5714,7 @@
       "excerpt": "Trường hợp không có số định danh cá nhân hoặc việc kết nối giữa Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp với Cơ sở"
      }
     ],
-    "classifications": [],
-    "template_w_tbl": 0
+    "classifications": []
    }
   }
  ]

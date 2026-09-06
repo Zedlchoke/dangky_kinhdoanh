@@ -1,215 +1,720 @@
 {
-  "form_id": "PLI_M12",
-  "group": "change",
-  "note": "Thong bao thay doi nganh, nghe kinh doanh - template co BA luoi nganh ke nhau (muc 1 bo sung / muc 2 bo khoi danh sach / muc 3 sua doi chi tiet), deu mat khi convert. Theo wave1_contract_inventory muc 2: loop khac nghia KHONG duoc gop vao ds_nganh -> moi luoi mot loop rieng. Row contract da agent 2B chot tren template that (python-docx): nganh_bo_sung = STT{_stt} | ten_nganh | ma_nganh | la_nganh_chinh(X); nganh_xoa_bo = STT{_stt} | ten_nganh | ma_nganh | ghi_chu (cot 4 la Ghi chu, KHONG co cot nganh chinh); nganh_sua_doi_chi_tiet = STT{_stt} | ten_nganh | ma_nganh | la_nganh_chinh(X). Ba danh sach doc lap -> GRID_META minRows 0, duplicateKeys [], requirePrimary false (khong ap requirePrimary/vsic duplicate-rule cua ds_nganh).",
-  "gap_nghiepvu": "(1) Ten loop 'nganh_sua_doi_chi_tiet' do agent 2B chot (PLAN.md chi dat ten nganh_bo_sung/nganh_xoa_bo); da ghi contract trong 'note'. (2) PLAN.md q#3 dua lieu loop 'nganh_truoc_thay_doi' nhung template M12 KHONG co luoi truoc-thay-doi (da kiem python-docx) - khong tao spec, khong suy dien; can Lead quyet nguon du lieu neu van can. (3) Grid muc 2 (bo nganh) khong co cot nganh chinh tren template - cot thu 4 la 'Ghi chu' -> map {ghi_chu}; requirePrimary/PRIMARY_INDUSTRY_REQUIRED khong ap dung cho grid nay. || Wave R3B1 (2026-08-27): them entry nested-grid 'ndd_uy_quyen_sau_thay_doi' (D2.1=A discriminator loai_dong, D2.4=A chu_ky outputOnly, D2.7=min1/max null). GAP con lai: 2 nhom cot header ghep block B145 ('Tổng giá trị vốn được đại diện', 'Thời điểm đại diện phần vốn') CHUA du evidence de khai tag canonical - dung policy 'absence, khong mislabel' cua FORM_TABLE_CONTRACTS['PLI_M02']; doan '____________________' cuoi block B145 duoc GIU LAI (trim keep_from) vi khac ky phan cach/ke trong cua nguon; min/max rows chi ghi form_maps side (spec v1 khong co truong). || Wave cap-von (2026-08-28, task 3a): them entry fixed-matrix 'nguon_von_dieule_sau_thay_doi' (D1.1=A; owner + Lead 2026-08-28: dung theo bieu mau HIEN HANH TT 121/2026/TT-BTC Phu luc Mau 12 — thay Mau 12 Phu luc I TT 68, bang 'Nguồn vốn điều lệ sau khi thay đổi' KHONG doi) — khong thay doi entry nguoi dai dien cua R3B1. 3 section von/co phan khac cua M12 van missing_grid, khong thuoc nhom 'Nguon von dieu le' — liet ke trong legal_status.question cua entry moi.",
-  "tables": [
-    {
-      "spec": {
-        "id": "nganh_bo_sung",
-        "detect": ["stt", "ten nganh, nghe kinh doanh duoc bo sung", "ma nganh"],
-        "stt_tag": true,
-        "cols": [
-          ["^stt$", null],
-          ["ten nganh", "ten_nganh"],
-          ["^ma nganh", "ma_nganh"],
-          ["^nganh chinh$|nganh, nghe kinh doanh chinh", "la_nganh_chinh"]
-        ],
-        "loop": "nganh_bo_sung",
-        "fields": ["ten_nganh", "ma_nganh", "la_nganh_chinh"]
-      },
-      "pos": "after",
-      "anchor": "^1\\. bo sung nganh",
-      "no_default_drops": true,
-      "drop_until": "^2\\. bo nganh",
-      "drop": ["^stt$", "^ten nganh\\b", "^ma nganh\\d*$",
-               "^nganh, nghe kinh doanh chinh"],
-      "headers": ["STT", "Tên ngành, nghề kinh doanh được bổ sung", "Mã ngành",
-                  "Ngành, nghề kinh doanh chính"]
+ "form_id": "PLI_M12",
+ "group": "change",
+ "note": "Thong bao thay doi nganh, nghe kinh doanh - template co BA luoi nganh ke nhau (muc 1 bo sung / muc 2 bo khoi danh sach / muc 3 sua doi chi tiet), deu mat khi convert. Theo wave1_contract_inventory muc 2: loop khac nghia KHONG duoc gop vao ds_nganh -> moi luoi mot loop rieng. Row contract da agent 2B chot tren template that (python-docx): nganh_bo_sung = STT{_stt} | ten_nganh | ma_nganh | la_nganh_chinh(X); nganh_xoa_bo = STT{_stt} | ten_nganh | ma_nganh | ghi_chu (cot 4 la Ghi chu, KHONG co cot nganh chinh); nganh_sua_doi_chi_tiet = STT{_stt} | ten_nganh | ma_nganh | la_nganh_chinh(X). Ba danh sach doc lap -> GRID_META minRows 0, duplicateKeys [], requirePrimary false (khong ap requirePrimary/vsic duplicate-rule cua ds_nganh).",
+ "gap_nghiepvu": "(1) Ten loop 'nganh_sua_doi_chi_tiet' do agent 2B chot (PLAN.md chi dat ten nganh_bo_sung/nganh_xoa_bo); da ghi contract trong 'note'. (2) PLAN.md q#3 dua lieu loop 'nganh_truoc_thay_doi' nhung template M12 KHONG co luoi truoc-thay-doi (da kiem python-docx) - khong tao spec, khong suy dien; can Lead quyet nguon du lieu neu van can. (3) Grid muc 2 (bo nganh) khong co cot nganh chinh tren template - cot thu 4 la 'Ghi chu' -> map {ghi_chu}; requirePrimary/PRIMARY_INDUSTRY_REQUIRED khong ap dung cho grid nay. || Wave R3B1 (2026-08-27): them entry nested-grid 'ndd_uy_quyen_sau_thay_doi' (D2.1=A discriminator loai_dong, D2.4=A chu_ky outputOnly, D2.7=min1/max null). GAP con lai: 2 nhom cot header ghep block B145 ('Tổng giá trị vốn được đại diện', 'Thời điểm đại diện phần vốn') CHUA du evidence de khai tag canonical - dung policy 'absence, khong mislabel' cua FORM_TABLE_CONTRACTS['PLI_M02']; doan '____________________' cuoi block B145 duoc GIU LAI (trim keep_from) vi khac ky phan cach/ke trong cua nguon; min/max rows chi ghi form_maps side (spec v1 khong co truong). || Wave cap-von (2026-08-28, task 3a): them entry fixed-matrix 'nguon_von_dieule_sau_thay_doi' (D1.1=A; owner + Lead 2026-08-28: dung theo bieu mau HIEN HANH TT 121/2026/TT-BTC Phu luc Mau 12 — thay Mau 12 Phu luc I TT 68, bang 'Nguồn vốn điều lệ sau khi thay đổi' KHONG doi) — khong thay doi entry nguoi dai dien cua R3B1. 3 section von/co phan khac cua M12 van missing_grid, khong thuoc nhom 'Nguon von dieu le' — liet ke trong legal_status.question cua entry moi.",
+ "tables": [
+  {
+   "spec": {
+    "id": "nganh_bo_sung",
+    "detect": [
+     "stt",
+     "ten nganh, nghe kinh doanh duoc bo sung",
+     "ma nganh"
+    ],
+    "stt_tag": true,
+    "cols": [
+     [
+      "^stt$",
+      null
+     ],
+     [
+      "ten nganh",
+      "ten_nganh"
+     ],
+     [
+      "^ma nganh",
+      "ma_nganh"
+     ],
+     [
+      "^nganh chinh$|nganh, nghe kinh doanh chinh",
+      "la_nganh_chinh"
+     ]
+    ],
+    "loop": "nganh_bo_sung",
+    "fields": [
+     "ten_nganh",
+     "ma_nganh",
+     "la_nganh_chinh"
+    ]
+   },
+   "pos": "after",
+   "anchor": "^1\\. bo sung nganh",
+   "no_default_drops": true,
+   "drop_until": "^2\\. bo nganh",
+   "drop": [
+    "^stt$",
+    "^ten nganh\\b",
+    "^ma nganh\\d*$",
+    "^nganh, nghe kinh doanh chinh"
+   ],
+   "headers": [
+    "STT",
+    "Tên ngành, nghề kinh doanh được bổ sung",
+    "Mã ngành",
+    "Ngành, nghề kinh doanh chính"
+   ]
+  },
+  {
+   "spec": {
+    "id": "nganh_xoa_bo",
+    "detect": [
+     "stt",
+     "ten nganh, nghe kinh doanh duoc bo khoi danh sach da dang ky",
+     "ma nganh"
+    ],
+    "stt_tag": true,
+    "cols": [
+     [
+      "^stt$",
+      null
+     ],
+     [
+      "ten nganh",
+      "ten_nganh"
+     ],
+     [
+      "^ma nganh",
+      "ma_nganh"
+     ],
+     [
+      "^ghi chu$",
+      "ghi_chu"
+     ]
+    ],
+    "loop": "nganh_xoa_bo",
+    "fields": [
+     "ten_nganh",
+     "ma_nganh",
+     "ghi_chu"
+    ]
+   },
+   "pos": "after",
+   "anchor": "^2\\. bo nganh",
+   "no_default_drops": true,
+   "drop_until": "^3\\. sua doi chi tiet",
+   "drop": [
+    "^stt$",
+    "^ten nganh\\b",
+    "^ma nganh\\d*$",
+    "^ghi chu$"
+   ],
+   "headers": [
+    "STT",
+    "Tên ngành, nghề kinh doanh được bỏ khỏi danh sách đã đăng ký",
+    "Mã ngành",
+    "Ghi chú"
+   ]
+  },
+  {
+   "spec": {
+    "id": "nganh_sua_doi_chi_tiet",
+    "detect": [
+     "stt",
+     "ten nganh, nghe kinh doanh duoc sua doi chi tiet",
+     "ma nganh"
+    ],
+    "stt_tag": true,
+    "cols": [
+     [
+      "^stt$",
+      null
+     ],
+     [
+      "ten nganh",
+      "ten_nganh"
+     ],
+     [
+      "^ma nganh",
+      "ma_nganh"
+     ],
+     [
+      "^nganh chinh$|nganh, nghe kinh doanh chinh",
+      "la_nganh_chinh"
+     ]
+    ],
+    "loop": "nganh_sua_doi_chi_tiet",
+    "fields": [
+     "ten_nganh",
+     "ma_nganh",
+     "la_nganh_chinh"
+    ]
+   },
+   "pos": "after",
+   "anchor": "^3\\. sua doi chi tiet",
+   "no_default_drops": true,
+   "drop_until": "doanh nghiep cam ket dap ung dieu kien tiep can thi truong",
+   "drop": [
+    "^stt$",
+    "^ten nganh\\b",
+    "^ma nganh\\d*$",
+    "^nganh, nghe kinh doanh chinh"
+   ],
+   "headers": [
+    "STT",
+    "Tên ngành, nghề kinh doanh được sửa đổi chi tiết",
+    "Mã ngành",
+    "Ngành, nghề kinh doanh chính"
+   ]
+  },
+  {
+   "spec": {
+    "id": "ndd_uy_quyen_sau_thay_doi",
+    "width_policy": "content",
+    "kind": "nested-grid",
+    "section_id": "ndd_uy_quyen_sau_thay_doi",
+    "semantic_key": "ds_ndd_uy_quyen_sau_thay_doi",
+    "loop": "ds_ndd_uy_quyen_sau_thay_doi",
+    "stt": {
+     "mode": "generated",
+     "col_index": 0
     },
-    {
-      "spec": {
-        "id": "nganh_xoa_bo",
-        "detect": ["stt", "ten nganh, nghe kinh doanh duoc bo khoi danh sach da dang ky",
-                   "ma nganh"],
-        "stt_tag": true,
-        "cols": [
-          ["^stt$", null],
-          ["ten nganh", "ten_nganh"],
-          ["^ma nganh", "ma_nganh"],
-          ["^ghi chu$", "ghi_chu"]
-        ],
-        "loop": "nganh_xoa_bo",
-        "fields": ["ten_nganh", "ma_nganh", "ghi_chu"]
+    "header_rows": [
+     [
+      {
+       "text": "STT",
+       "rowspan": 2
       },
-      "pos": "after",
-      "anchor": "^2\\. bo nganh",
-      "no_default_drops": true,
-      "drop_until": "^3\\. sua doi chi tiet",
-      "drop": ["^stt$", "^ten nganh\\b", "^ma nganh\\d*$", "^ghi chu$"],
-      "headers": ["STT", "Tên ngành, nghề kinh doanh được bỏ khỏi danh sách đã đăng ký",
-                  "Mã ngành", "Ghi chú"]
-    },
-    {
-      "spec": {
-        "id": "nganh_sua_doi_chi_tiet",
-        "detect": ["stt", "ten nganh, nghe kinh doanh duoc sua doi chi tiet", "ma nganh"],
-        "stt_tag": true,
-        "cols": [
-          ["^stt$", null],
-          ["ten nganh", "ten_nganh"],
-          ["^ma nganh", "ma_nganh"],
-          ["^nganh chinh$|nganh, nghe kinh doanh chinh", "la_nganh_chinh"]
-        ],
-        "loop": "nganh_sua_doi_chi_tiet",
-        "fields": ["ten_nganh", "ma_nganh", "la_nganh_chinh"]
+      {
+       "text": "Chủ sở hữu/Thành viên công ty TNHH/Cổ đông là nhà đầu tư nước ngoài là tổ chức",
+       "rowspan": 2
       },
-      "pos": "after",
-      "anchor": "^3\\. sua doi chi tiet",
-      "no_default_drops": true,
-      "drop_until": "doanh nghiep cam ket dap ung dieu kien tiep can thi truong",
-      "drop": ["^stt$", "^ten nganh\\b", "^ma nganh\\d*$",
-               "^nganh, nghe kinh doanh chinh"],
-      "headers": ["STT", "Tên ngành, nghề kinh doanh được sửa đổi chi tiết", "Mã ngành",
-                  "Ngành, nghề kinh doanh chính"]
-    },
-    {
-      "spec": {
-        "id": "ndd_uy_quyen_sau_thay_doi",
-        "width_policy": "content",
-        "kind": "nested-grid",
-        "section_id": "ndd_uy_quyen_sau_thay_doi",
-        "semantic_key": "ds_ndd_uy_quyen_sau_thay_doi",
-        "loop": "ds_ndd_uy_quyen_sau_thay_doi",
-        "stt": {"mode": "generated", "col_index": 0},
-        "header_rows": [
-          [
-            {"text": "STT", "rowspan": 2},
-            {"text": "Chủ sở hữu/Thành viên công ty TNHH/Cổ đông là nhà đầu tư nước ngoài là tổ chức", "rowspan": 2},
-            {"text": "Tên người đại diện theo ủy quyền", "rowspan": 2},
-            {"text": "Ngày, tháng, năm sinh", "rowspan": 2},
-            {"text": "Giới tính", "rowspan": 2},
-            {"text": "Số, ngày cấp, cơ quan cấp Giấy tờ pháp lý của cá nhân", "colspan": 3},
-            {"text": "Quốc tịch", "rowspan": 2},
-            {"text": "Dân tộc", "rowspan": 2},
-            {"text": "Địa chỉ liên lạc", "rowspan": 2},
-            {"text": "Vốn được ủy quyền", "colspan": 2},
-            {"text": "Chữ ký của người đại diện theo ủy quyền", "rowspan": 2},
-            {"text": "Ghi chú (nếu có)", "rowspan": 2}
-          ],
-          [
-            {"text": "Số"}, {"text": "Ngày cấp"}, {"text": "Cơ quan cấp"},
-            {"text": "VNĐ"}, {"text": "Tỷ lệ (%)"}
-          ]
-        ],
-        "columns": [
-          {"header": "Chủ sở hữu/Thành viên công ty TNHH/Cổ đông là nhà đầu tư nước ngoài là tổ chức", "tag": "chu_so_huu_tvtnhh_cdnn_to_chuc", "col_index": 1, "input_type": "text", "required": true},
-          {"header": "Tên người đại diện theo ủy quyền", "tag": "ten_ndd_uy_quyen", "col_index": 2, "input_type": "text", "required": true},
-          {"header": "Ngày, tháng, năm sinh", "tag": "ngay_sinh", "col_index": 3, "input_type": "text"},
-          {"header": "Giới tính", "tag": "gioi_tinh", "col_index": 4, "input_type": "text"},
-          {"header": "Số", "tag": "giay_to_so", "col_index": 5, "input_type": "text"},
-          {"header": "Ngày cấp", "tag": "giay_to_ngay", "col_index": 6, "input_type": "text"},
-          {"header": "Cơ quan cấp", "tag": "giay_to_co_quan", "col_index": 7, "input_type": "text"},
-          {"header": "Quốc tịch", "tag": "quoc_tich", "col_index": 8, "input_type": "text"},
-          {"header": "Dân tộc", "tag": "dan_toc", "col_index": 9, "input_type": "text"},
-          {"header": "Địa chỉ liên lạc", "tag": "dia_chi", "col_index": 10, "input_type": "text"},
-          {"header": "VNĐ", "tag": "von_duoc_uy_quyen_vnd", "col_index": 11, "input_type": "money"},
-          {"header": "Tỷ lệ (%)", "tag": "ty_le", "col_index": 12, "input_type": "percent"},
-          {"header": "Chữ ký của người đại diện theo ủy quyền", "tag": "chu_ky", "col_index": 13, "input_type": "outputOnly", "output_only": true},
-          {"header": "Ghi chú (nếu có)", "tag": "ghi_chu", "col_index": 14, "input_type": "text"}
-        ],
-        "discriminator": null,
-        "totals": []
+      {
+       "text": "Tên người đại diện theo ủy quyền",
+       "rowspan": 2
       },
-      "pos": "after",
-      "anchor": "^thong tin ve nguoi dai dien theo uy quyen sau khi thay doi:",
-      "no_default_drops": true,
-      "legal_status": {
-        "blocked": false,
-        "ref": "D2.1=A (discriminator loai_dong), D2.4=A (chu_ky outputOnly), D2.7=min1/max null - docs/decision_registry.md packet D2; evidence: census manifest section ndd_uy_quyen_sau_thay_doi + blocks PLI_M12.json B144-B145"
+      {
+       "text": "Ngày, tháng, năm sinh",
+       "rowspan": 2
       },
-      "trim": ["^sttchu so huu/thanh vien cong ty tnhh"],
-      "keep_from": "____________________"
-    },
-    {
-      "kind": "fixed-matrix",
-      "spec": {
-        "id": "nguon_von_dieule_sau_thay_doi",
-        "kind": "fixed-matrix",
-        "section_id": "nguon_von_dieule_sau_thay_doi",
-        "semantic_key": "nguon_von_dieu_le_sau_thay_doi",
-        "columns": [
-          {
-            "header": "Loại nguồn vốn",
-            "tag": null,
-            "input_type": "readonly"
-          },
-          {
-            "header": "Số tiền (bằng số; VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)",
-            "tag": "so_tien_vnd_va_tuong_duong",
-            "input_type": "money"
-          },
-          {
-            "header": "Tỷ lệ (%)",
-            "tag": "ty_le",
-            "input_type": "percent"
-          }
-        ],
-        "fixed_rows": [
-          {
-            "id": "von_ngan_sach_nha_nuoc",
-            "label": "Vốn ngân sách nhà nước"
-          },
-          {
-            "id": "von_tu_nhan",
-            "label": "Vốn tư nhân"
-          },
-          {
-            "id": "von_nuoc_ngoai",
-            "label": "Vốn nước ngoài"
-          },
-          {
-            "id": "von_khac",
-            "label": "Vốn khác"
-          },
-          {
-            "id": "tong_cong",
-            "label": "Tổng cộng",
-            "output_only": true
-          }
-        ],
-        "totals": [
-          {
-            "formula": "sum(so_tien_vnd_va_tuong_duong)",
-            "target_row": "tong_cong",
-            "target_tag": "so_tien_vnd_va_tuong_duong"
-          },
-          {
-            "formula": "sum(ty_le)",
-            "target_row": "tong_cong",
-            "target_tag": "ty_le"
-          }
-        ]
+      {
+       "text": "Giới tính",
+       "rowspan": 2
       },
-      "pos": "after",
-      "anchor": "^nguon von dieu le sau khi thay doi von dieu le",
-      "no_default_drops": true,
-      "drop_until": "^tai san gop von sau khi thay doi von dieu le",
-      "drop": [
-        "^loai nguon von$",
-        "^so tien \\(bang so; vnd",
-        "^ty le \\(%\\)$",
-        "^von ngan sach nha nuoc$",
-        "^von tu nhan$",
-        "^von nuoc ngoai$",
-        "^von khac$",
-        "^tong cong$"
-      ],
-      "legal_status": {
-        "blocked": false,
-        "ref": "Owner 2026-08-28 (docs/leader_handoff_excel_next.md Việc 4.1) + cảnh báo Lead cùng ngày: dựng theo biểu mẫu HIỆN HÀNH; ngữ cảnh riêng của M12, KHÔNG dùng chung data với mẫu thành lập (census manifest notes). NGUỒN HIỆN HÀNH: **TT 121/2026/TT-BTC** (hiệu lực 21/8/2026) — Điều 1 khoản 1 điểm g THAY THẾ Mẫu số 12 Phụ lục I của TT 68/2025/TT-BTC; Phụ lục đó, Mẫu số 12 'Giấy đề nghị đăng ký thay đổi nội dung Giấy chứng nhận đăng ký doanh nghiệp/Thông báo thay đổi nội dung đăng ký doanh nghiệp', khối 'ĐĂNG KÝ THAY ĐỔI VỐN ĐIỀU LỆ, PHẦN VỐN GÓP, TỶ LỆ PHẦN VỐN GÓP' → mục '1. Đăng ký thay đổi vốn điều lệ của công ty:' → bảng 'Nguồn vốn điều lệ sau khi thay đổi vốn điều lệ:' (trang 5 của mẫu = trang 54/70 của 121-btc.signed.pdf trên Cổng VTCP Chính phủ) — bảng 3 cột 'Loại nguồn vốn | Số tiền (bằng số; VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có) | Tỷ lệ (%)' với 5 dòng 'Vốn ngân sách nhà nước / Vốn tư nhân / Vốn nước ngoài / Vốn khác / Tổng cộng', GIỐNG HỆT Phụ lục I TT 68/2025 (đã đối chiếu trực tiếp bản gốc). BẢN REGEN TRONG REPO (khớp từng dòng): 02_thay_doi_thong_tin_doanh_nghiep/PL1_Mau_12_tach_tu_file_full.docx p60-p76 (p60 heading, p61 'Loại nguồn vốn', p62 'Số tiền (bằng số; VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)', p63 'Tỷ lệ (%)', p64/67/70/73/76 nhãn 5 dòng; 2 paragraph rỗng sau mỗi nhãn = 2 ô giá trị), mốc kết thúc p79 'Tài sản góp vốn sau khi thay đổi vốn điều lệ:'. Census: app/data/table_specs/manifest.json PLI_M12/nguon_von_dieule_sau_thay_doi (fixed-matrix, missing_grid, semantic_key=nguon_von_dieu_le_sau_thay_doi, fixed_rows đúng 5 dòng, required_columns loai_nguon_von|so_tien_vnd_va_tuong_duong|ty_le) — row id + tag lấy ĐÚNG manifest.",
-        "question": "(a) D1.1=A: cross-field 'Tổng cộng == Vốn điều lệ sau khi thay đổi (mục 1 khối thay đổi vốn điều lệ)' blocking — form_maps PLI_M12 hiện CHƯA có key số cho 'Vốn điều lệ sau khi thay đổi' (chỉ có von_dieu_le_chu/gia_tri_ntte/thoi_diem_thay_doi_von/hinh_thuc_tang_giam_von) -> Lead phải chốt valueKey khi wire FORM_TABLE_CONTRACTS, không suy diễn. (b) NGUYÊN NHÂN PHẠM VI: 3 section fixed-matrix khác của M12 vẫn missing_grid và KHÔNG thuộc nhóm 'Nguồn vốn điều lệ' của lane này — 'Tài sản góp vốn sau khi thay đổi vốn điều lệ' (p79-p108, packet D1.2), 'Thông tin về cổ phần (chỉ kê khai đối với công ty cổ phần)' (p111-p143, packet D1.4) và 'Tài sản góp vốn sau khi thay đổi vốn đầu tư' (p195-p224). LƯU Ý: bản gốc Phụ lục I Mẫu 12 (dangkykinhdoanh.gov.vn) IN SẴN lỗi chính tả 'Cổ phần ưu đã biểu quyết' / 'Cổ phần ưu đã cổ tức' (thiếu 'i') — nguồn repo trung thành với bản gốc, không phải lỗi sao chép; nếu sửa thì phải là quyết định owner riêng. (c) Tên chính thức của Mẫu 12 theo danh mục Phụ lục I (TT 121/2026): 'Giấy đề nghị đăng ký thay đổi nội dung Giấy chứng nhận đăng ký doanh nghiệp/Thông báo thay đổi nội dung đăng ký doanh nghiệp'. Ô HEADER trang 1: bản TT 121/2026 CÓ band 'TÊN DOANH NGHIỆP ____________' TRÁI + khối quốc hiệu PHẢI (cùng band), rồi 'Số: …' TRÁI / '…, ngày … tháng … năm …' PHẢI — nguồn trong repo THIẾU ô 'TÊN DOANH NGHIỆP' (hdr2col census của Lead đã phát hiện) -> đúng Việc 2 (layout header) của Lead, lane này KHÔNG có capability chèn paragraph nên không dựng được, cần Lead/owner xử lý khi regen theo TT 121. (d) Ô '% tự tính theo giá trị' chưa có formula trong v1 -> ty_le là ô nhập percent, tổng cột = sum(ty_le) (tiền lệ F2)."
+      {
+       "text": "Số, ngày cấp, cơ quan cấp Giấy tờ pháp lý của cá nhân",
+       "colspan": 3
+      },
+      {
+       "text": "Quốc tịch",
+       "rowspan": 2
+      },
+      {
+       "text": "Dân tộc",
+       "rowspan": 2
+      },
+      {
+       "text": "Địa chỉ liên lạc",
+       "rowspan": 2
+      },
+      {
+       "text": "Vốn được ủy quyền",
+       "colspan": 2
+      },
+      {
+       "text": "Chữ ký của người đại diện theo ủy quyền",
+       "rowspan": 2
+      },
+      {
+       "text": "Ghi chú (nếu có)",
+       "rowspan": 2
       }
-    }
-  ]
+     ],
+     [
+      {
+       "text": "Số"
+      },
+      {
+       "text": "Ngày cấp"
+      },
+      {
+       "text": "Cơ quan cấp"
+      },
+      {
+       "text": "VNĐ"
+      },
+      {
+       "text": "Tỷ lệ (%)"
+      }
+     ]
+    ],
+    "columns": [
+     {
+      "header": "Chủ sở hữu/Thành viên công ty TNHH/Cổ đông là nhà đầu tư nước ngoài là tổ chức",
+      "tag": "chu_so_huu_tvtnhh_cdnn_to_chuc",
+      "col_index": 1,
+      "input_type": "text",
+      "required": true
+     },
+     {
+      "header": "Tên người đại diện theo ủy quyền",
+      "tag": "ten_ndd_uy_quyen",
+      "col_index": 2,
+      "input_type": "text",
+      "required": true
+     },
+     {
+      "header": "Ngày, tháng, năm sinh",
+      "tag": "ngay_sinh",
+      "col_index": 3,
+      "input_type": "text"
+     },
+     {
+      "header": "Giới tính",
+      "tag": "gioi_tinh",
+      "col_index": 4,
+      "input_type": "text"
+     },
+     {
+      "header": "Số",
+      "tag": "giay_to_so",
+      "col_index": 5,
+      "input_type": "text"
+     },
+     {
+      "header": "Ngày cấp",
+      "tag": "giay_to_ngay",
+      "col_index": 6,
+      "input_type": "text"
+     },
+     {
+      "header": "Cơ quan cấp",
+      "tag": "giay_to_co_quan",
+      "col_index": 7,
+      "input_type": "text"
+     },
+     {
+      "header": "Quốc tịch",
+      "tag": "quoc_tich",
+      "col_index": 8,
+      "input_type": "text"
+     },
+     {
+      "header": "Dân tộc",
+      "tag": "dan_toc",
+      "col_index": 9,
+      "input_type": "text"
+     },
+     {
+      "header": "Địa chỉ liên lạc",
+      "tag": "dia_chi",
+      "col_index": 10,
+      "input_type": "text"
+     },
+     {
+      "header": "VNĐ",
+      "tag": "von_duoc_uy_quyen_vnd",
+      "col_index": 11,
+      "input_type": "money"
+     },
+     {
+      "header": "Tỷ lệ (%)",
+      "tag": "ty_le",
+      "col_index": 12,
+      "input_type": "percent"
+     },
+     {
+      "header": "Chữ ký của người đại diện theo ủy quyền",
+      "tag": "chu_ky",
+      "col_index": 13,
+      "input_type": "outputOnly",
+      "output_only": true
+     },
+     {
+      "header": "Ghi chú (nếu có)",
+      "tag": "ghi_chu",
+      "col_index": 14,
+      "input_type": "text"
+     }
+    ],
+    "discriminator": null,
+    "totals": []
+   },
+   "pos": "after",
+   "anchor": "^thong tin ve nguoi dai dien theo uy quyen sau khi thay doi:",
+   "no_default_drops": true,
+   "legal_status": {
+    "blocked": false,
+    "ref": "D2.1=A (discriminator loai_dong), D2.4=A (chu_ky outputOnly), D2.7=min1/max null - docs/decision_registry.md packet D2; evidence: census manifest section ndd_uy_quyen_sau_thay_doi + blocks PLI_M12.json B144-B145"
+   },
+   "trim": [
+    "^sttchu so huu/thanh vien cong ty tnhh"
+   ],
+   "keep_from": "____________________"
+  },
+  {
+   "kind": "fixed-matrix",
+   "spec": {
+    "id": "nguon_von_dieule_sau_thay_doi",
+    "kind": "fixed-matrix",
+    "section_id": "nguon_von_dieule_sau_thay_doi",
+    "semantic_key": "nguon_von_dieu_le_sau_thay_doi",
+    "columns": [
+     {
+      "header": "Loại nguồn vốn",
+      "tag": null,
+      "input_type": "readonly"
+     },
+     {
+      "header": "Số tiền (bằng số; VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)",
+      "tag": "so_tien_vnd_va_tuong_duong",
+      "input_type": "money"
+     },
+     {
+      "header": "Tỷ lệ (%)",
+      "tag": "ty_le",
+      "input_type": "percent"
+     }
+    ],
+    "fixed_rows": [
+     {
+      "id": "von_ngan_sach_nha_nuoc",
+      "label": "Vốn ngân sách nhà nước"
+     },
+     {
+      "id": "von_tu_nhan",
+      "label": "Vốn tư nhân"
+     },
+     {
+      "id": "von_nuoc_ngoai",
+      "label": "Vốn nước ngoài"
+     },
+     {
+      "id": "von_khac",
+      "label": "Vốn khác"
+     },
+     {
+      "id": "tong_cong",
+      "label": "Tổng cộng",
+      "output_only": true
+     }
+    ],
+    "totals": [
+     {
+      "formula": "sum(so_tien_vnd_va_tuong_duong)",
+      "target_row": "tong_cong",
+      "target_tag": "so_tien_vnd_va_tuong_duong"
+     },
+     {
+      "formula": "sum(ty_le)",
+      "target_row": "tong_cong",
+      "target_tag": "ty_le"
+     }
+    ]
+   },
+   "pos": "after",
+   "anchor": "^nguon von dieu le sau khi thay doi von dieu le",
+   "no_default_drops": true,
+   "drop_until": "^tai san gop von sau khi thay doi von dieu le",
+   "drop": [
+    "^loai nguon von$",
+    "^so tien \\(bang so; vnd",
+    "^ty le \\(%\\)$",
+    "^von ngan sach nha nuoc$",
+    "^von tu nhan$",
+    "^von nuoc ngoai$",
+    "^von khac$",
+    "^tong cong$"
+   ],
+   "legal_status": {
+    "blocked": false,
+    "ref": "Owner 2026-08-28 (docs/leader_handoff_excel_next.md Việc 4.1) + cảnh báo Lead cùng ngày: dựng theo biểu mẫu HIỆN HÀNH; ngữ cảnh riêng của M12, KHÔNG dùng chung data với mẫu thành lập (census manifest notes). NGUỒN HIỆN HÀNH: **TT 121/2026/TT-BTC** (hiệu lực 21/8/2026) — Điều 1 khoản 1 điểm g THAY THẾ Mẫu số 12 Phụ lục I của TT 68/2025/TT-BTC; Phụ lục đó, Mẫu số 12 'Giấy đề nghị đăng ký thay đổi nội dung Giấy chứng nhận đăng ký doanh nghiệp/Thông báo thay đổi nội dung đăng ký doanh nghiệp', khối 'ĐĂNG KÝ THAY ĐỔI VỐN ĐIỀU LỆ, PHẦN VỐN GÓP, TỶ LỆ PHẦN VỐN GÓP' → mục '1. Đăng ký thay đổi vốn điều lệ của công ty:' → bảng 'Nguồn vốn điều lệ sau khi thay đổi vốn điều lệ:' (trang 5 của mẫu = trang 54/70 của 121-btc.signed.pdf trên Cổng VTCP Chính phủ) — bảng 3 cột 'Loại nguồn vốn | Số tiền (bằng số; VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có) | Tỷ lệ (%)' với 5 dòng 'Vốn ngân sách nhà nước / Vốn tư nhân / Vốn nước ngoài / Vốn khác / Tổng cộng', GIỐNG HỆT Phụ lục I TT 68/2025 (đã đối chiếu trực tiếp bản gốc). BẢN REGEN TRONG REPO (khớp từng dòng): 02_thay_doi_thong_tin_doanh_nghiep/PL1_Mau_12_tach_tu_file_full.docx p60-p76 (p60 heading, p61 'Loại nguồn vốn', p62 'Số tiền (bằng số; VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)', p63 'Tỷ lệ (%)', p64/67/70/73/76 nhãn 5 dòng; 2 paragraph rỗng sau mỗi nhãn = 2 ô giá trị), mốc kết thúc p79 'Tài sản góp vốn sau khi thay đổi vốn điều lệ:'. Census: app/data/table_specs/manifest.json PLI_M12/nguon_von_dieule_sau_thay_doi (fixed-matrix, missing_grid, semantic_key=nguon_von_dieu_le_sau_thay_doi, fixed_rows đúng 5 dòng, required_columns loai_nguon_von|so_tien_vnd_va_tuong_duong|ty_le) — row id + tag lấy ĐÚNG manifest.",
+    "question": "(a) D1.1=A: cross-field 'Tổng cộng == Vốn điều lệ sau khi thay đổi (mục 1 khối thay đổi vốn điều lệ)' blocking — form_maps PLI_M12 hiện CHƯA có key số cho 'Vốn điều lệ sau khi thay đổi' (chỉ có von_dieu_le_chu/gia_tri_ntte/thoi_diem_thay_doi_von/hinh_thuc_tang_giam_von) -> Lead phải chốt valueKey khi wire FORM_TABLE_CONTRACTS, không suy diễn. (b) NGUYÊN NHÂN PHẠM VI: 3 section fixed-matrix khác của M12 vẫn missing_grid và KHÔNG thuộc nhóm 'Nguồn vốn điều lệ' của lane này — 'Tài sản góp vốn sau khi thay đổi vốn điều lệ' (p79-p108, packet D1.2), 'Thông tin về cổ phần (chỉ kê khai đối với công ty cổ phần)' (p111-p143, packet D1.4) và 'Tài sản góp vốn sau khi thay đổi vốn đầu tư' (p195-p224). LƯU Ý: bản gốc Phụ lục I Mẫu 12 (dangkykinhdoanh.gov.vn) IN SẴN lỗi chính tả 'Cổ phần ưu đã biểu quyết' / 'Cổ phần ưu đã cổ tức' (thiếu 'i') — nguồn repo trung thành với bản gốc, không phải lỗi sao chép; nếu sửa thì phải là quyết định owner riêng. (c) Tên chính thức của Mẫu 12 theo danh mục Phụ lục I (TT 121/2026): 'Giấy đề nghị đăng ký thay đổi nội dung Giấy chứng nhận đăng ký doanh nghiệp/Thông báo thay đổi nội dung đăng ký doanh nghiệp'. Ô HEADER trang 1: bản TT 121/2026 CÓ band 'TÊN DOANH NGHIỆP ____________' TRÁI + khối quốc hiệu PHẢI (cùng band), rồi 'Số: …' TRÁI / '…, ngày … tháng … năm …' PHẢI — nguồn trong repo THIẾU ô 'TÊN DOANH NGHIỆP' (hdr2col census của Lead đã phát hiện) -> đúng Việc 2 (layout header) của Lead, lane này KHÔNG có capability chèn paragraph nên không dựng được, cần Lead/owner xử lý khi regen theo TT 121. (d) Ô '% tự tính theo giá trị' chưa có formula trong v1 -> ty_le là ô nhập percent, tổng cột = sum(ty_le) (tiền lệ F2)."
+   }
+  },
+  {
+   "kind": "fixed-matrix",
+   "spec": {
+    "id": "tai_san_gop_von_sau_thay_doi_vdl",
+    "kind": "fixed-matrix",
+    "section_id": "tai_san_gop_von_sau_thay_doi_vdl",
+    "semantic_key": "co_cau_tai_san_gop_von_sau_thay_doi_vdl",
+    "columns": [
+     {
+      "header": "Tài sản góp vốn",
+      "tag": null,
+      "input_type": "readonly"
+     },
+     {
+      "header": "Ghi rõ loại ngoại tệ, số tiền được góp bằng mỗi loại ngoại tệ / loại tài sản, số lượng và giá trị còn lại của mỗi loại tài sản",
+      "tag": "chi_tiet_ngoai_te_tai_san_khac",
+      "input_type": "text"
+     },
+     {
+      "header": "Giá trị vốn của từng tài sản trong vốn điều lệ (bằng số, VNĐ)",
+      "tag": "gia_tri_vnd",
+      "input_type": "money"
+     },
+     {
+      "header": "Tỷ lệ (%)",
+      "tag": "ty_le",
+      "input_type": "percent"
+     }
+    ],
+    "fixed_rows": [
+     {
+      "id": "dong_viet_nam",
+      "label": "Đồng Việt Nam"
+     },
+     {
+      "id": "ngoai_te_tu_do_chuyen_doi",
+      "label": "Ngoại tệ tự do chuyển đổi (ghi rõ loại ngoại tệ, số tiền được góp bằng mỗi loại ngoại tệ)"
+     },
+     {
+      "id": "vang",
+      "label": "Vàng"
+     },
+     {
+      "id": "quyen_su_dung_dat",
+      "label": "Quyền sử dụng đất"
+     },
+     {
+      "id": "quyen_so_huu_tri_tue",
+      "label": "Quyền sở hữu trí tuệ"
+     },
+     {
+      "id": "tai_san_khac",
+      "label": "Các tài sản khác (ghi rõ loại tài sản, số lượng và giá trị còn lại của mỗi loại tài sản, có thể lập thành danh mục riêng kèm theo hồ sơ đăng ký doanh nghiệp)"
+     },
+     {
+      "id": "tong_so",
+      "label": "Tổng số",
+      "output_only": true
+     }
+    ],
+    "totals": [
+     {
+      "formula": "sum(gia_tri_vnd)",
+      "target_row": "tong_so",
+      "target_tag": "gia_tri_vnd"
+     },
+     {
+      "formula": "sum(ty_le)",
+      "target_row": "tong_so",
+      "target_tag": "ty_le"
+     }
+    ]
+   },
+   "pos": "after",
+   "anchor": "^tai san gop von sau khi thay doi von dieu le",
+   "no_default_drops": true,
+   "drop_until": "^thong tin ve co phan",
+   "drop": [
+    "^stt$",
+    "^tai san gop von$",
+    "^gia tri von cua tung tai san trong von dieu le",
+    "^gia tri von cua tung tai san trong von dau tu",
+    "^ty le \\(%\\)$",
+    "^\\d$",
+    "^dong viet nam$",
+    "^ngoai te tu do chuyen doi",
+    "^vang$",
+    "^quyen su dung dat$",
+    "^quyen so huu tri tue$",
+    "^cac tai san khac \\(",
+    "^tong so$"
+   ],
+   "legal_status": {
+    "blocked": false,
+    "ref": "O1 (IMPLEMENTED AS USER INPUT) + O2 (docs/owner_decision_packet_v7.md): materialize tu Mau 12 hien hanh theo TT 121/2026 (nguon da migrate: 02_thay_doi_thong_tin_doanh_nghiep/PL1_Mau_12_tach_tu_file_full.docx p81-p111 'Tài sản góp vốn sau khi thay đổi vốn điều lệ:' — 6 dong cu phap ly + Tong so, paragraph roi khong w:tbl). Shape giong het PLI_M01 tai_san_gop_von_von_dau_tu / PLI_M02 tai_san_gop_von_von_dieu_le (D1.1=A tong computed outputOnly + D1.2 mo ta text).",
+    "question": "(a) Cot STT 1..6 in san khong tai lap duoc o fixed-matrix v1 - khai thieu (gap nhu M01/M02/M04). (b) Cross-field 'Tong so == Von dieu le SAU thay doi' blocking: form_maps PLI_M12 khong co key so von dieu le (bang so) sau thay doi doc lap (von_dieu_le_chu duoc gan CHUNG cho 'da dang ky' p48 va 'sau khi thay doi' p49) -> KHONG khai sumEqualsKey (gia gap voi owner/Lead, cung tinh trang voi nguon_von_dieule_sau_thay_doi); mismatch computed-vs-stored van chan export qua recompute_totals strict (ExportTotalsError). (c) PERCENT_SUM warning khai o runtime contract form-domain.js."
+   }
+  },
+  {
+   "kind": "fixed-matrix",
+   "spec": {
+    "id": "tai_san_gop_von_sau_thay_doi_von_dau_tu",
+    "kind": "fixed-matrix",
+    "section_id": "tai_san_gop_von_sau_thay_doi_von_dau_tu",
+    "semantic_key": "co_cau_tai_san_gop_von_sau_thay_doi_vdt",
+    "columns": [
+     {
+      "header": "Tài sản góp vốn",
+      "tag": null,
+      "input_type": "readonly"
+     },
+     {
+      "header": "Ghi rõ loại ngoại tệ, số tiền được góp bằng mỗi loại ngoại tệ / loại tài sản, số lượng và giá trị còn lại của mỗi loại tài sản",
+      "tag": "chi_tiet_ngoai_te_tai_san_khac",
+      "input_type": "text"
+     },
+     {
+      "header": "Giá trị vốn của từng tài sản trong vốn đầu tư (bằng số, VNĐ)",
+      "tag": "gia_tri_vnd",
+      "input_type": "money"
+     },
+     {
+      "header": "Tỷ lệ (%)",
+      "tag": "ty_le",
+      "input_type": "percent"
+     }
+    ],
+    "fixed_rows": [
+     {
+      "id": "dong_viet_nam",
+      "label": "Đồng Việt Nam"
+     },
+     {
+      "id": "ngoai_te_tu_do_chuyen_doi",
+      "label": "Ngoại tệ tự do chuyển đổi (ghi rõ loại ngoại tệ, số tiền được góp bằng mỗi loại ngoại tệ)"
+     },
+     {
+      "id": "vang",
+      "label": "Vàng"
+     },
+     {
+      "id": "quyen_su_dung_dat",
+      "label": "Quyền sử dụng đất"
+     },
+     {
+      "id": "quyen_so_huu_tri_tue",
+      "label": "Quyền sở hữu trí tuệ"
+     },
+     {
+      "id": "tai_san_khac",
+      "label": "Các tài sản khác (ghi rõ loại tài sản, số lượng và giá trị còn lại của mỗi loại tài sản, có thể lập thành danh mục riêng kèm theo hồ sơ đăng ký đăng ký doanh nghiệp)"
+     },
+     {
+      "id": "tong_so",
+      "label": "Tổng số",
+      "output_only": true
+     }
+    ],
+    "totals": [
+     {
+      "formula": "sum(gia_tri_vnd)",
+      "target_row": "tong_so",
+      "target_tag": "gia_tri_vnd"
+     },
+     {
+      "formula": "sum(ty_le)",
+      "target_row": "tong_so",
+      "target_tag": "ty_le"
+     }
+    ]
+   },
+   "pos": "after",
+   "anchor": "^tai san gop von sau khi thay doi von dau tu",
+   "no_default_drops": true,
+   "drop_until": "^thong bao thay doi nguoi dai dien theo uy quyen",
+   "drop": [
+    "^stt$",
+    "^tai san gop von$",
+    "^gia tri von cua tung tai san trong von dieu le",
+    "^gia tri von cua tung tai san trong von dau tu",
+    "^ty le \\(%\\)$",
+    "^\\d$",
+    "^dong viet nam$",
+    "^ngoai te tu do chuyen doi",
+    "^vang$",
+    "^quyen su dung dat$",
+    "^quyen so huu tri tue$",
+    "^cac tai san khac \\(",
+    "^tong so$"
+   ],
+   "legal_status": {
+    "blocked": false,
+    "ref": "O1 + O2 (docs/owner_decision_packet_v7.md): materialize tu Mau 12 hien hanh theo TT 121/2026, phan 'DANG KY THAY DOI VON DAU TU CUA CHU DOANH NGHIEP TU NHAN' p197-p223 'Tài sản góp vốn sau khi thay đổi vốn đầu tư:' — 6 dong + Tong so. Ngu canh von dau tu RIENG (DNTN), KHONG dung chung data voi ngu canh von dieu le (census notes + PLAN A).",
+    "question": "(a) Cot STT in san - gap nhu tren. (b) Cross-field 'Tong so == Von dau tu sau khi thay doi' blocking: key von_dau_tu_so bi gan CHUNG cho 'da dang ky' (p191/B111) va 'sau khi thay doi' (p192/B112) -> sumEqualsKey se doi chieu sai nen KHONG khai (gap voi owner/Lead); mismatch computed-vs-stored van chan export qua recompute_totals strict."
+   }
+  },
+  {
+   "kind": "fixed-matrix",
+   "spec": {
+    "id": "co_cau_loai_co_phan_sau_thay_doi",
+    "kind": "fixed-matrix",
+    "section_id": "co_cau_loai_co_phan_sau_thay_doi",
+    "semantic_key": "co_cau_loai_co_phan_sau_thay_doi",
+    "columns": [
+     {
+      "header": "Loại cổ phần",
+      "tag": null,
+      "input_type": "readonly"
+     },
+     {
+      "header": "Số lượng",
+      "tag": "so_luong",
+      "input_type": "money"
+     },
+     {
+      "header": "Giá trị (bằng số, VNĐ)",
+      "tag": "gia_tri_vnd",
+      "input_type": "money"
+     },
+     {
+      "header": "Tỉ lệ so với vốn điều lệ (%)",
+      "tag": "ty_le_so_von_dieule",
+      "input_type": "percent"
+     }
+    ],
+    "fixed_rows": [
+     {
+      "id": "co_phan_pho_thong",
+      "label": "Cổ phần phổ thông"
+     },
+     {
+      "id": "cp_uu_dai_bieu_quyet",
+      "label": "Cổ phần ưu đã biểu quyết"
+     },
+     {
+      "id": "cp_uu_dai_co_tuc",
+      "label": "Cổ phần ưu đãi cổ tức"
+     },
+     {
+      "id": "cp_uu_dai_hoan_lai",
+      "label": "Cổ phần ưu đãi hoàn lại"
+     },
+     {
+      "id": "cp_uu_dai_khac",
+      "label": "Các cổ phần ưu đãi khác"
+     },
+     {
+      "id": "tong_so",
+      "label": "Tổng số",
+      "output_only": true
+     }
+    ],
+    "totals": [
+     {
+      "formula": "sum(so_luong)",
+      "target_row": "tong_so",
+      "target_tag": "so_luong"
+     },
+     {
+      "formula": "sum(gia_tri_vnd)",
+      "target_row": "tong_so",
+      "target_tag": "gia_tri_vnd"
+     },
+     {
+      "formula": "sum(ty_le_so_von_dieule)",
+      "target_row": "tong_so",
+      "target_tag": "ty_le_so_von_dieule"
+     }
+    ]
+   },
+   "pos": "after",
+   "anchor": "^thong tin ve co phan \\(chi ke khai doi voi cong ty co phan\\)",
+   "no_default_drops": true,
+   "drop_until": "^2\\. dang ky thay doi phan von gop",
+   "drop": [
+    "^stt$",
+    "^loai co phan$",
+    "^so luong$",
+    "^gia tri \\(bang so, vnd\\)$",
+    "^ti le so voi von dieu le \\(%\\)$",
+    "^\\d$",
+    "^co phan pho thong$",
+    "^co phan uu da bieu quyet$",
+    "^co phan uu dai co tuc$",
+    "^co phan uu dai hoan lai$",
+    "^cac co phan uu dai khac$",
+    "^tong so$"
+   ],
+   "legal_status": {
+    "blocked": false,
+    "ref": "O1 + O2 (docs/owner_decision_packet_v7.md): materialize tu Mau 12 hien hanh theo TT 121/2026 p113-p147 'Thông tin về cổ phần (chỉ kê khai đối với công ty cổ phần):' — 'Mệnh giá cổ phần: …' truong le rieng (GIU, khong drop, duoc credit scalar vung anchor nhu M04) + bang 5 cot x 6 dong. Shape giong het PLI_M04 co_cau_loai_co_phan (D1.4=A).",
+    "question": "(a) Chinh ta BAN IN hien hanh: dong 2 in 'Cổ phần ưu đã biểu quyết' (thieu chu 'i' so voi M04 'ưu đãi biểu quyết') — O2 chot GIU NGUYEN verbatim theo ban in hien hanh, khong 'sua' luat; row id giu canonical cp_uu_dai_bieu_quyet. (b) menh_gia_co_phan la truong le (khong phai cot) -> product(so_luong, menh_gia_co_phan) khong khai duoc - gap nhu M04 question (a). (c) sumEqualsKey gia_tri_vnd == von_dieu_le KHONG khai: form_maps PLI_M12 khong co key von_dieu_le bang so doc lap (chi von_dieu_le_chu gan chung 2 dong) - gap; PERCENT_SUM warning khai o runtime contract. (d) Cot STT in san - gap nhu tren."
+   }
+  }
+ ]
 }

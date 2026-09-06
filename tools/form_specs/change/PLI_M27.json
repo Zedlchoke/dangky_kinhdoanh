@@ -1,0 +1,185 @@
+{
+ "form_id": "PLI_M27",
+ "group": "change",
+ "note": "Mau 27 2026 (TT 121/2026): Thong bao tam ngung/tiep tuc kinh doanh truoc thoi han da thong bao. O1 (docs/owner_decision_packet_v7.md 'Adjudicate 22 section'): HAI section USER-INPUT - (1) danh_sach_ndd_pl_thong_bao grid Nhieu dong Nguoi dai dien theo phap luat (chan trang 2: 'Trường hợp có nhiều hơn một người đại diện theo pháp luật, doanh nghiệp có thể chọn kê khai thông tin của 01 hoặc nhiều người đại diện theo pháp luật'); (2) don_vi_tam_ngung_tiep_tuc grid don vi truc thuoc theo cac khoi b) chi nhanh/dia diem kinh doanh + c) van phong dai dien. Nguon: 04_tam_ngung_cham_dut_giai_the/PL1_Mau_27_*.docx (p18-p21 Nguoi dai dien: Ho ten/So dien thoai/Dia chi thu dien tu - 3 truong duy nhat cua mau 2026; p23-p51 cac khoi don vi).",
+ "gap_nghiepvu": "(a) Section don_vi_tam_ngung_tiep_tuc cua census la MOT section nhung nguon in o HAI vung roi roi (muc 1 tam ngung p23-p34 va muc 2 tiep tuc p40-p51) -> mot bang vat ly khong the nam o hai cho; materialize thanh HAI occurrence cung mot entry spec (cung bo cot): loop don_vi_truc_thuoc_tam_ngung_tiep_tuc (= census semantic_key, vung muc 1, ke khai don vi TAM NGUNG) va loop don_vi_tiep_tuc_truoc_han (vung muc 2, don vi TIEP TUC truoc han - dong 'den ngay' de trong hop phap vi nguon chi in 'kể từ ngày'). Loai don vi (chi nhanh/dia diem kinh doanh/van phong dai dien) la COT loai_don_vi nen khoi b) va c) goi chung mot bang; heading 'c) Đối với văn phòng đại diện:' + cau dan ngay thang cua tung khoi bi thu hoi (dates chuyen thanh cot tu_ngay/den_ngay theo dong, dung ngu nghia thong bao). (b) 'Chi nhánh chủ quản' (chi khoai dia diem truc thuoc chi nhanh) giu 2 cot rieng - dong VPDD de trong. (c) required_columns census cua NDD (7 cot 2025: ngay_thang_nam_sinh/gioi_tinh/so_dinh_danh_ca_nhan/...) la STALE so voi mau 2026 (chi con 3 truong) - da reconcile tai tools/census/build_manifest.py (SECTION_EVIDENCE_OVERRIDES) theo O1. (d) min_rows: NDD required 1 dong (footnote 2 - luon co it nhat 1 Nguoi dai dien); grid don vi khong bat buoc (minRows 0) - chi ke khai khi thong bao ap dung cho CN/DDKD/VPDD; O3 khong co selector cho mau nay nen section luon active.",
+ "tables": [
+  {
+   "spec": {
+    "id": "danh_sach_ndd_pl_thong_bao",
+    "detect": [
+     "stt",
+     "ho, chu dem va ten (ghi bang chu in hoa)",
+     "so dien thoai",
+     "dia chi thu dien tu"
+    ],
+    "stt_tag": true,
+    "cols": [
+     [
+      "^stt$",
+      null
+     ],
+     [
+      "^ho, chu dem va ten",
+      "ho_ten"
+     ],
+     [
+      "^so dien thoai",
+      "dien_thoai"
+     ],
+     [
+      "^dia chi thu dien tu",
+      "email"
+     ]
+    ],
+    "loop": "ds_ndd_pl_thong_bao_tam_ngung",
+    "fields": [
+     "ho_ten",
+     "dien_thoai",
+     "email"
+    ]
+   },
+   "pos": "after",
+   "anchor": "^thong tin nguoi dai dien theo phap luat cua doanh nghiep",
+   "no_default_drops": true,
+   "drop_until": "^b\\) doi voi chi nhanh/dia diem kinh doanh",
+   "drop": [
+    "^ho, chu dem va ten",
+    "^so dien thoai",
+    "^dia chi thu dien tu"
+   ],
+   "headers": [
+    "STT",
+    "Họ, chữ đệm và tên (ghi bằng chữ in hoa)",
+    "Số điện thoại",
+    "Địa chỉ thư điện tử"
+   ],
+   "notes": "O1 (2026-09-06) IMPLEMENTED AS USER INPUT. Nguon p18-p21: 'Thông tin người đại diện theo pháp luật của doanh nghiệp2:' + 3 truong 'Họ, chữ đệm và tên: …' / 'Số điện thoại3: …' / 'Địa chỉ thư điện tử4: …' (chan trang: '3,4 Doanh nghiệp kê khai số điện thoại, thư điện tử để nhận thông báo từ cơ quan đăng ký kinh doanh'; '2 Trường hợp có nhiều hơn một người đại diện theo pháp luật, doanh nghiệp có thể chọn kê khai thông tin của 01 hoặc nhiều người đại diện...'). Grid NHIEU DONG thay bo field don (ho_ten_in_hoa_2/dien_thoai_khac/dia_chi_thu_dien_tu trong blocks cu) - bo field cu bi drop trong vung [anchor, khoi b)) vi grid thay tron bo chuc nang (draft cu khong migrate: scalar -> loop la kho khac chieu, duoc chap nhan theo O1 'draft migration không cần'). Occurrence dinh vi [p18, '^b) doi voi chi nhanh'). min_rows/max_rows ghi tai FORM_GRID_META.PLI_M27 (spec kind=list khong co truong min/max trong contract v1 - cung cach PLI_M13/M15): required 1 dong (O3: section luon active, Nguoi dai dien luon ton tai de ky Thong bao).",
+   "occurrences": [
+    {
+     "occurrence_id": "ds_ndd_pl_thong_bao_tam_ngung",
+     "match_heading": "Thông tin người đại diện theo pháp luật của doanh nghiệp",
+     "nth": 1,
+     "sync_group": null,
+     "end_markers": [
+      "^b\\) doi voi chi nhanh/dia diem kinh doanh"
+     ]
+    }
+   ]
+  },
+  {
+   "spec": {
+    "id": "don_vi_tam_ngung_tiep_tuc",
+    "detect": [
+     "stt",
+     "loai don vi (chi nhanh/dia diem kinh doanh/van phong dai dien)",
+     "ten don vi (ghi bang chu in hoa)",
+     "ma so don vi/ma so thue cua don vi",
+     "tam ngung/tiep tuc ke tu ngay",
+     "den het ngay (ke khai khi tam ngung)",
+     "ly do",
+     "ten chi nhanh chu quan (ke khai khi la dia diem kinh doanh truc thuoc chi nhanh)",
+     "ma so chi nhanh chu quan/ma so thue"
+    ],
+    "stt_tag": true,
+    "cols": [
+     [
+      "^stt$",
+      null
+     ],
+     [
+      "^loai don vi",
+      "loai_don_vi"
+     ],
+     [
+      "^ten don vi",
+      "ten_don_vi"
+     ],
+     [
+      "^ma so don vi",
+      "ma_so_don_vi"
+     ],
+     [
+      "ke tu ngay",
+      "tu_ngay"
+     ],
+     [
+      "^den het ngay",
+      "den_ngay"
+     ],
+     [
+      "^ly do",
+      "ly_do"
+     ],
+     [
+      "^ten chi nhanh chu quan",
+      "ten_chi_nhanh_chu_quan"
+     ],
+     [
+      "^ma so chi nhanh chu quan",
+      "ma_so_chi_nhanh_chu_quan"
+     ]
+    ],
+    "loop": "don_vi_truc_thuoc_tam_ngung_tiep_tuc",
+    "fields": [
+     "loai_don_vi",
+     "ten_don_vi",
+     "ma_so_don_vi",
+     "tu_ngay",
+     "den_ngay",
+     "ly_do",
+     "ten_chi_nhanh_chu_quan",
+     "ma_so_chi_nhanh_chu_quan"
+    ]
+   },
+   "pos": "after",
+   "anchor": "^thong bao tam ngung kinh doanh ke tu ngay",
+   "no_default_drops": true,
+   "headers": [
+    "STT",
+    "Loại đơn vị (chi nhánh/địa điểm kinh doanh/văn phòng đại diện)",
+    "Tên đơn vị (ghi bằng chữ in hoa)",
+    "Mã số đơn vị/Mã số thuế của đơn vị",
+    "Tạm ngừng/tiếp tục kể từ ngày",
+    "Đến hết ngày (kê khai khi tạm ngừng)",
+    "Lý do",
+    "Tên chi nhánh chủ quản (kê khai khi là địa điểm kinh doanh trực thuộc chi nhánh)",
+    "Mã số chi nhánh chủ quản/Mã số thuế"
+   ],
+   "notes": "O1 (2026-09-06) IMPLEMENTED AS USER INPUT - census lead_reclassification: 'ban chat danh sach don vi -> editable-grid, cho phep nhieu dong'. MOT entry spec, HAI occurrence (nguon in o 2 vung roi roi): (1) occurrence_id=don_vi_truc_thuoc_tam_ngung_tiep_tuc (dung census semantic_key) tai cau dan 'Thông báo tạm ngừng kinh doanh kể từ ngày...' thu 2 (p23 - cau thu nhat cung prefix la dan muc 1.a doanh nghiep p15) -> don vi TAM NGUNG theo khoi b) chi nhanh/dia diem kinh doanh (p24-p29) + c) van phong dai dien (p30-p34); (2) occurrence_id=don_vi_tiep_tuc_truoc_han tai 'Thông báo tiếp tục kinh doanh kể từ ngày...' thu 2 (p40; p37 la dan muc 2.a doanh nghiep nen khong ranh ngoi region) -> don vi TIEP TUC theo khoi b) (p41-p46) + c) (p47-p51). Cot loai_don_vi phan biet chi nhanh/dia diem kinh doanh/van phong dai dien thay heading b)/c); 2 cot chi_nhanh_chu_quan phuc vu dia diem truc thuoc chi nhanh ('Chi nhánh chủ quản (chỉ kê khai đối với trường hợp...)' p26/p43). Cac khoi field don cu (cn.ten_tieng_viet/cn.ma_so/ly_do_*) bi drop TRONG VUNG OCCURRENCE (scoped, an toan theo PLI_M09); cac field muc 1.a doanh nghiep (tu_ngay/den_ngay/ly_do_tam_ngung p15-p16) va muc 2.a doanh nghiep (p37-p38, tu_ngay/ly_do_tiep_tuc) NAM NGOAI region -> GIU NGUYEN. Heading 'c) Đối với văn phòng đại diện:' + cau dan ngay thang tung khoi bi thu hoi trong region (ngay chuyen thanh cot theo dong). min_rows 0 (khong bat buoc - chi dung khi thong bao ap dung cho don vi truc thuoc) ghi tai FORM_GRID_META.PLI_M27.",
+   "occurrences": [
+    {
+     "occurrence_id": "don_vi_truc_thuoc_tam_ngung_tiep_tuc",
+     "match_heading": "Thông báo tạm ngừng kinh doanh kể từ ngày",
+     "nth": 2,
+     "sync_group": null,
+     "end_markers": [
+      "^2\\. truong hop tiep tuc kinh doanh"
+     ]
+    },
+    {
+     "occurrence_id": "don_vi_tiep_tuc_truoc_han",
+     "match_heading": "Thông báo tiếp tục kinh doanh kể từ ngày",
+     "nth": 2,
+     "sync_group": null,
+     "end_markers": [
+      "^doanh nghiep cam ket hoan toan chiu trach nhiem"
+     ]
+    }
+   ],
+   "drop": [
+    "^ten chi nhanh",
+    "^ma so chi nhanh",
+    "^chi nhanh chu quan",
+    "^ten van phong dai dien",
+    "^ma so van phong dai dien",
+    "^ly do tam ngung",
+    "^ly do tiep tuc",
+    "^ly do tiep tuc hoat dong",
+    "^c\\) doi voi van phong dai dien",
+    "^thong bao tam ngung hoat dong ke tu ngay",
+    "^thong bao tiep tuc hoat dong ke tu ngay"
+   ]
+  }
+ ]
+}

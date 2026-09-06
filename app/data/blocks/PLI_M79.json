@@ -726,56 +726,72 @@
    "role": "body"
   },
   {
-   "t": "p",
-   "align": "left",
-   "runs": [
+   "t": "loop",
+   "loop": "ds_tai_lieu_kem_theo_m79",
+   "headerRows": [
+    0
+   ],
+   "cols": [
     {
-     "text": "1. ………………………………………………………………………………………………………"
+     "col": 1,
+     "tag": "mo_ta_tai_lieu"
+    },
+    {
+     "col": 2,
+     "tag": "so_ban"
+    },
+    {
+     "col": 3,
+     "tag": "so_trang"
     }
    ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "section-heading"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
+   "blankRows": 4,
+   "rows": [
     {
-     "text": "2. ………………………………………………………………………………………………………"
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "STT",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Tên tài liệu kèm theo (ghi rõ tên tài liệu)",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Số bản (nếu có)",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Số trang (nếu có)",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
     }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "section-heading"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "3. ………………………………………………………………………………………………………"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "section-heading"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "…"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
+   ]
   },
   {
    "t": "p",

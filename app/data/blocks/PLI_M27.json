@@ -345,75 +345,72 @@
    "role": "body"
   },
   {
-   "t": "p",
-   "align": "left",
-   "runs": [
+   "t": "loop",
+   "loop": "ds_ndd_pl_thong_bao_tam_ngung",
+   "headerRows": [
+    0
+   ],
+   "cols": [
     {
-     "text": "Họ, chữ đệm và tên: "
+     "col": 1,
+     "tag": "ho_ten"
     },
     {
-     "input": {
-      "key": "ho_ten_in_hoa_2",
-      "w": 18
-     }
+     "col": 2,
+     "tag": "dien_thoai"
+    },
+    {
+     "col": 3,
+     "tag": "email"
     }
    ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
+   "blankRows": 4,
+   "rows": [
     {
-     "text": "Số điện thoại"
-    },
-    {
-     "text": "3",
-     "vertAlign": "superscript"
-    },
-    {
-     "text": ": "
-    },
-    {
-     "input": {
-      "key": "dien_thoai_khac",
-      "w": 16
-     }
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "STT",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Họ, chữ đệm và tên (ghi bằng chữ in hoa)",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Số điện thoại",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Địa chỉ thư điện tử",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
     }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Địa chỉ thư điện tử"
-    },
-    {
-     "text": "4",
-     "vertAlign": "superscript"
-    },
-    {
-     "text": ": "
-    },
-    {
-     "input": {
-      "key": "dia_chi_thu_dien_tu",
-      "w": 19
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
+   ]
   },
   {
    "t": "p",
@@ -450,220 +447,142 @@
    "role": "body"
   },
   {
-   "t": "p",
-   "align": "left",
-   "runs": [
+   "t": "loop",
+   "loop": "don_vi_truc_thuoc_tam_ngung_tiep_tuc",
+   "headerRows": [
+    0
+   ],
+   "cols": [
     {
-     "text": "Tên chi nhánh/địa điểm kinh doanh ("
+     "col": 1,
+     "tag": "loai_don_vi"
     },
     {
-     "text": "ghi bằng chữ in hoa",
-     "i": true
+     "col": 2,
+     "tag": "ten_don_vi"
     },
     {
-     "text": ") "
+     "col": 3,
+     "tag": "ma_so_don_vi"
     },
     {
-     "input": {
-      "key": "cn.ten_tieng_viet",
-      "w": 36
-     }
+     "col": 4,
+     "tag": "tu_ngay"
+    },
+    {
+     "col": 5,
+     "tag": "den_ngay"
+    },
+    {
+     "col": 6,
+     "tag": "ly_do"
+    },
+    {
+     "col": 7,
+     "tag": "ten_chi_nhanh_chu_quan"
+    },
+    {
+     "col": 8,
+     "tag": "ma_so_chi_nhanh_chu_quan"
     }
    ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
+   "blankRows": 4,
+   "rows": [
     {
-     "text": "Mã số chi nhánh/địa điểm kinh doanh hoặc mã số thuế chi nhánh: "
-    },
-    {
-     "input": {
-      "key": "cn.ma_so",
-      "w": 39
-     }
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "STT",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Loại đơn vị (chi nhánh/địa điểm kinh doanh/văn phòng đại diện)",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Tên đơn vị (ghi bằng chữ in hoa)",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Mã số đơn vị/Mã số thuế của đơn vị",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Tạm ngừng/tiếp tục kể từ ngày",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Đến hết ngày (kê khai khi tạm ngừng)",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Lý do",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Tên chi nhánh chủ quản (kê khai khi là địa điểm kinh doanh trực thuộc chi nhánh)",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Mã số chi nhánh chủ quản/Mã số thuế",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
     }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Chi nhánh chủ quản ("
-    },
-    {
-     "text": "chỉ kê khai đối với trường hợp thông báo tạm ngừng kinh doanh địa điểm kinh doanh trực thuộc chi nhánh",
-     "i": true
-    },
-    {
-     "text": "):"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Tên chi nhánh: "
-    },
-    {
-     "input": {
-      "key": "cn.ten_tieng_viet",
-      "w": 15
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Mã số chi nhánh/Mã số thuế của chi nhánh: "
-    },
-    {
-     "input": {
-      "key": "cn.ma_so",
-      "w": 29
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Lý do tạm ngừng: "
-    },
-    {
-     "input": {
-      "key": "ly_do_tam_ngung",
-      "w": 16
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "c)"
-    },
-    {
-     "text": " Đối với văn phòng đại diện:",
-     "i": true
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "section-heading"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Thông báo tạm ngừng hoạt động kể từ ngày … tháng … năm … đến hết ngày … tháng … năm … đối với văn phòng đại diện sau:"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "date-line"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Tên văn phòng đại diện ("
-    },
-    {
-     "text": "ghi bằng chữ in hoa",
-     "i": true
-    },
-    {
-     "text": ") "
-    },
-    {
-     "input": {
-      "key": "cn.ten_tieng_viet",
-      "w": 30
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Mã số văn phòng đại diện/Mã số thuế của văn phòng đại diện: "
-    },
-    {
-     "input": {
-      "key": "cn.ma_so",
-      "w": 38
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Lý do tạm ngừng: "
-    },
-    {
-     "input": {
-      "key": "ly_do_tam_ngung",
-      "w": 16
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
+   ]
   },
   {
    "t": "p",
@@ -789,220 +708,142 @@
    "role": "body"
   },
   {
-   "t": "p",
-   "align": "left",
-   "runs": [
+   "t": "loop",
+   "loop": "don_vi_tiep_tuc_truoc_han",
+   "headerRows": [
+    0
+   ],
+   "cols": [
     {
-     "text": "Tên chi nhánh/địa điểm kinh doanh ("
+     "col": 1,
+     "tag": "loai_don_vi"
     },
     {
-     "text": "ghi bằng chữ in hoa",
-     "i": true
+     "col": 2,
+     "tag": "ten_don_vi"
     },
     {
-     "text": "): "
+     "col": 3,
+     "tag": "ma_so_don_vi"
     },
     {
-     "input": {
-      "key": "cn.ten_tieng_viet",
-      "w": 36
-     }
+     "col": 4,
+     "tag": "tu_ngay"
+    },
+    {
+     "col": 5,
+     "tag": "den_ngay"
+    },
+    {
+     "col": 6,
+     "tag": "ly_do"
+    },
+    {
+     "col": 7,
+     "tag": "ten_chi_nhanh_chu_quan"
+    },
+    {
+     "col": 8,
+     "tag": "ma_so_chi_nhanh_chu_quan"
     }
    ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
+   "blankRows": 4,
+   "rows": [
     {
-     "text": "Mã số chi nhánh/địa điểm kinh doanh/Mã số thuế của chi nhánh: "
-    },
-    {
-     "input": {
-      "key": "cn.ma_so",
-      "w": 39
-     }
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "STT",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Loại đơn vị (chi nhánh/địa điểm kinh doanh/văn phòng đại diện)",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Tên đơn vị (ghi bằng chữ in hoa)",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Mã số đơn vị/Mã số thuế của đơn vị",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Tạm ngừng/tiếp tục kể từ ngày",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Đến hết ngày (kê khai khi tạm ngừng)",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Lý do",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Tên chi nhánh chủ quản (kê khai khi là địa điểm kinh doanh trực thuộc chi nhánh)",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Mã số chi nhánh chủ quản/Mã số thuế",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
     }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Chi nhánh chủ quản ("
-    },
-    {
-     "text": "chỉ kê khai đối với trường hợp thông báo tiếp tục kinh doanh trước thời hạn đã thông báo của địa điểm kinh doanh trực thuộc chi nhánh",
-     "i": true
-    },
-    {
-     "text": "):"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Tên chi nhánh: "
-    },
-    {
-     "input": {
-      "key": "cn.ten_tieng_viet",
-      "w": 15
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Mã số chi nhánh/Mã số thuế của chi nhánh: "
-    },
-    {
-     "input": {
-      "key": "cn.ma_so",
-      "w": 29
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Lý do tiếp tục kinh doanh: "
-    },
-    {
-     "input": {
-      "key": "ly_do_tiep_tuc",
-      "w": 21
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "c)"
-    },
-    {
-     "text": " Đối với văn phòng đại diện:",
-     "i": true
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "section-heading"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Thông báo tiếp tục hoạt động kể từ ngày … tháng … năm … đối với văn phòng đại diện sau:"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "date-line"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Tên văn phòng đại diện ("
-    },
-    {
-     "text": "ghi bằng chữ in hoa",
-     "i": true
-    },
-    {
-     "text": ") "
-    },
-    {
-     "input": {
-      "key": "cn.ten_tieng_viet",
-      "w": 30
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Mã số văn phòng đại diện/Mã số thuế của văn phòng đại diện: "
-    },
-    {
-     "input": {
-      "key": "cn.ma_so",
-      "w": 38
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Lý do tiếp tục hoạt động: "
-    },
-    {
-     "input": {
-      "key": "ly_do_tiep_tuc",
-      "w": 21
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
+   ]
   },
   {
    "t": "p",

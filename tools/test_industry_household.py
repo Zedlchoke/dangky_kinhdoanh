@@ -499,8 +499,10 @@ def t_m02_spec_occurrence_identity():
     fixed_matrix = [e for e in entries
                     if (e["spec"].get("kind")) == "fixed-matrix"]
     member_entries = [e for e in entries if e["spec"]["id"] in MEMBER_REGION_IDS]
+    # [Pin sync — F1-IN 2026-09-06] +c5_thue_chi_tieu_cap_doi (O1: 10
+    # section USER-INPUT; D5.2=A Mục C cấp đổi)
     assert [e["spec"]["id"] for e in fixed_matrix] == \
-        ["a7_thue_chi_tieu_cu_moi"], \
+        ["a7_thue_chi_tieu_cu_moi", "c5_thue_chi_tieu_cap_doi"], \
         "PLII_M02: entry fixed-matrix ngoài dự kiến %r" % \
         [e["spec"]["id"] for e in fixed_matrix]
     assert [e["spec"]["id"] for e in member_entries] == \
@@ -664,6 +666,11 @@ def t_m02_render_isolation():
         # cap-von (fc07c69): bảng thuế a7 (Chỉ tiêu | cũ | mới) — không phải
         # bảng ngành
         if first_cell.startswith("chi tieu"):
+            continue
+        # [Pin sync — F1-IN 2026-09-06]: bảng thuế C5 cấp đổi (STT / Các chỉ
+        # tiêu... | Địa chỉ nhận thông báo thuế | Tổng số lao động) — không
+        # phải bảng ngành
+        if first_cell.startswith("stt / cac chi tieu"):
             continue
         hdr = fold(" ".join(tr_cell_texts(tbl, 0)))
         by_header[hdr] = tbl

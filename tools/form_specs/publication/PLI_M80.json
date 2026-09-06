@@ -1,0 +1,60 @@
+{
+ "form_id": "PLI_M80",
+ "group": "publication",
+ "note": "Giay de nghi thu hoi giay to do ke khai ho so gia mao (Mau 80). O1 + D6.5=A + D6.6: section tai_lieu_kem_theo_thu_hoi la editable-grid 3+ dong giong het M79 (metadata only, khong upload binary). Nguon: 05_cong_bo_cung_cap_thong_tin/PL1_Mau_80_*.docx p31-p35 'Kèm theo Giấy đề nghị này có:' + 3 dong danh so + dong '…'.",
+ "gap_nghiepvu": "(a) 2 cot so_ban/so_trang them theo D6.6=A (optional) - khong co trong nguon in, cung mo rong co so du lieu voi M79. (b) Vung [anchor, cam ket) chi chua cac dong danh so nen drop an toan.",
+ "tables": [
+  {
+   "spec": {
+    "id": "tai_lieu_kem_theo_thu_hoi",
+    "detect": [
+     "stt",
+     "ten tai lieu kem theo (ghi ro ten tai lieu)",
+     "so ban (neu co)",
+     "so trang (neu co)"
+    ],
+    "stt_tag": true,
+    "cols": [
+     [
+      "^stt$",
+      null
+     ],
+     [
+      "mo ta|ten tai lieu|ghi ro",
+      "mo_ta_tai_lieu"
+     ],
+     [
+      "so ban",
+      "so_ban"
+     ],
+     [
+      "so trang",
+      "so_trang"
+     ]
+    ],
+    "loop": "ds_tai_lieu_kem_theo_m80",
+    "fields": [
+     "mo_ta_tai_lieu",
+     "so_ban",
+     "so_trang"
+    ]
+   },
+   "pos": "after",
+   "anchor": "^kem theo giay de nghi nay co",
+   "no_default_drops": true,
+   "drop_until": "^toi/\\(ten to chuc\\) cam ket",
+   "drop": [
+    "^\\d+\\.",
+    "^…",
+    "^\\.{3,}$"
+   ],
+   "headers": [
+    "STT",
+    "Tên tài liệu kèm theo (ghi rõ tên tài liệu)",
+    "Số bản (nếu có)",
+    "Số trang (nếu có)"
+   ],
+   "notes": "O1 IMPLEMENTED AS USER INPUT + D6.5=A + D6.6=A. Census: app/data/table_specs/manifest.json PLI_M80/tai_lieu_kem_theo_thu_hoi (editable-grid, missing_grid, semantic_key=ds_tai_lieu_kem_theo_m80, required stt|mo_ta_tai_lieu, 'Giống M79; blocks không có key nào cho danh sách.'). min_rows 3 / max_rows null + required cot mo_ta_tai_lieu khai tai FORM_GRID_META.PLI_M80."
+  }
+ ]
+}

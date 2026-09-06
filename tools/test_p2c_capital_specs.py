@@ -814,7 +814,13 @@ def t_blocked_other_forms():
         "PLI_M04": {"nguon_von_dieule", "co_cau_loai_co_phan",
                     "co_phan_duoc_quyen_chao_ban"},
         "PLI_M05": {"nguon_von_dieule"},
-        "PLI_M12": {"nguon_von_dieule_sau_thay_doi"},
+        # [Pin sync — F1-IN 2026-09-06] +3 fixed-matrix O1/O2 (2 tài sản góp
+        # vốn sau thay đổi + cơ cấu cổ phần, TT 121/2026; M12 thuộc nhóm 10
+        # section USER-INPUT của owner packet v7)
+        "PLI_M12": {"nguon_von_dieule_sau_thay_doi",
+                    "tai_san_gop_von_sau_thay_doi_vdl",
+                    "tai_san_gop_von_sau_thay_doi_von_dau_tu",
+                    "co_cau_loai_co_phan_sau_thay_doi"},
     }
     for fid, want in EXPECTED.items():
         group = "change" if fid == "PLI_M12" else "formation"
@@ -827,9 +833,14 @@ def t_blocked_other_forms():
             "%s: tập fixed-matrix %r != %r (đổi phạm vi phải qua owner)" % (
                 fid, sorted(got), sorted(want))
         # D1.2 vẫn giữ: không tự chế ô mô tả/sub-grid cho 'Vốn khác'
+        # [Pin sync — F1-IN 2026-09-06] tai_san_* là matrix TÀI SẢN góp vốn:
+        # cột chi_tiet_ngoai_te_tai_san_khac là CHÍNH CHỮ mẫu ('Các tài sản
+        # khác (ghi rõ loại tài sản…)', như M01/M02 đã khai) -> miễn kiểm.
         for e in raw["tables"]:
             spec = e["spec"]
             if (spec.get("kind") or "list") != "fixed-matrix":
+                continue
+            if str(spec.get("id", "")).startswith("tai_san"):
                 continue
             assert not any("chi_tiet" in (c.get("tag") or "")
                            for c in spec["columns"]), \

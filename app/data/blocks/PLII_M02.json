@@ -2627,207 +2627,118 @@
    "role": "section-heading"
   },
   {
-   "t": "p",
-   "align": "center",
-   "runs": [
+   "t": "table",
+   "widths": null,
+   "rows": [
     {
-     "text": "Các chỉ tiêu thông tin đăng ký thuế"
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "STT / Các chỉ tiêu thông tin đăng ký thuế",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Địa chỉ nhận thông báo thuế (số nhà/phòng, ngách/hẻm, ngõ/kiệt, đường/phố/đại lộ, tổ/xóm/ấp/thôn; xã/phường/đặc khu; tỉnh/thành phố trực thuộc trung ương; điện thoại; thư điện tử — chỉ kê khai nếu khác địa chỉ trụ sở)",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Tổng số lao động",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
+    },
+    {
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "5.1 Địa chỉ nhận thông báo thuế (chỉ kê khai nếu địa chỉ nhận thông báo thuế khác địa chỉ trụ sở):"
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "input": {
+          "key": "thue_chi_tieu_cap_doi.chi_tieu_5_1_dia_chi_nhan_thong_bao_thue.dia_chi_nhan_thong_bao_thue",
+          "w": 12
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "input": {
+          "key": "thue_chi_tieu_cap_doi.chi_tieu_5_1_dia_chi_nhan_thong_bao_thue.so_lao_dong",
+          "w": 12
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
+    },
+    {
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "5.2 Tổng số lao động"
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "input": {
+          "key": "thue_chi_tieu_cap_doi.chi_tieu_5_2_tong_so_lao_dong.dia_chi_nhan_thong_bao_thue",
+          "w": 12
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "input": {
+          "key": "thue_chi_tieu_cap_doi.chi_tieu_5_2_tong_so_lao_dong.so_lao_dong",
+          "w": 12
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
     }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "5.1"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Địa chỉ nhận thông báo thuế "
-    },
-    {
-     "text": "(chỉ kê khai nếu địa chỉ nhận thông báo thuế khác địa chỉ trụ sở)",
-     "i": true
-    },
-    {
-     "text": ":"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Số nhà/phòng, ngách/hẻm, ngõ/kiệt, đường/phố/đại lộ, tổ/xóm/ấp/thôn: "
-    },
-    {
-     "input": {
-      "key": "dia_chi_chi_tiet",
-      "w": 42
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Xã/Phường/Đặc khu: "
-    },
-    {
-     "input": {
-      "key": "xa_phuong",
-      "w": 17
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Tỉnh/Thành phố trực thuộc trung ương: "
-    },
-    {
-     "input": {
-      "key": "tinh_thanh",
-      "w": 27
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Điện thoại"
-    },
-    {
-     "text": " (nếu có)",
-     "i": true
-    },
-    {
-     "text": ": "
-    },
-    {
-     "input": {
-      "key": "dien_thoai_lien_he",
-      "w": 18
-     }
-    },
-    {
-     "text": " Fax "
-    },
-    {
-     "text": "(nếu có)",
-     "i": true
-    },
-    {
-     "text": ": "
-    },
-    {
-     "input": {
-      "key": "fax",
-      "w": 15
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Thư điện tử "
-    },
-    {
-     "text": "(nếu có)",
-     "i": true
-    },
-    {
-     "text": ": "
-    },
-    {
-     "input": {
-      "key": "email_tru_so",
-      "w": 19
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "5.2"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Tổng số lao động: "
-    },
-    {
-     "input": {
-      "key": "so_lao_dong",
-      "w": 17
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
+   ]
   },
   {
    "t": "p",

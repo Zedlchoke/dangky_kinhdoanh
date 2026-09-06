@@ -12,6 +12,9 @@
      + ds_nganh_tnhh_2tv + ndd.* (không trộn nhánh DNTN).
 [RT3] Idempotent export: ghi ×2 cùng questionnaire/meta -> byte-identical.
 [RT4] Ô điền number_format '@' — số 0 đầu CCCD không bị Excel ăn mất.
+[RT5] [O4] Mã định danh dài "012345678901234567890123456789" (30 chữ số, số 0
+     đầu) round-trip giữ 100% chuỗi; ô trong file là string, không scientific,
+     không truncate — giữ nguyên văn cả tel "0084…".
 
 Chạy:  python3 -X utf8 -m tools.test_excel_roundtrip   (exit 0 = PASS)
 """
@@ -57,7 +60,8 @@ def check(name: str):
 
 def fill_and_import(answers: dict[str, str], variant_value: str,
                     table_rows: dict[str, list[dict]] | None = None,
-                    meta: dict | None = None) -> dict:
+                    meta: dict | None = None,
+                    return_path: bool = False):
     """Export -> điền answers theo map (chỉ nhánh khớp variant) -> import."""
     tmp = Path(tempfile.mkdtemp(prefix="p3rt_"))
     out = write_questionnaire(QUESTIONNAIRE, tmp / "phieu.xlsx", meta=meta)
@@ -82,7 +86,10 @@ def fill_and_import(answers: dict[str, str], variant_value: str,
                 table_cursor[qid] = idx + 1
     filled = tmp / "phieu_filled.xlsx"
     wb.save(filled)
-    return import_questionnaire(filled, QUESTIONNAIRE)
+    res = import_questionnaire(filled, QUESTIONNAIRE)
+    if return_path:
+        return res, mp, wb["Phieu"], filled
+    return res
 
 
 @check("[RT1] DNTN: giữ 100% giá trị — text/money/date 3 key/select/bảng ngành")
@@ -184,8 +191,49 @@ def rt4():
     assert checked >= 1, "không tìm thấy ô q_dia_chi_tru_so không có when"
 
 
+LONG_ID = "012345678901234567890123456789"   # 30 chữ số, số 0 đầu — [O4]
+
+
+@check("[RT5] O4 mã định danh dài: 30 chữ số + số 0 đầu round-trip giữ "
+       "100% chuỗi (không scientific, không truncate, không mất số 0 đầu)")
+def rt5():
+    answers = {"q_loai_hinh": "DNTN", "q_ten_tieng_viet": "Công ty O4",
+               "q_dia_chi_tru_so": "9 Đường O4, TP.HCM", "q_so_cccd": LONG_ID,
+               "q_ho_ten": "Lê Văn O4", "q_dien_thoai": "0084901234567"}
+    table_rows = {"q_nganh_ten": ["Bán lẻ hàng điện tử"],
+                  "q_nganh_chinh": ["X"]}
+    res, mp, ws, filled = fill_and_import(
+        answers, "DNTN", table_rows=table_rows,
+        meta={"case_id": "RT5", "today": "06/09/2026"}, return_path=True)
+    assert res["ok"], res["errors"]
+    d = res["data"]
+    assert d["chu_hkd.so_cccd"] == LONG_ID, repr(d["chu_hkd.so_cccd"])
+    assert isinstance(d["chu_hkd.so_cccd"], str), type(d["chu_hkd.so_cccd"])
+    assert d["dien_thoai_khac"] == "0084901234567", d["dien_thoai_khac"]
+
+    # File trên đĩa: ô vừa điền là string, number_format '@', không scientific.
+    col = {h: i + 1 for i, h in enumerate(MAP_COLUMNS)}
+    seen = 0
+    for r in range(4, mp.max_row + 1):
+        if mp.cell(r, col["question_id"]).value == "q_so_cccd" and \
+                '"DNTN"' in (mp.cell(r, col["when"]).value or ""):
+            addr = mp.cell(r, col["cell"]).value
+            assert ws[addr].number_format == "@", ws[addr].number_format
+            v = ws[addr].value
+            assert v == LONG_ID and isinstance(v, str), repr(v)
+            assert "E" not in v.upper(), v     # không scientific notation
+            assert not v.startswith("."), v    # không truncate đầu
+            seen += 1
+    assert seen >= 1, "không tìm thấy ô q_so_cccd nhánh DNTN"
+    # Nạp lại file lần 2 (kiểm import idempotent trên cùng file string).
+    res2 = import_questionnaire(filled, QUESTIONNAIRE)
+    assert res2["ok"], res2["errors"]
+    assert res2["data"]["chu_hkd.so_cccd"] == LONG_ID
+    assert isinstance(res2["data"]["chu_hkd.so_cccd"], str)
+
+
 def main() -> int:
-    for fn in (rt1, rt2, rt3, rt4):
+    for fn in (rt1, rt2, rt3, rt4, rt5):
         fn()
     passed = sum(1 for ok, _ in _results if ok)
     failed = len(_results) - passed

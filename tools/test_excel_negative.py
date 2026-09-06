@@ -14,6 +14,8 @@ None}. Mã lỗi là contract chung với bridge X5 (hiện toast người dùng
 [NG6] select gõ tay giá trị ngoài danh sách            -> BAD_SELECT
 [NG7] ngày 32/13/2020                                  -> BAD_DATE
 [NG8] tiền "năm tỷ"                                    -> BAD_NUMBER
+[NG9] [O4] ô CCCD là ô SỐ (Excel tự đổi, mất số 0 đầu/precision) -> BAD_ID_TEXT
+[NG10] [O4] chuỗi scientific "1.23E+20" vào ô mã định danh       -> BAD_ID_TEXT
 
 Chạy:  python3 -X utf8 -m tools.test_excel_negative   (exit 0 = PASS)
 """
@@ -186,8 +188,37 @@ def ng8():
     assert "BAD_NUMBER" in codes(res), res["errors"]
 
 
+@check("[NG9] [O4] ô CCCD bị Excel đổi thành số (ghi int) -> BAD_ID_TEXT")
+def ng9():
+    p = export_filled()
+    wb = openpyxl.load_workbook(p)
+    mp, ws = wb[MAP_SHEET], wb["Phieu"]
+    col = {h: i + 1 for i, h in enumerate(MAP_COLUMNS)}
+    hit = 0
+    for r in range(4, mp.max_row + 1):
+        if mp.cell(r, col["question_id"]).value == "q_so_cccd" and \
+                '"DNTN"' in (mp.cell(r, col["when"]).value or ""):
+            # Ghi SỐ như Excel tự đổi khi khách dán mã không kèm định dạng Text.
+            ws[mp.cell(r, col["cell"]).value] = 791085001234
+            hit += 1
+    assert hit >= 1, "không tìm thấy ô q_so_cccd nhánh DNTN"
+    wb.save(p)
+    res = import_questionnaire(p, QUESTIONNAIRE)
+    assert res["ok"] is False and res["data"] is None, res
+    assert "BAD_ID_TEXT" in codes(res), res["errors"]
+
+
+@check("[NG10] [O4] chuỗi scientific '1.23E+20' vào ô mã định danh "
+       "-> BAD_ID_TEXT (không chấp nhận scientific notation)")
+def ng10():
+    p = export_filled({"q_so_cccd": "1.23E+20"})
+    res = import_questionnaire(p, QUESTIONNAIRE)
+    assert res["ok"] is False and res["data"] is None, res
+    assert "BAD_ID_TEXT" in codes(res), res["errors"]
+
+
 def main() -> int:
-    for fn in (ng1a, ng1b, ng2, ng3, ng4, ng5, ng6, ng7, ng8):
+    for fn in (ng1a, ng1b, ng2, ng3, ng4, ng5, ng6, ng7, ng8, ng9, ng10):
         fn()
     passed = sum(1 for ok, _ in _results if ok)
     failed = len(_results) - passed

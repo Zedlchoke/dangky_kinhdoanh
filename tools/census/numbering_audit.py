@@ -50,8 +50,15 @@ CONTINUATION_CHAINS = {
 }
 
 # Ngoại lệ có chủ đích (mỗi dòng một lý do — KHÔNG nới vô căn cứ):
-# - PLI_M09: mất mục 1..7 + vùng nhiễm lặp "1. Thông tin thành viên/cổ đông"
-#   (D3.1/D3.2=A) — chờ lane m09-rebuild dựng lại theo Phụ lục I Mẫu 9 TT 68.
+# - PLI_M09: [integ(F0L) 2026-09-06 cập nhật lý do] lý do cũ "chờ lane
+#   m09-rebuild dựng lại" đã xong (numbering 7..10 hoàn chỉnh, 0 JUMP —
+#   ngoại lệ JUMP không còn cần). Giữ ngoại lệ cho CHAIN M05->M09: template
+#   M09 dựng SELF-CONTAINED — lặp lại mục pointer "7. Thành viên công ty
+#   (kê khai theo Mẫu số 9…): Gửi kèm." + lưới ngay đầu form rồi tiếp 8..10,
+#   nên comp_first == main_last (7), không phải main_last + 1. Evidence:
+#   nguồn DN_PL1_Mau_09.docx KHÔNG có mục 7 (p5 = "8. Thông tin đăng ký
+#   thuế") — heading 7 ở template là quyết định rebuild (laneA2/Lead);
+#   đổi cấu trúc này thuộc owner, không phải side detector.
 EXCEPTIONS = {
     "PLI_M09",
 }
@@ -145,10 +152,30 @@ def main():
     # companion nối TIẾP SAU MỤC POINTER, không phải sau max: main_last =
     # số của mục "Gửi kèm" cuối cùng; không thấy pointer → fallback max
     # (hành vi cũ, form chưa có đuôi).
+    # [integ(F0L) 2026-09-06] Tính pointer/max trên FULL WALK (không reset
+    # theo restart). Premise cũ: extract_sequences đủ dùng. Hiện trạng: các
+    # mẫu rebuild current-law (M03/M04/M05 — laneA2) có nhãn TRƯỜNG của lưới
+    # người ("1. Họ, chữ đệm và tên…" — false positive ĐÃ tuyên bố loại ở
+    # docstring đầu file nhưng extract_sequences vẫn nuốt vào seq) restart
+    # ở CUỐI tài liệu -> reset làm RƠI mục pointer "7./8./9. … Gửi kèm" ->
+    # main_last hụt xuống 3 -> 2 chain GAP giả. Evidence: M03 walk đủ có
+    # (7, 'Thành viên công ty… Gửi kèm'), comp M06 bắt đầu 8 → chain đúng.
+    def walk_numbered(blocks):
+        out = []
+        for blk in blocks:
+            if blk.get("t") != "p" or blk.get("role") != "section-heading":
+                continue
+            txt = runtext(blk).strip()
+            if SUBNUM.match(txt):
+                continue
+            m = TOPNUM.match(txt)
+            if m:
+                out.append((int(m.group(1)), txt))
+        return out
     chains = {}
     for main_id, comp_id in sorted(CONTINUATION_CHAINS.items()):
         try:
-            seq = extract_sequences(
+            seq = walk_numbered(
                 json.loads(open(os.path.join(BLOCKS, main_id + ".json"),
                                 encoding="utf-8").read())["blocks"])
 
@@ -160,7 +187,7 @@ def main():
             pointers = [n for n, t in seq if re.search(r"gui kem", _fold(t))]
             max_last = max(seq, default=(0, ""), key=lambda t: t[0])[0]
             main_last = pointers[-1] if pointers else max_last
-            comp_first = min(extract_sequences(
+            comp_first = min(walk_numbered(
                 json.loads(open(os.path.join(BLOCKS, comp_id + ".json"),
                                 encoding="utf-8").read())["blocks"]),
                 default=(0, ""), key=lambda t: t[0])[0]

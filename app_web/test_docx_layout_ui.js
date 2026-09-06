@@ -3,11 +3,13 @@
  * (checkbox). Harness chuỗi HTML thuần node (jsdom-free), cùng style với
  * test_layout_l2_render.js — KHÔNG GUI.
  *
- * [C4-BAND]  blocks có band:header (22 mẫu — khớp allowlist HEADER_BAND của
+ * [C4-BAND]  blocks có band:header (23 mẫu sau F0L +PLI_M12 — khớp allowlist
+ *            HEADER_BAND của
  *            tools/test_header_layout.py phía DOCX) phải render
  *            <table class="btable hdr-band">, ô TRÁI (42%) là tên
  *            DN/HKD đứng TRƯỚC ô PHẢI (58%) quốc hiệu; mẫu KHÔNG band
- *            (PLI_M02/PLI_M12/PLI_M72 — false positive theo test DOCX)
+ *            (PLI_M02/PLI_M72 — false positive theo test DOCX; [F0L]
+ *            PLI_M12 đã RA KHỎI nhóm này sau migrate current-law p50)
  *            KHÔNG được dính class hdr-band.
  * [C4-CSS]   style.css phải giữ: hdr-band KHÔNG viền (border:none), hình học
  *            42%/58%, vertical-align: bottom; .rn-u gạch chân dòng
@@ -57,8 +59,13 @@ for (const f of fs.readdirSync(BLOCKS_DIR).filter(function (n) {
   });
   (has ? bandForms : noBandForms).push(f.replace(/\.json$/, ''));
 }
-check('C4 corpus: đúng 22 blocks JSON có band:header (khớp DOCX allowlist)',
-  bandForms.length === 22, 'thấy ' + bandForms.length + ': ' + bandForms.join(','));
+// [integ(F0L) 2026-09-06] 22 -> 23: +PLI_M12. Premise cũ: M12 là false
+// positive ("nguồn mất ô tên + TT 121/2026 đã thay mẫu"). Hiện trạng: M12
+// migrate current-law TT 121/2026 (ảnh p50), template có band 2x2 chuẩn,
+// blocks có band:header với mirror dn.ten_tieng_viet — khớp allowlist
+// HEADER_BAND_FORMS (23 mẫu, tools/test_header_layout.py).
+check('C4 corpus: đúng 23 blocks JSON có band:header (khớp DOCX allowlist)',
+  bandForms.length === 23, 'thấy ' + bandForms.length + ': ' + bandForms.join(','));
 
 {
   const d = loadBlocks('PLII_M02');
@@ -79,7 +86,8 @@ check('C4 corpus: đúng 22 blocks JSON có band:header (khớp DOCX allowlist)'
 }
 
 // mẫu KHÔNG band: không được dính class hdr-band
-for (const fid of ['PLI_M02', 'PLI_M12', 'PLI_M72']) {
+// [integ(F0L) 2026-09-06] PLI_M12 có band -> tự bị skip bởi guard dưới
+for (const fid of ['PLI_M02', 'PLI_M72']) {
   if (bandForms.indexOf(fid) >= 0) continue; // nếu regen đổi tập band thì bỏ
   const html = R.renderBlocks(loadBlocks(fid), R.newStore());
   check('C4 ' + fid + ': không band -> không class hdr-band',

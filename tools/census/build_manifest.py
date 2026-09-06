@@ -65,6 +65,10 @@ EVOLVED_FORMS = {
     # D3.1=A xóa vùng nhiễm p103-p222 (~104 paragraph), bảng 14 cột thay
     # grid phẳng; summary_counts.p 178 -> 74.
     "PLI_M09": "m09-rebuild: decontaminate 14-cot + chen muc 7 (D3.1/D3.2=A)",
+    # [integ(F0L) 2026-09-06] N-v4 (laneA2 0f5e9f4): M07 stub 2 dòng -> nội
+    # dung đầy đủ theo bản in TT 68 p49-50 (mục I/II.1/II.2, chữ ký, 13 chú
+    # thích); evidence: recount blocks hiện tại p=25 vs fragment stub p=2.
+    "PLI_M07": "N-v4 laneA2: stub 2 dong -> day du TT 68 p49-50 (p 2 -> 25)",
     "PLII_M02": "hdr2col: 4 p header -> w:tbl header band (band:header)",
     "PLII_M03": "hdr2col: 4 p header -> w:tbl header band (band:header)",
     "PLII_M04": "hdr2col: 4 p header -> w:tbl header band (band:header)",

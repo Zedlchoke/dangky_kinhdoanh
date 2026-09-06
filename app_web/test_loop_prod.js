@@ -135,13 +135,20 @@ function attrNum(attrs, name) {
   return m ? +m[1] : 1;
 }
 
-/* Mở rộng hàng header thành slot theo colspan -> [{title, colspan, rowspan}] */
+/* Mở rộng hàng header thành slot THEO CỘT VẬT LÝ (1 slot = 1 cột).
+ * [integ(F0L) fix] Premise cũ: slot push kèm colspan=cs rồi expandHeaderGrid
+ * lại cộng `col += cs` cho TỪNG slot -> ô colspan=9 bị đếm 9x9 (chiếm 81 cột
+ * ảo), các ô phía sau trôi khỏi lưới 18 cột. Hiện trạng: expandHeaderRow đã
+ * MỞ RỘNG colspan thành cs slot nên mỗi slot chỉ rộng đúng 1 cột; evidence:
+ * trace rendered thead PLI_M10 row0 = 10 th (colspan 1x8,9,1) — sau fix lưới
+ * ra đủ 18 cột, cột 17 nhận rowspan carry "Người quản lý doanh nghiệp3". */
 function expandHeaderRow(thCells) {
   const slots = [];
   thCells.forEach(c => {
     const cs = attrNum(c.attrs, 'colspan');
     const rs = attrNum(c.attrs, 'rowspan');
-    for (let k = 0; k < cs; k++) slots.push({ title: cellText(c), colspan: cs, rowspan: rs });
+    const title = cellText(c);
+    for (let k = 0; k < cs; k++) slots.push({ title, colspan: 1, rowspan: rs });
   });
   return slots;
 }
@@ -149,23 +156,30 @@ function expandHeaderRow(thCells) {
 /* [F0L 2026-09-06] Mở rộng TOÀN BỘ lưới header rowspan-aware: ô rowspan=N
  * được mang xuống N-1 hàng tiếp theo tại CÙNG cột (đúng ngữ nghĩa HTML/w:tbl
  * vMerge). Mẫu 10 2026 (ảnh p49) có 4 hàng header rowspan nhiều tầng — đọc
- * lẻ từng hàng sẽ không đủ 18 cột. Trả về lưới [row][col] = {title}. */
-function expandHeaderGrid(headRows, nCols) {
+ * lẻ từng hàng sẽ không đủ 18 cột. Trả về lưới [row][col] = {title}.
+ * [integ(F0L) fix] Core nhận cell Rows dạng {title,colspan,rowspan} (dùng
+ * chung cho rendered <th> lẫn cell JSON production — xem expandJsonHeaderGrid).
+ * Premise cũ: ô hết hạn kiểm `remain < 0` -> ô rowspan=3 còn "sống" thêm hàng
+ * thứ 4 (hàng số pháp định), đẩy 12 ô số lệch cột. Hiện trạng: remain=0 nghĩa
+ * là hàng trước là hàng CUỐI phạm vi -> phải nhả ô trước khi vào hàng mới;
+ * evidence: rowspan="3" chỉ phủ 3 hàng thead (row0-row2), row3 có đủ 18 th số. */
+function expandCellGrid(cellRows, nCols) {
   const open = new Array(nCols).fill(null); // {title, remain, born}
   const out = [];
-  headRows.forEach((r, ri) => {
+  cellRows.forEach((r, ri) => {
     // ô rowspan từ các hàng TRƯỚC: hiện diện ở hàng này, sau đó giảm remain
     for (let i = 0; i < nCols; i++) {
-      if (open[i] && open[i].remain < 0) open[i] = null; // hết phạm vi
+      if (open[i] && open[i].remain <= 0) open[i] = null; // hết phạm vi
     }
     const rowView = new Array(nCols).fill(null);
     for (let i = 0; i < nCols; i++) {
       if (open[i]) rowView[i] = { title: open[i].title, carried: true };
     }
     let col = 0;
-    expandHeaderRow(r).forEach(c => {
+    r.forEach(c => {
       while (col < nCols && rowView[col]) col++; // bỏ qua ô đang rowspan
-      const cs = c.colspan || 1, rs = c.rowspan || 1;
+      const cs = Math.max(1, (c.colspan | 0) || 1);
+      const rs = Math.max(1, (c.rowspan | 0) || 1);
       for (let k = 0; k < cs && col + k < nCols; k++) {
         if (rowView[col + k] && !rowView[col + k].carried) {
           throw new Error('header overlap tại cột ' + (col + k) + ': "' +
@@ -185,13 +199,36 @@ function expandHeaderGrid(headRows, nCols) {
   return out;
 }
 
+/* Lưới header từ rendered <th> (attrs HTML) */
+function expandHeaderGrid(headRows, nCols) {
+  return expandCellGrid(headRows.map(r => r.map(c => ({
+    title: cellText(c),
+    colspan: attrNum(c.attrs, 'colspan'),
+    rowspan: attrNum(c.attrs, 'rowspan')
+  }))), nCols);
+}
+
+/* [integ(F0L)] Lưới header từ cell JSON production (cùng nguồn với renderer,
+ * đọc độc lập để đối chiếu chéo) */
+function expandJsonHeaderGrid(b, nCols) {
+  const idx = b.headerRows || [];
+  return expandCellGrid((b.rows || [])
+    .filter((r, i) => idx.indexOf(i) >= 0)
+    .map(r => (r.cells || []).map(c => ({
+      title: (c.runs || [])
+        .map(x => (x && x.text != null ? String(x.text) : ''))
+        .join(' ').replace(/\s+/g, ' ').trim(),
+      colspan: Math.max(1, (c.colspan | 0) || 1),
+      rowspan: Math.max(1, (c.rowspan | 0) || 1)
+    }))), nCols);
+}
+
 /* Hàng tiêu đề = hàng header cuối KHÔNG phải hàng số thuần ("1".."18",
  * "11=9+10"...). Hàng số là nhãn cột pháp định, không phải tiêu đề cột. */
 function isNumberLabelRow(row) {
   return row.every(s => /^\d+(=\d+\+\d+)?$/.test((s.title || '').trim()));
 }
-function titleRowOf(headRows, nCols) {
-  const grid = expandHeaderGrid(headRows, nCols);
+function titleRowOfGrid(grid) {
   for (let i = grid.length - 1; i >= 0; i--) {
     if (!isNumberLabelRow(grid[i])) return grid[i];
   }
@@ -254,7 +291,15 @@ PROD_LOOPS.forEach(function (spec) {
   // 2. mỗi tag nằm đúng dưới tiêu đề tương ứng (col ZERO-BASED)
   let tagPosOk = true;
   let tagPosBad = '';
-  const headSlots = headRows.length ? titleRowOf(headRows, grid.n) : [];
+  const headSlots = headRows.length
+    ? titleRowOfGrid(expandHeaderGrid(headRows, grid.n)) : [];
+  /* [integ(F0L) fix] So LÁ-với-LÁ: trước đây headSlots (tiêu đề lá, hàng sâu
+   * nhất) bị đối với grid.title từ headerGridOf (first-wins top-down = tiêu đề
+   * NHÓM hàng 0) -> mọi cột có header nhiều tầng (8-16 của M10: nhóm "Chủ sở
+   * hữu hưởng lợi..." trên lá "Trực tiếp/Gián tiếp/Tổng") sẽ lệch dù render
+   * đúng. Hiện trạng: tính hàng lá từ CHÍNH cell JSON bằng cùng bộ
+   * expand/title (rowspan-aware, bỏ hàng số) rồi so đối xứng. */
+  const jsonLeaf = titleRowOfGrid(expandJsonHeaderGrid(b, grid.n));
   (b.cols || []).forEach(c => {
     const td = bodyRows.length ? bodyRows[0][c.col] : null;
     const key = 'loop:' + spec.loop + ':0:' + c.tag;
@@ -264,11 +309,12 @@ PROD_LOOPS.forEach(function (spec) {
       tagPosBad = c.tag + ' o cot ' + c.col;
       return;
     }
-    // tiêu đề phía trên đúng cột đó phải khớp tiêu đề suy từ header grid
-    if (headSlots[c.col] && grid.title[c.col] != null &&
-        headSlots[c.col].title !== grid.title[c.col]) {
+    // tiêu đề phía trên đúng cột đó phải khớp tiêu đề lá suy từ header grid
+    if (headSlots[c.col] && jsonLeaf[c.col] != null &&
+        headSlots[c.col].title !== jsonLeaf[c.col].title) {
       tagPosOk = false;
-      tagPosBad = c.tag + ': title "' + headSlots[c.col].title + '" != "' + grid.title[c.col] + '"';
+      tagPosBad = c.tag + ': title "' + headSlots[c.col].title + '" != "' +
+        jsonLeaf[c.col].title + '"';
     }
   });
   check(label + ': moi tag nam dung o duoi tieu de tuong ung', tagPosOk, tagPosBad);

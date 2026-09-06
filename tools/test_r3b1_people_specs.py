@@ -269,15 +269,24 @@ def t_no_default_drops_set():
 @check("[ANCHOR] anchor dung duy nhat 1 paragraph trong blocks hien tai VA template")
 def t_anchor_unique():
     EXPECTED_ANCHOR_BLOCK = {
-        "PLI_M02": 125,       # audit Wave D: blk126 là glue, B125 là heading
-        # [Pin sync — PLAN v7 F0.5] 144 -> 134: các đợt regen M12 sau anchor
-        # (chk-merge gộp tag về đầu nhãn + glue-fix) làm trượt index blocks;
-        # anchor regex vẫn khớp ĐÚNG 1 block (uniqueness giữ nguyên) và đúng
-        # heading "Tổng giá trị vốn..." — đã đối chiếu fold tại 134.
+        # [Pin sync — F0L 2026-09-06] 125 -> 124: premise cũ (audit Wave D):
+        # blk126 là glue, B125 là heading. Hiện trạng: sau các merge F0L,
+        # block liền trước heading M02 dính thành 1 ('thu dien tu (neu co):
+        # website (neu co):' gộp) -> heading 'nguoi dai dien theo phap
+        # luat/...' nằm ở 124; evidence: fold[124] == '- thong tin ve nguoi
+        # dai dien theo phap luat/nguoi dai dien theo uy quyen cua chu so
+        # huu:', anchor khớp template đúng 1 (index 130) — uniqueness giữ
+        # nguyên.
+        "PLI_M02": 124,
         # [Pin sync — F0L 2026-09-06] 134 -> 135: band "TÊN DOANH NGHIỆP"
-        # thêm ở đầu M12 theo TT 121/2026 (ảnh p50; laneA 3b50306) dịch toàn
-        # bộ blocks xuống 1; uniqueness anchor vẫn ĐÚNG 1 khớp.
-        "PLI_M12": 135,
+        # thêm ở đầu M12 theo TT 121/2026 (ảnh p50; laneA 3b50306) — pin này
+        # viết theo GIẢ ĐỊNH band là +1 paragraph.
+        # [Pin sync — F0L 2026-09-06, integ] 135 -> 132: premise trên hết
+        # hiệu lực sau regen THẬT — hdr2col biến 4 paragraph header thành
+        # MỘT w:tbl 2x2 (blocks[0]='[tbl]') nên trượt ròng là -3 (135-3=132);
+        # evidence: fold[132] == 'thong tin ve nguoi dai dien theo uy quyen
+        # sau khi thay doi:' (đúng heading), anchor khớp template đúng 1.
+        "PLI_M12": 132,
         "PLI_M15": 43,        # blk49 glue — hdr2col (084444d): bảng header
                               # band thay 4 p header -> index dịch 48 -> 43
     }

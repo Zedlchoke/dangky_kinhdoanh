@@ -3029,15 +3029,26 @@ HEADER_BAND_TEMP_ATTR = "{urn:orca:hdr2col}band"
 #   thông báo / quyết định), KHÔNG có ô tên bên trái.
 #   PLI_M11 — không có khối quốc hiệu; PLI_M06..M10 — không có header.
 # Ngoại lệ CẦN OWNER (xem docs handoff):
-#   PLI_M12 — nguồn docx MẤT ô "TÊN DOANH NGHIỆP" khi scrape; đồng thời
-#             Thông tư 121/2026/TT-BTC (hiệu lực 21/8/2026) đã thay Mẫu 12
-#             -> chờ nguồn mới theo TT 121, không tự chế nội dung.
+#   [integ(F0L) 2026-09-06 GỠ KHỎI ngoại lệ] PLI_M12 — premise cũ: nguồn docx
+#             MẤT ô "TÊN DOANH NGHIỆP" khi scrape + TT 121/2026 thay Mẫu 12
+#             -> chờ nguồn mới. Hiện trạng: M12 đã rebuild theo current-law
+#             TT 121/2026/TT-BTC (ảnh p50), nguồn mới CÓ khối 4 paragraph
+#             header chuẩn ('TÊN DOANH NGHIỆP'+dòng kẻ / quốc hiệu / 'Số:' /
+#             'ngày…tháng…năm', verify python-docx trên
+#             02_thay_doi_thong_tin_doanh_nghiep/PL1_Mau_12_tach_tu_file_full.docx);
+#             body có {dn.ten_tieng_viet} (form_maps fields[6]) -> band mirror
+#             đúng quy tắc owner. blocks JSON có ô band đầu tài liệu -> census
+#             include. Đã THÊM vào HEADER_BAND_FORMS + header_name_binding.json
+#             (reason dẫn ảnh p50 + L-2026).
 #   PLI_M72 — "(TÊN DOANH NGHIỆP TƯ NHÂN)" là subtitle mục công bố, không
 #             phải ô header; mẫu không có khối quốc hiệu.
 #   PLI_M27, PLI_M30 — nằm trong census NƯNG cũng là 2/9 mẫu bị Thông tư
 #             121/2026/TT-BTC thay thế; vẫn sửa layout (chỉ đổi hình thức,
 #             không đổi nội dung) và đã ghi chú chờ đối chiếu bản TT 121.
 HEADER_BAND_FORMS = {
+    # [integ(F0L) 2026-09-06] +PLI_M12 — see ngoại lệ comment phía trên
+    # (premise cũ false positive -> current-law TT 121/2026 p50 có band).
+    "PLI_M12": "TÊN DOANH NGHIỆP",
     "PLI_M13": "TÊN DOANH NGHIỆP",
     "PLI_M14": "TÊN DOANH NGHIỆP",
     "PLI_M15": "TÊN DOANH NGHIỆP",
@@ -3124,7 +3135,8 @@ def _restyle_national_motto(p_el, form_id):
       1. BỎ dòng kẻ scraped ("-----") ở cuối — chỉ khi thuần dấu kẻ;
       2. GẠCH CHÂN thật dòng "Độc lập - Tự do - Hạnh phúc" (w:u).
     Trả về True nếu đã xử lý; raise ValueError khi cấu trúc lạ (fail loud —
-    22 mẫu trong allowlist phải đồng nhất, lệch dạng phải bị nhìn thấy)."""
+    23 mẫu trong allowlist phải đồng nhất, lệch dạng phải bị nhìn thấy; [F0L
+    2026-09-06] 22->23 khi +PLI_M12 current-law p50)."""
     runs = [r for r in p_el if r.tag == qn("w:r")]
 
     def _flat_elems():
@@ -3364,6 +3376,8 @@ def _tag_header_band_slots(table, form_id, add_field, unmatched):
 # [WAVE v7 HEADER-NAME-SYNC] band đầu trang = mirror read-only của trường
 # canonical ở thân. Registry tools/header_name_binding.json là nguồn chân lý
 # duy nhất (census 2026-09-05: 22 fillable-header-slot; 20 bind + 2
+# BLOCKED_OWNER. [integ(F0L) 2026-09-06] +1 fillable: PLI_M12 (current-law
+# TT 121/2026, ảnh p50) -> 23 fillable-header-slot; 21 bind + 2
 # BLOCKED_OWNER). Generator thay dòng kẻ '-------' ở ô (0,0) bằng the
 # {key} — render đổ CÙNG giá trị thân vào band; blank draft → band trống
 # (không dữ liệu giả). Converter blocks sẽ biến the này thành run "mirror"

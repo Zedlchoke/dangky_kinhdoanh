@@ -180,14 +180,29 @@ WIDE_TABLE_FIXTURE = [
     ("PLI_M06", 0, 12, 14400, 900, "ds_thanh_vien_tnhh"),
     ("PLI_M07", 0, 11, 14400, 918, "ds_co_dong_sang_lap"),
     ("PLI_M09", 0, 14, 14400, 900, "ds_thanh_vien_hop_danh"),
-    ("PLI_M10", 0, 12, 14400, 909, "ds_cshhl"),
-    ("PLI_M12", 4, 15, 14400, 900, "ds_ndd_uy_quyen_sau_thay_doi"),
+    # [Pin sync — F0L 2026-09-06] PLI_M10 (0,12,14400,909) -> (0,18,16200,900):
+    # premise cũ = M10 bản 12 cột trên khổ dọc usable 14400, min col 909 theo
+    # longest-word. Hiện trạng (F0L current-law): M10 2026 (TT 121/2026, ảnh
+    # p49 — "Chủ sở hữu hưởng lợi" 9 cột con + "Người quản lý doanh nghiệp")
+    # là bảng 18 cột vật lý; generator tự áp policy Q-V2 (landscape -> usable
+    # 16200 twips) + sàn min col 900 (không còn over-floor 909). Evidence: chạy
+    # census_all_templates() ở commit e268038 trả ('PLI_M10',0,18,16200,900).
+    ("PLI_M10", 0, 18, 16200, 900, "ds_cshhl"),
+    # [Pin sync — F0L 2026-09-06] PLI_M12 ndd_uy_quyen: table_index 4 -> 5
+    # (bảng header band 2x2 chèn ở đầu tài liệu đẩy mọi bảng của M12 xuống
+    # 1 vị trí — cùng sự kiện với _EXPECTED_TABLE_COUNT 76->77 và
+    # M12_SPEC_MATRICES +1; các kích thước 15 cột/14400/900 KHÔNG đổi).
+    ("PLI_M12", 5, 15, 14400, 900, "ds_ndd_uy_quyen_sau_thay_doi"),
     ("PLI_M15", 1, 14, 14400, 900, "ds_nddpl_uy_quyen_chu_so_huu_moi"),
     ("PLI_M72", 5, 10, 14400, 928, "ds_co_dong_sang_lap_ctcp"),
     ("PLI_M72", 6, 10, 14400, 928, "ds_co_dong_nuoc_ngoai_ctcp"),
 ]
 
-_EXPECTED_TABLE_COUNT = 76   # số bảng có w:tblGrid trên toàn corpus
+_EXPECTED_TABLE_COUNT = 77   # số bảng có w:tblGrid trên toàn corpus
+# [Pin sync — F0L 2026-09-06] 76 -> 77: +bảng header band 2x2 của PLI_M12
+# (M12 vào HEADER_BAND_FORMS — regen sinh bảng có w:tblGrid ở đầu tài liệu,
+# ảnh p50). Các entry khác giữ nguyên; bảng band 2 cột < sàn WIDE_COLS=10
+# nên census bảng rộng không đổi.
 _EXPECTED_TEMPLATE_COUNT = 87
 
 
@@ -577,11 +592,17 @@ def test_c3b_sandbox_regen():
 
 # (section_id, template table_index, rows, cols, expect_present)
 M12_SPEC_MATRICES = [
-    ("nguon_von_dieule_sau_thay_doi", 0, 6, 3, True),
-    ("nganh_bo_sung", 1, 6, 4, True),
-    ("nganh_xoa_bo", 2, 6, 4, True),
-    ("nganh_sua_doi_chi_tiet", 3, 6, 4, True),
-    ("ndd_uy_quyen_sau_thay_doi", 4, 8, 15, True),
+    # [Pin sync — F0L 2026-09-06] template_table_index +1 cho TẤT CẢ entry:
+    # premise cũ = M12 có 5 bảng, matrix đầu tiên là bảng 0. Hiện trạng: M12
+    # vào allowlist HEADER_BAND -> regen sinh bảng header 2x2 ở ĐẦU tài liệu
+    # (ảnh p50) -> 6 bảng, mọi matrix dịch xuống 1 vị trí. Evidence: regen
+    # F0L (build_form_maps + tagger + docx_to_blocks, zero-diff) — C4a đếm
+    # 6 bảng, bảng 0 là band 2 cột.
+    ("nguon_von_dieule_sau_thay_doi", 1, 6, 3, True),
+    ("nganh_bo_sung", 2, 6, 4, True),
+    ("nganh_xoa_bo", 3, 6, 4, True),
+    ("nganh_sua_doi_chi_tiet", 4, 6, 4, True),
+    ("ndd_uy_quyen_sau_thay_doi", 5, 8, 15, True),
 ]
 
 # 3 matrix còn lại của manifest vẫn missing_grid -> BLOCKED_OWNER
@@ -597,7 +618,10 @@ def test_c4a_m12_tables():
     xml = _docx_xml((TEMPLATES / "PLI_M12.docx").read_bytes())
     body = _body_of(xml)
     segs = list(_iter_balanced_tbls(body))
-    assert len(segs) == 5, "M12 phải đúng 5 bảng (census): %d" % len(segs)
+    # [Pin sync — F0L 2026-09-06] 5 -> 6: +bảng header band 2x2 ở đầu tài
+    # liệu (M12 vào HEADER_BAND_FORMS sau migrate current-law p50). Bảng 0
+    # là band 2 cột — nằm ngoài M12_SPEC_MATRICES; các matrix dịch +1.
+    assert len(segs) == 6, "M12 phải đúng 6 bảng (census): %d" % len(segs)
     for sid, ti, rows, cols, _present in M12_SPEC_MATRICES:
         seg = body[segs[ti][0]:segs[ti][1]]
         grid = [int(w) for w in re.findall(

@@ -18,9 +18,13 @@ Mệnh đề kiểm chứng (chạy HOÀN TOÀN sandbox — bfm.OUT_TPL/OUT_DATA
 temp, KHÔNG ghi vào app/templates / app/data):
 
   [CENSUS]  allowlist HEADER_BAND_FORMS phải == đúng tập mẫu có ô band trong
-            blocks JSON (detector gập dấu); PLI_M12 / PLI_M72 là false positive
+            blocks JSON (detector gập dấu); PLI_M72 là false positive
             và PHẢI ở ngoài (lý do ghi trong source).
-  [LAYOUT]  22 mẫu: bảng header đúng 1 cái, đứng ngay sau các paragraph
+            [integ(F0L) 2026-09-06] PLI_M12 ra KHỎI nhóm false positive:
+            premise cũ "nguồn mất ô tên + TT 121/2026 đã thay mẫu" không còn
+            đúng — M12 đã migrate current-law TT 121/2026 (ảnh p50), nguồn
+            mới có khối 4 paragraph header chuẩn -> +vào allowlist (22 -> 23).
+  [LAYOUT]  23 mẫu: bảng header đúng 1 cái, đứng ngay sau các paragraph
             "Mẫu số …", 2 hàng x 2 cột, KHÔNG viền, chiều rộng = vùng chữ,
             alignment ô trái/phải đúng, vị trí ô đúng.
   [TEXT]    không mất chữ — ngoại lệ DUY NHẤT là dòng kẻ scraped "-----" dưới
@@ -229,7 +233,8 @@ def blocks_band_label_ids():
     Sau khi Lead regen (merge hdr2col @ 084444d), ô "TÊN …" KHÔNG còn là
     paragraph form-subtitle đứng riêng mà nằm trong bảng header 2 band —
     extractor gắn marker `band: "header"` (docx_to_blocks.is_header_band_table).
-    Pin đổi theo bằng chứng sản phẩm mới: census vẫn ÉP ĐÚNG tập 22 mẫu,
+    Pin đổi theo bằng chứng sản phẩm mới: census vẫn ÉP ĐÚNG tập mẫu
+    (23 mẫu sau [integ(F0L) 2026-09-06] +PLI_M12 current-law p50),
     chỉ đổi cách nhận diện từ paragraph-sang-bảng. Trạng thái pre-regen
     (ô tên còn là paragraph) vẫn được nhận để suite đọc được ở cả 2 thời điểm.
     """
@@ -257,7 +262,7 @@ def blocks_band_label_ids():
     return sorted(set(hits))
 
 
-@check("[CENSUS] allowlist 22 mau == dung tap mau co o band trong blocks JSON")
+@check("[CENSUS] allowlist 23 mau == dung tap mau co o band trong blocks JSON")
 def t_census():
     got = blocks_band_label_ids()
     want = sorted(bfm.HEADER_BAND_FORMS)
@@ -265,24 +270,29 @@ def t_census():
                          "  allowlist có mà blocks không có: %s"
                          % (sorted(set(got) - set(want)),
                             sorted(set(want) - set(got))))
-    assert len(want) == 22, "census kỳ vọng 22 mẫu, thấy %d" % len(want)
+    # [integ(F0L) 2026-09-06] 22 -> 23: +PLI_M12 (current-law TT 121/2026,
+    # ảnh p50 — premise cũ "false positive, chờ nguồn mới" hết hiệu lực vì
+    # nguồn migrate đã có khối header chuẩn + blocks JSON có ô band).
+    assert len(want) == 23, "census kỳ vọng 23 mẫu, thấy %d" % len(want)
     pli = sorted(x for x in want if x.startswith("PLI_"))
     plii = sorted(x for x in want if x.startswith("PLII_"))
-    assert pli == ["PLI_M13", "PLI_M14", "PLI_M15", "PLI_M17", "PLI_M18",
-                   "PLI_M19", "PLI_M21", "PLI_M23", "PLI_M25", "PLI_M26",
-                   "PLI_M27", "PLI_M28", "PLI_M29", "PLI_M30", "PLI_M31",
-                   "PLI_M32", "PLI_M33"], pli
+    assert pli == ["PLI_M12", "PLI_M13", "PLI_M14", "PLI_M15", "PLI_M17",
+                   "PLI_M18", "PLI_M19", "PLI_M21", "PLI_M23", "PLI_M25",
+                   "PLI_M26", "PLI_M27", "PLI_M28", "PLI_M29", "PLI_M30",
+                   "PLI_M31", "PLI_M32", "PLI_M33"], pli
     assert plii == ["PLII_M02", "PLII_M03", "PLII_M04", "PLII_M05",
                     "PLII_M06"], plii
     # false positive PHẢI ở ngoài allowlist
-    for fid in ("PLI_M12", "PLI_M72"):
+    # [integ(F0L) 2026-09-06] bỏ PLI_M12 khỏi pin âm — đã +vào allowlist;
+    # PLI_M72 vẫn là false positive ('(TÊN DOANH NGHIỆP TƯ NHÂN)' là subtitle
+    # mục công bố, không có khối quốc hiệu).
+    for fid in ("PLI_M72",):
         assert fid not in bfm.HEADER_BAND_FORMS, (
-            "%s không phải ô header 2-band (PLI_M12: nguồn mất ô tên + TT "
-            "121/2026 đã thay mẫu; PLI_M72: '(TÊN DOANH NGHIỆP TƯ NHÂN)' là "
+            "%s không phải ô header 2-band ('(TÊN DOANH NGHIỆP TƯ NHÂN)' là "
             "subtitle mục công bố)" % fid)
 
 
-@check("[CENSUS] nguon docx 22 mau deu nhan dien duoc 4 paragraph header")
+@check("[CENSUS] nguon docx 23 mau deu nhan dien duoc 4 paragraph header")
 def t_census_sources():
     for fid, label in sorted(bfm.HEADER_BAND_FORMS.items()):
         src = bfm.find_source(fid)
@@ -308,6 +318,13 @@ EXPECTED_CELL_ALIGN = {(0, 0): "left", (0, 1): "center",
                        (1, 0): "left", (1, 1): "right"}
 ALIGN_ENUM = {"left": "LEFT", "center": "CENTER", "right": "RIGHT"}
 
+# [integ(F0L) 2026-09-06] Band đứng TUYỆT ĐỐI đầu tài liệu (giấy đề nghị,
+# không có dòng 'Mẫu số …' phía trước như mẫu Phụ lục). Premise cũ: toàn bộ
+# allowlist là Phụ lục -> 'Mẫu số' luôn có. Hiện trạng: +PLI_M12 (TT 121/2026
+# p50) phá premise đó; evidence: source PL1_Mau_12_tach_tu_file_full.docx
+# paragraph 0 chính là ô 'TÊN DOANH NGHIỆP'.
+TOP_BAND_FORMS = {"PLI_M12"}
+
 
 def source_header_texts(fid, label):
     """Text 4 paragraph header của NGUỒN: [ô tên, quốc hiệu, Số, ngày ký]."""
@@ -326,7 +343,7 @@ def motto_two_lines(motto_text):
     return "\n".join(lines[:-1])
 
 
-@check("[LAYOUT] 22 mau: bang khong vien 2x2, alignment + vi tri o dung")
+@check("[LAYOUT] 23 mau: bang khong vien 2x2, alignment + vi tri o dung")
 def t_layout():
     with Sandbox() as sb:
         for fid, label in sorted(bfm.HEADER_BAND_FORMS.items()):
@@ -384,9 +401,18 @@ def t_layout():
             assert "tháng" in cell_text(tbl.rows[1].cells[1])
             # các paragraph "Mẫu số …" vẫn nằm TRƯỚC bảng (không bị hút vào ô);
             # KHÔNG còn paragraph header dọc nào sót lại trước bảng
+            # [integ(F0L) 2026-09-06] PLI_M12 là GIẤY ĐỀ NGHỊ (TT 121/2026,
+            # ảnh p50) — band đứng ở ĐẦU tài liệu, KHÔNG có dòng 'Mẫu số …'
+            # phía trước (đó là contract của mẫu Phụ lục). Contract riêng cho
+            # nhóm này: KHÔNG text nào đứng trước band (assert thật, không
+            # phải bypass).
             before = [t for t in body_texts_before_table(doc) if t.strip()]
-            assert any("Mẫu số" in t for t in before), \
-                "%s: mất dòng 'Mẫu số …' trước bảng: %r" % (fid, before)
+            if fid in TOP_BAND_FORMS:
+                assert before == [], \
+                    "%s: band phải đứng đầu tài liệu, thấy %r" % (fid, before)
+            else:
+                assert any("Mẫu số" in t for t in before), \
+                    "%s: mất dòng 'Mẫu số …' trước bảng: %r" % (fid, before)
             for t in before:
                 assert "CỘNG HÒA" not in t and "Số:" not in t \
                     and not t.startswith(label), \
@@ -683,7 +709,10 @@ def t_idempotent():
 
 @check("[IDEMPOT] mau NGOAI allowlist khong bi dong den")
 def t_untouched_forms():
-    probes = ["PLI_M01", "PLI_M02", "PLII_M01", "PLI_M12", "PLI_M72",
+    # [integ(F0L) 2026-09-06] bỏ PLI_M12 khỏi probes — đã +vào allowlist
+    # (current-law TT 121/2026 p50), nghĩa Idempotent đổi: 2 lần chạy CÙNG
+    # sinh band; mức đó đã cover bởi [IDEMPOT] chính phía trên.
+    probes = ["PLI_M01", "PLI_M02", "PLII_M01", "PLI_M72",
               "PLII_M07", "PLI_M43"]
     with Sandbox() as sb:
         for fid in probes:
@@ -691,7 +720,7 @@ def t_untouched_forms():
             doc = Document(str(sb.tpl / ("%s.docx" % fid)))
             got = header_band_table(doc)
             assert got is None, ("%s: không được sinh bảng header 2-band" % fid)
-            if fid in ("PLI_M12", "PLI_M72"):
+            if fid in ("PLI_M72",):
                 continue
             # mẫu không trong allowlist: cấu trúc body giữ nguyên (chỉ gắn the)
             texts = [Paragraph(c, doc).text
@@ -740,7 +769,9 @@ def t_negative():
 
 @check("[NEG] mau khong nam allowlist -> build_header_band_table tra None")
 def t_negative_not_in_allowlist():
-    for fid in ("PLI_M01", "PLI_M12", "PLI_M72", "PLII_M01"):
+    # [integ(F0L) 2026-09-06] bỏ PLI_M12 khỏi pin âm — đã +vào allowlist
+    # (current-law TT 121/2026 p50, band fillable).
+    for fid in ("PLI_M01", "PLI_M72", "PLII_M01"):
         doc = Document(str(bfm.find_source(fid)))
         assert bfm.build_header_band_table(doc, fid) is None, \
             "%s: phải là no-op" % fid

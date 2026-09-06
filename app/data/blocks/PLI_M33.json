@@ -31,8 +31,14 @@
       {
        "runs": [
         {
-         "text": "TÊN DOANH NGHIỆP\n-------",
+         "text": "TÊN DOANH NGHIỆP\n",
          "b": true
+        },
+        {
+         "input": {
+          "key": "dn.ten_tieng_viet",
+          "w": 16
+         }
         }
        ],
        "colspan": 1,

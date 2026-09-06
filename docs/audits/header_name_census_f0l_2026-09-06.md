@@ -1,6 +1,6 @@
 # HEADER-NAME CENSUS — F0L (post-migration current-law, READ-ONLY)
 
-- Generated: 2026-09-06  |  base HEAD: `e268038`
+- Generated: 2026-09-06  |  base HEAD: `90179ed`
 - Phạm vi: vùng band (từ đầu tài liệu tới tiêu đề biểu mẫu) của 87 template `app/templates/<fid>.docx`. Phân loại toàn corpus + no-signature verdicts: xem `header_name_census_2026-09-05.*` (vẫn còn hiệu lực).
 - Mục đích: rebaseline census sau migrate L-2026 (TT 121/2026/TT-BTC) — đối chiếu.allowlist HEADER_BAND_FORMS (23 mẫu) + tools/header_name_binding.json.
 
@@ -10,8 +10,8 @@
 |---|---|
 | Band-region occurrences | 35 |
 | fillable-header-slot | **23** (2026-09-05: 22; +PLI_M12) |
-| — đã bind (header_name_binding.json) | 21 |
-| — blocked_owner | 2 (`PLI_M33`, `PLII_M06`) |
+| — đã bind (header_name_binding.json) | 23 |
+| — blocked_owner | 0 (`—`) |
 | — unadjudicated | 0 (phải = 0) |
 | legal-title/subtitle trong vùng band | 12 |
 
@@ -30,8 +30,8 @@
 | PLII_M03 | TÊN HỘ KINH DOANH | `tbl@2.row0.cell0.para0` | bound | hkd_ten_tieng_viet_2 |
 | PLII_M04 | TÊN HỘ KINH DOANH | `tbl@2.row0.cell0.para0` | bound | hkd_ten_tieng_viet_2 |
 | PLII_M05 | TÊN HỘ KINH DOANH | `tbl@2.row0.cell0.para0` | bound | hkd_ten_tieng_viet_2 |
-| PLII_M06 | TÊN HỘ KINH DOANH | `tbl@2.row0.cell0.para0` | blocked_owner | blocked: band fillable nhưng thân không có input tên hộ — cần owner c… |
-| PLI_M12 | TÊN DOANH NGHIỆP | `para 0` | bound | dn.ten_tieng_viet |
+| PLII_M06 | TÊN HỘ KINH DOANH | `tbl@2.row0.cell0.para0` | bound | hkd_ten_tieng_viet_2 |
+| PLI_M12 | TÊN DOANH NGHIỆP | `tbl@0.row0.cell0.para0` | bound | dn.ten_tieng_viet |
 | PLI_M13 | TÊN DOANH NGHIỆP | `tbl@1.row0.cell0.para0` | bound | dn.ten_tieng_viet |
 | PLI_M14 | TÊN DOANH NGHIỆP | `tbl@1.row0.cell0.para0` | bound | dn.ten_tieng_viet |
 | PLI_M15 | TÊN DOANH NGHIỆP | `tbl@1.row0.cell0.para0` | bound | dn.ten_tieng_viet |
@@ -48,7 +48,7 @@
 | PLI_M30 | TÊN DOANH NGHIỆP | `tbl@2.row0.cell0.para0` | bound | dn.ten_tieng_viet |
 | PLI_M31 | TÊN DOANH NGHIỆP | `tbl@2.row0.cell0.para0` | bound | dn.ten_tieng_viet |
 | PLI_M32 | TÊN DOANH NGHIỆP | `tbl@2.row0.cell0.para0` | bound | dn.ten_tieng_viet |
-| PLI_M33 | TÊN DOANH NGHIỆP | `tbl@2.row0.cell0.para0` | blocked_owner | blocked: band fillable nhưng thân CHỈ có chu_hkd.ho_ten (tên người nộ… |
+| PLI_M33 | TÊN DOANH NGHIỆP | `tbl@2.row0.cell0.para0` | bound | dn.ten_tieng_viet |
 
 ## 4. Dữ liệu thô từng form
 

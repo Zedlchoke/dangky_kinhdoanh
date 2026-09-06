@@ -228,6 +228,18 @@ def e6_token_identity():
         band = next(b for b in blocks["blocks"]
                     if b.get("t") == "table" and b.get("band") == "header")
         runs = band["rows"][0]["cells"][0]["runs"]
+        # [N-v1/N-v2 2026-09-06] mode='band_input' (PLI_M33/PLII_M06): band
+        # LÀ ô nhập duy nhất của form — assert input ĐÚNG 1 key registry và
+        # KHÔNG mirror; mode mặc định giữ contract mirror read-only.
+        if bind.get("mode") == "band_input":
+            input_keys = [r["input"]["key"] for r in runs if "input" in r]
+            assert input_keys == [bind["key"]], \
+                "%s: band_input phải đúng 1 input key registry: %r" % (
+                    fid, input_keys)
+            mirror_keys = [r["mirror"]["key"] for r in runs if "mirror" in r]
+            assert mirror_keys == [], \
+                "%s: band_input không được mirror: %r" % (fid, mirror_keys)
+            continue
         input_keys = [r["input"]["key"] for r in runs if "input" in r]
         assert input_keys == [], \
             "%s: band (0,0) chứa input lạ: %r" % (fid, input_keys)
@@ -264,6 +276,18 @@ def e8_registry_consistency():
         n_template = zipfile.ZipFile(
             ROOT / "app" / MAPS[fid]["template"]).read(
                 "word/document.xml").decode("utf-8").count(token)
+        if bind.get("mode") == "band_input":
+            # [N-v1/N-v2] band là ô nhập DUY NHẤT: đúng 1 token trong template
+            assert n_template == 1, \
+                "%s: band_input phải đúng 1 token %r, thấy %d" % (
+                    fid, token, n_template)
+            blocks = convert(fid, MAPS)
+            band = next(b for b in blocks["blocks"]
+                        if b.get("t") == "table" and b.get("band") == "header")
+            runs = band["rows"][0]["cells"][0]["runs"]
+            assert any(r.get("input", {}).get("key") == bind["key"]
+                       for r in runs), "%s: band thiếu run input" % fid
+            continue
         # template: token thân + token band; render blank: token bị tiêu thụ
         assert n_template >= 2, \
             "%s: template chỉ có %d token %r (cần thân + band)" % (

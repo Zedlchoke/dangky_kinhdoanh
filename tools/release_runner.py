@@ -149,6 +149,10 @@ SUITES: list[dict] = [
     #     hash nguồn pháp lý — gate catalog bắt buộc sau TT 121/2026
     {"name": "test_current_law_catalog",  "type": "module",
      "target": "tools.test_current_law_catalog", "requires": ["python-docx"]},
+    # --- [N-v1/N-v2 2026-09-06] band-is-input: PLI_M33/PLII_M06 — band là ô
+    #     nhập duy nhất (blocks + render + one-source) ---
+    {"name": "test_nv1_nv2_band_input",   "type": "node",
+     "target": "app_web/test_nv1_nv2_band_input.js"},
     {"name": "test_audit_p1_docx_negative", "type": "module", "target": "tools.test_audit_p1_docx_negative",
      "requires": ["python-docx"]},
     {"name": "audit_blocks_check",        "type": "module", "target": "tools.audit_blocks_check",

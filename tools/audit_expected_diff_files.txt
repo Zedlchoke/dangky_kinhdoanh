@@ -572,3 +572,7 @@ tools/windows_handoff/README.md
 # --- [F4-EXCEL 2026-09-06] cluster nguồn cụm thay đổi ngành + thuế (merge f4xl) ---
 tools/questionnaire/clusters/thay_doi_nganh.json
 tools/questionnaire/clusters/thue_dang_ky.json
+# --- [N-v1/N-v2 2026-09-06] band-is-input PLI_M33/PLII_M06: registry mode
+# band_input + converter form-aware + gate E6/E8/header_layout pin + UI test
+# + census F0L regen (23/23 bind, 0 blocked_owner) ---
+app_web/test_nv1_nv2_band_input.js

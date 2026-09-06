@@ -747,18 +747,29 @@ HEADER_BAND_MOTTO = "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM"
 # thành run "mirror" — KHÔNG phải input thứ hai theo quyết định owner).
 _HEADER_NAME_BINDING_PATH = ROOT / "tools" / "header_name_binding.json"
 _hdr_name_keys: set | None = None
+_hdr_name_forms: dict | None = None
 
 
-def _header_name_mirror_keys() -> set:
-    global _hdr_name_keys
-    if _hdr_name_keys is None:
+def _header_name_binding_forms() -> dict:
+    global _hdr_name_forms
+    if _hdr_name_forms is None:
         try:
             data = json.loads(
                 _HEADER_NAME_BINDING_PATH.read_text(encoding="utf-8"))
-            _hdr_name_keys = {v["key"] for v in data.get("forms", {}).values()}
+            _hdr_name_forms = data.get("forms", {})
         except (OSError, ValueError, KeyError):
-            _hdr_name_keys = set()
-    return _hdr_name_keys
+            _hdr_name_forms = {}
+    return _hdr_name_forms
+
+
+def _band_mode_for(form_id: str, key: str) -> str:
+    """Mode binding theo (form, key): 'mirror' (mặc định, band read-only) hoặc
+    'band_input' (N-v1/N-v2: band LÀ ô nhập duy nhất của form — run input
+    giữ nguyên để UI vẽ input editable đúng một lần tại band)."""
+    entry = _header_name_binding_forms().get(form_id) or {}
+    if entry.get("key") == key:
+        return entry.get("mode", "mirror")
+    return "mirror"
 
 
 def is_header_band_table(grid: list[list[dict]]) -> bool:
@@ -775,15 +786,17 @@ def is_header_band_table(grid: list[list[dict]]) -> bool:
     return HEADER_BAND_MOTTO in all_text
 
 
-def _band_first_cell_to_mirror(block: dict) -> None:
+def _band_first_cell_to_mirror(block: dict, form_id: str = "") -> None:
     """[WAVE v7] ô (0,0) band: run input với key thuộc registry mirror ->
     run {"mirror": {"key": …}} — UI vẽ text read-only đồng bộ store, KHÔNG
     tạo input/tab-stop/validation thứ hai (quyết định owner
     HEADER-NAME-SYNC 2026-09-05). Run không nằm registry (band chưa bind)
-    giữ nguyên để gate bắt."""
+    giữ nguyên để gate bắt.
+    [N-v1/N-v2 2026-09-06] mode='band_input' (PLI_M33/PLII_M06): giữ run
+    input — band là ô NHẬP duy nhất của form, không mirror."""
     if not block.get("rows"):
         return
-    mirror_keys = _header_name_mirror_keys()
+    mirror_keys = _header_name_binding_forms()
     if not mirror_keys:
         return
     cells = block["rows"][0].get("cells") or []
@@ -791,12 +804,16 @@ def _band_first_cell_to_mirror(block: dict) -> None:
         return
     for run in cells[0].get("runs") or []:
         inp = run.get("input")
-        if inp and inp.get("key") in mirror_keys:
+        if not inp:
+            continue
+        key = inp.get("key")
+        if any(e.get("key") == key for e in mirror_keys.values()) and \
+                _band_mode_for(form_id, key) == "mirror":
             run.pop("input")
-            run["mirror"] = {"key": inp["key"]}
+            run["mirror"] = {"key": key}
 
 
-def table_block(tbl: Table) -> dict:
+def table_block(tbl: Table, fid: str = "") -> dict:
     grid = parse_table(tbl)
 
     # phát hiện hàng khuôn loop: một hàng chứa cả {#ten} và {/ten}
@@ -823,7 +840,7 @@ def table_block(tbl: Table) -> dict:
         }
         if is_header_band_table(grid):
             block["band"] = "header"
-            _band_first_cell_to_mirror(block)
+            _band_first_cell_to_mirror(block, fid)
         return block
 
     # bảng loop: headerRows = hàng tiêu đề (không trắng) trước hàng khuôn,
@@ -1316,7 +1333,7 @@ def convert_document(
             else:
                 prev_ref["consumed"] = False
         else:
-            blk = table_block(obj)
+            blk = table_block(obj, fid)
             _attach_cond(blk)
             blocks.append(blk)
             prev_ref["block"] = None

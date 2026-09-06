@@ -1,6 +1,6 @@
 {
  "generated": "2026-09-06",
- "base_head": "e268038",
+ "base_head": "90179ed",
  "base_head_note": "[integ(F0L) 2026-09-06] census band tên chủ thể sau migrate current-law L-2026 (TT 121/2026/TT-BTC). Phiên bản mới — KHÔNG đè docs/audits/header_name_census_2026-09-05.* (vẫn là base cho phần phân loại toàn corpus + no-signature verdicts).",
  "method": "raw scan bằng tools/census/header_name_census.py (scan_template trên 87 template app/templates/*.docx) + phân loại vùng band theo header_name_binding.json",
  "forms": {
@@ -9,8 +9,8 @@
     {
      "para_idx": 0,
      "line_idx": 0,
-     "table_cell": null,
-     "band_region": "before-band",
+     "table_cell": "tbl@0.row0.cell0.para0",
+     "band_region": "band-table",
      "text": "TÊN DOANH NGHIỆP",
      "classification": "fillable-header-slot",
      "adjudication": "bound",
@@ -18,9 +18,9 @@
      "binding_label": "TÊN DOANH NGHIỆP"
     }
    ],
-   "band_end_idx": 5,
-   "title_idx": 5,
-   "quoc_hieu_idx": 1,
+   "band_end_idx": 2,
+   "title_idx": 2,
+   "quoc_hieu_idx": 0,
    "no_band": false
   },
   "PLI_M13": {
@@ -548,8 +548,9 @@
      "band_region": "band-table",
      "text": "TÊN DOANH NGHIỆP",
      "classification": "fillable-header-slot",
-     "adjudication": "blocked_owner",
-     "binding_note": "band fillable nhưng thân CHỈ có chu_hkd.ho_ten (tên người nộp) — không có trường tên DN nào để mirror; bind tên người dưới nhãn TÊN DOANH NGHIỆP là sai pháp lý, tạo field mới cần owner chốt (O-packet v7)"
+     "adjudication": "bound",
+     "binding_key": "dn.ten_tieng_viet",
+     "binding_label": "TÊN DOANH NGHIỆP"
     }
    ],
    "band_end_idx": 4,
@@ -740,8 +741,9 @@
      "band_region": "band-table",
      "text": "TÊN HỘ KINH DOANH",
      "classification": "fillable-header-slot",
-     "adjudication": "blocked_owner",
-     "binding_note": "band fillable nhưng thân không có input tên hộ — cần owner chốt thêm field hay giữ band điền tay (O-packet v7)"
+     "adjudication": "bound",
+     "binding_key": "hkd_ten_tieng_viet_2",
+     "binding_label": "TÊN HỘ KINH DOANH"
     }
    ],
    "band_end_idx": 4,
@@ -997,8 +999,8 @@
    "legal-title/subtitle": 12
   },
   "fillable_header_slot": 23,
-  "bound": 21,
-  "blocked_owner": 2,
+  "bound": 23,
+  "blocked_owner": 0,
   "unadjudicated": 0,
   "m12_delta": "PLI_M12: needs-owner (2026-09-05) -> BOUND dn.ten_tieng_viet (current-law TT 121/2026, ảnh p50; L-2026)",
   "migrated_samples_no_new_band": [

@@ -662,9 +662,13 @@ def t_tags_and_blocks():
             # sách input của converter vẫn là đúng 5 slot băng dưới.
             want_slots = ["so_van_ban", "dia_diem_ky", "ngay_ky_vb",
                           "thang_ky_vb", "nam_ky_vb"]
+            # [N-v1/N-v2 2026-09-06] mode='band_input': band (0,0) LÀ ô nhập
+            # duy nhất của form — input band nằm TRƯỚC 5 slot băng dưới.
+            if _bind and _bind.get("mode") == "band_input":
+                want_slots = [_bind["key"]] + want_slots
             assert cell_inputs == want_slots, (
                 "%s: converter mất input trong bảng header: %r" % (fid, cell_inputs))
-            if _bind:
+            if _bind and _bind.get("mode") != "band_input":
                 mirror_runs = [
                     r["mirror"]["key"]
                     for row in first_tbl["rows"] for c in row["cells"]

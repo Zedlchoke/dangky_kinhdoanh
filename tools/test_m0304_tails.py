@@ -11,9 +11,12 @@ trúc bằng test:
 
   [SRC]     nguồn canonical chứa TRỌN đuôi theo đúng cấu trúc: heading mục
             8/9/10/11 (M03) và 10/11/12/13 (M04), chỉ tiêu 9.1–9.9 / 11.1–11.9,
-            3 dòng □ BHXH, câu BOT 'Có □/Không □', câu CSHHL '□ Có/□ Không'.
-            Lỗi số '1.6' (thay vì 11.6) là TỰ NHIÊN của nguồn — giữ nguyên
-            (không tự chế nội dung).
+            3 dòng □ BHXH, câu BOT 'Có □/Không □'. || CẬP NHẬT HIỆN LUẬT
+            (laneA2 F0L 2026-09-06, TT 121/2026/TT-BTC hiệu lực 21/08/2026):
+            câu CSHHL '□ Có/□ Không' đã BỊ THAY bằng dòng khai báo theo
+            Mẫu số 10 trên bản in 2026 (p29-p30 M03, p39-p40 M04) — suite
+            khóa cấu trúc MỚI; lỗi số '1.6' đã được SỬA thành '11.6' trên
+            bản in 2026 (p39) nên nguồn cũng sửa theo.
   [SPEC]    2 file spec của lane qua loader v1: inserts rỗng (superseded),
             anchor khớp ĐÚNG 1 paragraph nguồn, drop_until nằm SAU anchor, mọi
             drop pattern khớp >=1 paragraph trong vùng scoped và heading biên
@@ -28,20 +31,16 @@ trúc bằng test:
   [BHXH]    đúng 3 glyph □ -> 3 key riêng biệt chk_bc_hang_thang /
             bc_03_thang / bc_06_thang, nhãn khớp nguyên văn nguồn, đúng thứ
             tự, mỗi key xuất hiện đúng 1 lần trong template.
-  [CSHL]    câu hỏi 'Doanh nghiệp có chủ sở hữu hưởng lợi không?' có cặp
-            'Có □ Không □' RIÊNG trên nguồn và trong template là 2 ô thật
-            đứng ngay sau câu hỏi. HẠN CHẾ ĐÃ BIẾT (generator-level, ngoài
-            ownership lane): key chk_co/chk_khong dùng chung với cặp BOT
-            9.8/11.8 vì process_checkboxes chỉ repair trùng key TRONG CÙNG
-            paragraph (Pha B) — hai câu nằm ở 2 paragraph khác nhau nên cùng
-            key. Sửa đúng chỗ cần Lead đụng generator (tách pair theo vùng);
-            khi đó assert đếm == 2 của suite này sẽ báo đổi để cập nhật
-            KNOWN_DUP_CHK.
+  [CSHL]    (mới, TT121) mục CSHHL KHÔNG còn câu hỏi 'Doanh nghiệp có chủ
+            sở hữu hưởng lợi không?' — thay bằng dòng 'Doanh nghiệp kê khai
+            thông tin về chủ sở hữu hưởng lợi của doanh nghiệp theo Mẫu số 10
+            ban hành kèm theo Thông tư này.' ngay sau heading. chk_co/
+            chk_khong giờ chỉ còn 1 lần duy nhất ở câu BOT 9.8/11.8 (hạn chế
+            trùng key BOT+CSHL của process_checkboxes tự hết hiệu lực).
   [DUP]     không có key chk TRÙNG MỚI: tập key {tag} xuất hiện >1 lần trong
-            template phải BẰNG CHÍNH XÁC allowlist 6 key đã biết (4 chk_gt_*
-            của 2 khối chuyển đổi mục 1 — tiền lệ TRƯỚC lane, chk_co/
-            chk_khong cặp BOT+CSHL như trên), mỗi key đúng 2 lần. Key
-            chk_auto_* phải duy nhất toàn form.
+            template phải BẰNG CHÍNH XÁC allowlist 4 key đã biết (4 chk_gt_*
+            của 2 khối chuyển đổi mục 1 — tiền lệ TRƯỚC lane), mỗi key đúng
+            2 lần. Key chk_auto_* phải duy nhất toàn form.
   [RENDER]  render toàn bộ template qua docx_render.write_rendered với payload
             đủ key (chk='X') -> KHÔNG token nào sót ({a}, {#loop}, {?flag},
             {_stt}) trên document/header/footer; file render mở được bằng
@@ -94,9 +93,9 @@ TAIL_HEADINGS = {
         "thue": "11. thong tin dang ky thue",
         "bhxh": "12. thong tin ve viec dong bao hiem xa hoi",
         "cshl": "13. thong tin ve chu so huu huong loi",
-        # nguồn in '1.6' thay vì '11.6' — lỗi số của nguồn, giữ nguyên văn
-        "chi_tieu": ["11.%d" % i for i in (1, 2, 3, 4, 5, 7, 8, 9)],
-        "sai_so_so": ("1.6", "11.6"),
+        # nguồn in '11.6' đủ theo bản in 2026 (p39, laneA2 F0L đã sửa từ '1.6')
+        "chi_tieu": ["11.%d" % i for i in range(1, 10)],
+        "da_sua_so": ("1.6", "11.6"),
     },
 }
 
@@ -143,14 +142,17 @@ BHXH_KEYS = ["chk_bc_hang_thang", "chk_bc_03_thang", "chk_bc_06_thang"]
 BHXH_LABELS_RAW = ["Hàng tháng", "03 tháng một lần", "06 tháng một lần"]
 
 CSHL_QUESTION = "doanh nghiep co chu so huu huong loi khong"
+# TT121/2026: câu hỏi bị thay bằng dòng khai báo theo Mẫu số 10.
+CSHL_STATEMENT = ("doanh nghiep ke khai thong tin ve chu so huu huong loi "
+                  "cua doanh nghiep theo mau so 10")
 
 # Allowlist key chk trùng (xuất hiện đúng 2 lần trong template) — đã biết và
 # được thừa nhận: 4 chk_gt_* (2 khối "Loại giấy tờ pháp lý" ở mục 1, tiền lệ
-# TRƯỚC lane) + chk_co/chk_khong (câu BOT và câu CSHHL — hạn chế
-# cross-paragraph của process_checkboxes, xem docstring [CSHL]).
+# TRƯỚC lane). chk_co/chk_khong không còn trùng: câu CSHHL '□ Có/□ Không' đã
+# bị TT 121/2026 bỏ (khai CSHHL theo Mẫu số 10) nên giờ chỉ còn cặp BOT.
 KNOWN_DUP_CHK = {
     "chk_gt_cmnd": 2, "chk_gt_cccd": 2, "chk_gt_ho_chieu": 2,
-    "chk_gt_loai_khac": 2, "chk_co": 2, "chk_khong": 2,
+    "chk_gt_loai_khac": 2,
 }
 
 BOX_RE = re.compile(r"[□☐]")
@@ -315,15 +317,15 @@ def t_source_tail():
         for ct in h["chi_tieu"]:
             assert any(t == ct for t in tf[idx[1]:idx[2]]), \
                 "%s: thiếu chỉ tiêu %r trong vùng mục thuế" % (fid, ct)
-        # lỗi số của nguồn (M04: '1.6' thay vì '11.6') — giữ nguyên văn
-        if h["sai_so_so"]:
-            sai, dung = h["sai_so_so"]
-            assert any(t == sai for t in tf[idx[1]:idx[2]]), \
-                "%s: nguồn đã sửa %r -> %r? cập nhật TAIL_HEADINGS" % (
-                    fid, sai, dung)
-            assert not any(t == dung for t in tf[idx[1]:idx[2]]), \
-                "%s: nguồn xuất hiện %r — evidence lỗi số hết hiệu lực" % (
-                    fid, dung)
+        # lỗi số của nguồn (M04) — bản in 2026 đã sửa '1.6' -> '11.6' (p39),
+        # nguồn cũng đã sửa theo: '11.6' phải CÓ, '1.6' phải MẤT
+        if h.get("da_sua_so"):
+            sai, dung = h["da_sua_so"]
+            assert any(t == dung for t in tf[idx[1]:idx[2]]), \
+                "%s: thiếu chỉ tiêu %r (bản in 2026 p39 in %r)" % (
+                    fid, dung, dung)
+            assert not any(t == sai for t in tf[idx[1]:idx[2]]), \
+                "%s: nguồn còn %r — TT121 đã sửa thành %r" % (fid, sai, dung)
         # 3 dòng □ BHXH (glyph đứng TRƯỚC nhãn) trong vùng mục BHXH
         bh = [t for t in tf[idx[2]:idx[3]] if BOX_RE.search(t)]
         for lbl in BHXH_LABELS:
@@ -335,14 +337,14 @@ def t_source_tail():
             "%s: không có dòng 'Có □' (BOT) trong mục thuế" % fid
         assert any(t == "khong □" for t in thue_zone), \
             "%s: không có dòng 'Không □' (BOT) trong mục thuế" % fid
-        # câu CSHHL: '□ Có' và '□ Không' ngay sau câu hỏi
-        cq = next(i for i, t in enumerate(tf) if t.startswith(CSHL_QUESTION))
-        tail_after = tf[cq:cq + 3]
-        assert any(t == "□ co" for t in tail_after), \
-            "%s: sau câu hỏi CSHHL không có '□ Có' (thấy %r)" % (
-                fid, tail_after)
-        assert any(t == "□ khong" for t in tail_after), \
-            "%s: sau câu hỏi CSHHL không có '□ Không'" % fid
+        # CSHHL theo TT121: câu hỏi cũ PHẢI MẤT, dòng khai báo theo Mẫu số 10
+        # PHẢI CÓ ngay trong vùng mục CSHHL
+        assert not any(t.startswith(CSHL_QUESTION) for t in tf), \
+            "%s: câu hỏi CSHHL cũ còn trong nguồn — TT121 đã bỏ" % fid
+        i_h_cshl = idx[3]
+        assert any(t.startswith(CSHL_STATEMENT)
+                   for t in tf[i_h_cshl:i_h_cshl + 3]), \
+            "%s: thiếu dòng 'kê khai CSHHL theo Mẫu số 10' sau heading" % fid
         # nguồn flatten: không còn w:tbl nào (bảng do spec tái dựng)
         assert len(docx.Document(str(bfm.find_source(fid))).tables) == 0, \
             "%s: nguồn đã có w:tbl — cấu trúc nguồn đổi, rà lại lane" % fid
@@ -524,53 +526,42 @@ def t_bhxh():
                     fid, k, counts.get(k))
 
 
-@check("[CSHL] cau hoi co pair 'Có/Khong' rieng tren nguon; cap o ngay sau cau hoi")
+@check("[CSHL] khai bao theo Mau 10 (TT121); chk_co/chk_khong chi con o cau BOT")
 def t_cshl():
     for fid in FORMS:
-        blocks = blocks_json(fid)["blocks"]
-        cb = chk_blocks(fid)
-        texts = para_texts(fid)
-        i_cshl = block_index_of(fid, TAIL_HEADINGS[fid]["cshl"], texts)
-        i_q = block_index_of(fid, CSHL_QUESTION, texts)
-        assert i_cshl < i_q, "%s: câu hỏi CSHHL đứng trước heading mục" % fid
-        # đúng 2 lần chk_co (BOT + CSHHL) — lần 2 phải đứng NGAY sau câu hỏi
-        i_co = [j for j, b in enumerate(cb) if b["key"] == "chk_co"]
-        assert len(i_co) == 2, \
-            "%s: chk_co xuất hiện %d lần (BOT + CSHHL) — lệch allowlist" % (
-                fid, len(i_co))
-        bot_idx, cshl_idx = i_co
-        assert bot_idx < cshl_idx, \
-            "%s: thứ tự 2 lần chk_co không phải BOT -> CSHHL" % fid
-        # vị trí block câu hỏi -> số chk block trước nó
-        q_block_pos = None
-        for bi, b in enumerate(blocks):
-            if b.get("t") == "p" and fold("".join(
-                    r.get("text", "") for r in b.get("runs", []))
-                    ).startswith(CSHL_QUESTION):
-                q_block_pos = bi
-                break
-        assert q_block_pos is not None, "%s: mất block câu hỏi CSHHL" % fid
-        n_chk_before_q = sum(1 for b in blocks[:q_block_pos]
-                             if b.get("t") == "chk")
-        assert cshl_idx == n_chk_before_q, \
-            "%s: pair CSHHL không nằm NGAY sau câu hỏi (chk trước câu hỏi=%d, " \
-            "vị trí chk_co thứ 2=%d)" % (fid, n_chk_before_q, cshl_idx)
-        assert cb[cshl_idx].get("label") == "Có", \
-            "%s: ô 1 pair CSHHL sai nhãn %r" % (
-                fid, cb[cshl_idx].get("label"))
-        assert cb[cshl_idx + 1].get("key") == "chk_khong" and \
-            cb[cshl_idx + 1].get("label") == "Không", \
-            "%s: pair CSHHL thiếu bên Không hoặc sai nhãn" % fid
-        # template: {chk_co}/{chk_khong} đúng 2 lần (BOT + CSHHL); nếu generator
-        # đã tách pair theo vùng thì con số đổi -> cập nhật KNOWN_DUP_CHK
+        src_folds = folds(fid)  # SOURCE (docx gốc, không phải artifact)
+        tpl_texts = para_texts(fid)
+        i_cshl_src = next((i for i, t in enumerate(src_folds)
+                           if t.startswith(TAIL_HEADINGS[fid]["cshl"])), -1)
+        assert i_cshl_src >= 0, "%s: thiếu heading CSHHL trong nguồn" % fid
+        # nguồn: câu hỏi cũ PHẢI MẤT, dòng khai báo Mẫu số 10 PHẢI CÓ
+        assert all(not t.startswith(CSHL_QUESTION) for t in src_folds), \
+            "%s: câu hỏi CSHHL cũ còn trong nguồn — TT121 đã bỏ" % fid
+        assert any(t.startswith(CSHL_STATEMENT)
+                   for t in src_folds[i_cshl_src:i_cshl_src + 3]), \
+            "%s: thiếu dòng 'kê khai CSHHL theo Mẫu số 10' sau heading (nguồn)" % fid
+        # template: câu hỏi cũ mất, dòng mới có, đúng vị trí sau heading
+        tpl_texts = tpl_paras(fid)
+        tpl_folds = [fold(t) for t in tpl_texts]
+        assert all(not t.startswith(CSHL_QUESTION) for t in tpl_folds), \
+            "%s: câu hỏi CSHHL cũ còn trong template" % fid
+        assert any(t.startswith(CSHL_STATEMENT) for t in tpl_folds), \
+            "%s: thiếu dòng 'kê khai CSHHL theo Mẫu số 10' trong template" % fid
+        # chk_co/chk_khong giờ đúng 1 lần (câu BOT 9.8/11.8 duy nhất)
         counts = tpl_tag_counts(fid)
-        assert counts.get("chk_co") == 2 and counts.get("chk_khong") == 2, \
-            "%s: {chk_co}/{chk_khong} đếm %r/%r — generator đã tách pair? " \
-            "cập nhật KNOWN_DUP_CHK" % (fid, counts.get("chk_co"),
-                                        counts.get("chk_khong"))
+        assert counts.get("chk_co") == 1 and counts.get("chk_khong") == 1, \
+            "%s: {chk_co}/{chk_khong} đếm %r/%r (kỳ vọng 1/1 — chỉ câu BOT)" % (
+                fid, counts.get("chk_co"), counts.get("chk_khong"))
+        # form_maps không đăng ký thêm key chk từ vùng CSHHL
+        fm_keys = [f["key"] for f in form_maps_entry(fid)["fields"]]
+        assert fm_keys.count("chk_co") == 1 and fm_keys.count("chk_khong") == 1, \
+            "%s: form_maps chk_co/chk_khong lệch" % fid
 
 
-@check("[DUP] khong key chk trung MOI; dung allowlist 6 key, moi key x2")
+@check("[DUP] khong key chk trung MOI; dung allowlist 4 key, moi key x2")
+
+
+@check("[DUP] khong key chk trung MOI; dung allowlist 4 key, moi key x2")
 def t_no_new_dup():
     for fid in FORMS:
         counts = tpl_tag_counts(fid)

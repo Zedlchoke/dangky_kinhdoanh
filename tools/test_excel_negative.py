@@ -20,6 +20,10 @@ None}. Mã lỗi là contract chung với bridge X5 (hiện toast người dùng
 [NG12] [O7] xóa sheet map trên cụm hộ KD (PLII_M03)              -> BAD_HEADER
 [NG13] [O7] ô công thức độc hại "=1+1"/"=cmd…" (PLII_M02) -> fail-loud, no data
 [NG14] [O7] ô lạ trong vùng điền (PLII_M01)                  -> UNKNOWN_CELL
+[NG15] [P6=C] version lạ trên cụm thay đổi ngành (PLI_M12)       -> BAD_VERSION
+[NG16] [P6=C] xóa sheet phiếu trên cụm thuế (PLI_M27)            -> BAD_HEADER
+[NG17] [P6=C] ô công thức độc hại vào ô bắt buộc (PLI_M12) -> fail-loud, no data
+[NG18] [P6=C] ô lạ trong vùng điền (PLI_M12)                 -> UNKNOWN_CELL
 
 Chạy:  python3 -X utf8 -m tools.test_excel_negative   (exit 0 = PASS)
 """
@@ -243,6 +247,74 @@ M01_REQUIRED = {"q_ho_ten": "Nguyễn Văn A", "q_so_cccd": "079085001234",
                 "q_ten_hkd": "Hộ kinh doanh A", "q_dia_chi_chi_tiet": "25 Nguyễn Trãi",
                 "q_xa_phuong": "P. Bến Thành", "q_tinh_thanh": "TP.HCM"}
 
+# --- [P6=C 2026-09-06 — f4xl] cụm thay đổi ngành (PLI_M12) + cụm thuế (M27) --
+
+Q_M12 = json.loads((ROOT / "app" / "data" / "questionnaire" / "PLI_M12.json")
+                   .read_text(encoding="utf-8"))
+Q_M27 = json.loads((ROOT / "app" / "data" / "questionnaire" / "PLI_M27.json")
+                   .read_text(encoding="utf-8"))
+M12_REQUIRED = {"q_dn_ten": "CÔNG TY TNHH AN PHÁT",
+                "q_dn_ma_so": "0312345678"}
+M27_REQUIRED = {"q_dn_ten": "CÔNG TY TNHH AN PHÁT",
+                "q_dn_ma_so": "0312345678"}
+
+
+def _tamper_meta_version(p: Path, q: dict) -> None:
+    """Sửa metadata questionnaire_version trên sheet map -> version lạ."""
+    wb = openpyxl.load_workbook(p)
+    mp = wb[MAP_SHEET]
+    fixed = False
+    for row in mp.iter_rows(min_row=1, max_row=2):
+        for cell in row:
+            if isinstance(cell.value, str) and \
+                    cell.value.startswith("questionnaire_version="):
+                cell.value = "questionnaire_version=99"
+                fixed = True
+    assert fixed, "không tìm thấy metadata questionnaire_version"
+    wb.save(p)
+
+
+@check("[NG15] P6=C cụm thay đổi ngành: metadata questionnaire_version=99 "
+       "(PLI_M12) -> BAD_VERSION")
+def ng15():
+    p = export_filled(required_extra=M12_REQUIRED, questionnaire=Q_M12)
+    _tamper_meta_version(p, Q_M12)
+    res = import_questionnaire(p, Q_M12)
+    assert res["ok"] is False and res["data"] is None, res
+    assert codes(res) == ["BAD_VERSION"], res["errors"]
+
+
+@check("[NG16] P6=C cụm thuế: xóa sheet phiếu 'Phieu' (PLI_M27) -> BAD_HEADER")
+def ng16():
+    tmp = Path(tempfile.mkdtemp(prefix="p3ng16_"))
+    out = write_questionnaire(Q_M27, tmp / "p.xlsx")
+    wb = openpyxl.load_workbook(out)
+    del wb["Phieu"]
+    # openpyxl không lưu workbook chỉ còn sheet ẩn — mở khóa map để ghi được
+    # file "khách đã xóa nhầm sheet phiếu" (map vẫn bị loại khỏi danh sách
+    # sheet phiếu khi import theo tên).
+    wb[MAP_SHEET].sheet_state = "visible"
+    p = tmp / "no_phieu.xlsx"
+    wb.save(p)
+    res = import_questionnaire(p, Q_M27)
+    assert res["ok"] is False and res["data"] is None, res
+    assert codes(res) == ["BAD_HEADER"], res["errors"]
+
+
+@check("[NG17] P6=C cụm thay đổi ngành: ô công thức độc hại '=1+1' / '=cmd…' "
+       "vào ô bắt buộc (PLI_M12) -> fail-loud không crash, không data một phần")
+def ng17():
+    p = export_filled({"q_dn_ten": "=1+1",
+                       "q_dn_ma_so": "=cmd|' /C calc'!A0"},
+                      required_extra=M12_REQUIRED, questionnaire=Q_M12)
+    res = import_questionnaire(p, Q_M12)
+    # app chỉ ĐỌC giá trị (data_only=True), không bao giờ thực thi công thức;
+    # ô công thức không có cached value -> rỗng -> required missing -> ok=False.
+    assert res["ok"] is False and res["data"] is None, res
+    assert "MISSING_REQUIRED" in codes(res), res["errors"]
+    assert all("calc" not in str(v) for row in (res["data"] or {}).items()
+               for v in row), "giá trị công thức không được lọt vào data"
+
 
 @check("[NG11] O7 cụm hộ KD: metadata questionnaire_version=99 (PLII_M01) "
        "-> BAD_VERSION")
@@ -313,9 +385,32 @@ def ng14():
     assert "UNKNOWN_CELL" in codes(res), res["errors"]
 
 
+@check("[NG18] P6=C cụm thay đổi ngành: điền ô lạ trong vùng điền (PLI_M12) "
+       "-> UNKNOWN_CELL")
+def ng18():
+    p = export_filled(required_extra=M12_REQUIRED, questionnaire=Q_M12)
+    wb = openpyxl.load_workbook(p)
+    mp, ws = wb[MAP_SHEET], wb["Phieu"]
+    col = {h: i + 1 for i, h in enumerate(MAP_COLUMNS)}
+    # Ô lạ CÙNG HÀNG với một ô điền thật (cột C — cột C có ô map nhờ bảng
+    # row_group ngành): cột có ô map + hàng có ô map + nội dung không tĩnh.
+    addr = None
+    for r in range(4, mp.max_row + 1):
+        if mp.cell(r, col["question_id"]).value == "q_dn_ten":
+            addr = mp.cell(r, col["cell"]).value
+            break
+    assert addr and addr.startswith("B"), addr
+    row = int(addr[1:])
+    ws["C%d" % row] = "khach ghi chen ngang"
+    wb.save(p)
+    res = import_questionnaire(p, Q_M12)
+    assert res["ok"] is False and res["data"] is None, res
+    assert "UNKNOWN_CELL" in codes(res), res["errors"]
+
+
 def main() -> int:
     for fn in (ng1a, ng1b, ng2, ng3, ng4, ng5, ng6, ng7, ng8, ng9, ng10,
-               ng11, ng12, ng13, ng14):
+               ng11, ng12, ng13, ng14, ng15, ng16, ng17, ng18):
         fn()
     passed = sum(1 for ok, _ in _results if ok)
     failed = len(_results) - passed

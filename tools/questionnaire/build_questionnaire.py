@@ -58,7 +58,11 @@ def load_blocked(paths: list[Path], form_maps: dict) -> dict[str, dict]:
                 "BAD_VERSION", "%s: blocked_version=%r không hỗ trợ"
                 % (p.stem, source.get("blocked_version")))
         entries = source.get("blocked")
-        if not isinstance(entries, list) or not entries:
+        # [f4xl 2026-09-06] danh sách rỗng là HỢP LỆ: 9 mẫu TT121-thay đã
+        # migrate xong (merge e268038) — manifest giữ lại làm sổ theo dõi
+        # (ghi chú M11 REMOVED_BY_CURRENT_LAW), `blocked: []` = không còn
+        # form nào bị chặn. Chỉ fail-loud khi thiếu/không phải list.
+        if not isinstance(entries, list):
             raise QuestionnaireError(
                 "NO_ENTRIES", "%s: thiếu danh sách 'blocked'" % p.stem)
         for e in entries:

@@ -798,14 +798,21 @@ def _load_pli_m72() -> dict:
 
 
 def _fixture_value(qid: str) -> Any:
-    """Giá trị điền mẫu cho phiếu TỐT (None = bỏ trống)."""
+    """Giá trị điền mẫu cho phiếu TỐT (None = bỏ trống).
+
+    [f4xl 2026-09-06] Ô mã định danh (q_so_cccd) và ô text số (q_nganh_ma)
+    ghi CHUỖI như khách gõ vào ô number_format="@" — trước đây fixture ghi
+    int/number làm case "khách gõ số" nhưng đã bị guard [O4] BAD_ID_TEXT chặn
+    (ô số bị Excel đổi dạng = mất số 0 đầu). Case "khách gõ số" giờ thuộc
+    negative suite (tools/test_excel_negative.py NG9).
+    """
     return {
         "q_loai_hinh": "Doanh nghiệp tư nhân",    # label -> value DNTN
         "q_ten_tieng_viet": "  Công ty A ",        # trim -> "Công ty A"
         "q_dia_chi_tru_so": "123 Nguyễn Huệ, Quận 1, TP. Hồ Chí Minh",
         "q_ho_ten": "nguyễn văn a",                # app tự in hoa, giữ nguyên
         "q_gioi_tinh": "Nam",
-        "q_so_cccd": 79085001234,                  # khách gõ số -> vẫn là text
+        "q_so_cccd": "79085001234",                # chuỗi Text — guard [O4]
         "q_ngay_sinh": "5/12/1985",                # 1 chữ số ngày -> "05"
         "q_cccd_ngay_cap": datetime(2015, 3, 2),   # ô ngày Excel -> "02/03/2015"
         "q_von": "5.000.000",                      # dấu chấm nghìn -> 5000000
@@ -867,7 +874,7 @@ def _write_phieu(path: Path, version: int = 1,
     ws["C25"] = "Mã ngành (app tra VSIC giúp — không cần điền)"
     ws["D25"] = "Đây có phải ngành nghề chính không? (đánh X vào đúng một dòng)"
     table = {"q_nganh_ten": ("B", ["Bán lẻ hàng điện tử", "Cho thuê xe"]),
-             "q_nganh_ma": ("C", [4774, None]),
+             "q_nganh_ma": ("C", ["4774", None]),   # chuỗi Text — guard [O4]
              "q_nganh_chinh": ("D", ["X", None])}
     for table_row, sheet_row in ((0, 26), (1, 27)):
         for qid, (col, values) in table.items():

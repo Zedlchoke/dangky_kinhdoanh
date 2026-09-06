@@ -1,36 +1,44 @@
 {
   "blocked_version": 1,
-  "note": "[O7 — owner decision packet v7, 2026-09-06] Manifest các form bị CHẶN sinh questionnaire (blocked-chờ-migration). Form thuộc Thông tư 121/2026/TT-BTC (thay Phụ lục I số 1, 2, 3, 4, 5, 10, 12, 27, 30; bãi bỏ số 11) phải được migrate template/spec theo bản ký chính thức TRƯỚC khi sinh câu hỏi — KHÔNG copy cấu trúc mẫu 2025 bằng suy đoán (L-2026). Builder đọc mọi file clusters/blocked_*.json, fail-loud nếu một cluster câu hỏi trỏ tới form trong danh sách này. Cụm khác không bị ảnh hưởng vẫn chạy bình thường. Gỡ entry: sau khi Lead migrate form, xóa entry + tạo cluster câu hỏi theo mẫu hiện hành mới.",
-  "blocked": [
+  "note": "[O7 — owner decision packet v7, 2026-09-06] Manifest các form bị CHẶN sinh questionnaire (blocked-chờ-migration). Form thuộc Thông tư 121/2026/TT-BTC (thay Phụ lục I số 1, 2, 3, 4, 5, 10, 12, 27, 30; bãi bỏ số 11) phải được migrate template/spec theo bản ký chính thức TRƯỚC khi sinh câu hỏi — KHÔNG copy cấu trúc mẫu 2025 bằng suy đoán (L-2026). Builder đọc mọi file clusters/blocked_*.json, fail-loud nếu một cluster câu hỏi trỏ tới form trong danh sách này. || [f4xl 2026-09-06] GỠ HẾT entry: 9 mẫu đã migrate xong theo bản ký chính thức (PLI_M01, PLI_M02, PLI_M03, PLI_M04, PLI_M05, PLI_M10, PLI_M12, PLI_M27, PLI_M30 — merge e268038) nên `blocked` giờ là danh sách RỖNG có chủ đích (danh sách rỗng là hợp lệ). PLI_M11 (Mẫu Phụ lục I số 11 — Kê khai chủ sở hữu hưởng lợi) KHÔNG vào danh sách vì REMOVED_BY_CURRENT_LAW: bị bãi bỏ bởi Thông tư 121/2026/TT-BTC Điều 1 khoản 2, hiệu lực 2026-08-21 — không dùng tạo hồ sơ mới, form_maps chỉ giữ để đọc draft cũ (xem form_maps['PLI_M11'].current_law_status). Khi migrate một mẫu mới thay thế mẫu khác trong tương lai: thêm entry {doc_id, cluster, procedures, reason} vào đây.",
+  "released": [
     {
       "doc_id": "PLI_M01",
       "cluster": "cuoc1_ho_kinh_doanh/chuyen_doi",
       "procedures": ["chuyen_doi_hkd_sang_dn"],
-      "reason": "TT121/2026 thay Mẫu Phụ lục I số 1 — chờ migrate template/spec theo bản ký chính thức"
+      "released_note": "đã migrate TT121/2026 Mẫu Phụ lục I số 1 (merge e268038) — gỡ blocked 2026-09-06"
     },
     {
       "doc_id": "PLI_M02",
       "cluster": "cuoc1_ho_kinh_doanh/chuyen_doi",
       "procedures": ["chuyen_doi_hkd_sang_dn"],
-      "reason": "TT121/2026 thay Mẫu Phụ lục I số 2 — chờ migrate; thủ tục chuyển đổi hộ KD sang DN còn phải chờ đủ cả I_M01..I_M04"
+      "released_note": "đã migrate TT121/2026 Mẫu Phụ lục I số 2 (merge e268038) — gỡ blocked 2026-09-06"
     },
     {
       "doc_id": "PLI_M03",
       "cluster": "cuoc1_ho_kinh_doanh/chuyen_doi",
       "procedures": ["chuyen_doi_hkd_sang_dn"],
-      "reason": "TT121/2026 thay Mẫu Phụ lục I số 3 — chờ migrate"
+      "released_note": "đã migrate TT121/2026 Mẫu Phụ lục I số 3 (merge e268038) — gỡ blocked 2026-09-06"
     },
     {
       "doc_id": "PLI_M04",
       "cluster": "cuoc1_ho_kinh_doanh/chuyen_doi",
       "procedures": ["chuyen_doi_hkd_sang_dn"],
-      "reason": "TT121/2026 thay Mẫu Phụ lục I số 4 — chờ migrate"
+      "released_note": "đã migrate TT121/2026 Mẫu Phụ lục I số 4 (merge e268038) — gỡ blocked 2026-09-06"
     },
     {
       "doc_id": "PLI_M12",
-      "cluster": "cuoc3_thue/bosung_cap_nhat",
+      "cluster": "thay_doi_nganh + thue_dang_ky",
       "procedures": ["bo_sung_cap_nhat_thong_tin_dkdn", "thay_doi_ten_va_tru_so", "thay_doi_nganh_nghe", "thay_doi_von_dieu_le"],
-      "reason": "TT121/2026 thay Mẫu Phụ lục I số 12 — cụm thuế/bổ sung cập nhật thông tin (kể cả thay đổi nội dung đăng ký thuế của DN) chờ migrate; cụm 2 'thay đổi ngành' cũng dùng form này nên đồng trạng thái blocked"
+      "released_note": "đã migrate TT121/2026 Mẫu Phụ lục I số 12 (merge e268038) — gỡ blocked 2026-09-06; questionnaire cụm thay đổi ngành/thuế: thay_doi_nganh.json (mục thuế của M12 là trung tâm cụm — thông báo ngành đi kèm đăng ký thuế)"
     }
-  ]
+  ],
+  "removed_by_current_law": [
+    {
+      "doc_id": "PLI_M11",
+      "verdict": "REMOVED_BY_CURRENT_LAW",
+      "reason": "Mẫu Phụ lục I số 11 bị BÃI BỎ bởi Thông tư 121/2026/TT-BTC Điều 1 khoản 2 (hiệu lực 2026-08-21) — không migrate, không sinh questionnaire, không tạo hồ sơ mới; form_maps['PLI_M11'].current_law_status ghi nhận đầy đủ"
+    }
+  ],
+  "blocked": []
 }

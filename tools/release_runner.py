@@ -145,6 +145,10 @@ SUITES: list[dict] = [
      "requires": ["python-docx"]},
     {"name": "test_acceptance_docx",      "type": "module", "target": "tools.test_acceptance_docx",
      "requires": ["python-docx"]},
+    # --- [F0L 2026-09-06] L-2026 current-law: PLI_M11 inactive catalog +
+    #     hash nguồn pháp lý — gate catalog bắt buộc sau TT 121/2026
+    {"name": "test_current_law_catalog",  "type": "module",
+     "target": "tools.test_current_law_catalog", "requires": ["python-docx"]},
     {"name": "test_audit_p1_docx_negative", "type": "module", "target": "tools.test_audit_p1_docx_negative",
      "requires": ["python-docx"]},
     {"name": "audit_blocks_check",        "type": "module", "target": "tools.audit_blocks_check",

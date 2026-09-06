@@ -488,3 +488,18 @@ docs/audits/v7-core-audit.md
 # --- [OWNER-DELEGATED DECISIONS 2026-09-06] legal backlog đổi thành evidence
 # history; decisions current ở owner packet/decision registry; mở gate L-2026 ---
 docs/legal_review_backlog.md
+# --- [F0L L-2026 2026-09-06] current-law migration: 4 nguồn pháp lý ký số
+# (bằng chứng tải + SHA-256, dẫn SOURCES.md) + PLI_M11 REMOVED_BY_CURRENT_LAW
+# (generator stamp current_law_status + manifest note + gate catalog mới +
+# form_maps regen stamp) + runner đăng ký suite mới ---
+docs/legal_sources_2026/SOURCES.md
+docs/legal_sources_2026/121-btc.signed.pdf
+docs/legal_sources_2026/296_2026_nd-cp_23072026-signed.signed.pdf
+docs/legal_sources_2026/68-btc.pdf
+docs/legal_sources_2026/168nd.signed.pdf
+tools/test_current_law_catalog.py
+tools/build_form_maps.py
+tools/release_runner.py
+app/data/table_specs/manifest.json
+app/data/form_maps.json
+app/data/form_maps.js

@@ -111,10 +111,22 @@ const P2A = [
     added: [], decision: 'D2.3=A phẳng (cùng kiến trúc M07)'
   },
   {
+    /* [Pin sync — F0L 2026-09-06, mirror tools/test_p2a_people_specs.py
+     * "[F0L] M10 2026"] Premise cũ (P2A wave): M10 = editable-grid phẳng
+     * 12 cột 2025 + D2.5=A thêm cột `quyen_chi_phoi` (NĐ 168/2025 đ1 k1 đ.b).
+     * Premise CHẾT: TT 121/2026/TT-BTC (Đ1 k1 điểm e, ảnh p2) thay Mẫu 10 —
+     * hợp đồng 2026 `ds_cshhl_2026` kind=nested-grid 18 cột vật lý (STT +
+     * 17 tag), 2 cột Tổng output-only computed (11=9+10, 14=12+13). Quyết
+     * định D2.5=A cũ được THAY bởi cột 'Kiểm soát doanh nghiệp' (cùng nội
+     * dung fn8) — ghi trong legal_status của spec formation/PLI_M10.json +
+     * commit e268038 (lead sync pin python trước, pin JS sync theo). */
     docId: 'PLI_M10', sectionId: 'ds_cshhl_doanh_nghiep',
     specFile: 'tools/form_specs/formation/PLI_M10.json',
-    specId: 'ds_cshhl', loop: 'ds_cshhl',
-    added: ['quyen_chi_phoi'], decision: 'D2.5=A cột riêng quyền chi phối',
+    specId: 'ds_cshhl_2026', loop: 'ds_cshhl',
+    manifestKind: 'nested-grid', specKind: 'nested-grid',
+    added: [],
+    decision: 'F0L 2026: TT 121/2026 thay Mẫu 10 (nested-grid 17 tag; ' +
+      'D2.5 cũ superseded bởi kiem_soat_doanh_nghiep)',
     noSignature: true
   },
   {
@@ -191,14 +203,27 @@ check('GRID_META.ds_co_dong_sang_lap: co cot dan_toc (D2.3=A)',
       'ho_ten,ngay_sinh,gioi_tinh,so_cccd,quoc_tich,dan_toc,dia_chi,so_co_phan,ty_le,chu_ky',
   '...quoc_tich,dan_toc,dia_chi...',
   FD.GRID_META.ds_co_dong_sang_lap.columns.map(c => c.tag).join(','));
-check('GRID_META.ds_cshhl: co cot quyen_chi_phoi TRUOC ghi_chu (D2.5=A)',
+check('GRID_META.ds_cshhl 2026: dung 17 tag TT 121/2026 (F0L sync)',
   (() => {
     const t = FD.GRID_META.ds_cshhl.columns.map(c => c.tag);
-    return t.indexOf('quyen_chi_phoi') === t.length - 2 &&
-      t[t.length - 1] === 'ghi_chu';
-  })(),
-  '...,quyen_chi_phoi,ghi_chu',
+    return JSON.stringify(t) === JSON.stringify([
+      'ho_ten', 'ngay_sinh', 'gioi_tinh', 'so_giay_to', 'quoc_tich',
+      'dan_toc', 'dia_chi',
+      'ty_le_von_dieule_truc_tiep', 'ty_le_von_dieule_gian_tiep',
+      'ty_le_von_dieule_tong',
+      'ty_le_co_phan_truc_tiep', 'ty_le_co_phan_gian_tiep',
+      'ty_le_co_phan_tong',
+      'thanh_vien_hop_danh', 'nhom_ca_nhan_quan_he',
+      'kiem_soat_doanh_nghiep', 'nguoi_quan_ly_doanh_nghiep']);
+  })() &&
+    JSON.stringify(FD.GRID_META.ds_cshhl.outputOnlyTags) ===
+      JSON.stringify(['ty_le_von_dieule_tong', 'ty_le_co_phan_tong']) &&
+    FD.GRID_META.ds_cshhl.columns.filter(c => c.computed).length === 2,
+  '17 tag + 2 Tong output-only computed (11=9+10, 14=12+13)',
   FD.GRID_META.ds_cshhl.columns.map(c => c.tag).join(','));
+/* Premise cũ đã chết: "GRID_META.ds_cshhl có cột quyen_chi_phoi TRƯỚC
+ * ghi_chu (D2.5=A)" — TT 121/2026 thay Mẫu 10, nội dung quyền chi phối nằm
+ * ở cột `kiem_soat_doanh_nghiep` (legal_status spec PLI_M10.json). */
 /* [Lead sync sau rename] M06 dùng LOOP RIÊNG ds_thanh_vien_tnhh (11 cột,
  * thoi_han_gop_von trước chu_ky) — GRID_META.ds_thanh_vien 10 cột giữ nguyên
  * cho M09/các mẫu khác; export conflict guard hết cờ vì tên loop là duy nhất. */
@@ -220,26 +245,42 @@ check('GRID_META.ds_nganh/ds_tv_ho_gia_dinh khong bi xuyen tach',
 // 3. Khớp chéo manifest <-> spec generator <-> runtime (+ form_maps production)
 // ===========================================================================
 P2A.forEach(s => {
+  const isNested = s.specKind === 'nested-grid';
+  const manifestKind = s.manifestKind || 'editable-grid';
   const sec = (MANIFEST[s.docId] || {})[s.sectionId];
-  check(s.docId + '/' + s.sectionId + ': ton tai trong census manifest',
-    !!sec && sec.kind === 'editable-grid',
-    'kind=editable-grid', sec && sec.kind);
+  check(s.docId + '/' + s.sectionId + ': ton tai trong census manifest (kind=' +
+      manifestKind + ')',
+    !!sec && sec.kind === manifestKind,
+    'kind=' + manifestKind, sec && sec.kind);
 
   const raw = loadJson(s.specFile);
   const ent = (raw.tables || []).filter(t => t.spec.id === s.specId)[0];
-  check(s.docId + '/' + s.specId + ': spec JSON co entry (kind=list)',
-    !!ent && ent.spec.kind === 'list' && !ent.legal_status,
-    'kind=list, khong legal_status (kind=list khong dung co che blocked)',
-    ent && ent.spec.kind);
-  const hdrs = ent ? ent.headers : [];
-  const cols = ent ? ent.spec.cols : [];
-  const tagsFromSpec = hdrs.map((h, i) => {
-    const hf = R.normText(h).replace(/\s+/g, ' ').trim()
-      .toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
-      .replace(/đ/g, 'd');
-    const hit = cols.filter(c => new RegExp(c[0]).test(hf))[0];
-    return hit ? hit[1] : null;
-  });
+  if (!isNested) {
+    check(s.docId + '/' + s.specId + ': spec JSON co entry (kind=list)',
+      !!ent && ent.spec.kind === 'list' && !ent.legal_status,
+      'kind=list, khong legal_status (kind=list khong dung co che blocked)',
+      ent && ent.spec.kind);
+  } else {
+    check(s.docId + '/' + s.specId +
+        ': spec JSON co entry (kind=nested-grid, khong blocked)',
+      !!ent && ent.spec.kind === 'nested-grid' && !!ent.legal_status &&
+        ent.legal_status.blocked === false,
+      'kind=nested-grid, legal_status.blocked=false',
+      ent && (ent.spec.kind + ' / blocked=' +
+        JSON.stringify(ent.legal_status && ent.legal_status.blocked)));
+  }
+  // tag theo spec: kind=list suy từ header bằng bảng regex; kind=nested-grid
+  // đọc thẳng spec.columns[].tag (STT col 0 do engine sinh, không khai).
+  const tagsFromSpec = isNested
+    ? (ent ? ent.spec.columns.map(c => c.tag) : [])
+    : (ent ? (ent.headers || []).map((h, i) => {
+        const hf = R.normText(h).replace(/\s+/g, ' ').trim()
+          .toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
+          .replace(/đ/g, 'd');
+        const hit = (ent.spec.cols || []).filter(c =>
+          new RegExp(c[0]).test(hf))[0];
+        return hit ? hit[1] : null;
+      }) : []);
   check(s.docId + '/' + s.specId + ': loop/key khop manifest semantic_key hoac loop_audit',
     !!sec && (sec.semantic_key === s.loop ||
       ((sec.loop_audit || {}).loop === s.loop)),
@@ -270,10 +311,23 @@ P2A.forEach(s => {
       deltaOk && lost.length === 0,
       'added=[' + want.join(',') + '] lost=[]',
       'added=[' + added.join(',') + '] lost=[' + lost.join(',') + ']');
-    check(s.docId + '/' + s.loop + ': header text production duoc giu nguyen',
-      dt.columns.every(c => hdrs.indexOf(c.header) >= 0),
-      'moi header cu con trong spec', JSON.stringify(
-        dt.columns.map(c => c.header).filter(h => hdrs.indexOf(h) < 0)));
+    if (!isNested) {
+      // kind=list: header phẳng của production phải còn nguyên trong spec
+      const hdrs = ent ? (ent.headers || []) : [];
+      check(s.docId + '/' + s.loop + ': header text production duoc giu nguyen',
+        dt.columns.every(c => hdrs.indexOf(c.header) >= 0),
+        'moi header cu con trong spec', JSON.stringify(
+          dt.columns.map(c => c.header).filter(h => hdrs.indexOf(h) < 0)));
+    } else {
+      // kind=nested-grid (M10 2026): header nằm ở header_rows, form_maps
+      // chỉ giữ (col,tag) — đối chiếu ĐẦY ĐỦ tag set hai chiều + đúng thứ tự.
+      check(s.docId + '/' + s.loop + ': form_maps production khop dung ' +
+          specTags.length + ' tag spec (thu tu giong)',
+        prodTags.length === specTags.length && lost.length === 0 &&
+          added.length === 0 &&
+          JSON.stringify(prodTags) === JSON.stringify(specTags),
+        specTags.join(','), prodTags.join(','));
+    }
     // cột mới phải có metadata runtime (M06 đã wire form-scoped FORM_GRID_META)
     const meta = FD.getGridMeta({ docId: s.docId, loop: s.loop });
     const metaTags = ((meta && meta.columns) || []).map(c => c.tag);
@@ -282,6 +336,17 @@ P2A.forEach(s => {
       JSON.stringify(unMeta) === JSON.stringify([]),
       '[] (Lead wire xong: M06 form-scoped, M07/M10 GRID_META)',
       JSON.stringify(unMeta));
+    if (isNested) {
+      // runtime meta phải khớp ĐẦY ĐỦ 17 tag spec + 2 Tổng output-only
+      check(s.docId + '/' + s.loop +
+          ': metadata runtime 2026 khop spec (17 tag + 2 Tong output-only)',
+        JSON.stringify(metaTags) === JSON.stringify(specTags) &&
+          JSON.stringify((meta && meta.outputOnlyTags) || []) ===
+            JSON.stringify(['ty_le_von_dieule_tong', 'ty_le_co_phan_tong']),
+        specTags.join(',') + ' | outputOnly 2 Tong',
+        metaTags.join(',') + ' | ' +
+          JSON.stringify((meta && meta.outputOnlyTags) || []));
+    }
   }
 
   // PRE-INTEGRATION probe: với loop ĐÃ có trong blocks thì đối chiếu hiện
@@ -305,7 +370,12 @@ P2A.forEach(s => {
       pre(s.docId + '/' + s.loop + ': cot moi [' + added.join(',') +
         '] chua co trong blocks (can Lead regen de bat assert cols theo spec)');
     } else {
-      const want = tagsFromSpec.map((t, i) => [i, t]).filter(x => x[1]);
+      /* [Pin sync — F0L] kind=list: col khớp vị trí header (0-based);
+       * kind=nested-grid M10 2026: blocks loop khai col 1..17 (STT col 0
+       * do engine sinh — spec col_index 1..17). */
+      const want = isNested
+        ? tagsFromSpec.map((t, i) => [i + 1, t]).filter(x => x[1])
+        : tagsFromSpec.map((t, i) => [i, t]).filter(x => x[1]);
       check(s.docId + '/' + s.loop + ': blocks cols khop spec (post-regen)',
         JSON.stringify(got.slice().sort()) === JSON.stringify(want.slice().sort()),
         JSON.stringify(want.slice().sort()), JSON.stringify(got.slice().sort()));
@@ -399,11 +469,18 @@ M72_LOOPS.forEach(ln => {
 // 5. Cổng registry: P2A KHÔNG thêm contract kind mới
 // ===========================================================================
 /* [Lead sync sau wire P2C] registry kind-table giờ 8 form (thêm PLI_M01 +
- * PLI_M02 fixed-matrix). P2A là editable-grid → 6 section của lane VẪN PHẢI
+ * PLI_M02 fixed-matrix). P2A là editable-grid → 6 section của lane VẦN PHẢI
  * vắng mặt trong FORM_TABLE_CONTRACTS (check dưới). */
+/* [Pin sync — F0L 2026-09-06] premise "8 fixture form" đã chết — 3 form được
+ * đăng ký hợp lệ bởi các wave sau P2A: PLI_M05 (wave cap-von, merge fc07c69,
+ * bảng nguồn vốn điều lệ 3 cột), PLII_M02 (F1-IN D5.2=A 2026-09-06: 2
+ * fixed-matrix thuế a7_thue_chi_tieu_cu_moi + c5_thue_chi_tieu_cap_doi),
+ * PLI_M78 (F1-IN O1+D6.4 2026-09-06: "3. Thông tin yêu cầu"). P2A không
+ * đăng ký kind mới — check dưới chỉ ghim TẬP form, không đụng kind. */
 const WANT_CONTRACT_FORMS = ['PLI_M02', 'PLI_M03', 'PLI_M04', 'PLI_M70',
-  'PLI_M71', 'PLI_M12', 'PLI_M15', 'PLI_M01'];
-check('FORM_TABLE_CONTRACTS dung 8 fixture form (P2A la editable-grid)',
+  'PLI_M71', 'PLI_M12', 'PLI_M15', 'PLI_M01',
+  'PLI_M05', 'PLII_M02', 'PLI_M78'];
+check('FORM_TABLE_CONTRACTS dung 11 form (8 P2C + PLI_M05 + PLII_M02 + PLI_M78)',
   Object.keys(FD.FORM_TABLE_CONTRACTS).sort().join(',') ===
     WANT_CONTRACT_FORMS.sort().join(','),
   WANT_CONTRACT_FORMS.sort().join(','),

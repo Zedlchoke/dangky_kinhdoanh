@@ -48,9 +48,9 @@
   },
   "sections_total": 111,
   "sections_by_kind": {
-   "editable-grid": 43,
+   "editable-grid": 42,
    "fixed-matrix": 47,
-   "nested-grid": 7,
+   "nested-grid": 8,
    "output-table": 6,
    "prose-block": 3,
    "scalar-fields": 4,
@@ -2727,9 +2727,9 @@
        null
       ]
      },
-     "notes": "Sau chân trang của Mẫu 9 thật, template chứa tiếp toàn văn 'DANH SÁCH THÀNH VIÊN CÔNG TY TNHH HAI THÀNH VIÊN TRỞ LÊN' (Mẫu 6), 'DANH SÁCH CỔ ĐÔNG SÁNG LẬP' (Mẫu 7), 'DANH SÁCH CỔ ĐÔNG LÀ NHÀ ĐẦU TƯ NƯỚC NGOÀI' (Mẫu 8), một bản 'DANH SÁCH THÀNH VIÊN CÔNG TY HỢP DANH' thứ hai (header đầy đủ 14 cột dạng paragraph + glued 'STTTên thành viênSố, ngày cấp, nơi cấp...') và 'DANH SÁCH CHỦ SỞ HỮU HƯỞNG LỢI' (Mẫu 10) - tất cả là paragraph rời, không w:tbl. File nguồn DN_PL1_Mau_09... cũng nhiễm đúng cấu trúc này → lỗi tách từ file full, KHÔNG phải nội dung của Mẫu 9. | [F0L O1 2026-09-06] Đã DECONTAMINATE: 129 paragraph Mẫu 6/7/8/9(lần 2)/10 + run \"Mẫu số 6\" dính chân trang bị XÓA KHỎI NGUỒN (commit laneC 3eb9a55, merge 29c850f); 41/41 tag thật giữ nguyên; gate tools.test_m09_decontaminate 8/8; verdict REMOVED_BY_SOURCE_CLEANUP — xóa thật khỏi nguồn, không hiển thị, không render, không ngụy trang output.",
+     "notes": "Sau chân trang của Mẫu 9 thật, template chứa tiếp toàn văn 'DANH SÁCH THÀNH VIÊN CÔNG TY TNHH HAI THÀNH VIÊN TRỞ LÊN' (Mẫu 6), 'DANH SÁCH CỔ ĐÔNG SÁNG LẬP' (Mẫu 7), 'DANH SÁCH CỔ ĐÔNG LÀ NHÀ ĐẦU TƯ NƯỚC NGOÀI' (Mẫu 8), một bản 'DANH SÁCH THÀNH VIÊN CÔNG TY HỢP DANH' thứ hai (header đầy đủ 14 cột dạng paragraph + glued 'STTTên thành viênSố, ngày cấp, nơi cấp...') và 'DANH SÁCH CHỦ SỞ HỮU HƯỞNG LỢI' (Mẫu 10) - tất cả là paragraph rời, không w:tbl. File nguồn DN_PL1_Mau_09... cũng nhiễm đúng cấu trúc này → lỗi tách từ file full, KHÔNG phải nội dung của Mẫu 9. | [F0L O1 2026-09-06] Đã DECONTAMINATE: 129 paragraph Mẫu 6/7/8/9(lần 2)/10 + run \"Mẫu số 6\" dính chân trang bị XÓA KHỎI NGUỒN (laneC 3eb9a55/merge 29c850f); 41/41 tag thật giữ nguyên; gate tools.test_m09_decontaminate 8/8; verdict REMOVED_BY_SOURCE_CLEANUP.",
      "lead_reclassification": {
-      "reason": "Template chua nguyen van Mau 6/7/8/9(lan 2)/10 sau chan trang Mau 9 that (#p103-p222); can quyet dinh nguon/pham vi phap ly truoc khi lam bat cu grid nao."
+      "reason": "[F0L O1 2026-09-06] Vung nhiem da bi XOA KHOI NGUON (129 para Mau 6/7/8/9-lan2/10, laneC 3eb9a55/merge 29c850f); 41/41 tag that giu nguyen; gate tools.test_m09_decontaminate 8/8 — verdict REMOVED_BY_SOURCE_CLEANUP (xoa that, khong nguy trang output)."
      }
     }
    ],
@@ -2745,7 +2745,7 @@
     "loop": 1
    },
    "summary_counts_recount": {
-    "p": 72,
+    "p": 68,
     "chk": 14,
     "table": 0,
     "loop": 1
@@ -2767,7 +2767,7 @@
     {
      "section_id": "ds_cshhl_doanh_nghiep",
      "title": "Danh sách chủ sở hữu hưởng lợi của doanh nghiệp",
-     "kind": "editable-grid",
+     "kind": "nested-grid",
      "required_columns": [
       "stt",
       "ho_ten",
@@ -2777,10 +2777,16 @@
       "quoc_tich",
       "dan_toc",
       "dia_chi_lien_lac",
-      "ty_le_so_huu_von_dieule",
-      "ty_le_co_phan_bieu_quyet",
-      "quyen_chi_phoi",
-      "ghi_chu"
+      "ty_le_von_dieule_truc_tiep",
+      "ty_le_von_dieule_gian_tiep",
+      "ty_le_von_dieule_tong",
+      "ty_le_co_phan_truc_tiep",
+      "ty_le_co_phan_gian_tiep",
+      "ty_le_co_phan_tong",
+      "thanh_vien_hop_danh",
+      "nhom_ca_nhan_quan_he",
+      "kiem_soat_doanh_nghiep",
+      "nguoi_quan_ly_doanh_nghiep"
      ],
      "status": "already_complete",
      "source_evidence": {
@@ -2792,7 +2798,7 @@
        3
       ]
      },
-     "notes": "Loop đủ tag 10/10 cột dữ liệu của template production hiện tại (11 cột kể STT) - khớp template. Nhưng so với header mẫu gốc 12 cột (glued trong nguồn M09): nhóm 'Chủ sở hữu hưởng lợi của doanh nghiệp được xác định...' có 3 cột con: Tỷ lệ sở hữu vốn điều lệ | Tỷ lệ sở hữu cổ phần có quyền biểu quyết | QUYỀN CHI PHỐI - template hiện tại thiếu cột Quyền chi phối (chân trang 4 NĐ 168/2025 yêu cầu ghi rõ quyền chi phối; hiện không có chỗ kê khai riêng).",
+     "notes": "Loop đủ tag 10/10 cột dữ liệu của template production hiện tại (11 cột kể STT) - khớp template. Nhưng so với header mẫu gốc 12 cột (glued trong nguồn M09): nhóm 'Chủ sở hữu hưởng lợi của doanh nghiệp được xác định...' có 3 cột con: Tỷ lệ sở hữu vốn điều lệ | Tỷ lệ sở hữu cổ phần có quyền biểu quyết | QUYỀN CHI PHỐI - template hiện tại thiếu cột Quyền chi phối (chân trang 4 NĐ 168/2025 yêu cầu ghi rõ quyền chi phối; hiện không có chỗ kê khai riêng). | [F0L 2026-09-06] Hợp đồng 18 cột TT 121/2026 (ảnh p49 @350dpi — cột 16 'Nhóm cá nhân có quan hệ gia đình/hợp đồng7' — Lead proofread, sửa transcription 'họ hàng'); 'Quyền chi phối'/'Ghi chú' 2025 bị thay; D2.5=A superseded.",
      "loop_audit": {
       "table_index": 0,
       "loop": "ds_cshhl",
@@ -2821,21 +2827,28 @@
    ],
    "defects": [],
    "summary_counts_fragment": {
-    "p": 4,
+    "p": 15,
     "chk": 0,
     "table": 0,
     "loop": 1
    },
    "summary_counts_recount": {
-    "p": 4,
+    "p": 15,
     "chk": 0,
     "table": 0,
     "loop": 1
    },
    "detector": {
     "p_signatures": 0,
-    "list_hints": 0,
-    "hits": [],
+    "list_hints": 1,
+    "hits": [
+     {
+      "block": 13,
+      "stt": false,
+      "list_hint": true,
+      "excerpt": "8 Cá nhân kiểm soát ghi một hoặc nhiều các quyền sau: Quyền bổ nhiệm, miễn nhiệm hoặc bãi nhiệm đa số hoặc tất cả thành "
+     }
+    ],
     "classifications": [],
     "template_w_tbl": 1
    }
@@ -3224,7 +3237,7 @@
     "loop": 3
    },
    "summary_counts_recount": {
-    "p": 206,
+    "p": 205,
     "chk": 15,
     "table": 1,
     "loop": 4
@@ -3234,7 +3247,7 @@
     "list_hints": 1,
     "hits": [
      {
-      "block": 92,
+      "block": 93,
       "stt": false,
       "list_hint": true,
       "excerpt": "Doanh nghiệp cam kết bảo đảm thanh toán đủ các khoản nợ và các nghĩa vụ tài sản khác sau khi giảm vốn (doanh nghiệp chỉ "
@@ -4010,13 +4023,13 @@
    ],
    "defects": [],
    "summary_counts_fragment": {
-    "p": 66,
+    "p": 57,
     "chk": 0,
-    "table": 0,
+    "table": 1,
     "loop": 0
    },
    "summary_counts_recount": {
-    "p": 62,
+    "p": 57,
     "chk": 0,
     "table": 1,
     "loop": 0
@@ -4112,13 +4125,13 @@
    "legal_questions": [],
    "defects": [],
    "summary_counts_fragment": {
-    "p": 20,
+    "p": 18,
     "chk": 0,
-    "table": 0,
+    "table": 1,
     "loop": 0
    },
    "summary_counts_recount": {
-    "p": 16,
+    "p": 18,
     "chk": 0,
     "table": 1,
     "loop": 0

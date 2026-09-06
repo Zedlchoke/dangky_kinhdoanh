@@ -137,13 +137,19 @@ const PROD_LOOPS = [
   { doc: 'PLI_M08', loop: 'ds_co_dong_nn' },
   { doc: 'PLI_M09', loop: 'ds_thanh_vien_hop_danh' },
   { doc: 'PLI_M10', loop: 'ds_cshhl' },
-  { doc: 'PLI_M11', loop: 'ds_cshhl' },
+  /* [Pin sync — F0L 2026-09-06] PLI_M11 bị TT 121/2026 bãi bỏ
+   * (REMOVED_BY_CURRENT_LAW, form_maps current_law_status) — loop dùng chung
+   * ds_cshhl theo HỢP ĐỒNG 2026 của PLI_M10 (18 cột, ảnh p49). Draft cũ M11
+   * giữ nguyên key (đọc/alias) nhưng runtime meta không còn bắt buộc phủ tag
+   * 2025 (ten_to_chuc/ma_so_dn/ngay_cap/noi_cap/ty_le/ghi_chu). */
+  { doc: 'PLI_M11', loop: 'ds_cshhl', skipMetaCoverage: true },
   { doc: 'PLII_M01', loop: 'ds_nganh' },
   { doc: 'PLII_M01', loop: 'ds_tv_ho_gia_dinh' }
 ];
 
 PROD_LOOPS.forEach(function (spec) {
   const b = findLoopBlock(loadProd(spec.doc), spec.loop);
+  if (spec.skipMetaCoverage) return; // form REMOVED_BY_CURRENT_LAW — xem pin trên
   const metaTags = ((FD.getGridMeta(spec.loop) || {}).columns || []).map(c => c.tag);
   const missing = (b ? (b.cols || []) : []).filter(c => metaTags.indexOf(c.tag) < 0);
   check('GRID_META.' + spec.loop + ' phu tag cua ' + spec.doc +

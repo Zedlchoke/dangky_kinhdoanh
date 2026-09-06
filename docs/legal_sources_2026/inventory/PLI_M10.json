@@ -12,7 +12,7 @@
   },
   "pdf_page": "p2 (Điều 1 khoản 1 điểm e) + p49 (1 trang ngang)",
   "page_inventory": [
-    "p49: 'Mẫu số 10' góc phải; tiêu đề 'DANH SÁCH CHỦ SỞ HỮU HƯỞNG LỢI CỦA DOANH NGHIỆP'; bảng 18 cột — header 3 hàng (cột 1-8 + 18 cao suốt; group 'Chủ sở hữu hưởng lợi của doanh nghiệp2' spans cột 9-17; 'Tỷ lệ sở hữu vốn điều lệ4' spans 9-11; 'Tỷ lệ sở hữu cổ phần có quyền biểu quyết5' spans 12-14; Thành viên hợp danh6 / Nhóm cá nhân có quan hệ gia đình/họ hàng7 / Kiểm soát doanh nghiệp8), hàng số 1..18 với công thức '11=9+10' và '14=12+13', 1 hàng trống; dòng ngày tháng; khối chữ ký 'NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT/ CHỦ TỊCH CÔNG TY/CHỦ TỊCH HỘI ĐỒNG THÀNH VIÊN/ CHỦ TỊCH HỘI ĐỒNG QUẢN TRỊ CỦA CÔNG TY (Ký và ghi họ tên)9'; chân trang chú thích 1-9"
+    "p49: 'Mẫu số 10' góc phải; tiêu đề 'DANH SÁCH CHỦ SỞ HỮU HƯỞNG LỢI CỦA DOANH NGHIỆP'; bảng 18 cột — header 3 hàng (cột 1-8 + 18 cao suốt; group 'Chủ sở hữu hưởng lợi của doanh nghiệp2' spans cột 9-17; 'Tỷ lệ sở hữu vốn điều lệ4' spans 9-11; 'Tỷ lệ sở hữu cổ phần có quyền biểu quyết5' spans 12-14; Thành viên hợp danh6 / Nhóm cá nhân có quan hệ gia đình/hợp đồng7 / Kiểm soát doanh nghiệp8), hàng số 1..18 với công thức '11=9+10' và '14=12+13', 1 hàng trống; dòng ngày tháng; khối chữ ký 'NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT/ CHỦ TỊCH CÔNG TY/CHỦ TỊCH HỘI ĐỒNG THÀNH VIÊN/ CHỦ TỊCH HỘI ĐỒNG QUẢN TRỊ CỦA CÔNG TY (Ký và ghi họ tên)9'; chân trang chú thích 1-9"
   ],
   "old_headings": ["Danh sách chủ sở hữu hưởng lợi của doanh nghiệp (2025: bảng 1 hàng tiêu đề 12 cột production: STT, Họ và tên, Ngày/tháng/năm sinh, Giới tính, Quốc tịch, Dân tộc, Địa chỉ liên lạc, Giấy tờ pháp lý của cá nhân, Tỷ lệ sở hữu vốn điều lệ (%), Tỷ lệ sở hữu cổ phần có quyền biểu quyết (%), Quyền chi phối, Ghi chú)"],
   "new_headings": ["DANH SÁCH CHỦ SỞ HỮU HƯỞNG LỢI CỦA DOANH NGHIỆP (p49) + header 4 hàng: 3 hàng nhãn + hàng số 1..18 (11=9+10, 14=12+13)"],
@@ -37,7 +37,7 @@
       "evidence": "p49: 'Thành viên hợp danh6' + chú thích 6 'Tích dấu X nếu chủ sở hữu hưởng lợi là thành viên hợp danh.'"
     },
     {
-      "vi_tri_moi": "Cột 16 'Nhóm cá nhân có quan hệ gia đình/họ hàng7'",
+      "vi_tri_moi": "Cột 16 'Nhóm cá nhân có quan hệ gia đình/hợp đồng7'",
       "noi_dung": "fn7: ghi rõ mối quan hệ gia đình/hợp đồng tại cột 16, tỷ lệ kê khai tại cột 9,10,11 hoặc 12,13,14",
       "evidence": "p49 chú thích 7"
     },
@@ -125,7 +125,7 @@
   "source_quote": [
     "p49 tiêu đề: 'DANH SÁCH CHỦ SỞ HỮU HƯỞNG LỢI CỦA DOANH NGHIỆP'",
     "p49 hàng số: '1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11=9+10 | 12 | 13 | 14=12+13 | 15 | 16 | 17 | 18'",
-    "p49 header nhóm: 'Chủ sở hữu hưởng lợi của doanh nghiệp2' spans; 'Tỷ lệ sở hữu vốn điều lệ4'; 'Tỷ lệ sở hữu cổ phần có quyền biểu quyết5'; 'Thành viên hợp danh6'; 'Nhóm cá nhân có quan hệ gia đình/họ hàng7'; 'Kiểm soát doanh nghiệp8'; 'Người quản lý doanh nghiệp3'",
+    "p49 header nhóm: 'Chủ sở hữu hưởng lợi của doanh nghiệp2' spans; 'Tỷ lệ sở hữu vốn điều lệ4'; 'Tỷ lệ sở hữu cổ phần có quyền biểu quyết5'; 'Thành viên hợp danh6'; 'Nhóm cá nhân có quan hệ gia đình/hợp đồng7'; 'Kiểm soát doanh nghiệp8'; 'Người quản lý doanh nghiệp3'",
     "p49 chú thích 2: 'Chủ sở hữu hưởng lợi của doanh nghiệp được xác định theo quy định tại Điều 3 Nghị định số 296/2026/NĐ-CP.'",
     "p49 chú thích 6: 'Tích dấu X nếu chủ sở hữu hưởng lợi là thành viên hợp danh.'",
     "p2, Điều 1 khoản 1 điểm e: 'Thay thế Mẫu số 10 Phụ lục I ban hành kèm theo Thông tư số 68/2025/TT-BTC bằng Mẫu số 10 Phụ lục ban hành kèm theo Thông tư này;'"

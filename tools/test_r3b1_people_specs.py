@@ -159,10 +159,16 @@ def t_evidence_manifest():
             assert sec.get("kind"), "%s/%s thiếu kind" % (fid, sid)
             assert (ev.get("heading") or ev.get("anchor")), \
                 "%s/%s thiếu evidence nguồn" % (fid, sid)
-    # nhiễm nguồn Mẫu 6/7/8/9(lần 2)/10 phải còn nguyên được ghi nhận
+    # [Pin sync — F0L 2026-09-06] nhiễm nguồn Mẫu 6/7/8/9(lần 2)/10:
+    # premise cũ "phải còn nguyên được ghi nhận" đã chết — vùng nhiễm bị
+    # XÓA KHỎI NGUỒN theo O1 verdict REMOVED_BY_SOURCE_CLEANUP (laneC
+    # 3eb9a55 / merge 29c850f; gate tools.test_m09_decontaminate 8/8).
+    # Pin mới: manifest ghi TRẠNG THÁI SAU decontaminate có evidence.
     contam = forms["PLI_M09"]["vung_nhiem_mau_6789_10"]
     assert contam["kind"] == "source-contamination" and \
-        contam["status"] == "contaminated"
+        contam["status"] == "removed_by_source_cleanup", \
+        "vung_nhiem phải ghi trạng thái đã decontaminate (không quay lại " \
+        "'contaminated' hay ngụy trang thành output)"
     # hai lưới thành viên hộ gia đình PLII_M02 cùng tập cột 10 cột
     # [Pin sync — PLAN v7 F0.5] P2 member-grid rebuild (merge P2A) đã rebuild
     # 2 lưới này: status missing_grid -> already_complete, giữ đúng 10 cột.
@@ -268,7 +274,10 @@ def t_anchor_unique():
         # (chk-merge gộp tag về đầu nhãn + glue-fix) làm trượt index blocks;
         # anchor regex vẫn khớp ĐÚNG 1 block (uniqueness giữ nguyên) và đúng
         # heading "Tổng giá trị vốn..." — đã đối chiếu fold tại 134.
-        "PLI_M12": 134,
+        # [Pin sync — F0L 2026-09-06] 134 -> 135: band "TÊN DOANH NGHIỆP"
+        # thêm ở đầu M12 theo TT 121/2026 (ảnh p50; laneA 3b50306) dịch toàn
+        # bộ blocks xuống 1; uniqueness anchor vẫn ĐÚNG 1 khớp.
+        "PLI_M12": 135,
         "PLI_M15": 43,        # blk49 glue — hdr2col (084444d): bảng header
                               # band thay 4 p header -> index dịch 48 -> 43
     }

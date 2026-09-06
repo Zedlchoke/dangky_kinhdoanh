@@ -4188,35 +4188,15 @@ window.FORM_MAPS = {
    },
    {
     "key": "ho_ten_in_hoa_2",
-    "label": "1. Họ, chữ đệm và tên:"
-   },
-   {
-    "key": "ndd.ngay_sinh",
-    "label": "Ngày, tháng, năm sinh:"
-   },
-   {
-    "key": "ndd.thang_sinh",
-    "label": ""
-   },
-   {
-    "key": "ndd.nam_sinh",
-    "label": ""
-   },
-   {
-    "key": "ndd.gioi_tinh",
-    "label": "Giới tính:"
-   },
-   {
-    "key": "ndd.so_cccd",
-    "label": "Số định danh cá nhân:"
+    "label": "Họ, chữ đệm và tên:"
    },
    {
     "key": "dien_thoai_khac",
     "label": "Số điện thoại3:"
    },
    {
-    "key": "dia_chi_lien_he",
-    "label": "Địa chỉ liên hệ:"
+    "key": "dia_chi_thu_dien_tu",
+    "label": "Địa chỉ thư điện tử4:"
    },
    {
     "key": "cn.ten_tieng_viet",
@@ -10425,20 +10405,8 @@ window.FORM_MAPS = {
     "label": "Tên hộ kinh doanh (ghi bằng chữ in hoa):"
    },
    {
-    "key": "hkd_cd.so_gcn",
-    "label": "Số Giấy chứng nhận đăng ký hộ kinh doanh (nếu có):"
-   },
-   {
-    "key": "hkd_cd.ngay_cap",
-    "label": "Ngày cấp:"
-   },
-   {
-    "key": "hkd_cd.noi_cap",
-    "label": "Nơi cấp:"
-   },
-   {
-    "key": "hkd_cd.ma_so_thue",
-    "label": "Mã số thuế của hộ kinh doanh:"
+    "key": "hkd_ma_so",
+    "label": "Mã số hộ kinh doanh/Mã số đăng ký hộ kinh doanh/Mã số thuế:"
    },
    {
     "key": "hkd_cd.dia_chi",
@@ -11044,20 +11012,8 @@ window.FORM_MAPS = {
     "label": "Tên hộ kinh doanh (ghi bằng chữ in hoa):"
    },
    {
-    "key": "hkd_cd.so_gcn",
-    "label": "Số Giấy chứng nhận đăng ký hộ kinh doanh (nếu có):"
-   },
-   {
-    "key": "hkd_cd.ngay_cap",
-    "label": "Ngày cấp:"
-   },
-   {
-    "key": "hkd_cd.noi_cap",
-    "label": "Nơi cấp:"
-   },
-   {
-    "key": "hkd_cd.ma_so_thue",
-    "label": "Mã số thuế của hộ kinh doanh:"
+    "key": "hkd_ma_so",
+    "label": "Mã số hộ kinh doanh/Mã số đăng ký hộ kinh doanh/Mã số thuế:"
    },
    {
     "key": "hkd_cd.dia_chi",
@@ -12151,20 +12107,8 @@ window.FORM_MAPS = {
     "label": "Tên hộ kinh doanh (ghi bằng chữ in hoa):"
    },
    {
-    "key": "hkd_cd.so_gcn",
-    "label": "Số Giấy chứng nhận đăng ký hộ kinh doanh (nếu có):"
-   },
-   {
-    "key": "hkd_cd.ngay_cap",
-    "label": "Ngày cấp:"
-   },
-   {
-    "key": "hkd_cd.noi_cap",
-    "label": "Nơi cấp:"
-   },
-   {
-    "key": "hkd_cd.ma_so_thue",
-    "label": "Mã số thuế của hộ kinh doanh:"
+    "key": "hkd_ma_so",
+    "label": "Mã số hộ kinh doanh/Mã số đăng ký hộ kinh doanh/Mã số thuế:"
    },
    {
     "key": "hkd_cd.dia_chi",
@@ -12311,6 +12255,106 @@ window.FORM_MAPS = {
     "label": "von_tu_nhan.ty_le"
    },
    {
+    "key": "ma_so_du_an",
+    "label": "Mã số dự án:"
+   },
+   {
+    "key": "co_quan_cap",
+    "label": "Cơ quan cấp:"
+   },
+   {
+    "key": "gd.ho_ten",
+    "label": "Họ, chữ đệm và tên Giám đốc/Tổng giám đốc:"
+   },
+   {
+    "key": "gd.ngay_sinh",
+    "label": "Ngày, tháng, năm sinh:"
+   },
+   {
+    "key": "gd.thang_sinh",
+    "label": ""
+   },
+   {
+    "key": "gd.nam_sinh",
+    "label": ""
+   },
+   {
+    "key": "gd.gioi_tinh",
+    "label": "Giới tính:"
+   },
+   {
+    "key": "gd.so_cccd",
+    "label": "Số định danh cá nhân:"
+   },
+   {
+    "key": "gd.dien_thoai",
+    "label": "Điện thoại:"
+   },
+   {
+    "key": "kt.ho_ten",
+    "label": "Họ, chữ đệm và tên Kế toán trưởng/Phụ trách kế toán:"
+   },
+   {
+    "key": "kt.ngay_sinh",
+    "label": "Ngày, tháng, năm sinh:"
+   },
+   {
+    "key": "kt.thang_sinh",
+    "label": ""
+   },
+   {
+    "key": "kt.nam_sinh",
+    "label": ""
+   },
+   {
+    "key": "kt.gioi_tinh",
+    "label": "Giới tính:"
+   },
+   {
+    "key": "kt.so_cccd",
+    "label": "Số định danh cá nhân:"
+   },
+   {
+    "key": "kt.dien_thoai",
+    "label": "Điện thoại:"
+   },
+   {
+    "key": "dien_thoai_lien_he",
+    "label": "Điện thoại (nếu có):"
+   },
+   {
+    "key": "ngay_bd",
+    "label": "8.4 Ngày bắt đầu hoạt động4 (trường hợp doanh nghiệp dự kiến bắt đầu hoạt động kể từ ngày được cấp Giấy chứng nhận đăng "
+   },
+   {
+    "key": "thang_bd",
+    "label": ""
+   },
+   {
+    "key": "nam_bd",
+    "label": ""
+   },
+   {
+    "key": "ap_dung_tu",
+    "label": "Áp dụng từ ngày"
+   },
+   {
+    "key": "so_lao_dong",
+    "label": "8.7 Tổng số lao động (dự kiến):"
+   },
+   {
+    "key": "thang_ky_vb",
+    "label": ""
+   },
+   {
+    "key": "nam_ky_vb",
+    "label": ""
+   },
+   {
+    "key": "ho_ten_in_hoa",
+    "label": "1. Họ, chữ đệm và tên (ghi bằng chữ in hoa):"
+   },
+   {
     "key": "chk_tt_thanh_lap_moi",
     "label": "thanh lap moi",
     "type": "chk"
@@ -12386,7 +12430,7 @@ window.FORM_MAPS = {
     "type": "chk"
    },
    {
-    "key": "chk_co",
+    "key": "chk_auto_co",
     "label": "Có",
     "type": "chk"
    },
@@ -12403,6 +12447,66 @@ window.FORM_MAPS = {
    {
     "key": "chk_auto_khong_2",
     "label": "Không",
+    "type": "chk"
+   },
+   {
+    "key": "chk_ht_doc_lap",
+    "label": "hach toan doc lap",
+    "type": "chk"
+   },
+   {
+    "key": "chk_ht_hop_nhat",
+    "label": "co bao cao tai chinh hop nhat",
+    "type": "chk"
+   },
+   {
+    "key": "chk_ht_phu_thuoc",
+    "label": "hach toan phu thuoc",
+    "type": "chk"
+   },
+   {
+    "key": "chk_co",
+    "label": "co",
+    "type": "chk"
+   },
+   {
+    "key": "chk_khong",
+    "label": "khong",
+    "type": "chk"
+   },
+   {
+    "key": "chk_gtgt_khoan_tru",
+    "label": "khau tru",
+    "type": "chk"
+   },
+   {
+    "key": "chk_gtgt_truc_tiep_tren_gtgt",
+    "label": "truc tiep tren gtgt",
+    "type": "chk"
+   },
+   {
+    "key": "chk_gtgt_truc_tiep_doanh_so",
+    "label": "truc tiep tren doanh so",
+    "type": "chk"
+   },
+   {
+    "key": "chk_gtgt_khong_phai_nop",
+    "label": "khong phai nop thue gtgt",
+    "type": "chk"
+   },
+   {
+    "key": "chk_bc_hang_thang",
+    "label": "Hàng tháng",
+    "type": "chk"
+   },
+   {
+    "key": "chk_bc_03_thang",
+    "label": "03 tháng một lần",
+    "type": "chk"
+   },
+   {
+    "key": "chk_bc_06_thang",
+    "label": "06 tháng một lần",
     "type": "chk"
    }
   ],
@@ -12889,6 +12993,22 @@ window.FORM_MAPS = {
    {
     "key": "ds_co_dong_sang_lap.ty_le",
     "label": "ty_le"
+   },
+   {
+    "key": "dia_diem_ky",
+    "label": ""
+   },
+   {
+    "key": "ngay_ky_vb",
+    "label": ""
+   },
+   {
+    "key": "thang_ky_vb",
+    "label": ""
+   },
+   {
+    "key": "nam_ky_vb",
+    "label": ""
    }
   ],
   "dynamic_tables": [
@@ -13580,6 +13700,10 @@ window.FORM_MAPS = {
     "label": "gioi_tinh"
    },
    {
+    "key": "ds_cshhl.so_giay_to",
+    "label": "so_giay_to"
+   },
+   {
     "key": "ds_cshhl.quoc_tich",
     "label": "quoc_tich"
    },
@@ -13592,86 +13716,570 @@ window.FORM_MAPS = {
     "label": "dia_chi"
    },
    {
-    "key": "ds_cshhl.so_giay_to",
-    "label": "so_giay_to"
+    "key": "ds_cshhl.ty_le_von_dieule_truc_tiep",
+    "label": "ty_le_von_dieule_truc_tiep"
    },
    {
-    "key": "ds_cshhl.ty_le",
-    "label": "ty_le"
+    "key": "ds_cshhl.ty_le_von_dieule_gian_tiep",
+    "label": "ty_le_von_dieule_gian_tiep"
    },
    {
-    "key": "ds_cshhl.ty_le_co_phan",
-    "label": "ty_le_co_phan"
+    "key": "ds_cshhl.ty_le_von_dieule_tong",
+    "label": "ty_le_von_dieule_tong"
    },
    {
-    "key": "ds_cshhl.quyen_chi_phoi",
-    "label": "quyen_chi_phoi"
+    "key": "ds_cshhl.ty_le_co_phan_truc_tiep",
+    "label": "ty_le_co_phan_truc_tiep"
+   },
+   {
+    "key": "ds_cshhl.ty_le_co_phan_gian_tiep",
+    "label": "ty_le_co_phan_gian_tiep"
+   },
+   {
+    "key": "ds_cshhl.ty_le_co_phan_tong",
+    "label": "ty_le_co_phan_tong"
+   },
+   {
+    "key": "ds_cshhl.thanh_vien_hop_danh",
+    "label": "thanh_vien_hop_danh"
+   },
+   {
+    "key": "ds_cshhl.nhom_ca_nhan_quan_he",
+    "label": "nhom_ca_nhan_quan_he"
+   },
+   {
+    "key": "ds_cshhl.kiem_soat_doanh_nghiep",
+    "label": "kiem_soat_doanh_nghiep"
+   },
+   {
+    "key": "ds_cshhl.nguoi_quan_ly_doanh_nghiep",
+    "label": "nguoi_quan_ly_doanh_nghiep"
+   },
+   {
+    "key": "dia_diem_ky",
+    "label": ""
+   },
+   {
+    "key": "ngay_ky_vb",
+    "label": ""
+   },
+   {
+    "key": "thang_ky_vb",
+    "label": ""
+   },
+   {
+    "key": "nam_ky_vb",
+    "label": ""
    }
   ],
   "dynamic_tables": [
    {
-    "id": "ds_cshhl",
+    "id": "ds_cshhl_2026",
     "table_index": 0,
-    "header_row": 0,
-    "template_row": 5,
+    "template_row": 9,
     "loop": "ds_cshhl",
     "columns": [
      {
       "col": 1,
-      "header": "Họ và tên",
       "tag": "ho_ten"
      },
      {
       "col": 2,
-      "header": "Ngày, tháng, năm sinh",
       "tag": "ngay_sinh"
      },
      {
       "col": 3,
-      "header": "Giới tính",
       "tag": "gioi_tinh"
      },
      {
       "col": 4,
-      "header": "Quốc tịch",
-      "tag": "quoc_tich"
-     },
-     {
-      "col": 5,
-      "header": "Dân tộc",
-      "tag": "dan_toc"
-     },
-     {
-      "col": 6,
-      "header": "Địa chỉ liên lạc",
-      "tag": "dia_chi"
-     },
-     {
-      "col": 7,
-      "header": "Giấy tờ pháp lý của cá nhân",
       "tag": "so_giay_to"
      },
      {
+      "col": 5,
+      "tag": "quoc_tich"
+     },
+     {
+      "col": 6,
+      "tag": "dan_toc"
+     },
+     {
+      "col": 7,
+      "tag": "dia_chi"
+     },
+     {
       "col": 8,
-      "header": "Tỷ lệ sở hữu vốn điều lệ (%)",
-      "tag": "ty_le"
+      "tag": "ty_le_von_dieule_truc_tiep"
      },
      {
       "col": 9,
-      "header": "Tỷ lệ sở hữu cổ phần có quyền biểu quyết (%)",
-      "tag": "ty_le_co_phan"
+      "tag": "ty_le_von_dieule_gian_tiep"
      },
      {
       "col": 10,
-      "header": "Quyền chi phối",
-      "tag": "quyen_chi_phoi"
+      "tag": "ty_le_von_dieule_tong"
      },
      {
       "col": 11,
-      "header": "Ghi chú",
-      "tag": "ghi_chu"
+      "tag": "ty_le_co_phan_truc_tiep"
+     },
+     {
+      "col": 12,
+      "tag": "ty_le_co_phan_gian_tiep"
+     },
+     {
+      "col": 13,
+      "tag": "ty_le_co_phan_tong"
+     },
+     {
+      "col": 14,
+      "tag": "thanh_vien_hop_danh"
+     },
+     {
+      "col": 15,
+      "tag": "nhom_ca_nhan_quan_he"
+     },
+     {
+      "col": 16,
+      "tag": "kiem_soat_doanh_nghiep"
+     },
+     {
+      "col": 17,
+      "tag": "nguoi_quan_ly_doanh_nghiep"
      }
-    ]
+    ],
+    "header_row": 0
+   }
+  ],
+  "section_specs": [
+   {
+    "kind": "nested-grid",
+    "id": "ds_cshhl_2026",
+    "semantic_key": "ds_cshhl_doanh_nghiep",
+    "section_id": "ds_cshhl_doanh_nghiep",
+    "table_index": 0,
+    "loop": "ds_cshhl",
+    "header_rows": [
+     [
+      {
+       "text": "STT",
+       "rowspan": 3,
+       "colspan": 1,
+       "col_index": 0
+      },
+      {
+       "text": "Họ và tên",
+       "rowspan": 3,
+       "colspan": 1,
+       "col_index": 1
+      },
+      {
+       "text": "Ngày, tháng, năm sinh",
+       "rowspan": 3,
+       "colspan": 1,
+       "col_index": 2
+      },
+      {
+       "text": "Giới tính",
+       "rowspan": 3,
+       "colspan": 1,
+       "col_index": 3
+      },
+      {
+       "text": "Số, ngày cấp, cơ quan cấp Giấy tờ pháp lý của cá nhân1",
+       "rowspan": 3,
+       "colspan": 1,
+       "col_index": 4
+      },
+      {
+       "text": "Quốc tịch",
+       "rowspan": 3,
+       "colspan": 1,
+       "col_index": 5
+      },
+      {
+       "text": "Dân tộc",
+       "rowspan": 3,
+       "colspan": 1,
+       "col_index": 6
+      },
+      {
+       "text": "Địa chỉ liên lạc",
+       "rowspan": 3,
+       "colspan": 1,
+       "col_index": 7
+      },
+      {
+       "text": "Chủ sở hữu hưởng lợi của doanh nghiệp2",
+       "rowspan": 1,
+       "colspan": 9,
+       "col_index": 8
+      },
+      {
+       "text": "Người quản lý doanh nghiệp3",
+       "rowspan": 3,
+       "colspan": 1,
+       "col_index": 17
+      }
+     ],
+     [
+      {
+       "text": "Tỷ lệ sở hữu vốn điều lệ4",
+       "rowspan": 1,
+       "colspan": 3,
+       "col_index": 8
+      },
+      {
+       "text": "Tỷ lệ sở hữu cổ phần có quyền biểu quyết5",
+       "rowspan": 1,
+       "colspan": 3,
+       "col_index": 11
+      },
+      {
+       "text": "Thành viên hợp danh6",
+       "rowspan": 2,
+       "colspan": 1,
+       "col_index": 14
+      },
+      {
+       "text": "Nhóm cá nhân có quan hệ gia đình/hợp đồng7",
+       "rowspan": 2,
+       "colspan": 1,
+       "col_index": 15
+      },
+      {
+       "text": "Kiểm soát doanh nghiệp8",
+       "rowspan": 2,
+       "colspan": 1,
+       "col_index": 16
+      }
+     ],
+     [
+      {
+       "text": "Trực tiếp",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 8
+      },
+      {
+       "text": "Gián tiếp",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 9
+      },
+      {
+       "text": "Tổng",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 10
+      },
+      {
+       "text": "Trực tiếp",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 11
+      },
+      {
+       "text": "Gián tiếp",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 12
+      },
+      {
+       "text": "Tổng",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 13
+      }
+     ],
+     [
+      {
+       "text": "1",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 0
+      },
+      {
+       "text": "2",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 1
+      },
+      {
+       "text": "3",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 2
+      },
+      {
+       "text": "4",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 3
+      },
+      {
+       "text": "5",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 4
+      },
+      {
+       "text": "6",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 5
+      },
+      {
+       "text": "7",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 6
+      },
+      {
+       "text": "8",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 7
+      },
+      {
+       "text": "9",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 8
+      },
+      {
+       "text": "10",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 9
+      },
+      {
+       "text": "11=9+10",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 10
+      },
+      {
+       "text": "12",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 11
+      },
+      {
+       "text": "13",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 12
+      },
+      {
+       "text": "14=12+13",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 13
+      },
+      {
+       "text": "15",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 14
+      },
+      {
+       "text": "16",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 15
+      },
+      {
+       "text": "17",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 16
+      },
+      {
+       "text": "18",
+       "rowspan": 1,
+       "colspan": 1,
+       "col_index": 17
+      }
+     ]
+    ],
+    "header_texts": [
+     [
+      "STT",
+      "Họ và tên",
+      "Ngày, tháng, năm sinh",
+      "Giới tính",
+      "Số, ngày cấp, cơ quan cấp Giấy tờ pháp lý của cá nhân1",
+      "Quốc tịch",
+      "Dân tộc",
+      "Địa chỉ liên lạc",
+      "Chủ sở hữu hưởng lợi của doanh nghiệp2",
+      "Người quản lý doanh nghiệp3"
+     ],
+     [
+      "Tỷ lệ sở hữu vốn điều lệ4",
+      "Tỷ lệ sở hữu cổ phần có quyền biểu quyết5",
+      "Thành viên hợp danh6",
+      "Nhóm cá nhân có quan hệ gia đình/hợp đồng7",
+      "Kiểm soát doanh nghiệp8"
+     ],
+     [
+      "Trực tiếp",
+      "Gián tiếp",
+      "Tổng",
+      "Trực tiếp",
+      "Gián tiếp",
+      "Tổng"
+     ],
+     [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11=9+10",
+      "12",
+      "13",
+      "14=12+13",
+      "15",
+      "16",
+      "17",
+      "18"
+     ]
+    ],
+    "width": 18,
+    "columns": [
+     {
+      "col_index": 1,
+      "tag": "ho_ten",
+      "required": true,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 2,
+      "tag": "ngay_sinh",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 3,
+      "tag": "gioi_tinh",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 4,
+      "tag": "so_giay_to",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 5,
+      "tag": "quoc_tich",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 6,
+      "tag": "dan_toc",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 7,
+      "tag": "dia_chi",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 8,
+      "tag": "ty_le_von_dieule_truc_tiep",
+      "required": false,
+      "input_type": "percent",
+      "output_only": false
+     },
+     {
+      "col_index": 9,
+      "tag": "ty_le_von_dieule_gian_tiep",
+      "required": false,
+      "input_type": "percent",
+      "output_only": false
+     },
+     {
+      "col_index": 10,
+      "tag": "ty_le_von_dieule_tong",
+      "required": false,
+      "input_type": "percent",
+      "output_only": false
+     },
+     {
+      "col_index": 11,
+      "tag": "ty_le_co_phan_truc_tiep",
+      "required": false,
+      "input_type": "percent",
+      "output_only": false
+     },
+     {
+      "col_index": 12,
+      "tag": "ty_le_co_phan_gian_tiep",
+      "required": false,
+      "input_type": "percent",
+      "output_only": false
+     },
+     {
+      "col_index": 13,
+      "tag": "ty_le_co_phan_tong",
+      "required": false,
+      "input_type": "percent",
+      "output_only": false
+     },
+     {
+      "col_index": 14,
+      "tag": "thanh_vien_hop_danh",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 15,
+      "tag": "nhom_ca_nhan_quan_he",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 16,
+      "tag": "kiem_soat_doanh_nghiep",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     },
+     {
+      "col_index": 17,
+      "tag": "nguoi_quan_ly_doanh_nghiep",
+      "required": false,
+      "input_type": "text",
+      "output_only": false
+     }
+    ],
+    "stt": {
+     "mode": "generated",
+     "col_index": 0
+    },
+    "discriminator": null,
+    "totals": []
    }
   ]
  },
@@ -13886,20 +14494,8 @@ window.FORM_MAPS = {
     "label": "Tên hộ kinh doanh (ghi bằng chữ in hoa):"
    },
    {
-    "key": "hkd_cd.so_gcn",
-    "label": "Số Giấy chứng nhận đăng ký hộ kinh doanh (nếu có):"
-   },
-   {
-    "key": "hkd_cd.ngay_cap",
-    "label": "Ngày cấp:"
-   },
-   {
-    "key": "hkd_cd.noi_cap",
-    "label": "Nơi cấp:"
-   },
-   {
-    "key": "hkd_cd.ma_so_thue",
-    "label": "Mã số thuế của hộ kinh doanh:"
+    "key": "hkd_ma_so",
+    "label": "Mã số hộ kinh doanh/Mã số đăng ký hộ kinh doanh/Mã số thuế:"
    },
    {
     "key": "hkd_cd.dia_chi",
@@ -13943,7 +14539,7 @@ window.FORM_MAPS = {
    },
    {
     "key": "gp_ucsn_so",
-    "label": "Giấy phép thành lập và hoạt động số: … do Ủy ban Chứng khoán Nhà nước cấp ngày:"
+    "label": "Giấy phép thành lập và hoạt động số: … do Uỷ ban Chứng khoán Nhà nước cấp ngày:"
    },
    {
     "key": "dn.ten_tieng_viet",
@@ -14144,6 +14740,18 @@ window.FORM_MAPS = {
    {
     "key": "so_lao_dong",
     "label": "Tổng số lao động (dự kiến):"
+   },
+   {
+    "key": "ho_ten_in_hoa",
+    "label": "1. Họ, chữ đệm và tên (ghi bằng chữ in hoa):"
+   },
+   {
+    "key": "to_chuc.ten",
+    "label": "Tên tổ chức (ghi bằng chữ in hoa):"
+   },
+   {
+    "key": "dn.ma_so_dn",
+    "label": "Mã số doanh nghiệp/Số Quyết định thành lập:"
    },
    {
     "key": "chk_tt_thanh_lap_moi",
@@ -14529,20 +15137,8 @@ window.FORM_MAPS = {
     "label": "Tên hộ kinh doanh (ghi bằng chữ in hoa):"
    },
    {
-    "key": "hkd_cd.so_gcn",
-    "label": "Số Giấy chứng nhận đăng ký hộ kinh doanh (nếu có):"
-   },
-   {
-    "key": "hkd_cd.ngay_cap",
-    "label": "Ngày cấp:"
-   },
-   {
-    "key": "hkd_cd.noi_cap",
-    "label": "Nơi cấp:"
-   },
-   {
-    "key": "hkd_cd.ma_so_thue",
-    "label": "Mã số thuế của hộ kinh doanh:"
+    "key": "hkd_ma_so",
+    "label": "Mã số hộ kinh doanh/Mã số đăng ký hộ kinh doanh/Mã số thuế:"
    },
    {
     "key": "hkd_cd.dia_chi",
@@ -14582,7 +15178,7 @@ window.FORM_MAPS = {
    },
    {
     "key": "gp_ucsn_so",
-    "label": "Giấy phép thành lập và hoạt động số: … do Ủy ban Chứng khoán Nhà nước cấp ngày:"
+    "label": "Giấy phép thành lập và hoạt động số: … do Uỷ ban Chứng khoán Nhà nước cấp ngày:"
    },
    {
     "key": "dn.ten_tieng_viet",
@@ -14867,6 +15463,18 @@ window.FORM_MAPS = {
    {
     "key": "so_lao_dong",
     "label": "Tổng số lao động (dự kiến):"
+   },
+   {
+    "key": "ho_ten_in_hoa",
+    "label": "1. Họ, chữ đệm và tên (ghi bằng chữ in hoa):"
+   },
+   {
+    "key": "to_chuc.ten",
+    "label": "Tên tổ chức (ghi bằng chữ in hoa):"
+   },
+   {
+    "key": "dn.ma_so_dn",
+    "label": "Mã số doanh nghiệp/Số Quyết định thành lập:"
    },
    {
     "key": "chk_tt_thanh_lap_moi",

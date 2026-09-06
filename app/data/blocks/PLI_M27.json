@@ -349,87 +349,12 @@
    "align": "left",
    "runs": [
     {
-     "text": "1. Họ, chữ đệm và tên: "
+     "text": "Họ, chữ đệm và tên: "
     },
     {
      "input": {
       "key": "ho_ten_in_hoa_2",
-      "w": 19
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "section-heading"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Ngày, tháng, năm sinh: "
-    },
-    {
-     "input": {
-      "key": "ndd.ngay_sinh",
-      "w": 19
-     }
-    },
-    {
-     "text": "/"
-    },
-    {
-     "input": {
-      "key": "ndd.thang_sinh",
-      "w": 12
-     }
-    },
-    {
-     "text": "/"
-    },
-    {
-     "input": {
-      "key": "ndd.nam_sinh",
-      "w": 12
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "date-line"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Giới tính: "
-    },
-    {
-     "input": {
-      "key": "ndd.gioi_tinh",
-      "w": 13
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Số định danh cá nhân: "
-    },
-    {
-     "input": {
-      "key": "ndd.so_cccd",
-      "w": 19
+      "w": 18
      }
     }
    ],
@@ -469,45 +394,20 @@
    "align": "left",
    "runs": [
     {
-     "text": "Địa chỉ liên hệ: "
+     "text": "Địa chỉ thư điện tử"
+    },
+    {
+     "text": "4",
+     "vertAlign": "superscript"
+    },
+    {
+     "text": ": "
     },
     {
      "input": {
-      "key": "dia_chi_lien_he",
-      "w": 16
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "2. Họ, chữ đệm và tên: "
-    },
-    {
-     "input": {
-      "key": "ho_ten_in_hoa_2",
+      "key": "dia_chi_thu_dien_tu",
       "w": 19
      }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "section-heading"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "…"
     }
    ],
    "format": {
@@ -774,13 +674,11 @@
      "i": true
     },
     {
-     "text": "4",
-     "i": true,
+     "text": "5",
      "vertAlign": "superscript"
     },
     {
-     "text": ":",
-     "i": true
+     "text": ":"
     }
    ],
    "format": {
@@ -1134,22 +1032,13 @@
   },
   {
    "t": "p",
-   "align": "center",
+   "align": "left",
    "runs": [
     {
-     "text": "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT\nCỦA DOANH NGHIỆP/ NGƯỜI ĐỨNG ĐẦU CHI NHÁNH\n",
-     "b": true
+     "text": "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT\nCỦA DOANH NGHIỆP/\nNGƯỜI ĐỨNG ĐẦU CHI NHÁNH\n(Ký và ghi họ tên)"
     },
     {
-     "text": "("
-    },
-    {
-     "text": "Ký và ghi họ tên)",
-     "i": true
-    },
-    {
-     "text": "5",
-     "i": true,
+     "text": "6",
      "vertAlign": "superscript"
     }
    ],
@@ -1193,45 +1082,36 @@
    "align": "left",
    "runs": [
     {
-     "text": "2",
+     "text": "2 Trường hợp có nhiều hơn một người đại diện theo pháp luật, doanh nghiệp có thể chọn kê khai thông tin của 01 hoặc nhiều người đại diện theo pháp luật vào phần này.",
      "vertAlign": "superscript"
-    },
-    {
-     "text": " Kê khai thông tin của tất cả người đại diện theo pháp luật của doanh nghiệp."
     }
    ],
    "format": {
     "spaceBeforePt": 6.0
    },
-   "role": "footnote"
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "3",
+     "text": "3,4 Doanh nghiệp kê khai số điện thoại, thư điện tử để nhận thông báo từ cơ quan đăng ký kinh doanh.",
      "vertAlign": "superscript"
-    },
-    {
-     "text": " Số điện thoại của người đại diện theo pháp luật phải trùng với số điện thoại đã kê khai trong Cơ sở dữ liệu quốc gia về dân cư."
     }
    ],
    "format": {
     "spaceBeforePt": 6.0
    },
-   "role": "footnote"
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "4",
+     "text": "5 Doanh nghiệp gửi thông báo đến Cơ quan đăng ký kinh doanh cấp tỉnh nơi doanh nghiệp, chi nhánh/văn phòng đại diện/địa điểm kinh doanh đã đăng ký chậm nhất 03 ngày làm việc trước khi tiếp tục kinh doanh/hoạt động trước thời hạn đã thông báo.",
      "vertAlign": "superscript"
-    },
-    {
-     "text": " Doanh nghiệp gửi thông báo đến Cơ quan đăng ký kinh doanh cấp tỉnh nơi doanh nghiệp, chi nhánh/văn phòng đại diện/địa điểm kinh doanh đã đăng ký chậm nhất 03 ngày làm việc trước khi tiếp tục kinh doanh/hoạt động trước thời hạn đã thông báo."
     }
    ],
    "format": {

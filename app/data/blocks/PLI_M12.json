@@ -7,6 +7,20 @@
    "align": "center",
    "runs": [
     {
+     "text": "TÊN DOANH NGHIỆP\n---------------",
+     "b": true
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle"
+  },
+  {
+   "t": "p",
+   "align": "center",
+   "runs": [
+    {
      "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM\nĐộc lập - Tự do - Hạnh phúc \n---------------",
      "b": true
     }
@@ -4095,14 +4109,7 @@
    "align": "left",
    "runs": [
     {
-     "text": "a) Trường hợp doanh nghiệp có sự thay đổi chủ sở hữu hưởng lợi của doanh nghiệp, tỷ lệ sở hữu đã kê khai với Cơ quan đăng ký kinh doanh cấp tỉnh theo quy định tại khoản 1 Điều 52 Nghị định số 168/2025/NĐ-CP ("
-    },
-    {
-     "text": "kê khai theo Mẫu số 10 Phụ lục I ban hành kèm theo Thông tư này",
-     "i": true
-    },
-    {
-     "text": "): Gửi kèm."
+     "text": "a) Trường hợp doanh nghiệp có sự thay đổi thông tin về chủ sở hữu hưởng lợi của doanh nghiệp (bao gồm người quản lý doanh nghiệp) đã kê khai với Cơ quan đăng ký kinh doanh cấp tỉnh thì doanh nghiệp kê khai theo Mẫu số 10 Phụ lục I ban hành kèm theo Thông tư này: Gửi kèm."
     }
    ],
    "format": {
@@ -4115,54 +4122,7 @@
    "align": "left",
    "runs": [
     {
-     "text": "b) Trường hợp công ty cổ phần có sự thay đổi cổ đông là tổ chức sở hữu từ 25% tổng số cổ phần có quyền biểu quyết trở lên hoặc thay đổi tỷ lệ sở hữu tổng số cổ phần có quyền biểu quyết theo quy định tại khoản 2 Điều 52 Nghị định số 168/2025/NĐ-CP ("
-    },
-    {
-     "text": "kê khai theo Mẫu số 11 Phụ lục I ban hành kèm theo Thông tư này",
-     "i": true
-    },
-    {
-     "text": "): Gửi kèm."
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "c) Đối với doanh nghiệp được thành lập trước ngày 01/7/2025, trường hợp doanh nghiệp có thông tin về chủ sở hữu hưởng lợi của doanh nghiệp theo quy định tại khoản 1, khoản 2 Điều 18 Nghị định số 168/2025/NĐ-CP, doanh nghiệp bổ sung thông tin về chủ sở hữu hưởng lợi của doanh nghiệp theo quy định tại khoản 1 Điều 3 Luật số 76/2025/QH15 ngày 17/6/2025 sửa đổi, bổ sung một số điều của Luật Doanh nghiệp ("
-    },
-    {
-     "text": "kê khai theo Mẫu số 10 Phụ lục I ban hành kèm theo Thông tư này",
-     "i": true
-    },
-    {
-     "text": "): Gửi kèm."
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "d) Đối với công ty cổ phần được đăng ký thành lập trước ngày 01/7/2025, trường hợp công ty cổ phần có thông tin để xác định chủ sở hữu hưởng lợi của doanh nghiệp theo quy định tại khoản 3 Điều 18 Nghị định số 168/2025/NĐ-CP, công ty cổ phần bổ sung thông tin để xác định chủ sở hữu hưởng lợi của doanh nghiệp theo quy định tại khoản 1 Điều 3 Luật số 76/2025/QH15 ngày 17/6/2025 sửa đổi, bổ sung một số điều của Luật Doanh nghiệp ("
-    },
-    {
-     "text": "kê khai theo Mẫu số 11 Phụ lục I ban hành kèm theo Thông tư này",
-     "i": true
-    },
-    {
-     "text": "): Gửi kèm."
+     "text": "b) Đối với doanh nghiệp được thành lập trước ngày 01/7/2025, doanh nghiệp bổ sung thông tin về chủ sở hữu hưởng lợi của doanh nghiệp theo quy định tại khoản 1 Điều 3 Luật số 76/2025/QH15 ngày 17/6/2025 sửa đổi, bổ sung một số điều của Luật Doanh nghiệp (kê khai theo Mẫu số 10 Phụ lục I ban hành kèm theo Thông tư này): Gửi kèm."
     }
    ],
    "format": {

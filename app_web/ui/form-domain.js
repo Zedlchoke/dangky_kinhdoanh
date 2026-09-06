@@ -319,33 +319,38 @@
       minRows: 0, maxRows: null, required: false,
       allowAdd: true, allowDelete: true, allowReorder: true,
       confirmDeleteNonEmpty: true, requirePrimary: false,
-      // hợp nhất 2 biến thể production (PLI_M10 cá nhân, PLI_M11 tổ chức):
-      // row cá nhân có ho_ten..., row tổ chức có ten_to_chuc...
+      /* [F0L 2026-09-06] TT 121/2026 thay Mẫu 10 — bảng 18 cột (ảnh p49,
+       * inventory PLI_M10.json; spec formation/PLI_M10.json ds_cshhl_2026):
+       * 'Quyền chi phối'/'Ghi chú' và 2 cột tỷ lệ đơn của 2025 bị THAY bằng
+       * 6 cột tỷ lệ trực tiếp/gián tiếp/tổng (cột Tổng = output-only computed
+       * 11=9+10 / 14=12+13 theo O2-policy) + Thành viên hợp danh + Nhóm cá
+       * nhân quan hệ gia đình/hợp đồng + Kiểm soát doanh nghiệp + Người quản
+       * lý DN. Tag 2025 (ty_le, ty_le_co_phan, quyen_chi_phoi, ghi_chu và bộ
+       * tổ chức ten_to_chuc/ma_so_dn/ngay_cap/noi_cap của PLI_M11 bị bãi bỏ)
+       * KHÔNG còn trong template — draft cũ giữ nguyên, render theo cột mới. */
       columns: [
-        { tag: 'ho_ten', type: 'text' },
-        { tag: 'ten_to_chuc', type: 'text' },
-        { tag: 'ma_so_dn', type: 'text' },
-        { tag: 'ngay_cap', type: 'text' },
-        { tag: 'noi_cap', type: 'text' },
+        { tag: 'ho_ten', type: 'text', required: true },
         { tag: 'ngay_sinh', type: 'text' },
         { tag: 'gioi_tinh', type: 'text' },
+        { tag: 'so_giay_to', type: 'text' },
         { tag: 'quoc_tich', type: 'text' },
         { tag: 'dan_toc', type: 'text' },
         { tag: 'dia_chi', type: 'text' },
-        { tag: 'so_giay_to', type: 'text' },
-        { tag: 'ty_le', type: 'percent' },
-        { tag: 'ty_le_co_phan', type: 'percent' },
-        /* P2A (D2.5=A, NĐ 168/2025 điểm b khoản 1 Điều 17 qua chân trang 4
-         * Mẫu 10): QUYỀN CHI PHỐI là cột riêng của nhóm "Chủ sở hữu hưởng lợi
-         * của doanh nghiệp" (3 cột con: Tỷ lệ sở hữu vốn điều lệ | Tỷ lệ sở
-         * hữu cổ phần có quyền biểu quyết | Quyền chi phối), KHÔNG ghi vào
-         * Ghi chú. Spec tools/form_specs/formation/PLI_M10.json thêm cột
-         * {quyen_chi_phoi}; text tự do (ghi rõ một trong các quyền chi phối). */
-        { tag: 'quyen_chi_phoi', type: 'text' },
-        { tag: 'ghi_chu', type: 'text' }
+        { tag: 'ty_le_von_dieule_truc_tiep', type: 'percent' },
+        { tag: 'ty_le_von_dieule_gian_tiep', type: 'percent' },
+        { tag: 'ty_le_von_dieule_tong', type: 'percent', outputOnly: true,
+          computed: 'sum(ty_le_von_dieule_truc_tiep, ty_le_von_dieule_gian_tiep)' },
+        { tag: 'ty_le_co_phan_truc_tiep', type: 'percent' },
+        { tag: 'ty_le_co_phan_gian_tiep', type: 'percent' },
+        { tag: 'ty_le_co_phan_tong', type: 'percent', outputOnly: true,
+          computed: 'sum(ty_le_co_phan_truc_tiep, ty_le_co_phan_gian_tiep)' },
+        { tag: 'thanh_vien_hop_danh', type: 'text' },
+        { tag: 'nhom_ca_nhan_quan_he', type: 'text' },
+        { tag: 'kiem_soat_doanh_nghiep', type: 'text' },
+        { tag: 'nguoi_quan_ly_doanh_nghiep', type: 'text' }
       ],
-      duplicateKeys: ['so_giay_to', 'ma_so_dn'],
-      outputOnlyTags: []
+      duplicateKeys: ['so_giay_to'],
+      outputOnlyTags: ['ty_le_von_dieule_tong', 'ty_le_co_phan_tong']
     },
     ds_tv_ho_gia_dinh: {
       label: 'Các thành viên hộ gia đình',

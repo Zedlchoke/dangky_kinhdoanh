@@ -287,6 +287,19 @@
    "align": "left",
    "runs": [
     {
+     "text": "Doanh nghiệp gửi kèm Thông báo này bản sao sổ đăng ký cổ đông1."
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
      "text": "Doanh nghiệp cam kết hoàn toàn chịu trách nhiệm trước pháp luật về tính hợp pháp, chính xác và trung thực của nội dung Thông báo này."
     }
    ],
@@ -310,21 +323,13 @@
   },
   {
    "t": "p",
-   "align": "center",
+   "align": "left",
    "runs": [
     {
-     "text": "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT\nCỦA DOANH NGHIỆP",
-     "b": true
+     "text": "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT\nCỦA DOANH NGHIỆP\n(Ký và ghi họ tên)"
     },
     {
-     "text": "\n("
-    },
-    {
-     "text": "Ký và ghi họ tên)",
-     "i": true
-    },
-    {
-     "text": "1",
+     "text": "2",
      "vertAlign": "superscript"
     }
    ],
@@ -351,11 +356,21 @@
    "align": "left",
    "runs": [
     {
-     "text": "1",
+     "text": "1 Chỉ ghi nội dung này và gửi bản sao sổ đăng ký cổ đông kèm theo trong trường hợp doanh nghiệp là công ty cổ phần (không phải là công ty niêm yết và công ty đăng ký giao dịch chứng khoán).",
      "vertAlign": "superscript"
-    },
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
     {
-     "text": " Người đại diện theo pháp luật của doanh nghiệp ký trực tiếp vào phần này. "
+     "text": "2 Người đại diện theo pháp luật của doanh nghiệp ký trực tiếp vào phần này."
     }
    ],
    "format": {

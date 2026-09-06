@@ -461,15 +461,16 @@
     }
    ],
    "summary_counts": {
-    "p": 66,
+    "p": 57,
     "chk": 0,
-    "table": 0,
+    "table": 1,
     "loop": 0
    },
    "legal_questions": [
     "Một thông báo M27 có được phép tạm ngừng/tiếp tục nhiều đơn vị cùng lúc không, hay mỗi đơn vị một thông báo riêng (giấy gốc trình bày dạng đơn khối)?",
     "Số lượng NĐDPL liệt kê ở mục 1.a tối đa bao nhiêu dòng?"
-   ]
+   ],
+   "f0l_note": "[F0L 2026-09-06] TT 121/2026 thay mẫu — summary_counts rebaseline theo blocks sau regen."
   },
   {
    "form_id": "PLI_M28",
@@ -515,12 +516,13 @@
    "form_status": "NO_TABLE",
    "sections": [],
    "summary_counts": {
-    "p": 20,
+    "p": 18,
     "chk": 0,
-    "table": 0,
+    "table": 1,
     "loop": 0
    },
-   "legal_questions": []
+   "legal_questions": [],
+   "f0l_note": "[F0L 2026-09-06] TT 121/2026 thay mẫu — summary_counts rebaseline theo blocks sau regen."
   },
   {
    "form_id": "PLI_M31",

@@ -800,67 +800,27 @@
    "align": "left",
    "runs": [
     {
-     "text": "Số Giấy chứng nhận đăng ký hộ kinh doanh ("
+     "text": "Mã số hộ kinh doanh/Mã số đăng ký hộ kinh doanh/Mã số thuế: "
     },
     {
-     "text": "nếu có",
+     "input": {
+      "key": "hkd_ma_so",
+      "w": 38
+     }
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Trường hợp không khai thác được thông tin về hộ kinh doanh được chuyển đổi từ Cơ sở dữ liệu về đăng ký hộ kinh doanh hoặc thông tin khai thác được về hộ kinh doanh được chuyển đổi từ Cơ sở dữ liệu về đăng ký hộ kinh doanh không đầy đủ, không chính xác thì kê khai thêm các nội dung sau:",
      "i": true
-    },
-    {
-     "text": "): "
-    },
-    {
-     "input": {
-      "key": "hkd_cd.so_gcn",
-      "w": 33
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Ngày cấp: "
-    },
-    {
-     "input": {
-      "key": "hkd_cd.ngay_cap",
-      "w": 13
-     }
-    },
-    {
-     "text": " Nơi cấp: "
-    },
-    {
-     "input": {
-      "key": "hkd_cd.noi_cap",
-      "w": 13
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Mã số thuế của hộ kinh doanh: "
-    },
-    {
-     "input": {
-      "key": "hkd_cd.ma_so_thue",
-      "w": 23
-     }
     }
    ],
    "format": {
@@ -1356,14 +1316,7 @@
      }
     },
     {
-     "text": " do Ủy ban Chứng khoán Nhà nước cấp ngày: …./…./….. ("
-    },
-    {
-     "text": "nếu có",
-     "i": true
-    },
-    {
-     "text": ")"
+     "text": " do Uỷ ban Chứng khoán Nhà nước cấp ngày: …./…./….. (nếu có)"
     }
    ],
    "format": {
@@ -2277,14 +2230,7 @@
    "align": "left",
    "runs": [
     {
-     "text": "- Thông tin về Giấy chứng nhận đăng ký đầu tư ("
-    },
-    {
-     "text": "chỉ kê khai nếu chủ sở hữu là nhà đầu tư nước ngoài",
-     "i": true
-    },
-    {
-     "text": "):"
+     "text": "- Thông tin về Giấy chứng nhận đăng ký đầu tư (chỉ kê khai nếu chủ sở hữu là nhà đầu tư nước ngoài được cấp Giấy chứng nhận đăng ký đầu tư theo quy định của pháp luật – nếu có):"
     }
    ],
    "format": {
@@ -2876,7 +2822,7 @@
    "align": "center",
    "runs": [
     {
-     "text": "- Thông tin về Giấy chứng nhận đăng ký đầu tư (chỉ kê khai nếu chủ sở hữu là nhà đầu tư nước ngoài):"
+     "text": "- Thông tin về Giấy chứng nhận đăng ký đầu tư (chỉ kê khai nếu chủ sở hữu là nhà đầu tư nước ngoài được cấp Giấy chứng nhận đăng ký đầu tư theo quy định của pháp luật – nếu có):"
     }
    ],
    "format": {
@@ -5104,15 +5050,7 @@
    "align": "left",
    "runs": [
     {
-     "text": "12. Thông tin về chủ sở hữu hưởng lợi của doanh nghiệp",
-     "b": true
-    },
-    {
-     "text": "14",
-     "vertAlign": "superscript"
-    },
-    {
-     "text": ":",
+     "text": "12. Thông tin về chủ sở hữu hưởng lợi của doanh nghiệp:",
      "b": true
     }
    ],
@@ -5126,7 +5064,7 @@
    "align": "left",
    "runs": [
     {
-     "text": "Doanh nghiệp có chủ sở hữu hưởng lợi không?"
+     "text": "Doanh nghiệp kê khai thông tin về chủ sở hữu hưởng lợi của doanh nghiệp theo Mẫu số 10 ban hành kèm theo Thông tư này."
     }
    ],
    "format": {
@@ -5135,21 +5073,24 @@
    "role": "body"
   },
   {
-   "t": "chk",
-   "label": "Có",
-   "key": "chk_co"
-  },
-  {
-   "t": "chk",
-   "label": "Không",
-   "key": "chk_khong"
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Trường hợp hồ sơ đăng ký doanh nghiệp hợp lệ, đề nghị Quý Cơ quan đăng công bố nội dung đăng ký doanh nghiệp trên Cổng thông tin quốc gia về đăng ký doanh nghiệp."
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
   },
   {
    "t": "p",
    "align": "left",
    "runs": [
     {
-     "text": "Trường hợp hồ sơ đăng ký doanh nghiệp hợp lệ, đề nghị Quý Cơ quan đăng công bố nội dung đăng ký doanh nghiệp trên Cổng thông tin quốc gia về đăng ký doanh nghiệp."
+     "text": "Xin gửi kèm cam kết của nhà đầu tư nước ngoài theo quy định tại Điều 7 Nghị định số 296/2026/NĐ-CP ngày 23/7/2026 của Chính phủ sửa đổi, bổ sung một số điều của Nghị định số 168/2025/NĐ-CP ngày 30/6/2025 của Chính phủ về đăng ký doanh nghiệp tại Phụ lục kèm theo Giấy đề nghị này14."
     }
    ],
    "format": {
@@ -5497,6 +5438,405 @@
     },
     {
      "text": " Không kê khai trong trường hợp thành lập doanh nghiệp trên cơ sở chuyển đổi loại hình doanh nghiệp."
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "14 Doanh nghiệp chỉ ghi nội dung này và gửi phụ lục kèm theo trong trường hợp doanh nghiệp là tổ chức kinh tế thực hiện dự án do nhà đầu tư nước ngoài thành lập trước khi thực hiện thủ tục cấp, điều chỉnh Giấy chứng nhận đăng ký đầu tư theo quy định của pháp luật về đầu tư."
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "15 - Người đại diện theo pháp luật của doanh nghiệp ký trực tiếp vào phần này."
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Trường hợp đăng ký chuyển đổi loại hình doanh nghiệp đồng thời đăng ký thay đổi người đại diện theo pháp luật thì Chủ tịch công ty/Chủ tịch Hội đồng thành viên của công ty sau chuyển đổi ký trực tiếp vào phần này."
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Phụ lục"
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "(Kèm theo Giấy đề nghị đăng ký doanh nghiệp …1)",
+     "i": true
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM"
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "national-header"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Độc lập - Tự do - Hạnh phúc"
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "national-motto"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "input": {
+      "key": "dia_diem_ky",
+      "w": 12
+     }
+    },
+    {
+     "text": ", ngày ",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "ngay_ky_vb",
+      "w": 12
+     }
+    },
+    {
+     "text": " tháng ",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "thang_ky_vb",
+      "w": 12
+     }
+    },
+    {
+     "text": " năm ",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "nam_ky_vb",
+      "w": 12
+     }
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "date-line"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "CAM KẾT"
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Về việc đáp ứng điều kiện tiếp cận thị trường đối với nhà đầu tư nước ngoài"
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "theo quy định của pháp luật"
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Kính gửi: (Cơ quan đăng ký kinh doanh cấp tỉnh) "
+    },
+    {
+     "input": {
+      "key": "co_quan_dkkd",
+      "w": 32
+     }
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "salutation"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Nhà đầu tư nước ngoài có thông tin dưới đây:"
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "(Trường hợp chủ sở hữu là cá nhân thì kê khai:)",
+     "i": true
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Họ, chữ đệm và tên (ghi bằng chữ in hoa): "
+    },
+    {
+     "input": {
+      "key": "ho_ten_in_hoa",
+      "w": 29
+     }
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Số định danh cá nhân: … / Số Hộ chiếu nước ngoài hoặc giấy tờ có giá trị thay thế Hộ chiếu nước ngoài: … Ngày cấp: … Nơi cấp: …"
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "(Trường hợp chủ sở hữu là tổ chức thì kê khai:)",
+     "i": true
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Tên tổ chức (ghi bằng chữ in hoa): "
+    },
+    {
+     "input": {
+      "key": "to_chuc.ten",
+      "w": 25
+     }
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Mã số doanh nghiệp/Số Quyết định thành lập: "
+    },
+    {
+     "input": {
+      "key": "dn.ma_so_dn",
+      "w": 30
+     }
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Người đại diện theo pháp luật (ghi bằng chữ in hoa): ………………………."
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Số định danh cá nhân: … / Số Hộ chiếu nước ngoài hoặc giấy tờ có giá trị thay thế Hộ chiếu nước ngoài: … Ngày cấp: … Nơi cấp: …"
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Cam kết đáp ứng điều kiện tiếp cận thị trường đối với nhà đầu tư nước ngoài theo quy định của pháp luật khi thực hiện thủ tục thành lập ..2 và hoàn toàn chịu trách nhiệm trước pháp luật về tính hợp pháp, chính xác và trung thực của nội dung Cam kết này."
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "NHÀ ĐẦU TƯ NƯỚC NGOÀI"
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "form-subtitle"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "(Ký và ghi họ tên)3",
+     "i": true
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "signature"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "1,2 Ghi tên doanh nghiệp dự kiến thành lập."
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "3 Nhà đầu tư nước ngoài là cá nhân hoặc người đại diện theo pháp luật của nhà đầu tư nước ngoài là tổ chức ký trực tiếp vào phần này."
     }
    ],
    "format": {

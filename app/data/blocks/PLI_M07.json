@@ -23,6 +23,26 @@
    "role": "form-number"
   },
   {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "DANH SÁCH CỔ ĐÔNG SÁNG LẬP CÔNG TY CỔ PHẦN"
+    }
+   ],
+   "role": "form-subtitle"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "I. Cổ đông sáng lập là cá nhân"
+    }
+   ],
+   "role": "section-heading"
+  },
+  {
    "t": "loop",
    "loop": "ds_co_dong_sang_lap",
    "headerRows": [
@@ -187,6 +207,250 @@
      ]
     }
    ]
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "II. Cổ đông sáng lập là tổ chức"
+    }
+   ],
+   "role": "section-heading"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "1. Thông tin cổ đông"
+    }
+   ],
+   "role": "section-heading"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "2. Thông tin người đại diện theo pháp luật/ủy quyền của cổ đông"
+    }
+   ],
+   "role": "section-heading"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "input": {
+      "key": "dia_diem_ky",
+      "w": 12
+     }
+    },
+    {
+     "text": ", ngày ",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "ngay_ky_vb",
+      "w": 12
+     }
+    },
+    {
+     "text": " tháng ",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "thang_ky_vb",
+      "w": 12
+     }
+    },
+    {
+     "text": " năm ",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "nam_ky_vb",
+      "w": 12
+     }
+    }
+   ],
+   "role": "date-line"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT/"
+    }
+   ],
+   "role": "signature"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "CHỦ TỊCH HỘI ĐỒNG QUẢN TRỊ CỦA CÔNG TY"
+    }
+   ],
+   "role": "signature"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "(Ký và ghi họ tên)13",
+     "i": true
+    }
+   ],
+   "role": "signature"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "1 Nếu cột số 5 kê khai Số định danh cá nhân thì không phải kê khai các cột số 6, 7."
+    }
+   ],
+   "role": "footnote"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "2 Ghi giá trị vốn cổ phần của từng cổ đông sáng lập. Tài sản hình thành giá trị vốn cổ phần của từng cổ đông sáng lập cần được liệt kê cụ thể: tên loại tài sản góp vốn cổ phần; số lượng từng loại tài sản góp vốn cổ phần; giá trị của từng loại tài sản góp vốn cổ phần; thời điểm góp vốn cổ phần của từng loại tài sản. Giá trị ghi bằng số theo đơn vị VND và giá trị tương đương theo đơn vị tiền nước ngoài (ghi bằng số, loại ngoại tệ), nếu có."
+    }
+   ],
+   "role": "body"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "3 Loại tài sản góp vốn bao gồm: Đồng Việt Nam; Ngoại tệ tự do chuyển đổi (ghi rõ loại ngoại tệ, số tiền được góp bằng mỗi loại ngoại tệ); Vàng; Quyền sử dụng đất, quyền sở hữu trí tuệ, công nghệ, bí quyết kỹ thuật; Tài sản khác (ghi rõ loại tài sản, số lượng và giá trị còn lại của mỗi loại tài sản)."
+    }
+   ],
+   "role": "body"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Có thể lập thành danh mục riêng kèm theo hồ sơ đăng ký doanh nghiệp."
+    }
+   ],
+   "role": "body"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "4 Khi đăng ký thành lập doanh nghiệp, thời hạn góp vốn là thời hạn cổ đông sáng lập dự kiến hoàn thành việc góp vốn. Các trường hợp khác không kê khai thời hạn góp vốn."
+    }
+   ],
+   "role": "body"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "5 Trường hợp đăng ký/thông báo thay đổi nội dung đăng ký doanh nghiệp theo quyết định của Tòa án hoặc Trọng tài thì không cần chữ ký tại phần này."
+    }
+   ],
+   "role": "footnote"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "6,7,8 Kê khai tương tự các cổ đông sáng lập là cá nhân."
+    }
+   ],
+   "role": "body"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "9 Nếu cột số 6 kê khai Số định danh cá nhân thì không phải kê khai các cột số 7, 8."
+    }
+   ],
+   "role": "footnote"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "10 Không phải kê khai phần này đối với trường hợp kê khai người đại diện theo pháp luật."
+    }
+   ],
+   "role": "footnote"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "11 Tỷ lệ % của phần vốn góp được ủy quyền đại diện trên tổng số vốn góp của cổ đông đó tại doanh nghiệp."
+    }
+   ],
+   "role": "footnote"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "12 Người được kê khai thông tin ký trực tiếp vào phần này."
+    }
+   ],
+   "role": "footnote"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "13 - Người đại diện theo pháp luật của doanh nghiệp ký trực tiếp vào phần này."
+    }
+   ],
+   "role": "footnote"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Trường hợp đăng ký chuyển đổi loại hình doanh nghiệp đồng thời đăng ký thay đổi người đại diện theo pháp luật thì Chủ tịch Hội đồng quản trị của công ty sau chuyển đổi ký trực tiếp vào phần này."
+    }
+   ],
+   "role": "body"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Trường hợp Tòa án hoặc Trọng tài chỉ định người thực hiện thủ tục đăng ký doanh nghiệp thì người được chỉ định ký trực tiếp vào phần này."
+    }
+   ],
+   "role": "body"
   }
  ],
  "v": 3

@@ -86,9 +86,14 @@ class TestM11RemovedByCurrentLaw(unittest.TestCase):
         self.assertIn("PLI_M11", fm,
                       "form_maps phai con entry PLI_M11 (danh dau trang thai, "
                       "khong xoa entry)")
-        self.assertEqual(fm["PLI_M11"].get("current_law_status"),
-                         "REMOVED_BY_CURRENT_LAW",
-                         "PLI_M11.current_law_status phai la "
+        # [Lead merge 2026-09-06] hop dong thong nhat: marker la DICT co
+        # 'status' (giu provenance van_ban + hieu_luc) — sinh boi
+        # tools/build_form_maps.CURRENT_LAW_STATUS; corpus tooling
+        # (phase5_fixtures.current_law_status) chap nhan ca string/dict.
+        marker = fm["PLI_M11"].get("current_law_status")
+        status = marker.get("status") if isinstance(marker, dict) else marker
+        self.assertEqual(status, "REMOVED_BY_CURRENT_LAW",
+                         "PLI_M11.current_law_status phai mang "
                          "'REMOVED_BY_CURRENT_LAW' — Lead merge marker theo "
                          "inventory/PLI_M11.json de_xuat_marker_catalog")
 

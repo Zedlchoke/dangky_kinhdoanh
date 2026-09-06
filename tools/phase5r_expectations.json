@@ -796,5 +796,14 @@
    "evidence": "census 5R2 template: 1 cụm ký body-level ((không nhãn)) — cụm đơn, detector D6 đo vertical.",
    "min_write_gap_pt": 72
   }
+ },
+ "PLI_M10": {
+  "signature": {
+   "signers": 1,
+   "keep_together": true,
+   "orientation": "vertical",
+   "evidence": "[F0L 2026-09-06] TT 121/2026 thay Mẫu 10 (ảnh p49) — form mới CÓ khối ký 'NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT/ CHỦ TÍCH CÔNG TY/CHỦ TÍCH HỘI ĐỒNG THÀNH VIÊN/ CHỦ TÍCH HỘI ĐỒNG QUẢN TRỊ CỦA CÔNG TY (Ký và ghi họ tên)9'. Census template sau regen: 1 cụm body-level, signers=1, không trong bảng.",
+   "min_write_gap_pt": 72
+  }
  }
 }

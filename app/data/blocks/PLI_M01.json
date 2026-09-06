@@ -613,67 +613,27 @@
    "align": "left",
    "runs": [
     {
-     "text": "Số Giấy chứng nhận đăng ký hộ kinh doanh ("
+     "text": "Mã số hộ kinh doanh/Mã số đăng ký hộ kinh doanh/Mã số thuế: "
     },
     {
-     "text": "nếu có",
+     "input": {
+      "key": "hkd_ma_so",
+      "w": 38
+     }
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "Trường hợp không khai thác được thông tin về hộ kinh doanh được chuyển đổi từ Cơ sở dữ liệu về đăng ký hộ kinh doanh hoặc thông tin khai thác được về hộ kinh doanh được chuyển đổi từ Cơ sở dữ liệu về đăng ký hộ kinh doanh không đầy đủ, không chính xác thì kê khai thêm các nội dung sau:",
      "i": true
-    },
-    {
-     "text": "): "
-    },
-    {
-     "input": {
-      "key": "hkd_cd.so_gcn",
-      "w": 33
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Ngày cấp: "
-    },
-    {
-     "input": {
-      "key": "hkd_cd.ngay_cap",
-      "w": 13
-     }
-    },
-    {
-     "text": " Nơi cấp: "
-    },
-    {
-     "input": {
-      "key": "hkd_cd.noi_cap",
-      "w": 13
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Mã số thuế của hộ kinh doanh: "
-    },
-    {
-     "input": {
-      "key": "hkd_cd.ma_so_thue",
-      "w": 23
-     }
     }
    ],
    "format": {

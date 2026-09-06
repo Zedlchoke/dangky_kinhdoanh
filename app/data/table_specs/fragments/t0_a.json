@@ -1283,7 +1283,7 @@
      "kind": "unknown",
      "semantic_key_suggestion": null,
      "required_columns": [],
-     "status": "missing_grid",
+     "status": "removed_by_source_cleanup",
      "source_evidence": {
       "template": "app/templates/PLI_M09.docx",
       "heading": "- Trường hợp Tòa án hoặc Trọng tài chỉ định người thực hiện thủ tục đăng ký doanh nghiệp thì người được chỉ định ký trực tiếp vào phần này.Mẫu số 6",
@@ -1293,7 +1293,7 @@
        null
       ]
      },
-     "notes": "Sau chân trang của Mẫu 9 thật, template chứa tiếp toàn văn 'DANH SÁCH THÀNH VIÊN CÔNG TY TNHH HAI THÀNH VIÊN TRỞ LÊN' (Mẫu 6), 'DANH SÁCH CỔ ĐÔNG SÁNG LẬP' (Mẫu 7), 'DANH SÁCH CỔ ĐÔNG LÀ NHÀ ĐẦU TƯ NƯỚC NGOÀI' (Mẫu 8), một bản 'DANH SÁCH THÀNH VIÊN CÔNG TY HỢP DANH' thứ hai (header đầy đủ 14 cột dạng paragraph + glued 'STTTên thành viênSố, ngày cấp, nơi cấp...') và 'DANH SÁCH CHỦ SỞ HỮU HƯỞNG LỢI' (Mẫu 10) - tất cả là paragraph rời, không w:tbl. File nguồn DN_PL1_Mau_09... cũng nhiễm đúng cấu trúc này → lỗi tách từ file full, KHÔNG phải nội dung của Mẫu 9."
+     "notes": "Sau chân trang của Mẫu 9 thật, template chứa tiếp toàn văn 'DANH SÁCH THÀNH VIÊN CÔNG TY TNHH HAI THÀNH VIÊN TRỞ LÊN' (Mẫu 6), 'DANH SÁCH CỔ ĐÔNG SÁNG LẬP' (Mẫu 7), 'DANH SÁCH CỔ ĐÔNG LÀ NHÀ ĐẦU TƯ NƯỚC NGOÀI' (Mẫu 8), một bản 'DANH SÁCH THÀNH VIÊN CÔNG TY HỢP DANH' thứ hai (header đầy đủ 14 cột dạng paragraph + glued 'STTTên thành viênSố, ngày cấp, nơi cấp...') và 'DANH SÁCH CHỦ SỞ HỮU HƯỞNG LỢI' (Mẫu 10) - tất cả là paragraph rời, không w:tbl. File nguồn DN_PL1_Mau_09... cũng nhiễm đúng cấu trúc này → lỗi tách từ file full, KHÔNG phải nội dung của Mẫu 9. | [F0L O1 2026-09-06] Đã DECONTAMINATE: 129 paragraph Mẫu 6/7/8/9(lần 2)/10 + run \"Mẫu số 6\" dính chân trang bị XÓA KHỎI NGUỒN (laneC 3eb9a55/merge 29c850f); 41/41 tag thật giữ nguyên; gate tools.test_m09_decontaminate 8/8; verdict REMOVED_BY_SOURCE_CLEANUP."
     }
    ],
    "legal_questions": [
@@ -1306,7 +1306,7 @@
    "ten_mau": "Danh sách chủ sở hữu hưởng lợi của doanh nghiệp",
    "form_status": "BLOCKED_LEGAL_REVIEW",
    "summary_counts": {
-    "p": 4,
+    "p": 15,
     "chk": 0,
     "table": 0,
     "loop": 1
@@ -1314,14 +1314,14 @@
    "template_evidence": {
     "w_tbl_body_python_docx": 1,
     "raw_ooxml_w_tbl_incl_headers_footers": 1,
-    "paragraph_count": 6
+    "paragraph_count": 15
    },
    "source_docx": "06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn/DN_PL1_Mau_10_danh_sach_chu_so_huu_huong_loi_cua_doanh_nghiep.docx",
    "sections": [
     {
      "section_id": "ds_cshhl_doanh_nghiep",
      "title": "Danh sách chủ sở hữu hưởng lợi của doanh nghiệp",
-     "kind": "editable-grid",
+     "kind": "nested-grid",
      "semantic_key_suggestion": "ds_cshhl",
      "required_columns": [
       "stt",
@@ -1332,10 +1332,16 @@
       "quoc_tich",
       "dan_toc",
       "dia_chi_lien_lac",
-      "ty_le_so_huu_von_dieule",
-      "ty_le_co_phan_bieu_quyet",
-      "quyen_chi_phoi",
-      "ghi_chu"
+      "ty_le_von_dieule_truc_tiep",
+      "ty_le_von_dieule_gian_tiep",
+      "ty_le_von_dieule_tong",
+      "ty_le_co_phan_truc_tiep",
+      "ty_le_co_phan_gian_tiep",
+      "ty_le_co_phan_tong",
+      "thanh_vien_hop_danh",
+      "nhom_ca_nhan_quan_he",
+      "kiem_soat_doanh_nghiep",
+      "nguoi_quan_ly_doanh_nghiep"
      ],
      "status": "partial_columns",
      "source_evidence": {
@@ -1347,7 +1353,7 @@
        3
       ]
      },
-     "notes": "Loop đủ tag 10/10 cột dữ liệu của template production hiện tại (11 cột kể STT) - khớp template. Nhưng so với header mẫu gốc 12 cột (glued trong nguồn M09): nhóm 'Chủ sở hữu hưởng lợi của doanh nghiệp được xác định...' có 3 cột con: Tỷ lệ sở hữu vốn điều lệ | Tỷ lệ sở hữu cổ phần có quyền biểu quyết | QUYỀN CHI PHỐI - template hiện tại thiếu cột Quyền chi phối (chân trang 4 NĐ 168/2025 yêu cầu ghi rõ quyền chi phối; hiện không có chỗ kê khai riêng).",
+     "notes": "Loop đủ tag 10/10 cột dữ liệu của template production hiện tại (11 cột kể STT) - khớp template. Nhưng so với header mẫu gốc 12 cột (glued trong nguồn M09): nhóm 'Chủ sở hữu hưởng lợi của doanh nghiệp được xác định...' có 3 cột con: Tỷ lệ sở hữu vốn điều lệ | Tỷ lệ sở hữu cổ phần có quyền biểu quyết | QUYỀN CHI PHỐI - template hiện tại thiếu cột Quyền chi phối (chân trang 4 NĐ 168/2025 yêu cầu ghi rõ quyền chi phối; hiện không có chỗ kê khai riêng). | [F0L 2026-09-06] Hợp đồng 18 cột TT 121/2026 (ảnh p49 @350dpi — cột 16 'Nhóm cá nhân có quan hệ gia đình/hợp đồng7' — Lead proofread, sửa transcription 'họ hàng'); 'Quyền chi phối'/'Ghi chú' 2025 bị thay; D2.5=A superseded.",
      "loop_audit": {
       "table_index": 0,
       "loop": "ds_cshhl",
@@ -1369,7 +1375,8 @@
    ],
    "legal_questions": [
     "Quyền chi phối của CSHHL (điểm b khoản 1 Điều 17 NĐ 168/2025, chân trang 4 mẫu): là cột riêng trong bảng hay ghi vào cột Ghi chú?"
-   ]
+   ],
+   "f0l_note": "[F0L 2026-09-06] TT 121/2026 thay Mẫu 10 — bảng 18 cột (nested-grid, 11=9+10/14=12+13); summary_counts rebaseline theo blocks sau regen; required_columns 2026 trong sections."
   },
   {
    "form_id": "PLI_M11",
@@ -1413,7 +1420,7 @@
        6
       ]
      },
-     "notes": "8 cột template khớp TỪNG CỘT với header mẫu gốc (glued nguồn: STT|Tên tổ chức|Mã số DN/số QĐ thành lập|Ngày cấp|Nơi cấp|Địa chỉ trụ sở chính|Tỷ lệ sở hữu CP có quyền biểu quyết|Ghi chú (nếu có)); loop đủ tag 7/7 cột dữ liệu. Không còn vùng bảng khác trong mẫu.",
+     "notes": "8 cột template khớp TỪNG CỘT với header mẫu gốc (glued nguồn: STT|Tên tổ chức|Mã số DN/số QĐ thành lập|Ngày cấp|Nơi cấp|Địa chỉ trụ sở chính|Tỷ lệ sở hữu CP có quyền biểu quyết|Ghi chú (nếu có)); loop đủ tag 7/7 cột dữ liệu. Không còn vùng bảng khác trong mẫu. | [F0L L-2026] Mẫu số 11 Phụ lục I bị BÃI BỎ THEO THÔNG TƯ 121/2026/TT-BTC Điều 1 khoản 2 (hiệu lực 21/08/2026): verdict REMOVED_BY_CURRENT_LAW — không dùng tạo hồ sơ mới; template/form_maps giữ lại chỉ để đọc draft cũ.",
      "loop_audit": {
       "table_index": 0,
       "loop": "ds_cshhl",

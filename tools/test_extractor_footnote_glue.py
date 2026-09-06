@@ -78,10 +78,13 @@ GLUE_23_FORMS = [
 ]
 
 # Class 12: form chứa STT-glue/digit-run tại HEAD 65c7346 (số block flag).
-STT_GLUE_FORMS = {
-    "PLII_M02": 2,   # block #69, #122
-    "PLI_M72": 2,    # block #109, #112
-}
+# [Pin sync — F0L 2026-09-06] lớp STT-glue ĐÃ TUYỆT CHỦNG ở template
+# production: PLII_M02 (2 lưới thành viên rebuild thành w:tbl thật — wave P2)
+# và PLI_M72 (4 nested-grid rebuild — wave P1.2/P2) đều còn 0 block flag.
+# Hai wave trước pin {PLII_M02:2, PLI_M72:2} đỏ vì template đã sửa — đúng
+# thông điệp test cũ chỉ dẫn. Pin hiện trạng 0-flag ở STT_GLUE_FIXED_FORMS.
+STT_GLUE_FORMS = {}
+STT_GLUE_FIXED_FORMS = ("PLII_M02", "PLI_M72")
 
 # Class 2: chuỗi companion có GAP (numbering_report.continuation_chains).
 CHAIN_FORMS = {
@@ -301,6 +304,13 @@ class TestSttGlueClassification(BaseSandbox):
     thân của template (scrape dính chung một w:t)."""
 
     def test_so_block_flag_khop_head_va_thuoc_dung_form(self):
+        # [F0L] pin trạng thái ĐÃ SỬA: form từng dính STT-glue phải giữ 0 flag
+        for fid in STT_GLUE_FIXED_FORMS:
+            flagged = stt_flagged_blocks(self.blocks[fid])
+            self.assertEqual(
+                len(flagged), 0,
+                "%s: STT-glue tái xuất (%r) — hồi quy w:tbl rebuild"
+                % (fid, flagged))
         for fid, expected in STT_GLUE_FORMS.items():
             flagged = stt_flagged_blocks(self.blocks[fid])
             self.assertEqual(

@@ -141,6 +141,25 @@ M10_HEADERS = ["STT", "Họ và tên", "Ngày, tháng, năm sinh", "Giới tính
                "Giấy tờ pháp lý của cá nhân", "Tỷ lệ sở hữu vốn điều lệ (%)",
                "Tỷ lệ sở hữu cổ phần có quyền biểu quyết (%)", "Quyền chi phối",
                "Ghi chú"]
+# [Pin sync — F0L 2026-09-06] M10 2025 contract (12 cột, 'Quyền chi phối')
+# đã chết: TT 121/2026/TT-BTC Đ1 k1 điểm e thay Mẫu 10 bằng bảng 18 cột
+# (ảnh p49 @350dpi, Lead proofread; inventory PLI_M10.json). Hợp đồng 2026:
+M10_2026_ID = "ds_cshhl_2026"
+M10_2026_TAGS = [  # theo col_index 1..17 (STT col 0 do engine sinh)
+    "ho_ten", "ngay_sinh", "gioi_tinh", "so_giay_to", "quoc_tich",
+    "dan_toc", "dia_chi",
+    "ty_le_von_dieule_truc_tiep", "ty_le_von_dieule_gian_tiep",
+    "ty_le_von_dieule_tong",
+    "ty_le_co_phan_truc_tiep", "ty_le_co_phan_gian_tiep",
+    "ty_le_co_phan_tong",
+    "thanh_vien_hop_danh", "nhom_ca_nhan_quan_he",
+    "kiem_soat_doanh_nghiep", "nguoi_quan_ly_doanh_nghiep",
+]
+M10_2026_FORMULA_LABELS = ("11=9+10", "14=12+13")
+M10_2026_SPAN_HEADERS = ("Chủ sở hữu hưởng lợi của doanh nghiệp2",
+                         "Tỷ lệ sở hữu vốn điều lệ4",
+                         "Tỷ lệ sở hữu cổ phần có quyền biểu quyết5")
+M10_2026_ANCHOR = r"^danh sach chu so huu huong loi cua doanh nghiep$"
 M13_HEADERS = ["STT", "Họ, chữ đệm và tên (ghi bằng chữ in hoa)",
                "Ngày, tháng, năm sinh", "Giới tính", "Số định danh cá nhân",
                "Chức danh", "Địa chỉ liên lạc", "Quốc gia"]
@@ -151,7 +170,8 @@ ANCHOR_ENTRIES = {   # entry theo anchor (không occurrence) -> khớp blocks + 
     "PLI_M06": "thong tin ve giay chung nhan dang ky dau tu",
     "PLI_M07": r"^mau so 7$",
     "PLI_M08": "thong tin ve giay chung nhan dang ky dau tu",
-    "PLI_M10": r"^mau so 10$",
+    # [Pin sync — F0L] PLI_M10 chuyển sang anchor tiêu đề 2026 — pin riêng
+    # trong t_m10_2026_contract (kind nested-grid, không còn ^mau so 10$).
 }
 OCC_ENTRIES = {       # entry theo occurrence -> khớp 1 vùng ok trên nguồn
     "PLII_M07": "ds_thanh_vien_hkd_gcn",
@@ -183,10 +203,8 @@ SPEC_OF = {   # form -> (spec_id, loop, headers, [tag] theo thứ tự cột)
     "PLI_M08": ("ds_co_dong_nn", "ds_co_dong_nn", M08_HEADERS,
                 ["ten_cd", "quoc_gia", "ma_so", "dia_chi", "so_co_phan",
                  "ty_le", "chu_ky"]),
-    "PLI_M10": ("ds_cshhl", "ds_cshhl", M10_HEADERS,
-                ["ho_ten", "ngay_sinh", "gioi_tinh", "quoc_tich", "dan_toc",
-                 "dia_chi", "so_giay_to", "ty_le", "ty_le_co_phan",
-                 "quyen_chi_phoi", "ghi_chu"]),
+    # [Pin sync — F0L 2026-09-06] PLI_M10 ra khỏi nhóm list-kind: hợp đồng
+    # 2026 (nested-grid 18 cột) được pin riêng trong t_m10_2026_contract.
     "PLI_M13": ("ndd_pl_sau_thay_doi", "ds_ndd_pl_sau_thay_doi", M13_HEADERS,
                 ["ho_ten", "ngay_sinh", "gioi_tinh", "so_cccd", "chuc_danh",
                  "dia_chi", "quoc_gia"]),
@@ -199,7 +217,8 @@ MANIFEST_SECTION_OF = {
     "PLI_M06": "ds_thanh_vien_tnhh",
     "PLI_M07": "ds_co_dong_sang_lap",
     "PLI_M08": "ds_co_dong_nn",
-    "PLI_M10": "ds_cshhl_doanh_nghiep",
+    # [Pin sync — F0L] PLI_M10/ds_cshhl_doanh_nghiep pin riêng ở
+    # t_m10_2026_contract (nested-grid 2026).
     "PLI_M13": "ndd_pl_sau_thay_doi",
     "PLII_M07": "m7_danh_sach_thanh_vien_hgd",
 }
@@ -278,7 +297,8 @@ def t_manifest_loop_audit():
         "PLI_M06": ([(10, "Thời hạn góp vốn")], 11, "thoi_han_gop_von"),
         "PLI_M07": ([(6, "Dân tộc")], 10, "dan_toc"),
         "PLI_M08": ([], 7, None),
-        "PLI_M10": ([], 11, "quyen_chi_phoi"),
+        # [Pin sync — F0L] PLI_M10: loop_audit 11-tag/2025 hết giá trị —
+        # hợp đồng 18 cột pin riêng ở t_m10_2026_contract.
     }
     for fid, (missing, n_tags, new_tag) in audit.items():
         la = secs[MANIFEST_SECTION_OF[fid]].get("loop_audit") or {}
@@ -429,8 +449,10 @@ def t_spec_d28_separate_key():
 
 @check("[DELTA] M06/M07/M08/M10: dung delta so voi khai bao inline production")
 def t_delta_vs_inline():
+    # [Pin sync — F0L] PLI_M10: hợp đồng 2025 (thêm quyen_chi_phoi) đã chết
+    # theo TT 121/2026 — pin riêng ở t_m10_2026_contract.
     WANT_ADDED = {"PLI_M06": ["thoi_han_gop_von"], "PLI_M07": ["dan_toc"],
-                  "PLI_M08": [], "PLI_M10": ["quyen_chi_phoi"]}
+                  "PLI_M08": []}
     for fid, added in WANT_ADDED.items():
         sid, loop, headers, tags = SPEC_OF[fid]
         prod = prod_tags(fid, loop)               # [(col, tag)] theo template
@@ -455,26 +477,68 @@ def t_delta_vs_inline():
             assert c["header"] in headers, \
                 "%s: header production %r bị đổi text thành %r" % (
                     fid, c["header"], headers)
-        # chỉ M10 được THÊM cột vật lý (12 cột), 3 mẫu kia giữ nguyên số cột
-        want_cols = 12 if fid == "PLI_M10" else len(headers)
+        # [Pin sync — F0L] M10 không còn ở nhóm list-kind
+        want_cols = len(headers)
         assert len(headers) == want_cols, \
             "%s: số cột spec %d != %d" % (fid, len(headers), want_cols)
 
 
-@check("[DELTA] D2.5=A: cot 'Quyền chi phối' dung vi tri + khong ghi vao Ghi chú")
-def t_delta_m10_quyen_chi_phoi():
-    raw, ent = spec_entry("PLI_M10", "ds_cshhl")
-    assert ent["headers"].index("Quyền chi phối") == 10, \
-        "Quyền chi phối phải đứng trước Ghi chú theo nhóm CSHHL của mẫu gốc"
-    assert ent["headers"][-1] == "Ghi chú", "cot cuoi phai la Ghi chú"
+@check("[F0L] M10 2026: nested-grid 18 cot TT121 — cong thuc 11=9+10/14=12+13, 2025 supersed")
+def t_m10_2026_contract():
+    # [Pin sync — F0L 2026-09-06] premise cũ -> hiện trạng -> evidence:
+    #   Premise cũ : M10 = 12 cột 2025 ('Quyền chi phối' trước 'Ghi chú',
+    #                D2.5=A pin 11 tag production).
+    #   Hiện trạng : TT 121/2026/TT-BTC Đ1 k1 điểm e thay Mẫu 10 bằng bảng
+    #                18 cột; 4 hàng header + hàng số '11=9+10'/'14=12+13'
+    #                (ảnh p49 @350dpi Lead proofread — cột 16 'Nhóm cá nhân
+    #                có quan hệ gia đình/hợp đồng7'); 'Quyền chi phối'/'Ghi
+    #                chú' và 2 cột tỷ lệ đơn KHÔNG còn.
+    #   Evidence   : docs/legal_sources_2026/inventory/PLI_M10.json +
+    #                tools/test_current_law_migration.py (fingerprint 2025 mất).
+    #   Quyết định : sửa TEST theo hợp đồng current-law (TT121 thắng theo
+    #                thứ tự ưu tiên "văn bản pháp lý hiện hành").
+    raw, ent = spec_entry("PLI_M10", M10_2026_ID)
+    s = ent["spec"]
+    assert s["kind"] == "nested-grid", s["kind"]
+    assert s["loop"] == "ds_cshhl", s["loop"]
+    assert s["stt"] == {"mode": "generated", "col_index": 0}, s["stt"]
+    # 17 tag đúng thứ tự cột 1..17
+    cols = sorted(s["columns"], key=lambda c: c["col_index"])
+    got = [c["tag"] for c in cols]
+    assert got == M10_2026_TAGS, "tags 2026 %r != %r" % (got, M10_2026_TAGS)
+    assert [c["col_index"] for c in cols] == list(range(1, 18)), \
+        "col_index phải 1..17 (0 = STT engine sinh)"
+    # hàng số: 18 ô, chứa đúng 2 công thức verbatim
+    number_row = s["header_rows"][3]
+    labels = [c["text"] for c in number_row]
+    assert labels == (["1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+                       "11=9+10", "12", "13", "14=12+13",
+                       "15", "16", "17", "18"]), "hàng số %r" % (labels,)
+    # header nhóm spans verbatim (3 hàng đầu)
+    flat = [c["text"] for row in s["header_rows"][:3] for c in row]
+    for h in M10_2026_SPAN_HEADERS:
+        assert h in flat, "thiếu header nhóm %r" % h
+    assert "Nhóm cá nhân có quan hệ gia đình/hợp đồng7" in flat, \
+        "cột 16 phải verbatim '…gia đình/hợp đồng7' (proofread 350dpi)"
+    # 2025 supersed: tag cũ không còn ở spec
+    for dead in ("quyen_chi_phoi", "ghi_chu", "ty_le", "ty_le_co_phan"):
+        assert dead not in got, "tag 2025 %r còn trong spec" % dead
+    # anchor 2026 khớp ĐÚNG 1 lần ở nguồn và blocks
     ext = bfm.load_form_spec("PLI_M10")
-    s = ext["specs_by_id"]["ds_cshhl"]
-    assert "quyen_chi_phoi" in [t for t in s and
-                                [tg for _, tg in bfm._col_tags_for_headers(
-                                    ent["headers"], s).items() if tg]], \
-        "thiếu the {quyen_chi_phoi}"
-    assert "quyen chi phoi" not in " ".join(
-        h for h in ent["headers"] if h == "Ghi chú"), "không hợp nhất vào Ghi chú"
+    ents = [e for e in ext["entries"] if e["anchor"] == M10_2026_ANCHOR]
+    assert len(ents) == 1, "anchor 2026 %r không duy nhất trong spec" % ents
+    src = bfm.find_source("PLI_M10")
+    paras = [fold(p.text) for p in docx.Document(str(src)).paragraphs]
+    assert len([t for t in paras if re.search(M10_2026_ANCHOR, t)]) == 1, \
+        "anchor 2026 phải khớp đúng 1 paragraph nguồn"
+    hits_b = [t for t in block_folds("PLI_M10")
+              if re.search(M10_2026_ANCHOR, t)]
+    assert len(hits_b) == 1, "anchor 2026 phải khớp đúng 1 block"
+    # template production: đủ 17 tag = hợp đồng 2026
+    prod = prod_tags("PLI_M10", "ds_cshhl")
+    prod_tags_set = {t for _, t in prod}
+    assert prod_tags_set == set(M10_2026_TAGS), \
+        "template production %r != hợp đồng 2026" % sorted(prod_tags_set)
 
 
 @check("[REGION] anchor/occurrence dinh vi DUNG 1 vung (nguon + blocks hien tai)")
@@ -642,7 +706,7 @@ def t_blocked_others():
 
 @check("[BLOCKED] khong bia cot chu ky cho bang nguon khong co (PLII_M07/M10/M13)")
 def t_no_signature_invention():
-    NO_CHU_KY = {"PLII_M07", "PLI_M10", "PLI_M13"}
+    NO_CHU_KY = {"PLII_M07", "PLI_M13"}
     for fid in NO_CHU_KY:
         sid, loop, headers, tags = SPEC_OF[fid]
         assert "chu_ky" not in tags, \
@@ -653,6 +717,12 @@ def t_no_signature_invention():
             _GROUP_OF[fid], "%s.json" % fid).read_text(encoding="utf-8-sig"))
         blob = json.dumps(raw, ensure_ascii=False).lower()
         assert '"tag": "chu_ky"' not in blob, "%s: spec gắn the chu_ky" % fid
+    # [Pin sync — F0L] PLI_M10 2026 (nested-grid): cũng KHÔNG có cột Chữ ký
+    # (p49 @350dpi — gap_nghiepvu (e)); pin trực tiếp spec 2026.
+    blob10 = json.dumps(json.loads((ROOT / "tools" / "form_specs").joinpath(
+        "formation", "PLI_M10.json").read_text(encoding="utf-8-sig")),
+        ensure_ascii=False).lower()
+    assert '"tag": "chu_ky"' not in blob10, "M10 2026: spec gắn the chu_ky"
     # còn lại 3 bảng CÓ cột Chữ ký -> D2.4=A: chữ ký phải được gắn the
     for fid in ("PLI_M06", "PLI_M07", "PLI_M08"):
         assert "chu_ky" in SPEC_OF[fid][3], "%s: thiếu the {chu_ky} (D2.4=A)" % fid
@@ -663,7 +733,10 @@ def t_loader_prefers_json():
     for fid in ("PLI_M06", "PLI_M07", "PLI_M08", "PLI_M10"):
         ext = bfm.load_form_spec(fid)
         assert ext and ext["entries"], "%s: không đọc được spec JSON" % fid
-        sid, loop = SPEC_OF[fid][0], SPEC_OF[fid][1]
+        # [Pin sync — F0L] M10 ra khỏi SPEC_OF (nested-grid 2026) — loader
+        # vẫn phải ưu tiên file JSON cho loop canonical ds_cshhl.
+        loop = (M10_2026_ID and "ds_cshhl") if fid == "PLI_M10" \
+            else SPEC_OF[fid][1]
         assert any(ext["specs_by_id"][e["spec"]]["loop"] == loop
                    for e in ext["entries"]), "%s: thiếu loop %r" % (fid, loop)
 
@@ -672,7 +745,7 @@ def main() -> int:
     for fn in (t_manifest_state, t_manifest_loop_audit, t_src_plii_m07,
                t_src_m10_quyen_chi_phoi, t_src_m13_single_row_type,
                t_spec_shape, t_spec_d28_separate_key, t_delta_vs_inline,
-               t_delta_m10_quyen_chi_phoi, t_region_resolution,
+               t_m10_2026_contract, t_region_resolution,
                t_sandbox_rebuild, t_blocked_others, t_no_signature_invention,
                t_loader_prefers_json):
         fn()

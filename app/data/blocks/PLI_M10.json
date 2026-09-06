@@ -23,10 +23,24 @@
    "role": "form-number"
   },
   {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "DANH SÁCH CHỦ SỞ HỮU HƯỞNG LỢI CỦA DOANH NGHIỆP",
+     "b": true
+    }
+   ],
+   "role": "form-subtitle"
+  },
+  {
    "t": "loop",
    "loop": "ds_cshhl",
    "headerRows": [
-    0
+    0,
+    1,
+    2,
+    3
    ],
    "cols": [
     {
@@ -43,38 +57,62 @@
     },
     {
      "col": 4,
-     "tag": "quoc_tich"
-    },
-    {
-     "col": 5,
-     "tag": "dan_toc"
-    },
-    {
-     "col": 6,
-     "tag": "dia_chi"
-    },
-    {
-     "col": 7,
      "tag": "so_giay_to"
     },
     {
+     "col": 5,
+     "tag": "quoc_tich"
+    },
+    {
+     "col": 6,
+     "tag": "dan_toc"
+    },
+    {
+     "col": 7,
+     "tag": "dia_chi"
+    },
+    {
      "col": 8,
-     "tag": "ty_le"
+     "tag": "ty_le_von_dieule_truc_tiep"
     },
     {
      "col": 9,
-     "tag": "ty_le_co_phan"
+     "tag": "ty_le_von_dieule_gian_tiep"
     },
     {
      "col": 10,
-     "tag": "quyen_chi_phoi"
+     "tag": "ty_le_von_dieule_tong"
     },
     {
      "col": 11,
-     "tag": "ghi_chu"
+     "tag": "ty_le_co_phan_truc_tiep"
+    },
+    {
+     "col": 12,
+     "tag": "ty_le_co_phan_gian_tiep"
+    },
+    {
+     "col": 13,
+     "tag": "ty_le_co_phan_tong"
+    },
+    {
+     "col": 14,
+     "tag": "thanh_vien_hop_danh"
+    },
+    {
+     "col": 15,
+     "tag": "nhom_ca_nhan_quan_he"
+    },
+    {
+     "col": 16,
+     "tag": "kiem_soat_doanh_nghiep"
+    },
+    {
+     "col": 17,
+     "tag": "nguoi_quan_ly_doanh_nghiep"
     }
    ],
-   "blankRows": 4,
+   "blankRows": 5,
    "rows": [
     {
      "cells": [
@@ -86,7 +124,7 @@
         }
        ],
        "colspan": 1,
-       "rowspan": 1
+       "rowspan": 3
       },
       {
        "runs": [
@@ -96,7 +134,7 @@
         }
        ],
        "colspan": 1,
-       "rowspan": 1
+       "rowspan": 3
       },
       {
        "runs": [
@@ -106,7 +144,7 @@
         }
        ],
        "colspan": 1,
-       "rowspan": 1
+       "rowspan": 3
       },
       {
        "runs": [
@@ -116,7 +154,17 @@
         }
        ],
        "colspan": 1,
-       "rowspan": 1
+       "rowspan": 3
+      },
+      {
+       "runs": [
+        {
+         "text": "Số, ngày cấp, cơ quan cấp Giấy tờ pháp lý của cá nhân1",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 3
       },
       {
        "runs": [
@@ -126,7 +174,7 @@
         }
        ],
        "colspan": 1,
-       "rowspan": 1
+       "rowspan": 3
       },
       {
        "runs": [
@@ -136,7 +184,7 @@
         }
        ],
        "colspan": 1,
-       "rowspan": 1
+       "rowspan": 3
       },
       {
        "runs": [
@@ -146,12 +194,90 @@
         }
        ],
        "colspan": 1,
+       "rowspan": 3
+      },
+      {
+       "runs": [
+        {
+         "text": "Chủ sở hữu hưởng lợi của doanh nghiệp2",
+         "b": true
+        }
+       ],
+       "colspan": 9,
        "rowspan": 1
       },
       {
        "runs": [
         {
-         "text": "Giấy tờ pháp lý của cá nhân",
+         "text": "Người quản lý doanh nghiệp3",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 3
+      }
+     ]
+    },
+    {
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "Tỷ lệ sở hữu vốn điều lệ4",
+         "b": true
+        }
+       ],
+       "colspan": 3,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Tỷ lệ sở hữu cổ phần có quyền biểu quyết5",
+         "b": true
+        }
+       ],
+       "colspan": 3,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Thành viên hợp danh6",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 2
+      },
+      {
+       "runs": [
+        {
+         "text": "Nhóm cá nhân có quan hệ gia đình/hợp đồng7",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 2
+      },
+      {
+       "runs": [
+        {
+         "text": "Kiểm soát doanh nghiệp8",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 2
+      }
+     ]
+    },
+    {
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "Trực tiếp",
          "b": true
         }
        ],
@@ -161,7 +287,7 @@
       {
        "runs": [
         {
-         "text": "Tỷ lệ sở hữu vốn điều lệ (%)",
+         "text": "Gián tiếp",
          "b": true
         }
        ],
@@ -171,7 +297,7 @@
       {
        "runs": [
         {
-         "text": "Tỷ lệ sở hữu cổ phần có quyền biểu quyết (%)",
+         "text": "Tổng",
          "b": true
         }
        ],
@@ -181,7 +307,7 @@
       {
        "runs": [
         {
-         "text": "Quyền chi phối",
+         "text": "Trực tiếp",
          "b": true
         }
        ],
@@ -191,7 +317,201 @@
       {
        "runs": [
         {
-         "text": "Ghi chú",
+         "text": "Gián tiếp",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Tổng",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
+    },
+    {
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "1",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "2",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "3",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "4",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "5",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "6",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "7",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "8",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "9",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "10",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "11=9+10",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "12",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "13",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "14=12+13",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "15",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "16",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "17",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "18",
          "b": true
         }
        ],
@@ -207,11 +527,67 @@
    "align": "left",
    "runs": [
     {
-     "text": "15",
+     "input": {
+      "key": "dia_diem_ky",
+      "w": 12
+     }
+    },
+    {
+     "text": ", ngày ",
      "vertAlign": "superscript"
     },
     {
-     "text": " - Người đại diện theo pháp luật của doanh nghiệp ký trực tiếp vào phần này. "
+     "input": {
+      "key": "ngay_ky_vb",
+      "w": 12
+     }
+    },
+    {
+     "text": " tháng ",
+     "vertAlign": "superscript"
+    },
+    {
+     "input": {
+      "key": "thang_ky_vb",
+      "w": 12
+     }
+    },
+    {
+     "text": " năm ",
+     "vertAlign": "superscript"
+    },
+    {
+     "input": {
+      "key": "nam_ky_vb",
+      "w": 12
+     }
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "date-line"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT/ CHỦ TỊCH CÔNG TY/CHỦ TỊCH HỘI ĐỒNG THÀNH VIÊN/\nCHỦ TỊCH HỘI ĐỒNG QUẢN TRỊ CỦA CÔNG TY\n(Ký và ghi họ tên)9",
+     "vertAlign": "superscript"
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "signature"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "1 Nếu cột số 5 kê khai Số định danh cá nhân thì không phải kê khai các cột số 6, 7."
     }
    ],
    "format": {
@@ -224,7 +600,111 @@
    "align": "left",
    "runs": [
     {
-     "text": "- Trường hợp đăng ký chuyển đổi loại hình doanh nghiệp đồng thời đăng ký thay đổi người đại diện theo pháp luật thì Chủ tịch công ty/Chủ tịch Hội đồng thành viên của công ty sau chuyển đổi ký trực tiếp vào phần này."
+     "text": "2 Chủ sở hữu hưởng lợi của doanh nghiệp được xác định theo quy định tại Điều 3 Nghị định số 296/2026/NĐ-CP."
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "3 Trường hợp không có cá nhân đáp ứng tiêu chí tại khoản 1, khoản 2 Điều 17 Nghị định số 168/2025/NĐ-CP được sửa đổi, bổ sung tại Điều 3 Nghị định số 296/2026/NĐ-CP, doanh nghiệp xác định một cá nhân là người quản lý doanh nghiệp có quyền hạn lớn nhất để hành động thay mặt cho doanh nghiệp. Doanh nghiệp kê khai người quản lý doanh nghiệp thì doanh nghiệp ghi rõ chức danh quản lý tại doanh nghiệp tương ứng tại cột này."
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "4 Cá nhân trực tiếp hoặc gián tiếp hoặc vừa trực tiếp và gián tiếp sở hữu từ 25% vốn điều lệ trở lên của doanh nghiệp. Nhóm cá nhân có mối quan hệ gia đình theo quy định tại khoản 22 Điều 4 Luật Doanh nghiệp hoặc hợp đồng cùng nhau sở hữu trực tiếp hoặc gián tiếp hoặc vừa trực tiếp và gián tiếp từ 25% trở lên vốn điều lệ của doanh nghiệp, nhóm cá nhân kê khai tỷ lệ sở hữu tại công ty. Cột này áp dụng đối với cá nhân/nhóm cá nhân kê khai tỷ lệ sở hữu vốn điều lệ tại công ty TNHH một thành viên, công ty TNHH hai thành viên trở lên và công ty hợp danh."
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "5 Tỷ lệ sở hữu cổ phần có quyền biểu quyết = Số cổ phần có quyền biểu quyết/tổng số cổ phần có quyền biểu quyết của công ty cổ phần. Cá nhân trực tiếp hoặc gián tiếp hoặc vừa trực tiếp và gián tiếp sở hữu từ 25% tổng số cổ phần có quyền biểu quyết trở lên của doanh nghiệp. Nhóm cá nhân có mối quan hệ gia đình theo quy định tại khoản 22 Điều 4 Luật Doanh nghiệp hoặc hợp đồng cùng nhau sở hữu trực tiếp hoặc gián tiếp hoặc vừa trực tiếp và gián tiếp từ 25% trở lên tổng số cổ phần có quyền biểu quyết của doanh nghiệp, nhóm cá nhân kê khai tỷ lệ sở hữu tại công ty cổ phần. Cột này áp dụng đối với cá nhân/nhóm cá nhân kê khai tỷ lệ sở hữu cổ phần có quyền biểu quyết tại công ty cổ phần."
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "6 Tích dấu X nếu chủ sở hữu hưởng lợi là thành viên hợp danh."
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "footnote"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "7 Nhóm cá nhân có mối quan hệ gia đình theo quy định tại khoản 22 Điều 4 Luật Doanh nghiệp hoặc hợp đồng cùng nhau sở hữu trực tiếp hoặc gián tiếp hoặc vừa trực tiếp và gián tiếp từ 25% vốn điều lệ hoặc từ 25% trở lên tổng số cổ phần có quyền biểu quyết của doanh nghiệp. Doanh nghiệp ghi rõ mối quan hệ thuộc nhóm cá nhân có quan hệ gia đình hoặc nhóm cá nhân có quan hệ hợp đồng tại cột số 16 và kê khai tỷ lệ sở hữu tại công ty tại cột số 9, 10, 11 hoặc 12, 13, 14."
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "8 Cá nhân kiểm soát ghi một hoặc nhiều các quyền sau: Quyền bổ nhiệm, miễn nhiệm hoặc bãi nhiệm đa số hoặc tất cả thành viên hoặc chủ tịch hội đồng thành viên, Giám đốc, Tổng giám đốc; sửa đổi, bổ sung điều lệ của doanh nghiệp; thay đổi cơ cấu tổ chức; quyết định chính sách tài chính, đầu tư và hoạt động của doanh nghiệp; tổ chức lại, giải thể doanh nghiệp."
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "9 - Người đại diện theo pháp luật của doanh nghiệp/Chủ tịch công ty/Chủ tịch Hội đồng thành viên của công ty/Chủ tịch Hội đồng quản trị ký trực tiếp và ghi rõ họ tên theo quy định."
+    }
+   ],
+   "format": {
+    "spaceBeforePt": 6.0
+   },
+   "role": "body"
+  },
+  {
+   "t": "p",
+   "align": "left",
+   "runs": [
+    {
+     "text": "- Trường hợp Tòa án hoặc Trọng tài chỉ định người thực hiện thủ tục đăng ký doanh nghiệp thì người được chỉ định ký trực tiếp vào phần này."
     }
    ],
    "format": {

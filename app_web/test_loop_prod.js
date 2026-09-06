@@ -146,6 +146,58 @@ function expandHeaderRow(thCells) {
   return slots;
 }
 
+/* [F0L 2026-09-06] Mở rộng TOÀN BỘ lưới header rowspan-aware: ô rowspan=N
+ * được mang xuống N-1 hàng tiếp theo tại CÙNG cột (đúng ngữ nghĩa HTML/w:tbl
+ * vMerge). Mẫu 10 2026 (ảnh p49) có 4 hàng header rowspan nhiều tầng — đọc
+ * lẻ từng hàng sẽ không đủ 18 cột. Trả về lưới [row][col] = {title}. */
+function expandHeaderGrid(headRows, nCols) {
+  const open = new Array(nCols).fill(null); // {title, remain, born}
+  const out = [];
+  headRows.forEach((r, ri) => {
+    // ô rowspan từ các hàng TRƯỚC: hiện diện ở hàng này, sau đó giảm remain
+    for (let i = 0; i < nCols; i++) {
+      if (open[i] && open[i].remain < 0) open[i] = null; // hết phạm vi
+    }
+    const rowView = new Array(nCols).fill(null);
+    for (let i = 0; i < nCols; i++) {
+      if (open[i]) rowView[i] = { title: open[i].title, carried: true };
+    }
+    let col = 0;
+    expandHeaderRow(r).forEach(c => {
+      while (col < nCols && rowView[col]) col++; // bỏ qua ô đang rowspan
+      const cs = c.colspan || 1, rs = c.rowspan || 1;
+      for (let k = 0; k < cs && col + k < nCols; k++) {
+        if (rowView[col + k] && !rowView[col + k].carried) {
+          throw new Error('header overlap tại cột ' + (col + k) + ': "' +
+            rowView[col + k].title + '" vs "' + c.title + '"');
+        }
+        rowView[col + k] = { title: c.title };
+        if (rs > 1) open[col + k] = { title: c.title, remain: rs - 1, born: ri };
+      }
+      col += cs;
+    });
+    out.push(rowView.map(s => s || { title: '' }));
+    // giảm remain của các ô SINH TRƯỚC hàng này (đã dùng 1 hàng)
+    for (let i = 0; i < nCols; i++) {
+      if (open[i] && open[i].born < ri) open[i].remain--;
+    }
+  });
+  return out;
+}
+
+/* Hàng tiêu đề = hàng header cuối KHÔNG phải hàng số thuần ("1".."18",
+ * "11=9+10"...). Hàng số là nhãn cột pháp định, không phải tiêu đề cột. */
+function isNumberLabelRow(row) {
+  return row.every(s => /^\d+(=\d+\+\d+)?$/.test((s.title || '').trim()));
+}
+function titleRowOf(headRows, nCols) {
+  const grid = expandHeaderGrid(headRows, nCols);
+  for (let i = grid.length - 1; i >= 0; i--) {
+    if (!isNumberLabelRow(grid[i])) return grid[i];
+  }
+  return grid[grid.length - 1];
+}
+
 /* ------------------------- A. 8 bảng lặp PRODUCTION ------------------------ */
 
 const PROD_LOOPS = [
@@ -183,10 +235,14 @@ PROD_LOOPS.forEach(function (spec) {
   const headRowsJson = (b.rows || []).filter((r, i) => (b.headerRows || []).indexOf(i) >= 0);
   check(label + ': so hang header render dung schema (' + headRowsJson.length + ')',
     headRows.length === headRowsJson.length, 'got ' + headRows.length);
-  const widthsOk = headRows.length > 0 &&
-    headRows.every(r => expandHeaderRow(r).length === grid.n);
-  check(label + ': header grid co ' + grid.n + ' cot vat ly (mo rong colspan)',
-    widthsOk, 'got ' + headRows.map(r => expandHeaderRow(r).length).join(','));
+  let widthsOk = false, widthsMsg = '';
+  try {
+    const gridAll = expandHeaderGrid(headRows, grid.n);
+    widthsOk = headRows.length > 0 &&
+      gridAll.every(row => row.length === grid.n);
+  } catch (e) { widthsMsg = String(e.message || e); }
+  check(label + ': header grid co ' + grid.n + ' cot vat ly (rowspan-aware)',
+    widthsOk, widthsMsg || 'got ' + headRows.map(r => expandHeaderRow(r).length).join(','));
   check(label + ': moi hang body co dung ' + grid.n + ' td',
     bodyRows.length > 0 && bodyRows.every(r => r.length === grid.n),
     'got ' + bodyRows.map(r => r.length).join(','));
@@ -198,7 +254,7 @@ PROD_LOOPS.forEach(function (spec) {
   // 2. mỗi tag nằm đúng dưới tiêu đề tương ứng (col ZERO-BASED)
   let tagPosOk = true;
   let tagPosBad = '';
-  const headSlots = headRows.length ? expandHeaderRow(headRows[headRows.length - 1]) : [];
+  const headSlots = headRows.length ? titleRowOf(headRows, grid.n) : [];
   (b.cols || []).forEach(c => {
     const td = bodyRows.length ? bodyRows[0][c.col] : null;
     const key = 'loop:' + spec.loop + ':0:' + c.tag;

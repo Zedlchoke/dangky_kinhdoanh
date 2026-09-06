@@ -70,6 +70,11 @@ hiddenimports = [
     "clr_loader",
     "pythonnet",
     # Import trễ bên trong app_web/main.py (runtime `from tools.x import …`):
+    # LUU Ý: tools/ là namespace package (KHÔNG có __init__.py) — PyInstaller
+    # thường nhặt được qua pathex, nhưng đây là điểm rủi ro cao nhất của
+    # bundle. BẮT BUỘC kiểm sau build: pyi-archive_viewer -l dist\...exe
+    # phải thấy tools/docx_render (+ excel_export/excel_import); S6 export
+    # trong smoke sẽ fail-loud nếu thiếu.
     "tools",
     "tools.docx_render",
     "tools.excel_export",

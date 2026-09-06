@@ -125,6 +125,11 @@ Yêu cầu tái lập (PLAN F6.1, F6.3):
    `app_web/ui`, `app/data/blocks` (87), `app/data/nganh_vsic.json`
    (VSIC đầy đủ, không phải mock mini), `app/data/questionnaire`,
    `app/templates` (87 .docx).
+4. Kiểm import trễ (điểm rủi ro cao nhất): `tools/` là namespace package
+   nên `pyi-archive_viewer -l dist\DangKyKinhDoanh.exe` phải thấy
+   `tools/docx_render`, `tools/excel_export`, `tools/excel_import`; nếu S6
+   export trong smoke báo lỗi render — kiểm tra đây trước tiên (fail-loud
+   chứ không nuốt lỗi).
 
 ## Bước 6 — Ghi evidence + cập nhật verdict
 

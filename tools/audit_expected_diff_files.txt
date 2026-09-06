@@ -561,3 +561,14 @@ tools/test_m09_decontaminate.py
 docs/audits/header_name_census_f0l_2026-09-06.json
 docs/audits/header_name_census_f0l_2026-09-06.md
 tools/census/header_name_census_f0l.py
+# --- [platform 2026-09-06] F6 handoff kit + F5/F2 protocol docs (merge 5f45e22) ---
+docs/windows_handoff.md
+docs/ai_review_protocol.md
+docs/ui_sweep_protocol.md
+tools/windows_handoff/run_smoke_s1_s8.ps1
+tools/windows_handoff/dangky_kinhdoanh.spec
+tools/windows_handoff/launch_app_web.py
+tools/windows_handoff/README.md
+# --- [F4-EXCEL 2026-09-06] cluster nguồn cụm thay đổi ngành + thuế (merge f4xl) ---
+tools/questionnaire/clusters/thay_doi_nganh.json
+tools/questionnaire/clusters/thue_dang_ky.json

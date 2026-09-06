@@ -175,7 +175,9 @@ WIDE_TABLE_FIXTURE = [
     # diệt vỡ token cột hẹp (adjudicate auditor-visual Phần 3).
     ("PLII_M01", 1, 10, 14400, 954, "ds_tv_ho_gia_dinh"),
     ("PLII_M02", 1, 10, 14400, 954, "tv_hgd_sau_thay_doi"),
-    ("PLII_M02", 7, 10, 14400, 954, "tv_hgd_cap_doi"),
+    # [Pin sync — F1-IN 2026-09-06] 7 -> 8: +bảng c5_thue_chi_tieu_cap_doi
+    # (fixed-matrix Mục C) đứng trước lưới tv_hgd_cap_doi.
+    ("PLII_M02", 8, 10, 14400, 954, "tv_hgd_cap_doi"),
     ("PLI_M02", 1, 14, 14400, 900, "ds_nddpl_uy_quyen_chu_so_huu"),
     ("PLI_M06", 0, 12, 14400, 900, "ds_thanh_vien_tnhh"),
     ("PLI_M07", 0, 11, 14400, 918, "ds_co_dong_sang_lap"),
@@ -188,17 +190,19 @@ WIDE_TABLE_FIXTURE = [
     # 16200 twips) + sàn min col 900 (không còn over-floor 909). Evidence: chạy
     # census_all_templates() ở commit e268038 trả ('PLI_M10',0,18,16200,900).
     ("PLI_M10", 0, 18, 16200, 900, "ds_cshhl"),
-    # [Pin sync — F0L 2026-09-06] PLI_M12 ndd_uy_quyen: table_index 4 -> 5
-    # (bảng header band 2x2 chèn ở đầu tài liệu đẩy mọi bảng của M12 xuống
-    # 1 vị trí — cùng sự kiện với _EXPECTED_TABLE_COUNT 76->77 và
-    # M12_SPEC_MATRICES +1; các kích thước 15 cột/14400/900 KHÔNG đổi).
-    ("PLI_M12", 5, 15, 14400, 900, "ds_ndd_uy_quyen_sau_thay_doi"),
+    # [Pin sync — F0L+F1-IN 2026-09-06] PLI_M12 ndd_uy_quyen: 4 -> 5 (band
+    # header integration) -> 8 (+3 matrix O2 F1-IN đứng trước: nguon_von,
+    # tai_san ×2, co_cau, nganh ×3). 15 cột/14400/900 KHÔNG đổi.
+    ("PLI_M12", 8, 15, 14400, 900, "ds_ndd_uy_quyen_sau_thay_doi"),
     ("PLI_M15", 1, 14, 14400, 900, "ds_nddpl_uy_quyen_chu_so_huu_moi"),
     ("PLI_M72", 5, 10, 14400, 928, "ds_co_dong_sang_lap_ctcp"),
     ("PLI_M72", 6, 10, 14400, 928, "ds_co_dong_nuoc_ngoai_ctcp"),
 ]
 
-_EXPECTED_TABLE_COUNT = 77   # số bảng có w:tblGrid trên toàn corpus
+# [Pin sync — F1-IN 2026-09-06] 77 -> 87: 10 section user-input O1 được
+# rebuild thành w:tbl thật (M12 ×3 matrix, M27 ×2 grid, M78, M79, M80,
+# PLII_M02-c5) — thay đổi có chủ đích, coverage 85 IV drift 0.
+_EXPECTED_TABLE_COUNT = 87   # số bảng có w:tblGrid trên toàn corpus
 # [Pin sync — F0L 2026-09-06] 76 -> 77: +bảng header band 2x2 của PLI_M12
 # (M12 vào HEADER_BAND_FORMS — regen sinh bảng có w:tblGrid ở đầu tài liệu,
 # ảnh p50). Các entry khác giữ nguyên; bảng band 2 cột < sàn WIDE_COLS=10
@@ -592,24 +596,23 @@ def test_c3b_sandbox_regen():
 
 # (section_id, template table_index, rows, cols, expect_present)
 M12_SPEC_MATRICES = [
-    # [Pin sync — F0L 2026-09-06] template_table_index +1 cho TẤT CẢ entry:
-    # premise cũ = M12 có 5 bảng, matrix đầu tiên là bảng 0. Hiện trạng: M12
-    # vào allowlist HEADER_BAND -> regen sinh bảng header 2x2 ở ĐẦU tài liệu
-    # (ảnh p50) -> 6 bảng, mọi matrix dịch xuống 1 vị trí. Evidence: regen
-    # F0L (build_form_maps + tagger + docx_to_blocks, zero-diff) — C4a đếm
-    # 6 bảng, bảng 0 là band 2 cột.
+    # [Pin sync — F1-IN+integration 2026-09-06] index = vị trí sau khi cộng
+    # bảng band header (integration bind M12 p50) — matrix F1-IN dịch +1.
     ("nguon_von_dieule_sau_thay_doi", 1, 6, 3, True),
-    ("nganh_bo_sung", 2, 6, 4, True),
-    ("nganh_xoa_bo", 3, 6, 4, True),
-    ("nganh_sua_doi_chi_tiet", 4, 6, 4, True),
-    ("ndd_uy_quyen_sau_thay_doi", 5, 8, 15, True),
+    ("tai_san_gop_von_sau_thay_doi_vdl", 2, 8, 4, True),
+    ("co_cau_loai_co_phan_sau_thay_doi", 3, 7, 4, True),
+    ("nganh_bo_sung", 4, 6, 4, True),
+    ("nganh_xoa_bo", 5, 6, 4, True),
+    ("nganh_sua_doi_chi_tiet", 6, 6, 4, True),
+    ("tai_san_gop_von_sau_thay_doi_von_dau_tu", 7, 8, 4, True),
+    ("ndd_uy_quyen_sau_thay_doi", 8, 8, 15, True),
 ]
 
-# 3 matrix còn lại của manifest vẫn missing_grid -> BLOCKED_OWNER
+# [Pin sync — F1-IN 2026-09-06] M12_BLOCKED_MATRICES rỗng: 3 matrix BLOCKED_OWNER
+# cũ đã được owner adjudicate (O1/O2) và materialize trong M12_SPEC_MATRICES.
 M12_BLOCKED_MATRICES = [
-    "tai_san_gop_von_sau_thay_doi_vdl",
-    "co_cau_loai_co_phan_sau_thay_doi",
-    "tai_san_gop_von_sau_thay_doi_von_dau_tu",
+    # [Pin sync — F1-IN 2026-09-06] rỗng: 3 matrix BLOCKED_OWNER cũ đã được
+    # owner adjudicate (O1/O2) và materialize trong M12_SPEC_MATRICES ở trên.
 ]
 
 
@@ -621,7 +624,9 @@ def test_c4a_m12_tables():
     # [Pin sync — F0L 2026-09-06] 5 -> 6: +bảng header band 2x2 ở đầu tài
     # liệu (M12 vào HEADER_BAND_FORMS sau migrate current-law p50). Bảng 0
     # là band 2 cột — nằm ngoài M12_SPEC_MATRICES; các matrix dịch +1.
-    assert len(segs) == 6, "M12 phải đúng 6 bảng (census): %d" % len(segs)
+    # [Pin sync — F1-IN 2026-09-06] 6 -> 9: +3 matrix (tai_san ×2, co_cau
+    # loai_co_phan sau thay đổi) materialize theo O2 từ Mẫu 12 2026.
+    assert len(segs) == 9, "M12 phải đúng 9 bảng (census): %d" % len(segs)
     for sid, ti, rows, cols, _present in M12_SPEC_MATRICES:
         seg = body[segs[ti][0]:segs[ti][1]]
         grid = [int(w) for w in re.findall(

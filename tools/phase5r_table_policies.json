@@ -124,7 +124,7 @@
   },
   {
    "form": "PLII_M02",
-   "table_index": 7,
+   "table_index": 8,
    "cols": 10,
    "total_width": 14400,
    "min_col_width": 954,
@@ -142,7 +142,8 @@
    "split_candidate": null,
    "notes": "",
    "lead_note": "5R3-lead rebaseline: regen width_policy 12/12 sau khi path legacy M10 được nối spec (Lane D F2) — min chạm sàn 567.",
-   "landscape_sect_note": "[6V-V3/Q-V2 2026-09-04] bảng được bọc section khổ ngang riêng (pgSz 15840x12240 orient=landscape, lề trái/phải 720) ngay trước/sau bảng; width phân bổ lại theo content, sàn 900 twips, tổng 14400 = khổ in được landscape. Số cột KHÔNG đổi."
+   "landscape_sect_note": "[6V-V3/Q-V2 2026-09-04] bảng được bọc section khổ ngang riêng (pgSz 15840x12240 orient=landscape, lề trái/phải 720) ngay trước/sau bảng; width phân bổ lại theo content, sàn 900 twips, tổng 14400 = khổ in được landscape. Số cột KHÔNG đổi.",
+   "note": "[F1-IN 2026-09-06] 7->8: +bảng c5_thue_chi_tieu_cap_doi (Mục C) đứng trước."
   },
   {
    "form": "PLI_M02",
@@ -257,7 +258,7 @@
   },
   {
    "form": "PLI_M12",
-   "table_index": 5,
+   "table_index": 8,
    "cols": 15,
    "total_width": 14400,
    "min_col_width": 900,
@@ -275,7 +276,8 @@
    "split_candidate": "khóa lặp tự nhiên không tồn tại ở mức spec (2 nhóm cột cuối B145 chưa có tag canonical — BLOCKED_OWNER riêng), nên split-table chỉ khả thi sau khi owner chốt đủ tag; hiện KHÔNG tách.",
    "notes": "Bảng hẹp nhất corpus (576 twips = 1.016 cm, cách ngưỡng D9 567 đúng 9 twips); chính là bảng audit WLAY-008 nêu. Ưu tiên regen kế tiếp.",
    "lead_note": "5R3-lead rebaseline: regen width_policy 12/12 sau khi path legacy M10 được nối spec (Lane D F2) — min chạm sàn 567.",
-   "landscape_sect_note": "[6V-V3/Q-V2 2026-09-04] bảng được bọc section khổ ngang riêng (pgSz 15840x12240 orient=landscape, lề trái/phải 720) ngay trước/sau bảng; width phân bổ lại theo content, sàn 900 twips, tổng 14400 = khổ in được landscape. Số cột KHÔNG đổi."
+   "landscape_sect_note": "[6V-V3/Q-V2 2026-09-04] bảng được bọc section khổ ngang riêng (pgSz 15840x12240 orient=landscape, lề trái/phải 720) ngay trước/sau bảng; width phân bổ lại theo content, sàn 900 twips, tổng 14400 = khổ in được landscape. Số cột KHÔNG đổi.",
+   "note": "[F0L+F1-IN 2026-09-06] 5->8: band header (+1) và +3 matrix O2 (+3)."
   },
   {
    "form": "PLI_M15",
@@ -355,91 +357,99 @@
    "spec_ref": "tools/form_specs/change/PLI_M12.json#nguon_von_dieule_sau_thay_doi",
    "source_evidence": "TT 121/2026/TT-BTC Mẫu số 12 Phụ lục I (thay Mẫu 12 Phụ lục I TT 68/2025) — bảng 'Nguồn vốn điều lệ sau khi thay đổi vốn điều lệ' 3 cột 5 dòng; nguồn repo 02_thay_doi_thong_tin_doanh_nghiep/PL1_Mau_12_tach_tu_file_full.docx p60-p79; owner+Lead 2026-08-28 (D1.1=A).",
    "render_pin": "tblHeader + cantSplit + tblW áp dụng lúc render; template có w:tbl đủ 6x3 (width 2880x3) từ regen cap-von.",
-   "notes": "Đây là bảng từng bị D9 flag trong baseline_c9d095e (trước regen cap-von); tại base a2a5301 đã là bảng thật."
+   "notes": "Đây là bảng từng bị D9 flag trong baseline_c9d095e (trước regen cap-von); tại base a2a5301 đã là bảng thật.",
+   "note": "[F1-IN 2026-09-06] index band-aware + 3 matrix mới chen trước."
   },
   {
    "section_id": "nganh_bo_sung",
    "kind": "editable-grid (list)",
    "status": "matrix-ok",
-   "template_table_index": 2,
+   "template_table_index": 4,
    "rows": 6,
    "cols": 4,
    "spec_ref": "tools/form_specs/change/PLI_M12.json#nganh_bo_sung",
    "source_evidence": "Nguồn p152-p158 (manifest already_complete); rebuild Wave 2B.",
    "render_pin": "tblHeader + cantSplit + tblW lúc render.",
-   "notes": ""
+   "notes": "",
+   "note": "[F1-IN 2026-09-06] index band-aware + 3 matrix mới chen trước."
   },
   {
    "section_id": "nganh_xoa_bo",
    "kind": "editable-grid (list)",
    "status": "matrix-ok",
-   "template_table_index": 3,
+   "template_table_index": 5,
    "rows": 6,
    "cols": 4,
    "spec_ref": "tools/form_specs/change/PLI_M12.json#nganh_xoa_bo",
    "source_evidence": "Nguồn p158-p164 (manifest already_complete); cột 4 là 'Ghi chú' (không có cột ngành chính) — rebuild Wave 2B.",
    "render_pin": "tblHeader + cantSplit + tblW lúc render.",
-   "notes": ""
+   "notes": "",
+   "note": "[F1-IN 2026-09-06] index band-aware + 3 matrix mới chen trước."
   },
   {
    "section_id": "nganh_sua_doi_chi_tiet",
    "kind": "editable-grid (list)",
    "status": "matrix-ok",
-   "template_table_index": 4,
+   "template_table_index": 6,
    "rows": 6,
    "cols": 4,
    "spec_ref": "tools/form_specs/change/PLI_M12.json#nganh_sua_doi_chi_tiet",
    "source_evidence": "Nguồn p164-p170 (manifest already_complete); rebuild Wave 2B.",
    "render_pin": "tblHeader + cantSplit + tblW lúc render.",
-   "notes": ""
+   "notes": "",
+   "note": "[F1-IN 2026-09-06] index band-aware + 3 matrix mới chen trước."
   },
   {
    "section_id": "ndd_uy_quyen_sau_thay_doi",
    "kind": "nested-grid",
    "status": "matrix-ok",
-   "template_table_index": 5,
+   "template_table_index": 8,
    "rows": 8,
    "cols": 15,
    "spec_ref": "tools/form_specs/change/PLI_M12.json#ndd_uy_quyen_sau_thay_doi",
    "source_evidence": "manifest PLI_M12/ndd_uy_quyen_sau_thay_doi (partial_columns): header nối dính 14 cột nguồn, N6 rebuild 15 cột; nguồn p219-p227.",
    "render_pin": "tblHeader (2 tier vMerge được mark cả hai) + cantSplit + tblW lúc render; width redistribute ở regen kế tiếp.",
-   "notes": "Matrix CÓ trong template đủ 8x15; GAP còn lại là 2 nhóm cột header ghep block B145 ('Tổng giá trị vốn được đại diện', 'Thời điểm đại diện phần vốn') CHƯA có tag canonical — BLOCKED_OWNER riêng (policy 'absence, không mislabel' của FORM_TABLE_CONTRACTS PLI_M02); không thuộc khả năng lane C."
+   "notes": "Matrix CÓ trong template đủ 8x15; GAP còn lại là 2 nhóm cột header ghep block B145 ('Tổng giá trị vốn được đại diện', 'Thời điểm đại diện phần vốn') CHƯA có tag canonical — BLOCKED_OWNER riêng (policy 'absence, không mislabel' của FORM_TABLE_CONTRACTS PLI_M02); không thuộc khả năng lane C.",
+   "note": "[F1-IN 2026-09-06] index band-aware + 3 matrix mới chen trước."
   },
   {
    "section_id": "tai_san_gop_von_sau_thay_doi_vdl",
    "kind": "fixed-matrix",
-   "status": "BLOCKED_OWNER(D1.2 'Các tài sản khác trong Tài sản góp vốn' chỉ chốt B cho M01 — policy cho M12 chưa có; nguồn p79-p111 đã phẳng thành paragraph rời và cấu trúc bảng chưa được owner duyệt để viết spec entry; lane không tự sáng tác cột/hàng theo audit WLAY-005)",
-   "template_table_index": null,
-   "rows": null,
-   "cols": null,
+   "status": "matrix-ok",
+   "template_table_index": 2,
+   "rows": 8,
+   "cols": 4,
    "spec_ref": null,
    "source_evidence": "app/data/table_specs/manifest.json PLI_M12/tai_san_gop_von_sau_thay_doi_vdl: status missing_grid, required_columns 5 (stt|loai_tai_san|chi_tiet_ngoai_te_tai_san_khac|gia_tri_vnd|ty_le), '6 dòng cố định + Tổng số, paragraph rời, không input'; anchor PLI_M12.docx#p79-p111; nguồn gốc 02_thay_doi_thong_tin_doanh_nghiep/PL1_Mau_12_tach_tu_file_full.docx p79-p108 (packet D1.2 per legal_status.question của entry nguồn vốn).",
    "render_pin": "không áp dụng (không có w:tbl để pin)",
-   "notes": "Đây là một phần 'nhãn + STT rời' trang 7-8 mà audit WLAY-005 nêu. Khi owner duyệt cấu trúc: viết spec entry fixed-matrix rồi Lead regen — KHÔNG sửa tay template."
+   "notes": "Đây là một phần 'nhãn + STT rời' trang 7-8 mà audit WLAY-005 nêu. Khi owner duyệt cấu trúc: viết spec entry fixed-matrix rồi Lead regen — KHÔNG sửa tay template.",
+   "note": "[F1-IN O2 2026-09-06] matrix materialize theo Mẫu 12 2026; tổng/tỷ lệ computed output-only + recompute-strict mismatch blocking. Lý do BLOCKED_OWNER cũ hết hiệu lực (owner adjudicate). [F1-IN 2026-09-06] index band-aware + 3 matrix mới chen trước."
   },
   {
    "section_id": "co_cau_loai_co_phan_sau_thay_doi",
    "kind": "fixed-matrix",
-   "status": "BLOCKED_OWNER(D1.4=A chỉ chốt FORMULA giá trị = số lượng x mệnh giá (M04/M12) — chưa kèm cấu trúc biểu mẫu M12 được owner duyệt để viết spec entry; nguồn gốc p111-p147 in sẵn lỗi chính tả 'Cổ phần ưu đã biểu quyết'/'Cổ phần ưu đã cổ tức' và việc giữ/sửa nguyên văn phải là quyết định owner riêng; tiền lệ M04 co_cau_loai_co_phan là quyết định riêng của form M04, không tự suy rộng cho M12)",
-   "template_table_index": null,
-   "rows": null,
-   "cols": null,
+   "status": "matrix-ok",
+   "template_table_index": 3,
+   "rows": 7,
+   "cols": 4,
    "spec_ref": null,
    "source_evidence": "app/data/table_specs/manifest.json PLI_M12/co_cau_loai_co_phan_sau_thay_doi: status missing_grid, có fixed_rows 6 dòng (co_phan_pho_thong|cp_uu_dai_bieu_quyet|cp_uu_dai_co_tuc|cp_uu_dai_hoan_lai|cp_uu_dai_khac|tong_so) + required_columns 6 (menh_gia_co_phan đã map là trường lẻ|stt|loai_co_phan|so_luong|gia_tri_vnd|ty_le_so_von_dieule); anchor PLI_M12.docx#p111-p147 (nguon gốc p111-p143, packet D1.4).",
    "render_pin": "không áp dụng (không có w:tbl để pin)",
-   "notes": "Cấu trúc trong manifest là ĐỦ ĐỂ THẢO LUẬN nhưng chưa đủ theo tiêu chí rebuild của lane (spec entry phải được viết với source_evidence TT 121/2026 đối chiếu trực tiếp) — chờ owner/Lead mở. Tiền lệ gần nhất: PLI_M04 co_cau_loai_co_phan (fixed-matrix 6 hàng x 4 cột, STT in sẵn của mẫu không tái lập được ở fixed-matrix v1)."
+   "notes": "Cấu trúc trong manifest là ĐỦ ĐỂ THẢO LUẬN nhưng chưa đủ theo tiêu chí rebuild của lane (spec entry phải được viết với source_evidence TT 121/2026 đối chiếu trực tiếp) — chờ owner/Lead mở. Tiền lệ gần nhất: PLI_M04 co_cau_loai_co_phan (fixed-matrix 6 hàng x 4 cột, STT in sẵn của mẫu không tái lập được ở fixed-matrix v1).",
+   "note": "[F1-IN O2 2026-09-06] matrix materialize theo Mẫu 12 2026; tổng/tỷ lệ computed output-only + recompute-strict mismatch blocking. Lý do BLOCKED_OWNER cũ hết hiệu lực (owner adjudicate). [F1-IN 2026-09-06] index band-aware + 3 matrix mới chen trước."
   },
   {
    "section_id": "tai_san_gop_von_sau_thay_doi_von_dau_tu",
    "kind": "fixed-matrix",
-   "status": "BLOCKED_OWNER(ngữ cảnh vốn đầu tư DNTN RIÊNG (không dùng chung data với vốn điều lệ theo PLAN); nguồn p186-p219 phẳng thành paragraph rời; chưa có spec entry và chưa có quyết định owner về cấu trúc — D1.2 cũng chỉ chốt cho M01)",
-   "template_table_index": null,
-   "rows": null,
-   "cols": null,
+   "status": "matrix-ok",
+   "template_table_index": 7,
+   "rows": 8,
+   "cols": 4,
    "spec_ref": null,
    "source_evidence": "app/data/table_specs/manifest.json PLI_M12/tai_san_gop_von_sau_thay_doi_von_dau_tu: status missing_grid, required_columns 5 giống tai_san_gop_von_sau_thay_doi_vdl; anchor PLI_M12.docx#p186-p219 (nguồn gốc p195-p224).",
    "render_pin": "không áp dụng (không có w:tbl để pin)",
-   "notes": ""
+   "notes": "",
+   "note": "[F1-IN O2 2026-09-06] matrix materialize theo Mẫu 12 2026; tổng/tỷ lệ computed output-only + recompute-strict mismatch blocking. Lý do BLOCKED_OWNER cũ hết hiệu lực (owner adjudicate). [F1-IN 2026-09-06] index band-aware + 3 matrix mới chen trước."
   }
  ],
  "render_pin_contract": {
@@ -505,6 +515,7 @@
   }
  },
  "_notes": [
-  "6V-V4b 2026-09-05 Lead rebaseline: min_col_width = longest-word floor (>=900) — diet vo token cot hep (auditor-visual Phan 3)"
+  "6V-V4b 2026-09-05 Lead rebaseline: min_col_width = longest-word floor (>=900) — diet vo token cot hep (auditor-visual Phan 3)",
+  "[F1-IN 2026-09-06] rebaseline index PLII_M02#8, PLI_M12#8 sau khi 10 section O1 materialize thành w:tbl thật (tổng bảng 87)."
  ]
 }

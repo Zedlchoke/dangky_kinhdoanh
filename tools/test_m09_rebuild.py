@@ -16,7 +16,8 @@ và D3.2=A (chọn bản Mẫu 9 thứ hai — header 14 cột) của docs/decis
            fields) đăng ký đủ tag dưới key "<loop>.<tag>".
   [DECON]  template sau build KHÔNG còn dấu hiệu nhiễm Mẫu 6/7/8/9(lần 2)/10,
            nội dung hợp pháp (mục 8-10, cam kết, khối ký, chân trang 1-9) được
-           GIỮ; 5 paragraph không thể phân biệt bằng text được pin đúng số lượng.
+           GIỮ; tàn dư vùng nhiễm đã bị xóa TẠI NGUỒN (laneC 2026-09-06),
+           pin đúng 1 đường ký + 1 'STT' hợp pháp.
   [NUM]    ĐÁNH SỐ MỤC LIÊN TỤC: dãy mục "N." trong template tăng dần, không
            trùng, không nhảy trong phạm vi nó có; ghép với PLI_M05 (mục 1..6 của
            use case thanh_lap_hop_danh) phải phủ 1..10 và thiếu ĐÚNG mục 7 đã
@@ -359,24 +360,36 @@ def t_decontaminate():
     joined = "\n".join(fold(t) for t in texts)
     for marker in KEEP_MARKERS:
         assert fold(marker) in joined, "mất nội dung hợp pháp: %r" % marker
-    # 5 paragraph tàn dư không thể phân biệt bằng text (xem gap_nghiepvu (b)):
-    # 4 đường '_' tàn dư (p112/p140/p166/p219 nguồn) + 1 'STT' (p189 nguồn).
+    # Tàn dư vùng nhiễm đã BIẾN MẤT khỏi nguồn (laneC REMOVED_BY_SOURCE_CLEANUP,
+    # 2026-09-06: xóa p103-p222 + đuôi glue 'Mẫu số 6' của p102 tại file nguồn):
+    # chỉ còn đường ký hợp pháp p090 (25 '_') của khối "CÁC THÀNH VIÊN HỢP DANH"
+    # và 'STT' của bảng thuế mục 8. Pin đúng 1/1 để tàn dư không hồi sinh.
     underscores = [t for t in texts if re.fullmatch(r"_+", (t or "").strip() or "x")]
     stt_only = [t for t in texts if (t or "").strip() == "STT"]
-    assert len(underscores) == 5, (
-        "số đường '_' = %d, kỳ vọng 5 (1 đường ký hợp pháp p090 + 4 tàn dư"
-        " p112/p140/p166/p219 không phân biệt được bằng text)" % len(underscores))
-    assert len(stt_only) == 2, (
-        "số paragraph 'STT' = %d, kỳ vọng 2 (bảng thuế mục 8 + tàn dư p189)"
+    assert len(underscores) == 1, (
+        "số đường '_' = %d, kỳ vọng 1 (đường ký hợp pháp p090; 4 tàn dư"
+        " p112/p140/p166/p219 đã bị xóa khỏi nguồn — nếu >1 nghĩa là nhiễm "
+        "tái xuất hoặc mất đường ký)" % len(underscores))
+    assert len(stt_only) == 0, (
+        "số paragraph 'STT' = %d, kỳ vọng 0 ('STT' của bảng thuế mục 8 nằm "
+        "trong bảng sau build; tàn dư p189 đã bị xóa khỏi nguồn)"
         % len(stt_only))
     # bảng chèn đúng chỗ: ngay sau 'Mẫu số 9', rồi dòng mục 7 (Lead chèn qua
-    # spec inserts — lệnh owner 2026-08-28), rồi khối GCN đầu tư
+    # spec inserts — lệnh owner 2026-08-28), rồi khối GCN đầu tư. Khoảng giữa
+    # 'Mẫu số 9' và mục 7 chỉ được chứa paragraph nhẹ (spacer/close-break của
+    # landscape) — bảng 14 cột là w:tbl nên không xuất hiện trong danh sách p.
     folds = [fold(t) for t in texts]
     assert folds[0].startswith("pl1 - mau so 9"), "mất dòng tiêu đề nguồn"
     assert folds[1] == "mau so 9", "p001 phải là 'Mẫu số 9', nhận %r" % folds[1]
-    assert folds[3].startswith("7. thanh vien cong ty"), (
-        "p003 sau bảng phải là dòng mục 7 vừa chèn, nhận %r" % folds[3])
-    assert folds[4].startswith("- thong tin ve giay chung nhan dang ky dau tu"), (
+    hits7 = [i for i, f in enumerate(folds) if f.startswith("7. thanh vien cong ty")]
+    assert len(hits7) == 1, "dòng mục 7 xuất hiện %d lần, kỳ vọng 1" % len(hits7)
+    i7 = hits7[0]
+    assert 1 < i7 < len(folds), "mục 7 phải đứng sau khối tiêu đề"
+    between = [f for f in folds[2:i7] if f]
+    assert not between, (
+        "giữa 'Mẫu số 9' và mục 7 chỉ được có bảng + paragraph nhẹ, thấy: %r"
+        % between[:3])
+    assert folds[i7 + 1].startswith("- thong tin ve giay chung nhan dang ky dau tu"), (
         "p004 sau mục 7 phải là khối GCN đầu tư, nhận %r" % folds[4])
 
 

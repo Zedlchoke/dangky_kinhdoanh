@@ -1,0 +1,431 @@
+{
+  "doc_id": "PLI_M12",
+  "title": "Thay đổi ngành nghề và nội dung đăng ký doanh nghiệp (kèm đăng ký thuế)",
+  "questionnaire_version": 1,
+  "cluster": "thay_doi_nganh",
+  "questions": [
+    {
+      "question_id": "q_dn_ten",
+      "group": "Về doanh nghiệp hiện tại",
+      "text": "Tên doanh nghiệp của bạn là gì? (nếu đổi tên thì ghi TÊN MỚI, chữ in hoa)",
+      "type": "text",
+      "example": "CÔNG TY TNHH THƯƠNG MẠI DỊCH VỤ AN PHÁT",
+      "required": true,
+      "version": 20260906,
+      "data_key": "dn.ten_tieng_viet"
+    },
+    {
+      "question_id": "q_dn_ma_so",
+      "group": "Về doanh nghiệp hiện tại",
+      "text": "Mã số doanh nghiệp (mã số thuế) của công ty bạn?",
+      "type": "text",
+      "example": "0312345678",
+      "required": true,
+      "version": 20260906,
+      "data_key": "dn.ma_so_dn"
+    },
+    {
+      "question_id": "q_co_quan_dkkd",
+      "group": "Về doanh nghiệp hiện tại",
+      "text": "Bạn nộp hồ sơ tại cơ quan đăng ký kinh doanh cấp tỉnh nào?",
+      "type": "text",
+      "example": "Sở Kế hoạch và Đầu tư TP. Hồ Chí Minh",
+      "version": 20260906,
+      "data_key": "co_quan_dkkd"
+    },
+    {
+      "question_id": "q_ten_nuoc_ngoai",
+      "group": "Về thay đổi tên (nếu có)",
+      "text": "Tên doanh nghiệp viết bằng tiếng nước ngoài mới (nếu có)?",
+      "type": "text",
+      "example": "An Phat Trading Service Company Limited",
+      "version": 20260906,
+      "data_key": "dn.ten_nuoc_ngoai"
+    },
+    {
+      "question_id": "q_ten_viet_tat",
+      "group": "Về thay đổi tên (nếu có)",
+      "text": "Tên viết tắt mới (nếu có)?",
+      "type": "text",
+      "example": "An Phat Trading",
+      "version": 20260906,
+      "data_key": "dn.ten_viet_tat"
+    },
+    {
+      "question_id": "q_dia_chi_chi_tiet",
+      "group": "Về thay đổi trụ sở (nếu có)",
+      "text": "Nếu đổi trụ sở: địa chỉ mới ở đâu? (số nhà/phòng, ngách/hẻm, ngõ/kiệt, đường/phố, tổ/xóm/ấp/thôn)",
+      "type": "text",
+      "example": "25 Nguyễn Trãi, Phường Bến Thành",
+      "version": 20260906,
+      "data_key": "dia_chi_chi_tiet"
+    },
+    {
+      "question_id": "q_xa_phuong",
+      "group": "Về thay đổi trụ sở (nếu có)",
+      "text": "Xã/phường/đặc khu mới?",
+      "type": "text",
+      "example": "Phường Bến Thành",
+      "version": 20260906,
+      "data_key": "xa_phuong"
+    },
+    {
+      "question_id": "q_tinh_thanh",
+      "group": "Về thay đổi trụ sở (nếu có)",
+      "text": "Tỉnh/thành phố mới?",
+      "type": "text",
+      "example": "TP. Hồ Chí Minh",
+      "version": 20260906,
+      "data_key": "tinh_thanh"
+    },
+    {
+      "question_id": "q_dien_thoai",
+      "group": "Về thay đổi trụ sở (nếu có)",
+      "text": "Số điện thoại mới của công ty?",
+      "type": "tel",
+      "example": "0901234567",
+      "version": 20260906,
+      "data_key": "dien_thoai_khac"
+    },
+    {
+      "question_id": "q_fax",
+      "group": "Về thay đổi trụ sở (nếu có)",
+      "text": "Số fax (nếu có)?",
+      "type": "text",
+      "version": 20260906,
+      "data_key": "fax"
+    },
+    {
+      "question_id": "q_email",
+      "group": "Về thay đổi trụ sở (nếu có)",
+      "text": "Thư điện tử (email) mới?",
+      "type": "email",
+      "example": "kinhdoanh@anphat.vn",
+      "version": 20260906,
+      "data_key": "email_tru_so"
+    },
+    {
+      "question_id": "q_website",
+      "group": "Về thay đổi trụ sở (nếu có)",
+      "text": "Website (nếu có)?",
+      "type": "text",
+      "example": "anphat.vn",
+      "version": 20260906,
+      "data_key": "website"
+    },
+    {
+      "question_id": "q_nganh_bs_ten",
+      "group": "Về ngành nghề bổ sung",
+      "text": "Ngành nghề bạn muốn THÊM vào công ty? Ghi tên ngành",
+      "type": "text",
+      "example": "Bán lẻ hàng điện tử",
+      "repeatable": true,
+      "row_group": "nganh_bo_sung",
+      "version": 20260906,
+      "data_key": "nganh_bo_sung.ten_nganh"
+    },
+    {
+      "question_id": "q_nganh_bs_ma",
+      "group": "Về ngành nghề bổ sung",
+      "text": "Mã ngành bổ sung (app tra VSIC giúp — không cần điền)",
+      "type": "text",
+      "autofill": "vsic",
+      "repeatable": true,
+      "row_group": "nganh_bo_sung",
+      "version": 20260906,
+      "data_key": "nganh_bo_sung.ma_nganh"
+    },
+    {
+      "question_id": "q_nganh_bs_chinh",
+      "group": "Về ngành nghề bổ sung",
+      "text": "Ngành bổ sung này có phải ngành chính không? (đánh X vào đúng một dòng)",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "Ngành chính"
+        }
+      ],
+      "repeatable": true,
+      "row_group": "nganh_bo_sung",
+      "version": 20260906,
+      "data_key": "nganh_bo_sung.la_nganh_chinh"
+    },
+    {
+      "question_id": "q_nganh_xoa_ten",
+      "group": "Về ngành nghề bỏ khỏi danh sách",
+      "text": "Ngành nghề bạn muốn BỎ khỏi công ty? Ghi tên ngành",
+      "type": "text",
+      "example": "Bán buôn nông sản",
+      "repeatable": true,
+      "row_group": "nganh_xoa_bo",
+      "version": 20260906,
+      "data_key": "nganh_xoa_bo.ten_nganh"
+    },
+    {
+      "question_id": "q_nganh_xoa_ma",
+      "group": "Về ngành nghề bỏ khỏi danh sách",
+      "text": "Mã ngành muốn bỏ (nếu biết)?",
+      "type": "text",
+      "repeatable": true,
+      "row_group": "nganh_xoa_bo",
+      "version": 20260906,
+      "data_key": "nganh_xoa_bo.ma_nganh"
+    },
+    {
+      "question_id": "q_nganh_xoa_ghi_chu",
+      "group": "Về ngành nghề bỏ khỏi danh sách",
+      "text": "Ghi chú cho ngành bị bỏ (nếu có)?",
+      "type": "text",
+      "example": "Đang chuyển sang ngành mới",
+      "repeatable": true,
+      "row_group": "nganh_xoa_bo",
+      "version": 20260906,
+      "data_key": "nganh_xoa_bo.ghi_chu"
+    },
+    {
+      "question_id": "q_nganh_sua_ten",
+      "group": "Về ngành nghề sửa đổi chi tiết",
+      "text": "Ngành nghề bạn muốn SỬA lại nội dung? Ghi tên ngành mới",
+      "type": "text",
+      "example": "Bán lẻ hàng điện tử gia dụng",
+      "repeatable": true,
+      "row_group": "nganh_sua_doi_chi_tiet",
+      "version": 20260906,
+      "data_key": "nganh_sua_doi_chi_tiet.ten_nganh"
+    },
+    {
+      "question_id": "q_nganh_sua_ma",
+      "group": "Về ngành nghề sửa đổi chi tiết",
+      "text": "Mã ngành sau khi sửa (nếu biết)?",
+      "type": "text",
+      "repeatable": true,
+      "row_group": "nganh_sua_doi_chi_tiet",
+      "version": 20260906,
+      "data_key": "nganh_sua_doi_chi_tiet.ma_nganh"
+    },
+    {
+      "question_id": "q_nganh_sua_chinh",
+      "group": "Về ngành nghề sửa đổi chi tiết",
+      "text": "Ngành sau sửa có phải ngành chính không? (đánh X vào đúng một dòng)",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "Ngành chính"
+        }
+      ],
+      "repeatable": true,
+      "row_group": "nganh_sua_doi_chi_tiet",
+      "version": 20260906,
+      "data_key": "nganh_sua_doi_chi_tiet.la_nganh_chinh"
+    },
+    {
+      "question_id": "q_von_moi",
+      "group": "Về thay đổi vốn (nếu có)",
+      "text": "Nếu thay đổi vốn: vốn điều lệ sau thay đổi là bao nhiêu? (VNĐ)",
+      "type": "money",
+      "example": "20000000000",
+      "version": 20260906,
+      "data_key": "von_dieu_le_chu"
+    },
+    {
+      "question_id": "q_thoi_diem_thay_doi_von",
+      "group": "Về thay đổi vốn (nếu có)",
+      "text": "Thời điểm thay đổi vốn? (dd/mm/yyyy)",
+      "type": "date",
+      "example": "01/10/2026",
+      "version": 20260906,
+      "data_key": "thoi_diem_thay_doi_von"
+    },
+    {
+      "question_id": "q_hinh_thuc_tang_giam_von",
+      "group": "Về thay đổi vốn (nếu có)",
+      "text": "Công ty tăng hay giảm vốn, từ nguồn nào? Ghi rõ",
+      "type": "text",
+      "example": "Tăng vốn từ lợi nhuận giữ lại",
+      "version": 20260906,
+      "data_key": "hinh_thuc_tang_giam_von"
+    },
+    {
+      "question_id": "q_doi_dia_chi_tb_thue",
+      "group": "Về thông tin đăng ký thuế",
+      "text": "Công ty có ĐỔI luôn địa chỉ nhận thông báo thuế không? (đánh X nếu đúng — địa chỉ mới là địa chỉ trụ sở bạn ghi ở trên)",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "Đồng thời thay đổi địa chỉ nhận thông báo thuế"
+        }
+      ],
+      "version": 20260906,
+      "data_key": "chk_doi_dia_chi_tb_thue"
+    },
+    {
+      "question_id": "q_ngay_bd_hoat_dong",
+      "group": "Về thông tin đăng ký thuế",
+      "text": "Ngày bắt đầu hoạt động (thực tế) của doanh nghiệp là ngày nào? (dd/mm/yyyy)",
+      "type": "date",
+      "example": "01/10/2026",
+      "version": 20260906,
+      "data_key": [
+        {
+          "key": "ngay_bd",
+          "transform": "date_day"
+        },
+        {
+          "key": "thang_bd",
+          "transform": "date_month"
+        },
+        {
+          "key": "nam_bd",
+          "transform": "date_year"
+        }
+      ]
+    },
+    {
+      "question_id": "q_ht_doc_lap",
+      "group": "Về thông tin đăng ký thuế",
+      "text": "Công ty khai 'Hạch toán độc lập' đúng không? (đánh X vào đúng một trong ba dòng hạch toán)",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "Hạch toán độc lập"
+        }
+      ],
+      "version": 20260906,
+      "data_key": "chk_ht_doc_lap"
+    },
+    {
+      "question_id": "q_ht_hop_nhat",
+      "group": "Về thông tin đăng ký thuế",
+      "text": "Hạch toán độc lập nhưng CÓ báo cáo tài chính hợp nhất? (đánh X nếu đúng)",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "Có báo cáo tài chính hợp nhất"
+        }
+      ],
+      "version": 20260906,
+      "data_key": "chk_ht_hop_nhat"
+    },
+    {
+      "question_id": "q_ht_phu_thuoc",
+      "group": "Về thông tin đăng ký thuế",
+      "text": "Công ty khai 'Hạch toán phụ thuộc' (thuộc công ty mẹ)? (đánh X nếu đúng)",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "Hạch toán phụ thuộc"
+        }
+      ],
+      "version": 20260906,
+      "data_key": "chk_ht_phu_thuoc"
+    },
+    {
+      "question_id": "q_nam_tai_chinh",
+      "group": "Về thông tin đăng ký thuế",
+      "text": "Năm tài chính (niên độ kế toán) của công ty bắt đầu từ ngày nào? (theo năm dương lịch thì ghi 01/01)",
+      "type": "text",
+      "example": "01/01",
+      "version": 20260906,
+      "data_key": "ap_dung_tu"
+    },
+    {
+      "question_id": "q_so_lao_dong",
+      "group": "Về thông tin đăng ký thuế",
+      "text": "Tổng số lao động (dự kiến) của công ty?",
+      "type": "integer",
+      "example": "25",
+      "version": 20260906,
+      "data_key": "so_lao_dong"
+    },
+    {
+      "question_id": "q_bot_co",
+      "group": "Về thông tin đăng ký thuế",
+      "text": "Công ty CÓ hoạt động theo dự án BOT/BTO/BT/BOO, BLT, BTL, O&M? (đánh X vào đúng MỘT ô Có hoặc Không)",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "Có hoạt động theo dự án BOT/BTO/BT/BOO, BLT, BTL, O&M"
+        }
+      ],
+      "version": 20260906,
+      "data_key": "chk_co"
+    },
+    {
+      "question_id": "q_bot_khong",
+      "group": "Về thông tin đăng ký thuế",
+      "text": "Công ty KHÔNG hoạt động theo loại dự án BOT/BTO/BT/BOO, BLT, BTL, O&M? (đánh X nếu đúng)",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "Không hoạt động theo dự án BOT/BTO/BT/BOO, BLT, BTL, O&M"
+        }
+      ],
+      "version": 20260906,
+      "data_key": "chk_khong"
+    },
+    {
+      "question_id": "q_gtgt_khoan_tru",
+      "group": "Về thông tin đăng ký thuế",
+      "text": "Thuế GTGT: công ty tính theo phương pháp 'Khấu trừ'? (đánh X vào đúng MỘT trong bốn dòng phương pháp)",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "Khấu trừ"
+        }
+      ],
+      "version": 20260906,
+      "data_key": "chk_gtgt_khoan_tru"
+    },
+    {
+      "question_id": "q_gtgt_truc_tiep_gtgt",
+      "group": "Về thông tin đăng ký thuế",
+      "text": "Thuế GTGT: tính theo 'Trực tiếp trên giá trị gia tăng'? (đánh X nếu đúng)",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "Trực tiếp trên GTGT"
+        }
+      ],
+      "version": 20260906,
+      "data_key": "chk_gtgt_truc_tiep_tren_gtgt"
+    },
+    {
+      "question_id": "q_gtgt_truc_tiep_doanh_so",
+      "group": "Về thông tin đăng ký thuế",
+      "text": "Thuế GTGT: tính theo 'Trực tiếp trên doanh số'? (đánh X nếu đúng)",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "Trực tiếp trên doanh số"
+        }
+      ],
+      "version": 20260906,
+      "data_key": "chk_gtgt_truc_tiep_doanh_so"
+    },
+    {
+      "question_id": "q_gtgt_khong_nop",
+      "group": "Về thông tin đăng ký thuế",
+      "text": "Công ty KHÔNG phải nộp thuế GTGT? (đánh X nếu đúng)",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "Không phải nộp thuế GTGT"
+        }
+      ],
+      "version": 20260906,
+      "data_key": "chk_gtgt_khong_phai_nop"
+    }
+  ]
+}

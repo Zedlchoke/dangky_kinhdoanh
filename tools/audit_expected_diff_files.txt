@@ -510,3 +510,8 @@ app/data/form_maps.json
 app/data/table_specs/manifest.json
 tools/build_form_maps.py
 tools/release_runner.py
+# --- [F4-EXCEL 2026-09-06] P6=C cụm thay đổi ngành + thuế: questionnaire
+# artifacts sinh bởi build_questionnaire (deterministic, test Q6a assert
+# artifact == nguồn); builder gỡ blocked 5 mẫu đã migrate F0L ---
+app/data/questionnaire/PLI_M12.json
+app/data/questionnaire/PLI_M27.json

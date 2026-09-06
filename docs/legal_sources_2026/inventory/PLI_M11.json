@@ -1,0 +1,65 @@
+{
+  "form_id": "PLI_M11",
+  "wave": "F0L current-law migration — Lane A",
+  "checked_date": "2026-09-06",
+  "verdict": "REMOVED_BY_CURRENT_LAW",
+  "legal_basis": {
+    "van_ban": "TT 121/2026/TT-BTC (hiệu lực 21/08/2026 theo Điều 3)",
+    "dieu_khoan": "Điều 1 khoản 2",
+    "quote_verbatim": "2. Bãi bỏ Mẫu số 11 tại Phụ lục I ban hành kèm theo Thông tư số 68/2025/TT-BTC.",
+    "evidence_page": "p2 (ảnh scan 121-btc.signed.pdf, sha256 87f6989d209310b8c6fbec72a182c476bb83a462ce96d74c5218c26605342faf)"
+  },
+  "source_2025": "06_ho_kinh_doanh_va_chuyen_doi/02_chuyen_doi_hkd_sang_dn/DN_PL1_Mau_11_ke_khai_thong_tin_de_xac_dinh_chu_so_huu_huong_loi_cua_doanh_nghiep.docx",
+  "source_2026": null,
+  "pdf_page": "p2 (bãi bỏ) — Phụ lục TT 121 (p4-p70) KHÔNG có Mẫu số 10.5/Mẫu 11 thay thế: Mẫu 12 p63 không còn item nào dẫn Mẫu số 11; Mẫu 10 p49 là mẫu CSHHL duy nhất còn lại",
+  "page_inventory": [
+    "p2: Điều 1 khoản 2 — bãi bỏ Mẫu số 11 Phụ lục I TT 68/2025; Điều 2 — điều khoản chuyển tiếp (hồ sơ đã tiếp nhận trước 21/08/2026 theo NĐ168/NĐ296/TT68 tiếp tục giải quyết theo văn bản cũ); Điều 3 — hiệu lực 21/08/2026"
+  ],
+  "catalog_hien_trang": {
+    "use_cases": "app/data/use_cases.json KHÔNG tham chiếu PLI_M11 (đã grep toàn file, cả 'M11'/'Mau_11'/'Mẫu số 11' — 0 hit)",
+    "form_maps": "app/data/form_maps.json CÓ entry PLI_M11 (id, phu_luc, mau_so, ten_mau, file, template, fields, dynamic_tables) — chưa có marker hiện trạng pháp luật",
+    "template": "app/templates/PLI_M11.docx TỒN TẠI (baseline 2025)",
+    "spec": "tools/form_specs/formation/PLI_M11.json tồn tại (spec rebuild bảng ds_to_chuc_cshhl) — KHÔNG sửa trong lane này, chờ quyết định Lead gỡ khỏi catalog",
+    "source_docx": "giữ nguyên không sửa theo lệnh lane (không xóa, không sửa nội dung)",
+    "phan_luc_II": "PLII_M11 (Phụ lục II Mẫu 11 — thông báo yêu cầu hộ kinh doanh báo cáo) KHÔNG bị ảnh hưởng: TT 121 Điều 1 khoản 2 bãi bỏ đúng 'Mẫu số 11 tại Phụ lục I' — giữ nguyên"
+  },
+  "cross_reference_sau_khi_bai_bo": [
+    "PLI_M12 2026 (p63) đã bỏ cả 2 item dẫn Mẫu số 11 — source M12 trong repo đã sửa theo (commit 3b50306), template sau regen không còn chuỗi 'Mẫu số 11'",
+    "4 file '_Bieu_mau_PL_I_II_full.docx' (02_/03_/04_/05_/06_) là bản copy nguyên văn Phụ lục I+II TT 68/2025 dùng làm tài liệu tham chiếu — GIỮ NGUYÊN (không phải input pipeline của form nào; sửa sẽ làm sai hỏng lưu trữ nguồn 2025). Sau khi rời khỏi hiện hành, các file này chỉ còn giá trị lưu trữ — Lead cân nhắc gắn cờ 'archive-tt68' ở tầng docs nếu muốn.",
+    "Không form nào khác trong pipeline dẫn 'Mẫu số 11 Phụ lục I' (scan toàn bộ source docx: chỉ PLI_M11 tự nó và 4 file full + PLII_M11 khác phụ lục)"
+  ],
+  "canonical_key_impact": [
+    "form_maps PLI_M11: loop ds_cshhl (chung với M10), fields ten_to_chuc, ma_so_dn, ngay_cap, noi_cap, dia_chi, ty_le — sau khi Lead gỡ entry thì các key này hết tồn tại ở M11; không form nào khác dùng ten_to_chuc/noi_cap dạng này ngoài M11 (keys chỉ chết cục bộ)"
+  ],
+  "ui_impact": [
+    "Gỡ PLI_M11 khỏi menu/chọn mẫu; mọi luồng 'thay đổi cổ đông tổ chức ≥25%' giờ đi qua kê khai trong Mẫu 12 mục CSHHL (chỉ Mẫu 10) — Lead wire lại use case nếu có."
+  ],
+  "draft_migration": [
+    "Draft đang treo PLI_M11: theo Điều 2 TT 121, hồ sơ đã tiếp nhận trước 21/08/2026 giải quyết theo văn bản cũ; hồ sơ mới lập sau ngày này không dùng Mẫu 11. Đề xuất: app chặn TẠO MỚI draft M11, draft cũ vẫn mở/đọc được (không xoá dữ liệu)."
+  ],
+  "validation_impact": [
+    "Thêm gate: POST tạo draft/hồ sơ cho form_id PLI_M11 phải bị từ chối với thông báo 'Mẫu số 11 đã bãi bỏ theo khoản 2 Điều 1 Thông tư 121/2026/TT-BTC từ 21/08/2026'. Draft cũ vẫn export được."
+  ],
+  "docx_impact": [
+    "KHÔNG sửa source docx M11 (theo lệnh lane); Lead regen sẽ vẫn sinh template 2025 cho tới khi gỡ entry catalog — negative test (b) sẽ đỏ cho tới khi Lead merge marker."
+  ],
+  "excel_impact": ["Gỡ sheet/export mapping PLI_M11 khi Lead regen catalog."],
+  "de_xuat_marker_catalog": {
+    "mechanism": "form_maps.json entry PLI_M11 thêm trường 'current_law_status'",
+    "gia_tri": "REMOVED_BY_CURRENT_LAW",
+    "kem_theo": {
+      "current_law_ref": "khoản 2 Điều 1 Thông tư 121/2026/TT-BTC (hiệu lực 21/08/2026)",
+      "current_law_effective_date": "2026-08-21",
+      "replacement": "PLI_M10 (TT 121/2026, bảng 18 cột)"
+    },
+    "generator_side": "tools/build_form_maps.py có thể đọc marker này để (tuỳ Lead): (1) skip regen template, (2) vẫn regen nhưng gắn cờ, hoặc (3) không đụng generator — chỉ app gate. Lane A KHÔNG tự chèn vì form_maps là generated artifact (Lead regen riêng trên main)."
+  },
+  "test_evidence": [
+    "tools/test_current_law_migration.py TestM11RemovedByCurrentLaw: (a) form_maps PLI_M11.current_law_status == 'REMOVED_BY_CURRENT_LAW' (ĐỎ trên nhánh lane cho tới khi Lead merge marker — assertion viết theo HỢP ĐỊNH ĐÍCH); (b) không use case nào tham chiếu PLI_M11 (xanh: use_cases.json đã sạch); (c) source M12 không còn chuỗi 'Mẫu số 11' (xanh sau commit 3b50306)."
+  ],
+  "source_quote": [
+    "p2: '2. Bãi bỏ Mẫu số 11 tại Phụ lục I ban hành kèm theo Thông tư số 68/2025/TT-BTC.'",
+    "p2 Điều 2: 'Đối với hồ sơ đã được tiếp nhận và chưa được Cơ quan đăng ký kinh doanh cấp tỉnh chấp thuận trước ngày Thông tư này có hiệu lực thi hành nhưng đáp ứng quy định tại Nghị định số 168/2025/NĐ-CP, Nghị định số 296/2026/NĐ-CP và Thông tư số 68/2025/TT-BTC thì được tiếp tục giải quyết theo quy định tại các văn bản này.'",
+    "p2 Điều 3 khoản 1: 'Thông tư này có hiệu lực thi hành kể từ ngày 21 tháng 8 năm 2026.'"
+  ]
+}

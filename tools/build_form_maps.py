@@ -292,6 +292,10 @@ rule(r"^ho, chu dem va ten$", "ho_ten_in_hoa_2")
 rule(r"^ten chu so huu", "chu_so_huu.ho_ten")
 rule(r"^so dien thoai", "dien_thoai_khac")
 rule(r"^dia chi lien he", "dia_chi_lien_he")
+# TT 121/2026 (Mau 27, trang anh p67): "Địa chỉ liên hệ" cua NDD doi thanh
+# "Địa chỉ thư điện tử" (chu thich 3,4) — key moi, khong dung chung email_tru_so
+# (tru so) hay email_khac ("Thư điện tử" khong tien to "Địa chỉ").
+rule(r"^dia chi thu dien tu", "dia_chi_thu_dien_tu")
 rule(r"^ly do giai the", "ly_do_giai_the")
 rule(r"^ly do cham dut", "ly_do_cham_dut_ton_tai")
 rule(r"^ly do$", "ly_do")

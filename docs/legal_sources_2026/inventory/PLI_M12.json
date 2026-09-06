@@ -1,0 +1,119 @@
+{
+  "form_id": "PLI_M12",
+  "wave": "F0L current-law migration — Lane A",
+  "checked_date": "2026-09-06",
+  "source_2025": "02_thay_doi_thong_tin_doanh_nghiep/PL1_Mau_12_tach_tu_file_full.docx",
+  "source_2026": {
+    "van_ban": "TT 121/2026/TT-BTC",
+    "phan_luc": "Phụ lục I, Mẫu số 12 — Giấy đề nghị đăng ký thay đổi nội dung Giấy chứng nhận đăng ký doanh nghiệp/Thông báo thay đổi nội dung đăng ký doanh nghiệp",
+    "pages": "p50-p66",
+    "sha256": "87f6989d209310b8c6fbec72a182c476bb83a462ce96d74c5218c26605342faf",
+    "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/8/121-btc.signed.pdf"
+  },
+  "pdf_page": "Trang p2 (Điều 1 khoản 1 điểm g: thay thế Mẫu số 12) + p50-p66 (nội dung mẫu)",
+  "page_inventory": [
+    "p50: trang 1 — TÊN DOANH NGHIỆP (band trái) + quốc hiệu; GIẤY ĐỀ NGHỊ; A. ĐĂNG KÝ THAY ĐỔI...; checkbox tách/sáp nhập; CSHHL đất đảo/biên giới Có/Không",
+    "p51: trang 2 — ĐĂNG KÝ THAY ĐỔI TÊN DOANH NGHIỆP (3 dòng tên)",
+    "p52: trang 3 — ĐĂNG KÝ THAY ĐỔI ĐỊA CHỈ TRỤ SỞ CHÍNH (địa chỉ, 4 khu, cam kết trụ sở)",
+    "p53: trang 4 — ĐĂNG KÝ THAY ĐỔI THÀNH VIÊN CÔNG TY TNHH/HỢP DANH (gửi kèm Mẫu 6/Mẫu 9)",
+    "p54: trang 5 — ĐĂNG KÝ THAY ĐỔI VỐN ĐIỀU LỆ... mục 1: vốn, bảng 'Nguồn vốn điều lệ sau khi thay đổi' (3 cột, 5 dòng), bảng 'Tài sản góp vốn sau khi thay đổi vốn điều lệ' (STT/TS/VNĐ/Tỷ lệ)",
+    "p55: trang 6 — hết bảng tài sản góp; 'Thông tin về cổ phần' (Mệnh giá + bảng 5 loại cổ phần + Tổng số); mục 2 phần vốn góp (Mẫu 6/9); cam kết giảm vốn",
+    "p56: trang 7 — THÔNG BÁO THAY ĐỔI NGÀNH, NGHỀ KINH DOANH: 3 lưới (bổ sung/bỏ/sửa đổi chi tiết) + cam kết tiếp cận thị trường + Lưu ý mục 1",
+    "p57: trang 8 — hết Lưu ý (khoản 1 Điều 57 NĐ 168/2025)",
+    "p58: trang 9 — ĐĂNG KÝ THAY ĐỔI VỐN ĐẦU TƯ CỦA CHỦ DOANH NGHIỆP TƯ NHÂN + bảng tài sản góp vốn (6 dòng + Tổng số)",
+    "p59: trang 10 — THÔNG BÁO THAY ĐỔI NGƯỜI ĐẠI DIỆN THEO ỦY QUYỀN...: lưới 14 cột (Vốn được uỷ quyền = 3 ô: Tổng giá trị (10), Tỷ lệ (11), Thời điểm đại diện phần vốn (12); Chữ ký (13), Ghi chú (14)) + 4 chú thích",
+    "p60: trang 11 — THÔNG BÁO THAY ĐỔI CỔ ĐÔNG SÁNG LẬP/CỔ ĐÔNG NƯỚC NGOÀI (Mẫu 7/Mẫu 8, Điều 113 LDN)",
+    "p61: trang 2 (bộ đánh số riêng) — THÔNG BÁO THAY ĐỔI THÔNG TIN ĐĂNG KÝ THUẾ: chỉ tiêu 1-8",
+    "p62: trang 3 — chỉ tiêu 9 Phương pháp tính thuế GTGT (4 ô) + chú thích 4",
+    "p63: trang 4 — THÔNG BÁO THAY ĐỔI THÔNG TIN VỀ CHỦ SỞ HỮU HƯỞNG LỢI...: CHỈ 2 items a) Mẫu số 10, b) Mẫu số 10 (bỏ 2 items Mẫu số 11)",
+    "p64: trang 5 — B. BỔ SUNG, CẬP NHẬT THÔNG TIN ĐĂNG KÝ DOANH NGHIỆP (Mẫu 19)",
+    "p65: trang 6 — C. ĐỀ NGHỊ HIỆU ĐÍNH THÔNG TIN ĐĂNG KÝ DOANH NGHIỆP",
+    "p66: trang 7 — checkbox cấp Giấy xác nhận; công bố Cổng TTQT; cam kết; chữ ký NĐD/Chủ tịch/NGƯỜI ĐƯỢC ỦY QUYỀN + chú thích"
+  ],
+  "old_headings": [
+    "GIẤY ĐỀ NGHỊ / Đăng ký thay đổi nội dung GCN ĐKDN/Thông báo thay đổi nội dung ĐKDN",
+    "A. ĐĂNG KÝ THAY ĐỔI NỘI DUNG ĐĂNG KÝ DOANH NGHIỆP/THÔNG BÁO THAY ĐỔI NỘI DUNG ĐĂNG KÝ DOANH NGHIỆP",
+    "ĐĂNG KÝ THAY ĐỔI TÊN DOANH NGHIỆP", "ĐĂNG KÝ THAY ĐỔI ĐỊA CHỈ TRỤ SỞ CHÍNH",
+    "ĐĂNG KÝ THAY ĐỔI THÀNH VIÊN CÔNG TY TNHH/THÀNH VIÊN HỢP DANH CÔNG TY HỢP DANH",
+    "ĐĂNG KÝ THAY ĐỔI VỐN ĐIỀU LỆ, PHẦN VỐN GÓP, TỶ LỆ PHẦN VỐN GÓP",
+    "THÔNG BÁO THAY ĐỔI NGÀNH, NGHỀ KINH DOANH", "ĐĂNG KÝ THAY ĐỔI VỐN ĐẦU TƯ CỦA CHỦ DOANH NGHIỆP TƯ NHÂN",
+    "THÔNG BÁO THAY ĐỔI NGƯỜI ĐẠI DIỆN THEO ỦY QUYỀN CỦA CHỦ SỞ HỮU/THÀNH VIÊN CÔNG TY TNHH LÀ TỔ CHỨC/CỔ ĐÔNG LÀ TỔ CHỨC NƯỚC NGOÀI",
+    "THÔNG BÁO THAY ĐỔI CỔ ĐÔNG SÁNG LẬP/THÔNG BÁO THAY ĐỔI CỔ ĐÔNG LÀ NHÀ ĐẦU TƯ NƯỚC NGOÀI CÔNG TY CỔ PHẦN",
+    "THÔNG BÁO THAY ĐỔI THÔNG TIN ĐĂNG KÝ THUẾ",
+    "THÔNG BÁO THAY ĐỔI THÔNG TIN VỀ CHỦ SỞ HỮU HƯỞNG LỢI CỦA DOANH NGHIỆP/THÔNG BÁO THAY ĐỔI THÔNG TIN ĐỂ XÁC ĐỊNH CHỦ SỞ HỮU HƯỞNG LỢI (4 items a,b,c,d)",
+    "B. BỔ SUNG, CẬP NHẬT THÔNG TIN ĐĂNG KÝ DOANH NGHIỆP",
+    "C. ĐỀ NGHỊ HIỆU ĐÍNH THÔNG TIN ĐĂNG KÝ DOANH NGHIỆP"
+  ],
+  "new_headings": ["giống old_headings — KHÔNG heading nào đổi; chỉ thay nội dung mục CSHHL 4 items → 2 items và thêm band TÊN DOANH NGHIỆP trang 1"],
+  "old_fields": ["99 fields trong form_maps PLI_M12 (không đổi) — mục CSHHL là văn bản điều hướng (không có slot dấu chấm), không sinh field"],
+  "new_fields": ["99 fields — KHÔNG ĐỔI (regen --one: 99 fields, 4 bảng động)"],
+  "old_tables": [
+    "3 lưới ngành nghề (mục 1/2/3)", "Nguồn vốn điều lệ sau khi thay đổi (3 cột × 5 dòng)",
+    "Tài sản góp vốn sau khi thay đổi vốn điều lệ (4 cột × 6 dòng + Tổng số)",
+    "Thông tin về cổ phần (5 cột × 5 dòng + Tổng số)", "Tài sản góp vốn sau thay đổi vốn đầu tư DNTN",
+    "Lưới NDD theo ủy quyền 14 cột", "Bảng chỉ tiêu đăng ký thuế (9 chỉ tiêu)"
+  ],
+  "new_tables": ["giống old_tables — không bảng nào đổi cấu trúc (p54-p62 đối chiếu từng cột/dòng)"],
+  "added": [
+    {
+      "vi_tri_moi": "Trang 1 đầu mẫu (p50, hàng đầu)",
+      "noi_dung": "Band 'TÊN DOANH NGHIỆP ______' bên trái quốc hiệu",
+      "evidence": "p50: 'TÊN DOANH NGHIỆP ______' + 'CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM' cùng hàng bìa; source 2025 THIẾU band này (gap đã ghi trong tools/form_specs/change/PLI_M12.json legal_status.question mục c — hdr2col census của Lead)"
+    }
+  ],
+  "removed": [
+    {
+      "vi_tri_cu": "Mục 'THÔNG BÁO THAY ĐỔI THÔNG TIN VỀ CSHHL/...' — item b) (source P0319, trang ảnh 2026 tương ứng p63)",
+      "van_ban_cu": "b) Trường hợp công ty cổ phần có sự thay đổi cổ đông là tổ chức sở hữu từ 25% tổng số cổ phần có quyền biểu quyết trở lên hoặc thay đổi tỷ lệ sở hữu tổng số cổ phần có quyền biểu quyết theo quy định tại khoản 2 Điều 52 Nghị định số 168/2025/NĐ-CP (kê khai theo Mẫu số 11 Phụ lục I ban hành kèm theo Thông tư này): Gửi kèm.",
+      "van_ban_moi": "(không còn — TT 121/2026 bãi bỏ Mẫu số 11 theo Điều 1 khoản 2, p2)"
+    },
+    {
+      "vi_tri_cu": "Mục CSHHL — item d) (source P0321, p63)",
+      "van_ban_cu": "d) Đối với công ty cổ phần được đăng ký thành lập trước ngày 01/7/2025, trường hợp công ty cổ phần có thông tin để xác định chủ sở hữu hưởng lợi của doanh nghiệp theo quy định tại khoản 3 Điều 18 Nghị định số 168/2025/NĐ-CP, công ty cổ phần bổ sung thông tin để xác định chủ sở hữu hưởng lợi của doanh nghiệp theo quy định tại khoản 1 Điều 3 Luật số 76/2025/QH15 ngày 17/6/2025 sửa đổi, bổ sung một số điều của Luật Doanh nghiệp (kê khai theo Mẫu số 11 Phụ lục I ban hành kèm theo Thông tư này): Gửi kèm.",
+      "van_ban_moi": "(không còn — Mẫu số 11 bị bãi bỏ)"
+    }
+  ],
+  "changed": [
+    {
+      "vi_tri_cu_moi": "Mục CSHHL item a) — source P0318 (cũ) → P0290 (template mới) = trang ảnh 2026 p63",
+      "van_ban_cu": "a) Trường hợp doanh nghiệp có sự thay đổi chủ sở hữu hưởng lợi của doanh nghiệp, tỷ lệ sở hữu đã kê khai với Cơ quan đăng ký kinh doanh cấp tỉnh theo quy định tại khoản 1 Điều 52 Nghị định số 168/2025/NĐ-CP (kê khai theo Mẫu số 10 Phụ lục I ban hành kèm theo Thông tư này): Gửi kèm.",
+      "van_ban_moi": "a) Trường hợp doanh nghiệp có sự thay đổi thông tin về chủ sở hữu hưởng lợi của doanh nghiệp (bao gồm người quản lý doanh nghiệp) đã kê khai với Cơ quan đăng ký kinh doanh cấp tỉnh thì doanh nghiệp kê khai theo Mẫu số 10 Phụ lục I ban hành kèm theo Thông tư này: Gửi kèm.",
+      "evidence": "p63"
+    },
+    {
+      "vi_tri_cu_moi": "Mục CSHHL item c) → item b) — source P0320 (cũ) → P0291 (template mới) = p63",
+      "van_ban_cu": "c) Đối với doanh nghiệp được thành lập trước ngày 01/7/2025, trường hợp doanh nghiệp có thông tin về chủ sở hữu hưởng lợi của doanh nghiệp theo quy định tại khoản 1, khoản 2 Điều 18 Nghị định số 168/2025/NĐ-CP, doanh nghiệp bổ sung thông tin về chủ sở hữu hưởng lợi của doanh nghiệp theo quy định tại khoản 1 Điều 3 Luật số 76/2025/QH15 ngày 17/6/2025 sửa đổi, bổ sung một số điều của Luật Doanh nghiệp (kê khai theo Mẫu số 10 Phụ lục I ban hành kèm theo Thông tư này): Gửi kèm.",
+      "van_ban_moi": "b) Đối với doanh nghiệp được thành lập trước ngày 01/7/2025, doanh nghiệp bổ sung thông tin về chủ sở hữu hưởng lợi của doanh nghiệp theo quy định tại khoản 1 Điều 3 Luật số 76/2025/QH15 ngày 17/6/2025 sửa đổi, bổ sung một số điều của Luật Doanh nghiệp (kê khai theo Mẫu số 10 Phụ lục I ban hành kèm theo Thông tư này): Gửi kèm.",
+      "evidence": "p63"
+    }
+  ],
+  "no_delta_vung": [
+    "Trang 2-10, 11-16 của mẫu (p51-p62, p64-p66): tên, địa chỉ trụ sở, thành viên, vốn điều lệ + nguồn vốn điều lệ + tài sản góp + cổ phần, ngành nghề (3 lưới + Lưu ý), vốn đầu tư DNTN, lưới NDD ủy quyền 14 cột, cổ đông sáng lập/NN, đăng ký thuế 9 chỉ tiêu, Mục B, Mục C, chữ ký — đối chiếu từng trang với source, GIỐNG HẾT 2025 (kể cả lỗi in 'Cổ phần ưu đã biểu quyết'/'Cổ phần ưu đã cổ tức' còn nguyên tại p55)"
+  ],
+  "canonical_key_impact": [
+    "KHÔNG key form_maps nào đổi (mục CSHHL không sinh slot). Regen --one: 99 fields (không đổi), 3 slot không khớp (không đổi)."
+  ],
+  "ui_impact": [
+    "Band TÊN DOANH NGHIỆP mới trên template — Lead xem xét wire name_slot (mechanism name_slots có sẵn, 6V-V2/C2) nếu muốn ô điền tên; hiện là paragraph tĩnh không slot, an toàn."
+  ],
+  "draft_migration": [
+    "Draft cũ lưu key M12 không bị mất key nào → migrate an toàn 1:1."
+  ],
+  "validation_impact": [
+    "Không có validation nào gắn với 4 items CSHHL bị sửa/xóa (chỉ là hướng dẫn kê khai 'Gửi kèm Mẫu số 10/11'). UI flow cần ngừng điều hướng người dùng tới PLI_M11 từ M12 (xem PLI_M11.json)."
+  ],
+  "docx_impact": [
+    "Source DOCX đã sửa: thêm band TÊN DOANH NGHIỆP (trang 1); thay item a); xóa item b) cũ; thay item c) thành b) mới; xóa item d) cũ. Regen --one PLI_M12 PASS (0 ValueError)."
+  ],
+  "excel_impact": [
+    "Export Excel theo field — không đổi field nào nên không đổi mapping Excel."
+  ],
+  "test_evidence": [
+    "tools/test_current_law_migration.py: source M12 KHÔNG còn chứa chuỗi 'Mẫu số 11' (fingerprint 2025 phải mất); CÓ chứa 'bao gồm người quản lý doanh nghiệp' (fingerprint 2026, p63) và 'khoản 1 Điều 3 Luật số 76/2025/QH15'."
+  ],
+  "source_quote": [
+    "p63: 'a) Trường hợp doanh nghiệp có sự thay đổi thông tin về chủ sở hữu hưởng lợi của doanh nghiệp (bao gồm người quản lý doanh nghiệp) đã kê khai với Cơ quan đăng ký kinh doanh cấp tỉnh thì doanh nghiệp kê khai theo Mẫu số 10 Phụ lục I ban hành kèm theo Thông tư này: Gửi kèm.'",
+    "p63: 'b) Đối với doanh nghiệp được thành lập trước ngày 01/7/2025, doanh nghiệp bổ sung thông tin về chủ sở hữu hưởng lợi của doanh nghiệp theo quy định tại khoản 1 Điều 3 Luật số 76/2025/QH15 ngày 17/6/2025 sửa đổi, bổ sung một số điều của Luật Doanh nghiệp (kê khai theo Mẫu số 10 Phụ lục I ban hành kèm theo Thông tư này): Gửi kèm.'",
+    "p2, Điều 1 khoản 1 điểm g: 'Thay thế Mẫu số 12 Phụ lục I ban hành kèm theo Thông tư số 68/2025/TT-BTC bằng Mẫu số 12 Phụ lục ban hành kèm theo Thông tư này;'"
+  ]
+}

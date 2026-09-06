@@ -1,0 +1,112 @@
+{
+  "form_id": "PLI_M27",
+  "wave": "F0L current-law migration — Lane A",
+  "checked_date": "2026-09-06",
+  "source_2025": "04_tam_ngung_cham_dut_giai_the/PL1_Mau_27_thong_bao_ve_viec_tam_ngung_kinh_doanh_tiep_tuc_kinh_doanh_truoc_thoi_han_da_thong_bao_cua_doanh.docx",
+  "source_2026": {
+    "van_ban": "TT 121/2026/TT-BTC",
+    "phan_luc": "Phụ lục, Mẫu số 27 — Thông báo về việc tạm ngừng kinh doanh/tiếp tục kinh doanh trước thời hạn đã thông báo của doanh nghiệp/chi nhánh/địa điểm kinh doanh/về việc tạm ngừng hoạt động/tiếp tục hoạt động trước thời hạn đã thông báo của văn phòng đại diện",
+    "pages": "p67-p69",
+    "sha256": "87f6989d209310b8c6fbec72a182c476bb83a462ce96d74c5218c26605342faf",
+    "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/8/121-btc.signed.pdf"
+  },
+  "pdf_page": "p2 (Điều 1 khoản 1 điểm h) + p67-p69",
+  "page_inventory": [
+    "p67 (trang 8/TT121): bìa mẫu — TÊN DOANH NGHIỆP + quốc hiệu; THÔNG BÁO; mục 1 tạm ngừng: a) doanh nghiệp (ngày, lý do, chuyển CSDLQQG sang 'Tạm ngừng kinh doanh, hoạt động'), khối Thông tin NDD (Họ tên / Số điện thoại³ / Địa chỉ thư điện tử⁴), b) chi nhánh/địa điểm, c) văn phòng đại diện; chân trang chú thích 1,2,3,4",
+    "p68 (trang 9): hết b) tạm ngừng (chi nhánh chủ quản), c) VPĐD; mục 2 tiếp tục trước thời hạn⁵: a) doanh nghiệp, b) chi nhánh/VPĐD/địa điểm (chi nhánh chủ quản), c) VPĐD; chân trang chú thích 5",
+    "p69 (trang 10): cam kết trách nhiệm; chữ ký NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT CỦA DOANH NGHIỆP/NGƯỜI ĐỨNG ĐẦU CHI NHÁNH (Ký và ghi họ tên)⁶; chú thích 6 (3 gạch đầu dòng giữ nguyên)"
+  ],
+  "old_headings": ["THÔNG BÁO Về việc tạm ngừng kinh doanh/tiếp tục kinh doanh...; 1. Trường hợp tạm ngừng kinh doanh/hoạt động (a doanh nghiệp / b chi nhánh-địa điểm / c VPĐD); 2. Trường hợp tiếp tục kinh doanh/hoạt động trước thời hạn đã thông báo (a/b/c)"],
+  "new_headings": ["giống old_headings — heading không đổi"],
+  "old_fields": ["22 fields (2025 form_maps): trong đó khối NDD = ho_ten_in_hoa_2, ndd.ngay_sinh, ndd.thang_sinh, ndd.nam_sinh, ndd.gioi_tinh (ctx NDD), ndd.so_cccd (ctx NDD), dien_thoai_khac, dia_chi_lien_he"],
+  "new_fields": ["17 fields (regen --one sau sửa): bo ndd.ngay_sinh/thang_sinh/nam_sinh, ndd.gioi_tinh, ndd.so_cccd, dia_chi_lien_he; them dia_chi_thu_dien_tu; giu ho_ten_in_hoa_2 (bỏ tiền tố '1.'), dien_thoai_khac"],
+  "old_tables": ["(không có bảng dữ liệu — chỉ header 2x2 TÊN DOANH NGHIỆP/quốc hiệu)"],
+  "new_tables": ["không đổi"],
+  "added": [
+    {
+      "vi_tri_moi": "Khối 'Thông tin người đại diện theo pháp luật của doanh nghiệp²:' (p67) — dòng mới thay cho 'Địa chỉ liên hệ'",
+      "noi_dung": "Địa chỉ thư điện tử4: ………",
+      "evidence": "p67: 'Địa chỉ thư điện tử4: ……...……………………………' ngay sau 'Số điện thoại³:'"
+    }
+  ],
+  "removed": [
+    {
+      "vi_tri_cu": "Khối NDD (source P0019-P0021) → p67",
+      "van_ban_cu": "Ngày, tháng, năm sinh: ……../……./…………… / Giới tính: …… / Số định danh cá nhân: ……",
+      "van_ban_moi": "(không còn — khối NDD 2026 chỉ còn Họ tên / Số điện thoại / Địa chỉ thư điện tử)"
+    },
+    {
+      "vi_tri_cu": "Khối NDD (source P0024-P0025) → p67",
+      "van_ban_cu": "2. Họ, chữ đệm và tên: … / …",
+      "van_ban_moi": "(không còn — không đánh số từng NDD; chú thích 2 mới cho phép chọn 01 hoặc nhiều NDD)"
+    },
+    {
+      "vi_tri_cu": "Chú thích 3 (source P0064) → p67",
+      "van_ban_cu": "3 Số điện thoại của người đại diện theo pháp luật phải trùng với số điện thoại đã kê khai trong Cơ sở dữ liệu quốc gia về dân cư.",
+      "van_ban_moi": "3,4 Doanh nghiệp kê khai số điện thoại, thư điện tử để nhận thông báo từ cơ quan đăng ký kinh doanh."
+    }
+  ],
+  "changed": [
+    {
+      "vi_tri_cu_moi": "Khối NDD dòng đầu (source P0018 → P0018 mới) = p67",
+      "van_ban_cu": "1. Họ, chữ đệm và tên: ………",
+      "van_ban_moi": "Họ, chữ đệm và tên: ……… (bỏ tiền tố '1.')",
+      "evidence": "p67"
+    },
+    {
+      "vi_tri_cu_moi": "Khối NDD dòng cuối (source P0023 → mới) = p67",
+      "van_ban_cu": "Địa chỉ liên hệ: ………",
+      "van_ban_moi": "Địa chỉ thư điện tử4: ………",
+      "evidence": "p67"
+    },
+    {
+      "vi_tri_cu_moi": "Chú thích 2 (source P0063 → mới) = p67 chân trang",
+      "van_ban_cu": "2 Kê khai thông tin của tất cả người đại diện theo pháp luật của doanh nghiệp.",
+      "van_ban_moi": "2 Trường hợp có nhiều hơn một người đại diện theo pháp luật, doanh nghiệp có thể chọn kê khai thông tin của 01 hoặc nhiều người đại diện theo pháp luật vào phần này.",
+      "evidence": "p67"
+    },
+    {
+      "vi_tri_cu_moi": "Chú thích 4 → 5 (source P0065 → mới) + mốc thân văn bản 'thông báo4' → 'thông báo5' (source P0039 → P0034 mới) = p68",
+      "van_ban_cu": "4 Doanh nghiệp gửi thông báo ... chậm nhất 03 ngày làm việc trước khi tiếp tục kinh doanh/hoạt động trước thời hạn đã thông báo.",
+      "van_ban_moi": "5 (cùng nội dung, đánh số lại do chú thích 3,4 tách)",
+      "evidence": "p68 chân trang chú thích 5"
+    },
+    {
+      "vi_tri_cu_moi": "Chữ ký (source P0060 → P0055 mới) = p69",
+      "van_ban_cu": "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT CỦA DOANH NGHIỆP/ NGƯỜI ĐỨNG ĐẦU CHI NHÁNH (Ký và ghi họ tên)5",
+      "van_ban_moi": "(Ký và ghi họ tên)6 — nội dung + 3 dòng chú thích 6 giữ nguyên",
+      "evidence": "p69"
+    }
+  ],
+  "no_delta_vung": [
+    "Toàn bộ mục 1b/1c (tạm ngừng chi nhánh/địa điểm/VPĐD) và mục 2a/2b/2c (tiếp tục kinh doanh) — p67-p68 đối chiếu GIỐNG HẾT 2025 (kể cả câu 'chuyển tình trạng ... sang tình trạng \"Tạm ngừng kinh doanh, hoạt động\"' tại p67); heading, Kính gửi, Tên DN, MST, 2 đoạn cam kết — không đổi"
+  ],
+  "canonical_key_impact": [
+    "- keys MẤT khỏi form_maps PLI_M27: ndd.ngay_sinh, ndd.thang_sinh, ndd.nam_sinh, ndd.gioi_tinh, ndd.so_cccd, dia_chi_lien_he (vẫn còn ở các form khác: M02/M03/M04/M06/M08/M13/M72 — không phải key chết toàn cục)",
+    "- key MỚI: dia_chi_thu_dien_tu (rule mới r'^dia chi thu dien tu' trong tools/build_form_maps.py — additive, không đụng rule cũ)",
+    "- key giữ nguyên: ho_ten_in_hoa_2 (mất tiền tố '1.' vẫn khớp rule), dien_thoai_khac, tu_ngay, den_ngay, ly_do_tam_ngung, ly_do_tiep_tuc, cn.*"
+  ],
+  "ui_impact": [
+    "UI form PLI_M27 phải bỏ 5 ô nhập (ngày sinh/giới tính/CCCD/địa chỉ liên hệ của NDD, ô NDD thứ 2) và thêm ô 'Địa chỉ thư điện tử' — Lead wire theo form_maps 17 fields mới."
+  ],
+  "draft_migration": [
+    "Draft cũ có dữ liệu ndd.* cho M27: khi mở draft trên template mới các slot không tồn tại → dữ liệu đó bị bỏ qua khi điền (không lỗi engine); không suy diễn chuyển sang ô nào khác."
+  ],
+  "validation_impact": [
+    "Yêu cầu 'Số điện thoại ... phải trùng với Cơ sở dữ liệu quốc gia về dân cư' (2025) KHÔNG còn trong mẫu 2026 (p67 chú thích 3,4 mới chỉ nói kê khai để nhận thông báo) — không có rule validate nào trong app dựa trên câu này (grep 'dân cư' app/ = 0 hit) nên không phải gỡ validation; nếu sau này thêm rule thì phải theo chú thích mới."
+  ],
+  "docx_impact": [
+    "Source DOCX đã sửa: bỏ '1.'/'2.' trước họ tên NDD, xóa 3 dòng (sinh ngày/giới tính/CCCD), 'Địa chỉ liên hệ' → 'Địa chỉ thư điện tử4', gộp chú thích 3,4, đánh số lại chú thích 4→5 (thân văn bản + chân trang), ký tên 5→6. Regen --one PLI_M27 PASS: 17 fields, 0 bảng động, không ValueError."
+  ],
+  "excel_impact": [
+    "Export Excel theo fields: bớt 6 cột NDD, thêm cột dia_chi_thu_dien_tu."
+  ],
+  "test_evidence": [
+    "tools/test_current_law_migration.py: source M27 chứa 'Địa chỉ thư điện tử4' + '3,4 Doanh nghiệp kê khai số điện thoại, thư điện tử' (fingerprint 2026, p67); KHÔNG còn 'Cơ sở dữ liệu quốc gia về dân cư' (fingerprint 2025 phải mất); KHÔNG còn '2. Họ, chữ đệm và tên'."
+  ],
+  "source_quote": [
+    "p67: 'Thông tin người đại diện theo pháp luật của doanh nghiệp2: / Họ, chữ đệm và tên: …… / Số điện thoại3: …… / Địa chỉ thư điện tử4: ……'",
+    "p67 chú thích: '2 Trường hợp có nhiều hơn một người đại diện theo pháp luật, doanh nghiệp có thể chọn kê khai thông tin của 01 hoặc nhiều người đại diện theo pháp luật vào phần này.' + '3,4 Doanh nghiệp kê khai số điện thoại, thư điện tử để nhận thông báo từ cơ quan đăng ký kinh doanh.'",
+    "p2, Điều 1 khoản 1 điểm h: 'Thay thế Mẫu số 27 Phụ lục I ban hành kèm theo Thông tư số 68/2025/TT-BTC bằng Mẫu số 27 Phụ lục ban hành kèm theo Thông tư này;'"
+  ]
+}

@@ -424,14 +424,16 @@ def t_blank_render():
 # ---------------------------------------------------------------- [COVERAGE]
 @check("[COVERAGE] audit xep 10/10 section IMPLEMENTED_VERIFIED")
 def t_coverage():
-    import subprocess
-    r = subprocess.run(
-        [sys.executable, "-X", "utf8", "-m",
-         "tools.census.table_coverage_audit"], cwd=str(ROOT),
-        capture_output=True, text=True)
-    assert r.returncode == 0, r.stdout[-2000:] + r.stderr[-2000:]
-    cov = ROOT / "docs" / "table_coverage_current.json"
-    data = json.loads(cov.read_text(encoding="utf-8"))
+    # Chạy audit IN-PROCESS ghi ra file TEMP (không đụng docs/ — tránh
+    # re-stamp head làm bẩn tree sau mỗi lần chạy test)
+    import tempfile
+    import tools.census.table_coverage_audit as tca
+    with tempfile.TemporaryDirectory() as td:
+        tca.OUT_JSON = str(Path(td) / "cov.json")
+        tca.OUT_MD = str(Path(td) / "cov.md")
+        rc = tca.main([])
+        assert rc == 0, "coverage audit GATE FAIL"
+        data = json.loads(Path(tca.OUT_JSON).read_text(encoding="utf-8"))
     by_key = {(r["form_id"], r["section_id"]): r for r in data["rows"]}
     for fid, sid in SECTIONS_10:
         r = by_key.get((fid, sid))

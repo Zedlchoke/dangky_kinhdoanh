@@ -239,6 +239,11 @@ Q_M01 = json.loads((ROOT / "app" / "data" / "questionnaire" / "PLII_M01.json")
                    .read_text(encoding="utf-8"))
 Q_M02 = json.loads((ROOT / "app" / "data" / "questionnaire" / "PLII_M02.json")
                    .read_text(encoding="utf-8"))
+# [P6=C 2026-09-06 — f4xl] cụm thay đổi ngành (PLI_M12) + cụm thuế (PLI_M27)
+Q_M12 = json.loads((ROOT / "app" / "data" / "questionnaire" / "PLI_M12.json")
+                   .read_text(encoding="utf-8"))
+Q_M27 = json.loads((ROOT / "app" / "data" / "questionnaire" / "PLI_M27.json")
+                   .read_text(encoding="utf-8"))
 
 
 @check("[RT6] O7 cụm hộ KD — PLII_M01: bảng tv_hgd 2 hàng + ngành + CCCD "
@@ -302,8 +307,84 @@ def rt7():
                      "ma_nganh": "1030", "la_nganh_chinh": "X"}], rows
 
 
+@check("[RT8] P6=C cụm thay đổi ngành — PLI_M12: 3 lưới ngành (bổ sung 2 hàng "
+       "/ bỏ / sửa) + money/date 3 key/marks thuế + MSDN số 0 đầu giữ 100%")
+def rt8():
+    res = fill_and_import(
+        {"q_dn_ten": "CÔNG TY TNHH AN PHÁT",
+         "q_dn_ma_so": "0312345678",            # số 0 đầu — phải là chuỗi
+         "q_co_quan_dkkd": "Sở Kế hoạch và Đầu tư TP. Hồ Chí Minh",
+         "q_ten_nuoc_ngoai": "An Phat Company Limited",
+         "q_dia_chi_chi_tiet": "25 Nguyễn Trãi", "q_xa_phuong": "P. Bến Thành",
+         "q_tinh_thanh": "TP. Hồ Chí Minh", "q_dien_thoai": "0901234567",
+         "q_email": "kinhdoanh@anphat.vn",
+         "q_von_moi": "20.000.000.000", "q_thoi_diem_thay_doi_von": "01/10/2026",
+         "q_hinh_thuc_tang_giam_von": "Tăng vốn từ lợi nhuận giữ lại",
+         "q_doi_dia_chi_tb_thue": "X", "q_ngay_bd_hoat_dong": "01/10/2026",
+         "q_ht_doc_lap": "X", "q_nam_tai_chinh": "01/01",
+         "q_so_lao_dong": "25", "q_bot_khong": "X", "q_gtgt_khoan_tru": "X",
+         "q_nganh_xoa_ten": "Bán buôn nông sản",
+         "q_nganh_xoa_ghi_chu": "Đang chuyển sang ngành mới",
+         "q_nganh_sua_ten": "Bán lẻ hàng điện tử gia dụng"},
+        variant_value="",                      # cụm không có nhánh when
+        table_rows={"q_nganh_bs_ten": ["Bán lẻ hàng điện tử",
+                                       "Bán buôn máy tính"],
+                    "q_nganh_bs_ma": ["4751", "4761"],
+                    "q_nganh_bs_chinh": ["X", ""]},
+        meta={"case_id": "RT8", "today": "06/09/2026"},
+        questionnaire=Q_M12)
+    assert res["ok"], res["errors"]
+    d = res["data"]
+    assert d["dn.ten_tieng_viet"] == "CÔNG TY TNHH AN PHÁT"
+    assert d["dn.ma_so_dn"] == "0312345678"               # không mất số 0 đầu
+    assert isinstance(d["dn.ma_so_dn"], str)
+    assert d["von_dieu_le_chu"] == 20000000000, d["von_dieu_le_chu"]
+    assert d["thoi_diem_thay_doi_von"] == "01/10/2026"
+    assert (d["ngay_bd"], d["thang_bd"], d["nam_bd"]) == ("01", "10", "2026")
+    assert d["ap_dung_tu"] == "01/01" and d["so_lao_dong"] == 25
+    assert d["chk_doi_dia_chi_tb_thue"] == "X"
+    assert d["chk_ht_doc_lap"] == "X" and "chk_ht_phu_thuoc" not in d
+    assert d["chk_khong"] == "X" and "chk_co" not in d
+    assert d["chk_gtgt_khoan_tru"] == "X"
+    assert d["nganh_bo_sung"] == [
+        {"ten_nganh": "Bán lẻ hàng điện tử", "ma_nganh": "4751",
+         "la_nganh_chinh": "X"},
+        {"ten_nganh": "Bán buôn máy tính", "ma_nganh": "4761"},
+    ], d["nganh_bo_sung"]
+    assert d["nganh_xoa_bo"][0]["ten_nganh"] == "Bán buôn nông sản"
+    assert d["nganh_xoa_bo"][0]["ghi_chu"] == "Đang chuyển sang ngành mới"
+    assert d["nganh_sua_doi_chi_tiet"][0]["ten_nganh"] == \
+        "Bán lẻ hàng điện tử gia dụng"
+
+
+@check("[RT9] P6=C cụm thuế — PLI_M27: cặp ngày tạm ngừng, tel số 0 đầu, "
+       "mã chi nhánh giữ dấu '-'; không lẫn key cụm khác")
+def rt9():
+    res = fill_and_import(
+        {"q_dn_ten": "CÔNG TY TNHH AN PHÁT", "q_dn_ma_so": "0312345678",
+         "q_co_quan_dkkd": "Sở Kế hoạch và Đầu tư TP. Hồ Chí Minh",
+         "q_tam_ngung_tu_ngay": "01/11/2026",
+         "q_tam_ngung_den_ngay": "31/01/2027",
+         "q_ly_do_tam_ngung": "Chủ doanh nghiệp đi chữa bệnh",
+         "q_nguoi_lien_he": "Trần Văn B",
+         "q_dien_thoai_lien_he": "0084901234567",
+         "q_email_lien_he": "kinhdoanh@anphat.vn",
+         "q_cn_ten": "Chi nhánh Quận 7", "q_cn_ma_so": "0312345678-002"},
+        variant_value="", meta={"case_id": "RT9", "today": "06/09/2026"},
+        questionnaire=Q_M27)
+    assert res["ok"], res["errors"]
+    d = res["data"]
+    assert d["tu_ngay"] == "01/11/2026" and d["den_ngay"] == "31/01/2027"
+    assert d["ly_do_tam_ngung"] == "Chủ doanh nghiệp đi chữa bệnh"
+    assert d["ho_ten_in_hoa_2"] == "Trần Văn B"
+    assert d["dien_thoai_khac"] == "0084901234567"     # số 0 đầu không mất
+    assert isinstance(d["dien_thoai_khac"], str)
+    assert d["cn.ma_so"] == "0312345678-002"           # giữ nguyên dấu -
+    assert "von_dieu_le_chu" not in d, "lẫn key cụm thay đổi ngành"
+
+
 def main() -> int:
-    for fn in (rt1, rt2, rt3, rt4, rt5, rt6, rt7):
+    for fn in (rt1, rt2, rt3, rt4, rt5, rt6, rt7, rt8, rt9):
         fn()
     passed = sum(1 for ok, _ in _results if ok)
     failed = len(_results) - passed

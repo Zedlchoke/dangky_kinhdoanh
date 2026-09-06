@@ -218,16 +218,14 @@ NEW_CLUSTER_DOCS = {
     "hkd_thay_doi_noi_dung.json": "PLII_M02",
     "hkd_tam_ngung_tiep_tuc.json": "PLII_M03",
     "hkd_cham_dut.json": "PLII_M04",
+    # [P6=C 2026-09-06] cụm thay đổi ngành (M12) + cụm thuế (M27)
+    "thay_doi_nganh.json": "PLI_M12",
+    "thue_dang_ky.json": "PLI_M27",
 }
 BLOCKED_MANIFEST = CLUSTER_DIR / "blocked_tt121_migration.json"
 
 
-def load_blocked_for_test() -> dict:
-    from tools.questionnaire.build_questionnaire import load_blocked
-    return load_blocked(sorted(CLUSTER_DIR.glob("*.json")), FORM_MAPS)
-
-
-@check("[Q5a] O7: 4 cụm hộ kinh doanh validate sạch + artifact khớp nguồn")
+@check("[Q5a] O7: cụm hộ KD + cụm P6=C validate sạch + artifact khớp nguồn")
 def q5a():
     for fname, doc_id in NEW_CLUSTER_DOCS.items():
         src = json.loads((CLUSTER_DIR / fname).read_text(encoding="utf-8"))
@@ -256,30 +254,31 @@ def q5b():
         "không được hỏi khách giá trị CŨ (app tự điền từ hồ sơ)"
 
 
-@check("[Q5c] O7: manifest blocked có lý do + mọi doc_id có trong form_maps")
+@check("[Q5c] O7: manifest blocked — 9 mẫu đã migrate nên `blocked` RỖNG có "
+       "chủ đích + ghi chú M11 REMOVED_BY_CURRENT_LAW")
 def q5c():
     m = json.loads(BLOCKED_MANIFEST.read_text(encoding="utf-8"))
     assert m.get("blocked_version") == 1
-    docs = []
-    for e in m["blocked"]:
-        assert e.get("doc_id") in FORM_MAPS, e
-        assert e.get("reason"), e
-        assert "TT121" in e["reason"], e
-        docs.append(e["doc_id"])
-    assert sorted(docs) == ["PLI_M01", "PLI_M02", "PLI_M03", "PLI_M04",
-                            "PLI_M12"], docs
+    assert m["blocked"] == [], \
+        "còn form blocked dù 9 mẫu đã migrate (merge e268038): %s" % m["blocked"]
+    # sổ theo dõi: released ghi nhận 5 doc từng bị chặn đã gỡ
+    released = {e["doc_id"] for e in m.get("released", [])}
+    assert {"PLI_M01", "PLI_M02", "PLI_M03", "PLI_M04", "PLI_M12"} <= released
+    removed = {e["doc_id"]: e for e in m.get("removed_by_current_law", [])}
+    assert "PLI_M11" in removed, "thiếu ghi chú M11"
+    assert removed["PLI_M11"].get("verdict") == "REMOVED_BY_CURRENT_LAW", \
+        removed["PLI_M11"]
 
 
-@check("[Q5d] O7: form blocked-chờ-migration KHÔNG có artifact questionnaire")
+@check("[Q5d] O7: sau khi gỡ blocked, PLI_M12/PLI_M27 CÓ artifact questionnaire")
 def q5d():
-    m = json.loads(BLOCKED_MANIFEST.read_text(encoding="utf-8"))
-    for e in m["blocked"]:
-        p = OUT_DIR / (e["doc_id"] + ".json")
-        assert not p.exists(), \
-            "%s bị blocked nhưng có artifact (cấm sinh câu hỏi)" % p
+    for doc_id in ("PLI_M12", "PLI_M27"):
+        p = OUT_DIR / (doc_id + ".json")
+        assert p.exists(), "thiếu artifact %s (chạy builder trước?)" % p
 
 
-@check("[Q5e] O7: builder fail-loud DOC_BLOCKED nếu cluster trỏ form blocked")
+@check("[Q5e] O7: builder fail-loud DOC_BLOCKED nếu cluster trỏ form blocked "
+       "(guard giữ nguyên — kiểm bằng manifest tổng hợp)")
 def q5e():
     import tempfile
     bad = {
@@ -289,12 +288,18 @@ def q5e():
             "question_id": "q_x", "group": "g", "text": "t", "type": "text",
             "version": 1, "data_key": "so_van_ban"}],
     }
-    blocked = load_blocked_for_test()
+    # hình dạng y hệt load_blocked() trả về — guard không phụ thuộc manifest
+    # thật (hiện rỗng) mà chạy trên entry blocked bất kỳ.
+    synthetic_blocked = {
+        "PLI_M12": {"doc_id": "PLI_M12", "cluster": "test",
+                    "procedures": ["x"], "reason": "TT121 chờ migrate",
+                    "manifest": "blocked_tong_hop.json"},
+    }
     with tempfile.TemporaryDirectory() as tmp:
         p = Path(tmp) / "bad_cluster.json"
         p.write_text(json.dumps(bad, ensure_ascii=False), encoding="utf-8")
         try:
-            build_one(p, FORM_MAPS, write=True, blocked=blocked)
+            build_one(p, FORM_MAPS, write=True, blocked=synthetic_blocked)
         except QuestionnaireError as exc:
             assert exc.code == "DOC_BLOCKED", exc.code
         else:
@@ -302,9 +307,117 @@ def q5e():
         assert not (Path(tmp) / "PLI_M12.json").exists()
 
 
+# ---------------------------------------------------------------------------
+# [P6=C 2026-09-06 — f4xl] Cụm 2 'thay đổi ngành' (PLI_M12) + cụm 3 'thuế'
+# (PLI_M27): mapping thủ tục→form→questionnaire, verdict N/A có reason,
+# version câu hỏi 20260906, M12 hỏi đủ phần ngành + 7 chỉ tiêu thuế.
+# ---------------------------------------------------------------------------
+
+Q_M12 = json.loads((OUT_DIR / "PLI_M12.json").read_text(encoding="utf-8")) \
+    if (OUT_DIR / "PLI_M12.json").exists() else None
+Q_M27 = json.loads((OUT_DIR / "PLI_M27.json").read_text(encoding="utf-8")) \
+    if (OUT_DIR / "PLI_M27.json").exists() else None
+
+CHANGE_PROCEDURES = ["thay_doi_nganh_nghe", "thay_doi_ten_va_tru_so",
+                     "thay_doi_von_dieu_le", "bo_sung_cap_nhat_thong_tin_dkdn"]
+TAX_KEYS_M12 = ("chk_doi_dia_chi_tb_thue", "ngay_bd", "chk_ht_doc_lap",
+                "ap_dung_tu", "so_lao_dong", "chk_co", "chk_gtgt_khoan_tru")
+
+
+def _q6_all_keys(q: dict) -> list[str]:
+    keys = []
+    for x in q["questions"]:
+        dk = x["data_key"]
+        for t in (dk if isinstance(dk, list) else [{"key": dk}]):
+            keys.append(t["key"] if isinstance(t, dict) else t)
+    return keys
+
+
+@check("[Q6a] P6=C: cụm thay đổi ngành/thuế validate sạch + artifact khớp nguồn")
+def q6a():
+    for fname in ("thay_doi_nganh.json", "thue_dang_ky.json"):
+        src = json.loads((CLUSTER_DIR / fname).read_text(encoding="utf-8"))
+        assert src["doc_id"] == NEW_CLUSTER_DOCS[fname], fname
+        assert validate(src, FORM_MAPS) == [], fname
+        artifact = OUT_DIR / (src["doc_id"] + ".json")
+        assert artifact.exists(), "thiếu artifact %s" % artifact
+        built = build_one(CLUSTER_DIR / fname, FORM_MAPS, write=False)[1]
+        assert built + "\n" == artifact.read_text(encoding="utf-8"), \
+            "%s: artifact lệch nguồn cluster (cần regen)" % fname
+
+
+@check("[Q6b] P6=C: mọi procedure trong mapping có verdict QUESTIONNAIRE "
+       "hoặc N/A kèm reason (không im lặng)")
+def q6b():
+    for fname in ("thay_doi_nganh.json", "thue_dang_ky.json"):
+        src = json.loads((CLUSTER_DIR / fname).read_text(encoding="utf-8"))
+        assert src.get("procedures"), fname
+        for pr in src["procedures"]:
+            assert pr.get("verdict") in ("QUESTIONNAIRE", "N/A"), pr
+            if pr["verdict"] == "N/A":
+                assert pr.get("reason"), "N/A phải có reason: %s" % pr
+                assert not pr.get("questionnaire"), \
+                    "N/A thì không trỏ questionnaire: %s" % pr
+            else:
+                assert pr.get("questionnaire"), \
+                    "QUESTIONNAIRE phải trỏ file: %s" % pr
+
+
+@check("[Q6c] P6=C: 4 thủ tục change-DN đều trỏ PLI_M12 -> thay_doi_nganh.json")
+def q6c():
+    src = json.loads((CLUSTER_DIR / "thay_doi_nganh.json")
+                     .read_text(encoding="utf-8"))
+    mapped = {pr["id"] for pr in src["procedures"]
+              if pr["verdict"] == "QUESTIONNAIRE"}
+    for pid in CHANGE_PROCEDURES:
+        assert pid in mapped, "thiếu thủ tục %s" % pid
+
+
+@check("[Q6d] P6=C: M12 hỏi đủ 3 lưới ngành + 7 chỉ tiêu thuế (địa chỉ TB "
+       "thuế, ngày bắt đầu hoạt động, hạch toán, năm tài chính, lao động, "
+       "BOT, GTGT) — đúng yêu cầu owner")
+def q6d():
+    keys = set(_q6_all_keys(Q_M12))
+    for grid in ("nganh_bo_sung.", "nganh_xoa_bo.", "nganh_sua_doi_chi_tiet."):
+        assert any(k.startswith(grid) for k in keys), "thiếu lưới %s" % grid
+    for tax_key in TAX_KEYS_M12:
+        assert tax_key in keys, "thiếu chỉ tiêu thuế %s" % tax_key
+    assert "nam_bd" in keys and "chk_gtgt_khong_phai_nop" in keys
+
+
+@check("[Q6e] P6=C: version câu hỏi 20260906 (int của 2026.09.06) trên CẢ 2 "
+       "cụm mới; cụm cũ giữ nguyên version 1")
+def q6e():
+    for fname in ("thay_doi_nganh.json", "thue_dang_ky.json"):
+        src = json.loads((CLUSTER_DIR / fname).read_text(encoding="utf-8"))
+        assert src.get("content_version") == "2026.09.06", fname
+        for x in src["questions"]:
+            assert x["version"] == 20260906, \
+                "%s/%s: version %r" % (fname, x["question_id"], x["version"])
+    old = json.loads((CLUSTER_DIR / "hkd_thay_doi_noi_dung.json")
+                     .read_text(encoding="utf-8"))
+    assert all(x["version"] == 1 for x in old["questions"])
+
+
+@check("[Q6f] P6=C: cụm thuế — tam ngừng DN có questionnaire (M27), phần thuế "
+       "M27 N/A có reason, phần đăng ký thuế thật sự nằm ở M12")
+def q6f():
+    src = json.loads((CLUSTER_DIR / "thue_dang_ky.json")
+                     .read_text(encoding="utf-8"))
+    by_id = {pr["id"]: pr for pr in src["procedures"]}
+    assert by_id["tam_ngung_tiep_tuc_kinh_doanh_dn"]["verdict"] == \
+        "QUESTIONNAIRE"
+    na = by_id["tam_ngung_tiep_tuc_kinh_doanh_dn:phan_thue"]
+    assert na["verdict"] == "N/A" and na["reason"], na
+    assert by_id["thay_doi_thong_tin_dang_ky_thue"]["form"] == "PLI_M12"
+    # không hỏi khách ô thuế không tồn tại trên M27
+    keys = set(_q6_all_keys(src))
+    assert not any("thue" in k for k in keys), keys
+
+
 def main() -> int:
     for fn in (q1a, q1b, q1c, q2a, q2b, q2c, q2d, q3a, q3b, q4,
-               q5a, q5b, q5c, q5d, q5e):
+               q5a, q5b, q5c, q5d, q5e, q6a, q6b, q6c, q6d, q6e, q6f):
         fn()
     passed = sum(1 for ok, _ in _results if ok)
     failed = len(_results) - passed

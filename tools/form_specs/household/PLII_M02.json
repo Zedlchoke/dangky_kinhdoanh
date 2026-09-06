@@ -313,46 +313,124 @@
    "pos": "after",
    "anchor": "danh sach cac thanh vien ho gia dinh dang ky ho kinh doanh sau khi thay doi",
    "no_default_drops": true,
-   "drop": ["^sttho ten"],
+   "drop": [
+    "^sttho ten"
+   ],
    "spec": {
     "id": "tv_hgd_sau_thay_doi",
     "width_policy": "content",
     "kind": "nested-grid",
     "section_id": "a4_tv_hgd_sau_thay_doi",
     "semantic_key": "tv_hgd_sau_thay_doi",
-    "stt": {"mode": "generated", "col_index": 0},
-    "header_rows": [[
-     {"text": "STT"},
-     {"text": "Họ tên"},
-     {"text": "Ngày, tháng, năm sinh"},
-     {"text": "Số định danh cá nhân"},
-     {"text": "Giới tính"},
-     {"text": "Quốc tịch"},
-     {"text": "Dân tộc"},
-     {"text": "Nơi thường trú"},
-     {"text": "Nơi ở hiện tại"},
-     {"text": "Chữ ký"}
-    ]],
+    "stt": {
+     "mode": "generated",
+     "col_index": 0
+    },
+    "header_rows": [
+     [
+      {
+       "text": "STT"
+      },
+      {
+       "text": "Họ tên"
+      },
+      {
+       "text": "Ngày, tháng, năm sinh"
+      },
+      {
+       "text": "Số định danh cá nhân"
+      },
+      {
+       "text": "Giới tính"
+      },
+      {
+       "text": "Quốc tịch"
+      },
+      {
+       "text": "Dân tộc"
+      },
+      {
+       "text": "Nơi thường trú"
+      },
+      {
+       "text": "Nơi ở hiện tại"
+      },
+      {
+       "text": "Chữ ký"
+      }
+     ]
+    ],
     "columns": [
-     {"header": "Họ tên", "tag": "ho_ten", "col_index": 1, "input_type": "text", "required": true},
-     {"header": "Ngày, tháng, năm sinh", "tag": "ngay_sinh", "col_index": 2, "input_type": "text"},
-     {"header": "Số định danh cá nhân", "tag": "so_cccd", "col_index": 3, "input_type": "text"},
-     {"header": "Giới tính", "tag": "gioi_tinh", "col_index": 4, "input_type": "text"},
-     {"header": "Quốc tịch", "tag": "quoc_tich", "col_index": 5, "input_type": "text"},
-     {"header": "Dân tộc", "tag": "dan_toc", "col_index": 6, "input_type": "text"},
-     {"header": "Nơi thường trú", "tag": "noi_thuong_tru", "col_index": 7, "input_type": "text"},
-     {"header": "Nơi ở hiện tại", "tag": "noi_o_hien_tai", "col_index": 8, "input_type": "text"},
-     {"header": "Chữ ký", "tag": "chu_ky", "col_index": 9, "input_type": "outputOnly", "output_only": true}
+     {
+      "header": "Họ tên",
+      "tag": "ho_ten",
+      "col_index": 1,
+      "input_type": "text",
+      "required": true
+     },
+     {
+      "header": "Ngày, tháng, năm sinh",
+      "tag": "ngay_sinh",
+      "col_index": 2,
+      "input_type": "text"
+     },
+     {
+      "header": "Số định danh cá nhân",
+      "tag": "so_cccd",
+      "col_index": 3,
+      "input_type": "text"
+     },
+     {
+      "header": "Giới tính",
+      "tag": "gioi_tinh",
+      "col_index": 4,
+      "input_type": "text"
+     },
+     {
+      "header": "Quốc tịch",
+      "tag": "quoc_tich",
+      "col_index": 5,
+      "input_type": "text"
+     },
+     {
+      "header": "Dân tộc",
+      "tag": "dan_toc",
+      "col_index": 6,
+      "input_type": "text"
+     },
+     {
+      "header": "Nơi thường trú",
+      "tag": "noi_thuong_tru",
+      "col_index": 7,
+      "input_type": "text"
+     },
+     {
+      "header": "Nơi ở hiện tại",
+      "tag": "noi_o_hien_tai",
+      "col_index": 8,
+      "input_type": "text"
+     },
+     {
+      "header": "Chữ ký",
+      "tag": "chu_ky",
+      "col_index": 9,
+      "input_type": "outputOnly",
+      "output_only": true
+     }
     ],
     "totals": []
    },
-   "occurrences": [{
-    "occurrence_id": "tv_hgd_sau_thay_doi",
-    "match_heading": "Danh sách các thành viên hộ gia đình đăng ký hộ kinh doanh sau khi thay đổi",
-    "nth": 1,
-    "sync_group": null,
-    "end_markers": ["^dang ky thay doi von kinh doanh"]
-   }],
+   "occurrences": [
+    {
+     "occurrence_id": "tv_hgd_sau_thay_doi",
+     "match_heading": "Danh sách các thành viên hộ gia đình đăng ký hộ kinh doanh sau khi thay đổi",
+     "nth": 1,
+     "sync_group": null,
+     "end_markers": [
+      "^dang ky thay doi von kinh doanh"
+     ]
+    }
+   ],
    "legal_status": {
     "blocked": false,
     "ref": "Owner P2=A 2026-09-03 (docs/owner_decision_packet_2026-09-03.md mục P2: 'mở rebuild theo mẫu hiện hành (nested-grid, D2.1/D2.9)'; namespacing key D2.9=A). Nguồn 06_ho_kinh_doanh_va_chuyen_doi/01_mau_ho_kinh_doanh/PL2_Mau_02_*.docx P78 heading 'Danh sách các thành viên hộ gia đình đăng ký hộ kinh doanh sau khi thay đổi2:' + P79 header dán chữ 'STTHọ tên…Chữ ký' kèm digit-run '12345678910' — 10 CỘT VẬT LÝ đếm từ digit-run và CHÂN TRANG chính thức của mẫu P179: 'kê khai số định danh cá nhân thì chỉ kê khai các cột số 1, 2, 3, 4, 5, 10, không phải kê khai các cột số 6, 7, 8, 9' => 1=STT, 2=Họ tên, 3=Ngày sinh, 4=CCCD, 5=Giới tính, 6=Quốc tịch, 7=Dân tộc, 8=Nơi thường trú, 9=Nơi ở hiện tại, 10=Chữ ký. Tập tag = required_columns của census manifest section a4_tv_hgd_sau_thay_doi (semantic_key=tv_hgd_sau_thay_doi); chu_ky outputOnly theo D2.4=A. Cùng tập cột ds_tv_ho_gia_dinh của M02/M01 nhưng ngữ cảnh A.4 (sau thay đổi) -> key riêng, không auto-sync.",
@@ -364,7 +442,9 @@
    "pos": "after",
    "anchor": "7\\. thong tin ve cac thanh vien ho gia dinh dang ky ho kinh doanh",
    "no_default_drops": true,
-   "trim": ["^sttho ten"],
+   "trim": [
+    "^sttho ten"
+   ],
    "keep_from": "Hộ kinh doanh cam kết",
    "spec": {
     "id": "tv_hgd_cap_doi",
@@ -372,43 +452,177 @@
     "kind": "nested-grid",
     "section_id": "c7_tv_hgd_cap_doi",
     "semantic_key": "tv_hgd_cap_doi",
-    "stt": {"mode": "generated", "col_index": 0},
-    "header_rows": [[
-     {"text": "STT"},
-     {"text": "Họ tên"},
-     {"text": "Ngày, tháng, năm sinh"},
-     {"text": "Số định danh cá nhân"},
-     {"text": "Giới tính"},
-     {"text": "Quốc tịch"},
-     {"text": "Dân tộc"},
-     {"text": "Nơi thường trú"},
-     {"text": "Nơi ở hiện tại"},
-     {"text": "Chữ ký"}
-    ]],
+    "stt": {
+     "mode": "generated",
+     "col_index": 0
+    },
+    "header_rows": [
+     [
+      {
+       "text": "STT"
+      },
+      {
+       "text": "Họ tên"
+      },
+      {
+       "text": "Ngày, tháng, năm sinh"
+      },
+      {
+       "text": "Số định danh cá nhân"
+      },
+      {
+       "text": "Giới tính"
+      },
+      {
+       "text": "Quốc tịch"
+      },
+      {
+       "text": "Dân tộc"
+      },
+      {
+       "text": "Nơi thường trú"
+      },
+      {
+       "text": "Nơi ở hiện tại"
+      },
+      {
+       "text": "Chữ ký"
+      }
+     ]
+    ],
     "columns": [
-     {"header": "Họ tên", "tag": "ho_ten", "col_index": 1, "input_type": "text", "required": true},
-     {"header": "Ngày, tháng, năm sinh", "tag": "ngay_sinh", "col_index": 2, "input_type": "text"},
-     {"header": "Số định danh cá nhân", "tag": "so_cccd", "col_index": 3, "input_type": "text"},
-     {"header": "Giới tính", "tag": "gioi_tinh", "col_index": 4, "input_type": "text"},
-     {"header": "Quốc tịch", "tag": "quoc_tich", "col_index": 5, "input_type": "text"},
-     {"header": "Dân tộc", "tag": "dan_toc", "col_index": 6, "input_type": "text"},
-     {"header": "Nơi thường trú", "tag": "noi_thuong_tru", "col_index": 7, "input_type": "text"},
-     {"header": "Nơi ở hiện tại", "tag": "noi_o_hien_tai", "col_index": 8, "input_type": "text"},
-     {"header": "Chữ ký", "tag": "chu_ky", "col_index": 9, "input_type": "outputOnly", "output_only": true}
+     {
+      "header": "Họ tên",
+      "tag": "ho_ten",
+      "col_index": 1,
+      "input_type": "text",
+      "required": true
+     },
+     {
+      "header": "Ngày, tháng, năm sinh",
+      "tag": "ngay_sinh",
+      "col_index": 2,
+      "input_type": "text"
+     },
+     {
+      "header": "Số định danh cá nhân",
+      "tag": "so_cccd",
+      "col_index": 3,
+      "input_type": "text"
+     },
+     {
+      "header": "Giới tính",
+      "tag": "gioi_tinh",
+      "col_index": 4,
+      "input_type": "text"
+     },
+     {
+      "header": "Quốc tịch",
+      "tag": "quoc_tich",
+      "col_index": 5,
+      "input_type": "text"
+     },
+     {
+      "header": "Dân tộc",
+      "tag": "dan_toc",
+      "col_index": 6,
+      "input_type": "text"
+     },
+     {
+      "header": "Nơi thường trú",
+      "tag": "noi_thuong_tru",
+      "col_index": 7,
+      "input_type": "text"
+     },
+     {
+      "header": "Nơi ở hiện tại",
+      "tag": "noi_o_hien_tai",
+      "col_index": 8,
+      "input_type": "text"
+     },
+     {
+      "header": "Chữ ký",
+      "tag": "chu_ky",
+      "col_index": 9,
+      "input_type": "outputOnly",
+      "output_only": true
+     }
     ],
     "totals": []
    },
-   "occurrences": [{
-    "occurrence_id": "tv_hgd_cap_doi",
-    "match_heading": "7. Thông tin về các thành viên hộ gia đình đăng ký hộ kinh doanh",
-    "nth": 1,
-    "sync_group": null,
-    "end_markers": ["^chu ho kinh doanh \\(ky"]
-   }],
+   "occurrences": [
+    {
+     "occurrence_id": "tv_hgd_cap_doi",
+     "match_heading": "7. Thông tin về các thành viên hộ gia đình đăng ký hộ kinh doanh",
+     "nth": 1,
+     "sync_group": null,
+     "end_markers": [
+      "^chu ho kinh doanh \\(ky"
+     ]
+    }
+   ],
    "legal_status": {
     "blocked": false,
     "ref": "Owner P2=A 2026-09-03 (docs/owner_decision_packet_2026-09-03.md mục P2; D2.9=A). Nguồn P169 heading '7. Thông tin về các thành viên hộ gia đình đăng ký hộ kinh doanh9:' + P170 header dán chữ 'STTHọ tên…Chữ ký12345678910' DÍNH KÈM câu cam kết 'Hộ kinh doanh cam kết về tính hợp pháp, chính xác, trung thực…' — 10 cột như a4 (chứng minh digit-run + chân trang P179). Trim keep_from giữ nguyên văn câu cam kết pháp lý; digit-run + header dán bị loại. Tập tag = required_columns census manifest section c7_tv_hgd_cap_doi (semantic_key=tv_hgd_cap_doi, notes 'chu_ky outputOnly'); khác ngữ cảnh với a4 (C.7 cấp đổi/đăng ký lại) và KHÔNG sync_group (PLAN A: dữ liệu độc lập). Chân trang 9: chỉ kê khai khi chủ thể thành lập là các thành viên hộ gia đình và kê khai cả thông tin của chủ hộ.",
     "question": "Như entry tv_hgd_sau_thay_doi: gate pin cũ đỏ sau regen, Lead sync khi merge."
+   }
+  },
+  {
+   "kind": "fixed-matrix",
+   "spec": {
+    "id": "c5_thue_chi_tieu_cap_doi",
+    "kind": "fixed-matrix",
+    "section_id": "c5_thue_chi_tieu_cap_doi",
+    "semantic_key": "thue_chi_tieu_cap_doi",
+    "columns": [
+     {
+      "header": "STT / Các chỉ tiêu thông tin đăng ký thuế",
+      "tag": null,
+      "input_type": "readonly"
+     },
+     {
+      "header": "Địa chỉ nhận thông báo thuế (số nhà/phòng, ngách/hẻm, ngõ/kiệt, đường/phố/đại lộ, tổ/xóm/ấp/thôn; xã/phường/đặc khu; tỉnh/thành phố trực thuộc trung ương; điện thoại; thư điện tử — chỉ kê khai nếu khác địa chỉ trụ sở)",
+      "tag": "dia_chi_nhan_thong_bao_thue",
+      "input_type": "text"
+     },
+     {
+      "header": "Tổng số lao động",
+      "tag": "so_lao_dong",
+      "input_type": "money"
+     }
+    ],
+    "fixed_rows": [
+     {
+      "id": "chi_tieu_5_1_dia_chi_nhan_thong_bao_thue",
+      "label": "5.1 Địa chỉ nhận thông báo thuế (chỉ kê khai nếu địa chỉ nhận thông báo thuế khác địa chỉ trụ sở):"
+     },
+     {
+      "id": "chi_tieu_5_2_tong_so_lao_dong",
+      "label": "5.2 Tổng số lao động"
+     }
+    ],
+    "totals": []
+   },
+   "pos": "after",
+   "anchor": "^5\\. thong tin dang ky thue",
+   "no_default_drops": true,
+   "drop_until": "^6\\. chu the thanh lap ho kinh doanh",
+   "drop": [
+    "^cac chi tieu thong tin dang ky thue$",
+    "^5\\.1$",
+    "^dia chi nhan thong bao thue",
+    "^so nha/phong, ngach/hem",
+    "^xa/phuong/dac khu",
+    "^tinh/thanh pho truc thuoc trung uong",
+    "^dien thoai",
+    "^thu dien tu",
+    "^5\\.2$",
+    "^tong so lao dong"
+   ],
+   "legal_status": {
+    "blocked": false,
+    "ref": "O1 IMPLEMENTED AS USER INPUT + D5.2=A (docs/owner_decision_packet_v7.md): 'trích EXACT canonical rows từ PLII_M02 source hiện hành, không tự thêm chỉ tiêu'. Nguon: 06_ho_kinh_doanh_va_chuyen_doi/01_mau_ho_kinh_doanh/PL2_Mau_02_*.docx Muc C 'ĐĂNG KÝ CẤP ĐỔI SANG GIẤY CHỨNG NHẬN ĐĂNG KÝ HỘ KINH DOANH', mục 5 'Thông tin đăng ký thuế:' (p155-p166): CHÍNH XÁC 2 chỉ tiêu CO NOI DUNG THAT — '5.1 Địa chỉ nhận thông báo thuế (chỉ kê khai nếu địa chỉ nhận thông báo thuế khác địa chỉ trụ sở):' (kèm nhóm địa chỉ/điện thoại/email p160-p164) và '5.2 Tổng số lao động: …' (p165-p166); nguon Muc C khong co dong '…' (khac Muc A). Row id dung lai 2 tag canonical cua a7 (chi_tieu_5_1_dia_chi_nhan_thong_bao_thue / chi_tieu_5_2_tong_so_lao_dong) theo required_columns census.",
+    "question": "(a) Nhom 5 o nhap dia chi/DT/email cua 5.1 trong nguon (p160-p164) duoc don vao MOT o text 'dia_chi_nhan_thong_bao_thue' (header trich dung cac nhan con cua nguon) — fixed-matrix v1 khong ho tro o da-dong/na-nest; khac phuc tranh chap key trung voi tru so: cac input cu (dia_chi_chi_tiet/xa_phuong/tinh_thanh/dien_thoai_lien_he/fax/email_tru_so) tai 5.1 BI DROP trong vung, con lai du lieu tru so C.2 nguyen ven ( truoc day chung key voi C.2 la defect duoc sua kem). (b) required_columns census (stt|chi_tieu_5_1_...|chi_tieu_5_2_...) duoc credit du: stt credit theo fixed_rows, 2 chi tieu la row id, so cot vat ly 3 >= 3 required (path 'tên cột lệch chuẩn' cua coverage audit). (c) so_lao_dong tai C.5 cu la input don lap (key so_lao_dong trung voi muc A) -> sau regen thanh {thue_chi_tieu_cap_doi.chi_tieu_5_2_tong_so_lao_dong.so_lao_dong} doc lap, key muc A giu nguyen."
    }
   }
  ]

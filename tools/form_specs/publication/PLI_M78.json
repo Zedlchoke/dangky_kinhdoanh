@@ -1,0 +1,74 @@
+{
+ "form_id": "PLI_M78",
+ "group": "publication",
+ "note": "Giay de nghi cung cap thong tin dang ky doanh nghiep (Mau 78). O1 + D6.4 (docs/owner_decision_packet_v7.md): section san_pham_cung_cap_thong_tin la fixed-matrix 4 dong phap dinh (3 san pham co dinh theo mau + 'Sản phẩm khác'), cot So luong so nguyen >=0, max_rows=null; ten cac dong co dinh lay NGUYEN VAN source. Nguon: 05_cong_bo_cung_cap_thong_tin/PL1_Mau_78_*.docx p19-p34 ('3. Thông tin yêu cầu:' — STT | Tên sản phẩm | Số lượng sản phẩm).",
+ "gap_nghiepvu": "(a) MIRROR ten DN (D6.4 theo de bai: bind dn.ten_tieng_viet vao 'của …') CHUA DAT DUOC: label dong 1-3 chua token {dn.ten_tieng_viet} thi converter blocks (annotate_and_verify_section_specs -> verify_fixed_matrix_spec) FAIL-LOUD 'cot nhan van con the' va rung dinh 'input thay the trong bang' — pipeline khong co slot mirror-token cho o nhan fixed-matrix (khac header band co registry header_name_binding). Labels giu NGUYEN VAN ban in 'của …' (blank phap dinh); gap mo cho Lead/owner: (i) cho phep mirror-token trong o nhan fixed-matrix (verifier + docx_render parity) hoac (ii) mo rong registry mirror. UI khong in token ky thuat (N-v3). (b) 'Sản phẩm khác' (dong 4): nguon in 'Sản phẩm khác' + dong mo ta '……..' ngay duoi -> cot ten_san_pham la O MO TA bat buoc khi so luong > 0 (cross-field requiredIfPositive khai tai runtime contract; shape them additive vao evalSectionCrossFieldRules). (c) So luong >=0 (D6.4): input_type money cho validator >=0 hien hanh; rang buoc NGUYEN chua co trong contract v1 - gap ghi nhan.",
+ "tables": [
+  {
+   "kind": "fixed-matrix",
+   "spec": {
+    "id": "san_pham_cung_cap_thong_tin",
+    "kind": "fixed-matrix",
+    "section_id": "san_pham_cung_cap_thong_tin",
+    "semantic_key": "ds_san_pham_yeu_cau",
+    "columns": [
+     {
+      "header": "Tên sản phẩm",
+      "tag": null,
+      "input_type": "readonly"
+     },
+     {
+      "header": "Tên sản phẩm khác (ghi rõ tên sản phẩm, nếu có)",
+      "tag": "ten_san_pham",
+      "input_type": "text"
+     },
+     {
+      "header": "Số lượng sản phẩm",
+      "tag": "so_luong_san_pham",
+      "input_type": "money"
+     }
+    ],
+    "fixed_rows": [
+     {
+      "id": "sp_gcn_dkdn",
+      "label": "Giấy chứng nhận đăng ký doanh nghiệp của …"
+     },
+     {
+      "id": "sp_lich_su_3_nam",
+      "label": "Thông tin lịch sử 3 năm của doanh nghiệp …"
+     },
+     {
+      "id": "sp_thong_tin_moi_nhat",
+      "label": "Thông tin doanh nghiệp mới nhất của …"
+     },
+     {
+      "id": "san_pham_khac",
+      "label": "Sản phẩm khác"
+     }
+    ],
+    "totals": []
+   },
+   "pos": "after",
+   "anchor": "^3\\. thong tin yeu cau",
+   "no_default_drops": true,
+   "drop_until": "^toi/\\(ten to chuc\\) cam ket",
+   "drop": [
+    "^stt$",
+    "^ten san pham$",
+    "^so luong san pham$",
+    "^\\d$",
+    "^giay chung nhan dang ky doanh nghiep cua",
+    "^thong tin lich su 3 nam cua doanh nghiep",
+    "^thong tin doanh nghiep moi nhat cua",
+    "^san pham khac$",
+    "^…+$",
+    "^\\.{3,}$"
+   ],
+   "legal_status": {
+    "blocked": false,
+    "ref": "O1 IMPLEMENTED AS USER INPUT + D6.4 (docs/owner_decision_packet_v7.md + docs/decision_registry.md packet D6): 'integer >=0/max null, “sản phẩm khác” bắt buộc mô tả khi SL>0, tên các dòng cố định lấy source'. Census: app/data/table_specs/manifest.json PLI_M78/san_pham_cung_cap_thong_tin (fixed-matrix, missing_grid, semantic_key=ds_san_pham_yeu_cau, required stt|ten_san_pham|so_luong_san_pham, 'PLAN mục F. 4 hàng cố định... Blocks KHÔNG có key nào cho sản phẩm/số lượng'). Nguon p19-p34: header 'STT | Tên sản phẩm | Số lượng sản phẩm'; dong 1 'Giấy chứng nhận đăng ký doanh nghiệp của …' (p23-24), dong 2 'Thông tin lịch sử 3 năm của doanh nghiệp …' (p26-27), dong 3 'Thông tin doanh nghiệp mới nhất của …' (p29-30), dong 4 'Sản phẩm khác' (p32-33) + dong mo ta '……' (p34).",
+    "question": "(a) Cot STT 1..4 in san cua mau khong tai lap duoc o fixed-matrix v1 (chi 1 cot tag=null tai chi so 0 lam nhan) -> STT gom vao khong duoc, khai thieu (gap dung nhu M01/M02/M04). (b) required_columns census 'ten_san_pham' duoc dung lam tag cua O MO TA dong 4 (Ten san pham khac) - khop ten cot theo census; 3 dong dau ten san pham la label co dinh (read-only) dung theo source. (c) Rang buoc 'mo ta bat buoc khi SL>0' khai tai runtime contract (requiredIfPositive) vi spec generator v1 khong co slot cross_field_rules cho fixed-matrix."
+   }
+  }
+ ]
+}

@@ -1,0 +1,60 @@
+{
+ "form_id": "PLI_M79",
+ "group": "publication",
+ "note": "Giay de nghi yeu cau DN thay doi ten xam pham SHTT (Mau 79). O1 + D6.5=A + D6.6 (docs/owner_decision_packet_v7.md): section tai_lieu_kem_theo_de_nghi la editable-grid 3+ dong, METADATA ONLY - ten tai lieu bat buoc, so ban/so trang optional, KHONG upload binary. Nguon: 05_cong_bo_cung_cap_thong_tin/PL1_Mau_79_*.docx p33-p37 'Kèm theo Giấy đề nghị này có:' + 3 dong danh so '1. … 2. … 3. …' + dong '…' (so dong bien thien).",
+ "gap_nghiepvu": "(a) Nguon chi in dong danh so trang ('1. ………') KHONG co cot so ban/so trang; 2 cot so_ban/so_trang them theo D6.6=A (owner chot 'số bản/số trang optional') - la mo rong co so du lieu, khong phai tu che nguon phap ly. (b) D6.5=A 'metadata only': khong co cot tep dinh kem/upload. (c) minRows 3 khop '3+ dòng' cua mau; grid khong bat buoc (khong chuyen truong hop khong co tai lieu thi khong sinh loi gia).",
+ "tables": [
+  {
+   "spec": {
+    "id": "tai_lieu_kem_theo_de_nghi",
+    "detect": [
+     "stt",
+     "ten tai lieu kem theo (ghi ro ten tai lieu)",
+     "so ban (neu co)",
+     "so trang (neu co)"
+    ],
+    "stt_tag": true,
+    "cols": [
+     [
+      "^stt$",
+      null
+     ],
+     [
+      "mo ta|ten tai lieu|ghi ro",
+      "mo_ta_tai_lieu"
+     ],
+     [
+      "so ban",
+      "so_ban"
+     ],
+     [
+      "so trang",
+      "so_trang"
+     ]
+    ],
+    "loop": "ds_tai_lieu_kem_theo_m79",
+    "fields": [
+     "mo_ta_tai_lieu",
+     "so_ban",
+     "so_trang"
+    ]
+   },
+   "pos": "after",
+   "anchor": "^kem theo giay de nghi nay co",
+   "no_default_drops": true,
+   "drop_until": "^toi/\\(ten to chuc\\) cam ket",
+   "drop": [
+    "^\\d+\\.",
+    "^…",
+    "^\\.{3,}$"
+   ],
+   "headers": [
+    "STT",
+    "Tên tài liệu kèm theo (ghi rõ tên tài liệu)",
+    "Số bản (nếu có)",
+    "Số trang (nếu có)"
+   ],
+   "notes": "O1 IMPLEMENTED AS USER INPUT + D6.5=A + D6.6=A. Census: app/data/table_specs/manifest.json PLI_M79/tai_lieu_kem_theo_de_nghi (editable-grid, missing_grid, semantic_key=ds_tai_lieu_kem_theo_m79, required stt|mo_ta_tai_lieu, 'Bảng hành chính không header; 3 dòng đánh số + dấu … → số dòng biến thiên. Blocks không có key nào.'). Vung [anchor, cam ket) chi chua 4 dong danh so nen drop ^\\d+\\. / ^… / dot-line la du an toan (REBUILD_DROP_DEFAULT khong them gi nho no_default_drops). min_rows 3 / max_rows null + required cot mo_ta_tai_lieu khai tai FORM_GRID_META.PLI_M79 (spec kind=list khong co truong min/max trong contract v1)."
+  }
+ ]
+}

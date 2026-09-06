@@ -37,6 +37,64 @@ ROOT = Path(__file__).resolve().parent.parent
 FIXTURES = ("empty-paper", "valid-minimal", "valid-full",
             "long-boundary", "choice-variants")
 
+# ---------------------------------------------------------------------------
+# [Lane C F3, 2026-09-06] Render-unit inventory đọc ĐỘNG từ form_maps.
+# Corpus cuối (vd phase8f) không được kẹp cứng 87 form: khi catalog pháp
+# lý loại một mẫu (vd PLI_M11 bị bãi bỏ theo TT 121/2026 — entry sẽ mang
+# marker 'current_law_status' trong form_maps), corpus phải tự loại form đó.
+# Marker CHƯA tồn tại trong form_maps hiện tại -> mọi form được giữ (không
+# skip) — code phải chịu thiếu marker, KHÔNG suy diễn inactive.
+# ---------------------------------------------------------------------------
+INACTIVE_CATALOG_STATES = {
+    "inactive", "removed", "repealed", "bo_loai", "khoi_catalog",
+    "disabled", "withdrawn",
+}
+
+
+def current_law_status(form_map: dict):
+    """Đọc marker 'current_law_status' của 1 entry form_maps.
+
+    Trả về:
+      None  -> không có marker (hoặc giá trị rỗng/active) => form còn hiệu lực
+      str   -> trạng thái bất thường đã lowercase (caller quyết định skip)
+    """
+    st = (form_map or {}).get("current_law_status")
+    if st is None:
+        return None
+    if isinstance(st, dict):
+        st = st.get("status") or st.get("state") or ""
+    s = str(st).strip().lower()
+    if not s or s in ("active", "hieu_luc", "in_force"):
+        return None
+    return s
+
+
+def active_form_ids(maps: dict, log=None) -> tuple[list[str], list[tuple[str, str]]]:
+    """Inventory render-unit động: sorted(maps) trừ form inactive theo marker.
+
+    Trả về (active_ids, skipped) với skipped = [(form_id, trạng thái)].
+    `log` là callable nhận 1 dòng thông báo (vd print) — skip luôn được ghi
+    log để số form corpus không bao giờ đổi ngầm.
+    """
+    active: list[str] = []
+    skipped: list[tuple[str, str]] = []
+    for fid in sorted(maps):
+        st = current_law_status(maps[fid])
+        if st and st in INACTIVE_CATALOG_STATES:
+            skipped.append((fid, st))
+            if log is not None:
+                log("[corpus-inventory] skip %s (current_law_status=%s)"
+                    % (fid, st))
+            continue
+        if st:
+            # trạng thái lạ: KHÔNG tự suy skip (fail-open có log) — marker
+            # chỉ khi owner chốt mới đưa form ra khỏi corpus
+            if log is not None:
+                log("[corpus-inventory] %s current_law_status=%r không nhận "
+                    "diện -> vẫn đưa vào corpus" % (fid, st))
+        active.append(fid)
+    return active, skipped
+
 M72_VARIANTS = [
     ("DNTN", "loai_hinh_dntn"),
     ("TNHH_1TV", "loai_hinh_tnhh_1tv"),

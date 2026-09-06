@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 """v7_signature_census.py — [WAVE v7] Bằng chứng SIGNATURE-USABILITY-SPACE
-trên corpus phase7v/final (455 record, đọc PDF có sẵn — không export).
+trên corpus visual dạng phase7v (baseline phase7v/final: 455 record). Số
+record LUÔN đếm từ đĩa (rglob *.pdf) — không pin; kỳ vọng signature đọc từ
+registry template-derived tools/phase5r_expectations.json (B1 của
+test_phase5r_signatures ép registry == census template).
 
 Ba số phải KHỚP NHAU:
   1. census   — cụm ký tìm bằng NGỮ PHÁP CENSUS RỘNG (test_phase5r_signatures)
@@ -115,12 +118,6 @@ def main() -> int:
                     manual_gaps.append(float(page.rect.y1) - l["y1"])
         doc.close()
         # đếm manual/daky từ detector clusters cho báo cáo
-    # tổng manual/daky qua detector một lần nữa (đếm từ manifest để nhất quán)
-    m = json.loads((corpus / "manifest.json").read_text(encoding="utf-8"))
-    det_clusters = 0
-    det_daky = 0
-    for rec in m["records"]:
-        pass
     # gap floor check
     below72 = [g for g in manual_gaps if g < 72.0 - 0.5]
     report = {

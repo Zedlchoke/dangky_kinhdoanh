@@ -110,6 +110,9 @@ SECTION_KINDS = TABLE_KINDS + NON_TABLE_KINDS
 SECTION_STATUSES = (
     "missing_grid", "partial_columns", "partial", "already_complete",
     "output_only", "no_table", "contaminated",
+    # [F0L O1 2026-09-06] vùng nhiễm đã bị XÓA khỏi nguồn có evidence
+    # (decontaminate + gate test riêng) — không ngụy trang thành output.
+    "removed_by_source_cleanup",
 )
 NO_TABLE_SECTION_KINDS = ("prose-block", "scalar-fields")
 
@@ -140,8 +143,13 @@ RECLASSIFICATIONS = {
         "kind": "prose-block", "status": "no_table",
         "reason": "Giong PLII_M17 (ban nop online): dong cham tay khong input, khong luoi."},
     ("PLI_M09", "vung_nhiem_mau_6789_10"): {
-        "kind": "source-contamination", "status": "contaminated",
-        "reason": "Template chua nguyen van Mau 6/7/8/9(lan 2)/10 sau chan trang Mau 9 that (#p103-p222); can quyet dinh nguon/pham vi phap ly truoc khi lam bat cu grid nao."},
+        "kind": "source-contamination", "status": "removed_by_source_cleanup",
+        "reason": "[F0L O1 2026-09-06] Vung nhiem da bi XOA KHOI NGUON "
+                  "(129 para Mau 6/7/8/9-lan2/10, laneC 3eb9a55/merge "
+                  "29c850f); 41/41 tag that giu nguyen; gate "
+                  "tools.test_m09_decontaminate 8/8 — verdict "
+                  "REMOVED_BY_SOURCE_CLEANUP (xoa that, khong nguy trang "
+                  "output)."},
     ("PLI_M27", "don_vi_tam_ngung_tiep_tuc"): {
         "kind": "editable-grid", "status": "missing_grid",
         "reason": "6 khoi don vi (tam ngung/tiep tuc x CN/VPDD/DDKD) moi khoi 1 bo cn.*; ban chat danh sach don vi -> editable-grid du kien, cho quyet dinh 1-nhieu."},

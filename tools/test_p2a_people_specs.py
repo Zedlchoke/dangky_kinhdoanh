@@ -11,8 +11,10 @@ D2.8=A, D2.4=A) + packet D7 (D7.3=A):
             (chưa regen -> vẫn missing_grid/partial_columns).
   [SRC]     MẪU NGUỒN (docx gốc) phải tự chứng minh từng cột được khai:
             PLII_M07 mục 7 có ĐÚNG 7 nhãn cột (không ngày sinh/giới tính/dân
-            tộc/chữ ký); Mẫu 10 glue trong nguồn M09 có cột 'Quyền chi phối'
-            + chân trang 4 (NĐ 168/2025 điểm b khoản 1 Điều 17); Mẫu 13 chỉ
+            tộc/chữ ký); nguồn M09 sạch vùng nhiễm — không còn header glue
+            Mẫu 10 (pin cập nhật F0L 2026-09-06: vùng nhiễm bị xóa theo O1
+            REMOVED_BY_SOURCE_CLEANUP, và Mẫu 10 bị TT 121/2026 thay —
+            quyết định D2.5=A cột 'Quyền chi phối' bị supersede); Mẫu 13 chỉ
             có MỘT row-type (không có nhóm 'ủy quyền' trong vùng) -> không
             khai discriminator.
   [SPEC]    6 file spec qua loader/validator của tools/build_form_maps.py
@@ -320,28 +322,36 @@ def t_src_plii_m07():
             "nguồn mục 7 có '%s' -> spec không được khai/khai thiếu" % banned
 
 
-@check("[SRC] Mau 10 glue trong nguon M09 co cot 'Quyền chi phối' + chan trang 4 ND168")
+@check("[F0L] nguon M09 sach nhiem — khong con header glue Mau 10 trong nguon")
 def t_src_m10_quyen_chi_phoi():
+    # [Pin sync — F0L 2026-09-06] premise cũ -> hiện trạng -> evidence:
+    #   Premise cũ : Mẫu 10 (2025) chỉ tồn tại trọn vẹn trong vùng nhiễm của
+    #                nguồn M09; cột 'Quyền chi phối' + chân trang 4 (NĐ
+    #                168/2025 điểm b khoản 1 Đ.17) được pin từ header glue đó.
+    #   Hiện trạng : (1) vùng nhiễm Mẫu 6/7/8/9(lần 2)/10 đã bị XÓA khỏi nguồn
+    #                M09 theo O1 verdict REMOVED_BY_SOURCE_CLEANUP (laneC
+    #                2026-09-06, merge 29c850f; gate tools.test_m09_decontaminate);
+    #                (2) TT 121/2026/TT-BTC (hiệu lực 21/08/2026) đã THAY toàn
+    #                bộ Mẫu 10 bằng bảng 18 cột mới KHÔNG có cột 'Quyền chi
+    #                phối' (ảnh p49; inventory
+    #                docs/legal_sources_2026/inventory/PLI_M10.json —
+    #                test_evidence liệt kê 'Quyền chi phối' trong tập
+    #                fingerprint 2025 phải MẤT).
+    #   Quyết định : sửa TEST (premise chết), không sửa production. Pin mới:
+    #                nguồn M09 không còn header glue Mẫu 10; quyết định
+    #                D2.5=A về cột 'Quyền chi phối' bị TT 121/2026 supersede.
     src = bfm.find_source("PLI_M09")
     doc = docx.Document(str(src))
     paras = [p.text for p in doc.paragraphs]
     idx = [i for i, t in enumerate(paras)
            if fold(t).startswith("sttho va tenngay, thang, nam sinh")]
-    assert len(idx) == 1, "header glue Mẫu 10 khớp %d lần" % len(idx)
-    glue = fold(paras[idx[0]])
-    assert "quyen chi phoi" in glue, "Mẫu 10 glue thiếu cột Quyền chi phối"
-    assert glue.count("12345678910") >= 1 and "11" in glue and "12" in glue, \
-        "Mẫu 10 glue không phải lưới 12 cột: %r" % glue[-40:]
-    # chân trang 4: đúng căn cứ pháp lý D2.5=A
-    foot = [t for t in paras if "diem b khoan 1 dieu 17 nghi dinh so 168/2025" in
-            fold(t) and "quyen chi phoi" in fold(t)]
-    assert foot, "không tìm thấy chân trang 4 (NĐ 168/2025 điểm b khoản 1 Đ.17)"
-    assert "bo nhiem, mien nhiem" in fold(foot[0]), \
-        "chân trang 4 không liệt kê quyền chi phối"
-    # nhóm CSHHL của mẫu gốc gồm ĐÚNG 3 cột con
-    for col in ("ty le so huu von dieu le",
-                "ty le so huu co phan co quyen bieu quyet"):
-        assert col in glue, "Mẫu 10 glue thiếu %r" % col
+    assert not idx, (
+        "nguồn M09 vẫn còn header glue Mẫu 10 tại %r — vùng nhiễm phải đã "
+        "bị xóa (O1 REMOVED_BY_SOURCE_CLEANUP)" % idx)
+    joined = fold("\n".join(paras))
+    assert "quyen chi phoi" not in joined, (
+        "nguồn M09 còn sót 'Quyền chi phối' — fingerprint 2025 của Mẫu 10 "
+        "phải mất theo TT 121/2026")
 
 
 @check("[SRC] Mau 13 chi co MOT row-type -> khong khai discriminator (D2.1)")

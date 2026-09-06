@@ -95,9 +95,13 @@ FINAL_BLOCKED = "BLOCKED_OWNER"
 FINAL_NO_TABLE = "NO_TABLE"
 FINAL_OUTPUT_ONLY = "OUTPUT_ONLY"
 FINAL_REMOVED = "REMOVED_BY_CURRENT_LAW"
+# [F0L O1 2026-09-06] section nhiễm source đã được DECONTAMINATE có evidence
+# (xóa thật khỏi nguồn, gate test riêng) — không hiển thị, không render,
+# không ngụy trang thành output. Chỉ khi manifest/override ghi tường minh.
+FINAL_REMOVED_SOURCE = "REMOVED_BY_SOURCE_CLEANUP"
 FINAL_STATUSES = (FINAL_IMPLEMENTED, FINAL_PARTIAL, FINAL_MISSING,
                   FINAL_BLOCKED, FINAL_NO_TABLE, FINAL_OUTPUT_ONLY,
-                  FINAL_REMOVED)
+                  FINAL_REMOVED, FINAL_REMOVED_SOURCE)
 
 # manifest status được gate coi là "đã implement"
 MANIFEST_IMPLEMENTED_STATUSES = ("already_complete", "implemented")
@@ -296,6 +300,13 @@ def derive_final_status(kind, manifest_status, override_status, stages,
 
     if kind == "output-table" or manifest_status == "output_only":
         return FINAL_OUTPUT_ONLY, [], ["render-only theo kind/manifest"]
+
+    # [F0L O1 2026-09-06] vùng nhiễm đã decontaminate tường minh (xóa thật
+    # khỏi nguồn + gate test riêng) — verdict tách khỏi BLOCKED_OWNER.
+    if manifest_status == "removed_by_source_cleanup":
+        return FINAL_REMOVED_SOURCE, [], [
+            "manifest/override ghi rõ vùng nhiễm đã bị xóa khỏi nguồn "
+            "(decontaminate có evidence, gate test riêng)"]
 
     if removed_by_law:
         return FINAL_REMOVED, [], ["manifest ghi rõ văn bản hiện hành đã bỏ"]
@@ -1538,7 +1549,9 @@ def build_md(rows, totals, drifts, head_commit):
        "blocked; tool KHÔNG tự suy diễn nội dung pháp lý. `NO_TABLE` = "
        "manifest no_table và không tầng nào có bằng chứng bảng. "
        "`OUTPUT_ONLY` = render-only. `REMOVED_BY_CURRENT_LAW` = CHỈ khi "
-       "manifest ghi rõ văn bản hiện hành đã bỏ mục (không suy diễn).")
+       "manifest ghi rõ văn bản hiện hành đã bỏ mục (không suy diễn). "
+       "`REMOVED_BY_SOURCE_CLEANUP` = CHỈ khi manifest/override ghi rõ vùng "
+       "nhiễm đã bị xóa khỏi nguồn có evidence + gate test riêng (O1 F0L).")
     ap("")
     ap("## Còn thiếu bao nhiêu bảng THẬT?")
     ap("")
@@ -1547,9 +1560,13 @@ def build_md(rows, totals, drifts, head_commit):
        "(`MISSING_IMPLEMENTATION` %d + `PARTIAL_COLUMNS` %d)."
        % (work, totals.get(FINAL_MISSING, 0), totals.get(FINAL_PARTIAL, 0)))
     ap("- Chờ owner/blocker pháp lý: %d. Không phải bảng (theo census): "
-       "%d `NO_TABLE` + %d `OUTPUT_ONLY` + %d `REMOVED_BY_CURRENT_LAW`."
+       "%d `NO_TABLE` + %d `OUTPUT_ONLY` + %d `REMOVED_BY_CURRENT_LAW`"
+       "%s."
        % (totals.get(FINAL_BLOCKED, 0), totals.get(FINAL_NO_TABLE, 0),
-          totals.get(FINAL_OUTPUT_ONLY, 0), totals.get(FINAL_REMOVED, 0)))
+          totals.get(FINAL_OUTPUT_ONLY, 0), totals.get(FINAL_REMOVED, 0),
+          (" + %d `REMOVED_BY_SOURCE_CLEANUP`"
+           % totals.get(FINAL_REMOVED_SOURCE, 0))
+          if totals.get(FINAL_REMOVED_SOURCE) else ""))
     ap("- Đã verify đủ pipeline: **%d** `IMPLEMENTED_VERIFIED`."
        % totals.get(FINAL_IMPLEMENTED, 0))
     ap("")

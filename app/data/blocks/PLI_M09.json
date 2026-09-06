@@ -1569,58 +1569,6 @@
     "spaceBeforePt": 6.0
    },
    "role": "footnote"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "__________________________"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "national-separator"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "_________________________"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "national-separator"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "_________________________"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "national-separator"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "______________________"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "national-separator"
   }
  ],
  "v": 3

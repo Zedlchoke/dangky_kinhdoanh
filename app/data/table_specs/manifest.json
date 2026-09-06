@@ -2717,7 +2717,7 @@
      "title": "Vùng nghi nhiễm: bản copy Mẫu số 6, 7, 8, Mẫu 9 (lần 2) và Mẫu số 10 nằm trong template PLI_M09.docx",
      "kind": "source-contamination",
      "required_columns": [],
-     "status": "contaminated",
+     "status": "removed_by_source_cleanup",
      "source_evidence": {
       "template": "app/templates/PLI_M09.docx",
       "heading": "- Trường hợp Tòa án hoặc Trọng tài chỉ định người thực hiện thủ tục đăng ký doanh nghiệp thì người được chỉ định ký trực tiếp vào phần này.Mẫu số 6",
@@ -2727,7 +2727,7 @@
        null
       ]
      },
-     "notes": "Sau chân trang của Mẫu 9 thật, template chứa tiếp toàn văn 'DANH SÁCH THÀNH VIÊN CÔNG TY TNHH HAI THÀNH VIÊN TRỞ LÊN' (Mẫu 6), 'DANH SÁCH CỔ ĐÔNG SÁNG LẬP' (Mẫu 7), 'DANH SÁCH CỔ ĐÔNG LÀ NHÀ ĐẦU TƯ NƯỚC NGOÀI' (Mẫu 8), một bản 'DANH SÁCH THÀNH VIÊN CÔNG TY HỢP DANH' thứ hai (header đầy đủ 14 cột dạng paragraph + glued 'STTTên thành viênSố, ngày cấp, nơi cấp...') và 'DANH SÁCH CHỦ SỞ HỮU HƯỞNG LỢI' (Mẫu 10) - tất cả là paragraph rời, không w:tbl. File nguồn DN_PL1_Mau_09... cũng nhiễm đúng cấu trúc này → lỗi tách từ file full, KHÔNG phải nội dung của Mẫu 9.",
+     "notes": "Sau chân trang của Mẫu 9 thật, template chứa tiếp toàn văn 'DANH SÁCH THÀNH VIÊN CÔNG TY TNHH HAI THÀNH VIÊN TRỞ LÊN' (Mẫu 6), 'DANH SÁCH CỔ ĐÔNG SÁNG LẬP' (Mẫu 7), 'DANH SÁCH CỔ ĐÔNG LÀ NHÀ ĐẦU TƯ NƯỚC NGOÀI' (Mẫu 8), một bản 'DANH SÁCH THÀNH VIÊN CÔNG TY HỢP DANH' thứ hai (header đầy đủ 14 cột dạng paragraph + glued 'STTTên thành viênSố, ngày cấp, nơi cấp...') và 'DANH SÁCH CHỦ SỞ HỮU HƯỞNG LỢI' (Mẫu 10) - tất cả là paragraph rời, không w:tbl. File nguồn DN_PL1_Mau_09... cũng nhiễm đúng cấu trúc này → lỗi tách từ file full, KHÔNG phải nội dung của Mẫu 9. | [F0L O1 2026-09-06] Đã DECONTAMINATE: 129 paragraph Mẫu 6/7/8/9(lần 2)/10 + run \"Mẫu số 6\" dính chân trang bị XÓA KHỎI NGUỒN (commit laneC 3eb9a55, merge 29c850f); 41/41 tag thật giữ nguyên; gate tools.test_m09_decontaminate 8/8; verdict REMOVED_BY_SOURCE_CLEANUP — xóa thật khỏi nguồn, không hiển thị, không render, không ngụy trang output.",
      "lead_reclassification": {
       "reason": "Template chua nguyen van Mau 6/7/8/9(lan 2)/10 sau chan trang Mau 9 that (#p103-p222); can quyet dinh nguon/pham vi phap ly truoc khi lam bat cu grid nao."
      }

@@ -1,5 +1,5 @@
-{
- "comment": "[WAVE v7 HEADER-NAME-SYNC 2026-09-05] Registry band đầu trang mirror read-only — NGUỒN CHÂN LÝ DUY NHẤT cho generator (bind token vào ô band), converter blocks (run mirror), gate (detector D17) và test UI. Census: docs/audits/ + /tmp/header_name_census.json (216 occurrence / 87 form; 22 fillable-header-slot). [integ(F0L) 2026-09-06: +PLI_M12 (current-law TT 121/2026, ảnh p50) -> 23 fillable-header-slot; 21 bind + 2 BLOCKED_OWNER; census docs phiên bản mới docs/audits/header_name_census_f0l_2026-09-06.*]. Quy tắc owner: tên chủ thể nhập MỘT LẦN ở thân; band là mirror của cùng canonical key; KHÔNG tạo input/tab-stop thứ hai. Mỗi entry: form_id -> {key, label, reason}. cell luôn là '0,0' (ô trái band trên). | [N-v1/N-v2 2026-09-06] mode=band_input: band là Ô NHẬP duy nhất (không mirror) — chỉ cho form không có trường thân mẫu (PLI_M33, PLII_M06); census F0L 23 fillable slot = 23 bind (0 blocked_owner).",
+ {
+ "comment": "[WAVE v7 HEADER-NAME-SYNC 2026-09-05] Registry band đầu trang mirror read-only — NGUỒN CHÂN LÝ DUY NHẤT cho generator (bind token vào ô band), converter blocks (run mirror), gate (detector D17) và test UI. Census: docs/audits/ + /tmp/header_name_census.json (216 occurrence / 87 form; 22 fillable-header-slot). [integ(F0L) 2026-09-06: +PLI_M12 (current-law TT 121/2026, ảnh p50) -> 23 fillable-header-slot; 21 bind + 2 BLOCKED_OWNER; census docs phiên bản mới docs/audits/header_name_census_f0l_2026-09-06.*]. Quy tắc owner: tên chủ thể nhập MỘT LẦN ở thân; band là mirror của cùng canonical key; KHÔNG tạo input/tab-stop thứ hai. Mỗi entry: form_id -> {key, label, reason}. cell luôn là '0,0' (ô trái band trên). | [N-v1/N-v2 2026-09-06] mode=band_input: band là Ô NHẬP duy nhất (không mirror) — chỉ cho form không có trường thân mẫu (PLI_M33, PLII_M06); census F0L 23 fillable slot = 23 bind (0 blocked_owner). | [N-v3 2026-09-06] section output_mirrors MỚI: occurrence 'Tên doanh nghiệp' trong VÙNG OUTPUT của cơ quan (M48 p17 / M49 p9 nhánh DN hiện hữu / M70 p14) bind render-time từ dn.ten_tieng_viet — READ-ONLY mirror, KHÔNG thêm input/draft key; thiếu canonical -> in RỖNG đúng pháp định.",
  "forms": {
   "PLI_M12": {
    "key": "dn.ten_tieng_viet",
@@ -119,5 +119,32 @@
    "reason": "N-v2 DECIDED A (owner 2026-09-06): band là ô nhập pháp định duy nhất tên hộ theo canonical key family PLII (hkd_ten_tieng_viet_2); không đồng nhất với chu_hkd.ho_ten."
   }
  },
- "blocked_owner": {}
+ "blocked_owner": {},
+ "output_mirrors": {
+  "comment": "[N-v3 2026-09-06] Occurrence output bind render-time (khác section 'forms' ở trên: đó là band đầu trang). Mỗi entry: form_id -> {key, label_fold, context_fold, pattern, expect, reason}. Generator (build_form_maps) dùng label_fold (regex trên text GẬP DẤU — fold() bỏ dấu viết thường) + context_fold (tùy chọn, cùng paragraph) để TÌM đúng paragraph, rồi thay substring khớp pattern (regex trên text NGUYÊN) bằng the {key} — idempotent, fail-loud khi số occurrence bind/satisfied != expect. Converter (docx_to_blocks) biến MỌI run input của form F có key nằm ở đây thành run mirror {\"mirror\":{\"key\":…}} (paragraph lẫn table cell; bỏ qua ô (0,0) band đã xử lý riêng). Owner N-v3: bind từ dn.ten_tieng_viet READ-ONLY — KHÔNG thêm input/draft key; draft thiếu -> render RỖNG (không token kỹ thuật, không dữ liệu giả).",
+  "PLI_M48": {
+   "key": "dn.ten_tieng_viet",
+   "label_fold": "\\(ten doanh nghiep\\)",
+   "context_fold": "ve viec",
+   "pattern": "\\(Tên doanh nghiệp\\)\\s*[…\\.]+",
+   "expect": 1,
+   "reason": "N-v3 (owner chốt 2026-09-06): M48 Thông báo sửa đổi/bổ sung hồ sơ — occurrence 'của (Tên doanh nghiệp) ………' trong câu 'về việc: …' (template p17, khối output cơ quan; paragraph đó còn chứa 'về việc' nên context_fold='ve viec' tách khỏi occurrence 'Kính gửi: (Tên doanh nghiệp)' p10 — occurrence đó thuộc khối người nhận, owner KHÔNG adjudicate, giữ nguyên). Thay nhãn ngoặc + dòng kẻ ngay sau bằng {dn.ten_tieng_viet}."
+  },
+  "PLI_M49": {
+   "key": "dn.ten_tieng_viet",
+   "label_fold": "\\(ten doanh nghiep\\)",
+   "context_fold": "doi voi cac truong hop con lai",
+   "pattern": "[…\\.]*\\(Tên doanh nghiệp\\)[…\\.]*",
+   "expect": 1,
+   "reason": "N-v3 (owner chốt 2026-09-06): M49 Thông báo dừng/từ chối — CHỈ occurrence trong NHÁNH DOANH NGHIỆP HIỆN HỮU của khối Kính gửi (dòng '……….(Tên doanh nghiệp)…………..' dưới '(Đối với các trường hợp còn lại)', template p9): cả nhánh nằm trong CÙNG một paragraph (w:br xuống dòng) nên context_fold='doi voi cac truong hop con lai' neo đúng nhánh. Nhánh thành lập mới (Ông/Bà + giấy tờ cá nhân) KHÔNG bind — người nhận dùng dữ liệu cá nhân đúng cấu trúc mẫu. Occurrence '(Tên Doanh nghiệp)' ở câu 'Sau khi xem xét…' (p14) không nằm trong quyết định owner, giữ nguyên."
+  },
+  "PLI_M70": {
+   "key": "dn.ten_tieng_viet",
+   "label_fold": "\\(ten doanh nghiep\\)",
+   "context_fold": "ve viec",
+   "pattern": "\\(Tên doanh nghiệp\\)\\s*[…\\.]+",
+   "expect": 1,
+   "reason": "N-v3 (owner chốt 2026-09-06): M70 Giấy tiếp nhận hồ sơ — occurrence 'của (Tên doanh nghiệp) ………' trong câu '…về việc … của (Tên doanh nghiệp)…' (template p14, vùng output; context_fold='ve viec' — paragraph duy nhất chứa cả hai). Thay nhãn ngoặc + dòng kẻ ngay sau bằng {dn.ten_tieng_viet}."
+  }
+ }
 }

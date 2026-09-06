@@ -3434,6 +3434,83 @@ def _bind_header_name_slot(table, form_id):
 
 
 # ---------------------------------------------------------------------------
+# [N-v3 OUTPUT-MIRROR 2026-09-06] occurrence "Tên doanh nghiệp" trong VÙNG
+# OUTPUT của cơ quan (M48 p17 / M49 p9 nhánh DN hiện hữu / M70 p14) bind
+# render-time từ dn.ten_tieng_viet — READ-ONLY mirror, KHÔNG thêm input/draft
+# key; draft thiếu -> render RỖNG đúng pháp định. Cấu hình trong registry
+# tools/header_name_binding.json section "output_mirrors" (nguồn chân lý duy
+# nhất, cùng file với band mirror). Converter (docx_to_blocks) có pass đối
+# xứng biến the thành run mirror — xem _output_mirrors_to_mirror ở đó.
+# ---------------------------------------------------------------------------
+
+def output_mirrors_registry() -> dict:
+    """Section "output_mirrors" của registry header_name_binding.json."""
+    return header_name_binding().get("output_mirrors", {})
+
+
+def _bind_output_mirrors(doc, form_id):
+    """Thay occurrence output khai báo trong registry bằng the {key}.
+
+    Tìm paragraph theo label_fold (regex trên text GẬP DẤU) + context_fold
+    (tùy chọn, CÙNG paragraph — neo ngữ cảnh, vd nhánh DN hiện hữu của M49),
+    rồi thay substring khớp pattern (regex trên text NGUYÊN) bằng the.
+    Idempotent: paragraph đã chứa the -> tính satisfied, không đụng nữa.
+    Fail loud: số occurrence bind/satisfied != expect -> raise ValueError.
+    Trả số occurrence đã bind lần này (0 khi form không trong registry hoặc
+    regen lần 2 trên bản đã bind)."""
+    entry = output_mirrors_registry().get(form_id)
+    if not entry:
+        return 0
+    key = entry["key"]
+    token = "{%s}" % key
+    label_re = re.compile(entry["label_fold"])
+    ctx_re = (re.compile(entry["context_fold"])
+              if entry.get("context_fold") else None)
+    pattern = re.compile(entry["pattern"])
+    expect = int(entry.get("expect", 1))
+
+    bound = satisfied = 0
+    from docx.text.paragraph import Paragraph
+    for p_el in doc.element.body.iter(qn("w:p")):
+        para = Paragraph(p_el, doc)
+        full = "".join(r.text for r in para.runs)
+        folded = fold(full)
+        ctx_ok = ctx_re is None or bool(ctx_re.search(folded))
+        label_hit = bool(label_re.search(folded))
+        if not label_hit:
+            # Idempotent: bind đã thay CẢ nhãn nguồn (vd '(Tên doanh nghiệp)')
+            # bằng the nên lần regen/gọi sau không còn label để khớp — nhận
+            # diện bản đã bind qua token + context (vd 've viec' M48/M70,
+            # marker nhánh DN M49) cùng paragraph.
+            if ctx_ok and token in full:
+                satisfied += 1
+            continue
+        if not ctx_ok:
+            continue
+        spans = list(pattern.finditer(full))
+        if not spans:
+            if token in full:
+                satisfied += 1   # đã bind, không còn nhãn/ kẻ để thay
+                continue
+            raise ValueError(
+                "[out-mirror] %s: tìm thấy paragraph khớp label %r nhưng "
+                "pattern %r không khớp text nguyên (nguồn lệch chuẩn?)"
+                % (form_id, entry["label_fold"], entry["pattern"]))
+        # áp từ cuối lên đầu để không lệch chỉ số (apply_tags_to_para tự sắp)
+        apply_tags_to_para(para, [(m.start(), m.end(), token) for m in spans])
+        bound += 1
+        satisfied += 1
+    if satisfied != expect:
+        raise ValueError(
+            "[out-mirror] %s: bind %d/%d occurrence output cho %r "
+            "(label=%r context=%r) — sai số occurrence kỳ vọng, kiểm tra "
+            "nguồn/registry" % (form_id, satisfied, expect, key,
+                                entry["label_fold"],
+                                entry.get("context_fold", "-")))
+    return bound
+
+
+# ---------------------------------------------------------------------------
 # Quy trình chính
 # ---------------------------------------------------------------------------
 
@@ -4151,6 +4228,11 @@ def process_form(path, titles, coverage, out_tpl=None):
     # header band/bảng ký) và TRƯỚC glue normalize để space quanh the mới
     # được chuẩn hóa cùng lượt.
     apply_name_slots(doc, form_id, ext, add_field)
+
+    # [N-v3] bind occurrence output "Tên doanh nghiệp" (M48/M49/M70) theo
+    # registry output_mirrors — chạy SAU mọi pass gắn the (nhãn/context đã
+    # ổn định) và TRƯỚC glue normalize để the mới được chuẩn hóa cùng lượt.
+    _bind_output_mirrors(doc, form_id)
 
     # [6V-V2/C1] chuẩn hóa skeleton glue (B1/D13): chèn space quanh {tag}
     # khi kề word char / ':' / '(' — rule + 3 ví dụ đối chứng bản giấy ở

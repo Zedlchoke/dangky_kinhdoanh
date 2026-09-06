@@ -1,0 +1,79 @@
+{
+  "form_id": "PLI_M30",
+  "wave": "F0L current-law migration — Lane A",
+  "checked_date": "2026-09-06",
+  "source_2025": "04_tam_ngung_cham_dut_giai_the/PL1_Mau_30_thong_bao_ve_viec_giai_the_doanh_nghiep.docx",
+  "source_2026": {
+    "van_ban": "TT 121/2026/TT-BTC",
+    "phan_luc": "Phụ lục, Mẫu số 30 — Thông báo về việc giải thể doanh nghiệp",
+    "pages": "p70",
+    "sha256": "87f6989d209310b8c6fbec72a182c476bb83a462ce96d74c5218c26605342faf",
+    "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/8/121-btc.signed.pdf"
+  },
+  "pdf_page": "p2 (Điều 1 khoản 1 điểm i) + p70",
+  "page_inventory": [
+    "p70 (1 trang): TÊN DOANH NGHIỆP + quốc hiệu; Số/ngày-tháng-năm; THÔNG BÁO Về việc giải thể doanh nghiệp; Kính gửi; Tên DN; MST; Số GCN ĐKKD (chỉ kê khai nếu không có MST) + Ngày cấp/Nơi cấp; heading IN DAM 'Thông báo về việc giải thể doanh nghiệp như sau:'; đoạn thanh toán hết nợ + đề nghị cập nhật tình trạng đã giải thể; CÂU MỚI 'Doanh nghiệp gửi kèm Thông báo này bản sao sổ đăng ký cổ đông1.'; 2 đoạn cam kết; chữ ký NDD (Ký và ghi họ tên)2; chân trang chú thích 1-2"
+  ],
+  "old_headings": ["THÔNG BÁO Về việc giải thể doanh nghiệp; 'Thông báo về việc giải thể doanh nghiệp như sau:' (chữ thường)"],
+  "new_headings": ["giống old_headings; riêng dòng 'Thông báo về việc giải thể doanh nghiệp như sau:' IN ĐẬM trên bản 2026 (p70)"],
+  "old_fields": ["10 fields: so_van_ban, dia_diem_ky, ngay_ky_vb, thang_ky_vb, nam_ky_vb, co_quan_dkkd, dn.ten_tieng_viet, dn.ma_so_dn, so_gcn_dkkd (Số GCN ĐKKD + ngày cấp/nơi cấp nhóm), ... — không field nào đổi"],
+  "new_fields": ["10 fields — KHÔNG ĐỔI (câu mới không có slot dấu chấm)"],
+  "old_tables": ["(không có bảng dữ liệu)"],
+  "new_tables": ["không đổi"],
+  "added": [
+    {
+      "vi_tri_moi": "Sau đoạn 'Doanh nghiệp đã thanh toán hết các khoản nợ ... sang tình trạng đã giải thể.' (p70)",
+      "noi_dung": "Doanh nghiệp gửi kèm Thông báo này bản sao sổ đăng ký cổ đông1.",
+      "evidence": "p70: dòng độc lập ngay sau đoạn cập nhật tình trạng, trước đoạn cam kết; chú thích 1 giới hạn CTCP"
+    },
+    {
+      "vi_tri_moi": "Chân trang (p70)",
+      "noi_dung": "1 Chỉ ghi nội dung này và gửi bản sao sổ đăng ký cổ đông kèm theo trong trường hợp doanh nghiệp là công ty cổ phần (không phải là công ty niêm yết và công ty đăng ký giao dịch chứng khoán).",
+      "evidence": "p70 chân trang chú thích 1"
+    }
+  ],
+  "removed": [],
+  "changed": [
+    {
+      "vi_tri_cu_moi": "Chân trang (source P0021 → P0021 mới; P0022 chèn 1 dòng trước) = p70",
+      "van_ban_cu": "1 Người đại diện theo pháp luật của doanh nghiệp ký trực tiếp vào phần này. / Trường hợp Tòa án hoặc Trọng tài chỉ định ... ký trực tiếp vào phần này.",
+      "van_ban_moi": "1 Chỉ ghi nội dung này và gửi bản sao sổ đăng ký cổ đông kèm theo trong trường hợp doanh nghiệp là công ty cổ phần (không phải là công ty niêm yết và công ty đăng ký giao dịch chứng khoán). / 2 Người đại diện theo pháp luật của doanh nghiệp ký trực tiếp vào phần này. / Trường hợp Tòa án hoặc Trọng tài chỉ định ... ký trực tiếp vào phần này.",
+      "evidence": "p70 chân trang"
+    },
+    {
+      "vi_tri_cu_moi": "Chữ ký (source P0019 → mới) = p70",
+      "van_ban_cu": "NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT CỦA DOANH NGHIỆP (Ký và ghi họ tên)1",
+      "van_ban_moi": "(Ký và ghi họ tên)2 — nội dung giữ nguyên",
+      "evidence": "p70"
+    },
+    {
+      "vi_tri_cu_moi": "Dòng dẫn 'Thông báo về việc giải thể doanh nghiệp như sau:' (source P0013) = p70",
+      "van_ban_cu": "chữ thường (không đậm)",
+      "van_ban_moi": "IN ĐẬM (định dạng, không đổi chữ)",
+      "evidence": "p70"
+    }
+  ],
+  "no_delta_vung": [
+    "Đoạn 'Doanh nghiệp đã thanh toán hết các khoản nợ, nghĩa vụ tài sản khác và không trong quá trình giải quyết tranh chấp tại Toà án hoặc Trọng tài theo quy định tại khoản 2 Điều 207 Luật Doanh nghiệp. Đề nghị Quý Cơ quan cập nhật ... sang tình trạng đã giải thể.' — p70 GIỐNG HẾT 2025; 2 đoạn cam kết, Kính gửi, Tên DN, MST, Số GCN ĐKKD/Ngày cấp/Nơi cấp — không đổi"
+  ],
+  "canonical_key_impact": ["Không key nào đổi (regen --one PLI_M30: 10 fields, 0 bảng động)."],
+  "ui_impact": [
+    "Không ô nhập mới. UI nên hiện chú thích: bản sao sổ đăng ký cổ đông chỉ gửi khi DN là công ty cổ phần (không niêm yết, không đăng ký GCKK) — có thể map sang checklist hồ sơ kèm theo."
+  ],
+  "draft_migration": ["Draft cũ tương thích 1:1 (không mất slot)."],
+  "validation_impact": [
+    "Câu mới là nghĩa vụ kèm tài liệu theo điều kiện CTCP — app hiện không kiểm tài liệu kèm theo cho M30; nếu thêm rule thì điều kiện là 'doanh nghiệp là công ty cổ phần' theo chú thích 1, không suy diễn rộng hơn."
+  ],
+  "docx_impact": [
+    "Source DOCX đã sửa: chèn câu 'Doanh nghiệp gửi kèm Thông báo này bản sao sổ đăng ký cổ đông1.'; thay chú thích 1; chèn dòng chú thích 2; ký tên 1→2; in đậm dòng dẫn. Regen --one PLI_M30 PASS."
+  ],
+  "excel_impact": ["Không đổi mapping Excel (fields giữ nguyên)."],
+  "test_evidence": [
+    "tools/test_current_law_migration.py: source M30 chứa 'bản sao sổ đăng ký cổ đông' + 'không phải là công ty niêm yết và công ty đăng ký giao dịch chứng khoán' (fingerprint 2026, p70)."
+  ],
+  "source_quote": [
+    "p70: 'Doanh nghiệp gửi kèm Thông báo này bản sao sổ đăng ký cổ đông1.'",
+    "p70 chú thích 1: 'Chỉ ghi nội dung này và gửi bản sao sổ đăng ký cổ đông kèm theo trong trường hợp doanh nghiệp là công ty cổ phần (không phải là công ty niêm yết và công ty đăng ký giao dịch chứng khoán).'",
+    "p2, Điều 1 khoản 1 điểm i: 'Thay thế Mẫu số 30 Phụ lục I ban hành kèm theo Thông tư số 68/2025/TT-BTC bằng Mẫu số 30 Phụ lục ban hành kèm theo Thông tư này.'"
+  ]
+}

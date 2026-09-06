@@ -1,0 +1,206 @@
+{
+  "van_ban": "Nghị định 296/2026/NĐ-CP ngày 23/7/2026 sửa đổi, bổ sung một số điều của Nghị định số 168/2025/NĐ-CP về đăng ký doanh nghiệp",
+  "wave": "F0L current-law migration — Lane A",
+  "checked_date": "2026-09-06",
+  "source": {
+    "pages": "p001-p014 (14 trang, /tmp/nd296_pages)",
+    "sha256": "b05f8e7400633052d77a731a377600de51000abecb4ff5e7495426545123f7b9",
+    "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2026/7/296_2026_nd-cp_23072026-signed.signed.pdf",
+    "hieu_luc": "23/7/2026 (Điều 22 khoản 1, p014)"
+  },
+  "chu_de": [
+    "xác thực điện tử",
+    "người ủy quyền",
+    "chủ sở hữu hưởng lợi",
+    "M01-M05",
+    "M10",
+    "workflow online"
+  ],
+  "dieu": [
+    {
+      "dieu": "Điều 1 (p001-p002)",
+      "sua_nd168": "Điều 4",
+      "tom_tat": "Sửa khoản 1 (người thành lập/DN tự kê khai hồ sơ, chịu trách nhiệm hợp pháp-trung thực-chính xác; chủ sở hữu/cổ đông/thành viên góp vốn đủ quy định khoản 2 Điều 34 LDN, KHÔNG ĐỨNG TÊN THAY NGƯỜI KHÁC để góp vốn); bổ sung khoản 7 (CQĐKKD cấp tỉnh khai thác CSDLQQG ĐKDN + CSDL khác, KHÔNG yêu cầu nộp bản sao GCN ĐKDN/GCN ĐKKD hợp tác xã/GCN ĐKKD hộ kinh doanh/GCN ĐKKD thuế/GCN ĐKKD đầu tư/văn bản chấp thuận góp vốn mua cổ phần của NĐTNN/GCN thành lập/QĐ Tòa án... đã có trong hồ sơ; khai thác không được → mới yêu cầu bổ sung; việc khai thác thay thế thành phần hồ sơ theo thông báo trên Cổng TTQT ĐKDN); bổ sung khoản 8 (TNHH MTV 100% vốn Nhà nước: bản sao nghị quyết/QĐ chủ sở hữu + văn bản cử người đại diện theo ủy quyền THAY BẰNG văn bản của tổ chức/cá nhân có thẩm quyền theo pháp luật quản lý và đầu tư vốn nhà nước).",
+      "quote": "\"7. Cơ quan đăng ký kinh doanh cấp tỉnh khai thác, sử dụng thông tin đã có trong Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp và các cơ sở dữ liệu quốc gia, cơ sở dữ liệu chuyên ngành khác và không yêu cầu cá nhân, tổ chức thực hiện thủ tục đăng ký doanh nghiệp nộp bản sao Giấy chứng nhận đăng ký doanh nghiệp, Giấy chứng nhận đăng ký hợp tác xã, Giấy chứng nhận đăng ký hộ kinh doanh...\" (p001-p002)",
+      "anh_huong_app": "Validation 'bắt buộc đính kèm bản sao GCN' hiện không có trong app; nếu sau này thêm checklist giấy tờ thì danh mục phải trừ các giấy tờ khai thác được từ CSDL — không suy diễn thêm."
+    },
+    {
+      "dieu": "Điều 2 (p002-p003)",
+      "sua_nd168": "khoản 5 Điều 12",
+      "tom_tat": "NGƯỜI ỦY QUYỀN: người ủy quyền và người được ủy quyền chịu trách nhiệm trước pháp luật về việc ủy quyền; phải XÁC THỰC ĐIỆN TỬ để được cấp ĐKDN khi thực hiện: đăng ký thành lập DN, thay đổi NDD, chủ sở hữu, thành viên TNHH, cổ đông sáng lập, cổ đông NNTT (CTCP không niêm yết/KQCK), chủ DNTN, thành viên hợp danh. Xác thực bị gián đoạn → xác thực sau khi được cấp ĐKDN. Không xác nhận/xác nhận không ủy quyền → CQĐKKD cấp tỉnh yêu cầu DN báo cáo (khoản 5 Điều 21 NĐ168). Chưa có tài khoản định danh điện tử → hồ sơ kèm bản sao thẻ Căn cứ cư trú/thẻ CCCD/hộ chiếu/hộ chiếu nước ngoài/giấy tờ thay thế hộ chiếu còn hiệu lực của NGƯỜI ỦY QUYỀN.",
+      "quote": "\"Người ủy quyền và người được ủy quyền phải xác thực điện tử để được cấp đăng ký doanh nghiệp khi thực hiện thủ tục đăng ký thành lập doanh nghiệp, đăng ký thay đổi người đại diện theo pháp luật, chủ sở hữu, thành viên của công ty trách nhiệm hữu hạn, thông tin cổ đông sáng lập, cổ đông là nhà đầu tư nước ngoài của công ty cổ phần không phải là công ty niêm yết và công ty đăng ký giao dịch chứng khoán, chủ doanh nghiệp tư nhân, thành viên hợp danh.\" (p002)",
+      "anh_huong_app": "App chưa có bước 'xác thực điện tử' (grep app_tk: không có logic ủy quyền/xác thực) — đây là gap workflow (nền tảng định danh quốc gia), không thể dựng local; cần Lead ghi nhận như thuộc tính quy trình nộp online, KHÔNG thêm validation cứng trong app."
+    },
+    {
+      "dieu": "Điều 3 (p003)",
+      "sua_nd168": "Điều 17 (thay thế toàn bộ)",
+      "tom_tat": "CSHHL = cá nhân trực tiếp/gián tiếp SỞ HỮU HOẶC KIỂM SOÁT CUỐI CÙNG trên thực tế, không bao gồm cá nhân đại diện vốn nhà nước. Khoản 1: (i) trực tiếp/gián tiếp/vừa cả hai sở hữu ≥25% VĐL hoặc ≥25% cổ phần có quyền biểu quyết; chủ sở hữu gián tiếp = qua tổ chức/thỏa thuận pháp lý khác; nhóm gia đình (khoản 22 Điều 4 LDN) hoặc hợp đồng cùng nhau sở hữu ≥25% → cả nhóm là CSHHL; công ty hợp danh: TẤT CẢ thành viên hợp danh là CSHHL không phụ thuộc tỷ lệ. Khoản 2: kiểm soát qua 1 hoặc nhiều quyền (bổ nhiệm/miễn nhiệm/bãi nhiệm đa số hoặc tất cả thành viên hoặc chủ tịch HĐTV/HĐQT, GĐ/TGĐ; sửa đổi bổ sung điều lệ; thay đổi cơ cấu tổ chức; quyết định chính sách tài chính-đầu tư-hoạt động; tổ chức lại, giải thể). Khoản 3: không có cá nhân đáp ứng k1, k2 → xác định NGƯỜI QUẢN LÝ DOANH NGHIỆP có quyền hạn lớn nhất (trừ cá nhân đại diện vốn nhà nước).",
+      "quote": "\"3. Trong trường hợp không có cá nhân đáp ứng tiêu chí tại khoản 1, 2 Điều này, doanh nghiệp xác định một cá nhân là người quản lý doanh nghiệp có quyền hạn lớn nhất để hành động thay mặt cho doanh nghiệp, trừ trường hợp cá nhân đại diện vốn nhà nước trong doanh nghiệp.\" (p003)",
+      "anh_huong_app": "LÀ CĂN CỨ 18 CỘT CỦA MẪU 10 TT 121 (đã migrate: commit d641ad7). Chuỗi 'Cá nhân kiểm soát...' của NĐ296 Điều 3 khoản 2 = nội dung chú thích 8 trên p49; 'người quản lý doanh nghiệp có quyền hạn lớn nhất' = chú thích 3/cột 18."
+    },
+    {
+      "dieu": "Điều 4 (p004)",
+      "sua_nd168": "Điều 18 (thay thế toàn bộ)",
+      "tom_tat": "Thứ tự kê khai CSHHL: a) cá nhân đáp ứng khoản 1 Điều 17; b) nếu không có/không đúng → kê khai 1 hoặc nhiều cá nhân đáp ứng tiêu chí KHỐI CHỐI thực tế (khoản 2 Điều 17); c) không có cá nhân k1, k2 → kê khai cá nhân khoản 3 Điều 17 (người quản lý DN).",
+      "quote": "\"c) Trường hợp không có cá nhân đáp ứng tiêu chí quy định tại khoản 1, 2 Điều 17 thì người thành lập doanh nghiệp, doanh nghiệp kê khai, thông báo với Cơ quan đăng ký kinh doanh thông tin của cá nhân được quy định tại khoản 3 Điều 17 Nghị định này.\" (p004)",
+      "anh_huong_app": "Quy tắc lựa chọn dòng dữ liệu CSHHL (K1 sở hữu → K2 kiểm soát → K3 NQLDN). UI M10 2026 có thể pre-select cột theo thứ tự này; hiện chưa wire."
+    },
+    {
+      "dieu": "Điều 5 (p004-p005)",
+      "sua_nd168": "khoản 2 Điều 20",
+      "tom_tat": "Cơ quan ĐKKD cấp xã = phòng chuyên môn thuộc UBND cấp xã (nếu lập) hoặc UBND cấp xã; có tài khoản và con dấu.",
+      "quote": "\"2. Ở cấp xã: a) Trường hợp đơn vị hành chính cấp xã thành lập phòng chuyên môn thì cơ quan đăng ký kinh doanh giải quyết thủ tục đăng ký hộ kinh doanh là phòng chuyên môn thuộc Ủy ban nhân dân cấp xã...\" (p004)",
+      "anh_huong_app": "Chỉ ảnh hưởng phạm vi PLII (hộ kinh doanh) — dropdown 'Cơ quan đăng ký kinh doanh cấp...' của HKD; không trong 5 form lane A."
+    },
+    {
+      "dieu": "Điều 6 (p005)",
+      "sua_nd168": "bổ sung khoản 8a Điều 21",
+      "tom_tat": "Cập nhật, lưu trữ thông tin cổ đông CTCP không niêm yết/KQCK trong CSDLQQG ĐKDN trong 06 NĂM kể từ ngày công ty giải thể.",
+      "quote": "\"8a. Cập nhật, lưu trữ thông tin về cổ đông của công ty cổ phần không phải là công ty niêm yết và công ty đăng ký giao dịch chứng khoán trong Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp trong thời hạn 06 năm kể từ ngày công ty giải thể theo quy định tại Nghị định này.\" (p005)",
+      "anh_huong_app": "Không có validation liên quan hiện tại."
+    },
+    {
+      "dieu": "Điều 7 (p005)",
+      "sua_nd168": "bổ sung khoản 6 Điều 24",
+      "tom_tat": "NĐTNN thành lập DN trước khi cấp GCN ĐT: hồ sơ ĐKDN không bao gồm bản sao GCN ĐKĐT; giấy đề nghị ĐKDN bao gồm nội dung cam kết điều kiện tiếp cận thị trường đối với NĐTNN.",
+      "quote": "\"6. Trường hợp nhà đầu tư nước ngoài thành lập doanh nghiệp trước khi thực hiện thủ tục cấp, điều chỉnh Giấy chứng nhận đăng ký đầu tư theo quy định của pháp luật về đầu tư thì hồ sơ đăng ký doanh nghiệp không bao gồm bản sao Giấy chứng nhận đăng ký đầu tư...\" (p005)",
+      "anh_huong_app": "Thuộc luồng M01 (wave M01-M05 sau) — ghi nhận để wave sau xử lý checklist giấy tờ."
+    },
+    {
+      "dieu": "Điều 8 (p005)",
+      "sua_nd168": "Điều 38 (khoản 1, điểm a và d khoản 2)",
+      "tom_tat": "Hồ sơ ĐKDN qua mạng = văn bản điện tử/dữ liệu điện tử theo LDN 2020 SDBS 2025, giá trị pháp lý tương đương bản giấy; ủy quyền qua mạng kèm giấy tờ Điều 12 ở dạng điện tử.",
+      "quote": "\"1. Hồ sơ đăng ký doanh nghiệp qua mạng thông tin điện tử bao gồm các giấy tờ theo quy định tại Luật Doanh nghiệp năm 2020 được sửa đổi, bổ sung năm 2025 và Nghị định này được thể hiện dưới dạng văn bản điện tử hoặc dữ liệu điện tử... có giá trị pháp lý tương đương hồ sơ đăng ký doanh nghiệp bằng bản giấy.\" (p005)",
+      "anh_huong_app": "Workflow online — app xuất DOCX bản giấy; không đổi."
+    },
+    {
+      "dieu": "Điều 9 (p006-p007)",
+      "sua_nd168": "Điều 39 (thay thế toàn bộ)",
+      "tom_tat": "Trình tự ĐKDN qua mạng định danh quốc gia: nộp hồ sơ đăng nhập Cổng DVCQG/Ứng dụng định danh quốc gia bằng TÀI KHOẢN ĐỊNH DANH ĐIỆN TỬ; giấy tờ được kê khai trên hệ thống CHỈ YÊU CẦU KÝ NGƯỜI NỘP (không ký số/ký trực tiếp lại, không tải lên lại); giấy tờ yêu cầu nhiều người ký phải ký số/ký trực tiếp và tải lên; thanh toán phí (nếu có) + XÁC THỰC ĐIỆN TỬ để nộp; a) người có thẩm quyền ký / b) người được ủy quyền (tải toàn bộ giấy tờ + ký số/trực tiếp).",
+      "quote": "\"1. Người nộp hồ sơ đăng nhập Cổng dịch vụ công quốc gia hoặc Ứng dụng định danh quốc gia bằng tài khoản định danh điện tử để truy cập Hệ thống thông tin quốc gia về đăng ký doanh nghiệp.\" (p006)",
+      "anh_huong_app": "Workflow online ngoài phạm vi app; ghi nhận."
+    },
+    {
+      "dieu": "Điều 10 (p007)",
+      "sua_nd168": "điểm c khoản 1 Điều 51",
+      "tom_tat": "Chuyển nhượng cổ phần: bản sao/bản chính hợp đồng chuyển nhượng hoặc giấy tờ chứng minh hoãn tất chuyển nhượng; giấy tờ chứng minh góp vốn khi cổ đông NNTT mua cổ phần lẻ; hợp đồng tặng cho.",
+      "quote": "\"c) Bản sao hoặc bản chính hợp đồng chuyển nhượng cổ phần hoặc giấy tờ chứng minh việc hoãn tất chuyển nhượng trong trường hợp chuyển nhượng cổ phần; giấy tờ chứng minh việc góp vốn trong trường hợp cổ đông là nhà đầu tư nước ngoài mua cổ phần bán riêng lẻ; hợp đồng tặng cho cổ phần trong trường hợp tặng cho cổ phần;\" (p007)",
+      "anh_huong_app": "Thuộc luồng M12/CTCP — checklist giấy tờ, app chưa wire."
+    },
+    {
+      "dieu": "Điều 11 (p007-p008)",
+      "sua_nd168": "Điều 60 (khoản 1; điểm a khoản 2; bổ sung khoản 7, 8)",
+      "tom_tat": "(1) Tạm ngừng/tiếp tục trước hạn: nộp chậm nhất 03 ngày làm việc; CẦU tiếp tục tạm ngừng sau khi hết hạn đã thông báo → gửi thông báo chậm nhất 03 ngày làm việc trước ngày TIẾP TỤC TẠM NGỪNG; thời hạn 1 lần thông báo ≤ 12 THÁNG; TỔNG LIÊN TIẾP ≤ 24 THÁNG. (2a) Thông báo tạm ngừng BAO GỒM SỐ ĐIỆN THOẠI VÀ ĐỊA CHỈ THƯ ĐIỆN TỬ CỦA NDD (căn cứ trực tiếp của khối NDD 3 dòng trong Mẫu 27 TT 121 — đã migrate commit f407581). (7) Trong thời gian tạm ngừng, có thay đổi thông tin Đ30/Đ31 LDN → phải ĐK thay đổi/thông báo thay đổi. (8) Trong 05 ngày làm việc kể từ ngày kết thúc hạn tạm ngừng, NDD phải XÁC NHẬN TIẾP TỤC KINH DOANH TRỞ LẠI trên HTTT; không xác nhận → CQ gửi văn bản yêu cầu báo cáo (điểm c khoản 1 Điều 216 LDN) trong 10 ngày làm việc; không gửi báo cáo trong 06 tháng → thu hồi GCN (Điều 69) và DN phải giải thể (Điều 65).",
+      "quote": "\"Thời hạn tạm ngừng của mỗi lần thông báo không được quá 12 tháng. Tổng thời gian tạm ngừng kinh doanh liên tiếp không được quá 24 tháng.\" (p007); \"a) Thông báo tạm ngừng kinh doanh, tạm ngừng hoạt động, trong đó bao gồm thông tin về số điện thoại và địa chỉ thư điện tử của người đại diện theo pháp luật của doanh nghiệp;\" (p007); \"8. Trong thời hạn 05 ngày làm việc kể từ ngày kết thúc thời hạn tạm ngừng kinh doanh đã thông báo, người đại diện theo pháp luật của doanh nghiệp phải xác nhận việc tiếp tục kinh doanh trở lại...\" (p008)",
+      "anh_huong_app": "App hiện KHÔNG có validation thời hạn tạm ngừng (grep '12 thang|24 thang' app_tk/use_cases: 0 hit). CẦN THÊM (Lead): (i) soft-check M27 den_ngay - tu_ngay ≤ 12 tháng; (ii) tổng chuỗi tạm ngừng liên tiếp ≤ 24 tháng cần dữ liệu lịch sử — hiện ngoài tầm; (iii) xác nhận tiếp tục KD sau hạn tạm ngừng là nghiệp vụ mới chưa có form riêng (dùng M27 mục 2)."
+    },
+    {
+      "dieu": "Điều 12 (p008)",
+      "sua_nd168": "bổ sung khoản 3 Điều 61",
+      "tom_tat": "Trong thời gian tạm ngừng/đình chỉ/chấm dứt theo yêu cầu cơ quan nhà nước có thẩm quyền, khi có thay đổi thông tin ĐKDN (Đ30/Đ31 LDN) → phải đăng ký thay đổi, thông báo thay đổi.",
+      "quote": "\"3. Trong thời gian tạm ngừng kinh doanh, đình chỉ hoạt động, chấm dứt kinh doanh theo yêu cầu của cơ quan nhà nước có thẩm quyền, khi có thay đổi thông tin đăng ký doanh nghiệp quy định tại Điều 30 và Điều 31 Luật Doanh nghiệp năm 2020 được sửa đổi, bổ sung năm 2025 và Nghị định này, doanh nghiệp phải đăng ký thay đổi, thông báo thay đổi nội dung đăng ký doanh nghiệp theo quy định.\" (p008)",
+      "anh_huong_app": "Ghi chú nghiệp vụ UI khi DN đang tạm ngừng muốn nộp M12/M25."
+    },
+    {
+      "dieu": "Điều 13 (p008)",
+      "sua_nd168": "khoản 3 Điều 64",
+      "tom_tat": "Trong 05 ngày làm việc kể từ ngày thanh toán hết các khoản nợ, DN gửi hồ sơ ĐK giải thể; CTCP KHÔNG niêm yết/KQCK: thông báo giải thể phải kèm BẢN SAO SỔ ĐĂNG KÝ CỔ ĐÔNG — căn cứ trực tiếp của câu thêm trong Mẫu 30 TT 121 (đã migrate commit 808a8f4).",
+      "quote": "\"Đối với công ty cổ phần không phải là công ty niêm yết và công ty đăng ký giao dịch chứng khoán, thông báo về việc giải thể doanh nghiệp trong hồ sơ đăng ký doanh nghiệp phải kèm theo bản sao sổ đăng ký cổ đông.\" (p008)",
+      "anh_huong_app": "Checklist giấy tờ M30: thêm điều kiện 'CTCP không niêm yết/KQCK → sổ đăng ký cổ đông' (không phải validation dữ liệu form, là giấy tờ kèm theo)."
+    },
+    {
+      "dieu": "Điều 14 (p009-p010)",
+      "sua_nd168": "Điều 72 (thay thế toàn bộ)",
+      "tom_tat": "Quy trình chuyển tình trạng pháp lý, đình chỉ thủ tục phá sản, hủy quyết định tuyên bố phá sản — các mốc 03 ngày làm việc chuyển tình trạng trong CSDLQQG; truyền sang Hệ thống ứng dụng đăng ký thuế.",
+      "quote": "\"a) Trong thời hạn 03 ngày làm việc kể từ ngày nhận được quyết định mở thủ tục phá sản của Tòa án, Cơ quan đăng ký kinh doanh cấp tỉnh chuyển tình trạng pháp lý của doanh nghiệp sang tình trạng đang làm thủ tục phá sản...\" (p009)",
+      "anh_huong_app": "Ngoài 5 form lane A (nghiệp vụ CQ ĐKKD)."
+    },
+    {
+      "dieu": "Điều 15 (p010)",
+      "sua_nd168": "khoản 5 Điều 93",
+      "tom_tat": "Ủy quyền ĐK hộ kinh doanh: chịu trách nhiệm về ủy quyền; phải XÁC THỰC ĐIỆN TỬ khi thành lập HKD, thay đổi chủ hộ, thay đổi thành viên hộ gia đình; gián đoạn → xác thực sau; không xác nhận → CQ cấp xã yêu cầu báo cáo (khoản 6 Điều 22); chưa có TK định danh → kèm bản sao thẻ Căn cứ cư trú/CCCD còn hiệu lực của người ủy quyền.",
+      "quote": "\"Người ủy quyền và người được ủy quyền phải thực hiện xác thực điện tử để được cấp đăng ký hộ kinh doanh khi thực hiện thủ tục đăng ký thành lập hộ kinh doanh, đăng ký thay đổi chủ hộ kinh doanh, đăng ký thay đổi thành viên hộ gia đình đăng ký hộ kinh doanh.\" (p010)",
+      "anh_huong_app": "PLII (hộ kinh doanh) — ngoài 5 form lane A; wave PLII sau."
+    },
+    {
+      "dieu": "Điều 16 (p010)",
+      "sua_nd168": "bổ sung khoản 5 Điều 103",
+      "tom_tat": "Trong thời gian tạm ngừng kinh doanh của HKD, khi có thay đổi thông tin ĐK HKD (Điều 100) → phải đăng ký thay đổi nội dung.",
+      "quote": "\"5. Trong thời gian tạm ngừng kinh doanh, khi có thay đổi thông tin đăng ký hộ kinh doanh theo quy định tại Điều 100 Nghị định này, hộ kinh doanh phải đăng ký thay đổi nội dung đăng ký hộ kinh doanh theo quy định.\" (p010)",
+      "anh_huong_app": "PLII — ngoài phạm vi lane."
+    },
+    {
+      "dieu": "Điều 17 (p010-p011)",
+      "sua_nd168": "Điều 112 (khoản 1, điểm a khoản 2; bổ sung khoản 4)",
+      "tom_tat": "Hồ sơ ĐK HKD qua mạng = VBE/DDE, giá trị tương đương bản giấy; tên văn bản điện tử đặt tương ứng tên loại giấy tờ; ủy quyền qua mạng kèm giấy tờ Điều 93 dạng điện tử; khoản 4 MỚI: hồ sơ tiếp nhận sau giờ hành chính/ngày nghỉ/ngày lễ/Tết → hạn trả kết quả tính từ ngày làm việc kế tiếp.",
+      "quote": "\"4. Trường hợp hồ sơ được tiếp nhận trên Hệ thống thông tin về đăng ký hộ kinh doanh sau giờ hành chính hoặc vào ngày nghỉ, ngày lễ, Tết theo quy định thì thời hạn trả kết quả giải quyết thủ tục đăng ký hộ kinh doanh quy định tại Nghị định này được tính từ ngày làm việc kế tiếp của ngày hồ sơ được tiếp nhận.\" (p011)",
+      "anh_huong_app": "PLII + workflow online — ghi nhận."
+    },
+    {
+      "dieu": "Điều 18 (p011-p012)",
+      "sua_nd168": "Điều 113 (thay thế toàn bộ)",
+      "tom_tat": "Trình tự ĐK HKD qua mạng (Cổng DVCQG/Ứng dụng định danh quốc gia, tài khoản định danh điện tử; kê khai trên hệ thống chỉ ký người nộp; nhiều người ký → ký số/tải lên; xác thực điện tử; HKD có thể DỪNG thực hiện thủ tục qua mạng — khoản 5 Điều 95).",
+      "quote": "\"4. Hộ kinh doanh thực hiện thủ tục đăng ký qua mạng thông tin điện tử có thể dừng thực hiện thủ tục đăng ký hộ kinh doanh theo quy định tại khoản 5 Điều 95 Nghị định này.\" (p012)",
+      "anh_huong_app": "PLII — ngoài phạm vi lane."
+    },
+    {
+      "dieu": "Điều 19 (p012-p013)",
+      "sua_nd168": "thay thế/bãi bỏ cụm từ, khoản rải rác",
+      "tom_tat": "(1) 'bản dịch tiếng Việt công chứng' → 'bản dịch tiếng Việt được chứng thực chữ ký người dịch' (k2 Đ10). (2) 'các khoản 1..8 Điều này' → '+ 8a' (k9 Đ21). (3) '03 ngày làm việc' → '02 ngày làm việc' tại: k6 Đ31, k5 Đ56, k4 Đ66, các k1,2,3,4 Đ77, k5 Đ95, các k1,2,3,4 Đ115 (RÚT NGẮN thời hạn thông báo một số thủ tục). (4) 'Hệ thống thông tin đăng ký thuế' → 'Hệ thống ứng dụng đăng ký thuế' (k2 Đ53). (5) 'nơi đặt địa điểm kinh doanh' → 'theo quy định pháp luật' (k2 Đ87). (6) Bãi bỏ 'và danh sách người đại diện theo ủy quyền' (k3 Đ54). (7) Bãi bỏ 'nơi đã nộp hồ sơ' (k5 Đ95). (8) Bãi bỏ 'nơi hộ kinh doanh đăng ký trụ sở' (k1 Đ99). (9) Bãi bỏ Điều 37, khoản 2 Điều 52, Điều 111, khoản 3 Điều 124.",
+      "quote": "\"3. Thay thế cụm từ \"03 ngày làm việc\" bằng cụm từ \"02 ngày làm việc\" tại khoản 6 Điều 31, khoản 5 Điều 56, khoản 4 Điều 66, các khoản 1, 2, 3 và 4 Điều 77, khoản 5 Điều 95, các khoản 1, 2, 3 và 4 Điều 115.\" (p012)",
+      "anh_huong_app": "HAI ĐIỂM CHẠM APP: (a) use_cases.json 'tam_ngung_tiep_tuc_kinh_doanh_dn' ghi 'nộp chậm nhất 03 ngày làm việc trước ngày tạm ngừng/tiếp tục' — KHÔNG bị Điều 19 đụng tới (03→02 chỉ tại Đ31/56/66/77/95/115, KHÔNG có Đ60) — giữ nguyên, không suy diễn sửa; (b) Mẫu 27 TT 121 chân trang vẫn ghi 'chậm nhất 03 ngày làm việc' (p67, p68) — nhất quán với Điều 60 chưa đổi. Điều 37 NĐ168 bị bãi bỏ — cần Lead soát use_cases có trích Điều 37 không (grep riêng, không thuộc 5 form lane)."
+    },
+    {
+      "dieu": "Điều 20 (p013)",
+      "sua_nd168": "xử lý hồ sơ chuyển tiếp",
+      "tom_tat": "Hồ sơ GIẢI THỂ và THÔNG BÁO TẠM NGỪNG đã tiếp nhận chưa chấp thuận trước ngày hiệu lực → giải quyết THEO NĐ 296; hồ sơ ĐKDN khác đã tiếp nhận chưa chấp thuận → theo NĐ 168.",
+      "quote": "\"1. Trường hợp hồ sơ đăng ký giải thể, thông báo tạm ngừng kinh doanh được tiếp nhận và chưa được Cơ quan đăng ký kinh doanh cấp tỉnh chấp thuận trước ngày Nghị định này có hiệu lực thi hành thì việc giải quyết thủ tục này thực hiện theo quy định tại Nghị định này.\" (p013)",
+      "anh_huong_app": "M30/M27 đang mở dở (chưa chấp thuận) trước 23/7/2026 phải xử theo NĐ296 — ghi chú workflow; draft lưu trong app không có khái niệm 'đã chấp thuận' nên Lead cân nhắc nhãn nhắc việc."
+    },
+    {
+      "dieu": "Điều 21 (p013-p014)",
+      "sua_nd168": "điều khoản chuyển tiếp về tạm ngừng",
+      "tom_tat": "Quy định tổng 24 tháng áp dụng CẢ với DN đã thông báo tạm ngừng trước ngày hiệu lực: (a) tổng liên tiếp đến hết hạn gần nhất chưa vượt 24 tháng → được tiếp tục ĐK tạm ngừng nhưng tổng (gồm cả trước hiệu lực) không vượt 24 tháng; (b) đã vượt 24 tháng → KHÔNG được tiếp tục ĐK tạm ngừng sau khi hạn gần nhất kết thúc. Khoản 2: nghĩa vụ xác nhận tiếp tục KD (khoản 8 Điều 60 mới) áp dụng với DN thông báo tạm ngừng KỂ TỪ ngày hiệu lực.",
+      "quote": "\"a) Trường hợp tổng thời gian tạm ngừng kinh doanh liên tiếp đến thời điểm kết thúc thời hạn tạm ngừng kinh doanh đã thông báo gần nhất chưa vượt quá 24 tháng thì doanh nghiệp được tiếp tục đăng ký tạm ngừng kinh doanh nhưng phải bảo đảm tổng thời gian tạm ngừng kinh doanh liên tiếp, bao gồm cả thời gian đã đăng ký trước ngày Nghị định này có hiệu lực thi hành, không được vượt quá 24 tháng;\" (p013)",
+      "anh_huong_app": "Validation đề xuất cho M27: soft-warn tổng thời gian tạm ngừng liên tiếp (kể cả kỳ đã đăng ký trước 23/7/2026) > 24 tháng → chặn tiếp tục ĐK tạm ngừng (điểm b). Cần dữ liệu lịch sử — ngoài khả năng single-form hiện tại, Lead quyết."
+    },
+    {
+      "dieu": "Điều 22 (p014)",
+      "sua_nd168": "hiệu lực",
+      "tom_tat": "NĐ 296/2026 có hiệu lực từ 23/7/2026.",
+      "quote": "\"1. Nghị định này có hiệu lực thi hành từ ngày 23 tháng 7 năm 2026.\" (p014)",
+      "anh_huong_app": "Mốc thời gian: trước 23/7/2026 theo NĐ168; sau đó theo NĐ296 — ngày hiệu lực nằm TRƯỚC ngày hiệu lực TT 121 (21/8/2026)."
+    }
+  ],
+  "validation_hien_trang_app": {
+    "da_kiem": [
+      "grep app_tk + app/data: KHÔNG có rule nào về thời hạn tạm ngừng 12/24 tháng",
+      "KHÔNG có rule 'SĐT trùng CSDL dân cư' (chuỗi 'dân cư' 0 hit) — nghĩa là xóa requirement này khỏi Mẫu 27 không làm gãy validation nào",
+      "KHÔNG có module xác thực điện tử/ủy quyền",
+      "use_cases.json: form pair {pl:'I', mau:11} = 0 hit; đề cập 'Mẫu số 11'/'Mẫu 11' = 0 hit",
+      "use_cases 'tam_ngung_tiep_tuc_kinh_doanh_dn' nộp chậm nhất 03 ngày làm việc — khớp NĐ296 (Điều 60 không nằm trong danh sách 03→02 của Điều 19)"
+    ],
+    "de_nghi_lead": [
+      "soft-warn M27: mỗi lần tạm ngừng ≤ 12 tháng; tổng liên tiếp ≤ 24 tháng (Điều 11 khoản 1 NĐ296) — cần dữ liệu lịch sử kỳ tạm ngừng, nếu chưa có thì chỉ warn theo lần hiện tại",
+      "checklist M30: CTCP không niêm yết/KQCK → kèm bản sao sổ đăng ký cổ đông (Điều 13 NĐ296)",
+      "workflow: xác nhận tiếp tục kinh doanh trong 05 ngày làm việc kể từ hết hạn tạm ngừng (khoản 8 Điều 60 NĐ296) — chưa có form riêng, theo TT 121 dùng Mẫu 27 mục 2",
+      "ghi nguồn pháp lý use_cases: cập nhật 'căn cứ pháp lý' các use case CSHHL sang Điều 17, 18 NĐ168 SDBS NĐ296"
+    ]
+  },
+  "source_quote_anh": [
+    "p001: bìa + Điều 1 khoản 1 (sửa khoản 1 Điều 4)",
+    "p002: khoản 7, 8 Điều 4 + Điều 2 (xác thực điện tử ủy quyền)",
+    "p003: Điều 3 (Điều 17 mới — CSHHL)",
+    "p004: Điều 4 (Điều 18 mới — kê khai CSHHL) + Điều 5 đầu",
+    "p005: Điều 5 hết + Điều 6 (8a Đ21) + Điều 7 (k6 Đ24) + Điều 8 (Đ38)",
+    "p006: Điều 9 (Đ39 mới — qua mạng định danh quốc gia)",
+    "p007: Điều 9 hết + Điều 10 (c k1 Đ51) + Điều 11 (Đ60: 12/24 tháng, SĐT+TĐT của NDD)",
+    "p008: Điều 11 k7, k8 + Điều 12 (k3 Đ61) + Điều 13 (k3 Đ64 — sổ đăng ký cổ đông)",
+    "p009: Điều 14 (Đ72 — phá sản)",
+    "p010: Điều 14 hết + Điều 15 (k5 Đ93 — ủy quyền HKD) + Điều 16 (k5 Đ103) + Điều 17 đầu",
+    "p011: Điều 17 hết (k4 Đ112 — sau giờ hành chính) + Điều 18 (Đ113 mới)",
+    "p012: Điều 18 hết + Điều 19 (thay cụm từ 1-5)",
+    "p013: Điều 19 hết (6-9) + Điều 20 (hồ sơ chuyển tiếp) + Điều 21 (24 tháng)",
+    "p014: Điều 21 k2 + Điều 22 (hiệu lực 23/7/2026) + chữ ký Phó Thủ tướng Nguyễn Văn Thắng"
+  ]
+}

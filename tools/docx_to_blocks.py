@@ -813,6 +813,67 @@ def _band_first_cell_to_mirror(block: dict, form_id: str = "") -> None:
             run["mirror"] = {"key": key}
 
 
+# ---------------------------------------------------------------------------
+# [N-v3 OUTPUT-MIRROR 2026-09-06] mirror pass TỔNG QUÁT cho occurrence output
+# (M48 p17 / M49 p9 nhánh DN / M70 p14): run input BẤT KỲ trong form F có key
+# nằm trong registry output_mirrors[F] (section "output_mirrors" của
+# tools/header_name_binding.json) -> run {"mirror": {"key": …}} — áp cho cả
+# paragraph lẫn table cell, chạy SAU KHI parse toàn tài liệu. READ-ONLY theo
+# quyết định owner: KHÔNG tạo input/tab-stop/draft key thứ hai; draft thiếu
+# canonical -> render RỖNG đúng pháp định. Ô (0,0) band header KHÔNG đụng —
+# đã xử lý riêng bằng _band_first_cell_to_mirror (mirror lẫn band_input đều
+# bỏ qua). Block "loop" giữ nguyên: the trong hàng khuôn là cột dữ liệu loop,
+# không phải occurrence output.
+# ---------------------------------------------------------------------------
+
+_output_mirror_forms: dict | None = None
+
+
+def _output_mirror_registry() -> dict:
+    global _output_mirror_forms
+    if _output_mirror_forms is None:
+        try:
+            data = json.loads(
+                _HEADER_NAME_BINDING_PATH.read_text(encoding="utf-8"))
+            _output_mirror_forms = data.get("output_mirrors", {})
+        except (OSError, ValueError):
+            _output_mirror_forms = {}
+    return _output_mirror_forms
+
+
+def _mirror_runs_inplace(runs: list[dict], key: str) -> int:
+    """Biến run input đúng key thành run mirror (trừ run đã là mirror)."""
+    n = 0
+    for run in runs:
+        inp = run.get("input")
+        if inp and inp.get("key") == key and "mirror" not in run:
+            run.pop("input")
+            run["mirror"] = {"key": key}
+            n += 1
+    return n
+
+
+def _output_mirrors_to_mirror(blocks: list[dict], form_id: str) -> int:
+    """Pass tổng quát: input run key ∈ output_mirrors[form_id] -> mirror."""
+    entry = _output_mirror_registry().get(form_id)
+    if not entry or not entry.get("key"):
+        return 0
+    key = entry["key"]
+    n = 0
+    for blk in blocks:
+        t = blk.get("t")
+        if t == "p":
+            n += _mirror_runs_inplace(blk.get("runs") or [], key)
+        elif t == "table":
+            band_header = blk.get("band") == "header"
+            for ri, row in enumerate(blk.get("rows") or []):
+                for ci, cell in enumerate(row.get("cells") or []):
+                    if band_header and ri == 0 and ci == 0:
+                        continue  # ô (0,0) band do pass riêng xử lý
+                    n += _mirror_runs_inplace(cell.get("runs") or [], key)
+    return n
+
+
 def table_block(tbl: Table, fid: str = "") -> dict:
     grid = parse_table(tbl)
 
@@ -1342,6 +1403,11 @@ def convert_document(
     if cond_stack:
         raise ValueError(
             "%s: marker {?%s} không được đóng trong template" % (fid, cond_stack[-1]))
+
+    # [N-v3] pass mirror TỔNG QUÁT chạy SAU KHI parse toàn tài liệu: run
+    # input có key nằm trong registry output_mirrors[fid] -> run mirror
+    # (paragraph lẫn table cell; ô (0,0) band đã xử lý riêng nên bỏ qua).
+    _output_mirrors_to_mirror(blocks, fid)
 
     if section_specs:
         # kind mới: kiểm định cấu trúc NGAY TRƯỚC khi ghi JSON (fail loud);

@@ -416,6 +416,10 @@ const D = require('./ui/form-domain.js');
   warnStore.values['dn.ten_tieng_viet'] = 'CONG TY GATE';
   warnStore.loops.ds_nganh = [
     { ma_nganh: '0111', ten_nganh: 'Trồng lúa', la_nganh_chinh: 'X' }];
+  // [O3 2026-09-06] section nested-grid NĐDPL của M02 (luôn active, min 1
+  // dòng business-data) phải được điền thì hồ sơ còn đúng MỘT warning tỷ lệ.
+  warnStore.loops.ds_nddpl_uy_quyen_chu_so_huu = [
+    { loai_dong: 'ndd_pl', ten_nguoi_dai_dien: 'NGUYEN VAN A' }];
   warnStore.loops.ds_thanh_vien = [
     { ho_ten: 'A', von_dong_gop: '600.000.000', ty_le_von: '60' },
     { ho_ten: 'B', von_dong_gop: '400.000.000', ty_le_von: '30' } // tổng 90%

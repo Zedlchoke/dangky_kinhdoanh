@@ -245,7 +245,53 @@ function error(spec, row, tag, code, message) {
     message: message, severity: 'blocking' };
 }
 
-function validate(spec, rows) {
+/* O3 (owner decision packet v7, 2026-09-06): min_rows chỉ đếm DÒNG BUSINESS
+ * DATA. Cột cấu trúc (outputOnly - chỉ dùng để in; stt - số thứ tự tự sinh)
+ * không được tính là dữ liệu nghiệp vụ: một dòng chỉ có ô STT/chữ ký in là
+ * dòng trống về mặt dữ liệu. */
+function isStructuralColumn(column) {
+  return !column || typeof column.tag !== 'string' || !column.tag ||
+    column.type === 'outputOnly' || column.type === 'stt';
+}
+
+function businessColumnsOf(spec) {
+  return columnsOf(spec)
+    .filter(function (column) { return !isStructuralColumn(column); })
+    .map(function (column) { return column.tag; });
+}
+
+function cellHasValue(row, key) {
+  return row[key] != null && String(row[key]).trim() !== '';
+}
+
+/* Dòng BUSINESS DATA của một spec: ít nhất một ô dữ liệu có giá trị.
+ * Loại trừ: key nội bộ (_row_id...), cột cấu trúc (outputOnly/stt), và tag
+ * discriminator (vai trò dòng chưa phải dữ liệu - khớp contract export giữ
+ * dòng chỉ có discriminator để không mất cấu trúc). Key ngoài khai báo vẫn
+ * tính là dữ liệu (khớp blank-row contract của đường export). */
+function businessRowsOf(spec, rows) {
+  var structural = {};
+  columnsOf(spec).forEach(function (column) {
+    if (isStructuralColumn(column)) structural[column.tag] = true;
+  });
+  var businessTags = businessColumnsOf(spec);
+  var discriminatorTag = spec && spec.discriminator &&
+    typeof spec.discriminator.tag === 'string' ? spec.discriminator.tag : null;
+  return (Array.isArray(rows) ? rows : []).filter(function (row) {
+    if (!row || typeof row !== 'object' || Array.isArray(row)) return false;
+    if (businessTags.some(function (tag) { return cellHasValue(row, tag); })) {
+      return true;
+    }
+    return Object.keys(row).some(function (key) {
+      return key.charAt(0) !== '_' &&
+        !hasOwn.call(structural, key) &&
+        !(discriminatorTag != null && key === discriminatorTag) &&
+        cellHasValue(row, key);
+    });
+  });
+}
+
+function validate(spec, rows, ctx) {
   var contractErrors = validateContract(spec);
   if (contractErrors.length) return contractErrors.map(function (item) {
     return { key: spec && spec.semantic_key || null, docId: spec && spec.form_id || null,
@@ -295,10 +341,42 @@ function validate(spec, rows) {
         }
       });
   });
+  /* O3 (owner decision packet v7, 2026-09-06): min_rows/max_rows chỉ enforce
+   * KHI section ACTIVE. ctx.isActive === false nghĩa là caller đã đánh giá
+   * activeWhen của section CHƯA thỏa -> section inactive: 0 dòng là hợp lệ,
+   * không sinh MIN_ROWS/MAX_ROWS. Không có ctx (caller cũ/test trực tiếp) ->
+   * mặc định ACTIVE, giữ hành vi decided của D2.7=A. Dòng business-data được
+   * đếm bởi businessRowsOf; blank UI row không tính. */
+  var active = !(ctx && ctx.isActive === false);
+  if (active) {
+    var minRows = spec.min_rows == null ? 0 : Number(spec.min_rows);
+    if (positiveInteger(minRows) &&
+        businessRowsOf(spec, normalized.rows).length < minRows) {
+      errors.push({
+        key: spec.semantic_key, docId: spec.form_id || null, code: 'MIN_ROWS',
+        message: 'Active section "' + (spec.section_id || spec.semantic_key) +
+          '" requires at least ' + minRows + ' row(s) of business data; ' +
+          'blank rows do not count (O3)',
+        severity: 'blocking'
+      });
+    }
+    var maxRows = spec.max_rows == null ? null : Number(spec.max_rows);
+    if (maxRows != null && Number.isFinite(maxRows) && maxRows > 0 &&
+        normalized.rows.length > maxRows) {
+      errors.push({
+        key: spec.semantic_key, docId: spec.form_id || null, code: 'MAX_ROWS',
+        message: 'Section "' + (spec.section_id || spec.semantic_key) +
+          '" exceeds the maximum of ' + maxRows + ' row(s)',
+        severity: 'warning'
+      });
+    }
+  }
   return errors;
 }
 
 module.exports = {
+  businessColumnsOf: businessColumnsOf,
+  businessRowsOf: businessRowsOf,
   headerLayout: headerLayout,
   normalizeRows: normalizeRows,
   physicalColumns: physicalColumns,

@@ -261,6 +261,25 @@
             !FD.isActiveGrid(gm, rows, store)) {
           rows = []; // selector nói section không áp dụng -> payload rỗng
         }
+        /* O3 (owner 2026-09-06): section-contract kind mới (nested-grid) khai
+         * activeWhen -> section inactive thì payload RỖNG: dữ liệu cũ của
+         * section không được lọt export (và validate đã không block do
+         * isActiveSection=false). Chỉ áp dụng cho entry CÓ activeWhen - không
+         * khai thì giữ nguyên payload (hành vi cũ). */
+        if (rows.length && typeof FD.isActiveSection === 'function') {
+          var inactiveSec = null;
+          (docIds || []).some(function (id) {
+            var sec = FD.sectionContractForLoop(id, name);
+            if (sec && (sec.activeWhen || (sec.spec && sec.spec.activeWhen))) {
+              inactiveSec = sec;
+              return true;
+            }
+            return false;
+          });
+          if (inactiveSec && !FD.isActiveSection(inactiveSec, rows, store)) {
+            rows = []; // O3: section inactive - không lọt export
+          }
+        }
         out[name] = rows.map(function (row) {
           var clean = {};
           Object.keys(row || {}).forEach(function (k) {

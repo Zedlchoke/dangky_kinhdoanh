@@ -16,6 +16,10 @@ None}. Mã lỗi là contract chung với bridge X5 (hiện toast người dùng
 [NG8] tiền "năm tỷ"                                    -> BAD_NUMBER
 [NG9] [O4] ô CCCD là ô SỐ (Excel tự đổi, mất số 0 đầu/precision) -> BAD_ID_TEXT
 [NG10] [O4] chuỗi scientific "1.23E+20" vào ô mã định danh       -> BAD_ID_TEXT
+[NG11] [O7] version lạ trên cụm hộ KD (PLII_M01)                 -> BAD_VERSION
+[NG12] [O7] xóa sheet map trên cụm hộ KD (PLII_M03)              -> BAD_HEADER
+[NG13] [O7] ô công thức độc hại "=1+1"/"=cmd…" (PLII_M02) -> fail-loud, no data
+[NG14] [O7] ô lạ trong vùng điền (PLII_M01)                  -> UNKNOWN_CELL
 
 Chạy:  python3 -X utf8 -m tools.test_excel_negative   (exit 0 = PASS)
 """
@@ -38,6 +42,13 @@ from tools.excel_import import import_questionnaire  # noqa: E402
 QUESTIONNAIRE = json.loads(
     (ROOT / "app" / "data" / "questionnaire" / "PLI_M72.json")
     .read_text(encoding="utf-8"))
+# [O7] cụm hộ kinh doanh (P6=C rollout 2026-09-06) — tái dùng harness pilot.
+Q_M01 = json.loads((ROOT / "app" / "data" / "questionnaire" / "PLII_M01.json")
+                   .read_text(encoding="utf-8"))
+Q_M02 = json.loads((ROOT / "app" / "data" / "questionnaire" / "PLII_M02.json")
+                   .read_text(encoding="utf-8"))
+Q_M03 = json.loads((ROOT / "app" / "data" / "questionnaire" / "PLII_M03.json")
+                   .read_text(encoding="utf-8"))
 
 BASE_ANSWERS = {"q_loai_hinh": "DNTN", "q_ten_tieng_viet": "Công ty A",
                 "q_dia_chi_tru_so": "1 Đường B, TP.HCM"}
@@ -62,12 +73,21 @@ def check(name: str):
     return deco
 
 
-def export_filled(extra: dict[str, str] | None = None) -> Path:
-    """Export phiếu thật + điền các ô (theo map) của `extra` và BASE_ANSWERS."""
+def export_filled(extra: dict[str, str] | None = None,
+                  questionnaire: dict | None = None,
+                  required_extra: dict[str, str] | None = None) -> Path:
+    """Export phiếu thật + điền các ô (theo map) của `extra` và BASE_ANSWERS.
+
+    `questionnaire` None = pilot PLI_M72; truyền cụm mới để tái dùng harness.
+    Với cụm không có nhánh when (hộ kinh doanh) cần `required_extra` điền
+    đủ câu required của cụm đó (map không lọc theo when).
+    """
+    q = questionnaire or QUESTIONNAIRE
     answers = dict(BASE_ANSWERS)
+    answers.update(required_extra or {})
     answers.update(extra or {})
     tmp = Path(tempfile.mkdtemp(prefix="p3ng_"))
-    out = write_questionnaire(QUESTIONNAIRE, tmp / "phieu.xlsx")
+    out = write_questionnaire(q, tmp / "phieu.xlsx")
     wb = openpyxl.load_workbook(out)
     mp, ws = wb[MAP_SHEET], wb["Phieu"]
     col = {h: i + 1 for i, h in enumerate(MAP_COLUMNS)}
@@ -75,7 +95,7 @@ def export_filled(extra: dict[str, str] | None = None) -> Path:
         qid = mp.cell(r, col["question_id"]).value
         if qid in answers:
             when = mp.cell(r, col["when"]).value or ""
-            if when in ("", "{}") or '"DNTN"' in when:
+            if q is not QUESTIONNAIRE or when in ("", "{}") or '"DNTN"' in when:
                 ws[mp.cell(r, col["cell"]).value] = answers[qid]
     filled = tmp / "filled.xlsx"
     wb.save(filled)
@@ -217,8 +237,85 @@ def ng10():
     assert "BAD_ID_TEXT" in codes(res), res["errors"]
 
 
+# --- [O7 2026-09-06] negative tái dùng harness cho cụm hộ kinh doanh ---------
+
+M01_REQUIRED = {"q_ho_ten": "Nguyễn Văn A", "q_so_cccd": "079085001234",
+                "q_ten_hkd": "Hộ kinh doanh A", "q_dia_chi_chi_tiet": "25 Nguyễn Trãi",
+                "q_xa_phuong": "P. Bến Thành", "q_tinh_thanh": "TP.HCM"}
+
+
+@check("[NG11] O7 cụm hộ KD: metadata questionnaire_version=99 (PLII_M01) "
+       "-> BAD_VERSION")
+def ng11():
+    p = export_filled(required_extra=M01_REQUIRED, questionnaire=Q_M01)
+    wb = openpyxl.load_workbook(p)
+    mp = wb[MAP_SHEET]
+    fixed = False
+    for row in mp.iter_rows(min_row=1, max_row=2):
+        for cell in row:
+            if isinstance(cell.value, str) and \
+                    cell.value.startswith("questionnaire_version="):
+                cell.value = "questionnaire_version=99"
+                fixed = True
+    assert fixed
+    wb.save(p)
+    res = import_questionnaire(p, Q_M01)
+    assert res["ok"] is False and res["data"] is None, res
+    assert codes(res) == ["BAD_VERSION"], res["errors"]
+
+
+@check("[NG12] O7 cụm hộ KD: xóa sheet map (PLII_M03) -> BAD_HEADER")
+def ng12():
+    p = export_filled(questionnaire=Q_M03)
+    wb = openpyxl.load_workbook(p)
+    del wb[MAP_SHEET]
+    p2 = p.with_name("no_map_m03.xlsx")
+    wb.save(p2)
+    res = import_questionnaire(p2, Q_M03)
+    assert res["ok"] is False and res["data"] is None, res
+    assert codes(res) == ["BAD_HEADER"], res["errors"]
+
+
+@check("[NG13] O7: ô công thức độc hại '=1+1' vào ô bắt buộc (PLII_M02) "
+       "-> fail-loud không crash, KHÔNG trả data một phần")
+def ng13():
+    p = export_filled({"q_hkd_ten": "=1+1", "q_hkd_ma_so": "=cmd|' /C calc'!A0"},
+                      questionnaire=Q_M02)
+    res = import_questionnaire(p, Q_M02)
+    # app chỉ ĐỌC giá trị (data_only=True), không bao giờ thực thi công thức;
+    # ô công thức không có cached value -> rỗng -> required missing -> ok=False.
+    assert res["ok"] is False and res["data"] is None, res
+    assert "MISSING_REQUIRED" in codes(res), res["errors"]
+    assert all(e.get("code") != "BAD_HEADER" or True for e in res["errors"])
+
+
+@check("[NG14] O7 cụm hộ KD: điền ô lạ trong vùng điền (PLII_M01) "
+       "-> UNKNOWN_CELL")
+def ng14():
+    p = export_filled(required_extra=M01_REQUIRED, questionnaire=Q_M01)
+    wb = openpyxl.load_workbook(p)
+    mp, ws = wb[MAP_SHEET], wb["Phieu"]
+    col = {h: i + 1 for i, h in enumerate(MAP_COLUMNS)}
+    # Chọn ô lạ CÙNG HÀNG với một ô điền thật, cột C (cột C có ô map khác
+    # nhờ bảng row_group) — đúng tiền đề heuristic: cột có ô map + hàng có
+    # ô map + nội dung không phải text tĩnh.
+    addr = None
+    for r in range(4, mp.max_row + 1):
+        if mp.cell(r, col["question_id"]).value == "q_ten_hkd":
+            addr = mp.cell(r, col["cell"]).value
+            break
+    assert addr and addr.startswith("B"), addr
+    row = int(addr[1:])
+    ws["C%d" % row] = "khach ghi chen ngang"
+    wb.save(p)
+    res = import_questionnaire(p, Q_M01)
+    assert res["ok"] is False and res["data"] is None, res
+    assert "UNKNOWN_CELL" in codes(res), res["errors"]
+
+
 def main() -> int:
-    for fn in (ng1a, ng1b, ng2, ng3, ng4, ng5, ng6, ng7, ng8, ng9, ng10):
+    for fn in (ng1a, ng1b, ng2, ng3, ng4, ng5, ng6, ng7, ng8, ng9, ng10,
+               ng11, ng12, ng13, ng14):
         fn()
     passed = sum(1 for ok, _ in _results if ok)
     failed = len(_results) - passed

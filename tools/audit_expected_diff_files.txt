@@ -213,6 +213,10 @@ app/data/blocks/PLII_M28.json
 app/data/form_maps.js
 app/data/form_maps.json
 app/data/questionnaire/PLI_M72.json
+app/data/questionnaire/PLII_M04.json
+app/data/questionnaire/PLII_M03.json
+app/data/questionnaire/PLII_M02.json
+app/data/questionnaire/PLII_M01.json
 app/data/table_specs/manifest.json
 app/data/table_specs/fragments/t0_a.json
 app/data/table_specs/fragments/t0_b.json
@@ -336,6 +340,11 @@ tools/phase5r_expectations.json
 tools/phase5r_table_policies.json
 tools/questionnaire/build_questionnaire.py
 tools/questionnaire/clusters/thanh_lap_doanh_nghiep.json
+tools/questionnaire/clusters/hkd_thay_doi_noi_dung.json
+tools/questionnaire/clusters/hkd_tam_ngung_tiep_tuc.json
+tools/questionnaire/clusters/hkd_dang_ky_moi.json
+tools/questionnaire/clusters/hkd_cham_dut.json
+tools/questionnaire/clusters/blocked_tt121_migration.json
 tools/questionnaire/schema.py
 tools/release_runner.py
 tools/test_cap_von_specs.py
@@ -454,6 +463,8 @@ tools/census/6v_micro_census.py
 tools/census/6v_micro_census.json
 # --- [6V-V4/micro 2026-09-05] Lead bo sung: test_dom +6 assertion V4 placeholder hint (lane bo sot, runner H7.4 bat) ---
 app_web/test_dom.js
+app_web/test_min_rows_o3.js
+app_web/test_nv3_output_name.js
 # --- 6V-V4b (lane 6v-v4fix, 2026-09-05): 3 template đổi bởi pass separator
 # superscript (việc 5, nhóm d census); audit doc do commit auditor 960d0b2
 # thêm; allowlist D5 sparse mới (việc 9).

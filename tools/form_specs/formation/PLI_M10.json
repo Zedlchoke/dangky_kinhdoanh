@@ -12,67 +12,272 @@
     "section_id": "ds_cshhl_doanh_nghiep",
     "semantic_key": "ds_cshhl_doanh_nghiep",
     "loop": "ds_cshhl",
-    "stt": {"mode": "generated", "col_index": 0},
+    "stt": {
+     "mode": "generated",
+     "col_index": 0
+    },
     "header_rows": [
      [
-      {"text": "STT", "rowspan": 3},
-      {"text": "Họ và tên", "rowspan": 3},
-      {"text": "Ngày, tháng, năm sinh", "rowspan": 3},
-      {"text": "Giới tính", "rowspan": 3},
-      {"text": "Số, ngày cấp, cơ quan cấp Giấy tờ pháp lý của cá nhân1", "rowspan": 3},
-      {"text": "Quốc tịch", "rowspan": 3},
-      {"text": "Dân tộc", "rowspan": 3},
-      {"text": "Địa chỉ liên lạc", "rowspan": 3},
-      {"text": "Chủ sở hữu hưởng lợi của doanh nghiệp2", "rowspan": 1, "colspan": 9},
-      {"text": "Người quản lý doanh nghiệp3", "rowspan": 3}
+      {
+       "text": "STT",
+       "rowspan": 3
+      },
+      {
+       "text": "Họ và tên",
+       "rowspan": 3
+      },
+      {
+       "text": "Ngày, tháng, năm sinh",
+       "rowspan": 3
+      },
+      {
+       "text": "Giới tính",
+       "rowspan": 3
+      },
+      {
+       "text": "Số, ngày cấp, cơ quan cấp Giấy tờ pháp lý của cá nhân1",
+       "rowspan": 3
+      },
+      {
+       "text": "Quốc tịch",
+       "rowspan": 3
+      },
+      {
+       "text": "Dân tộc",
+       "rowspan": 3
+      },
+      {
+       "text": "Địa chỉ liên lạc",
+       "rowspan": 3
+      },
+      {
+       "text": "Chủ sở hữu hưởng lợi của doanh nghiệp2",
+       "rowspan": 1,
+       "colspan": 9
+      },
+      {
+       "text": "Người quản lý doanh nghiệp3",
+       "rowspan": 3
+      }
      ],
      [
-      {"text": "Tỷ lệ sở hữu vốn điều lệ4", "rowspan": 1, "colspan": 3},
-      {"text": "Tỷ lệ sở hữu cổ phần có quyền biểu quyết5", "rowspan": 1, "colspan": 3},
-      {"text": "Thành viên hợp danh6", "rowspan": 2},
-      {"text": "Nhóm cá nhân có quan hệ gia đình/họ hàng7", "rowspan": 2},
-      {"text": "Kiểm soát doanh nghiệp8", "rowspan": 2}
+      {
+       "text": "Tỷ lệ sở hữu vốn điều lệ4",
+       "rowspan": 1,
+       "colspan": 3
+      },
+      {
+       "text": "Tỷ lệ sở hữu cổ phần có quyền biểu quyết5",
+       "rowspan": 1,
+       "colspan": 3
+      },
+      {
+       "text": "Thành viên hợp danh6",
+       "rowspan": 2
+      },
+      {
+       "text": "Nhóm cá nhân có quan hệ gia đình/họ hàng7",
+       "rowspan": 2
+      },
+      {
+       "text": "Kiểm soát doanh nghiệp8",
+       "rowspan": 2
+      }
      ],
      [
-      {"text": "Trực tiếp", "rowspan": 1},
-      {"text": "Gián tiếp", "rowspan": 1},
-      {"text": "Tổng", "rowspan": 1},
-      {"text": "Trực tiếp", "rowspan": 1},
-      {"text": "Gián tiếp", "rowspan": 1},
-      {"text": "Tổng", "rowspan": 1}
+      {
+       "text": "Trực tiếp",
+       "rowspan": 1
+      },
+      {
+       "text": "Gián tiếp",
+       "rowspan": 1
+      },
+      {
+       "text": "Tổng",
+       "rowspan": 1
+      },
+      {
+       "text": "Trực tiếp",
+       "rowspan": 1
+      },
+      {
+       "text": "Gián tiếp",
+       "rowspan": 1
+      },
+      {
+       "text": "Tổng",
+       "rowspan": 1
+      }
      ],
      [
-      {"text": "1"}, {"text": "2"}, {"text": "3"}, {"text": "4"}, {"text": "5"},
-      {"text": "6"}, {"text": "7"}, {"text": "8"}, {"text": "9"}, {"text": "10"},
-      {"text": "11=9+10"}, {"text": "12"}, {"text": "13"}, {"text": "14=12+13"},
-      {"text": "15"}, {"text": "16"}, {"text": "17"}, {"text": "18"}
+      {
+       "text": "1"
+      },
+      {
+       "text": "2"
+      },
+      {
+       "text": "3"
+      },
+      {
+       "text": "4"
+      },
+      {
+       "text": "5"
+      },
+      {
+       "text": "6"
+      },
+      {
+       "text": "7"
+      },
+      {
+       "text": "8"
+      },
+      {
+       "text": "9"
+      },
+      {
+       "text": "10"
+      },
+      {
+       "text": "11=9+10"
+      },
+      {
+       "text": "12"
+      },
+      {
+       "text": "13"
+      },
+      {
+       "text": "14=12+13"
+      },
+      {
+       "text": "15"
+      },
+      {
+       "text": "16"
+      },
+      {
+       "text": "17"
+      },
+      {
+       "text": "18"
+      }
      ]
     ],
     "columns": [
-     {"header": "Họ và tên", "tag": "ho_ten", "col_index": 1, "input_type": "text", "required": true},
-     {"header": "Ngày, tháng, năm sinh", "tag": "ngay_sinh", "col_index": 2, "input_type": "text"},
-     {"header": "Giới tính", "tag": "gioi_tinh", "col_index": 3, "input_type": "text"},
-     {"header": "Số, ngày cấp, cơ quan cấp Giấy tờ pháp lý của cá nhân1", "tag": "so_giay_to", "col_index": 4, "input_type": "text"},
-     {"header": "Quốc tịch", "tag": "quoc_tich", "col_index": 5, "input_type": "text"},
-     {"header": "Dân tộc", "tag": "dan_toc", "col_index": 6, "input_type": "text"},
-     {"header": "Địa chỉ liên lạc", "tag": "dia_chi", "col_index": 7, "input_type": "text"},
-     {"header": "Trực tiếp", "tag": "ty_le_von_dieule_truc_tiep", "col_index": 8, "input_type": "percent"},
-     {"header": "Gián tiếp", "tag": "ty_le_von_dieule_gian_tiep", "col_index": 9, "input_type": "percent"},
-     {"header": "Tổng", "tag": "ty_le_von_dieule_tong", "col_index": 10, "input_type": "percent"},
-     {"header": "Trực tiếp", "tag": "ty_le_co_phan_truc_tiep", "col_index": 11, "input_type": "percent"},
-     {"header": "Gián tiếp", "tag": "ty_le_co_phan_gian_tiep", "col_index": 12, "input_type": "percent"},
-     {"header": "Tổng", "tag": "ty_le_co_phan_tong", "col_index": 13, "input_type": "percent"},
-     {"header": "Thành viên hợp danh6", "tag": "thanh_vien_hop_danh", "col_index": 14, "input_type": "text"},
-     {"header": "Nhóm cá nhân có quan hệ gia đình/họ hàng7", "tag": "nhom_ca_nhan_quan_he", "col_index": 15, "input_type": "text"},
-     {"header": "Kiểm soát doanh nghiệp8", "tag": "kiem_soat_doanh_nghiep", "col_index": 16, "input_type": "text"},
-     {"header": "Người quản lý doanh nghiệp3", "tag": "nguoi_quan_ly_doanh_nghiep", "col_index": 17, "input_type": "text"}
+     {
+      "header": "Họ và tên",
+      "tag": "ho_ten",
+      "col_index": 1,
+      "input_type": "text",
+      "required": true
+     },
+     {
+      "header": "Ngày, tháng, năm sinh",
+      "tag": "ngay_sinh",
+      "col_index": 2,
+      "input_type": "text"
+     },
+     {
+      "header": "Giới tính",
+      "tag": "gioi_tinh",
+      "col_index": 3,
+      "input_type": "text"
+     },
+     {
+      "header": "Số, ngày cấp, cơ quan cấp Giấy tờ pháp lý của cá nhân1",
+      "tag": "so_giay_to",
+      "col_index": 4,
+      "input_type": "text"
+     },
+     {
+      "header": "Quốc tịch",
+      "tag": "quoc_tich",
+      "col_index": 5,
+      "input_type": "text"
+     },
+     {
+      "header": "Dân tộc",
+      "tag": "dan_toc",
+      "col_index": 6,
+      "input_type": "text"
+     },
+     {
+      "header": "Địa chỉ liên lạc",
+      "tag": "dia_chi",
+      "col_index": 7,
+      "input_type": "text"
+     },
+     {
+      "header": "Trực tiếp",
+      "tag": "ty_le_von_dieule_truc_tiep",
+      "col_index": 8,
+      "input_type": "percent"
+     },
+     {
+      "header": "Gián tiếp",
+      "tag": "ty_le_von_dieule_gian_tiep",
+      "col_index": 9,
+      "input_type": "percent"
+     },
+     {
+      "header": "Tổng",
+      "tag": "ty_le_von_dieule_tong",
+      "col_index": 10,
+      "input_type": "percent"
+     },
+     {
+      "header": "Trực tiếp",
+      "tag": "ty_le_co_phan_truc_tiep",
+      "col_index": 11,
+      "input_type": "percent"
+     },
+     {
+      "header": "Gián tiếp",
+      "tag": "ty_le_co_phan_gian_tiep",
+      "col_index": 12,
+      "input_type": "percent"
+     },
+     {
+      "header": "Tổng",
+      "tag": "ty_le_co_phan_tong",
+      "col_index": 13,
+      "input_type": "percent"
+     },
+     {
+      "header": "Thành viên hợp danh6",
+      "tag": "thanh_vien_hop_danh",
+      "col_index": 14,
+      "input_type": "text"
+     },
+     {
+      "header": "Nhóm cá nhân có quan hệ gia đình/họ hàng7",
+      "tag": "nhom_ca_nhan_quan_he",
+      "col_index": 15,
+      "input_type": "text"
+     },
+     {
+      "header": "Kiểm soát doanh nghiệp8",
+      "tag": "kiem_soat_doanh_nghiep",
+      "col_index": 16,
+      "input_type": "text"
+     },
+     {
+      "header": "Người quản lý doanh nghiệp3",
+      "tag": "nguoi_quan_ly_doanh_nghiep",
+      "col_index": 17,
+      "input_type": "text"
+     }
     ],
     "discriminator": null,
     "totals": [],
     "width_policy": "content"
    },
    "pos": "after",
-   "anchor": "^mau so 10$",
+   "anchor": "^danh sach chu so huu huong loi cua doanh nghiep$",
    "no_default_drops": true,
    "legal_status": {
     "blocked": false,

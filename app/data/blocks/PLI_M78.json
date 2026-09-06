@@ -418,149 +418,192 @@
    "role": "section-heading"
   },
   {
-   "t": "p",
-   "align": "center",
-   "runs": [
+   "t": "table",
+   "widths": null,
+   "rows": [
     {
-     "text": "Tên sản phẩm",
-     "b": true
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "Tên sản phẩm",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Tên sản phẩm khác (ghi rõ tên sản phẩm, nếu có)",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Số lượng sản phẩm",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
+    },
     {
-     "text": "Số lượng sản phẩm",
-     "b": true
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "Giấy chứng nhận đăng ký doanh nghiệp của …"
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "input": {
+          "key": "ds_san_pham_yeu_cau.sp_gcn_dkdn.ten_san_pham",
+          "w": 12
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "input": {
+          "key": "ds_san_pham_yeu_cau.sp_gcn_dkdn.so_luong_san_pham",
+          "w": 12
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
+    },
     {
-     "text": "1"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "Thông tin lịch sử 3 năm của doanh nghiệp …"
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "input": {
+          "key": "ds_san_pham_yeu_cau.sp_lich_su_3_nam.ten_san_pham",
+          "w": 12
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "input": {
+          "key": "ds_san_pham_yeu_cau.sp_lich_su_3_nam.so_luong_san_pham",
+          "w": 12
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
+    },
     {
-     "text": "Giấy chứng nhận đăng ký doanh nghiệp của …"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "Thông tin doanh nghiệp mới nhất của …"
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "input": {
+          "key": "ds_san_pham_yeu_cau.sp_thong_tin_moi_nhat.ten_san_pham",
+          "w": 12
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "input": {
+          "key": "ds_san_pham_yeu_cau.sp_thong_tin_moi_nhat.so_luong_san_pham",
+          "w": 12
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
+    },
     {
-     "text": "2"
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "Sản phẩm khác"
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "input": {
+          "key": "ds_san_pham_yeu_cau.san_pham_khac.ten_san_pham",
+          "w": 12
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "input": {
+          "key": "ds_san_pham_yeu_cau.san_pham_khac.so_luong_san_pham",
+          "w": 12
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
     }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Thông tin lịch sử 3 năm của doanh nghiệp …"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "3"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Thông tin doanh nghiệp mới nhất của …"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "center",
-   "runs": [
-    {
-     "text": "4"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Sản phẩm khác"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "………………………………………………………"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
+   ]
   },
   {
    "t": "p",

@@ -133,6 +133,138 @@ window.FORM_MAPS = {
     "label": "von_tu_nhan.ty_le"
    },
    {
+    "key": "co_cau_tai_san_gop_von_sau_thay_doi_vdl.dong_viet_nam.chi_tiet_ngoai_te_tai_san_khac",
+    "label": "dong_viet_nam.chi_tiet_ngoai_te_tai_san_khac"
+   },
+   {
+    "key": "co_cau_tai_san_gop_von_sau_thay_doi_vdl.ngoai_te_tu_do_chuyen_doi.chi_tiet_ngoai_te_tai_san_khac",
+    "label": "ngoai_te_tu_do_chuyen_doi.chi_tiet_ngoai_te_tai_san_khac"
+   },
+   {
+    "key": "co_cau_tai_san_gop_von_sau_thay_doi_vdl.quyen_so_huu_tri_tue.chi_tiet_ngoai_te_tai_san_khac",
+    "label": "quyen_so_huu_tri_tue.chi_tiet_ngoai_te_tai_san_khac"
+   },
+   {
+    "key": "co_cau_tai_san_gop_von_sau_thay_doi_vdl.quyen_su_dung_dat.chi_tiet_ngoai_te_tai_san_khac",
+    "label": "quyen_su_dung_dat.chi_tiet_ngoai_te_tai_san_khac"
+   },
+   {
+    "key": "co_cau_tai_san_gop_von_sau_thay_doi_vdl.tai_san_khac.chi_tiet_ngoai_te_tai_san_khac",
+    "label": "tai_san_khac.chi_tiet_ngoai_te_tai_san_khac"
+   },
+   {
+    "key": "co_cau_tai_san_gop_von_sau_thay_doi_vdl.vang.chi_tiet_ngoai_te_tai_san_khac",
+    "label": "vang.chi_tiet_ngoai_te_tai_san_khac"
+   },
+   {
+    "key": "co_cau_tai_san_gop_von_sau_thay_doi_vdl.dong_viet_nam.gia_tri_vnd",
+    "label": "dong_viet_nam.gia_tri_vnd"
+   },
+   {
+    "key": "co_cau_tai_san_gop_von_sau_thay_doi_vdl.ngoai_te_tu_do_chuyen_doi.gia_tri_vnd",
+    "label": "ngoai_te_tu_do_chuyen_doi.gia_tri_vnd"
+   },
+   {
+    "key": "co_cau_tai_san_gop_von_sau_thay_doi_vdl.quyen_so_huu_tri_tue.gia_tri_vnd",
+    "label": "quyen_so_huu_tri_tue.gia_tri_vnd"
+   },
+   {
+    "key": "co_cau_tai_san_gop_von_sau_thay_doi_vdl.quyen_su_dung_dat.gia_tri_vnd",
+    "label": "quyen_su_dung_dat.gia_tri_vnd"
+   },
+   {
+    "key": "co_cau_tai_san_gop_von_sau_thay_doi_vdl.tai_san_khac.gia_tri_vnd",
+    "label": "tai_san_khac.gia_tri_vnd"
+   },
+   {
+    "key": "co_cau_tai_san_gop_von_sau_thay_doi_vdl.vang.gia_tri_vnd",
+    "label": "vang.gia_tri_vnd"
+   },
+   {
+    "key": "co_cau_tai_san_gop_von_sau_thay_doi_vdl.dong_viet_nam.ty_le",
+    "label": "dong_viet_nam.ty_le"
+   },
+   {
+    "key": "co_cau_tai_san_gop_von_sau_thay_doi_vdl.ngoai_te_tu_do_chuyen_doi.ty_le",
+    "label": "ngoai_te_tu_do_chuyen_doi.ty_le"
+   },
+   {
+    "key": "co_cau_tai_san_gop_von_sau_thay_doi_vdl.quyen_so_huu_tri_tue.ty_le",
+    "label": "quyen_so_huu_tri_tue.ty_le"
+   },
+   {
+    "key": "co_cau_tai_san_gop_von_sau_thay_doi_vdl.quyen_su_dung_dat.ty_le",
+    "label": "quyen_su_dung_dat.ty_le"
+   },
+   {
+    "key": "co_cau_tai_san_gop_von_sau_thay_doi_vdl.tai_san_khac.ty_le",
+    "label": "tai_san_khac.ty_le"
+   },
+   {
+    "key": "co_cau_tai_san_gop_von_sau_thay_doi_vdl.vang.ty_le",
+    "label": "vang.ty_le"
+   },
+   {
+    "key": "co_cau_loai_co_phan_sau_thay_doi.co_phan_pho_thong.so_luong",
+    "label": "co_phan_pho_thong.so_luong"
+   },
+   {
+    "key": "co_cau_loai_co_phan_sau_thay_doi.cp_uu_dai_bieu_quyet.so_luong",
+    "label": "cp_uu_dai_bieu_quyet.so_luong"
+   },
+   {
+    "key": "co_cau_loai_co_phan_sau_thay_doi.cp_uu_dai_co_tuc.so_luong",
+    "label": "cp_uu_dai_co_tuc.so_luong"
+   },
+   {
+    "key": "co_cau_loai_co_phan_sau_thay_doi.cp_uu_dai_hoan_lai.so_luong",
+    "label": "cp_uu_dai_hoan_lai.so_luong"
+   },
+   {
+    "key": "co_cau_loai_co_phan_sau_thay_doi.cp_uu_dai_khac.so_luong",
+    "label": "cp_uu_dai_khac.so_luong"
+   },
+   {
+    "key": "co_cau_loai_co_phan_sau_thay_doi.co_phan_pho_thong.gia_tri_vnd",
+    "label": "co_phan_pho_thong.gia_tri_vnd"
+   },
+   {
+    "key": "co_cau_loai_co_phan_sau_thay_doi.cp_uu_dai_bieu_quyet.gia_tri_vnd",
+    "label": "cp_uu_dai_bieu_quyet.gia_tri_vnd"
+   },
+   {
+    "key": "co_cau_loai_co_phan_sau_thay_doi.cp_uu_dai_co_tuc.gia_tri_vnd",
+    "label": "cp_uu_dai_co_tuc.gia_tri_vnd"
+   },
+   {
+    "key": "co_cau_loai_co_phan_sau_thay_doi.cp_uu_dai_hoan_lai.gia_tri_vnd",
+    "label": "cp_uu_dai_hoan_lai.gia_tri_vnd"
+   },
+   {
+    "key": "co_cau_loai_co_phan_sau_thay_doi.cp_uu_dai_khac.gia_tri_vnd",
+    "label": "cp_uu_dai_khac.gia_tri_vnd"
+   },
+   {
+    "key": "co_cau_loai_co_phan_sau_thay_doi.co_phan_pho_thong.ty_le_so_von_dieule",
+    "label": "co_phan_pho_thong.ty_le_so_von_dieule"
+   },
+   {
+    "key": "co_cau_loai_co_phan_sau_thay_doi.cp_uu_dai_bieu_quyet.ty_le_so_von_dieule",
+    "label": "cp_uu_dai_bieu_quyet.ty_le_so_von_dieule"
+   },
+   {
+    "key": "co_cau_loai_co_phan_sau_thay_doi.cp_uu_dai_co_tuc.ty_le_so_von_dieule",
+    "label": "cp_uu_dai_co_tuc.ty_le_so_von_dieule"
+   },
+   {
+    "key": "co_cau_loai_co_phan_sau_thay_doi.cp_uu_dai_hoan_lai.ty_le_so_von_dieule",
+    "label": "cp_uu_dai_hoan_lai.ty_le_so_von_dieule"
+   },
+   {
+    "key": "co_cau_loai_co_phan_sau_thay_doi.cp_uu_dai_khac.ty_le_so_von_dieule",
+    "label": "cp_uu_dai_khac.ty_le_so_von_dieule"
+   },
+   {
     "key": "menh_gia_co_phan",
     "label": "Mệnh giá cổ phần:"
    },
@@ -175,6 +307,78 @@ window.FORM_MAPS = {
    {
     "key": "von_dau_tu_so",
     "label": "Vốn đầu tư đã đăng ký (bằng số; bằng chữ; VNĐ):"
+   },
+   {
+    "key": "co_cau_tai_san_gop_von_sau_thay_doi_vdt.dong_viet_nam.chi_tiet_ngoai_te_tai_san_khac",
+    "label": "dong_viet_nam.chi_tiet_ngoai_te_tai_san_khac"
+   },
+   {
+    "key": "co_cau_tai_san_gop_von_sau_thay_doi_vdt.ngoai_te_tu_do_chuyen_doi.chi_tiet_ngoai_te_tai_san_khac",
+    "label": "ngoai_te_tu_do_chuyen_doi.chi_tiet_ngoai_te_tai_san_khac"
+   },
+   {
+    "key": "co_cau_tai_san_gop_von_sau_thay_doi_vdt.quyen_so_huu_tri_tue.chi_tiet_ngoai_te_tai_san_khac",
+    "label": "quyen_so_huu_tri_tue.chi_tiet_ngoai_te_tai_san_khac"
+   },
+   {
+    "key": "co_cau_tai_san_gop_von_sau_thay_doi_vdt.quyen_su_dung_dat.chi_tiet_ngoai_te_tai_san_khac",
+    "label": "quyen_su_dung_dat.chi_tiet_ngoai_te_tai_san_khac"
+   },
+   {
+    "key": "co_cau_tai_san_gop_von_sau_thay_doi_vdt.tai_san_khac.chi_tiet_ngoai_te_tai_san_khac",
+    "label": "tai_san_khac.chi_tiet_ngoai_te_tai_san_khac"
+   },
+   {
+    "key": "co_cau_tai_san_gop_von_sau_thay_doi_vdt.vang.chi_tiet_ngoai_te_tai_san_khac",
+    "label": "vang.chi_tiet_ngoai_te_tai_san_khac"
+   },
+   {
+    "key": "co_cau_tai_san_gop_von_sau_thay_doi_vdt.dong_viet_nam.gia_tri_vnd",
+    "label": "dong_viet_nam.gia_tri_vnd"
+   },
+   {
+    "key": "co_cau_tai_san_gop_von_sau_thay_doi_vdt.ngoai_te_tu_do_chuyen_doi.gia_tri_vnd",
+    "label": "ngoai_te_tu_do_chuyen_doi.gia_tri_vnd"
+   },
+   {
+    "key": "co_cau_tai_san_gop_von_sau_thay_doi_vdt.quyen_so_huu_tri_tue.gia_tri_vnd",
+    "label": "quyen_so_huu_tri_tue.gia_tri_vnd"
+   },
+   {
+    "key": "co_cau_tai_san_gop_von_sau_thay_doi_vdt.quyen_su_dung_dat.gia_tri_vnd",
+    "label": "quyen_su_dung_dat.gia_tri_vnd"
+   },
+   {
+    "key": "co_cau_tai_san_gop_von_sau_thay_doi_vdt.tai_san_khac.gia_tri_vnd",
+    "label": "tai_san_khac.gia_tri_vnd"
+   },
+   {
+    "key": "co_cau_tai_san_gop_von_sau_thay_doi_vdt.vang.gia_tri_vnd",
+    "label": "vang.gia_tri_vnd"
+   },
+   {
+    "key": "co_cau_tai_san_gop_von_sau_thay_doi_vdt.dong_viet_nam.ty_le",
+    "label": "dong_viet_nam.ty_le"
+   },
+   {
+    "key": "co_cau_tai_san_gop_von_sau_thay_doi_vdt.ngoai_te_tu_do_chuyen_doi.ty_le",
+    "label": "ngoai_te_tu_do_chuyen_doi.ty_le"
+   },
+   {
+    "key": "co_cau_tai_san_gop_von_sau_thay_doi_vdt.quyen_so_huu_tri_tue.ty_le",
+    "label": "quyen_so_huu_tri_tue.ty_le"
+   },
+   {
+    "key": "co_cau_tai_san_gop_von_sau_thay_doi_vdt.quyen_su_dung_dat.ty_le",
+    "label": "quyen_su_dung_dat.ty_le"
+   },
+   {
+    "key": "co_cau_tai_san_gop_von_sau_thay_doi_vdt.tai_san_khac.ty_le",
+    "label": "tai_san_khac.ty_le"
+   },
+   {
+    "key": "co_cau_tai_san_gop_von_sau_thay_doi_vdt.vang.ty_le",
+    "label": "vang.ty_le"
    },
    {
     "key": "ds_ndd_uy_quyen_sau_thay_doi.chu_so_huu_tvtnhh_cdnn_to_chuc",
@@ -431,7 +635,7 @@ window.FORM_MAPS = {
   "dynamic_tables": [
    {
     "id": "nganh_bo_sung",
-    "table_index": 1,
+    "table_index": 3,
     "header_row": 0,
     "template_row": 5,
     "loop": "nganh_bo_sung",
@@ -455,7 +659,7 @@ window.FORM_MAPS = {
    },
    {
     "id": "nganh_xoa_bo",
-    "table_index": 2,
+    "table_index": 4,
     "header_row": 0,
     "template_row": 5,
     "loop": "nganh_xoa_bo",
@@ -479,7 +683,7 @@ window.FORM_MAPS = {
    },
    {
     "id": "nganh_sua_doi_chi_tiet",
-    "table_index": 3,
+    "table_index": 5,
     "header_row": 0,
     "template_row": 5,
     "loop": "nganh_sua_doi_chi_tiet",
@@ -503,7 +707,7 @@ window.FORM_MAPS = {
    },
    {
     "id": "ndd_uy_quyen_sau_thay_doi",
-    "table_index": 4,
+    "table_index": 7,
     "template_row": 7,
     "loop": "ds_ndd_uy_quyen_sau_thay_doi",
     "columns": [
@@ -644,11 +848,293 @@ window.FORM_MAPS = {
     ]
    },
    {
+    "kind": "fixed-matrix",
+    "id": "tai_san_gop_von_sau_thay_doi_vdl",
+    "semantic_key": "co_cau_tai_san_gop_von_sau_thay_doi_vdl",
+    "section_id": "tai_san_gop_von_sau_thay_doi_vdl",
+    "table_index": 1,
+    "columns": [
+     {
+      "col": 0,
+      "header": "Tài sản góp vốn",
+      "tag": null,
+      "input_type": "readonly",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     },
+     {
+      "col": 1,
+      "header": "Ghi rõ loại ngoại tệ, số tiền được góp bằng mỗi loại ngoại tệ / loại tài sản, số lượng và giá trị còn lại của mỗi loại tài sản",
+      "tag": "chi_tiet_ngoai_te_tai_san_khac",
+      "input_type": "text",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     },
+     {
+      "col": 2,
+      "header": "Giá trị vốn của từng tài sản trong vốn điều lệ (bằng số, VNĐ)",
+      "tag": "gia_tri_vnd",
+      "input_type": "money",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     },
+     {
+      "col": 3,
+      "header": "Tỷ lệ (%)",
+      "tag": "ty_le",
+      "input_type": "percent",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     }
+    ],
+    "fixed_rows": [
+     {
+      "id": "dong_viet_nam",
+      "label": "Đồng Việt Nam",
+      "output_only": false
+     },
+     {
+      "id": "ngoai_te_tu_do_chuyen_doi",
+      "label": "Ngoại tệ tự do chuyển đổi (ghi rõ loại ngoại tệ, số tiền được góp bằng mỗi loại ngoại tệ)",
+      "output_only": false
+     },
+     {
+      "id": "vang",
+      "label": "Vàng",
+      "output_only": false
+     },
+     {
+      "id": "quyen_su_dung_dat",
+      "label": "Quyền sử dụng đất",
+      "output_only": false
+     },
+     {
+      "id": "quyen_so_huu_tri_tue",
+      "label": "Quyền sở hữu trí tuệ",
+      "output_only": false
+     },
+     {
+      "id": "tai_san_khac",
+      "label": "Các tài sản khác (ghi rõ loại tài sản, số lượng và giá trị còn lại của mỗi loại tài sản, có thể lập thành danh mục riêng kèm theo hồ sơ đăng ký doanh nghiệp)",
+      "output_only": false
+     },
+     {
+      "id": "tong_so",
+      "label": "Tổng số",
+      "output_only": true
+     }
+    ],
+    "totals": [
+     {
+      "formula": "sum(gia_tri_vnd)",
+      "target_row": "tong_so",
+      "target_tag": "gia_tri_vnd"
+     },
+     {
+      "formula": "sum(ty_le)",
+      "target_row": "tong_so",
+      "target_tag": "ty_le"
+     }
+    ]
+   },
+   {
+    "kind": "fixed-matrix",
+    "id": "co_cau_loai_co_phan_sau_thay_doi",
+    "semantic_key": "co_cau_loai_co_phan_sau_thay_doi",
+    "section_id": "co_cau_loai_co_phan_sau_thay_doi",
+    "table_index": 2,
+    "columns": [
+     {
+      "col": 0,
+      "header": "Loại cổ phần",
+      "tag": null,
+      "input_type": "readonly",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     },
+     {
+      "col": 1,
+      "header": "Số lượng",
+      "tag": "so_luong",
+      "input_type": "money",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     },
+     {
+      "col": 2,
+      "header": "Giá trị (bằng số, VNĐ)",
+      "tag": "gia_tri_vnd",
+      "input_type": "money",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     },
+     {
+      "col": 3,
+      "header": "Tỉ lệ so với vốn điều lệ (%)",
+      "tag": "ty_le_so_von_dieule",
+      "input_type": "percent",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     }
+    ],
+    "fixed_rows": [
+     {
+      "id": "co_phan_pho_thong",
+      "label": "Cổ phần phổ thông",
+      "output_only": false
+     },
+     {
+      "id": "cp_uu_dai_bieu_quyet",
+      "label": "Cổ phần ưu đã biểu quyết",
+      "output_only": false
+     },
+     {
+      "id": "cp_uu_dai_co_tuc",
+      "label": "Cổ phần ưu đãi cổ tức",
+      "output_only": false
+     },
+     {
+      "id": "cp_uu_dai_hoan_lai",
+      "label": "Cổ phần ưu đãi hoàn lại",
+      "output_only": false
+     },
+     {
+      "id": "cp_uu_dai_khac",
+      "label": "Các cổ phần ưu đãi khác",
+      "output_only": false
+     },
+     {
+      "id": "tong_so",
+      "label": "Tổng số",
+      "output_only": true
+     }
+    ],
+    "totals": [
+     {
+      "formula": "sum(so_luong)",
+      "target_row": "tong_so",
+      "target_tag": "so_luong"
+     },
+     {
+      "formula": "sum(gia_tri_vnd)",
+      "target_row": "tong_so",
+      "target_tag": "gia_tri_vnd"
+     },
+     {
+      "formula": "sum(ty_le_so_von_dieule)",
+      "target_row": "tong_so",
+      "target_tag": "ty_le_so_von_dieule"
+     }
+    ]
+   },
+   {
+    "kind": "fixed-matrix",
+    "id": "tai_san_gop_von_sau_thay_doi_von_dau_tu",
+    "semantic_key": "co_cau_tai_san_gop_von_sau_thay_doi_vdt",
+    "section_id": "tai_san_gop_von_sau_thay_doi_von_dau_tu",
+    "table_index": 6,
+    "columns": [
+     {
+      "col": 0,
+      "header": "Tài sản góp vốn",
+      "tag": null,
+      "input_type": "readonly",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     },
+     {
+      "col": 1,
+      "header": "Ghi rõ loại ngoại tệ, số tiền được góp bằng mỗi loại ngoại tệ / loại tài sản, số lượng và giá trị còn lại của mỗi loại tài sản",
+      "tag": "chi_tiet_ngoai_te_tai_san_khac",
+      "input_type": "text",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     },
+     {
+      "col": 2,
+      "header": "Giá trị vốn của từng tài sản trong vốn đầu tư (bằng số, VNĐ)",
+      "tag": "gia_tri_vnd",
+      "input_type": "money",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     },
+     {
+      "col": 3,
+      "header": "Tỷ lệ (%)",
+      "tag": "ty_le",
+      "input_type": "percent",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     }
+    ],
+    "fixed_rows": [
+     {
+      "id": "dong_viet_nam",
+      "label": "Đồng Việt Nam",
+      "output_only": false
+     },
+     {
+      "id": "ngoai_te_tu_do_chuyen_doi",
+      "label": "Ngoại tệ tự do chuyển đổi (ghi rõ loại ngoại tệ, số tiền được góp bằng mỗi loại ngoại tệ)",
+      "output_only": false
+     },
+     {
+      "id": "vang",
+      "label": "Vàng",
+      "output_only": false
+     },
+     {
+      "id": "quyen_su_dung_dat",
+      "label": "Quyền sử dụng đất",
+      "output_only": false
+     },
+     {
+      "id": "quyen_so_huu_tri_tue",
+      "label": "Quyền sở hữu trí tuệ",
+      "output_only": false
+     },
+     {
+      "id": "tai_san_khac",
+      "label": "Các tài sản khác (ghi rõ loại tài sản, số lượng và giá trị còn lại của mỗi loại tài sản, có thể lập thành danh mục riêng kèm theo hồ sơ đăng ký đăng ký doanh nghiệp)",
+      "output_only": false
+     },
+     {
+      "id": "tong_so",
+      "label": "Tổng số",
+      "output_only": true
+     }
+    ],
+    "totals": [
+     {
+      "formula": "sum(gia_tri_vnd)",
+      "target_row": "tong_so",
+      "target_tag": "gia_tri_vnd"
+     },
+     {
+      "formula": "sum(ty_le)",
+      "target_row": "tong_so",
+      "target_tag": "ty_le"
+     }
+    ]
+   },
+   {
     "kind": "nested-grid",
     "id": "ndd_uy_quyen_sau_thay_doi",
     "semantic_key": "ds_ndd_uy_quyen_sau_thay_doi",
     "section_id": "ndd_uy_quyen_sau_thay_doi",
-    "table_index": 4,
+    "table_index": 7,
     "loop": "ds_ndd_uy_quyen_sau_thay_doi",
     "header_rows": [
      [
@@ -4187,28 +4673,214 @@ window.FORM_MAPS = {
     "label": "Lý do tạm ngừng:"
    },
    {
-    "key": "ho_ten_in_hoa_2",
-    "label": "Họ, chữ đệm và tên:"
+    "key": "ds_ndd_pl_thong_bao_tam_ngung.ho_ten",
+    "label": "ho_ten"
    },
    {
-    "key": "dien_thoai_khac",
-    "label": "Số điện thoại3:"
+    "key": "ds_ndd_pl_thong_bao_tam_ngung.dien_thoai",
+    "label": "dien_thoai"
    },
    {
-    "key": "dia_chi_thu_dien_tu",
-    "label": "Địa chỉ thư điện tử4:"
+    "key": "ds_ndd_pl_thong_bao_tam_ngung.email",
+    "label": "email"
    },
    {
-    "key": "cn.ten_tieng_viet",
-    "label": "Tên chi nhánh/địa điểm kinh doanh (ghi bằng chữ in hoa)"
+    "key": "don_vi_truc_thuoc_tam_ngung_tiep_tuc.loai_don_vi",
+    "label": "loai_don_vi"
    },
    {
-    "key": "cn.ma_so",
-    "label": "Mã số chi nhánh/địa điểm kinh doanh hoặc mã số thuế chi nhánh:"
+    "key": "don_vi_truc_thuoc_tam_ngung_tiep_tuc.ten_don_vi",
+    "label": "ten_don_vi"
+   },
+   {
+    "key": "don_vi_truc_thuoc_tam_ngung_tiep_tuc.ma_so_don_vi",
+    "label": "ma_so_don_vi"
+   },
+   {
+    "key": "don_vi_truc_thuoc_tam_ngung_tiep_tuc.tu_ngay",
+    "label": "tu_ngay"
+   },
+   {
+    "key": "don_vi_truc_thuoc_tam_ngung_tiep_tuc.den_ngay",
+    "label": "den_ngay"
+   },
+   {
+    "key": "don_vi_truc_thuoc_tam_ngung_tiep_tuc.ly_do",
+    "label": "ly_do"
+   },
+   {
+    "key": "don_vi_truc_thuoc_tam_ngung_tiep_tuc.ten_chi_nhanh_chu_quan",
+    "label": "ten_chi_nhanh_chu_quan"
+   },
+   {
+    "key": "don_vi_truc_thuoc_tam_ngung_tiep_tuc.ma_so_chi_nhanh_chu_quan",
+    "label": "ma_so_chi_nhanh_chu_quan"
    },
    {
     "key": "ly_do_tiep_tuc",
     "label": "Lý do tiếp tục kinh doanh:"
+   },
+   {
+    "key": "don_vi_tiep_tuc_truoc_han.loai_don_vi",
+    "label": "loai_don_vi"
+   },
+   {
+    "key": "don_vi_tiep_tuc_truoc_han.ten_don_vi",
+    "label": "ten_don_vi"
+   },
+   {
+    "key": "don_vi_tiep_tuc_truoc_han.ma_so_don_vi",
+    "label": "ma_so_don_vi"
+   },
+   {
+    "key": "don_vi_tiep_tuc_truoc_han.tu_ngay",
+    "label": "tu_ngay"
+   },
+   {
+    "key": "don_vi_tiep_tuc_truoc_han.den_ngay",
+    "label": "den_ngay"
+   },
+   {
+    "key": "don_vi_tiep_tuc_truoc_han.ly_do",
+    "label": "ly_do"
+   },
+   {
+    "key": "don_vi_tiep_tuc_truoc_han.ten_chi_nhanh_chu_quan",
+    "label": "ten_chi_nhanh_chu_quan"
+   },
+   {
+    "key": "don_vi_tiep_tuc_truoc_han.ma_so_chi_nhanh_chu_quan",
+    "label": "ma_so_chi_nhanh_chu_quan"
+   }
+  ],
+  "dynamic_tables": [
+   {
+    "id": "danh_sach_ndd_pl_thong_bao",
+    "table_index": 1,
+    "header_row": 0,
+    "template_row": 5,
+    "loop": "ds_ndd_pl_thong_bao_tam_ngung",
+    "columns": [
+     {
+      "col": 1,
+      "header": "Họ, chữ đệm và tên (ghi bằng chữ in hoa)",
+      "tag": "ho_ten"
+     },
+     {
+      "col": 2,
+      "header": "Số điện thoại",
+      "tag": "dien_thoai"
+     },
+     {
+      "col": 3,
+      "header": "Địa chỉ thư điện tử",
+      "tag": "email"
+     }
+    ],
+    "semantic_key": "ds_ndd_pl_thong_bao_tam_ngung",
+    "occurrence_id": "ds_ndd_pl_thong_bao_tam_ngung"
+   },
+   {
+    "id": "don_vi_tam_ngung_tiep_tuc",
+    "table_index": 2,
+    "header_row": 0,
+    "template_row": 5,
+    "loop": "don_vi_truc_thuoc_tam_ngung_tiep_tuc",
+    "columns": [
+     {
+      "col": 1,
+      "header": "Loại đơn vị (chi nhánh/địa điểm kinh doanh/văn phòng đại diện)",
+      "tag": "loai_don_vi"
+     },
+     {
+      "col": 2,
+      "header": "Tên đơn vị (ghi bằng chữ in hoa)",
+      "tag": "ten_don_vi"
+     },
+     {
+      "col": 3,
+      "header": "Mã số đơn vị/Mã số thuế của đơn vị",
+      "tag": "ma_so_don_vi"
+     },
+     {
+      "col": 4,
+      "header": "Tạm ngừng/tiếp tục kể từ ngày",
+      "tag": "tu_ngay"
+     },
+     {
+      "col": 5,
+      "header": "Đến hết ngày (kê khai khi tạm ngừng)",
+      "tag": "den_ngay"
+     },
+     {
+      "col": 6,
+      "header": "Lý do",
+      "tag": "ly_do"
+     },
+     {
+      "col": 7,
+      "header": "Tên chi nhánh chủ quản (kê khai khi là địa điểm kinh doanh trực thuộc chi nhánh)",
+      "tag": "ten_chi_nhanh_chu_quan"
+     },
+     {
+      "col": 8,
+      "header": "Mã số chi nhánh chủ quản/Mã số thuế",
+      "tag": "ma_so_chi_nhanh_chu_quan"
+     }
+    ],
+    "semantic_key": "don_vi_truc_thuoc_tam_ngung_tiep_tuc",
+    "occurrence_id": "don_vi_truc_thuoc_tam_ngung_tiep_tuc"
+   },
+   {
+    "id": "don_vi_tam_ngung_tiep_tuc",
+    "table_index": 3,
+    "header_row": 0,
+    "template_row": 5,
+    "loop": "don_vi_tiep_tuc_truoc_han",
+    "columns": [
+     {
+      "col": 1,
+      "header": "Loại đơn vị (chi nhánh/địa điểm kinh doanh/văn phòng đại diện)",
+      "tag": "loai_don_vi"
+     },
+     {
+      "col": 2,
+      "header": "Tên đơn vị (ghi bằng chữ in hoa)",
+      "tag": "ten_don_vi"
+     },
+     {
+      "col": 3,
+      "header": "Mã số đơn vị/Mã số thuế của đơn vị",
+      "tag": "ma_so_don_vi"
+     },
+     {
+      "col": 4,
+      "header": "Tạm ngừng/tiếp tục kể từ ngày",
+      "tag": "tu_ngay"
+     },
+     {
+      "col": 5,
+      "header": "Đến hết ngày (kê khai khi tạm ngừng)",
+      "tag": "den_ngay"
+     },
+     {
+      "col": 6,
+      "header": "Lý do",
+      "tag": "ly_do"
+     },
+     {
+      "col": 7,
+      "header": "Tên chi nhánh chủ quản (kê khai khi là địa điểm kinh doanh trực thuộc chi nhánh)",
+      "tag": "ten_chi_nhanh_chu_quan"
+     },
+     {
+      "col": 8,
+      "header": "Mã số chi nhánh chủ quản/Mã số thuế",
+      "tag": "ma_so_chi_nhanh_chu_quan"
+     }
+    ],
+    "semantic_key": "don_vi_tiep_tuc_truoc_han",
+    "occurrence_id": "don_vi_tiep_tuc_truoc_han"
    }
   ]
  },
@@ -6962,6 +7634,99 @@ window.FORM_MAPS = {
    {
     "key": "dia_chi_khac",
     "label": "Địa chỉ:"
+   },
+   {
+    "key": "ds_san_pham_yeu_cau.san_pham_khac.ten_san_pham",
+    "label": "san_pham_khac.ten_san_pham"
+   },
+   {
+    "key": "ds_san_pham_yeu_cau.sp_gcn_dkdn.ten_san_pham",
+    "label": "sp_gcn_dkdn.ten_san_pham"
+   },
+   {
+    "key": "ds_san_pham_yeu_cau.sp_lich_su_3_nam.ten_san_pham",
+    "label": "sp_lich_su_3_nam.ten_san_pham"
+   },
+   {
+    "key": "ds_san_pham_yeu_cau.sp_thong_tin_moi_nhat.ten_san_pham",
+    "label": "sp_thong_tin_moi_nhat.ten_san_pham"
+   },
+   {
+    "key": "ds_san_pham_yeu_cau.san_pham_khac.so_luong_san_pham",
+    "label": "san_pham_khac.so_luong_san_pham"
+   },
+   {
+    "key": "ds_san_pham_yeu_cau.sp_gcn_dkdn.so_luong_san_pham",
+    "label": "sp_gcn_dkdn.so_luong_san_pham"
+   },
+   {
+    "key": "ds_san_pham_yeu_cau.sp_lich_su_3_nam.so_luong_san_pham",
+    "label": "sp_lich_su_3_nam.so_luong_san_pham"
+   },
+   {
+    "key": "ds_san_pham_yeu_cau.sp_thong_tin_moi_nhat.so_luong_san_pham",
+    "label": "sp_thong_tin_moi_nhat.so_luong_san_pham"
+   }
+  ],
+  "section_specs": [
+   {
+    "kind": "fixed-matrix",
+    "id": "san_pham_cung_cap_thong_tin",
+    "semantic_key": "ds_san_pham_yeu_cau",
+    "section_id": "san_pham_cung_cap_thong_tin",
+    "table_index": 0,
+    "columns": [
+     {
+      "col": 0,
+      "header": "Tên sản phẩm",
+      "tag": null,
+      "input_type": "readonly",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     },
+     {
+      "col": 1,
+      "header": "Tên sản phẩm khác (ghi rõ tên sản phẩm, nếu có)",
+      "tag": "ten_san_pham",
+      "input_type": "text",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     },
+     {
+      "col": 2,
+      "header": "Số lượng sản phẩm",
+      "tag": "so_luong_san_pham",
+      "input_type": "money",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     }
+    ],
+    "fixed_rows": [
+     {
+      "id": "sp_gcn_dkdn",
+      "label": "Giấy chứng nhận đăng ký doanh nghiệp của …",
+      "output_only": false
+     },
+     {
+      "id": "sp_lich_su_3_nam",
+      "label": "Thông tin lịch sử 3 năm của doanh nghiệp …",
+      "output_only": false
+     },
+     {
+      "id": "sp_thong_tin_moi_nhat",
+      "label": "Thông tin doanh nghiệp mới nhất của …",
+      "output_only": false
+     },
+     {
+      "id": "san_pham_khac",
+      "label": "Sản phẩm khác",
+      "output_only": false
+     }
+    ],
+    "totals": []
    }
   ]
  },
@@ -7072,6 +7837,44 @@ window.FORM_MAPS = {
    {
     "key": "ly_do_de_nghi",
     "label": "Lý do đề nghị:"
+   },
+   {
+    "key": "ds_tai_lieu_kem_theo_m79.mo_ta_tai_lieu",
+    "label": "mo_ta_tai_lieu"
+   },
+   {
+    "key": "ds_tai_lieu_kem_theo_m79.so_ban",
+    "label": "so_ban"
+   },
+   {
+    "key": "ds_tai_lieu_kem_theo_m79.so_trang",
+    "label": "so_trang"
+   }
+  ],
+  "dynamic_tables": [
+   {
+    "id": "tai_lieu_kem_theo_de_nghi",
+    "table_index": 0,
+    "header_row": 0,
+    "template_row": 5,
+    "loop": "ds_tai_lieu_kem_theo_m79",
+    "columns": [
+     {
+      "col": 1,
+      "header": "Tên tài liệu kèm theo (ghi rõ tên tài liệu)",
+      "tag": "mo_ta_tai_lieu"
+     },
+     {
+      "col": 2,
+      "header": "Số bản (nếu có)",
+      "tag": "so_ban"
+     },
+     {
+      "col": 3,
+      "header": "Số trang (nếu có)",
+      "tag": "so_trang"
+     }
+    ]
    }
   ]
  },
@@ -7174,6 +7977,44 @@ window.FORM_MAPS = {
    {
     "key": "ly_do_de_nghi",
     "label": "Lý do đề nghị thu hồi:"
+   },
+   {
+    "key": "ds_tai_lieu_kem_theo_m80.mo_ta_tai_lieu",
+    "label": "mo_ta_tai_lieu"
+   },
+   {
+    "key": "ds_tai_lieu_kem_theo_m80.so_ban",
+    "label": "so_ban"
+   },
+   {
+    "key": "ds_tai_lieu_kem_theo_m80.so_trang",
+    "label": "so_trang"
+   }
+  ],
+  "dynamic_tables": [
+   {
+    "id": "tai_lieu_kem_theo_thu_hoi",
+    "table_index": 0,
+    "header_row": 0,
+    "template_row": 5,
+    "loop": "ds_tai_lieu_kem_theo_m80",
+    "columns": [
+     {
+      "col": 1,
+      "header": "Tên tài liệu kèm theo (ghi rõ tên tài liệu)",
+      "tag": "mo_ta_tai_lieu"
+     },
+     {
+      "col": 2,
+      "header": "Số bản (nếu có)",
+      "tag": "so_ban"
+     },
+     {
+      "col": 3,
+      "header": "Số trang (nếu có)",
+      "tag": "so_trang"
+     }
+    ]
    }
   ]
  },
@@ -7685,8 +8526,20 @@ window.FORM_MAPS = {
     "label": "Tổng số (bằng số, bằng chữ, VNĐ):"
    },
    {
-    "key": "so_lao_dong",
-    "label": "Tổng số lao động:"
+    "key": "thue_chi_tieu_cap_doi.chi_tieu_5_1_dia_chi_nhan_thong_bao_thue.dia_chi_nhan_thong_bao_thue",
+    "label": "chi_tieu_5_1_dia_chi_nhan_thong_bao_thue.dia_chi_nhan_thong_bao_thue"
+   },
+   {
+    "key": "thue_chi_tieu_cap_doi.chi_tieu_5_2_tong_so_lao_dong.dia_chi_nhan_thong_bao_thue",
+    "label": "chi_tieu_5_2_tong_so_lao_dong.dia_chi_nhan_thong_bao_thue"
+   },
+   {
+    "key": "thue_chi_tieu_cap_doi.chi_tieu_5_1_dia_chi_nhan_thong_bao_thue.so_lao_dong",
+    "label": "chi_tieu_5_1_dia_chi_nhan_thong_bao_thue.so_lao_dong"
+   },
+   {
+    "key": "thue_chi_tieu_cap_doi.chi_tieu_5_2_tong_so_lao_dong.so_lao_dong",
+    "label": "chi_tieu_5_2_tong_so_lao_dong.so_lao_dong"
    },
    {
     "key": "tv_hgd_cap_doi.ho_ten",
@@ -7890,7 +8743,7 @@ window.FORM_MAPS = {
    },
    {
     "id": "tv_hgd_cap_doi",
-    "table_index": 7,
+    "table_index": 8,
     "template_row": 6,
     "loop": "tv_hgd_cap_doi",
     "columns": [
@@ -8150,11 +9003,60 @@ window.FORM_MAPS = {
     "totals": []
    },
    {
+    "kind": "fixed-matrix",
+    "id": "c5_thue_chi_tieu_cap_doi",
+    "semantic_key": "thue_chi_tieu_cap_doi",
+    "section_id": "c5_thue_chi_tieu_cap_doi",
+    "table_index": 7,
+    "columns": [
+     {
+      "col": 0,
+      "header": "STT / Các chỉ tiêu thông tin đăng ký thuế",
+      "tag": null,
+      "input_type": "readonly",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     },
+     {
+      "col": 1,
+      "header": "Địa chỉ nhận thông báo thuế (số nhà/phòng, ngách/hẻm, ngõ/kiệt, đường/phố/đại lộ, tổ/xóm/ấp/thôn; xã/phường/đặc khu; tỉnh/thành phố trực thuộc trung ương; điện thoại; thư điện tử — chỉ kê khai nếu khác địa chỉ trụ sở)",
+      "tag": "dia_chi_nhan_thong_bao_thue",
+      "input_type": "text",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     },
+     {
+      "col": 2,
+      "header": "Tổng số lao động",
+      "tag": "so_lao_dong",
+      "input_type": "money",
+      "computed": false,
+      "output_only": false,
+      "required": false
+     }
+    ],
+    "fixed_rows": [
+     {
+      "id": "chi_tieu_5_1_dia_chi_nhan_thong_bao_thue",
+      "label": "5.1 Địa chỉ nhận thông báo thuế (chỉ kê khai nếu địa chỉ nhận thông báo thuế khác địa chỉ trụ sở):",
+      "output_only": false
+     },
+     {
+      "id": "chi_tieu_5_2_tong_so_lao_dong",
+      "label": "5.2 Tổng số lao động",
+      "output_only": false
+     }
+    ],
+    "totals": []
+   },
+   {
     "kind": "nested-grid",
     "id": "tv_hgd_cap_doi",
     "semantic_key": "tv_hgd_cap_doi",
     "section_id": "c7_tv_hgd_cap_doi",
-    "table_index": 7,
+    "table_index": 8,
     "loop": "tv_hgd_cap_doi",
     "header_rows": [
      [

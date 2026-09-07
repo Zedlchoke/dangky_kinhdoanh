@@ -635,6 +635,34 @@ def test_v2c_d17():
     assert rec["gate_verdict"] == "FAIL"
 
 
+@check("V2c_d17_band_input_mutations")
+def test_v2c_d17_band_input():
+    # [F3B 2026-09-07] mode=band_input (N-v1/N-v2 DECIDED A — PLI_M33,
+    # PLII_M06): band là ô nhập pháp định DUY NHẤT, thân KHÔNG có trường
+    # tên → giá trị band xuất hiện ĐÚNG 1 LẦN là ĐÚNG; >=2 (double-slot
+    # quay lại) phải FAIL HDR_NAME_SYNC.
+    reg = {"forms": {"PLII_M06": {"key": "hkd_ten_tieng_viet_2",
+                                  "label": "TÊN HỘ KINH DOANH",
+                                  "mode": "band_input"}}}
+    val = "HO KINH DOANH AN CAO"
+    # 1) chỉ band có tên (count == 1) → PASS
+    p = _sig_page(0, [(1, 700.0, "TÊN HỘ KINH DOANH"),
+                      (2, 720.0, val)])
+    assert gate.det_header_name([p], "PLII_M06", reg, val) == []
+    # 2) double-slot: tên quay lại ở thân (count == 2) → HDR_NAME_SYNC
+    p = _sig_page(0, [(1, 700.0, "TÊN HỘ KINH DOANH"),
+                      (2, 720.0, val)])
+    hits = gate.det_header_name([p], "PLII_M06", reg, val + "\n" + val)
+    assert [h["code"] for h in hits] == ["HDR_NAME_SYNC"], hits
+    # 3) mode mặc định (mirror) vẫn giữ hợp đồng >=2: count == 1 → SYNC
+    reg_mirror = {"forms": {"PLI_M32": {"key": "dn.ten_tieng_viet",
+                                        "label": "TÊN DOANH NGHIỆP"}}}
+    p = _sig_page(0, [(1, 700.0, "TÊN DOANH NGHIỆP"),
+                      (2, 720.0, val)])
+    hits = gate.det_header_name([p], "PLI_M32", reg_mirror, val)
+    assert [h["code"] for h in hits] == ["HDR_NAME_SYNC"], hits
+
+
 # ---------------------------------------------------------------------------
 # Runner
 # ---------------------------------------------------------------------------
@@ -650,6 +678,7 @@ def main() -> int:
     test_v2a_d8()
     test_v2b_d6()
     test_v2c_d17()
+    test_v2c_d17_band_input()
     passed = [r for r in _RESULTS if r[1]]
     failed = [r for r in _RESULTS if not r[1]]
     for name, ok, msg in _RESULTS:

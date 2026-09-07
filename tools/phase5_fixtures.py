@@ -126,8 +126,15 @@ EXCLUSIVE_GROUPS = [
     # cặp Có/Không (chk_co/chk_khong hoặc chk_auto_*_co/_khong) — chọn 1;
     # đuôi _2/_3 là lặp câu hỏi giống nhau trong cùng mẫu
     ("co_khong", r"^chk_(auto_)?(co|khong)(_\d+)?$", "chk_khong"),
+    # [F5-dryrun fix] chủ thể hộ kinh doanh: hộ gia đình / cá nhân — chọn 1
+    ("chu_the_hkd", r"^chk_ct_(ho_gia_dinh|ca_nhan)$", "chk_ct_ho_gia_dinh"),
     # mô hình tổ chức công ty: Hội đồng thành viên (hoặc Hội đồng quản trị)
     # / Chủ tịch công ty — hai mô hình quản trị loại-trừ nhau về pháp lý
+    # [F5-dryrun fix 2026-09-07] đồng bộ runtime EXCLUSIVE_CHK_GROUPS
+    # (form-domain.js): chk_auto_chu_ho_kinh_doanh_chet_hoac_bi_toa_an_tu là
+    # checkbox ĐỘC LẬP (trường hợp chủ hộ chết/bị Tòa tuyên bố mất tích) —
+    # không được nuốt vào nhóm cặp Có/Không; cặp chủ thể PLII_M02
+    # (chk_ct_ho_gia_dinh | chk_ct_ca_nhan) chọn-1 theo mẫu.
     # (F-V5-3: trước đây choice-variants tick cả hai trên M02/M15). Key auto
     # bị cắt ở 48 ký tự slug nên pattern phải khớp đúng 2 slug này.
     ("mo_hinh_to_chuc",
@@ -348,6 +355,27 @@ class ValueFactory:
         self.vsic = vsic if vsic is not None else load_vsic()
         self._vsic_i = 0
         self._used: set[str] = set()
+        # [F5-dryrun fix 2026-09-07] tập key của form đang sinh (build_fixture
+        # set trước khi value()) — dùng để phân biệt slot ngày ĐỘC LẬP vs slot
+        # NGÀY THÀNH PHẦN trong pattern {ngay_X}/{thang_X}/{nam_X}.
+        self._form_keys: set[str] = set()
+
+    def set_form_keys(self, keys: set[str]) -> None:
+        self._form_keys = {k for k in keys}
+
+    def _date_slot_is_component(self, k: str) -> bool:
+        """True khi key ngày này là thành phần của pattern 3-token
+        ({ngay_X}/{thang_X}/{nam_X} cùng prefix loop/scalar) — giá trị phải
+        là NGÀY (dd), không phải full dd/mm/yyyy. Tránh hồi quy 6V-V4b 7a:
+        full-date chỉ đúng cho slot ngày độc lập (vd {ngay_cap} một mình)."""
+        fam = k.rsplit(".", 1)[0] if "." in k else ""
+        base = k.split(".")[-1]
+        if not (base.startswith("ngay_") or base == "ngay"):
+            return False
+        suffix = base[5:]  # 'sinh', 'cap', ... ('ngay_' = 5 ký tự)
+        thang = ("%s.thang_%s" % (fam, suffix)) if fam else ("thang_%s" % suffix)
+        nam = ("%s.nam_%s" % (fam, suffix)) if fam else ("nam_%s" % suffix)
+        return thang in self._form_keys and nam in self._form_keys
 
     def _next(self) -> int:
         self.n += 1
@@ -426,10 +454,14 @@ class ValueFactory:
         if k.endswith("ngay") or "ngay_ky" in k:
             return "%02d" % (n % 28 + 1)
         if "ngay_sinh" in k or "ngay_cap" in k:
-            # [6V-V4b việc 7a] 'Ngày, tháng, năm sinh' / 'Ngày cấp' là
-            # TRƯỜNG NGÀY ĐỦ dd/mm/yyyy theo bản giấy — fixture cũ chỉ điền
-            # số ngày ('Ngày, tháng, năm sinh: 12', 'Ngày cấp 10') không đủ
-            # định dạng ngày. Ngày sinh năm 19xx, ngày cấp năm 20xx.
+            # [6V-V4b việc 7a] slot ngày ĐỘC LẬP là TRƯỜNG NGÀY ĐỦ dd/mm/yyyy
+            # theo bản giấy. [F5-dryrun fix 2026-09-07] slot NGÀY THÀNH PHẦN
+            # (pattern {ngay_X}/{thang_X}/{nam_X} — template ghép 3 token bằng
+            # '/', hoặc cột grid tách ngày/tháng/năm) chỉ được điền NGÀY (dd):
+            # full-date ghép với thang/nam kề nhau thành double-date
+            # '09/09/1978/10/1980' (finding #1 dryrun 20 record).
+            if self._date_slot_is_component(k):
+                return "%02d" % (n % 28 + 1)
             if "ngay_sinh" in k:
                 return "%02d/%02d/19%02d" % (n % 28 + 1, n % 12 + 1,
                                              70 + n % 30)
@@ -554,6 +586,14 @@ def build_fixture(fid: str, form_map: dict, fixture: str,
     if fixture not in FIXTURES:
         raise ValueError("fixture không hợp lệ: %r" % fixture)
     f = factory or ValueFactory()
+    # [F5-dryrun fix] cung tập key form để value() phân biệt slot ngày
+    # độc lập vs thành phần (loop columns có dạng 'loop.tag').
+    keys: set[str] = {fld["key"] for fld in form_map.get("fields", [])}
+    for t in form_map.get("dynamic_tables", []):
+        for c in t.get("columns", []):
+            if c.get("tag"):
+                keys.add("%s.%s" % (t.get("loop") or t.get("id"), c["tag"]))
+    f.set_form_keys(keys)
     data: dict = {}
     if fixture == "empty-paper":
         return data

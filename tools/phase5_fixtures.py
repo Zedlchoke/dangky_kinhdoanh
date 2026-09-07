@@ -48,7 +48,9 @@ FIXTURES = ("empty-paper", "valid-minimal", "valid-full",
 INACTIVE_CATALOG_STATES = {
     "inactive", "removed", "repealed", "bo_loai", "khoi_catalog",
     "disabled", "withdrawn",
-}
+    # [F0L] PLI_M11 bãi bỏ theo TT 121/2026 Đ1 k2 — generator stamp
+    # current_law_status.status = "REMOVED_BY_CURRENT_LAW" (lowercase ở trên).
+    "removed_by_current_law",}
 
 
 def current_law_status(form_map: dict):

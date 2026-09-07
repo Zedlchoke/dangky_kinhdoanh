@@ -350,466 +350,410 @@
    "role": "body"
   },
   {
-   "t": "p",
-   "align": "left",
-   "runs": [
+   "t": "table",
+   "widths": null,
+   "rows": [
     {
-     "text": "1. Đối với doanh nghiệp:",
-     "b": true
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "section-heading"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "- Tên doanh nghiệp: "
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "Nhóm",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Tên",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Mã số",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Địa chỉ",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Điện thoại",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Người đại diện theo pháp luật /\nNgười đứng đầu",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Đơn vị chủ quản (đối với địa điểm kinh doanh)",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Tình trạng pháp lý /\nTình trạng hoạt động",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
     },
     {
-     "input": {
-      "key": "dn.ten_tieng_viet",
-      "w": 18
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "- Mã số: "
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "1. Doanh nghiệp",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "mirror": {
+          "key": "dn.ten_tieng_viet"
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "mirror": {
+          "key": "ma_so_van_ban"
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "mirror": {
+          "key": "dn.dia_chi_tru_so"
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "mirror": {
+          "key": "dien_thoai_khac"
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "mirror": {
+          "key": "tinh_trang_phap_ly"
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
     },
     {
-     "input": {
-      "key": "ma_so_van_ban",
-      "w": 12
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "- Địa chỉ trụ sở: "
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "2. Chi nhánh",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "mirror": {
+          "key": "cn.ten_tieng_viet"
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "mirror": {
+          "key": "ma_so_cn"
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "mirror": {
+          "key": "dia_chi_khac"
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "mirror": {
+          "key": "nguoi_dung_dau.ten"
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "mirror": {
+          "key": "tinh_trang_hoat_dong"
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
     },
     {
-     "input": {
-      "key": "dn.dia_chi_tru_so",
-      "w": 17
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "- Điện thoại: "
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "3. Văn phòng đại diện",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "mirror": {
+          "key": "cn.ten_tieng_viet"
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "mirror": {
+          "key": "ma_so_vpdd"
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "mirror": {
+          "key": "dia_chi_khac"
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "mirror": {
+          "key": "nguoi_dung_dau.ten"
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "mirror": {
+          "key": "tinh_trang_hoat_dong"
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
     },
     {
-     "input": {
-      "key": "dien_thoai_khac",
-      "w": 15
-     }
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "4. Địa điểm kinh doanh",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "mirror": {
+          "key": "cn.ten_tieng_viet"
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "mirror": {
+          "key": "ma_so_ddkd"
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "mirror": {
+          "key": "dia_chi_khac"
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "mirror": {
+          "key": "nguoi_dung_dau.ten"
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "mirror": {
+          "key": "tinh_trang_hoat_dong"
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
     }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "- Người đại diện theo pháp luật: ……………………………………………….."
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "- Tình trạng pháp lý: "
-    },
-    {
-     "input": {
-      "key": "tinh_trang_phap_ly",
-      "w": 19
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "2. Đối với chi nhánh:",
-     "b": true
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "section-heading"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "- Tên chi nhánh: "
-    },
-    {
-     "input": {
-      "key": "cn.ten_tieng_viet",
-      "w": 16
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "- Mã số: "
-    },
-    {
-     "input": {
-      "key": "ma_so_van_ban",
-      "w": 12
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "- Địa chỉ: "
-    },
-    {
-     "input": {
-      "key": "dia_chi_khac",
-      "w": 13
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "- Người đứng đầu: "
-    },
-    {
-     "input": {
-      "key": "nguoi_dung_dau.ten",
-      "w": 17
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "- Tình trạng hoạt động: "
-    },
-    {
-     "input": {
-      "key": "tinh_trang_hoat_dong",
-      "w": 20
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "3. Đối với văn phòng đại diện: ",
-     "b": true
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "section-heading"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "- Tên văn phòng đại diện: … "
-    },
-    {
-     "input": {
-      "key": "cn.ten_tieng_viet",
-      "w": 22
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "- Mã số: "
-    },
-    {
-     "input": {
-      "key": "ma_so_van_ban",
-      "w": 12
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "- Địa chỉ: "
-    },
-    {
-     "input": {
-      "key": "dia_chi_khac",
-      "w": 13
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "- Người đứng đầu: "
-    },
-    {
-     "input": {
-      "key": "nguoi_dung_dau.ten",
-      "w": 17
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "- Tình trạng hoạt động: "
-    },
-    {
-     "input": {
-      "key": "tinh_trang_hoat_dong",
-      "w": 20
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "4. Đối với địa điểm kinh doanh:",
-     "b": true
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "section-heading"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "- Tên địa điểm kinh doanh: "
-    },
-    {
-     "input": {
-      "key": "cn.ten_tieng_viet",
-      "w": 21
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "- Mã số: "
-    },
-    {
-     "input": {
-      "key": "ma_so_van_ban",
-      "w": 12
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "- Đơn vị chủ quản: ..……………………………………………………………"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "- Địa chỉ: "
-    },
-    {
-     "input": {
-      "key": "dia_chi_khac",
-      "w": 13
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "- Người đứng đầu: "
-    },
-    {
-     "input": {
-      "key": "nguoi_dung_dau.ten",
-      "w": 17
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "- Tình trạng hoạt động: "
-    },
-    {
-     "input": {
-      "key": "tinh_trang_hoat_dong",
-      "w": 20
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
+   ]
   },
   {
    "t": "p",

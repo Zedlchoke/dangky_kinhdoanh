@@ -73,6 +73,31 @@
     return col === 0 ? rowLabel : '';
   }
 
+  /* [F1-OUT 2026-09-06] grid.cells — per-cell mirror binding (O1 OUTPUT_ONLY).
+   * Ô = string (nhãn tĩnh) | {text} | {mirror: key} | {text, mirror}.
+   * Ô mirror render GIÁ TRỊ canonical từ store (span.mirror-fld read-only,
+   * cùng class với render.js) — KHÔNG tạo <input>, không tab-stop; store thiếu
+   * key -> in RỖNG đúng pháp định (không placeholder, không token kỹ thuật).
+   * Cell spec sai kiểu -> degrade về text rỗng (fail-closed, không crash). */
+  function cellContent(grid, row, col, cols, context) {
+    var cells = grid && grid.cells;
+    if (!Array.isArray(cells) || !Array.isArray(cells[row])) return null;
+    var cell = cells[row][col];
+    if (cell == null) return null;
+    if (typeof cell === 'string') return escapeHtml(cell).split('\n').join('<br>');
+    if (typeof cell !== 'object') return '';
+    var html = '';
+    var text = typeof cell.text === 'string' ? cell.text : '';
+    if (text) html += escapeHtml(text).split('\n').join('<br>');
+    var key = typeof cell.mirror === 'string' ? cell.mirror : '';
+    if (key) {
+      var value = contextValue(context, key);
+      html += '<span class="mirror-fld" data-key="' + escapeHtml(key) +
+        '">' + escapeHtml(value == null ? '' : String(value)) + '</span>';
+    }
+    return html;
+  }
+
   function renderOutputTable(contract, context) {
     contract = contract || {};
     if (contract.kind !== 'output-table' || !isActive(contract, context || {})) {
@@ -98,11 +123,13 @@
     for (var row = 0; row < rows; row++) {
       html += '<tr role="row" data-output-row="' + row + '">';
       for (var col = 0; col < cols; col++) {
+        var content = cellContent(grid, row, col, cols, context);
+        if (content == null) {
+          content = escapeHtml(cellLabel(grid.labels, row, col, cols))
+            .split('\n').join('<br>');
+        }
         html += '<td role="gridcell" data-output-row="' + row +
-          '" data-output-col="' + col + '">' +
-          escapeHtml(cellLabel(grid.labels, row, col, cols))
-            .split('\n').join('<br>') +
-          '</td>';
+          '" data-output-col="' + col + '">' + content + '</td>';
       }
       html += '</tr>';
     }

@@ -1130,8 +1130,14 @@
         if (parts[i].hidden) continue;
         /* [Fix ISS-5 re-shoot P2] anchor của fixed-matrix CHÍNH LÀ heading
          * đánh số của section ("7. Nguồn vốn điều lệ:") mà builder không phát
-         * lại — giữ block đầu hiển thị, chỉ ẩn các block nguồn còn lại. */
-        if (i === span.start && entry.kind === 'fixed-matrix') continue;
+         * lại — giữ block đầu hiển thị, chỉ ẩn các block nguồn còn lại.
+         * [F1-OUT 2026-09-06] output-table neo trên heading PARAGRAPH (vd
+         * 'Hồ sơ bao gồm:') cũng giữ block đầu: heading thuộc bản giấy, lưới
+         * contract thay phần nguồn phía sau. Contract neo thẳng vào BẢNG
+         * (PLI_M70/M71 chu_ky — span.start là block table) vẫn ẩn như cũ. */
+        if (i === span.start && (entry.kind === 'fixed-matrix' ||
+            (entry.kind === 'output-table' &&
+             parts[i].b && parts[i].b.t === 'p'))) continue;
         parts[i].html = '<div class="dupe-anchor">' + parts[i].html + '</div>';
         parts[i].hidden = true;
       }

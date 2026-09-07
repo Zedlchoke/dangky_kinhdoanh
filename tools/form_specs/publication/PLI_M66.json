@@ -1,0 +1,97 @@
+{
+  "form_id": "PLI_M66",
+  "group": "publication",
+  "note": "F1-OUT spec registration (base e268038) - THONG BAO CN/VPPD/DDKD DANG LAM THU TUC CHAM DUT. HAI section don_vi_dang_lam_thu_tuc_cham_dut + ddkd_truc_thuoc_dang_cham_dut (manifest: editable-grid/missing_grid) chuyen OUTPUT_ONLY theo O1 (docs/owner_decision_packet_v7.md; D6.2/D6.3 docs/decision_registry.md). Defect pli_m66_bo_ten_ma_x23 (note '1 bo ten+ma' thuc te lap x2/x3) xu dung bang cach TACH 2 section (manifest da dua 2 section_id) + moi don vi 1 bo ten+ma tren 1 DONG rieng cua luoi. | NGUON THAT: 04_tam_ngung_cham_dut_giai_the/PL1_Mau_66_thong_bao_ve_viec_chi_nhanh_van_phong_dai_dien_dia_diem_kinh_doanh_dang_lam_thu_tuc_cham_dut_hoa.docx (manifest anchor #p18-p27; chan trang 2/3: 'Liet ke cac...' / 'Liet ke tat ca...' = nhieu don vi/giay). | EVIDENCE BLOCKS (app/data/blocks/PLI_M66.json): vung A b017-b021 (Ten cn.ten_tieng_viet / Ma so cn.ma_so_2 / So GCNDKHD cn.ma_so_2 dung lai / Ngay cap+Noi cap ngay_cap,noi_cap DUNG lai voi Do1 b015); vung B b023-b026 (Ten + Ma so cn.ma_so_2, khong co field rieng) + b026 '- ...'. | REBUILD: (A) drop 4 paragraph scoped [anchor 'thong tin chi nhanh...', drop_until '^truong hop chi nhanh dang lam thu tuc cham dut'), chen output-table 3r x 5c (header + 1 dong mirror + 1 dong trong); (B) drop 3 paragraph scoped [anchor 'co cac dia diem kinh doanh truc thuoc sau...', drop_until 'dang tai thong bao nay tren cong'), chen output-table 3r x 2c. Giu nguyen Do1 (ong_ba/so_giay_to_ca_nhan/ngay_cap/noi_cap b011-b016) va phan dau thong bao (dn.* b007-b010). | MIRROR POLICY: ten -> cn.ten_tieng_viet; ma so/mst -> cn.ma_so_2 (key canonical hien tai cua mau); So GCNDKHD/ngay cap/noi cap don vi khong co key rieng (trung voi Do1) -> in TRONG dung phap dinh. | LUAT: O1 OUTPUT_ONLY (bieu do CQB phat hanh, dang tai Cong QTG); legal_status.blocked=false.",
+  "tables": [
+    {
+      "kind": "output-table",
+      "pos": "after",
+      "anchor": "thong tin chi nhanh/van phong dai dien/dia diem kinh doanh dang lam thu tuc cham dut",
+      "drop_until": "^truong hop chi nhanh dang lam thu tuc cham dut hoat dong co dia diem",
+      "no_default_drops": true,
+      "drop": [
+        "^- ten chi nhanh",
+        "^ma so/ma so thue",
+        "^so giay chung nhan dang ky hoat dong",
+        "^ngay cap"
+      ],
+      "legal_status": {
+        "blocked": false,
+        "ref": "O1 OUTPUT_ONLY docs/owner_decision_packet_v7.md (11 section); D6.2/D6.3 docs/decision_registry.md; defect pli_m66_bo_ten_ma_x23"
+      },
+      "spec": {
+        "id": "don_vi_dang_lam_thu_tuc_cham_dut",
+        "kind": "output-table",
+        "section_id": "don_vi_dang_lam_thu_tuc_cham_dut",
+        "semantic_key": "don_vi_dang_cham_dut",
+        "grid": {
+          "rows": 3,
+          "cols": 5,
+          "cells": [
+            [
+              {"text": "Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh (ghi bằng chữ in hoa)"},
+              {"text": "Mã số/mã số thuế"},
+              {"text": "Số Giấy chứng nhận đăng ký hoạt động (trường hợp không có mã số/mã số thuế)"},
+              {"text": "Ngày cấp"},
+              {"text": "Nơi cấp"}
+            ],
+            [
+              {"mirror": "cn.ten_tieng_viet"},
+              {"mirror": "cn.ma_so_2"},
+              {"text": ""},
+              {"text": ""},
+              {"text": ""}
+            ],
+            [
+              {"text": ""},
+              {"text": ""},
+              {"text": ""},
+              {"text": ""},
+              {"text": ""}
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "kind": "output-table",
+      "pos": "after",
+      "anchor": "co cac dia diem kinh doanh truc thuoc sau dang lam thu tuc cham dut",
+      "drop_until": "dang tai thong bao nay tren cong thong tin quoc gia",
+      "no_default_drops": true,
+      "drop": [
+        "^ten chi nhanh/van phong",
+        "^ma so/ma so thue",
+        "^- "
+      ],
+      "legal_status": {
+        "blocked": false,
+        "ref": "O1 OUTPUT_ONLY docs/owner_decision_packet_v7.md (11 section); D6.2/D6.3 docs/decision_registry.md; defect pli_m66_bo_ten_ma_x23"
+      },
+      "spec": {
+        "id": "ddkd_truc_thuoc_dang_cham_dut",
+        "kind": "output-table",
+        "section_id": "ddkd_truc_thuoc_dang_cham_dut",
+        "semantic_key": "ddkd_truc_thuoc_dang_cham_dut",
+        "grid": {
+          "rows": 3,
+          "cols": 2,
+          "cells": [
+            [
+              {"text": "Tên địa điểm kinh doanh trực thuộc (ghi bằng chữ in hoa)"},
+              {"text": "Mã số/mã số thuế"}
+            ],
+            [
+              {"mirror": "cn.ten_tieng_viet"},
+              {"mirror": "cn.ma_so_2"}
+            ],
+            [
+              {"text": ""},
+              {"text": ""}
+            ]
+          ]
+        }
+      }
+    }
+  ]
+}

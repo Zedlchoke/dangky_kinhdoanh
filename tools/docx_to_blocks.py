@@ -1124,6 +1124,51 @@ def verify_nested_grid_spec(blk, spec: dict, sem: str) -> list[str]:
     return errs
 
 
+def _output_grid_cell_at(blk, ri: int, pos: int):
+    """Ô vật lý của block table tại (hàng ri, vị trí cột pos) theo colspan."""
+    rows = blk.get("rows") or []
+    if ri >= len(rows):
+        return None
+    for _start, _span, cell in _physical_indexes(rows[ri]["cells"]):
+        if _start == pos:
+            return cell
+    return None
+
+
+def _bind_output_grid_mirrors(blk, spec: dict) -> list[str]:
+    """[F1-OUT O1 OUTPUT_ONLY] Biến the `{key}` tại ô khai mirror của lưới
+    output-table thành run {"mirror": {"key": …}} — cùng ngữ nghĩa band mirror
+    (_band_first_cell_to_mirror): KHÔNG phải input, không vào draft/validation/
+    tab-stop; UI vẽ span.mirror-fld read-only đồng bộ canonical store; ô không
+    có dữ liệu -> in RỖNG. Trả list lỗi (thiếu the/sai key tại vị trí khai)."""
+    errs: list[str] = []
+    cells = ((spec.get("grid") or {}).get("cells")) or []
+    for ri, row in enumerate(cells):
+        for ci, cell in enumerate(row):
+            key = (cell or {}).get("mirror")
+            if not key:
+                continue
+            target = _output_grid_cell_at(blk, ri, ci)
+            if target is None:
+                errs.append("ô mirror (%d,%d) không tồn tại trong lưới" %
+                            (ri, ci))
+                continue
+            # idempotent: run mirror đúng key đã tồn tại -> không đụng nữa
+            if any("mirror" in r and r["mirror"].get("key") == key
+                   for r in target.get("runs", [])):
+                continue
+            hits = [r for r in target.get("runs", []) if "input" in r]
+            if len(hits) != 1 or hits[0]["input"].get("key") != key:
+                got = [r["input"].get("key") for r in hits]
+                errs.append("ô mirror (%d,%d) kỳ vọng the {%s}, thấy %s"
+                            % (ri, ci, key, got))
+                continue
+            run = hits[0]
+            run.pop("input")
+            run["mirror"] = {"key": key}
+    return errs
+
+
 def verify_output_table_spec(blk, spec: dict, sem: str) -> list[str]:
     errs = []
     grid = spec["grid"]
@@ -1158,6 +1203,28 @@ def verify_output_table_spec(blk, spec: dict, sem: str) -> list[str]:
             if _fold_txt(_block_row_runs_text(cell)) != _fold_txt(want):
                 errs.append("nhãn (%d,%d) = %r != %r"
                             % (ri, pos, _block_row_runs_text(cell), want))
+    # [F1-OUT] kiểm định run mirror theo cells khai báo (sau khi
+    # _bind_output_grid_mirrors đã biến the -> run mirror).
+    spec_cells = ((spec.get("grid") or {}).get("cells")) or []
+    for ri, row in enumerate(spec_cells):
+        for ci, cell_spec in enumerate(row):
+            key = (cell_spec or {}).get("mirror")
+            if not key:
+                continue
+            cell = _output_grid_cell_at(blk, ri, ci)
+            if cell is None:
+                errs.append("ô mirror (%d,%d) không tồn tại khi verify" %
+                            (ri, ci))
+                continue
+            mirrors = [r for r in cell.get("runs", []) if "mirror" in r]
+            if len(mirrors) != 1 or mirrors[0]["mirror"].get("key") != key:
+                errs.append("ô (%d,%d) kỳ vọng đúng 1 run mirror {%s}, thấy %s"
+                            % (ri, ci, key,
+                               [r.get("mirror") for r in mirrors]))
+            inputs_left = _block_cell_inputs(cell)
+            if inputs_left:
+                errs.append("ô mirror (%d,%d) vẫn còn the input %s"
+                            % (ri, ci, inputs_left))
     return errs
 
 
@@ -1210,7 +1277,11 @@ def annotate_and_verify_section_specs(blocks, section_specs) -> int:
                                 "labels %r" % (sid, sem,
                                                grid.get("labels")))
                 continue
-            errs = verify_output_table_spec(blk, payload, sem)
+            # [F1-OUT] biến the {key} tại ô khai mirror thành run mirror
+            # (mutation đúng chỗ như _band_first_cell_to_mirror) rồi mới
+            # verify: mọi the input còn lại trong lưới là lỗi cứng.
+            errs = _bind_output_grid_mirrors(blk, payload)
+            errs += verify_output_table_spec(blk, payload, sem)
         else:
             problems.append("%s: kind không hỗ trợ trong converter: %r"
                             % (sid, kind))

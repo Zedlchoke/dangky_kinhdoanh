@@ -970,12 +970,60 @@ def _validate_kind_spec(raw_spec, form_id="<form>"):
              "semantic_key khong hop le: %r" % (sem,))
         grid = raw_spec.get("grid")
         need(isinstance(grid, dict), "grid phai la object")
-        need(set(grid) <= {"rows", "cols", "labels"},
+        # [F1-OUT 2026-09-06] "cells": per-cell mirror binding (O1 OUTPUT_ONLY
+        # — render từ canonical store khi có, ô không có dữ liệu in RỖNG).
+        # Cell = string (nhãn tĩnh) | {"text": str} | {"mirror": key} |
+        # {"text": str, "mirror": key}. mirror KHÔNG phải input (run mirror
+        # read-only, đúng cơ chế header band mirror).
+        need(set(grid) <= {"rows", "cols", "labels", "cells"},
              "grid co truong le: %s" % sorted(set(grid)))
         rows, ncols = grid.get("rows"), grid.get("cols")
         need(isinstance(rows, int) and rows > 0, "grid.rows phai la int >0")
         need(isinstance(ncols, int) and ncols > 0, "grid.cols phai la int >0")
         labels = grid.get("labels")
+        cells = grid.get("cells")
+        need(cells is None or isinstance(cells, list),
+             "grid.cells phai la list hang (ma tran cell)")
+        if cells is not None:
+            # hai cách khai báo loại trừ nhau: labels tĩnh vs cells mirror
+            need(not labels,
+                 "grid chi duoc khai MOT trong hai: labels (tinh) hoac "
+                 "cells (per-cell mirror)")
+            need(len(cells) == rows,
+                 "grid.cells phai du %d hang" % rows)
+            norm_cells = []
+            for ri, row in enumerate(cells):
+                need(isinstance(row, list) and len(row) == ncols,
+                     "grid.cells[%d] phai la list du %d cot" % (ri, ncols))
+                norm_row = []
+                for ci, cell in enumerate(row):
+                    if isinstance(cell, str):
+                        norm_row.append({"text": cell, "mirror": None})
+                        continue
+                    need(isinstance(cell, dict) and
+                         set(cell) <= {"text", "mirror"} and
+                         ("text" in cell or "mirror" in cell),
+                         "grid.cells[%d][%d] phai la string hoac object co "
+                         "it nhat mot trong {text, mirror}" % (ri, ci))
+                    text = cell.get("text")
+                    need(text is None or isinstance(text, str),
+                         "grid.cells[%d][%d].text phai la string" % (ri, ci))
+                    mir = cell.get("mirror")
+                    need(mir is None or (isinstance(mir, str) and
+                                         _ID_RE.match(mir)),
+                         "grid.cells[%d][%d].mirror khong hop le: %r "
+                         "(phai khop [A-Za-z0-9_.]+)" % (ri, ci, mir))
+                    norm_row.append({"text": text or "", "mirror": mir})
+                norm_cells.append(norm_row)
+            # labels suy ra cho consumer chỉ đọc nhãn tĩnh (finder/verify cũ,
+            # output-table.js cũ): ô mirror = "" (run mirror không mang text).
+            labels = [[c["text"] for c in row] for row in norm_cells]
+            common.update({
+                "semantic_key": sem,
+                "grid": {"rows": rows, "cols": ncols, "labels": labels,
+                         "cells": norm_cells},
+            })
+            return common
         need(isinstance(labels, list),
              "grid.labels phai la list (string tung hang hoặc ma tran)")
         if any(isinstance(x, list) for x in labels):
@@ -1933,10 +1981,18 @@ def _build_nested_grid_table(doc, spec):
 
 
 def _build_output_table_grid(doc, spec):
-    """output-table: lưới chỉ để in/ký — KHÔNG the input nào."""
+    """output-table: lưới chỉ để in/ký — KHÔNG the input nào.
+
+    [F1-OUT 2026-09-06] grid.cells (tuỳ chọn): per-cell mirror binding.
+    Ô mirror ghi the `{key}` vào w:t (cùng cơ chế header band mirror,
+    _bind_header_name_slot) — converter blocks biến thành run "mirror"
+    read-only (docx_to_blocks), export docx_render._subst_vars đổ giá trị
+    canonical của hồ sơ; thiếu dữ liệu -> in RỖNG đúng pháp định.
+    """
     grid = spec["grid"]
     labels = grid["labels"]
     matrix = all(isinstance(x, list) for x in labels)
+    cells = grid.get("cells")
 
     def label_at(r, c):
         if not labels:
@@ -1948,6 +2004,20 @@ def _build_output_table_grid(doc, spec):
     tbl = _new_grid(doc, grid["rows"], grid["cols"])
     for r in range(grid["rows"]):
         for c in range(grid["cols"]):
+            if cells is not None:
+                cell_spec = cells[r][c]
+                if cell_spec["mirror"]:
+                    # run mirror: the {key} in đậm như nhãn (tiền tố nhãn tĩnh
+                    # nếu ô khai cả "text", vd 'Mã số: {key}') — giá trị đổ lúc
+                    # render/export; draft trống -> ô trống (không placeholder)
+                    text = cell_spec["text"] or ""
+                    token = "{%s}" % cell_spec["mirror"]
+                    _cell_set_text(tbl.rows[r].cells[c], text + token,
+                                   bold=True)
+                elif cell_spec["text"]:
+                    _cell_set_text(tbl.rows[r].cells[c], cell_spec["text"],
+                                   bold=True)
+                continue
             text = label_at(r, c)
             if text:
                 _cell_set_text(tbl.rows[r].cells[c], text, bold=True)
@@ -2285,9 +2355,14 @@ def _grid_meta_payload(spec):
             "totals": [],
         }
     if kind == KIND_OUTPUT_TABLE:
-        return {"grid": {k: spec["grid"][k]
-                         for k in ("rows", "cols", "labels")},
-                "inputs": []}
+        out = {"grid": {k: spec["grid"][k]
+                        for k in ("rows", "cols", "labels")},
+               "inputs": []}
+        # [F1-OUT] per-cell mirror binding đi kèm để converter kiểm định +
+        # biến run input thành run mirror; specs legacy không có cells.
+        if spec["grid"].get("cells") is not None:
+            out["grid"]["cells"] = spec["grid"]["cells"]
+        return out
     raise ValueError("kind khong co grid meta payload: %r" % kind)
 
 
@@ -3742,8 +3817,12 @@ def build_horizontal_signature_tables(doc, form_id, section_specs=None) -> int:
                     for x in titles_folded]
             for base in section_specs:
                 grid = base.get("grid") or {}
+                # [F1-OUT] labels dạng ma trận (grid.cells) chỉ có ở spec mới
+                # — bảng ký ngang chỉ ghép với labels FLAT nên bỏ qua phần tử
+                # không phải string thay vì crash.
                 lab = [re.sub(r"\s+", " ", fold(x)).strip()
-                       for x in (grid.get("labels") or [])]
+                       for x in (grid.get("labels") or [])
+                       if isinstance(x, str)]
                 if (base.get("kind") == "output-table"
                         and grid.get("rows") == 2 and grid.get("cols") == 1
                         and [re.sub(r"\s*\(.*$", "", x) for x in lab] == want):
@@ -3931,6 +4010,10 @@ def process_form(path, titles, coverage, out_tpl=None):
         else:  # output-table
             base["grid"] = {k: spec["grid"][k] for k in ("rows", "cols",
                                                          "labels")}
+            # [F1-OUT] mirror binding đi cùng section_spec (converter verify +
+            # audit); inputs vẫn rỗng tuyệt đối — mirror không phải input.
+            if spec["grid"].get("cells") is not None:
+                base["grid"]["cells"] = spec["grid"]["cells"]
             base["inputs"] = []
         out.append(base)
 

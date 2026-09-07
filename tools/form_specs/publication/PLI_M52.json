@@ -1,0 +1,99 @@
+{
+  "form_id": "PLI_M52",
+  "group": "publication",
+  "note": "F1-OUT spec registration (base e268038) - THONG BAO RA SOAT THONG TIN DANG KY DN. Section duy nha khung_ra_soat_4_nhom (manifest: fixed-matrix/partial_columns) chuyen OUTPUT_ONLY theo O1 (docs/owner_decision_packet_v7.md - 11 section output-only; D4.2=A + D6.2/D6.3 docs/decision_registry.md). | NGUON THAT: 05_cong_bo_cung_cap_thong_tin/PL1_Mau_52_thong_bao_ve_viec_ra_soat_thong_tin_dang_ky_doanh_nghiep_tinh_trang_phap_ly_cua_doanh_nghiep.docx (manifest anchor #p16-p42 = 4 nhom bullet). | EVIDENCE BLOCKS (app/data/blocks/PLI_M52.json): b016-b041 la 4 nhom bullet ('1. Doi voi doanh nghiep' -> '- Tinh trang hoat dong' cua nhom 4); key 'ma_so_van_ban' xuat hien 4 lan (nhiem 3 ngu nghia - defect ghi trong manifest notes); '- Nguoi dai dien theo phap luat' (nhom DN) KHONG co key (census notes: nhom DN thieu field nguoi dai dien); '- Don vi chu quan' (nhom DDKD) khong co key. | REBUILD: drop 26 paragraph bullet (scoped [anchor, 'sau khi ra soat')), chen 1 output-table 5r x 8c (header + 4 nhom DN/CN/VPPD/DDKD) THAY VUNG do; giu nguyen moi input khac (so/ngay ky, co_quan_dkkd, dia chi/dien thoai/email/website CQ, noi nhan, truong don vi). | MIRROR POLICY (D4.2=A): 'ma_so_van_ban' GIU cho nhom DN (MSDN); 3 nhom don vi dung key moi ma_so_cn/ma_so_vpdd/ma_so_ddkd - output-only khong co input nen KHONG can migration (Lead: key tach o spec output read-only). Cac cell con lai mirror key canonical ton tai trong form_maps hien tai (dn.ten_tieng_viet, dn.dia_chi_tru_so, dien_thoai_khac, cn.ten_tieng_viet, dia_chi_khac, nguoi_dung_dau.ten, tinh_trang_phap_ly, tinh_trang_hoat_dong); cell khong co du lieu canonical (NDDPL nhom DN, don vi chu quan, dien thoai 3 nhom don vi) in TRONG dung phap dinh - KHONG placeholder, KHONG token. Key dung chung nhom 3 don vi (cn.ten_tieng_viet/dia_chi_khac/nguoi_dung_dau.ten/tinh_trang_hoat_dong) la semantic census ke thua - ghi nhan, khong sang tao key moi. | LUAT: O1 OUTPUT_ONLY (form do CQDKKD phat hanh; render tu ho so/canonical store khi co, khong tao man nhap trung); legal_status.blocked=false.",
+  "tables": [
+    {
+      "kind": "output-table",
+      "pos": "after",
+      "anchor": "de nghi doanh nghiep ra soat, kiem tra doi chieu",
+      "drop_until": "^sau khi ra soat",
+      "no_default_drops": true,
+      "drop": [
+        "^1\\. doi voi doanh nghiep",
+        "^- ten doanh nghiep",
+        "^- ma so",
+        "^- dia chi tru so",
+        "^- dien thoai",
+        "^- nguoi dai dien theo phap luat",
+        "^- tinh trang phap ly",
+        "^2\\. doi voi chi nhanh",
+        "^- ten chi nhanh",
+        "^- dia chi",
+        "^- nguoi dung dau",
+        "^- tinh trang hoat dong",
+        "^3\\. doi voi van phong dai dien",
+        "^- ten van phong dai dien",
+        "^4\\. doi voi dia diem kinh doanh",
+        "^- ten dia diem kinh doanh",
+        "^- don vi chu quan"
+      ],
+      "legal_status": {
+        "blocked": false,
+        "ref": "O1 OUTPUT_ONLY docs/owner_decision_packet_v7.md (11 section); D4.2=A, D6.2/D6.3 docs/decision_registry.md"
+      },
+      "spec": {
+        "id": "khung_ra_soat_4_nhom",
+        "kind": "output-table",
+        "section_id": "khung_ra_soat_4_nhom",
+        "semantic_key": "ra_soat_thong_tin_4_nhom",
+        "grid": {
+          "rows": 5,
+          "cols": 8,
+          "cells": [
+            [
+              {"text": "Nhóm"},
+              {"text": "Tên"},
+              {"text": "Mã số"},
+              {"text": "Địa chỉ"},
+              {"text": "Điện thoại"},
+              {"text": "Người đại diện theo pháp luật /\nNgười đứng đầu"},
+              {"text": "Đơn vị chủ quản (đối với địa điểm kinh doanh)"},
+              {"text": "Tình trạng pháp lý /\nTình trạng hoạt động"}
+            ],
+            [
+              {"text": "1. Doanh nghiệp"},
+              {"mirror": "dn.ten_tieng_viet"},
+              {"mirror": "ma_so_van_ban"},
+              {"mirror": "dn.dia_chi_tru_so"},
+              {"mirror": "dien_thoai_khac"},
+              {"text": ""},
+              {"text": ""},
+              {"mirror": "tinh_trang_phap_ly"}
+            ],
+            [
+              {"text": "2. Chi nhánh"},
+              {"mirror": "cn.ten_tieng_viet"},
+              {"mirror": "ma_so_cn"},
+              {"mirror": "dia_chi_khac"},
+              {"text": ""},
+              {"mirror": "nguoi_dung_dau.ten"},
+              {"text": ""},
+              {"mirror": "tinh_trang_hoat_dong"}
+            ],
+            [
+              {"text": "3. Văn phòng đại diện"},
+              {"mirror": "cn.ten_tieng_viet"},
+              {"mirror": "ma_so_vpdd"},
+              {"mirror": "dia_chi_khac"},
+              {"text": ""},
+              {"mirror": "nguoi_dung_dau.ten"},
+              {"text": ""},
+              {"mirror": "tinh_trang_hoat_dong"}
+            ],
+            [
+              {"text": "4. Địa điểm kinh doanh"},
+              {"mirror": "cn.ten_tieng_viet"},
+              {"mirror": "ma_so_ddkd"},
+              {"mirror": "dia_chi_khac"},
+              {"text": ""},
+              {"mirror": "nguoi_dung_dau.ten"},
+              {"text": ""},
+              {"mirror": "tinh_trang_hoat_dong"}
+            ]
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -701,25 +701,26 @@
       "nguoi_dd_pl_hoac_nguoi_dung_dau",
       "tinh_trang_hoat_dong"
      ],
-     "status": "partial_columns",
+     "status": "output_only",
      "source_evidence": {
       "template": "app/templates/PLI_M52.docx",
       "heading": "Đề nghị doanh nghiệp rà soát, kiểm tra đối chiếu và bổ sung, cập nhật thông tin đăng ký doanh nghiệp...",
       "anchor": "05_cong_bo_cung_cap_thong_tin/PL1_Mau_52_....docx#p16-p42"
      },
-     "notes": "Khung viền gốc bị làm phẳng thành 4 nhóm bullet '- Tên/- Mã số/- Địa chỉ...'. Blocks map đủ 3 nhóm đơn vị nhưng: key 'ma_so_van_ban' bị tái sử dụng làm mã số của cả 3 nhóm (nhiễu ngữ nghĩa); nhóm DN thiếu field người đại diện theo pháp luật (nguồn dòng '- Người đại diện theo pháp luật:'); nhóm ĐĐKD còn '- Đơn vị chủ quản:' chưa thấy key riêng."
+     "notes": "Khung viền gốc bị làm phẳng thành 4 nhóm bullet '- Tên/- Mã số/- Địa chỉ...'. Blocks map đủ 3 nhóm đơn vị nhưng: key 'ma_so_van_ban' bị tái sử dụng làm mã số của cả 3 nhóm (nhiễu ngữ nghĩa); nhóm DN thiếu field người đại diện theo pháp luật (nguồn dòng '- Người đại diện theo pháp luật:'); nhóm ĐĐKD còn '- Đơn vị chủ quản:' chưa thấy key riêng. | [F1-OUT O1 2026-09-06] OUTPUT_ONLY: lưới CQĐKKD phát hành — render từ hồ sơ qua mirror cell, không input; evidence spec publication/ + blocks mirror + test_f1_output_sections 7/7."
     }
    ],
    "summary_counts": {
-    "p": 46,
+    "p": 20,
     "chk": 0,
-    "table": 0,
+    "table": 1,
     "loop": 0
    },
    "legal_questions": [
     "Key 'ma_so_van_ban' dùng chung cho MSDN/mã số của 3 nhóm — cần tách key riêng từng nhóm trước khi dựng grid không?",
     "Mẫu do CQĐKKD phát hành để DN phản hồi: chủ thể nhập 4 nhóm này là doanh nghiệp đúng không?"
-   ]
+   ],
+   "f0l_note": "[F1-OUT 2026-09-06] summary_counts rebaseline sau khi section output-only materialize."
   },
   {
    "form_id": "PLI_M53",
@@ -800,24 +801,25 @@
       "ten_don_vi",
       "ma_so_don_vi"
      ],
-     "status": "missing_grid",
+     "status": "output_only",
      "source_evidence": {
       "template": "app/templates/PLI_M56.docx",
       "heading": "- Nếu doanh nghiệp thông báo tiếp tục kinh doanh...cho doanh nghiệp và một hoặc một số chi nhánh/văn phòng đại diện/địa điểm...",
       "anchor": "04_tam_ngung_cham_dut_giai_the/PL1_Mau_56_....docx#p16-p21"
      },
-     "notes": "Văn bản mẫu nói 'một hoặc một số' nhưng chỉ có 1 bộ field; key 'ma_so_van_ban' đang mang ngữ nghĩa mã số đơn vi (sai ngữ nghĩa)."
+     "notes": "Văn bản mẫu nói 'một hoặc một số' nhưng chỉ có 1 bộ field; key 'ma_so_van_ban' đang mang ngữ nghĩa mã số đơn vi (sai ngữ nghĩa). | [F1-OUT O1 2026-09-06] OUTPUT_ONLY: lưới CQĐKKD phát hành — render từ hồ sơ qua mirror cell, không input; evidence spec publication/ + blocks mirror + test_f1_output_sections 7/7."
     }
    ],
    "summary_counts": {
-    "p": 25,
+    "p": 20,
     "chk": 0,
-    "table": 0,
+    "table": 1,
     "loop": 0
    },
    "legal_questions": [
     "Trường hợp 'một hoặc một số đơn vị': cần grid nhiều dòng cho giấy xác nhận do CQĐKKD lập? Key ma_so_van_ban cần đổi tên đúng ngữ nghĩa?"
-   ]
+   ],
+   "f0l_note": "[F1-OUT 2026-09-06] summary_counts rebaseline sau khi section output-only materialize."
   },
   {
    "form_id": "PLI_M57",
@@ -861,13 +863,13 @@
       "dia_chi",
       "tinh_trang_phap_ly"
      ],
-     "status": "missing_grid",
+     "status": "output_only",
      "source_evidence": {
       "template": "app/templates/PLI_M63.docx",
       "heading": "Có các địa điểm kinh doanh trực thuộc chi nhánh:",
       "anchor": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_63_....docx#p32-p33"
      },
-     "notes": "PLAN mục E. Blocks không có field nào cho danh sách ĐĐKD trực thuộc."
+     "notes": "PLAN mục E. Blocks không có field nào cho danh sách ĐĐKD trực thuộc. | [F1-OUT O1 2026-09-06] OUTPUT_ONLY: lưới CQĐKKD phát hành — render từ hồ sơ qua mirror cell, không input; evidence spec publication/ + blocks mirror + test_f1_output_sections 7/7."
     },
     {
      "section_id": "noi_dung_quyet_dinh_thu_hoi",
@@ -885,15 +887,16 @@
     }
    ],
    "summary_counts": {
-    "p": 51,
+    "p": 50,
     "chk": 0,
-    "table": 0,
+    "table": 1,
     "loop": 0
    },
    "legal_questions": [
     "M63 là quyết định hành chính do CQĐKKD ban hành — app ĐKKD cho doanh nghiệp kê khai thì section nào thuộc thẩm quyền nhập của DN, phần nào chỉ là output khi tích hợp hệ thống cơ quan?",
     "Biến thể Điều 2/3/4 theo 2 trường hợp thu hồi: render có điều kiện theo trường hợp nào?"
-   ]
+   ],
+   "f0l_note": "[F1-OUT 2026-09-06] summary_counts rebaseline sau khi section output-only materialize."
   },
   {
    "form_id": "PLI_M66",
@@ -910,13 +913,13 @@
       "ngay_cap",
       "noi_cap"
      ],
-     "status": "missing_grid",
+     "status": "output_only",
      "source_evidence": {
       "template": "app/templates/PLI_M66.docx",
       "heading": "Thông tin chi nhánh/văn phòng đại diện/địa điểm kinh doanh đang làm thủ tục chấm dứt hoạt động2:",
       "anchor": "04_tam_ngung_cham_dut_giai_the/PL1_Mau_66_....docx#p18-p27"
      },
-     "notes": "PLAN mục E. Dấu '- …' cuối vùng + chân trang 2 'Liệt kê các chi nhánh/văn phòng đại diện/địa điểm kinh doanh đang làm thủ tục chấm dứt hoạt động' → nhiều đơn vị/giấy. Blocks chỉ có 1 bộ tên+mã."
+     "notes": "PLAN mục E. Dấu '- …' cuối vùng + chân trang 2 'Liệt kê các chi nhánh/văn phòng đại diện/địa điểm kinh doanh đang làm thủ tục chấm dứt hoạt động' → nhiều đơn vị/giấy. Blocks chỉ có 1 bộ tên+mã. | [F1-OUT O1 2026-09-06] OUTPUT_ONLY: lưới CQĐKKD phát hành — render từ hồ sơ qua mirror cell, không input; evidence spec publication/ + blocks mirror + test_f1_output_sections 7/7."
     },
     {
      "section_id": "ddkd_truc_thuoc_dang_cham_dut",
@@ -927,13 +930,13 @@
       "ten_ddkd",
       "ma_so"
      ],
-     "status": "missing_grid",
+     "status": "output_only",
      "source_evidence": {
       "template": "app/templates/PLI_M66.docx",
       "heading": "Có các địa điểm kinh doanh trực thuộc sau đang làm thủ tục chấm dứt hoạt động3:",
       "anchor": "04_tam_ngung_cham_dut_giai_the/PL1_Mau_66_....docx#p24-p27"
      },
-     "notes": "Chân trang 3 'Liệt kê tất cả các địa điểm kinh doanh trực thuộc chi nhánh'. Blocks không có field riêng cho nhóm này."
+     "notes": "Chân trang 3 'Liệt kê tất cả các địa điểm kinh doanh trực thuộc chi nhánh'. Blocks không có field riêng cho nhóm này. | [F1-OUT O1 2026-09-06] OUTPUT_ONLY: lưới CQĐKKD — mirror cell, không input."
     },
     {
      "section_id": "thong_bao_cqb",
@@ -951,15 +954,16 @@
     }
    ],
    "summary_counts": {
-    "p": 34,
+    "p": 27,
     "chk": 0,
-    "table": 0,
+    "table": 2,
     "loop": 0
    },
    "legal_questions": [
     "M66 do CQĐKKD phát hành: ai là chủ thể kê khai trong app (DN xem/output hay cán bộ nhập)? Nếu output-only vẫn phải giữ grid khi xuất DOCX theo PLAN mục G.",
     "Số dòng tối đa của 2 danh sách đơn vị/địa điểm trực thuộc?"
-   ]
+   ],
+   "f0l_note": "[F1-OUT 2026-09-06] summary_counts rebaseline sau khi section output-only materialize."
   },
   {
    "form_id": "PLI_M67",
@@ -976,24 +980,25 @@
       "dia_chi",
       "chi_nhanh_chu_quan"
      ],
-     "status": "missing_grid",
+     "status": "output_only",
      "source_evidence": {
       "template": "app/templates/PLI_M67.docx",
       "heading": "(Cơ quan ĐKKD cấp tỉnh) thông báo (các) chi nhánh/văn phòng đại diện/địa điểm kinh doanh sau đây của doanh nghiệp...",
       "anchor": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_67_....docx#p8"
      },
-     "notes": "Từ '(các)' gợi ý nhiều đơn vị trong 1 thông báo nhưng blocks chỉ có 1 bộ tên/mã/địa chỉ (lặp 2 lần trong blocks). Cần chốt 1-nhiều. File nguồn trùng tại 04_tam_ngung... (bản 03 thắng)."
+     "notes": "Từ '(các)' gợi ý nhiều đơn vị trong 1 thông báo nhưng blocks chỉ có 1 bộ tên/mã/địa chỉ (lặp 2 lần trong blocks). Cần chốt 1-nhiều. File nguồn trùng tại 04_tam_ngung... (bản 03 thắng). | [F1-OUT O1 2026-09-06] OUTPUT_ONLY: lưới CQĐKKD phát hành — render từ hồ sơ qua mirror cell, không input; evidence spec publication/ + blocks mirror + test_f1_output_sections 7/7."
     }
    ],
    "summary_counts": {
-    "p": 21,
+    "p": 12,
     "chk": 0,
-    "table": 0,
+    "table": 1,
     "loop": 0
    },
    "legal_questions": [
     "'(các) chi nhánh... sau đây': một thông báo M67 liệt kê được nhiều đơn vị không?"
-   ]
+   ],
+   "f0l_note": "[F1-OUT 2026-09-06] summary_counts rebaseline sau khi section output-only materialize."
   },
   {
    "form_id": "PLI_M68",
@@ -1008,13 +1013,13 @@
       "ten_don_vi",
       "ma_so_hoac_ms_thue"
      ],
-     "status": "missing_grid",
+     "status": "output_only",
      "source_evidence": {
       "template": "app/templates/PLI_M68.docx",
       "heading": "Các chi nhánh, văn phòng đại diện, địa điểm kinh doanh sau của doanh nghiệp đang làm thủ tục chấm dứt hoạt động:",
       "anchor": "04_tam_ngung_cham_dut_giai_the/PL1_Mau_68_....docx#p17-p19"
      },
-     "notes": "PLAN mục E. Detector 'Các … sau'. Blocks chỉ có 1 bộ cn.ten_tieng_viet/cn.ma_so."
+     "notes": "PLAN mục E. Detector 'Các … sau'. Blocks chỉ có 1 bộ cn.ten_tieng_viet/cn.ma_so. | [F1-OUT O1 2026-09-06] OUTPUT_ONLY: lưới CQĐKKD phát hành — render từ hồ sơ qua mirror cell, không input; evidence spec publication/ + blocks mirror + test_f1_output_sections 7/7."
     },
     {
      "section_id": "thong_bao_dang_giai_the",
@@ -1032,14 +1037,15 @@
     }
    ],
    "summary_counts": {
-    "p": 28,
+    "p": 26,
     "chk": 0,
-    "table": 0,
+    "table": 1,
     "loop": 0
    },
    "legal_questions": [
     "Danh sách đơn vị chấm dứt khi giải thể: chủ thể nhập và giới hạn số dòng? Phần còn lại của biểu là output của cơ quan?"
-   ]
+   ],
+   "f0l_note": "[F1-OUT 2026-09-06] summary_counts rebaseline sau khi section output-only materialize."
   },
   {
    "form_id": "PLI_M69",
@@ -1066,13 +1072,13 @@
       "stt",
       "mo_ta_tai_lieu"
      ],
-     "status": "missing_grid",
+     "status": "output_only",
      "source_evidence": {
       "template": "app/templates/PLI_M70.docx",
       "heading": "Hồ sơ bao gồm:",
       "anchor": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_70_....docx#p15-p18"
      },
-     "notes": "Bảng hành chính không header/STT-header, 3 dòng đánh số cố định trên giấy; blocks không có key nào cho 3 dòng này. File nguồn trùng tại 05_cong_bo... (bản 03 thắng)."
+     "notes": "Bảng hành chính không header/STT-header, 3 dòng đánh số cố định trên giấy; blocks không có key nào cho 3 dòng này. File nguồn trùng tại 05_cong_bo... (bản 03 thắng). | [F1-OUT O1 2026-09-06] OUTPUT_ONLY: lưới CQĐKKD phát hành — render từ hồ sơ qua mirror cell, không input; evidence spec publication/ + blocks mirror + test_f1_output_sections 7/7."
     },
     {
      "section_id": "chu_ky_nguoi_nop_nguoi_nhan",
@@ -1090,15 +1096,16 @@
     }
    ],
    "summary_counts": {
-    "p": 23,
+    "p": 18,
     "chk": 0,
-    "table": 0,
+    "table": 2,
     "loop": 0
    },
    "legal_questions": [
     "'Hồ sơ bao gồm:' cố định 3 dòng hay cho phép n tài liệu (một số hồ sơ có >3 tài liệu đính kèm)?",
     "Ô NGƯỜI NỘP/NGƯỜI NHẬN xử lý outputOnly đúng theo PLAN mục C/G?"
-   ]
+   ],
+   "f0l_note": "[F1-OUT 2026-09-06] summary_counts rebaseline sau khi section output-only materialize."
   },
   {
    "form_id": "PLI_M71",
@@ -1113,13 +1120,13 @@
       "stt",
       "mo_ta_tai_lieu"
      ],
-     "status": "missing_grid",
+     "status": "output_only",
      "source_evidence": {
       "template": "app/templates/PLI_M71.docx",
       "heading": "Hồ sơ bao gồm:",
       "anchor": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_71_....docx#p16-p19"
      },
-     "notes": "Giống M70 nhưng bản điện tử; blocks không có key cho 3 dòng. File nguồn trùng tại 05_cong_bo... (bản 03 thắng)."
+     "notes": "Giống M70 nhưng bản điện tử; blocks không có key cho 3 dòng. File nguồn trùng tại 05_cong_bo... (bản 03 thắng). | [F1-OUT O1 2026-09-06] OUTPUT_ONLY: lưới CQĐKKD phát hành — render từ hồ sơ qua mirror cell, không input; evidence spec publication/ + blocks mirror + test_f1_output_sections 7/7."
     },
     {
      "section_id": "chu_ky_co_quan_cap_tinh",
@@ -1137,14 +1144,15 @@
     }
    ],
    "summary_counts": {
-    "p": 25,
+    "p": 21,
     "chk": 0,
-    "table": 0,
+    "table": 2,
     "loop": 0
    },
    "legal_questions": [
     "Như M70: số dòng tài liệu cố định hay biến thiên?"
-   ]
+   ],
+   "f0l_note": "[F1-OUT 2026-09-06] summary_counts rebaseline sau khi section output-only materialize."
   },
   {
    "form_id": "PLI_M72",
@@ -1317,13 +1325,13 @@
       "dia_chi",
       "tinh_trang_phap_ly"
      ],
-     "status": "missing_grid",
+     "status": "output_only",
      "source_evidence": {
       "template": "app/templates/PLI_M75.docx",
       "heading": "Có các chi nhánh/văn phòng đại diện/địa điểm kinh doanh:",
       "anchor": "04_tam_ngung_cham_dut_giai_the/PL1_Mau_75_....docx#p22-p25"
      },
-     "notes": "PLAN mục E. 3 dòng theo loại đơn vị (CN/VPĐD/ĐĐKD) — fixed theo loại hay editable tự do cần chốt."
+     "notes": "PLAN mục E. 3 dòng theo loại đơn vị (CN/VPĐD/ĐĐKD) — fixed theo loại hay editable tự do cần chốt. | [F1-OUT O1 2026-09-06] OUTPUT_ONLY: lưới CQĐKKD phát hành — render từ hồ sơ qua mirror cell, không input; evidence spec publication/ + blocks mirror + test_f1_output_sections 7/7."
     },
     {
      "section_id": "ddkd_truc_thuoc_khoi_phuc",
@@ -1336,13 +1344,13 @@
       "dia_chi",
       "tinh_trang_phap_ly"
      ],
-     "status": "missing_grid",
+     "status": "output_only",
      "source_evidence": {
       "template": "app/templates/PLI_M75.docx",
       "heading": "Có các địa điểm kinh doanh trực thuộc chi nhánh:",
       "anchor": "04_tam_ngung_cham_dut_giai_the/PL1_Mau_75_....docx#p34-p35"
      },
-     "notes": "PLAN mục E. Blocks không có field cho nhóm này."
+     "notes": "PLAN mục E. Blocks không có field cho nhóm này. | [F1-OUT O1 2026-09-06] OUTPUT_ONLY: lưới CQĐKKD — mirror cell, không input."
     },
     {
      "section_id": "thong_bao_khoi_phuc_gcn",
@@ -1360,14 +1368,15 @@
     }
    ],
    "summary_counts": {
-    "p": 44,
+    "p": 40,
     "chk": 0,
-    "table": 0,
+    "table": 2,
     "loop": 0
    },
    "legal_questions": [
     "3 dòng đơn vị theo loại (CN/VPĐD/ĐĐKD): fixed-matrix 3 hàng hay editable-grid tự do? Chủ thể kê khai (CQB vs DN)?"
-   ]
+   ],
+   "f0l_note": "[F1-OUT 2026-09-06] summary_counts rebaseline sau khi section output-only materialize."
   },
   {
    "form_id": "PLI_M76",

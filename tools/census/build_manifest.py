@@ -201,6 +201,71 @@ RECLASSIFICATIONS = {
     ("PLII_M18", "ho_so_bao_gom"): {
         "kind": "prose-block", "status": "no_table",
         "reason": "Giong PLII_M17 (ban nop online): dong cham tay khong input, khong luoi."},
+    # --- [F1-OUT 2026-09-06 — Lead áp sau salvage] 11 section OUTPUT_ONLY
+    # theo O1 (owner 2026-09-06): lưới do CQĐKKD phát hành, render từ hồ sơ
+    # qua mirror cell (không input). Evidence: spec publication/* + blocks
+    # mirror run + form-domain dispatch + test_f1_output_sections 7/7 +
+    # test_f1_output_ui 63/63.
+    ("PLI_M52", "khung_ra_soat_4_nhom"): {
+        "status": "output_only",
+        "evidence": "O1 OUTPUT_ONLY: khung rà soát 4 nhóm do CQĐKKD phát hành; "
+                    "spec publication/PLI_M52.json + mirror cell; tách key "
+                    "ma_so_van_ban theo D4.2=A.",
+    },
+    ("PLI_M56", "cn_vppd_ddkd_tiep_tuc_truoc_han"): {
+        "kind": "editable-grid",
+        "status": "output_only",
+        "evidence": "O1 OUTPUT_ONLY: giấy xác nhận của CQĐKKD; grid mirror "
+                    "'một hoặc một số' đơn vị từ hồ sơ.",
+    },
+    ("PLI_M63", "dia_diem_truc_thuoc_bi_thu_hoi"): {
+        "kind": "editable-grid",
+        "status": "output_only",
+        "evidence": "O1 OUTPUT_ONLY: quyết định thu hồi của CQĐKKD; grid mirror.",
+    },
+    ("PLI_M66", "don_vi_dang_lam_thu_tuc_cham_dut"): {
+        "kind": "editable-grid",
+        "status": "output_only",
+        "evidence": "O1 OUTPUT_ONLY + tách section theo defect bo_ten_ma_x23 "
+                    "(mỗi đơn vị 1 bộ tên+mã).",
+    },
+    ("PLI_M66", "ddkd_truc_thuoc_dang_cham_dut"): {
+        "kind": "editable-grid",
+        "status": "output_only",
+        "evidence": "O1 OUTPUT_ONLY; grid mirror từ hồ sơ.",
+    },
+    ("PLI_M67", "don_vi_cham_dut_sau_day"): {
+        "kind": "editable-grid",
+        "status": "output_only",
+        "evidence": "O1 OUTPUT_ONLY; '(các)' đơn vị = grid mirror.",
+    },
+    ("PLI_M68", "don_vi_cham_dut_khi_doanh_nghiep_giai_the"): {
+        "kind": "editable-grid",
+        "status": "output_only",
+        "evidence": "O1 OUTPUT_ONLY; grid mirror; thong_bao_dang_giai_the "
+                    "đã output-table từ trước.",
+    },
+    ("PLI_M70", "ho_so_bao_gom"): {
+        "kind": "fixed-matrix",
+        "status": "output_only",
+        "evidence": "O1 OUTPUT_ONLY (supersede D6.3): hồ sơ bao gồm in 3 dòng "
+                    "pháp định theo giấy; fixed-matrix mirror.",
+    },
+    ("PLI_M71", "ho_so_bao_gom_online"): {
+        "kind": "fixed-matrix",
+        "status": "output_only",
+        "evidence": "O1 OUTPUT_ONLY; bản điện tử 3 dòng pháp định.",
+    },
+    ("PLI_M75", "cn_vppd_ddkd_khoi_phuc"): {
+        "kind": "editable-grid",
+        "status": "output_only",
+        "evidence": "O1 OUTPUT_ONLY; grid 3 loại đơn vị theo giấy.",
+    },
+    ("PLI_M75", "ddkd_truc_thuoc_khoi_phuc"): {
+        "kind": "editable-grid",
+        "status": "output_only",
+        "evidence": "O1 OUTPUT_ONLY; grid mirror từ hồ sơ.",
+    },
     ("PLI_M09", "vung_nhiem_mau_6789_10"): {
         "kind": "source-contamination", "status": "removed_by_source_cleanup",
         "reason": "[F0L O1 2026-09-06] Vung nhiem da bi XOA KHOI NGUON "

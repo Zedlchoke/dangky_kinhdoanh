@@ -75,15 +75,17 @@ class ActiveFormIdsInventory(unittest.TestCase):
         self.LOG.append(line)
 
     def test_real_maps_all_active_and_count_not_hardcoded(self):
+        # [Pin sync — F0L 2026-09-07] premise cũ "chưa có marker" hết hiệu lực:
+        # PLI_M11 mang marker REMOVED_BY_CURRENT_LAW (TT 121/2026 Đ1 k2, bãi bỏ
+        # Mẫu 11 — generator stamp + gate test_current_law_catalog). Kỳ vọng
+        # DERIVED: đúng 1 skip = PLI_M11; corpus final = 86 render unit.
         maps = _maps_real()
         active, skipped = active_form_ids(maps)
-        self.assertEqual(skipped, [], "form_maps hiện tại chưa có marker — "
-                                      "không form nào được skip")
-        self.assertEqual(active, sorted(maps))
-        # kỳ vọng DERIVED từ form_maps (hôm nay = 87 form): khi owner chốt
-        # marker cho PLI_M11 thì con số này tự theo maps, không phải pin test
-        self.assertEqual(len(active), len(maps))
-        self.assertNotIn("PLI_M11", [f for f, _s in skipped])
+        self.assertEqual(skipped, [("PLI_M11", "removed_by_current_law")],
+                         "đúng PLI_M11 bị loại theo current-law")
+        self.assertEqual(sorted(active), sorted(k for k in maps
+                                                if k != "PLI_M11"))
+        self.assertEqual(len(active), len(maps) - 1)
 
     def test_simulated_pli_m11_inactive_is_skipped_and_logged(self):
         maps = _maps_real()

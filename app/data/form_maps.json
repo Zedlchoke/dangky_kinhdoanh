@@ -4350,6 +4350,96 @@
     "key": "noi_nhan",
     "label": "Nơi nhận:\n- Tên, địa chỉ doanh nghiệp bị thu hồi GCNĐKHĐ chi nhánh/văn phòng đại diện/ GCNĐK ĐĐKD;\n- Cơ quan quản lý thu"
    }
+  ],
+  "section_specs": [
+   {
+    "kind": "output-table",
+    "id": "dia_diem_truc_thuoc_bi_thu_hoi",
+    "semantic_key": "ddkd_truc_thuoc_bi_thu_hoi",
+    "section_id": "dia_diem_truc_thuoc_bi_thu_hoi",
+    "table_index": 0,
+    "grid": {
+     "rows": 3,
+     "cols": 4,
+     "labels": [
+      [
+       "Tên địa điểm kinh doanh",
+       "Mã số/mã số thuế",
+       "Địa chỉ",
+       "Tình trạng pháp lý"
+      ],
+      [
+       "",
+       "",
+       "",
+       ""
+      ],
+      [
+       "",
+       "",
+       "",
+       ""
+      ]
+     ],
+     "cells": [
+      [
+       {
+        "text": "Tên địa điểm kinh doanh",
+        "mirror": null
+       },
+       {
+        "text": "Mã số/mã số thuế",
+        "mirror": null
+       },
+       {
+        "text": "Địa chỉ",
+        "mirror": null
+       },
+       {
+        "text": "Tình trạng pháp lý",
+        "mirror": null
+       }
+      ],
+      [
+       {
+        "text": "",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": null
+       }
+      ],
+      [
+       {
+        "text": "",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": null
+       }
+      ]
+     ]
+    },
+    "inputs": []
+   }
   ]
  },
  "PLI_M67": {
@@ -4389,40 +4479,117 @@
     "label": ", địa chỉ trụ sở chính:"
    },
    {
-    "key": "cn.ten_tieng_viet",
-    "label": "1. Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh (ghi bằng chữ in hoa):"
-   },
-   {
-    "key": "cn.ma_so",
-    "label": "Mã số chi nhánh/văn phòng đại diện/địa điểm kinh doanh hoặc mã số thuế của chi nhánh/văn phòng đại diện:"
-   },
-   {
-    "key": "cn.dia_chi",
-    "label": "2. Địa chỉ chi nhánh/văn phòng đại diện/địa điểm kinh doanh:"
-   },
-   {
-    "key": "dien_thoai_lien_he",
-    "label": "Điện thoại (nếu có):"
-   },
-   {
-    "key": "fax",
-    "label": "Fax (nếu có):"
-   },
-   {
-    "key": "email_tru_so",
-    "label": "Thư điện tử (nếu có):"
-   },
-   {
-    "key": "website",
-    "label": "Website (nếu có):"
-   },
-   {
     "key": "noi_nhan",
     "label": "Nơi nhận: \n- Tên, địa chỉ doanh nghiệp;\n- Cơ quan hải quan … (tỉnh, thành phố nơi doanh nghiệp đặt trụ sở chính) (để biế"
    },
    {
     "key": "luu_vb",
     "label": ";\n- Lưu:"
+   }
+  ],
+  "section_specs": [
+   {
+    "kind": "output-table",
+    "id": "don_vi_cham_dut_sau_day",
+    "semantic_key": "don_vi_cham_dut_m67",
+    "section_id": "don_vi_cham_dut_sau_day",
+    "table_index": 0,
+    "grid": {
+     "rows": 3,
+     "cols": 5,
+     "labels": [
+      [
+       "Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh (ghi bằng chữ in hoa)",
+       "Mã số đơn vị hoặc mã số thuế",
+       "Địa chỉ",
+       "Điện thoại/Fax/Thư điện tử/Website (nếu có)",
+       "Chi nhánh chủ quản (tên, địa chỉ, mã số - đối với địa điểm kinh doanh trực thuộc chi nhánh)"
+      ],
+      [
+       "",
+       "",
+       "",
+       "",
+       ""
+      ],
+      [
+       "",
+       "",
+       "",
+       "",
+       ""
+      ]
+     ],
+     "cells": [
+      [
+       {
+        "text": "Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh (ghi bằng chữ in hoa)",
+        "mirror": null
+       },
+       {
+        "text": "Mã số đơn vị hoặc mã số thuế",
+        "mirror": null
+       },
+       {
+        "text": "Địa chỉ",
+        "mirror": null
+       },
+       {
+        "text": "Điện thoại/Fax/Thư điện tử/Website (nếu có)",
+        "mirror": null
+       },
+       {
+        "text": "Chi nhánh chủ quản (tên, địa chỉ, mã số - đối với địa điểm kinh doanh trực thuộc chi nhánh)",
+        "mirror": null
+       }
+      ],
+      [
+       {
+        "text": "",
+        "mirror": "cn.ten_tieng_viet"
+       },
+       {
+        "text": "",
+        "mirror": "cn.ma_so"
+       },
+       {
+        "text": "",
+        "mirror": "cn.dia_chi"
+       },
+       {
+        "text": "",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": null
+       }
+      ],
+      [
+       {
+        "text": "",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": null
+       }
+      ]
+     ]
+    },
+    "inputs": []
    }
   ]
  },
@@ -4506,10 +4673,36 @@
   "section_specs": [
    {
     "kind": "output-table",
+    "id": "ho_so_bao_gom",
+    "semantic_key": "ds_tai_lieu_ho_so_nop",
+    "section_id": "ho_so_bao_gom",
+    "table_index": 0,
+    "grid": {
+     "rows": 3,
+     "cols": 2,
+     "labels": [
+      [
+       "1.",
+       ""
+      ],
+      [
+       "2.",
+       ""
+      ],
+      [
+       "3.",
+       ""
+      ]
+     ]
+    },
+    "inputs": []
+   },
+   {
+    "kind": "output-table",
     "id": "chu_ky_nguoi_nop_nguoi_nhan",
     "semantic_key": "chu_ky_tiep_nhan_ho_so",
     "section_id": "chu_ky_nguoi_nop_nguoi_nhan",
-    "table_index": 0,
+    "table_index": 1,
     "grid": {
      "rows": 1,
      "cols": 2,
@@ -4602,10 +4795,36 @@
   "section_specs": [
    {
     "kind": "output-table",
+    "id": "ho_so_bao_gom_online",
+    "semantic_key": "ds_tai_lieu_ho_so_online",
+    "section_id": "ho_so_bao_gom_online",
+    "table_index": 0,
+    "grid": {
+     "rows": 3,
+     "cols": 2,
+     "labels": [
+      [
+       "1.",
+       ""
+      ],
+      [
+       "2.",
+       ""
+      ],
+      [
+       "3.",
+       ""
+      ]
+     ]
+    },
+    "inputs": []
+   },
+   {
+    "kind": "output-table",
     "id": "chu_ky_co_quan_cap_tinh",
     "semantic_key": "chu_ky_cqb_m71",
     "section_id": "chu_ky_co_quan_cap_tinh",
-    "table_index": 0,
+    "table_index": 1,
     "grid": {
      "rows": 1,
      "cols": 1,
@@ -5208,18 +5427,6 @@
     "label": "- Nếu doanh nghiệp thông báo tiếp tục kinh doanh, tiếp tục hoạt động trước thời hạn đã thông báo cho doanh nghiệp và tất"
    },
    {
-    "key": "cn.ten_tieng_viet",
-    "label": "+ Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh (ghi bằng chữ in hoa):"
-   },
-   {
-    "key": "ma_so_van_ban",
-    "label": "Mã số:"
-   },
-   {
-    "key": "cn.ma_so",
-    "label": "Mã số chi nhánh:"
-   },
-   {
     "key": "ly_do",
     "label": "Lý do:"
    },
@@ -5230,6 +5437,96 @@
    {
     "key": "luu_vb",
     "label": ";\n- Lưu:"
+   }
+  ],
+  "section_specs": [
+   {
+    "kind": "output-table",
+    "id": "cn_vppd_ddkd_tiep_tuc_truoc_han",
+    "semantic_key": "don_vi_tiep_tuc_truoc_han",
+    "section_id": "cn_vppd_ddkd_tiep_tuc_truoc_han",
+    "table_index": 0,
+    "grid": {
+     "rows": 3,
+     "cols": 4,
+     "labels": [
+      [
+       "Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh (ghi bằng chữ in hoa)",
+       "Mã số",
+       "Tên chi nhánh chủ quản (đối với địa điểm kinh doanh trực thuộc chi nhánh)",
+       "Mã số chi nhánh chủ quản"
+      ],
+      [
+       "",
+       "",
+       "",
+       ""
+      ],
+      [
+       "",
+       "",
+       "",
+       ""
+      ]
+     ],
+     "cells": [
+      [
+       {
+        "text": "Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh (ghi bằng chữ in hoa)",
+        "mirror": null
+       },
+       {
+        "text": "Mã số",
+        "mirror": null
+       },
+       {
+        "text": "Tên chi nhánh chủ quản (đối với địa điểm kinh doanh trực thuộc chi nhánh)",
+        "mirror": null
+       },
+       {
+        "text": "Mã số chi nhánh chủ quản",
+        "mirror": null
+       }
+      ],
+      [
+       {
+        "text": "",
+        "mirror": "cn.ten_tieng_viet"
+       },
+       {
+        "text": "",
+        "mirror": "cn.ma_so"
+       },
+       {
+        "text": "",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": null
+       }
+      ],
+      [
+       {
+        "text": "",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": null
+       }
+      ]
+     ]
+    },
+    "inputs": []
    }
   ]
  },
@@ -5290,16 +5587,171 @@
     "label": "Nơi cấp:"
    },
    {
-    "key": "cn.ten_tieng_viet",
-    "label": "- Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh (ghi bằng chữ in hoa):"
-   },
-   {
-    "key": "cn.ma_so_2",
-    "label": "Mã số/mã số thuế của chi nhánh/văn phòng đại diện/địa điểm kinh doanh:"
-   },
-   {
     "key": "noi_nhan",
     "label": "Nơi nhận:\n- Cơ quan quản lý thuế tỉnh, thành phố …\n(để biết);\n- Cơ quan hải quan tỉnh, thành phố … (để biết);\n- Cơ quan "
+   }
+  ],
+  "section_specs": [
+   {
+    "kind": "output-table",
+    "id": "don_vi_dang_lam_thu_tuc_cham_dut",
+    "semantic_key": "don_vi_dang_cham_dut",
+    "section_id": "don_vi_dang_lam_thu_tuc_cham_dut",
+    "table_index": 0,
+    "grid": {
+     "rows": 3,
+     "cols": 5,
+     "labels": [
+      [
+       "Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh (ghi bằng chữ in hoa)",
+       "Mã số/mã số thuế",
+       "Số Giấy chứng nhận đăng ký hoạt động (trường hợp không có mã số/mã số thuế)",
+       "Ngày cấp",
+       "Nơi cấp"
+      ],
+      [
+       "",
+       "",
+       "",
+       "",
+       ""
+      ],
+      [
+       "",
+       "",
+       "",
+       "",
+       ""
+      ]
+     ],
+     "cells": [
+      [
+       {
+        "text": "Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh (ghi bằng chữ in hoa)",
+        "mirror": null
+       },
+       {
+        "text": "Mã số/mã số thuế",
+        "mirror": null
+       },
+       {
+        "text": "Số Giấy chứng nhận đăng ký hoạt động (trường hợp không có mã số/mã số thuế)",
+        "mirror": null
+       },
+       {
+        "text": "Ngày cấp",
+        "mirror": null
+       },
+       {
+        "text": "Nơi cấp",
+        "mirror": null
+       }
+      ],
+      [
+       {
+        "text": "",
+        "mirror": "cn.ten_tieng_viet"
+       },
+       {
+        "text": "",
+        "mirror": "cn.ma_so_2"
+       },
+       {
+        "text": "",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": null
+       }
+      ],
+      [
+       {
+        "text": "",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": null
+       }
+      ]
+     ]
+    },
+    "inputs": []
+   },
+   {
+    "kind": "output-table",
+    "id": "ddkd_truc_thuoc_dang_cham_dut",
+    "semantic_key": "ddkd_truc_thuoc_dang_cham_dut",
+    "section_id": "ddkd_truc_thuoc_dang_cham_dut",
+    "table_index": 1,
+    "grid": {
+     "rows": 3,
+     "cols": 2,
+     "labels": [
+      [
+       "Tên địa điểm kinh doanh trực thuộc (ghi bằng chữ in hoa)",
+       "Mã số/mã số thuế"
+      ],
+      [
+       "",
+       ""
+      ],
+      [
+       "",
+       ""
+      ]
+     ],
+     "cells": [
+      [
+       {
+        "text": "Tên địa điểm kinh doanh trực thuộc (ghi bằng chữ in hoa)",
+        "mirror": null
+       },
+       {
+        "text": "Mã số/mã số thuế",
+        "mirror": null
+       }
+      ],
+      [
+       {
+        "text": "",
+        "mirror": "cn.ten_tieng_viet"
+       },
+       {
+        "text": "",
+        "mirror": "cn.ma_so_2"
+       }
+      ],
+      [
+       {
+        "text": "",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": null
+       }
+      ]
+     ]
+    },
+    "inputs": []
    }
   ]
  },
@@ -5364,16 +5816,68 @@
     "label": "/Số Hộ chiếu, Hộ chiếu nước ngoài hoặc giấy tờ có giá trị thay thế hộ chiếu nước ngoài (đối với người đại diện là người "
    },
    {
-    "key": "cn.ten_tieng_viet",
-    "label": "Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh:"
-   },
-   {
-    "key": "cn.ma_so",
-    "label": "Mã số chi nhánh/văn phòng đại diện/địa điểm kinh doanh hoặc mã số thuế của chi nhánh/văn phòng đại diện:"
-   },
-   {
     "key": "noi_nhan",
     "label": "Nơi nhận: \n- Tên, địa chỉ doanh nghiệp;\n- Cơ quan quản lý thuế tỉnh, thành phố …\n(để biết);\n- Cơ quan hải quan tỉnh, thà"
+   }
+  ],
+  "section_specs": [
+   {
+    "kind": "output-table",
+    "id": "don_vi_cham_dut_khi_doanh_nghiep_giai_the",
+    "semantic_key": "don_vi_cham_dut_giai_the",
+    "section_id": "don_vi_cham_dut_khi_doanh_nghiep_giai_the",
+    "table_index": 0,
+    "grid": {
+     "rows": 3,
+     "cols": 2,
+     "labels": [
+      [
+       "Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh",
+       "Mã số hoặc mã số thuế"
+      ],
+      [
+       "",
+       ""
+      ],
+      [
+       "",
+       ""
+      ]
+     ],
+     "cells": [
+      [
+       {
+        "text": "Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh",
+        "mirror": null
+       },
+       {
+        "text": "Mã số hoặc mã số thuế",
+        "mirror": null
+       }
+      ],
+      [
+       {
+        "text": "",
+        "mirror": "cn.ten_tieng_viet"
+       },
+       {
+        "text": "",
+        "mirror": "cn.ma_so"
+       }
+      ],
+      [
+       {
+        "text": "",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": null
+       }
+      ]
+     ]
+    },
+    "inputs": []
    }
   ]
  },
@@ -5578,6 +6082,228 @@
    {
     "key": "noi_nhan",
     "label": "Nơi nhận:\n- Cơ quan quản lý thuế (tỉnh, thành phố nơi doanh nghiệp đăng ký trụ sở);\n- Lưu:"
+   }
+  ],
+  "section_specs": [
+   {
+    "kind": "output-table",
+    "id": "cn_vppd_ddkd_khoi_phuc",
+    "semantic_key": "don_vi_khoi_phuc_cua_dn",
+    "section_id": "cn_vppd_ddkd_khoi_phuc",
+    "table_index": 0,
+    "grid": {
+     "rows": 4,
+     "cols": 5,
+     "labels": [
+      [
+       "Loại đơn vị",
+       "Tên",
+       "Mã số/mã số thuế",
+       "Địa chỉ",
+       "Tình trạng pháp lý"
+      ],
+      [
+       "Chi nhánh",
+       "",
+       "",
+       "",
+       ""
+      ],
+      [
+       "Văn phòng đại diện",
+       "",
+       "",
+       "",
+       ""
+      ],
+      [
+       "Địa điểm kinh doanh",
+       "",
+       "",
+       "",
+       ""
+      ]
+     ],
+     "cells": [
+      [
+       {
+        "text": "Loại đơn vị",
+        "mirror": null
+       },
+       {
+        "text": "Tên",
+        "mirror": null
+       },
+       {
+        "text": "Mã số/mã số thuế",
+        "mirror": null
+       },
+       {
+        "text": "Địa chỉ",
+        "mirror": null
+       },
+       {
+        "text": "Tình trạng pháp lý",
+        "mirror": null
+       }
+      ],
+      [
+       {
+        "text": "Chi nhánh",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": null
+       }
+      ],
+      [
+       {
+        "text": "Văn phòng đại diện",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": null
+       }
+      ],
+      [
+       {
+        "text": "Địa điểm kinh doanh",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": null
+       }
+      ]
+     ]
+    },
+    "inputs": []
+   },
+   {
+    "kind": "output-table",
+    "id": "ddkd_truc_thuoc_khoi_phuc",
+    "semantic_key": "ddkd_truc_thuoc_khoi_phuc",
+    "section_id": "ddkd_truc_thuoc_khoi_phuc",
+    "table_index": 1,
+    "grid": {
+     "rows": 3,
+     "cols": 4,
+     "labels": [
+      [
+       "Tên địa điểm kinh doanh",
+       "Mã số/mã số thuế",
+       "Địa chỉ",
+       "Tình trạng pháp lý"
+      ],
+      [
+       "",
+       "",
+       "",
+       ""
+      ],
+      [
+       "",
+       "",
+       "",
+       ""
+      ]
+     ],
+     "cells": [
+      [
+       {
+        "text": "Tên địa điểm kinh doanh",
+        "mirror": null
+       },
+       {
+        "text": "Mã số/mã số thuế",
+        "mirror": null
+       },
+       {
+        "text": "Địa chỉ",
+        "mirror": null
+       },
+       {
+        "text": "Tình trạng pháp lý",
+        "mirror": null
+       }
+      ],
+      [
+       {
+        "text": "",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": null
+       }
+      ],
+      [
+       {
+        "text": "",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": null
+       }
+      ]
+     ]
+    },
+    "inputs": []
    }
   ]
  },
@@ -6188,36 +6914,246 @@
     "label": "Website:"
    },
    {
-    "key": "dn.ten_tieng_viet",
-    "label": "- Tên doanh nghiệp:"
-   },
-   {
-    "key": "ma_so_van_ban",
-    "label": "- Mã số:"
-   },
-   {
-    "key": "tinh_trang_phap_ly",
-    "label": "- Tình trạng pháp lý:"
-   },
-   {
-    "key": "cn.ten_tieng_viet",
-    "label": "- Tên chi nhánh:"
-   },
-   {
-    "key": "dia_chi_khac",
-    "label": "- Địa chỉ:"
-   },
-   {
-    "key": "nguoi_dung_dau.ten",
-    "label": "- Người đứng đầu:"
-   },
-   {
-    "key": "tinh_trang_hoat_dong",
-    "label": "- Tình trạng hoạt động:"
-   },
-   {
     "key": "noi_nhan",
     "label": "Nơi nhận:\n- Như trên;\n- …;\n- Lưu:"
+   }
+  ],
+  "section_specs": [
+   {
+    "kind": "output-table",
+    "id": "khung_ra_soat_4_nhom",
+    "semantic_key": "ra_soat_thong_tin_4_nhom",
+    "section_id": "khung_ra_soat_4_nhom",
+    "table_index": 0,
+    "grid": {
+     "rows": 5,
+     "cols": 8,
+     "labels": [
+      [
+       "Nhóm",
+       "Tên",
+       "Mã số",
+       "Địa chỉ",
+       "Điện thoại",
+       "Người đại diện theo pháp luật /\nNgười đứng đầu",
+       "Đơn vị chủ quản (đối với địa điểm kinh doanh)",
+       "Tình trạng pháp lý /\nTình trạng hoạt động"
+      ],
+      [
+       "1. Doanh nghiệp",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       ""
+      ],
+      [
+       "2. Chi nhánh",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       ""
+      ],
+      [
+       "3. Văn phòng đại diện",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       ""
+      ],
+      [
+       "4. Địa điểm kinh doanh",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       ""
+      ]
+     ],
+     "cells": [
+      [
+       {
+        "text": "Nhóm",
+        "mirror": null
+       },
+       {
+        "text": "Tên",
+        "mirror": null
+       },
+       {
+        "text": "Mã số",
+        "mirror": null
+       },
+       {
+        "text": "Địa chỉ",
+        "mirror": null
+       },
+       {
+        "text": "Điện thoại",
+        "mirror": null
+       },
+       {
+        "text": "Người đại diện theo pháp luật /\nNgười đứng đầu",
+        "mirror": null
+       },
+       {
+        "text": "Đơn vị chủ quản (đối với địa điểm kinh doanh)",
+        "mirror": null
+       },
+       {
+        "text": "Tình trạng pháp lý /\nTình trạng hoạt động",
+        "mirror": null
+       }
+      ],
+      [
+       {
+        "text": "1. Doanh nghiệp",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": "dn.ten_tieng_viet"
+       },
+       {
+        "text": "",
+        "mirror": "ma_so_van_ban"
+       },
+       {
+        "text": "",
+        "mirror": "dn.dia_chi_tru_so"
+       },
+       {
+        "text": "",
+        "mirror": "dien_thoai_khac"
+       },
+       {
+        "text": "",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": "tinh_trang_phap_ly"
+       }
+      ],
+      [
+       {
+        "text": "2. Chi nhánh",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": "cn.ten_tieng_viet"
+       },
+       {
+        "text": "",
+        "mirror": "ma_so_cn"
+       },
+       {
+        "text": "",
+        "mirror": "dia_chi_khac"
+       },
+       {
+        "text": "",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": "nguoi_dung_dau.ten"
+       },
+       {
+        "text": "",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": "tinh_trang_hoat_dong"
+       }
+      ],
+      [
+       {
+        "text": "3. Văn phòng đại diện",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": "cn.ten_tieng_viet"
+       },
+       {
+        "text": "",
+        "mirror": "ma_so_vpdd"
+       },
+       {
+        "text": "",
+        "mirror": "dia_chi_khac"
+       },
+       {
+        "text": "",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": "nguoi_dung_dau.ten"
+       },
+       {
+        "text": "",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": "tinh_trang_hoat_dong"
+       }
+      ],
+      [
+       {
+        "text": "4. Địa điểm kinh doanh",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": "cn.ten_tieng_viet"
+       },
+       {
+        "text": "",
+        "mirror": "ma_so_ddkd"
+       },
+       {
+        "text": "",
+        "mirror": "dia_chi_khac"
+       },
+       {
+        "text": "",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": "nguoi_dung_dau.ten"
+       },
+       {
+        "text": "",
+        "mirror": null
+       },
+       {
+        "text": "",
+        "mirror": "tinh_trang_hoat_dong"
+       }
+      ]
+     ]
+    },
+    "inputs": []
    }
   ]
  },

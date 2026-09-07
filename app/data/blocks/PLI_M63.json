@@ -743,17 +743,102 @@
    "role": "body"
   },
   {
-   "t": "p",
-   "align": "left",
-   "runs": [
+   "t": "table",
+   "widths": null,
+   "rows": [
     {
-     "text": "Tên, mã số, địa chỉ, tình trạng pháp lý địa điểm kinh doanh: .................................................."
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "Tên địa điểm kinh doanh",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Mã số/mã số thuế",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Địa chỉ",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Tình trạng pháp lý",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
+    },
+    {
+     "cells": [
+      {
+       "runs": [],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
+    },
+    {
+     "cells": [
+      {
+       "runs": [],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
     }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
+   ]
   },
   {
    "t": "p",

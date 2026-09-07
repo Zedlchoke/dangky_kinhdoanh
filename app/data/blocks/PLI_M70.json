@@ -373,43 +373,67 @@
    "role": "body"
   },
   {
-   "t": "p",
-   "align": "left",
-   "runs": [
+   "t": "table",
+   "widths": null,
+   "rows": [
     {
-     "text": "1…………………………………………………………………………………………………."
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "1.",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
+    },
     {
-     "text": "2.…………………………………………………………………………………………………"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "2.",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
+    },
     {
-     "text": "3.…………………………………………………………………………………………………"
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "3.",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
     }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
+   ]
   },
   {
    "t": "p",

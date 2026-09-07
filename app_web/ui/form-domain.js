@@ -1695,6 +1695,26 @@
           active_when: [],
           notes: 'Giữ grid khi xuất DOCX dù không nhập liệu (PLAN mục G).'
         }
+      }, {
+        /* [F1-OUT 2026-09-06] ho_so_bao_gom — O1 OUTPUT_ONLY, D6.3: 3 dòng
+         * đánh số cố định in sẵn (không header/STT-header, đúng bản giấy);
+         * CQĐKKD in mô tả tài liệu khi tiếp nhận nên không có mirror key. */
+        sectionId: 'ho_so_bao_gom',
+        semanticKey: 'ds_tai_lieu_ho_so_nop',
+        kind: 'output-table',
+        policy: { allowAdd: false, allowDelete: false, allowReorder: false },
+        anchor: { match: 'ho so bao gom', endMatch: 'thoi gian tra ket qua' },
+        spec: {
+          kind: 'output-table',
+          section_id: 'ho_so_bao_gom',
+          semantic_key: 'ds_tai_lieu_ho_so_nop',
+          form_id: 'PLI_M70',
+          grid: { rows: 3, cols: 2,
+            labels: [['1.', ''], ['2.', ''], ['3.', '']] },
+          inputs: [],
+          outputOnlyTags: [],
+          active_when: []
+        }
       }]
     },
     /* O2 - output-table biến thể 1 ô ký (chỉ cơ quan cấp tỉnh). */
@@ -1717,6 +1737,385 @@
           grid: { rows: 1, cols: 1,
             labels: [['(TÊN CƠ QUAN ĐĂNG KÝ KINH DOANH CẤP TỈNH)']] },
           inputs: [],
+          active_when: []
+        }
+      }, {
+        /* [F1-OUT 2026-09-06] ho_so_bao_gom_online — O1 OUTPUT_ONLY, D6.3:
+         * bản điện tử của M70, 3 dòng đánh số cố định in sẵn. */
+        sectionId: 'ho_so_bao_gom_online',
+        semanticKey: 'ds_tai_lieu_ho_so_online',
+        kind: 'output-table',
+        policy: { allowAdd: false, allowDelete: false, allowReorder: false },
+        anchor: { match: 'ho so bao gom', endMatch: 'thoi gian tra ket qua' },
+        spec: {
+          kind: 'output-table',
+          section_id: 'ho_so_bao_gom_online',
+          semantic_key: 'ds_tai_lieu_ho_so_online',
+          form_id: 'PLI_M71',
+          grid: { rows: 3, cols: 2,
+            labels: [['1.', ''], ['2.', ''], ['3.', '']] },
+          inputs: [],
+          outputOnlyTags: [],
+          active_when: []
+        }
+      }]
+    },
+    /* ==================== F1-OUT (2026-09-06): 11 section O1 OUTPUT_ONLY ====
+     * Các lưới do CQĐKKD phát hành — KHÔNG có input nào (O1: render từ hồ sơ
+     * /canonical store khi có, ô không có dữ liệu in RỖNG đúng pháp định).
+     * Cơ chế render: grid.cells per-cell mirror binding — output-table.js vẽ
+     * span.mirror-fld read-only (cùng class với render.js band mirror); blocks
+     * mirror run tương ứng do converter sinh từ the {key} trong template
+     * (tools/build_form_maps.py _build_output_table_grid + docx_to_blocks
+     * _bind_output_grid_mirrors). outputOnlyTags = danh sách mirror key của
+     * section (không phải cột nhập). Anchor heading-paragraph được render.js
+     * GIỮ hiển thị (không bọc dupe-anchor) — phần nguồn phía sau bị thay bằng
+     * component grid. */
+    /* F1O-1 - M52 khung rà soát 4 nhóm: 4 hàng DN/CN/VPĐD/ĐĐKD; D4.2=A tách
+     * key mã số (ma_so_van_ban giữ cho DN; ma_so_cn/ma_so_vpdd/ma_so_ddkd). */
+    'PLI_M52': {
+      sections: [{
+        sectionId: 'khung_ra_soat_4_nhom',
+        semanticKey: 'ra_soat_thong_tin_4_nhom',
+        kind: 'output-table',
+        policy: { allowAdd: false, allowDelete: false, allowReorder: false },
+        anchor: { match: 'de nghi doanh nghiep ra soat, kiem tra doi chieu',
+          endMatch: 'sau khi ra soat, de nghi doanh nghiep gui' },
+        spec: {
+          kind: 'output-table',
+          section_id: 'khung_ra_soat_4_nhom',
+          semantic_key: 'ra_soat_thong_tin_4_nhom',
+          form_id: 'PLI_M52',
+          grid: {
+            rows: 5, cols: 8,
+            labels: [
+              ['Nhóm', 'Tên', 'Mã số', 'Địa chỉ', 'Điện thoại',
+                'Người đại diện theo pháp luật /\nNgười đứng đầu',
+                'Đơn vị chủ quản (đối với địa điểm kinh doanh)',
+                'Tình trạng pháp lý /\nTình trạng hoạt động'],
+              ['1. Doanh nghiệp', '', '', '', '', '', '', ''],
+              ['2. Chi nhánh', '', '', '', '', '', '', ''],
+              ['3. Văn phòng đại diện', '', '', '', '', '', '', ''],
+              ['4. Địa điểm kinh doanh', '', '', '', '', '', '', '']
+            ],
+            cells: [
+              [{ text: 'Nhóm' }, { text: 'Tên' }, { text: 'Mã số' },
+                { text: 'Địa chỉ' }, { text: 'Điện thoại' },
+                { text: 'Người đại diện theo pháp luật /\nNgười đứng đầu' },
+                { text: 'Đơn vị chủ quản (đối với địa điểm kinh doanh)' },
+                { text: 'Tình trạng pháp lý /\nTình trạng hoạt động' }],
+              [{ text: '1. Doanh nghiệp' }, { mirror: 'dn.ten_tieng_viet' },
+                { mirror: 'ma_so_van_ban' }, { mirror: 'dn.dia_chi_tru_so' },
+                { mirror: 'dien_thoai_khac' }, { text: '' }, { text: '' },
+                { mirror: 'tinh_trang_phap_ly' }],
+              [{ text: '2. Chi nhánh' }, { mirror: 'cn.ten_tieng_viet' },
+                { mirror: 'ma_so_cn' }, { mirror: 'dia_chi_khac' },
+                { text: '' }, { mirror: 'nguoi_dung_dau.ten' }, { text: '' },
+                { mirror: 'tinh_trang_hoat_dong' }],
+              [{ text: '3. Văn phòng đại diện' }, { mirror: 'cn.ten_tieng_viet' },
+                { mirror: 'ma_so_vpdd' }, { mirror: 'dia_chi_khac' },
+                { text: '' }, { mirror: 'nguoi_dung_dau.ten' }, { text: '' },
+                { mirror: 'tinh_trang_hoat_dong' }],
+              [{ text: '4. Địa điểm kinh doanh' }, { mirror: 'cn.ten_tieng_viet' },
+                { mirror: 'ma_so_ddkd' }, { mirror: 'dia_chi_khac' },
+                { text: '' }, { mirror: 'nguoi_dung_dau.ten' }, { text: '' },
+                { mirror: 'tinh_trang_hoat_dong' }]
+            ]
+          },
+          inputs: [],
+          outputOnlyTags: ['dn.ten_tieng_viet', 'ma_so_van_ban',
+            'dn.dia_chi_tru_so', 'dien_thoai_khac', 'tinh_trang_phap_ly',
+            'cn.ten_tieng_viet', 'ma_so_cn', 'ma_so_vpdd', 'ma_so_ddkd',
+            'dia_chi_khac', 'nguoi_dung_dau.ten', 'tinh_trang_hoat_dong'],
+          active_when: [],
+          notes: 'O1 OUTPUT_ONLY; D4.2=A tách key ma_so theo nhóm; render ' +
+            'từ canonical store, ô thiếu dữ liệu in trống (docs/' +
+            'owner_decision_packet_v7.md, docs/decision_registry.md).'
+        }
+      }]
+    },
+    /* F1O-2 - M56 tiếp tục kinh doanh trước hạn cho "một hoặc một số" đơn vị:
+     * 1 hàng mirror + 1 hàng trống pháp định (D6.3). */
+    'PLI_M56': {
+      sections: [{
+        sectionId: 'cn_vppd_ddkd_tiep_tuc_truoc_han',
+        semanticKey: 'don_vi_tiep_tuc_truoc_han',
+        kind: 'output-table',
+        policy: { allowAdd: false, allowDelete: false, allowReorder: false },
+        anchor: { match: 'mot hoac mot so chi nhanh/van phong dai dien/dia diem',
+          endMatch: 'neu doanh nghiep chi thong bao tiep tuc' },
+        spec: {
+          kind: 'output-table',
+          section_id: 'cn_vppd_ddkd_tiep_tuc_truoc_han',
+          semantic_key: 'don_vi_tiep_tuc_truoc_han',
+          form_id: 'PLI_M56',
+          grid: {
+            rows: 3, cols: 4,
+            labels: [
+              ['Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh (ghi bằng chữ in hoa)', 'Mã số',
+                'Tên chi nhánh chủ quản (đối với địa điểm kinh doanh trực thuộc chi nhánh)', 'Mã số chi nhánh chủ quản'],
+              ['', '', '', ''],
+              ['', '', '', '']
+            ],
+            cells: [
+              [{ text: 'Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh (ghi bằng chữ in hoa)' },
+                { text: 'Mã số' },
+                { text: 'Tên chi nhánh chủ quản (đối với địa điểm kinh doanh trực thuộc chi nhánh)' },
+                { text: 'Mã số chi nhánh chủ quản' }],
+              [{ mirror: 'cn.ten_tieng_viet' }, { mirror: 'cn.ma_so' },
+                { text: '' }, { text: '' }],
+              [{ text: '' }, { text: '' }, { text: '' }, { text: '' }]
+            ]
+          },
+          inputs: [],
+          outputOnlyTags: ['cn.ten_tieng_viet', 'cn.ma_so'],
+          active_when: []
+        }
+      }]
+    },
+    /* F1O-3 - M63 địa điểm trực thuộc bị thu hồi: header + 2 hàng trống
+     * pháp định (không có loop key canonical trong hồ sơ). */
+    'PLI_M63': {
+      sections: [{
+        sectionId: 'dia_diem_truc_thuoc_bi_thu_hoi',
+        semanticKey: 'ddkd_truc_thuoc_bi_thu_hoi',
+        kind: 'output-table',
+        policy: { allowAdd: false, allowDelete: false, allowReorder: false },
+        anchor: { match: 'co cac dia diem kinh doanh truc thuoc chi nhanh',
+          endMatch: 'la chi nhanh/van phong dai dien/dia diem kinh doanh cua doanh nghiep sau' },
+        spec: {
+          kind: 'output-table',
+          section_id: 'dia_diem_truc_thuoc_bi_thu_hoi',
+          semantic_key: 'ddkd_truc_thuoc_bi_thu_hoi',
+          form_id: 'PLI_M63',
+          grid: {
+            rows: 3, cols: 4,
+            labels: [
+              ['Tên địa điểm kinh doanh', 'Mã số/mã số thuế', 'Địa chỉ', 'Tình trạng pháp lý'],
+              ['', '', '', ''],
+              ['', '', '', '']
+            ],
+            cells: [
+              [{ text: 'Tên địa điểm kinh doanh' }, { text: 'Mã số/mã số thuế' },
+                { text: 'Địa chỉ' }, { text: 'Tình trạng pháp lý' }],
+              [{ text: '' }, { text: '' }, { text: '' }, { text: '' }],
+              [{ text: '' }, { text: '' }, { text: '' }, { text: '' }]
+            ]
+          },
+          inputs: [],
+          outputOnlyTags: [],
+          active_when: []
+        }
+      }]
+    },
+    /* F1O-4a/4b - M66 hai danh sách chấm dứt (defect bo_ten_ma_x23: tách
+     * section, mỗi đơn vị 1 bộ tên+mã trên 1 dòng). */
+    'PLI_M66': {
+      sections: [{
+        sectionId: 'don_vi_dang_lam_thu_tuc_cham_dut',
+        semanticKey: 'don_vi_dang_cham_dut',
+        kind: 'output-table',
+        policy: { allowAdd: false, allowDelete: false, allowReorder: false },
+        anchor: { match: 'thong tin chi nhanh/van phong dai dien/dia diem kinh doanh dang lam thu tuc cham dut',
+          endMatch: 'truong hop chi nhanh dang lam thu tuc cham dut hoat dong co dia diem' },
+        spec: {
+          kind: 'output-table',
+          section_id: 'don_vi_dang_lam_thu_tuc_cham_dut',
+          semantic_key: 'don_vi_dang_cham_dut',
+          form_id: 'PLI_M66',
+          grid: {
+            rows: 3, cols: 5,
+            labels: [
+              ['Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh (ghi bằng chữ in hoa)', 'Mã số/mã số thuế',
+                'Số Giấy chứng nhận đăng ký hoạt động (trường hợp không có mã số/mã số thuế)', 'Ngày cấp', 'Nơi cấp'],
+              ['', '', '', '', ''],
+              ['', '', '', '', '']
+            ],
+            cells: [
+              [{ text: 'Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh (ghi bằng chữ in hoa)' },
+                { text: 'Mã số/mã số thuế' },
+                { text: 'Số Giấy chứng nhận đăng ký hoạt động (trường hợp không có mã số/mã số thuế)' },
+                { text: 'Ngày cấp' }, { text: 'Nơi cấp' }],
+              [{ mirror: 'cn.ten_tieng_viet' }, { mirror: 'cn.ma_so_2' },
+                { text: '' }, { text: '' }, { text: '' }],
+              [{ text: '' }, { text: '' }, { text: '' }, { text: '' }, { text: '' }]
+            ]
+          },
+          inputs: [],
+          outputOnlyTags: ['cn.ten_tieng_viet', 'cn.ma_so_2'],
+          active_when: []
+        }
+      }, {
+        sectionId: 'ddkd_truc_thuoc_dang_cham_dut',
+        semanticKey: 'ddkd_truc_thuoc_dang_cham_dut',
+        kind: 'output-table',
+        policy: { allowAdd: false, allowDelete: false, allowReorder: false },
+        anchor: { match: 'co cac dia diem kinh doanh truc thuoc sau dang lam thu tuc cham dut',
+          endMatch: 'dang tai thong bao nay tren cong thong tin quoc gia' },
+        spec: {
+          kind: 'output-table',
+          section_id: 'ddkd_truc_thuoc_dang_cham_dut',
+          semantic_key: 'ddkd_truc_thuoc_dang_cham_dut',
+          form_id: 'PLI_M66',
+          grid: {
+            rows: 3, cols: 2,
+            labels: [
+              ['Tên địa điểm kinh doanh trực thuộc (ghi bằng chữ in hoa)', 'Mã số/mã số thuế'],
+              ['', ''],
+              ['', '']
+            ],
+            cells: [
+              [{ text: 'Tên địa điểm kinh doanh trực thuộc (ghi bằng chữ in hoa)' },
+                { text: 'Mã số/mã số thuế' }],
+              [{ mirror: 'cn.ten_tieng_viet' }, { mirror: 'cn.ma_so_2' }],
+              [{ text: '' }, { text: '' }]
+            ]
+          },
+          inputs: [],
+          outputOnlyTags: ['cn.ten_tieng_viet', 'cn.ma_so_2'],
+          active_when: []
+        }
+      }]
+    },
+    /* F1O-5 - M67 (các) đơn vị chấm dứt sau đây: nhiều đơn vị/giấy. */
+    'PLI_M67': {
+      sections: [{
+        sectionId: 'don_vi_cham_dut_sau_day',
+        semanticKey: 'don_vi_cham_dut_m67',
+        kind: 'output-table',
+        policy: { allowAdd: false, allowDelete: false, allowReorder: false },
+        anchor: { match: 'thong bao (cac) chi nhanh/van phong dai dien/dia diem kinh doanh sau day',
+          endMatch: 'noi nhan' },
+        spec: {
+          kind: 'output-table',
+          section_id: 'don_vi_cham_dut_sau_day',
+          semantic_key: 'don_vi_cham_dut_m67',
+          form_id: 'PLI_M67',
+          grid: {
+            rows: 3, cols: 5,
+            labels: [
+              ['Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh (ghi bằng chữ in hoa)', 'Mã số đơn vị hoặc mã số thuế',
+                'Địa chỉ', 'Điện thoại/Fax/Thư điện tử/Website (nếu có)',
+                'Chi nhánh chủ quản (tên, địa chỉ, mã số - đối với địa điểm kinh doanh trực thuộc chi nhánh)'],
+              ['', '', '', '', ''],
+              ['', '', '', '', '']
+            ],
+            cells: [
+              [{ text: 'Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh (ghi bằng chữ in hoa)' },
+                { text: 'Mã số đơn vị hoặc mã số thuế' }, { text: 'Địa chỉ' },
+                { text: 'Điện thoại/Fax/Thư điện tử/Website (nếu có)' },
+                { text: 'Chi nhánh chủ quản (tên, địa chỉ, mã số - đối với địa điểm kinh doanh trực thuộc chi nhánh)' }],
+              [{ mirror: 'cn.ten_tieng_viet' }, { mirror: 'cn.ma_so' },
+                { mirror: 'cn.dia_chi' }, { text: '' }, { text: '' }],
+              [{ text: '' }, { text: '' }, { text: '' }, { text: '' }, { text: '' }]
+            ]
+          },
+          inputs: [],
+          outputOnlyTags: ['cn.ten_tieng_viet', 'cn.ma_so', 'cn.dia_chi'],
+          active_when: []
+        }
+      }]
+    },
+    /* F1O-6 - M68 danh sách đơn vị chấm dứt khi DN giải thể. */
+    'PLI_M68': {
+      sections: [{
+        sectionId: 'don_vi_cham_dut_khi_doanh_nghiep_giai_the',
+        semanticKey: 'don_vi_cham_dut_giai_the',
+        kind: 'output-table',
+        policy: { allowAdd: false, allowDelete: false, allowReorder: false },
+        anchor: { match: 'cac chi nhanh, van phong dai dien, dia diem kinh doanh sau cua doanh nghiep dang lam thu tuc cham dut',
+          endMatch: 'truong hop giai the doanh nghiep theo quy dinh tai dieu 208' },
+        spec: {
+          kind: 'output-table',
+          section_id: 'don_vi_cham_dut_khi_doanh_nghiep_giai_the',
+          semantic_key: 'don_vi_cham_dut_giai_the',
+          form_id: 'PLI_M68',
+          grid: {
+            rows: 3, cols: 2,
+            labels: [
+              ['Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh', 'Mã số hoặc mã số thuế'],
+              ['', ''],
+              ['', '']
+            ],
+            cells: [
+              [{ text: 'Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh' },
+                { text: 'Mã số hoặc mã số thuế' }],
+              [{ mirror: 'cn.ten_tieng_viet' }, { mirror: 'cn.ma_so' }],
+              [{ text: '' }, { text: '' }]
+            ]
+          },
+          inputs: [],
+          outputOnlyTags: ['cn.ten_tieng_viet', 'cn.ma_so'],
+          active_when: []
+        }
+      }]
+    },
+    /* F1O-7/8 - M70 + M71 "Hồ sơ bao gồm:" 3 dòng đánh số cố định, không
+     * header (in sẵn dòng trống pháp định như bản giấy — D6.3): đăng ký ở
+     * entry PLI_M70 / PLI_M71 phía trên (section thứ 2 của từng form). */
+    /* F1O-9/10 - M75 hai lưới khôi phục: 3 dòng định loại đơn vị + địa điểm
+     * trực thuộc (header + hàng trống pháp định — D6.3). */
+    'PLI_M75': {
+      sections: [{
+        sectionId: 'cn_vppd_ddkd_khoi_phuc',
+        semanticKey: 'don_vi_khoi_phuc_cua_dn',
+        kind: 'output-table',
+        policy: { allowAdd: false, allowDelete: false, allowReorder: false },
+        anchor: { match: 'co cac chi nhanh/van phong dai dien/dia diem kinh doanh',
+          endMatch: 'doi voi chi nhanh/van phong dai dien/dia diem kinh doanh thi ghi' },
+        spec: {
+          kind: 'output-table',
+          section_id: 'cn_vppd_ddkd_khoi_phuc',
+          semantic_key: 'don_vi_khoi_phuc_cua_dn',
+          form_id: 'PLI_M75',
+          grid: {
+            rows: 4, cols: 5,
+            labels: [
+              ['Loại đơn vị', 'Tên', 'Mã số/mã số thuế', 'Địa chỉ', 'Tình trạng pháp lý'],
+              ['Chi nhánh', '', '', '', ''],
+              ['Văn phòng đại diện', '', '', '', ''],
+              ['Địa điểm kinh doanh', '', '', '', '']
+            ],
+            cells: [
+              [{ text: 'Loại đơn vị' }, { text: 'Tên' }, { text: 'Mã số/mã số thuế' },
+                { text: 'Địa chỉ' }, { text: 'Tình trạng pháp lý' }],
+              [{ text: 'Chi nhánh' }, { text: '' }, { text: '' }, { text: '' }, { text: '' }],
+              [{ text: 'Văn phòng đại diện' }, { text: '' }, { text: '' }, { text: '' }, { text: '' }],
+              [{ text: 'Địa điểm kinh doanh' }, { text: '' }, { text: '' }, { text: '' }, { text: '' }]
+            ]
+          },
+          inputs: [],
+          outputOnlyTags: [],
+          active_when: []
+        }
+      }, {
+        sectionId: 'ddkd_truc_thuoc_khoi_phuc',
+        semanticKey: 'ddkd_truc_thuoc_khoi_phuc',
+        kind: 'output-table',
+        policy: { allowAdd: false, allowDelete: false, allowReorder: false },
+        anchor: { match: 'co cac dia diem kinh doanh truc thuoc chi nhanh',
+          endMatch: 'la chi nhanh/van phong dai dien/dia diem kinh doanh cua doanh nghiep sau' },
+        spec: {
+          kind: 'output-table',
+          section_id: 'ddkd_truc_thuoc_khoi_phuc',
+          semantic_key: 'ddkd_truc_thuoc_khoi_phuc',
+          form_id: 'PLI_M75',
+          grid: {
+            rows: 3, cols: 4,
+            labels: [
+              ['Tên địa điểm kinh doanh', 'Mã số/mã số thuế', 'Địa chỉ', 'Tình trạng pháp lý'],
+              ['', '', '', ''],
+              ['', '', '', '']
+            ],
+            cells: [
+              [{ text: 'Tên địa điểm kinh doanh' }, { text: 'Mã số/mã số thuế' },
+                { text: 'Địa chỉ' }, { text: 'Tình trạng pháp lý' }],
+              [{ text: '' }, { text: '' }, { text: '' }, { text: '' }],
+              [{ text: '' }, { text: '' }, { text: '' }, { text: '' }]
+            ]
+          },
+          inputs: [],
+          outputOnlyTags: [],
           active_when: []
         }
       }]

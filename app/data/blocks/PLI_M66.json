@@ -344,103 +344,134 @@
    "role": "body"
   },
   {
-   "t": "p",
-   "align": "left",
-   "runs": [
+   "t": "table",
+   "widths": null,
+   "rows": [
     {
-     "text": "- Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh ("
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh (ghi bằng chữ in hoa)",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Mã số/mã số thuế",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Số Giấy chứng nhận đăng ký hoạt động (trường hợp không có mã số/mã số thuế)",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Ngày cấp",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Nơi cấp",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
     },
     {
-     "text": "ghi bằng chữ in hoa",
-     "i": true
+     "cells": [
+      {
+       "runs": [
+        {
+         "mirror": {
+          "key": "cn.ten_tieng_viet"
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "mirror": {
+          "key": "cn.ma_so_2"
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
     },
     {
-     "text": "): "
-    },
-    {
-     "input": {
-      "key": "cn.ten_tieng_viet",
-      "w": 47
-     }
+     "cells": [
+      {
+       "runs": [],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
     }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Mã số/mã số thuế của chi nhánh/văn phòng đại diện/địa điểm kinh doanh: "
-    },
-    {
-     "input": {
-      "key": "cn.ma_so_2",
-      "w": 43
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Số Giấy chứng nhận đăng ký hoạt động ("
-    },
-    {
-     "text": "trường hợp không có mã số/mã số thuế của chi nhánh/văn phòng đại diện/địa điểm kinh doanh",
-     "i": true
-    },
-    {
-     "text": "): "
-    },
-    {
-     "input": {
-      "key": "cn.ma_so_2",
-      "w": 60
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Ngày cấp: "
-    },
-    {
-     "input": {
-      "key": "ngay_cap",
-      "w": 13
-     }
-    },
-    {
-     "text": " Nơi cấp: "
-    },
-    {
-     "input": {
-      "key": "noi_cap",
-      "w": 13
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
+   ]
   },
   {
    "t": "p",
@@ -477,62 +508,74 @@
    "role": "body"
   },
   {
-   "t": "p",
-   "align": "left",
-   "runs": [
+   "t": "table",
+   "widths": null,
+   "rows": [
     {
-     "text": "Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh ("
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "Tên địa điểm kinh doanh trực thuộc (ghi bằng chữ in hoa)",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Mã số/mã số thuế",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
     },
     {
-     "text": "ghi bằng chữ in hoa",
-     "i": true
+     "cells": [
+      {
+       "runs": [
+        {
+         "mirror": {
+          "key": "cn.ten_tieng_viet"
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "mirror": {
+          "key": "cn.ma_so_2"
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
     },
     {
-     "text": "): "
-    },
-    {
-     "input": {
-      "key": "cn.ten_tieng_viet",
-      "w": 46
-     }
+     "cells": [
+      {
+       "runs": [],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
     }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Mã số/mã số thuế của chi nhánh/văn phòng đại diện/địa điểm kinh doanh: "
-    },
-    {
-     "input": {
-      "key": "cn.ma_so_2",
-      "w": 43
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "- …"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
+   ]
   },
   {
    "t": "p",

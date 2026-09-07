@@ -1,0 +1,51 @@
+{
+  "form_id": "PLI_M63",
+  "group": "publication",
+  "note": "F1-OUT spec registration (base e268038) - QUYET DINH THU HOI GCNDKHD. Section dia_diem_truc_thuoc_bi_thu_hoi (manifest: editable-grid/missing_grid, PLAN muc E, blocks khong co field nao cho danh sach DDKD truc thuoc) chuyen OUTPUT_ONLY theo O1 (docs/owner_decision_packet_v7.md; D6.2/D6.3 docs/decision_registry.md). | NGUON THAT: 03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_63_quyet_dinh_ve_viec_thu_hoi_giay_chung_nhan_dang_ky_hoat_dong_chi_nhanh_van_phong_dai_dien_giay_c.docx (manifest anchor #p32-p33; section output-table noi_dung_quyet_dinh_thu_hoi DAMG KY truoc do - khong dung lai). | EVIDENCE BLOCKS (app/data/blocks/PLI_M63.json): dong 'Co cac dia diem kinh doanh truc thuoc chi nhanh:' (b032) ke theo DONG DON 'Ten, ma so, dia chi, tinh trang phap ly dia diem kinh doanh: ......' (b033) - khong input nao trong blocks cho vung nay. | REBUILD: drop 1 paragraph b033 (scoped [anchor, 'la chi nhanh/van phong dai dien/dia diem kinh doanh cua doanh nghiep sau')), chen 1 output-table 3r x 4c: header + 2 DONG TRONG phap dinh (D6.3: khong co loop key canonical cho DDKD truc thuoc trong ho so -> luoi in san dong trong nhu ban giay, KHONG tu sinh mirror gia). | LUAT: O1 OUTPUT_ONLY (quyet dinh do TRUONG CQDKKD ban hanh;phan Dieu 1 la output khi tich hop he thong co quan); legal_status.blocked=false.",
+  "tables": [
+    {
+      "kind": "output-table",
+      "pos": "after",
+      "anchor": "co cac dia diem kinh doanh truc thuoc chi nhanh",
+      "drop_until": "^la chi nhanh/van phong dai dien/dia diem kinh doanh cua doanh nghiep sau",
+      "no_default_drops": true,
+      "drop": [
+        "^ten, ma so, dia chi, tinh trang phap ly dia diem kinh doanh"
+      ],
+      "legal_status": {
+        "blocked": false,
+        "ref": "O1 OUTPUT_ONLY docs/owner_decision_packet_v7.md (11 section); D6.2/D6.3 docs/decision_registry.md"
+      },
+      "spec": {
+        "id": "dia_diem_truc_thuoc_bi_thu_hoi",
+        "kind": "output-table",
+        "section_id": "dia_diem_truc_thuoc_bi_thu_hoi",
+        "semantic_key": "ddkd_truc_thuoc_bi_thu_hoi",
+        "grid": {
+          "rows": 3,
+          "cols": 4,
+          "cells": [
+            [
+              {"text": "Tên địa điểm kinh doanh"},
+              {"text": "Mã số/mã số thuế"},
+              {"text": "Địa chỉ"},
+              {"text": "Tình trạng pháp lý"}
+            ],
+            [
+              {"text": ""},
+              {"text": ""},
+              {"text": ""},
+              {"text": ""}
+            ],
+            [
+              {"text": ""},
+              {"text": ""},
+              {"text": ""},
+              {"text": ""}
+            ]
+          ]
+        }
+      }
+    }
+  ]
+}

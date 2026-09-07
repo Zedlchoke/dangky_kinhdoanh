@@ -1,0 +1,105 @@
+{
+  "form_id": "PLI_M75",
+  "group": "publication",
+  "note": "F1-OUT spec registration (base e268038) - THONG BAO KHOI PHUC GCNDKDN/GCNDKHD. HAI section cn_vppd_ddkd_khoi_phuc + ddkd_truc_thuoc_khoi_phuc (manifest: editable-grid/missing_grid, PLAN muc E) chuyen OUTPUT_ONLY theo O1 (docs/owner_decision_packet_v7.md; D6.2/D6.3 docs/decision_registry.md). Section output-table thong_bao_khoi_phuc_gcn DAMG KY truoc do - khong dung lai. | NGUON THAT: 04_tam_ngung_cham_dut_giai_the/PL1_Mau_75_thong_bao_ve_viec_khoi_phuc_giay_chung_nhan_dang_ky_doanh_nghiep_giay_chung_nhan_dang_ky_hoat_do.docx (manifest anchor #p22-p25 va #p34-p35). | EVIDENCE BLOCKS (app/data/blocks/PLI_M75.json): vung A b021-b024 - heading 'Co cac chi nhanh/van phong dai dien/dia diem kinh doanh:' ke 3 DONG DINH LOAI 'Ten, ma so, dia chi, tinh trang phap ly chi nhanh/van phong dai dien/dia diem kinh doanh: ......' (KHONG input nao); vung B b033-b034 - heading 'Co cac dia diem kinh doanh truc thuoc chi nhanh:' ke 1 dong 'Ten, ma so, dia chi, tinh trang phap ly dia diem kinh doanh: ......' (khong input). | REBUILD: (A) drop 3 dong dinh loai scoped [anchor, 'doi voi chi nhanh/van phong dai dien/dia diem kinh doanh thi ghi'), chen output-table 4r x 5c: header + 3 DONG DINH LOAI phap dinh (Chi nhanh / Van phong dai dien / Dia diem kinh doanh) - 3 dong khoa loai don vi theo census notes ('3 dong theo loai don vu CN/VPPD/DDKD'); (B) drop 1 dong scoped [anchor, 'la chi nhanh/van phong dai dien/dia diem kinh doanh cua doanh nghiep sau'), chen output-table 3r x 4c: header + 2 dong trong. | MIRROR POLICY: ca 2 luoi KHONG co loop key canonical trong ho so (D6.3) -> in san dong trong phap dinh nhu ban giay, KHONG tu sinh mirror gia. Thong tin don vi dang khoi phuc nam o vung 'Doi voi chi nhnh... thi ghi' (cn.ten_tieng_viet/cn.ma_so_2 giu nguyen nhu input). | LUAT: O1 OUTPUT_ONLY; legal_status.blocked=false.",
+  "tables": [
+    {
+      "kind": "output-table",
+      "pos": "after",
+      "anchor": "co cac chi nhanh/van phong dai dien/dia diem kinh doanh",
+      "drop_until": "doi voi chi nhanh/van phong dai dien/dia diem kinh doanh thi ghi",
+      "no_default_drops": true,
+      "drop": [
+        "^ten, ma so, dia chi, tinh trang phap ly"
+      ],
+      "legal_status": {
+        "blocked": false,
+        "ref": "O1 OUTPUT_ONLY docs/owner_decision_packet_v7.md (11 section); D6.2/D6.3 docs/decision_registry.md"
+      },
+      "spec": {
+        "id": "cn_vppd_ddkd_khoi_phuc",
+        "kind": "output-table",
+        "section_id": "cn_vppd_ddkd_khoi_phuc",
+        "semantic_key": "don_vi_khoi_phuc_cua_dn",
+        "grid": {
+          "rows": 4,
+          "cols": 5,
+          "cells": [
+            [
+              {"text": "Loại đơn vị"},
+              {"text": "Tên"},
+              {"text": "Mã số/mã số thuế"},
+              {"text": "Địa chỉ"},
+              {"text": "Tình trạng pháp lý"}
+            ],
+            [
+              {"text": "Chi nhánh"},
+              {"text": ""},
+              {"text": ""},
+              {"text": ""},
+              {"text": ""}
+            ],
+            [
+              {"text": "Văn phòng đại diện"},
+              {"text": ""},
+              {"text": ""},
+              {"text": ""},
+              {"text": ""}
+            ],
+            [
+              {"text": "Địa điểm kinh doanh"},
+              {"text": ""},
+              {"text": ""},
+              {"text": ""},
+              {"text": ""}
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "kind": "output-table",
+      "pos": "after",
+      "anchor": "co cac dia diem kinh doanh truc thuoc chi nhanh",
+      "drop_until": "^la chi nhanh/van phong dai dien/dia diem kinh doanh cua doanh nghiep sau",
+      "no_default_drops": true,
+      "drop": [
+        "^ten, ma so, dia chi, tinh trang phap ly"
+      ],
+      "legal_status": {
+        "blocked": false,
+        "ref": "O1 OUTPUT_ONLY docs/owner_decision_packet_v7.md (11 section); D6.2/D6.3 docs/decision_registry.md"
+      },
+      "spec": {
+        "id": "ddkd_truc_thuoc_khoi_phuc",
+        "kind": "output-table",
+        "section_id": "ddkd_truc_thuoc_khoi_phuc",
+        "semantic_key": "ddkd_truc_thuoc_khoi_phuc",
+        "grid": {
+          "rows": 3,
+          "cols": 4,
+          "cells": [
+            [
+              {"text": "Tên địa điểm kinh doanh"},
+              {"text": "Mã số/mã số thuế"},
+              {"text": "Địa chỉ"},
+              {"text": "Tình trạng pháp lý"}
+            ],
+            [
+              {"text": ""},
+              {"text": ""},
+              {"text": ""},
+              {"text": ""}
+            ],
+            [
+              {"text": ""},
+              {"text": ""},
+              {"text": ""},
+              {"text": ""}
+            ]
+          ]
+        }
+      }
+    }
+  ]
+}

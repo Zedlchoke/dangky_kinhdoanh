@@ -1,0 +1,46 @@
+{
+  "form_id": "PLI_M68",
+  "group": "publication",
+  "note": "F1-OUT spec registration (base e268038) - THONG BAO DOANH NGHIEP DANG LAM THU TUC GIAI THE. Section don_vi_cham_dut_khi_doanh_nghiep_giai_the (manifest: editable-grid/missing_grid, detector 'Cac ... sau', blocks chi 1 bo cn.ten_tieng_viet/cn.ma_so) chuyen OUTPUT_ONLY theo O1 (docs/owner_decision_packet_v7.md; D6.2/D6.3 docs/decision_registry.md). Section output-table thong_bao_dang_giai_the DAMG KY truoc do - khong dung lai. | NGUON THAT: 04_tam_ngung_cham_dut_giai_the/PL1_Mau_68_thong_bao_ve_viec_doanh_nghiep_dang_lam_thu_tuc_giai_the.docx (manifest anchor #p17-p19). | EVIDENCE BLOCKS (app/data/blocks/PLI_M68.json): b016 heading 'Cac chi nhanh, van phong dai dien, dia diem kinh doanh sau...' + b017 Ten (cn.ten_tieng_viet) + b018 Ma so hoac mst (cn.ma_so); chan trang 2 'Ghi ten cua tat ca nguoi dai dien...' khong lien quan so dong. | REBUILD: drop 2 paragraph scoped [anchor, drop_until '^truong hop giai the doanh nghiep theo quy dinh tai dieu 208'), chen 1 output-table 3r x 2c (header + 1 dong mirror + 1 dong trong phap dinh). Giu nguyen phan dau thong bao (dn.*, so_gcn_dkkd, Do2), 2 bien the Dieu 208/209, noi nhan, truong don vi. | MIRROR POLICY: ten -> cn.ten_tieng_viet; ma so/mst -> cn.ma_so (key canonical hien tai). | LUAT: O1 OUTPUT_ONLY (bieu do CQB dang tai Cong QTG); legal_status.blocked=false.",
+  "tables": [
+    {
+      "kind": "output-table",
+      "pos": "after",
+      "anchor": "cac chi nhanh, van phong dai dien, dia diem kinh doanh sau cua doanh nghiep dang lam thu tuc cham dut",
+      "drop_until": "^truong hop giai the doanh nghiep theo quy dinh tai dieu 208",
+      "no_default_drops": true,
+      "drop": [
+        "^ten chi nhanh/van phong dai dien/dia diem kinh doanh:",
+        "^ma so chi nhanh/van phong dai dien/dia diem kinh doanh hoac ma so thue"
+      ],
+      "legal_status": {
+        "blocked": false,
+        "ref": "O1 OUTPUT_ONLY docs/owner_decision_packet_v7.md (11 section); D6.2/D6.3 docs/decision_registry.md"
+      },
+      "spec": {
+        "id": "don_vi_cham_dut_khi_doanh_nghiep_giai_the",
+        "kind": "output-table",
+        "section_id": "don_vi_cham_dut_khi_doanh_nghiep_giai_the",
+        "semantic_key": "don_vi_cham_dut_giai_the",
+        "grid": {
+          "rows": 3,
+          "cols": 2,
+          "cells": [
+            [
+              {"text": "Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh"},
+              {"text": "Mã số hoặc mã số thuế"}
+            ],
+            [
+              {"mirror": "cn.ten_tieng_viet"},
+              {"mirror": "cn.ma_so"}
+            ],
+            [
+              {"text": ""},
+              {"text": ""}
+            ]
+          ]
+        }
+      }
+    }
+  ]
+}

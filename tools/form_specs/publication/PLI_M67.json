@@ -1,0 +1,62 @@
+{
+  "form_id": "PLI_M67",
+  "group": "publication",
+  "note": "F1-OUT spec registration (base e268038) - THONG BAO CHAM DUT HOAT DONG CN/VPPD/DDKD. Section don_vi_cham_dut_sau_day (manifest: editable-grid/missing_grid; lead_reclassification ghi 'ban chat editable-grid, (cac) = nhieu don vi') chuyen OUTPUT_ONLY theo O1 (docs/owner_decision_packet_v7.md; D6.2/D6.3 docs/decision_registry.md - 'mot giay nhieu don vi' -> luoi mirror + dong trong phap dinh). | NGUON THAT: 03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_67_thong_bao_ve_viec_cham_dut_hoat_dong_chi_nhanh_van_phong_dai_dien_dia_diem_kinh_doanh.docx (manifest anchor #p8; file nguon trung tai 04_tam_ngung..., ban 03 thang). | EVIDENCE BLOCKS (app/data/blocks/PLI_M67.json): b008-b016 la muc 1/2/3 (ten cn.ten_tieng_viet, ma so cn.ma_so, dia chi cn.dia_chi, dien thoai/fax/email/website 'neu co', chi nhanh chu quan: ten/dia chi/ma so cn.* DUNG LAI) - inputs cua vung nay la 1 bo duy nhat du 'cac' goi y nhieu don vi. | REBUILD: drop 9 paragraph scoped [anchor '(co quan dang ky kinh doanh cap tinh) thong bao (cac) chi nhanh...', drop_until '^noi nhan'), chen 1 output-table 3r x 5c (header + 1 dong mirror + 1 dong trong phap dinh). Giu nguyen anchor para (co_quan_dkkd + dn.dia_chi_tru_so), noi nhan, truong don vi. | MIRROR POLICY: ten/ma so/dia chi -> cn.ten_tieng_viet/cn.ma_so/cn.dia_chi (key canonical hien tai); cot lien he 'neu co' + chi nhanh chu quan khong co du lieu canonical -> in TRONG. | LUAT: O1 OUTPUT_ONLY (bieu do CQB phat hanh); legal_status.blocked=false.",
+  "tables": [
+    {
+      "kind": "output-table",
+      "pos": "after",
+      "anchor": "thong bao \\(cac\\) chi nhanh/van phong dai dien/dia diem kinh doanh sau day",
+      "drop_until": "^noi nhan",
+      "no_default_drops": true,
+      "drop": [
+        "^1\\. ten chi nhanh",
+        "^ma so chi nhanh/van phong",
+        "^2\\. dia chi chi nhanh",
+        "^dien thoai \\(neu co\\)",
+        "^thu dien tu \\(neu co\\)",
+        "^3\\. thong tin ve chi nhanh chu quan",
+        "^ten chi nhanh",
+        "^dia chi chi nhanh",
+        "^ma so chi nhanh/ma so thue"
+      ],
+      "legal_status": {
+        "blocked": false,
+        "ref": "O1 OUTPUT_ONLY docs/owner_decision_packet_v7.md (11 section); D6.2/D6.3 docs/decision_registry.md"
+      },
+      "spec": {
+        "id": "don_vi_cham_dut_sau_day",
+        "kind": "output-table",
+        "section_id": "don_vi_cham_dut_sau_day",
+        "semantic_key": "don_vi_cham_dut_m67",
+        "grid": {
+          "rows": 3,
+          "cols": 5,
+          "cells": [
+            [
+              {"text": "Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh (ghi bằng chữ in hoa)"},
+              {"text": "Mã số đơn vị hoặc mã số thuế"},
+              {"text": "Địa chỉ"},
+              {"text": "Điện thoại/Fax/Thư điện tử/Website (nếu có)"},
+              {"text": "Chi nhánh chủ quản (tên, địa chỉ, mã số - đối với địa điểm kinh doanh trực thuộc chi nhánh)"}
+            ],
+            [
+              {"mirror": "cn.ten_tieng_viet"},
+              {"mirror": "cn.ma_so"},
+              {"mirror": "cn.dia_chi"},
+              {"text": ""},
+              {"text": ""}
+            ],
+            [
+              {"text": ""},
+              {"text": ""},
+              {"text": ""},
+              {"text": ""},
+              {"text": ""}
+            ]
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -195,241 +195,140 @@
    "role": "body"
   },
   {
-   "t": "p",
-   "align": "left",
-   "runs": [
+   "t": "table",
+   "widths": null,
+   "rows": [
     {
-     "text": "1. Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh",
-     "b": true
+     "cells": [
+      {
+       "runs": [
+        {
+         "text": "Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh (ghi bằng chữ in hoa)",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Mã số đơn vị hoặc mã số thuế",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Địa chỉ",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Điện thoại/Fax/Thư điện tử/Website (nếu có)",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "text": "Chi nhánh chủ quản (tên, địa chỉ, mã số - đối với địa điểm kinh doanh trực thuộc chi nhánh)",
+         "b": true
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
     },
     {
-     "text": " "
+     "cells": [
+      {
+       "runs": [
+        {
+         "mirror": {
+          "key": "cn.ten_tieng_viet"
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "mirror": {
+          "key": "cn.ma_so"
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [
+        {
+         "mirror": {
+          "key": "cn.dia_chi"
+         }
+        }
+       ],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
     },
     {
-     "text": "(ghi bằng chữ in hoa)",
-     "i": true
-    },
-    {
-     "text": ": "
-    },
-    {
-     "input": {
-      "key": "cn.ten_tieng_viet",
-      "w": 47
-     }
+     "cells": [
+      {
+       "runs": [],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [],
+       "colspan": 1,
+       "rowspan": 1
+      },
+      {
+       "runs": [],
+       "colspan": 1,
+       "rowspan": 1
+      }
+     ]
     }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "section-heading"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Mã số chi nhánh/văn phòng đại diện/địa điểm kinh doanh hoặc mã số thuế của chi nhánh/văn phòng đại diện: "
-    },
-    {
-     "input": {
-      "key": "cn.ma_so",
-      "w": 60
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "2. Địa chỉ chi nhánh/văn phòng đại diện/địa điểm kinh doanh:",
-     "b": true
-    },
-    {
-     "text": " "
-    },
-    {
-     "input": {
-      "key": "cn.dia_chi",
-      "w": 38
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "section-heading"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Điện thoại "
-    },
-    {
-     "text": "(nếu có)",
-     "i": true
-    },
-    {
-     "text": ": "
-    },
-    {
-     "input": {
-      "key": "dien_thoai_lien_he",
-      "w": 18
-     }
-    },
-    {
-     "text": " Fax"
-    },
-    {
-     "text": " (nếu có)",
-     "i": true
-    },
-    {
-     "text": ": "
-    },
-    {
-     "input": {
-      "key": "fax",
-      "w": 15
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Thư điện tử"
-    },
-    {
-     "text": " (nếu có)",
-     "i": true
-    },
-    {
-     "text": ": "
-    },
-    {
-     "input": {
-      "key": "email_tru_so",
-      "w": 19
-     }
-    },
-    {
-     "text": " Website"
-    },
-    {
-     "text": " (nếu có)",
-     "i": true
-    },
-    {
-     "text": ": "
-    },
-    {
-     "input": {
-      "key": "website",
-      "w": 17
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "3. Thông tin về chi nhánh chủ quản",
-     "b": true
-    },
-    {
-     "text": " "
-    },
-    {
-     "text": "(đối với trường hợp chấm dứt hoạt động của địa điểm kinh doanh trực thuộc chi nhánh)",
-     "i": true
-    },
-    {
-     "text": ":"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "section-heading"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Tên chi nhánh: "
-    },
-    {
-     "input": {
-      "key": "cn.ten_tieng_viet",
-      "w": 15
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Địa chỉ chi nhánh: "
-    },
-    {
-     "input": {
-      "key": "cn.dia_chi",
-      "w": 17
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
-     "text": "Mã số chi nhánh/Mã số thuế của chi nhánh: "
-    },
-    {
-     "input": {
-      "key": "cn.ma_so",
-      "w": 29
-     }
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body"
+   ]
   },
   {
    "t": "p",

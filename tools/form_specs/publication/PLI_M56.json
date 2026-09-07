@@ -1,0 +1,54 @@
+{
+  "form_id": "PLI_M56",
+  "group": "publication",
+  "note": "F1-OUT spec registration (base e268038) - GIAY XAC NHAN TIEP TUC KINH DOANH TRUOC HAN. Section cn_vppd_ddkd_tiep_tuc_truoc_han (manifest: editable-grid/missing_grid, 'mot hoac mot so' nhung chi 1 bo field) chuyen OUTPUT_ONLY theo O1 (docs/owner_decision_packet_v7.md; D6.2/D6.3 docs/decision_registry.md - 'mot hoac mot so' = 1 dong mirror tu ho so + 1 dong trong phap dinh nhu ban giay). | NGUON THAT: 04_tam_ngung_cham_dut_giai_the/PL1_Mau_56_giay_xac_nhan_ve_viec_doanh_nghiep_thong_bao_tiep_tuc_kinh_doanh_truoc_thoi_han_da_thong_bao.docx (manifest anchor #p16-p21). | EVIDENCE BLOCKS (app/data/blocks/PLI_M56.json): b014-b020 la vung '- Neu...mot hoac mot so...': b016 '+ Ten...' cn.ten_tieng_viet; b017 'Ma so:' ma_so_van_ban (SAI ngu nghia theo census notes - key nay la so van ban, khong phai ma so don vi); b018-b020 chi nhanh chu quan (cn.ten_tieng_viet/cn.ma_so dung lai). | REBUILD: drop 5 paragraph b015-b019 (scoped [anchor, '- neu doanh nghiep chi thong bao')), chen 1 output-table 3r x 4c (header + 1 dong mirror + 1 dong trong phap dinh); giu nguyen 'Xac nhan' ten DN/MSDN (b011-b013), 2 dong '- Neu...tat ca/tiep tuc' voi input tu_ngay, ly do, noi nhan, truong don vi. | MIRROR POLICY: ten don vi -> cn.ten_tieng_viet; ma so don vi -> cn.ma_so (key canonical DUNG ngu nghia, khac census-mapped ma_so_van_ban); cell chi nhanh chu quan khong co du lieu canonical rieng -> in TRONG. | LUAT: O1 OUTPUT_ONLY; legal_status.blocked=false.",
+  "tables": [
+    {
+      "kind": "output-table",
+      "pos": "after",
+      "anchor": "mot hoac mot so chi nhanh/van phong dai dien/dia diem",
+      "drop_until": "^- neu doanh nghiep chi thong bao tiep tuc",
+      "no_default_drops": true,
+      "drop": [
+        "^\\+ ten chi nhanh",
+        "^ma so",
+        "^chi nhanh chu quan",
+        "^ten chi nhanh chu quan"
+      ],
+      "legal_status": {
+        "blocked": false,
+        "ref": "O1 OUTPUT_ONLY docs/owner_decision_packet_v7.md (11 section); D6.2/D6.3 docs/decision_registry.md"
+      },
+      "spec": {
+        "id": "cn_vppd_ddkd_tiep_tuc_truoc_han",
+        "kind": "output-table",
+        "section_id": "cn_vppd_ddkd_tiep_tuc_truoc_han",
+        "semantic_key": "don_vi_tiep_tuc_truoc_han",
+        "grid": {
+          "rows": 3,
+          "cols": 4,
+          "cells": [
+            [
+              {"text": "Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh (ghi bằng chữ in hoa)"},
+              {"text": "Mã số"},
+              {"text": "Tên chi nhánh chủ quản (đối với địa điểm kinh doanh trực thuộc chi nhánh)"},
+              {"text": "Mã số chi nhánh chủ quản"}
+            ],
+            [
+              {"mirror": "cn.ten_tieng_viet"},
+              {"mirror": "cn.ma_so"},
+              {"text": ""},
+              {"text": ""}
+            ],
+            [
+              {"text": ""},
+              {"text": ""},
+              {"text": ""},
+              {"text": ""}
+            ]
+          ]
+        }
+      }
+    }
+  ]
+}

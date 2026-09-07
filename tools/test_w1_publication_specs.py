@@ -344,17 +344,29 @@ def spec_files_valid():
             "%s: note thiếu tham chiếu evidence blocks" % fid
         assert "manifest.json" in note, \
             "%s: note thiếu tham chiếu census manifest" % fid
-        assert len(raw["tables"]) == 1, \
-            "%s: kỳ vọng đúng 1 entry output-table" % fid
-        for ent in raw["tables"]:
-            ls = ent.get("legal_status") or {}
-            assert ls.get("blocked") is False, (
-                "%s/%s: legal_status.blocked=%r — D6.2=A đã DECIDED, section "
-                "output_only KHÔNG được khai blocked" % (
-                    fid, ent["spec"]["id"], ls.get("blocked")))
-            assert "D6.2" in (ls.get("ref") or ""), \
-                "%s: legal_status.ref phải truy về D6.2" % fid
-            assert ent.get("anchor"), "%s: entry thiếu anchor" % fid
+        # [F1-OUT 2026-09-06] file có thêm entry ho_so_bao_gom(_online) của
+        # lane F1-OUT — W1 chỉ khớp entry CHỮ KÝ của mình, không cấm entry mới.
+        ent = w1_entry(fid)
+        ls = ent.get("legal_status") or {}
+        assert ls.get("blocked") is False, (
+            "%s/%s: legal_status.blocked=%r — D6.2=A đã DECIDED, section "
+            "output_only KHÔNG được khai blocked" % (
+                fid, ent["spec"]["id"], ls.get("blocked")))
+        assert "D6.2" in (ls.get("ref") or ""), \
+            "%s: legal_status.ref phải truy về D6.2" % fid
+        assert ent.get("anchor"), "%s: entry thiếu anchor" % fid
+
+
+def w1_entry(fid: str) -> dict:
+    """Entry output-table CHỮ KÝ của W1 trong file spec (F1-OUT có thể thêm
+    entry khác cùng file — lane nào tự khớp entry của lane đó)."""
+    raw = read_raw(fid)
+    want = ("chu_ky_nguoi_nop_nguoi_nhan" if fid == "PLI_M70"
+            else "chu_ky_co_quan_cap_tinh")
+    hits = [t for t in raw["tables"]
+            if (t.get("spec") or {}).get("id") == want]
+    assert len(hits) == 1, "%s: entry %r không duy nhất" % (fid, want)
+    return hits[0]
 
 
 @check("[W1-LOAD] loader build_form_maps chap nhan 2 file spec moi")

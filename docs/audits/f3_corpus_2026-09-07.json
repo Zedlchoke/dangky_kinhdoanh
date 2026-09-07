@@ -1,0 +1,163 @@
+{
+ "lane": "F3-CORPUS",
+ "date": "2026-09-07",
+ "worktree": "/Users/hoangminhlong/orca/dangky_kinhdoanh-worktrees/final-f3-corpus",
+ "branch": "agent/final-f3-corpus",
+ "head": "24d09f0",
+ "corpus_official": "/Users/hoangminhlong/orca/dangky_kinhdoanh-worktrees/final-f3-corpus/generated_ho_so/_visual_layout/phase8f_final",
+ "corpus_rerun_determinism": "/Users/hoangminhlong/orca/dangky_kinhdoanh-worktrees/final-f3-corpus/generated_ho_so/_visual_layout/phase8f_final_rerun",
+ "preflight": {
+  "json": "/tmp/f3_preflight_final2.json",
+  "verdict": "PASS",
+  "pass": 65,
+  "fail": 0,
+  "env_errors": [],
+  "soffice_preflight_warnings": [],
+  "history": [
+   "pre-merge PASS 65/65",
+   "sau merge1 FAIL 1: test_audit_wave_h_negative H7.4 (bookkeeping main, pre-existing — đã xác minh fail giống nhau trên main; Lead fix ad91e67)",
+   "HEAD 24d09f0 PASS 65/65"
+  ]
+ },
+ "inventory": {
+  "active": 86,
+  "skipped": [
+   [
+    "PLI_M11",
+    "removed_by_current_law"
+   ]
+  ],
+  "render_units_expected": 430,
+  "fixtures": 5,
+  "smoke_export": {
+   "batch_files": 85,
+   "batch_ok": true,
+   "m72_variants_ok": 5,
+   "log": "generated_ho_so/_visual_layout/phase8f_final (tool SUMMARY) + /tmp/f3/export_corpus_final.log"
+  }
+ },
+ "visual_gate_run1": {
+  "generated_ts": "20260907_095416",
+  "records": 450,
+  "pages_png": 1752,
+  "png_disk_assert": {
+   "claimed": 1752,
+   "disk": 1752,
+   "mismatches": [],
+   "ok": true
+  },
+  "export_errors": 0,
+  "hard_fail_records": 2,
+  "hard_fail_counts": {
+   "D17_header_name": 2
+  },
+  "hard_detail": [
+   {
+    "record": "valid-full/main/PLII_M06",
+    "page": 1,
+    "code": "HDR_NAME_SYNC",
+    "value": "CÔNG TY CỔ PHẦN CHỨNG"
+   },
+   {
+    "record": "valid-full/main/PLI_M33",
+    "page": 1,
+    "code": "HDR_NAME_SYNC",
+    "value": "CÔNG TY TNHH MTV KỸ"
+   }
+  ],
+  "candidate_records": 13,
+  "candidate_counts": {
+   "D9_table_grid": 5,
+   "D5_blank_sparse": 8
+  },
+  "adjudication": {
+   "D9_table_grid M10 x5": "(ii) pixel-OK — 18 cot du, wrap ky tu doc duoc, khong mat noi dung (valid-full/main/PLI_M10/page-02.png); item \"cho pixel phase8f\" cua dryrun F5",
+   "D5 M52 trang cuoi x3": "(i) Noi nhan + TRUONG DON VI — entry [f3] da them allowlist",
+   "D5 M12 p13 banner-section x5": "(ii) banner section dung mot trang truoc bang 18 cot khong vua (noi dung theo ngay p14) — entry [f3] da them allowlist"
+  },
+  "verdict": "FAIL (2 D17) — xem docs/audits/f3_hard_fail_2026-09-07.md"
+ },
+ "visual_gate_run2_rerun": {
+  "generated_ts": "20260907_110043",
+  "records": 450,
+  "hard_fail_records": 2,
+  "hard_fail_counts": {
+   "D17_header_name": 2
+  },
+  "candidate_records": 5,
+  "candidate_counts": {
+   "D9_table_grid": 5
+  },
+  "png_disk_assert": {
+   "claimed": 1752,
+   "disk": 1752,
+   "mismatches": [],
+   "ok": true
+  },
+  "note": "8 hit D5 tu-adjudicate qua allowlist [f3] — con 5 candidate D9"
+ },
+ "signature_census": {
+  "corpus": "generated_ho_so/_visual_layout/phase8f_final",
+  "records": 450,
+  "census_clusters": 450,
+  "detector_clusters": 450,
+  "coverage_equal": true,
+  "coverage_mismatch_sample": [],
+  "expected_but_zero_detected": [],
+  "manual_clusters": 440,
+  "manual_gap_min_pt": 72.9,
+  "manual_gap_median_pt": 100.5,
+  "manual_gap_below_72": 0
+ },
+ "zip_validity": {
+  "total_docx": 450,
+  "testzip_failed": [],
+  "ok": true
+ },
+ "word_open": {
+  "tool": "tools/phase5_word_open_loop.py",
+  "word_version": "16.16.27",
+  "jobs": 90,
+  "pass_open_direct": 90,
+  "elapsed_s": 657.2,
+  "inventory_json": "/Users/hoangminhlong/orca/dangky_kinhdoanh-worktrees/final-f3-corpus/generated_ho_so/_visual_layout/phase8f_final/word_open/inventory.json",
+  "verdict": "PASS"
+ },
+ "determinism": {
+  "verdict": "PASS",
+  "records_a": 450,
+  "records_b": 450,
+  "key_set_equal": true,
+  "document_xml_hash_equal": 450,
+  "page_count_mismatch": 0,
+  "png_list_mismatch": 0,
+  "method": "sha256(word/document.xml) per record + key set + page list tuong doi corpus-root; JSON: phase8f_final_rerun/determinism_check.json"
+ },
+ "allowlist_update": {
+  "file": "docs/phase6v_d5_sparse_allowlist.json",
+  "added_f3_entries": 8,
+  "new_count": 72,
+  "new_by_class": {
+   "(i)": 58,
+   "(ii)": 14
+  }
+ },
+ "hard_fail_doc": "docs/audits/f3_hard_fail_2026-09-07.md",
+ "obsolete_baseline": [
+  "/Users/hoangminhlong/orca/dangky_kinhdoanh-worktrees/final-f3-corpus/generated_ho_so/_visual_layout/phase8f",
+  "/Users/hoangminhlong/orca/dangky_kinhdoanh-worktrees/final-f3-corpus/generated_ho_so/_visual_layout/phase8f_obsolete_export"
+ ],
+ "overall": {
+  "gates_pass": [
+   "preflight",
+   "signature_census",
+   "zip",
+   "word_open",
+   "png_disk_assert",
+   "determinism"
+  ],
+  "gates_open": [
+   "visual_gate_hard (2 D17 — mismatch hop dong detector, cho Lead encode exemption band_input)"
+  ]
+ }
+}

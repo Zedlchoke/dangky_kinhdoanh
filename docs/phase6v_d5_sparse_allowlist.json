@@ -1,13 +1,13 @@
 {
  "version": "1+v7.1",
- "date": "2026-09-05",
- "lane": "agent/6v-v4fix (6V-V4b việc 9)",
- "source_adjudication": "docs/audits/6v/v4-visual-audit.md — 72 hit D5_blank_sparse: 59 (i) + 7 (ii) + 6 (iii) đã fix ở việc 1; allowlist này liệt kê lại các hit (i)/(ii) đo trên corpus v4b_finalcheck (455 record, template+fixture sau V4b, 2026-09-05 tối) + 2 hit mới lớp (ii) do việc 7a (ngày đủ định dạng).",
+ "date": "2026-09-07",
+ "lane": "agent/final-f3-corpus (F3 corpus phase8f_final)",
+ "source_adjudication": "docs/audits/6v/v4-visual-audit.md — 72 hit D5_blank_sparse: 59 (i) + 7 (ii) + 6 (iii) đã fix ở việc 1; allowlist này liệt kê lại các hit (i)/(ii) đo trên corpus v4b_finalcheck (455 record, template+fixture sau V4b, 2026-09-05 tối) + 2 hit mới lớp (ii) do việc 7a (ngày đủ định dạng). | [f3 2026-09-07] +8 hit corpus phase8f_final (450 record sau fixture-fix + M11 loại catalog): 5 (ii) M12 p13 banner-section + 3 (i) M52 trang cuối dời trang.",
  "mechanism": "gate nạp mặc định (tools/phase5_visual_gate.py --allowlist); hit SPARSE khớp (fixture, tag, form, page) — khóa vắng = wildcard — được ghi verdict vào record['d5_adjudicated'] thay vì candidate 'chưa adjudicate'.",
- "count": 64,
+ "count": 72,
  "by_class": {
-  "(i)": 55,
-  "(ii)": 9
+  "(i)": 58,
+  "(ii)": 14
  },
  "blank_pages": [],
  "sparse_pages": [
@@ -522,6 +522,70 @@
    "page": 2,
    "adjudication": "(i)",
    "reason": "[v7] dòng ký + 'Chủ hộ kinh doanh ký trực tiếp vào phần này.' — khối ký hoàn chỉnh + chú thích, dời trang do spacer 72pt"
+  },
+  {
+   "fixture": "empty-paper",
+   "tag": "main",
+   "form": "PLI_M12",
+   "page": 13,
+   "adjudication": "(ii)",
+   "reason": "[f3] banner section 'THÔNG BÁO THAY ĐỔI NGƯỜI ĐẠI DIỆN THEO ỦY QUYỀN...' đứng một trang: bảng 18 cột kế tiếp không vừa phần trang còn lại nên dời nguyên khối sang trang kế (nội dung theo ngay trang sau, không mất mát, không trộn mẫu, deterministic cùng p13 cả 5 fixture) — legacy layout chấp nhận được; pixel phase8f/valid-full/main/PLI_M12 page-13/14"
+  },
+  {
+   "fixture": "valid-minimal",
+   "tag": "main",
+   "form": "PLI_M12",
+   "page": 13,
+   "adjudication": "(ii)",
+   "reason": "[f3] banner section 'THÔNG BÁO THAY ĐỔI NGƯỜI ĐẠI DIỆN THEO ỦY QUYỀN...' đứng một trang: bảng 18 cột kế tiếp không vừa phần trang còn lại nên dời nguyên khối sang trang kế (nội dung theo ngay trang sau, không mất mát, không trộn mẫu, deterministic cùng p13 cả 5 fixture) — legacy layout chấp nhận được; pixel phase8f/valid-full/main/PLI_M12 page-13/14"
+  },
+  {
+   "fixture": "valid-full",
+   "tag": "main",
+   "form": "PLI_M12",
+   "page": 13,
+   "adjudication": "(ii)",
+   "reason": "[f3] banner section 'THÔNG BÁO THAY ĐỔI NGƯỜI ĐẠI DIỆN THEO ỦY QUYỀN...' đứng một trang: bảng 18 cột kế tiếp không vừa phần trang còn lại nên dời nguyên khối sang trang kế (nội dung theo ngay trang sau, không mất mát, không trộn mẫu, deterministic cùng p13 cả 5 fixture) — legacy layout chấp nhận được; pixel phase8f/valid-full/main/PLI_M12 page-13/14"
+  },
+  {
+   "fixture": "long-boundary",
+   "tag": "main",
+   "form": "PLI_M12",
+   "page": 13,
+   "adjudication": "(ii)",
+   "reason": "[f3] banner section 'THÔNG BÁO THAY ĐỔI NGƯỜI ĐẠI DIỆN THEO ỦY QUYỀN...' đứng một trang: bảng 18 cột kế tiếp không vừa phần trang còn lại nên dời nguyên khối sang trang kế (nội dung theo ngay trang sau, không mất mát, không trộn mẫu, deterministic cùng p13 cả 5 fixture) — legacy layout chấp nhận được; pixel phase8f/valid-full/main/PLI_M12 page-13/14"
+  },
+  {
+   "fixture": "choice-variants",
+   "tag": "main",
+   "form": "PLI_M12",
+   "page": 13,
+   "adjudication": "(ii)",
+   "reason": "[f3] banner section 'THÔNG BÁO THAY ĐỔI NGƯỜI ĐẠI DIỆN THEO ỦY QUYỀN...' đứng một trang: bảng 18 cột kế tiếp không vừa phần trang còn lại nên dời nguyên khối sang trang kế (nội dung theo ngay trang sau, không mất mát, không trộn mẫu, deterministic cùng p13 cả 5 fixture) — legacy layout chấp nhận được; pixel phase8f/valid-full/main/PLI_M12 page-13/14"
+  },
+  {
+   "fixture": "valid-full",
+   "tag": "main",
+   "form": "PLI_M52",
+   "page": 4,
+   "adjudication": "(i)",
+   "reason": "[f3] trang cuối tự nhiên: Nơi nhận ('- Lưu:') + khối chữ ký TRƯỞNG ĐƠN VỊ (Ký, ghi họ tên và đóng dấu) — cùng lớp entry M52 p3 cũ, số trang dời sau fixture fix (M52 giờ 4/6 trang ở valid-full/long-boundary)"
+  },
+  {
+   "fixture": "long-boundary",
+   "tag": "main",
+   "form": "PLI_M52",
+   "page": 6,
+   "adjudication": "(i)",
+   "reason": "[f3] trang cuối tự nhiên: Nơi nhận ('- Lưu:') + khối chữ ký TRƯỞNG ĐƠN VỊ (Ký, ghi họ tên và đóng dấu) — cùng lớp entry M52 p3 cũ, số trang dời sau fixture fix (M52 giờ 4/6 trang ở valid-full/long-boundary)"
+  },
+  {
+   "fixture": "choice-variants",
+   "tag": "main",
+   "form": "PLI_M52",
+   "page": 4,
+   "adjudication": "(i)",
+   "reason": "[f3] trang cuối tự nhiên: Nơi nhận ('- Lưu:') + khối chữ ký TRƯỞNG ĐƠN VỊ (Ký, ghi họ tên và đóng dấu) — cùng lớp entry M52 p3 cũ, số trang dời sau fixture fix (M52 giờ 4/6 trang ở valid-full/long-boundary)"
   }
  ]
 }

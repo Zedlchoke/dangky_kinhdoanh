@@ -4611,7 +4611,10 @@
       "anchor": "05_cong_bo_cung_cap_thong_tin/PL1_Mau_52_....docx#p16-p42"
      },
      "notes": "Khung viền gốc bị làm phẳng thành 4 nhóm bullet '- Tên/- Mã số/- Địa chỉ...'. Blocks map đủ 3 nhóm đơn vị nhưng: key 'ma_so_van_ban' bị tái sử dụng làm mã số của cả 3 nhóm (nhiễu ngữ nghĩa); nhóm DN thiếu field người đại diện theo pháp luật (nguồn dòng '- Người đại diện theo pháp luật:'); nhóm ĐĐKD còn '- Đơn vị chủ quản:' chưa thấy key riêng. | [F1-OUT O1 2026-09-06] OUTPUT_ONLY: lưới CQĐKKD phát hành — render từ hồ sơ qua mirror cell, không input; evidence spec publication/ + blocks mirror + test_f1_output_sections 7/7.",
-     "semantic_key": "ra_soat_thong_tin_4_nhom"
+     "semantic_key": "ra_soat_thong_tin_4_nhom",
+     "lead_status_override": {
+      "evidence": "O1 OUTPUT_ONLY: khung rà soát 4 nhóm do CQĐKKD phát hành; spec publication/PLI_M52.json + mirror cell; tách key ma_so_van_ban theo D4.2=A."
+     }
     }
    ],
    "legal_questions": [
@@ -4780,7 +4783,10 @@
       "anchor": "04_tam_ngung_cham_dut_giai_the/PL1_Mau_56_....docx#p16-p21"
      },
      "notes": "Văn bản mẫu nói 'một hoặc một số' nhưng chỉ có 1 bộ field; key 'ma_so_van_ban' đang mang ngữ nghĩa mã số đơn vi (sai ngữ nghĩa). | [F1-OUT O1 2026-09-06] OUTPUT_ONLY: lưới CQĐKKD phát hành — render từ hồ sơ qua mirror cell, không input; evidence spec publication/ + blocks mirror + test_f1_output_sections 7/7.",
-     "semantic_key": "don_vi_tiep_tuc_truoc_han"
+     "semantic_key": "don_vi_tiep_tuc_truoc_han",
+     "lead_status_override": {
+      "evidence": "O1 OUTPUT_ONLY: giấy xác nhận của CQĐKKD; grid mirror 'một hoặc một số' đơn vị từ hồ sơ."
+     }
     }
    ],
    "legal_questions": [
@@ -4876,7 +4882,10 @@
       "anchor": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_63_....docx#p32-p33"
      },
      "notes": "PLAN mục E. Blocks không có field nào cho danh sách ĐĐKD trực thuộc. | [F1-OUT O1 2026-09-06] OUTPUT_ONLY: lưới CQĐKKD phát hành — render từ hồ sơ qua mirror cell, không input; evidence spec publication/ + blocks mirror + test_f1_output_sections 7/7.",
-     "semantic_key": "ddkd_truc_thuoc_bi_thu_hoi"
+     "semantic_key": "ddkd_truc_thuoc_bi_thu_hoi",
+     "lead_status_override": {
+      "evidence": "O1 OUTPUT_ONLY: quyết định thu hồi của CQĐKKD; grid mirror."
+     }
     },
     {
      "section_id": "noi_dung_quyet_dinh_thu_hoi",
@@ -4941,7 +4950,10 @@
       "anchor": "04_tam_ngung_cham_dut_giai_the/PL1_Mau_66_....docx#p18-p27"
      },
      "notes": "PLAN mục E. Dấu '- …' cuối vùng + chân trang 2 'Liệt kê các chi nhánh/văn phòng đại diện/địa điểm kinh doanh đang làm thủ tục chấm dứt hoạt động' → nhiều đơn vị/giấy. Blocks chỉ có 1 bộ tên+mã. | [F1-OUT O1 2026-09-06] OUTPUT_ONLY: lưới CQĐKKD phát hành — render từ hồ sơ qua mirror cell, không input; evidence spec publication/ + blocks mirror + test_f1_output_sections 7/7.",
-     "semantic_key": "don_vi_dang_cham_dut"
+     "semantic_key": "don_vi_dang_cham_dut",
+     "lead_status_override": {
+      "evidence": "O1 OUTPUT_ONLY + tách section theo defect bo_ten_ma_x23 (mỗi đơn vị 1 bộ tên+mã)."
+     }
     },
     {
      "section_id": "ddkd_truc_thuoc_dang_cham_dut",
@@ -4958,7 +4970,10 @@
       "anchor": "04_tam_ngung_cham_dut_giai_the/PL1_Mau_66_....docx#p24-p27"
      },
      "notes": "Chân trang 3 'Liệt kê tất cả các địa điểm kinh doanh trực thuộc chi nhánh'. Blocks không có field riêng cho nhóm này. | [F1-OUT O1 2026-09-06] OUTPUT_ONLY: lưới CQĐKKD — mirror cell, không input.",
-     "semantic_key": "ddkd_truc_thuoc_dang_cham_dut"
+     "semantic_key": "ddkd_truc_thuoc_dang_cham_dut",
+     "lead_status_override": {
+      "evidence": "O1 OUTPUT_ONLY; grid mirror từ hồ sơ."
+     }
     },
     {
      "section_id": "thong_bao_cqb",
@@ -5031,7 +5046,7 @@
       "dia_chi",
       "chi_nhanh_chu_quan"
      ],
-     "status": "missing_grid",
+     "status": "output_only",
      "source_evidence": {
       "template": "app/templates/PLI_M67.docx",
       "heading": "(Cơ quan ĐKKD cấp tỉnh) thông báo (các) chi nhánh/văn phòng đại diện/địa điểm kinh doanh sau đây của doanh nghiệp...",
@@ -5040,7 +5055,10 @@
      "notes": "Từ '(các)' gợi ý nhiều đơn vị trong 1 thông báo nhưng blocks chỉ có 1 bộ tên/mã/địa chỉ (lặp 2 lần trong blocks). Cần chốt 1-nhiều. File nguồn trùng tại 04_tam_ngung... (bản 03 thắng). | [F1-OUT O1 2026-09-06] OUTPUT_ONLY: lưới CQĐKKD phát hành — render từ hồ sơ qua mirror cell, không input; evidence spec publication/ + blocks mirror + test_f1_output_sections 7/7.",
      "semantic_key": "don_vi_cham_dut_m67",
      "lead_reclassification": {
-      "reason": "'(Cac) chi nhanh/VPDD/DDKD sau day' -> ban chat editable-grid du kien; blocks hien chi 1 bo ten/mso/dia_chi; cho quyet dinh 1-nhieu."
+      "reason": "O1 OUTPUT_ONLY (supersede P1 missing_grid): '(cac) don vi' = grid mirror tu ho so; census fragment kind=unknown -> chuan hoa editable-grid."
+     },
+     "lead_status_override": {
+      "evidence": "O1 OUTPUT_ONLY (supersede P1 missing_grid); '(các)' đơn vị = grid mirror; kind chuẩn hóa editable-grid qua RECLASSIFICATIONS (census fragment kind=unknown)."
      }
     }
    ],
@@ -5096,7 +5114,10 @@
       "anchor": "04_tam_ngung_cham_dut_giai_the/PL1_Mau_68_....docx#p17-p19"
      },
      "notes": "PLAN mục E. Detector 'Các … sau'. Blocks chỉ có 1 bộ cn.ten_tieng_viet/cn.ma_so. | [F1-OUT O1 2026-09-06] OUTPUT_ONLY: lưới CQĐKKD phát hành — render từ hồ sơ qua mirror cell, không input; evidence spec publication/ + blocks mirror + test_f1_output_sections 7/7.",
-     "semantic_key": "don_vi_cham_dut_giai_the"
+     "semantic_key": "don_vi_cham_dut_giai_the",
+     "lead_status_override": {
+      "evidence": "O1 OUTPUT_ONLY; grid mirror; thong_bao_dang_giai_the đã output-table từ trước."
+     }
     },
     {
      "section_id": "thong_bao_dang_giai_the",
@@ -5193,7 +5214,10 @@
       "anchor": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_70_....docx#p15-p18"
      },
      "notes": "Bảng hành chính không header/STT-header, 3 dòng đánh số cố định trên giấy; blocks không có key nào cho 3 dòng này. File nguồn trùng tại 05_cong_bo... (bản 03 thắng). | [F1-OUT O1 2026-09-06] OUTPUT_ONLY: lưới CQĐKKD phát hành — render từ hồ sơ qua mirror cell, không input; evidence spec publication/ + blocks mirror + test_f1_output_sections 7/7.",
-     "semantic_key": "ds_tai_lieu_ho_so_nop"
+     "semantic_key": "ds_tai_lieu_ho_so_nop",
+     "lead_status_override": {
+      "evidence": "O1 OUTPUT_ONLY (supersede D6.3): hồ sơ bao gồm in 3 dòng pháp định theo giấy; fixed-matrix mirror."
+     }
     },
     {
      "section_id": "chu_ky_nguoi_nop_nguoi_nhan",
@@ -5256,7 +5280,10 @@
       "anchor": "03_chi_nhanh_van_phong_dai_dien_dia_diem/PL1_Mau_71_....docx#p16-p19"
      },
      "notes": "Giống M70 nhưng bản điện tử; blocks không có key cho 3 dòng. File nguồn trùng tại 05_cong_bo... (bản 03 thắng). | [F1-OUT O1 2026-09-06] OUTPUT_ONLY: lưới CQĐKKD phát hành — render từ hồ sơ qua mirror cell, không input; evidence spec publication/ + blocks mirror + test_f1_output_sections 7/7.",
-     "semantic_key": "ds_tai_lieu_ho_so_online"
+     "semantic_key": "ds_tai_lieu_ho_so_online",
+     "lead_status_override": {
+      "evidence": "O1 OUTPUT_ONLY; bản điện tử 3 dòng pháp định; fixed-matrix mirror."
+     }
     },
     {
      "section_id": "chu_ky_co_quan_cap_tinh",
@@ -5539,7 +5566,10 @@
       "anchor": "04_tam_ngung_cham_dut_giai_the/PL1_Mau_75_....docx#p22-p25"
      },
      "notes": "PLAN mục E. 3 dòng theo loại đơn vị (CN/VPĐD/ĐĐKD) — fixed theo loại hay editable tự do cần chốt. | [F1-OUT O1 2026-09-06] OUTPUT_ONLY: lưới CQĐKKD phát hành — render từ hồ sơ qua mirror cell, không input; evidence spec publication/ + blocks mirror + test_f1_output_sections 7/7.",
-     "semantic_key": "don_vi_khoi_phuc_cua_dn"
+     "semantic_key": "don_vi_khoi_phuc_cua_dn",
+     "lead_status_override": {
+      "evidence": "O1 OUTPUT_ONLY; grid 3 loại đơn vị theo giấy."
+     }
     },
     {
      "section_id": "ddkd_truc_thuoc_khoi_phuc",
@@ -5558,7 +5588,10 @@
       "anchor": "04_tam_ngung_cham_dut_giai_the/PL1_Mau_75_....docx#p34-p35"
      },
      "notes": "PLAN mục E. Blocks không có field cho nhóm này. | [F1-OUT O1 2026-09-06] OUTPUT_ONLY: lưới CQĐKKD — mirror cell, không input.",
-     "semantic_key": "ddkd_truc_thuoc_khoi_phuc"
+     "semantic_key": "ddkd_truc_thuoc_khoi_phuc",
+     "lead_status_override": {
+      "evidence": "O1 OUTPUT_ONLY; grid mirror từ hồ sơ."
+     }
     },
     {
      "section_id": "thong_bao_khoi_phuc_gcn",

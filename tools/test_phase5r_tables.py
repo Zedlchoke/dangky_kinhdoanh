@@ -202,7 +202,13 @@ WIDE_TABLE_FIXTURE = [
 # [Pin sync — F1-IN 2026-09-06] 77 -> 87: 10 section user-input O1 được
 # rebuild thành w:tbl thật (M12 ×3 matrix, M27 ×2 grid, M78, M79, M80,
 # PLII_M02-c5) — thay đổi có chủ đích, coverage 85 IV drift 0.
-_EXPECTED_TABLE_COUNT = 87   # số bảng có w:tblGrid trên toàn corpus
+# [Pin sync — F1-OUT 2026-09-06] 87 -> 98: +11 bảng mirror output-only O1
+# (M52 fixed-matrix, M56/M63/M66×2/M67/M68/M75×2 grid, M70/M71 fixed 3 dòng
+# hồ sơ bao gồm) — lưới do CQĐKKD phát hành render từ hồ sơ, không input.
+# Đều là bảng hẹp (<10 cột) nên fixture bảng rộng WIDE_TABLE_FIXTURE không
+# đổi (census_all_templates xác minh wide khớp 1:1); coverage OUTPUT_ONLY
+# 6 -> 17, drift 0.
+_EXPECTED_TABLE_COUNT = 98   # số bảng có w:tblGrid trên toàn corpus
 # [Pin sync — F0L 2026-09-06] 76 -> 77: +bảng header band 2x2 của PLI_M12
 # (M12 vào HEADER_BAND_FORMS — regen sinh bảng có w:tblGrid ở đầu tài liệu,
 # ảnh p50). Các entry khác giữ nguyên; bảng band 2 cột < sàn WIDE_COLS=10

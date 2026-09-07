@@ -1,0 +1,160 @@
+{
+ "batches": [
+  {
+   "batch": 1,
+   "forms": [
+    "PLI_M01",
+    "PLI_M02",
+    "PLI_M03",
+    "PLI_M04",
+    "PLI_M05",
+    "PLI_M10",
+    "PLI_M12"
+   ]
+  },
+  {
+   "batch": 2,
+   "forms": [
+    "PLI_M27",
+    "PLI_M30",
+    "PLI_M33",
+    "PLII_M06",
+    "PLI_M48",
+    "PLI_M49",
+    "PLI_M70"
+   ]
+  },
+  {
+   "batch": 3,
+   "forms": [
+    "PLI_M09",
+    "PLII_M02",
+    "PLI_M15",
+    "PLI_M72",
+    "PLI_M32",
+    "PLII_M01",
+    "PLII_M03"
+   ]
+  },
+  {
+   "batch": 4,
+   "forms": [
+    "PLII_M04",
+    "PLII_M05",
+    "PLII_M07",
+    "PLII_M08",
+    "PLII_M09",
+    "PLII_M10",
+    "PLII_M11"
+   ]
+  },
+  {
+   "batch": 5,
+   "forms": [
+    "PLII_M12",
+    "PLII_M13",
+    "PLII_M14",
+    "PLII_M15",
+    "PLII_M16",
+    "PLII_M17",
+    "PLII_M18"
+   ]
+  },
+  {
+   "batch": 6,
+   "forms": [
+    "PLII_M19",
+    "PLII_M20",
+    "PLII_M21",
+    "PLII_M22",
+    "PLII_M23",
+    "PLII_M24",
+    "PLII_M25"
+   ]
+  },
+  {
+   "batch": 7,
+   "forms": [
+    "PLII_M26",
+    "PLII_M27",
+    "PLII_M28",
+    "PLI_M06",
+    "PLI_M07",
+    "PLI_M08",
+    "PLI_M13"
+   ]
+  },
+  {
+   "batch": 8,
+   "forms": [
+    "PLI_M14",
+    "PLI_M17",
+    "PLI_M18",
+    "PLI_M19",
+    "PLI_M21",
+    "PLI_M23",
+    "PLI_M25"
+   ]
+  },
+  {
+   "batch": 9,
+   "forms": [
+    "PLI_M26",
+    "PLI_M28",
+    "PLI_M29",
+    "PLI_M31",
+    "PLI_M42",
+    "PLI_M43",
+    "PLI_M45"
+   ]
+  },
+  {
+   "batch": 10,
+   "forms": [
+    "PLI_M46",
+    "PLI_M47",
+    "PLI_M50",
+    "PLI_M51",
+    "PLI_M52",
+    "PLI_M53",
+    "PLI_M54"
+   ]
+  },
+  {
+   "batch": 11,
+   "forms": [
+    "PLI_M55",
+    "PLI_M56",
+    "PLI_M57",
+    "PLI_M63",
+    "PLI_M66",
+    "PLI_M67",
+    "PLI_M68"
+   ]
+  },
+  {
+   "batch": 12,
+   "forms": [
+    "PLI_M69",
+    "PLI_M71",
+    "PLI_M73",
+    "PLI_M74",
+    "PLI_M75",
+    "PLI_M76",
+    "PLI_M78"
+   ]
+  },
+  {
+   "batch": 13,
+   "forms": [
+    "PLI_M79",
+    "PLI_M80"
+   ]
+  },
+  {
+   "batch": 14,
+   "forms": []
+  }
+ ],
+ "note": "F5 review plan — chia theo form, priority current-law/signature-heavy đầu"
+}

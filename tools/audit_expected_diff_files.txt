@@ -610,3 +610,7 @@ tools/test_f1_output_sections.py
 app_web/test_f1_output_ui.js
 # --- [F5-dryrun merge 2026-09-07] dryrun review mắt 20 record phase7v ---
 docs/audits/ai_review_dryrun_phase7v_2026-09-06.md
+# --- [F3 merge 2026-09-07] corpus evidence + D17 hard-fail doc ---
+docs/audits/f3_corpus_2026-09-07.json
+docs/audits/f3_corpus_2026-09-07.md
+docs/audits/f3_hard_fail_2026-09-07.md

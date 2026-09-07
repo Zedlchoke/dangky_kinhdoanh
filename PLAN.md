@@ -1,20 +1,53 @@
 # MASTER PLAN v7 — HOÀN THIỆN TOÀN BỘ SẢN PHẨM SAU PHASE 6V
 
+> **✅ CHECKPOINT WAVE F0L–F4 — 2026-09-07 (Lead session, base `44f21bc`):**
+> current-law migration L-2026 ĐÓNG ở mức kỹ thuật + **111/111 section đều có
+> verdict, BLOCKED_OWNER = 0**:
+> (1) **F0L** — 4 văn bản ký số (TT 121/2026, NĐ 296/2026, TT 68/2025,
+> NĐ 168/2025) tải + SHA-256 (`docs/legal_sources_2026/`); 9 mẫu
+> M1–M5/M10/M12/M27/M30 migrate qua source→spec→generator theo ảnh trang
+> (delta inventory 10 form + ND296 22 điều); **PLI_M11 REMOVED_BY_CURRENT_LAW**
+> (stamp + catalog + gate `test_current_law_catalog`); M09 decontaminate
+> (129 đoạn nhiễm) verdict REMOVED_BY_SOURCE_CLEANUP; N-v4 M07 rebuild từ
+> bản in TT68 p49-50; N-v1/N-v2 band-is-input M33/PLII_M06 (census 23/23
+> bind, 0 blocked_owner); N-v3 mirrors M48/M49/M70. Lead proofread ảnh
+> bắt 2 lỗi transcribe (M10 'họ hàng'→'hợp đồng'; M27/M30 mất tiêu đề khối ký).
+> (2) **F1** — 10/10 user-input (M02 radio exclusive, M12×3 matrix O2
+> computed-strict, M27×2 grid 2026, M78/79/80, PLII_M02-c5) + 11/11
+> output-only (M52/M56/M63/M66×2/M67/M68/M70/M71/M75×2, mirror cell) +
+> M09 removed — coverage `85 IV · 17 OUTPUT_ONLY · 7 NO_TABLE · 1+1 REMOVED`,
+> drift 0.
+> (3) **F2** — full sweep: 38/38 suite; 87 form render sạch; 2186 key
+> 0 thiếu control; Chromium viewport×3 / zoom 200% / keyboard-only / ARIA /
+> focus ring PASS; error-focus-first-field + btable-wrap đã fix; WebView2
+> vẫn là gate Windows riêng. Evidence `docs/audits/ui_sweep_f2_2026-09-06.*`.
+> (4) **F4** — Excel P6=C đủ 4 cụm: M72 pilot + hộ kinh doanh (4
+> questionnaire) + thay đổi ngành (37 câu) + thuế (12 câu, phần thuế thật
+> ở M12; N/A có reason); round-trip/negative/mã dài PASS.
+> (5) **Fixture fix sau dryrun review** — slot ngày thành phần điền NGÀY
+> (hết double-date); EXCLUSIVE_GROUPS +chu_the_hkd. Runner: **VERDICT PASS**.
+> Đang chạy: F3 corpus `phase8f_final` (86 unit × 5 fixture, M11 loại) →
+> F5 AI review 100% PNG (human sign-off vẫn outstanding — O5) → F7 auditor.
+> Windows S1–S8 vẫn **NOT RUN** (O6 — handoff kit sẵn ở
+> `tools/windows_handoff/`). Không push (chờ lệnh owner).
+
 > **✅ CHECKPOINT WAVE v7 — 2026-09-05 (sau commit `9f756f6`):** hai defect
 > ưu tiên của mandate đã đóng ở mức kỹ thuật + gate hard:
 > (1) **HEADER-NAME-SYNC** — 20/22 slot band bind mirror read-only qua
 > registry `tools/header_name_binding.json`; gate hard `D17_header_name`;
 > PLI_M32 E2E 8/0; 2 slot BLOCKED_OWNER (PLI_M33, PLII_M06 — packet
-> `docs/owner_decision_packet_v7.md` N-v1/N-v2).
+> `docs/owner_decision_packet_v7.md` N-v1/N-v2). *(Cả hai đã đóng bằng
+> N-v1/N-v2 band-is-input ở wave F0L–F4.)*
 > (2) **SIGNATURE-USABILITY-SPACE** — sàn ký tay 72pt toàn corpus; D6 đồng
 > bộ census (coverage 420/420, expected-but-zero = 0); min gap 72.9pt /
 > median 119.6pt / <72pt = 0; "Đã ký" được đo nhưng không áp sàn; mutation
-> V2a/V2b đủ theo mandate.
+> V2a/V2b đủ theo mandate. *(Corpus phase7v chỉ còn là baseline kỹ thuật —
+> corpus final là phase8f.)*
 > Corpus mới `generated_ho_so/_visual_layout/phase7v/final/` (455 record):
 > HARD 0 · candidate chưa adjudicate 0 · export error 0 · PNG 1653==đĩa ·
 > ZIP 455/455 · Word 16.16.27 open-direct 91/91. Runner sau wave: xem
 > `docs/execution_ledger.md` wave v7. Human review corpus mới vẫn
-> **NOT_REVIEWED** (O5); Windows vẫn NOT RUN (O6); 22 BLOCKED_OWNER chờ O1.
+> **NOT_REVIEWED** (O5); Windows vẫn NOT RUN (O6).
 
 > **Kế hoạch duy nhất có hiệu lực từ 2026-09-05.** Lịch sử P0→P5R→6V nằm
 > trong `docs/execution_ledger.md`, `docs/defect_registry.md` và git. Không

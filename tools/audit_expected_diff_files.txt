@@ -596,5 +596,15 @@ app_web/test_nv3_inline_mirror.js
 # btable-wrap cho bảng thường (PLI_M70) — finding từ UI sweep F2 ---
 docs/audits/ui_sweep_f2_2026-09-06.md
 docs/audits/ui_sweep_f2_2026-09-06.json
-app_web/test_p2a_people_contracts.js
-app_web/test_r3b1_people_contracts.js
+# --- [F1-OUT merge 2026-09-07] templates/blocks 9 form output-only (salvage
+# merge) + spec M70/M71 sửa + UI output-table dispatch ---
+app/templates/PLI_M52.docx
+tools/form_specs/publication/PLI_M52.json
+tools/form_specs/publication/PLI_M56.json
+tools/form_specs/publication/PLI_M63.json
+tools/form_specs/publication/PLI_M66.json
+tools/form_specs/publication/PLI_M67.json
+tools/form_specs/publication/PLI_M68.json
+tools/form_specs/publication/PLI_M75.json
+tools/test_f1_output_sections.py
+app_web/test_f1_output_ui.js

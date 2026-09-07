@@ -69,6 +69,17 @@ function emptyStore(values, loops) {
 const MANIFEST = read(path.join(ROOT, 'app', 'data', 'table_specs',
   'manifest.json'));
 const FIXTURES = [
+  /* [F1-OUT 2026-09-06 O1] 11 section output-only (mirror cell) + M78 */
+  ['PLI_M52', 'khung_ra_soat_4_nhom', 'fixed-matrix'],
+  ['PLI_M56', 'cn_vppd_ddkd_tiep_tuc_truoc_han', 'editable-grid'],
+  ['PLI_M63', 'dia_diem_truc_thuoc_bi_thu_hoi', 'editable-grid'],
+  ['PLI_M66', 'don_vi_dang_lam_thu_tuc_cham_dut', 'editable-grid'],
+  ['PLI_M66', 'ddkd_truc_thuoc_dang_cham_dut', 'editable-grid'],
+  ['PLI_M67', 'don_vi_cham_dut_sau_day', 'editable-grid'],
+  ['PLI_M68', 'don_vi_cham_dut_khi_doanh_nghiep_giai_the', 'editable-grid'],
+  ['PLI_M75', 'cn_vppd_ddkd_khoi_phuc', 'editable-grid'],
+  ['PLI_M75', 'ddkd_truc_thuoc_khoi_phuc', 'editable-grid'],
+  ['PLI_M78', 'san_pham_cung_cap_thong_tin', 'fixed-matrix'],
   ['PLI_M70', 'chu_ky_nguoi_nop_nguoi_nhan', 'output-table'],
   ['PLI_M71', 'chu_ky_co_quan_cap_tinh', 'output-table'],
   ['PLI_M03', 'nguon_von_dieule', 'fixed-matrix'],
@@ -112,7 +123,13 @@ FIXTURES.forEach(function ([formId, sectionId, kind]) {
   check(formId + '/semanticKey khớp manifest',
     entry.semanticKey === sec.semantic_key,
     entry.semanticKey + ' != ' + sec.semantic_key);
-  check(formId + '/spec.kind trùng entry.kind', entry.spec.kind === kind);
+  // [Pin sync — F1-OUT O1 2026-09-06] section output_only: census kind giữ
+  // kind cấu trúc giấy (editable-grid/fixed-matrix) nhưng runtime dispatch
+  // đúng output-table (mirror cell, không input) — cặp kind này là chủ đích.
+  check(formId + '/spec.kind trùng entry.kind',
+    entry.spec.kind === kind ||
+      (sec.status === 'output_only' && entry.spec.kind === 'output-table'),
+    'manifest=' + sec.kind + ' spec=' + entry.spec.kind);
 });
 check('PLI_M72 KHÔNG bị đăng ký kind mới (cô lập editable-grid/M72)',
   !FD.FORM_TABLE_CONTRACTS.PLI_M72);
@@ -405,18 +422,27 @@ section('3. output-table: không input nào nhưng grid vẫn xuất hiện');
       comp.indexOf('data-component="output-table"') >= 0);
     check(fid + ': blocks chữ ký nguồn bị thay bằng grid (.dupe-anchor)',
       (out.match(/class="dupe-anchor"/g) || []).length >= 1);
+    /* [Pin sync — F1-OUT 2026-09-06] M70/M71 giờ có 2 bảng output-table:
+     * bảng hồ sơ (mới, O1) ĐỨNG TRƯỚC bảng ký. componentMarkup chỉ lấy
+     * bảng đầu nên pin cũ trượt — assert trên TOÀN BỘ output render. */
+    const fullOut = out;
     if (fid === 'PLI_M70') {
-      check('O1: 1 hàng x 2 cột (người nộp | người nhận ngang — 5R2)',
-        comp.indexOf('aria-rowcount="1"') >= 0 &&
+      check('O1: bảng ho_so_bao_gom 3 hàng x 2 cột render (F1-OUT)',
+        comp.indexOf('aria-rowcount="3"') >= 0 &&
         comp.indexOf('aria-colcount="2"') >= 0);
+      check('O1: bảng chữ ký 1 hàng x 2 cột (người nộp | người nhận — 5R2)',
+        fullOut.indexOf('data-section-id="chu_ky_nguoi_nop_nguoi_nhan"') >= 0 &&
+        fullOut.indexOf('aria-rowcount="1"') >= 0 &&
+        fullOut.indexOf('aria-colcount="2"') >= 0);
       check('O1: nhãn lấy đúng text chữ ký của blocks nguồn',
-        comp.indexOf('NGƯỜI NỘP<br>(Ký và ghi họ tên)') >= 0 &&
-        comp.indexOf('NGƯỜI NHẬN<br>(Ký và ghi họ tên)') >= 0);
+        fullOut.indexOf('NGƯỜI NỘP<br>(Ký và ghi họ tên)') >= 0 &&
+        fullOut.indexOf('NGƯỜI NHẬN<br>(Ký và ghi họ tên)') >= 0);
     } else {
       check('O2: biến thể 1 ô ký cơ quan',
-        comp.indexOf('aria-rowcount="1"') >= 0 &&
-        comp.indexOf('aria-colcount="1"') >= 0 &&
-        comp.indexOf('(TÊN CƠ QUAN ĐĂNG KÝ KINH DOANH CẤP TỈNH)') >= 0);
+        fullOut.indexOf('data-section-id="chu_ky_co_quan_cap_tinh"') >= 0 &&
+        fullOut.indexOf('aria-rowcount="1"') >= 0 &&
+        fullOut.indexOf('aria-colcount="1"') >= 0 &&
+        fullOut.indexOf('(TÊN CƠ QUAN ĐĂNG KÝ KINH DOANH CẤP TỈNH)') >= 0);
       check('O2: footnote sau vùng ký KHÔNG bị cuốn vào component',
         (() => {
           const blocks = loadBlocks('PLI_M71').blocks;

@@ -614,3 +614,5 @@ docs/audits/ai_review_dryrun_phase7v_2026-09-06.md
 docs/audits/f3_corpus_2026-09-07.json
 docs/audits/f3_corpus_2026-09-07.md
 docs/audits/f3_hard_fail_2026-09-07.md
+# --- [F5 plan 2026-09-07] kế hoạch chia 13 lô review phase8f ---
+docs/audits/f5_review_plan_phase8f.json

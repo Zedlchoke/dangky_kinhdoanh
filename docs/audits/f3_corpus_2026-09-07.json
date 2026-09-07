@@ -143,21 +143,76 @@
   }
  },
  "hard_fail_doc": "docs/audits/f3_hard_fail_2026-09-07.md",
+ "band_input_resolution": {
+  "status": "RESOLVED-EXEMPT",
+  "agent": "F3B",
+  "authorize": "Lead (sửa detector mismatch hợp đồng — render đúng)",
+  "tool_fix": "tools/phase5_visual_gate.py det_header_name đọc bind.mode: band_input -> PASS khi hay.count(needle)==1, FAIL HDR_NAME_SYNC khi count>=2 (double-slot) hoặc count==0 (không đối chiếu được); mode mirror giữ nguyên >=2",
+  "registry_basis": "tools/header_name_binding.json mode=band_input (N-v1/N-v2 DECIDED A 2026-09-06) — band là ô nhập pháp định DUY NHẤT PLI_M33 / PLII_M06",
+  "mutation_suite": {
+   "cmd": "python3 -X utf8 -m tools.test_phase6v_detectors",
+   "result": "11 PASS / 0 FAIL",
+   "note": "10 cũ + case mới V2c_d17_band_input_mutations (count 1 -> PASS; count 2 double-slot -> SYNC; mirror 1-lần vẫn SYNC)"
+  }
+ },
+ "visual_gate_final": {
+  "generated_ts": "20260907_175524",
+  "cmd": "python3 -X utf8 tools/phase5_visual_gate.py --outdir generated_ho_so/_visual_layout/phase8f_final --forms <86 active_form_ids>",
+  "records": 450,
+  "fixtures_per_record_zero_fail": 5,
+  "hard_fail_records": 0,
+  "hard_fail_counts": {},
+  "candidate_records": 5,
+  "candidate_counts": {
+   "D9_table_grid": 5
+  },
+  "candidate_ids": [
+   "empty-paper/main/PLI_M10",
+   "valid-minimal/main/PLI_M10",
+   "valid-full/main/PLI_M10",
+   "long-boundary/main/PLI_M10",
+   "choice-variants/main/PLI_M10"
+  ],
+  "export_errors": 0,
+  "png_disk_assert": {
+   "claimed": 1752,
+   "disk": 1752,
+   "mismatches": [],
+   "ok": true
+  },
+  "fixture_seconds": {
+   "empty-paper": 983.7,
+   "valid-minimal": 834.9,
+   "valid-full": 574.2,
+   "long-boundary": 474.3,
+   "choice-variants": 440.2
+  },
+  "note": "manifest mới đè manifest cũ trong corpus; D17 2 record band_input = []; 5 candidate D9 M10 adjudicate lớp (ii) như run 1",
+  "verdict": "PASS (HARD 0)"
+ },
+ "preflight_rerun": {
+  "json": "/tmp/f3b_preflight.json",
+  "phase": "pre-commit (working tree có 2 file tools được authorize)",
+  "summary": "63 PASS / 2 FAIL",
+  "fail_detail": {
+   "test_m72_activation": "FAIL check 8 'git: khong thay doi tools/**' — do working-tree dirty trước commit, hết sau commit",
+   "test_audit_wave_h_negative": "H7.4 PRE-EXISTING từ commit d054d24: diff baseline/p1.2-d882793..HEAD thừa 3 docs audit (f3_corpus_2026-09-07.{md,json}, f3_hard_fail_2026-09-07.md) thiếu entry tools/audit_expected_diff_files.txt — cần Lead +3 entry (mẫu ad91e67)"
+  }
+ },
  "obsolete_baseline": [
   "/Users/hoangminhlong/orca/dangky_kinhdoanh-worktrees/final-f3-corpus/generated_ho_so/_visual_layout/phase8f",
   "/Users/hoangminhlong/orca/dangky_kinhdoanh-worktrees/final-f3-corpus/generated_ho_so/_visual_layout/phase8f_obsolete_export"
  ],
  "overall": {
   "gates_pass": [
-   "preflight",
+   "preflight (HEAD 24d09f0 65/65; sau commit f3b còn H7.4 chờ Lead +3 entry manifest — pre-existing từ d054d24)",
+   "visual_gate_hard (F3B gate cuối 20260907_175524: HARD 0 — PASS)",
    "signature_census",
    "zip",
    "word_open",
    "png_disk_assert",
    "determinism"
   ],
-  "gates_open": [
-   "visual_gate_hard (2 D17 — mismatch hop dong detector, cho Lead encode exemption band_input)"
-  ]
+  "gates_open": []
  }
 }

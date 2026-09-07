@@ -818,10 +818,19 @@ def det_header_name(pages: list, form: str, registry: dict | None = None,
     # Tên dài wrap 2 dòng và PDF gom baseline trái+phải thành một dòng
     # (chữ quốc hiệu dính vào giá trị band) — tách quốc hiệu đã biết rồi
     # PASS nếu BẤT KỲ mảnh nào của band khớp thân (xuất hiện >= 2 lần).
+    # [F3B 2026-09-07] mode=band_input (N-v1/N-v2 DECIDED A — PLI_M33,
+    # PLII_M06): band là Ô NHẬP pháp định DUY NHẤT, thân mẫu KHÔNG có
+    # trường tên (docs/audits/f3_hard_fail_2026-09-07.md) → mỗi mảnh giá
+    # trị band (đã lọc motto + dòng kẻ) phải xuất hiện ĐÚNG 1 LẦN trong
+    # toàn văn. count >= 2 = double-slot (band + thân) quay lại → FAIL;
+    # count != 1 (kể cả 0 — không đối chiếu được) cũng FAIL. Mode mặc
+    # định (mirror) giữ nguyên hợp đồng >=2.
     _motto_folds = ("cong hoa xa hoi chu nghia viet nam",
                     "doc lap - tu do - hanh phuc")
     hay = re.sub(r"\s+", " ", _fold(
         full_text or "\n".join(p["text"] for p in pages)))
+    band_input = (bind.get("mode") or "").strip() == "band_input"
+    bi_seen = False
     for ln in below[:3]:
         f = ln["fold"]
         if _HDR_NAME_DASH_FOLD.match(f):
@@ -831,8 +840,16 @@ def det_header_name(pages: list, form: str, registry: dict | None = None,
         needle = re.sub(r"\s+", " ", f).strip(" .,-")
         if not needle or not any(c.isalpha() for c in needle):
             continue
-        if hay.count(needle) >= 2:
+        n = hay.count(needle)
+        if band_input:
+            if n != 1:
+                return [{"code": "HDR_NAME_SYNC", "page": 1,
+                         "value": below[0]["text"][:60]}]
+            bi_seen = True
+        elif n >= 2:
             return []
+    if band_input and bi_seen:
+        return []
     return [{"code": "HDR_NAME_SYNC", "page": 1,
              "value": below[0]["text"][:60]}]
 

@@ -201,71 +201,11 @@ RECLASSIFICATIONS = {
     ("PLII_M18", "ho_so_bao_gom"): {
         "kind": "prose-block", "status": "no_table",
         "reason": "Giong PLII_M17 (ban nop online): dong cham tay khong input, khong luoi."},
-    # --- [F1-OUT 2026-09-06 — Lead áp sau salvage] 11 section OUTPUT_ONLY
-    # theo O1 (owner 2026-09-06): lưới do CQĐKKD phát hành, render từ hồ sơ
-    # qua mirror cell (không input). Evidence: spec publication/* + blocks
-    # mirror run + form-domain dispatch + test_f1_output_sections 7/7 +
-    # test_f1_output_ui 63/63.
-    ("PLI_M52", "khung_ra_soat_4_nhom"): {
-        "status": "output_only",
-        "evidence": "O1 OUTPUT_ONLY: khung rà soát 4 nhóm do CQĐKKD phát hành; "
-                    "spec publication/PLI_M52.json + mirror cell; tách key "
-                    "ma_so_van_ban theo D4.2=A.",
-    },
-    ("PLI_M56", "cn_vppd_ddkd_tiep_tuc_truoc_han"): {
-        "kind": "editable-grid",
-        "status": "output_only",
-        "evidence": "O1 OUTPUT_ONLY: giấy xác nhận của CQĐKKD; grid mirror "
-                    "'một hoặc một số' đơn vị từ hồ sơ.",
-    },
-    ("PLI_M63", "dia_diem_truc_thuoc_bi_thu_hoi"): {
-        "kind": "editable-grid",
-        "status": "output_only",
-        "evidence": "O1 OUTPUT_ONLY: quyết định thu hồi của CQĐKKD; grid mirror.",
-    },
-    ("PLI_M66", "don_vi_dang_lam_thu_tuc_cham_dut"): {
-        "kind": "editable-grid",
-        "status": "output_only",
-        "evidence": "O1 OUTPUT_ONLY + tách section theo defect bo_ten_ma_x23 "
-                    "(mỗi đơn vị 1 bộ tên+mã).",
-    },
-    ("PLI_M66", "ddkd_truc_thuoc_dang_cham_dut"): {
-        "kind": "editable-grid",
-        "status": "output_only",
-        "evidence": "O1 OUTPUT_ONLY; grid mirror từ hồ sơ.",
-    },
-    ("PLI_M67", "don_vi_cham_dut_sau_day"): {
-        "kind": "editable-grid",
-        "status": "output_only",
-        "evidence": "O1 OUTPUT_ONLY; '(các)' đơn vị = grid mirror.",
-    },
-    ("PLI_M68", "don_vi_cham_dut_khi_doanh_nghiep_giai_the"): {
-        "kind": "editable-grid",
-        "status": "output_only",
-        "evidence": "O1 OUTPUT_ONLY; grid mirror; thong_bao_dang_giai_the "
-                    "đã output-table từ trước.",
-    },
-    ("PLI_M70", "ho_so_bao_gom"): {
-        "kind": "fixed-matrix",
-        "status": "output_only",
-        "evidence": "O1 OUTPUT_ONLY (supersede D6.3): hồ sơ bao gồm in 3 dòng "
-                    "pháp định theo giấy; fixed-matrix mirror.",
-    },
-    ("PLI_M71", "ho_so_bao_gom_online"): {
-        "kind": "fixed-matrix",
-        "status": "output_only",
-        "evidence": "O1 OUTPUT_ONLY; bản điện tử 3 dòng pháp định.",
-    },
-    ("PLI_M75", "cn_vppd_ddkd_khoi_phuc"): {
-        "kind": "editable-grid",
-        "status": "output_only",
-        "evidence": "O1 OUTPUT_ONLY; grid 3 loại đơn vị theo giấy.",
-    },
-    ("PLI_M75", "ddkd_truc_thuoc_khoi_phuc"): {
-        "kind": "editable-grid",
-        "status": "output_only",
-        "evidence": "O1 OUTPUT_ONLY; grid mirror từ hồ sơ.",
-    },
+    # --- [F1-OUT 2026-09-06] 11 section OUTPUT_ONLY theo O1 KHONG nam o day:
+    # RECLASSIFICATIONS la map "sua kind census" (entry bat buoc co kind +
+    # reason; thieu -> KeyError tai normalize_section). 11 section nay census
+    # fragment da dung kind/status=output_only, chi can evidence ghi de ->
+    # LEAD_STATUS_OVERRIDES (xem dau map do).
     ("PLI_M09", "vung_nhiem_mau_6789_10"): {
         "kind": "source-contamination", "status": "removed_by_source_cleanup",
         "reason": "[F0L O1 2026-09-06] Vung nhiem da bi XOA KHOI NGUON "
@@ -292,9 +232,17 @@ RECLASSIFICATIONS = {
     ("PLI_M57", "don_vi_tiep_tuc_xac_nhan"): {
         "kind": "scalar-fields", "status": "no_table",
         "reason": "So it, mot giay = mot don vi; blocks map truong ngay thang; khong dong lap."},
+    # [F1-OUT 2026-09-06] O1 adjudicate supersede verdict missing_grid cua P1:
+    # '(cac)' don vi = grid mirror tu ho so (CQDKKD phat hanh, khong input).
+    # Census fragment dang kind=unknown -> chuan hoa kind o day (map dung de
+    # sua kind); status + evidence chi tiet o LEAD_STATUS_OVERRIDES. Truoc do
+    # dict literal nay co 2 entry trung key (missing_grid cua P1 khai sau nen
+    # ghi de entry O1) — chi giu 1 entry dung.
     ("PLI_M67", "don_vi_cham_dut_sau_day"): {
-        "kind": "editable-grid", "status": "missing_grid",
-        "reason": "'(Cac) chi nhanh/VPDD/DDKD sau day' -> ban chat editable-grid du kien; blocks hien chi 1 bo ten/mso/dia_chi; cho quyet dinh 1-nhieu."},
+        "kind": "editable-grid", "status": "output_only",
+        "reason": "O1 OUTPUT_ONLY (supersede P1 missing_grid): '(cac) don vi' "
+                  "= grid mirror tu ho so; census fragment kind=unknown -> "
+                  "chuan hoa editable-grid."},
 }
 
 STT_RE = re.compile(r"^\s*STT\b")
@@ -350,6 +298,66 @@ SIGNATURE_CLASSIFICATIONS = {
 }
 
 LEAD_STATUS_OVERRIDES = {
+    # --- F1-OUT (2026-09-06, O1 adjudicate: 11 section OUTPUT_ONLY) — lưới do
+    # CQĐKKD phát hành, render từ hồ sơ qua mirror cell (không input).
+    # Evidence: spec publication/* + blocks mirror run + form-domain output
+    # dispatch + tools/test_f1_output_sections 7/7 + app_web
+    # test_f1_output_ui 63/63. (Trước đây đặt nhầm trong RECLASSIFICATIONS —
+    # map đó bắt buộc kind + reason nên normalize_section văng KeyError;
+    # ghi đè status-only phải nằm ở đây.) ---
+    ("PLI_M52", "khung_ra_soat_4_nhom"): {
+        "status": "output_only",
+        "evidence": "O1 OUTPUT_ONLY: khung rà soát 4 nhóm do CQĐKKD phát hành; "
+                    "spec publication/PLI_M52.json + mirror cell; tách key "
+                    "ma_so_van_ban theo D4.2=A.",
+    },
+    ("PLI_M56", "cn_vppd_ddkd_tiep_tuc_truoc_han"): {
+        "status": "output_only",
+        "evidence": "O1 OUTPUT_ONLY: giấy xác nhận của CQĐKKD; grid mirror "
+                    "'một hoặc một số' đơn vị từ hồ sơ.",
+    },
+    ("PLI_M63", "dia_diem_truc_thuoc_bi_thu_hoi"): {
+        "status": "output_only",
+        "evidence": "O1 OUTPUT_ONLY: quyết định thu hồi của CQĐKKD; grid mirror.",
+    },
+    ("PLI_M66", "don_vi_dang_lam_thu_tuc_cham_dut"): {
+        "status": "output_only",
+        "evidence": "O1 OUTPUT_ONLY + tách section theo defect bo_ten_ma_x23 "
+                    "(mỗi đơn vị 1 bộ tên+mã).",
+    },
+    ("PLI_M66", "ddkd_truc_thuoc_dang_cham_dut"): {
+        "status": "output_only",
+        "evidence": "O1 OUTPUT_ONLY; grid mirror từ hồ sơ.",
+    },
+    ("PLI_M67", "don_vi_cham_dut_sau_day"): {
+        "status": "output_only",
+        "evidence": "O1 OUTPUT_ONLY (supersede P1 missing_grid); '(các)' đơn vị "
+                    "= grid mirror; kind chuẩn hóa editable-grid qua "
+                    "RECLASSIFICATIONS (census fragment kind=unknown).",
+    },
+    ("PLI_M68", "don_vi_cham_dut_khi_doanh_nghiep_giai_the"): {
+        "status": "output_only",
+        "evidence": "O1 OUTPUT_ONLY; grid mirror; thong_bao_dang_giai_the "
+                    "đã output-table từ trước.",
+    },
+    ("PLI_M70", "ho_so_bao_gom"): {
+        "status": "output_only",
+        "evidence": "O1 OUTPUT_ONLY (supersede D6.3): hồ sơ bao gồm in 3 dòng "
+                    "pháp định theo giấy; fixed-matrix mirror.",
+    },
+    ("PLI_M71", "ho_so_bao_gom_online"): {
+        "status": "output_only",
+        "evidence": "O1 OUTPUT_ONLY; bản điện tử 3 dòng pháp định; "
+                    "fixed-matrix mirror.",
+    },
+    ("PLI_M75", "cn_vppd_ddkd_khoi_phuc"): {
+        "status": "output_only",
+        "evidence": "O1 OUTPUT_ONLY; grid 3 loại đơn vị theo giấy.",
+    },
+    ("PLI_M75", "ddkd_truc_thuoc_khoi_phuc"): {
+        "status": "output_only",
+        "evidence": "O1 OUTPUT_ONLY; grid mirror từ hồ sơ.",
+    },
     # --- Wave P2 (2026-08-27): merge abe6084 (P2A) / 1691728 (P2C) /
     # a61cdfb (P2D) + Lead regen batch 8 mẫu. Evidence = suite thật đã chạy
     # trên main sau merge; loop_audit census giữ nguyên như hồ sơ lịch sử. ---

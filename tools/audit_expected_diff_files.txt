@@ -608,3 +608,5 @@ tools/form_specs/publication/PLI_M68.json
 tools/form_specs/publication/PLI_M75.json
 tools/test_f1_output_sections.py
 app_web/test_f1_output_ui.js
+# --- [F5-dryrun merge 2026-09-07] dryrun review mắt 20 record phase7v ---
+docs/audits/ai_review_dryrun_phase7v_2026-09-06.md

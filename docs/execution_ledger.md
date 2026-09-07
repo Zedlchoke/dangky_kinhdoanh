@@ -648,3 +648,21 @@ corpus cuối. O5 human review và O6 Windows vẫn là evidence outstanding, kh
 | Lane A2 merge: M01-M05 + N-v4 M07 rebuild từ TT68 p49-50 (bỏ stub, 13 chú thích) | Lead | `beeae4b`..`0f5e9f4` (merge) | Lead thẩm định chéo M07 vs ảnh p49 (verbatim khớp) | branch agent/final-contracts-m0105 |
 | Lead proofread bắt 2 defect transcribe: M10 cột 16 'họ hàng'→'hợp đồng' (ảnh p49 350dpi); M27/M30 mất dòng tiêu đề khối ký → khôi phục verbatim p69/p70 (Ký và ghi họ tên)6/² | Lead | `e268038` | census titles M27/M30 khớp registry; test_extractor_footnote_glue 12/12 | /tmp/p49_col16_350.png, /tmp/p69_top_250.png |
 | Pin sync theo quy tắc premise→evidence: p2a 14/0 (M10 2026 contract + M09 decontam), r3b1 (M12 anchor 134→135, M09 removed_by_source_cleanup), glue STT_GLUE_FIXED_FORMS, M27 superscript 4/5 tại source | Lead | `6de45d5`/`e268038` | suites xanh từng cái | commit messages |
+
+## Wave F1/F2/F4 — 22 section + UI sweep + Excel P6=C @ main 0b08187→ (2026-09-06/07)
+
+| Task | Owner | Commit | Gate | Evidence |
+|---|---|---|---|---|
+| Lane B merge: O3 min_rows conditional, O4 mã dài chuỗi/BAD_ID_TEXT, N-v3 test, Excel cụm hộ KD (4 questionnaire), full-sweep harness | Lead | `ecdbc08` | min_rows 25/0; nv3 11/0; questionnaire 15/0 | branch agent/final-ui-excel |
+| Lane A2 merge: M01-M05 + N-v4 M07 rebuild TT68 p49-50 | Lead | `5002dd9` | Lead thẩm định M07 vs ảnh p49 verbatim | branch agent/final-contracts-m0105 |
+| Integration agent merge: pin/census rebaseline (M10 18 cột, band M12 binding #23, registry chữ ký M02-M05/M07, allowlist +30) | Lead | merge sau `6256c76` | runner PASS tạm | branch agent/final-integration |
+| Lead fix 10 digit-glue nguồn M02-M05/M30 (superscript tách run) | Lead | commit sau merge | check_layout_l1 (d) = 0; runner PASS 64/0 | — |
+| Lead N-v1/N-v2: band-is-input M33/PLII_M06 (registry mode + converter form-aware + gates E6/E8/header_layout + UI test 14/0) | Lead | `0353e5e` | census F0L: 23/23 bind, 0 blocked_owner | app_web/test_nv1_nv2_band_input.js |
+| NV3 merge: output_mirrors M48/M49/M70 (M49 chỉ nhánh DN) + tests 7/0 + 20/0 | Lead | merge sau `b17497e` | band gates giữ nguyên xanh | branch agent/final-nv3 |
+| F4-EXCEL merge: cụm thay đổi ngành (37 câu incl. 7 chỉ tiêu thuế M12 2026) + thuế M27 (12 câu), gỡ blocked 5 mẫu | Lead | `38efb62` | questionnaire 21/0; excel export/roundtrip/negative 25/9/19 | branch agent/f4-excel |
+| F2-SWEEP merge: 38/38 suite; 87/87 form; 2186 key 0 thiếu; Chromium viewport×3/zoom 200%/keyboard/ARIA PASS (13 PASS / 4 NOT RUN / 0 FAIL) | Lead | `69dfe53` | docs/audits/ui_sweep_f2_2026-09-06.{md,json} | branch agent/final-f2-sweep |
+| Lead fix finding F2: error-focus-first-field khi export chặn + .btable-wrap bảng thường | Lead | `fa320be` | dom 69/0; sweep 87/87; l2 77/0 | — |
+| F1-IN merge: 10/10 section user-input (M02 radio exclusive, M12×3 matrix O2 computed-strict giữ verbatim bản in, M27×2 grid 2026, M78 requiredIfPositive, M79/80 min3, PLII_M02-c5 đúng 2 chỉ tiêu) | Lead | merge `b42732f` | test_f1_input 14/0 + UI 13/0; coverage 85 IV | branch agent/f1-input |
+| F1-OUT salvage merge: 11/11 section output-only (M52 tách key D4.2, M56-M75 mirror cell, M70/71 hồ sơ 3 dòng) — agent hết quota weekly, Lead commit WIP + override 11 OUTPUT_ONLY | Lead | merge + `49d1b35` | lane tests 7/7 + 63/63 | branch agent/f1-output |
+| Census-fix merge: override về đúng LEAD_STATUS_OVERRIDES + M67 dedup key — **coverage OUTPUT_ONLY 17 / BLOCKED_OWNER 0 / MISSING 0, drift 0** | Lead | merge `1888fcc` | manifest deep GATE PASS 87/87 | branch agent/final-census-fix |
+| Lead pin sync sau F1-OUT: runtime_tables FIXTURES +11, M70/M71 full-output checks, allowlist +30 | Lead | `9d12302` | runtime_tables 245/0; **runner VERDICT PASS** | /tmp/after_f1out.json |

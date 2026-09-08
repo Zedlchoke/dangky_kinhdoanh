@@ -13929,6 +13929,14 @@ window.FORM_MAPS = {
     "label": ""
    },
    {
+    "key": "thang_ky_vb",
+    "label": ""
+   },
+   {
+    "key": "nam_ky_vb",
+    "label": ""
+   },
+   {
     "key": "co_quan_dkkd",
     "label": "Kính gửi: (Cơ quan đăng ký kinh doanh cấp tỉnh)"
    },
@@ -14179,14 +14187,6 @@ window.FORM_MAPS = {
    {
     "key": "so_lao_dong",
     "label": "8.7 Tổng số lao động (dự kiến):"
-   },
-   {
-    "key": "thang_ky_vb",
-    "label": ""
-   },
-   {
-    "key": "nam_ky_vb",
-    "label": ""
    },
    {
     "key": "ho_ten_in_hoa",

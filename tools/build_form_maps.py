@@ -1083,8 +1083,16 @@ def load_form_spec(form_id):
         # 2026-08-28 — sửa M09 mất mục 7); validate shape fail-loud ở đây.
         # name_slots: chèn placeholder vào slot tên DN/HKD dưới tiêu đề
         # (6V-V2/C2, diệt B2/D14) — validate shape fail-loud cùng kiểu.
+        # landscape_min_col_twips: override PER-FORM sàn cột section ngang
+        # [RFIX-1 2026-09-07] — sàn chung 900 twips (6V-V3) nhân số cột vật
+        # lý có thể VƯỢT khổ in được (M10: 18 cột × 900 = 16200 > usable
+        # 14400 của Letter landscape → _content_col_widths không thể lùi
+        # dưới sàn nên TRẢ VỀ tổng 16200, 1800 twips cuối tràn mép phải,
+        # render mất cột 18). Form nào cần hẹp hơn khai override riêng —
+        # KHÔNG hạ sàn chung toàn corpus.
         allowed_root = {"form_id", "group", "note", "gap_nghiepvu", "tables",
-                        "section_cond", "inserts", "name_slots"}
+                        "section_cond", "inserts", "name_slots",
+                        "landscape_min_col_twips"}
         extra_root = set(raw) - allowed_root
         if extra_root:
             raise ValueError(
@@ -1187,6 +1195,13 @@ def load_form_spec(form_id):
             result["inserts"] = raw["inserts"]
         if raw.get("name_slots"):
             result["name_slots"] = raw["name_slots"]
+        if raw.get("landscape_min_col_twips") is not None:
+            v = raw["landscape_min_col_twips"]
+            if not isinstance(v, int) or isinstance(v, bool) or not 1 <= v:
+                raise ValueError(
+                    "[form_specs] %s (%s): landscape_min_col_twips phải int "
+                    ">= 1: %r" % (form_id, path_used, v))
+            result["landscape_min_col_twips"] = v
     _form_spec_cache[form_id] = result
     return result
 
@@ -1286,6 +1301,14 @@ def _content_col_widths(weights: list, total: int,
                 rem -= step
             guard += 1
         return raw
+    # [RFIX-1 2026-09-07] bất biến VẬT LÝ: sàn × số cột không được vượt tổng
+    # — nếu vượt (M10 18 cột × 900 = 16200 > 14400) thì hàm cũ trả tổng
+    # 16200 (không lùi được dưới sàn) khiến bảng tràn mép phải, mất cột
+    # cuối lúc render. Hạ sàn về mức vừa tổng TRƯỚC khi kẹp floors; caller
+    # build_landscape_sections đã hạ sàn theo override per-form nên guard
+    # này chỉ là lưới an toàn (không đổi kết quả cho bảng nào đang vừa).
+    if min_w * n > total:
+        min_w = max(1, total // n)
     fl = [max(min_w, int(f)) for f in floors]
     raw = [min_w] * n
     rem = total - min_w * n
@@ -1707,6 +1730,16 @@ def build_landscape_sections(doc, form_id, ext=None) -> int:
         return 0
     landscape_sect = _landscape_sect_copy(sect)
     usable = _landscape_usable_twips(landscape_sect)
+    # [RFIX-1 2026-09-07] sàn cột PER-FORM: spec khai "landscape_min_col_twips"
+    # thì dùng thay sàn chung 900 — sàn chung × số cột có thể vượt khổ in
+    # được (M10: 18×900=16200 > 14400) và _content_col_widths khi đó trả
+    # tổng VƯỢT usable → 1800 twips cuối tràn mép phải, render mất cột 18.
+    # Chỉ form khai override mới đổi — không hạ sàn chung toàn corpus.
+    min_col_override = LANDSCAPE_MIN_COL_TWIPS
+    if ext is not None and ext.get("landscape_min_col_twips") is not None:
+        min_col_override = int(ext["landscape_min_col_twips"])
+        print("[landscape] %s: sàn cột per-form %d twips (override spec)"
+              % (form_id, min_col_override))
 
     # Gộp các bảng rộng kế nhau (gap chỉ toàn paragraph "nhẹ") + gộp ngược
     # caption đứng kề trên bảng đầu group — lặp tới khi ổn định.
@@ -1737,9 +1770,17 @@ def build_landscape_sections(doc, form_id, ext=None) -> int:
                 continue  # vị trí caption gộp ngược — không phải bảng
             tbl_el = children[pos]
             ncols = len(_tbl_grid_cols(tbl_el))
+            # bất biến vật lý per bảng: sàn × số cột phải vừa usable —
+            # lưới an toàn khi override vẫn lớn hơn mức tối thiểu vừa khổ.
+            mw = min_col_override
+            if mw * ncols > usable:
+                mw = max(1, usable // ncols)
+                print("[landscape] %s: sàn %d×%d cột vượt usable %d -> hạ "
+                      "xuống %d" % (form_id, min_col_override, ncols,
+                                    usable, mw))
             widths = _content_col_widths(
                 _table_content_weights(tbl_el, ncols), usable,
-                min_w=LANDSCAPE_MIN_COL_TWIPS,
+                min_w=mw,
                 floors=_table_word_floors(tbl_el, ncols))
             if not _apply_width_list(tbl_el, widths):
                 raise ValueError(
@@ -2732,6 +2773,31 @@ def _assign_para_slots(full, groups, add_field, unmatched, form_id, where,
         # trường hợp đặc biệt: "……, ngày ……tháng ……năm ……" (ký tên, có slot đầu dòng)
         if not lab.strip() and re.match(r"[,.]?\s*ngay\b", fold(full[g_end:g_end + 30])):
             names = ["dia_diem_ky", "ngay_ky_vb", "thang_ky_vb", "nam_ky_vb"]
+            # [RFIX-2 2026-09-07] Nguồn M05 in '……., ngày … tháng … năm ……':
+            # slot ngày/tháng chỉ MỘT ký tự '…' nên DOT_RUN ([.…]{2,}) không
+            # bắt được — chỉ thấy 2 group (đầu dòng + sau 'năm'), nhánh cũ
+            # gắn names theo THỨ TỰ group -> {ngay_ky_vb} rơi vào slot NĂM
+            # (render 'năm 04'), slot ngày/tháng còn nguyên chấm. Khi số
+            # group bắt được < 4 mà cấu trúc dòng khớp đủ 4 slot
+            # (ngày X tháng Y năm Z) thì gắn theo VỊ TRÍ regex. Dòng đủ
+            # group (vd '……, ngày …… tháng …… năm ……') vẫn đi nhánh cũ
+            # nguyên vẹn — zero-diff cho mọi form khác.
+            m_date = None
+            if len(groups) - gi < len(names):
+                m_date = re.match(
+                    r"\s*,\s*ngày\s*([.…]+)\s*tháng\s*([.…]+)\s*năm\s*([.…]+)"
+                    r"\s*$", full[g_end:])
+            if m_date is not None:
+                assignments.append((g_start, g_end, "{%s}" % names[0]))
+                add_field(names[0], label)
+                for j in (1, 2, 3):
+                    s, e = m_date.span(j)
+                    assignments.append(
+                        (g_end + s, g_end + e, "{%s}" % names[j]))
+                    add_field(names[j], "")
+                prev_end = g_end + m_date.end()
+                gi = len(groups)
+                continue
             take = min(len(names), len(groups) - gi)
             for j in range(take):
                 s, e = groups[gi + j]

@@ -629,4 +629,3 @@ tools/test_acceptance_docx.py
 tools/test_audit_p1_docx_negative.py
 tools/test_industry_formation.py
 tools/test_plii_m01_member_stt.py
-tools/test_m72_conditional.py

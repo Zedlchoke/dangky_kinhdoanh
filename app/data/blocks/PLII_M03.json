@@ -31,12 +31,9 @@
       {
        "runs": [
         {
-         "text": "TÊN HỘ KINH DOANH\n",
-         "b": true
-        },
-        {
-         "mirror": {
-          "key": "hkd_ten_tieng_viet_2"
+         "input": {
+          "key": "hkd_ten_tieng_viet_2",
+          "w": 12
          }
         }
        ],
@@ -121,8 +118,7 @@
       }
      ]
     }
-   ],
-   "band": "header"
+   ]
   },
   {
    "t": "p",

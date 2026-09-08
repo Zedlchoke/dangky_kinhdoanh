@@ -25,12 +25,9 @@
       {
        "runs": [
         {
-         "text": "TÊN DOANH NGHIỆP\n",
-         "b": true
-        },
-        {
-         "mirror": {
-          "key": "dn.ten_tieng_viet"
+         "input": {
+          "key": "dn.ten_tieng_viet",
+          "w": 12
          }
         }
        ],
@@ -115,8 +112,7 @@
       }
      ]
     }
-   ],
-   "band": "header"
+   ]
   },
   {
    "t": "p",

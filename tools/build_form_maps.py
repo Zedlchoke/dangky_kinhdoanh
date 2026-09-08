@@ -3541,11 +3541,12 @@ _HDR_DASH_LINE_RE = re.compile(r"^[-_.\u2013\u2014\u2026 ]{3,}$")
 
 
 def _bind_header_name_slot(table, form_id):
-    """Thay dòng kẻ điền tay ở ô (0,0) band bằng the {key} của registry.
+    """Thay TOÀN BỘ ô (0,0) band bằng the {key} — nhãn 'TÊN DOANH NGHIỆP'
+    bị XOÁ (owner chỉ thị 2026-09-08: khi in ra CHỈ hiện tên DN, không hiện
+    nhãn form-field; bản giấy để nhãn + dòng kẻ để VIẾT TAY, bản điện tử
+    chỉ cần giá trị).
 
-    Idempotent: ô đã chứa the {key} -> không đổi. Cấu trúc lệch (không tìm
-    thấy dòng kẻ ĐỒNG THỜI không có the) -> raise ValueError (fail loud,
-    đúng hợp đồng của build_header_band_table)."""
+    Idempotent: ô đã chứa the {key} -> không đổi."""
     bind = header_name_binding()["forms"].get(form_id)
     if not bind:
         return False
@@ -3557,21 +3558,20 @@ def _bind_header_name_slot(table, form_id):
     token = "{%s}" % key
     if token in para.text:
         return False   # đã bind (regen lần 2)
-    # Dòng kẻ thường nằm trong CÙNG run với nhãn ('TÊN …' + <w:br/> +
-    # '-------' — 2 w:t), nên thao tác ở mức w:t.
-    for run in para.runs:
-        replaced = False
-        for t_el in run._r.findall(qn("w:t")):
-            txt = t_el.text or ""
-            if _HDR_DASH_LINE_RE.match(txt):
-                t_el.text = token if not replaced else ""
-                t_el.set(qn("xml:space"), "preserve")
-                replaced = True
-        if replaced:
-            return True
-    raise ValueError(
-        "[hdr-name] %s: ô (0,0) không có dòng kẻ '-------' để bind %r "
-        "(sao chép nguồn lệch chuẩn?)" % (form_id, key))
+    # [Owner 2026-09-08] XOÁ toàn bộ run (nhãn + dòng kẻ) rồi thêm 1 run
+    # duy nhất chứa token. Giữ bold từ run đầu tiên (nếu có).
+    first_bold = para.runs[0].bold if para.runs else None
+    font_name = None
+    if para.runs:
+        font_name = para.runs[0].font.name
+    for run in list(para.runs):
+        run._r.getparent().remove(run._r)
+    new_run = para.add_run(token)
+    if first_bold:
+        new_run.bold = True
+    if font_name:
+        new_run.font.name = font_name
+    return True
 
 
 # ---------------------------------------------------------------------------

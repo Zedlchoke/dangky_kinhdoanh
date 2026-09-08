@@ -635,3 +635,6 @@ app_web/test_f3t_parity.js
 tools/census/header_semantic_census.py
 docs/audits/header_semantic_census.json
 docs/audits/header_semantic_census.md
+# --- [F3H impl 2026-09-08] header-subject-semantics: registry roles + D19 detector + fixtures + mutation V4 ---
+tools/header_semantics.py
+tools/test_f3h_fixtures.py

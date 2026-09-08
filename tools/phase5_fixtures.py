@@ -144,6 +144,9 @@ EXCLUSIVE_GROUPS = [
     # kê khai / khoán — chọn 1 trong 2 (chk nằm 2 block p khác nhau nên
     # heuristic cùng-paragraph không gộp được)
     ("pp_ke_khai", r"^chk_pp_(ke_khai|khoan)$", "chk_pp_ke_khai"),
+    # [F5 judge-batch8 fix 2026-09-07] PLI_M14 trường hợp thay đổi chủ DNTN:
+    # tặng / chủ chết / bán — chọn 1 trong 3
+    ("thay_doi_chu_dntn", r"^chk_cd_dntn_(tang|chu_chet|ban)$", "chk_cd_dntn_tang"),
     # bộ 3 chủ thể đặc biệt M02: đầu tư đặc biệt / DN xã hội / CTCK — các
     # khai báo độc lập KHÔNG loại-trừ (doanh nghiệp có thể đồng thời) →
     # KHÔNG đưa vào nhóm; choice giữ tick-all là chủ đích của fixture cho

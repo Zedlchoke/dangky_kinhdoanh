@@ -411,3 +411,23 @@ chiều ngược (template CÓ thêm so với nguồn); nguồn không đủ tá
 | M27/M30 mất khối chữ ký tiêu đề (para trống tại vị trí title) sau edit nguồn lane | **CLOSED** | B1 census_registry bắt titles=[]; khôi phục verbatim TT121 p69 (3 dòng + (Ký và ghi họ tên)6) / p70 (2 dòng + (Ký và ghi họ tên)2); census titles khớp registry; signers=1 |
 | M27 glue superscript chú thích 4/5 (chữ số nằm run thường) | **CLOSED** | Tách run superscript tại source (para 20/34); test_extractor_footnote_glue 12/12 |
 | p2a/r3b1 pin premise 2025 (M10 12 cột 'Quyền chi phối', M12 anchor index, M09 glue, STT-glue extinct) | **CLOSED** | Pin sync có bảng premise→hiện trạng→evidence trong comment test; không bỏ assertion nào |
+
+## Class F3T-1 — DATA APPENDED AFTER PREALLOCATED BLANK ROWS [OPEN 2026-09-08]
+
+- **Owner evidence:** Word export PLI_M72 hiển thị một cụm hàng trắng ngay sau
+  header, rồi các hàng ngành người dùng nhập mới xuất ở cuối bảng.
+- **Reproduction tái kiểm tại `main@2c5ec67`:** variant TNHH 2TV, K=4, N=1 tạo bảng
+  6 hàng: `1 header + 4 blank + 1 data`; expected `1 header + 1 data + 3
+  residual blank` = 5 hàng.
+- **Root cause:** UI `renderLoop` dùng `max(rows.length, blankRows)`; DOCX
+  `_expand_loops` giữ nguyên K hàng trắng trước marker rồi append N clone của
+  marker row. Hai đường render không cùng contract.
+- **Blast radius cần census, chưa được phép coi tất cả là FAIL:** 47 loop/26
+  form có `blankRows` tại checkpoint (37 K=4, 10 K=5) dùng chung đường engine.
+- **Test blind spot:** `tools/test_row_contract_export.py` PASS 8/8 vì fixture
+  loop chỉ có marker row, không có header + K blank preallocated như production.
+- **Contract sửa:** editable/nested body rows=`max(K,N)`; N data nằm trước,
+  chỉ K−N residual blank ở sau nếu N<K; blank không có STT. Fixed-matrix và
+  output-table giữ semantics riêng.
+- **Plan/gate:** `PLAN.md` mục F3T; không đóng defect trước khi full inventory,
+  production-like mutation test, UI↔DOCX↔PDF parity và visual corpus đều PASS.

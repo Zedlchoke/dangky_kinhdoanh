@@ -1,10 +1,18 @@
 # MASTER PLAN v7 — HOÀN THIỆN TOÀN BỘ SẢN PHẨM SAU PHASE 6V
 
-> **⚠️ REOPEN F3H — HEADER-SUBJECT-SEMANTICS, 2026-09-08
-> (`main@b2ec33c`, tree sạch):** owner phát hiện gate D17 hiện tại mới chứng
+> **⚠️ REOPEN F3H + F3T — HEADER-SUBJECT-SEMANTICS VÀ TABLE-ROW-PLACEMENT,
+> 2026-09-08
+> (defect tái kiểm trên `main@2c5ec67`; trước patch docs, production tree
+> sạch):** owner phát hiện gate D17 hiện tại mới chứng
 > minh binding/sync, chưa chứng minh mọi occurrence “TÊN DOANH NGHIỆP/TÊN HỘ
-> KINH DOANH” được dùng đúng **vai trò pháp lý và UX**. Phải đóng F3H trước
-> khi tiếp tục ký F5 trên corpus. Hai fixture phân biệt bắt buộc:
+> KINH DOANH” được dùng đúng **vai trò pháp lý và UX**. Phải đóng F3H+F3T trước
+> khi tiếp tục ký F5 trên corpus. Owner đồng thời bắt được lỗi Word M72:
+> dữ liệu bảng bị nối **sau** 4 hàng trắng có sẵn. Root cause đã tái hiện tại
+> HEAD: UI render `max(dataRows, blankRows)` nhưng DOCX `_expand_loops` giữ K
+> hàng trắng rồi append N hàng dữ liệu, thành `K + N`. Census có 47 loop/26
+> form mang cùng rủi ro. Phải đóng F3T bằng hợp đồng `max(K,N)` và full-corpus
+> table audit; suite cũ 8/8 không đủ vì fixture không có preallocated rows.
+> Hai fixture phân biệt bắt buộc cho F3H:
 > `PLI_M31` nguồn có band `TÊN DOANH NGHIỆP` + dòng điền, nên phải **giữ nhãn
 > pháp định và điền tên ngay dưới**; `PLI_M72` nguồn không có band này, chỉ có
 > mục `1. Tên doanh nghiệp`, nên **không được tự thêm band**. Không xóa nhãn
@@ -41,8 +49,8 @@
 > 1752 PNG, HARD 0, candidate chưa adjudicate 0, ZIP 450/450, Word 90/90,
 > determinism 450/450 và runner VERDICT PASS. Tuy nhiên human review phát hiện
 > hợp đồng vai trò band tên chưa được diễn đạt/khóa đủ chặt, nên mở **F3H** và
-> coi corpus/hash này là stale đối với F5. Trình tự mới: F3H → corpus mới → F5
-> AI/human review → F7 auditor.
+> coi corpus/hash này là stale đối với F5. Trình tự mới: F3H + F3T → corpus
+> mới → F5 AI/human review → F7 auditor.
 > Windows S1–S8 vẫn **NOT RUN** (O6 — handoff kit sẵn ở
 > `tools/windows_handoff/`). Không push (chờ lệnh owner).
 
@@ -348,7 +356,10 @@ Với section owner chọn implement:
    output-table; không hạ nested thành text phẳng chỉ để nhanh;
 3. computed total/cross-field/required/activeWhen/min/max rows phải nhất quán
    UI–draft–export;
-4. blank user row bị lọc khi export, blankRows pháp định của mẫu vẫn giữ;
+4. blank user row bị lọc khi export; `blankRows` là sức chứa tối thiểu của bản
+   giấy và phải được **dữ liệu điền vào trước**, không phải K hàng bất biến đứng
+   trước dữ liệu. Với K hàng in sẵn và N hàng dữ liệu, body output là
+   `max(K,N)`, không phải `K+N`;
 5. test negative cho thiếu cột, sai discriminator, inactive leakage, tổng sai,
    draft cũ và row boundary;
 6. Lead regen ×2, cập nhật manifest/coverage từ generator.
@@ -528,6 +539,104 @@ M33/PLII_M06/M72 xanh; detector hard/candidate chưa adjudicate = 0; regen lần
 hai zero-diff; runner 0 FAIL; Word-open/DOCX/PDF/PNG corpus mới PASS. Visual QA
 chỉ PASS sau khi đã render và xem corpus mới; nếu chưa xem thì ghi NOT RUN.
 
+### F3T — Dứt điểm bảng thừa hàng, sai vị trí dữ liệu và lỗi trình bày
+
+F3T mở lại kết luận Q-P4-2 ở đúng một điểm: “hàng trắng in sẵn là cấu trúc
+pháp định” **không đồng nghĩa** với việc giữ nguyên toàn bộ hàng trắng rồi nối
+dữ liệu xuống cuối. Mục đích của các hàng này là sức chứa để điền dữ liệu.
+
+#### F3T.1 — Defect đã chứng minh và phạm vi audit
+
+- Tái hiện HEAD với `PLI_M72`, variant TNHH 2TV, một ngành `Chăn nuôi/0141`:
+  bảng Word có 6 hàng = 1 header + 4 hàng trắng + 1 hàng dữ liệu. Kỳ vọng là
+  5 hàng = 1 header + 1 hàng dữ liệu + 3 hàng trắng còn lại.
+- Root cause: `app_web/ui/render.js` đã dùng `max(rows.length, blankRows)`, còn
+  `tools/docx_render.py::_expand_loops` chỉ thay hàng marker và không consume
+  các hàng trắng preallocated đứng trước marker.
+- Census tại `2c5ec67`: 47 loop có `blankRows` trên 26 form (37 loop K=4,
+  10 loop K=5). Phải sinh lại inventory động sau fix; không chỉ sửa M72.
+- `tools/test_row_contract_export.py` đang PASS 8/8 nhưng fixture loop tối giản
+  không chứa header + K blank + marker row, nên không thể bắt defect production.
+
+#### F3T.2 — Hợp đồng row-placement thống nhất UI/DOCX/PDF
+
+Với editable-grid hoặc nested-grid có K hàng trống pháp định và N hàng business
+sau khi lọc blank rows:
+
+1. `N=0`: giữ đúng K hàng trắng để in tay; STT của hàng trắng để trống.
+2. `0<N<K`: in N hàng dữ liệu từ hàng đầu tiên, đúng STT 1..N; giữ K−N hàng
+   trắng **sau dữ liệu**, không có khoảng trắng xen giữa header và dòng 1.
+3. `N>=K`: in đúng N hàng dữ liệu, không append thêm K hàng trắng.
+4. Dòng partial có dữ liệu được giữ và validator báo thiếu cột theo contract;
+   dòng mọi ô trống không được tính vào N hoặc STT.
+5. Thứ tự, `_row_id`, radio ngành chính, discriminator nested-grid và variant
+   active phải giữ nguyên; grid inactive không được lọt vào output.
+6. `fixed-matrix` giữ mọi dòng pháp định cố định; `output-table` giữ schema
+   output-only. Không áp công thức editable-loop lên hai kind này.
+7. Chiều cao, border, shading, cell margins và formatting của hàng dữ liệu/
+   hàng trắng còn lại phải lấy từ đúng row prototype; không phá layout để đạt
+   row count.
+
+Nếu một bảng là ngoại lệ thực sự cần K blank cố định **ngoài** dữ liệu, phải có
+source-evidence và mode riêng trong registry; cấm allowlist theo form mà không
+có semantics.
+
+#### F3T.3 — Quét tất cả lớp lỗi bảng, không chỉ row count
+
+Trên mọi table occurrence của active catalog và đủ 5 variant M72, lập matrix:
+`form/variant/table_index/semantic_key/kind/header geometry/columns/K/policy/
+source evidence/fixture verdict`. Audit bắt buộc:
+
+- dữ liệu bắt đầu ngay sau header, không có blank block chen trước;
+- tổng hàng đúng policy ở empty/minimal/full/long; STT liên tục và đúng thứ tự;
+- mọi giá trị payload xuất đúng cột, đặc biệt `Tên ngành`, `Mã ngành`, ngành
+  chính; không có tình trạng chỉ xuất mã mà mất tên;
+- không mất/thừa cột, header rowspan/colspan đúng, header lặp khi qua trang;
+- không trộn dữ liệu giữa hai loop, hai section hoặc variant inactive;
+- không cắt chữ, vỡ token, tràn cell, cột 1–2mm, border mất, text đè nhau;
+- hàng không bị split vô lý; bảng rộng có orientation/width/wrap theo registry;
+- không có bảng rỗng mồ côi, trang chỉ có header bảng, hoặc cụm dữ liệu nhảy
+  sang trang sau khi vẫn còn đủ chỗ hợp lý.
+
+D9 hiện chủ yếu kiểm hình học/độ rộng, nên phải thêm detector hard riêng cho
+semantics dữ liệu-hàng. Candidate pixel-OK cũ của M10 không được dùng để miễn
+kiểm row-placement hoặc missing-column.
+
+#### F3T.4 — Tests đỏ→xanh bắt buộc
+
+- Nâng fixture engine thành bảng production-like: header + K blank row + một
+  marker row; pin các case `(K,N)=(4,0),(4,1),(4,4),(4,6),(5,2)`.
+- Negative mutation: cố ý giữ `K+N`, đặt blank giữa hai dòng dữ liệu, đánh STT
+  cho hàng trắng, đảo thứ tự, làm mất `ten_nganh`, rò loop variant khác, sai
+  colspan/header và tách hàng qua trang; mỗi mutation phải đỏ.
+- Production anchors tối thiểu: PLI_M72 đủ 5 variant; PLII_M01; PLII_M02;
+  PLI_M02; PLI_M10; PLI_M12; PLI_M27; PLI_M79; PLI_M80. Sau đó gate inventory
+  phải phủ toàn bộ 47 loop hiện tại và mọi loop mới sinh từ active catalog.
+- Assert parity: cùng payload thì UI, exported DOCX và PDF có cùng N business
+  row, cùng STT/thứ tự/giá trị; số blank residual đúng `max(K,N)-N`.
+- Add 1/2/nhiều ngành với tên Unicode dài, mã có zero đầu và ngành chính;
+  kiểm tên+mã cùng nằm trong đúng một physical row sau Word/LibreOffice render.
+
+#### F3T.5 — Ownership, merge và evidence
+
+- Lane A (read-only, dùng chung với F3H): census source/table-occurrence và
+  classification mode; không sửa production.
+- Lane B: hợp đồng UI/store/export payload và parity tests; không sửa DOCX
+  generator.
+- Lane C: `_expand_loops`, structural/PDF detectors và mutation tests; không
+  hand-edit template/blocks/form_maps.
+- Lead merge A→B→C, cập nhật Q-P4-2/row inventory theo contract mới, regen ×2
+  zero-diff, chạy exact allowlist, runner, deep manifest và corpus mới.
+- Review bằng mắt các trang chứa mọi bảng minimal/full; không chỉ xem page 1.
+  Evidence phải có crop/table locator để reviewer biết bảng nào đã duyệt.
+
+**Gate F3T:** inventory table occurrence 100%; 0 unknown policy; mọi editable/
+nested loop đạt body rows=`max(K,N)`, không blank-before-data, không missing
+column/value, STT/order/variant đúng; fixed/output tables không regression;
+structural + DOCX + PDF detector hard 0, candidate chưa adjudicate 0; Word-open
+inventory động PASS; PNG được xem toàn bộ trang có bảng. Nếu chưa chạy Word hoặc
+chưa xem ảnh thì ghi NOT RUN, không suy từ unit test.
+
 ### F4 — Excel P6=C hoàn chỉnh
 
 Giữ nguyên pilot M72 và rollout ba cụm còn lại:
@@ -554,7 +663,7 @@ regression.
 
 ### F5 — Human visual sign-off G-E
 
-Chỉ thực hiện sau F0–F4 để không ký corpus stale:
+Chỉ thực hiện sau F0–F4 và F3H+F3T để không ký corpus stale:
 
 1. Lead sinh corpus final mới từ HEAD sạch.
 2. Công cụ review hiển thị từng record/page, form/fixture/variant và checklist;
@@ -615,8 +724,8 @@ remove worktree đã merge. **Không push/tag/release** nếu owner chưa ra l�
 | G1 Contracts | 22 BLOCKED đã adjudicate; M12/min_rows có owner decision |
 | G2 Tests | runner + legacy-strict + compileall 0 FAIL, 0 critical NOT RUN |
 | G3 UI | full inventory động, 3 viewport, zoom, keyboard, draft/E2E; F3H đúng một editable source và đúng role band/no-band PASS |
-| G4 Tables | 111/111 drift 0; không active section thiếu control/cột |
-| G5 Documents | final corpus hard 0/candidate 0; F3H 100% occurrence đúng source-role, required band có label+value/slot, forbidden band=0; signature census/detector 100% + gap UX PASS; Word inventory động, ZIP/determinism PASS |
+| G4 Tables | 111/111 drift 0; F3T inventory 100%; editable/nested body=`max(K,N)`, không blank-before-data, không thiếu cột/value/STT/order/variant; fixed/output không regression |
+| G5 Documents | final corpus hard 0/candidate 0; F3H 100% occurrence đúng source-role, required band có label+value/slot, forbidden band=0; F3T structural/PDF visual PASS; signature census/detector 100% + gap UX PASS; Word inventory động, ZIP/determinism PASS |
 | G6 Human | reviewer verdict 100% trên đúng hash corpus cuối |
 | G7 Excel | P6=C đủ 4 cụm, round-trip/negative/UI/visual PASS |
 | G8 Windows | reproducible `.exe`, WebView2/offline/clean-machine S1–S8 PASS |

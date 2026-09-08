@@ -1,12 +1,12 @@
 {
- "version": "1+v7.1",
- "date": "2026-09-07",
- "lane": "agent/final-f3-corpus (F3 corpus phase8f_final)",
- "source_adjudication": "docs/audits/6v/v4-visual-audit.md — 72 hit D5_blank_sparse: 59 (i) + 7 (ii) + 6 (iii) đã fix ở việc 1; allowlist này liệt kê lại các hit (i)/(ii) đo trên corpus v4b_finalcheck (455 record, template+fixture sau V4b, 2026-09-05 tối) + 2 hit mới lớp (ii) do việc 7a (ngày đủ định dạng). | [f3 2026-09-07] +8 hit corpus phase8f_final (450 record sau fixture-fix + M11 loại catalog): 5 (ii) M12 p13 banner-section + 3 (i) M52 trang cuối dời trang.",
+ "version": "1+v7.2",
+ "date": "2026-09-08",
+ "lane": "agent/f3-corpus-v2 (F3 corpus phase8g, HEAD b1bf058 sau F3T+F3H+render-fix)",
+ "source_adjudication": "docs/audits/6v/v4-visual-audit.md — 72 hit D5_blank_sparse: 59 (i) + 7 (ii) + 6 (iii) đã fix ở việc 1; allowlist này liệt kê lại các hit (i)/(ii) đo trên corpus v4b_finalcheck (455 record, template+fixture sau V4b, 2026-09-05 tối) + 2 hit mới lớp (ii) do việc 7a (ngày đủ định dạng). | [f3 2026-09-07] +8 hit corpus phase8f_final (450 record sau fixture-fix + M11 loại catalog): 5 (ii) M12 p13 banner-section + 3 (i) M52 trang cuối dời trang. | [f3v2 2026-09-08] +3 hit corpus phase8g (450 record sau F3T _expand_loops max(K,N) + render-fix RFIX-1/2/4 — pagination M72/M26 dời): 3 (i) trang cuối/section cuối tự nhiên.",
  "mechanism": "gate nạp mặc định (tools/phase5_visual_gate.py --allowlist); hit SPARSE khớp (fixture, tag, form, page) — khóa vắng = wildcard — được ghi verdict vào record['d5_adjudicated'] thay vì candidate 'chưa adjudicate'.",
- "count": 72,
+ "count": 75,
  "by_class": {
-  "(i)": 58,
+  "(i)": 61,
   "(ii)": 14
  },
  "blank_pages": [],
@@ -586,6 +586,30 @@
    "page": 4,
    "adjudication": "(i)",
    "reason": "[f3] trang cuối tự nhiên: Nơi nhận ('- Lưu:') + khối chữ ký TRƯỞNG ĐƠN VỊ (Ký, ghi họ tên và đóng dấu) — cùng lớp entry M52 p3 cũ, số trang dời sau fixture fix (M52 giờ 4/6 trang ở valid-full/long-boundary)"
-  }
- ]
+ },
+ {
+  "fixture": "empty-paper",
+  "tag": "main",
+  "form": "PLII_M26",
+  "page": 2,
+  "adjudication": "(i)",
+  "reason": "[f3v2] trang cuối tự nhiên: 'Nơi nhận:' (- Như trên; - ; - Lưu:) + khối chữ ký TRƯỞNG PHÒNG (Ký, ghi họ tên và đóng dấu) — cùng lớp entry M52/M17 cũ; pixel phase8g/empty-paper/main/PLII_M26/page-02.png"
+ },
+ {
+  "fixture": "valid-minimal",
+  "tag": "m72_dhdn",
+  "form": "PLI_M72",
+  "page": 2,
+  "adjudication": "(i)",
+  "reason": "[f3v2] section cuối tự nhiên của Mẫu 72: mục '8. Nơi đăng ký' (2 dòng) là section pháp lý cuối form — corpus sau F3T (_expand_loops max(K,N), bảng 7 hết đột ở p1) + RFIX-4 (fragment row-2 nguồn đã xoá) nên pagination dời so với phase8f_final; nội dung mục 1-8 đầy đủ, không mất mát; pixel phase8g/valid-minimal/m72_dhdn/PLI_M72/page-02.png"
+ },
+ {
+  "fixture": "long-boundary",
+  "tag": "m72_dhdn",
+  "form": "PLI_M72",
+  "page": 11,
+  "adjudication": "(i)",
+  "reason": "[f3v2] trang cuối tự nhiên (11/11): mục '8. Nơi đăng ký' — section pháp lý cuối form sau các bảng dài; cùng lớp entry valid-minimal/m72_dhdn p2; pixel phase8g/long-boundary/m72_dhdn/PLI_M72/page-11.png"
+ }
+]
 }

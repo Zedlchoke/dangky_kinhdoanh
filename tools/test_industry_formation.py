@@ -231,12 +231,13 @@ def make_render_check(form_id: str, sample_rows: list[dict]):
         assert [t.strip() for t in texts[0]] == EXPECTED_HEADERS, \
             "header render %r != %r" % (texts[0], EXPECTED_HEADERS)
 
-        # 3 hàng dữ liệu nằm ở cuối bảng (sau các hàng trắng để in)
+        # [F3T.2 max(K,N)] dữ liệu NGAY SAU header; hàng trắng residual
+        # nằm SAU dữ liệu (pin cũ "cuối bảng" là vị trí khiếm khuyết)
         ten_col = next(c for c, tag in EXPECTED_COLS if tag == "ten_nganh")
         ma_col = next(c for c, tag in EXPECTED_COLS if tag == "ma_nganh")
         x_col = next(c for c, tag in EXPECTED_COLS if tag == "la_nganh_chinh")
         n_data = len(sample_rows)
-        data_texts = texts[-n_data:]
+        data_texts = texts[1:1 + n_data]
         x_count = 0
         for i, row in enumerate(data_texts):
             want = sample_rows[i]

@@ -213,26 +213,74 @@ def _chk_glyph_boxes(xml: str, data: dict) -> str:
     return "".join(out)
 
 
+def _loop_marker_name(row: str) -> str | None:
+    """Tên loop nếu `row` là HÀNG KHUÔN (chứa đủ cặp {#name}...{/name});
+    None nếu là hàng thường."""
+    return next(
+        (n for n in LOOP_OPEN_RE.findall(row) if "{/%s}" % n in row),
+        None,
+    )
+
+
+def _row_has_content(row: str) -> bool:
+    """Hàng <w:tr> có nội dung nhìn thấy không? Hàng trắng preallocated của
+    bản giấy: mọi ô rỗng (không w:t có chữ, không drawing/pict/object)."""
+    if re.search(r"<w:drawing[ >]|<w:pict[ >]|<w:object[ >]", row):
+        return True
+    return "".join(
+        re.findall(r"<w:t[^>]*>([^<]*)</w:t>", row)).strip() != ""
+
+
 def _expand_loops(xml: str, data: dict) -> str:
-    """Nhân bản/xóa các hàng <w:tr> khuôn của bảng lặp."""
+    """Nhân bản/xóa các hàng <w:tr> khuôn của bảng lặp — hợp đồng
+    TABLE-ROW-PLACEMENT `max(K,N)` (F3T.2, đồng bộ render.js: mỗi hàng hiển
+    thị = max(số dòng dữ liệu, blankRows)).
+
+    Template của một bảng lặp: header + K hàng trắng in sẵn (blankRows của
+    blocks — sức chứa điền theo bản giấy) + MỘT hàng khuôn {#loop}{/loop}
+    đứng CUỐI. K là số hàng trắng kề TRƯỚC hàng marker trong cùng bảng
+    (kề nhau trong XML, không marker, không nội dung — `_row_has_content`).
+    Với N = số dòng dữ liệu sau last-mile guard (bên dưới):
+
+    - N=0   : giữ đúng K hàng trắng (STT trống) để in tay; hàng khuôn bị xóa.
+    - 0<N<K : N hàng dữ liệu clone MẪU HÀNG MARKER đứng NGAY SAU header,
+              STT 1..N; K−N hàng trắng còn lại clone MẪU HÀNG TRẮNG nằm SAU
+              dữ liệu — không có hàng trắng nào chen giữa header và dòng 1.
+    - N>=K  : in đúng N hàng dữ liệu, KHÔNG append hàng trắng.
+    - items không phải list (grid inactive/variant sai) -> coi như N=0.
+
+    Phương thức này KHÔNG áp cho fixed-matrix/output-table (hai kind không có
+    hàng marker {#loop} nên về nguyên tắc không bao giờ đi vào nhánh này).
+
+    Phần guard per-row (giữ nguyên từ PHASE 4): dòng loop mà MỌI giá trị dữ
+    liệu trống (bỏ key nội bộ `_` — `_row_id`, discriminator, ...) không trở
+    thành business data; dòng chỉ có discriminator/structural key (giá trị
+    khác rỗng) vẫn được in. {_stt} đếm 1-based TRÊN DỮ LIỆU sau khi lọc."""
+    matches = list(ROW_RE.finditer(xml))
+    if not matches:
+        return xml
     out: list[str] = []
     pos = 0
-    for m in ROW_RE.finditer(xml):
+    for i, m in enumerate(matches):
         row = m.group(0)
-        name = next(
-            (
-                n
-                for n in LOOP_OPEN_RE.findall(row)
-                if "{/%s}" % n in row
-            ),
-            None,
-        )
+        name = _loop_marker_name(row)
         if name is None:
             continue  # hàng thường, giữ nguyên
-        out.append(xml[pos : m.start()])
+        # F3T.2: consume các hàng trắng preallocated kề TRƯỚC hàng marker
+        # (cùng bảng — kề nhau trong XML; dừng ở hàng có marker/nội dung).
+        k0 = i
+        while (k0 > 0
+               and matches[k0 - 1].end() == matches[k0].start()
+               and _loop_marker_name(matches[k0 - 1].group(0)) is None
+               and not _row_has_content(matches[k0 - 1].group(0))):
+            k0 -= 1
+        k = i - k0
+        blank_proto = matches[k0].group(0) if k else ""
+        out.append(xml[pos : matches[k0].start()])
+        printed: list[str] = []
         items = data.get(name)
         if isinstance(items, list):
-            printed = 0  # PHASE 4: {_stt} đếm trên dòng dữ liệu, sau khi lọc
+            stt = 0  # PHASE 4/F3T.2: {_stt} đếm trên dòng dữ liệu, sau khi lọc
             for idx, item in enumerate(items):
                 if not isinstance(item, dict):
                     continue
@@ -248,11 +296,11 @@ def _expand_loops(xml: str, data: dict) -> str:
                     if not k.startswith("_")
                 ):
                     continue
-                printed += 1
+                stt += 1
                 r = row.replace("{#%s}" % name, "").replace("{/%s}" % name, "")
                 # Biến engine {_stt}: số thứ tự 1-based của dòng dữ liệu
                 # (thay trước khi quét tag thường để dữ liệu không ghi đè)
-                r = r.replace("{_stt}", str(printed))
+                r = r.replace("{_stt}", str(stt))
                 # Phase 6V-V2 (C3/Q-V1): chk tag trong cột bảng lặp (nếu có)
                 # phải thành ô vuông trước khi subst thường ghi X trần
                 r = _chk_glyph_boxes(r, item)
@@ -265,8 +313,13 @@ def _expand_loops(xml: str, data: dict) -> str:
                     ),
                     r,
                 )
-                out.append(r)
-        # items không phải list hoặc list rỗng -> xóa hẳn hàng khuôn
+                printed.append(r)
+        n = len(printed)
+        out.extend(printed)
+        # K−N hàng trắng còn lại SAU dữ liệu (N=0 -> đúng K trắng nguyên
+        # mẫu; N>=K -> 0 hàng trắng append).
+        for _ in range(max(k - n, 0)):
+            out.append(blank_proto)
         pos = m.end()
     out.append(xml[pos:])
     return "".join(out)

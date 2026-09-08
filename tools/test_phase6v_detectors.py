@@ -29,6 +29,12 @@ V1a (pin baseline — chống "chọn số đẹp"):
 V1b–V1f (negative mutations): mỗi detector có cặp positive/negative tự
 dựng (docx zip tối thiểu + pdf pymupdf) — bug phải bắt, bản đúng phải bỏ.
 
+V3 (F3T 2026-09-08): D18_row_placement — structural DOCX (BLANK_BEFORE_DATA
+/ STT_ON_BLANK / STT_BREAK / ROW_COUNT_MISMATCH theo registry blocks
+blankRows) + PDF_BLANK_GAP (chỉ đo khi có chuỗi STT). Mutation ĐỎ từng case
+F3T.4: K-blank-then-data (K+N), blank giữa hai dòng data, STT trên hàng
+trắng, STT đảo, lệch tổng hàng; hard-gate contract (gate_fails, FAIL).
+
 Chạy:  python3 -X utf8 -m tools.test_phase6v_detectors
 Exit 0 = PASS; exit 1 = FAIL.
 """
@@ -664,8 +670,128 @@ def test_v2c_d17_band_input():
 
 
 # ---------------------------------------------------------------------------
-# Runner
+# V3 — [F3T] D18_row_placement: structural DOCX + PDF + hard-gate verdict.
+# Mutation ĐỎ cho từng case F3T.4: K-blank-then-data (K+N), blank giữa hai
+# dòng dữ liệu, STT trên hàng trắng, STT đảo thứ tự, lệch tổng hàng max(K,N),
+# và bản đúng (K=4,N=2)/(K=4,N=0)/(K=0,N=3) phải PASS. Đăng ký gate: HARD.
 # ---------------------------------------------------------------------------
+
+def _loop_tbl(rows_cells: list[list[str]]) -> str:
+    """Bảng w:tbl tối thiểu 3 cột từ list hàng (list ô text)."""
+    body = "".join(
+        "<w:tr>%s</w:tr>" % "".join(
+            "<w:tc><w:p><w:r><w:t>%s</w:t></w:r></w:p></w:tc>" % c
+            for c in cells)
+        for cells in rows_cells)
+    return ("<w:tbl><w:tblPr><w:tblW w:w=\"0\" w:type=\"auto\"/></w:tblPr>"
+            '<w:tblGrid><w:gridCol w:w="600"/><w:gridCol w:w="3000"/>'
+            '<w:gridCol w:w="2000"/></w:tblGrid>' + body + "</w:tbl>")
+
+
+_HDR = ["STT", "Tên ngành", "Mã ngành"]
+# registry như blocks sinh ra: loop ds_x K=4, header 1 hàng,
+# signature = header row0 đã fold_squeeze
+from tools.row_placement import (  # noqa: E402
+    det_row_placement, det_row_placement_pdf, fold_squeeze,
+)
+
+_D18_REG = [{"loop": "ds_x", "k": 4, "header_rows": 1,
+             "sig": fold_squeeze(" ".join(_HDR))}]
+
+
+def _d18(rows_cells):
+    p = _min_docx(TMP / "d18_case.docx", _loop_tbl(rows_cells))
+    return det_row_placement(p, _D18_REG)
+
+
+@check("V3a_d18_row_placement_structural_mutations")
+def test_v3a_d18_structural():
+    # bản ĐÚNG (K=4, N=2): header + 2 data + 2 trắng → PASS
+    hits = _d18([_HDR, ["1", "Trồng lúa", "0111"], ["2", "Chăn nuôi", "0141"],
+                 ["", "", ""], ["", "", ""]])
+    assert hits == [], "bản đúng (4,2) không được bắn: %r" % hits
+    # bản ĐÚNG (K=4, N=6 ≥ K): đúng 6 hàng data, KHÔNG append trắng → PASS
+    hits = _d18([_HDR] + [[str(i + 1), "Ngành %d" % (i + 1), "%04d" % (i + 1)]
+                          for i in range(6)])
+    assert hits == [], "bản đúng (4,6) không được bắn: %r" % hits
+    # bản ĐÚNG (K=4, N=0): header + 4 trắng (giữ sức chứa in tay) → PASS
+    hits = _d18([_HDR, ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""]])
+    assert hits == [], "N=0 giữ K trắng không được bắn: %r" % hits
+    # MUTATION ĐỎ: K-blank-then-data (K+N) — defect F3T.1 tái hiện
+    hits = _d18([_HDR, ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""],
+                 ["1", "Trồng lúa", "0111"]])
+    codes = {h["code"] for h in hits}
+    assert {"BLANK_BEFORE_DATA", "ROW_COUNT_MISMATCH"} <= codes, hits
+    # MUTATION ĐỎ: blank chen giữa hai dòng dữ liệu
+    hits = _d18([_HDR, ["1", "Trồng lúa", "0111"], ["", "", ""],
+                 ["2", "Chăn nuôi", "0141"], ["", "", ""]])
+    assert "BLANK_BEFORE_DATA" in {h["code"] for h in hits}, hits
+    # MUTATION ĐỎ: đánh STT cho hàng trắng (đuôi)
+    hits = _d18([_HDR, ["1", "Trồng lúa", "0111"], ["2", "", ""],
+                 ["3", "", ""]])
+    assert "STT_ON_BLANK" in {h["code"] for h in hits}, hits
+    # MUTATION ĐỎ: STT đảo thứ tự (mutation "đảo thứ tự" F3T.4)
+    hits = _d18([_HDR, ["2", "Chăn nuôi", "0141"], ["1", "Trồng lúa", "0111"],
+                 ["", "", ""], ["", "", ""]])
+    assert "STT_BREAK" in {h["code"] for h in hits}, hits
+    # MUTATION ĐỎ: mất một hàng trắng (tổng 4 != 1 + max(4,1)) — thiếu K−N
+    hits = _d18([_HDR, ["1", "Trồng lúa", "0111"], ["", "", ""],
+                 ["", "", ""]])
+    assert "ROW_COUNT_MISMATCH" in {h["code"] for h in hits}, hits
+    # K=0 (loop không có blankRows): N=3 data thuần → PASS
+    reg0 = [{"loop": "ds_y", "k": 0, "header_rows": 1,
+             "sig": _D18_REG[0]["sig"]}]
+    p = _min_docx(TMP / "d18_k0.docx", _loop_tbl(
+        [_HDR, ["1", "A", "1"], ["2", "B", "2"], ["3", "C", "3"]]))
+    assert det_row_placement(p, reg0) == [], "K=0/N=3 phải PASS"
+
+
+@check("V3b_d18_row_placement_pdf_gap_mutations")
+def test_v3b_d18_pdf():
+    # PDF mutation dựng trực tiếp words (băng trống không thể dựng bằng text
+    # pymupdf). w(x0, y0, txt) -> word tuple như pdf_pages trả.
+    def _page(words):
+        return [{"pno": 0, "text": "", "words": words}]
+
+    def w(x0, y0, txt):
+        return (x0, y0, x0 + 6.0 * len(txt), y0 + 10.0, txt, 0, 0, 0)
+
+    # MUTATION ĐỎ: header rồi băng trống ~70pt (≈4 hàng trắng) trước dòng STT=1
+    bad = _page([w(50, 700, "STT"), w(80, 700, "Tên"), w(160, 700, "Mã"),
+                 w(50, 780, "1"), w(80, 780, "0111"), w(160, 780, "Trồng"),
+                 w(50, 796, "2"), w(80, 796, "0141"), w(160, 796, "Chăn")])
+    hits = det_row_placement_pdf(bad)
+    assert len(hits) == 1 and hits[0]["code"] == "PDF_BLANK_GAP", hits
+    assert hits[0]["gap_pt"] > 40, hits
+    # bản ĐÚNG: dòng 1 nằm ngay dưới header (~18pt pitch) → PASS
+    good = _page([w(50, 700, "STT"), w(80, 700, "Tên"), w(160, 700, "Mã"),
+                  w(50, 718, "1"), w(80, 718, "0111"), w(160, 718, "Trồng"),
+                  w(50, 736, "2"), w(80, 736, "0141"), w(160, 736, "Chăn")])
+    assert det_row_placement_pdf(good) == [], \
+        "gap thường không được bắn (F-V3b)"
+    # N=0 (không có chuỗi STT) không được bắn — K trắng hợp pháp
+    noblank = _page([w(50, 700, "STT"), w(80, 700, "Tên")])
+    assert det_row_placement_pdf(noblank) == []
+
+
+@check("V3c_d18_row_placement_is_hard_gate")
+def test_v3c_d18_hard():
+    # fail-loud contract: D18 phải nằm HARD_FAIL_KEYS — hit → gate_fails,
+    # verdict FAIL (không phải candidate).
+    assert "D18_row_placement" in gate.HARD_FAIL_KEYS
+    rec = {"form": "PLI_M72", "fixture": "valid-full", "tag": "main",
+           "detectors": {"D18_row_placement": [
+               {"table": 2, "code": "BLANK_BEFORE_DATA",
+                "blank_rows": [2, 3, 4, 5], "first_data_row": 6}]}}
+    gate.record_verdicts([rec], {})
+    assert rec["gate_verdict"] == "FAIL"
+    assert any(f["detector"] == "D18_row_placement"
+               for f in rec["gate_fails"]), rec["gate_fails"]
+    assert not any(c["detector"] == "D18_row_placement"
+                   for c in rec["gate_candidates"])
+
+
+
 
 def main() -> int:
     test_v1a_pin()
@@ -679,6 +805,9 @@ def main() -> int:
     test_v2b_d6()
     test_v2c_d17()
     test_v2c_d17_band_input()
+    test_v3a_d18_structural()
+    test_v3b_d18_pdf()
+    test_v3c_d18_hard()
     passed = [r for r in _RESULTS if r[1]]
     failed = [r for r in _RESULTS if not r[1]]
     for name, ok, msg in _RESULTS:

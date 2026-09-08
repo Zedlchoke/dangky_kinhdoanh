@@ -243,7 +243,15 @@ def run_variant_case(variant: dict, out_path: Path) -> None:
     texts = [tr_cell_texts(tbl, ri) for ri in range(len(tbl.rows))]
     assert fold_join(texts[0]) == fold_join(HDR_NGANH), \
         "%s: header bảng %r != %r" % (label, texts[0], HDR_NGANH)
-    data_texts = texts[-len(LOOP_ROWS):]
+    # [F3T.2 max(K,N)] dữ liệu đứng NGAY SAU header (STT 1..N); K−N hàng
+    # trắng còn lại nằm SAU dữ liệu với STT trống (trước fix test này pin
+    # nhầm vị trí khiếm khuyết K-blank-then-data: data nối ở CUỐI bảng).
+    k_blank = 4  # blankRows của ds_nganh_* (blocks PLI_M72)
+    n_data = len(LOOP_ROWS)
+    assert len(texts) == 1 + max(k_blank, n_data), \
+        ("%s: tổng hàng bảng ngành %d != 1 + max(K=%d, N=%d)"
+         % (label, len(texts), k_blank, n_data))
+    data_texts = texts[1:1 + n_data]
     for i, row in enumerate(data_texts):
         want = LOOP_ROWS[i]
         assert len(row) == 4, \

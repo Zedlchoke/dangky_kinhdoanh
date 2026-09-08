@@ -310,7 +310,9 @@ def assert_render_ds_nganh(fid: str) -> None:
     tbl = find_table_by_headers(doc, hdr)
     assert tbl is not None, "%s: không tìm thấy bảng ngành trong file render" % fid
     texts = [tr_cell_texts(tbl, ri) for ri in range(len(tbl.rows))]
-    data_texts = texts[-len(DS_NGANH_3ROWS):]
+    # [F3T.2 max(K,N)] dữ liệu ngay sau header (pin cũ texts[-n:] là vị trí
+    # khiếm khuyết K-blank-then-data)
+    data_texts = texts[1:1 + len(DS_NGANH_3ROWS)]
     for i, row in enumerate(data_texts):
         want = DS_NGANH_3ROWS[i]
         assert len(row) == 4, "%s: hàng dữ liệu %d có %d ô != 4" % (fid, i, len(row))
@@ -364,7 +366,9 @@ def t_render_m12_three_loops():
 
     def rows_of(tbl, n):
         texts = [tr_cell_texts(tbl, ri) for ri in range(len(tbl.rows))]
-        data_texts = texts[-n:]
+        # [F3T.2 max(K,N)] dữ liệu ngay sau header (pin cũ texts[-n:] là vị
+        # trí khiếm khuyết K-blank-then-data)
+        data_texts = texts[1:1 + n]
         for row in data_texts:
             assert len(row) == 4, "hàng có %d ô != 4: %r" % (len(row), row)
         return data_texts
@@ -584,7 +588,9 @@ def t_m72_five_grids_render():
         dataset = M72_RENDER_DATASETS[name]
         texts = [tr_cell_texts(tables[k], ri)
                  for ri in range(len(tables[k].rows))]
-        data_texts = texts[-len(dataset):]
+        # [F3T.2 max(K,N)] dữ liệu ngay sau header (pin cũ texts[-n:] là vị
+        # trí khiếm khuyết K-blank-then-data)
+        data_texts = texts[1:1 + len(dataset)]
         assert len(data_texts) == len(dataset), \
             "PLI_M72/%s: bảng %d chỉ đọc được %d hàng dữ liệu != %d" % (
                 name, k, len(data_texts), len(dataset))

@@ -122,7 +122,10 @@ def t_rows_and_columns():
     texts = [tr_cell_texts(tbl, ri) for ri in range(len(tbl.rows))]
 
     n_data = len(SAMPLE_ROWS)
-    data_texts = texts[-n_data:]          # dòng dữ liệu nằm cuối bảng
+    # [F3T.2 max(K,N)] dữ liệu đứng NGAY SAU header; K−N hàng trắng còn lại
+    # nằm SAU dữ liệu. Pin cũ "dữ liệu nằm cuối bảng" (texts[-n_data:]) là
+    # vị trí khiếm khuyết K-blank-then-data — đã nâng cấp theo hợp đồng mới.
+    data_texts = texts[1:1 + n_data]
     for i, row in enumerate(data_texts):
         want = SAMPLE_ROWS[i]
         assert len(row) == len(EXPECTED_HEADERS), \
@@ -144,9 +147,12 @@ def t_rows_and_columns():
     assert x_marks.count("X") == 1 and x_marks[0] == "X", \
         "cột Ngành chính phải có đúng một 'X' ở dòng ngành chính, thấy %r" % (
             x_marks,)
-    # Các hàng giữa header và khối dữ liệu là hàng trắng để in (không mang
-    # giá trị của dòng dữ liệu đầu tiên - kiểm tra không trượt hàng).
-    mid = texts[1:-n_data] if len(texts) > 1 + n_data else []
+    # [F3T.2] hàng trắng residual (K−N) nằm SAU dữ liệu: phải trắng hoàn
+    # toàn — không được mang STT/giá trị.
+    for r in texts[1 + n_data:]:
+        assert all(c == "" for c in r), \
+            "hàng đuôi phải trắng hoàn toàn (STT trống): %r" % (r,)
+    mid = texts[1 + n_data:]
     joined = "|".join("|".join(r) for r in mid)
     for want in SAMPLE_ROWS:
         assert want["ma_nganh"] not in joined, \

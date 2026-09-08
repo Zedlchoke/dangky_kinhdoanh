@@ -69,7 +69,9 @@ def t_member_stt_col0():
     n_data = len(ref.MEMBER_ROWS)
     assert len(texts) >= 1 + n_data, \
         "bang chi co %d hang, thua cho %d dong du lieu" % (len(texts), n_data)
-    data_rows = texts[-n_data:]
+    # [F3T.2 max(K,N)] dữ liệu ngay sau header (pin cũ texts[-n:] là vị trí
+    # khiếm khuyết K-blank-then-data)
+    data_rows = texts[1:1 + n_data]
     for i, row in enumerate(data_rows):
         want = ref.MEMBER_ROWS[i]
         assert len(row) == len(ref.MEMBER_HEADERS), \
@@ -97,7 +99,9 @@ def t_industry_table_contract():
     assert tbl is not None, "khong tim thay bang nganh nghe"
     texts = [ref.tr_cell_texts(tbl, ri) for ri in range(len(tbl.rows))]
     n_data = len(ref.INDUSTRY_ROWS)
-    data_rows = texts[-n_data:]
+    # [F3T.2 max(K,N)] dữ liệu ngay sau header (pin cũ texts[-n:] là vị trí
+    # khiếm khuyết K-blank-then-data)
+    data_rows = texts[1:1 + n_data]
     n_x = 0
     for i, row in enumerate(data_rows):
         want = ref.INDUSTRY_ROWS[i]

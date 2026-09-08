@@ -315,7 +315,9 @@ def t_render_member_rows():
     assert len(texts) >= 1 + n_data, \
         "bảng thành viên chỉ có %d hàng, không đủ chỗ cho %d dòng dữ liệu" % (
             len(texts), n_data)
-    data_texts = texts[-n_data:]
+    # [F3T.2 max(K,N)] dữ liệu NGAY SAU header (pin cũ texts[-n:] là vị trí
+    # khiếm khuyết K-blank-then-data)
+    data_texts = texts[1:1 + n_data]
     for i, row in enumerate(data_texts):
         want = MEMBER_ROWS[i]
         assert len(row) == len(MEMBER_HEADERS), \
@@ -356,7 +358,9 @@ def t_render_ds_nganh_regression():
     texts = [tr_cell_texts(tbl, ri) for ri in range(len(tbl.rows))]
 
     n_data = len(INDUSTRY_ROWS)
-    data_texts = texts[-n_data:]
+    # [F3T.2 max(K,N)] dữ liệu NGAY SAU header (pin cũ texts[-n:] là vị trí
+    # khiếm khuyết K-blank-then-data)
+    data_texts = texts[1:1 + n_data]
     n_x = 0
     for i, row in enumerate(data_texts):
         want = INDUSTRY_ROWS[i]

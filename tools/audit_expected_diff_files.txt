@@ -625,3 +625,16 @@ docs/f3h_f3t_directive_2026-09-08.md
 tools/form_specs/change/PLI_M72.json
 tools/form_specs/formation/PLI_M10.json
 tools/form_specs/formation/PLI_M05.json
+# --- [F3T lane C 2026-09-08] row placement: detector mới + pin suite nâng cấp ---
+tools/row_placement.py
+tools/test_row_placement_anchors.py
+tools/test_acceptance_docx.py
+tools/test_audit_p1_docx_negative.py
+tools/test_industry_formation.py
+tools/test_plii_m01_member_stt.py
+tools/docx_render.py
+tools/phase5_visual_gate.py
+tools/test_phase6v_detectors.py
+tools/test_row_contract_export.py
+tools/test_m72_conditional.py
+app_web/test_m72_activation.js

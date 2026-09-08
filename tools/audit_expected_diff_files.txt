@@ -629,3 +629,5 @@ tools/test_acceptance_docx.py
 tools/test_audit_p1_docx_negative.py
 tools/test_industry_formation.py
 tools/test_plii_m01_member_stt.py
+# --- [F3T lane B 2026-09-08] parity UI↔DOCX↔PDF 156 check ---
+app_web/test_f3t_parity.js

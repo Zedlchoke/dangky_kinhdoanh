@@ -362,8 +362,8 @@ function runPy(scriptRel) {
   const tbl = loopTable(html, 'ds_nganh');
   const stts = sttsOf(tbl);
 
-  // Production PLI_M02 giữ 4 blankRows để in nên tổng hàng hiển thị
-  // max(3, 4): 3 dòng dữ liệu đầu phải mang STT 1/2/3, dãy STT liên tục từ 1.
+  // [Pin sync — owner N-only 2026-09-08] chỉ 3 dòng dữ liệu trong store
+  // (blankRows không còn render, bỏ max(3,4)): STT 1/2/3, dãy liên tục từ 1.
   check('AC6: them 3 dong -> 3 dong dau co STT 1/2/3 (regex td.stt)',
     stts.length >= 3 && stts.slice(0, 3).join(',') === '1,2,3', stts.join(','));
   check('AC6: day STT lien tuc bat dau tu 1 (tu danh lai theo thu tu)',
@@ -473,7 +473,8 @@ function runPy(scriptRel) {
     JSON.stringify(marks));
 
   // Radio trên renderer: đúng 1 ô checked, thuộc dòng 2
-  const ngBlankRows = Number((findLoopBlock(M02, 'ds_nganh') || {}).blankRows || 0);
+  // [Pin sync — owner N-only 2026-09-08] chỉ N dòng dữ liệu (N=3 trong store)
+  // — blankRows không còn render, số radio = N data rows (bỏ max(3,K,1))
   const html = renderDoc(M02, store);
   const tbl = loopTable(html, 'ds_nganh');
   const radios = tbl.match(/<input type="radio"[^>]*>/g) || [];
@@ -483,7 +484,7 @@ function runPy(scriptRel) {
     if (/checked/.test(r) && m) checkedIdx.push(Number(m[1]));
   });
   check('AC9: renderer chi dung 1 radio checked va la dong da chon',
-    radios.length === Math.max(3, Number(ngBlankRows), 1) &&
+    radios.length === Math.max(store.loops.ds_nganh.length, 1) &&
       checkedIdx.length === 1 && checkedIdx[0] === 1,
     'radios=' + radios.length + ' checked@' + checkedIdx.join(','));
 }

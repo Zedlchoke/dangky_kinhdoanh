@@ -207,10 +207,11 @@ function runGridContract(docId, loopName, fillRow, identityTag) {
     afterMove[1]._row_id === a2.id && JSON.stringify(afterMove[1]) === snapA2);
 
   // STT luon tu thu tu mang (render lai sau thao tac)
+  // [Pin sync — owner N-only 2026-09-08] chỉ hiện N dòng dữ liệu — blankRows
+  // không còn render, nShow = số dòng dữ liệu trong store (bỏ max(K,N))
   const html = renderDoc(doc, store);
   const stts = sttsOf(loopTable(html, loopName));
-  const nShow = Math.max(afterMove.length,
-    findLoopBlock(doc, loopName).blankRows || 0);
+  const nShow = afterMove.length;
   check(label + ': STT danh lai 1..' + nShow + ' theo thu tu hien tai',
     stts.join(',') === Array.from({ length: nShow }, (_, i) => i + 1).join(','),
     stts.join(','));

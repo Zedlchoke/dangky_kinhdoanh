@@ -299,7 +299,10 @@ let stDntn; // dùng lại ở mục 8 (selectorHtml)
       else if (b.t === 'table') (b.rows || []).forEach(function (row) {
         row.cells.forEach(function (c) { walk(c.runs); });
       });
-      else if (b.t === 'loop') ti += (b.cols || []).length * (b.blankRows || 0);
+      // [Pin sync — owner N-only 2026-09-08] loop chỉ in N dòng dữ liệu,
+      // không hàng trắng; render dưới dùng store rỗng (N=0) và không truyền
+      // gridMeta (minUiRows=0) -> loop đóng góp 0 input (trước đây cols×blankRows)
+      else if (b.t === 'loop') ti += 0;
     });
     return { ti: ti, cb: cb };
   }

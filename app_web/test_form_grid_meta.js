@@ -438,9 +438,12 @@ M72_LOOPS.forEach(l => runMiniContract('PLI_M72', M72, l));
     !!cellErr && idxNow === 0 &&
       resolvedKey === 'loop:ds_nganh_dntn:' + idxNow + ':ma_nganh',
     'resolvedKey=' + resolvedKey + ' idxNow=' + idxNow);
+  // [Pin sync — owner N-only 2026-09-08] chỉ 2 dòng dữ liệu trong store —
+  // không còn 2 hàng trắng đuôi (trước đây pin '1,2,3,4' = max(K=4, N=2))
   check('7. STT danh lai theo thu tu moi, _row_id giu nguyen',
+    rows.length === 2 &&
     rows.map(r => (r.inner.match(/<td class="stt">(\d+)<\/td>/) || [])[1])
-      .filter(Boolean).join(',') === '1,2,3,4' &&
+      .filter(Boolean).join(',') === '1,2' &&
       attrVal(rows[idxNow].attrs, 'data-row-id') === badId);
 }
 

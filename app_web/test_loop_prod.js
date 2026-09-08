@@ -262,7 +262,12 @@ PROD_LOOPS.forEach(function (spec) {
   const unmappedCols = [];
   for (let c = 0; c < grid.n; c++) if (!tagByCol[c]) unmappedCols.push(c);
 
-  const tableHtml = extractLoopTable(renderLoopOnly(b), spec.loop);
+  // [Pin sync — owner N-only 2026-09-08] chỉ hiện N dòng dữ liệu — gieo N
+  // dòng dữ liệu vào store (N = blankRows cũ của block) thay vì dựa hàng trắng
+  const nData = Math.max(1, b.blankRows || 0);
+  const storeN = R.newStore();
+  storeN.loops[spec.loop] = Array.from({ length: nData }, () => ({}));
+  const tableHtml = extractLoopTable(renderLoopOnly(b, storeN), spec.loop);
   check(label + ': render ra table loop-table', /class="btable loop-table"/.test(tableHtml));
   if (!tableHtml) return;
 
@@ -284,8 +289,10 @@ PROD_LOOPS.forEach(function (spec) {
     bodyRows.length > 0 && bodyRows.every(r => r.length === grid.n),
     'got ' + bodyRows.map(r => r.length).join(','));
 
-  const expBodyRows = Math.max(0, b.blankRows || 0);
-  check(label + ': so hang body = max(0 du lieu, ' + expBodyRows + ' blankRows)',
+  // [Pin sync — owner N-only 2026-09-08] body = đúng N dòng dữ liệu trong
+  // store; blankRows không còn render (không hàng trắng, bỏ max(K,N))
+  const expBodyRows = nData;
+  check(label + ': so hang body = dung ' + expBodyRows + ' dong du lieu (khong hang trang)',
     bodyRows.length === expBodyRows, 'got ' + bodyRows.length);
 
   // 2. mỗi tag nằm đúng dưới tiêu đề tương ứng (col ZERO-BASED)
@@ -398,7 +405,11 @@ PROD_LOOPS.forEach(function (spec) {
       { col: 4, tag: 'an', type: 'outputOnly' }
     ]
   };
-  const html = renderLoopOnly(bMoney);
+  // [Pin sync — owner N-only 2026-09-08] N=1 dòng dữ liệu thay blankRows:1
+  // (blankRows không còn render — hợp đồng N-only)
+  const stMoney = R.newStore();
+  stMoney.loops.ds_tong_hop = [{}];
+  const html = renderLoopOnly(bMoney, stMoney);
   const bodyRow = extractBodyRows(extractLoopTable(html, 'ds_tong_hop'))[0];
   check('type money -> input co class num', !!bodyRow &&
     /class="fld loop-fld num"/.test(bodyRow[1].inner));
@@ -470,7 +481,11 @@ PROD_LOOPS.forEach(function (spec) {
     ]
   };
   const grid = headerGridOf(bMulti);
-  const htmlMulti = renderLoopOnly(bMulti);
+  // [Pin sync — owner N-only 2026-09-08] N=2 dòng dữ liệu thay blankRows:2
+  // (blankRows không còn render — hợp đồng N-only)
+  const stMulti = R.newStore();
+  stMulti.loops.ds_multi = [{}, {}];
+  const htmlMulti = renderLoopOnly(bMulti, stMulti);
   const table = extractLoopTable(htmlMulti, 'ds_multi');
   const headRows = extractHeaderRows(table);
   const bodyRows = extractBodyRows(table);
@@ -495,7 +510,10 @@ PROD_LOOPS.forEach(function (spec) {
     ],
     cols: [{ col: 1, tag: 'y' }]
   };
-  const htmlSpan = renderLoopOnly(bSpan);
+  // [Pin sync — owner N-only 2026-09-08] N=1 dòng dữ liệu thay blankRows:1
+  const stSpan = R.newStore();
+  stSpan.loops.ds_span = [{}];
+  const htmlSpan = renderLoopOnly(bSpan, stSpan);
   const tSpan = extractLoopTable(htmlSpan, 'ds_span');
   const hSpan = extractHeaderRows(tSpan);
   const bSpan2 = extractBodyRows(tSpan);
@@ -513,7 +531,10 @@ PROD_LOOPS.forEach(function (spec) {
     rows: [{ cells: [{ runs: [{ text: 'Ten' }] }, { runs: [{ text: 'A' }] }] }],
     cols: [{ col: 1, tag: 'gia_tri' }]
   };
-  const rowsNoStt = extractBodyRows(extractLoopTable(renderLoopOnly(bNoStt), 'ds_no_stt'));
+  // [Pin sync — owner N-only 2026-09-08] N=2 dòng dữ liệu thay blankRows:2
+  const stNoStt = R.newStore();
+  stNoStt.loops.ds_no_stt = [{}, {}];
+  const rowsNoStt = extractBodyRows(extractLoopTable(renderLoopOnly(bNoStt, stNoStt), 'ds_no_stt'));
   check('col0 khong tag + header khong co "stt" -> td rong, KHONG tu danh so',
     rowsNoStt.length === 2 &&
       rowsNoStt.every(r => r[0].attrs.trim() === '' && r[0].inner.trim() === ''),

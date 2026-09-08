@@ -469,10 +469,11 @@ check('S0. fixture KHONG anh huong resolver production (isolation)',
       return !!lb && !!want && Array.isArray(lb.cond) && lb.cond.length === 1 &&
         lb.cond[0] === want;
     }));
-  // [P2 pin sync 2026-09-03] P2 rebuild member grids lam blocks P thay doi:
-  // 146 -> 126 paragraph (toc dot '5. Nganh...' don gian hoa khi gan 9 loop).
-  check('8. blocks PLI_M72: 126 paragraph sau rebuild member grids (P2)',
-    counts.p === 126, 'p=' + counts.p);
+  // [P2 pin sync 2026-09-03] 146 -> 126: rebuild member grids (toc dot don
+  // gian hoa khi gan 9 loop). [Pin sync — render-fix 2026-09-08] 126 -> 125:
+  // fragment header row-2 ctcp xoá tại source (1 paragraph bớt).
+  check('8. blocks PLI_M72: 125 paragraph sau rebuild + fragment fix',
+    counts.p === 125, 'p=' + counts.p);
   check('8. blocks PLI_M72: VAN khong co o chon loai hinh (0 chk, 0 key loai_hinh)',
     chkBlocks === 0 && loaiHinhKeys === 0);
 

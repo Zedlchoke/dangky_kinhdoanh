@@ -618,3 +618,5 @@ docs/audits/f3_hard_fail_2026-09-07.md
 docs/audits/f5_review_plan_phase8f.json
 # --- [F3T lane A 2026-09-08] census row-placement động (47 loop/26 form) ---
 tools/census/row_placement_census.py
+# --- [owner directive 2026-09-08] F3H+F3T reopen — chỉ thị điều phối ---
+docs/f3h_f3t_directive_2026-09-08.md

@@ -762,14 +762,54 @@ def _header_name_binding_forms() -> dict:
     return _hdr_name_forms
 
 
+_hdr_name_roles: dict | None = None
+
+
+def _header_roles() -> dict:
+    """[F3H 2026-09-08] Section "roles" của registry (census 87 form —
+    required_band_mirror / required_band_input / output_mirror /
+    no_subject_band). Nguồn chân lý role cho converter lẫn detector."""
+    global _hdr_name_roles
+    if _hdr_name_roles is None:
+        try:
+            data = json.loads(
+                _HEADER_NAME_BINDING_PATH.read_text(encoding="utf-8"))
+            _hdr_name_roles = data.get("roles", {})
+        except (OSError, ValueError, KeyError):
+            _hdr_name_roles = {}
+    return _hdr_name_roles
+
+
+def header_role(form_id: str) -> str | None:
+    """Role header-subject của form theo census (None = ngoài census)."""
+    entry = _header_roles().get(form_id) or {}
+    return entry.get("role")
+
+
+# Role KHÔNG được bind band chủ thể (converter giữ nguyên mọi run —
+# "không_subject_band/leg_title không bind" theo directive F3H).
+_NON_BAND_ROLES = ("no_subject_band", "legal_title_or_subtitle",
+                   "output_mirror")
+
+
 def _band_mode_for(form_id: str, key: str) -> str:
-    """Mode binding theo (form, key): 'mirror' (mặc định, band read-only) hoặc
-    'band_input' (N-v1/N-v2: band LÀ ô nhập duy nhất của form — run input
-    giữ nguyên để UI vẽ input editable đúng một lần tại band)."""
+    """Mode binding theo (form, key), ROLE-AWARE [F3H 2026-09-08]:
+    - 'mirror'      : band read-only, run input -> run mirror;
+    - 'band_input'  : N-v1/N-v2 — band LÀ ô nhập duy nhất (PLI_M33,
+                      PLII_M06), run input giữ nguyên;
+    - 'none'        : role output_mirror / no_subject_band /
+                      legal_title_or_subtitle — KHÔNG bind band (cấm tự
+                      thêm/mirror band chủ thể, fixture PLI_M72).
+    Form ngoài census nhưng có entry registry giữ hành vi cũ ('mirror')."""
+    role = header_role(form_id)
+    if role in _NON_BAND_ROLES:
+        return "none"
     entry = _header_name_binding_forms().get(form_id) or {}
     if entry.get("key") == key:
         return entry.get("mode", "mirror")
-    return "mirror"
+    if entry:
+        return "mirror"
+    return "none" if role is not None else "mirror"
 
 
 def is_header_band_table(grid: list[list[dict]]) -> bool:
@@ -854,9 +894,13 @@ def _mirror_runs_inplace(runs: list[dict], key: str) -> int:
 
 
 def _output_mirrors_to_mirror(blocks: list[dict], form_id: str) -> int:
-    """Pass tổng quát: input run key ∈ output_mirrors[form_id] -> mirror."""
+    """Pass tổng quát: input run key ∈ output_mirrors[form_id] -> mirror.
+    [F3H] Guard role: chỉ áp cho form census role='output_mirror' (hoặc form
+    ngoài census — hành vi cũ); mâu thuẫn registry↔roles thì trust roles."""
     entry = _output_mirror_registry().get(form_id)
     if not entry or not entry.get("key"):
+        return 0
+    if header_role(form_id) not in (None, "output_mirror"):
         return 0
     key = entry["key"]
     n = 0

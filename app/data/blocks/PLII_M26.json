@@ -418,8 +418,9 @@
      "text": " về việc đăng ký/thông báo … của … "
     },
     {
-     "text": "(Tên hộ kinh doanh)",
-     "i": true
+     "mirror": {
+      "key": "hkd_ten_tieng_viet_2"
+     }
     },
     {
      "text": " - Mã số hộ kinh doanh "
@@ -427,7 +428,7 @@
     {
      "input": {
       "key": "ve_viec",
-      "w": 46
+      "w": 19
      }
     },
     {

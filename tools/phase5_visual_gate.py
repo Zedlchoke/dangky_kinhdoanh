@@ -41,6 +41,13 @@ Detector ↔ WLAY:
                                   != header + max(K,N), STT đứt, STT trên
                                   hàng trắng; PDF_BLANK_GAP (chỉ fixture
                                   valid-full). Registry = blocks blankRows.
+  D19 header semantics [F3H]    → role-aware theo census (header_semantic_
+                                  census.json): BAND_REQUIRED_MISSING,
+                                  BAND_FORBIDDEN_PRESENT, BAND_LABEL_REMOVED,
+                                  BAND_VALUE_OR_SLOT_MISSING, BAND_WRONG_KEY,
+                                  DUPLICATE_EDITABLE, STALE_MIRROR,
+                                  LEGAL_SUBTITLE_MUTATED (tools/header_
+                                  semantics.py — tách khỏi D17).
 
 Chạy:
   python3 -X utf8 tools/phase5_visual_gate.py                # full corpus × 5 fixture
@@ -73,6 +80,7 @@ from tools.phase5_fixtures import (          # noqa: E402
 from tools.row_placement import (           # noqa: E402  [F3T] D18
     det_row_placement, det_row_placement_pdf, load_loop_registry,
 )
+from tools import header_semantics as hs    # noqa: E402  [F3H] D19
 
 MAPS_PATH = ROOT / "app" / "data" / "form_maps.json"
 BLOCKS_DIR = ROOT / "app" / "data" / "blocks"
@@ -1027,6 +1035,19 @@ def analyze(maps, blocks_all, fixture: str, dirs: list[Path],
                     det_header_name(pages, fid, HEADER_NAME_BINDING,
                                     "\n".join(p["text"] for p in pages))
                     if fixture == "valid-full" else [])
+                # fixture exclusivity (D12) — build TRƯỚC D19 (D19 lớp PDF
+                # cần giá trị canonical từ fixture valid-full)
+                fdata = build_fixture(fid, maps[fid], fixture,
+                                      blocks_all.get(fid), ValueFactory())
+                # [F3H] D19 header-subject-semantics — role-aware, TÁCH KHỎI
+                # D17 (census header_semantic_census.json): structural chạy
+                # mọi fixture; lớp PDF chỉ valid-full (cần giá trị canonical).
+                rec["detectors"]["D19_header_semantics"] = hs.det_record(
+                    fid, blocks_all.get(fid), pages=pages,
+                    data=fdata,
+                    full_text="\n".join(p["text"] for p in pages),
+                    pdf_checks=(fixture == "valid-full"),
+                    registry=HEADER_NAME_BINDING)
                 # [6V-V1] D15 chk glyph — contract fixture choice-variants
                 # (mọi nhóm loại trừ có đúng 1 lựa chọn được tick)
                 rec["detectors"]["D15_chk_glyph"] = (
@@ -1037,9 +1058,6 @@ def analyze(maps, blocks_all, fixture: str, dirs: list[Path],
                 toks = det_token_values(pages)
                 rec["detectors"]["D16_token_values"] = toks[:60]
                 rec["detectors"]["D16_token_count"] = len(toks)
-                # fixture exclusivity (D12)
-                fdata = build_fixture(fid, maps[fid], fixture,
-                                      blocks_all.get(fid), ValueFactory())
                 rec["detectors"]["D12_fixture_violations"] = validate_fixture(
                     maps[fid], blocks_all.get(fid) or {}, fdata, fixture)
                 # render PNG
@@ -1077,6 +1095,10 @@ HARD_FAIL_KEYS = {
     # K-blank-then-data (K+N) trên DOCX/PDF là defect cấu trúc bảng — không
     # cho qua như candidate.
     "D18_row_placement": 1,
+    # [F3H] HEADER-SUBJECT-SEMANTICS (owner directive 2026-09-08): band chủ
+    # thể theo role census — thiếu/cấm/nhãn mất/slot mất/sai key/trùng
+    # editable/stale mirror/subtitle pháp định bị sửa đều FAIL record.
+    "D19_header_semantics": 1,
 }
 
 

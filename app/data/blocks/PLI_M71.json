@@ -331,19 +331,11 @@
      }
     },
     {
-     "text": " của ("
+     "text": " của "
     },
     {
-     "text": "Tên doanh nghiệp",
-     "i": true
-    },
-    {
-     "text": ") "
-    },
-    {
-     "input": {
-      "key": "dn.ten_tieng_viet",
-      "w": 20
+     "mirror": {
+      "key": "dn.ten_tieng_viet"
      }
     },
     {

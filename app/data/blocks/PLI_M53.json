@@ -155,14 +155,9 @@
    "align": "left",
    "runs": [
     {
-     "text": "("
-    },
-    {
-     "text": "Tên doanh nghiệp",
-     "i": true
-    },
-    {
-     "text": ")"
+     "mirror": {
+      "key": "dn.ten_tieng_viet"
+     }
     },
     {
      "text": "\n",
@@ -369,19 +364,20 @@
    "align": "left",
    "runs": [
     {
-     "text": "Yêu cầu ("
+     "text": "Yêu cầu "
     },
     {
-     "text": "tên doanh nghiệp",
-     "i": true
+     "mirror": {
+      "key": "dn.ten_tieng_viet"
+     }
     },
     {
-     "text": "): "
+     "text": ": "
     },
     {
      "input": {
       "key": "yeu_cau_dn",
-      "w": 22
+      "w": 12
      }
     }
    ],

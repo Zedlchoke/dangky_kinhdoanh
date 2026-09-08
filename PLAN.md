@@ -1,5 +1,16 @@
 # MASTER PLAN v7 — HOÀN THIỆN TOÀN BỘ SẢN PHẨM SAU PHASE 6V
 
+> **⚠️ REOPEN F3H — HEADER-SUBJECT-SEMANTICS, 2026-09-08
+> (`main@b2ec33c`, tree sạch):** owner phát hiện gate D17 hiện tại mới chứng
+> minh binding/sync, chưa chứng minh mọi occurrence “TÊN DOANH NGHIỆP/TÊN HỘ
+> KINH DOANH” được dùng đúng **vai trò pháp lý và UX**. Phải đóng F3H trước
+> khi tiếp tục ký F5 trên corpus. Hai fixture phân biệt bắt buộc:
+> `PLI_M31` nguồn có band `TÊN DOANH NGHIỆP` + dòng điền, nên phải **giữ nhãn
+> pháp định và điền tên ngay dưới**; `PLI_M72` nguồn không có band này, chỉ có
+> mục `1. Tên doanh nghiệp`, nên **không được tự thêm band**. Không xóa nhãn
+> M31 chỉ vì tên lặp ở thân, và không thêm nhãn M72 để làm giao diện đồng đều.
+> Chi tiết thực thi/gate: mục **F3H**.
+>
 > **✅ CHECKPOINT WAVE F0L–F4 — 2026-09-07 (Lead session, base `44f21bc`):**
 > current-law migration L-2026 ĐÓNG ở mức kỹ thuật + **111/111 section đều có
 > verdict, BLOCKED_OWNER = 0**:
@@ -26,8 +37,12 @@
 > ở M12; N/A có reason); round-trip/negative/mã dài PASS.
 > (5) **Fixture fix sau dryrun review** — slot ngày thành phần điền NGÀY
 > (hết double-date); EXCLUSIVE_GROUPS +chu_the_hkd. Runner: **VERDICT PASS**.
-> Đang chạy: F3 corpus `phase8f_final` (86 unit × 5 fixture, M11 loại) →
-> F5 AI review 100% PNG (human sign-off vẫn outstanding — O5) → F7 auditor.
+> **F3 corpus kỹ thuật đã chạy** tại `9f15d58`: `phase8f_final` 450 record /
+> 1752 PNG, HARD 0, candidate chưa adjudicate 0, ZIP 450/450, Word 90/90,
+> determinism 450/450 và runner VERDICT PASS. Tuy nhiên human review phát hiện
+> hợp đồng vai trò band tên chưa được diễn đạt/khóa đủ chặt, nên mở **F3H** và
+> coi corpus/hash này là stale đối với F5. Trình tự mới: F3H → corpus mới → F5
+> AI/human review → F7 auditor.
 > Windows S1–S8 vẫn **NOT RUN** (O6 — handoff kit sẵn ở
 > `tools/windows_handoff/`). Không push (chờ lệnh owner).
 
@@ -390,10 +405,12 @@ Lane DOCX xử lý các debt còn lại dựa trên source, detector trước fi
    từng phát hiện lỗi nhưng fixture cũ bỏ sót.
 7. **HEADER-NAME-SYNC ở generator/export:** census toàn bộ header band có
    literal `TÊN DOANH NGHIỆP`/`TÊN HỘ KINH DOANH` và phân loại từng occurrence:
-   `fillable-header-slot` hay `legal-title/subtitle`. Với slot fillable, thay
-   placeholder label bằng giá trị canonical cùng key ở thân mẫu, giữ separator
-   pháp định; không thêm field/key thứ hai. Với title/subtitle (ví dụ tiêu đề
-   loại hình M72), giữ nguyên. Fix qua spec/generator rồi Lead regen—cấm sửa
+   `fillable-header-slot` hay `legal-title/subtitle`. Với slot fillable, **giữ
+   nhãn pháp định**, chỉ thay dòng điền/placeholder bên dưới bằng giá trị
+   canonical cùng key ở thân mẫu; không thêm field/key thứ hai. Nếu payload
+   rỗng nhưng workflow vẫn cho phép xuất bản nháp thì phải giữ một vùng điền
+   nhìn thấy được, không được để trơ mỗi nhãn. Với title/subtitle (ví dụ tiêu
+   đề loại hình M72), giữ nguyên. Fix qua spec/generator rồi Lead regen—cấm sửa
    tay DOCX/blocks/form_maps. Test bắt buộc:
    - `PLI_M32` blank → header không có dữ liệu giả; filled → tên xuất đúng ở
      header và thân, không còn literal placeholder tại slot;
@@ -419,6 +436,97 @@ Lead regen generated artifacts, review exact diff, regen lần hai zero-diff.
 coverage == signature census/output truth, 0 missing cluster, 0 manual-sign
 gap dưới ngưỡng O8 và 9 no-signature form có verdict; không pin số trang 1631
 vì pagination có thể thay hợp lệ—chỉ pin identity và equality theo manifest.
+
+### F3H — Dứt điểm vai trò tên chủ thể ở đầu biểu mẫu
+
+F3H là defect wave bắt buộc phát sinh từ human review. Không coi corpus
+`phase8f_final` là đủ điều kiện human sign-off cho đến khi gate dưới đây xanh.
+Mục tiêu không phải làm mọi mẫu giống nhau; mục tiêu là mỗi mẫu giống **đúng
+nguồn hiện hành** và người dùng luôn biết nhập tên ở đâu.
+
+#### F3H.1 — Một registry occurrence-level làm nguồn chân lý
+
+Mở rộng `tools/header_name_binding.json` (hoặc sinh registry kế nhiệm có migration
+rõ) để **mọi occurrence** liên quan tên chủ thể trong active catalog có record:
+
+- `form_id`, variant/branch nếu có, source path + hash + vị trí evidence;
+- `role` đúng một trong:
+  - `required_band_mirror`: nguồn có band; nhãn pháp định luôn giữ; tên lấy từ
+    một input canonical ở thân và band chỉ mirror read-only;
+  - `required_band_input`: nguồn có band nhưng thân không có field tương đương;
+    band là input duy nhất (`PLI_M33`, `PLII_M06` hiện thuộc nhóm này);
+  - `no_subject_band`: nguồn không có band tên; cấm generator/UI tự thêm
+    (`PLI_M72` và các form tương ứng);
+  - `legal_title_or_subtitle`: chữ “tên doanh nghiệp/hộ” là tiêu đề, nhãn mục,
+    tên loại hình hoặc câu pháp định; giữ nguyên, không biến thành input;
+  - `output_mirror`: nội dung do cơ quan phát hành, bind read-only từ hồ sơ;
+- `subject_kind`, canonical key, `label_required`, `blank_policy`, số input và
+  số mirror kỳ vọng.
+
+Không được phân loại chỉ bằng regex. Lane census phải đối chiếu ảnh/trang của
+nguồn pháp lý hiện hành; các form đã migrate theo TT 121/2026 dùng source 2026.
+Mỗi occurrence chưa đủ evidence là FAIL/NEEDS-ADJUDICATION, không tự chọn mode.
+
+#### F3H.2 — Hợp đồng UX và export
+
+1. Người dùng nhập tên chủ thể đúng **một lần**:
+   - `required_band_mirror`: input ở thân, band cập nhật trực tiếp khi gõ, xóa,
+     đổi A→B, đổi form/variant và reload draft; band không có tab-stop/input;
+   - `required_band_input`: input nằm ngay trong band, có label/accessible name,
+     draft/validation/export dùng cùng canonical key; không sinh input ẩn ở thân.
+2. DOCX/PDF với tên đã nhập phải giữ nhãn pháp định và đặt tên vào đúng dòng
+   điền; cấm output kiểu chỉ còn `TÊN DOANH NGHIỆP`/`TÊN HỘ KINH DOANH` mà
+   không có giá trị hoặc vùng điền nhìn thấy.
+3. Với bản nháp rỗng được phép xuất, band phải có fill-line/vùng điền đủ rõ;
+   với hồ sơ final có field bắt buộc, validation phải chặn trước export.
+4. `no_subject_band` không được nhận band mới. Tên ở mục thân như M72 vẫn phải
+   bind đủ; việc thiếu band không phải lỗi nếu nguồn pháp lý không có band.
+5. Không xóa nhãn nguồn chỉ vì tên xuất hiện lần nữa trong thân: band là chủ thể
+   phát hành văn bản, còn dòng thân là nội dung kê khai. Nếu muốn một bản “rút
+   gọn”, phải là output mode khác và không được thay thế bản pháp lý canonical.
+
+#### F3H.3 — Fixture/gate bắt buộc
+
+- Fixture tối thiểu: blank/draft, filled, A→B, Unicode dài, reload draft; M72
+  chạy đủ 5 variant. Inventory form/render-unit lấy động từ active catalog,
+  không hard-code denominator lịch sử.
+- Fixture neo:
+  - `PLI_M31`: đúng một band; literal nhãn vẫn có; giá trị canonical nằm ngay
+    dưới nhãn; cùng tên ở dòng thân; 0 editable control thứ hai;
+  - `PLI_M33` và `PLII_M06`: đúng một `band_input`; nhập được bằng chuột/bàn
+    phím; blank/fill/reload/export nhất quán;
+  - `PLI_M72`: 0 subject band ở cả 5 variant; mục `1. Tên doanh nghiệp/công ty`
+    vẫn có đủ giá trị đúng variant; đổi variant không rò tên/label stale;
+  - `PLI_M32`: mirror từ input thân, giữ nhãn, A→B và reload ra B.
+- Thêm detector hard mới (không nhồi thêm ngoại lệ mơ hồ vào D17), tối thiểu
+  bắt: `BAND_REQUIRED_MISSING`, `BAND_FORBIDDEN_PRESENT`,
+  `BAND_LABEL_REMOVED`, `BAND_VALUE_OR_SLOT_MISSING`, `BAND_WRONG_KEY`,
+  `DUPLICATE_EDITABLE`, `STALE_MIRROR`, `LEGAL_SUBTITLE_MUTATED`.
+- Mutation test phải cố ý: xóa nhãn M31, bỏ value M31, thêm band M72, biến
+  subtitle M72 thành input, dùng `dn_goc` thay `dn`, tạo hai band input và giữ
+  giá trị A sau khi đổi B; từng mutation phải làm gate đỏ.
+- Kiểm ba lớp độc lập: DOM/UI E2E; OOXML/DOCX structure; PDF→PNG visual. Với
+  PDF, detector phải kiểm quan hệ gần nhau giữa label và value/fill-line, không
+  chỉ đếm chuỗi toàn trang.
+
+#### F3H.4 — Ownership, merge và evidence
+
+- Lane A read-only: census occurrence-level + source-evidence matrix.
+- Lane B: UI/store/draft/validation + test DOM/E2E; không sửa generator.
+- Lane C: generator/export detector + mutation tests; không hand-edit generated
+  artifacts.
+- Lead: adjudicate matrix, merge A→B→C, regenerate template/blocks/form maps
+  hai lần (lần hai zero-diff), review exact allowlist, chạy full runner và sinh
+  lại corpus. Worktree/report chỉ dọn sau khi evidence đã commit.
+- Bất kỳ record F5 đã review trên hash cũ đều stale. Chỉ record/hash corpus sau
+  F3H mới được ký; không copy `reviewer_verdict` từ corpus cũ.
+
+**Gate F3H:** 100% occurrence active có evidence+role; 0 role unknown; UI có
+đúng một editable source cho mỗi canonical subject; tất cả required band có
+label + value/slot đúng policy; tất cả forbidden band bằng 0; fixture M31/M32/
+M33/PLII_M06/M72 xanh; detector hard/candidate chưa adjudicate = 0; regen lần
+hai zero-diff; runner 0 FAIL; Word-open/DOCX/PDF/PNG corpus mới PASS. Visual QA
+chỉ PASS sau khi đã render và xem corpus mới; nếu chưa xem thì ghi NOT RUN.
 
 ### F4 — Excel P6=C hoàn chỉnh
 
@@ -506,9 +614,9 @@ remove worktree đã merge. **Không push/tag/release** nếu owner chưa ra l�
 | G0 Truth | HEAD/base/dirty/ownership rõ; docs current không mâu thuẫn |
 | G1 Contracts | 22 BLOCKED đã adjudicate; M12/min_rows có owner decision |
 | G2 Tests | runner + legacy-strict + compileall 0 FAIL, 0 critical NOT RUN |
-| G3 UI | full inventory 28/87/M72, 3 viewport, zoom, keyboard, draft/E2E và header-name mirror PASS |
+| G3 UI | full inventory động, 3 viewport, zoom, keyboard, draft/E2E; F3H đúng một editable source và đúng role band/no-band PASS |
 | G4 Tables | 111/111 drift 0; không active section thiếu control/cột |
-| G5 Documents | final corpus hard 0/candidate 0, header-name sync census PASS, signature census/detector 100% + gap UX PASS, Word 91/91, ZIP/determinism PASS |
+| G5 Documents | final corpus hard 0/candidate 0; F3H 100% occurrence đúng source-role, required band có label+value/slot, forbidden band=0; signature census/detector 100% + gap UX PASS; Word inventory động, ZIP/determinism PASS |
 | G6 Human | reviewer verdict 100% trên đúng hash corpus cuối |
 | G7 Excel | P6=C đủ 4 cụm, round-trip/negative/UI/visual PASS |
 | G8 Windows | reproducible `.exe`, WebView2/offline/clean-machine S1–S8 PASS |

@@ -130,6 +130,20 @@ EXCLUSIVE_GROUPS = [
     ("co_khong", r"^chk_(auto_)?(co|khong)(_\d+)?$", "chk_khong"),
     # [F5-dryrun fix] chủ thể hộ kinh doanh: hộ gia đình / cá nhân — chọn 1
     ("chu_the_hkd", r"^chk_ct_(ho_gia_dinh|ca_nhan)$", "chk_ct_ho_gia_dinh"),
+    # [F5 judge-1a fix 2026-09-07] tình trạng thành lập/thay đổi — M01 3 lựa
+    # chọn, M02 7 lựa chọn (mới/tách/chia/hợp nhất/chuyển đổi loại hình/
+    # chuyển đổi từ HKD/chuyển đổi từ CSBT) — MỘT nhóm mở rộng
+    ("tinh_trang_thanh_lap",
+     r"^chk_tt_(thanh_lap_moi|tach_dn|chia_dn|hop_nhat_dn|chuyen_doi_loai_hinh"
+     r"|chuyen_doi_tu_hkd|chuyen_doi_tu_csbt)$", "chk_tt_thanh_lap_moi"),
+    # cặp auto Có/Không theo ngữ cảnh (hiển thị giá trị tương đương ngoại tệ,
+    # đã đăng ký đầu tư đặc biệt...) — đuôi _2 là lặp câu hỏi trong cùng mẫu
+    ("auto_co_khong",
+     r"^chk_auto_(co|khong)(_\d+)?$", "chk_auto_khong"),
+    # bộ 3 chủ thể đặc biệt M02: đầu tư đặc biệt / DN xã hội / CTCK — các
+    # khai báo độc lập KHÔNG loại-trừ (doanh nghiệp có thể đồng thời) →
+    # KHÔNG đưa vào nhóm; choice giữ tick-all là chủ đích của fixture cho
+    # nhóm này (ghi rõ reason khi review).
     # mô hình tổ chức công ty: Hội đồng thành viên (hoặc Hội đồng quản trị)
     # / Chủ tịch công ty — hai mô hình quản trị loại-trừ nhau về pháp lý
     # [F5-dryrun fix 2026-09-07] đồng bộ runtime EXCLUSIVE_CHK_GROUPS

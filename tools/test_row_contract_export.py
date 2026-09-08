@@ -12,6 +12,13 @@ Phủ (mỗi nhóm contract cùng semantics):
      - RC3 partial row (một ô có giá trị) KHÔNG bị mất.
      - RC4 hai loop cùng template -> số hàng độc lập (không cross-contaminate).
      - RC5 output không còn marker {...} sót.
+     - RC6 [F3T.2/F3T.4] ROW-PLACEMENT matrix `max(K,N)` trên fixture
+       PRODUCTION-LIKE (header + K hàng trắng in sẵn + hàng marker): pin
+       (K,N) = (4,0) (4,1) (4,4) (4,6) (5,2) + (0,3) không-K; mỗi pin assert
+       TỔNG SỐ HÀNG, VỊ TRÍ DATA (ngay sau header, không blank chen trước),
+       STT 1..N và K−N hàng trắng đuôi CÓ STT TRỐNG. Trước F3T suite này
+       8/8 PASS trên fixture tối giản không có K trắng — blind spot của
+       defect K-blank-then-data; fixture nâng cấp chứ không bỏ assertion.
 
 [FM] fixed-matrix giữ đúng cấu trúc dòng pháp định
      - FM1 chưa nhập gì -> ĐỦ số dòng cố định (kể cả dòng Tổng), tổng = '0'
@@ -20,11 +27,11 @@ Phủ (mỗi nhóm contract cùng semantics):
      - FM3 stored totals sai -> fail-loud (ExportTotalsError) — đã phủ TS2
        của test_export_grid_kinds; corpus chỉ pin lại hành vi.
 
-Template editable dựng tối thiểu bằng python-docx trong tmp (không đụng
-production templates). Fixture fixed-matrix tái dùng sandbox helper của
+Template editable dựng bằng python-docx trong tmp (không đụng production
+templates). Fixture fixed-matrix tái dùng sandbox helper của
 tools/test_generator_deep_idempotency. Exit 0 = PASS / 1 = FAIL.
 
-Chạy:  python -X utf8 tools/test_row_contract_export.py
+Chạy:  python -X utf8 -m tools.test_row_contract_export
 """
 from __future__ import annotations
 
@@ -66,15 +73,28 @@ def check(name: str):
 
 
 # ---------------------------------------------------------------------------
-# Editable-loop template tối thiểu: 1 bảng, 1 hàng khuôn
+# Editable-loop template PRODUCTION-LIKE (F3T.4): mỗi loop một bảng
+#   header | K hàng trắng in sẵn | hàng khuôn
 #   {#ds_x}{_stt} | {ma_nganh} | {ten_nganh}{/ds_x}
+# blank_rows=0 mô phỏng loop không-K (chỉ header + marker).
 # ---------------------------------------------------------------------------
-def build_loop_template(path: Path, loops: list[str]) -> None:
+LOOP_HDR = ("STT", "Mã ngành", "Tên ngành")
+
+
+def build_loop_template(path: Path, loops: list[str],
+                        blank_rows: int = 0) -> None:
     d = docx.Document()
-    d.add_paragraph("PHỤ LỤC — corpus loop template")
+    d.add_paragraph("PHỤ LỤC — corpus loop template (production-like: "
+                    "header + %d blank + marker)" % blank_rows)
     for name in loops:
         t = d.add_table(rows=1, cols=3)
-        cells = t.rows[0].cells
+        for i, htxt in enumerate(LOOP_HDR):
+            t.rows[0].cells[i].text = htxt
+        for _ in range(blank_rows):
+            r = t.add_row()
+            for c in r.cells:
+                c.text = ""
+        cells = t.add_row().cells
         cells[0].text = "{#%s}{_stt}" % name
         cells[1].text = "{ma_nganh}"
         cells[2].text = "{ten_nganh}{/%s}" % name
@@ -100,7 +120,9 @@ def rc1_blank_row_not_rendered():
     tmp = Path("/tmp/dkdn_row_contract_corpus")
     tmp.mkdir(parents=True, exist_ok=True)
     tpl = tmp / "loop_tpl.docx"
-    build_loop_template(tpl, ["ds_x"])
+    # fixture production-like: header + 4 hàng trắng + hàng marker (như
+    # ds_nganh_* của PLI_M72; K=4 trong blocks blankRows)
+    build_loop_template(tpl, ["ds_x"], blank_rows=4)
     payload = {"ds_x": [
         {"ma_nganh": "0111", "ten_nganh": "Trồng lúa"},
         {},                                            # blank hoàn toàn
@@ -157,7 +179,7 @@ def rc3_partial_kept():
 def rc4_two_loops_independent():
     tmp = Path("/tmp/dkdn_row_contract_corpus")
     tpl = tmp / "loop_tpl2.docx"
-    build_loop_template(tpl, ["ds_a", "ds_b"])
+    build_loop_template(tpl, ["ds_a", "ds_b"], blank_rows=4)
     payload = {
         "ds_a": [{"ma_nganh": "1", "ten_nganh": "A1"}, {}, 
                  {"ma_nganh": "2", "ten_nganh": "A2"}],
@@ -177,8 +199,10 @@ def rc4_two_loops_independent():
 @check("[RC5] output khong con marker {...} sot")
 def rc5_no_markers():
     tmp = Path("/tmp/dkdn_row_contract_corpus")
-    for name in ("rc1_out.docx", "rc2_out.docx", "rc3_out.docx",
-                 "rc4_out.docx"):
+    names = ["rc1_out.docx", "rc2_out.docx", "rc3_out.docx",
+             "rc4_out.docx"]
+    names += sorted(p.name for p in tmp.glob("rc6_out_*.docx"))
+    for name in names:
         p = tmp / name
         if not p.exists():
             continue
@@ -187,6 +211,88 @@ def rc5_no_markers():
         xml = zipfile.ZipFile(p).read("word/document.xml").decode("utf-8")
         left = LEFTOVER_RE.findall(xml)
         assert not left, "%s còn marker: %r" % (name, left)
+
+
+# ---------------------------------------------------------------------------
+# [RC6] F3T.2/F3T.4 — ROW-PLACEMENT matrix max(K,N) trên fixture
+# production-like (header + K hàng trắng + hàng marker). Mỗi pin assert:
+# tổng số hàng = header + max(K,N); N hàng dữ liệu đứng NGAY SAU header
+# (không blank chen trước dòng 1) với STT 1..N đúng; K−N hàng trắng còn
+# lại nằm SAU dữ liệu với STT TRỐNG; N=0 giữ đúng K trắng.
+# ---------------------------------------------------------------------------
+
+def loop_table_rows(path: Path) -> list[list[str]]:
+    """Text từng ô của bảng loop ĐẦU TIÊN trong tài liệu."""
+    d = docx.Document(str(path))
+    t = d.tables[0]
+    return [[c.text.strip() for c in r.cells] for r in t.rows]
+
+
+def _pin_case(k: int, n: int, out_name: str) -> None:
+    tmp = Path("/tmp/dkdn_row_contract_corpus")
+    tmp.mkdir(parents=True, exist_ok=True)
+    tpl = tmp / ("rc6_tpl_k%d.docx" % k)
+    build_loop_template(tpl, ["ds_x"], blank_rows=k)
+    payload = {"ds_x": [
+        {"ma_nganh": "%04d" % (i + 1),
+         "ten_nganh": "Ngành nghề %d" % (i + 1)}
+        for i in range(n)
+    ]}
+    out = tmp / out_name
+    out.write_bytes(render(str(tpl), payload))
+    rows = loop_table_rows(out)
+
+    # 1) tổng số hàng = header + max(K, N)
+    expect_total = 1 + max(k, n)
+    assert len(rows) == expect_total, \
+        "(K=%d,N=%d): tổng hàng %d != 1 + max(%d,%d)=%d: %r" % (
+            k, n, len(rows), k, n, expect_total, rows)
+    # 2) header nguyên vẹn ở hàng đầu
+    assert tuple(rows[0]) == LOOP_HDR, \
+        "(K=%d,N=%d): header lệch: %r" % (k, n, rows[0])
+    # 3) vị trí data: N hàng dữ liệu NGAY SAU header, STT 1..N
+    for i in range(n):
+        row = rows[1 + i]
+        assert row[0] == str(i + 1), \
+            "(K=%d,N=%d): STT hàng %d = %r, kỳ vọng %d" % (
+                k, n, 1 + i, row[0], i + 1)
+        assert row[1] == "%04d" % (i + 1) and row[2], \
+            "(K=%d,N=%d): dữ liệu hàng %d lệch: %r" % (k, n, 1 + i, row)
+    # 4) K−N hàng trắng đuôi: mọi ô trống (STT của hàng trắng để trống)
+    for j in range(1 + n, len(rows)):
+        assert all(c == "" for c in rows[j]), \
+            "(K=%d,N=%d): hàng trắng đuôi %d phải trống: %r" % (
+                k, n, j, rows[j])
+
+
+@check("[RC6a] (K=4,N=0) giu dung 4 hang trang STT trong")
+def rc6a_k4_n0():
+    _pin_case(4, 0, "rc6_out_k4n0.docx")
+
+
+@check("[RC6b] (K=4,N=1) 1 data ngay sau header + 3 trang duoi, STT trang")
+def rc6b_k4_n1():
+    _pin_case(4, 1, "rc6_out_k4n1.docx")
+
+
+@check("[RC6c] (K=4,N=4) dung 4 data STT 1..4, khong trang thua")
+def rc6c_k4_n4():
+    _pin_case(4, 4, "rc6_out_k4n4.docx")
+
+
+@check("[RC6d] (K=4,N=6) N>=K: dung 6 data STT 1..6, khong append trang")
+def rc6d_k4_n6():
+    _pin_case(4, 6, "rc6_out_k4n6.docx")
+
+
+@check("[RC6e] (K=5,N=2) 2 data + 3 trang duoi STT trong")
+def rc6e_k5_n2():
+    _pin_case(5, 2, "rc6_out_k5n2.docx")
+
+
+@check("[RC6f] (K=0,N=3) loop khong-K: 3 data ngay sau header")
+def rc6f_k0_n3():
+    _pin_case(0, 3, "rc6_out_k0n3.docx")
 
 
 # ---------------------------------------------------------------------------
@@ -280,6 +386,14 @@ def main() -> int:
     rc2_order_and_stt()
     rc3_partial_kept()
     rc4_two_loops_independent()
+    # [RC6] matrix pin (K,N) — chạy trước RC5 để outputs có mặt khi quét
+    # leftover marker
+    rc6d_k4_n6()
+    rc6e_k5_n2()
+    rc6f_k0_n3()
+    rc6a_k4_n0()
+    rc6b_k4_n1()
+    rc6c_k4_n4()
     rc5_no_markers()
     # [FM] dùng chung 1 sandbox generator đã apply, như pattern
     # test_export_grid_kinds (apply_sandbox trước, restore sau).

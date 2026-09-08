@@ -309,7 +309,9 @@ def t_render_three_rows(fid: str):
         "header render %r != %r" % (texts[0], EXPECTED_HEADERS)
 
     n_data = len(SAMPLE_ROWS)
-    data_texts = texts[-n_data:]
+    # [F3T.2 max(K,N)] dữ liệu NGAY SAU header (pin cũ texts[-n:] là vị trí
+    # khiếm khuyết K-blank-then-data)
+    data_texts = texts[1:1 + n_data]
     n_x = 0
     for i, row in enumerate(data_texts):
         want = SAMPLE_ROWS[i]

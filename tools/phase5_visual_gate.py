@@ -35,6 +35,12 @@ Detector ↔ WLAY:
   D16 token giá trị (6V-V1)     → B4: giá trị LABEL_HOA_N fallback
                                   (NOI_O_HIEN_TAI_123) + mảnh token Word
                                   wrap (_HIEN, _TAI_1)
+  D17 header-name sync (WAVE v7)→ band tên DN/HKD lệch/thiếu giá trị
+  D18 row placement [F3T]       → F3T.1/F3T.2: pattern K-blank-then-data
+                                  (blank chen trước/giữa data), tổng hàng
+                                  != header + max(K,N), STT đứt, STT trên
+                                  hàng trắng; PDF_BLANK_GAP (chỉ fixture
+                                  valid-full). Registry = blocks blankRows.
 
 Chạy:
   python3 -X utf8 tools/phase5_visual_gate.py                # full corpus × 5 fixture
@@ -63,6 +69,9 @@ sys.path.insert(0, str(ROOT))
 from tools.layout_roles import classify_role   # noqa: E402
 from tools.phase5_fixtures import (          # noqa: E402
     FIXTURES, M72_VARIANTS, ValueFactory, build_fixture, validate_fixture,
+)
+from tools.row_placement import (           # noqa: E402  [F3T] D18
+    det_row_placement, det_row_placement_pdf, load_loop_registry,
 )
 
 MAPS_PATH = ROOT / "app" / "data" / "form_maps.json"
@@ -977,12 +986,23 @@ def analyze(maps, blocks_all, fixture: str, dirs: list[Path],
             rec["detectors"]["D4_contamination"] = det_contamination(
                 docx_path, maps[fid])
             rec["detectors"]["D9_table_grid"] = det_table_grid(docx_path)
+            # [F3T] D18 row placement — structural DOCX (mọi fixture):
+            # K-blank-then-data / tổng hàng max(K,N) / STT đứt / STT trên
+            # hàng trắng. Registry loop đọc blocks blankRows (không hard-code
+            # form); fixed-matrix/output-table không bị áp công thức max(K,N).
+            rec["detectors"]["D18_row_placement"] = det_row_placement(
+                docx_path, load_loop_registry(blocks_all.get(fid) or {}))
 
             # --- PDF detectors
             if pdf_path.exists():
                 _doc, pages = pdf_pages(pdf_path, zoom)
                 rec["page_count"] = len(pages)
                 rec["detectors"]["D5_blank_sparse"] = det_blank_sparse(pages)
+                # [F3T] D18 lớp PDF bổ trợ — chỉ fixture valid-full (N>=1;
+                # N=0 là K trắng hợp pháp nên không có dòng STT để đo).
+                rec["detectors"]["D18_row_placement"] = (
+                    rec["detectors"].get("D18_row_placement", [])
+                    + det_row_placement_pdf(pages))
                 sig = det_signatures(pages, expectations, fid)
                 rec["detectors"]["D6_signature"] = {
                     "fails": sig["fails"], "candidates": sig["candidates"]}
@@ -1053,6 +1073,10 @@ HARD_FAIL_KEYS = {
     # một giá trị một lần nhập) — band còn dòng kẻ hoặc lệch giá trị thân
     # đều FAIL record.
     "D17_header_name": 1,
+    # [F3T] ROW_PLACEMENT fail-loud (owner directive 2026-09-08): pattern
+    # K-blank-then-data (K+N) trên DOCX/PDF là defect cấu trúc bảng — không
+    # cho qua như candidate.
+    "D18_row_placement": 1,
 }
 
 
@@ -1247,7 +1271,8 @@ def main() -> int:
                      # hard) tới khi V2 xong; đếm ở đây để số hard luôn
                      # hiện diện trong summary ngay khi Lead nâng hard.
                      "D13_skeleton_glue", "D14_name_slot", "D15_chk_glyph",
-                     "D16_token_values", "D17_header_name")
+                     "D16_token_values", "D17_header_name",
+                     "D18_row_placement")
     for key in detector_keys:
         summary[key] = sum(
             1 for r in all_records

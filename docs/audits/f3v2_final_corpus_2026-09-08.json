@@ -1,0 +1,251 @@
+{
+ "lane": "F3-CORPUS-FINAL (CORPUS-FINAL render từ HEAD sạch d70fe14)",
+ "date": "2026-09-08",
+ "worktree": "/Users/hoangminhlong/orca/dangky_kinhdoanh-worktrees/f3-corpus-v2",
+ "branch": "agent/f3-corpus-v2",
+ "head": "d70fe14",
+ "head_contents": "TẤT CẢ fixes: F3T N-only (47 loop chỉ N data rows) + band label removal (23 form, e148d83) + choice tick 1/nhóm (5 nhóm mới) + render-fix M10/M05/M72 + D18 bỏ ROW_COUNT_MISMATCH + D19 BAND_LABEL_REMOVED→BAND_LABEL_PRESENT",
+ "merge": "git merge main → fast-forward 20df7bc..d70fe14 (74 files, không conflict)",
+ "corpus_official": "/Users/hoangminhlong/orca/dangky_kinhdoanh-worktrees/f3-corpus-v2/generated_ho_so/_visual_layout/phase8g_v2",
+ "corpus_rerun_determinism": "/Users/hoangminhlong/orca/dangky_kinhdoanh-worktrees/f3-corpus-v2/generated_ho_so/_visual_layout/phase8g_v2_rerun",
+ "inventory": {
+  "active": 86,
+  "skipped": [
+   [
+    "PLI_M11",
+    "removed_by_current_law"
+   ]
+  ],
+  "fixtures": 5,
+  "records": 450,
+  "records_math": "5 fixture × 90 record/fixture (85 form tag main + PLI_M72 ×5 tag m72_dntn/m72_tnhh_1tv/m72_tnhh_2tv/m72_ctcp/m72_dhdn)",
+  "png_total": 1737,
+  "png_per_fixture": {
+   "empty-paper": 271,
+   "valid-minimal": 289,
+   "valid-full": 311,
+   "long-boundary": 555,
+   "choice-variants": 311
+  },
+  "png_note": "−17 PNG so phase8g (1754) do pagination dời sau N-only sync",
+  "smoke_export": {
+   "batch_files": 85,
+   "batch_ok": true,
+   "m72_variants_ok": 5,
+   "log": "tool phase5_export_corpus chạy trực tiếp (SUMMARY batch_ok=true, m72_variants_ok=5)"
+  }
+ },
+ "preflight": {
+  "json": "/tmp/f3v2_final_preflight.json",
+  "verdict": "PASS",
+  "pass": 65,
+  "fail": 0,
+  "not_run": 0,
+  "not_run_critical": 0,
+  "env_errors": [],
+  "soffice_preflight_warnings": "1 dòng log headless convert (không phải lỗi)"
+ },
+ "visual_gate_run1": {
+  "fixture_seconds": {
+   "empty-paper": 528.6,
+   "valid-minimal": 456.4,
+   "valid-full": 450.5,
+   "long-boundary": 473.3,
+   "choice-variants": 452.9
+  },
+  "records": 450,
+  "pages_png": 1737,
+  "export_errors": 0,
+  "png_disk_assert": {
+   "claimed": 1737,
+   "disk": 1737,
+   "mismatches": 0,
+   "ok": true
+  },
+  "hard_fail_records": 33,
+  "hard_fail_counts": {
+   "D18_row_placement": 10,
+   "D19_header_semantics": 23
+  },
+  "detector_zero_hard": {
+   "D1_source_indicator": 0,
+   "D2_field_code": 0,
+   "D3_markers": 0,
+   "D4_contamination": 0,
+   "D5_BLANK": 0,
+   "D6_signature": 0,
+   "D10_matrix_headers": 0,
+   "D11_glue": 0,
+   "D12_fixture_violations": 0,
+   "D13_skeleton_glue": 0,
+   "D14_name_slot": 0,
+   "D15_chk_glyph": 0,
+   "D16_token_values": 0,
+   "D17_header_name": 0
+  },
+  "hard_fail_detail": {
+   "D18_row_placement": {
+    "code": "PDF_BLANK_GAP",
+    "records": "PLI_M07 ×5 fixture (gap 75.5pt, stt_run 2, p2) + PLI_M10 ×5 fixture (gap 81.1pt, stt_run 3) — long-boundary bắn ở p10/p26, valid-full M10 ở p4 (pagination dời sau N-only), còn lại p2",
+    "docx_layer": "0 hit toàn corpus: 0 BLANK_BEFORE_DATA / 0 STT_ON_BLANK / 0 STT_BREAK (ROW_COUNT_MISMATCH đã bỏ theo owner d70fe14) — hợp đồng N-only (chỉ N data rows, 47 loop) GIỮ ĐÚNG trên corpus render thật",
+    "root_cause": "heuristic lớp PDF (chưa đổi ở d70fe14) nhận nhầm chữ số superscript của khối chú thích pháp lý chân trang ('1 …', '2 …', '3 …') làm chuỗi STT; gap 75.5/81.1pt là khoảng hở tự nhiên giữa dòng '(Ký và ghi họ tên)' và khối chú thích — đúng layout nguồn",
+    "evidence_render_dung": "trang bị bắn GIỐNG HỆT từng byte text so corpus phase8g (đã adjudicate cùng lớp): empty-paper/main/PLI_M07.pdf p2 text-equal=True; empty-paper/main/PLI_M10.pdf p2 text-equal=True; valid-full/main/PLI_M07.pdf p2 text-equal=True (pymupdf get_text). Trang kết thúc bằng chú thích pháp lý ('- Trường hợp Tòa án hoặc Trọng tài…', '6 Tích dấu X nếu chủ sở hữu hưởng lợi là thành viên hợp danh.')",
+    "adjudication": "mismatch hợp đồng detector — render đúng; cần Lead: heuristic D18-lớp-PDF loại trừ khối chú thích chân trang (dòng superscript marker)"
+   },
+   "D19_header_semantics": {
+    "code": "BAND_WRONG_KEY",
+    "records": "đúng 23/23 form band-required theo registry tools/header_name_binding.json (21 required_band_mirror + 2 required_band_input PLI_M33/PLII_M06) — 100% population, chỉ fixture valid-full (lớp PDF)",
+    "root_cause_da_xac_dinh_dung": "FEED MISMATCH dữ liệu, KHÔNG phải layout: batch export gộp data mọi form last-write-wins trên key chung — 'dn.ten_tieng_viet' do PLI_M79 ghi cuối (giá trị 'CÔNG TY TNHH MTV KỸ THUẬT - XÂY DỰNG TRƯỜNG THÀNH 23') → band VÀ thân mirror đều render ĐÚNG giá trị merged (D17 PASS 450/450, count>=2) nhưng D19 được nuôi data=fixture per-form (vd PLI_M12 'CÔNG TY TNHH SẢN XUẤT THƯƠNG MẠI HOÀNG GIA 7') → containment fail. Chẩn đoán 'fragment containment + motto cùng dòng' của corpus trước KHÔNG ĐỦ — nguyên nhân thật là data feed",
+    "evidence_render_dung": "THỬ NGHIỆM ĐƠN-FORM: export PLI_M12 MỘT MÌNH với fixture per-form → D19 = 0 hit (PASS), giá trị per-form có mặt trong PDF. Structural layer 0 hit; BAND_LABEL_PRESENT = 0 toàn corpus (nhãn đã xoá sạch theo e148d83 — fix owner GIỮ VỮNG); D17 header-name-sync = 0 FAIL (band↔body đồng bộ, band_input exempt F3B OK)",
+    "adjudication": "mismatch feed detector — render đúng theo data đã export; cần Lead: D19-lớp-PDF nhận data MERGED của batch export (hoặc so band với needle thân thay vì giá trị fixture per-form)"
+   }
+  },
+  "candidate_records": 7,
+  "candidate_counts": {
+   "D9_table_grid": 5,
+   "D5_blank_sparse": 2
+  },
+  "candidate_adjudication": [
+   {
+    "record": "*/main/PLI_M10 ×5 fixture",
+    "detector": "D9_table_grid",
+    "code": "NARROW_COL_WIDE",
+    "adjudication": "(ii) pixel-OK",
+    "evidence": "total width ĐÚNG 14400 twips, 18 cột đủ (min col 614 — override per-form 500), không mất cột 18, không glyph dính — cùng lớp adjudicate corpus phase8g/[f3]"
+   },
+   {
+    "record": "empty-paper/m72_dhdn/PLI_M72 p2 (2/2)",
+    "detector": "D5_blank_sparse SPARSE 42 chars",
+    "adjudication": "(i)",
+    "evidence": "trang cuối tự nhiên: mục '8. Nơi đăng ký: (Cơ quan đăng ký kinh doanh cấp tỉnh)' — section pháp lý cuối M72, cùng lớp entry valid-minimal/m72_dhdn p2 + long-boundary/m72_dhdn p11 (pagination dời sau N-only); pixel page-02.png; allowlist +[f3v2-final]"
+   },
+   {
+    "record": "long-boundary/main/PLII_M01 p3 (3/14)",
+    "detector": "D5_blank_sparse SPARSE 29 chars",
+    "adjudication": "(ii)",
+    "evidence": "dòng mục '5.3. Tổng số lao động (dự kiến): 269' đứng trang riêng — fixture long-boundary đẩy section sang trang kế, giá trị nguyên vẹn, theo liền sau p2; pixel page-03.png; allowlist +[f3v2-final]"
+   }
+  ],
+  "verdict": "HARD 33 — cùng population với corpus phase8g, cả 33 đều được chứng minh MỚI là mismatch phía detector (D18: trang byte-identical; D19: đơn-form PASS) — KHÔNG fake PASS; candidate 7/7 đã adjudicate, zero unresolved"
+ },
+ "render_fix_verification": {
+  "M10_width_14400": "D9 detail total=14400, ncols=18, min col 614 mọi fixture (5/5)",
+  "M05_nam_token": "valid-full/main/PLI_M05.pdf: 'TP. Đà Nẵng, ngày 04 tháng 05 năm 2025'; regex 'năm 0d' = không thấy",
+  "M72_fragment": "5/5 m72_ctcp không còn fragment 'Ghi chú (nếu có)9.'; heading '9. Người đại diện' CÓ mặt đúng 5/5 m72_ctcp và KHÔNG có ở 20 variant khác (đúng đặc thù CTCP)",
+  "choice_tick_1_per_group": "D15_chk_glyph = 0 FAIL trên 90 record choice-variants (5 nhóm choice mới tick đúng 1/nhóm); D12 fixture exclusivity = 0",
+  "nonly_contract": "D5 BLANK = 0 toàn corpus (không còn hàng trắng); D18 lớp DOCX = 0 hit (0 BLANK_BEFORE_DATA / STT_BREAK)"
+ },
+ "signature_census": {
+  "corpus": "generated_ho_so/_visual_layout/phase8g_v2",
+  "records": 450,
+  "census_clusters": 450,
+  "detector_clusters": 450,
+  "coverage_equal": true,
+  "coverage_pct": 100,
+  "expected_but_zero_detected": 0,
+  "manual_clusters": 440,
+  "manual_gap_min_pt": 72.9,
+  "manual_gap_median_pt": 100.5,
+  "manual_gap_below_72": 0,
+  "floor_pt": 72,
+  "verdict": "PASS"
+ },
+ "zip_validity": {
+  "total_docx": 450,
+  "testzip_failed": 0,
+  "ok": true,
+  "json": "generated_ho_so/_visual_layout/phase8g_v2/zip_validity.json"
+ },
+ "word_open": {
+  "tool": "tools/phase5_word_open_loop.py",
+  "word_version": "16.16.27",
+  "jobs": 90,
+  "pass_open_direct": 90,
+  "fail": 0,
+  "elapsed_s": 899.4,
+  "inventory_json": "/Users/hoangminhlong/orca/dangky_kinhdoanh-worktrees/f3-corpus-v2/generated_ho_so/_visual_layout/phase8g_v2/word_open/inventory.json",
+  "shots": "/Users/hoangminhlong/orca/dangky_kinhdoanh-worktrees/f3-corpus-v2/generated_ho_so/_visual_layout/phase5_word_open/shots",
+  "verdict": "PASS 90/90 (85 form tag main + PLI_M72 ×5 variant)"
+ },
+ "determinism": {
+  "verdict": "PASS",
+  "records_a": 450,
+  "records_b": 450,
+  "key_set_equal": true,
+  "document_xml_hash_equal": 450,
+  "document_xml_mismatch": 0,
+  "png_list_mismatch": 0,
+  "png_disk_assert_rerun": {
+   "claimed": 1737,
+   "disk": 1737,
+   "ok": true
+  },
+  "rerun_hard_pattern": "giống run 1 (D18 ×10 + D19 ×23) và candidate chỉ còn 5 (D9 M10) — 2 hit D5 được adjudicate qua allowlist mới → detector VÀ allowlist đều deterministic",
+  "rerun_fixture_seconds": {
+   "empty-paper": 566.6,
+   "valid-minimal": 540.4,
+   "valid-full": 447.6,
+   "long-boundary": 469.3,
+   "choice-variants": 440.1
+  },
+  "method": "disk-based so sánh phase8g_v2 vs phase8g_v2_rerun: key fixture|tag|form + danh sách page-*.png + sha256(word/document.xml) từ DOCX; JSON: phase8g_v2_rerun/determinism_check.json",
+  "note": "rerun chạy trọn vẹn 5/5 fixture (không bị kill như lần corpus trước)"
+ },
+ "allowlist": {
+  "file": "docs/phase6v_d5_sparse_allowlist.json",
+  "added_f3v2_final": 2,
+  "count_total": 77,
+  "by_class": {
+   "(i)": 62,
+   "(ii)": 15
+  },
+  "hard_khong_noi": true,
+  "entries_added": [
+   "empty-paper/m72_dhdn/PLI_M72 p2 (i) — mục 8. Nơi đăng ký",
+   "long-boundary/main/PLII_M01 p3 (ii) — dòng mục 5.3 Tổng số lao động"
+  ]
+ },
+ "verdict_tong": "CORPUS 450/450 RENDER ĐỦ; HARD 33 của run d70fe14 (D18 ×10 footnote-as-STT + D19 ×23 feed merged) ĐÃ ĐÓNG bởi dfix 2026-09-08: sửa đúng root cause đã adjudicate ở 2 detector heuristic lớp PDF (D18: footnote guard + header anchor 'STT'; D19: hợp đồng so band-vs-thân IN-DOCUMENT, data fixture chỉ dùng chẩn đoán code) — mutation 22/22, re-run FULL gate phase8g_v2 → HARD-FAIL 0 (exit 0), candidate còn 5 (D9 ×5 adjudicate (ii)). Mọi gate phụ (preflight/census/ZIP/Word/determinism/PNG==đĩa) PASS đầy đủ.",
+ "risks_for_lead": [
+  "ĐÃ ĐÓNG: HARD 33 → HARD 0 sau dfix 2026-09-08 (mutation 22/22; re-run gate exit 0; render không đổi). Lịch sử root cause giữ ở visual_gate_run1.hard_fail_detail.",
+  "D9 ×5 PLI_M10 NARROW_COL_WIDE còn candidate (total 14400 đúng, min col 614) — adjudicated (ii) pixel-OK; hết vĩnh viễn cần nới policy D9 cho form có override per-form (Lead quyết)",
+  "PNG tổng 1737 (−17 so phase8g 1754) do pagination dời sau N-only — không mất nội dung (zip/word/determinism PASS đủ)",
+  "gate default --forms all vẫn chưa lọc current_law_status — đã truyền --forms 86 id thủ công (giữ nguyên rủi ro cũ)",
+  "[dfix] D18-PDF bỏ qua chuỗi số khi trang không có anchor 'STT' cùng x-range phía trên (NOTE-level, không HARD) — chấp nhận được vì DOCX structural là lớp authoritative (0 hit toàn corpus); hằng heuristic mới (PDF_STT_ANCHOR_DX=20pt, footnote predicate Δx0≤3pt/kề nhau<2×line-height/token sau marker không thuần số) chưa đo phân bố rộng ngoài corpus hiện có"
+ ],
+ "dfix": {
+  "lane": "DETECTOR-FIX (dfix) 2026-09-08 — sửa 2 detector heuristic lớp PDF để đóng HARD 0",
+  "scope": "CHỈ lớp detector: tools/row_placement.py (det_row_placement_pdf), tools/header_semantics.py (det_pdf), mutation suite tools/test_phase6v_detectors.py (+2 case). KHÔNG đụng app/**, form_specs/**; không fake pass, không bỏ check — lớp DOCX structural (authoritative) giữ nguyên.",
+  "D18_row_placement": {
+   "defect": "PDF_BLANK_GAP ×10 (PLI_M07 ×5 + PLI_M10 ×5, mọi fixture) — heuristic lớp PDF coi chuỗi superscript marker chú thích pháp lý chân trang ('1 Nếu…', '2 Ghi…', '3 Loại tài sản…') là STT-run → đo gap 75.5/81.1pt giữa '(Ký và ghi họ tên)' và khối footnote thành 'khoảng trống trên STT=1'. Lớp DOCX authoritative 0 hit toàn corpus.",
+   "fix": "2 guard generic (không hard-code form): (1) FOOTNOTE GUARD — dòng số 1-2 chữ số mà dòng kề dưới (kề nhau <2×line-height) bắt đầu cùng lề x0 (±3pt) bằng từ KHÔNG thuần số = prose footnote wrap cùng margin → cả chuỗi là footnote, bỏ qua; (2) HEADER ANCHOR — chỉ đo gap khi có dòng 'STT' phía trên cùng x-range (|Δx0| ≤ 20pt); không có anchor = không xác định được → bỏ qua (NOTE-level, KHÔNG HARD). True-positive giữ nguyên: mutation bảng STT thật kẽ hở 70pt sau header vẫn ĐỎ PDF_BLANK_GAP.",
+   "kem_sync": "smoke module 'K+N defect RED' còn đòi ROW_COUNT_MISMATCH (owner đã BỎ code này tại d70fe14; fail PRE-EXISTING tại HEAD 577670d) → sync sang pin BLANK_BEFORE_DATA (defect vẫn RED)."
+  },
+  "D19_header_semantics": {
+   "defect": "BAND_WRONG_KEY ×23 (100% form band-required, chỉ valid-full) — det_pdf cũ yêu cầu giá trị canonical trong `data` (fixture PER-FORM) phải nằm trong mảnh band; batch export gộp 86 form/1 payload → dn.ten_tieng_viet last-write-wins (PLI_M79) → band VÀ thân cùng render giá trị MERGED ≠ fixture per-form → containment fail. D17 (thuần in-document) PASS 450/450 cùng corpus — mâu thuẫn trực tiếp, khớp chẩn đoán 'root_cause_da_xac_dinh_dung' ở visual_gate_run1.",
+   "fix": "Hợp đồng IN-DOCUMENT (khớp D17, không fake pass): giá trị band đọc từ chính tài liệu (mảnh band đã lọc motto/dòng kẻ), so với THÂN cùng PDF — mirror: BẤT KỲ mảnh band được thân lặp lại (count ≥2) là PASS; band_input: mỗi mảnh ĐÚNG 1 lần (≥2 → DUPLICATE_EDITABLE, 0 → BAND_VALUE_OR_SLOT_MISSING). Tham số `data` không còn tham chiếu pass/fail — chỉ CHẨN ĐOÁN code khi band/thân lệch (mảnh khớp canonical → STALE_MIRROR; không → BAND_WRONG_KEY). Mọi mutation ĐỎ V4e cũ giữ nguyên code lỗi (bắt thuần in-document, không cần data)."
+  },
+  "verification": {
+   "mutation_suite": "python3 -X utf8 -m tools.test_phase6v_detectors → 22/22 PASS (20 cũ + V3b2_d18_pdf_footnote_marker_guard + V4e2_d19_pdf_in_document_feed; pin cả 2 shape footnote thật M07/M10, worst case footnote DƯỚI bảng STT cùng x-range, feed merged batch, và true-positive vẫn ĐỎ)",
+   "module_smoke_row_placement": "ALL PASS 7/7",
+   "structural_sweep": "python3 -X utf8 tools/header_semantics.py → 87 form: 0 hit, 0 thiếu role",
+   "f3h_fixture_e2e": "5/5 PASS (M31 band+fill-line / M72 no-band / M32 mirror A→B)",
+   "d18_pdf_full_corpus_scan": "0 hit trên TOÀN BỘ PDF phase8g_v2 (trước: 10)",
+   "d19_valid_full_records": "0 hit trên 90 record valid-full qua det_record pdf_checks=True (trước: 23)"
+  },
+  "gate_rerun": {
+   "command": "python3 -X utf8 tools/phase5_visual_gate.py --outdir generated_ho_so/_visual_layout/phase8g_v2 --forms <86 active id> (log /tmp/dfix_gate_run.log)",
+   "verdict": "HARD-FAIL: 0 — exit 0",
+   "per_fixture": "empty-paper 90/0 FAIL 444.6s; valid-minimal 90/0 435.3s; valid-full 90/0 397.0s; long-boundary 90/0 414.6s; choice-variants 90/0 396.8s",
+   "records": 450,
+   "export_errors": 0,
+   "png_disk_assert": "claimed=1737 disk=1737 mismatches=0 ok=true",
+   "hard_fail_counts": {},
+   "candidate_counts": {
+    "D9_table_grid": 5
+   },
+   "candidate_note": "D9 ×5 PLI_M10 NARROW_COL_WIDE — adjudicate (ii) pixel-OK total 14400, không đổi; D5 ×2 đã allowlist [f3v2-final] nên không còn ở candidates",
+   "render_unchanged": "chỉ lớp detector đổi — render corpus giữ nguyên 450 record/1737 PNG; ZIP/Word/determinism đã PASS ở run d70fe14 trên cùng nội dung render, không cần chạy lại"
+  }
+ }
+}

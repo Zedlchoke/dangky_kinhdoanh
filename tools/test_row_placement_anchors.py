@@ -12,12 +12,14 @@ Với MỖI loop có blankRows=K trong blocks của form anchor:
      nested-grid/chưa có dữ liệu được inject N=3 theo cột blocks);
   2. render production template qua tools.docx_render.render (đường export
      thật);
-  3. assert hợp đồng F3T.2 trên bảng ĐÃ RENDER, registry tra từ blocks:
+  3. assert hợp đồng F3T.2 trên bảng ĐÃ RENDER, registry tra từ blocks
+     ([Pin sync — owner N-only 2026-09-08]: CHỈ N hàng dữ liệu, KHÔNG
+     hàng trắng):
      - bảng loop tồn tại, header nguyên vẹn (signature khớp blocks);
-     - tổng hàng = header + N;
+     - tổng hàng = lead + header + N;
      - N hàng dữ liệu đứng NGAY SAU header (không blank chen trước dòng 1);
      - STT trên dòng dữ liệu = 1..N;
-     - K−N hàng trắng còn lại nằm SAU dữ liệu và CÓ STT TRỐNG.
+     - KHÔNG còn hàng trắng đuôi — bảng kết thúc ở dòng dữ liệu thứ N.
   4. kèm det_row_placement (D18) chạy trên cùng DOCX phải 0 hit.
 
 M72: mỗi biến thể chỉ kích hoạt ĐÚNG flag của biến thể; mọi loop vùng biến
@@ -170,10 +172,12 @@ def _assert_loop_placement(fid: str, tables, entry: dict, n: int) -> None:
     texts = [fold_squeeze("".join(cells)) for cells in tbl]
     non_blank = [i for i, t in enumerate(texts) if t]
     first_nb, last_nb = non_blank[0], non_blank[-1]
+    # [Pin sync — owner N-only 2026-09-08] tổng hàng = lead + header + N
+    # (không max(K,N), không hàng trắng)
     total_expect = first_nb + h + n
     assert len(tbl) == total_expect, \
-        ("%s/%s: tổng hàng %d != lead %d + header %d + max(K=%d, N=%d): %r"
-         % (fid, loop, len(tbl), first_nb, h, k, n,
+        ("%s/%s: tổng hàng %d != lead %d + header %d + N=%d: %r"
+         % (fid, loop, len(tbl), first_nb, h, n,
             ["".join(c)[:30] for c in tbl]))
     # data NGAY SAU header: nếu blank chen trước dòng 1 thì vị trí data đầu
     # sẽ là hàng trắng -> assert này bắn
@@ -188,12 +192,12 @@ def _assert_loop_placement(fid: str, tables, entry: dict, n: int) -> None:
         assert stt == str(j + 1), \
             "%s/%s: STT hàng %d = %r, kỳ vọng %d" % (
                 fid, loop, first_nb + h + j, stt, j + 1)
-    # hàng trắng còn lại SAU data: trống hoàn toàn (STT của hàng trắng trống)
-    for i in range(first_nb + h + n, len(tbl)):
-        cells = tbl[i]
-        assert all(c == "" for c in cells), \
-            ("%s/%s: hàng đuôi %d phải trắng hoàn toàn (STT trống): %r"
-             % (fid, loop, i, cells))
+    # [Pin sync — owner N-only 2026-09-08] KHÔNG hàng trắng đuôi — dòng
+    # không-trắng cuối cùng phải là dòng dữ liệu thứ N (bảng kết thúc ngay
+    # sau data; assert tổng hàng bên trên đã pin tổng = lead + header + N)
+    assert last_nb == first_nb + h + n - 1, \
+        ("%s/%s: còn hàng trắng sau dòng data cuối (last_nb=%d, kỳ vọng %d)"
+         % (fid, loop, last_nb, first_nb + h + n - 1))
 
 
 @check("[ANCHOR] 8 form production: N>0 -> placement N đúng + D18 0 hit")

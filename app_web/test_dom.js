@@ -56,7 +56,10 @@ function countExpected(blocks) {
     else if (b.t === 'table') (b.rows || []).forEach(function (row) {
       (row.cells || []).forEach(walkRuns);
     });
-    else if (b.t === 'loop') textInputs += (b.cols || []).length * (b.blankRows || 0);
+    // [Pin sync — owner N-only 2026-09-08] loop chỉ render N hàng dữ liệu
+    // của store; store trống (newStore) KHÔNG còn K hàng trắng in sẵn
+    // (blankRows) nên loop không đóng góp input nào vào lần render này
+    else if (b.t === 'loop') textInputs += 0;
   });
   return { textInputs: textInputs, checkboxes: checkboxes };
 }
@@ -155,13 +158,14 @@ const m21 = loadMock('blocks_PLII_M01.json');
     hasInputWith(html, 'loop:ds_test:1:gia_tri', 'hang hai')
   );
 
-  // bảng lặp có sẵn blankRows: hiển thị đủ max(số dòng, blankRows)
+  // [Pin sync — owner N-only 2026-09-08] loop chỉ hiển thị đúng N hàng dữ
+  // liệu (không còn max(số dòng, blankRows) hàng trắng ở đuôi)
   const storeM06 = R.newStore();
   storeM06.loops.ds_thanh_vien = [{ ho_ten: 'NGUYEN VAN A' }];
   const htmlM06 = R.renderBlocks(m06, storeM06);
   const soHang = countMatches(htmlM06, /data-loop="ds_thanh_vien"/g);
   const sttRows = countMatches(htmlM06, /class="stt">/g);
-  check('PLI_M06: hang hien thi = max(1 dong du lieu, 4 blankRows)', sttRows === 4, 'got ' + sttRows);
+  check('PLI_M06: hang hien thi = 1 dong du lieu (N-only, khong hang trang)', sttRows === 1, 'got ' + sttRows);
   check(
     'PLI_M06: gia tri ho_ten vao dung o hang 0',
     hasInputWith(htmlM06, 'loop:ds_thanh_vien:0:ho_ten', 'NGUYEN VAN A')

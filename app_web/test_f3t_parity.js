@@ -806,24 +806,30 @@ function runCase(worker, fid, variant) {
         else errs.push('DOCX ' + loop + ': khong con bang nao de khop trong nhom');
       });
 
-      // max parity 2 chiều cho scenario sạch (mọi dòng store là business):
-      //   UI tbody = max(K,N) == DOCX total - lead - header
+      // [Pin sync — owner N-only 2026-09-08] parity = N hàng dữ liệu ở CẢ
+      // UI và DOCX (không max(K,N)): DOCX body == N_export và UI số hàng
+      // chứa dữ liệu == N_export (UI chỉ được ghì thêm minUiRows hàng trắng
+      // khi store trống — đã được uiLoopErrors pin).
       if (sc !== 'mixed') {
         active.forEach(loop => {
           const meta = metaByLoop[loop];
-          const storeLen = (c.store.loops[loop] || []).length;
           const n = c.nOf[loop];
-          if (storeLen !== n) return;   // đã là mixed-style; contract riêng vẫn assert
           const tbl = loopTableHtml(html, loop);
           if (!tbl) return;
-          const uiBody = tbodyTrs(tbl).length;
+          const trs = tbodyTrs(tbl);
           const t = g.tables.find(tt =>
             !docxTableErrors(meta, n, tt, c.loops[loop] || [],
               infoByLoop[loop].tag0).length) || g.tables[0];
-          if (uiBody !== t.total - t.lead - t.header_rows) {
-            errs.push('PARITY ' + loop + ': UI body=' + uiBody +
-              ' != DOCX body=' + (t.total - t.lead - t.header_rows) +
-              ' (max(K=' + meta.k + ',N=' + n + ') lech giua UI va DOCX)');
+          const docxBody = t.total - t.lead - t.header_rows;
+          if (docxBody !== n) {
+            errs.push('PARITY ' + loop + ': DOCX body=' + docxBody +
+              ' != N=' + n + ' (N-only: DOCX chi mang N hang du lieu)');
+          }
+          const uiDataRows = trs.filter(tr => rowInputs(tr)
+            .some(v => v != null && String(v).trim() !== '')).length;
+          if (uiDataRows !== n) {
+            errs.push('PARITY ' + loop + ': UI data rows=' + uiDataRows +
+              ' != N=' + n + ' (N-only: UI chi mang N hang du lieu)');
           }
         });
       } else {

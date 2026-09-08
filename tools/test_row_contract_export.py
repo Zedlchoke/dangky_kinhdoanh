@@ -12,13 +12,15 @@ Phủ (mỗi nhóm contract cùng semantics):
      - RC3 partial row (một ô có giá trị) KHÔNG bị mất.
      - RC4 hai loop cùng template -> số hàng độc lập (không cross-contaminate).
      - RC5 output không còn marker {...} sót.
-     - RC6 [F3T.2/F3T.4] ROW-PLACEMENT matrix `max(K,N)` trên fixture
-       PRODUCTION-LIKE (header + K hàng trắng in sẵn + hàng marker): pin
-       (K,N) = (4,0) (4,1) (4,4) (4,6) (5,2) + (0,3) không-K; mỗi pin assert
-       TỔNG SỐ HÀNG, VỊ TRÍ DATA (ngay sau header, không blank chen trước),
-       STT 1..N và K−N hàng trắng đuôi CÓ STT TRỐNG. Trước F3T suite này
-       8/8 PASS trên fixture tối giản không có K trắng — blind spot của
-       defect K-blank-then-data; fixture nâng cấp chứ không bỏ assertion.
+     - RC6 [F3T.2/F3T.4] ROW-PLACEMENT matrix trên fixture PRODUCTION-LIKE
+       (header + K hàng trắng in sẵn + hàng marker): pin
+       (K,N) = (4,0) (4,1) (4,4) (4,6) (5,2) + (0,3) không-K;
+       [Pin sync — owner N-only 2026-09-08] mỗi pin assert TỔNG SỐ HÀNG =
+       header + N (không max(K,N)), VỊ TRÍ DATA (ngay sau header, không
+       blank chen trước), STT 1..N và KHÔNG hàng trắng đuôi. Trước F3T
+       suite này 8/8 PASS trên fixture tối giản không có K trắng — blind
+       spot của defect K-blank-then-data; fixture nâng cấp chứ không bỏ
+       assertion.
 
 [FM] fixed-matrix giữ đúng cấu trúc dòng pháp định
      - FM1 chưa nhập gì -> ĐỦ số dòng cố định (kể cả dòng Tổng), tổng = '0'
@@ -214,11 +216,13 @@ def rc5_no_markers():
 
 
 # ---------------------------------------------------------------------------
-# [RC6] F3T.2/F3T.4 — ROW-PLACEMENT matrix max(K,N) trên fixture
-# production-like (header + K hàng trắng + hàng marker). Mỗi pin assert:
-# tổng số hàng = header + max(K,N); N hàng dữ liệu đứng NGAY SAU header
-# (không blank chen trước dòng 1) với STT 1..N đúng; K−N hàng trắng còn
-# lại nằm SAU dữ liệu với STT TRỐNG; N=0 giữ đúng K trắng.
+# [RC6] F3T.2/F3T.4 — ROW-PLACEMENT matrix trên fixture production-like
+# (header + K hàng trắng + hàng marker).
+# [Pin sync — owner N-only 2026-09-08] hợp đồng mới CHỈ N hàng dữ liệu,
+# KHÔNG hàng trắng: mỗi pin assert tổng số hàng = header + N; N hàng dữ
+# liệu đứng NGAY SAU header (không blank chen trước dòng 1) với STT 1..N
+# đúng; không còn hàng trắng đuôi (K chỉ là metadata blocks, không còn
+# được render).
 # ---------------------------------------------------------------------------
 
 def loop_table_rows(path: Path) -> list[list[str]]:
@@ -242,7 +246,7 @@ def _pin_case(k: int, n: int, out_name: str) -> None:
     out.write_bytes(render(str(tpl), payload))
     rows = loop_table_rows(out)
 
-    # [Pin sync — owner 2026-09-08] CHỈ N hàng dữ liệu, không hàng trắng
+    # [Pin sync — owner N-only 2026-09-08] CHỈ N hàng dữ liệu, không hàng trắng
     expect_total = 1 + n
     assert len(rows) == expect_total, (
         "(K=%d,N=%d): tổng hàng %d != 1 + %d = %d" % (k, n, len(rows), n, expect_total))
@@ -251,15 +255,16 @@ def _pin_case(k: int, n: int, out_name: str) -> None:
         row = rows[1 + i]
         assert row[0] == str(i + 1), "STT hàng %d = %r" % (1 + i, row[0])
         assert row[1] == "%04d" % (i + 1) and row[2], "data lệch"
-    # [owner] KHÔNG có hàng trắng đuôi
+    # [Pin sync — owner N-only 2026-09-08] KHÔNG có hàng trắng đuôi
+    # (tổng hàng đã pin = header + N nên không thể còn hàng nào sau data)
 
 
-@check("[RC6a] (K=4,N=0) giu dung 4 hang trang STT trong")
+@check("[RC6a] (K=4,N=0) chi header, khong hang trang (N-only)")
 def rc6a_k4_n0():
     _pin_case(4, 0, "rc6_out_k4n0.docx")
 
 
-@check("[RC6b] (K=4,N=1) 1 data ngay sau header + 3 trang duoi, STT trang")
+@check("[RC6b] (K=4,N=1) 1 data ngay sau header, khong trang duoi (N-only)")
 def rc6b_k4_n1():
     _pin_case(4, 1, "rc6_out_k4n1.docx")
 
@@ -274,7 +279,7 @@ def rc6d_k4_n6():
     _pin_case(4, 6, "rc6_out_k4n6.docx")
 
 
-@check("[RC6e] (K=5,N=2) 2 data + 3 trang duoi STT trong")
+@check("[RC6e] (K=5,N=2) 2 data, khong trang duoi (N-only)")
 def rc6e_k5_n2():
     _pin_case(5, 2, "rc6_out_k5n2.docx")
 

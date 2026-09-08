@@ -644,6 +644,3 @@ docs/audits/f3v2_corpus_2026-09-08.md
 # --- [dfix 2026-09-09] D18 PDF footnote guard + D19 in-document matching — HARD 0 ---
 docs/audits/f3v2_final_corpus_2026-09-08.json
 docs/audits/f3v2_final_corpus_2026-09-08.md
-tools/row_placement.py
-tools/header_semantics.py
-tools/test_phase6v_detectors.py

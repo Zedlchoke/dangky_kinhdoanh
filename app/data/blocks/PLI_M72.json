@@ -3188,36 +3188,6 @@
    "align": "left",
    "runs": [
     {
-     "text": "("
-    },
-    {
-     "text": "VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có",
-     "i": true
-    },
-    {
-     "text": ")Tỷ lệ ("
-    },
-    {
-     "text": "%",
-     "i": true
-    },
-    {
-     "text": ")Ghi chú (nếu có)"
-    }
-   ],
-   "format": {
-    "spaceBeforePt": 6.0
-   },
-   "role": "body",
-   "cond": [
-    "loai_hinh_ctcp"
-   ]
-  },
-  {
-   "t": "p",
-   "align": "left",
-   "runs": [
-    {
      "text": "9. Người đại diện theo pháp luật của công ty",
      "b": true
     },

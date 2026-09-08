@@ -47,13 +47,33 @@
      }
     },
     {
-     "text": ", ngày … tháng … năm ",
+     "text": ", ngày ",
      "i": true
     },
     {
      "input": {
       "key": "ngay_ky_vb",
-      "w": 18
+      "w": 12
+     }
+    },
+    {
+     "text": " tháng ",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "thang_ky_vb",
+      "w": 12
+     }
+    },
+    {
+     "text": " năm ",
+     "i": true
+    },
+    {
+     "input": {
+      "key": "nam_ky_vb",
+      "w": 12
      }
     }
    ],

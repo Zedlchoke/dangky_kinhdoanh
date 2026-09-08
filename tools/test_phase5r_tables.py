@@ -182,14 +182,19 @@ WIDE_TABLE_FIXTURE = [
     ("PLI_M06", 0, 12, 14400, 900, "ds_thanh_vien_tnhh"),
     ("PLI_M07", 0, 11, 14400, 918, "ds_co_dong_sang_lap"),
     ("PLI_M09", 0, 14, 14400, 900, "ds_thanh_vien_hop_danh"),
-    # [Pin sync — F0L 2026-09-06] PLI_M10 (0,12,14400,909) -> (0,18,16200,900):
-    # premise cũ = M10 bản 12 cột trên khổ dọc usable 14400, min col 909 theo
-    # longest-word. Hiện trạng (F0L current-law): M10 2026 (TT 121/2026, ảnh
-    # p49 — "Chủ sở hữu hưởng lợi" 9 cột con + "Người quản lý doanh nghiệp")
-    # là bảng 18 cột vật lý; generator tự áp policy Q-V2 (landscape -> usable
-    # 16200 twips) + sàn min col 900 (không còn over-floor 909). Evidence: chạy
-    # census_all_templates() ở commit e268038 trả ('PLI_M10',0,18,16200,900).
-    ("PLI_M10", 0, 18, 16200, 900, "ds_cshhl"),
+    # [Pin sync — RFIX-1 2026-09-07] PLI_M10 (0,18,16200,900) -> (0,18,14400,615):
+    # premise cũ (F0L 2026-09-06) = generator landscape chia đều sàn 900×18 cột
+    # = 16200 twips. Defect production (F5 review mắt): usable landscape thật là
+    # 14400 (Letter 15840 − 2×720) nên 1800 twips cuối TRÀN mép phải — render
+    # PDF mất cột 18 ('Lý do được trình bày chi tiết tại hồ sơ đề nghị số N')
+    # và cắt cột 17 (word x1=793.9 > 792pt) trên cả 5/5 record M10 corpus
+    # phase8f_final. Fix: spec PLI_M10.json khai 'landscape_min_col_twips': 500
+    # (override PER-FORM, không hạ sàn 900 chung) + guard vật lý trong
+    # _content_col_widths (sàn×số cột > tổng thì hạ sàn về mức vừa) — width
+    # lại phân bổ THEO NỘI DUNG trong đúng 14400. Evidence: census sau regen
+    # trả ('PLI_M10',0,18,14400,615); render PDF có đủ chữ cột 18, không word
+    # nào x1 > 792−36pt.
+    ("PLI_M10", 0, 18, 14400, 615, "ds_cshhl"),
     # [Pin sync — F0L+F1-IN 2026-09-06] PLI_M12 ndd_uy_quyen: 4 -> 5 (band
     # header integration) -> 8 (+3 matrix O2 F1-IN đứng trước: nguon_von,
     # tai_san ×2, co_cau, nganh ×3). 15 cột/14400/900 KHÔNG đổi.

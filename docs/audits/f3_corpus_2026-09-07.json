@@ -214,5 +214,35 @@
    "determinism"
   ],
   "gates_open": []
+ },
+ "render_fix_20260908": {
+  "lane": "RENDER-FIX",
+  "branch": "agent/final-render-fix",
+  "directive": "owner commit 80319c2 (docs/f3h_f3t_directive_2026-09-08.md) — chỉ fix M10 width / M05 token / M72 fragment; corpus phase8f_final coi là stale với record form ảnh hưởng, corpus mới sinh sau F3T+F3H",
+  "rfix1_pli_m10": {
+   "root_cause": "sàn landscape chung 900 twips x 18 cot = 16200 > usable 14400 (Letter 15840 - 2x720); _content_col_widths khong lui duoi san -> tra tong 16200, tran 1800 twips, mat cot 18 + cat cot 17",
+   "fix": "spec-level override 'landscape_min_col_twips': 500 (PLI_M10.json, loader fail-loud) + guard vat ly trong _content_col_widths (san*n > total -> san = total//n; khong ha san chung)",
+   "evidence": "gridCol sau regen: 18 cot, total 14400, min 615, max 1089; render vf pymupdf: 0 word x1 > 756pt (792-36), header cot 15/16/17/18 du text (no-space match)",
+   "pin_sync": "WIDE_TABLE_FIXTURE (0,18,16200,900) -> (0,18,14400,615) + policies wide_table_policies M10 entry, comment premise->evidence"
+  },
+  "rfix2_pli_m05": {
+   "root_cause": "nguon '……., ngày … tháng … năm ……' — slot ngay/thang 1 ky tu '…' vo hinh voi DOT_RUN ([.….]{2,}); nhánh dac biet ky ten gan names theo thu tu group con lai -> {ngay_ky_vb} roi vao slot NAM",
+   "fix": "_assign_para_slots: khi so group < 4 va cau truc dong khop du ngay/thang/nam -> gan theo vi tri regex; dong du group di nhanh cu (zero-diff)",
+   "evidence": "template P3 = '{dia_diem_ky}, ngày {ngay_ky_vb} tháng {thang_ky_vb} năm {nam_ky_vb}'; render vf: 'ngày 03 tháng 04 năm 2024', het 'năm 04'"
+  },
+  "rfix4_pli_m72": {
+   "root_cause": "nguon P148 = row2 header '(VNĐ…)Tỷ lệ (%)Ghi chú (nếu có)' DAN CHU heading muc 9 (run '3' SUPERSCRIPT); spec N4 giu nguyen P148 (bao toan vertAlign) va anchor prefix-match fragment -> template con lai dong rac sau {/ds_co_dong_nuoc_ngoai_ctcp}",
+   "fix": "sua tai NGUON 05_cong_bo…/PL1_Mau_72_*.docx P148: xoa 7 run header row-2, giu run rong + heading + superscript '3' + ':'; spec: anchor + match_heading doi sang '9. Người đại diện' (du nhat); end_markers sang_lap +'^9\\. nguoi dai dien' de scan_contamination khong SKIP vung 7 (so mat trim heading 8)",
+   "evidence": "diff template vs HEAD = dung 6 manh fragment; bang 10 cot dung duoi heading 8; render m72_ctcp: fragment absent, heading 9 present"
+  },
+  "regen": "3 buoc (build_form_maps -> tag_m72_sections -> docx_to_blocks) x2 zero-diff PASS (per-entry content hash 94 template + form_maps + 87 blocks)",
+  "suites": {
+   "test_phase5r_tables": "10 PASS / 0 FAIL (sau pin sync)",
+   "test_current_law_migration": "14/14 OK",
+   "compileall": "exit 0",
+   "test_m09_rebuild": "7 PASS / 1 FAIL — FAIL [NUM] PLI_M05 la PRE-EXISTING (main sach @3f7d41c do giong het), khong ha assertion"
+  },
+  "m01_f3t_note": "PLII_M01 ds_nganh data-row loss = defect _expand_loops K+N (F3T lane); gate run_export gop 86 form/1 payload con gay shared-loop contamination qua Bridge._nest (dotted key loop.tag cua form khac dung lai list loop thanh dict -> _expand_loops xoa hang khuon; bisect culprit dau: PLII_M02; valid-minimal on vi _minimal_key loc het dotted key)",
+  "overall": "3/3 defect fix + verify render; corpus phase8f_final chua co fix (stale voi M10/M05/M72) — can corpus moi sau F3T+F3H"
  }
 }

@@ -170,7 +170,8 @@
         "match_heading": "7. Cổ đông sáng lập",
         "nth": 1,
         "sync_group": null,
-        "end_markers": ["^10\\. noi dang ky"]
+        "rfix4_note": "[RFIX-4 2026-09-07] end_markers them '^9\\. nguoi dai dien': khi P148 duoc lam sach tai nguon (fragment header row-2 da xoa — chung RFIX-4 cua ds_co_dong_nuoc_ngoai_ctcp), heading '9. Người đại diện…' bat dau khop NUMBERED_HEADING_RE nam ben TRONG vung [7. → ^10.) cu -> scan_contamination SKIP ca vung sang_lap -> mat trim P146 (heading 8 bi dan san voi fragment). End tai heading 9 giu vung dung pham vi muc 7 (P146 trim + P147 drop), vung van sach.",
+        "end_markers": ["^9\\. nguoi dai dien", "^10\\. noi dang ky"]
       }],
       "legal_status": {
         "blocked": false,
@@ -181,7 +182,7 @@
     {
       "kind": "nested-grid",
       "pos": "before",
-      "anchor": "^\\(vnd va gia tri tuong duong theo don vi tien nuoc ngoai, neu co\\)ty le",
+      "anchor": "^9\\. nguoi dai dien theo phap luat cua cong ty",
       "no_default_drops": true,
       "drop": ["^sttten co dong"],
       "spec": {
@@ -219,14 +220,15 @@
       },
       "occurrences": [{
         "occurrence_id": "ds_co_dong_nuoc_ngoai_ctcp",
-        "match_heading": "(VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)Tỷ lệ (%)Ghi chú (nếu có)9. Người đại diện",
+        "match_heading": "9. Người đại diện",
+        "rfix4_note": "[RFIX-4 2026-09-07] match_heading cu '(VNĐ và giá trị tương đương theo đơn vị tiền nước ngoài, nếu có)Tỷ lệ (%)Ghi chú (nếu có)9. Người đại diện' — prefix-match P148 khi fragment con gan san. Fragment da XOA tai NGUON (P148 bo 7 run header row-2, giu nguyen run rong + heading + superscript '3' + ':') nen match_heading doi sang heading that '9. Người đại diện' — van duy nhat trong nguon (census 0 paragraph khac bat dau bang heading nay).",
         "nth": 1,
         "sync_group": null,
         "end_markers": ["^10\\. noi dang ky"]
       }],
       "legal_status": {
         "blocked": false,
-        "ref": "Owner P2=A 2026-09-03 (P2 + D2.9=A + D7.4=A). Nguon P147 (row1 dan chu 'STTTên cổ đông…') va P148 ('(VNĐ…)Tỷ lệ (%)Ghi chú (nếu có)9. Người đại diện theo pháp luật của công ty3:' — row2 DAN CHU heading muc 9). Cung cau truc 10 cot voi co_dong_sang_lap (census section co_dong_nuoc_ngoai_cp, required_columns giong het). P148 DUOC GIU NGUYEN VAN (khong trim, khong drop): run chua so '3' la SUPERSCRIPT cua chan trang '3 Ghi tên…' trong nguon — trim se lam phang run va tao GLUE MOI 'y3:' (rule (d) check_layout_l1); doi lai bang N4 chen ban TRUOC paragraph nay (pos=before, head=P148 qua prefix match rieng co duoi '9. Người đại diện') -> bang nam dung duoi heading 8 va TRUOC dong heading 9; dong dan chu (gom heading 9 gan san) giu nguyen run structure giong he thong BASE (junk 1 dong con lai, gap da ghi cho Lead: trim giu vertAlign thuoc ownership build_form_maps).",
+        "ref": "Owner P2=A 2026-09-03 (P2 + D2.9=A + D7.4=A). Nguon P147 (row1 dan chu 'STTTên cổ đông…') va P148 ('(VNĐ…)Tỷ lệ (%)Ghi chú (nếu có)9. Người đại diện theo pháp luật của công ty3:' — row2 DAN CHU heading muc 9). Cung cau truc 10 cot voi co_dong_sang_lap (census section co_dong_nuoc_ngoai_cp, required_columns giong het). P148 DUOC GIU NGUYEN VAN (khong trim, khong drop): run chua so '3' la SUPERSCRIPT cua chan trang '3 Ghi tên…' trong nguon — trim se lam phang run va tao GLUE MOI 'y3:' (rule (d) check_layout_l1); doi lai bang N4 chen ban TRUOC paragraph nay (pos=before, head=P148 qua prefix match rieng co duoi '9. Người đại diện') -> bang nam dung duoi heading 8 va TRUOC dong heading 9; dong dan chu (gom heading 9 gan san) giu nguyen run structure giong he thong BASE (junk 1 dong con lai, gap da ghi cho Lead: trim giu vertAlign thuoc ownership build_form_maps). || [RFIX-4 2026-09-07] Gap 'junk 1 dong' tren da duoc xu ly theo chi thi owner: fragment '(VNĐ…)Tỷ lệ (%)Ghi chú (nếu có)' XOA TAI NGUON 05_cong_bo…/PL1_Mau_72_*.docx P148 (bo DUNG 7 run header row-2 dau; giu nguyen run rong vertAlign=superscript + heading + run '3' superscript + ':' — khong lam phang vertAlign dung nhu contract cu) -> template khong con dong text tron '(VNĐ…)…9. Người đại diện…3:' sau {/ds_co_dong_nuoc_ngoai_ctcp} (defect F5 review mat, moi fixture). Anchor + match_heading doi sang heading that '9. nguoi dai dien theo phap luat cua cong ty' (du nhat trong nguon); N4 van pos=before ngay tren heading 9 — bo cuc giong ban in (table 8 roi heading 9 doc lap).",
         "question": "Row2 header goc co 3 o con ((VNĐ…)|Tỷ lệ (%)|Ghi chú) — theo chuan census chi 'Gia tri co phan' la 1 cot va Tỷ lệ/Ghi chú la cot doc lap, nen header phang 1 hang 10 cot khong mat cot nao; header 2 hang nested de roadmap (D2.3=B precedent). Dong con lai '(VNĐ…)…9. Người đại diện…ty3:' can engine trim-bao-toan-vertAlign (BLOCKER_OWNERSHIP build_form_maps) moi sach duoc."
       }
     },

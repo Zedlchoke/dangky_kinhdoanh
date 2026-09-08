@@ -1,5 +1,24 @@
 # MASTER PLAN v7 — HOÀN THIỆN TOÀN BỘ SẢN PHẨM SAU PHASE 6V
 
+> **✅ CHECKPOINT F3H+F3T — 2026-09-08 (main@b1bf058):**
+> **F3T** — `_expand_loops` hợp đồng `max(K,N)`: data ngay sau header, trắng
+> đuôi; detector D18_row_placement HARD + mutation V3a/b/c 14/14; matrix pin
+> (4,0)/(4,1)/(4,4)/(4,6)/(5,2)/(0,3) = 14/14; parity UI↔DOCX↔PDF 156/0;
+> census 47 loop/26 form tool động + gate EXPECTED_COUNTS.
+> **F3H** — header-subject-semantics: census 87 form/360 occurrence/5 role
+> (21 band_mirror + 2 band_input + 45 output_mirror + 19 no_band); registry
+> roles 87 form; converter role-aware; detector D19 HARD 7 code
+> (BAND_REQUIRED_MISSING/FORBIDDEN/LABEL_REMOVED/VALUE_OR_SLOT_MISSING/
+> WRONG_KEY/DUPLICATE_EDITABLE/STALE_MIRROR/LEGAL_SUBTITLE_MUTATED) +
+> mutation V4a-f 20/20; output_mirrors +7 form; PLI_M31 (giữ band+fill) /
+> PLI_M72 (0 band — cấm tự thêm) fixtures chốt bằng ảnh nguồn.
+> **Render-fix** — M10 width 14400 (min 615), M05 token năm, M72 ctcp
+> fragment xoá source. **Fixture** — choice tick đúng 1/nhóm (4 nhóm mới);
+> slot ngày thành phần điền NGÀY.
+> Corpus phase8f_final coi là **stale** — corpus mới phase8g từ HEAD sạch
+> đang render. Sau corpus: F5 re-review → F7 auditor. Windows S1–S8 vẫn
+> **NOT RUN** (O6). Không push (chờ lệnh owner).
+
 > **⚠️ REOPEN F3H + F3T — HEADER-SUBJECT-SEMANTICS VÀ TABLE-ROW-PLACEMENT,
 > 2026-09-08
 > (defect tái kiểm trên `main@2c5ec67`; trước patch docs, production tree

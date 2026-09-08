@@ -164,12 +164,16 @@ def walk_run_containers(data: dict):
 
 
 def json_keys(data: dict) -> set:
-    """Tập key người dùng nhập: mọi input.key + key của block chk."""
+    """Tập key người dùng nhập: mọi input.key + key của block chk.
+    [F3H 2026-09-08] mirror.key cũng tính — output_mirror forms (F1-OUT O1 +
+    F3H census) render giá trị qua run mirror, frontend không thiếu field."""
     keys: set = set()
     for runs in walk_run_containers(data):
         for r in runs:
             if "input" in r:
                 keys.add(r["input"]["key"])
+            if "mirror" in r:
+                keys.add(r["mirror"]["key"])
     for b in data["blocks"]:
         if b["t"] == "chk":
             keys.add(b["key"])

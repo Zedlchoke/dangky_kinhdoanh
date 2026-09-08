@@ -52,6 +52,7 @@ sys.path.insert(0, str(ROOT))
 import pymupdf  # noqa: E402
 
 import tools.phase5_visual_gate as gate  # noqa: E402
+from tools import header_semantics as hs  # noqa: E402  [F3H] D19
 
 CORPUS = ROOT / "generated_ho_so" / "_visual_layout" / "phase6v" \
     / "v0_corpuscheck"
@@ -790,6 +791,232 @@ def test_v3c_d18_hard():
     assert not any(c["detector"] == "D18_row_placement"
                    for c in rec["gate_candidates"])
 
+# ---------------------------------------------------------------------------
+# V4 — [F3H 2026-09-08] D19_header_semantics: mutation ĐỎ→XANH cho TỪNG code
+# (BAND_REQUIRED_MISSING, BAND_FORBIDDEN_PRESENT, BAND_LABEL_REMOVED,
+# BAND_VALUE_OR_SLOT_MISSING, BAND_WRONG_KEY, DUPLICATE_EDITABLE,
+# STALE_MIRROR, LEGAL_SUBTITLE_MUTATED). Lớp structural đọc blocks thật của
+# app/data/blocks; lớp PDF dựng words tổng hợp (cùng kiểu V2c).
+# ---------------------------------------------------------------------------
+
+def _blocks(fid: str) -> dict:
+    return json.loads((ROOT / "app" / "data" / "blocks" / (
+        "%s.json" % fid)).read_text(encoding="utf-8"))
+
+
+def _band_table_of(blocks: dict) -> dict:
+    for b in blocks["blocks"]:
+        if b.get("t") == "table" and b.get("band") == "header":
+            return b
+    raise AssertionError("blocks không có band table")
+
+
+def _deep(blocks: dict) -> dict:
+    return json.loads(json.dumps(blocks, ensure_ascii=False))
+
+
+@check("V4a_d19_structural_band_presence_mutations")
+def test_v4a_band_presence():
+    # GREEN: form band thật (M31 band + fill-line dưới nhãn) và form 0 band
+    # thật (M72 — cấm tự thêm; M79/M80 band TÊN TỔ CHỨC không tính là band
+    # chủ thể) đều phải sạch.
+    assert hs.det_structural("PLI_M31", _blocks("PLI_M31")) == [], \
+        "M31 (band + fill-line) không được bắn"
+    assert hs.det_structural("PLI_M72", _blocks("PLI_M72")) == [], \
+        "M72 (0 band) không được bắn"
+    assert hs.det_structural("PLI_M79", _blocks("PLI_M79")) == [], \
+        "M79 band TÊN TỔ CHỨC không phải band chủ thể"
+    assert hs.det_structural("PLI_M80", _blocks("PLI_M80")) == [], \
+        "M80 band TÊN TỔ CHỨC không phải band chủ thể"
+
+    # MUTATION ĐỎ BAND_REQUIRED_MISSING: xoá band table khỏi M32 (mirror)
+    m32 = _deep(_blocks("PLI_M32"))
+    m32["blocks"] = [b for b in m32["blocks"]
+                     if not (b.get("t") == "table"
+                             and b.get("band") == "header")]
+    hits = hs.det_structural("PLI_M32", m32)
+    assert [h["code"] for h in hits] == ["BAND_REQUIRED_MISSING"], hits
+
+    # MUTATION ĐỎ BAND_FORBIDDEN_PRESENT: tự thêm band vào M72 (output_mirror)
+    m72 = _deep(_blocks("PLI_M72"))
+    fake_band = {"t": "table", "band": "header", "widths": None, "rows": [
+        {"cells": [
+            {"runs": [{"text": "TÊN DOANH NGHIỆP\n", "b": True},
+                      {"mirror": {"key": "dn.ten_tieng_viet"}}]},
+            {"runs": [{"text": "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM"}]}]}]}
+    m72["blocks"].insert(0, fake_band)
+    hits = hs.det_structural("PLI_M72", m72)
+    assert [h["code"] for h in hits] == ["BAND_FORBIDDEN_PRESENT"], hits
+
+
+@check("V4b_d19_structural_band_content_mutations")
+def test_v4b_band_content():
+    # GREEN: M33 band_input thật (input giữ nguyên tại band, không mirror)
+    hits = hs.det_structural("PLI_M33", _blocks("PLI_M33"))
+    assert hits == [], "M33 band_input thật không được bắn: %r" % hits
+
+    # MUTATION ĐỎ BAND_LABEL_REMOVED: nhãn pháp định bị sửa
+    b = _deep(_blocks("PLI_M32"))
+    cell = _band_table_of(b)["rows"][0]["cells"][0]
+    for r in cell["runs"]:
+        if r.get("text") == "TÊN DOANH NGHIỆP\n":
+            r["text"] = "TÊN CÔNG TY\n"
+    hits = hs.det_structural("PLI_M32", b)
+    assert [h["code"] for h in hits] == ["BAND_LABEL_REMOVED"], hits
+
+    # MUTATION ĐỎ BAND_VALUE_OR_SLOT_MISSING (structural): mất run giá trị
+    b = _deep(_blocks("PLI_M32"))
+    cell = _band_table_of(b)["rows"][0]["cells"][0]
+    cell["runs"] = [r for r in cell["runs"] if "mirror" not in r]
+    hits = hs.det_structural("PLI_M32", b)
+    assert [h["code"] for h in hits] == ["BAND_VALUE_OR_SLOT_MISSING"], hits
+
+    # MUTATION ĐỎ BAND_WRONG_KEY: band bind nhầm key khác
+    b = _deep(_blocks("PLI_M32"))
+    cell = _band_table_of(b)["rows"][0]["cells"][0]
+    for r in cell["runs"]:
+        if r.get("mirror", {}).get("key") == "dn.ten_tieng_viet":
+            r["mirror"]["key"] = "chu_hkd.ho_ten"
+    hits = hs.det_structural("PLI_M32", b)
+    assert [h["code"] for h in hits] == ["BAND_WRONG_KEY"], hits
+
+
+@check("V4c_d19_structural_duplicate_editable_mutations")
+def test_v4c_duplicate_editable():
+    # MUTATION ĐỎ: band mirror (M32) thành INPUT thứ hai — thân vẫn input
+    # cùng key => 2 input cùng key, một cái nằm ô (0,0) band.
+    b = _deep(_blocks("PLI_M32"))
+    cell = _band_table_of(b)["rows"][0]["cells"][0]
+    for r in cell["runs"]:
+        if "mirror" in r:
+            r.pop("mirror")
+            r["input"] = {"key": "dn.ten_tieng_viet"}
+    hits = hs.det_structural("PLI_M32", b)
+    assert [h["code"] for h in hits] == ["DUPLICATE_EDITABLE"], hits
+
+    # MUTATION ĐỎ: band_input (M33) + thêm input ở thân => band không còn là
+    # ô nhập DUY NHẤT.
+    b = _deep(_blocks("PLI_M33"))
+    b["blocks"].append({"t": "p", "runs": [
+        {"text": "Tên doanh nghiệp: "},
+        {"input": {"key": "dn.ten_tieng_viet"}}]})
+    hits = hs.det_structural("PLI_M33", b)
+    assert [h["code"] for h in hits] == ["DUPLICATE_EDITABLE"], hits
+
+    # GREEN adjudicated: body-body cùng key trên form đa mục (M02 mục A/C,
+    # M12, M75) là MỘT draft key — KHÔNG được bắn.
+    for fid in ("PLII_M02", "PLI_M12", "PLI_M75"):
+        assert hs.det_structural(fid, _blocks(fid)) == [], \
+            "%s body-body cùng key phải GREEN" % fid
+
+
+@check("V4d_d19_structural_legal_subtitle_mutations")
+def test_v4d_legal_subtitle():
+    # GREEN: subtitle 5 biến thể M72 + section headline M73/M74 còn nguyên
+    for fid in ("PLI_M72", "PLI_M73", "PLI_M74"):
+        assert hs.det_structural(fid, _blocks(fid)) == [], \
+            "%s subtitle thật không được bắn" % fid
+    # MUTATION ĐỎ: xoá subtitle "(TÊN DOANH NGHIỆP TƯ NHÂN)" khỏi M72
+    b = _deep(_blocks("PLI_M72"))
+    b["blocks"] = [blk for blk in b["blocks"]
+                   if not (blk.get("t") == "p" and "".join(
+                       r.get("text", "") for r in blk.get("runs") or []
+                   ).strip() == "(TÊN DOANH NGHIỆP TƯ NHÂN)")]
+    hits = hs.det_structural("PLI_M72", b)
+    assert [h["code"] for h in hits] == ["LEGAL_SUBTITLE_MUTATED"], hits
+    # MUTATION ĐỎ: xoá headline "1. Tên doanh nghiệp" khỏi M74
+    b = _deep(_blocks("PLI_M74"))
+    b["blocks"] = [blk for blk in b["blocks"]
+                   if not (blk.get("t") == "p" and "".join(
+                       r.get("text", "") for r in blk.get("runs") or []
+                   ).strip() == "1. Tên doanh nghiệp:")]
+    hits = hs.det_structural("PLI_M74", b)
+    assert [h["code"] for h in hits] == ["LEGAL_SUBTITLE_MUTATED"], hits
+
+
+def _hs_page(lines: list[tuple[float, str]]) -> dict:
+    """Trang PDF tổng hợp cho D19: [(y0, text)] một dòng logic mỗi phần tử.
+    Mỗi dòng một block number riêng (pdf_pages group words theo block/line)."""
+    words = []
+    for bi, (y0, text) in enumerate(lines):
+        words.append((100.0, y0, 100.0 + 6.0 * len(text), y0 + 12, text,
+                      bi, bi, 0))
+    return {"pno": 0, "words": words, "text": "\n".join(t for _, t in lines)}
+
+
+_VAL = "CONG TY TNHH A BỘ ĐỘI"
+
+
+def _reg_one(fid="PLI_M32", role=None, mode=None):
+    e = {"key": "dn.ten_tieng_viet", "label": "TÊN DOANH NGHIỆP"}
+    if mode:
+        e["mode"] = mode
+    return {"forms": {fid: e},
+            "roles": {fid: {"role": role or "required_band_mirror",
+                            "canonical_key": "dn.ten_tieng_viet"}}}
+
+
+@check("V4e_d19_pdf_layer_mutations")
+def test_v4e_pdf_layer():
+    reg = _reg_one()
+    # GREEN mirror: band + thân cùng giá trị (count >= 2)
+    p = _hs_page([(700, "TÊN DOANH NGHIỆP"), (720, _VAL)])
+    assert hs.det_pdf([p], "PLI_M32", {"dn.ten_tieng_viet": _VAL},
+                      _VAL + "\n" + _VAL, reg) == []
+
+    # MUTATION ĐỎ STALE_MIRROR: band đúng giá trị nhưng thân mất (count 1)
+    hits = hs.det_pdf([p], "PLI_M32", {"dn.ten_tieng_viet": _VAL}, _VAL, reg)
+    assert [h["code"] for h in hits] == ["STALE_MIRROR"], hits
+
+    # MUTATION ĐỎ BAND_REQUIRED_MISSING (PDF): mất luôn nhãn trang 1
+    p = _hs_page([(700, "SỐ: 000001"), (720, _VAL)])
+    hits = hs.det_pdf([p], "PLI_M32", {"dn.ten_tieng_viet": _VAL},
+                      _VAL, reg)
+    assert [h["code"] for h in hits] == ["BAND_REQUIRED_MISSING"], hits
+
+    # MUTATION ĐỎ BAND_VALUE_OR_SLOT_MISSING: dưới nhãn chỉ còn dòng kẻ
+    p = _hs_page([(700, "TÊN DOANH NGHIỆP"), (720, "---------")])
+    hits = hs.det_pdf([p], "PLI_M32", {"dn.ten_tieng_viet": _VAL},
+                      _VAL, reg)
+    assert [h["code"] for h in hits] == ["BAND_VALUE_OR_SLOT_MISSING"], hits
+
+    # MUTATION ĐỎ BAND_WRONG_KEY: band hiện giá trị khác, canonical ở thân
+    p = _hs_page([(700, "TÊN DOANH NGHIỆP"), (720, "TEN SAI KEY")])
+    hits = hs.det_pdf([p], "PLI_M32", {"dn.ten_tieng_viet": _VAL},
+                      _VAL, reg)
+    assert [h["code"] for h in hits] == ["BAND_WRONG_KEY"], hits
+
+    # band_input (PLII_M06 style): giá trị ĐÚNG 1 lần → GREEN
+    reg_bi = _reg_one("PLII_M06", role="required_band_input",
+                      mode="band_input")
+    reg_bi["forms"]["PLII_M06"]["label"] = "TÊN HỘ KINH DOANH"
+    reg_bi["roles"]["PLII_M06"]["canonical_key"] = "hkd_ten_tieng_viet_2"
+    val = "HO KINH DOANH AN CAO"
+    p = _hs_page([(700, "TÊN HỘ KINH DOANH"), (720, val)])
+    assert hs.det_pdf([p], "PLII_M06",
+                      {"hkd_ten_tieng_viet_2": val}, val, reg_bi) == []
+    # MUTATION ĐỎ DUPLICATE_EDITABLE (PDF): giá trị xuất hiện 2 lần
+    hits = hs.det_pdf([p], "PLII_M06", {"hkd_ten_tieng_viet_2": val},
+                      val + "\n" + val, reg_bi)
+    assert [h["code"] for h in hits] == ["DUPLICATE_EDITABLE"], hits
+
+    # form role no_band: lớp PDF bỏ qua
+    reg_nb = {"roles": {"PLI_M46": {"role": "no_subject_band"}}}
+    assert hs.det_pdf([p], "PLI_M46", {}, "", reg_nb) == []
+
+
+@check("V4f_d19_is_hard_gate")
+def test_v4f_hard_gate():
+    assert "D19_header_semantics" in gate.HARD_FAIL_KEYS
+    rec = {"form": "PLI_M32", "fixture": "valid-full", "tag": "main",
+           "detectors": {"D19_header_semantics": [
+               {"code": "BAND_FORBIDDEN_PRESENT", "n_band_tables": 1}]}}
+    gate.record_verdicts([rec], {})
+    assert rec["gate_verdict"] == "FAIL"
+    assert any(f["detector"] == "D19_header_semantics"
+               for f in rec["gate_fails"]), rec["gate_fails"]
+    assert not any(c["detector"] == "D19_header_semantics"
+                   for c in rec["gate_candidates"])
 
 
 
@@ -808,6 +1035,12 @@ def main() -> int:
     test_v3a_d18_structural()
     test_v3b_d18_pdf()
     test_v3c_d18_hard()
+    test_v4a_band_presence()
+    test_v4b_band_content()
+    test_v4c_duplicate_editable()
+    test_v4d_legal_subtitle()
+    test_v4e_pdf_layer()
+    test_v4f_hard_gate()
     passed = [r for r in _RESULTS if r[1]]
     failed = [r for r in _RESULTS if not r[1]]
     for name, ok, msg in _RESULTS:

@@ -161,14 +161,9 @@
    "align": "left",
    "runs": [
     {
-     "text": "("
-    },
-    {
-     "text": "Tên doanh nghiệp",
-     "i": true
-    },
-    {
-     "text": ")"
+     "mirror": {
+      "key": "dn.ten_tieng_viet"
+     }
     },
     {
      "text": "\n",

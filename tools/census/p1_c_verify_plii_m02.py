@@ -55,9 +55,20 @@ SPEC_PATH = ROOT / "tools" / "form_specs" / "household" / "PLII_M02.json"
 WORKING_TMPL = ROOT / "app" / "templates" / "PLII_M02.docx"
 BLOCKS_PATH = ROOT / "app" / "data" / "blocks" / "PLII_M02.json"
 FORM_MAPS_PATH = ROOT / "app" / "data" / "form_maps.json"
+BINDING_PATH = ROOT / "tools" / "header_name_binding.json"
 SOURCE_DIR = ROOT / "06_ho_kinh_doanh_va_chuyen_doi" / "01_mau_ho_kinh_doanh"
 
 LOOP_CARRIER_HIEN_TAI = "ds_nganh"  # bảng C.3 giữ loop production từ Wave 2C
+
+
+def band_token_keys() -> set[str]:
+    """[Pin sync — owner band-label removal 2026-09-08] các key được bind
+    vào ô (0,0) band theo tools/header_name_binding.json section "forms"
+    (nguồn chân lý của _bind_header_name_slot). Ô band hiện CHỈ chứa
+    token "{key}" — nhãn 'TÊN DOANH NGHIỆP/TÊN HỘ KINH DOANH' đã bị xoá
+    (commit e148d83) — nên band phải được nhận diện qua token."""
+    data = json.loads(BINDING_PATH.read_text(encoding="utf-8"))
+    return {b["key"] for b in (data.get("forms") or {}).values()}
 
 # [P2 pin sync 2026-09-03] P2 rebuild them 2 luoi thanh vien ho gia dinh
 # (nested-grid) vao PLII_M02: tv_hgd_sau_thay_doi (dau Muc A) +
@@ -186,13 +197,21 @@ def region_spans(seq):
 def classify_table(tbl) -> str:
     """Wave A (PLAN v4): phân loại bảng theo NỘI DUNG header, không theo vị
     trí trong tài liệu. Trả về:
-      'band'     — header band (tên hộ/doanh nghiệp + quốc hiệu);
+      'band'     — header band (ô (0,0) là the {key} bind tên chủ thể, hoặc
+                   nhãn legacy 'tên hộ/doanh nghiệp' ở artifact cũ);
       'tax'      — bảng thuế a7 (header 'Chỉ tiêu');
       'industry' — bảng ngành.
     """
     if not tbl.rows or not tbl.rows[0].cells:
         return "industry"
     c0 = fold(tbl.rows[0].cells[0].text)
+    # [Pin sync — owner band-label removal 2026-09-08] commit e148d83: ô (0,0)
+    # band CHỈ còn token "{key}" (nhãn + dòng kẻ đã xoá). Nhận band qua token
+    # khớp registry header_name_binding trước, nhãn legacy chỉ là fallback
+    # cho artifact dựng trước 2026-09-08.
+    tok = re.match(r"^\{([^{}]+)\}$", c0.strip())
+    if tok and tok.group(1) in band_token_keys():
+        return "band"
     if c0.startswith(("ten ho kinh doanh", "ten doanh nghiep")):
         return "band"
     if c0.startswith("chi tieu"):
@@ -237,14 +256,30 @@ def selftest_table_classification() -> None:
     hiện."""
     from docx import Document as _Doc
     d = _Doc()
+    # [Pin sync — owner band-label removal 2026-09-08] band hiện trạng: ô
+    # (0,0) CHỈ chứa the {key} — nhãn 'Tên hộ kinh doanh' đã bị xoá
+    # (commit e148d83). Pin mới nhận band qua token registry; nhãn legacy
+    # giữ làm fallback cho artifact dựng trước 2026-09-08.
     band = d.add_table(rows=1, cols=2)
-    band.rows[0].cells[0].text = "Tên hộ kinh doanh"
+    band.rows[0].cells[0].text = "{hkd_ten_tieng_viet_2}"
     band.rows[0].cells[1].text = "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM"
     tax = d.add_table(rows=1, cols=3)
     tax.rows[0].cells[0].text = "Chỉ tiêu"
     ind = d.add_table(rows=1, cols=4)
     ind.rows[0].cells[0].text = "STT"
-    assert classify_table(band) == "band", "band phải nhận qua nội dung ô"
+    assert classify_table(band) == "band", \
+        "band token-only (the {key}) phải nhận qua registry"
+    assert not any(ch in band.rows[0].cells[0].text.lower()
+                   for ch in ("tên hộ", "ten ho", "tên doanh", "ten doanh",
+                              "---")), \
+        "band hiện trạng KHÔNG được còn nhãn/dòng kẻ ở ô (0,0)"
+    legacy = d.add_table(rows=1, cols=2)
+    legacy.rows[0].cells[0].text = "Tên hộ kinh doanh"
+    assert classify_table(legacy) == "band", "fallback nhãn legacy phải giữ"
+    unknown = d.add_table(rows=1, cols=2)
+    unknown.rows[0].cells[0].text = "{key_khong_trong_registry}"
+    assert classify_table(unknown) == "industry", \
+        "token lạ ngoài registry không được nhận là band"
     assert classify_table(tax) == "tax", "thuế phải nhận qua header Chỉ tiêu"
     assert classify_table(ind) == "industry"
 

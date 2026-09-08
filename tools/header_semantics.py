@@ -13,11 +13,18 @@ Mã lỗi (đều vào HARD_FAIL_KEYS qua detector key "D19_header_semantics"):
                                buộc PLI_M72: cấm tự thêm band). Band "TÊN TỔ
                                CHỨC" (M79/M80) KHÔNG phải band chủ thể —
                                is_header_band_table không tính nó.
-  BAND_LABEL_REMOVED         : band có nhưng nhãn pháp định "TÊN DOANH
-                               NGHIỆP/TÊN HỘ KINH DOANH" đã bị xoá/sửa.
+  BAND_LABEL_PRESENT         : [Pin sync — owner band-label removal
+                               2026-09-08] owner đã XOÁ nhãn "TÊN DOANH
+                               NGHIỆP/TÊN HỘ KINH DOANH" khỏi ô band (commit
+                               e148d83 — in ra CHỈ hiện tên) nên hiện trạng
+                               CHUẨN là band KHÔNG có nhãn, chỉ còn the giá
+                               trị; code (đổi nghĩa từ BAND_LABEL_REMOVED)
+                               fire khi nhãn XUẤT HIỆN LẠI — artifact dựng
+                               trước 2026-09-08 hoặc mutation trả nhãn về.
   BAND_VALUE_OR_SLOT_MISSING : band thiếu run giá trị/slot (structural) hoặc
-                               PDF valid-full không có dòng giá trị dưới nhãn
-                               (fill-line input cũng phải còn nhìn thấy).
+                               PDF valid-full không có dòng giá trị ở vùng
+                               band (fill-line input cũng phải còn nhìn
+                               thấy).
   BAND_WRONG_KEY             : band bind/render SAI key — giá trị band không
                                khớp canonical key của census.
   DUPLICATE_EDITABLE         : >=2 run input cùng canonical key CÙNG tầm nhìn
@@ -188,13 +195,16 @@ def det_structural(form_id: str, blocks, registry: dict | None = None
     canonical = _canonical_key(form_id, reg)
     label = _band_label(form_id, reg)
 
-    # ---- band nội dung: nhãn + key ----
+    # ---- band nội dung: nhãn (đã bị xoá) + key ----
     if band_tbls and role in BAND_REQUIRED_ROLES:
         cell = band_tbls[0]["rows"][0]["cells"][0]
         text = _cell_text(cell)
+        # [Pin sync — owner band-label removal 2026-09-08] commit e148d83:
+        # hiện trạng CHUẨN là ô band CHỈ có the giá trị, KHÔNG có nhãn.
+        # Nhãn xuất hiện lại = artifact cũ/mutation → BAND_LABEL_PRESENT.
         label_f = _squeeze(label or "")
-        if label_f and label_f not in _squeeze(text):
-            hits.append({"code": "BAND_LABEL_REMOVED", "label": label,
+        if label_f and label_f in _squeeze(text):
+            hits.append({"code": "BAND_LABEL_PRESENT", "label": label,
                          "cell_text": text[:60]})
         keys = _run_keys(cell.get("runs") or [])
         wrong = sorted({k for _kind, k in keys if k != canonical})
@@ -264,6 +274,28 @@ _MOTTO_FOLDS = ("cong hoa xa hoi chu nghia viet nam",
                 "doc lap - tu do - hanh phuc")
 
 
+def _band_slot_lines(lines: list) -> tuple[dict | None, list]:
+    """[Pin sync — owner band-label removal 2026-09-08] neo vùng band bằng
+    dòng quốc hiệu. Dòng giá trị band = các dòng TRONG CỘT TRÁI (x0 không
+    vượt quá mốc quốc hiệu) nằm trong cửa sổ dọc quanh dòng quốc hiệu — bao
+    cả dòng TRÊN nó vì tên dài wrap làm lệch baseline trái/phải. Trả về
+    (dòng quốc hiệu, [dòng quốc hiệu] + slot theo y)."""
+    motto = None
+    for ln in lines:
+        if _MOTTO_FOLDS[0] in ln["fold"]:
+            motto = ln
+            break
+    if motto is None:
+        return None, []
+    lo, hi = motto["y0"] - 40.0, motto["y1"] + 40.0
+    slot = [ln for ln in lines
+            if ln is not motto
+            and ln["x0"] <= motto["x0"] + 20
+            and lo <= ln["y0"] <= hi]
+    slot.sort(key=lambda ln: ln["y0"])
+    return motto, [motto] + slot[:4]
+
+
 def _page_lines_of(page) -> list[dict]:
     lines: dict[tuple, list] = {}
     for w in page.get("words") or []:
@@ -290,6 +322,13 @@ def _clean_band_piece(f: str) -> str:
 def det_pdf(pages: list, form_id: str, data: dict | None,
             full_text: str | None = None,
             registry: dict | None = None) -> list[dict]:
+    """[Pin sync — owner band-label removal 2026-09-08] commit e148d83 xoá
+    nhãn khỏi ô band nên vùng band trên PDF KHÔNG còn dòng nhãn để neo.
+    Neo mới: dòng quốc hiệu (motto) trang 1 — luôn có trong band chủ thể và
+    không có ở bảng dữ liệu. Dòng giá trị band = phần còn lại của dòng
+    motto (PDF hay gom baseline trái+phải thành một dòng) cộng tối đa 2
+    dòng dưới nó trong cùng cột trái (tên dài wrap). Hợp đồng giá trị giữ
+    nguyên: mirror count >= 2, band_input count == 1."""
     reg = registry or load_registry()
     role = _role_of(form_id, reg)
     if role not in BAND_REQUIRED_ROLES or not pages:
@@ -297,28 +336,14 @@ def det_pdf(pages: list, form_id: str, data: dict | None,
     canonical = _canonical_key(form_id, reg)
     if not canonical:
         return []
-    label_f = _squeeze(_band_label(form_id, reg) or "")
     hits: list[dict] = []
     lines = _page_lines_of(pages[0])
 
-    # ---- BAND_REQUIRED_MISSING (PDF): mất luôn nhãn ở trang 1 ----
-    label = None
-    for ln in lines:
-        f = re.sub(r"[0-9]{1,2}$", "", ln["fold"])
-        if f == label_f or (label_f and label_f in f
-                            and len(f) <= len(label_f) + 2):
-            label = ln
-            break
-    if label is None:
-        return [{"code": "BAND_REQUIRED_MISSING", "layer": "pdf",
-                 "label": label_f}]
+    # ---- BAND_REQUIRED_MISSING (PDF): mất luôn band (không còn quốc hiệu) ----
+    motto, slot = _band_slot_lines(lines)
+    if motto is None:
+        return [{"code": "BAND_REQUIRED_MISSING", "layer": "pdf"}]
 
-    # ---- dòng giá trị / fill-line dưới nhãn ----
-    below = [ln for ln in lines
-             if ln["y0"] > label["y1"] - 2
-             and not (ln["x1"] < label["x0"] - 30
-                      or ln["x0"] > label["x0"] + 420)]
-    below.sort(key=lambda ln: ln["y0"])
     value = (data or {}).get(canonical)
     hay = re.sub(r"\s+", " ", fold(
         full_text if full_text is not None
@@ -326,20 +351,17 @@ def det_pdf(pages: list, form_id: str, data: dict | None,
     hay = re.sub(r"\s+", " ", hay)
     fold_v = re.sub(r"\s+", " ", fold(value or ""))
 
-    if not below:
-        hits.append({"code": "BAND_VALUE_OR_SLOT_MISSING", "layer": "pdf",
-                     "key": canonical})
-        return hits
-    # mảnh band: tới 3 dòng dưới nhãn, bỏ motto + dòng kẻ
+    # mảnh band: dòng quốc hiệu + các dòng slot (bỏ motto + dòng kẻ)
     pieces = []
-    for ln in below[:3]:
+    for ln in slot:
         p = _clean_band_piece(ln["fold"])
         if p and any(c.isalpha() for c in p):
             pieces.append(p)
     if not pieces:
         hits.append({"code": "BAND_VALUE_OR_SLOT_MISSING", "layer": "pdf",
                      "key": canonical,
-                     "band_line": below[0]["text"][:60]})
+                     "band_line": (slot[-1]["text"] if len(slot) > 1
+                                   else motto["text"])[:60]})
         return hits
 
     band_ok = bool(fold_v) and any(
@@ -365,7 +387,8 @@ def det_pdf(pages: list, form_id: str, data: dict | None,
         # band hiển thị giá trị KHÁC canonical
         hits.append({"code": "BAND_WRONG_KEY", "layer": "pdf",
                      "expect": canonical,
-                     "band_value": below[0]["text"][:60]})
+                     "band_value": (slot[-1]["text"] if len(slot) > 1
+                                    else motto["text"])[:60]})
     return hits
 
 

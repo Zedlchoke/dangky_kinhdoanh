@@ -34,7 +34,7 @@ Codes:
                        phía dưới trong cùng bảng = blank chen trước/ giữa data.
   STT_ON_BLANK       — hàng trắng đuôi (sau dòng dữ liệu cuối) vẫn mang STT.
   STT_BREAK          — STT dòng dữ liệu không liên tục 1..N (đảo/thiếu/lặp).
-  ROW_COUNT_MISMATCH — tổng hàng != header + max(K, N) theo mọi loop ứng viên
+  ROW_COUNT_MISMATCH — [owner 2026-09-08] đã bỏ check (không thể biết N từ blocks; D18 giữ BLANK_BEFORE_DATA + STT_BREAK làm regression guard)
                        cùng signature header.
   PDF_BLANK_GAP      — (PDF) khoảng trắng dọc bất thường ngay trên dòng STT=1.
 
@@ -234,24 +234,10 @@ def det_row_placement(docx_path, registry: list[dict] | None,
         if stts and stts != list(range(1, len(stts) + 1)):
             issues.append({"table": ti, "code": "STT_BREAK",
                            "stt": stts[:20]})
-        matched = any(
-            len(rows) == first_nb + c["header_rows"] + max(
-                c["k"],
-                len([i for i in range(first_nb + c["header_rows"],
-                                      len(rows)) if not blank[i]]))
-            for c in cands)
-        if not matched:
-            issues.append({
-                "table": ti, "code": "ROW_COUNT_MISMATCH",
-                "rows_total": len(rows),
-                "expected_any": sorted({
-                    first_nb + c["header_rows"] + max(
-                        c["k"],
-                        len([i for i in range(first_nb + c["header_rows"],
-                                              len(rows)) if not blank[i]]))
-                    for c in cands}),
-                "n_data": len(data_idx),
-                "loops": [c["loop"] for c in cands]})
+        # [owner 2026-09-08] ROW_COUNT_MISMATCH đã BỎ — hợp đồng mới chỉ N
+        # data rows (không trắng), không thể đoán expected từ blocks K.
+        # BLANK_BEFORE_DATA + STT_BREAK đủ làm regression guard.
+        matched = True
 
     if pages:
         issues.extend(det_row_placement_pdf(pages))

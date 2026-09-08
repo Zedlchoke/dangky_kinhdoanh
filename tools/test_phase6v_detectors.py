@@ -30,10 +30,12 @@ V1b–V1f (negative mutations): mỗi detector có cặp positive/negative tự
 dựng (docx zip tối thiểu + pdf pymupdf) — bug phải bắt, bản đúng phải bỏ.
 
 V3 (F3T 2026-09-08): D18_row_placement — structural DOCX (BLANK_BEFORE_DATA
-/ STT_ON_BLANK / STT_BREAK / ROW_COUNT_MISMATCH theo registry blocks
-blankRows) + PDF_BLANK_GAP (chỉ đo khi có chuỗi STT). Mutation ĐỎ từng case
-F3T.4: K-blank-then-data (K+N), blank giữa hai dòng data, STT trên hàng
-trắng, STT đảo, lệch tổng hàng; hard-gate contract (gate_fails, FAIL).
+/ STT_ON_BLANK / STT_BREAK theo registry blocks blankRows) + PDF_BLANK_GAP
+(chỉ đo khi có chuỗi STT). [Pin sync — owner N-only 2026-09-08]
+ROW_COUNT_MISMATCH đã BỎ: hợp đồng render CHỈ N hàng dữ liệu, detector
+không đoán expected từ blocks K. Mutation ĐỎ từng case F3T.4:
+K-blank-then-data (K+N), blank giữa hai dòng data, STT trên hàng trắng,
+STT đảo; hard-gate contract (gate_fails, FAIL).
 
 Chạy:  python3 -X utf8 -m tools.test_phase6v_detectors
 Exit 0 = PASS; exit 1 = FAIL.
@@ -604,33 +606,38 @@ def test_v2c_d17():
     reg = {"forms": {"PLI_M32": {"key": "dn.ten_tieng_viet",
                                  "label": "TÊN DOANH NGHIỆP"}}}
     val = "CONG TY TNHH A BỘ ĐỘI"
-    # 1) band còn dòng kẻ '-------' → HDR_NAME_UNBOUND
-    p = _sig_page(0, [(1, 700.0, "TÊN DOANH NGHIỆP"),
+    # [Pin sync — owner band-label removal 2026-09-08] commit e148d83 xoá
+    # nhãn khỏi ô band nên D17 neo vùng band bằng DÒNG QUỐC HIỆU; các trang
+    # tổng hợp dưới đây dựng theo hình học mới (motto + dòng giá trị band,
+    # KHÔNG còn dòng nhãn 'TÊN DOANH NGHIỆP').
+    _MOTTO = "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM"
+    # 1) band còn dòng kẻ '-------' (slot không bind) → HDR_NAME_UNBOUND
+    p = _sig_page(0, [(1, 700.0, _MOTTO),
                       (2, 720.0, "-------")])
     hits = gate.det_header_name([p], "PLI_M32", reg, val + "\n" + val)
     assert [h["code"] for h in hits] == ["HDR_NAME_UNBOUND"], hits
 
     # 2) band bound + giá trị khớp thân (xuất hiện 2 lần: band + thân) → PASS
-    p = _sig_page(0, [(1, 700.0, "TÊN DOANH NGHIỆP"),
+    p = _sig_page(0, [(1, 700.0, _MOTTO),
                       (2, 720.0, val)])
     hits = gate.det_header_name([p], "PLI_M32", reg, val + "\n" + val)
     assert hits == [], hits
 
     # 3) band có giá trị KHÁC thân (chỉ thấy 1 lần — bind nhầm key) → SYNC
-    p = _sig_page(0, [(1, 700.0, "TÊN DOANH NGHIỆP"),
+    p = _sig_page(0, [(1, 700.0, _MOTTO),
                       (2, 720.0, "TEN SAI GIA TRI")])
     hits = gate.det_header_name([p], "PLI_M32", reg, val + "\n" + val)
     assert [h["code"] for h in hits] == ["HDR_NAME_SYNC"], hits
 
     # 4) band giá trị trống (token render rỗng trên valid-full là lỗi) → SYNC
-    p = _sig_page(0, [(1, 700.0, "TÊN DOANH NGHIỆP"),
+    p = _sig_page(0, [(1, 700.0, _MOTTO),
                       (2, 720.0, "Số: 000001")])
     hits = gate.det_header_name([p], "PLI_M32", reg, val)
     assert hits and hits[0]["code"] in ("HDR_NAME_SYNC",
                                         "HDR_NAME_LABEL_MISSING"), hits
 
     # 5) form không nằm registry → detector bỏ qua
-    p = _sig_page(0, [(1, 700.0, "TÊN DOANH NGHIỆP"), (2, 720.0, "-------")])
+    p = _sig_page(0, [(1, 700.0, _MOTTO), (2, 720.0, "-------")])
     assert gate.det_header_name([p], "PLI_M33", reg, "") == []
 
     # 6) D17 là HARD gate: record_verdicts phải đẩy vào gate_fails
@@ -648,23 +655,26 @@ def test_v2c_d17_band_input():
     # PLII_M06): band là ô nhập pháp định DUY NHẤT, thân KHÔNG có trường
     # tên → giá trị band xuất hiện ĐÚNG 1 LẦN là ĐÚNG; >=2 (double-slot
     # quay lại) phải FAIL HDR_NAME_SYNC.
+    # [Pin sync — owner band-label removal 2026-09-08] hình học PDF mới:
+    # neo bằng dòng quốc hiệu, không còn dòng nhãn.
     reg = {"forms": {"PLII_M06": {"key": "hkd_ten_tieng_viet_2",
                                   "label": "TÊN HỘ KINH DOANH",
                                   "mode": "band_input"}}}
     val = "HO KINH DOANH AN CAO"
+    _MOTTO = "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM"
     # 1) chỉ band có tên (count == 1) → PASS
-    p = _sig_page(0, [(1, 700.0, "TÊN HỘ KINH DOANH"),
+    p = _sig_page(0, [(1, 700.0, _MOTTO),
                       (2, 720.0, val)])
     assert gate.det_header_name([p], "PLII_M06", reg, val) == []
     # 2) double-slot: tên quay lại ở thân (count == 2) → HDR_NAME_SYNC
-    p = _sig_page(0, [(1, 700.0, "TÊN HỘ KINH DOANH"),
+    p = _sig_page(0, [(1, 700.0, _MOTTO),
                       (2, 720.0, val)])
     hits = gate.det_header_name([p], "PLII_M06", reg, val + "\n" + val)
     assert [h["code"] for h in hits] == ["HDR_NAME_SYNC"], hits
     # 3) mode mặc định (mirror) vẫn giữ hợp đồng >=2: count == 1 → SYNC
     reg_mirror = {"forms": {"PLI_M32": {"key": "dn.ten_tieng_viet",
                                         "label": "TÊN DOANH NGHIỆP"}}}
-    p = _sig_page(0, [(1, 700.0, "TÊN DOANH NGHIỆP"),
+    p = _sig_page(0, [(1, 700.0, _MOTTO),
                       (2, 720.0, val)])
     hits = gate.det_header_name([p], "PLI_M32", reg_mirror, val)
     assert [h["code"] for h in hits] == ["HDR_NAME_SYNC"], hits
@@ -673,8 +683,12 @@ def test_v2c_d17_band_input():
 # ---------------------------------------------------------------------------
 # V3 — [F3T] D18_row_placement: structural DOCX + PDF + hard-gate verdict.
 # Mutation ĐỎ cho từng case F3T.4: K-blank-then-data (K+N), blank giữa hai
-# dòng dữ liệu, STT trên hàng trắng, STT đảo thứ tự, lệch tổng hàng max(K,N),
-# và bản đúng (K=4,N=2)/(K=4,N=0)/(K=0,N=3) phải PASS. Đăng ký gate: HARD.
+# dòng dữ liệu, STT trên hàng trắng, STT đảo thứ tự; các shape location-đúng
+# (K=4,N=2)/(K=4,N=0)/(K=0,N=3) phải PASS. Đăng ký gate: HARD.
+# [Pin sync — owner N-only 2026-09-08] hợp đồng render mới CHỈ N hàng dữ
+# liệu (không hàng trắng) nên detector KHÔNG còn đoán expected từ blocks K:
+# ROW_COUNT_MISMATCH đã BỎ — mutation "lệch/thiếu tổng hàng" không còn là
+# defect đo được; guard regression = BLANK_BEFORE_DATA + STT_BREAK.
 # ---------------------------------------------------------------------------
 
 def _loop_tbl(rows_cells: list[list[str]]) -> str:
@@ -707,22 +721,29 @@ def _d18(rows_cells):
 
 @check("V3a_d18_row_placement_structural_mutations")
 def test_v3a_d18_structural():
-    # bản ĐÚNG (K=4, N=2): header + 2 data + 2 trắng → PASS
+    # [Pin sync — owner N-only 2026-09-08] shape trắng-đuôi (lượng tử K không
+    # còn được render nhưng detector không đoán được N) → không được bắn:
+    # guard D18 là VỊ TRÍ (blank chen trước/giữa data), không phải số lượng.
     hits = _d18([_HDR, ["1", "Trồng lúa", "0111"], ["2", "Chăn nuôi", "0141"],
                  ["", "", ""], ["", "", ""]])
-    assert hits == [], "bản đúng (4,2) không được bắn: %r" % hits
-    # bản ĐÚNG (K=4, N=6 ≥ K): đúng 6 hàng data, KHÔNG append trắng → PASS
+    assert hits == [], "trắng đuôi sau data (4,2) không được bắn: %r" % hits
+    # N=6 ≥ K: đúng 6 hàng data, KHÔNG append trắng → PASS
     hits = _d18([_HDR] + [[str(i + 1), "Ngành %d" % (i + 1), "%04d" % (i + 1)]
                           for i in range(6)])
     assert hits == [], "bản đúng (4,6) không được bắn: %r" % hits
-    # bản ĐÚNG (K=4, N=0): header + 4 trắng (giữ sức chứa in tay) → PASS
+    # N=0: header + 4 trắng, không data → không bắn (không blank chen trước
+    # data, không STT) — row count tự do, không phải defect vị trí.
     hits = _d18([_HDR, ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""]])
-    assert hits == [], "N=0 giữ K trắng không được bắn: %r" % hits
-    # MUTATION ĐỎ: K-blank-then-data (K+N) — defect F3T.1 tái hiện
+    assert hits == [], "N=0 toàn trắng không được bắn: %r" % hits
+    # MUTATION ĐỎ: K-blank-then-data (K+N) — defect F3T.1 tái hiện.
+    # [Pin sync — owner N-only 2026-09-08] defect thật VẪN phải ĐỎ qua
+    # BLANK_BEFORE_DATA (ROW_COUNT_MISMATCH đã BỎ khỏi detector — không thể
+    # đoán expected từ blocks K).
     hits = _d18([_HDR, ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""],
                  ["1", "Trồng lúa", "0111"]])
     codes = {h["code"] for h in hits}
-    assert {"BLANK_BEFORE_DATA", "ROW_COUNT_MISMATCH"} <= codes, hits
+    assert "BLANK_BEFORE_DATA" in codes, hits
+    assert "ROW_COUNT_MISMATCH" not in codes, hits
     # MUTATION ĐỎ: blank chen giữa hai dòng dữ liệu
     hits = _d18([_HDR, ["1", "Trồng lúa", "0111"], ["", "", ""],
                  ["2", "Chăn nuôi", "0141"], ["", "", ""]])
@@ -735,10 +756,13 @@ def test_v3a_d18_structural():
     hits = _d18([_HDR, ["2", "Chăn nuôi", "0141"], ["1", "Trồng lúa", "0111"],
                  ["", "", ""], ["", "", ""]])
     assert "STT_BREAK" in {h["code"] for h in hits}, hits
-    # MUTATION ĐỎ: mất một hàng trắng (tổng 4 != 1 + max(4,1)) — thiếu K−N
+    # [Pin sync — owner N-only 2026-09-08] mutation cũ "mất một hàng trắng
+    # (tổng != 1 + max(K,N))" KHÔNG còn là defect: hợp đồng N-only không set
+    # tổng hàng từ blocks (ROW_COUNT_MISMATCH đã BỎ) — pin rằng shape thiếu
+    # trắng đuôi không bị bắn nhầm code đã retire.
     hits = _d18([_HDR, ["1", "Trồng lúa", "0111"], ["", "", ""],
                  ["", "", ""]])
-    assert "ROW_COUNT_MISMATCH" in {h["code"] for h in hits}, hits
+    assert all(h["code"] != "ROW_COUNT_MISMATCH" for h in hits), hits
     # K=0 (loop không có blankRows): N=3 data thuần → PASS
     reg0 = [{"loop": "ds_y", "k": 0, "header_rows": 1,
              "sig": _D18_REG[0]["sig"]}]
@@ -793,7 +817,7 @@ def test_v3c_d18_hard():
 
 # ---------------------------------------------------------------------------
 # V4 — [F3H 2026-09-08] D19_header_semantics: mutation ĐỎ→XANH cho TỪNG code
-# (BAND_REQUIRED_MISSING, BAND_FORBIDDEN_PRESENT, BAND_LABEL_REMOVED,
+# (BAND_REQUIRED_MISSING, BAND_FORBIDDEN_PRESENT, BAND_LABEL_PRESENT,
 # BAND_VALUE_OR_SLOT_MISSING, BAND_WRONG_KEY, DUPLICATE_EDITABLE,
 # STALE_MIRROR, LEGAL_SUBTITLE_MUTATED). Lớp structural đọc blocks thật của
 # app/data/blocks; lớp PDF dựng words tổng hợp (cùng kiểu V2c).
@@ -855,14 +879,15 @@ def test_v4b_band_content():
     hits = hs.det_structural("PLI_M33", _blocks("PLI_M33"))
     assert hits == [], "M33 band_input thật không được bắn: %r" % hits
 
-    # MUTATION ĐỎ BAND_LABEL_REMOVED: nhãn pháp định bị sửa
+    # MUTATION ĐỎ BAND_LABEL_PRESENT [Pin sync — owner band-label removal
+    # 2026-09-08]: hiện trạng CHUẨN là band KHÔNG có nhãn (commit e148d83 —
+    # in ra CHỈ hiện tên); nhãn pháp định XUẤT HIỆN LẠI ở ô band = artifact
+    # cũ/mutation trả nhãn về → phải bị bắn.
     b = _deep(_blocks("PLI_M32"))
     cell = _band_table_of(b)["rows"][0]["cells"][0]
-    for r in cell["runs"]:
-        if r.get("text") == "TÊN DOANH NGHIỆP\n":
-            r["text"] = "TÊN CÔNG TY\n"
+    cell["runs"].insert(0, {"text": "TÊN DOANH NGHIỆP\n", "b": True})
     hits = hs.det_structural("PLI_M32", b)
-    assert [h["code"] for h in hits] == ["BAND_LABEL_REMOVED"], hits
+    assert [h["code"] for h in hits] == ["BAND_LABEL_PRESENT"], hits
 
     # MUTATION ĐỎ BAND_VALUE_OR_SLOT_MISSING (structural): mất run giá trị
     b = _deep(_blocks("PLI_M32"))
@@ -958,9 +983,13 @@ def _reg_one(fid="PLI_M32", role=None, mode=None):
 
 @check("V4e_d19_pdf_layer_mutations")
 def test_v4e_pdf_layer():
+    # [Pin sync — owner band-label removal 2026-09-08] hình học PDF mới:
+    # band KHÔNG còn dòng nhãn — các trang tổng hợp neo bằng dòng quốc hiệu,
+    # dòng giá trị band nằm dưới nó (hoặc dính cùng baseline).
     reg = _reg_one()
+    _MOTTO = "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM"
     # GREEN mirror: band + thân cùng giá trị (count >= 2)
-    p = _hs_page([(700, "TÊN DOANH NGHIỆP"), (720, _VAL)])
+    p = _hs_page([(700, _MOTTO), (720, _VAL)])
     assert hs.det_pdf([p], "PLI_M32", {"dn.ten_tieng_viet": _VAL},
                       _VAL + "\n" + _VAL, reg) == []
 
@@ -968,20 +997,21 @@ def test_v4e_pdf_layer():
     hits = hs.det_pdf([p], "PLI_M32", {"dn.ten_tieng_viet": _VAL}, _VAL, reg)
     assert [h["code"] for h in hits] == ["STALE_MIRROR"], hits
 
-    # MUTATION ĐỎ BAND_REQUIRED_MISSING (PDF): mất luôn nhãn trang 1
+    # MUTATION ĐỎ BAND_REQUIRED_MISSING (PDF): mất luôn band trang 1
+    # (không còn khối quốc hiệu — đồng nghĩa mất band vì band không còn nhãn)
     p = _hs_page([(700, "SỐ: 000001"), (720, _VAL)])
     hits = hs.det_pdf([p], "PLI_M32", {"dn.ten_tieng_viet": _VAL},
                       _VAL, reg)
     assert [h["code"] for h in hits] == ["BAND_REQUIRED_MISSING"], hits
 
-    # MUTATION ĐỎ BAND_VALUE_OR_SLOT_MISSING: dưới nhãn chỉ còn dòng kẻ
-    p = _hs_page([(700, "TÊN DOANH NGHIỆP"), (720, "---------")])
+    # MUTATION ĐỎ BAND_VALUE_OR_SLOT_MISSING: vùng band chỉ còn dòng kẻ
+    p = _hs_page([(700, _MOTTO), (720, "---------")])
     hits = hs.det_pdf([p], "PLI_M32", {"dn.ten_tieng_viet": _VAL},
                       _VAL, reg)
     assert [h["code"] for h in hits] == ["BAND_VALUE_OR_SLOT_MISSING"], hits
 
     # MUTATION ĐỎ BAND_WRONG_KEY: band hiện giá trị khác, canonical ở thân
-    p = _hs_page([(700, "TÊN DOANH NGHIỆP"), (720, "TEN SAI KEY")])
+    p = _hs_page([(700, _MOTTO), (720, "TEN SAI KEY")])
     hits = hs.det_pdf([p], "PLI_M32", {"dn.ten_tieng_viet": _VAL},
                       _VAL, reg)
     assert [h["code"] for h in hits] == ["BAND_WRONG_KEY"], hits
@@ -992,7 +1022,7 @@ def test_v4e_pdf_layer():
     reg_bi["forms"]["PLII_M06"]["label"] = "TÊN HỘ KINH DOANH"
     reg_bi["roles"]["PLII_M06"]["canonical_key"] = "hkd_ten_tieng_viet_2"
     val = "HO KINH DOANH AN CAO"
-    p = _hs_page([(700, "TÊN HỘ KINH DOANH"), (720, val)])
+    p = _hs_page([(700, _MOTTO), (720, val)])
     assert hs.det_pdf([p], "PLII_M06",
                       {"hkd_ten_tieng_viet_2": val}, val, reg_bi) == []
     # MUTATION ĐỎ DUPLICATE_EDITABLE (PDF): giá trị xuất hiện 2 lần

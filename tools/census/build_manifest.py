@@ -31,6 +31,26 @@ REVIEWS = {
 
 VALID_STATUS = ("NO_TABLE", "TABLE_COMPLETE", "BLOCKED_LEGAL_REVIEW")
 
+# [Pin sync — owner band-label removal 2026-09-08] các key được bind vào ô
+# (0,0) band (registry của _bind_header_name_slot) — ô band hiện CHỈ chứa
+# the "{key}", nhãn đã bị xoá (commit e148d83).
+_BAND_BIND_KEYS: set | None = None
+
+
+def _band_bind_keys() -> set:
+    global _BAND_BIND_KEYS
+    if _BAND_BIND_KEYS is None:
+        p = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                         os.pardir, "header_name_binding.json")
+        try:
+            data = json.loads(open(p, encoding="utf-8").read())
+            _BAND_BIND_KEYS = {
+                b.get("key") for b in (data.get("forms") or {}).values()
+                if b.get("key")}
+        except (OSError, ValueError):
+            _BAND_BIND_KEYS = set()
+    return _BAND_BIND_KEYS
+
 # Form da chu dong tien hoa SAU census qua wave P1 (regenerate lam thay doi
 # p/loop counts). Khong phai drift ro rang; moi dong la mot quyet dinh integrate.
 EVOLVED_FORMS = {
@@ -662,11 +682,18 @@ def deep_template_tables(form_id):
 
     def _is_header_band(tbl) -> bool:
         """hdr2col merge 084444d: bảng header 2 band là layout artifact
-        (ô tên + quốc hiệu + Số/ngày), KHÔNG phải bảng dữ liệu — không đếm."""
+        (ô tên + quốc hiệu + Số/ngày), KHÔNG phải bảng dữ liệu — không đếm.
+        [Pin sync — owner band-label removal 2026-09-08] commit e148d83: ô
+        (0,0) band CHỈ còn the "{key}" — nhận band qua the khớp registry
+        tools/header_name_binding.json; nhãn legacy là fallback."""
         if not tbl.rows or not tbl.rows[0].cells:
             return False
         first = tbl.rows[0].cells[0].text or ""
-        if not ("TÊN DOANH NGHIỆP" in first or "TÊN HỘ KINH DOANH" in first):
+        tok = re.match(r"^\s*\{([A-Za-z0-9_][A-Za-z0-9_.]*)\}\s*$",
+                       first.strip())
+        tok_hit = bool(tok) and tok.group(1) in _band_bind_keys()
+        if not tok_hit and not ("TÊN DOANH NGHIỆP" in first
+                                or "TÊN HỘ KINH DOANH" in first):
             return False
         all_text = "\n".join(c.text for r in tbl.rows for c in r.cells)
         return "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM" in all_text

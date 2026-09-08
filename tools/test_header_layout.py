@@ -365,20 +365,16 @@ def t_layout():
                 assert got == ALIGN_ENUM[mode], (
                     "%s: ô (%d,%d) align %s != %s" % (fid, ri, ci, got, mode))
             # nội dung từng ô = nguồn (băng 1 phải) / nguồn + the (băng 2)
-            # [WAVE v7 HEADER-NAME-SYNC] form bật binding: dòng kẻ tên ô
-            # (0,0) được generator thay bằng the {key} của registry.
+            # [WAVE v7 HEADER-NAME-SYNC] form bật binding: ô (0,0) được
+            # generator bind the {key} của registry.
+            # [Pin sync — owner band-label removal 2026-09-08] commit e148d83:
+            # _bind_header_name_slot XOÁ TOÀN BỘ run (nhãn 'TÊN …' + dòng
+            # kẻ) thay bằng ĐÚNG 1 run the {key} — band in ra CHỈ hiện tên.
+            # Pin mới: ô (0,0) == the {key}, KHÔNG còn nhãn/dòng kẻ.
             src00 = src_texts[0]
             _bind = bfm.header_name_binding()["forms"].get(fid)
             if _bind:
-                _lines = []
-                _swapped = False
-                for ln in src00.split("\n"):
-                    if not _swapped and bfm.HEADER_BAND_RULE_RE.match(ln.strip()):
-                        _lines.append("{%s}" % _bind["key"])
-                        _swapped = True
-                    else:
-                        _lines.append(ln)
-                src00 = "\n".join(_lines)
+                src00 = "{%s}" % _bind["key"]
             expected = {
                 (0, 0): src00,
                 (0, 1): motto_two_lines(src_texts[1]),                 # bỏ dòng kẻ
@@ -394,7 +390,17 @@ def t_layout():
                 assert got == want, (
                     "%s: ô (%d,%d) = %r != %r" % (fid, ri, ci, got, want))
             # băng 1 PHẢI cùng hàng ngang: ô trái (tên) và ô phải (quốc hiệu)
-            assert cell_text(tbl.rows[0].cells[0]).startswith(label)
+            # [Pin sync — owner band-label removal 2026-09-08] ô trái CHỈ có
+            # the {key} — nhãn không được còn lại ở band.
+            if _bind:
+                c00 = cell_text(tbl.rows[0].cells[0])
+                assert c00 == "{%s}" % _bind["key"], \
+                    "%s: ô (0,0) phải CHỈ chứa the %s: %r" % (
+                        fid, _bind["key"], c00)
+                assert not fold(c00).startswith(
+                    tuple(fold(l) for l in BAND_LABEL_FOLD)), \
+                    "%s: band còn nhãn pháp lý (owner đã xoá 2026-09-08): %r" % (
+                        fid, c00)
             assert "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM" in cell_text(tbl.rows[0].cells[1])
             # băng 2: Số trái, ngày tháng năm phải, cùng hàng
             assert cell_text(tbl.rows[1].cells[0]).startswith("Số:")
@@ -484,7 +490,12 @@ def t_text_preserved():
                 if not bind:
                     return text
                 return _dash_run_re.sub("{%s}" % bind["key"], text, count=1)
-            expect[0] = _swap_label_rule(expect[0])
+            # [Pin sync — owner band-label removal 2026-09-08] commit e148d83:
+            # generator XOÁ toàn bộ run (nhãn 'TÊN …' + dòng kẻ) và thay bằng
+            # ĐÚNG 1 run the {key} — kỳ vọng ô trái là CHỈ the {key}.
+            _bind0 = bfm.header_name_binding()["forms"].get(fid)
+            expect[0] = ("{%s}" % _bind0["key"]) if _bind0 \
+                else _swap_label_rule(expect[0])
             # Toàn bộ chữ còn lại PHẢI GIỮ NGUYÊN (kể cả dòng kẻ điền tên ô trái)
             assert "".join(norm(t) for t in expect) == \
                 "".join(norm(t) for t in after), (
@@ -500,10 +511,15 @@ def t_text_preserved():
                 plain = visible_text(Document(str(sb.tpl / ("%s.docx" % fid))))
             finally:
                 bfm.HEADER_BAND_FORMS = saved_forms
-            # [WAVE v7] plain (band tắt) còn dòng kẻ tên; band bật đã thay
-            # bằng the — quy đồng trước khi so (chỉ form bật binding).
+            # [WAVE v7] plain (band tắt) còn dòng kẻ tên; band bật (post
+            # e148d83) chỉ còn the {key}, KHÔNG nhãn — quy đồng trước khi so:
+            # gỡ dòng kẻ (norm gỡ token) và gỡ nhãn 'TÊN …' khỏi plain
+            # [Pin sync — owner band-label removal 2026-09-08].
             plain = _swap_label_rule(plain)
-            assert norm(plain).replace(norm(rule), "", 1) == norm(new_txt), (
+            _n_plain = norm(plain).replace(norm(rule), "", 1)
+            if bfm.header_name_binding()["forms"].get(fid):
+                _n_plain = _n_plain.replace(norm(label), "", 1)
+            assert _n_plain == norm(new_txt), (
                 "%s: text tài liệu đổi ngoài cụm header khi bật header band"
                 % fid)
         sb.assert_repo_untouched()

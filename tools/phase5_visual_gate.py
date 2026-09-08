@@ -787,6 +787,33 @@ _HDR_NAME_LABEL_FOLD = re.compile(r"^ten (doanh nghiep|ho kinh doanh)$")
 _HDR_NAME_DASH_FOLD = re.compile(r"^[-_.\u2013\u2014\u2026 ]{3,}$")
 
 
+def _find_motto_line(lines: list) -> dict | None:
+    """[Pin sync — owner band-label removal 2026-09-08] commit e148d83 xoá
+    nhãn khỏi ô band nên D17 không còn dòng nhãn để neo. Neo mới: dòng
+    quốc hiệu trang 1 — luôn nằm trong band chủ thể, không có ở bảng dữ
+    liệu. Dòng giá trị band = các dòng trong cột trái quanh dòng quốc hiệu
+    (tên dài wrap làm lệch baseline trái/phải, giá trị có thể nằm TRÊN
+    dòng quốc hiệu)."""
+    for ln in lines:
+        if "cong hoa xa hoi chu nghia viet nam" in ln["fold"]:
+            return ln
+    return None
+
+
+def _band_slot_lines(lines: list) -> tuple[dict | None, list]:
+    """(dòng quốc hiệu, [dòng quốc hiệu] + các dòng slot band theo y)."""
+    anchor = _find_motto_line(lines)
+    if anchor is None:
+        return None, []
+    lo, hi = anchor["y0"] - 40.0, anchor["y1"] + 40.0
+    slot = [ln for ln in lines
+            if ln is not anchor
+            and ln["x0"] <= anchor["x0"] + 20
+            and lo <= ln["y0"] <= hi]
+    slot.sort(key=lambda ln: ln["y0"])
+    return anchor, [anchor] + slot[:4]
+
+
 def _page_lines_of(page) -> list[dict]:
     lines: dict[tuple, list] = {}
     for w in page["words"]:
@@ -810,28 +837,21 @@ def det_header_name(pages: list, form: str, registry: dict | None = None,
     bind = ((registry or {}).get("forms") or {}).get(form)
     if not bind:
         return []
-    label_f = _fold(bind.get("label") or "")
     lines = _page_lines_of(pages[0])
-    label = None
-    for ln in lines:
-        f = re.sub(r"[0-9]{1,2}$", "", ln["fold"])
-        if f == label_f or (label_f and label_f in f and len(f) <= len(label_f) + 2):
-            label = ln
-            break
-    if label is None:
+    # [Pin sync — owner band-label removal 2026-09-08] neo band qua dòng
+    # quốc hiệu (nhãn 'TÊN …' đã bị owner xoá khỏi band — e148d83). Mất
+    # quốc hiệu = mất cả band.
+    anchor, below = _band_slot_lines(lines)
+    if anchor is None:
         return [{"code": "HDR_NAME_LABEL_MISSING", "page": 1,
-                 "expect": bind.get("label")}]
-    # dòng kế trong cùng cột (x chồng label, ngay dưới)
-    below = [ln for ln in lines
-             if ln["y0"] > label["y1"] - 2
-             and not (ln["x1"] < label["x0"] - 30 or
-                      ln["x0"] > label["x0"] + 420)]
-    below.sort(key=lambda ln: ln["y0"])
+                 "expect": bind.get("label"),
+                 "note": "band mất khối quốc hiệu (band không còn nhãn từ "
+                         "e148d83 — neo là dòng quốc hiệu)"}]
     if not below:
         return [{"code": "HDR_NAME_SYNC", "page": 1, "value": ""}]
-    if _HDR_NAME_DASH_FOLD.match(below[0]["fold"]):
-        return [{"code": "HDR_NAME_UNBOUND", "page": 1,
-                 "slot": bind.get("label")}]
+    # [Pin sync — owner band-label removal 2026-09-08] vùng band chỉ còn
+    # dòng kẻ (slot không bind, artifact/mutation cũ) → HDR_NAME_UNBOUND.
+    has_dash = any(_HDR_NAME_DASH_FOLD.match(ln["fold"]) for ln in below)
     # Tên dài wrap 2 dòng và PDF gom baseline trái+phải thành một dòng
     # (chữ quốc hiệu dính vào giá trị band) — tách quốc hiệu đã biết rồi
     # PASS nếu BẤT KỲ mảnh nào của band khớp thân (xuất hiện >= 2 lần).
@@ -847,7 +867,7 @@ def det_header_name(pages: list, form: str, registry: dict | None = None,
     hay = re.sub(r"\s+", " ", _fold(
         full_text or "\n".join(p["text"] for p in pages)))
     band_input = (bind.get("mode") or "").strip() == "band_input"
-    bi_seen = False
+    bi_seen = saw_needle = False
     for ln in below[:3]:
         f = ln["fold"]
         if _HDR_NAME_DASH_FOLD.match(f):
@@ -857,18 +877,24 @@ def det_header_name(pages: list, form: str, registry: dict | None = None,
         needle = re.sub(r"\s+", " ", f).strip(" .,-")
         if not needle or not any(c.isalpha() for c in needle):
             continue
+        saw_needle = True
         n = hay.count(needle)
         if band_input:
             if n != 1:
                 return [{"code": "HDR_NAME_SYNC", "page": 1,
-                         "value": below[0]["text"][:60]}]
+                         "value": ln["text"][:60]}]
             bi_seen = True
         elif n >= 2:
             return []
+    if not saw_needle:
+        if has_dash:
+            return [{"code": "HDR_NAME_UNBOUND", "page": 1,
+                     "slot": bind.get("label")}]
+        return [{"code": "HDR_NAME_SYNC", "page": 1, "value": ""}]
     if band_input and bi_seen:
         return []
     return [{"code": "HDR_NAME_SYNC", "page": 1,
-             "value": below[0]["text"][:60]}]
+             "value": (below[1] if len(below) > 1 else below[0])["text"][:60]}]
 
 
 # [WAVE v7] registry band mirror tên chủ thể — nạp 1 lần sau khi loader đã

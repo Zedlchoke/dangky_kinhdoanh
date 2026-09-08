@@ -459,7 +459,12 @@ def test_c2c_integration():
             if depth == 1 and len(trs) >= 2:
                 texts = "".join(re.findall(
                     r"<w:t(?:\s[^>]*)?>([^<]*)</w:t>", trs[0]))
-                is_band = (("TÊN DOANH NGHIỆP" in texts or
+                # [Pin sync — owner band-label removal 2026-09-08] commit
+                # e148d83: band KHÔNG còn nhãn 'TÊN …' ở ô (0,0) — bằng chứng
+                # band ở hàng 0 render là khối quốc hiệu nằm ngay hàng 0
+                # (khớp docx_render._header_row_count); nhãn legacy fallback.
+                is_band = (("CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM" in texts or
+                            "TÊN DOANH NGHIỆP" in texts or
                             "TÊN HỘ KINH DOANH" in texts) and
                            "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM" in seg)
                 row0_has_text = texts.strip() != ""

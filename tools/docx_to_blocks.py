@@ -815,11 +815,23 @@ def _band_mode_for(form_id: str, key: str) -> str:
 def is_header_band_table(grid: list[list[dict]]) -> bool:
     """Bảng header 2 band (hdr2col): ô đầu trái là ô TÊN …, bảng chứa khối
     quốc hiệu — chỉ các bảng header band của Việc 2 khớp, bảng dữ liệu thường
-    không bao giờ chứa cả hai."""
+    không bao giờ chứa cả hai.
+    [Pin sync — owner band-label removal 2026-09-08] commit e148d83: ô (0,0)
+    band CHỈ còn the "{key}" (nhãn + dòng kẻ bị xoá) nên nhãn không còn là
+    bằng chứng khả dụng. Nhận band qua the khớp registry
+    header_name_binding.json (cùng nguồn chân lý với _bind_header_name_slot);
+    nhãn legacy chỉ là fallback cho artifact dựng trước 2026-09-08. Cả hai
+    đường vẫn yêu cầu khối quốc hiệu trong bảng (hợp chống trúng bảng dữ
+    liệu mang trùng tên ô)."""
     if not grid or not grid[0]:
         return False
-    first = ANY_TAG_RE.sub("", cell_full_text(grid[0][0]))
-    if not any(k in first for k in HEADER_BAND_FIRST_CELL):
+    raw_first = cell_full_text(grid[0][0])
+    first = ANY_TAG_RE.sub("", raw_first)
+    tok = re.match(r"^\s*\{([A-Za-z0-9_][A-Za-z0-9_.]*)\}\s*$", raw_first.strip())
+    tok_hit = bool(tok) and any(
+        e.get("key") == tok.group(1)
+        for e in _header_name_binding_forms().values())
+    if not tok_hit and not any(k in first for k in HEADER_BAND_FIRST_CELL):
         return False
     all_text = ANY_TAG_RE.sub(
         "", "".join(cell_full_text(rec) for row in grid for rec in row))

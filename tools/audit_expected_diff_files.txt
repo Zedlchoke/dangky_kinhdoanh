@@ -638,3 +638,6 @@ docs/audits/header_semantic_census.md
 # --- [F3H impl 2026-09-08] header-subject-semantics: registry roles + D19 detector + fixtures + mutation V4 ---
 tools/header_semantics.py
 tools/test_f3h_fixtures.py
+# --- [F3-v2 2026-09-08] corpus phase8g evidence docs ---
+docs/audits/f3v2_corpus_2026-09-08.json
+docs/audits/f3v2_corpus_2026-09-08.md

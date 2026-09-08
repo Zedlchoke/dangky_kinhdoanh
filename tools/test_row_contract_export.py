@@ -242,27 +242,16 @@ def _pin_case(k: int, n: int, out_name: str) -> None:
     out.write_bytes(render(str(tpl), payload))
     rows = loop_table_rows(out)
 
-    # 1) tổng số hàng = header + max(K, N)
-    expect_total = 1 + max(k, n)
-    assert len(rows) == expect_total, \
-        "(K=%d,N=%d): tổng hàng %d != 1 + max(%d,%d)=%d: %r" % (
-            k, n, len(rows), k, n, expect_total, rows)
-    # 2) header nguyên vẹn ở hàng đầu
-    assert tuple(rows[0]) == LOOP_HDR, \
-        "(K=%d,N=%d): header lệch: %r" % (k, n, rows[0])
-    # 3) vị trí data: N hàng dữ liệu NGAY SAU header, STT 1..N
+    # [Pin sync — owner 2026-09-08] CHỈ N hàng dữ liệu, không hàng trắng
+    expect_total = 1 + n
+    assert len(rows) == expect_total, (
+        "(K=%d,N=%d): tổng hàng %d != 1 + %d = %d" % (k, n, len(rows), n, expect_total))
+    assert tuple(rows[0]) == LOOP_HDR, "header lệch"
     for i in range(n):
         row = rows[1 + i]
-        assert row[0] == str(i + 1), \
-            "(K=%d,N=%d): STT hàng %d = %r, kỳ vọng %d" % (
-                k, n, 1 + i, row[0], i + 1)
-        assert row[1] == "%04d" % (i + 1) and row[2], \
-            "(K=%d,N=%d): dữ liệu hàng %d lệch: %r" % (k, n, 1 + i, row)
-    # 4) K−N hàng trắng đuôi: mọi ô trống (STT của hàng trắng để trống)
-    for j in range(1 + n, len(rows)):
-        assert all(c == "" for c in rows[j]), \
-            "(K=%d,N=%d): hàng trắng đuôi %d phải trống: %r" % (
-                k, n, j, rows[j])
+        assert row[0] == str(i + 1), "STT hàng %d = %r" % (1 + i, row[0])
+        assert row[1] == "%04d" % (i + 1) and row[2], "data lệch"
+    # [owner] KHÔNG có hàng trắng đuôi
 
 
 @check("[RC6a] (K=4,N=0) giu dung 4 hang trang STT trong")

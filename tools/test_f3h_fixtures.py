@@ -6,8 +6,9 @@ mirror theo chỉ thị owner docs/f3h_f3t_directive_2026-09-08.md mục 2:
       output_mirror + 19 no_band) và khớp nội bộ forms/output_mirrors;
   F2  converter role-aware: band chỉ bind khi role band-required; band_input
       giữ input; 10 form output_mirrors có run mirror READ-ONLY;
-  F3  FIXTURE PLI_M31: band + fill-line NGAY DƯỚI nhãn pháp định (giữ nhãn +
-      điền tên; bản rỗng còn fill-line);
+  F3  FIXTURE PLI_M31: band + fill-line — [Pin sync — owner band-label
+      removal 2026-09-08] band KHÔNG còn nhãn pháp định (commit e148d83,
+      in ra CHỈ hiện tên): bản rỗng band TRỐNG, thân giữ nhãn + fill-line;
   F4  FIXTURE PLI_M72: KHÔNG band — mutation tự thêm band phải ĐỎ
       (BAND_FORBIDDEN_PRESENT);
   F5  PLI_M32 mirror A→B E2E: viết tên ở thân → band đổi → PDF khớp.
@@ -220,15 +221,22 @@ def f2_converter():
 @check("F3_fixture_pli_m31_band_with_fill_line")
 def f3_m31():
     fid, key = "PLI_M31", "dn.ten_tieng_viet"
-    # (a) bản rỗng: nhãn pháp định + fill-line còn nhìn thấy (không dash,
-    #     không token kỹ thuật) ở CẢ band lẫn thân
+    # (a) bản rỗng: [Pin sync — owner band-label removal 2026-09-08] commit
+    #     e148d83: band KHÔNG còn nhãn pháp định (in ra CHỈ hiện tên) —
+    #     bản rỗng band TRỐNG (không nhãn, không dash, không token); thân
+    #     vẫn còn nhãn + fill-line
     xml = _render(fid, {})
     txt = _xml_text(xml)
     assert key not in xml, "band blank còn token"
-    assert "TÊN DOANH NGHIỆP" in txt, "band mất nhãn pháp định"
+    assert "TÊN DOANH NGHIỆP" not in txt, \
+        "band còn nhãn pháp lý (owner đã xoá khỏi band 2026-09-08)"
+    assert not re.search(r"[-_.…]{3,}", txt.split(
+        "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM")[0]), \
+        "band blank còn dòng kẻ"
     assert "Tên doanh nghiệp (ghi bằng chữ in hoa):" in _norm(txt), \
         "thân mất nhãn + fill-line"
-    # (b) valid-full E2E: giá trị đổ ở CẢ band (dưới nhãn) lẫn thân
+    # (b) valid-full E2E: giá trị đổ ở CẢ band (vùng band trên trang 1,
+    #     neo bằng dòng quốc hiệu — band không còn nhãn để neo) lẫn thân
     data = _valid_full(fid)
     value = data[key]
     assert value, "valid-full phải có giá trị tên"
@@ -237,12 +245,14 @@ def f3_m31():
         raw = "\n".join(p["text"] for p in pages)
         text = _norm(raw)
         assert value in text, "PDF không có giá trị tên"
-        # band: nhãn trang 1, giá trị nằm dưới nhãn trong cùng cột
+        # band: dòng quốc hiệu trang 1, giá trị nằm trong vùng band quanh nó
+        # (tên dài wrap có thể nằm TRÊN dòng quốc hiệu)
         first = raw.split("\n")
-        li = next(i for i, ln in enumerate(first)
-                  if hs._squeeze(ln) == "ten doanh nghiep")
-        assert value in _norm("\n".join(first[li:li + 4])), \
-            "giá trị band không nằm dưới nhãn: %r" % first[li:li + 4]
+        mi = next(i for i, ln in enumerate(first)
+                  if "cong hoa xa hoi chu nghia viet nam" in hs._squeeze(ln))
+        assert value in _norm("\n".join(first[max(0, mi - 2):mi + 3])), \
+            "giá trị band không nằm ở vùng band quốc hiệu: %r" % (
+                first[max(0, mi - 2):mi + 3],)
         # thân: nhãn pháp định + giá trị cùng dòng
         assert re.search(r"Tên doanh nghiệp \(ghi bằng chữ in hoa\):\s*%s"
                          % re.escape(value), text), \

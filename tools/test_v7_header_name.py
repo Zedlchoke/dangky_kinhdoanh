@@ -136,7 +136,12 @@ def e1_blank():
                 fid, band)
         assert not re.search(r"[-_.…]{3,}", band), \
             "%s: band blank còn dòng kẻ: %r" % (fid, band)
-        assert "TÊN" in band, "%s: band mất nhãn pháp lý: %r" % (fid, band)
+        # [Pin sync — owner band-label removal 2026-09-08] commit e148d83:
+        # band KHÔNG còn nhãn pháp lý 'TÊN …' (in ra CHỈ hiện tên) nên band
+        # blank phải TRỐNG hẳn — không nhãn, không dữ liệu giả, không dòng kẻ.
+        assert band.strip() == "", \
+            "%s: band blank phải trống (không nhãn/giả dữ liệu): %r" % (
+                fid, band)
 
 
 @check("E2_filled_name_in_band_and_body")

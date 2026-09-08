@@ -14,7 +14,7 @@ Với MỖI loop có blankRows=K trong blocks của form anchor:
      thật);
   3. assert hợp đồng F3T.2 trên bảng ĐÃ RENDER, registry tra từ blocks:
      - bảng loop tồn tại, header nguyên vẹn (signature khớp blocks);
-     - tổng hàng = header + max(K, N);
+     - tổng hàng = header + N;
      - N hàng dữ liệu đứng NGAY SAU header (không blank chen trước dòng 1);
      - STT trên dòng dữ liệu = 1..N;
      - K−N hàng trắng còn lại nằm SAU dữ liệu và CÓ STT TRỐNG.
@@ -170,7 +170,7 @@ def _assert_loop_placement(fid: str, tables, entry: dict, n: int) -> None:
     texts = [fold_squeeze("".join(cells)) for cells in tbl]
     non_blank = [i for i, t in enumerate(texts) if t]
     first_nb, last_nb = non_blank[0], non_blank[-1]
-    total_expect = first_nb + h + max(k, n)
+    total_expect = first_nb + h + n
     assert len(tbl) == total_expect, \
         ("%s/%s: tổng hàng %d != lead %d + header %d + max(K=%d, N=%d): %r"
          % (fid, loop, len(tbl), first_nb, h, k, n,
@@ -196,7 +196,7 @@ def _assert_loop_placement(fid: str, tables, entry: dict, n: int) -> None:
              % (fid, loop, i, cells))
 
 
-@check("[ANCHOR] 8 form production: N>0 -> placement max(K,N) đúng + D18 0 hit")
+@check("[ANCHOR] 8 form production: N>0 -> placement N đúng + D18 0 hit")
 def anchors_plain_forms():
     maps = _load_maps()
     for fid in ANCHORS:

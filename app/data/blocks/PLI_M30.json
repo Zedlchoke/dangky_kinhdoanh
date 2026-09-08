@@ -31,9 +31,8 @@
       {
        "runs": [
         {
-         "input": {
-          "key": "dn.ten_tieng_viet",
-          "w": 12
+         "mirror": {
+          "key": "dn.ten_tieng_viet"
          }
         }
        ],
@@ -118,7 +117,8 @@
       }
      ]
     }
-   ]
+   ],
+   "band": "header"
   },
   {
    "t": "p",

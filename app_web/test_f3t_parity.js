@@ -13,8 +13,8 @@
  * full = fixture valid-full của tools/phase5_fixtures, loop trống inject 3):
  *   (a) UI: app_web/ui/render.js renderBlocks trên blocks production với
  *       store dựng từ CÙNG fixture — đếm hàng hiển thị/data/trống cho mỗi
- *       loop theo ĐÚNG công thức render.js:
- *           nRows = max(storeRows.length, blankRows, minUiRows)
+ *       loop theo ĐÚNG công thức render.js (N-only 2026-09-08):
+ *           nRows = max(storeRows.length, minUiRows)
  *       (minUiRows=1 khi gridMeta allowAdd, như controller production);
  *   (b) DOCX: payload export dựng bằng ĐÚNG đường export thật của app
  *       (buildExportData: values + checks 'X' + FD.selectorFlagsOf +
@@ -22,16 +22,17 @@
  *       tools.docx_render.render với tables_meta=section_specs (như
  *       app_web/main.py Bridge.export) -> python-docx-free đo từng bảng
  *       loop theo registry blankRows (tools.row_placement);
- *   (c) assert cụ thể cho TỪNG loop:
- *       - max parity 2 chiều: UI (displayed - thead) == max(K, N_store) và
- *         DOCX (total - lead) == header + max(K, N_export); scenario sạch
+ *   (c) assert cụ thể cho TỪNG loop — [Pin sync — owner N-only 2026-09-08]
+ *       hợp đồng mới CHỈ N hàng dữ liệu, KHÔNG hàng trắng:
+ *       - parity N-only 2 chiều: UI số hàng chứa dữ liệu == N_store và
+ *         DOCX (total - lead - header) == N_export; scenario sạch
  *         (mọi dòng store là business data) hai vế BẰNG NHAU;
  *       - vị trí data NGAY SAU header theo cả 2 hướng: UI tbody row j chứa
  *         dữ liệu store row j (không trống chen trước); DOCX body row j
  *         (sau lead+header) không trống, đúng giá trị payload theo THỨ TỰ,
  *         không có trống chen giữa (mid_gaps=0);
- *       - STT liên tục: UI 1..displayed; DOCX 1..N trên dòng dữ liệu, dòng
- *         trống đuôi STT TRỐNG (K-N dòng trống nằm SAU dữ liệu);
+ *       - STT liên tục: UI 1..displayed; DOCX 1..N trên dòng dữ liệu,
+ *         không có hàng trống đuôi (tail_blanks=0);
  *       - M72: chỉ variant được chọn xuất — UI chỉ render bảng loop của
  *         variant đó (cond blocks), DOCX chỉ còn bảng variant đó (vùng
  *         {?loai_hinh_*} drop), số bảng = số loop variant;
@@ -549,17 +550,18 @@ function exportDataOf(store, fid) {
 
 /* ----------------------------------------------------- contract assertors */
 
-/* DOCX contract của một bảng loop (F3T.2 max(K,N), N = nExport). */
+/* DOCX contract của một bảng loop (F3T.2 N-only — [Pin sync — owner N-only
+ * 2026-09-08]: CHỈ N hàng dữ liệu sau header, KHÔNG hàng trắng, N = nExport). */
 function docxTableErrors(meta, n, t, exportedRows, tag0) {
   const errs = [];
   const L = meta.loop;
-  const expectBody = Math.max(meta.k, n);
+  // [Pin sync — owner N-only 2026-09-08] tổng body = N (không max(K,N))
+  const expectBody = n;
   if (t.total !== t.lead + t.header_rows + expectBody) {
-    errs.push('DOCX %s: total=%d != lead=%d + header=%d + max(K=%d,N=%d)=%d'
+    errs.push('DOCX %s: total=%d != lead=%d + header=%d + N=%d'
       .replace('%s', L).replace('%d', String(t.total))
       .replace('%d', String(t.lead)).replace('%d', String(t.header_rows))
-      .replace('%d', String(meta.k)).replace('%d', String(n))
-      .replace('%d', String(expectBody)));
+      .replace('%d', String(n)));
   }
   if (t.n_data !== n) errs.push('DOCX %s: n_data=%d != N=%d'
     .replace('%s', L).replace('%d', String(t.n_data)).replace('%d', String(n)));
@@ -571,15 +573,17 @@ function docxTableErrors(meta, n, t, exportedRows, tag0) {
   }
   if (t.mid_gaps !== 0) errs.push('DOCX %s: %d blank chen giua header/data'
     .replace('%s', L).replace('%d', String(t.mid_gaps)));
-  if (t.tail_blanks !== Math.max(meta.k - n, 0)) {
-    errs.push('DOCX %s: tail_blanks=%d != max(K-N,0)=%d'
-      .replace('%s', L).replace('%d', String(t.tail_blanks))
-      .replace('%d', String(Math.max(meta.k - n, 0))));
+  // [Pin sync — owner N-only 2026-09-08] KHÔNG hàng trắng đuôi (bỏ hợp đồng
+  // max(K-N,0) trắng in sẵn)
+  if (t.tail_blanks !== 0) {
+    errs.push('DOCX %s: tail_blanks=%d != 0 (N-only: khong hang trang)'
+      .replace('%s', L).replace('%d', String(t.tail_blanks)));
   }
   t.blank_flags.forEach((b, i) => {
-    const shouldBeBlank = i >= n;
-    if (b !== shouldBeBlank) {
-      errs.push('DOCX %s: body row %d blank=%s (data phai lien ke sau header, trang chi nam duoi)'
+    // [Pin sync — owner N-only 2026-09-08] mọi body row phải là dữ liệu
+    // (body chỉ còn đúng N hàng, data liền kề sau header)
+    if (b !== false) {
+      errs.push('DOCX %s: body row %d blank=%s (N-only: moi body row phai la data)'
         .replace('%s', L).replace('%d', String(i))
         .replace('%s', String(b)));
     }
@@ -598,19 +602,22 @@ function docxTableErrors(meta, n, t, exportedRows, tag0) {
   return errs;
 }
 
-/* UI contract của một loop (công thức render.js: số hàng tbody =
- * max(storeRows.length, blankRows, minUiRows); data ngay sau thead). */
+/* UI contract của một loop (công thức render.js N-only — [Pin sync — owner
+ * N-only 2026-09-08]: số hàng tbody = max(storeRows.length, minUiRows),
+ * KHÔNG còn blankRows K; data ngay sau thead). */
 function uiLoopErrors(meta, info, storeRows, nExport, scenario, html, minUi) {
   const errs = [];
   const L = meta.loop;
   const tbl = loopTableHtml(html, L);
   if (!tbl) { errs.push('UI ' + L + ': khong tim thay bang loop'); return errs; }
   const trs = tbodyTrs(tbl);
-  const expectRows = Math.max(storeRows.length, meta.k, minUi);
+  // [Pin sync — owner N-only 2026-09-08] chỉ N hàng dữ liệu (ghì tối đa
+  // minUiRows khi trống) — bỏ max(K, …) hàng trắng
+  const expectRows = Math.max(storeRows.length, minUi);
   if (trs.length !== expectRows) {
     errs.push('UI ' + L + ': displayed=' + trs.length +
       ' != max(store=' + storeRows.length +
-      ', K=' + meta.k + ', minUi=' + minUi + ')=' + expectRows);
+      ', minUi=' + minUi + ')=' + expectRows);
   }
   // STT lien tuc 1..displayed (UI danh so moi hang hien thi)
   if (info.hasStt) {

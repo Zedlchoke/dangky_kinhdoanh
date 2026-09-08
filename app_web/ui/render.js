@@ -511,8 +511,9 @@
       normText(colTitle[0] || '').indexOf('stt') >= 0;
 
     // luôn còn ít nhất 1 dòng trống trên UI khi bảng cho thêm dòng
+    // [Owner 2026-09-08] chỉ hiện đúng N dòng dữ liệu — không hàng trắng
     var minUiRows = (gm && gm.allowAdd !== false) ? 1 : 0;
-    var nRows = Math.max(rows.length, b.blankRows || 0, minUiRows);
+    var nRows = Math.max(rows.length, minUiRows);
     var body = '';
     for (var i = 0; i < nRows; i++) {
       var tds = '';

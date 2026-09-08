@@ -31,9 +31,8 @@
       {
        "runs": [
         {
-         "input": {
-          "key": "hkd_ten_tieng_viet_2",
-          "w": 12
+         "mirror": {
+          "key": "hkd_ten_tieng_viet_2"
          }
         }
        ],
@@ -118,7 +117,8 @@
       }
      ]
     }
-   ]
+   ],
+   "band": "header"
   },
   {
    "t": "p",

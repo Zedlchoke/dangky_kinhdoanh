@@ -316,10 +316,9 @@ def _expand_loops(xml: str, data: dict) -> str:
                 printed.append(r)
         n = len(printed)
         out.extend(printed)
-        # K−N hàng trắng còn lại SAU dữ liệu (N=0 -> đúng K trắng nguyên
-        # mẫu; N>=K -> 0 hàng trắng append).
-        for _ in range(max(k - n, 0)):
-            out.append(blank_proto)
+        # [Owner 2026-09-08] KHÔNG append hàng trắng — chỉ in đúng N dòng
+        # dữ liệu. Bản giấy K trắng là cho viết tay; bản điện tử chỉ hiện
+        # data. Nếu N=0 (không có data) cũng không in hàng nào.
         pos = m.end()
     out.append(xml[pos:])
     return "".join(out)
@@ -1619,6 +1618,10 @@ _TRPR_ORDER = ("w:cnfStyle", "w:divId", "w:gridBefore", "w:gridAfter",
 _TRPR_INDEX = {name: i for i, name in enumerate(_TRPR_ORDER)}
 _TR_TOKEN_RE = re.compile(r"<w:tr[ >]|</w:tr>|<w:tbl[ >]|</w:tbl>")
 # band quốc hiệu (replicate docx_to_blocks.is_header_band_table ở lớp xml)
+# [Pin sync — owner band-label removal 2026-09-08] commit e148d83: ô (0,0)
+# band KHÔNG còn nhãn 'TÊN DOANH NGHIỆP/TÊN HỘ KINH DOANH' (chỉ còn giá trị/
+# ô trống) nên bằng chứng band ở lớp XML render là khối quốc hiệu nằm ngay
+# hàng 0 của bảng; nhãn legacy giữ làm fallback cho artifact cũ.
 _BAND_FIRST_CELL = ("TÊN DOANH NGHIỆP", "TÊN HỘ KINH DOANH")
 _BAND_MOTTO = "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM"
 _VMERGE_CONTINUE_RE = re.compile(
@@ -1716,7 +1719,11 @@ def _header_row_count(seg: str, rows: list[str]) -> int:
     if not _row_visible_text(rows[0]):
         return 0
     first = _row_visible_text(rows[0])
-    if any(k in first for k in _BAND_FIRST_CELL) and _BAND_MOTTO in seg:
+    # [Pin sync — owner band-label removal 2026-09-08] quốc hiệu nằm ở ô
+    # (0,1) của band — cùng HÀNG 0 nên đủ làm bằng chứng tại đây; nhãn legacy
+    # giữ fallback cho artifact dựng trước 2026-09-08.
+    if (_BAND_MOTTO in first or any(k in first for k in _BAND_FIRST_CELL)) \
+            and _BAND_MOTTO in seg:
         return 0  # band layout quốc hiệu — không phải header cột
     n = 1
     for row in rows[1:3]:

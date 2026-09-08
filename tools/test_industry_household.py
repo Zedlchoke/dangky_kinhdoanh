@@ -662,8 +662,15 @@ def t_m02_render_isolation():
             continue
         # hdr2col (084444d): bảng header band (tên hộ + quốc hiệu) KHÔNG phải
         # bảng ngành — loại khỏi đếm, giữ nguyên gate 4 bảng ngành phân biệt
+        # [Pin sync — owner band-label removal 2026-09-08] commit e148d83: ô
+        # (0,0) band CHỈ còn giá trị/the (nhãn đã bị xoá) nên bằng chứng band
+        # trên bản RENDER là khối quốc hiệu ở ô (0,1); nhãn legacy là fallback.
         first_cell = fold(tbl.rows[0].cells[0].text) if tbl.rows[0].cells else ""
-        if first_cell.startswith(("ten ho kinh doanh", "ten doanh nghiep")):
+        second_cell = fold(tbl.rows[0].cells[1].text) \
+            if len(tbl.rows[0].cells) > 1 else ""
+        if "cong hoa xa hoi chu nghia viet nam" in second_cell or \
+                first_cell.startswith(("ten ho kinh doanh",
+                                       "ten doanh nghiep")):
             continue
         # cap-von (fc07c69): bảng thuế a7 (Chỉ tiêu | cũ | mới) — không phải
         # bảng ngành

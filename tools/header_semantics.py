@@ -25,8 +25,14 @@ Mã lỗi (đều vào HARD_FAIL_KEYS qua detector key "D19_header_semantics"):
                                PDF valid-full không có dòng giá trị ở vùng
                                band (fill-line input cũng phải còn nhìn
                                thấy).
-  BAND_WRONG_KEY             : band bind/render SAI key — giá trị band không
-                               khớp canonical key của census.
+  BAND_WRONG_KEY             : band bind/render SAI key — lớp PDF: giá trị
+                               band KHÔNG được thân cùng tài liệu lặp lại và
+                               cũng không khớp canonical ([dfix 2026-09-08]
+                               so band-vs-thân IN-DOCUMENT, không so với
+                               `data` fixture riêng — batch export gộp data
+                               last-write-wins nên PDF thật render giá trị
+                               merged; `data` chỉ còn vai trò chẩn đoán code
+                               STALE_MIRROR vs BAND_WRONG_KEY).
   DUPLICATE_EDITABLE         : >=2 run input cùng canonical key CÙNG tầm nhìn
                                (band_input + thân, hoặc 2 thân) — vi phạm
                                "tên nhập đúng 1 lần". Fire khi >=2 input cùng
@@ -45,8 +51,9 @@ Mã lỗi (đều vào HARD_FAIL_KEYS qua detector key "D19_header_semantics"):
 
 Hai lớp:
   det_structural(form_id, blocks)            — DOCX/blocks, chạy mọi fixture.
-  det_pdf(pages, form_id, data, full_text)   — PDF valid-full (cần giá trị
-                                               canonical để đối chiếu).
+  det_pdf(pages, form_id, data, full_text)   — PDF valid-full, so band-vs-thân
+                                               IN-DOCUMENT (dfix 2026-09-08:
+                                               data chỉ dùng chẩn đoán code).
   det_record(...)                            — hợp hai lớp cho gate loop.
 
 Chạy độc lập: python3 -X utf8 tools/header_semantics.py  (sweep 87 form).
@@ -327,8 +334,19 @@ def det_pdf(pages: list, form_id: str, data: dict | None,
     Neo mới: dòng quốc hiệu (motto) trang 1 — luôn có trong band chủ thể và
     không có ở bảng dữ liệu. Dòng giá trị band = phần còn lại của dòng
     motto (PDF hay gom baseline trái+phải thành một dòng) cộng tối đa 2
-    dòng dưới nó trong cùng cột trái (tên dài wrap). Hợp đồng giá trị giữ
-    nguyên: mirror count >= 2, band_input count == 1."""
+    dòng dưới nó trong cùng cột trái (tên dài wrap).
+
+    [dfix 2026-09-08] Hợp đồng lớp PDF là IN-DOCUMENT: giá trị band (đọc từ
+    chính tài liệu) phải được THÂN cùng tài liệu lặp lại — mirror count >= 2
+    (band + thân), band_input count == 1 (band là ô nhập duy nhất). KHÔNG
+    đối chiếu `data` fixture riêng: batch export gộp data mọi form vào MỘT
+    payload, key chung last-write-wins (dn.ten_tieng_viet do PLI_M79 ghi
+    cuối) → PDF thật render giá trị MERGED ở cả band lẫn thân (D17 PASS
+    450/450 theo cùng hợp đồng), còn `data` per-form thì giá trị khác → so
+    band-vs-fixture bắn nhầm BAND_WRONG_KEY trên 23/23 form band-required.
+    `data` chỉ còn dùng để CHẨN ĐOÁN code khi band/thân lệch nhau (đúng
+    canonical → STALE_MIRROR; khác → BAND_WRONG_KEY) — pass/fail thuần
+    trong-document."""
     reg = registry or load_registry()
     role = _role_of(form_id, reg)
     if role not in BAND_REQUIRED_ROLES or not pages:
@@ -364,31 +382,39 @@ def det_pdf(pages: list, form_id: str, data: dict | None,
                                    else motto["text"])[:60]})
         return hits
 
-    band_ok = bool(fold_v) and any(
-        fold_v in p or p in fold_v for p in pieces)
     band_input = role == "required_band_input"
-    if band_ok:
-        n = hay.count(fold_v) if fold_v else 0
-        if band_input:
-            # band là ô nhập duy nhất: giá trị phải xuất hiện ĐÚNG 1 lần
-            if n >= 2:
-                hits.append({"code": "DUPLICATE_EDITABLE", "layer": "pdf",
-                             "key": canonical, "count": n})
-            elif n == 0:
-                hits.append({"code": "BAND_VALUE_OR_SLOT_MISSING",
-                             "layer": "pdf", "key": canonical})
-        else:
-            # mirror: band + thân phải CÙNG có giá trị (count >= 2)
-            if n < 2:
-                hits.append({"code": "STALE_MIRROR", "layer": "pdf",
-                             "key": canonical, "count": n,
-                             "value": (value or "")[:60]})
+    # [dfix 2026-09-08] so band-vs-thân trong document: đếm TỪNG mảnh band
+    # trong toàn văn (tên dài wrap 2 dòng → mỗi mảnh vẫn khớp đoạn thân
+    # tương ứng; mảnh lân cận ngoài giá trị — vd tên cơ quan — không ga lỗi).
+    counts = [hay.count(p) for p in pieces]
+    if band_input:
+        # band là ô nhập duy nhất: MỖI mảnh giá trị phải xuất hiện ĐÚNG 1 lần
+        if any(c >= 2 for c in counts):
+            hits.append({"code": "DUPLICATE_EDITABLE", "layer": "pdf",
+                         "key": canonical,
+                         "count": max(counts)})
+        elif any(c == 0 for c in counts):
+            hits.append({"code": "BAND_VALUE_OR_SLOT_MISSING",
+                         "layer": "pdf", "key": canonical})
     else:
-        # band hiển thị giá trị KHÁC canonical
-        hits.append({"code": "BAND_WRONG_KEY", "layer": "pdf",
-                     "expect": canonical,
-                     "band_value": (slot[-1]["text"] if len(slot) > 1
-                                    else motto["text"])[:60]})
+        # mirror: band + thân phải CÙNG có giá trị — BẤT KỲ mảnh band nào
+        # được thân lặp lại (count >= 2) là đủ; band chỉ gồm mảnh đơn-lần
+        # (count 1: chỉ band có, thân không) hoặc mảnh lạ (count 0: band
+        # hiện giá trị không tồn tại trong tài liệu) đều là lệch band-thân.
+        if not any(c >= 2 for c in counts):
+            # chẩn đoán: band đúng canonical (mảnh nào khớp giá trị canonical
+            # của fixture) → mirror bị cắt (STALE_MIRROR); band hiện giá trị
+            # khác hẳn → bind sai key (BAND_WRONG_KEY).
+            matches_canonical = bool(fold_v) and any(
+                fold_v in p or p in fold_v for p in pieces)
+            hits.append({
+                "code": "STALE_MIRROR" if matches_canonical
+                else "BAND_WRONG_KEY",
+                "layer": "pdf", "key": canonical,
+                "count": max(counts) if counts else 0,
+                "band_value": (slot[-1]["text"] if len(slot) > 1
+                               else motto["text"])[:60],
+                **({"value": value[:60]} if matches_canonical else {})})
     return hits
 
 

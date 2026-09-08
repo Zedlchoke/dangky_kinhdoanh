@@ -2,6 +2,7 @@
 
 Agent: CORPUS-FINAL · Worktree `/Users/hoangminhlong/orca/dangky_kinhdoanh-worktrees/f3-corpus-v2` (branch `agent/f3-corpus-v2`).
 Merge: `git merge main` → **fast-forward 20df7bc..d70fe14** (74 files: N-only sync, band label removal, render-fix, D18 bỏ ROW_COUNT_MISMATCH, D19 BAND_LABEL_PRESENT; không conflict).
+**[dfix 2026-09-08] DETECTOR-FIX đóng HARD 0:** sửa 2 detector heuristic lớp PDF (D18 + D19) đúng root cause đã adjudicate — mutation 22/22, **re-run FULL gate phase8g_v2 → HARD-FAIL 0** (chi tiết mục DFIX cuối file; render corpus KHÔNG đổi — chỉ lớp detector).
 
 ## Corpus chính thức
 
@@ -18,8 +19,9 @@ Merge: `git merge main` → **fast-forward 20df7bc..d70fe14** (74 files: N-only 
 | Gate | Kết quả |
 |---|---|
 | Preflight `release_runner` (`/tmp/f3v2_final_preflight.json`) | **VERDICT PASS 65/65**, env_errors=[] |
-| Visual gate HARD | **33 FAIL** = D18_row_placement ×10 + D19_header_semantics ×23 — **cùng đúng population corpus phase8g**, lần này root cause được chứng minh CHÍNH XÁC là mismatch phía detector (bằng chứng mới mạnh hơn, xem dưới); KHÔNG fake PASS |
-| Visual gate candidate | run 1: 7 record — **zero unresolved**: D5 ×2 adjudicate (i)/(ii) + allowlist `[f3v2-final]`; D9 ×5 adjudicate (ii) pixel-OK total 14400 |
+| Visual gate HARD (run d70fe14) | ~~33 FAIL~~ = D18_row_placement ×10 + D19_header_semantics ×23 — **ĐÃ ĐÓNG bởi dfix 2026-09-08**, xem mục DFIX |
+| Visual gate HARD (re-run sau dfix) | **0 FAIL — HARD 0 / 450 record** (5 fixture × 90, exit 0; `summary.json` hard_fail_counts = {}) — chỉ còn 5 candidate D9 adjudicate (ii) |
+| Visual gate candidate (re-run sau dfix) | **5 record** — D9 ×5 PLI_M10 `NARROW_COL_WIDE` mọi fixture, adjudicate (ii) pixel-OK total 14400 (không đổi so run trước; D5 ×2 đã allowlist `[f3v2-final]`) |
 | Signature census v7 | **PASS** — census 450 = detector 450 (**coverage 100%**), expected-but-zero = 0, manual 440 cluster, min gap **72.9pt** (sàn 72), median 100.5pt, below-72 = **0** |
 | ZIP validity | **450/450 testzip OK** (`zip_validity.json` trong corpus) |
 | Word open (Microsoft Word 16.16.27) | **90/90 PASS_OPEN_DIRECT** (85 form + M72 ×5 variant), 899.4s — inventory `phase8g_v2/word_open/inventory.json` |
@@ -34,7 +36,7 @@ Merge: `git merge main` → **fast-forward 20df7bc..d70fe14** (74 files: N-only 
 - **RFIX M10/M05/M72:** D9 M10 detail **total=14400**, 18 cột đủ (min col 614) 5/5 fixture; M05 = "ngày 04 tháng 05 **năm 2025**" (regex `năm 0d` không thấy); m72_ctcp 5/5 hết fragment "Ghi chú (nếu có)9." và CÓ heading "9. Người đại diện" (20 variant khác không có — đúng đặc thù CTCP).
 - **D17 = 0 FAIL** toàn corpus (band↔body mirror đồng bộ, band_input exempt F3B OK); D14 = 0; D13 = 0; D16 = 0.
 
-## HARD 33 — phân tích & adjudication (cần Lead encode fix detector, ngoài phạm vi lane corpus)
+## HARD 33 — phân tích & adjudication (ĐÃ ĐÓNG bởi dfix 2026-09-08 — giữ làm bằng chứng root cause)
 
 ### D18_row_placement ×10 — `PDF_BLANK_GAP` — PLI_M07 (5 fixture) + PLI_M10 (5 fixture)
 
@@ -48,7 +50,40 @@ Merge: `git merge main` → **fast-forward 20df7bc..d70fe14** (74 files: N-only 
 - **Bằng chứng render đúng (thử nghiệm mới):** export **PLI_M12 một mình** với fixture per-form → **D19 = 0 hit (PASS)**, giá trị per-form có mặt trong PDF. Structural layer 0 hit; BAND_LABEL_PRESENT = 0 (fix owner giữ vững).
 - Kèm theo: chẩn đoán "fragment containment + motto cùng dòng" trong `docs/audits/f3v2_corpus_2026-09-08.json` **không đủ** — Lead nên đọc mục `root_cause_da_xac_dinh_dung` trong JSON của lane này.
 
-**Việc cần Lead để đóng HARD 0:** (a) heuristic D18-lớp-PDF loại trừ khối chú thích chân trang (dòng superscript marker) khỏi STT-run; (b) D19-lớp-PDF nhận **data merged** của batch export (hoặc so band với needle của thân mirror thay vì giá trị fixture per-form). Sau fix re-run gate (~40 phút).
+**[dfix 2026-09-08 — ĐÃ ĐÓNG]** Hai việc nêu trên cho Lead đã được DETECTOR-FIX thực hiện đúng hướng adjudicate: (a) D18-lớp-PDF loại trừ khối chú thích chân trang khỏi STT-run; (b) D19-lớp-PDF đổi sang hợp đồng so band-vs-thân IN-DOCUMENT (không so fixture per-form) — xem chi tiết diff + mutation + re-run gate ở mục DFIX dưới đây.
+
+## DFIX 2026-09-08 — DETECTOR-FIX: sửa 2 detector heuristic lớp PDF → HARD 0
+
+Scope: CHỈ lớp detector (`tools/row_placement.py`, `tools/header_semantics.py`, mutation suite `tools/test_phase6v_detectors.py`). KHÔNG đụng `app/**`, `form_specs/**`; không fake pass, không bỏ check — hợp đồng structural (authoritative) giữ nguyên.
+
+### Fix 1 — D18 `PDF_BLANK_GAP` ×10 (`tools/row_placement.py` `det_row_placement_pdf`)
+
+- **Cũ (đỏ sai 10 record):** mọi chuỗi dòng số tăng dần bắt đầu "1" ở lề trái (≥2 dòng) đều bị coi là STT-run → đo gap dọc phía trên. Chuỗi superscript marker chú thích pháp lý chân trang ("1 Nếu cột số 5…", "2 Ghi giá trị…", "3 Loại tài sản…") thoả shape này → gap tự nhiên 75.5pt (M07, stt_run 2) / 81.1pt (M10, stt_run 3) giữa "(Ký và ghi họ tên)" và khối footnote bị đọc là "khoảng trống trên STT=1".
+- **Mới (2 guard, generic — không hard-code form):**
+  1. **FOOTNOTE GUARD** — dòng số 1-2 chữ số mà dòng kề dưới (kề nhau, Δy < 2×line-height) bắt đầu CÙNG lề x0 (±3pt) bằng từ KHÔNG thuần số = prose footnote wrap cùng margin → cả chuỗi là footnote, không phải bảng. Hàng STT thật không có shape này (dòng dưới là số STT kế hoặc cách quãng).
+  2. **HEADER ANCHOR** — chuỗi chỉ được đo gap khi có dòng chữ "STT" PHÍA TRÊN cùng x-range (|Δx0| ≤ 20pt = "số nằm CÙNG bảng với header STT"); không có anchor = không xác định được → bỏ qua (NOTE-level, KHÔNG HARD).
+- Bảo đảm không cụt chân true-positive: mutation giữ case bảng STT thật kẽ hở 70pt sau header → vẫn ĐỎ `PDF_BLANK_GAP`; DOCX structural (authoritative, 0 hit toàn corpus) không đổi.
+- Kèm sync smoke trong module: expectation "K+N defect RED" còn đòi `ROW_COUNT_MISMATCH` (code owner đã BỎ tại d70fe14, fail từ trước tại HEAD 577670d — pre-existing) → sửa thành pin `BLANK_BEFORE_DATA` (defect vẫn RED).
+
+### Fix 2 — D19 `BAND_WRONG_KEY` ×23 (`tools/header_semantics.py` `det_pdf`)
+
+- **Cũ (đỏ sai 23 record):** `band_ok` yêu cầu giá trị canonical trong `data` (fixture **per-form**) phải xuất hiện trong mảnh band; batch export gộp 86 form/1 payload → `dn.ten_tieng_viet` last-write-wins (PLI_M79 ghi cuối) → band VÀ thân cùng render giá trị **merged** ≠ fixture per-form → containment fail → `BAND_WRONG_KEY` trên 100% form band-required. D17 (so thuần in-document) PASS 450/450 cùng corpus — mâu thuẫn trực tiếp.
+- **Mới (hợp đồng IN-DOCUMENT, khớp D17):** giá trị band đọc từ CHÍNH tài liệu (mảnh band sau khi lọc motto/dòng kẻ), so với THÂN cùng PDF: mirror — BẤT KỲ mảnh band nào được thân lặp lại (count ≥ 2) là PASS; band_input — mỗi mảnh ĐÚNG 1 lần (≥2 → `DUPLICATE_EDITABLE`, 0 → `BAND_VALUE_OR_SLOT_MISSING`). Tham số `data` KHÔNG còn tham chiếu pass/fail — chỉ dùng CHẨN ĐOÁN code khi band/thân lệch (mảnh khớp canonical → `STALE_MIRROR`; không → `BAND_WRONG_KEY`).
+- Không fake pass: mọi mutation ĐỎ cũ của V4e giữ nguyên code lỗi (STALE_MIRROR / BAND_WRONG_KEY / DUPLICATE_EDITABLE / SLOT_MISSING đều vẫn bị bắt thuần in-document, không cần data).
+
+### Verification
+
+| Check | Kết quả |
+|---|---|
+| Mutation suite `python3 -X utf8 -m tools.test_phase6v_detectors` | **22/22 PASS** (20 cũ + 2 case mới: `V3b2_d18_pdf_footnote_marker_guard`, `V4e2_d19_pdf_in_document_feed` — pin cả 2 shape footnote thật M07/M10 + worst case footnote DƯỚI bảng STT cùng x-range + feed merged batch) |
+| Smoke `python3 -X utf8 -m tools.row_placement` | ALL PASS (7/7) |
+| Sweep structural `python3 -X utf8 tools/header_semantics.py` | 87 form: 0 hit, 0 thiếu role |
+| E2E fixture `python3 -X utf8 -m tools.test_f3h_fixtures` | 5/5 PASS (M31/M72/M32 mirror A→B) |
+| Quét D18-PDF toàn corpus phase8g_v2 (450 doc × mọi trang, RGlob PDF) | **0 hit** (trước: 10) |
+| D19 `det_record` pdf_checks=True trên 90 record valid-full | **0 hit** (trước: 23) |
+| **Re-run FULL gate** `python3 -X utf8 tools/phase5_visual_gate.py --outdir generated_ho_so/_visual_layout/phase8g_v2 --forms <86 active id>` | **HARD-FAIL: 0** — 5 fixture × 90 record: 0 FAIL mỗi fixture (444.6/435.3/397.0/414.6/396.8s); exit 0; export_errors 0; **PNG 1737/1737 ok**; candidate còn **5** = D9 ×5 PLI_M10 (adjudicate (ii) pixel-OK, không đổi) |
+
+Render corpus KHÔNG thay đổi (chỉ lớp detector): 450 record / 1737 PNG giữ nguyên; ZIP/Word/determinism đã PASS ở run d70fe14 trên cùng nội dung render nên không cần chạy lại.
 
 ## Adjudication 7 candidate (run 1) — zero unresolved
 
@@ -59,11 +94,12 @@ Merge: `git merge main` → **fast-forward 20df7bc..d70fe14** (74 files: N-only 
 
 ## Rủi ro / còn mở cho Lead
 
-1. **Gate verdict = FAIL 33 HARD** — xem mục HARD 33; 2 fix detector nêu trên rồi re-run để đóng HARD 0.
-2. Chẩn đoán D19 cũ (fragment containment) không đủ — nguyên nhân thật là feed data merged; cần sửa detector theo hướng đó.
+1. ~~Gate verdict = FAIL 33 HARD~~ **ĐÃ ĐÓNG — HARD 0 sau dfix 2026-09-08** (mutation 22/22, re-run gate exit 0).
+2. ~~Chẩn đoán D19 cũ (fragment containment) không đủ~~ **ĐÃ XỬ LÝ** — detector chuyển hợp đồng in-document đúng nguyên nhân feed merged; giữ lại ghi chú lịch sử ở mục HARD 33 trên làm bằng chứng adjudicate.
 3. D9 ×5 M10 còn candidate (allowlist chỉ D5) — adjudicated (ii); fix vĩnh viễn thuộc policy D9.
 4. PNG tổng 1737 (−17) do pagination dời sau N-only — không mất nội dung (ZIP/Word/determinism PASS đủ).
 5. Gate default `--forms all` vẫn chưa lọc `current_law_status` — lần này truyền `--forms` 86 id thủ công (rủi ro cũ giữ nguyên).
+6. [dfix] D18-PDF guard "không có anchor STT → bỏ qua" nghĩa là lớp PDF bổ trợ chỉ fire khi trang có header 'STT' cùng x-range phía trên chuỗi số — chấp nhận được vì DOCX structural là lớp authoritative (0 hit toàn corpus); `PDF_STT_ANCHOR_DX=20pt` và predicate footnote (Δx0 ≤3pt, kề nhau <2×line-height, token sau marker không thuần số) là hằng heuristic mới, chưa đo phân bố rộng ngoài corpus hiện có.
 
 ## artefacts tham chiếu
 
@@ -71,3 +107,4 @@ Merge: `git merge main` → **fast-forward 20df7bc..d70fe14** (74 files: N-only 
 - Rerun: `phase8g_v2_rerun/{manifest.json, summary.json, determinism_check.json}`
 - Preflight JSON: `/tmp/f3v2_final_preflight.json`; log gate: `/tmp/f3v2_final_gate.log`, `/tmp/f3v2_final_rerun.log`; log Word: `/tmp/f3v2_final_wordopen.log`
 - Allowlist: `docs/phase6v_d5_sparse_allowlist.json` (77 entry, +2 `[f3v2-final]`)
+- [dfix 2026-09-08] Re-run gate sau fix detector (cùng outdir, nội dung render không đổi): log `/tmp/dfix_gate_run.log`; `summary.json` hard_fail_counts={} candidate D9 ×5; manifest 450 record/PNG 1737 ok

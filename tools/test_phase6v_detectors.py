@@ -799,6 +799,68 @@ def test_v3b_d18_pdf():
     assert det_row_placement_pdf(noblank) == []
 
 
+@check("V3b2_d18_pdf_footnote_marker_guard")
+def test_v3b2_d18_pdf_footnote():
+    # [dfix 2026-09-08] corpus phase8g_v2: M07/M10 ×5 fixture bắn nhầm
+    # PDF_BLANK_GAP vì chuỗi số '1 …', '2 …', '3 …' của khối chú thích pháp
+    # lý CHÂN TRANG (superscript marker) bị đọc là STT-run — gap 75-81pt là
+    # khoảng hở tự nhiên giữa '(Ký và ghi họ tên)' và khối footnote.
+    def _page(words):
+        return [{"pno": 0, "text": "", "words": words}]
+
+    def w(x0, y0, txt):
+        return (x0, y0, x0 + 6.0 * len(txt), y0 + 10.0, txt, 0, 0, 0)
+
+    # shape thật M07 (stt_run 2, gap 75.5pt): '(Ký…)13' rồi khối footnote
+    # '1 Nếu…' / '2 Ghi…' / prose wrap cùng lề — KHÔNG được bắn
+    m07 = _page([
+        w(50, 690, "(Ký và ghi họ tên)13"),
+        w(50, 780, "1"), w(80, 780, "Nếu"), w(170, 780, "cột"),
+        w(50, 796, "2"), w(80, 796, "Ghi"), w(170, 796, "giá"),
+        w(50, 812, "phần"), w(130, 812, "của"),
+    ])
+    assert det_row_placement_pdf(m07) == [], \
+        "footnote chân trang không được bắn (dfix): %r" % \
+        det_row_placement_pdf(m07)
+    # shape thật M10 (stt_run 3, gap 81.1pt): dòng wrap '7.' chen giữa
+    # marker '1' và '2' — vẫn là footnote, không được bắn
+    m10 = _page([
+        w(50, 600, "(Ký và ghi họ tên)9"),
+        w(50, 690, "1"), w(80, 690, "Nếu"), w(300, 690, "số"),
+        w(50, 706, "7."), w(120, 706, "ghichu"),
+        w(50, 722, "2"), w(80, 722, "Chu"),
+        w(50, 738, "3"), w(80, 738, "Truong"),
+        w(50, 754, "hop"), w(130, 754, "khong"),
+    ])
+    assert det_row_placement_pdf(m10) == [], \
+        "footnote M10 (wrap '7.' giữa run) không được bắn (dfix): %r" % \
+        det_row_placement_pdf(m10)
+    # worst case: khối footnote NẰM DƯỚI một bảng STT thật (anchor 'STT'
+    # cùng x-range vẫn có trên trang) — footnote guard phải chặn, bảng thật
+    # (gap thường so header) vẫn sạch
+    worst = _page([
+        w(50, 100, "STT"), w(80, 100, "Tên"), w(160, 100, "Mã"),
+        w(50, 118, "1"), w(80, 118, "0111"), w(160, 118, "Trồng"),
+        w(50, 136, "2"), w(80, 136, "0141"), w(160, 136, "Chăn"),
+        w(50, 600, "(Ký và ghi họ tên)13"),
+        w(50, 690, "1"), w(80, 690, "Nếu"),
+        w(50, 706, "2"), w(80, 706, "Ghi"),
+        w(50, 722, "phần"), w(130, 722, "của"),
+    ])
+    assert det_row_placement_pdf(worst) == [], \
+        "footnote dưới bảng STT không được bắn (dfix): %r" % \
+        det_row_placement_pdf(worst)
+    # GUARD KHÔNG ĐỘT KÍCH true-positive: bảng STT thật kẽ hở 70pt sau
+    # header (số + data cell kề bên, dòng dưới là số STT kế) vẫn ĐỎ
+    real = _page([
+        w(50, 100, "STT"), w(80, 100, "Tên"), w(160, 100, "Mã"),
+        w(50, 170, "1"), w(80, 170, "0111"), w(160, 170, "Trồng"),
+        w(50, 186, "2"), w(80, 186, "0141"), w(160, 186, "Chăn"),
+    ])
+    hits = det_row_placement_pdf(real)
+    assert len(hits) == 1 and hits[0]["code"] == "PDF_BLANK_GAP", hits
+
+
 @check("V3c_d18_row_placement_is_hard_gate")
 def test_v3c_d18_hard():
     # fail-loud contract: D18 phải nằm HARD_FAIL_KEYS — hit → gate_fails,
@@ -1035,6 +1097,53 @@ def test_v4e_pdf_layer():
     assert hs.det_pdf([p], "PLI_M46", {}, "", reg_nb) == []
 
 
+@check("V4e2_d19_pdf_in_document_feed")
+def test_v4e2_in_document_feed():
+    # [dfix 2026-09-08] batch export gộp 86 form / 1 payload — key chung
+    # last-write-wins (dn.ten_tieng_viet do PLI_M79 ghi cuối) → PDF thật
+    # render giá trị MERGED ở CẢ band lẫn thân. Hợp đồng lớp PDF là
+    # IN-DOCUMENT (band text == body text cùng tài liệu), KHÔNG so với
+    # `data` fixture per-form — corpus phase8g_v2: 23/23 form band-required
+    # bắn nhầm BAND_WRONG_KEY đúng vì so band (merged) vs fixture riêng.
+    reg = _reg_one()
+    _MOTTO = "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM"
+    merged = "CONG TY TNHH MTV KY THUAT - XAY DUNG TRUONG THANH 23"
+    # GREEN mirror: band + thân cùng render giá trị merged, data fixture
+    # vẫn là giá trị per-form khác → PASS (hợp đồng in-document)
+    p = _hs_page([(700, _MOTTO), (720, merged)])
+    assert hs.det_pdf([p], "PLI_M32", {"dn.ten_tieng_viet": _VAL},
+                      merged + "\n" + merged, reg) == [], \
+        "band=thân=merged phải PASS dù data khác: %r" % hs.det_pdf(
+            [p], "PLI_M32", {"dn.ten_tieng_viet": _VAL},
+            merged + "\n" + merged, reg)
+    # GREEN band_input: giá trị band (merged) DUY NHẤT trong văn bản,
+    # data fixture khác → PASS
+    reg_bi = _reg_one("PLII_M06", role="required_band_input",
+                      mode="band_input")
+    reg_bi["forms"]["PLII_M06"]["label"] = "TÊN HỘ KINH DOANH"
+    reg_bi["roles"]["PLII_M06"]["canonical_key"] = "hkd_ten_tieng_viet_2"
+    p2 = _hs_page([(700, _MOTTO), (720, merged)])
+    assert hs.det_pdf([p2], "PLII_M06",
+                      {"hkd_ten_tieng_viet_2": "HO KINH DOANH AN CAO"},
+                      merged, reg_bi) == []
+    # MUTATION ĐỎ vẫn bắt được in-document, KHÔNG cần data: band hiện giá
+    # trị không được thân lặp lại và không khớp canonical → BAND_WRONG_KEY
+    p3 = _hs_page([(700, _MOTTO), (720, "TEN SAI KEY")])
+    hits = hs.det_pdf([p3], "PLI_M32", {}, _VAL, reg)
+    assert [h["code"] for h in hits] == ["BAND_WRONG_KEY"], hits
+    # MUTATION ĐỎ DUPLICATE_EDITABLE (band_input) in-document với merged feed
+    hits = hs.det_pdf([p2], "PLII_M06",
+                      {"hkd_ten_tieng_viet_2": "HO KINH DOANH AN CAO"},
+                      merged + "\n" + merged, reg_bi)
+    assert [h["code"] for h in hits] == ["DUPLICATE_EDITABLE"], hits
+    # MUTATION ĐỎ STALE_MIRROR in-document: band đúng canonical (khớp data)
+    # nhưng thân mất giá trị (count 1) — data chỉ còn vai trò chẩn đoán code
+    p4 = _hs_page([(700, _MOTTO), (720, _VAL)])
+    hits = hs.det_pdf([p4], "PLI_M32", {"dn.ten_tieng_viet": _VAL},
+                      _VAL, reg)
+    assert [h["code"] for h in hits] == ["STALE_MIRROR"], hits
+
+
 @check("V4f_d19_is_hard_gate")
 def test_v4f_hard_gate():
     assert "D19_header_semantics" in gate.HARD_FAIL_KEYS
@@ -1064,12 +1173,14 @@ def main() -> int:
     test_v2c_d17_band_input()
     test_v3a_d18_structural()
     test_v3b_d18_pdf()
+    test_v3b2_d18_pdf_footnote()
     test_v3c_d18_hard()
     test_v4a_band_presence()
     test_v4b_band_content()
     test_v4c_duplicate_editable()
     test_v4d_legal_subtitle()
     test_v4e_pdf_layer()
+    test_v4e2_in_document_feed()
     test_v4f_hard_gate()
     passed = [r for r in _RESULTS if r[1]]
     failed = [r for r in _RESULTS if not r[1]]

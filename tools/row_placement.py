@@ -28,6 +28,17 @@ Hai lớp:
     tăng dần, token trái nhất thuần số ở lề trái) mà băng dọc KHÔNG CHỮ ngay
     phía trên dòng STT=1 cao quá ngưỡng → PDF_BLANK_GAP. N=0 (không có dòng
     STT) không bao giờ bị bắn — đó là case K trắng hợp pháp.
+    [dfix 2026-09-08] chuỗi số phải THẬT SỰ là STT-run của một bảng mới bị
+    đo gap, hai guard loại trừ false positive khối chú thích pháp lý chân
+    trang ('1 …', '2 …', '3 …' là superscript marker của footnote, không
+    phải STT — corpus phase8g_v2: M07/M10 bắn nhầm 10 record):
+      (a) FOOTNOTE GUARD — dòng số kề dưới bắt đầu CÙNG lề x0 bằng từ
+          KHÔNG thuần số (prose chú thích wrap liên tục tại cùng margin)
+          → cả chuỗi là footnote, không phải bảng;
+      (b) HEADER ANCHOR — phải có dòng chữ 'STT' ở PHÍA TRÊN cùng x-range
+          (|Δx0| ≤ 20pt, điều kiện "số nằm CÙNG bảng"); không có anchor =
+          không xác định được → bỏ qua (NOTE-level, không HARD).
+    DOCX structural vẫn là lớp authoritative; lớp PDF chỉ thu hẹp sau fix.
 
 Codes:
   BLANK_BEFORE_DATA  — hàng trắng (kể cả hàng chỉ có STT) có hàng dữ liệu
@@ -58,10 +69,36 @@ _DRAWING_RE = re.compile(r"<w:drawing[ >]|<w:pict[ >]|<w:object[ >]")
 # PDF: gap dọc (pt) trên dòng STT=1 vượt ngưỡng -> khối trắng chen trước data.
 # Một hàng bảng ~14-18pt pitch; K=3 blank ~ 45-55pt. Ngưỡng 40pt bắt K>=3;
 # K=4/5 của corpus (80-100pt) dư dả. DOCX structural mới là lớp authoritative
-# bắt đủ mọi K — lớp PDF chỉ là belt-and-braces chống render lạ sau conversion.
+# lớp PDF chỉ là belt-and-braces chống render lạ sau conversion.
 PDF_GAP_MIN_PT = 40.0
 # STT column nằm ở lề trái bảng (x0 < 110pt trên khổ A4 ~ 595pt).
 PDF_STT_X0_MAX = 110.0
+# [dfix 2026-09-08] marker footnote là số ngắn 1-2 chữ số.
+_PDF_NUM12_RE = re.compile(r"^\d{1,2}$")
+# [dfix 2026-09-08] dung sai x-range giữa anchor 'STT' và cột số của run.
+PDF_STT_ANCHOR_DX = 20.0
+
+
+def _is_footnote_marker_line(lines: list[dict], i: int) -> bool:
+    """[dfix 2026-09-08] Dòng i mở đầu bằng số ngắn (1-2 chữ số) VÀ dòng text
+    kề dưới (KẼ NHAU — prose wrap là liền mạch) bắt đầu CÙNG lề x0 bằng từ
+    KHÔNG thuần số → cặp 'marker + prose wrap' của khối chú thích chân trang
+    (footnote xuống dòng liên tục tại cùng margin — vd '2 Ghi giá trị…' /
+    'phần của từng cổ đông…'). Hàng STT của bảng không có shape này: dòng
+    dưới nó là số STT kế tiếp (thuần số) hoặc cách một quãng (hết bảng),
+    không bao giờ là prose cùng lề kề ngay dưới."""
+    ln = lines[i]
+    if not _PDF_NUM12_RE.match(ln["first"]):
+        return False
+    if i + 1 >= len(lines):
+        return False
+    nxt = lines[i + 1]
+    if not nxt["words"]:
+        return False
+    lh = max(ln["y1"] - ln["y0"], 6.0)
+    return (abs(nxt["x0"] - ln["x0"]) <= 3.0
+            and not _INT_RE.match(nxt["first"])
+            and nxt["y0"] - ln["y1"] < 2.0 * lh)
 
 
 def fold_squeeze(text: str) -> str:
@@ -252,7 +289,19 @@ def det_row_placement_pdf(pages: list[dict]) -> list[dict]:
     """Băng dọc KHÔNG CHỮ bất thường ngay trên dòng STT=1 của một chuỗi STT
     tăng dần (>=2 dòng) -> khối trắng chen giữa header và dòng dữ liệu đầu
     (pattern K-blank-then-data sống sót qua conversion). N=0 không có dòng
-    STT nên không bao giờ bị bắn — K trắng hợp pháp."""
+    STT nên không bao giờ bị bắn — K trắng hợp pháp.
+
+    [dfix 2026-09-08] Chuỗi số phải THẬT SỰ là STT-run của một bảng:
+      (a) FOOTNOTE GUARD — dòng số trong run kề dưới nó bắt đầu cùng lề x0
+          bằng từ không thuần số (prose chú thích chân trang wrap cùng margin)
+          → toàn chuỗi là footnote marker ('1 …', '2 …', '3 …' của khối chú
+          thích pháp lý), KHÔNG phải bảng → bỏ qua;
+      (b) HEADER ANCHOR — phải tồn tại dòng chữ 'STT' phía trên cùng x-range
+          (|Δx0| ≤ 20pt) → "số nằm CÙNG bảng với header STT"; không có anchor
+          = không xác định được → bỏ qua (NOTE-level, KHÔNG HARD).
+    Corpus phase8g_v2 trước fix: M07/M10 bắn nhầm 10 record vì gap 75-81pt
+    giữa '(Ký và ghi họ tên)' và khối footnote bị đọc là 'khoảng trống trên
+    STT=1' — DOCX structural (authoritative) 0 hit toàn corpus."""
     hits: list[dict] = []
     for p in pages:
         words = p.get("words") or []
@@ -272,6 +321,10 @@ def det_row_placement_pdf(pages: list[dict]) -> list[dict]:
                          "y1": max(w[3] for w in ws),
                          "x0": ws[0][0],
                          "first": ws[0][4]})
+        # [dfix 2026-09-08] anchor header 'STT': (x0, y1) mọi dòng chứa token
+        # 'STT' (bỏ dấu câu đuôi, không phân biệt hoa thường).
+        anchors = [(ln["x0"], ln["y1"]) for ln in norm if any(
+            w[4].strip(" :.*").lower() == "stt" for w in ln["words"])]
         i = 0
         while i < len(norm) - 1:
             ln = norm[i]
@@ -279,8 +332,10 @@ def det_row_placement_pdf(pages: list[dict]) -> list[dict]:
                     or ln["x0"] > PDF_STT_X0_MAX:
                 i += 1
                 continue
-            # chuỗi STT tăng dần 1,2,... trên các line kề nhau
+            # chuỗi STT tăng dần 1,2,... trên các line kề nhau (run_idx giữ
+            # index `norm` thật — dòng wrap lẻ giữa hai marker không vào run)
             run = [ln]
+            run_idx = [i]
             expect = 2
             for j in range(i + 1, len(norm)):
                 pj = norm[j]
@@ -289,12 +344,24 @@ def det_row_placement_pdf(pages: list[dict]) -> list[dict]:
                         and pj["y0"] - run[-1]["y1"] < 3.0 * max(
                             run[-1]["y1"] - run[-1]["y0"], 6.0):
                     run.append(pj)
+                    run_idx.append(j)
                     expect += 1
                 elif pj["y0"] > ln["y1"] + 3.0 * max(
                         ln["y1"] - ln["y0"], 6.0):
                     break
             if len(run) < 2:
                 i += 1
+                continue
+            # [dfix 2026-09-08] (a) loại trừ khối footnote chân trang: BẤT KỲ
+            # dòng số nào trong run có prose wrap cùng lề phía dưới.
+            if any(_is_footnote_marker_line(norm, k) for k in run_idx):
+                i += len(run)
+                continue
+            # [dfix 2026-09-08] (b) yêu cầu anchor 'STT' phía trên cùng x-range
+            # — không có = không xác định được đây là bảng STT → không HARD.
+            if not any(abs(ax - ln["x0"]) <= PDF_STT_ANCHOR_DX
+                       and ay1 <= ln["y0"] + 3.0 for ax, ay1 in anchors):
+                i += len(run)
                 continue
             # line có chữ gần nhất PHÍA TRÊN run
             prev = None
@@ -310,7 +377,7 @@ def det_row_placement_pdf(pages: list[dict]) -> list[dict]:
                                  "code": "PDF_BLANK_GAP",
                                  "gap_pt": round(gap, 1),
                                  "stt_run": len(run)})
-                break  # một trang chỉ cần bắt lần đầu
+                    break  # một trang chỉ cần bắt lần đầu
             i += len(run)
     return hits
 
@@ -365,7 +432,9 @@ def _smoke() -> int:
     ]))
     expect("good (4,2) pass", det_row_placement(good, REG) == [],
            det_row_placement(good, REG))
-    # defect K+N: header + 4 trắng + 1 data
+    # defect K+N: header + 4 trắng + 1 data — [Pin sync — owner N-only
+    # 2026-09-08] ROW_COUNT_MISMATCH đã BỎ khỏi detector; defect K+N vẫn RED
+    # qua BLANK_BEFORE_DATA (mutation suite V3a pin đúng hợp đồng này).
     bad = _min_docx(tmp / "bad.docx", _tbl([
         ["STT", "Tên ngành", "Mã ngành"],
         ["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""],
@@ -373,8 +442,7 @@ def _smoke() -> int:
     ]))
     hits = det_row_placement(bad, REG)
     codes = {h["code"] for h in hits}
-    expect("K+N defect RED", {"BLANK_BEFORE_DATA", "ROW_COUNT_MISMATCH"}
-           <= codes, hits)
+    expect("K+N defect RED", "BLANK_BEFORE_DATA" in codes, hits)
     # mutation: blank giữa hai dòng dữ liệu
     mid = _min_docx(tmp / "mid.docx", _tbl([
         ["STT", "Tên ngành", "Mã ngành"],

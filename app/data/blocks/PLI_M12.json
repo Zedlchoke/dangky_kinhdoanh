@@ -3,6 +3,17 @@
  "ten_mau": "Giấy đề nghị đăng ký thay đổi nội dung Giấy chứng nhận đăng ký doanh nghiệp/Thông báo thay đổi nội dung đăng ký doanh nghiệp",
  "blocks": [
   {
+   "t": "p",
+   "align": "right",
+   "runs": [
+    {
+     "text": "Mẫu số 12",
+     "b": true
+    }
+   ],
+   "role": "form-number"
+  },
+  {
    "t": "table",
    "widths": null,
    "rows": [

@@ -649,3 +649,14 @@ docs/audits/f7_final_audit_2026-09-09.md
 
 # --- [wave2-fixture 2026-09-09] B1-B5 fixture engine + harness export fixes ---
 tools/test_wave2_fixture_lane.py
+# --- [wave2-docx 2026-09-09] C1/C2 binding + C3/C4 nhãn Mẫu số (corpus lớp A) ---
+# C1: {..ngay_cap} trôi vào ô NƠI CẤP (slot '…' 1 ký tự vô hình với DOT_RUN) —
+#     10 block PLI_M42/43/63/68/69 + PLI_M72 x5: template + blocks + form_maps.
+# C2: PLI_M67 slot sau '(tên doanh nghiệp)' đổi co_quan_dkkd -> dn.ten_tieng_viet.
+# C3: PLI_M12 CHÈN dòng 'Mẫu số 12' đậm căn phải TRƯỚC band (TT 121/2026 p50).
+# C4: 15 form chuẩn hoá nhãn 'Mẫu số N' sang PHẢI+đậm (TT 121 p50/p67/p70;
+#     TT 68 p78/83/111/130/224/239) — 23 template đổi (15 C4 + M12 + 7 C1/C2).
+# 50/51 file của commit fix đã có entry từ các wave trước (template/blocks/
+# form_maps/build_form_maps/test_header_layout đều từng đổi) — entry DUY NHẤT
+# còn thiếu là test pin mới; không thêm duplicate để giữ exact-set H7.4.
+tools/test_wave2_docx_pins.py

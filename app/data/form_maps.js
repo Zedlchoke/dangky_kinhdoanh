@@ -3769,7 +3769,11 @@ window.FORM_MAPS = {
    },
    {
     "key": "ngay_cap",
-    "label": "Ngày cấp: … Nơi cấp:"
+    "label": "Ngày cấp:"
+   },
+   {
+    "key": "noi_cap",
+    "label": "Nơi cấp:"
    },
    {
     "key": "dia_chi_lien_lac",
@@ -3895,7 +3899,11 @@ window.FORM_MAPS = {
    },
    {
     "key": "ngay_cap",
-    "label": "Ngày cấp: … Nơi cấp:"
+    "label": "Ngày cấp:"
+   },
+   {
+    "key": "noi_cap",
+    "label": "Nơi cấp:"
    },
    {
     "key": "dia_chi_lien_lac",
@@ -4472,7 +4480,7 @@ window.FORM_MAPS = {
     "label": ""
    },
    {
-    "key": "co_quan_dkkd",
+    "key": "dn.ten_tieng_viet",
     "label": "(Cơ quan đăng ký kinh doanh cấp tỉnh) thông báo (các) chi nhánh/văn phòng đại diện/địa điểm kinh doanh sau đây của doanh"
    },
    {
@@ -5817,6 +5825,10 @@ window.FORM_MAPS = {
     "label": "/Số Hộ chiếu, Hộ chiếu nước ngoài hoặc giấy tờ có giá trị thay thế hộ chiếu nước ngoài (đối với người đại diện là người "
    },
    {
+    "key": "noi_cap",
+    "label": "Nơi cấp:"
+   },
+   {
     "key": "noi_nhan",
     "label": "Nơi nhận: \n- Tên, địa chỉ doanh nghiệp;\n- Cơ quan quản lý thuế tỉnh, thành phố …\n(để biết);\n- Cơ quan hải quan tỉnh, thà"
    }
@@ -5941,6 +5953,10 @@ window.FORM_MAPS = {
    {
     "key": "so_ho_chieu",
     "label": "/Số Hộ chiếu, Hộ chiếu nước ngoài hoặc giấy tờ có giá trị thay thế hộ chiếu nước ngoài (đối với người đại diện là người "
+   },
+   {
+    "key": "noi_cap",
+    "label": "Nơi cấp:"
    },
    {
     "key": "ly_do_giai_the",
@@ -7256,7 +7272,11 @@ window.FORM_MAPS = {
    },
    {
     "key": "ngay_cap",
-    "label": "Ngày cấp: … Nơi cấp:"
+    "label": "Ngày cấp:"
+   },
+   {
+    "key": "noi_cap",
+    "label": "Nơi cấp:"
    },
    {
     "key": "dia_chi_lien_lac",
@@ -7285,10 +7305,6 @@ window.FORM_MAPS = {
    {
     "key": "to_chuc.ten",
     "label": "Tên tổ chức (ghi bằng chữ in hoa):"
-   },
-   {
-    "key": "noi_cap",
-    "label": "Nơi cấp:"
    },
    {
     "key": "ndd.ho_ten",
@@ -7320,7 +7336,11 @@ window.FORM_MAPS = {
    },
    {
     "key": "ndd.ngay_cap",
-    "label": "Ngày cấp: … Nơi cấp:"
+    "label": "Ngày cấp:"
+   },
+   {
+    "key": "ndd.noi_cap",
+    "label": "Nơi cấp:"
    },
    {
     "key": "ndd.chuc_vu",

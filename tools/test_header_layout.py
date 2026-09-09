@@ -323,7 +323,29 @@ ALIGN_ENUM = {"left": "LEFT", "center": "CENTER", "right": "RIGHT"}
 # allowlist là Phụ lục -> 'Mẫu số' luôn có. Hiện trạng: +PLI_M12 (TT 121/2026
 # p50) phá premise đó; evidence: source PL1_Mau_12_tach_tu_file_full.docx
 # paragraph 0 chính là ô 'TÊN DOANH NGHIỆP'.
+# [C3 2026-09-09 — adjudicate lớp A] premise cũ "M12 giấy đề nghị -> KHÔNG
+# có dòng 'Mẫu số …'" là SAI so với nguồn pháp lý: TT 121/2026/TT-BTC phụ
+# lục I Mẫu số 12, tr.50 (ảnh /tmp/legal_p0_pages/M12_p50.png) in "Mẫu số 12"
+# IN ĐẬM góc PHẢI TRÊN, ngay PHÍA TRÊN band. Nguồn scrape migrate TT 121
+# mất dòng này -> generator (build_form_maps._normalize_mauso_label) CHÈN
+# đúng dòng "Mẫu số 12" đậm căn phải trước band. Contract MỚI cho nhóm này:
+# before == ["Mẫu số 12"] — vẫn là assert thật, không phải bypass.
 TOP_BAND_FORMS = {"PLI_M12"}
+
+
+def _mauso_paragraph_before_band(doc):
+    """Paragraph 'Mẫu số N' đứng ngay trước bảng header band (nếu có)."""
+    from docx.oxml.ns import qn as _qn
+    prev_p = None
+    for child in doc.element.body.iterchildren():
+        if child.tag == _qn("w:tbl"):
+            return prev_p
+        if child.tag == _qn("w:p"):
+            from docx.text.paragraph import Paragraph
+            t = Paragraph(child, doc).text.strip()
+            if t:
+                prev_p = child if t.startswith("Mẫu số") else None
+    return None
 
 
 def source_header_texts(fid, label):
@@ -408,17 +430,37 @@ def t_layout():
             # các paragraph "Mẫu số …" vẫn nằm TRƯỚC bảng (không bị hút vào ô);
             # KHÔNG còn paragraph header dọc nào sót lại trước bảng
             # [integ(F0L) 2026-09-06] PLI_M12 là GIẤY ĐỀ NGHỊ (TT 121/2026,
-            # ảnh p50) — band đứng ở ĐẦU tài liệu, KHÔNG có dòng 'Mẫu số …'
-            # phía trước (đó là contract của mẫu Phụ lục). Contract riêng cho
-            # nhóm này: KHÔNG text nào đứng trước band (assert thật, không
-            # phải bypass).
+            # ảnh p50) — band đứng ở ĐẦU tài liệu.
+            # [C3 2026-09-09] premise cũ "KHÔNG có dòng 'Mẫu số …' phía trước"
+            # adjudicate là SAI so với nguồn p50 (mẫu giấy IN "Mẫu số 12" đậm
+            # căn phải trên band) — generator giờ chèn dòng này, contract
+            # mới ở nhánh TOP_BAND_FORMS bên dưới.
             before = [t for t in body_texts_before_table(doc) if t.strip()]
             if fid in TOP_BAND_FORMS:
-                assert before == [], \
-                    "%s: band phải đứng đầu tài liệu, thấy %r" % (fid, before)
+                # [C3 2026-09-09] contract MỚI: generator CHÈN "Mẫu số 12"
+                # đậm căn phải trước band (nguồn pháp lý TT 121/2026 p50;
+                # premise cũ "KHÔNG text trước band" đã adjudicate là SAI —
+                # comment đầy đủ ở TOP_BAND_FORMS phía trên).
+                assert before == ["Mẫu số 12"], \
+                    "%s: trước band phải đúng ['Mẫu số 12'], thấy %r" % (fid, before)
             else:
                 assert any("Mẫu số" in t for t in before), \
                     "%s: mất dòng 'Mẫu số …' trước bảng: %r" % (fid, before)
+            # [C4 2026-09-09] nhãn "Mẫu số N" chuẩn nguồn pháp lý: in ĐẬM +
+            # căn PHẢI (TT 121/2026 p50/p67/p70; TT 68 p78/83/111/130/224/239
+            # — adjudicate lớp A 2026-09-09). Generator chuẩn hoá ở
+            # build_form_maps._normalize_mauso_label (M12 được CHÈN mới).
+            _mauso_el = _mauso_paragraph_before_band(doc)
+            assert _mauso_el is not None, \
+                "%s: không tìm thấy paragraph 'Mẫu số N' trước band" % fid
+            _mauso_p = Paragraph(_mauso_el, doc)
+            _got_align = str(_mauso_p.alignment).split(" ")[0] \
+                if _mauso_p.alignment is not None else "LEFT"
+            assert _got_align == "RIGHT", \
+                "%s: nhãn 'Mẫu số' chưa căn phải (align=%s)" % (fid, _got_align)
+            _bold_runs = [r for r in _mauso_p.runs if r.text.strip()]
+            assert _bold_runs and all(r.bold for r in _bold_runs), \
+                "%s: nhãn 'Mẫu số' chưa in đậm" % fid
             for t in before:
                 assert "CỘNG HÒA" not in t and "Số:" not in t \
                     and not t.startswith(label), \
@@ -554,6 +596,13 @@ def t_text_preserved():
             # gỡ dòng kẻ (norm gỡ token) và gỡ nhãn 'TÊN …' khỏi plain
             # [Pin sync — owner band-label removal 2026-09-08].
             plain = _swap_label_rule(plain)
+            # [C3 2026-09-09] M12: generator CHÈN dòng "Mẫu số 12" trước band
+            # (_normalize_mauso_label — chạy trong build_header_band_table nên
+            # lần band-tắt không sinh). Bù text chèn có chủ đích vào phía
+            # plain để phép so sánh chỉ đo hiệu ứng tái dụng 4 paragraph
+            # thành bảng, không tính dòng pháp lý mới (TT 121/2026 p50).
+            if fid in TOP_BAND_FORMS:
+                plain = "Mẫu số 12" + plain
             _n_plain = norm(plain).replace(norm(rule), "", 1)
             if bfm.header_name_binding()["forms"].get(fid):
                 _n_plain = _n_plain.replace(norm(label), "", 1)

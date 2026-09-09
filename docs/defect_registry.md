@@ -431,3 +431,12 @@ chiều ngược (template CÓ thêm so với nguồn); nguồn không đủ tá
   output-table giữ semantics riêng.
 - **Plan/gate:** `PLAN.md` mục F3T; không đóng defect trước khi full inventory,
   production-like mutation test, UI↔DOCX↔PDF parity và visual corpus đều PASS.
+
+## Entries phase9-bandfix (2026-09-09)
+
+- **[P1 MỞ] AUTO-CHK-KEY trùng giữa form:** key auto `chk_auto_co`/`chk_auto_khong`/`chk_auto_co_hien_thi_*` dùng chung nhiều form (M01–M05/M12/M15) — trong hồ sơ multi-form thực, tick khác lựa chọn ở 2 form cùng cụm sẽ hiển thị chéo (một key một giá trị). Harness corpus đã de-dup (wave2-B6 + unit test); production cần key unique per (form, cụm) ở generator — chạm form_maps/blocks/UI validation, làm lane riêng có owner decision.
+- **[P1 MỞ] D7 blind-spot split cấp-cặp:** cặp ký dọc 2 người (NGƯỜI NỘP/NGƯỜI NHẬN) tách 2 trang không bị D7 bắt (title+instruction cùng paragraph). E2 đã fix bằng keepNext; detector cần thêm luật cặp.
+- **[P1 MỚ] D8 không đo spacer nội bộ ô bảng ký:** giá trị `_SIG_CELL_TEMPLATE` cũ 800tw < sàn 72pt registry mà D8 không thấy (đo tới mép trang). E1 đã hạ 240tw + mirror generator; detector nên đọc spacer exact trong ô.
+- **[P1 MỞ] PLI_M45/M53 cụm ký mồ côi trang 2** (E4 no-op — para rỗng nằm SAU cụm trong template): 3 phương án ở KE_HOACH §P1.1.
+- **[ĐÓNG phase9] Class 4 band dọc** — bandfix a01f433 + verify 23/23 ảnh empty-paper + valid-full (band 36/64 TNR 13pt bold top, không wrap quốc hiệu, không stale mirror).
+- **[ĐÓNG phase9] A-1..A-7, A-9..A-15** — xem bảng `docs/audits/phase9_bandfix_audit_2026-09-09.md` §2 (mỗi mục có fix + pin + verify).

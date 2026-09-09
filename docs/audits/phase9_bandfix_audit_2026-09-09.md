@@ -68,3 +68,27 @@ Mức: BLOCKER / MAJOR / MINOR. Trạng thái tính đến commit cuối phiên.
 - DECIDED-DIFF nhãn band + M09 các câu hỏi owner mở (đang PIN BLOCKED trong
   suite `r3b1` — không mất).
 - Detector blind-spot D7 (split cấp-cặp) / D8 (spacer nội bộ ô).
+
+## 5. Kết quả corpus v2 SAU wave2+wave3 (bằng chứng cuối phiên)
+
+| Hạng mục | Kết quả |
+|---|---|
+| Corpus `phase9_bandfix_v2` | **450 record (90 render-unit × 5 fixture — M11 removed đã loại khỏi inventory)**; HARD **0**; candidate **5** (D9 PLI_M10 min-col 624 — pixel-OK đã adjudicate từ phase8g, nay cột thoáng hơn); export error 0 |
+| Word open-direct 16.16.27 | **90/90 PASS_OPEN_DIRECT** (`word_open/inventory.json`) |
+| Contact sheet | 450 sheet tại `_qa_contact/<fixture>/` (5 fixture × 90) |
+| Verify từng fix bằng ảnh/text-layer | Mục 1-10 §5.1 dưới — **ĐẠT** (trừ A-8 đã ghi P1) |
+| D5 allowlist | prune **26 entry stale** + thêm **4 entry (ii)** Lead duyệt ảnh; H7 exact-set 57/57 |
+| Runner | **68 PASS / 0 FAIL — VERDICT PASS** (65 + 3 suite wave2/3 mới đăng ký) |
+
+### 5.1 Verify từng fix trên corpus v2 (Lead, ảnh + text-layer)
+
+1. PLI_M12: có "Mẫu số 12" đậm căn phải trên band — ĐẠT (ảnh).
+2. Nhãn "Mẫu số" phải+đậm: M17 ĐẠT (ảnh đại diện); 23/23 pin structural `t_c4_mauso_right_bold` xanh.
+3. Ngày cấp/Nơi cấp 2 giá trị: M42/M63/M68/m72_dntn (text: "Ngày cấp: 14/02/2025 Nơi cấp: Sở Kế hoạch…") — ĐẠT; 10 block pin `test_wave2_docx_pins` 6/6.
+4. PLI_M67: "(tên doanh nghiệp) CÔNG TY TNHH MTV KỸ THUẬT - XÂY DỰNG TRƯỜNG THÀNH 23" — ĐẠT (text).
+5. PLI_M70: 1 trang, cặp ký trang 1 (E1) — ĐẠT (ảnh + page count).
+6. PLII_M17: 2 trang nhưng cặp NGƯỜI NỘP/NGƯỜI NHẬN nguyên khối cùng trang (E2) — ĐẠT (ảnh).
+7. m72_dntn + m72_dhdn: 1 trang (E3; W3 pin 15/0) — ĐẠT.
+8. Bảng dữ liệu valid-full: M10 có dòng + % hết số 12 chữ số (B3); PLII_M01 ngày sinh dd/mm/yyyy + VSIC giữ 0 đầu (B1+B2) — ĐẠT (text).
+9. Tick choice-variants: m72_dntn ngành chính chỉ dòng 1 có X (B4a) — ĐẠT (text); **B6** merge de-dup 7 cụm "Có X Không X" (M01–M05/M12/M15) — ĐẠT (DOCX XML: 1 X-run) sau re-render fixture.
+10. PLI_M45/M53: vẫn 2 trang (E4 no-op đã ghi) — P1 adjudicate tiếp.

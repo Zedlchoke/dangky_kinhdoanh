@@ -1397,6 +1397,16 @@ def _add_rows_cantsplit(seg: str, rows: list[str]) -> str:
     return out
 
 
+def _spacing_exact_line_twips(p_xml: str) -> int | None:
+    """w:line (twips) khi paragraph khai lineRule='exact' (spacer
+    exact-height); không khai / không exact -> None."""
+    sp = re.search(r"<w:spacing\b[^>]*/>", p_xml)
+    if not sp or 'w:lineRule="exact"' not in sp.group(0):
+        return None
+    ml = re.search(r'w:line="(\d+)"', sp.group(0))
+    return int(ml.group(1)) if ml else None
+
+
 def _ensure_signature_space(xml: str, form_id: str | None = None) -> str:
     """Class 7 + WLAY-004: (a) mỗi title vùng ký có >=1 dòng trống phía trên
     trong cùng container (hoặc spacing before đủ) — hành vi cũ giữ nguyên;
@@ -1410,7 +1420,9 @@ def _ensure_signature_space(xml: str, form_id: str | None = None) -> str:
     body = bm.group(2)
     paras = list(_SIG_TOKEN_RE.finditer(body))
     # CẶP token với phần tử kế tiếp trong cùng container để tính vùng viết
-    inserts: list[tuple[int, int, str]] = []   # (start, end, spacer_xml)
+    # [E2] op (start, end, xml): start==end -> chèn; start<end -> thay
+    # nguyên paragraph (để gắn keepNext — xem banner [E2] trong vòng lặp).
+    ops: list[tuple[int, int, str]] = []
     for idx, m in enumerate(paras):
         tok = m.group(0)
         if not tok.startswith("<w:p"):
@@ -1439,7 +1451,7 @@ def _ensure_signature_space(xml: str, form_id: str | None = None) -> str:
         has_space = bool(sp and int(sp.group(1)) >= _SIG_MIN_SPACE_TWIPS)
         if not prev_empty and not has_space:
             # (a) chèn dòng trống ngay TRƯỚC title — giữ hành vi Class 7
-            inserts.append((m.start(), m.start(), "<w:p/>"))
+            ops.append((m.start(), m.start(), "<w:p/>"))
         # (b) vùng viết dưới instruction — Phase 5R2
         # dò trong cùng container: chuỗi paragraph rỗng rồi tới paragraph có
         # chữ (F) hoặc biên container/kết thúc.
@@ -1453,26 +1465,45 @@ def _ensure_signature_space(xml: str, form_id: str | None = None) -> str:
             if not ntok.startswith("<w:p"):
                 continue
             ntext = _sig_para_text(ntok)
+            sp2 = _SIG_SPACING_RE.search(ntok)
+            before2 = int(sp2.group(1)) if sp2 else 0
             if ntext.strip():
-                sp2 = _SIG_SPACING_RE.search(ntok)
-                existing += int(sp2.group(1)) if sp2 else 0
+                existing += before2
                 f_text = ntext
                 break
-            sp2 = _SIG_SPACING_RE.search(ntok)
-            existing += 240 + (int(sp2.group(1)) if sp2 else 0)
-        if f_text and existing < min_write:
+            # [E2 hardening] paragraph rỗng exact-height (spacer do chính
+            # pass này chèn) có chiều cao THẬT là w:line, không phải dòng
+            # trắng ước lượng 240 — cộng w:line exact để không double-insert
+            line_exact = _spacing_exact_line_twips(ntok)
+            existing += ((line_exact if line_exact is not None else 240)
+                         + before2)
+        if not f_text:
+            continue
+        # [E2 wave3-paginate — PLII_M17 cặp ký dọc bị cắt] cặp đa-người-ký
+        # DỌC: đoạn chữ kế tiếp là title của cụm ký khác ("NGƯỜI NỘP (Ký…)"
+        # kế "NGƯỜI NHẬN (Ký…)") — spacer deficit chèn giữa 2 cụm đẩy cụm
+        # sau rơi MỘT MÌNH trang kế ("NGƯỜI NHẬN" lơ lửng). Bó instruction
+        # hiện tại với cụm kế: keepNext trên paragraph instruction và trên
+        # spacer vừa chèn → cặp nguyên khối (atomic).
+        bind_next = bool(_SIG_TITLE_RE.search(f_text))
+        if bind_next and "<w:keepNext/>" not in tok:
+            ops.append((m.start(), m.end(),
+                        _ppr_add_flag(tok, "<w:keepNext/>")))
+        if existing < min_write:
             deficit = min_write + _SIG_WRITE_SAFETY_TWIPS - existing
             spacer = ("<w:p><w:pPr>"
                       '<w:spacing w:before="0" w:after="0" w:line="%d" '
                       'w:lineRule="exact"/></w:pPr></w:p>' % deficit)
-            inserts.append((m.end(), m.end(), spacer))
-    if not inserts:
+            if bind_next:
+                spacer = _ppr_add_flag(spacer, "<w:keepNext/>")
+            ops.append((m.end(), m.end(), spacer))
+    if not ops:
         return xml
     out: list[str] = []
     pos = 0
-    for s, e, seg in inserts:
+    for s, e, seg in ops:
         if s < pos:
-            continue  # đè nhau (không xảy ra: mỗi paragraph một insert)
+            continue  # đè nhau (không xảy ra: mỗi paragraph một edit)
         out.append(body[pos:s])
         out.append(seg)
         pos = e

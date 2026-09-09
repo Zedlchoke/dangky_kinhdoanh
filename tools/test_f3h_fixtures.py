@@ -247,12 +247,14 @@ def f3_m31():
         assert value in text, "PDF không có giá trị tên"
         # band: dòng quốc hiệu trang 1, giá trị nằm trong vùng band quanh nó
         # (tên dài wrap có thể nằm TRÊN dòng quốc hiệu)
+        # [bandfix 2026-09-09] band 13pt (chuẩn hành chính VN) + cột trái
+        # 36% -> tên dài wrap tới 3-4 dòng, vùng nhìn lùi nới mi-2 -> mi-4.
         first = raw.split("\n")
         mi = next(i for i, ln in enumerate(first)
                   if "cong hoa xa hoi chu nghia viet nam" in hs._squeeze(ln))
-        assert value in _norm("\n".join(first[max(0, mi - 2):mi + 3])), \
+        assert value in _norm("\n".join(first[max(0, mi - 4):mi + 3])), \
             "giá trị band không nằm ở vùng band quốc hiệu: %r" % (
-                first[max(0, mi - 2):mi + 3],)
+                first[max(0, mi - 4):mi + 3],)
         # thân: nhãn pháp định + giá trị cùng dòng
         assert re.search(r"Tên doanh nghiệp \(ghi bằng chữ in hoa\):\s*%s"
                          % re.escape(value), text), \

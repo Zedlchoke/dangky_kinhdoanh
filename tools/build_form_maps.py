@@ -3222,8 +3222,21 @@ HEADER_BAND_MOTTO_LINE2 = "Độc lập - Tự do - Hạnh phúc"
 HEADER_BAND_RULE_RE = re.compile(r"^[\s\-_.…—–]+$")
 # "……, ngày…… tháng…… năm ……" — băng dưới cột phải
 _HEADER_BAND_DATE_RE = re.compile(r"^[\s.…,;:\-–—]*ngay\b.*\bthang\b.*\bnam\b")
-# Tỉ lệ chiều rộng cột TRÁI (phần còn lại cho khối quốc hiệu + ngày ký).
-HEADER_BAND_LEFT_RATIO = 0.42
+# [bandfix 2026-09-09] Tỉ lệ chiều rộng cột TRÁI (phần còn lại cho khối quốc
+# hiệu + ngày ký). Trước đây 0.42: cột phải 58% (5011/8640 twips = 250.5pt)
+# KHÔNG đủ chứa "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM" trên 1 dòng — quốc hiệu
+# bị wrap chữ "NAM" rơi xuống (ảnh owner PLI_M12). Đo đạc (PIL, Times New
+# Roman Bold): dòng quốc hiệu = 271.5pt @13pt (bản cũ Arial bold 12pt cũng đã
+# là ~251pt > 250.5pt — chỉ thiếu 0.15pt là wrap). Chọn 13pt chuẩn văn bản
+# hành chính VN -> cột phải cần >= 5429 twips + margin an toàn -> 64% của
+# 8640 = 5530 twips (276.5pt).
+# Ràng buộc gate test_header_layout: cột phải >= 50% tổng — 64% thỏa.
+HEADER_BAND_LEFT_RATIO = 0.36
+# [bandfix 2026-09-09] Font band đầu trang — chuẩn văn bản hành chính VN
+# (Nghị định 30/2020/NĐ-CP: Times New Roman 13-14pt). Toàn bộ 4 ô band cùng
+# cỡ chữ để dòng tên DN và dòng đầu quốc hiệu CÙNG BASELINE.
+HEADER_BAND_FONT = "Times New Roman"
+HEADER_BAND_SIZE_PT = 13
 _HEADER_BAND_ALIGN = {(0, 0): "left", (0, 1): "center",
                       (1, 0): "left", (1, 1): "right"}
 
@@ -3269,6 +3282,34 @@ def _hdr_para_align(p_el, mode):
         jc = OxmlElement("w:jc")
         pPr.append(jc)
     jc.set(qn("w:val"), mode)
+
+
+def _band_apply_font(p_el, doc, *, bold):
+    """[bandfix 2026-09-09] Đưa mọi run của paragraph band về Times New Roman
+    13pt (chuẩn văn bản hành chính VN). bold=True ép in đậm (băng trên: tên
+    chủ thể + khối quốc hiệu); bold=None giữ nguyên trọng số (băng dưới
+    "Số:"/ngày ký — bản giấy KHÔNG đậm). Giữ mọi rPr khác (w:u gạch chân
+    dòng motto do _restyle_national_motto gắn, w:i của dòng ngày tháng...)."""
+    from docx.shared import Pt
+    from docx.text.paragraph import Paragraph
+    for run in Paragraph(p_el, doc).runs:
+        run.font.name = HEADER_BAND_FONT
+        run.font.size = Pt(HEADER_BAND_SIZE_PT)
+        if bold is not None:
+            run.font.bold = bold
+
+
+def _band_cell_valign_top(cell):
+    """[bandfix 2026-09-09] w:vAlign=top cho ô band — 2 ô băng trên cùng
+    baseline (tên DN không trôi xuống thấp hơn quốc hiệu). Gọi SAU
+    _band_set_borders_none để w:vAlign đứng SAU w:tcBorders trong tcPr
+    (đúng thứ tự schema OOXML — Word nghiêm)."""
+    tcPr = cell._tc.get_or_add_tcPr()
+    for old in tcPr.findall(qn("w:vAlign")):
+        tcPr.remove(old)
+    va = OxmlElement("w:vAlign")
+    va.set(qn("w:val"), "top")
+    tcPr.append(va)
 
 
 def _restyle_national_motto(p_el, form_id):
@@ -3478,6 +3519,14 @@ def build_header_band_table(doc, form_id):
             tc.append(src)                       # di chuyển (không copy)
             _hdr_para_align(src, _HEADER_BAND_ALIGN[(ri, ci)])
     _restyle_national_motto(window[1], form_id)
+    # [bandfix 2026-09-09] font + nền dọc: TOÀN band Times New Roman 13pt;
+    # băng trên (tên chủ thể | quốc hiệu) IN ĐẬM; cả 4 ô vAlign=top để dòng
+    # tên DN cùng baseline với dòng đầu quốc hiệu. Chạy SAU
+    # _restyle_national_motto để run gạch chân motto vừa dựng cũng nhận font.
+    for ri in range(2):
+        for ci in range(2):
+            _band_apply_font(window[ri * 2 + ci], doc, bold=(ri == 0))
+            _band_cell_valign_top(tbl.rows[ri].cells[ci])
 
     parent = body                       # 4 paragraph là con trực tiếp của body
     parent.insert(insert_at, tbl_el)
@@ -3559,18 +3608,18 @@ def _bind_header_name_slot(table, form_id):
     if token in para.text:
         return False   # đã bind (regen lần 2)
     # [Owner 2026-09-08] XOÁ toàn bộ run (nhãn + dòng kẻ) rồi thêm 1 run
-    # duy nhất chứa token. Giữ bold từ run đầu tiên (nếu có).
-    first_bold = para.runs[0].bold if para.runs else None
-    font_name = None
-    if para.runs:
-        font_name = para.runs[0].font.name
+    # duy nhất chứa token.
+    # [bandfix 2026-09-09] run tên chủ thể: IN ĐẬM + Times New Roman 13pt —
+    # ÉP CỨNG (không kế thừa run nguồn) để cùng baseline/độ cao với dòng đầu
+    # quốc hiệu ở ô phải (mock bản giấy ĐKKD VN). Đặt size TƯỜNG MINH: thiếu
+    # thì run rơi về docDefault 12pt trong khi quốc hiệu 13pt -> lệch baseline.
     for run in list(para.runs):
         run._r.getparent().remove(run._r)
+    from docx.shared import Pt
     new_run = para.add_run(token)
-    if first_bold:
-        new_run.bold = True
-    if font_name:
-        new_run.font.name = font_name
+    new_run.bold = True
+    new_run.font.name = HEADER_BAND_FONT
+    new_run.font.size = Pt(HEADER_BAND_SIZE_PT)
     return True
 
 

@@ -490,6 +490,11 @@ def render(template_path: str | os.PathLike, data: dict,
                     xml = raw.decode("utf-8")
                     xml = _apply_conditions(xml, payload)
                     xml = _expand_loops(xml, payload)
+                    # [E3 wave3-paginate] nén run ≥3 paragraph rỗng đứng
+                    # ngay sau bảng (body-level) về 1 paragraph — gốc rễ
+                    # m72_dhdn mục kế tràn trang gần trống. Header/footer
+                    # không có w:body nên pass này tự no-op ở đó.
+                    xml = _collapse_blank_para_runs(xml)
                     # Phase 6V-V2 (C3/Q-V1): {chk_*} -> ô vuông viền + X
                     # (trước subst thường để tag bị tiêu thụ tại đây)
                     xml = _chk_glyph_boxes(xml, payload)
@@ -886,6 +891,345 @@ def _drop_trailing_empty_para(xml: str) -> str:
     # 61c8068: slice body[:spans[cut][0]] đã cắt mất sectPr (Lane D F1)
     return (xml[:bm.start(2)] + body[:spans[cut][0]] +
             body[spans[-1][0]:] + xml[bm.end(2):])
+
+# ---------------------------------------------------------------------------
+# [E3 wave3-paginate — m72_dhdn: run ≥3 paragraph rỗng ngay sau bảng]
+# Tàn dư đệm viết tay trên bản giấy: template PLI_M72 giữ 5-9 paragraph rỗng
+# liên tiếp NGAY SAU bảng thành viên (body-level) — khi mục kế ("8. Nơi đăng
+# ký") rơi sát mép trang, cả run tràn sang trang kế gần trống (~96% trắng).
+# Điều trị CÓ ĐIỆU KIỆN HẸP ngay lúc render: chỉ run ≥3 paragraph rỗng
+# liên tiếp ĐỨNG NGAY SAU `</w:tbl>` ở body-level được nén về 1 paragraph —
+# giữ paragraph CUỐI của run (mang w:spacing before=120 tách bảng khỏi mục
+# kế). Run rỗng ở nơi khác (giữa văn bản thường, run <3) KHÔNG bị đụng.
+# Chạy NGAY SAU _expand_loops (bảng lặp đã nhân bản xong) và TRƯỚC các pass
+# khối ký/spacer nên không bao giờ xóa vùng viết do _ensure_signature_space
+# chèn (spacer chèn SAU pass này). Định nghĩa "rỗng" dùng chung với
+# _drop_trailing_empty_para (không w:t chữ, không drawing/pict/object).
+# ---------------------------------------------------------------------------
+
+def _collapse_blank_para_runs(xml: str) -> str:
+    """Nén run ≥3 paragraph rỗng liên tiếp đứng ngay sau bảng (body-level)
+    về 1 paragraph giữ lại là paragraph CUỐI của run. Không có run thỏa ->
+    XML nguyên vẹn (byte-identical)."""
+    bm = _BODY_RE.search(xml)
+    if not bm:
+        return xml
+    body = bm.group(2)
+    spans = _split_body_children(body)
+    if len(spans) < 2:
+        return xml
+    drops: list[tuple[int, int]] = []
+    i = 0
+    while i < len(spans):
+        s, e = spans[i]
+        if not body[s:e].startswith("<w:tbl"):
+            i += 1
+            continue
+        # run paragraph rỗng liền sau bảng
+        j = i + 1
+        while j < len(spans):
+            sj, ej = spans[j]
+            seg = body[sj:ej]
+            if not seg.startswith("<w:p"):
+                break
+            texts = "".join(re.findall(r"<w:t[^>]*>([^<]*)</w:t>", seg))
+            if texts.strip() or _TRAILING_EMPTY_HAS_CONTENT_RE.search(seg):
+                break
+            j += 1
+        if j - (i + 1) >= 3:
+            # giữ paragraph CUỐI của run (before=120 tách bảng khỏi mục kế)
+            drops.extend(spans[i + 1:j - 1])
+        i = j
+    if not drops:
+        return xml
+    out: list[str] = []
+    pos = 0
+    for s, e in drops:
+        out.append(body[pos:s])
+        pos = e
+    out.append(body[pos:])
+    return xml[:bm.start(2)] + "".join(out) + xml[bm.end(2):]
+
+
+# ---------------------------------------------------------------------------
+# Phase 5R1 (WLAY-006, guard cuối tại export): field code Word bị làm phẳng
+#
+# Generator (build_form_maps.drop_flat_field_code_paras) đã loại paragraph
+# field code stale lúc SINH template, nhưng template hiện hành chỉ được làm
+# mới bởi Lead regen. Guard này vô hiệu hoá text field code literal CÒN SÓT
+# trong w:t NGAY LÚC RENDER để đường export không bao giờ in chữ rác
+# ' PAGE \\* MERGEFORMAT 2' (đồng bộ ngữ pháp với detector D2 của gate và
+# với FLAT_FIELD_CODE_RE của generator — 3 nơi phải giữ cùng một grammar).
+# Token 'MERGEFORMAT' không phải nội dung pháp lý; chỉ xoá text của w:t,
+# không đổi cấu trúc paragraph.
+# ---------------------------------------------------------------------------
+
+_FLAT_FIELD_CODE_RE = re.compile(
+    r"\b(?:PAGE|NUMPAGES|TOC|HYPERLINK|SEQ|STYLEREF|IF)\s*\\\*|\bMERGEFORMAT\b")
+_WT_RE = re.compile(r"(<w:t[^>]*>)([^<]*)(</w:t>)")
+
+
+def _strip_flat_field_code(xml: str) -> str:
+    """Vô hiệu hoá literal field code trong w:t (giữ tag, xoá text)."""
+    def _repl(m: re.Match) -> str:
+        return (m.group(1) + m.group(3)) if (
+            m.group(2) and _FLAT_FIELD_CODE_RE.search(m.group(2))
+        ) else m.group(0)
+    return _WT_RE.sub(_repl, xml)
+
+
+# ---------------------------------------------------------------------------
+# Class 7 (defect_registry.md) + Phase 5R2 (WLAY-003/004): khối ký
+#
+# Bản giấy nguồn LUÔN tách dòng tiêu đề vùng ký khỏi nội dung phía trên bằng
+# ít nhất một dòng trống, hoặc bằng w:spacing w:before=120 ngay trên đoạn
+# title (đo tại BASE: 84 title ký nguồn — 39 case sát nội dung đều có
+# spacing 120, 44 case còn lại có 1-2 đoạn trống, 1 outlier 9). Generator
+# (blocks -> template) có chỗ làm RƠI dòng trống đó (vd PLI_M70: cặp
+# "NGƯỜI NỘP/NGƯỜI NHẬN (Ký và ghi họ tên)" bị bó vào ô bảng, không còn
+# dòng trống lẫn spacing -> in ra không có chỗ ký). Blocks là generated
+# NÊN KHÔNG sửa generated blocks: xử lý NGAY TRƯỚC KHI XUẤT — với mọi
+# paragraph document.xml chứa marker title ký "(Ký…"/"(Đã ký…)", nếu
+# KHÔNG có đoạn trống liền trước trong cùng container (body/ô bảng) và
+# KHÔNG có spacing before >= 120 thì chèn một paragraph rỗng ngay trước.
+# Chỉ THÊM khoảng trống, không đổi chữ/số đoạn có nội dung.
+#
+# Phase 5R2 bổ sung hai nội dung:
+#
+# WLAY-003 (_keep_signature_blocks): khối ký bị tách qua trang — instruction
+# rơi đầu trang trong khi title nằm trang trước (SIG_SPLIT: PLI_M09 trang 5,
+# PLII_M25). Ở mức XML có chủ đích (không hard-code page break):
+#   - paragraph chứa instruction "(Ký…"/"(Đã ký…" -> w:keepLines (cụm
+#     title+instr trong MỘT paragraph qua w:br không bị xẻ dòng);
+#   - paragraph title ký NGAY TRƯỚC instruction trong cùng container ->
+#     w:keepNext + w:keepLines (title dính theo instr);
+#   - bảng chứa khối ký (sau WLAY-002 regen: bảng 1x2) -> w:tr/w:cantSplit
+#     cho mọi hàng (hàng ký không bị xẻ giữa trang).
+# Chỉ THÊM thuộc tính khi chưa có (idempotent — render 2 lần cùng bytes).
+#
+# WLAY-004 (_ensure_signature_space mở rộng): MỖI cụm ký — không chỉ cụm
+# cuối — phải có vùng viết dọc dưới instruction. Nếu NGAY SAU paragraph
+# instruction (sau một chuỗi paragraph rỗng nếu có) là nội dung chữ kế tiếp
+# trong cùng container mà khoảng dọc ước tính < ngưỡng contract
+# (min_write_gap_pt của form trong tools/phase5r_expectations.json; mặc định
+# 480 twips ~ 2 dòng trống) thì chèn MỘT paragraph đệm exact-height ngay sau
+# instruction (chỉ THÊM khoảng, không đổi chữ, không đụng paragraph khác).
+# Trong bảng: đệm nằm trong ô (row height/spacing trong ô).
+# ---------------------------------------------------------------------------
+
+# [WAVE v7] title/instruction nhận THÊM chỉ thị KHÔNG ngoặc đứng dòng riêng
+# ("Ký, ghi họ tên và đóng dấu" của giấy chứng nhận; "Ký và ghi họ tên từng
+# thành viên") — trước đây các cụm này không được chèn vùng viết và không
+# keep-together. Anchor ^: chỉ dòng BẮT ĐẦU bằng chỉ thị, không bắt câu
+# narrative có chữ "ký" giữa câu.
+_SIG_TITLE_RE = re.compile(
+    r"\((?:Ký|Đã ký)"
+    r"|^\s*Ký(?:,| và)? ghi (?:rõ )?họ tên(?: từng thành viên)?"
+    r"(?: và đóng dấu)?(?: [0-9]{1,2})?"
+    r"|^\s*Ký, họ tên, đóng dấu")
+# Cụm "Đã ký" (đã ký số/điện tử): KHÔNG cần vùng viết tay (owner v7) —
+# render không chèn spacer vùng viết dưới instruction này.
+_SIG_DAKY_RE = re.compile(r"\(Đã ký\b|^\s*Đã ký\b")
+_SIG_MIN_SPACE_TWIPS = 120
+_SIG_WRITE_DEFAULT_TWIPS = 480      # 2 dòng trống ~ vùng viết tối thiểu
+_SIG_WRITE_SAFETY_TWIPS = 60        # dự phòng sai số metric dòng khi in
+_SIG_SPACING_RE = re.compile(r'<w:spacing[^>]*w:before="(\d+)"')
+# token quét tuần tự: biên container (ô bảng/bảng) hoặc một paragraph.
+# NHÁNH có cặp đóng phải đứng TRƯỚC ([ >] loại luôn '/'), nếu không
+# "<w:p/>" sẽ bị nhánh đầu nuốt chung với paragraph kế tiếp.
+_SIG_TOKEN_RE = re.compile(
+    r"<w:tc[ >]|</w:tc>|<w:tbl[ >]|</w:tbl>"
+    r"|<w:p[ >].*?</w:p>|<w:p[^>]*/>", re.S)
+_SIG_T_RE = re.compile(r"<w:t[^>]*>([^<]*)</w:t>")
+
+_EXPECT_PATH = Path(__file__).resolve().parent.parent / "tools" / \
+    "phase5r_expectations.json"
+_EXPECT_CACHE: dict | None = None
+
+
+def _signature_expectations() -> dict:
+    """Registry kỳ vọng khối ký (đọc 1 lần; vắng mặt/hỏng -> {})."""
+    global _EXPECT_CACHE
+    if _EXPECT_CACHE is None:
+        try:
+            _EXPECT_CACHE = json.loads(
+                _EXPECT_PATH.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            _EXPECT_CACHE = {}
+    return _EXPECT_CACHE
+
+
+def _sig_write_min_twips(form_id: str | None) -> int:
+    """Ngưỡng vùng viết dưới instruction (twips): min_write_gap_pt × 20 của
+    contract nếu form có khai; ngược lại mặc định 2 dòng trống (480)."""
+    sig = ((_signature_expectations().get(form_id or "") or {})
+           .get("signature") or {})
+    gap_pt = sig.get("min_write_gap_pt")
+    try:
+        return max(0, int(round(float(gap_pt) * 20)))
+    except (TypeError, ValueError):
+        return _SIG_WRITE_DEFAULT_TWIPS
+
+
+def _sig_para_text(p_xml: str) -> str:
+    return "".join(_SIG_T_RE.findall(p_xml))
+
+
+def _ppr_add_flag(p_xml: str, flag: str) -> str:
+    """Thêm flag (<w:keepNext/>|<w:keepLines/>) vào pPr của paragraph theo
+    đúng thứ tự schema (ngay sau w:pStyle nếu có). Idempotent: đã có -> giữ
+    nguyên bytes."""
+    if flag in p_xml:
+        return p_xml
+    m = re.match(r"<w:p(?:\s[^>]*)?>", p_xml)
+    if not m:
+        return p_xml  # <w:p/> tự đóng — không có pPr để thêm
+    head, rest = m.group(0), p_xml[m.end():]
+    if rest.startswith("<w:pPr>"):
+        at = len("<w:pPr>")
+        sm = re.match(r"(<w:pStyle[^>]*/>)", rest[at:])
+        if sm:
+            at += sm.end()
+        return head + rest[:at] + flag + rest[at:]
+    return head + "<w:pPr>" + flag + "</w:pPr>" + rest
+
+
+def _sig_title_only(text: str) -> bool:
+    """Paragraph NHÁN người ký (chỉ title, không paren instruction): chữ IN
+    ngắn. Dùng cho cặp title-para + instr-para chạy kề."""
+    t = text.strip()
+    if not t or _SIG_TITLE_RE.search(t) or len(t) > 80:
+        return False
+    alpha = [c for c in t if c.isalpha()]
+    return len(alpha) >= 4 and sum(c.isupper() for c in alpha) / len(alpha) >= 0.6
+
+
+def _keep_signature_blocks(xml: str) -> str:
+    """WLAY-003: keepLines/keepNext cho cụm ký + cantSplit cho hàng bảng ký.
+    Trả XML mới; cụm đã mang thuộc tính -> bytes giữ nguyên (idempotent).
+
+    Pass 1 — paragraph: token-walk theo container; paragraph chứa instruction
+    "(Ký…"/"(Đã ký…" nhận keepLines; nếu NGAY TRƯỚC nó (cùng container) là
+    paragraph nhãn IN HOA thì nhãn đó nhận keepNext+keepLines.
+    Pass 2 — bảng: bảng có <=4 hàng và MỌI hàng đều chứa ô instruction ký ->
+    cantSplit cho từng hàng chưa có (hàng ký không bị xẻ giữa trang)."""
+    bm = _BODY_RE.search(xml)
+    if not bm:
+        return xml
+    body = bm.group(2)
+
+    # --- pass 1: paragraph-level keep ---
+    # Title para NGAY TRƯỚC instr para được GIỮ LẠI (buffer) đến khi biết
+    # token kế tiếp: là instr -> flush với keepNext+keepLines; khác -> flush
+    # nguyên trạng. Idempotent: đã có flag thì bytes giữ nguyên.
+    # Kèm theo (5R4): footnote-body ("3 Người đề nghị ký ...") nhận keepLines
+    # — footnote bị xẻ giữa câu sang trang gần trống (PLI_M80 long-boundary
+    # trang 3 còn 3 từ 'dấu vào phần này.').
+    out: list[str] = []
+    pos = 0
+    pending: tuple[int, int, str] | None = None  # (start, end, tok) title treo
+
+    def _flush(with_keep: bool) -> None:
+        nonlocal pending, pos
+        if pending is not None:
+            s, e, tok = pending
+            out.append(body[pos:s])
+            if with_keep:
+                # thứ tự schema: keepNext TRƯỚC keepLines — chèn keepLines
+                # trước rồi keepNext cùng vị trí (sau pStyle) giữ đúng thứ tự
+                tok = _ppr_add_flag(
+                    _ppr_add_flag(tok, "<w:keepLines/>"), "<w:keepNext/>")
+            out.append(tok)
+            pos = e
+            pending = None
+
+    for m in _SIG_TOKEN_RE.finditer(body):
+        tok = m.group(0)
+        if tok.startswith("<w:tc") or tok in ("</w:tc>", "</w:tbl>") \
+                or tok.startswith("<w:tbl"):
+            _flush(False)
+            out.append(body[pos:m.end()])
+            pos = m.end()
+            continue
+        text = _sig_para_text(tok)
+        if _SIG_TITLE_RE.search(text):
+            _flush(True)   # title treo liền trước instr -> keepNext+keepLines
+            out.append(body[pos:m.start()])
+            out.append(_ppr_add_flag(tok, "<w:keepLines/>"))
+            pos = m.end()
+            continue
+        if text.strip() and _sig_title_only(text):
+            # nhãn IN HOA — giữ lại chờ token kế tiếp (title của cụm?)
+            out.append(body[pos:m.start()])
+            pos = m.start()
+            pending = (m.start(), m.end(), tok)
+            continue
+        # 5R4: footnote-body ("3 Người đề nghị ký ...") — keepLines cả đoạn,
+        # footnote không bị xẻ giữa câu sang trang gần trống
+        if text.strip() and _FOOTNOTE_BODY_RE.match(text.strip()):
+            _flush(False)
+            out.append(body[pos:m.start()])
+            out.append(_ppr_add_flag(tok, "<w:keepLines/>"))
+            pos = m.end()
+            continue
+        _flush(False)
+        out.append(body[pos:m.end()])
+        pos = m.end()
+    _flush(False)
+    out.append(body[pos:])
+    body = "".join(out)   # không đổi khi không có cụm ký (ghép lại nguyên vẹn)
+
+    # --- pass 2: table row cantSplit (thay từ cuối lên đầu để giữ offset) ---
+    segs = list(_iter_balanced_tbls(body))
+    for start, end in reversed(segs):
+        seg = body[start:end]
+        rows = ROW_RE.findall(seg)
+        if not rows or len(rows) > _SIG_TABLE_MAX_ROWS:
+            continue
+        if not all(
+                any(_SIG_TITLE_RE.search(_sig_para_text(p))
+                    for p in re.findall(r"<w:p[ >].*?</w:p>|<w:p[^>]*/>",
+                                        row, re.S))
+                for row in rows):
+            continue
+        new_seg = _add_rows_cantsplit(seg, rows)
+        # [E1 wave3-paginate] nén chiều cao hàng ký ngang — xem
+        # _compact_sig_table ngay dưới.
+        new_seg = _compact_sig_table(new_seg)
+        if new_seg != seg:
+            body = body[:start] + new_seg + body[end:]
+    return xml[:bm.start(2)] + body + xml[bm.end(2):]
+
+
+# Bảng ký cần khoá hàng: giới hạn số hàng (bảng 1x2 sau WLAY-002 là 1 hàng)
+_SIG_TABLE_MAX_ROWS = 4
+
+# ---------------------------------------------------------------------------
+# [E1 wave3-paginate — PLI_M70 bảng ký ngang tràn trang]
+# Hàng bảng ký ngang pin sẵn trHeight atLeast 1200 (60pt) + spacer exact
+# 800 (40pt) trong ô (bake từ _SIG_TABLE_TEMPLATE/_SIG_CELL_TEMPLATE của
+# tools/build_form_maps.py) → hàng cao ~74pt. Khi đuôi trang 1 chỉ còn
+# ~63pt, CẢ HÀNG (cantSplit) tràn sang trang 2 gần trống (~95% trắng).
+# Nén: sàn hàng 1200→600 (30pt) và vùng viết trong ô 800→240 (12pt —
+# cùng giá trị _cell_wrap của guard _horizontal_signature_tables) → hàng
+# ~46pt lọt trang 1. Giá trị phải ĐỒNG BỘ với hai template của
+# build_form_maps.py (Lead regen sau). Chỉ chạy trên bảng đã nhận diện là
+# bảng ký (mọi hàng chứa chỉ thị ký) nên không đụng bảng dữ liệu.
+_SIG_TRHEIGHT_1200_RE = re.compile(
+    r'<w:trHeight\b(?=[^>]*w:val="1200")(?=[^>]*w:hRule="atLeast")[^>]*/>')
+_SIG_SPACING_800_EXACT_RE = re.compile(
+    r'<w:spacing\b(?=[^>]*w:line="800")(?=[^>]*w:lineRule="exact")[^>]*/>')
+
+
+def _compact_sig_table(seg: str) -> str:
+    """Nén chiều cao hàng bảng ký: trHeight atLeast 1200→600, spacer exact
+    800→240 (idempotent — giá trị đã ≤ ngưỡng thì bytes giữ nguyên)."""
+    seg = _SIG_TRHEIGHT_1200_RE.sub(
+        lambda m: m.group(0).replace('w:val="1200"', 'w:val="600"', 1), seg)
+    return _SIG_SPACING_800_EXACT_RE.sub(
+        lambda m: m.group(0).replace('w:line="800"', 'w:line="240"', 1), seg)
+
+
 
 
 # ---------------------------------------------------------------------------

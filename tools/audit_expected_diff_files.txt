@@ -667,3 +667,7 @@ tools/test_wave2_docx_pins.py
 # body xoá para rỗng + zero before M45/M53) — docx_render + build_form_maps đã
 # có entry từ wave trước; entry DUY NHẤT còn thiếu là test mutation/structural mới.
 tools/test_wave3_paginate.py
+
+# --- [phase9 bandfix QA 2026-09-09] audit table + kế hoạch tổng hợp Lead ---
+docs/audits/phase9_bandfix_audit_2026-09-09.md
+KE_HOACH_TONG_HOP_2026-09-09.md

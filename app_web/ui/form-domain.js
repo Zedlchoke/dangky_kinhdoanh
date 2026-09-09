@@ -3374,13 +3374,33 @@
   }
 
   /* Nhóm loại-trừ chk: tick đồng thời >=2 option trong cùng nhóm là lỗi
-     blocking (mô hình tổ chức công ty: HĐTV/HĐQT HOẶC Chủ tịch công ty). */
+     blocking. Đồng bộ với tools/phase5_fixtures.py (EXCLUSIVE_GROUPS) —
+     runtime chỉ chặn các cặp mà tick đồng thời vi phạm pháp lý rõ ràng
+     trên mọi mẫu; [wave2-B4 2026-09-09] thêm 2 nhóm mới adjudicate từ
+     corpus QA (cùng pattern với bên fixture):
+       - tinh_trang_thanh_lap: PLI_M12 cụm tách/sáp nhập 2 ô (B4d) + các
+         lựa chọn thành lập/thay đổi cùng họ chk_tt_ chọn-1;
+       - thay_doi_chu_ho_hkd: PLII_M02 'Thay đổi chủ hộ kinh doanh do'
+         ủy quyền (chk_ct_ho_gia_dinh) vs chủ hộ chết/mất tích (B4e). */
   var EXCLUSIVE_CHK_GROUPS = [
     {
       gid: 'mo_hinh_to_chuc',
       pattern: /^chk_auto_(hoi_dong_thanh_vien_giam_doc_hoac_tong_g|chu_tich_cong_ty_giam_doc_hoac_tong_giam)$/,
       message: 'Mô hình tổ chức công ty chỉ được chọn một: Hội đồng thành viên/'
                + 'Hội đồng quản trị HOẶC Chủ tịch công ty',
+    },
+    {
+      gid: 'tinh_trang_thanh_lap',
+      // khớp pattern EXCLUSIVE_GROUPS['tinh_trang_thanh_lap'] (8 lựa chọn)
+      pattern: /^chk_tt_(thanh_lap_moi|tach_dn|sap_nhap_dn|chia_dn|hop_nhat_dn|chuyen_doi_loai_hinh|chuyen_doi_tu_hkd|chuyen_doi_tu_csbt)$/,
+      message: 'Tình trạng thành lập/thay đổi doanh nghiệp chỉ được chọn một ô',
+    },
+    {
+      gid: 'thay_doi_chu_ho_hkd',
+      pattern: /^chk_(ct_ho_gia_dinh|auto_chu_ho_kinh_doanh_chet_hoac_bi_toa_an_tu)$/,
+      message: 'Thay đổi chủ hộ kinh doanh chỉ được chọn một: thành viên hộ '
+               + 'gia đình ủy quyền HOẶC chủ hộ chết/bị Tòa án tuyên bố đã '
+               + 'chết, mất tích',
     },
   ];
 

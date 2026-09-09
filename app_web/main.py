@@ -139,7 +139,22 @@ def _run_soffice(soffice: str, case_id: str, args: list, src_name: str,
 
 def _nest(data: dict) -> dict:
     """Chuyển key phẳng dạng 'a.b.c' thành dict lồng nhau vì engine render
-    (tools/docx_render._lookup) tra cứu theo đường dẫn lồng nhau."""
+    (tools/docx_render._lookup) tra cứu theo đường dẫn lồng nhau.
+
+    [wave2-B1] Batch corpus gộp payload phẳng của ~86 form: một prefix có thể
+    ĐÃ giữ LIST dòng grid của form khác (vd 'ds_nganh' bảng ngành, 'ds_cshhl'
+    PLI_M10/11) trong khi một form khác đóng góp key dotted cùng prefix
+    (vd mirror scalar 'ds_nganh.la_nganh_chinh'). Code cũ đè list bằng dict
+    → bảng ngành/CSHHL/thành viên mất toàn bộ dòng (finding corpus lớp B).
+    Quy tắc mới: node trung gian phi-dict ĐÃ CÓ GIÁ TRỊ được giữ nguyên,
+    key dotted trùng prefix bị bỏ qua.
+
+    Trade-off (chọn ít xâm lấn nhất): giá trị scalar dotted bị bỏ trong ca
+    xung đột này — dữ liệu từng dòng đã nằm trong list nên bảng không mất
+    gì; mirror scalar là đại diện cấp form của chính cột đó. Chỉ breaker
+    node phi-dict; dict gặp dict vẫn đi sâu như cũ, và key KHÔNG dotted
+    (assignment trực tiếp) vẫn 'người sau thắng' như trước.
+    """
     out: dict = {}
     for k, v in data.items():
         parts = str(k).split(".")
@@ -147,13 +162,21 @@ def _nest(data: dict) -> dict:
             out[k] = v
             continue
         cur = out
+        placed = True
         for p in parts[:-1]:
             nxt = cur.get(p)
-            if not isinstance(nxt, dict):
-                nxt = {}
-                cur[p] = nxt
+            if isinstance(nxt, dict):
+                cur = nxt
+                continue
+            if nxt is not None:
+                # list/scalar sẵn có ở node trung gian: KHÔNG đè bằng dict
+                placed = False
+                break
+            nxt = {}
+            cur[p] = nxt
             cur = nxt
-        cur[parts[-1]] = v
+        if placed:
+            cur[parts[-1]] = v
     return out
 
 

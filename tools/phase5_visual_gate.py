@@ -75,7 +75,8 @@ sys.path.insert(0, str(ROOT))
 
 from tools.layout_roles import classify_role   # noqa: E402
 from tools.phase5_fixtures import (          # noqa: E402
-    FIXTURES, M72_VARIANTS, ValueFactory, build_fixture, validate_fixture,
+    FIXTURES, M72_VARIANTS, ValueFactory, active_form_ids, build_fixture,
+    validate_fixture,
 )
 from tools.row_placement import (           # noqa: E402  [F3T] D18
     det_row_placement, det_row_placement_pdf, load_loop_registry,
@@ -921,14 +922,23 @@ def det_fixed_matrix_headers(pdf_text: str, form_map: dict) -> list[str]:
 # Gate runner
 # ---------------------------------------------------------------------------
 
-def build_all_data(maps: dict, blocks_all: dict, fixture: str) -> dict:
-    """Gộp data mọi form cho một batch export (key unique per form giữ giá trị
-    riêng; key chung — ngày ký, cơ quan… — nhận giá trị cuối, cùng ngữ nghĩa)."""
+def merge_fixture_data(maps: dict, blocks_all: dict, fixture: str,
+                       form_ids: list[str]) -> dict:
+    """Gộp data các form cho một batch export (key unique per form giữ giá
+    trị riêng; key chung — ngày ký, cơ quan… — nhận giá trị cuối, cùng ngữ
+    nghĩa). [wave2-B1] tách thành hàm dùng chung để run_export và test hồi
+    quy gọi ĐÚNG một logic merge; payload phẳng sau đó qua Bridge.export
+    (_nest) — list dòng grid của từng form phải sống sót sau merge."""
     merged: dict = {}
-    for fid in sorted(maps):
+    for fid in form_ids:
         merged.update(build_fixture(fid, maps[fid], fixture,
                                     blocks_all.get(fid), ValueFactory()))
     return merged
+
+
+def build_all_data(maps: dict, blocks_all: dict, fixture: str) -> dict:
+    """Wrapper tương thích: gộp TOÀN BỘ form trong maps (đã sắp xếp)."""
+    return merge_fixture_data(maps, blocks_all, fixture, sorted(maps))
 
 
 def run_export(maps: dict, blocks_all: dict, fixture: str,
@@ -951,10 +961,8 @@ def run_export(maps: dict, blocks_all: dict, fixture: str,
     dst_root = out_root / fixture
     dst_root.mkdir(parents=True, exist_ok=True)
     for tag, ids, variant in batches:
-        data = {}
-        for fid in ids:
-            data.update(build_fixture(fid, maps[fid], fixture,
-                                      blocks_all.get(fid), ValueFactory()))
+        # [wave2-B1] merge qua hàm dùng chung merge_fixture_data (testable)
+        data = merge_fixture_data(maps, blocks_all, fixture, ids)
         if variant:
             value, flag = variant
             data["dn.loai_hinh"] = value
@@ -1256,10 +1264,24 @@ def main() -> int:
             print("fixture không hợp lệ: %r" % f)
             return 2
     maps = json.loads(MAPS_PATH.read_text(encoding="utf-8"))
+    skipped: list[tuple[str, str]] = []
     if args.forms == "all":
-        form_ids = sorted(maps)
+        # [wave2-B5] inventory ĐỘNG như phase5_export_corpus: form mang marker
+        # current_law_status inactive (vd PLI_M11 REMOVED_BY_CURRENT_LAW —
+        # TT 121/2026 bãi bỏ Mẫu 11) phải ra KHỎI corpus; trước đây
+        # sorted(maps) đưa cả form đã bãi bỏ vào render + manifest.
+        form_ids, skipped = active_form_ids(maps, log=print)
     else:
         form_ids = [f.strip() for f in args.forms.split(",") if f.strip()]
+    # [wave2-B5] render-unit đếm ĐỘNG (không hard-code): batch 'main' =
+    # mọi form active TRỪ PLI_M72; PLI_M72 (nếu active) render 1 DOCX riêng
+    # cho MỖI variant trong M72_VARIANTS.
+    non72 = [f for f in form_ids if f != "PLI_M72"]
+    m72_units = len(M72_VARIANTS) if "PLI_M72" in form_ids else 0
+    render_units = len(non72) + m72_units
+    print("[corpus-inventory] active=%d skipped=%d m72_variants=%d "
+          "render_units_per_fixture=%d"
+          % (len(form_ids), len(skipped), m72_units, render_units))
     blocks_all = {}
     for fid in form_ids:
         p = BLOCKS_DIR / ("%s.json" % fid)
@@ -1295,6 +1317,15 @@ def main() -> int:
         "generated": ts,
         "fixtures": fixtures,
         "forms": form_ids,
+        # [wave2-B5] inventory động: số render-unit không hard-code — tổng
+        # DOCX mỗi fixture = len(non72) + M72 variants (90 với corpus hiện
+        # tại: 86 active, M11 bị loại, M72 ×5 variant).
+        "inventory": {
+            "active": len(form_ids),
+            "skipped": skipped,
+            "m72_variants": m72_units,
+            "render_units_per_fixture": render_units,
+        },
         "export_errors": export_errors,
         "records": all_records,
     }

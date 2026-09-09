@@ -331,12 +331,13 @@ select, .btn {
 table.hdr-band, table.hdr-band td {
   border: none;
 }
-table.hdr-band td:first-child { width: 42%; }
-table.hdr-band td:last-child { width: 58%; }
-table.hdr-band td { vertical-align: bottom; }
+table.hdr-band td:first-child { width: 36%; }
+table.hdr-band td:last-child { width: 64%; }
+table.hdr-band td { vertical-align: top; }
 .loop-fld {
   font-family: "Times New Roman", serif;
-  font-size: 12pt;
+  font-size: 13pt;
+  font-weight: bold;
   width: 100%;
   border: none;
   /* [Phase 5 fix bug owner] border:none + background:transparent khiến ô

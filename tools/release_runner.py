@@ -131,6 +131,19 @@ SUITES: list[dict] = [
      "target": "tools.test_r3b1_people_specs", "requires": ["python-docx"]},
     {"name": "test_header_layout",        "type": "module",
      "target": "tools.test_header_layout", "requires": ["python-docx"]},
+    # --- [phase9 wave2 2026-09-09] Lane B fixture/harness: _nest giữ list,
+    #     date-component loop-ns, value() ưu tiên _chu/ty_le, exclusivity
+    #     choice-variants (B6 de-dup merge), gate active_form_ids.
+    {"name": "test_wave2_fixture_lane",   "type": "module",
+     "target": "tools.test_wave2_fixture_lane"},
+    # --- [phase9 wave2 2026-09-09] Lane C generator: pin bind Ngày cấp/Nơi
+    #     cấp 10 blocks, M67 key, Mẫu số 12 + nhãn phải đậm 23 form band.
+    {"name": "test_wave2_docx_pins",      "type": "module",
+     "target": "tools.test_wave2_docx_pins", "requires": ["python-docx"]},
+    # --- [phase9 wave3 2026-09-09] Lane E pagination: E1-E4 sig-table
+    #     compact / cặp ký atomic / nén run rỗng sau bảng / trim đuôi ký.
+    {"name": "test_wave3_paginate",       "type": "module",
+     "target": "tools.test_wave3_paginate", "requires": ["python-docx"]},
     # --- [WAVE v7 2026-09-05] HEADER-NAME-SYNC: E2E PLI_M32 + family band
     #     (blank/filled/A→B/Unicode/PDF D17/mutation) — mandate owner
     {"name": "test_v7_header_name",       "type": "module",

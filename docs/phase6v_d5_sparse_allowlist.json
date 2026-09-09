@@ -1,16 +1,96 @@
 {
  "version": "1+v7.2",
- "date": "2026-09-08",
+ "date": "2026-09-09",
  "lane": "agent/f3-corpus-v2 (F3 corpus phase8g, HEAD b1bf058 sau F3T+F3H+render-fix)",
  "source_adjudication": "docs/audits/6v/v4-visual-audit.md — 72 hit D5_blank_sparse: 59 (i) + 7 (ii) + 6 (iii) đã fix ở việc 1; allowlist này liệt kê lại các hit (i)/(ii) đo trên corpus v4b_finalcheck (455 record, template+fixture sau V4b, 2026-09-05 tối) + 2 hit mới lớp (ii) do việc 7a (ngày đủ định dạng). | [f3 2026-09-07] +8 hit corpus phase8f_final (450 record sau fixture-fix + M11 loại catalog): 5 (ii) M12 p13 banner-section + 3 (i) M52 trang cuối dời trang. | [f3v2 2026-09-08] +3 hit corpus phase8g (450 record sau F3T _expand_loops max(K,N) + render-fix RFIX-1/2/4 — pagination M72/M26 dời): 3 (i) trang cuối/section cuối tự nhiên. | [f3v2-final 2026-09-08] +2 hit corpus phase8g_v2 (450 record sau N-only sync d70fe14 — pagination dời nữa, 1737 PNG): 1 (i) empty-paper/m72_dhdn M72 p2 mục '8. Nơi đăng ký' (cùng lớp entry valid-minimal/m72_dhdn p2) + 1 (ii) long-boundary/main/PLII_M01 p3 dòng mục '5.3. Tổng số lao động' đứng trang riêng (long-boundary đẩy section, nội dung nguyên vẹn, theo ngay sau p2).",
  "mechanism": "gate nạp mặc định (tools/phase5_visual_gate.py --allowlist); hit SPARSE khớp (fixture, tag, form, page) — khóa vắng = wildcard — được ghi verdict vào record['d5_adjudicated'] thay vì candidate 'chưa adjudicate'.",
- "count": 77,
+ "count": 55,
  "by_class": {
   "(i)": 62,
   "(ii)": 15
  },
  "blank_pages": [],
  "sparse_pages": [
+  {
+   "fixture": "choice-variants",
+   "tag": "m72_dntn",
+   "form": "PLI_M72",
+   "page": 2,
+   "adjudication": "(ii)",
+   "reason": "[phase9 v2 2026-09-09] tương tự valid-full — trang cuối mục, đã duyệt ảnh"
+  },
+  {
+   "fixture": "choice-variants",
+   "tag": "main",
+   "form": "PLII_M17",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "choice-variants",
+   "tag": "main",
+   "form": "PLII_M20",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "choice-variants",
+   "tag": "main",
+   "form": "PLII_M22",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "choice-variants",
+   "tag": "main",
+   "form": "PLII_M23",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "choice-variants",
+   "tag": "main",
+   "form": "PLII_M25",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "choice-variants",
+   "tag": "main",
+   "form": "PLI_M42",
+   "page": 2,
+   "adjudication": "(ii)",
+   "reason": "đuôi địa chỉ 'Liêm, TP. Hà Nội' xé cụm qua trang — adjudicate auditor (ii)"
+  },
+  {
+   "fixture": "choice-variants",
+   "tag": "main",
+   "form": "PLI_M43",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "choice-variants",
+   "tag": "main",
+   "form": "PLI_M52",
+   "page": 4,
+   "adjudication": "(i)",
+   "reason": "[f3] trang cuối tự nhiên: Nơi nhận ('- Lưu:') + khối chữ ký TRƯỞNG ĐƠN VỊ (Ký, ghi họ tên và đóng dấu) — cùng lớp entry M52 p3 cũ, số trang dời sau fixture fix (M52 giờ 4/6 trang ở valid-full/long-boundary)"
+  },
+  {
+   "fixture": "choice-variants",
+   "tag": "main",
+   "form": "PLI_M76",
+   "page": 2,
+   "adjudication": "(ii)",
+   "reason": "đuôi câu 'Đề nghị Ông/Bà liên hệ…' wrap qua trang, câu nguyên vẹn — adjudicate auditor (ii)"
+  },
   {
    "fixture": "empty-paper",
    "tag": "main",
@@ -54,10 +134,10 @@
   {
    "fixture": "empty-paper",
    "tag": "main",
-   "form": "PLI_M02",
-   "page": 6,
-   "adjudication": "(ii)",
-   "reason": "đuôi mục địa chủ (Tỉnh/TP, Quốc gia, ĐT/Fax, Email) wrap từ trang trước — adjudicate auditor (ii)"
+   "form": "PLII_M26",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "[f3v2] trang cuối tự nhiên: 'Nơi nhận:' (- Như trên; - ; - Lưu:) + khối chữ ký TRƯỞNG PHÒNG (Ký, ghi họ tên và đóng dấu) — cùng lớp entry M52/M17 cũ; pixel phase8g/empty-paper/main/PLII_M26/page-02.png"
   },
   {
    "fixture": "empty-paper",
@@ -116,28 +196,156 @@
    "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
   },
   {
-   "fixture": "empty-paper",
+   "fixture": "long-boundary",
    "tag": "main",
-   "form": "PLI_M70",
+   "form": "PLII_M01",
+   "page": 4,
+   "adjudication": "(ii)",
+   "reason": "[phase9 v2 2026-09-09] dòng đơn '5.3 Tổng số lao động: 269' cuối mục 5 — dữ liệu biên dài đẩy dòng cuối mục sang trang riêng, không tách cụm; Lead đã duyệt ảnh"
+  },
+  {
+   "fixture": "long-boundary",
+   "tag": "main",
+   "form": "PLII_M03",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "[v7] dòng ký + 'Chủ hộ kinh doanh ký trực tiếp vào phần này.' — khối ký hoàn chỉnh + chú thích, dời trang do spacer 72pt"
+  },
+  {
+   "fixture": "long-boundary",
+   "tag": "main",
+   "form": "PLII_M08",
    "page": 2,
    "adjudication": "(i)",
    "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
   },
   {
-   "fixture": "empty-paper",
+   "fixture": "long-boundary",
+   "tag": "main",
+   "form": "PLII_M17",
+   "page": 2,
+   "adjudication": "(ii)",
+   "reason": "đuôi giá trị 'Minh - Phòng ĐKKD' wrap ('Hồ Chí/Minh') — adjudicate auditor (ii)"
+  },
+  {
+   "fixture": "long-boundary",
+   "tag": "main",
+   "form": "PLII_M20",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "long-boundary",
+   "tag": "main",
+   "form": "PLII_M25",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "long-boundary",
+   "tag": "main",
+   "form": "PLI_M02",
+   "page": 8,
+   "adjudication": "(ii)",
+   "reason": "[phase9 v2 2026-09-09] dòng 'Thư điện tử…Website…' cuối bảng liên hệ rơi trang riêng — bảng dài biên, header lặp đúng; Lead đã duyệt ảnh"
+  },
+  {
+   "fixture": "long-boundary",
+   "tag": "main",
+   "form": "PLI_M47",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "long-boundary",
+   "tag": "main",
+   "form": "PLI_M52",
+   "page": 6,
+   "adjudication": "(i)",
+   "reason": "[f3] trang cuối tự nhiên: Nơi nhận ('- Lưu:') + khối chữ ký TRƯỞNG ĐƠN VỊ (Ký, ghi họ tên và đóng dấu) — cùng lớp entry M52 p3 cũ, số trang dời sau fixture fix (M52 giờ 4/6 trang ở valid-full/long-boundary)"
+  },
+  {
+   "fixture": "valid-full",
    "tag": "m72_dntn",
    "form": "PLI_M72",
    "page": 2,
-   "adjudication": "(i)",
-   "reason": "ô điền/khối 'Nơi đăng ký' cuối form Excel M72 — hợp lệ theo thiết kế (parity adjudicate auditor cho m72_dntn p2)"
+   "adjudication": "(ii)",
+   "reason": "[phase9 v2 2026-09-09] dòng đơn '6. Vốn đầu tư/7. Chủ doanh nghiệp' cuối mục bị đẩy trang 2 bởi dữ liệu biên dài — Lead đã duyệt ảnh (crop /tmp/d5_1), không cụm bị tách"
   },
   {
-   "fixture": "valid-minimal",
+   "fixture": "valid-full",
    "tag": "main",
-   "form": "PLII_M07",
-   "page": 3,
+   "form": "PLII_M17",
+   "page": 2,
    "adjudication": "(i)",
    "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "valid-full",
+   "tag": "main",
+   "form": "PLII_M20",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "valid-full",
+   "tag": "main",
+   "form": "PLII_M22",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "valid-full",
+   "tag": "main",
+   "form": "PLII_M23",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "valid-full",
+   "tag": "main",
+   "form": "PLII_M25",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "valid-full",
+   "tag": "main",
+   "form": "PLI_M42",
+   "page": 2,
+   "adjudication": "(ii)",
+   "reason": "đuôi địa chỉ 'Liêm, TP. Hà Nội' xé cụm qua trang — adjudicate auditor (ii)"
+  },
+  {
+   "fixture": "valid-full",
+   "tag": "main",
+   "form": "PLI_M43",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "valid-full",
+   "tag": "main",
+   "form": "PLI_M52",
+   "page": 4,
+   "adjudication": "(i)",
+   "reason": "[f3] trang cuối tự nhiên: Nơi nhận ('- Lưu:') + khối chữ ký TRƯỞNG ĐƠN VỊ (Ký, ghi họ tên và đóng dấu) — cùng lớp entry M52 p3 cũ, số trang dời sau fixture fix (M52 giờ 4/6 trang ở valid-full/long-boundary)"
+  },
+  {
+   "fixture": "valid-full",
+   "tag": "main",
+   "form": "PLI_M76",
+   "page": 2,
+   "adjudication": "(ii)",
+   "reason": "đuôi câu 'Đề nghị Ông/Bà liên hệ…' wrap qua trang, câu nguyên vẹn — adjudicate auditor (ii)"
   },
   {
    "fixture": "valid-minimal",
@@ -222,14 +430,6 @@
   {
    "fixture": "valid-minimal",
    "tag": "main",
-   "form": "PLI_M52",
-   "page": 3,
-   "adjudication": "(i)",
-   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
-  },
-  {
-   "fixture": "valid-minimal",
-   "tag": "main",
    "form": "PLI_M53",
    "page": 2,
    "adjudication": "(i)",
@@ -250,382 +450,7 @@
    "page": 3,
    "adjudication": "(i)",
    "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
-  },
-  {
-   "fixture": "valid-full",
-   "tag": "main",
-   "form": "PLII_M17",
-   "page": 2,
-   "adjudication": "(i)",
-   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
-  },
-  {
-   "fixture": "valid-full",
-   "tag": "main",
-   "form": "PLII_M20",
-   "page": 2,
-   "adjudication": "(i)",
-   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
-  },
-  {
-   "fixture": "valid-full",
-   "tag": "main",
-   "form": "PLII_M22",
-   "page": 2,
-   "adjudication": "(i)",
-   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
-  },
-  {
-   "fixture": "valid-full",
-   "tag": "main",
-   "form": "PLII_M23",
-   "page": 2,
-   "adjudication": "(i)",
-   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
-  },
-  {
-   "fixture": "valid-full",
-   "tag": "main",
-   "form": "PLII_M25",
-   "page": 2,
-   "adjudication": "(i)",
-   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
-  },
-  {
-   "fixture": "valid-full",
-   "tag": "main",
-   "form": "PLI_M42",
-   "page": 2,
-   "adjudication": "(ii)",
-   "reason": "đuôi địa chỉ 'Liêm, TP. Hà Nội' xé cụm qua trang — adjudicate auditor (ii)"
-  },
-  {
-   "fixture": "valid-full",
-   "tag": "main",
-   "form": "PLI_M43",
-   "page": 2,
-   "adjudication": "(i)",
-   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
-  },
-  {
-   "fixture": "valid-full",
-   "tag": "main",
-   "form": "PLI_M52",
-   "page": 3,
-   "adjudication": "(i)",
-   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
-  },
-  {
-   "fixture": "valid-full",
-   "tag": "main",
-   "form": "PLI_M76",
-   "page": 2,
-   "adjudication": "(ii)",
-   "reason": "đuôi câu 'Đề nghị Ông/Bà liên hệ…' wrap qua trang, câu nguyên vẹn — adjudicate auditor (ii)"
-  },
-  {
-   "fixture": "valid-full",
-   "tag": "m72_ctcp",
-   "form": "PLI_M72",
-   "page": 2,
-   "adjudication": "(ii)",
-   "reason": "mục 6 'Tổng số cổ phần' (cặp nhãn+giá trị hoàn chỉnh) wrap qua ranh giới trang do giá trị ngày đủ định dạng dd/mm/yyyy (việc 7a) làm trang 1 kín — hit mới do lane V4b, nội dung nguyên vẹn; chờ polish keepNext khối vốn (owner)"
-  },
-  {
-   "fixture": "valid-full",
-   "tag": "m72_dhdn",
-   "form": "PLI_M72",
-   "page": 3,
-   "adjudication": "(i)",
-   "reason": "ô điền/khối 'Nơi đăng ký' cuối form Excel M72 — hợp lệ theo thiết kế (parity adjudicate auditor cho m72_dntn p2)"
-  },
-  {
-   "fixture": "long-boundary",
-   "tag": "main",
-   "form": "PLII_M08",
-   "page": 2,
-   "adjudication": "(i)",
-   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
-  },
-  {
-   "fixture": "long-boundary",
-   "tag": "main",
-   "form": "PLII_M17",
-   "page": 2,
-   "adjudication": "(ii)",
-   "reason": "đuôi giá trị 'Minh - Phòng ĐKKD' wrap ('Hồ Chí/Minh') — adjudicate auditor (ii)"
-  },
-  {
-   "fixture": "long-boundary",
-   "tag": "main",
-   "form": "PLII_M20",
-   "page": 2,
-   "adjudication": "(i)",
-   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
-  },
-  {
-   "fixture": "long-boundary",
-   "tag": "main",
-   "form": "PLII_M25",
-   "page": 2,
-   "adjudication": "(i)",
-   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
-  },
-  {
-   "fixture": "long-boundary",
-   "tag": "main",
-   "form": "PLII_M27",
-   "page": 2,
-   "adjudication": "(i)",
-   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
-  },
-  {
-   "fixture": "long-boundary",
-   "tag": "main",
-   "form": "PLI_M47",
-   "page": 2,
-   "adjudication": "(i)",
-   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
-  },
-  {
-   "fixture": "long-boundary",
-   "tag": "main",
-   "form": "PLI_M76",
-   "page": 2,
-   "adjudication": "(ii)",
-   "reason": "đuôi câu 'Đề nghị Ông/Bà liên hệ…' wrap qua trang, câu nguyên vẹn — adjudicate auditor (ii)"
-  },
-  {
-   "fixture": "choice-variants",
-   "tag": "main",
-   "form": "PLII_M17",
-   "page": 2,
-   "adjudication": "(i)",
-   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
-  },
-  {
-   "fixture": "choice-variants",
-   "tag": "main",
-   "form": "PLII_M20",
-   "page": 2,
-   "adjudication": "(i)",
-   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
-  },
-  {
-   "fixture": "choice-variants",
-   "tag": "main",
-   "form": "PLII_M22",
-   "page": 2,
-   "adjudication": "(i)",
-   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
-  },
-  {
-   "fixture": "choice-variants",
-   "tag": "main",
-   "form": "PLII_M23",
-   "page": 2,
-   "adjudication": "(i)",
-   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
-  },
-  {
-   "fixture": "choice-variants",
-   "tag": "main",
-   "form": "PLII_M25",
-   "page": 2,
-   "adjudication": "(i)",
-   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
-  },
-  {
-   "fixture": "choice-variants",
-   "tag": "main",
-   "form": "PLI_M42",
-   "page": 2,
-   "adjudication": "(ii)",
-   "reason": "đuôi địa chỉ 'Liêm, TP. Hà Nội' xé cụm qua trang — adjudicate auditor (ii)"
-  },
-  {
-   "fixture": "choice-variants",
-   "tag": "main",
-   "form": "PLI_M43",
-   "page": 2,
-   "adjudication": "(i)",
-   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
-  },
-  {
-   "fixture": "choice-variants",
-   "tag": "main",
-   "form": "PLI_M52",
-   "page": 3,
-   "adjudication": "(i)",
-   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
-  },
-  {
-   "fixture": "choice-variants",
-   "tag": "main",
-   "form": "PLI_M76",
-   "page": 2,
-   "adjudication": "(ii)",
-   "reason": "đuôi câu 'Đề nghị Ông/Bà liên hệ…' wrap qua trang, câu nguyên vẹn — adjudicate auditor (ii)"
-  },
-  {
-   "fixture": "choice-variants",
-   "tag": "m72_ctcp",
-   "form": "PLI_M72",
-   "page": 2,
-   "adjudication": "(ii)",
-   "reason": "mục 6 'Tổng số cổ phần' (cặp nhãn+giá trị hoàn chỉnh) wrap qua ranh giới trang do giá trị ngày đủ định dạng dd/mm/yyyy (việc 7a) làm trang 1 kín — hit mới do lane V4b, nội dung nguyên vẹn; chờ polish keepNext khối vốn (owner)"
-  },
-  {
-   "fixture": "choice-variants",
-   "tag": "m72_dhdn",
-   "form": "PLI_M72",
-   "page": 3,
-   "adjudication": "(i)",
-   "reason": "ô điền/khối 'Nơi đăng ký' cuối form Excel M72 — hợp lệ theo thiết kế (parity adjudicate auditor cho m72_dntn p2)"
-  },
-  {
-   "fixture": "empty-paper",
-   "tag": "main",
-   "form": "PLI_M19",
-   "page": 7,
-   "adjudication": "(i)",
-   "reason": "[v7] chú thích pháp lý dưới vùng ký: '- Trường hợp Tòa án hoặc Trọng tài chỉ định… ký trực tiếp vào phần này' — spacer 72pt dời trang, nội dung hợp lệ"
-  },
-  {
-   "fixture": "valid-full",
-   "tag": "main",
-   "form": "PLI_M27",
-   "page": 4,
-   "adjudication": "(i)",
-   "reason": "[v7] chú thích pháp lý dưới vùng ký (Tòa án/Trọng tài chỉ định) — dời trang do spacer 72pt, nội dung hợp lệ"
-  },
-  {
-   "fixture": "choice-variants",
-   "tag": "main",
-   "form": "PLI_M27",
-   "page": 4,
-   "adjudication": "(i)",
-   "reason": "[v7] chú thích pháp lý dưới vùng ký (Tòa án/Trọng tài chỉ định) — dời trang do spacer 72pt, nội dung hợp lệ"
-  },
-  {
-   "fixture": "long-boundary",
-   "tag": "main",
-   "form": "PLI_M17",
-   "page": 7,
-   "adjudication": "(i)",
-   "reason": "[v7] chú thích pháp lý dưới vùng ký (Tòa án/Trọng tài chỉ định) — dời trang do spacer 72pt, nội dung hợp lệ"
-  },
-  {
-   "fixture": "long-boundary",
-   "tag": "main",
-   "form": "PLII_M03",
-   "page": 2,
-   "adjudication": "(i)",
-   "reason": "[v7] dòng ký + 'Chủ hộ kinh doanh ký trực tiếp vào phần này.' — khối ký hoàn chỉnh + chú thích, dời trang do spacer 72pt"
-  },
-  {
-   "fixture": "empty-paper",
-   "tag": "main",
-   "form": "PLI_M12",
-   "page": 13,
-   "adjudication": "(ii)",
-   "reason": "[f3] banner section 'THÔNG BÁO THAY ĐỔI NGƯỜI ĐẠI DIỆN THEO ỦY QUYỀN...' đứng một trang: bảng 18 cột kế tiếp không vừa phần trang còn lại nên dời nguyên khối sang trang kế (nội dung theo ngay trang sau, không mất mát, không trộn mẫu, deterministic cùng p13 cả 5 fixture) — legacy layout chấp nhận được; pixel phase8f/valid-full/main/PLI_M12 page-13/14"
-  },
-  {
-   "fixture": "valid-minimal",
-   "tag": "main",
-   "form": "PLI_M12",
-   "page": 13,
-   "adjudication": "(ii)",
-   "reason": "[f3] banner section 'THÔNG BÁO THAY ĐỔI NGƯỜI ĐẠI DIỆN THEO ỦY QUYỀN...' đứng một trang: bảng 18 cột kế tiếp không vừa phần trang còn lại nên dời nguyên khối sang trang kế (nội dung theo ngay trang sau, không mất mát, không trộn mẫu, deterministic cùng p13 cả 5 fixture) — legacy layout chấp nhận được; pixel phase8f/valid-full/main/PLI_M12 page-13/14"
-  },
-  {
-   "fixture": "valid-full",
-   "tag": "main",
-   "form": "PLI_M12",
-   "page": 13,
-   "adjudication": "(ii)",
-   "reason": "[f3] banner section 'THÔNG BÁO THAY ĐỔI NGƯỜI ĐẠI DIỆN THEO ỦY QUYỀN...' đứng một trang: bảng 18 cột kế tiếp không vừa phần trang còn lại nên dời nguyên khối sang trang kế (nội dung theo ngay trang sau, không mất mát, không trộn mẫu, deterministic cùng p13 cả 5 fixture) — legacy layout chấp nhận được; pixel phase8f/valid-full/main/PLI_M12 page-13/14"
-  },
-  {
-   "fixture": "long-boundary",
-   "tag": "main",
-   "form": "PLI_M12",
-   "page": 13,
-   "adjudication": "(ii)",
-   "reason": "[f3] banner section 'THÔNG BÁO THAY ĐỔI NGƯỜI ĐẠI DIỆN THEO ỦY QUYỀN...' đứng một trang: bảng 18 cột kế tiếp không vừa phần trang còn lại nên dời nguyên khối sang trang kế (nội dung theo ngay trang sau, không mất mát, không trộn mẫu, deterministic cùng p13 cả 5 fixture) — legacy layout chấp nhận được; pixel phase8f/valid-full/main/PLI_M12 page-13/14"
-  },
-  {
-   "fixture": "choice-variants",
-   "tag": "main",
-   "form": "PLI_M12",
-   "page": 13,
-   "adjudication": "(ii)",
-   "reason": "[f3] banner section 'THÔNG BÁO THAY ĐỔI NGƯỜI ĐẠI DIỆN THEO ỦY QUYỀN...' đứng một trang: bảng 18 cột kế tiếp không vừa phần trang còn lại nên dời nguyên khối sang trang kế (nội dung theo ngay trang sau, không mất mát, không trộn mẫu, deterministic cùng p13 cả 5 fixture) — legacy layout chấp nhận được; pixel phase8f/valid-full/main/PLI_M12 page-13/14"
-  },
-  {
-   "fixture": "valid-full",
-   "tag": "main",
-   "form": "PLI_M52",
-   "page": 4,
-   "adjudication": "(i)",
-   "reason": "[f3] trang cuối tự nhiên: Nơi nhận ('- Lưu:') + khối chữ ký TRƯỞNG ĐƠN VỊ (Ký, ghi họ tên và đóng dấu) — cùng lớp entry M52 p3 cũ, số trang dời sau fixture fix (M52 giờ 4/6 trang ở valid-full/long-boundary)"
-  },
-  {
-   "fixture": "long-boundary",
-   "tag": "main",
-   "form": "PLI_M52",
-   "page": 6,
-   "adjudication": "(i)",
-   "reason": "[f3] trang cuối tự nhiên: Nơi nhận ('- Lưu:') + khối chữ ký TRƯỞNG ĐƠN VỊ (Ký, ghi họ tên và đóng dấu) — cùng lớp entry M52 p3 cũ, số trang dời sau fixture fix (M52 giờ 4/6 trang ở valid-full/long-boundary)"
-  },
-  {
-   "fixture": "choice-variants",
-   "tag": "main",
-   "form": "PLI_M52",
-   "page": 4,
-   "adjudication": "(i)",
-   "reason": "[f3] trang cuối tự nhiên: Nơi nhận ('- Lưu:') + khối chữ ký TRƯỞNG ĐƠN VỊ (Ký, ghi họ tên và đóng dấu) — cùng lớp entry M52 p3 cũ, số trang dời sau fixture fix (M52 giờ 4/6 trang ở valid-full/long-boundary)"
-  },
-  {
-   "fixture": "empty-paper",
-   "tag": "main",
-   "form": "PLII_M26",
-   "page": 2,
-   "adjudication": "(i)",
-   "reason": "[f3v2] trang cuối tự nhiên: 'Nơi nhận:' (- Như trên; - ; - Lưu:) + khối chữ ký TRƯỞNG PHÒNG (Ký, ghi họ tên và đóng dấu) — cùng lớp entry M52/M17 cũ; pixel phase8g/empty-paper/main/PLII_M26/page-02.png"
-  },
-  {
-   "fixture": "valid-minimal",
-   "tag": "m72_dhdn",
-   "form": "PLI_M72",
-   "page": 2,
-   "adjudication": "(i)",
-   "reason": "[f3v2] section cuối tự nhiên của Mẫu 72: mục '8. Nơi đăng ký' (2 dòng) là section pháp lý cuối form — corpus sau F3T (_expand_loops max(K,N), bảng 7 hết đột ở p1) + RFIX-4 (fragment row-2 nguồn đã xoá) nên pagination dời so với phase8f_final; nội dung mục 1-8 đầy đủ, không mất mát; pixel phase8g/valid-minimal/m72_dhdn/PLI_M72/page-02.png"
-  },
-  {
-   "fixture": "long-boundary",
-   "tag": "m72_dhdn",
-   "form": "PLI_M72",
-   "page": 11,
-   "adjudication": "(i)",
-   "reason": "[f3v2] trang cuối tự nhiên (11/11): mục '8. Nơi đăng ký' — section pháp lý cuối form sau các bảng dài; cùng lớp entry valid-minimal/m72_dhdn p2; pixel phase8g/long-boundary/m72_dhdn/PLI_M72/page-11.png"
-  },
-  {
-   "fixture": "empty-paper",
-   "tag": "m72_dhdn",
-   "form": "PLI_M72",
-   "page": 2,
-   "adjudication": "(i)",
-   "reason": "[f3v2-final] trang cuối tự nhiên (2/2) empty-paper: mục '8. Nơi đăng ký: (Cơ quan đăng ký kinh doanh cấp tỉnh)' — section pháp lý cuối Mẫu 72, cùng lớp entry valid-minimal/m72_dhdn p2 + long-boundary/m72_dhdn p11 (pagination dời sau N-only d70fe14: empty-paper bảng rút gọn nên mục 8 rơi p2); nội dung đầy đủ; pixel phase8g_v2/empty-paper/m72_dhdn/PLI_M72/page-02.png"
-  },
-  {
-   "fixture": "long-boundary",
-   "tag": "main",
-   "form": "PLII_M01",
-   "page": 3,
-   "adjudication": "(ii)",
-   "reason": "[f3v2-final] fixture long-boundary: dòng mục '5.3. Tổng số lao động (dự kiến): 269' đứng trang riêng (3/14) — tên/địa chỉ dài đẩy section sang trang kế, giá trị nguyên vẹn, nội dung mục 5 tiếp nối p2 không mất mát; pixel phase8g_v2/long-boundary/main/PLII_M01/page-03.png"
   }
- ]
+ ],
+ "prune_note": "[phase9 v2 2026-09-09] prune 26 entry stale (mất hit sau wave2/wave3: E1 bảng ký M70 gọn trang, E3 nén run rỗng m72, B6 de-dup, C3/C4 nhãn Mẫu số, B1/B2 dữ liệu bảng) + thêm 4 entry (ii) đã Lead duyệt ảnh — evidence docs/audits/phase9_bandfix_audit_2026-09-09.md"
 }

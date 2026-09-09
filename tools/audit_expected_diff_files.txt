@@ -660,3 +660,10 @@ tools/test_wave2_fixture_lane.py
 # form_maps/build_form_maps/test_header_layout đều từng đổi) — entry DUY NHẤT
 # còn thiếu là test pin mới; không thêm duplicate để giữ exact-set H7.4.
 tools/test_wave2_docx_pins.py
+# --- [wave3-paginate 2026-09-09] Lane E: 4 fix phân trang render-side (E1 bảng ký ngang
+# tràn trang PLI_M70: trHeight 1200->600 + spacer ô 800->240 đồng bộ
+# build_form_maps; E2 cặp ký dọc nguyên khối PLII_M17 keepNext + existing đếm
+# w:line exact; E3 nén run >=3 para rỗng ngay sau bảng m72_dhdn; E4 cụm ký cuối
+# body xoá para rỗng + zero before M45/M53) — docx_render + build_form_maps đã
+# có entry từ wave trước; entry DUY NHẤT còn thiếu là test mutation/structural mới.
+tools/test_wave3_paginate.py

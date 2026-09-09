@@ -434,6 +434,44 @@ def t_layout():
             assert right >= total * 0.5, (
                 "%s: cột phải %d twips quá hẹp cho khối quốc hiệu (tblW=%d)"
                 % (fid, right, total))
+            # [Pin bandfix a01f433 2026-09-09] tỷ lệ band pin theo hằng số
+            # nguồn HEADER_BAND_LEFT_RATIO (0.36) — sàn cũ ">= 50%" cho phép
+            # revert về 0.42 làm quốc hiệu 13pt wrap chữ 'NAM' mà vẫn xanh.
+            want_left = int(round(total * bfm.HEADER_BAND_LEFT_RATIO))
+            assert abs(cols[0] - want_left) <= 1, (
+                "%s: cột trái %d != %.0f%% của %d (bandfix a01f433)"
+                % (fid, cols[0], bfm.HEADER_BAND_LEFT_RATIO * 100, total))
+            # [Pin bandfix a01f433] typography + valign: mọi run band là TNR
+            # 13pt (sz=26 half-points); băng trên (tên | quốc hiệu + motto)
+            # ép bold, băng dưới 'Số:'/ngày tháng năm giữ thường; 4 ô
+            # vAlign=top đặt sau tcBorders trong tcPr (schema OOXML).
+            row_runs = [[], []]
+            for ri in range(2):
+                for cell in tbl.rows[ri].cells:
+                    tcPr = cell._tc.find(qn("w:tcPr"))
+                    va = tcPr.find(qn("w:vAlign"))
+                    assert va is not None and va.get(qn("w:val")) == "top", (
+                        "%s: ô (%d,*) thiếu vAlign=top (bandfix a01f433)" % (fid, ri))
+                    _tags = [e.tag for e in tcPr]
+                    assert _tags.index(qn("w:vAlign")) > _tags.index(qn("w:tcBorders")), (
+                        "%s: vAlign đứng trước tcBorders — sai thứ tự schema" % fid)
+                    for p in cell.paragraphs:
+                        for r in p.runs:
+                            rPr = r._r.find(qn("w:rPr"))
+                            sz = rPr.find(qn("w:sz")) if rPr is not None else None
+                            fonts = rPr.find(qn("w:rFonts")) if rPr is not None else None
+                            assert fonts is not None \
+                                and fonts.get(qn("w:ascii")) == "Times New Roman", (
+                                "%s: run band (%d,*) không phải TNR: %r"
+                                % (fid, ri, r.text[:20]))
+                            assert sz is not None and sz.get(qn("w:val")) == "26", (
+                                "%s: run band (%d,*) không phải 13pt: %r"
+                                % (fid, ri, r.text[:20]))
+                            row_runs[ri].append(r.bold)
+            assert row_runs[0] and all(row_runs[0]), (
+                "%s: băng trên phải bold toàn bộ run: %r" % (fid, row_runs[0]))
+            assert not any(row_runs[1]), (
+                "%s: băng dưới phải giữ thường: %r" % (fid, row_runs[1]))
             # thuộc tính tạm đã được scrub trước khi lưu
             assert tbl._tbl.get(bfm.HEADER_BAND_TEMP_ATTR) is None, \
                 "%s: còn sót thuộc tính tạm %s" % (fid, bfm.HEADER_BAND_TEMP_ATTR)

@@ -646,3 +646,6 @@ docs/audits/f3v2_final_corpus_2026-09-08.json
 docs/audits/f3v2_final_corpus_2026-09-08.md
 # --- [bandfix CSS 2026-09-09] CSS band 36/64 top align + 13pt bold mirror ---
 docs/audits/f7_final_audit_2026-09-09.md
+
+# --- [wave2-fixture 2026-09-09] B1-B5 fixture engine + harness export fixes ---
+tools/test_wave2_fixture_lane.py

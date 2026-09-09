@@ -110,6 +110,17 @@ M72_VARIANTS = [
 # Mỗi entry: (tên nhóm, regex khớp key chk, lựa chọn mặc định của fixture
 # choice-variants). Nhóm = các option tranh nhau MỘT lựa chọn pháp lý.
 # Checkbox ĐỘC LẬP (không khớp nhóm nào) được phép chọn đồng thời.
+#
+# [wave2-B4b] NGUỒN THỨ HAI của cụm loại-trừ là bằng chứng KHỐI (xem
+# _block_groups): các chk inline CÙNG một block `p` (cùng câu hỏi trên giấy)
+# và các block `chk` KỀ NHAU (dãy option của một câu hỏi — cặp Có/Không
+# 'đất đảo', 'hiển thị giá trị tương đương GTNT'…). Vì vậy HAI pattern
+# tổng quát cũ ('co_khong' ^chk_(auto_)?(co|khong)(_\d+)?$ và
+# 'auto_co_khong') đã BỎ: chúng bắt nhầm key generic của NHIỀU câu hỏi
+# khác nhau vào một nhóm rồi _merge_overlapping gộp đôi → chỉ 1 ô được tick,
+# các cặp còn lại KHÔNG ô nào (finding corpus: PLI_M02 p9, PLI_M12 p12) —
+# đã xác minh 100% key generic thuộc một cụm khối ≥2 ở cả 87 form nên việc
+# bỏ pattern không làm rớt cụm thật nào.
 # ---------------------------------------------------------------------------
 EXCLUSIVE_GROUPS = [
     # kỳ báo cáo BHXH: hàng tháng / 3 tháng / 6 tháng (chọn 1 trong 3)
@@ -125,28 +136,29 @@ EXCLUSIVE_GROUPS = [
     ("giay_to_dd", r"^chk_gt_(cmnd|cccd|ho_chieu|loai_khac)$", "chk_gt_cccd"),
     # khu vị trí: CN / chế xuất / kinh tế / công nghệ cao — chọn 1
     ("khu_vuc", r"^chk_khu_(cong_nghiep|che_xuat|kinh_te|cong_nghe_cao)$", "chk_khu_cong_nghiep"),
-    # cặp Có/Không (chk_co/chk_khong hoặc chk_auto_*_co/_khong) — chọn 1;
-    # đuôi _2/_3 là lặp câu hỏi giống nhau trong cùng mẫu
-    ("co_khong", r"^chk_(auto_)?(co|khong)(_\d+)?$", "chk_khong"),
     # [F5-dryrun fix] chủ thể hộ kinh doanh: hộ gia đình / cá nhân — chọn 1
     ("chu_the_hkd", r"^chk_ct_(ho_gia_dinh|ca_nhan)$", "chk_ct_ho_gia_dinh"),
     # [F5 judge-1a fix 2026-09-07] tình trạng thành lập/thay đổi — M01 3 lựa
     # chọn, M02 7 lựa chọn (mới/tách/chia/hợp nhất/chuyển đổi loại hình/
-    # chuyển đổi từ HKD/chuyển đổi từ CSBT) — MỘT nhóm mở rộng
+    # chuyển đổi từ HKD/chuyển đổi từ CSBT) — MỘT nhóm mở rộng.
+    # [wave2-B4d fix 2026-09-09] + 'sap_nhap_dn': PLI_M12 cụm
+    # 'tách / sáp nhập doanh nghiệp' là 2 ô của MỘT lựa chọn pháp lý —
+    # trước đây 2 key không khớp nhóm nào nên fixture tick CẢ HAI.
     ("tinh_trang_thanh_lap",
-     r"^chk_tt_(thanh_lap_moi|tach_dn|chia_dn|hop_nhat_dn|chuyen_doi_loai_hinh"
-     r"|chuyen_doi_tu_hkd|chuyen_doi_tu_csbt)$", "chk_tt_thanh_lap_moi"),
-    # cặp auto Có/Không theo ngữ cảnh (hiển thị giá trị tương đương ngoại tệ,
-    # đã đăng ký đầu tư đặc biệt...) — đuôi _2 là lặp câu hỏi trong cùng mẫu
-    ("auto_co_khong",
-     r"^chk_auto_(co|khong)(_\d+)?$", "chk_auto_khong"),
-    # [F5 judge-3b fix 2026-09-07] phương pháp kê khai PLII_M01 mục 5.4:
-    # kê khai / khoán — chọn 1 trong 2 (chk nằm 2 block p khác nhau nên
-    # heuristic cùng-paragraph không gộp được)
-    ("pp_ke_khai", r"^chk_pp_(ke_khai|khoan)$", "chk_pp_ke_khai"),
-    # [F5 judge-batch8 fix 2026-09-07] PLI_M14 trường hợp thay đổi chủ DNTN:
-    # tặng / chủ chết / bán — chọn 1 trong 3
-    ("thay_doi_chu_dntn", r"^chk_cd_dntn_(tang|chu_chet|ban)$", "chk_cd_dntn_tang"),
+     r"^chk_tt_(thanh_lap_moi|tach_dn|sap_nhap_dn|chia_dn|hop_nhat_dn"
+     r"|chuyen_doi_loai_hinh|chuyen_doi_tu_hkd|chuyen_doi_tu_csbt)$",
+     "chk_tt_thanh_lap_moi"),
+    # [wave2-B4e fix 2026-09-09] PLII_M02 'Thay đổi chủ hộ kinh doanh do':
+    # thành viên hộ gia đình ỦY QUYỀN (chk_ct_ho_gia_dinh) HOẶC chủ hộ
+    # chết/bị Tòa tuyên bố đã chết, mất tích (chk_auto_chu_ho_kinh_doanh_…
+    # chet_hoac_bi_toa_an_tu) — chọn 1. Trước đây key auto bị coi là
+    # checkbox độc lập nên fixture tick CẢ HAI (finding corpus B4e). Key
+    # chk_ct_ho_gia_dinh cũng thuộc nhóm chu_the_hkd (xuất hiện 2 lần trong
+    # mẫu với 2 vai trò) — _group_pick ưu tiên member nằm trong nhiều cụm
+    # nguồn để CẢ HAI cụm đều có đúng 1 ô tick.
+    ("thay_doi_chu_ho_hkd",
+     r"^chk_(ct_ho_gia_dinh|auto_chu_ho_kinh_doanh_chet_hoac_bi_toa_an_tu)$",
+     "chk_ct_ho_gia_dinh"),
     # bộ 3 chủ thể đặc biệt M02: đầu tư đặc biệt / DN xã hội / CTCK — các
     # khai báo độc lập KHÔNG loại-trừ (doanh nghiệp có thể đồng thời) →
     # KHÔNG đưa vào nhóm; choice giữ tick-all là chủ đích của fixture cho
@@ -154,16 +166,20 @@ EXCLUSIVE_GROUPS = [
     # mô hình tổ chức công ty: Hội đồng thành viên (hoặc Hội đồng quản trị)
     # / Chủ tịch công ty — hai mô hình quản trị loại-trừ nhau về pháp lý
     # [F5-dryrun fix 2026-09-07] đồng bộ runtime EXCLUSIVE_CHK_GROUPS
-    # (form-domain.js): chk_auto_chu_ho_kinh_doanh_chet_hoac_bi_toa_an_tu là
-    # checkbox ĐỘC LẬP (trường hợp chủ hộ chết/bị Tòa tuyên bố mất tích) —
-    # không được nuốt vào nhóm cặp Có/Không; cặp chủ thể PLII_M02
-    # (chk_ct_ho_gia_dinh | chk_ct_ca_nhan) chọn-1 theo mẫu.
-    # (F-V5-3: trước đây choice-variants tick cả hai trên M02/M15). Key auto
-    # bị cắt ở 48 ký tự slug nên pattern phải khớp đúng 2 slug này.
+    # (form-domain.js). Key auto bị cắt ở 48 ký tự slug nên pattern phải
+    # khớp đúng 2 slug này.
     ("mo_hinh_to_chuc",
      r"^chk_auto_(hoi_dong_thanh_vien_giam_doc_hoac_tong_g"
      r"|chu_tich_cong_ty_giam_doc_hoac_tong_giam)$",
      "chk_auto_hoi_dong_thanh_vien_giam_doc_hoac_tong_g"),
+    # [F5 judge-3b fix 2026-09-07] phương pháp kê khai PLII_M01 mục 5.4:
+    # kê khai / khoán — chọn 1 trong 2 (chk nằm 2 block p khác nhau nên
+    # heuristic cùng-paragraph không gộp được; [wave2-B4b] nay đã là cụm
+    # khối kề nhau nhưng giữ pattern để pick đúng 'kê khai')
+    ("pp_ke_khai", r"^chk_pp_(ke_khai|khoan)$", "chk_pp_ke_khai"),
+    # [F5 judge-batch8 fix 2026-09-07] PLI_M14 trường hợp thay đổi chủ DNTN:
+    # tặng / chủ chết / bán — chọn 1 trong 3
+    ("thay_doi_chu_dntn", r"^chk_cd_dntn_(tang|chu_chet|ban)$", "chk_cd_dntn_tang"),
 ]
 
 _GROUP_CACHE: dict = {}
@@ -328,6 +344,10 @@ def _fallback_value(f: "ValueFactory", k: str, n: int, lf: str,
     if k.endswith("_chu") or "bang_chu" in k:
         return f._unique("Năm trăm triệu Việt Nam đồng chẵn "
                          "(phần góp số %d)" % n)
+    # [wave2-B3] tỷ lệ trước họ 'von' — 'ty_le_von_dieule'/'ty_le_von' chứa
+    # 'von' nhưng là cột % (0-100), không phải số tiền
+    if "ty_le" in k or "phan_tram" in k:
+        return str((n * 7) % 100 + 1)
     if "von" in k or "tai_san" in k or "chi_phi" in k:
         return str(n * 500000000)
     # --- con số ---
@@ -382,20 +402,37 @@ class ValueFactory:
         # set trước khi value()) — dùng để phân biệt slot ngày ĐỘC LẬP vs slot
         # NGÀY THÀNH PHẦN trong pattern {ngay_X}/{thang_X}/{nam_X}.
         self._form_keys: set[str] = set()
+        # [wave2-B2] namespace loop hiện hành khi sinh dòng grid (bare tag
+        # của cột được tra cứu theo ĐỦ 'loop.tag'); rỗng ở ngữ cảnh scalar.
+        self._loop_ns: str = ""
 
     def set_form_keys(self, keys: set[str]) -> None:
         self._form_keys = {k for k in keys}
+
+    def set_loop_ns(self, ns: str) -> None:
+        self._loop_ns = ns or ""
 
     def _date_slot_is_component(self, k: str) -> bool:
         """True khi key ngày này là thành phần của pattern 3-token
         ({ngay_X}/{thang_X}/{nam_X} cùng prefix loop/scalar) — giá trị phải
         là NGÀY (dd), không phải full dd/mm/yyyy. Tránh hồi quy 6V-V4b 7a:
-        full-date chỉ đúng cho slot ngày độc lập (vd {ngay_cap} một mình)."""
-        fam = k.rsplit(".", 1)[0] if "." in k else ""
+        full-date chỉ đúng cho slot ngày độc lập (vd {ngay_cap} một mình).
+
+        [wave2-B2] Bộ 3 phải CÙNG namespace: key dotted dùng prefix của chính
+        nó (vd 'gd.ngay_sinh' ↔ 'gd.thang_sinh'); key TRẦN của cột grid dùng
+        namespace loop hiện hành (set_loop_ns) và tra cứu theo key ĐỦ
+        'loop.tag'. Trước đây key trần 'ngay_sinh' của cột grid bị so với
+        bộ 3 scalar TRẦN của chủ thể KHÁC trong cùng form (vd PLII_M01 có
+        scalar ngay/thang/nam_sinh của người đại diện) → cột 'Ngày, tháng,
+        năm sinh' của bảng chỉ nhận '24' thay vì full date (dương tính giả)."""
         base = k.split(".")[-1]
         if not (base.startswith("ngay_") or base == "ngay"):
             return False
         suffix = base[5:]  # 'sinh', 'cap', ... ('ngay_' = 5 ký tự)
+        if "." in k:
+            fam = k.rsplit(".", 1)[0]
+        else:
+            fam = self._loop_ns
         thang = ("%s.thang_%s" % (fam, suffix)) if fam else ("thang_%s" % suffix)
         nam = ("%s.nam_%s" % (fam, suffix)) if fam else ("nam_%s" % suffix)
         return thang in self._form_keys and nam in self._form_keys
@@ -468,12 +505,20 @@ class ValueFactory:
             return _DIA_CHI[n % len(_DIA_CHI)].format(n * 3)
         if "co_quan_dkkd" in k or "co_quan_cap" in k:
             return _CO_QUAN[n % len(_CO_QUAN)]
+        # [wave2-B3] "bằng chữ" và "tỷ lệ" phải được nhận diện TRƯỚC họ
+        # 'von'/'so_von': key 'von_dieu_le_chu' chứa 'von_dieu_le' và
+        # 'ty_le_so_von_dieule' chứa 'so_von' — nhánh von cũ nuốt cả hai,
+        # trả SỐ tiền thay vì chữ (thiếu 'đồng') và số hàng trăm tỷ thay vì
+        # % 0-100 cho cột tỷ lệ.
+        if k.endswith("_chu") or "bang_chu" in k:
+            return self._unique("Năm trăm triệu Việt Nam đồng chẵn "
+                                "(phần góp số %d)" % n)
+        if "ty_le" in k or "phan_tram" in k:
+            return str((n * 7) % 100 + 1)
         if "von_dieu_le" in k or "von_dang_ky" in k or "gia_tri" in k or \
                 "menh_gia" in k or "so_tien" in k or "tong" in k or \
                 "muc_von" in k or "so_von" in k:
             return str(n * 500000000)
-        if "ty_le" in k or "phan_tram" in k:
-            return str((n * 7) % 100 + 1)
         if k.endswith("ngay") or "ngay_ky" in k:
             return "%02d" % (n % 28 + 1)
         if "ngay_sinh" in k or "ngay_cap" in k:
@@ -523,9 +568,22 @@ class ValueFactory:
 def chk_groups(form_map: dict, blocks: dict | list) -> list[list[str]]:
     """Trả danh sách nhóm loại-trừ: mỗi nhóm là list key chk tranh nhau.
 
-    Hai nguồn: (1) EXCLUSIVE_GROUPS theo pattern key; (2) mọi tập chk inline
-    xuất hiện trong CÙNG một block `p` (cùng câu hỏi trên giấy). Nhóm pattern
-    và nhóm paragraph có thể trùng member — dedupe giữ nhóm dài hơn."""
+    Hai nguồn: (1) EXCLUSIVE_GROUPS theo pattern key; (2) bằng chứng khối
+    (_block_groups): chk inline cùng block `p` + dãy block `chk` kề nhau
+    [wave2-B4b]. Nhóm pattern và nhóm khối có thể trùng member — dedupe giữ
+    nhóm dài hơn (qua _merge_with_counts)."""
+    groups, _counts = _exclusive_clusters(form_map, blocks)
+    return groups
+
+
+def _exclusive_clusters(form_map: dict,
+                        blocks: dict | list) -> tuple[list[list[str]],
+                                                      dict[str, int]]:
+    """Cụm loại-trừ sau gộp + số cụm NGUỒN chứa mỗi member.
+
+    counts[m] > 1 nghĩa là key m thuộc nhiều cụm nguồn (một key dùng ở hai
+    vai trò trên cùng mẫu — vd chk_ct_ho_gia_dinh PLII_M02): _group_pick
+    ưu tiên member này để mọi cụm nguồn đều có đúng 1 ô tick."""
     fields = form_map.get("fields", [])
     chk_keys = [f["key"] for f in fields if f.get("type") == "chk"]
     keyset = set(chk_keys)
@@ -538,20 +596,25 @@ def chk_groups(form_map: dict, blocks: dict | list) -> list[list[str]]:
         if len(members) >= 2:
             groups.append(members)
 
-    # (2) theo paragraph (chk inline cùng block p)
-    for grp in _paragraph_groups(blocks):
+    # (2) theo khối (cùng paragraph / dãy chk kề nhau)
+    for grp in _block_groups(blocks):
         members = [k for k in grp if k in keyset]
         if len(members) >= 2:
             groups.append(members)
-    return _merge_overlapping(groups)
+    return _merge_with_counts(groups)
 
 
-def _merge_overlapping(groups: list[list[str]]) -> list[list[str]]:
+def _merge_with_counts(groups: list[list[str]],
+                       ) -> tuple[list[list[str]], dict[str, int]]:
     """Gộp các nhóm chia member (cùng một câu hỏi bị bắt bởi 2 nguồn) —
-    tránh pick 2 lựa chọn cho cùng một câu."""
+    tránh pick 2 lựa chọn cho cùng một câu; đếm mỗi member nằm trong bao
+    nhiêu nhóm nguồn."""
     merged: list[set[str]] = []
+    counts: dict[str, int] = {}
     for g in groups:
         gs = set(g)
+        for m in gs:
+            counts[m] = counts.get(m, 0) + 1
         hit = [m for m in merged if m & gs]
         if hit:
             union = gs.union(*hit)
@@ -559,23 +622,49 @@ def _merge_overlapping(groups: list[list[str]]) -> list[list[str]]:
             merged.append(union)
         else:
             merged.append(gs)
-    return [sorted(m) for m in merged]
+    return [sorted(m) for m in merged], counts
 
 
-def _paragraph_groups(blocks) -> list[list[str]]:
+def _merge_overlapping(groups: list[list[str]]) -> list[list[str]]:
+    """Wrapper tương thích: chỉ trả nhóm đã gộp (không cần counts)."""
+    return _merge_with_counts(groups)[0]
+
+
+def _block_groups(blocks) -> list[list[str]]:
+    """Cụm chk theo BẰNG CHỨNG KHỐI [wave2-B4b]:
+
+    (a) các chk inline (input run) trong CÙNG block `p` — cùng câu hỏi trên
+        bản giấy (vd cặp 'đất đảo' chk_auto_co/chk_auto_khong PLI_M02);
+    (b) dãy block `t=='chk'` ĐỨNG KỀ NHAU (không block nào xen vào) — dãy
+        option của một câu hỏi (vd 'Có hiển thị giá trị tương đương…'
+        chk_auto_co_2/chk_auto_khong_2, danh sách 7 ô tình trạng thành lập).
+    Bất kỳ block loại khác (p, table,…) đều chấm dứt dãy (b)."""
     out: list[list[str]] = []
     items = blocks.get("blocks") if isinstance(blocks, dict) else blocks
+    seq: list[str] = []
+
+    def _flush():
+        if len(seq) >= 2:
+            out.append(list(seq))
+        seq.clear()
+
     for b in items or []:
-        if not isinstance(b, dict) or b.get("t") != "p":
+        if not isinstance(b, dict):
             continue
-        keys = []
-        for r in b.get("runs") or []:
-            if isinstance(r, dict) and isinstance(r.get("input"), dict):
-                k = r["input"].get("key") or ""
-                if k.startswith("chk"):
-                    keys.append(k)
-        if len(keys) >= 2:
-            out.append(keys)
+        if b.get("t") == "chk":
+            seq.append(b.get("key") or "")
+            continue
+        if b.get("t") == "p":
+            keys = []
+            for r in b.get("runs") or []:
+                if isinstance(r, dict) and isinstance(r.get("input"), dict):
+                    k = r["input"].get("key") or ""
+                    if k.startswith("chk"):
+                        keys.append(k)
+            if len(keys) >= 2:
+                out.append(keys)
+        _flush()
+    _flush()
     return out
 
 
@@ -641,12 +730,12 @@ def build_fixture(fid: str, form_map: dict, fixture: str,
 
     # ---- chk: chỉ fixture choice tick ----
     if fixture == "choice-variants":
-        groups = chk_groups(form_map, blocks or {})
+        groups, counts = _exclusive_clusters(form_map, blocks or {})
         members_in_groups: set[str] = set()
         picked: set[str] = set()
         for members in groups:
             members_in_groups.update(members)
-            pick = _group_pick(members)
+            pick = _group_pick(members, counts)
             if pick:
                 picked.add(pick)
         for field in form_map.get("fields", []):
@@ -663,18 +752,33 @@ def build_fixture(fid: str, form_map: dict, fixture: str,
     rows_n = 1 if is_minimal else (25 if is_long else 3)
     for t in form_map.get("dynamic_tables", []):
         loop, cols = t["loop"], t.get("columns", [])
+        # [wave2-B2] cột grid được value() tra theo ĐỦ 'loop.tag' khi xét
+        # cụm ngày thành phần — đặt namespace loop hiện hành, reset sau.
+        f.set_loop_ns(loop)
+        # [wave2-B4a] cột 'la_nganh_chinh' (cột ngành chính của bảng ngành):
+        # trên bản giấy ĐÚNG 1 dòng được đánh dấu — chỉ dòng CÓ DỮ LIỆU ĐẦU
+        # nhận 'X', các dòng còn lại trống. Trước đây mọi dòng đều nhận '×'
+        # (5 render-unit PLI_M72 đánh dấu cả 3 dòng — finding corpus B4a).
+        main_col = next((c["tag"] for c in cols
+                         if (c.get("tag") or "").endswith("la_nganh_chinh")),
+                        None)
         rows = []
-        for _ in range(rows_n):
+        for row_i in range(rows_n):
             row = {c["tag"]: f.value(c["tag"], c.get("label") or "")
                    for c in cols}
             # [6V-V4b việc 7b] cột chữ ký = vùng viết tay: giá trị VẼ RA
             # rồi MỚI loại — giữ nguyên chuỗi gọi ValueFactory (n) để việc
             # bỏ cột ký KHÔNG xô lệch giá trị của mọi field phía sau
             # (xô lệch n đã gây drift pagination toàn corpus, tái hiện
-            # m72_ctcp p2 trang 29 ký tự)
-            rows.append({k: v for k, v in row.items()
-                         if not is_handwriting_column(k)})
+            # m72_ctcp p2 trang 29 ký tự). [wave2-B4a] 'la_nganh_chinh' cũng
+            # giữ chuỗi gọi f.value (chống drift n) rồi MỚI ghi đè.
+            row = {k: v for k, v in row.items()
+                   if not is_handwriting_column(k)}
+            if main_col and main_col in row:
+                row[main_col] = "X" if row_i == 0 else ""
+            rows.append(row)
         data[loop] = rows
+    f.set_loop_ns("")
 
     # ---- fixed-matrix cells (spec-driven) ----
     specs = [s for s in (form_map.get("section_specs") or [])
@@ -693,13 +797,24 @@ def build_fixture(fid: str, form_map: dict, fixture: str,
     return data
 
 
-def _group_pick(members: list[str]) -> str:
+def _group_pick(members: list[str],
+                counts: dict[str, int] | None = None) -> str:
     """Chọn thành viên đại diện cho nhóm: ưu tiên pick khai báo trong
-    EXCLUSIVE_GROUPS nếu còn trong members, nếu không thì member đầu."""
+    EXCLUSIVE_GROUPS nếu còn trong members, nếu không thì member đầu.
+
+    [wave2-B4] Khi nhóm là HỢP của nhiều cụm nguồn chia member (counts[m]>1
+    — vd chk_ct_ho_gia_dinh thuộc cả chu_the_hkd lẫn thay_doi_chu_ho_hkd
+    trên PLII_M02), ưu tiên member nằm trong NHIỀU cụm nguồn nhất: một tick
+    thỏa mãn đồng thời các cụm, tránh cụm bị bỏ trống (0 tick)."""
     for _name, pat, pick in EXCLUSIVE_GROUPS:
         rx = re.compile(pat)
         if pick in members and all(rx.match(m) for m in members):
             return pick
+    if counts:
+        best = max(members,
+                   key=lambda m: (counts.get(m, 0), -members.index(m)))
+        if counts.get(best, 0) > 1:
+            return best
     return members[0]
 
 
@@ -725,7 +840,8 @@ def _stretchable(key: str) -> bool:
 def validate_fixture(form_map: dict, blocks, data: dict,
                      fixture: str) -> list[str]:
     """Trả list vi phạm (rỗng = hợp lệ). Kiểm:
-    (V1) nhóm loại-trừ chọn đúng <=1;
+    (V1) nhóm loại-trừ chọn đúng <=1; [wave2-B4] với choice-variants: đúng 1
+         (không 0, không 2) — mọi cụm đều phải có đại diện;
     (V2) empty-paper không có giá trị nào;
     (V3) fixture khác: mỗi grid active có dữ liệu (trừ empty);
     (V4) không dùng chuỗi 'TEST' chung mọi field."""
@@ -740,6 +856,11 @@ def validate_fixture(form_map: dict, blocks, data: dict,
         if len(chosen) > 1:
             errs.append("V1: nhóm loại-trừ %s được chọn %d: %s"
                         % (members[0], len(chosen), ",".join(chosen)))
+        elif fixture == "choice-variants" and len(chosen) == 0:
+            errs.append(
+                "V1b: cụm loại-trừ %s không được tick ô nào "
+                "(choice-variants phải chọn đúng 1 trong: %s)"
+                % (members[0], ",".join(members)))
     # (V3)
     if fixture != "valid-minimal":
         for t in form_map.get("dynamic_tables", []):

@@ -1130,6 +1130,9 @@ def _keep_signature_blocks(xml: str) -> str:
                 for row in rows):
             continue
         new_seg = _add_rows_cantsplit(seg, rows)
+        # [E1 wave3-paginate] nén chiều cao hàng ký ngang — xem
+        # _compact_sig_table ngay dưới.
+        new_seg = _compact_sig_table(new_seg)
         if new_seg != seg:
             body = body[:start] + new_seg + body[end:]
     return xml[:bm.start(2)] + body + xml[bm.end(2):]
@@ -1137,6 +1140,31 @@ def _keep_signature_blocks(xml: str) -> str:
 
 # Bảng ký cần khoá hàng: giới hạn số hàng (bảng 1x2 sau WLAY-002 là 1 hàng)
 _SIG_TABLE_MAX_ROWS = 4
+
+# ---------------------------------------------------------------------------
+# [E1 wave3-paginate — PLI_M70 bảng ký ngang tràn trang]
+# Hàng bảng ký ngang pin sẵn trHeight atLeast 1200 (60pt) + spacer exact
+# 800 (40pt) trong ô (bake từ _SIG_TABLE_TEMPLATE/_SIG_CELL_TEMPLATE của
+# tools/build_form_maps.py) → hàng cao ~74pt. Khi đuôi trang 1 chỉ còn
+# ~63pt, CẢ HÀNG (cantSplit) tràn sang trang 2 gần trống (~95% trắng).
+# Nén: sàn hàng 1200→600 (30pt) và vùng viết trong ô 800→240 (12pt —
+# cùng giá trị _cell_wrap của guard _horizontal_signature_tables) → hàng
+# ~46pt lọt trang 1. Giá trị phải ĐỒNG BỘ với hai template của
+# build_form_maps.py (Lead regen sau). Chỉ chạy trên bảng đã nhận diện là
+# bảng ký (mọi hàng chứa chỉ thị ký) nên không đụng bảng dữ liệu.
+_SIG_TRHEIGHT_1200_RE = re.compile(
+    r'<w:trHeight\b(?=[^>]*w:val="1200")(?=[^>]*w:hRule="atLeast")[^>]*/>')
+_SIG_SPACING_800_EXACT_RE = re.compile(
+    r'<w:spacing\b(?=[^>]*w:line="800")(?=[^>]*w:lineRule="exact")[^>]*/>')
+
+
+def _compact_sig_table(seg: str) -> str:
+    """Nén chiều cao hàng bảng ký: trHeight atLeast 1200→600, spacer exact
+    800→240 (idempotent — giá trị đã ≤ ngưỡng thì bytes giữ nguyên)."""
+    seg = _SIG_TRHEIGHT_1200_RE.sub(
+        lambda m: m.group(0).replace('w:val="1200"', 'w:val="600"', 1), seg)
+    return _SIG_SPACING_800_EXACT_RE.sub(
+        lambda m: m.group(0).replace('w:line="800"', 'w:line="240"', 1), seg)
 
 # Footnote-body: "3 Người đề nghị ký và ghi họ tên..." — số cuối chú thích
 # đứng NGAY TRƯỚC chữ, không có dấu chấm/ngoặc (tiền lệ layout_roles).

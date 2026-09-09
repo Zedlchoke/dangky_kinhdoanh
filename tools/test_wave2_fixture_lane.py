@@ -355,11 +355,36 @@ def b5_inventory():
     assert render_units == 90, render_units
 
 
+@check("[B6] merge de-dup tick cụm exclusive — batch 86 form không còn "
+       "'Có X Không X' (key auto dùng chung M01–M05/M12/M15)")
+def b6_merge_dedup():
+    from tools.phase5_fixtures import _exclusive_clusters
+    blocks_all = {fid: _blocks(fid) for fid in ACTIVE_IDS}
+    merged = merge_fixture_data(MAPS, blocks_all, "choice-variants",
+                                sorted(ACTIVE_IDS))
+    bad = []
+    for fid in sorted(ACTIVE_IDS):
+        groups, _counts = _exclusive_clusters(MAPS[fid], blocks_all[fid])
+        for members in groups:
+            xs = [k for k in set(members) if merged.get(k) == "X"]
+            if len(xs) >= 2:
+                bad.append((fid, sorted(xs)))
+    assert not bad, "cụm ≥2 tick sau merge: %r" % bad[:4]
+    # neo cụm từng bắt gặp ở corpus v2 (finding 2026-09-09): M01 GTNT
+    gtnt = [k for k in ("chk_auto_co_hien_thi_thong_tin_ve_gia_tri_tuong_d",
+                        "chk_auto_khong") if merged.get(k) == "X"]
+    assert len(gtnt) <= 1, "M01 GTNT vẫn %d tick: %r" % (len(gtnt), gtnt)
+    # valid-full không tick chk — de-dup phải no-op (không đụng data khác)
+    vf = merge_fixture_data(MAPS, blocks_all, "valid-full", sorted(ACTIVE_IDS))
+    assert not [k for k in vf if k.startswith("chk") and vf[k] == "X"], \
+        "valid-full không được có chk tick"
+
+
 def main() -> int:
     for fn in (b1_unit, b1_merge, b2_grid, b2_scalar, b3_value,
                b4a_la_nganh_chinh, b4b_co_khong_pairs, b4c_thanh_lap,
                b4d_tach_sap, b4e_pliim02, b4_sweep, b4_validator,
-               b4_registry, b5_inventory):
+               b4_registry, b5_inventory, b6_merge_dedup):
         fn()
     fails = [r for r in _results if not r[0]]
     print("-" * 60)

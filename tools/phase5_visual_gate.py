@@ -928,11 +928,34 @@ def merge_fixture_data(maps: dict, blocks_all: dict, fixture: str,
     trị riêng; key chung — ngày ký, cơ quan… — nhận giá trị cuối, cùng ngữ
     nghĩa). [wave2-B1] tách thành hàm dùng chung để run_export và test hồi
     quy gọi ĐÚNG một logic merge; payload phẳng sau đó qua Bridge.export
-    (_nest) — list dòng grid của từng form phải sống sót sau merge."""
+    (_nest) — list dòng grid của từng form phải sống sót sau merge.
+
+    [wave2-B6 2026-09-09] de-dup tick cụm loại-trừ sau merge: batch 86 form
+    gộp flat last-write-wins, các form khác nhau pick lựa chọn KHÁC NHAU của
+    CÙNG key auto (vd `chk_auto_khong` dùng chung M01–M05/M12/M15) → merged
+    cùng lúc 'X' ở 2 key của một cụm → render "Có X Không X" (finding corpus
+    v2 choice-variants: 7 cụm / 7 form). Duyệt từng cụm exclusive theo thứ tự
+    (form, index): giữ đúng 1 key ticked (sort đầu), unset phần còn lại —
+    xác suất cụm sau mất sạch tick là 0 trong corpus hiện hành vì mỗi form
+    build riêng đã tick đúng 1; key dùng chung chỉ có thể NHẤT QUÁN toàn
+    batch (một key một giá trị) — khác biệt giữa các form cùng key là giới
+    hạn của data-model auto-key, ghi defect_registry P1."""
+    from tools.phase5_fixtures import _exclusive_clusters
     merged: dict = {}
     for fid in form_ids:
         merged.update(build_fixture(fid, maps[fid], fixture,
                                     blocks_all.get(fid), ValueFactory()))
+    if fixture == "choice-variants":
+        for fid in sorted(form_ids):
+            try:
+                groups, _counts = _exclusive_clusters(maps[fid],
+                                                      blocks_all.get(fid) or {})
+            except Exception:
+                continue
+            for members in groups:
+                xs = sorted(k for k in set(members) if merged.get(k) == "X")
+                for k in xs[1:]:
+                    merged.pop(k, None)
     return merged
 
 

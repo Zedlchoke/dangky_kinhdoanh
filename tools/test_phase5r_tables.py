@@ -194,7 +194,13 @@ WIDE_TABLE_FIXTURE = [
     # lại phân bổ THEO NỘI DUNG trong đúng 14400. Evidence: census sau regen
     # trả ('PLI_M10',0,18,14400,615); render PDF có đủ chữ cột 18, không word
     # nào x1 > 792−36pt.
-    ("PLI_M10", 0, 18, 14400, 615, "ds_cshhl"),
+    # [Pin sync — wave2-fixture B3 2026-09-09] 615 -> 624: fixture engine sửa
+    # ưu tiên họ key — cột `ty_le_*`/percent giờ trả 0-100 (không còn số
+    # 12 chữ số) → floors longest-word của 2 cột tỷ lệ giảm hợp lệ, phân bổ
+    # lại trong đúng 14400 (tổng không đổi); cột min LỚN HƠN trước (624>615)
+    # = thoáng hơn cho D9. Evidence: census regen ×2 zero-diff trả
+    # ('PLI_M10',0,18,14400,624) tại wave3 commit.
+    ("PLI_M10", 0, 18, 14400, 624, "ds_cshhl"),
     # [Pin sync — F0L+F1-IN 2026-09-06] PLI_M12 ndd_uy_quyen: 4 -> 5 (band
     # header integration) -> 8 (+3 matrix O2 F1-IN đứng trước: nguon_von,
     # tai_san ×2, co_cau, nganh ×3). 15 cột/14400/900 KHÔNG đổi.

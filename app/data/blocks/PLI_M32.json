@@ -14,10 +14,11 @@
   },
   {
    "t": "p",
-   "align": "left",
+   "align": "right",
    "runs": [
     {
-     "text": "Mẫu số 32"
+     "text": "Mẫu số 32",
+     "b": true
     }
    ],
    "role": "form-number"

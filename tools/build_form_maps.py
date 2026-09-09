@@ -147,6 +147,18 @@ rule(r"^dien thoai", "kt.dien_thoai", ["kt.dien_thoai", "kt.email"], ctx=CTX_KT)
 # --- Ngày tháng nơi ký (đầu trang) ---
 rule(r"^ngay\s+.*thang", "ngay_thang_vb", ["ngay_ky_vb", "thang_ky_vb", "nam_ky_vb"])
 # --- Cơ quan tiếp nhận ---
+# [C2 2026-09-09] PLI_M67 câu "(Cơ quan ĐKKD cấp tỉnh) thông báo … của doanh
+# nghiệp: (tên doanh nghiệp) …": slot sau "(tên doanh nghiệp)" là TÊN DN,
+# không phải cơ quan ĐKKD — nhãn dài chứa '(Cơ quan đăng ký kinh doanh cấp
+# tỉnh)' ở ĐẦU câu từng trúng rule unanchored 'co quan dang ky kinh doanh
+# cap' bên dưới -> {co_quan_dkkd} đè lên ô tên (corpus lớp A 2026-09-09;
+# đối chiếu form anh em PLI_M66 bind {dn.ten_tieng_viet} cho cùng dữ liệu).
+# Neo đuôi nhãn 'cua doanh nghiep: (ten doanh nghiep)' — census corpus:
+# 0 nhãn khác khớp (M49 '(tên doanh nghiệp)' trơn, M53 'yêu cầu (tên doanh
+# nghiệp)', M70/M71 '… của (tên doanh nghiệp)' đều KHÔNG có 'doanh nghiệp:'
+# kế trước nên không bị đụng; M53 vẫn trúng rule '^yeu cau' của nó vì rule
+# này chỉ thắng khi nhãn KẾT THÚC bằng cặp trên).
+rule(r"cua doanh nghiep: \(ten doanh nghiep\)$", "dn.ten_tieng_viet")
 rule(r"kinh gui|co quan dang ky kinh doanh cap", "co_quan_dkkd")
 # --- Chủ thể cá nhân (HKD) ---
 rule(r"ghi ho ten bang chu in hoa", "chu_hkd.ho_ten")
@@ -2755,6 +2767,21 @@ def apply_name_slots(doc, form_id, ext, add_field):
     return n_done
 
 
+def _first_slot_key(lab, section_ctx):
+    """[C1 2026-09-09] Rule ĐẦU TIÊN trong R khớp `lab` (tôn trọng ctx, cùng
+    thứ tự ưu tiên khi gắn slot thường) -> key sẽ được gắn: groups-rule lấy
+    phần tử groups[0], rule thường lấy key. Dùng để tách nhãn ghép mà vẫn
+    giữ đúng họ key (ngay_cap / ndd.ngay_cap / hkd_cd.ngay_cap, ...)."""
+    for pat, key, grps, ctx in R:
+        if pat and re.search(pat, lab):
+            if ctx and not re.search(ctx, section_ctx):
+                continue
+            if grps:
+                return grps[0] or key
+            return key
+    return None
+
+
 def _assign_para_slots(full, groups, add_field, unmatched, form_id, where,
                        section_ctx="", pending_label=""):
     """Gán the cho TẤT CẢ nhóm dấu chấm của MỘT paragraph -> [(s, e, tag)].
@@ -2809,6 +2836,32 @@ def _assign_para_slots(full, groups, add_field, unmatched, form_id, where,
         if not lab.strip() and pending_label:
             # slot ở đoạn riêng, nhãn nằm ở paragraph trước kết thúc bằng ":"
             lab = norm_label(pending_label)
+        # [C1 2026-09-09] Nhãn ghép "Ngày cấp: … Nơi cấp: ……" — slot sau
+        # "Ngày cấp:" chỉ MỘT ký tự '…' nên DOT_RUN ([.…]{2,}) không thấy,
+        # cả đoạn " Ngày cấp: … Nơi cấp: " thành nhãn của nhóm chấm cuối;
+        # rule '^ngay cap' (re.search tiền tố) gắn nhầm {..ngay_cap} vào ô
+        # NƠI CẤP (corpus lớp A 2026-09-09: PLI_M42/43/63/68/69 + PLI_M72
+        # x5 render-unit — cùng 1 cơ chế, pattern nguồn
+        # '…): …… Ngày cấp: … Nơi cấp: ……'). Tách 2 nhãn: nhóm '…' ẩn trong
+        # nhãn = {..ngay_cap}, nhóm chấm hiện tại = {..noi_cap}; key lấy theo
+        # ĐÚNG rule sẽ khớp (giữ ctx ndd/hkd_cd/... như khi gắn thường).
+        # Chỉ applying khi tìm được slot '…' ẩn (đơn ký tự, không kề chấm)
+        # và CẢ hai key tồn tại — lệch một điều kiện thì rơi xuống khối rule
+        # thường bên dưới như cũ (không nuốt im).
+        if re.match(r"^ngay cap\D*noi cap$", lab):
+            ngay_key = _first_slot_key("ngay cap", section_ctx)
+            noi_key = _first_slot_key("noi cap", section_ctx)
+            m_hidden = re.search(r"(?<![.…])…(?![.…])", label)
+            if ngay_key and noi_key and m_hidden:
+                hs = prev_end + m_hidden.start()
+                he = prev_end + m_hidden.end()
+                assignments.append((hs, he, "{%s}" % ngay_key))
+                add_field(ngay_key, full[prev_end:hs])
+                assignments.append((g_start, g_end, "{%s}" % noi_key))
+                add_field(noi_key, full[he:g_start])
+                prev_end = g_end
+                gi += 1
+                continue
         matched = None
         for pat, key, grps, ctx in R:
             if pat and re.search(pat, lab):
@@ -3240,6 +3293,73 @@ HEADER_BAND_SIZE_PT = 13
 _HEADER_BAND_ALIGN = {(0, 0): "left", (0, 1): "center",
                       (1, 0): "left", (1, 1): "right"}
 
+# [C3/C4 2026-09-09] Nhãn "Mẫu số N" đầu mẫu — nguồn pháp lý ĐỀU in ĐẬM,
+# căn PHẢI trên band (TT 121/2026/TT-BTC p50 M12 / p67 M27 / p70 M30; TT
+# 68/2025/TT-BTC p78/p83/p111/p130/p224/p239 — adjudicate lớp A 2026-09-09,
+# ảnh /tmp/legal_p0_pages/M12_p50.png, M27_p67.png, M30_p70.png). Nguồn
+# scrape bị lệch: 7 mẫu đã đúng PHẢI+đậm (M13/14/15/18/19/21/26), 15 mẫu
+# còn TRÁI (M17/23/25/27/28/29/30/31/32/33 + PLII_M02..M06), PLI_M12 thiếu
+# hẳn dòng (nguồn migrate TT 121/2026 không mang "Mẫu số 12"). Generator
+# chuẩn hoá TƯỜNG MINH trong build_header_band_table: mọi form band có đúng
+# 1 dòng "Mẫu số N" in đậm căn phải TRƯỚC band; thiếu thì CHÈN mới (hiện
+# chỉ M12). Idempotent: dòng đã đúng chuẩn thì không đụng (7 mẫu đã đúng
+# regen zero-diff).
+MAUSO_LABEL_RE = re.compile(r"^Mẫu\s*số\s*\d{1,4}\s*$")
+
+
+def _mauso_paragraph_before(doc, children, anchor):
+    """Paragraph 'Mẫu số N' ngay TRÊN ô band (cách tối đa 1 paragraph rỗng,
+    không vượt xa hơn — census 23 form: nhãn luôn đứng kề ô tên). Trả về
+    element w:p hoặc None."""
+    from docx.text.paragraph import Paragraph
+    for j in range(anchor - 1, max(anchor - 4, -1), -1):
+        el = children[j]
+        if el.tag != qn("w:p"):
+            return None
+        text = Paragraph(el, doc).text.strip()
+        if not text:
+            continue
+        return el if MAUSO_LABEL_RE.match(text) else None
+    return None
+
+
+def _normalize_mauso_label(doc, form_id, children, anchor):
+    """[C3/C4 2026-09-09] Chuẩn hoá dòng 'Mẫu số N' TRƯỚC band: in đậm +
+    căn phải (nguồn pháp lý — comment ở MAUSO_LABEL_RE). Form thiếu dòng
+    (PLI_M12 — nguồn migrate TT 121/2026 mất) thì CHÈN 'Mẫu số <N>' mới
+    (Times New Roman 13pt đậm — cùng font band HEADER_BAND_*). Trả về số
+    element CHÈN MỚI trước anchor (0 hoặc 1) để caller dồn vị trí chèn band.
+    Idempotent: dòng đã đúng chuẩn thì KHÔNG đụng byte."""
+    from docx.shared import Pt
+    from docx.text.paragraph import Paragraph
+    el = _mauso_paragraph_before(doc, children, anchor)
+    if el is None:
+        mau = int(re.search(r"M(\d+)$", form_id).group(1))
+        para = doc.add_paragraph()
+        run = para.add_run("Mẫu số %d" % mau)
+        run.bold = True
+        run.font.name = HEADER_BAND_FONT
+        run.font.size = Pt(HEADER_BAND_SIZE_PT)
+        _hdr_para_align(para._p, "right")
+        children[anchor].addprevious(para._p)
+        print("[mauso] %s: chèn dòng 'Mẫu số %d' đậm căn phải trước band "
+              "(TT 121/2026 p50 — nguồn migrate thiếu)" % (form_id, mau))
+        return 1
+    para = Paragraph(el, doc)
+    p_pr = el.find(qn("w:pPr"))
+    jc_el = p_pr.find(qn("w:jc")) if p_pr is not None else None
+    is_right = jc_el is not None and jc_el.get(qn("w:val")) == "right"
+    text_runs = [r for r in para.runs if r.text.strip()]
+    is_bold = bool(text_runs) and all(r.font.bold for r in text_runs)
+    if is_right and is_bold:
+        return 0
+    _hdr_para_align(el, "right")
+    for r in text_runs:
+        r.font.bold = True
+    print("[mauso] %s: chuẩn hoá nhãn 'Mẫu số' -> in đậm + căn phải "
+          "(nguồn pháp lý đặt PHẢI — C4 2026-09-09)" % form_id)
+    return 0
+
 
 def _hdr_fold(text):
     return fold(re.sub(r"\s+", " ", text or "")).strip()
@@ -3466,7 +3586,11 @@ def build_header_band_table(doc, form_id):
         raise ValueError("[hdr2col] %s: không tìm thấy ô %r trong nguồn"
                          % (form_id, label))
     # vị trí chèn bảng — phải khoá TRƯỚC khi di chuyển 4 paragraph vào ô
-    insert_at = children.index(children[anchor])
+    # [C3/C4 2026-09-09] nhãn "Mẫu số N" in đậm căn phải TRƯỚC band: chuẩn
+    # hoá dòng có sẵn / chèn mới khi thiếu (M12). Chèn mới dồn vị trí band
+    # xuống 1 (band vẫn NGAY SAU dòng nhãn, đúng thứ tự bản giấy).
+    insert_shift = _normalize_mauso_label(doc, form_id, children, anchor)
+    insert_at = children.index(children[anchor]) + insert_shift
     window = children[anchor:anchor + 4]
     if len(window) < 4 or any(el.tag != qn("w:p") for el in window):
         raise ValueError("[hdr2col] %s: 4 paragraph header không liền khối"

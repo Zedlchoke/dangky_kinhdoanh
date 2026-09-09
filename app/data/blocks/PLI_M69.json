@@ -318,12 +318,21 @@
      }
     },
     {
-     "text": " Ngày cấp: … Nơi cấp: "
+     "text": " Ngày cấp: "
     },
     {
      "input": {
       "key": "ngay_cap",
-      "w": 19
+      "w": 13
+     }
+    },
+    {
+     "text": " Nơi cấp: "
+    },
+    {
+     "input": {
+      "key": "noi_cap",
+      "w": 13
      }
     }
    ],

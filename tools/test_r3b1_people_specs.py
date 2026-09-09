@@ -290,7 +290,11 @@ def t_anchor_unique():
         # co_cau) materialize thành w:tbl thay đoạn paragraph phẳng -> tổng
         # block M12 giảm mạnh; evidence: fold[89] == heading NĐD ủy quyền,
         # anchor khớp blocks ĐÚNG 1 (uniqueness giữ nguyên).
-        "PLI_M12": 89,
+        # [Pin sync — C3 wave2-docx 2026-09-09] 89 -> 90: generator CHÈN dòng
+        # "Mẫu số 12" đậm căn phải TRƯỚC band (TT 121/2026 p50 — nguồn migrate
+        # thiếu; adjudicate lớp A 2026-09-09) -> mọi block sau nhãn dịch +1;
+        # evidence: fold[90] == heading NĐD ủy quyền, anchor vẫn khớp ĐÚNG 1.
+        "PLI_M12": 90,
         "PLI_M15": 43,        # blk49 glue — hdr2col (084444d): bảng header
                               # band thay 4 p header -> index dịch 48 -> 43
     }

@@ -352,12 +352,18 @@ def t_w3_no_trailing_empty_para():
 @check("W3 pagination: TNHH_2TV khong trang chars<20; 4 variant khac giu page count")
 def t_w3_pagination():
     """Đỏ trước khi sửa qua reproduction; sau fix: page count 4 variant
-    DNTN/TNHH_1TV/CTCP/DHDN giữ nguyên (2/2/3/2 đo tại BASE), TNHH_2TV
-    không còn trang trắng (<20 chars)."""
+    TNHH_1TV/CTCP/DHDN giữ nguyên (2/3/2 đo tại BASE), TNHH_2TV
+    không còn trang trắng (<20 chars).
+    [Pin sync — E3 wave3-paginate 2026-09-09] DNTN 2 -> 1, DHDN 2 -> 1: render
+    nén run ≥3 paragraph rỗng liên tiếp sau bảng (`_collapse_blank_para_runs`)
+    thu hồi ~156pt đệm viết tay thừa — DNTN gọn 1 trang; DHDN hết trang 2
+    mồ côi 1 dòng "8. Nơi đăng ký" (case 5 MAJOR empty-paper, adjudicate
+    2026-09-09); evidence: corpus phase9_bandfix_v2 empty-paper m72_dntn /
+    m72_dhdn 1 trang."""
     import subprocess
     import fitz
     W3_SANDBOX.mkdir(parents=True, exist_ok=True)
-    baseline_pages = {"DNTN": 2, "TNHH_1TV": 2, "CTCP": 3, "DHDN": 2}
+    baseline_pages = {"DNTN": 1, "TNHH_1TV": 2, "CTCP": 3, "DHDN": 1}
     for label in ("DNTN", "TNHH_1TV", "TNHH_2TV", "CTCP", "DHDN"):
         docx = W3_SANDBOX / ("M72_%s.docx" % label)
         docx.write_bytes(_render_m72_variant(label))

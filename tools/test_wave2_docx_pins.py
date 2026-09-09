@@ -15,6 +15,11 @@ không chạy lại generator: test đọc nhanh, fail khi artifact trôi khỏi
       Form chịu ảnh hưởng: PLI_M42, PLI_M43, PLI_M63, PLI_M68, PLI_M69,
       PLI_M72 (x5 render-unit) — cùng 1 pattern nguồn
       '…): …… Ngày cấp: … Nơi cấp: ……'.
+      Phạm vi pin: CHỈ các form trên. Ngoài phạm vi (đã biết, KHÔNG thuộc
+      danh sách adjudicate lớp A): PLI_M02/03/04/05 có 8 paragraph
+      '…Ngày cấp: … Nơi cấp: …' mà TẤT CẢ slot đều '…' đơn ký tự — nguồn
+      không có nhóm chấm nào đạt ngưỡng DOT_RUN nên bind 0 input (khác
+      cơ chế: đây là hạn chế DOT_RUN gốc, cần quyết định riêng nếu xử).
   C2  PLI_M67 block "(tên doanh nghiệp) …" bind dn.ten_tieng_viet (đối chiếu
       form anh em PLI_M66); {co_quan_dkkd} không còn đè lên ô tên (nguồn
       M67 không có nhãn ĐKKD fill nào khác — không có dòng "Kính gửi").

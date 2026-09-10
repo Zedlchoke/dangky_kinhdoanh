@@ -1,0 +1,81 @@
+{
+  "manifest_id": "chuyen_doi_hkd_sang_dn",
+  "manifest_version": 1,
+  "schema_version": 1,
+  "case_id": "chuyen_doi_hkd_sang_dn",
+  "case_title": "Chuyển đổi hộ kinh doanh thành doanh nghiệp",
+  "nhom": "Chuyển đổi hộ kinh doanh sang doanh nghiệp",
+  "mo_ta": "Dùng khi hộ kinh doanh chuyển đổi thành doanh nghiệp. Chọn loại hình sau chuyển đổi để xác định mẫu Giấy đề nghị đăng ký doanh nghiệp tương ứng (Mẫu 1/2/3/4 Phụ lục I).",
+  "co_so_phap_ly": [
+    "Điều 27 Nghị định 168/2025/NĐ-CP (đăng ký thành lập DN trên cơ sở chuyển đổi từ hộ kinh doanh)"
+  ],
+  "luu_y": [
+    "Hồ sơ chuyển đổi KHÔNG bao gồm bản sao Giấy chứng nhận đăng ký đầu tư.",
+    "Hộ kinh doanh KHÔNG được hoạt động kể từ thời điểm doanh nghiệp được cấp GCNĐKDN.",
+    "Việc chấm dứt hoạt động hộ kinh doanh cũ được liên thông tự động: cấp tỉnh gửi thông tin cho cấp xã, cấp xã thông báo cơ quan thuế; hộ KD chuyển trạng thái 'đang làm thủ tục chấm dứt hoạt động' rồi 'đã chấm dứt' khi hoàn thành nghĩa vụ thuế (khoản 3 Điều 27).",
+    "Nộp tại Cơ quan đăng ký kinh doanh cấp tỉnh nơi đặt trụ sở chính dự kiến của doanh nghiệp."
+  ],
+  "giay_to_kem": [
+    "Bản sao Giấy chứng nhận đăng ký hộ kinh doanh (bắt buộc)",
+    "Các giấy tờ của hồ sơ thành lập doanh nghiệp tương ứng theo Điều 24 NĐ 168 (Điều lệ, danh sách thành viên, giấy tờ pháp lý...)",
+    "Nếu có nhà đầu tư nước ngoài góp vốn/mua phần vốn góp thuộc trường hợp phải chấp thuận: bản sao văn bản chấp thuận của Cơ quan đăng ký đầu tư"
+  ],
+  "forms_oneOf": [
+    {
+      "ids": [
+        "PLI_M01",
+        "PLI_M02",
+        "PLI_M03",
+        "PLI_M04"
+      ],
+      "max": 1
+    }
+  ],
+  "forms": [
+    {
+      "form_id": "PLI_M01",
+      "ten_mau": "Giấy đề nghị đăng ký doanh nghiệp - Doanh nghiệp tư nhân",
+      "bat_buoc": false,
+      "ghi_chu": "Nếu chuyển đổi thành doanh nghiệp tư nhân",
+      "questionnaire_version": null,
+      "cluster": null,
+      "title": "Giấy đề nghị đăng ký doanh nghiệp - Doanh nghiệp tư nhân",
+      "content_review": "pending",
+      "questions": []
+    },
+    {
+      "form_id": "PLI_M02",
+      "ten_mau": "Giấy đề nghị đăng ký doanh nghiệp - Công ty trách nhiệm hữu hạn một thành viên",
+      "bat_buoc": false,
+      "ghi_chu": "Nếu chuyển đổi thành công ty TNHH một thành viên",
+      "questionnaire_version": null,
+      "cluster": null,
+      "title": "Giấy đề nghị đăng ký doanh nghiệp - Công ty trách nhiệm hữu hạn một thành viên",
+      "content_review": "pending",
+      "questions": []
+    },
+    {
+      "form_id": "PLI_M03",
+      "ten_mau": "Giấy đề nghị đăng ký doanh nghiệp - Công ty trách nhiệm hữu hạn hai thành viên trở lên",
+      "bat_buoc": false,
+      "ghi_chu": "Nếu chuyển đổi thành TNHH hai thành viên trở lên (kèm Mẫu 6)",
+      "questionnaire_version": null,
+      "cluster": null,
+      "title": "Giấy đề nghị đăng ký doanh nghiệp - Công ty trách nhiệm hữu hạn hai thành viên trở lên",
+      "content_review": "pending",
+      "questions": []
+    },
+    {
+      "form_id": "PLI_M04",
+      "ten_mau": "Giấy đề nghị đăng ký doanh nghiệp - Công ty cổ phần",
+      "bat_buoc": false,
+      "ghi_chu": "Nếu chuyển đổi thành công ty cổ phần (kèm Mẫu 7)",
+      "questionnaire_version": null,
+      "cluster": null,
+      "title": "Giấy đề nghị đăng ký doanh nghiệp - Công ty cổ phần",
+      "content_review": "pending",
+      "questions": []
+    }
+  ],
+  "manifest_hash": "4d674fb2100c2906ae8da26c188d730c45d9b087543d58949c55e13d8b187b7e"
+}

@@ -1,0 +1,33 @@
+{
+  "manifest_id": "thay_doi_noi_dung_hoat_dong_cn_vpdd",
+  "manifest_version": 1,
+  "schema_version": 1,
+  "case_id": "thay_doi_noi_dung_hoat_dong_cn_vpdd",
+  "case_title": "Thay đổi nội dung đăng ký hoạt động chi nhánh/VPĐĐ/địa điểm kinh doanh",
+  "nhom": "Chi nhánh, VPĐĐ, địa điểm kinh doanh",
+  "mo_ta": "Dùng khi thay đổi tên, địa chỉ, người đứng đầu, ngành nghề... của chi nhánh, VPĐĐ hoặc địa điểm kinh doanh; thực hiện trong 10 ngày kể từ ngày có thay đổi.",
+  "co_so_phap_ly": [
+    "Điều 56 Nghị định 168/2025/NĐ-CP"
+  ],
+  "luu_y": [
+    "Hồ sơ CHỈ gồm giấy đề nghị Mẫu 19 (khoản 4 Điều 56).",
+    "Nếu chuyển địa chỉ sang tỉnh khác (thay cơ quan thuế quản lý), phải làm thủ tục với cơ quan thuế trước; hồ sơ nộp tại cấp tỉnh nơi chuyển ĐẾN.",
+    "Sau chuyển đổi loại hình doanh nghiệp, các chi nhánh/VPĐĐ/địa điểm phải đăng ký thay đổi nội dung đăng ký hoạt động (khoản 6 Điều 56)."
+  ],
+  "giay_to_kem": [],
+  "forms_oneOf": [],
+  "forms": [
+    {
+      "form_id": "PLI_M19",
+      "ten_mau": "Giấy đề nghị đăng ký thay đổi nội dung đăng ký hoạt động chi nhánh/văn phòng đại diện/địa điểm kinh doanh",
+      "bat_buoc": true,
+      "ghi_chu": "Giấy đề nghị đăng ký thay đổi nội dung đăng ký hoạt động chi nhánh/VPĐĐ/địa điểm kinh doanh",
+      "questionnaire_version": null,
+      "cluster": null,
+      "title": "Giấy đề nghị đăng ký thay đổi nội dung đăng ký hoạt động chi nhánh/văn phòng đại diện/địa điểm kinh doanh",
+      "content_review": "pending",
+      "questions": []
+    }
+  ],
+  "manifest_hash": "f87bec59d97796667d45619f07b08213dcb85536d898a4bee6e43219db94dbc3"
+}

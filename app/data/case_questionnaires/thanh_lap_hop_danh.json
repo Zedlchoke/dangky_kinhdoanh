@@ -1,0 +1,44 @@
+{
+  "manifest_id": "thanh_lap_hop_danh",
+  "manifest_version": 1,
+  "schema_version": 1,
+  "case_id": "thanh_lap_hop_danh",
+  "case_title": "Thành lập Công ty hợp danh",
+  "nhom": "Thành lập doanh nghiệp",
+  "mo_ta": "Dùng khi thành lập công ty hợp danh, phải có ít nhất 02 thành viên hợp danh (chịu trách nhiệm vô hạn).",
+  "co_so_phap_ly": [
+    "Điều 20 Luật Doanh nghiệp (được dẫn chiếu tại khoản 2 Điều 24 Nghị định 168/2025/NĐ-CP)",
+    "Khoản 2 Điều 24 Nghị định 168/2025/NĐ-CP"
+  ],
+  "luu_y": [],
+  "giay_to_kem": [
+    "Bản Điều lệ công ty hợp danh",
+    "Bản sao giấy tờ pháp lý của thành viên hợp danh là cá nhân (miễn nếu kê khai số định danh cá nhân)"
+  ],
+  "forms_oneOf": [],
+  "forms": [
+    {
+      "form_id": "PLI_M05",
+      "ten_mau": "Giấy đề nghị đăng ký doanh nghiệp - Công ty hợp danh",
+      "bat_buoc": true,
+      "ghi_chu": "Giấy đề nghị đăng ký doanh nghiệp - Công ty hợp danh",
+      "questionnaire_version": null,
+      "cluster": null,
+      "title": "Giấy đề nghị đăng ký doanh nghiệp - Công ty hợp danh",
+      "content_review": "pending",
+      "questions": []
+    },
+    {
+      "form_id": "PLI_M09",
+      "ten_mau": "Danh sách thành viên công ty hợp danh",
+      "bat_buoc": true,
+      "ghi_chu": "Danh sách thành viên công ty hợp danh",
+      "questionnaire_version": null,
+      "cluster": null,
+      "title": "Danh sách thành viên công ty hợp danh",
+      "content_review": "pending",
+      "questions": []
+    }
+  ],
+  "manifest_hash": "4aa8304ed1a6409cd03b3458a7f2945d2c12e25d979af68c0c2ad77c247290ca"
+}

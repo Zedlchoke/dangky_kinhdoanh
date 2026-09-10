@@ -1,0 +1,45 @@
+{
+  "manifest_id": "thay_doi_chusohuu_chudn",
+  "manifest_version": 1,
+  "schema_version": 1,
+  "case_id": "thay_doi_chusohuu_chudn",
+  "case_title": "Thay đổi chủ sở hữu công ty TNHH 1TV / chủ doanh nghiệp tư nhân",
+  "nhom": "Thay đổi nội dung đăng ký doanh nghiệp",
+  "mo_ta": "Dùng khi chuyển nhượng, tặng cho toàn bộ phần vốn góp của TNHH một thành viên; bán/tặng cho doanh nghiệp tư nhân; hoặc thay đổi chủ do thừa kế.",
+  "co_so_phap_ly": [
+    "Điều 46 Nghị định 168/2025/NĐ-CP (thay đổi chủ sở hữu TNHH 1TV)",
+    "Điều 47 Nghị định 168/2025/NĐ-CP (thay đổi chủ doanh nghiệp tư nhân trong trường hợp bán, tặng cho doanh nghiệp, chủ DN chết)"
+  ],
+  "luu_y": [],
+  "giay_to_kem": [
+    "Với TNHH 1TV: hợp đồng chuyển nhượng/giấy tờ chứng minh hoàn tất chuyển nhượng; hợp đồng tặng cho; hoặc bản sao văn bản xác nhận quyền thừa kế hợp pháp",
+    "Với DNTN: hợp đồng mua bán/biển bản thanh lý hợp đồng mua bán; hợp đồng tặng cho; hoặc bản sao văn bản xác nhận quyền thừa kế",
+    "Bản sao giấy tờ pháp lý của chủ mới (miễn nếu kê khai số định danh)"
+  ],
+  "forms_oneOf": [],
+  "forms": [
+    {
+      "form_id": "PLI_M15",
+      "ten_mau": "Giấy đề nghị đăng ký thay đổi chủ sở hữu công ty TNHH một thành viên",
+      "bat_buoc": false,
+      "ghi_chu": "Giấy đề nghị đăng ký thay đổi chủ sở hữu công ty TNHH một thành viên",
+      "questionnaire_version": null,
+      "cluster": null,
+      "title": "Giấy đề nghị đăng ký thay đổi chủ sở hữu công ty TNHH một thành viên",
+      "content_review": "pending",
+      "questions": []
+    },
+    {
+      "form_id": "PLI_M14",
+      "ten_mau": "Giấy đề nghị đăng ký thay đổi chủ doanh nghiệp tư nhân",
+      "bat_buoc": false,
+      "ghi_chu": "Giấy đề nghị đăng ký thay đổi chủ doanh nghiệp tư nhân",
+      "questionnaire_version": null,
+      "cluster": null,
+      "title": "Giấy đề nghị đăng ký thay đổi chủ doanh nghiệp tư nhân",
+      "content_review": "pending",
+      "questions": []
+    }
+  ],
+  "manifest_hash": "58d3327f43bf9fbc5134ed6761518293cad970e344216668b5deb8cae0df77c0"
+}

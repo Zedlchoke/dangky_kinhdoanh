@@ -1,0 +1,37 @@
+{
+  "manifest_id": "thanh_lap_dntn",
+  "manifest_version": 1,
+  "schema_version": 1,
+  "case_id": "thanh_lap_dntn",
+  "case_title": "Thành lập Doanh nghiệp tư nhân",
+  "nhom": "Thành lập doanh nghiệp",
+  "mo_ta": "Dùng khi một cá nhân thành lập doanh nghiệp và làm chủ doanh nghiệp tư nhân, chịu trách nhiệm bằng toàn bộ tài sản của mình về mọi hoạt động của doanh nghiệp.",
+  "co_so_phap_ly": [
+    "Điều 19 Luật Doanh nghiệp (được dẫn chiếu tại khoản 1 Điều 24 Nghị định 168/2025/NĐ-CP)",
+    "Khoản 1 Điều 24 Nghị định 168/2025/NĐ-CP",
+    "Điều 11 Nghị định 168/2025/NĐ-CP (kê khai số định danh cá nhân)"
+  ],
+  "luu_y": [
+    "Doanh nghiệp tư nhân không có bản Điều lệ riêng (khác công ty).",
+    "Một cá nhân chỉ được lập một DNTN; chủ DNTN không được đồng thời là chủ hộ kinh doanh, thành viên hợp danh.",
+    "Hồ sơ nộp tại Cơ quan đăng ký kinh doanh thuộc Sở Tài chính cấp tỉnh."
+  ],
+  "giay_to_kem": [
+    "Bản sao giấy tờ pháp lý của cá nhân đối với chủ doanh nghiệp tư nhân (CCCD/hộ chiếu). KHÔNG phải nộp nếu chủ DN kê khai số định danh cá nhân trong mẫu đề nghị (khoản 1 Điều 11 NĐ 168)"
+  ],
+  "forms_oneOf": [],
+  "forms": [
+    {
+      "form_id": "PLI_M01",
+      "ten_mau": "Giấy đề nghị đăng ký doanh nghiệp - Doanh nghiệp tư nhân",
+      "bat_buoc": true,
+      "ghi_chu": "Giấy đề nghị đăng ký doanh nghiệp - Doanh nghiệp tư nhân",
+      "questionnaire_version": null,
+      "cluster": null,
+      "title": "Giấy đề nghị đăng ký doanh nghiệp - Doanh nghiệp tư nhân",
+      "content_review": "pending",
+      "questions": []
+    }
+  ],
+  "manifest_hash": "b8d5690a2dd7d27e78f4bbec3dae191e2c1363dc202c76a8dce4f46696bb7e9b"
+}

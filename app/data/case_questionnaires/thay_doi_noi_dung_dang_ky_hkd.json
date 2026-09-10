@@ -1,0 +1,496 @@
+{
+  "manifest_id": "thay_doi_noi_dung_dang_ky_hkd",
+  "manifest_version": 1,
+  "schema_version": 1,
+  "case_id": "thay_doi_noi_dung_dang_ky_hkd",
+  "case_title": "Thay đổi nội dung đăng ký hộ kinh doanh",
+  "nhom": "Thay đổi nội dung đăng ký hộ kinh doanh",
+  "mo_ta": "Dùng khi hộ kinh doanh thay đổi một trong các nội dung đã đăng ký: tên hộ, địa chỉ trụ sở, chủ hộ, thành viên hộ gia đình đăng ký, vốn kinh doanh, ngành nghề kinh doanh hoặc nội dung đăng ký thuế (trừ phương pháp tính thuế). Hồ sơ nộp tại Cơ quan đăng ký kinh doanh cấp xã nơi hộ kinh doanh đặt trụ sở.",
+  "co_so_phap_ly": [
+    "Điều 100 Nghị định 168/2025/NĐ-CP (hồ sơ, trình tự, thủ tục đăng ký thay đổi nội dung đăng ký hộ kinh doanh)",
+    "Điều 101 Nghị định 168/2025/NĐ-CP (bắt buộc bổ sung số điện thoại liên hệ khi đăng ký thay đổi)"
+  ],
+  "luu_y": [
+    "Chủ hộ phải đăng ký thay đổi trong 10 ngày kể từ ngày có thay đổi (khoản 1 Điều 100).",
+    "Giấy đề nghị do chủ hộ kinh doanh ký (khoản 2 Điều 100).",
+    "Bắt buộc kê khai số điện thoại liên hệ — thiếu số điện thoại thì hồ sơ bị coi là không hợp lệ (khoản 1 Điều 101).",
+    "Thay đổi trụ sở dẫn đến thay đổi cơ quan thuế quản lý trực tiếp: phải hoàn tất thủ tục với cơ quan thuế TRƯỚC khi đăng ký với cấp xã (khoản 2 Điều 100).",
+    "Giải quyết trong 03 ngày làm việc; thay đổi tên/trụ sở/chủ hộ/thành viên/vốn/ngành nghề được cấp Giấy chứng nhận đăng ký hộ kinh doanh mới (khoản 7 Điều 100)."
+  ],
+  "giay_to_kem": [
+    "Thay đổi chủ hộ do các thành viên hộ gia đình ủy quyền cho thành viên còn lại: bản sao văn bản ủy quyền (công chứng/chứng thực) - khoản 3 Điều 100",
+    "Thay đổi chủ hộ do chủ hộ chết/bị Tòa án tuyên bố đã chết, mất tích, bị hạn chế hoặc mất năng lực hành vi dân sự: bản sao giấy chứng tử hoặc quyết định của Tòa án - khoản 4, 5 Điều 100",
+    "Thay đổi thành viên hộ gia đình (tiếp nhận thành viên mới): bản sao văn bản ủy quyền của thành viên mới cho chủ hộ kinh doanh (công chứng/chứng thực) - khoản 6 Điều 100"
+  ],
+  "forms_oneOf": [],
+  "forms": [
+    {
+      "form_id": "PLII_M02",
+      "ten_mau": "Giấy đề nghị đăng ký thay đổi nội dung đăng ký hộ kinh doanh",
+      "bat_buoc": true,
+      "ghi_chu": "Giấy đề nghị đăng ký thay đổi nội dung đăng ký hộ kinh doanh (do chủ hộ kinh doanh ký)",
+      "questionnaire_version": 1,
+      "cluster": "hkd_thay_doi_noi_dung",
+      "title": "Thay đổi nội dung đăng ký hộ kinh doanh",
+      "content_review": "approved",
+      "questions": [
+        {
+          "question_id": "q_hkd_ten",
+          "group": "Về hộ kinh doanh đang đăng ký",
+          "text": "Tên hộ kinh doanh hiện tại của bạn là gì?",
+          "type": "text",
+          "example": "Hộ kinh doanh bánh ngọt Hải Phòng",
+          "required": true,
+          "version": 1,
+          "data_key": "hkd_ten_tieng_viet_2"
+        },
+        {
+          "question_id": "q_hkd_ma_so",
+          "group": "Về hộ kinh doanh đang đăng ký",
+          "text": "Mã số hộ kinh doanh (mã số thuế) của bạn?",
+          "type": "text",
+          "example": "0312345678-001",
+          "required": true,
+          "version": 1,
+          "data_key": "hkd_ma_so"
+        },
+        {
+          "question_id": "q_co_quan_dkkd",
+          "group": "Về hộ kinh doanh đang đăng ký",
+          "text": "Bạn nộp hồ sơ tại cơ quan đăng ký kinh doanh cấp xã/phường nào?",
+          "type": "text",
+          "example": "Phòng Tài chính - Kế hoạch Quận 1",
+          "version": 1,
+          "data_key": "co_quan_dkkd"
+        },
+        {
+          "question_id": "q_ten_moi",
+          "group": "Về thay đổi tên và địa chỉ",
+          "text": "Nếu đổi tên hộ: bạn muốn đặt tên mới là gì? (bỏ trống nếu giữ nguyên tên)",
+          "type": "text",
+          "version": 1,
+          "data_key": "hkd_ten_tieng_viet"
+        },
+        {
+          "question_id": "q_ten_moi_nuoc_ngoai",
+          "group": "Về thay đổi tên và địa chỉ",
+          "text": "Tên tiếng nước ngoài mới (nếu có)?",
+          "type": "text",
+          "version": 1,
+          "data_key": "hkd_ten_tieng_nuoc"
+        },
+        {
+          "question_id": "q_ten_moi_viet_tat",
+          "group": "Về thay đổi tên và địa chỉ",
+          "text": "Tên viết tắt mới (nếu có)?",
+          "type": "text",
+          "version": 1,
+          "data_key": "hkd_ten_viet_tat"
+        },
+        {
+          "question_id": "q_dia_chi_chi_tiet",
+          "group": "Về thay đổi tên và địa chỉ",
+          "text": "Nếu đổi địa điểm kinh doanh: địa chỉ mới ở đâu? (số nhà/phòng, đường/phố, tổ/xóm/ấp/thôn)",
+          "type": "text",
+          "version": 1,
+          "data_key": "dia_chi_chi_tiet"
+        },
+        {
+          "question_id": "q_xa_phuong",
+          "group": "Về thay đổi tên và địa chỉ",
+          "text": "Xã/phường/đặc khu mới?",
+          "type": "text",
+          "version": 1,
+          "data_key": "xa_phuong"
+        },
+        {
+          "question_id": "q_tinh_thanh",
+          "group": "Về thay đổi tên và địa chỉ",
+          "text": "Tỉnh/thành phố mới?",
+          "type": "text",
+          "version": 1,
+          "data_key": "tinh_thanh"
+        },
+        {
+          "question_id": "q_dien_thoai_hkd",
+          "group": "Về thay đổi thông tin liên lạc",
+          "text": "Số điện thoại mới của hộ kinh doanh?",
+          "type": "tel",
+          "version": 1,
+          "data_key": "dien_thoai_khac"
+        },
+        {
+          "question_id": "q_email",
+          "group": "Về thay đổi thông tin liên lạc",
+          "text": "Email mới (nếu có)?",
+          "type": "email",
+          "version": 1,
+          "data_key": "email_tru_so"
+        },
+        {
+          "question_id": "q_fax",
+          "group": "Về thay đổi thông tin liên lạc",
+          "text": "Số fax (nếu có)?",
+          "type": "text",
+          "version": 1,
+          "data_key": "fax"
+        },
+        {
+          "question_id": "q_website",
+          "group": "Về thay đổi thông tin liên lạc",
+          "text": "Website (nếu có)?",
+          "type": "text",
+          "version": 1,
+          "data_key": "website"
+        },
+        {
+          "question_id": "q_chu_ho_ten",
+          "group": "Về chủ hộ",
+          "text": "Họ và tên chủ hộ (sau thay đổi)? (bạn ghi thường, app tự in hoa)",
+          "type": "text",
+          "example": "Trần Thị B",
+          "version": 1,
+          "data_key": "chu_hkd.ho_ten"
+        },
+        {
+          "question_id": "q_ngay_sinh",
+          "group": "Về chủ hộ",
+          "text": "Ngày, tháng, năm sinh của chủ hộ? (dd/mm/yyyy)",
+          "type": "date",
+          "example": "05/12/1985",
+          "version": 1,
+          "data_key": [
+            {
+              "key": "ngay_sinh",
+              "transform": "date_day"
+            },
+            {
+              "key": "thang_sinh",
+              "transform": "date_month"
+            },
+            {
+              "key": "nam_sinh",
+              "transform": "date_year"
+            }
+          ]
+        },
+        {
+          "question_id": "q_gioi_tinh",
+          "group": "Về chủ hộ",
+          "text": "Giới tính của chủ hộ?",
+          "type": "select",
+          "options": [
+            {
+              "value": "Nam",
+              "label": "Nam"
+            },
+            {
+              "value": "Nữ",
+              "label": "Nữ"
+            }
+          ],
+          "version": 1,
+          "data_key": "chu_hkd.gioi_tinh"
+        },
+        {
+          "question_id": "q_so_cccd",
+          "group": "Về chủ hộ",
+          "text": "Số định danh cá nhân (CCCD) của chủ hộ?",
+          "type": "text",
+          "example": "079085001234",
+          "version": 1,
+          "data_key": "chu_hkd.so_cccd"
+        },
+        {
+          "question_id": "q_dan_toc",
+          "group": "Về chủ hộ",
+          "text": "Dân tộc của chủ hộ?",
+          "type": "text",
+          "example": "Kinh",
+          "version": 1,
+          "data_key": "chu_hkd.dan_toc"
+        },
+        {
+          "question_id": "q_quoc_tich",
+          "group": "Về chủ hộ",
+          "text": "Quốc tịch của chủ hộ?",
+          "type": "text",
+          "example": "Việt Nam",
+          "version": 1,
+          "data_key": "chu_hkd.quoc_tich"
+        },
+        {
+          "question_id": "q_dien_thoai_chu_ho",
+          "group": "Về chủ hộ",
+          "text": "Số điện thoại liên hệ của chủ hộ?",
+          "type": "tel",
+          "version": 1,
+          "data_key": "dien_thoai_lien_he"
+        },
+        {
+          "question_id": "q_von_moi",
+          "group": "Về thay đổi vốn",
+          "text": "Nếu thay đổi vốn: vốn kinh doanh sau thay đổi là bao nhiêu? (VNĐ)",
+          "type": "money",
+          "example": "80000000",
+          "version": 1,
+          "data_key": "von_kd_moi"
+        },
+        {
+          "question_id": "q_thoi_diem_thay_doi_von",
+          "group": "Về thay đổi vốn",
+          "text": "Thời điểm thay đổi vốn? (dd/mm/yyyy)",
+          "type": "date",
+          "version": 1,
+          "data_key": "thoi_diem_thay_doi_von"
+        },
+        {
+          "question_id": "q_hinh_thuc_tang_giam_von",
+          "group": "Về thay đổi vốn",
+          "text": "Hộ bạn tăng hay giảm vốn? Ghi rõ (ví dụ: tăng vốn thêm 30.000.000)",
+          "type": "text",
+          "example": "Tăng vốn",
+          "version": 1,
+          "data_key": "hinh_thuc_tang_giam_von"
+        },
+        {
+          "question_id": "q_nganh_bs_ten",
+          "group": "Về ngành nghề bổ sung",
+          "text": "Ngành nghề bạn muốn THÊM vào hộ kinh doanh? Ghi tên ngành",
+          "type": "text",
+          "repeatable": true,
+          "row_group": "nganh_bo_sung",
+          "version": 1,
+          "data_key": "nganh_bo_sung.ten_nganh_bo_sung"
+        },
+        {
+          "question_id": "q_nganh_bs_ma",
+          "group": "Về ngành nghề bổ sung",
+          "text": "Mã ngành bổ sung (app tra VSIC giúp — không cần điền)",
+          "type": "text",
+          "autofill": "vsic",
+          "repeatable": true,
+          "row_group": "nganh_bo_sung",
+          "version": 1,
+          "data_key": "nganh_bo_sung.ma_nganh"
+        },
+        {
+          "question_id": "q_nganh_bs_chinh",
+          "group": "Về ngành nghề bổ sung",
+          "text": "Ngành bổ sung này có phải ngành chính không? (đánh X vào đúng một dòng)",
+          "type": "mark",
+          "options": [
+            {
+              "value": "X",
+              "label": "Ngành chính"
+            }
+          ],
+          "repeatable": true,
+          "row_group": "nganh_bo_sung",
+          "version": 1,
+          "data_key": "nganh_bo_sung.la_nganh_chinh"
+        },
+        {
+          "question_id": "q_nganh_xoa_ten",
+          "group": "Về ngành nghề bỏ khỏi danh sách",
+          "text": "Ngành nghề bạn muốn BỎ khỏi hộ kinh doanh? Ghi tên ngành",
+          "type": "text",
+          "repeatable": true,
+          "row_group": "nganh_xoa_bo",
+          "version": 1,
+          "data_key": "nganh_xoa_bo.ten_nganh_bo"
+        },
+        {
+          "question_id": "q_nganh_xoa_ma",
+          "group": "Về ngành nghề bỏ khỏi danh sách",
+          "text": "Mã ngành muốn bỏ (nếu biết)?",
+          "type": "text",
+          "repeatable": true,
+          "row_group": "nganh_xoa_bo",
+          "version": 1,
+          "data_key": "nganh_xoa_bo.ma_nganh"
+        },
+        {
+          "question_id": "q_nganh_xoa_chinh",
+          "group": "Về ngành nghề bỏ khỏi danh sách",
+          "text": "Ngành bị bỏ có phải ngành chính không? (đánh X vào đúng một dòng)",
+          "type": "mark",
+          "options": [
+            {
+              "value": "X",
+              "label": "Ngành chính"
+            }
+          ],
+          "repeatable": true,
+          "row_group": "nganh_xoa_bo",
+          "version": 1,
+          "data_key": "nganh_xoa_bo.la_nganh_chinh"
+        },
+        {
+          "question_id": "q_nganh_sua_ten",
+          "group": "Về ngành nghề sửa đổi chi tiết",
+          "text": "Ngành nghề bạn muốn SỬA lại nội dung? Ghi tên ngành mới",
+          "type": "text",
+          "repeatable": true,
+          "row_group": "nganh_sua_doi",
+          "version": 1,
+          "data_key": "nganh_sua_doi_chi_tiet.ten_nganh"
+        },
+        {
+          "question_id": "q_nganh_sua_ma",
+          "group": "Về ngành nghề sửa đổi chi tiết",
+          "text": "Mã ngành sau khi sửa (nếu biết)?",
+          "type": "text",
+          "repeatable": true,
+          "row_group": "nganh_sua_doi",
+          "version": 1,
+          "data_key": "nganh_sua_doi_chi_tiet.ma_nganh"
+        },
+        {
+          "question_id": "q_tv_hgd_ho_ten",
+          "group": "Về thành viên hộ gia đình sau thay đổi",
+          "text": "Thành viên hộ gia đình (sau thay đổi) — họ và tên?",
+          "type": "text",
+          "repeatable": true,
+          "row_group": "tv_hgd_sau_thay_doi",
+          "version": 1,
+          "data_key": "tv_hgd_sau_thay_doi.ho_ten"
+        },
+        {
+          "question_id": "q_tv_hgd_ngay_sinh",
+          "group": "Về thành viên hộ gia đình sau thay đổi",
+          "text": "Thành viên hộ gia đình — ngày, tháng, năm sinh? (dd/mm/yyyy)",
+          "type": "date",
+          "repeatable": true,
+          "row_group": "tv_hgd_sau_thay_doi",
+          "version": 1,
+          "data_key": "tv_hgd_sau_thay_doi.ngay_sinh"
+        },
+        {
+          "question_id": "q_tv_hgd_so_cccd",
+          "group": "Về thành viên hộ gia đình sau thay đổi",
+          "text": "Thành viên hộ gia đình — số định danh cá nhân?",
+          "type": "text",
+          "example": "079085005678",
+          "repeatable": true,
+          "row_group": "tv_hgd_sau_thay_doi",
+          "version": 1,
+          "data_key": "tv_hgd_sau_thay_doi.so_cccd"
+        },
+        {
+          "question_id": "q_tv_hgd_gioi_tinh",
+          "group": "Về thành viên hộ gia đình sau thay đổi",
+          "text": "Thành viên hộ gia đình — giới tính?",
+          "type": "select",
+          "options": [
+            {
+              "value": "Nam",
+              "label": "Nam"
+            },
+            {
+              "value": "Nữ",
+              "label": "Nữ"
+            }
+          ],
+          "repeatable": true,
+          "row_group": "tv_hgd_sau_thay_doi",
+          "version": 1,
+          "data_key": "tv_hgd_sau_thay_doi.gioi_tinh"
+        },
+        {
+          "question_id": "q_tv_hgd_noi_o",
+          "group": "Về thành viên hộ gia đình sau thay đổi",
+          "text": "Thành viên hộ gia đình — nơi ở hiện tại?",
+          "type": "text",
+          "repeatable": true,
+          "row_group": "tv_hgd_sau_thay_doi",
+          "version": 1,
+          "data_key": "tv_hgd_sau_thay_doi.noi_o_hien_tai"
+        },
+        {
+          "question_id": "q_thue_dia_chi_tb_moi",
+          "group": "Về thông tin đăng ký thuế (giá trị mới)",
+          "text": "Địa chỉ nhận thông báo thuế MỚI của hộ bạn là gì?",
+          "type": "text",
+          "example": "25 Nguyễn Trãi, Phường Bến Thành, Quận 1, TP.HCM",
+          "version": 1,
+          "data_key": "thue_chi_tieu_cu_moi.chi_tieu_5_1_dia_chi_nhan_thong_bao_thue.thong_tin_dang_ky_moi"
+        },
+        {
+          "question_id": "q_thue_so_lao_dong_moi",
+          "group": "Về thông tin đăng ký thuế (giá trị mới)",
+          "text": "Tổng số lao động MỚI (dự kiến) của hộ bạn?",
+          "type": "integer",
+          "example": "3",
+          "version": 1,
+          "data_key": "thue_chi_tieu_cu_moi.chi_tieu_5_2_tong_so_lao_dong.thong_tin_dang_ky_moi"
+        },
+        {
+          "question_id": "q_thue_chi_tieu_khac_moi",
+          "group": "Về thông tin đăng ký thuế (giá trị mới)",
+          "text": "Nội dung đăng ký thuế khác cần thay đổi? Ghi rõ (bỏ trống nếu không có)",
+          "type": "text",
+          "version": 1,
+          "data_key": "thue_chi_tieu_cu_moi.chi_tieu_khac.thong_tin_dang_ky_moi"
+        },
+        {
+          "question_id": "q_khong_kd_tai_tru_so",
+          "group": "Về các trường hợp khác",
+          "text": "Hộ bạn có KHÔNG kinh doanh tại trụ sở/nơi ở không? (đánh X nếu đúng)",
+          "type": "mark",
+          "options": [
+            {
+              "value": "X",
+              "label": "Không kinh doanh tại trụ sở"
+            }
+          ],
+          "version": 1,
+          "data_key": "chk_khong_kd_tai_tru_so"
+        },
+        {
+          "question_id": "q_uy_quyen_thanh_vien",
+          "group": "Về các trường hợp khác",
+          "text": "Các thành viên hộ gia đình có ủy quyền cho một thành viên làm chủ hộ không? (đánh X nếu đúng)",
+          "type": "mark",
+          "options": [
+            {
+              "value": "X",
+              "label": "Ủy quyền thành viên làm chủ hộ"
+            }
+          ],
+          "version": 1,
+          "data_key": "chk_ct_ho_gia_dinh"
+        },
+        {
+          "question_id": "q_chu_ho_da_mat",
+          "group": "Về các trường hợp khác",
+          "text": "Chủ hộ đã mất hoặc bị tòa án tuyên bố mất tích? (đánh X nếu đúng)",
+          "type": "mark",
+          "options": [
+            {
+              "value": "X",
+              "label": "Chủ hộ đã mất/mất tích"
+            }
+          ],
+          "version": 1,
+          "data_key": "chk_auto_chu_ho_kinh_doanh_chet_hoac_bi_toa_an_tu"
+        },
+        {
+          "question_id": "q_chu_ho_la_ca_nhan",
+          "group": "Về các trường hợp khác",
+          "text": "Chủ hộ là một cá nhân? (đánh X nếu đúng)",
+          "type": "mark",
+          "options": [
+            {
+              "value": "X",
+              "label": "Chủ hộ là cá nhân"
+            }
+          ],
+          "version": 1,
+          "data_key": "chk_ct_ca_nhan"
+        }
+      ]
+    }
+  ],
+  "manifest_hash": "53e4423f9d296d89e2310d55d67b1beae76176d043c12d41c6a6342298e46bc8"
+}

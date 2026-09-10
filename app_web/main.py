@@ -16,6 +16,12 @@ Bridge (window.pywebview.api trong JS):
                                   {ok:False,cancelled} | {ok:False,errors:[…]}
 - import_questionnaire(payload) -> nạp phiếu Excel khách điền
                                   (tools/excel_import): {ok,errors,data}
+- export_case_workbook(payload) -> xuất workbook Excel CASE-LEVEL cho cả
+                                  hồ sơ (tools/excel_case_export): {ok,path}
+- import_case_workbook(payload) -> nạp workbook case-level, trả candidate
+                                  draft v2 nguyên tử (tools/excel_case_import):
+                                  {ok,candidate,audit,errors,file_path} —
+                                  KHÔNG merge vào draft; UI quyết định thay
 - open_dir(path)                -> mở thư mục bằng Explorer
 
 Không đụng tools/*, app_tk/*, app/data/* (chỉ đọc).
@@ -564,9 +570,149 @@ class Bridge:
             return {"ok": False, "errors": [{"code": "IMPORT_FAILED",
                     "message": "%s: %s" % (type(exc).__name__, _safe_error(exc))}]}
 
-    def open_dir(self, path):
+    # --------------------------------------- workbook Excel case (E2)
+    _AUDIT_LOG = ROOT / "generated_ho_so" / "excel_case_audit.jsonl"
+
+    def _case_manifest(self, payload):
+        """case_id từ payload -> (manifest | None, errors | None).
+
+        case_id đến thẳng từ Bridge nên KHÔNG được tin: ghép đường dẫn qua
+        _sanitize_name để '../x' không đọc thoát ra ngoài app/data
+        (F-P3-SEC-PATH). Case chưa có manifest = chưa build hoặc còn chờ
+        content review (E0/E4) — trả CASE_NOT_READY, không đoán nội dung.
+        """
+        payload = _as_dict(payload) or {}
+        case_id = _sanitize_name(str(payload.get("case_id") or ""), "case", 120)
+        path = APP_DIR / "data" / "case_questionnaires" / ("%s.json" % case_id)
+        if not case_id or not path.exists():
+            return None, [{"code": "CASE_NOT_READY",
+                           "message": "Case chưa có phiếu Excel cấp hồ sơ "
+                                      "(chưa build manifest hoặc đang chờ "
+                                      "duyệt nội dung)."}]
         try:
-            os.startfile(str(path))  # Windows Explorer
+            with open(path, encoding="utf-8") as f:
+                return json.load(f), None
+        except Exception as exc:  # noqa: BLE001
+            return None, [{"code": "CASE_NOT_READY",
+                           "message": "không đọc được manifest case (%s: %s)"
+                                      % (type(exc).__name__, _safe_error(exc))}]
+
+    def export_case_workbook(self, payload):
+        """Xuất workbook Excel CASE-LEVEL cho cả hồ sơ (wave E2 bridge).
+
+        payload: {case_id} — KHÔNG lấy activeDocId (quyết định E0: truyền
+        case_id). Hỏi chỗ lưu rồi gọi tools/excel_case_export.
+        write_case_workbook. Case có form pending content review bị exporter
+        từ chối (CASE_NOT_READY — gate E4: không phát hành file khuyết).
+        """
+        manifest, errors = self._case_manifest(payload)
+        if errors:
+            return {"ok": False, "errors": errors}
+
+        import tkinter as tk
+        from tkinter import filedialog
+
+        try:
+            from tools.excel_case_export import workbook_stem  # noqa: E402
+            stem = workbook_stem(manifest)
+        except Exception:  # noqa: BLE001 — manifest sai khung vẫn cho chọn chỗ lưu
+            stem = "DKKD_%s" % manifest.get("case_id", "case")
+
+        root = tk.Tk()
+        root.withdraw()
+        root.attributes("-topmost", True)
+        path = filedialog.asksaveasfilename(
+            title="Xuất Excel cả hồ sơ cho khách",
+            defaultextension=".xlsx",
+            initialfile="%s.xlsx" % stem,
+            filetypes=[("Phiếu Excel", "*.xlsx"), ("Tất cả file", "*.*")],
+            parent=root,
+        )
+        root.destroy()
+        if not path:
+            return {"ok": False, "cancelled": True}
+        try:
+            from tools.excel_case_export import write_case_workbook  # noqa: E402
+
+            write_case_workbook(manifest, path, meta={
+                "today": time.strftime("%d/%m/%Y"),
+                "exported_at": time.strftime("%d/%m/%Y %H:%M"),
+            })
+            return {"ok": True, "path": str(path)}
+        except Exception as exc:  # noqa: BLE001
+            code = getattr(exc, "code", "EXPORT_FAILED")
+            return {"ok": False, "errors": [{"code": code,
+                    "message": "%s: %s" % (type(exc).__name__,
+                                           _safe_error(exc))}]}
+
+    def import_case_workbook(self, payload):
+        """Nạp workbook Excel case-level -> candidate draft v2 NGUYÊN TỰ.
+
+        payload: {case_id}. KHÔNG merge vào draft đang mở ở đây — trả
+        candidate về UI; UI phải hiện xác nhận (có nút hủy) và chỉ thay draft
+        khi người dùng đồng ý (PLAN §2.2: import nguyên tử). Audit metadata
+        (file hash, versions, số đếm — KHÔNG có dữ liệu khách) ghi append vào
+        generated_ho_so/excel_case_audit.jsonl; lỗi ghi log không làm hỏng
+        kết quả nạp.
+        """
+        manifest, errors = self._case_manifest(payload)
+        if errors:
+            return {"ok": False, "errors": errors}
+
+        import tkinter as tk
+        from tkinter import filedialog
+
+        root = tk.Tk()
+        root.withdraw()
+        root.attributes("-topmost", True)
+        path = filedialog.askopenfilename(
+            title="Nạp Excel cả hồ sơ",
+            filetypes=[("Phiếu Excel", "*.xlsx"), ("Tất cả file", "*.*")],
+            parent=root,
+        )
+        root.destroy()
+        if not path:
+            return {"ok": False, "cancelled": True}
+        try:
+            from tools.excel_case_import import import_case_workbook  # noqa: E402
+
+            result = import_case_workbook(
+                path, manifest,
+                imported_at=time.strftime("%Y-%m-%dT%H:%M:%S"))
+        except Exception as exc:  # noqa: BLE001
+            return {"ok": False, "errors": [{"code": "IMPORT_FAILED",
+                    "message": "%s: %s" % (type(exc).__name__,
+                                           _safe_error(exc))}]}
+        result["file_path"] = str(path)
+        if result.get("ok"):
+            self._append_excel_case_audit(result.get("audit") or {})
+        return result
+
+    def _append_excel_case_audit(self, audit: dict):
+        """Append audit metadata local. Chỉ hash/versions/đếm — KHÔNG BAO GIỜ
+        ghi dữ liệu khách (giá trị ô, tên, địa chỉ…) vào log (F-P3-SEC-LOG)."""
+        try:
+            self._AUDIT_LOG.parent.mkdir(parents=True, exist_ok=True)
+            with open(self._AUDIT_LOG, "a", encoding="utf-8") as f:
+                f.write(json.dumps(audit, ensure_ascii=False) + "\n")
+        except Exception:  # noqa: BLE001 — log là phụ, không chặn nạp
+            pass
+
+    def open_dir(self, path):
+        # Theo platform: Windows Explorer / macOS Finder / Linux xdg-open
+        # (P1 macOS smoke: os.startfile chỉ tồn tại trên Windows, nút "mở
+        # thư mục" trả {ok:False} trên máy khác — mở bằng launcher hệ thống).
+        target = str(path)
+        try:
+            if hasattr(os, "startfile"):
+                os.startfile(target)  # Windows Explorer
+            elif sys.platform == "darwin":
+                if subprocess.run(["open", target], check=False).returncode != 0:
+                    raise OSError("open trả exit != 0")
+            else:
+                if subprocess.run(["xdg-open", target],
+                                  check=False).returncode != 0:
+                    raise OSError("xdg-open trả exit != 0")
             return {"ok": True}
         except Exception as exc:  # noqa: BLE001
             return {"ok": False, "error": repr(exc)}

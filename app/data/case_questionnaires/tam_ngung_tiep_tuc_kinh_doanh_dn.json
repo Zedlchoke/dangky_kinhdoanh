@@ -1,0 +1,160 @@
+{
+  "manifest_id": "tam_ngung_tiep_tuc_kinh_doanh_dn",
+  "manifest_version": 1,
+  "schema_version": 1,
+  "case_id": "tam_ngung_tiep_tuc_kinh_doanh_dn",
+  "case_title": "Thông báo tạm ngừng / tiếp tục kinh doanh trước thời hạn đã thông báo (doanh nghiệp, chi nhánh, VPĐĐ, địa điểm)",
+  "nhom": "Tạm ngừng, tiếp tục kinh doanh",
+  "mo_ta": "Dùng khi doanh nghiệp, chi nhánh, địa điểm KD tạm ngừng kinh doanh (VPĐĐ: tạm ngừng hoạt động) hoặc tiếp tục trước thời hạn đã thông báo; nộp chậm nhất 03 ngày làm việc trước ngày tạm ngừng/tiếp tục.",
+  "co_so_phap_ly": [
+    "Điều 60 Nghị định 168/2025/NĐ-CP (lưu ý: khoản 1, 2 Điều 60 đã bị sửa đổi bởi Nghị định 296/2026/NĐ-CP - cần kiểm chứng nội dung sửa đổi)"
+  ],
+  "luu_y": [
+    "Mỗi lần thông báo tạm ngừng KHÔNG quá 12 tháng; muốn kéo dài phải thông báo lại chậm nhất 03 ngày làm việc trước khi hết hạn.",
+    "Tình trạng pháp lý chuyển sang 'Tạm ngừng kinh doanh, hoạt động'."
+  ],
+  "giay_to_kem": [
+    "Khi tạm ngừng kinh doanh của DOANH NGHIỆP: bản sao/bản chính nghị quyết, quyết định về việc tạm ngừng kinh doanh (chủ sở hữu/HĐTV/HĐQT tùy loại hình). Riêng tiếp tục kinh doanh hoặc tạm ngừng của chi nhánh/VPĐĐ/địa điểm: chỉ cần Mẫu 27"
+  ],
+  "forms_oneOf": [],
+  "forms": [
+    {
+      "form_id": "PLI_M27",
+      "ten_mau": "Thông báo về việc tạm ngừng kinh doanh/tiếp tục kinh doanh trước thời hạn đã thông báo của doanh nghiệp/chi nhánh /địa điểm kinh doanh/về việc tạm ngừng hoạt động/tiếp tục hoạt động trước thời hạn đã thông báo của văn phòng đại diện",
+      "bat_buoc": true,
+      "ghi_chu": "Thông báo tạm ngừng kinh doanh/tiếp tục kinh doanh trước thời hạn đã thông báo",
+      "questionnaire_version": 1,
+      "cluster": "thue_dang_ky",
+      "title": "Tạm ngừng / tiếp tục kinh doanh doanh nghiệp (cụm thuế)",
+      "content_review": "approved",
+      "questions": [
+        {
+          "question_id": "q_dn_ten",
+          "group": "Về doanh nghiệp",
+          "text": "Tên doanh nghiệp của bạn là gì? (chữ in hoa)",
+          "type": "text",
+          "example": "CÔNG TY TNHH THƯƠNG MẠI DỊCH VỤ AN PHÁT",
+          "required": true,
+          "version": 20260906,
+          "data_key": "dn.ten_tieng_viet"
+        },
+        {
+          "question_id": "q_dn_ma_so",
+          "group": "Về doanh nghiệp",
+          "text": "Mã số doanh nghiệp (mã số thuế) của công ty bạn?",
+          "type": "text",
+          "example": "0312345678",
+          "required": true,
+          "version": 20260906,
+          "data_key": "dn.ma_so_dn"
+        },
+        {
+          "question_id": "q_co_quan_dkkd",
+          "group": "Về doanh nghiệp",
+          "text": "Bạn nộp hồ sơ tại cơ quan đăng ký kinh doanh cấp tỉnh nào?",
+          "type": "text",
+          "example": "Sở Kế hoạch và Đầu tư TP. Hồ Chí Minh",
+          "version": 20260906,
+          "data_key": "co_quan_dkkd"
+        },
+        {
+          "question_id": "q_tam_ngung_tu_ngay",
+          "group": "Về tạm ngừng kinh doanh",
+          "text": "Nếu tạm ngừng: công ty tạm ngừng kinh doanh kể từ ngày nào? (dd/mm/yyyy)",
+          "type": "date",
+          "example": "01/11/2026",
+          "version": 20260906,
+          "data_key": "tu_ngay"
+        },
+        {
+          "question_id": "q_tam_ngung_den_ngay",
+          "group": "Về tạm ngừng kinh doanh",
+          "text": "Tạm ngừng đến hết ngày nào? (dd/mm/yyyy — nếu chưa biết ngày tiếp tục thì ghi ngày dự kiến)",
+          "type": "date",
+          "example": "31/01/2027",
+          "version": 20260906,
+          "data_key": "den_ngay"
+        },
+        {
+          "question_id": "q_ly_do_tam_ngung",
+          "group": "Về tạm ngừng kinh doanh",
+          "text": "Lý do tạm ngừng kinh doanh là gì? (ghi ngắn gọn)",
+          "type": "text",
+          "example": "Chủ doanh nghiệp đi chữa bệnh",
+          "version": 20260906,
+          "data_key": "ly_do_tam_ngung"
+        },
+        {
+          "question_id": "q_ly_do_tiep_tuc",
+          "group": "Về tiếp tục kinh doanh trước thời hạn",
+          "text": "Nếu TIẾP TỤC kinh doanh trước thời hạn đã thông báo: lý do là gì? (ghi ngắn gọn, bỏ trống nếu chỉ tạm ngừng)",
+          "type": "text",
+          "example": "Kinh doanh ổn định trở lại sớm hơn dự kiến",
+          "version": 20260906,
+          "data_key": "ly_do_tiep_tuc"
+        },
+        {
+          "question_id": "q_nguoi_lien_he",
+          "group": "Về người liên hệ",
+          "text": "Người liên hệ (người đại diện theo pháp luật) tên gì?",
+          "type": "text",
+          "example": "Trần Văn B",
+          "version": 20260906,
+          "data_key": "ds_ndd_pl_thong_bao_tam_ngung.ho_ten",
+          "row_group": "ds_ndd_pl_thong_bao_tam_ngung",
+          "repeatable": true,
+          "note": "[F1-IN sync 2026-09-06] Mẫu 27 2026: thông tin người liên hệ là khối người đại diện theo pháp luật (Họ tên/ĐT/Email) — key cũ ho_ten_in_hoa_2/dien_thoai_khac hết hiệu lực sau migrate."
+        },
+        {
+          "question_id": "q_dien_thoai_lien_he",
+          "group": "Về người liên hệ",
+          "text": "Số điện thoại liên hệ của người đó?",
+          "type": "tel",
+          "example": "0901234567",
+          "version": 20260906,
+          "data_key": "ds_ndd_pl_thong_bao_tam_ngung.dien_thoai",
+          "row_group": "ds_ndd_pl_thong_bao_tam_ngung",
+          "repeatable": true,
+          "note": "[F1-IN sync 2026-09-06] Mẫu 27 2026: thông tin người liên hệ là khối người đại diện theo pháp luật (Họ tên/ĐT/Email) — key cũ ho_ten_in_hoa_2/dien_thoai_khac hết hiệu lực sau migrate."
+        },
+        {
+          "question_id": "q_email_lien_he",
+          "group": "Về người liên hệ",
+          "text": "Email liên hệ (nếu có)?",
+          "type": "email",
+          "example": "kinhdoanh@anphat.vn",
+          "version": 20260906,
+          "data_key": "ds_ndd_pl_thong_bao_tam_ngung.email",
+          "row_group": "ds_ndd_pl_thong_bao_tam_ngung",
+          "repeatable": true,
+          "note": "[F1-IN sync 2026-09-06] Mẫu 27 2026: thông tin người liên hệ là khối người đại diện theo pháp luật (Họ tên/ĐT/Email) — key cũ ho_ten_in_hoa_2/dien_thoai_khac hết hiệu lực sau migrate."
+        },
+        {
+          "question_id": "q_cn_ten",
+          "group": "Nếu tạm ngừng/tiếp tục tại chi nhánh hoặc địa điểm kinh doanh",
+          "text": "Chi nhánh/địa điểm nào muốn tạm ngừng? Ghi tên từng nơi",
+          "type": "text",
+          "example": "Chi nhánh Quận 7",
+          "version": 20260906,
+          "data_key": "don_vi_truc_thuoc_tam_ngung_tiep_tuc.ten_don_vi",
+          "row_group": "don_vi_truc_thuoc_tam_ngung_tiep_tuc",
+          "repeatable": true,
+          "note": "[F1-IN sync 2026-09-06] Mẫu 27 2026: đơn vị tạm ngừng/tiếp tục là lưới (loại đơn vị/tên/mã số/…) — key cũ cn.* hết hiệu lực."
+        },
+        {
+          "question_id": "q_cn_ma_so",
+          "group": "Nếu tạm ngừng/tiếp tục tại chi nhánh hoặc địa điểm kinh doanh",
+          "text": "Mã số của chi nhánh/địa điểm đó?",
+          "type": "text",
+          "example": "0312345678-002",
+          "version": 20260906,
+          "data_key": "don_vi_truc_thuoc_tam_ngung_tiep_tuc.ma_so_don_vi",
+          "row_group": "don_vi_truc_thuoc_tam_ngung_tiep_tuc",
+          "repeatable": true,
+          "note": "[F1-IN sync 2026-09-06] Mẫu 27 2026: đơn vị tạm ngừng/tiếp tục là lưới (loại đơn vị/tên/mã số/…) — key cũ cn.* hết hiệu lực."
+        }
+      ]
+    }
+  ],
+  "manifest_hash": "2502b9a381628016aa7ada7fb9dafde33e32ed2521dc99b752f70cc71c4581bd"
+}

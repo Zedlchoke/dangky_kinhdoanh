@@ -1,0 +1,33 @@
+{
+  "manifest_id": "cung_cap_thong_tin_dkdn",
+  "manifest_version": 1,
+  "schema_version": 1,
+  "case_id": "cung_cap_thong_tin_dkdn",
+  "case_title": "Đề nghị cung cấp thông tin đăng ký doanh nghiệp",
+  "nhom": "Công bố, cung cấp thông tin",
+  "mo_ta": "Dùng khi tổ chức, cá nhân cần bản sao hồ sơ/thông tin đăng ký doanh nghiệp lưu giữ trong cơ sở dữ liệu (ngoài phần thông tin công khai miễn phí).",
+  "co_so_phap_ly": [
+    "Điều 74 Nghị định 168/2025/NĐ-CP"
+  ],
+  "luu_y": [
+    "Thông tin cơ bản (tên, mã số DN, địa chỉ, ngành nghề, người đại diện theo pháp luật, tình trạng pháp lý) tra cứu MIỄN PHÍ tại https://dangkykinhdoanh.gov.vn.",
+    "Yêu cầu trả phí, chi phí theo quy định; KHÔNG cung cấp thông tin chủ sở hữu hưởng lợi cho tổ chức, cá nhân thường (chỉ cho cơ quan nhà nước có thẩm quyền phục vụ phòng chống rửa tiền).",
+    "Cơ quan nhà nước không được yêu cầu doanh nghiệp nộp bản sao GCDN khi làm thủ tục hành chính (khoản 3 Điều 74)."
+  ],
+  "giay_to_kem": [],
+  "forms_oneOf": [],
+  "forms": [
+    {
+      "form_id": "PLI_M78",
+      "ten_mau": "Giấy đề nghị cung cấp thông tin đăng ký doanh nghiệp",
+      "bat_buoc": true,
+      "ghi_chu": "Giấy đề nghị cung cấp thông tin đăng ký doanh nghiệp",
+      "questionnaire_version": null,
+      "cluster": null,
+      "title": "Giấy đề nghị cung cấp thông tin đăng ký doanh nghiệp",
+      "content_review": "pending",
+      "questions": []
+    }
+  ],
+  "manifest_hash": "e2cfb3feef2e678ec706c41e4af78c4ef0b68120801ddac91a5ee7e4ed15bb1f"
+}

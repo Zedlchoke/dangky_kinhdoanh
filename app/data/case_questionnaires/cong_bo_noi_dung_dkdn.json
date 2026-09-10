@@ -1,0 +1,32 @@
+{
+  "manifest_id": "cong_bo_noi_dung_dkdn",
+  "manifest_version": 1,
+  "schema_version": 1,
+  "case_id": "cong_bo_noi_dung_dkdn",
+  "case_title": "Công bố nội dung đăng ký doanh nghiệp",
+  "nhom": "Công bố, cung cấp thông tin",
+  "mo_ta": "Dùng khi doanh nghiệp đề nghị công bố nội dung đăng ký doanh nghiệp trên Cổng thông tin quốc gia về đăng ký doanh nghiệp; phí công bố nộp cùng thời điểm nộp hồ sơ đăng ký.",
+  "co_so_phap_ly": [
+    "Điều 73 Nghị định 168/2025/NĐ-CP",
+    "Khoản 1, 2 Điều 32 Luật Doanh nghiệp (nội dung công bố)"
+  ],
+  "luu_y": [
+    "Nếu doanh nghiệp không được cấp đăng ký doanh nghiệp, phí công bố được hoàn trả (khoản 3 Điều 73)."
+  ],
+  "giay_to_kem": [],
+  "forms_oneOf": [],
+  "forms": [
+    {
+      "form_id": "PLI_M32",
+      "ten_mau": "Giấy đề nghị công bố nội dung đăng ký doanh nghiệp",
+      "bat_buoc": true,
+      "ghi_chu": "Giấy đề nghị công bố nội dung đăng ký doanh nghiệp",
+      "questionnaire_version": null,
+      "cluster": null,
+      "title": "Giấy đề nghị công bố nội dung đăng ký doanh nghiệp",
+      "content_review": "pending",
+      "questions": []
+    }
+  ],
+  "manifest_hash": "24f8069f197f313e1e11cf13566d51c08883ecde47d264f85eb61c72ab2da765"
+}

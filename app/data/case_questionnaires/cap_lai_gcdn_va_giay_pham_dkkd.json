@@ -1,0 +1,31 @@
+{
+  "manifest_id": "cap_lai_gcdn_va_giay_pham_dkkd",
+  "manifest_version": 1,
+  "schema_version": 1,
+  "case_id": "cap_lai_gcdn_va_giay_pham_dkkd",
+  "case_title": "Cấp lại Giấy chứng nhận đăng ký doanh nghiệp/Giấy xác nhận thay đổi nội dung/GCN hoạt động chi nhánh, VPĐĐ, địa điểm kinh doanh",
+  "nhom": "Cấp lại, cấp đổi, bổ sung cập nhật thông tin",
+  "mo_ta": "Dùng khi các giấy chứng nhận/xác nhận bằng bản giấy bị mất, cháy, rách, nát hoặc tiêu hủy dưới hình thức khác.",
+  "co_so_phap_ly": [
+    "Điều 62 Nghị định 168/2025/NĐ-CP"
+  ],
+  "luu_y": [
+    "Cơ quan đăng ký kinh doanh cấp tỉnh xem xét cấp lại trong 01 ngày làm việc."
+  ],
+  "giay_to_kem": [],
+  "forms_oneOf": [],
+  "forms": [
+    {
+      "form_id": "PLI_M26",
+      "ten_mau": "Giấy đề nghị cấp lại Giấy chứng nhận đăng ký doanh nghiệp/Giấy xác nhận thay đổi nội dung đăng ký doanh nghiệp/Giấy chứng nhận đăng ký hoạt động chi nhánh/văn phòng đại diện/Giấy chứng nhận đăng ký địa điểm kinh doanh/Giấy xác nhận thay đổi nội dung đăng ký hoạt động chi nhánh/văn phòng đại diện/địa điểm kinh doanh",
+      "bat_buoc": true,
+      "ghi_chu": "Giấy đề nghị cấp lại các loại giấy chứng nhận/xác nhận đăng ký",
+      "questionnaire_version": null,
+      "cluster": null,
+      "title": "Giấy đề nghị cấp lại Giấy chứng nhận đăng ký doanh nghiệp/Giấy xác nhận thay đổi nội dung đăng ký doanh nghiệp/Giấy chứng nhận đăng ký hoạt động chi nhánh/văn phòng đại diện/Giấy chứng nhận đăng ký địa điểm kinh doanh/Giấy xác nhận thay đổi nội dung đăng ký hoạt động chi nhánh/văn phòng đại diện/địa điểm kinh doanh",
+      "content_review": "pending",
+      "questions": []
+    }
+  ],
+  "manifest_hash": "29e0c10f6d82f494ac794acdb84d46aaca1e72d9d157d0afb51a69f6f5d00123"
+}

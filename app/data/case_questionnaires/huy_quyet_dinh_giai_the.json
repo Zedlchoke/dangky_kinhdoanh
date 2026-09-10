@@ -1,0 +1,34 @@
+{
+  "manifest_id": "huy_quyet_dinh_giai_the",
+  "manifest_version": 1,
+  "schema_version": 1,
+  "case_id": "huy_quyet_dinh_giai_the",
+  "case_title": "Hủy bỏ nghị quyết/quyết định giải thể doanh nghiệp",
+  "nhom": "Giải thể doanh nghiệp",
+  "mo_ta": "Dùng khi doanh nghiệp đã nộp nghị quyết giải thể (trong thời hạn 180 ngày chưa bị chuyển trạng thái 'đã giải thể') nhưng muốn dừng thủ tục giải thể để tiếp tục hoạt động.",
+  "co_so_phap_ly": [
+    "Khoản 7 Điều 64 Nghị định 168/2025/NĐ-CP"
+  ],
+  "luu_y": [
+    "Trong 01 ngày làm việc, cơ quan đăng ký kinh doanh đăng tải thông báo hủy bỏ và khôi phục tình trạng pháp lý của doanh nghiệp.",
+    "Chỉ áp dụng trong thời hạn 180 ngày kể từ ngày nộp nghị quyết giải thể và chưa bị chuyển trạng thái đã giải thể."
+  ],
+  "giay_to_kem": [
+    "Nghị quyết/quyết định của chủ doanh nghiệp tư nhân/chủ sở hữu công ty/HĐTV/ĐHĐCĐ về việc hủy bỏ nghị quyết hoặc quyết định giải thể"
+  ],
+  "forms_oneOf": [],
+  "forms": [
+    {
+      "form_id": "PLI_M31",
+      "ten_mau": "Thông báo về việc huỷ bỏ Nghị quyết/Quyết định giải thể doanh nghiệp",
+      "bat_buoc": true,
+      "ghi_chu": "Thông báo về việc huỷ bỏ Nghị quyết/Quyết định giải thể doanh nghiệp",
+      "questionnaire_version": null,
+      "cluster": null,
+      "title": "Thông báo về việc huỷ bỏ Nghị quyết/Quyết định giải thể doanh nghiệp",
+      "content_review": "pending",
+      "questions": []
+    }
+  ],
+  "manifest_hash": "f4c1ad25ac5ea81550c367537b39fcd089fc76111586122e35f04d5d1c5694e7"
+}

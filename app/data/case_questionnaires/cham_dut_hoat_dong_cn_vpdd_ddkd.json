@@ -1,0 +1,35 @@
+{
+  "manifest_id": "cham_dut_hoat_dong_cn_vpdd_ddkd",
+  "manifest_version": 1,
+  "schema_version": 1,
+  "case_id": "cham_dut_hoat_dong_cn_vpdd_ddkd",
+  "case_title": "Chấm dứt hoạt động chi nhánh/VPĐĐ/địa điểm kinh doanh",
+  "nhom": "Chi nhánh, VPĐĐ, địa điểm kinh doanh",
+  "mo_ta": "Dùng khi doanh nghiệp quyết định chấm dứt hoạt động chi nhánh, văn phòng đại diện hoặc địa điểm kinh doanh; nộp trong 10 ngày kể từ ngày quyết định.",
+  "co_so_phap_ly": [
+    "Điều 66 Nghị định 168/2025/NĐ-CP"
+  ],
+  "luu_y": [
+    "Phải hoàn thành nghĩa vụ nộp thuế với cơ quan thuế TRƯỚC khi nộp hồ sơ (khoản 1 Điều 66); cơ quan thuế phản hồi trong 02 ngày làm việc.",
+    "Trước khi chấm dứt hoạt động chi nhánh, phải chấm dứt hoạt động tất cả địa điểm kinh doanh trực thuộc chi nhánh đó (khoản 5 Điều 66).",
+    "Trước khi nộp hồ sơ giải thể doanh nghiệp phải chấm dứt hoạt động toàn bộ chi nhánh/VPĐĐ/địa điểm KD (khoản 4 Điều 64)."
+  ],
+  "giay_to_kem": [
+    "Bản sao/bản chính nghị quyết, quyết định về việc chấm dứt hoạt động chi nhánh/VPĐĐ: của chủ sở hữu (TNHH 1TV), HĐTV (TNHH 2TV+, hợp danh), HĐQT (CTCP)"
+  ],
+  "forms_oneOf": [],
+  "forms": [
+    {
+      "form_id": "PLI_M28",
+      "ten_mau": "Thông báo về việc chấm dứt hoạt động chi nhánh/văn phòng đại diện/địa điểm kinh doanh",
+      "bat_buoc": true,
+      "ghi_chu": "Thông báo về việc chấm dứt hoạt động chi nhánh/VPĐĐ/địa điểm kinh doanh",
+      "questionnaire_version": null,
+      "cluster": null,
+      "title": "Thông báo về việc chấm dứt hoạt động chi nhánh/văn phòng đại diện/địa điểm kinh doanh",
+      "content_review": "pending",
+      "questions": []
+    }
+  ],
+  "manifest_hash": "e933624dc9638d549df0b9d2c9b93e868350a03792262576bd15e4c1233bf09a"
+}

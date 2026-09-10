@@ -2224,6 +2224,95 @@
     });
   }
 
+  // ---------------------------------------------- Excel case-level (E2)
+  /* Workbook MỘT file cho cả case (PLAN_hoan_thien_pfat_hanh §2.1/§5-E2).
+   * Xuất truyền case_id (KHÔNG lấy activeDocId — quyết định E0). Nạp trả
+   * candidate draft v2 nguyên tử: chỉ thay draft sau khi xác nhận (có hủy),
+   * còn lỗi thì draft giữ nguyên vẹn. */
+
+  function caseExcelInfo(html) {
+    var box = $('#case-excel-info');
+    if (!box) return;
+    if (html) { box.innerHTML = html; box.hidden = false; }
+    else { box.hidden = true; box.innerHTML = ''; }
+  }
+
+  function exportCaseWorkbook() {
+    var a = api();
+    if (!a) {
+      toast('Cần chạy trong app desktop (python app_web/main.py) để xuất Excel cả hồ sơ.', 'err');
+      return;
+    }
+    if (!state.caseId) { toast('Chưa chọn thủ tục/case nào.', 'err'); return; }
+    var box = toast('Đang tạo workbook Excel cho cả hồ sơ…', '', true);
+    Promise.resolve(a.export_case_workbook(
+      JSON.stringify({ case_id: state.caseId })
+    )).then(function (res) {
+      if (typeof res === 'string') res = JSON.parse(res);
+      box.remove();
+      if (res.ok) {
+        toast('<b>Đã xuất Excel cả hồ sơ!</b><br>' + esc(res.path || ''), 'ok', true);
+      } else if (!res.cancelled) {
+        toast('<b>Không xuất được Excel cả hồ sơ</b><br>' +
+          esc(bridgeErrorsText(res.errors)), 'err', true);
+      }
+    }).catch(function (e) {
+      box.remove();
+      toast('Lỗi xuất Excel cả hồ sơ: ' + esc(String(e)), 'err', true);
+    });
+  }
+
+  function importCaseWorkbook() {
+    var a = api();
+    if (!a) {
+      toast('Cần chạy trong app desktop (python app_web/main.py) để nạp Excel cả hồ sơ.', 'err');
+      return;
+    }
+    if (!state.caseId) { toast('Chưa chọn thủ tục/case nào.', 'err'); return; }
+    Promise.resolve(a.import_case_workbook(
+      JSON.stringify({ case_id: state.caseId }) // dialog chọn file do Python mở
+    )).then(function (res) {
+      if (typeof res === 'string') res = JSON.parse(res);
+      if (!res.ok) {
+        // Nguyên tử: nạp thất bại KHÔNG đụng draft hiện tại
+        if (!res.cancelled) {
+          toast('<b>Không nạp được Excel cả hồ sơ</b><br>' +
+            esc(bridgeErrorsText(res.errors)), 'err', true);
+        }
+        return;
+      }
+      var c = res.candidate || {};
+      var st = c.store || {};
+      var nItems = Object.keys(st.values || {}).length +
+        Object.keys(st.checks || {}).length;
+      var nRows = Object.keys(st.loops || {}).reduce(function (acc, k) {
+        return acc + ((st.loops[k] || []).length);
+      }, 0);
+      var src = c.source || {};
+      var summary = 'Case: <b>' + esc(c.caseId || '') + '</b> — Phiếu: ' +
+        esc(String(src.manifest_hash || '').slice(0, 8)) +
+        ' — ' + nItems + ' giá trị, ' + nRows + ' hàng bảng';
+      // Nút hủy trước khi thay draft (yêu cầu §2.2): confirm là ranh giới
+      // duy nhất giữa candidate và draft đang mở.
+      if (!confirm('Nạp dữ liệu từ file này sẽ THAY TOÀN BỘ hồ sơ đang mở?\n\n' +
+          summary.replace(/<[^>]+>/g, '') + '\n\nOK = thay hồ sơ, Cancel = giữ nguyên.')) {
+        toast('Đã hủy nạp — hồ sơ hiện tại giữ nguyên.');
+        return;
+      }
+      applyDraft(res.candidate);
+      caseExcelInfo('Excel cả hồ sơ: phiếu <b>' +
+        esc(String(src.manifest_hash || '').slice(0, 8)) + '</b> đã nạp lúc ' +
+        esc(src.imported_at || '') + ' (' + nItems + ' giá trị, ' + nRows +
+        ' hàng bảng)');
+      // Panel "còn thiếu" theo field/mẫu: chạy lại validator toàn hồ sơ
+      runCheck(true);
+      openRightPanel();
+      toast('Đã nạp workbook cả hồ sơ. Kiểm tra panel "còn thiếu".', 'ok');
+    }).catch(function (e) {
+      toast('Lỗi nạp Excel cả hồ sơ: ' + esc(String(e)), 'err', true);
+    });
+  }
+
   function resetDossier() {
     if (state.dirty &&
         !confirm('Nhập lại sẽ XÓA toàn bộ dữ liệu đang khai. Tiếp tục?')) return;
@@ -2435,6 +2524,9 @@
     $('#btn-open-draft').addEventListener('click', openDraftFile);
     $('#btn-export-excel').addEventListener('click', exportQuestionnaire);
     $('#btn-import-excel').addEventListener('click', importQuestionnaire);
+    // E2: workbook Excel case-level
+    $('#btn-export-case-excel').addEventListener('click', exportCaseWorkbook);
+    $('#btn-import-case-excel').addEventListener('click', importCaseWorkbook);
 
     $('#btn-toggle-right').addEventListener('click', function () { toggleRightPanel(); });
     $('#btn-toggle-side').addEventListener('click', function () {

@@ -1,0 +1,64 @@
+{
+  "manifest_id": "cham_dut_hoat_dong_hkd",
+  "manifest_version": 1,
+  "schema_version": 1,
+  "case_id": "cham_dut_hoat_dong_hkd",
+  "case_title": "Chấm dứt hoạt động hộ kinh doanh",
+  "nhom": "Hộ kinh doanh",
+  "mo_ta": "Dùng khi hộ kinh doanh muốn kết thúc hoạt động. Phải thanh toán đủ nợ (gồm nợ thuế và nghĩa vụ tài chính khác) trước khi nộp hồ sơ.",
+  "co_so_phap_ly": [
+    "Điều 104 Nghị định 168/2025/NĐ-CP"
+  ],
+  "luu_y": [
+    "Nộp hồ sơ trong 05 ngày làm việc kể từ ngày thanh toán hết các khoản nợ.",
+    "Cấp xã gửi thông tin cho cơ quan thuế; nếu thuế xác nhận hoàn thành nghĩa vụ (hoặc không phản hồi trong 02 ngày làm việc), tình trạng chuyển sang 'đã chấm dứt hoạt động' trong 05 ngày làm việc."
+  ],
+  "giay_to_kem": [
+    "Nếu chủ hộ đã chết/bị Tòa án tuyên bố đã chết: kèm bản sao giấy chứng tử hoặc bản sao quyết định của Tòa án (người thừa kế/người quản lý tài sản nộp hồ sơ - khoản 4 Điều 104)"
+  ],
+  "forms_oneOf": [],
+  "forms": [
+    {
+      "form_id": "PLII_M04",
+      "ten_mau": "Thông báo về việc chấm dứt hoạt động hộ kinh doanh",
+      "bat_buoc": true,
+      "ghi_chu": "Thông báo về việc chấm dứt hoạt động hộ kinh doanh",
+      "questionnaire_version": 1,
+      "cluster": "hkd_cham_dut",
+      "title": "Chấm dứt hoạt động hộ kinh doanh",
+      "content_review": "approved",
+      "questions": [
+        {
+          "question_id": "q_hkd_ten",
+          "group": "Về hộ kinh doanh",
+          "text": "Tên hộ kinh doanh của bạn là gì?",
+          "type": "text",
+          "example": "Hộ kinh doanh bánh ngọt Hải Phòng",
+          "required": true,
+          "version": 1,
+          "data_key": "hkd_ten_tieng_viet_2"
+        },
+        {
+          "question_id": "q_hkd_ma_so",
+          "group": "Về hộ kinh doanh",
+          "text": "Mã số hộ kinh doanh (mã số thuế) của bạn?",
+          "type": "text",
+          "example": "0312345678-001",
+          "required": true,
+          "version": 1,
+          "data_key": "hkd_ma_so"
+        },
+        {
+          "question_id": "q_co_quan_dkkd",
+          "group": "Về hộ kinh doanh",
+          "text": "Bạn nộp hồ sơ tại cơ quan đăng ký kinh doanh cấp xã/phường nào?",
+          "type": "text",
+          "example": "UBND Phường Bến Thành",
+          "version": 1,
+          "data_key": "co_quan_dkkd"
+        }
+      ]
+    }
+  ],
+  "manifest_hash": "91da5672f00ffd6601ffe8d8c0a5f75ee76ae3c28b590307051065f8bbef3285"
+}

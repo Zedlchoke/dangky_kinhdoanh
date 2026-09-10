@@ -1,0 +1,31 @@
+{
+  "manifest_id": "cap_doi_gcdkkd_sang_gcdn",
+  "manifest_version": 1,
+  "schema_version": 1,
+  "case_id": "cap_doi_gcdkkd_sang_gcdn",
+  "case_title": "Cấp đổi sang Giấy chứng nhận đăng ký doanh nghiệp (doanh nghiệp đang dùng Giấy chứng nhận đăng ký kinh doanh cũ)",
+  "nhom": "Cấp lại, cấp đổi, bổ sung cập nhật thông tin",
+  "mo_ta": "Dùng cho doanh nghiệp còn giữ Giấy chứng nhận đăng ký kinh doanh hoặc GCN đăng ký kinh doanh và đăng ký thuế (cấp trước 01/7/2015) muốn đổi sang GCDN theo mẫu mới.",
+  "co_so_phap_ly": [
+    "Điều 118-121 Nghị định 168/2025/NĐ-CP (quy định chuyển tiếp đối với giấy chứng nhận cấp trước ngày 01/07/2015 - số điều cụ thể cần kiểm chứng lại)"
+  ],
+  "luu_y": [
+    "Khi đề nghị cấp đổi, ngành nghề được ghi lại theo ngành kinh tế cấp 4 (Điều 7 NĐ 168)."
+  ],
+  "giay_to_kem": [],
+  "forms_oneOf": [],
+  "forms": [
+    {
+      "form_id": "PLI_M21",
+      "ten_mau": "Giấy đề nghị cấp đổi sang Giấy chứng nhận đăng ký doanh nghiệp đối với doanh nghiệp được cấp Giấy chứng nhận đăng ký kinh doanh hoặc Giấy chứng nhận đăng ký kinh doanh và đăng ký thuế",
+      "bat_buoc": true,
+      "ghi_chu": "Giấy đề nghị cấp đổi sang GCDN đối với DN được cấp GCN đăng ký kinh doanh",
+      "questionnaire_version": null,
+      "cluster": null,
+      "title": "Giấy đề nghị cấp đổi sang Giấy chứng nhận đăng ký doanh nghiệp đối với doanh nghiệp được cấp Giấy chứng nhận đăng ký kinh doanh hoặc Giấy chứng nhận đăng ký kinh doanh và đăng ký thuế",
+      "content_review": "pending",
+      "questions": []
+    }
+  ],
+  "manifest_hash": "532c671d458dc4d138c3b630f5d32a98d67da735c3ae496721ec31957397af9e"
+}

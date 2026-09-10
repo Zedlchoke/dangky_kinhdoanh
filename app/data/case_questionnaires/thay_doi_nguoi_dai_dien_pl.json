@@ -1,0 +1,35 @@
+{
+  "manifest_id": "thay_doi_nguoi_dai_dien_pl",
+  "manifest_version": 1,
+  "schema_version": 1,
+  "case_id": "thay_doi_nguoi_dai_dien_pl",
+  "case_title": "Đăng ký thay đổi người đại diện theo pháp luật",
+  "nhom": "Thay đổi nội dung đăng ký doanh nghiệp",
+  "mo_ta": "Dùng khi công ty TNHH, công ty cổ phần thay đổi người đại diện theo pháp luật (bổ nhiệm, bầu mới, thay đổi thông tin).",
+  "co_so_phap_ly": [
+    "Điều 43 Nghị định 168/2025/NĐ-CP (quy định rõ ai có thẩm quyền ký giấy đề nghị)"
+  ],
+  "luu_y": [
+    "Nếu Chủ tịch HĐTV/Chủ tịch công ty/Chủ tịch HĐQT chính là người đại diện theo pháp luật bị thay thì người ký là Chủ tịch mới.",
+    "Có quy định riêng cho trường hợp người đại diện theo pháp luật chết, mất tích, bị tạm giam... (khoản 3 Điều 43) và trường hợp Chủ tịch vắng mặt (khoản 2 Điều 43)."
+  ],
+  "giay_to_kem": [
+    "Bản sao/bản chính nghị quyết, quyết định về việc thay đổi người đại diện theo pháp luật: chủ sở hữu công ty (TNHH 1TV), HĐTV (TNHH 2TV+), ĐHĐCĐ nếu thay đổi làm thay đổi Điều lệ; HĐQT nếu không làm thay đổi Điều lệ ngoài thông tin cá nhân, chữ ký của người đại diện",
+    "Bản sao giấy tờ pháp lý của người đại diện theo pháp luật mới (miễn nếu kê khai số định danh cá nhân)"
+  ],
+  "forms_oneOf": [],
+  "forms": [
+    {
+      "form_id": "PLI_M13",
+      "ten_mau": "Giấy đề nghị đăng ký thay đổi người đại diện theo pháp luật",
+      "bat_buoc": true,
+      "ghi_chu": "Giấy đề nghị đăng ký thay đổi người đại diện theo pháp luật",
+      "questionnaire_version": null,
+      "cluster": null,
+      "title": "Giấy đề nghị đăng ký thay đổi người đại diện theo pháp luật",
+      "content_review": "pending",
+      "questions": []
+    }
+  ],
+  "manifest_hash": "3bd3692fe743c88b34e13b54e4ab044d1720a4f64c8cbd592f35d4905bd8903d"
+}

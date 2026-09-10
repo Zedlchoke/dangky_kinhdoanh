@@ -1,0 +1,37 @@
+{
+  "manifest_id": "giai_the_doanh_nghiep",
+  "manifest_version": 1,
+  "schema_version": 1,
+  "case_id": "giai_the_doanh_nghiep",
+  "case_title": "Đăng ký giải thể doanh nghiệp",
+  "nhom": "Giải thể doanh nghiệp",
+  "mo_ta": "Dùng khi doanh nghiệp giải thể theo nghị quyết/quyết định của chủ sở hữu, HĐTV, ĐHĐCĐ hoặc chủ doanh nghiệp tư nhân (điểm a, b, c khoản 1 Điều 207 Luật Doanh nghiệp).",
+  "co_so_phap_ly": [
+    "Điều 64 Nghị định 168/2025/NĐ-CP (lưu ý: khoản 3 Điều 64 đã bị sửa đổi bởi Nghị định 296/2026/NĐ-CP)",
+    "Khoản 1 Điều 208, khoản 1 Điều 210 Luật Doanh nghiệp"
+  ],
+  "luu_y": [
+    "Quy trình 2 bước: nộp nghị quyết giải thể trước (cơ quan đăng tải trên Cổng thông tin quốc gia, chuyển trạng thái 'đang làm thủ tục giải thể'); sau khi thanh toán hết nợ mới nộp hồ sơ đăng ký giải thể.",
+    "Phải chấm dứt hoạt động toàn bộ chi nhánh/VPĐĐ/địa điểm kinh doanh TRƯỚC khi nộp hồ sơ giải thể (khoản 4 Điều 64).",
+    "Sau 180 ngày kể từ ngày nhận nghị quyết giải thể mà không có hồ sơ đăng ký giải thể và ý kiến phản đối, cơ quan đăng ký tự chuyển trạng thái sang 'đã giải thể' (khoản 6 Điều 64)."
+  ],
+  "giay_to_kem": [
+    "Giai đoạn 1 (trong 07 ngày làm việc kể từ ngày thông qua giải thể): nghị quyết/quyết định giải thể; biên bản họp HĐTV/ĐHĐCĐ (TNHH 2TV+, hợp danh, CTCP); phương án giải quyết nợ (nếu có)",
+    "Giai đoạn 2 (trong 05 ngày làm việc kể từ ngày thanh toán hết nợ): hồ sơ đăng ký giải thể theo khoản 1 Điều 210 Luật Doanh nghiệp (báo cáo quyết toán thuế TNCN; xác nhận hoàn thành nghĩa vụ tài chính của cơ quan thuế; xác nhận xử lý/con dấu...)"
+  ],
+  "forms_oneOf": [],
+  "forms": [
+    {
+      "form_id": "PLI_M30",
+      "ten_mau": "Thông báo về việc giải thể doanh nghiệp",
+      "bat_buoc": true,
+      "ghi_chu": "Thông báo về việc giải thể doanh nghiệp",
+      "questionnaire_version": null,
+      "cluster": null,
+      "title": "Thông báo về việc giải thể doanh nghiệp",
+      "content_review": "pending",
+      "questions": []
+    }
+  ],
+  "manifest_hash": "87284740d80a653ffabc8faa02a081dafc1608320814a3a52ae064667cbce6f1"
+}

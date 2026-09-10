@@ -1,0 +1,45 @@
+{
+  "manifest_id": "thanh_lap_tnhh_2tv",
+  "manifest_version": 1,
+  "schema_version": 1,
+  "case_id": "thanh_lap_tnhh_2tv",
+  "case_title": "Thành lập Công ty TNHH hai thành viên trở lên",
+  "nhom": "Thành lập doanh nghiệp",
+  "mo_ta": "Dùng khi có từ 02 đến 50 thành viên (tổ chức, cá nhân) cùng góp vốn thành lập công ty TNHH.",
+  "co_so_phap_ly": [
+    "Điều 21 Luật Doanh nghiệp (được dẫn chiếu tại khoản 3 Điều 24 Nghị định 168/2025/NĐ-CP)",
+    "Khoản 3 Điều 24 Nghị định 168/2025/NĐ-CP"
+  ],
+  "luu_y": [],
+  "giay_to_kem": [
+    "Bản Điều lệ công ty",
+    "Bản sao giấy tờ pháp lý của từng thành viên là cá nhân (miễn nếu kê khai số định danh cá nhân)",
+    "Nếu thành viên là tổ chức: bản sao giấy tờ pháp lý của tổ chức, văn bản cử người đại diện theo ủy quyền, bản sao giấy tờ pháp lý cá nhân của người được cử (tổ chức nước ngoài phải hợp pháp hóa lãnh sự)"
+  ],
+  "forms_oneOf": [],
+  "forms": [
+    {
+      "form_id": "PLI_M03",
+      "ten_mau": "Giấy đề nghị đăng ký doanh nghiệp - Công ty trách nhiệm hữu hạn hai thành viên trở lên",
+      "bat_buoc": true,
+      "ghi_chu": "Giấy đề nghị đăng ký doanh nghiệp - TNHH hai thành viên trở lên",
+      "questionnaire_version": null,
+      "cluster": null,
+      "title": "Giấy đề nghị đăng ký doanh nghiệp - Công ty trách nhiệm hữu hạn hai thành viên trở lên",
+      "content_review": "pending",
+      "questions": []
+    },
+    {
+      "form_id": "PLI_M06",
+      "ten_mau": "Danh sách thành viên công ty trách nhiệm hữu hạn hai thành viên trở lên",
+      "bat_buoc": true,
+      "ghi_chu": "Danh sách thành viên công ty",
+      "questionnaire_version": null,
+      "cluster": null,
+      "title": "Danh sách thành viên công ty trách nhiệm hữu hạn hai thành viên trở lên",
+      "content_review": "pending",
+      "questions": []
+    }
+  ],
+  "manifest_hash": "3fc1fd0e24a1148115f6c5ad64e4f9aea197d546b3fb24a769d0912903bf12e0"
+}

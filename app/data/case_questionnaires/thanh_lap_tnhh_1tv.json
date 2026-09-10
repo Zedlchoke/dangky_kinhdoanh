@@ -1,0 +1,36 @@
+{
+  "manifest_id": "thanh_lap_tnhh_1tv",
+  "manifest_version": 1,
+  "schema_version": 1,
+  "case_id": "thanh_lap_tnhh_1tv",
+  "case_title": "Thành lập Công ty TNHH một thành viên",
+  "nhom": "Thành lập doanh nghiệp",
+  "mo_ta": "Dùng khi một tổ chức hoặc một cá nhân làm chủ sở hữu duy nhất của công ty TNHH một thành viên.",
+  "co_so_phap_ly": [
+    "Điều 21 Luật Doanh nghiệp (được dẫn chiếu tại khoản 3 Điều 24 Nghị định 168/2025/NĐ-CP)",
+    "Khoản 3 Điều 24 Nghị định 168/2025/NĐ-CP"
+  ],
+  "luu_y": [
+    "Hồ sơ TNHH một thành viên KHÔNG bao gồm danh sách thành viên."
+  ],
+  "giay_to_kem": [
+    "Bản Điều lệ công ty",
+    "Bản sao giấy tờ pháp lý của cá nhân đối với chủ sở hữu là cá nhân, người đại diện theo pháp luật (miễn nếu đã kê khai số định danh cá nhân)",
+    "Nếu chủ sở hữu là tổ chức: bản sao GCNĐKDN/giấy tờ tương đương, văn bản cử người đại diện theo pháp luật, bản sao giấy tờ pháp lý của người được cử"
+  ],
+  "forms_oneOf": [],
+  "forms": [
+    {
+      "form_id": "PLI_M02",
+      "ten_mau": "Giấy đề nghị đăng ký doanh nghiệp - Công ty trách nhiệm hữu hạn một thành viên",
+      "bat_buoc": true,
+      "ghi_chu": "Giấy đề nghị đăng ký doanh nghiệp - Công ty TNHH một thành viên",
+      "questionnaire_version": null,
+      "cluster": null,
+      "title": "Giấy đề nghị đăng ký doanh nghiệp - Công ty trách nhiệm hữu hạn một thành viên",
+      "content_review": "pending",
+      "questions": []
+    }
+  ],
+  "manifest_hash": "93589fa7ff4bc4c1b802225901de5b8eb8a5c1efb5a5d6513057c5039cc8357b"
+}

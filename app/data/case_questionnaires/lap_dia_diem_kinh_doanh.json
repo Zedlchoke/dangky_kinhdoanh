@@ -1,0 +1,32 @@
+{
+  "manifest_id": "lap_dia_diem_kinh_doanh",
+  "manifest_version": 1,
+  "schema_version": 1,
+  "case_id": "lap_dia_diem_kinh_doanh",
+  "case_title": "Thông báo lập địa điểm kinh doanh",
+  "nhom": "Chi nhánh, VPĐĐ, địa điểm kinh doanh",
+  "mo_ta": "Dùng khi doanh nghiệp lập địa điểm kinh doanh tại địa chỉ khác nơi đặt trụ sở chính hoặc chi nhánh; nộp trong 10 ngày kể từ ngày quyết định lập.",
+  "co_so_phap_ly": [
+    "Khoản 2 Điều 30 Nghị định 168/2025/NĐ-CP"
+  ],
+  "luu_y": [
+    "Hồ sơ chỉ gồm thông báo lập địa điểm kinh doanh (đơn giản hơn chi nhánh/VPĐĐ).",
+    "Mặc định chỉ cập nhật thông tin vào cơ sở dữ liệu; cấp Giấy chứng nhận đăng ký địa điểm kinh doanh (Mẫu 43 Phụ lục I) khi doanh nghiệp có nhu cầu (khoản 3 Điều 30)."
+  ],
+  "giay_to_kem": [],
+  "forms_oneOf": [],
+  "forms": [
+    {
+      "form_id": "PLI_M17",
+      "ten_mau": "Giấy đề nghị đăng ký hoạt động chi nhánh/văn phòng đại diện/Thông báo lập địa điểm kinh doanh",
+      "bat_buoc": true,
+      "ghi_chu": "Dùng phần 'THÔNG BÁO lập địa điểm kinh doanh' của Mẫu 17",
+      "questionnaire_version": null,
+      "cluster": null,
+      "title": "Giấy đề nghị đăng ký hoạt động chi nhánh/văn phòng đại diện/Thông báo lập địa điểm kinh doanh",
+      "content_review": "pending",
+      "questions": []
+    }
+  ],
+  "manifest_hash": "36c8eb10a5dd63d18ed782ac254f0133f7e227fb0b5d2bd5dd6c27696290e7bc"
+}

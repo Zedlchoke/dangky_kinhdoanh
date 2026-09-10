@@ -1,0 +1,56 @@
+{
+  "manifest_id": "thanh_lap_ctcp",
+  "manifest_version": 1,
+  "schema_version": 1,
+  "case_id": "thanh_lap_ctcp",
+  "case_title": "Thành lập Công ty cổ phần",
+  "nhom": "Thành lập doanh nghiệp",
+  "mo_ta": "Dùng khi thành lập công ty cổ phần (tối thiểu 03 cổ đông).",
+  "co_so_phap_ly": [
+    "Điều 22 Luật Doanh nghiệp (được dẫn chiếu tại khoản 4 Điều 24 Nghị định 168/2025/NĐ-CP)",
+    "Khoản 4 Điều 24 Nghị định 168/2025/NĐ-CP"
+  ],
+  "luu_y": [],
+  "giay_to_kem": [
+    "Bản Điều lệ công ty",
+    "Bản sao giấy tờ pháp lý của cổ đông sáng lập là cá nhân (miễn nếu kê khai số định danh cá nhân)",
+    "Nếu cổ đông sáng lập là tổ chức: bản sao giấy tờ pháp lý của tổ chức, văn bản cử người đại diện, bản sao giấy tờ pháp lý cá nhân của người được cử"
+  ],
+  "forms_oneOf": [],
+  "forms": [
+    {
+      "form_id": "PLI_M04",
+      "ten_mau": "Giấy đề nghị đăng ký doanh nghiệp - Công ty cổ phần",
+      "bat_buoc": true,
+      "ghi_chu": "Giấy đề nghị đăng ký doanh nghiệp - Công ty cổ phần",
+      "questionnaire_version": null,
+      "cluster": null,
+      "title": "Giấy đề nghị đăng ký doanh nghiệp - Công ty cổ phần",
+      "content_review": "pending",
+      "questions": []
+    },
+    {
+      "form_id": "PLI_M07",
+      "ten_mau": "Danh sách cổ đông sáng lập công ty cổ phần",
+      "bat_buoc": true,
+      "ghi_chu": "Danh sách cổ đông sáng lập",
+      "questionnaire_version": null,
+      "cluster": null,
+      "title": "Danh sách cổ đông sáng lập công ty cổ phần",
+      "content_review": "pending",
+      "questions": []
+    },
+    {
+      "form_id": "PLI_M08",
+      "ten_mau": "Danh sách cổ đông là nhà đầu tư nước ngoài",
+      "bat_buoc": false,
+      "ghi_chu": "Chỉ nộp nếu có cổ đông là nhà đầu tư nước ngoài",
+      "questionnaire_version": null,
+      "cluster": null,
+      "title": "Danh sách cổ đông là nhà đầu tư nước ngoài",
+      "content_review": "pending",
+      "questions": []
+    }
+  ],
+  "manifest_hash": "362df7b593bab93dc83fae9dd1b7cf5733f3331f38eb9e1c3ddf332746f042f8"
+}

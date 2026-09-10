@@ -1,0 +1,322 @@
+{
+  "generated_by": "tools.build_case_questionnaires",
+  "cases": [
+    {
+      "case_id": "thanh_lap_dntn",
+      "case_title": "Thành lập Doanh nghiệp tư nhân",
+      "manifest_hash": "b8d5690a2dd7d27e78f4bbec3dae191e2c1363dc202c76a8dce4f46696bb7e9b",
+      "n_forms": 1,
+      "approved_forms": [],
+      "pending_forms": [
+        "PLI_M01"
+      ],
+      "all_approved": false
+    },
+    {
+      "case_id": "thanh_lap_tnhh_1tv",
+      "case_title": "Thành lập Công ty TNHH một thành viên",
+      "manifest_hash": "93589fa7ff4bc4c1b802225901de5b8eb8a5c1efb5a5d6513057c5039cc8357b",
+      "n_forms": 1,
+      "approved_forms": [],
+      "pending_forms": [
+        "PLI_M02"
+      ],
+      "all_approved": false
+    },
+    {
+      "case_id": "thanh_lap_tnhh_2tv",
+      "case_title": "Thành lập Công ty TNHH hai thành viên trở lên",
+      "manifest_hash": "3fc1fd0e24a1148115f6c5ad64e4f9aea197d546b3fb24a769d0912903bf12e0",
+      "n_forms": 2,
+      "approved_forms": [],
+      "pending_forms": [
+        "PLI_M03",
+        "PLI_M06"
+      ],
+      "all_approved": false
+    },
+    {
+      "case_id": "thanh_lap_ctcp",
+      "case_title": "Thành lập Công ty cổ phần",
+      "manifest_hash": "362df7b593bab93dc83fae9dd1b7cf5733f3331f38eb9e1c3ddf332746f042f8",
+      "n_forms": 3,
+      "approved_forms": [],
+      "pending_forms": [
+        "PLI_M04",
+        "PLI_M07",
+        "PLI_M08"
+      ],
+      "all_approved": false
+    },
+    {
+      "case_id": "thanh_lap_hop_danh",
+      "case_title": "Thành lập Công ty hợp danh",
+      "manifest_hash": "4aa8304ed1a6409cd03b3458a7f2945d2c12e25d979af68c0c2ad77c247290ca",
+      "n_forms": 2,
+      "approved_forms": [],
+      "pending_forms": [
+        "PLI_M05",
+        "PLI_M09"
+      ],
+      "all_approved": false
+    },
+    {
+      "case_id": "dang_ky_ho_kinh_doanh_lan_dau",
+      "case_title": "Đăng ký hộ kinh doanh lần đầu",
+      "manifest_hash": "df55a31d20fad2d9e113313aed59c57fced49903014581b4c2a14618311949a9",
+      "n_forms": 1,
+      "approved_forms": [
+        "PLII_M01"
+      ],
+      "pending_forms": [],
+      "all_approved": true
+    },
+    {
+      "case_id": "chuyen_doi_hkd_sang_dn",
+      "case_title": "Chuyển đổi hộ kinh doanh thành doanh nghiệp",
+      "manifest_hash": "4d674fb2100c2906ae8da26c188d730c45d9b087543d58949c55e13d8b187b7e",
+      "n_forms": 4,
+      "approved_forms": [],
+      "pending_forms": [
+        "PLI_M01",
+        "PLI_M02",
+        "PLI_M03",
+        "PLI_M04"
+      ],
+      "all_approved": false
+    },
+    {
+      "case_id": "thay_doi_ten_va_tru_so",
+      "case_title": "Thay đổi tên doanh nghiệp / địa chỉ trụ sở chính",
+      "manifest_hash": "9ffa8ba0b3b5c1e5f6e7f79304bd93df09bdba885d4949a826b5e9d053820c49",
+      "n_forms": 1,
+      "approved_forms": [
+        "PLI_M12"
+      ],
+      "pending_forms": [],
+      "all_approved": true
+    },
+    {
+      "case_id": "thay_doi_nganh_nghe",
+      "case_title": "Thông báo thay đổi ngành, nghề kinh doanh",
+      "manifest_hash": "41331a069bd5ed461d49f345a40faf497ffa6bb6901ff1214de5fbb9bcb078ac",
+      "n_forms": 1,
+      "approved_forms": [
+        "PLI_M12"
+      ],
+      "pending_forms": [],
+      "all_approved": true
+    },
+    {
+      "case_id": "thay_doi_von_dieu_le",
+      "case_title": "Đăng ký thay đổi vốn điều lệ, phần vốn góp, tỷ lệ vốn góp",
+      "manifest_hash": "11039fefe0d30f0b79bc0c60b2fd3f108afbdb692338e474283f8680f408b397",
+      "n_forms": 1,
+      "approved_forms": [
+        "PLI_M12"
+      ],
+      "pending_forms": [],
+      "all_approved": true
+    },
+    {
+      "case_id": "thay_doi_nguoi_dai_dien_pl",
+      "case_title": "Đăng ký thay đổi người đại diện theo pháp luật",
+      "manifest_hash": "3bd3692fe743c88b34e13b54e4ab044d1720a4f64c8cbd592f35d4905bd8903d",
+      "n_forms": 1,
+      "approved_forms": [],
+      "pending_forms": [
+        "PLI_M13"
+      ],
+      "all_approved": false
+    },
+    {
+      "case_id": "thay_doi_chusohuu_chudn",
+      "case_title": "Thay đổi chủ sở hữu công ty TNHH 1TV / chủ doanh nghiệp tư nhân",
+      "manifest_hash": "58d3327f43bf9fbc5134ed6761518293cad970e344216668b5deb8cae0df77c0",
+      "n_forms": 2,
+      "approved_forms": [],
+      "pending_forms": [
+        "PLI_M15",
+        "PLI_M14"
+      ],
+      "all_approved": false
+    },
+    {
+      "case_id": "thay_doi_noi_dung_dang_ky_hkd",
+      "case_title": "Thay đổi nội dung đăng ký hộ kinh doanh",
+      "manifest_hash": "53e4423f9d296d89e2310d55d67b1beae76176d043c12d41c6a6342298e46bc8",
+      "n_forms": 1,
+      "approved_forms": [
+        "PLII_M02"
+      ],
+      "pending_forms": [],
+      "all_approved": true
+    },
+    {
+      "case_id": "lap_chi_nhanh_vpdd",
+      "case_title": "Đăng ký hoạt động chi nhánh / văn phòng đại diện",
+      "manifest_hash": "8055c64c0b0a9c841c0aaa6cb029fe6f2103329847eb7e88ab1a93dacdcff508",
+      "n_forms": 1,
+      "approved_forms": [],
+      "pending_forms": [
+        "PLI_M17"
+      ],
+      "all_approved": false
+    },
+    {
+      "case_id": "lap_dia_diem_kinh_doanh",
+      "case_title": "Thông báo lập địa điểm kinh doanh",
+      "manifest_hash": "36c8eb10a5dd63d18ed782ac254f0133f7e227fb0b5d2bd5dd6c27696290e7bc",
+      "n_forms": 1,
+      "approved_forms": [],
+      "pending_forms": [
+        "PLI_M17"
+      ],
+      "all_approved": false
+    },
+    {
+      "case_id": "thay_doi_noi_dung_hoat_dong_cn_vpdd",
+      "case_title": "Thay đổi nội dung đăng ký hoạt động chi nhánh/VPĐĐ/địa điểm kinh doanh",
+      "manifest_hash": "f87bec59d97796667d45619f07b08213dcb85536d898a4bee6e43219db94dbc3",
+      "n_forms": 1,
+      "approved_forms": [],
+      "pending_forms": [
+        "PLI_M19"
+      ],
+      "all_approved": false
+    },
+    {
+      "case_id": "cham_dut_hoat_dong_cn_vpdd_ddkd",
+      "case_title": "Chấm dứt hoạt động chi nhánh/VPĐĐ/địa điểm kinh doanh",
+      "manifest_hash": "e933624dc9638d549df0b9d2c9b93e868350a03792262576bd15e4c1233bf09a",
+      "n_forms": 1,
+      "approved_forms": [],
+      "pending_forms": [
+        "PLI_M28"
+      ],
+      "all_approved": false
+    },
+    {
+      "case_id": "tam_ngung_tiep_tuc_kinh_doanh_dn",
+      "case_title": "Thông báo tạm ngừng / tiếp tục kinh doanh trước thời hạn đã thông báo (doanh nghiệp, chi nhánh, VPĐĐ, địa điểm)",
+      "manifest_hash": "2502b9a381628016aa7ada7fb9dafde33e32ed2521dc99b752f70cc71c4581bd",
+      "n_forms": 1,
+      "approved_forms": [
+        "PLI_M27"
+      ],
+      "pending_forms": [],
+      "all_approved": true
+    },
+    {
+      "case_id": "tam_ngung_tiep_tuc_kinh_doanh_hkd",
+      "case_title": "Đăng ký tạm ngừng / tiếp tục kinh doanh của hộ kinh doanh",
+      "manifest_hash": "946a3f98ae2188a037c5a43d661e2b9d6ad5613d613eae85918d8bb73dade226",
+      "n_forms": 1,
+      "approved_forms": [
+        "PLII_M03"
+      ],
+      "pending_forms": [],
+      "all_approved": true
+    },
+    {
+      "case_id": "cham_dut_hoat_dong_hkd",
+      "case_title": "Chấm dứt hoạt động hộ kinh doanh",
+      "manifest_hash": "91da5672f00ffd6601ffe8d8c0a5f75ee76ae3c28b590307051065f8bbef3285",
+      "n_forms": 1,
+      "approved_forms": [
+        "PLII_M04"
+      ],
+      "pending_forms": [],
+      "all_approved": true
+    },
+    {
+      "case_id": "giai_the_doanh_nghiep",
+      "case_title": "Đăng ký giải thể doanh nghiệp",
+      "manifest_hash": "87284740d80a653ffabc8faa02a081dafc1608320814a3a52ae064667cbce6f1",
+      "n_forms": 1,
+      "approved_forms": [],
+      "pending_forms": [
+        "PLI_M30"
+      ],
+      "all_approved": false
+    },
+    {
+      "case_id": "huy_quyet_dinh_giai_the",
+      "case_title": "Hủy bỏ nghị quyết/quyết định giải thể doanh nghiệp",
+      "manifest_hash": "f4c1ad25ac5ea81550c367537b39fcd089fc76111586122e35f04d5d1c5694e7",
+      "n_forms": 1,
+      "approved_forms": [],
+      "pending_forms": [
+        "PLI_M31"
+      ],
+      "all_approved": false
+    },
+    {
+      "case_id": "cong_bo_noi_dung_dkdn",
+      "case_title": "Công bố nội dung đăng ký doanh nghiệp",
+      "manifest_hash": "24f8069f197f313e1e11cf13566d51c08883ecde47d264f85eb61c72ab2da765",
+      "n_forms": 1,
+      "approved_forms": [],
+      "pending_forms": [
+        "PLI_M32"
+      ],
+      "all_approved": false
+    },
+    {
+      "case_id": "cung_cap_thong_tin_dkdn",
+      "case_title": "Đề nghị cung cấp thông tin đăng ký doanh nghiệp",
+      "manifest_hash": "e2cfb3feef2e678ec706c41e4af78c4ef0b68120801ddac91a5ee7e4ed15bb1f",
+      "n_forms": 1,
+      "approved_forms": [],
+      "pending_forms": [
+        "PLI_M78"
+      ],
+      "all_approved": false
+    },
+    {
+      "case_id": "cap_lai_gcdn_va_giay_pham_dkkd",
+      "case_title": "Cấp lại Giấy chứng nhận đăng ký doanh nghiệp/Giấy xác nhận thay đổi nội dung/GCN hoạt động chi nhánh, VPĐĐ, địa điểm kinh doanh",
+      "manifest_hash": "29e0c10f6d82f494ac794acdb84d46aaca1e72d9d157d0afb51a69f6f5d00123",
+      "n_forms": 1,
+      "approved_forms": [],
+      "pending_forms": [
+        "PLI_M26"
+      ],
+      "all_approved": false
+    },
+    {
+      "case_id": "cap_doi_gcdkkd_sang_gcdn",
+      "case_title": "Cấp đổi sang Giấy chứng nhận đăng ký doanh nghiệp (doanh nghiệp đang dùng Giấy chứng nhận đăng ký kinh doanh cũ)",
+      "manifest_hash": "532c671d458dc4d138c3b630f5d32a98d67da735c3ae496721ec31957397af9e",
+      "n_forms": 1,
+      "approved_forms": [],
+      "pending_forms": [
+        "PLI_M21"
+      ],
+      "all_approved": false
+    },
+    {
+      "case_id": "bo_sung_cap_nhat_thong_tin_dkdn",
+      "case_title": "Cập nhật, bổ sung thông tin trong hồ sơ đăng ký doanh nghiệp",
+      "manifest_hash": "c71d656ab6bb01af48f992299aef5dd31918e7380d1ec95537e6a6dda435c8a3",
+      "n_forms": 1,
+      "approved_forms": [
+        "PLI_M12"
+      ],
+      "pending_forms": [],
+      "all_approved": true
+    },
+    {
+      "case_id": "pilot_ui_m02_m06",
+      "case_title": "(PILOT UI) Kiểm thử đồng bộ Mẫu 02 + Mẫu 06",
+      "manifest_hash": "1c68b7c378f07f76e2a9da599c4f58d55ebc11508ec29f5fde9b57c32b0320ff",
+      "n_forms": 2,
+      "approved_forms": [],
+      "pending_forms": [
+        "PLI_M02",
+        "PLI_M06"
+      ],
+      "all_approved": false
+    }
+  ]
+}

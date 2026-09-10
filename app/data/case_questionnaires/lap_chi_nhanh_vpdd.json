@@ -1,0 +1,37 @@
+{
+  "manifest_id": "lap_chi_nhanh_vpdd",
+  "manifest_version": 1,
+  "schema_version": 1,
+  "case_id": "lap_chi_nhanh_vpdd",
+  "case_title": "Đăng ký hoạt động chi nhánh / văn phòng đại diện",
+  "nhom": "Chi nhánh, VPĐĐ, địa điểm kinh doanh",
+  "mo_ta": "Dùng khi doanh nghiệp thành lập chi nhánh hoặc văn phòng đại diện trong nước; nộp trong 10 ngày kể từ ngày ra quyết định thành lập, tại cấp tỉnh nơi đặt chi nhánh/VPĐĐ.",
+  "co_so_phap_ly": [
+    "Khoản 2 Điều 45 Luật Doanh nghiệp (được dẫn chiếu tại khoản 1 Điều 30 Nghị định 168/2025/NĐ-CP)",
+    "Điều 30 Nghị định 168/2025/NĐ-CP"
+  ],
+  "luu_y": [
+    "Cấp Giấy chứng nhận đăng ký hoạt động chi nhánh/VPĐĐ (Mẫu 42 Phụ lục I) trong 03 ngày làm việc.",
+    "Phần tên riêng trong tên chi nhánh/VPĐĐ không được dùng cụm từ 'công ty', 'doanh nghiệp' (Điều 16)."
+  ],
+  "giay_to_kem": [
+    "Bản sao quyết định thành lập chi nhánh/VPĐĐ",
+    "Bản sao biên bản họp về việc thành lập: biên bản họp HĐTV (TNHH 2TV+, hợp danh), biên bản họp HĐQT (CTCP); với TNHH 1TV: bản sao quyết định của chủ sở hữu công ty",
+    "Bản sao giấy tờ pháp lý của người đứng đầu chi nhánh/VPĐĐ (miễn nếu kê khai số định danh cá nhân)"
+  ],
+  "forms_oneOf": [],
+  "forms": [
+    {
+      "form_id": "PLI_M17",
+      "ten_mau": "Giấy đề nghị đăng ký hoạt động chi nhánh/văn phòng đại diện/Thông báo lập địa điểm kinh doanh",
+      "bat_buoc": true,
+      "ghi_chu": "Giấy đề nghị đăng ký hoạt động chi nhánh/văn phòng đại diện",
+      "questionnaire_version": null,
+      "cluster": null,
+      "title": "Giấy đề nghị đăng ký hoạt động chi nhánh/văn phòng đại diện/Thông báo lập địa điểm kinh doanh",
+      "content_review": "pending",
+      "questions": []
+    }
+  ],
+  "manifest_hash": "8055c64c0b0a9c841c0aaa6cb029fe6f2103329847eb7e88ab1a93dacdcff508"
+}

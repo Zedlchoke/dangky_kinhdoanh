@@ -1,0 +1,40 @@
+{
+  "manifest_id": "pilot_ui_m02_m06",
+  "manifest_version": 1,
+  "schema_version": 1,
+  "case_id": "pilot_ui_m02_m06",
+  "case_title": "(PILOT UI) Kiểm thử đồng bộ Mẫu 02 + Mẫu 06",
+  "nhom": "Thành lập doanh nghiệp",
+  "mo_ta": "Case PILOT cho giao diện khai trực tiếp kiểu HTKK: dùng để kiểm thử đồng bộ dữ liệu giữa Mẫu 02 (Giấy đề nghị DN TNHH một thành viên) và Mẫu 06 (Danh sách thành viên TNHH hai thành viên trở lên). KHÔNG phải thủ tục thật.",
+  "co_so_phap_ly": [],
+  "luu_y": [
+    "Case này chỉ phục vụ kiểm thử giao diện pilot: đồng bộ data-key giữa các mẫu, bảng lặp, VSIC, tổng vốn, lưu/khôi phục nháp và xuất DOCX M02+M06."
+  ],
+  "giay_to_kem": [],
+  "forms_oneOf": [],
+  "forms": [
+    {
+      "form_id": "PLI_M02",
+      "ten_mau": "Giấy đề nghị đăng ký doanh nghiệp - Công ty trách nhiệm hữu hạn một thành viên",
+      "bat_buoc": true,
+      "ghi_chu": "Giấy đề nghị đăng ký doanh nghiệp - TNHH một thành viên (pilot UI)",
+      "questionnaire_version": null,
+      "cluster": null,
+      "title": "Giấy đề nghị đăng ký doanh nghiệp - Công ty trách nhiệm hữu hạn một thành viên",
+      "content_review": "pending",
+      "questions": []
+    },
+    {
+      "form_id": "PLI_M06",
+      "ten_mau": "Danh sách thành viên công ty trách nhiệm hữu hạn hai thành viên trở lên",
+      "bat_buoc": true,
+      "ghi_chu": "Danh sách thành viên công ty - TNHH hai thành viên trở lên (pilot UI)",
+      "questionnaire_version": null,
+      "cluster": null,
+      "title": "Danh sách thành viên công ty trách nhiệm hữu hạn hai thành viên trở lên",
+      "content_review": "pending",
+      "questions": []
+    }
+  ],
+  "manifest_hash": "1c68b7c378f07f76e2a9da599c4f58d55ebc11508ec29f5fde9b57c32b0320ff"
+}

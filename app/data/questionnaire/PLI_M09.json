@@ -1,0 +1,567 @@
+{
+  "doc_id": "PLI_M09",
+  "title": "Danh sách thành viên công ty hợp danh",
+  "questionnaire_version": 1,
+  "cluster": "dn_thanh_lap",
+  "content_note": "Nội dung sinh bởi tools.build_form_questionnaires theo ủy quyền owner owner_delegated_2026-09-10 (owner_delegated_2026-09-10)",
+  "questions": [
+    {
+      "question_id": "q_i09_ma_so_du_an",
+      "group": "Dự án đầu tư / giấy phép (nếu có)",
+      "text": "Mã số dự án đầu tư (nếu có)?",
+      "type": "text",
+      "version": 1,
+      "data_key": "ma_so_du_an"
+    },
+    {
+      "question_id": "q_i09_ngay_cap",
+      "group": "Giấy tờ pháp lý đã cấp",
+      "text": "Giấy tờ pháp lý của bạn được cấp ngày nào? (dd/mm/yyyy)",
+      "type": "date",
+      "example": "10/01/2021",
+      "version": 1,
+      "data_key": "ngay_cap"
+    },
+    {
+      "question_id": "q_i09_co_quan_cap",
+      "group": "Dự án đầu tư / giấy phép (nếu có)",
+      "text": "Mã số dự án do cơ quan nào cấp?",
+      "type": "text",
+      "version": 1,
+      "data_key": "co_quan_cap"
+    },
+    {
+      "question_id": "q_i09_gd_ho_ten",
+      "group": "Giám đốc/Tổng giám đốc",
+      "text": "Giám đốc/Tổng giám đốc — họ và tên? (ghi thường, app tự in hoa)",
+      "type": "text",
+      "example": "Nguyễn Văn D",
+      "version": 1,
+      "data_key": "gd.ho_ten"
+    },
+    {
+      "question_id": "q_i09_gd_gioi_tinh",
+      "group": "Giám đốc/Tổng giám đốc",
+      "text": "Giám đốc/Tổng giám đốc — giới tính?",
+      "type": "select",
+      "options": [
+        {
+          "value": "Nam",
+          "label": "Nam"
+        },
+        {
+          "value": "Nữ",
+          "label": "Nữ"
+        }
+      ],
+      "version": 1,
+      "data_key": "gd.gioi_tinh"
+    },
+    {
+      "question_id": "q_i09_gd_so_cccd",
+      "group": "Giám đốc/Tổng giám đốc",
+      "text": "Giám đốc/Tổng giám đốc — số định danh cá nhân?",
+      "type": "text",
+      "example": "079085009999",
+      "version": 1,
+      "data_key": "gd.so_cccd"
+    },
+    {
+      "question_id": "q_i09_gd_dien_thoai",
+      "group": "Giám đốc/Tổng giám đốc",
+      "text": "Giám đốc/Tổng giám đốc — số điện thoại (nếu có)?",
+      "type": "tel",
+      "example": "0901234567",
+      "version": 1,
+      "data_key": "gd.dien_thoai"
+    },
+    {
+      "question_id": "q_i09_kt_ho_ten",
+      "group": "Kế toán trưởng/người phụ trách kế toán",
+      "text": "Kế toán trưởng/người phụ trách kế toán — họ và tên? (nếu chưa có, bỏ trống)",
+      "type": "text",
+      "version": 1,
+      "data_key": "kt.ho_ten"
+    },
+    {
+      "question_id": "q_i09_kt_gioi_tinh",
+      "group": "Kế toán trưởng/người phụ trách kế toán",
+      "text": "Kế toán trưởng — giới tính?",
+      "type": "select",
+      "options": [
+        {
+          "value": "Nam",
+          "label": "Nam"
+        },
+        {
+          "value": "Nữ",
+          "label": "Nữ"
+        }
+      ],
+      "version": 1,
+      "data_key": "kt.gioi_tinh"
+    },
+    {
+      "question_id": "q_i09_kt_so_cccd",
+      "group": "Kế toán trưởng/người phụ trách kế toán",
+      "text": "Kế toán trưởng — số định danh cá nhân?",
+      "type": "text",
+      "version": 1,
+      "data_key": "kt.so_cccd"
+    },
+    {
+      "question_id": "q_i09_kt_dien_thoai",
+      "group": "Kế toán trưởng/người phụ trách kế toán",
+      "text": "Kế toán trưởng — số điện thoại (nếu có)?",
+      "type": "tel",
+      "version": 1,
+      "data_key": "kt.dien_thoai"
+    },
+    {
+      "question_id": "q_i09_dia_chi_chi_tiet",
+      "group": "Về trụ sở chính",
+      "text": "Địa chỉ trụ sở chính ở đâu? (số nhà/phòng, ngách/hẻm, ngõ/kiệt, đường/phố, tổ/xóm/ấp/thôn)",
+      "type": "text",
+      "example": "25 Nguyễn Trãi, Phường Bến Thành",
+      "required": true,
+      "version": 1,
+      "data_key": "dia_chi_chi_tiet"
+    },
+    {
+      "question_id": "q_i09_xa_phuong",
+      "group": "Về trụ sở chính",
+      "text": "Trụ sở ở xã/phường/đặc khu nào?",
+      "type": "text",
+      "example": "Phường Bến Thành",
+      "required": true,
+      "version": 1,
+      "data_key": "xa_phuong"
+    },
+    {
+      "question_id": "q_i09_tinh_thanh",
+      "group": "Về trụ sở chính",
+      "text": "Trụ sở ở tỉnh/thành phố nào?",
+      "type": "text",
+      "example": "TP. Hồ Chí Minh",
+      "required": true,
+      "version": 1,
+      "data_key": "tinh_thanh"
+    },
+    {
+      "question_id": "q_i09_dien_thoai_lien_he",
+      "group": "Số liên hệ",
+      "text": "Số điện thoại liên hệ (nếu có)?",
+      "type": "tel",
+      "example": "0901234567",
+      "version": 1,
+      "data_key": "dien_thoai_lien_he"
+    },
+    {
+      "question_id": "q_i09_fax",
+      "group": "Số liên hệ",
+      "text": "Số fax (nếu có)?",
+      "type": "text",
+      "version": 1,
+      "data_key": "fax"
+    },
+    {
+      "question_id": "q_i09_email_tru_so",
+      "group": "Số liên hệ",
+      "text": "Email liên hệ (nếu có)?",
+      "type": "email",
+      "version": 1,
+      "data_key": "email_tru_so"
+    },
+    {
+      "question_id": "q_i09_ap_dung_tu",
+      "group": "Bảo hiểm xã hội (phương thức đóng)",
+      "text": "Mức đóng bảo hiểm xã hội áp dụng từ ngày nào? (dd/mm/yyyy, nếu có)",
+      "type": "date",
+      "version": 1,
+      "data_key": "ap_dung_tu"
+    },
+    {
+      "question_id": "q_i09_so_lao_dong",
+      "group": "Bắt đầu hoạt động và lao động",
+      "text": "Dự kiến dùng bao nhiêu lao động?",
+      "type": "integer",
+      "example": "10",
+      "version": 1,
+      "data_key": "so_lao_dong"
+    },
+    {
+      "question_id": "q_i09_chk_ht_doc_lap",
+      "group": "Chế độ kế toán và báo cáo tài chính",
+      "text": "Bạn có thuộc/không — đánh X vào ô: ht doc lap?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "ht doc lap"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_ht_doc_lap"
+    },
+    {
+      "question_id": "q_i09_chk_ht_hop_nhat",
+      "group": "Chế độ kế toán và báo cáo tài chính",
+      "text": "Bạn có thuộc/không — đánh X vào ô: ht hop nhat?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "ht hop nhat"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_ht_hop_nhat"
+    },
+    {
+      "question_id": "q_i09_chk_ht_phu_thuoc",
+      "group": "Chế độ kế toán và báo cáo tài chính",
+      "text": "Bạn có thuộc/không — đánh X vào ô: ht phu thuoc?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "ht phu thuoc"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_ht_phu_thuoc"
+    },
+    {
+      "question_id": "q_i09_chk_co",
+      "group": "Các khai báo khác",
+      "text": "Bạn có thuộc/không — đánh X vào ô: Có?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "Có"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_co"
+    },
+    {
+      "question_id": "q_i09_chk_khong",
+      "group": "Các khai báo khác",
+      "text": "Bạn có thuộc/không — đánh X vào ô: Không?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "Không"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_khong"
+    },
+    {
+      "question_id": "q_i09_chk_gtgt_khoan_tru",
+      "group": "Thuế giá trị gia tăng",
+      "text": "Bạn có thuộc/không — đánh X vào ô: gtgt khoan tru?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "gtgt khoan tru"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_gtgt_khoan_tru"
+    },
+    {
+      "question_id": "q_i09_chk_gtgt_truc_tiep_tren_gtgt",
+      "group": "Thuế giá trị gia tăng",
+      "text": "Bạn có thuộc/không — đánh X vào ô: gtgt truc tiep tren gtgt?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "gtgt truc tiep tren gtgt"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_gtgt_truc_tiep_tren_gtgt"
+    },
+    {
+      "question_id": "q_i09_chk_gtgt_truc_tiep_doanh_so",
+      "group": "Thuế giá trị gia tăng",
+      "text": "Bạn có thuộc/không — đánh X vào ô: gtgt truc tiep doanh so?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "gtgt truc tiep doanh so"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_gtgt_truc_tiep_doanh_so"
+    },
+    {
+      "question_id": "q_i09_chk_gtgt_khong_phai_nop",
+      "group": "Thuế giá trị gia tăng",
+      "text": "Bạn có thuộc/không — đánh X vào ô: gtgt khong phai nop?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "gtgt khong phai nop"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_gtgt_khong_phai_nop"
+    },
+    {
+      "question_id": "q_i09_chk_bc_hang_thang",
+      "group": "Bảo hiểm xã hội (phương thức đóng)",
+      "text": "Bạn có thuộc/không — đánh X vào ô: bc hang thang?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "bc hang thang"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_bc_hang_thang"
+    },
+    {
+      "question_id": "q_i09_chk_bc_03_thang",
+      "group": "Bảo hiểm xã hội (phương thức đóng)",
+      "text": "Bạn có thuộc/không — đánh X vào ô: bc 03 thang?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "bc 03 thang"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_bc_03_thang"
+    },
+    {
+      "question_id": "q_i09_chk_bc_06_thang",
+      "group": "Bảo hiểm xã hội (phương thức đóng)",
+      "text": "Bạn có thuộc/không — đánh X vào ô: bc 06 thang?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "bc 06 thang"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_bc_06_thang"
+    },
+    {
+      "question_id": "q_i09_ngay_bd",
+      "group": "Bắt đầu hoạt động và lao động",
+      "text": "Doanh nghiệp dự kiến bắt đầu hoạt động từ ngày nào? (dd/mm/yyyy)",
+      "type": "date",
+      "example": "01/10/2026",
+      "version": 1,
+      "data_key": [
+        {
+          "key": "ngay_bd",
+          "transform": "date_day"
+        },
+        {
+          "key": "thang_bd",
+          "transform": "date_month"
+        },
+        {
+          "key": "nam_bd",
+          "transform": "date_year"
+        }
+      ]
+    },
+    {
+      "question_id": "q_i09_gd_ngay_sinh",
+      "group": "Giám đốc/Tổng giám đốc",
+      "text": "Giám đốc/Tổng giám đốc — ngày, tháng, năm sinh? (dd/mm/yyyy)",
+      "type": "date",
+      "example": "05/12/1985",
+      "version": 1,
+      "data_key": [
+        {
+          "key": "gd.ngay_sinh",
+          "transform": "date_day"
+        },
+        {
+          "key": "gd.thang_sinh",
+          "transform": "date_month"
+        },
+        {
+          "key": "gd.nam_sinh",
+          "transform": "date_year"
+        }
+      ]
+    },
+    {
+      "question_id": "q_i09_kt_ngay_sinh",
+      "group": "Kế toán trưởng/người phụ trách kế toán",
+      "text": "Kế toán trưởng — ngày, tháng, năm sinh? (dd/mm/yyyy)",
+      "type": "date",
+      "example": "05/12/1985",
+      "version": 1,
+      "data_key": [
+        {
+          "key": "kt.ngay_sinh",
+          "transform": "date_day"
+        },
+        {
+          "key": "kt.thang_sinh",
+          "transform": "date_month"
+        },
+        {
+          "key": "kt.nam_sinh",
+          "transform": "date_year"
+        }
+      ]
+    },
+    {
+      "question_id": "q_i09_ds_thanh_vien_hop_danh_ho_ten",
+      "group": "Danh sách thành viên công ty hợp danh",
+      "text": "Họ và tên?",
+      "type": "text",
+      "repeatable": true,
+      "row_group": "ds_thanh_vien_hop_danh",
+      "version": 1,
+      "data_key": "ds_thanh_vien_hop_danh.ho_ten",
+      "example": "Nguyễn Văn A",
+      "required": true
+    },
+    {
+      "question_id": "q_i09_ds_thanh_vien_hop_danh_ngay_sinh",
+      "group": "Danh sách thành viên công ty hợp danh",
+      "text": "Ngày, tháng, năm sinh? (dd/mm/yyyy)?",
+      "type": "date",
+      "repeatable": true,
+      "row_group": "ds_thanh_vien_hop_danh",
+      "version": 1,
+      "data_key": "ds_thanh_vien_hop_danh.ngay_sinh",
+      "example": "05/12/1985"
+    },
+    {
+      "question_id": "q_i09_ds_thanh_vien_hop_danh_gioi_tinh",
+      "group": "Danh sách thành viên công ty hợp danh",
+      "text": "Giới tính?",
+      "type": "select",
+      "repeatable": true,
+      "row_group": "ds_thanh_vien_hop_danh",
+      "version": 1,
+      "data_key": "ds_thanh_vien_hop_danh.gioi_tinh",
+      "options": [
+        {
+          "value": "Nam",
+          "label": "Nam"
+        },
+        {
+          "value": "Nữ",
+          "label": "Nữ"
+        }
+      ]
+    },
+    {
+      "question_id": "q_i09_ds_thanh_vien_hop_danh_so_cccd",
+      "group": "Danh sách thành viên công ty hợp danh",
+      "text": "Số định danh cá nhân/số giấy tờ pháp lý?",
+      "type": "text",
+      "repeatable": true,
+      "row_group": "ds_thanh_vien_hop_danh",
+      "version": 1,
+      "data_key": "ds_thanh_vien_hop_danh.so_cccd",
+      "example": "079085001234"
+    },
+    {
+      "question_id": "q_i09_ds_thanh_vien_hop_danh_quoc_tich",
+      "group": "Danh sách thành viên công ty hợp danh",
+      "text": "Quốc tịch?",
+      "type": "text",
+      "repeatable": true,
+      "row_group": "ds_thanh_vien_hop_danh",
+      "version": 1,
+      "data_key": "ds_thanh_vien_hop_danh.quoc_tich",
+      "example": "Việt Nam"
+    },
+    {
+      "question_id": "q_i09_ds_thanh_vien_hop_danh_dan_toc",
+      "group": "Danh sách thành viên công ty hợp danh",
+      "text": "Dân tộc?",
+      "type": "text",
+      "repeatable": true,
+      "row_group": "ds_thanh_vien_hop_danh",
+      "version": 1,
+      "data_key": "ds_thanh_vien_hop_danh.dan_toc",
+      "example": "Kinh"
+    },
+    {
+      "question_id": "q_i09_ds_thanh_vien_hop_danh_dia_chi",
+      "group": "Danh sách thành viên công ty hợp danh",
+      "text": "Địa chỉ liên lạc?",
+      "type": "text",
+      "repeatable": true,
+      "row_group": "ds_thanh_vien_hop_danh",
+      "version": 1,
+      "data_key": "ds_thanh_vien_hop_danh.dia_chi",
+      "example": "25 Nguyễn Trãi"
+    },
+    {
+      "question_id": "q_i09_ds_thanh_vien_hop_danh_von_dong_gop",
+      "group": "Danh sách thành viên công ty hợp danh",
+      "text": "Phần vốn góp là bao nhiêu? (VNĐ)?",
+      "type": "money",
+      "repeatable": true,
+      "row_group": "ds_thanh_vien_hop_danh",
+      "version": 1,
+      "data_key": "ds_thanh_vien_hop_danh.von_dong_gop",
+      "example": "2.000.000.000"
+    },
+    {
+      "question_id": "q_i09_ds_thanh_vien_hop_danh_ty_le_von",
+      "group": "Danh sách thành viên công ty hợp danh",
+      "text": "Tỷ lệ vốn góp (%)?",
+      "type": "text",
+      "repeatable": true,
+      "row_group": "ds_thanh_vien_hop_danh",
+      "version": 1,
+      "data_key": "ds_thanh_vien_hop_danh.ty_le_von",
+      "example": "40"
+    },
+    {
+      "question_id": "q_i09_ds_thanh_vien_hop_danh_loai_tai_san_gop_von",
+      "group": "Danh sách thành viên công ty hợp danh",
+      "text": "Loại tài sản góp vốn (nếu góp bằng tài sản)?",
+      "type": "text",
+      "repeatable": true,
+      "row_group": "ds_thanh_vien_hop_danh",
+      "version": 1,
+      "data_key": "ds_thanh_vien_hop_danh.loai_tai_san_gop_von"
+    },
+    {
+      "question_id": "q_i09_ds_thanh_vien_hop_danh_thoi_han_gop_von",
+      "group": "Danh sách thành viên công ty hợp danh",
+      "text": "Thời hạn góp vốn?",
+      "type": "text",
+      "repeatable": true,
+      "row_group": "ds_thanh_vien_hop_danh",
+      "version": 1,
+      "data_key": "ds_thanh_vien_hop_danh.thoi_han_gop_von",
+      "example": "Trước 31/12/2026"
+    },
+    {
+      "question_id": "q_i09_ds_thanh_vien_hop_danh_ghi_chu",
+      "group": "Danh sách thành viên công ty hợp danh",
+      "text": "Ghi chú thêm (nếu có)?",
+      "type": "text",
+      "repeatable": true,
+      "row_group": "ds_thanh_vien_hop_danh",
+      "version": 1,
+      "data_key": "ds_thanh_vien_hop_danh.ghi_chu"
+    }
+  ]
+}

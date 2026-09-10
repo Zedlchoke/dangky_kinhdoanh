@@ -1,0 +1,118 @@
+{
+  "doc_id": "PLI_M07",
+  "title": "Danh sách cổ đông sáng lập công ty cổ phần",
+  "questionnaire_version": 1,
+  "cluster": "dn_thanh_lap",
+  "content_note": "Nội dung sinh bởi tools.build_form_questionnaires theo ủy quyền owner owner_delegated_2026-09-10 (owner_delegated_2026-09-10)",
+  "questions": [
+    {
+      "question_id": "q_i07_ds_co_dong_sang_lap_ho_ten",
+      "group": "Danh sách cổ đông sáng lập",
+      "text": "Họ và tên?",
+      "type": "text",
+      "repeatable": true,
+      "row_group": "ds_co_dong_sang_lap",
+      "version": 1,
+      "data_key": "ds_co_dong_sang_lap.ho_ten",
+      "example": "Nguyễn Văn A",
+      "required": true
+    },
+    {
+      "question_id": "q_i07_ds_co_dong_sang_lap_ngay_sinh",
+      "group": "Danh sách cổ đông sáng lập",
+      "text": "Ngày, tháng, năm sinh? (dd/mm/yyyy)?",
+      "type": "date",
+      "repeatable": true,
+      "row_group": "ds_co_dong_sang_lap",
+      "version": 1,
+      "data_key": "ds_co_dong_sang_lap.ngay_sinh",
+      "example": "05/12/1985"
+    },
+    {
+      "question_id": "q_i07_ds_co_dong_sang_lap_gioi_tinh",
+      "group": "Danh sách cổ đông sáng lập",
+      "text": "Giới tính?",
+      "type": "select",
+      "repeatable": true,
+      "row_group": "ds_co_dong_sang_lap",
+      "version": 1,
+      "data_key": "ds_co_dong_sang_lap.gioi_tinh",
+      "options": [
+        {
+          "value": "Nam",
+          "label": "Nam"
+        },
+        {
+          "value": "Nữ",
+          "label": "Nữ"
+        }
+      ]
+    },
+    {
+      "question_id": "q_i07_ds_co_dong_sang_lap_so_cccd",
+      "group": "Danh sách cổ đông sáng lập",
+      "text": "Số định danh cá nhân/số giấy tờ pháp lý?",
+      "type": "text",
+      "repeatable": true,
+      "row_group": "ds_co_dong_sang_lap",
+      "version": 1,
+      "data_key": "ds_co_dong_sang_lap.so_cccd",
+      "example": "079085001234"
+    },
+    {
+      "question_id": "q_i07_ds_co_dong_sang_lap_quoc_tich",
+      "group": "Danh sách cổ đông sáng lập",
+      "text": "Quốc tịch?",
+      "type": "text",
+      "repeatable": true,
+      "row_group": "ds_co_dong_sang_lap",
+      "version": 1,
+      "data_key": "ds_co_dong_sang_lap.quoc_tich",
+      "example": "Việt Nam"
+    },
+    {
+      "question_id": "q_i07_ds_co_dong_sang_lap_dan_toc",
+      "group": "Danh sách cổ đông sáng lập",
+      "text": "Dân tộc?",
+      "type": "text",
+      "repeatable": true,
+      "row_group": "ds_co_dong_sang_lap",
+      "version": 1,
+      "data_key": "ds_co_dong_sang_lap.dan_toc",
+      "example": "Kinh"
+    },
+    {
+      "question_id": "q_i07_ds_co_dong_sang_lap_dia_chi",
+      "group": "Danh sách cổ đông sáng lập",
+      "text": "Địa chỉ liên lạc?",
+      "type": "text",
+      "repeatable": true,
+      "row_group": "ds_co_dong_sang_lap",
+      "version": 1,
+      "data_key": "ds_co_dong_sang_lap.dia_chi",
+      "example": "25 Nguyễn Trãi"
+    },
+    {
+      "question_id": "q_i07_ds_co_dong_sang_lap_so_co_phan",
+      "group": "Danh sách cổ đông sáng lập",
+      "text": "Tổng số cổ phần?",
+      "type": "integer",
+      "repeatable": true,
+      "row_group": "ds_co_dong_sang_lap",
+      "version": 1,
+      "data_key": "ds_co_dong_sang_lap.so_co_phan",
+      "example": "1000"
+    },
+    {
+      "question_id": "q_i07_ds_co_dong_sang_lap_ty_le",
+      "group": "Danh sách cổ đông sáng lập",
+      "text": "Tỷ lệ (%)?",
+      "type": "text",
+      "repeatable": true,
+      "row_group": "ds_co_dong_sang_lap",
+      "version": 1,
+      "data_key": "ds_co_dong_sang_lap.ty_le",
+      "example": "40"
+    }
+  ]
+}

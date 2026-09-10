@@ -31,7 +31,8 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 from tools.build_case_questionnaires import (  # noqa: E402
-    INDEX_NAME, CaseManifestError, OUT_DIR, build_all, build_manifest,
+    APPROVED_EQUIV, INDEX_NAME, REVIEW_APPROVED, REVIEW_DELEGATED,
+    REVIEW_PENDING, CaseManifestError, OUT_DIR, build_all, build_manifest,
     form_id_of, manifest_hash,
 )
 from tools.questionnaire.schema import load_form_maps, validate  # noqa: E402
@@ -87,42 +88,47 @@ def cq1():
                           "content_review", "questions"):
                 assert field in form, \
                     "%s/%s: thiếu %r" % (case_id, form.get("form_id"), field)
-            assert form["content_review"] in ("approved", "pending")
-            assert (form["content_review"] == "approved") == \
+            assert form["content_review"] in APPROVED_EQUIV + \
+                (REVIEW_PENDING,), "%s: review lạ %r" % (
+                    form["form_id"], form["content_review"])
+            assert (form["content_review"] in APPROVED_EQUIV) == \
                 bool(form["questions"]), \
                 "%s/%s: approved/pending lệch questions" % (
                     case_id, form["form_id"])
 
 
-@check("[CQ2] đúng 9 case READY (E1/E2) — form pending questions rỗng")
+@check("[CQ2] đủ 28/28 case READY — delegated đối xử như approved")
 def cq2():
-    ready = sorted(e["case_id"] for e in _index()["cases"]
-                   if e["all_approved"])
-    assert ready == sorted([
-        "dang_ky_ho_kinh_doanh_lan_dau",
-        "thay_doi_ten_va_tru_so",
-        "thay_doi_nganh_nghe",
-        "thay_doi_von_dieu_le",
-        "thay_doi_noi_dung_dang_ky_hkd",
-        "tam_ngung_tiep_tuc_kinh_doanh_dn",
-        "tam_ngung_tiep_tuc_kinh_doanh_hkd",
-        "cham_dut_hoat_dong_hkd",
-        "bo_sung_cap_nhat_thong_tin_dkdn",
-    ]), ready
+    from tools.build_case_questionnaires import REVIEW_DELEGATED
     index = _index()
     assert len(index["cases"]) == 28, len(index["cases"])
-    assert sum(1 for e in index["cases"] if not e["all_approved"]) == 19
-    # spot-check hai đầu: READY đủ câu, pending rỗng và có ghi chú form
+    ready = [e for e in index["cases"] if e["all_approved"]]
+    assert len(ready) == 28, \
+        sorted(e["case_id"] for e in index["cases"] if not e["all_approved"])
+    assert all(not e["pending_forms"] for e in index["cases"])
+    # 7 form X1 giữ "approved"; form E4/E5 mang nhãn delegated
     m = _on_disk("dang_ky_ho_kinh_doanh_lan_dau")
     assert m["forms"][0]["form_id"] == "PLII_M01"
-    assert m["forms"][0]["content_review"] == "approved"
+    assert m["forms"][0]["content_review"] == REVIEW_APPROVED
     assert len(m["forms"][0]["questions"]) >= 30
     m2 = _on_disk("thanh_lap_dntn")
     assert m2["forms"][0]["form_id"] == "PLI_M01"
-    assert m2["forms"][0]["content_review"] == "pending"
-    assert m2["forms"][0]["questions"] == []
-    assert m2["forms"][0]["bat_buoc"] is True          # từ use case
-    assert m2["forms"][0]["ghi_chu"], "pending vẫn giữ ghi_chu use case"
+    assert m2["forms"][0]["content_review"] == REVIEW_DELEGATED
+    assert len(m2["forms"][0]["questions"]) >= 50
+    assert m2["forms"][0]["bat_buoc"] is True
+    # case oneOf có câu selector pseudo-key được nhúng
+    m3 = _on_disk("chuyen_doi_hkd_sang_dn")
+    sel = [q for f in m3["forms"] for q in f["questions"]
+           if str(q.get("data_key", "")).startswith("oneOf.")]
+    assert len(sel) == 1 and sel[0]["type"] == "select" and \
+        sel[0].get("required") is True, sel
+    assert [o["value"] for o in sel[0]["options"]] == \
+        ["PLI_M01", "PLI_M02", "PLI_M03", "PLI_M04"], sel[0]["options"]
+    # form tùy chọn ngoài oneOf có câu mark opt-in
+    m4 = _on_disk("thanh_lap_ctcp")
+    opts = [q for f in m4["forms"] for q in f["questions"]
+            if str(q.get("data_key", "")).startswith("optionalForm.")]
+    assert [o["data_key"] for o in opts] == ["optionalForm.PLI_M08"], opts
 
 
 @check("[CQ3] hash manifest tự-consistent + build lại không DRIFT")
@@ -141,22 +147,32 @@ def cq3():
     build_all(write=False)
 
 
-@check("[CQ4] migration read-only: 7 questionnaire cũ nguyên vẹn + API cũ chạy")
+@check("[CQ4] questionnaire cũ nguyên vẹn; 21 file E4/E5 validate schema")
 def cq4():
     form_maps = load_form_maps(ROOT)
     qdir = ROOT / "app" / "data" / "questionnaire"
     docs = sorted(p.stem for p in qdir.glob("*.json"))
-    assert docs == ["PLII_M01", "PLII_M02", "PLII_M03", "PLII_M04",
-                    "PLI_M12", "PLI_M27", "PLI_M72"], docs
+    assert len(docs) == 28, docs
+    legacy = {"PLII_M01", "PLII_M02", "PLII_M03", "PLII_M04",
+              "PLI_M12", "PLI_M27", "PLI_M72"}
+    assert legacy <= set(docs), docs
     for doc in docs:
         q = json.loads((qdir / ("%s.json" % doc)).read_text(encoding="utf-8"))
         assert q["doc_id"] == doc
         validate(q, form_maps)          # sai schema sẽ raise QuestionnaireError
         assert q["questionnaire_version"] == 1
-    # API cũ xuất/nạp phiếu theo doc_id vẫn hoạt động (PLII_M03 — phiếu nhỏ)
+        if doc not in legacy:
+            # provenance: nội dung sinh theo ủy quyền owner 2026-09-10
+            assert "owner_delegated_2026-09-10" in \
+                str(q.get("content_note")), doc
+
+
+@check("[CQ4b] migration read-only: API cũ excel_export/import vẫn chạy")
+def cq4b():
     from tools.excel_export import write_questionnaire
     from tools.excel_import import BAD_HEADER, import_questionnaire
 
+    qdir = ROOT / "app" / "data" / "questionnaire"
     q = json.loads((qdir / "PLII_M03.json").read_text(encoding="utf-8"))
     with tempfile.TemporaryDirectory() as tmp:
         path = write_questionnaire(q, Path(tmp) / "phieu.xlsx")
@@ -192,7 +208,7 @@ def cq5():
     assert form_id_of({"pl": "II", "mau": 4}) == "PLII_M04"
 
 
-@check("[CQ6] _index.json khớp manifest từng case")
+@check("[CQ6] _index.json khớp manifest từng case (approved+delegated)")
 def cq6():
     index = _index()
     assert index["generated_by"] == "tools.build_case_questionnaires"
@@ -200,17 +216,20 @@ def cq6():
         m = _on_disk(entry["case_id"])
         assert entry["manifest_hash"] == m["manifest_hash"], entry["case_id"]
         approved = [f["form_id"] for f in m["forms"]
-                    if f["content_review"] == "approved"]
+                    if f["content_review"] in APPROVED_EQUIV]
         pending = [f["form_id"] for f in m["forms"]
-                   if f["content_review"] == "pending"]
+                   if f["content_review"] == REVIEW_PENDING]
+        delegated = [f["form_id"] for f in m["forms"]
+                     if f["content_review"] == REVIEW_DELEGATED]
         assert entry["approved_forms"] == approved, entry["case_id"]
         assert entry["pending_forms"] == pending, entry["case_id"]
+        assert entry["delegated_forms"] == delegated, entry["case_id"]
         assert entry["all_approved"] == (not pending), entry["case_id"]
         assert entry["n_forms"] == len(m["forms"]), entry["case_id"]
 
 
 def main() -> int:
-    for fn in (cq1, cq2, cq3, cq4, cq5, cq6):
+    for fn in (cq1, cq2, cq3, cq4, cq4b, cq5, cq6):
         fn()
     passed = sum(1 for ok, _ in _results if ok)
     failed = len(_results) - passed

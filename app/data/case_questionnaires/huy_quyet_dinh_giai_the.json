@@ -23,12 +23,58 @@
       "ten_mau": "Thông báo về việc huỷ bỏ Nghị quyết/Quyết định giải thể doanh nghiệp",
       "bat_buoc": true,
       "ghi_chu": "Thông báo về việc huỷ bỏ Nghị quyết/Quyết định giải thể doanh nghiệp",
-      "questionnaire_version": null,
-      "cluster": null,
+      "questionnaire_version": 1,
+      "cluster": "giai_the",
       "title": "Thông báo về việc huỷ bỏ Nghị quyết/Quyết định giải thể doanh nghiệp",
-      "content_review": "pending",
-      "questions": []
+      "content_review": "owner_delegated_2026-09-10",
+      "questions": [
+        {
+          "question_id": "q_i31_dn_ten_tieng_viet",
+          "group": "Về tên doanh nghiệp",
+          "text": "Tên doanh nghiệp (bạn ghi thường, app tự in hoa)?",
+          "type": "text",
+          "example": "Công ty TNHH An Phát",
+          "required": true,
+          "version": 1,
+          "data_key": "dn.ten_tieng_viet"
+        },
+        {
+          "question_id": "q_i31_dn_ma_so_dn",
+          "group": "Thông tin doanh nghiệp",
+          "text": "Mã số doanh nghiệp/mã số thuế của doanh nghiệp?",
+          "type": "text",
+          "example": "0312345678",
+          "required": true,
+          "version": 1,
+          "data_key": "dn.ma_so_dn"
+        },
+        {
+          "question_id": "q_i31_so_gcn_dkkd",
+          "group": "Giấy chứng nhận hiện có",
+          "text": "Số Giấy chứng nhận đăng ký kinh doanh (chỉ kê khai nếu chưa có mã số doanh nghiệp)?",
+          "type": "text",
+          "version": 1,
+          "data_key": "so_gcn_dkkd"
+        },
+        {
+          "question_id": "q_i31_ngay_cap",
+          "group": "Giấy tờ pháp lý đã cấp",
+          "text": "Giấy chứng nhận đăng ký kinh doanh được cấp ngày nào? (dd/mm/yyyy)",
+          "type": "date",
+          "version": 1,
+          "data_key": "ngay_cap"
+        },
+        {
+          "question_id": "q_i31_ve_viec",
+          "group": "Nội dung đề nghị",
+          "text": "Nghị quyết/quyết định giải thể bị hủy mang số mấy?",
+          "type": "text",
+          "example": "12/2026/NQ-HĐTV",
+          "version": 1,
+          "data_key": "ve_viec"
+        }
+      ]
     }
   ],
-  "manifest_hash": "f4c1ad25ac5ea81550c367537b39fcd089fc76111586122e35f04d5d1c5694e7"
+  "manifest_hash": "fc0f17416f1bdb6ba72adbc9e18060da6606f02dfb29aa9bcbbe1438fa461e0c"
 }

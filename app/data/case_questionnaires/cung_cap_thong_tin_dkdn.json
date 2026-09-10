@@ -22,12 +22,183 @@
       "ten_mau": "Giấy đề nghị cung cấp thông tin đăng ký doanh nghiệp",
       "bat_buoc": true,
       "ghi_chu": "Giấy đề nghị cung cấp thông tin đăng ký doanh nghiệp",
-      "questionnaire_version": null,
-      "cluster": null,
+      "questionnaire_version": 1,
+      "cluster": "cong_bo_tt",
       "title": "Giấy đề nghị cung cấp thông tin đăng ký doanh nghiệp",
-      "content_review": "pending",
-      "questions": []
+      "content_review": "owner_delegated_2026-09-10",
+      "questions": [
+        {
+          "question_id": "q_i78_chu_hkd_ho_ten",
+          "group": "Về người khai hồ sơ",
+          "text": "Họ và tên của bạn là gì? (bạn ghi thường, app tự in hoa)",
+          "type": "text",
+          "example": "Nguyễn Văn A",
+          "required": true,
+          "version": 1,
+          "data_key": "chu_hkd.ho_ten"
+        },
+        {
+          "question_id": "q_i78_chu_hkd_gioi_tinh",
+          "group": "Về người khai hồ sơ",
+          "text": "Giới tính của bạn?",
+          "type": "select",
+          "options": [
+            {
+              "value": "Nam",
+              "label": "Nam"
+            },
+            {
+              "value": "Nữ",
+              "label": "Nữ"
+            }
+          ],
+          "version": 1,
+          "data_key": "chu_hkd.gioi_tinh"
+        },
+        {
+          "question_id": "q_i78_chu_hkd_so_cccd",
+          "group": "Về người khai hồ sơ",
+          "text": "Số giấy tờ pháp lý của bạn (số định danh cá nhân / hộ chiếu)?",
+          "type": "text",
+          "example": "079085001234",
+          "version": 1,
+          "data_key": "chu_hkd.so_cccd"
+        },
+        {
+          "question_id": "q_i78_ngay_cap",
+          "group": "Giấy tờ pháp lý đã cấp",
+          "text": "Giấy tờ pháp lý của bạn được cấp ngày nào? (dd/mm/yyyy)",
+          "type": "date",
+          "example": "10/01/2021",
+          "version": 1,
+          "data_key": "ngay_cap"
+        },
+        {
+          "question_id": "q_i78_noi_cap",
+          "group": "Giấy tờ pháp lý đã cấp",
+          "text": "Giấy tờ pháp lý của bạn do nơi nào cấp?",
+          "type": "text",
+          "example": "Cục Trưởng Cục CSCĐ",
+          "version": 1,
+          "data_key": "noi_cap"
+        },
+        {
+          "question_id": "q_i78_dien_thoai_khac",
+          "group": "Số liên hệ",
+          "text": "Số điện thoại liên hệ của bạn?",
+          "type": "tel",
+          "example": "0901234567",
+          "version": 1,
+          "data_key": "dien_thoai_khac"
+        },
+        {
+          "question_id": "q_i78_email_tru_so",
+          "group": "Số liên hệ",
+          "text": "Email liên hệ (nếu có)?",
+          "type": "email",
+          "version": 1,
+          "data_key": "email_tru_so"
+        },
+        {
+          "question_id": "q_i78_dia_chi_khac",
+          "group": "Các khai báo khác",
+          "text": "Địa chỉ?",
+          "type": "text",
+          "version": 1,
+          "data_key": "dia_chi_khac"
+        },
+        {
+          "question_id": "q_i78_ds_san_pham_yeu_cau_san_pham_khac_ten_san_pham",
+          "group": "Sản phẩm thông tin yêu cầu",
+          "text": "Sản phẩm khác — ghi rõ tên/mô tả (nếu có)?",
+          "type": "text",
+          "version": 1,
+          "data_key": "ds_san_pham_yeu_cau.san_pham_khac.ten_san_pham"
+        },
+        {
+          "question_id": "q_i78_ds_san_pham_yeu_cau_sp_gcn_dkdn_ten_san_pham",
+          "group": "Sản phẩm thông tin yêu cầu",
+          "text": "Bản Giấy chứng nhận đăng ký doanh nghiệp — ghi rõ tên/mô tả (nếu có)?",
+          "type": "text",
+          "version": 1,
+          "data_key": "ds_san_pham_yeu_cau.sp_gcn_dkdn.ten_san_pham"
+        },
+        {
+          "question_id": "q_i78_ds_san_pham_yeu_cau_sp_lich_su_3_nam_ten_san_pham",
+          "group": "Sản phẩm thông tin yêu cầu",
+          "text": "Thông tin lịch sử 3 năm của doanh nghiệp — ghi rõ tên/mô tả (nếu có)?",
+          "type": "text",
+          "version": 1,
+          "data_key": "ds_san_pham_yeu_cau.sp_lich_su_3_nam.ten_san_pham"
+        },
+        {
+          "question_id": "q_i78_ds_san_pham_yeu_cau_sp_thong_tin_moi_nhat_ten_san_pham",
+          "group": "Sản phẩm thông tin yêu cầu",
+          "text": "Thông tin doanh nghiệp mới nhất — ghi rõ tên/mô tả (nếu có)?",
+          "type": "text",
+          "version": 1,
+          "data_key": "ds_san_pham_yeu_cau.sp_thong_tin_moi_nhat.ten_san_pham"
+        },
+        {
+          "question_id": "q_i78_ds_san_pham_yeu_cau_san_pham_khac_so_luong_san_pham",
+          "group": "Sản phẩm thông tin yêu cầu",
+          "text": "Sản phẩm khác — bạn cần bao nhiêu bản?",
+          "type": "money",
+          "example": "1",
+          "version": 1,
+          "data_key": "ds_san_pham_yeu_cau.san_pham_khac.so_luong_san_pham"
+        },
+        {
+          "question_id": "q_i78_ds_san_pham_yeu_cau_sp_gcn_dkdn_so_luong_san_pham",
+          "group": "Sản phẩm thông tin yêu cầu",
+          "text": "Bản Giấy chứng nhận đăng ký doanh nghiệp — bạn cần bao nhiêu bản?",
+          "type": "money",
+          "example": "1",
+          "version": 1,
+          "data_key": "ds_san_pham_yeu_cau.sp_gcn_dkdn.so_luong_san_pham"
+        },
+        {
+          "question_id": "q_i78_ds_san_pham_yeu_cau_sp_lich_su_3_nam_so_luong_san_pham",
+          "group": "Sản phẩm thông tin yêu cầu",
+          "text": "Thông tin lịch sử 3 năm của doanh nghiệp — bạn cần bao nhiêu bản?",
+          "type": "money",
+          "example": "1",
+          "version": 1,
+          "data_key": "ds_san_pham_yeu_cau.sp_lich_su_3_nam.so_luong_san_pham"
+        },
+        {
+          "question_id": "q_i78_ds_san_pham_yeu_cau_sp_thong_tin_moi_nhat_so_luong_san_pham",
+          "group": "Sản phẩm thông tin yêu cầu",
+          "text": "Thông tin doanh nghiệp mới nhất — bạn cần bao nhiêu bản?",
+          "type": "money",
+          "example": "1",
+          "version": 1,
+          "data_key": "ds_san_pham_yeu_cau.sp_thong_tin_moi_nhat.so_luong_san_pham"
+        },
+        {
+          "question_id": "q_i78_ngay_sinh",
+          "group": "Các khai báo khác",
+          "text": "Bạn — ngày, tháng, năm sinh? (dd/mm/yyyy)",
+          "type": "date",
+          "example": "05/12/1985",
+          "version": 1,
+          "data_key": [
+            {
+              "key": "ngay_sinh",
+              "transform": "date_day"
+            },
+            {
+              "key": "thang_sinh",
+              "transform": "date_month"
+            },
+            {
+              "key": "nam_sinh",
+              "transform": "date_year"
+            }
+          ]
+        }
+      ]
     }
   ],
-  "manifest_hash": "e2cfb3feef2e678ec706c41e4af78c4ef0b68120801ddac91a5ee7e4ed15bb1f"
+  "manifest_hash": "796613e876b0aacaa97f6fae4c5819599c3642b3f90eae3627aef980882892ca"
 }

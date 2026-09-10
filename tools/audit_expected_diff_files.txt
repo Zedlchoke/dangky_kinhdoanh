@@ -734,3 +734,34 @@ tools/macos_handoff/README.md
 # --- [integration 2026-09-10] W0 env manifest (renderer sẵn sàng — đóng blocker soffice plan gốc) ---
 docs/audits/w0_env_manifest_2026-09-10.md
 docs/audits/w0_env_manifest_2026-09-10.json
+
+# --- [E5 2026-09-10 owner ủy quyền] questionnaire sinh cho 21 form (generator tools/build_form_questionnaires.py, phủ 100% key fillable; provenance content_note trong từng file) ---
+app/data/questionnaire/PLI_M01.json
+app/data/questionnaire/PLI_M02.json
+app/data/questionnaire/PLI_M03.json
+app/data/questionnaire/PLI_M04.json
+app/data/questionnaire/PLI_M05.json
+app/data/questionnaire/PLI_M06.json
+app/data/questionnaire/PLI_M07.json
+app/data/questionnaire/PLI_M08.json
+app/data/questionnaire/PLI_M09.json
+app/data/questionnaire/PLI_M13.json
+app/data/questionnaire/PLI_M14.json
+app/data/questionnaire/PLI_M15.json
+app/data/questionnaire/PLI_M17.json
+app/data/questionnaire/PLI_M19.json
+app/data/questionnaire/PLI_M21.json
+app/data/questionnaire/PLI_M26.json
+app/data/questionnaire/PLI_M28.json
+app/data/questionnaire/PLI_M30.json
+app/data/questionnaire/PLI_M31.json
+app/data/questionnaire/PLI_M32.json
+app/data/questionnaire/PLI_M78.json
+tools/build_form_questionnaires.py
+tools/test_questionnaire_coverage.py
+tools/test_excel_case_oneof.py
+
+# --- [compat/visual 2026-09-10] LibreOffice Calc round-trip + gate visual workbook case ---
+docs/audits/excel_case_visual_2026-09-10.md
+tools/excel_case_visual.py
+tools/test_excel_calc_roundtrip.py

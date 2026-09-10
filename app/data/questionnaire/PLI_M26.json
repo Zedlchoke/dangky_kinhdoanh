@@ -1,0 +1,55 @@
+{
+  "doc_id": "PLI_M26",
+  "title": "Giấy đề nghị cấp lại Giấy chứng nhận đăng ký doanh nghiệp/Giấy xác nhận thay đổi nội dung đăng ký doanh nghiệp/Giấy chứng nhận đăng ký hoạt động chi nhánh/văn phòng đại diện/Giấy chứng nhận đăng ký địa điểm kinh doanh/Giấy xác nhận thay đổi nội dung đăng ký hoạt động chi nhánh/văn phòng đại diện/địa điểm kinh doanh",
+  "questionnaire_version": 1,
+  "cluster": "cap_doi_cn",
+  "content_note": "Nội dung sinh bởi tools.build_form_questionnaires theo ủy quyền owner owner_delegated_2026-09-10 (owner_delegated_2026-09-10)",
+  "questions": [
+    {
+      "question_id": "q_i26_dn_ten_tieng_viet",
+      "group": "Về tên doanh nghiệp",
+      "text": "Tên doanh nghiệp (bạn ghi thường, app tự in hoa)?",
+      "type": "text",
+      "example": "Công ty TNHH An Phát",
+      "required": true,
+      "version": 1,
+      "data_key": "dn.ten_tieng_viet"
+    },
+    {
+      "question_id": "q_i26_dn_ma_so_dn",
+      "group": "Thông tin doanh nghiệp",
+      "text": "Mã số doanh nghiệp/mã số thuế của doanh nghiệp?",
+      "type": "text",
+      "example": "0312345678",
+      "required": true,
+      "version": 1,
+      "data_key": "dn.ma_so_dn"
+    },
+    {
+      "question_id": "q_i26_cn_ten_tieng_viet",
+      "group": "Về chi nhánh/văn phòng đại diện/địa điểm kinh doanh",
+      "text": "Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh? (ghi thường, app tự in hoa)",
+      "type": "text",
+      "example": "Chi nhánh Quận 1",
+      "version": 1,
+      "data_key": "cn.ten_tieng_viet"
+    },
+    {
+      "question_id": "q_i26_cn_ma_so",
+      "group": "Về chi nhánh/văn phòng đại diện/địa điểm kinh doanh",
+      "text": "Mã số chi nhánh/mã số thuế của chi nhánh (nếu đã cấp)?",
+      "type": "text",
+      "version": 1,
+      "data_key": "cn.ma_so"
+    },
+    {
+      "question_id": "q_i26_ly_do_de_nghi",
+      "group": "Nội dung đề nghị",
+      "text": "Lý do đề nghị cấp lại là gì? (bị rách nát, mất, thay đổi nội dung…)",
+      "type": "text",
+      "example": "Giấy chứng nhận bị mất",
+      "version": 1,
+      "data_key": "ly_do_de_nghi"
+    }
+  ]
+}

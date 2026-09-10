@@ -1,0 +1,1603 @@
+{
+  "doc_id": "PLI_M02",
+  "title": "Giấy đề nghị đăng ký doanh nghiệp - Công ty trách nhiệm hữu hạn một thành viên",
+  "questionnaire_version": 1,
+  "cluster": "dn_thanh_lap",
+  "content_note": "Nội dung sinh bởi tools.build_form_questionnaires theo ủy quyền owner owner_delegated_2026-09-10 (owner_delegated_2026-09-10)",
+  "questions": [
+    {
+      "question_id": "q_i02_chu_hkd_ho_ten",
+      "group": "Về người khai hồ sơ",
+      "text": "Họ và tên của bạn là gì? (bạn ghi thường, app tự in hoa)",
+      "type": "text",
+      "example": "Nguyễn Văn A",
+      "required": true,
+      "version": 1,
+      "data_key": "chu_hkd.ho_ten"
+    },
+    {
+      "question_id": "q_i02_chu_hkd_gioi_tinh",
+      "group": "Về người khai hồ sơ",
+      "text": "Giới tính của bạn?",
+      "type": "select",
+      "options": [
+        {
+          "value": "Nam",
+          "label": "Nam"
+        },
+        {
+          "value": "Nữ",
+          "label": "Nữ"
+        }
+      ],
+      "version": 1,
+      "data_key": "chu_hkd.gioi_tinh"
+    },
+    {
+      "question_id": "q_i02_chu_hkd_so_cccd",
+      "group": "Về người khai hồ sơ",
+      "text": "Số giấy tờ pháp lý của bạn (số định danh cá nhân / hộ chiếu)?",
+      "type": "text",
+      "example": "079085001234",
+      "version": 1,
+      "data_key": "chu_hkd.so_cccd"
+    },
+    {
+      "question_id": "q_i02_dia_chi_chi_tiet",
+      "group": "Về trụ sở chính",
+      "text": "Địa chỉ trụ sở chính ở đâu? (số nhà/phòng, ngách/hẻm, ngõ/kiệt, đường/phố, tổ/xóm/ấp/thôn)",
+      "type": "text",
+      "example": "25 Nguyễn Trãi, Phường Bến Thành",
+      "required": true,
+      "version": 1,
+      "data_key": "dia_chi_chi_tiet"
+    },
+    {
+      "question_id": "q_i02_xa_phuong",
+      "group": "Về trụ sở chính",
+      "text": "Trụ sở ở xã/phường/đặc khu nào?",
+      "type": "text",
+      "example": "Phường Bến Thành",
+      "required": true,
+      "version": 1,
+      "data_key": "xa_phuong"
+    },
+    {
+      "question_id": "q_i02_tinh_thanh",
+      "group": "Về trụ sở chính",
+      "text": "Trụ sở ở tỉnh/thành phố nào?",
+      "type": "text",
+      "example": "TP. Hồ Chí Minh",
+      "required": true,
+      "version": 1,
+      "data_key": "tinh_thanh"
+    },
+    {
+      "question_id": "q_i02_ndd_quoc_gia",
+      "group": "Người đại diện theo pháp luật",
+      "text": "Người đại diện mang quốc gia nào (nếu khác Việt Nam)?",
+      "type": "text",
+      "version": 1,
+      "data_key": "ndd.quoc_gia"
+    },
+    {
+      "question_id": "q_i02_ndd_dien_thoai",
+      "group": "Người đại diện theo pháp luật",
+      "text": "Số điện thoại của người đại diện (nếu có)?",
+      "type": "tel",
+      "example": "0901234567",
+      "version": 1,
+      "data_key": "ndd.dien_thoai"
+    },
+    {
+      "question_id": "q_i02_ndd_email",
+      "group": "Người đại diện theo pháp luật",
+      "text": "Email của người đại diện (nếu có)?",
+      "type": "email",
+      "version": 1,
+      "data_key": "ndd.email"
+    },
+    {
+      "question_id": "q_i02_chu_hkd_dan_toc",
+      "group": "Về người khai hồ sơ",
+      "text": "Dân tộc của bạn?",
+      "type": "text",
+      "example": "Kinh",
+      "version": 1,
+      "data_key": "chu_hkd.dan_toc"
+    },
+    {
+      "question_id": "q_i02_chu_hkd_quoc_tich",
+      "group": "Về người khai hồ sơ",
+      "text": "Quốc tịch của bạn?",
+      "type": "text",
+      "example": "Việt Nam",
+      "version": 1,
+      "data_key": "chu_hkd.quoc_tich"
+    },
+    {
+      "question_id": "q_i02_ngay_cap",
+      "group": "Giấy tờ pháp lý đã cấp",
+      "text": "Giấy tờ pháp lý của bạn được cấp ngày nào? (dd/mm/yyyy)",
+      "type": "date",
+      "example": "10/01/2021",
+      "version": 1,
+      "data_key": "ngay_cap"
+    },
+    {
+      "question_id": "q_i02_noi_cap",
+      "group": "Giấy tờ pháp lý đã cấp",
+      "text": "Giấy tờ pháp lý của bạn do nơi nào cấp?",
+      "type": "text",
+      "example": "Cục Trưởng Cục CSCĐ",
+      "version": 1,
+      "data_key": "noi_cap"
+    },
+    {
+      "question_id": "q_i02_quoc_gia",
+      "group": "Các khai báo khác",
+      "text": "Quốc gia (nếu khác Việt Nam)?",
+      "type": "text",
+      "version": 1,
+      "data_key": "quoc_gia"
+    },
+    {
+      "question_id": "q_i02_dn_goc_ten_doanh_nghiep",
+      "group": "Doanh nghiệp gốc (tách/chia/hợp nhất — nếu có)",
+      "text": "Tên doanh nghiệp gốc (trường hợp tách/chia/hợp nhất/chuyển đổi — nếu có)?",
+      "type": "text",
+      "version": 1,
+      "data_key": "dn_goc.ten_doanh_nghiep"
+    },
+    {
+      "question_id": "q_i02_dn_goc_ma_so_dn",
+      "group": "Doanh nghiệp gốc (tách/chia/hợp nhất — nếu có)",
+      "text": "Mã số doanh nghiệp/mã số thuế của doanh nghiệp gốc (nếu có)?",
+      "type": "text",
+      "version": 1,
+      "data_key": "dn_goc.ma_so_dn"
+    },
+    {
+      "question_id": "q_i02_hkd_cd_ten_hkd",
+      "group": "Chuyển đổi từ hộ kinh doanh (nếu có)",
+      "text": "Tên hộ kinh doanh được chuyển đổi là gì?",
+      "type": "text",
+      "example": "Hộ kinh doanh An Phát",
+      "version": 1,
+      "when": {
+        "chk_tt_chuyen_doi_tu_hkd": [
+          "X"
+        ]
+      },
+      "data_key": "hkd_cd.ten_hkd"
+    },
+    {
+      "question_id": "q_i02_hkd_ma_so",
+      "group": "Các khai báo khác",
+      "text": "Mã số hộ kinh doanh/mã số thuế của hộ được chuyển đổi?",
+      "type": "text",
+      "example": "0312345678",
+      "version": 1,
+      "data_key": "hkd_ma_so"
+    },
+    {
+      "question_id": "q_i02_hkd_cd_dia_chi",
+      "group": "Chuyển đổi từ hộ kinh doanh (nếu có)",
+      "text": "Địa chỉ trụ sở hộ kinh doanh được chuyển đổi?",
+      "type": "text",
+      "example": "25 Nguyễn Trãi, Phường Bến Thành",
+      "version": 1,
+      "when": {
+        "chk_tt_chuyen_doi_tu_hkd": [
+          "X"
+        ]
+      },
+      "data_key": "hkd_cd.dia_chi"
+    },
+    {
+      "question_id": "q_i02_hkd_cd_ten_chu_ho",
+      "group": "Chuyển đổi từ hộ kinh doanh (nếu có)",
+      "text": "Tên chủ hộ kinh doanh được chuyển đổi?",
+      "type": "text",
+      "example": "Nguyễn Văn A",
+      "version": 1,
+      "when": {
+        "chk_tt_chuyen_doi_tu_hkd": [
+          "X"
+        ]
+      },
+      "data_key": "hkd_cd.ten_chu_ho"
+    },
+    {
+      "question_id": "q_i02_so_giay_to_ca_nhan",
+      "group": "Giấy tờ pháp lý đã cấp",
+      "text": "Số giấy tờ pháp lý của cá nhân theo Giấy chứng nhận đã cấp (nếu có)?",
+      "type": "text",
+      "version": 1,
+      "data_key": "so_giay_to_ca_nhan"
+    },
+    {
+      "question_id": "q_i02_ngay_het_han",
+      "group": "Giấy tờ pháp lý đã cấp",
+      "text": "Giấy tờ pháp lý có ngày hết hạn không? (dd/mm/yyyy, bỏ trống nếu không có)",
+      "type": "date",
+      "version": 1,
+      "data_key": "ngay_het_han"
+    },
+    {
+      "question_id": "q_i02_csbt_ten",
+      "group": "Chuyển đổi từ cơ sở bảo trợ xã hội/quỹ (nếu có)",
+      "text": "Tên cơ sở bảo trợ xã hội/quỹ xã hội/quỹ từ thiện được chuyển đổi?",
+      "type": "text",
+      "version": 1,
+      "when": {
+        "chk_tt_chuyen_doi_tu_csbt": [
+          "X"
+        ]
+      },
+      "data_key": "csbt.ten"
+    },
+    {
+      "question_id": "q_i02_csbt_so_gcn",
+      "group": "Chuyển đổi từ cơ sở bảo trợ xã hội/quỹ (nếu có)",
+      "text": "Số Giấy chứng nhận đăng ký thành lập/Giấy phép thành lập của cơ sở đó?",
+      "type": "text",
+      "version": 1,
+      "when": {
+        "chk_tt_chuyen_doi_tu_csbt": [
+          "X"
+        ]
+      },
+      "data_key": "csbt.so_gcn"
+    },
+    {
+      "question_id": "q_i02_csbt_ngay_cap",
+      "group": "Chuyển đổi từ cơ sở bảo trợ xã hội/quỹ (nếu có)",
+      "text": "Giấy đó được cấp ngày nào? (dd/mm/yyyy)",
+      "type": "date",
+      "version": 1,
+      "when": {
+        "chk_tt_chuyen_doi_tu_csbt": [
+          "X"
+        ]
+      },
+      "data_key": "csbt.ngay_cap"
+    },
+    {
+      "question_id": "q_i02_csbt_ma_so_thue",
+      "group": "Chuyển đổi từ cơ sở bảo trợ xã hội/quỹ (nếu có)",
+      "text": "Mã số thuế của cơ sở đó (10 số, nếu có)?",
+      "type": "text",
+      "version": 1,
+      "when": {
+        "chk_tt_chuyen_doi_tu_csbt": [
+          "X"
+        ]
+      },
+      "data_key": "csbt.ma_so_thue"
+    },
+    {
+      "question_id": "q_i02_csbt_dia_chi",
+      "group": "Chuyển đổi từ cơ sở bảo trợ xã hội/quỹ (nếu có)",
+      "text": "Địa chỉ trụ sở chính của cơ sở đó?",
+      "type": "text",
+      "version": 1,
+      "when": {
+        "chk_tt_chuyen_doi_tu_csbt": [
+          "X"
+        ]
+      },
+      "data_key": "csbt.dia_chi"
+    },
+    {
+      "question_id": "q_i02_csbt_ten_nguoi_dai_dien",
+      "group": "Chuyển đổi từ cơ sở bảo trợ xã hội/quỹ (nếu có)",
+      "text": "Tên người đại diện của cơ sở đó?",
+      "type": "text",
+      "version": 1,
+      "when": {
+        "chk_tt_chuyen_doi_tu_csbt": [
+          "X"
+        ]
+      },
+      "data_key": "csbt.ten_nguoi_dai_dien"
+    },
+    {
+      "question_id": "q_i02_gp_ucsn_so",
+      "group": "Dự án đầu tư / giấy phép (nếu có)",
+      "text": "Giấy phép thành lập và hoạt động số?",
+      "type": "text",
+      "version": 1,
+      "when": {
+        "chk_ctck": [
+          "X"
+        ]
+      },
+      "data_key": "gp_ucsn_so"
+    },
+    {
+      "question_id": "q_i02_dn_ten_tieng_viet",
+      "group": "Về tên doanh nghiệp",
+      "text": "Tên doanh nghiệp (bạn ghi thường, app tự in hoa)?",
+      "type": "text",
+      "example": "Công ty TNHH An Phát",
+      "required": true,
+      "version": 1,
+      "data_key": "dn.ten_tieng_viet"
+    },
+    {
+      "question_id": "q_i02_dn_ten_nuoc_ngoai",
+      "group": "Về tên doanh nghiệp",
+      "text": "Tên doanh nghiệp viết bằng tiếng nước ngoài (nếu có)?",
+      "type": "text",
+      "version": 1,
+      "data_key": "dn.ten_nuoc_ngoai"
+    },
+    {
+      "question_id": "q_i02_dn_ten_viet_tat",
+      "group": "Về tên doanh nghiệp",
+      "text": "Tên doanh nghiệp viết tắt (nếu có)?",
+      "type": "text",
+      "version": 1,
+      "data_key": "dn.ten_viet_tat"
+    },
+    {
+      "question_id": "q_i02_dien_thoai_khac",
+      "group": "Số liên hệ",
+      "text": "Số điện thoại khác (nếu có)?",
+      "type": "tel",
+      "version": 1,
+      "data_key": "dien_thoai_khac"
+    },
+    {
+      "question_id": "q_i02_fax",
+      "group": "Số liên hệ",
+      "text": "Số fax (nếu có)?",
+      "type": "text",
+      "version": 1,
+      "data_key": "fax"
+    },
+    {
+      "question_id": "q_i02_email_tru_so",
+      "group": "Số liên hệ",
+      "text": "Email liên hệ (nếu có)?",
+      "type": "email",
+      "version": 1,
+      "data_key": "email_tru_so"
+    },
+    {
+      "question_id": "q_i02_website",
+      "group": "Số liên hệ",
+      "text": "Website (nếu có)?",
+      "type": "text",
+      "version": 1,
+      "data_key": "website"
+    },
+    {
+      "question_id": "q_i02_ho_ten_in_hoa",
+      "group": "Các khai báo khác",
+      "text": "Họ và tên của bạn là gì? (bạn ghi thường, app tự in hoa)",
+      "type": "text",
+      "example": "Nguyễn Văn A",
+      "required": true,
+      "version": 1,
+      "data_key": "ho_ten_in_hoa"
+    },
+    {
+      "question_id": "q_i02_dien_thoai_lien_he",
+      "group": "Số liên hệ",
+      "text": "Số điện thoại liên hệ (nếu có)?",
+      "type": "tel",
+      "example": "0901234567",
+      "version": 1,
+      "data_key": "dien_thoai_lien_he"
+    },
+    {
+      "question_id": "q_i02_ma_so_du_an",
+      "group": "Dự án đầu tư / giấy phép (nếu có)",
+      "text": "Mã số dự án đầu tư (nếu có)?",
+      "type": "text",
+      "version": 1,
+      "data_key": "ma_so_du_an"
+    },
+    {
+      "question_id": "q_i02_co_quan_cap",
+      "group": "Dự án đầu tư / giấy phép (nếu có)",
+      "text": "Mã số dự án do cơ quan nào cấp?",
+      "type": "text",
+      "version": 1,
+      "data_key": "co_quan_cap"
+    },
+    {
+      "question_id": "q_i02_to_chuc_ten",
+      "group": "Chủ sở hữu/thành viên là tổ chức (nếu có)",
+      "text": "Nếu chủ sở hữu là TỔ CHỨC: tên tổ chức là gì? (ghi thường, app tự in hoa)",
+      "type": "text",
+      "example": "Công ty CP Đầu tư ABC",
+      "version": 1,
+      "data_key": "to_chuc.ten"
+    },
+    {
+      "question_id": "q_i02_dn_ma_so_dn",
+      "group": "Thông tin doanh nghiệp",
+      "text": "Mã số doanh nghiệp/Số Quyết định thành lập của tổ chức chủ sở hữu?",
+      "type": "text",
+      "example": "0312345678",
+      "version": 1,
+      "data_key": "dn.ma_so_dn"
+    },
+    {
+      "question_id": "q_i02_von_dieu_le",
+      "group": "Vốn",
+      "text": "Vốn điều lệ là bao nhiêu? (VNĐ, ghi bằng số)",
+      "type": "money",
+      "example": "5.000.000.000",
+      "version": 1,
+      "data_key": "von_dieu_le"
+    },
+    {
+      "question_id": "q_i02_von_dieu_le_chu",
+      "group": "Vốn",
+      "text": "Vốn điều lệ viết bằng chữ?",
+      "type": "text",
+      "example": "Năm tỷ đồng",
+      "version": 1,
+      "data_key": "von_dieu_le_chu"
+    },
+    {
+      "question_id": "q_i02_nguon_von_dieu_le_von_khac_so_tien_vnd_va_tuong_duong",
+      "group": "Nguồn vốn điều lệ",
+      "text": "Vốn khác — số tiền (VNĐ, nếu có)?",
+      "type": "money",
+      "version": 1,
+      "data_key": "nguon_von_dieu_le.von_khac.so_tien_vnd_va_tuong_duong"
+    },
+    {
+      "question_id": "q_i02_nguon_von_dieu_le_von_ngan_sach_nha_nuoc_so_tien_vnd_va_tuon",
+      "group": "Nguồn vốn điều lệ",
+      "text": "Vốn ngân sách nhà nước — số tiền (VNĐ, nếu có)?",
+      "type": "money",
+      "version": 1,
+      "data_key": "nguon_von_dieu_le.von_ngan_sach_nha_nuoc.so_tien_vnd_va_tuong_duong"
+    },
+    {
+      "question_id": "q_i02_nguon_von_dieu_le_von_nuoc_ngoai_so_tien_vnd_va_tuong_duong",
+      "group": "Nguồn vốn điều lệ",
+      "text": "Vốn đầu tư nước ngoài — số tiền (VNĐ, nếu có)?",
+      "type": "money",
+      "version": 1,
+      "data_key": "nguon_von_dieu_le.von_nuoc_ngoai.so_tien_vnd_va_tuong_duong"
+    },
+    {
+      "question_id": "q_i02_nguon_von_dieu_le_von_tu_nhan_so_tien_vnd_va_tuong_duong",
+      "group": "Nguồn vốn điều lệ",
+      "text": "Vốn tư nhân trong nước — số tiền (VNĐ, nếu có)?",
+      "type": "money",
+      "version": 1,
+      "data_key": "nguon_von_dieu_le.von_tu_nhan.so_tien_vnd_va_tuong_duong"
+    },
+    {
+      "question_id": "q_i02_nguon_von_dieu_le_von_khac_ty_le",
+      "group": "Nguồn vốn điều lệ",
+      "text": "Vốn khác — chiếm tỷ lệ (%)?",
+      "type": "text",
+      "version": 1,
+      "data_key": "nguon_von_dieu_le.von_khac.ty_le"
+    },
+    {
+      "question_id": "q_i02_nguon_von_dieu_le_von_ngan_sach_nha_nuoc_ty_le",
+      "group": "Nguồn vốn điều lệ",
+      "text": "Vốn ngân sách nhà nước — chiếm tỷ lệ (%)?",
+      "type": "text",
+      "version": 1,
+      "data_key": "nguon_von_dieu_le.von_ngan_sach_nha_nuoc.ty_le"
+    },
+    {
+      "question_id": "q_i02_nguon_von_dieu_le_von_nuoc_ngoai_ty_le",
+      "group": "Nguồn vốn điều lệ",
+      "text": "Vốn đầu tư nước ngoài — chiếm tỷ lệ (%)?",
+      "type": "text",
+      "version": 1,
+      "data_key": "nguon_von_dieu_le.von_nuoc_ngoai.ty_le"
+    },
+    {
+      "question_id": "q_i02_nguon_von_dieu_le_von_tu_nhan_ty_le",
+      "group": "Nguồn vốn điều lệ",
+      "text": "Vốn tư nhân trong nước — chiếm tỷ lệ (%)?",
+      "type": "text",
+      "version": 1,
+      "data_key": "nguon_von_dieu_le.von_tu_nhan.ty_le"
+    },
+    {
+      "question_id": "q_i02_co_cau_tai_san_gop_von_dieu_le_dong_viet_nam_chi_tiet_ngoai_",
+      "group": "Cơ cấu tài sản góp vốn điều lệ",
+      "text": "Tiền Việt Nam — chi tiết bằng ngoại tệ (loại ngoại tệ, nếu có)?",
+      "type": "text",
+      "version": 1,
+      "data_key": "co_cau_tai_san_gop_von_dieu_le.dong_viet_nam.chi_tiet_ngoai_te_tai_san_khac"
+    },
+    {
+      "question_id": "q_i02_co_cau_tai_san_gop_von_dieu_le_ngoai_te_tu_do_chuyen_doi_chi",
+      "group": "Cơ cấu tài sản góp vốn điều lệ",
+      "text": "Ngoại tệ tự do chuyển đổi — chi tiết bằng ngoại tệ (loại ngoại tệ, nếu có)?",
+      "type": "text",
+      "version": 1,
+      "data_key": "co_cau_tai_san_gop_von_dieu_le.ngoai_te_tu_do_chuyen_doi.chi_tiet_ngoai_te_tai_san_khac"
+    },
+    {
+      "question_id": "q_i02_co_cau_tai_san_gop_von_dieu_le_quyen_so_huu_tri_tue_chi_tiet",
+      "group": "Cơ cấu tài sản góp vốn điều lệ",
+      "text": "Quyền sở hữu trí tuệ — chi tiết bằng ngoại tệ (loại ngoại tệ, nếu có)?",
+      "type": "text",
+      "version": 1,
+      "data_key": "co_cau_tai_san_gop_von_dieu_le.quyen_so_huu_tri_tue.chi_tiet_ngoai_te_tai_san_khac"
+    },
+    {
+      "question_id": "q_i02_co_cau_tai_san_gop_von_dieu_le_quyen_su_dung_dat_chi_tiet_ng",
+      "group": "Cơ cấu tài sản góp vốn điều lệ",
+      "text": "Quyền sử dụng đất — chi tiết bằng ngoại tệ (loại ngoại tệ, nếu có)?",
+      "type": "text",
+      "version": 1,
+      "data_key": "co_cau_tai_san_gop_von_dieu_le.quyen_su_dung_dat.chi_tiet_ngoai_te_tai_san_khac"
+    },
+    {
+      "question_id": "q_i02_co_cau_tai_san_gop_von_dieu_le_tai_san_khac_chi_tiet_ngoai_t",
+      "group": "Cơ cấu tài sản góp vốn điều lệ",
+      "text": "Tài sản khác — chi tiết bằng ngoại tệ (loại ngoại tệ, nếu có)?",
+      "type": "text",
+      "version": 1,
+      "data_key": "co_cau_tai_san_gop_von_dieu_le.tai_san_khac.chi_tiet_ngoai_te_tai_san_khac"
+    },
+    {
+      "question_id": "q_i02_co_cau_tai_san_gop_von_dieu_le_vang_chi_tiet_ngoai_te_tai_sa",
+      "group": "Cơ cấu tài sản góp vốn điều lệ",
+      "text": "Vàng — chi tiết bằng ngoại tệ (loại ngoại tệ, nếu có)?",
+      "type": "text",
+      "version": 1,
+      "data_key": "co_cau_tai_san_gop_von_dieu_le.vang.chi_tiet_ngoai_te_tai_san_khac"
+    },
+    {
+      "question_id": "q_i02_co_cau_tai_san_gop_von_dieu_le_dong_viet_nam_gia_tri_vnd",
+      "group": "Cơ cấu tài sản góp vốn điều lệ",
+      "text": "Tiền Việt Nam — giá trị bao nhiêu (VNĐ, nếu có)?",
+      "type": "money",
+      "version": 1,
+      "data_key": "co_cau_tai_san_gop_von_dieu_le.dong_viet_nam.gia_tri_vnd"
+    },
+    {
+      "question_id": "q_i02_co_cau_tai_san_gop_von_dieu_le_ngoai_te_tu_do_chuyen_doi_gia",
+      "group": "Cơ cấu tài sản góp vốn điều lệ",
+      "text": "Ngoại tệ tự do chuyển đổi — giá trị bao nhiêu (VNĐ, nếu có)?",
+      "type": "money",
+      "version": 1,
+      "data_key": "co_cau_tai_san_gop_von_dieu_le.ngoai_te_tu_do_chuyen_doi.gia_tri_vnd"
+    },
+    {
+      "question_id": "q_i02_co_cau_tai_san_gop_von_dieu_le_quyen_so_huu_tri_tue_gia_tri_",
+      "group": "Cơ cấu tài sản góp vốn điều lệ",
+      "text": "Quyền sở hữu trí tuệ — giá trị bao nhiêu (VNĐ, nếu có)?",
+      "type": "money",
+      "version": 1,
+      "data_key": "co_cau_tai_san_gop_von_dieu_le.quyen_so_huu_tri_tue.gia_tri_vnd"
+    },
+    {
+      "question_id": "q_i02_co_cau_tai_san_gop_von_dieu_le_quyen_su_dung_dat_gia_tri_vnd",
+      "group": "Cơ cấu tài sản góp vốn điều lệ",
+      "text": "Quyền sử dụng đất — giá trị bao nhiêu (VNĐ, nếu có)?",
+      "type": "money",
+      "version": 1,
+      "data_key": "co_cau_tai_san_gop_von_dieu_le.quyen_su_dung_dat.gia_tri_vnd"
+    },
+    {
+      "question_id": "q_i02_co_cau_tai_san_gop_von_dieu_le_tai_san_khac_gia_tri_vnd",
+      "group": "Cơ cấu tài sản góp vốn điều lệ",
+      "text": "Tài sản khác — giá trị bao nhiêu (VNĐ, nếu có)?",
+      "type": "money",
+      "version": 1,
+      "data_key": "co_cau_tai_san_gop_von_dieu_le.tai_san_khac.gia_tri_vnd"
+    },
+    {
+      "question_id": "q_i02_co_cau_tai_san_gop_von_dieu_le_vang_gia_tri_vnd",
+      "group": "Cơ cấu tài sản góp vốn điều lệ",
+      "text": "Vàng — giá trị bao nhiêu (VNĐ, nếu có)?",
+      "type": "money",
+      "version": 1,
+      "data_key": "co_cau_tai_san_gop_von_dieu_le.vang.gia_tri_vnd"
+    },
+    {
+      "question_id": "q_i02_co_cau_tai_san_gop_von_dieu_le_dong_viet_nam_ty_le",
+      "group": "Cơ cấu tài sản góp vốn điều lệ",
+      "text": "Tiền Việt Nam — chiếm tỷ lệ (%)?",
+      "type": "text",
+      "version": 1,
+      "data_key": "co_cau_tai_san_gop_von_dieu_le.dong_viet_nam.ty_le"
+    },
+    {
+      "question_id": "q_i02_co_cau_tai_san_gop_von_dieu_le_ngoai_te_tu_do_chuyen_doi_ty_",
+      "group": "Cơ cấu tài sản góp vốn điều lệ",
+      "text": "Ngoại tệ tự do chuyển đổi — chiếm tỷ lệ (%)?",
+      "type": "text",
+      "version": 1,
+      "data_key": "co_cau_tai_san_gop_von_dieu_le.ngoai_te_tu_do_chuyen_doi.ty_le"
+    },
+    {
+      "question_id": "q_i02_co_cau_tai_san_gop_von_dieu_le_quyen_so_huu_tri_tue_ty_le",
+      "group": "Cơ cấu tài sản góp vốn điều lệ",
+      "text": "Quyền sở hữu trí tuệ — chiếm tỷ lệ (%)?",
+      "type": "text",
+      "version": 1,
+      "data_key": "co_cau_tai_san_gop_von_dieu_le.quyen_so_huu_tri_tue.ty_le"
+    },
+    {
+      "question_id": "q_i02_co_cau_tai_san_gop_von_dieu_le_quyen_su_dung_dat_ty_le",
+      "group": "Cơ cấu tài sản góp vốn điều lệ",
+      "text": "Quyền sử dụng đất — chiếm tỷ lệ (%)?",
+      "type": "text",
+      "version": 1,
+      "data_key": "co_cau_tai_san_gop_von_dieu_le.quyen_su_dung_dat.ty_le"
+    },
+    {
+      "question_id": "q_i02_co_cau_tai_san_gop_von_dieu_le_tai_san_khac_ty_le",
+      "group": "Cơ cấu tài sản góp vốn điều lệ",
+      "text": "Tài sản khác — chiếm tỷ lệ (%)?",
+      "type": "text",
+      "version": 1,
+      "data_key": "co_cau_tai_san_gop_von_dieu_le.tai_san_khac.ty_le"
+    },
+    {
+      "question_id": "q_i02_co_cau_tai_san_gop_von_dieu_le_vang_ty_le",
+      "group": "Cơ cấu tài sản góp vốn điều lệ",
+      "text": "Vàng — chiếm tỷ lệ (%)?",
+      "type": "text",
+      "version": 1,
+      "data_key": "co_cau_tai_san_gop_von_dieu_le.vang.ty_le"
+    },
+    {
+      "question_id": "q_i02_ndd_ho_ten",
+      "group": "Người đại diện theo pháp luật",
+      "text": "Họ và tên người đại diện theo pháp luật? (bạn ghi thường, app tự in hoa)",
+      "type": "text",
+      "example": "Nguyễn Văn C",
+      "version": 1,
+      "data_key": "ndd.ho_ten"
+    },
+    {
+      "question_id": "q_i02_ndd_gioi_tinh",
+      "group": "Người đại diện theo pháp luật",
+      "text": "Giới tính?",
+      "type": "select",
+      "options": [
+        {
+          "value": "Nam",
+          "label": "Nam"
+        },
+        {
+          "value": "Nữ",
+          "label": "Nữ"
+        }
+      ],
+      "version": 1,
+      "data_key": "ndd.gioi_tinh"
+    },
+    {
+      "question_id": "q_i02_ndd_so_cccd",
+      "group": "Người đại diện theo pháp luật",
+      "text": "Số định danh cá nhân của người đại diện đang đăng ký?",
+      "type": "text",
+      "example": "079085001234",
+      "version": 1,
+      "data_key": "ndd.so_cccd"
+    },
+    {
+      "question_id": "q_i02_ndd_chuc_vu",
+      "group": "Người đại diện theo pháp luật",
+      "text": "Chức danh của người đại diện (Chủ tịch HĐTV, Chủ tịch công ty…)?",
+      "type": "text",
+      "example": "Chủ tịch công ty",
+      "version": 1,
+      "data_key": "ndd.chuc_vu"
+    },
+    {
+      "question_id": "q_i02_gd_ho_ten",
+      "group": "Giám đốc/Tổng giám đốc",
+      "text": "Giám đốc/Tổng giám đốc — họ và tên? (ghi thường, app tự in hoa)",
+      "type": "text",
+      "example": "Nguyễn Văn D",
+      "version": 1,
+      "data_key": "gd.ho_ten"
+    },
+    {
+      "question_id": "q_i02_gd_gioi_tinh",
+      "group": "Giám đốc/Tổng giám đốc",
+      "text": "Giám đốc/Tổng giám đốc — giới tính?",
+      "type": "select",
+      "options": [
+        {
+          "value": "Nam",
+          "label": "Nam"
+        },
+        {
+          "value": "Nữ",
+          "label": "Nữ"
+        }
+      ],
+      "version": 1,
+      "data_key": "gd.gioi_tinh"
+    },
+    {
+      "question_id": "q_i02_gd_so_cccd",
+      "group": "Giám đốc/Tổng giám đốc",
+      "text": "Giám đốc/Tổng giám đốc — số định danh cá nhân?",
+      "type": "text",
+      "example": "079085009999",
+      "version": 1,
+      "data_key": "gd.so_cccd"
+    },
+    {
+      "question_id": "q_i02_gd_dien_thoai",
+      "group": "Giám đốc/Tổng giám đốc",
+      "text": "Giám đốc/Tổng giám đốc — số điện thoại (nếu có)?",
+      "type": "tel",
+      "example": "0901234567",
+      "version": 1,
+      "data_key": "gd.dien_thoai"
+    },
+    {
+      "question_id": "q_i02_kt_ho_ten",
+      "group": "Kế toán trưởng/người phụ trách kế toán",
+      "text": "Kế toán trưởng/người phụ trách kế toán — họ và tên? (nếu chưa có, bỏ trống)",
+      "type": "text",
+      "version": 1,
+      "data_key": "kt.ho_ten"
+    },
+    {
+      "question_id": "q_i02_kt_gioi_tinh",
+      "group": "Kế toán trưởng/người phụ trách kế toán",
+      "text": "Kế toán trưởng — giới tính?",
+      "type": "select",
+      "options": [
+        {
+          "value": "Nam",
+          "label": "Nam"
+        },
+        {
+          "value": "Nữ",
+          "label": "Nữ"
+        }
+      ],
+      "version": 1,
+      "data_key": "kt.gioi_tinh"
+    },
+    {
+      "question_id": "q_i02_kt_so_cccd",
+      "group": "Kế toán trưởng/người phụ trách kế toán",
+      "text": "Kế toán trưởng — số định danh cá nhân?",
+      "type": "text",
+      "version": 1,
+      "data_key": "kt.so_cccd"
+    },
+    {
+      "question_id": "q_i02_kt_dien_thoai",
+      "group": "Kế toán trưởng/người phụ trách kế toán",
+      "text": "Kế toán trưởng — số điện thoại (nếu có)?",
+      "type": "tel",
+      "version": 1,
+      "data_key": "kt.dien_thoai"
+    },
+    {
+      "question_id": "q_i02_ap_dung_tu",
+      "group": "Bảo hiểm xã hội (phương thức đóng)",
+      "text": "Mức đóng bảo hiểm xã hội áp dụng từ ngày nào? (dd/mm/yyyy, nếu có)",
+      "type": "date",
+      "version": 1,
+      "data_key": "ap_dung_tu"
+    },
+    {
+      "question_id": "q_i02_so_lao_dong",
+      "group": "Bắt đầu hoạt động và lao động",
+      "text": "Dự kiến dùng bao nhiêu lao động?",
+      "type": "integer",
+      "example": "10",
+      "version": 1,
+      "data_key": "so_lao_dong"
+    },
+    {
+      "question_id": "q_i02_chk_tt_thanh_lap_moi",
+      "group": "Trường hợp thành lập doanh nghiệp",
+      "text": "Bạn có thuộc/không — đánh X vào ô: tt thanh lap moi?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "tt thanh lap moi"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_tt_thanh_lap_moi"
+    },
+    {
+      "question_id": "q_i02_chk_tt_tach_dn",
+      "group": "Trường hợp thành lập doanh nghiệp",
+      "text": "Bạn có thuộc/không — đánh X vào ô: tt tach dn?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "tt tach dn"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_tt_tach_dn"
+    },
+    {
+      "question_id": "q_i02_chk_tt_chia_dn",
+      "group": "Trường hợp thành lập doanh nghiệp",
+      "text": "Bạn có thuộc/không — đánh X vào ô: tt chia dn?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "tt chia dn"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_tt_chia_dn"
+    },
+    {
+      "question_id": "q_i02_chk_tt_hop_nhat_dn",
+      "group": "Trường hợp thành lập doanh nghiệp",
+      "text": "Bạn có thuộc/không — đánh X vào ô: tt hop nhat dn?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "tt hop nhat dn"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_tt_hop_nhat_dn"
+    },
+    {
+      "question_id": "q_i02_chk_tt_chuyen_doi_loai_hinh",
+      "group": "Trường hợp thành lập doanh nghiệp",
+      "text": "Bạn có thuộc/không — đánh X vào ô: tt chuyen doi loai hinh?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "tt chuyen doi loai hinh"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_tt_chuyen_doi_loai_hinh"
+    },
+    {
+      "question_id": "q_i02_chk_tt_chuyen_doi_tu_hkd",
+      "group": "Trường hợp thành lập doanh nghiệp",
+      "text": "Bạn có thuộc/không — đánh X vào ô: tt chuyen doi tu hkd?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "tt chuyen doi tu hkd"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_tt_chuyen_doi_tu_hkd"
+    },
+    {
+      "question_id": "q_i02_chk_tt_chuyen_doi_tu_csbt",
+      "group": "Trường hợp thành lập doanh nghiệp",
+      "text": "Bạn có thuộc/không — đánh X vào ô: tt chuyen doi tu csbt?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "tt chuyen doi tu csbt"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_tt_chuyen_doi_tu_csbt"
+    },
+    {
+      "question_id": "q_i02_chk_gt_cmnd",
+      "group": "Loại giấy tờ pháp lý của cá nhân",
+      "text": "Bạn có thuộc/không — đánh X vào ô: gt cmnd?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "gt cmnd"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_gt_cmnd"
+    },
+    {
+      "question_id": "q_i02_chk_gt_cccd",
+      "group": "Loại giấy tờ pháp lý của cá nhân",
+      "text": "Bạn có thuộc/không — đánh X vào ô: gt cccd?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "gt cccd"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_gt_cccd"
+    },
+    {
+      "question_id": "q_i02_chk_gt_ho_chieu",
+      "group": "Loại giấy tờ pháp lý của cá nhân",
+      "text": "Bạn có thuộc/không — đánh X vào ô: gt ho chieu?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "gt ho chieu"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_gt_ho_chieu"
+    },
+    {
+      "question_id": "q_i02_chk_gt_loai_khac",
+      "group": "Loại giấy tờ pháp lý của cá nhân",
+      "text": "Bạn có thuộc/không — đánh X vào ô: gt loai khac?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "gt loai khac"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_gt_loai_khac"
+    },
+    {
+      "question_id": "q_i02_chk_dau_tu_dac_biet",
+      "group": "Các khai báo khác",
+      "text": "Bạn có thuộc/không — đánh X vào ô: dau tu dac biet?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "dau tu dac biet"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_dau_tu_dac_biet"
+    },
+    {
+      "question_id": "q_i02_chk_dn_xa_hoi",
+      "group": "Các khai báo khác",
+      "text": "Bạn có thuộc/không — đánh X vào ô: dn xa hoi?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "dn xa hoi"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_dn_xa_hoi"
+    },
+    {
+      "question_id": "q_i02_chk_ctck",
+      "group": "Các khai báo khác",
+      "text": "Bạn có thuộc/không — đánh X vào ô: ctck?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "ctck"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_ctck"
+    },
+    {
+      "question_id": "q_i02_chk_khu_cong_nghiep",
+      "group": "Vị trí đặt trụ sở/địa điểm",
+      "text": "Bạn có thuộc/không — đánh X vào ô: khu cong nghiep?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "khu cong nghiep"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_khu_cong_nghiep"
+    },
+    {
+      "question_id": "q_i02_chk_khu_che_xuat",
+      "group": "Vị trí đặt trụ sở/địa điểm",
+      "text": "Bạn có thuộc/không — đánh X vào ô: khu che xuat?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "khu che xuat"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_khu_che_xuat"
+    },
+    {
+      "question_id": "q_i02_chk_khu_kinh_te",
+      "group": "Vị trí đặt trụ sở/địa điểm",
+      "text": "Bạn có thuộc/không — đánh X vào ô: khu kinh te?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "khu kinh te"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_khu_kinh_te"
+    },
+    {
+      "question_id": "q_i02_chk_khu_cong_nghe_cao",
+      "group": "Vị trí đặt trụ sở/địa điểm",
+      "text": "Bạn có thuộc/không — đánh X vào ô: khu cong nghe cao?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "khu cong nghe cao"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_khu_cong_nghe_cao"
+    },
+    {
+      "question_id": "q_i02_chk_auto_co",
+      "group": "Các khai báo khác",
+      "text": "Bạn có thuộc/không — đánh X vào ô: Có (có GCN quyền sử dụng đất tại đảo/xã phường biên giới)?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "Có (có GCN quyền sử dụng đất tại đảo/xã phường biên giới)"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_auto_co"
+    },
+    {
+      "question_id": "q_i02_chk_auto_khong",
+      "group": "Các khai báo khác",
+      "text": "Bạn có thuộc/không — đánh X vào ô: Không (không có GCN quyền sử dụng đất tại đảo/xã phường biên giới)?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "Không (không có GCN quyền sử dụng đất tại đảo/xã phường biên giới)"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_auto_khong"
+    },
+    {
+      "question_id": "q_i02_chk_auto_hoi_dong_thanh_vien_giam_doc_hoac_tong_g",
+      "group": "Các khai báo khác",
+      "text": "Bạn có thuộc/không — đánh X vào ô: auto hoi dong thanh vien giam doc hoac tong g?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "auto hoi dong thanh vien giam doc hoac tong g"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_auto_hoi_dong_thanh_vien_giam_doc_hoac_tong_g"
+    },
+    {
+      "question_id": "q_i02_chk_auto_chu_tich_cong_ty_giam_doc_hoac_tong_giam",
+      "group": "Các khai báo khác",
+      "text": "Bạn có thuộc/không — đánh X vào ô: auto chu tich cong ty giam doc hoac tong giam?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "auto chu tich cong ty giam doc hoac tong giam"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_auto_chu_tich_cong_ty_giam_doc_hoac_tong_giam"
+    },
+    {
+      "question_id": "q_i02_chk_auto_co_2",
+      "group": "Các khai báo khác",
+      "text": "Bạn có thuộc/không — đánh X vào ô: Có hiển thị giá trị tương đương ngoại tệ trên GCN?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "Có hiển thị giá trị tương đương ngoại tệ trên GCN"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_auto_co_2"
+    },
+    {
+      "question_id": "q_i02_chk_auto_khong_2",
+      "group": "Các khai báo khác",
+      "text": "Bạn có thuộc/không — đánh X vào ô: Không hiển thị giá trị tương đương ngoại tệ trên GCN?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "Không hiển thị giá trị tương đương ngoại tệ trên GCN"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_auto_khong_2"
+    },
+    {
+      "question_id": "q_i02_chk_ht_doc_lap",
+      "group": "Chế độ kế toán và báo cáo tài chính",
+      "text": "Bạn có thuộc/không — đánh X vào ô: ht doc lap?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "ht doc lap"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_ht_doc_lap"
+    },
+    {
+      "question_id": "q_i02_chk_ht_hop_nhat",
+      "group": "Chế độ kế toán và báo cáo tài chính",
+      "text": "Bạn có thuộc/không — đánh X vào ô: ht hop nhat?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "ht hop nhat"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_ht_hop_nhat"
+    },
+    {
+      "question_id": "q_i02_chk_ht_phu_thuoc",
+      "group": "Chế độ kế toán và báo cáo tài chính",
+      "text": "Bạn có thuộc/không — đánh X vào ô: ht phu thuoc?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "ht phu thuoc"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_ht_phu_thuoc"
+    },
+    {
+      "question_id": "q_i02_chk_co",
+      "group": "Các khai báo khác",
+      "text": "Bạn có thuộc/không — đánh X vào ô: Có?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "Có"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_co"
+    },
+    {
+      "question_id": "q_i02_chk_khong",
+      "group": "Các khai báo khác",
+      "text": "Bạn có thuộc/không — đánh X vào ô: Không?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "Không"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_khong"
+    },
+    {
+      "question_id": "q_i02_chk_gtgt_khoan_tru",
+      "group": "Thuế giá trị gia tăng",
+      "text": "Bạn có thuộc/không — đánh X vào ô: gtgt khoan tru?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "gtgt khoan tru"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_gtgt_khoan_tru"
+    },
+    {
+      "question_id": "q_i02_chk_gtgt_truc_tiep_tren_gtgt",
+      "group": "Thuế giá trị gia tăng",
+      "text": "Bạn có thuộc/không — đánh X vào ô: gtgt truc tiep tren gtgt?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "gtgt truc tiep tren gtgt"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_gtgt_truc_tiep_tren_gtgt"
+    },
+    {
+      "question_id": "q_i02_chk_gtgt_truc_tiep_doanh_so",
+      "group": "Thuế giá trị gia tăng",
+      "text": "Bạn có thuộc/không — đánh X vào ô: gtgt truc tiep doanh so?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "gtgt truc tiep doanh so"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_gtgt_truc_tiep_doanh_so"
+    },
+    {
+      "question_id": "q_i02_chk_gtgt_khong_phai_nop",
+      "group": "Thuế giá trị gia tăng",
+      "text": "Bạn có thuộc/không — đánh X vào ô: gtgt khong phai nop?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "gtgt khong phai nop"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_gtgt_khong_phai_nop"
+    },
+    {
+      "question_id": "q_i02_chk_bc_hang_thang",
+      "group": "Bảo hiểm xã hội (phương thức đóng)",
+      "text": "Bạn có thuộc/không — đánh X vào ô: bc hang thang?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "bc hang thang"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_bc_hang_thang"
+    },
+    {
+      "question_id": "q_i02_chk_bc_03_thang",
+      "group": "Bảo hiểm xã hội (phương thức đóng)",
+      "text": "Bạn có thuộc/không — đánh X vào ô: bc 03 thang?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "bc 03 thang"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_bc_03_thang"
+    },
+    {
+      "question_id": "q_i02_chk_bc_06_thang",
+      "group": "Bảo hiểm xã hội (phương thức đóng)",
+      "text": "Bạn có thuộc/không — đánh X vào ô: bc 06 thang?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "bc 06 thang"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_bc_06_thang"
+    },
+    {
+      "question_id": "q_i02_ngay_sinh",
+      "group": "Các khai báo khác",
+      "text": "Bạn — ngày, tháng, năm sinh? (dd/mm/yyyy)",
+      "type": "date",
+      "example": "05/12/1985",
+      "version": 1,
+      "data_key": [
+        {
+          "key": "ngay_sinh",
+          "transform": "date_day"
+        },
+        {
+          "key": "thang_sinh",
+          "transform": "date_month"
+        },
+        {
+          "key": "nam_sinh",
+          "transform": "date_year"
+        }
+      ]
+    },
+    {
+      "question_id": "q_i02_ngay_bd",
+      "group": "Bắt đầu hoạt động và lao động",
+      "text": "Doanh nghiệp dự kiến bắt đầu hoạt động từ ngày nào? (dd/mm/yyyy)",
+      "type": "date",
+      "example": "01/10/2026",
+      "version": 1,
+      "data_key": [
+        {
+          "key": "ngay_bd",
+          "transform": "date_day"
+        },
+        {
+          "key": "thang_bd",
+          "transform": "date_month"
+        },
+        {
+          "key": "nam_bd",
+          "transform": "date_year"
+        }
+      ]
+    },
+    {
+      "question_id": "q_i02_gd_ngay_sinh",
+      "group": "Giám đốc/Tổng giám đốc",
+      "text": "Giám đốc/Tổng giám đốc — ngày, tháng, năm sinh? (dd/mm/yyyy)",
+      "type": "date",
+      "example": "05/12/1985",
+      "version": 1,
+      "data_key": [
+        {
+          "key": "gd.ngay_sinh",
+          "transform": "date_day"
+        },
+        {
+          "key": "gd.thang_sinh",
+          "transform": "date_month"
+        },
+        {
+          "key": "gd.nam_sinh",
+          "transform": "date_year"
+        }
+      ]
+    },
+    {
+      "question_id": "q_i02_kt_ngay_sinh",
+      "group": "Kế toán trưởng/người phụ trách kế toán",
+      "text": "Kế toán trưởng — ngày, tháng, năm sinh? (dd/mm/yyyy)",
+      "type": "date",
+      "example": "05/12/1985",
+      "version": 1,
+      "data_key": [
+        {
+          "key": "kt.ngay_sinh",
+          "transform": "date_day"
+        },
+        {
+          "key": "kt.thang_sinh",
+          "transform": "date_month"
+        },
+        {
+          "key": "kt.nam_sinh",
+          "transform": "date_year"
+        }
+      ]
+    },
+    {
+      "question_id": "q_i02_ndd_ngay_sinh",
+      "group": "Người đại diện theo pháp luật",
+      "text": "Người đại diện theo pháp luật — ngày, tháng, năm sinh? (dd/mm/yyyy)",
+      "type": "date",
+      "example": "05/12/1985",
+      "version": 1,
+      "data_key": [
+        {
+          "key": "ndd.ngay_sinh",
+          "transform": "date_day"
+        },
+        {
+          "key": "ndd.thang_sinh",
+          "transform": "date_month"
+        },
+        {
+          "key": "ndd.nam_sinh",
+          "transform": "date_year"
+        }
+      ]
+    },
+    {
+      "question_id": "q_i02_ds_nganh_ma_nganh",
+      "group": "Ngành, nghề kinh doanh",
+      "text": "Mã ngành (app tra VSIC giúp — không cần điền)?",
+      "type": "text",
+      "repeatable": true,
+      "row_group": "ds_nganh",
+      "version": 1,
+      "data_key": "ds_nganh.ma_nganh",
+      "autofill": "vsic"
+    },
+    {
+      "question_id": "q_i02_ds_nganh_ten_nganh",
+      "group": "Ngành, nghề kinh doanh",
+      "text": "Tên ngành, nghề kinh doanh?",
+      "type": "text",
+      "repeatable": true,
+      "row_group": "ds_nganh",
+      "version": 1,
+      "data_key": "ds_nganh.ten_nganh",
+      "example": "Bán lẻ hàng điện tử",
+      "required": true
+    },
+    {
+      "question_id": "q_i02_ds_nganh_chi_tiet",
+      "group": "Ngành, nghề kinh doanh",
+      "text": "Chi tiết hoạt động ngành?",
+      "type": "text",
+      "repeatable": true,
+      "row_group": "ds_nganh",
+      "version": 1,
+      "data_key": "ds_nganh.chi_tiet"
+    },
+    {
+      "question_id": "q_i02_ds_nganh_la_nganh_chinh",
+      "group": "Ngành, nghề kinh doanh",
+      "text": "Đây có phải ngành nghề chính không? (đánh X vào đúng một dòng)?",
+      "type": "mark",
+      "repeatable": true,
+      "row_group": "ds_nganh",
+      "version": 1,
+      "data_key": "ds_nganh.la_nganh_chinh",
+      "options": [
+        {
+          "value": "X",
+          "label": "X"
+        }
+      ]
+    },
+    {
+      "question_id": "q_i02_ds_nddpl_uy_quyen_chu_so_huu_ten_nguoi_dai_dien",
+      "group": "Người đại diện được ủy quyền của chủ sở hữu tổ chức (nếu có)",
+      "text": "Tên người đại diện?",
+      "type": "text",
+      "repeatable": true,
+      "row_group": "ds_nddpl_uy_quyen_chu_so_huu",
+      "version": 1,
+      "data_key": "ds_nddpl_uy_quyen_chu_so_huu.ten_nguoi_dai_dien"
+    },
+    {
+      "question_id": "q_i02_ds_nddpl_uy_quyen_chu_so_huu_ngay_sinh",
+      "group": "Người đại diện được ủy quyền của chủ sở hữu tổ chức (nếu có)",
+      "text": "Ngày, tháng, năm sinh? (dd/mm/yyyy)?",
+      "type": "date",
+      "repeatable": true,
+      "row_group": "ds_nddpl_uy_quyen_chu_so_huu",
+      "version": 1,
+      "data_key": "ds_nddpl_uy_quyen_chu_so_huu.ngay_sinh",
+      "example": "05/12/1985"
+    },
+    {
+      "question_id": "q_i02_ds_nddpl_uy_quyen_chu_so_huu_gioi_tinh",
+      "group": "Người đại diện được ủy quyền của chủ sở hữu tổ chức (nếu có)",
+      "text": "Giới tính?",
+      "type": "select",
+      "repeatable": true,
+      "row_group": "ds_nddpl_uy_quyen_chu_so_huu",
+      "version": 1,
+      "data_key": "ds_nddpl_uy_quyen_chu_so_huu.gioi_tinh",
+      "options": [
+        {
+          "value": "Nam",
+          "label": "Nam"
+        },
+        {
+          "value": "Nữ",
+          "label": "Nữ"
+        }
+      ]
+    },
+    {
+      "question_id": "q_i02_ds_nddpl_uy_quyen_chu_so_huu_giay_to_so",
+      "group": "Người đại diện được ủy quyền của chủ sở hữu tổ chức (nếu có)",
+      "text": "Số giấy tờ pháp lý?",
+      "type": "text",
+      "repeatable": true,
+      "row_group": "ds_nddpl_uy_quyen_chu_so_huu",
+      "version": 1,
+      "data_key": "ds_nddpl_uy_quyen_chu_so_huu.giay_to_so"
+    },
+    {
+      "question_id": "q_i02_ds_nddpl_uy_quyen_chu_so_huu_giay_to_ngay",
+      "group": "Người đại diện được ủy quyền của chủ sở hữu tổ chức (nếu có)",
+      "text": "Giấy tờ cấp ngày nào? (dd/mm/yyyy)?",
+      "type": "date",
+      "repeatable": true,
+      "row_group": "ds_nddpl_uy_quyen_chu_so_huu",
+      "version": 1,
+      "data_key": "ds_nddpl_uy_quyen_chu_so_huu.giay_to_ngay"
+    },
+    {
+      "question_id": "q_i02_ds_nddpl_uy_quyen_chu_so_huu_giay_to_co_quan",
+      "group": "Người đại diện được ủy quyền của chủ sở hữu tổ chức (nếu có)",
+      "text": "Giấy tờ do cơ quan nào cấp?",
+      "type": "text",
+      "repeatable": true,
+      "row_group": "ds_nddpl_uy_quyen_chu_so_huu",
+      "version": 1,
+      "data_key": "ds_nddpl_uy_quyen_chu_so_huu.giay_to_co_quan"
+    },
+    {
+      "question_id": "q_i02_ds_nddpl_uy_quyen_chu_so_huu_quoc_tich",
+      "group": "Người đại diện được ủy quyền của chủ sở hữu tổ chức (nếu có)",
+      "text": "Quốc tịch?",
+      "type": "text",
+      "repeatable": true,
+      "row_group": "ds_nddpl_uy_quyen_chu_so_huu",
+      "version": 1,
+      "data_key": "ds_nddpl_uy_quyen_chu_so_huu.quoc_tich",
+      "example": "Việt Nam"
+    },
+    {
+      "question_id": "q_i02_ds_nddpl_uy_quyen_chu_so_huu_dan_toc",
+      "group": "Người đại diện được ủy quyền của chủ sở hữu tổ chức (nếu có)",
+      "text": "Dân tộc?",
+      "type": "text",
+      "repeatable": true,
+      "row_group": "ds_nddpl_uy_quyen_chu_so_huu",
+      "version": 1,
+      "data_key": "ds_nddpl_uy_quyen_chu_so_huu.dan_toc",
+      "example": "Kinh"
+    },
+    {
+      "question_id": "q_i02_ds_nddpl_uy_quyen_chu_so_huu_dia_chi",
+      "group": "Người đại diện được ủy quyền của chủ sở hữu tổ chức (nếu có)",
+      "text": "Địa chỉ liên lạc?",
+      "type": "text",
+      "repeatable": true,
+      "row_group": "ds_nddpl_uy_quyen_chu_so_huu",
+      "version": 1,
+      "data_key": "ds_nddpl_uy_quyen_chu_so_huu.dia_chi",
+      "example": "25 Nguyễn Trãi"
+    },
+    {
+      "question_id": "q_i02_ds_nddpl_uy_quyen_chu_so_huu_von_duoc_uy_quyen_vnd",
+      "group": "Người đại diện được ủy quyền của chủ sở hữu tổ chức (nếu có)",
+      "text": "Phần vốn được ủy quyền (VNĐ)?",
+      "type": "money",
+      "repeatable": true,
+      "row_group": "ds_nddpl_uy_quyen_chu_so_huu",
+      "version": 1,
+      "data_key": "ds_nddpl_uy_quyen_chu_so_huu.von_duoc_uy_quyen_vnd"
+    },
+    {
+      "question_id": "q_i02_ds_nddpl_uy_quyen_chu_so_huu_ty_le",
+      "group": "Người đại diện được ủy quyền của chủ sở hữu tổ chức (nếu có)",
+      "text": "Tỷ lệ (%)?",
+      "type": "text",
+      "repeatable": true,
+      "row_group": "ds_nddpl_uy_quyen_chu_so_huu",
+      "version": 1,
+      "data_key": "ds_nddpl_uy_quyen_chu_so_huu.ty_le",
+      "example": "40"
+    },
+    {
+      "question_id": "q_i02_ds_nddpl_uy_quyen_chu_so_huu_ghi_chu",
+      "group": "Người đại diện được ủy quyền của chủ sở hữu tổ chức (nếu có)",
+      "text": "Ghi chú thêm (nếu có)?",
+      "type": "text",
+      "repeatable": true,
+      "row_group": "ds_nddpl_uy_quyen_chu_so_huu",
+      "version": 1,
+      "data_key": "ds_nddpl_uy_quyen_chu_so_huu.ghi_chu"
+    }
+  ]
+}

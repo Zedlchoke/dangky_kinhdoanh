@@ -24,12 +24,139 @@
       "ten_mau": "Thông báo về việc chấm dứt hoạt động chi nhánh/văn phòng đại diện/địa điểm kinh doanh",
       "bat_buoc": true,
       "ghi_chu": "Thông báo về việc chấm dứt hoạt động chi nhánh/VPĐĐ/địa điểm kinh doanh",
-      "questionnaire_version": null,
-      "cluster": null,
+      "questionnaire_version": 1,
+      "cluster": "cn_vpdd",
       "title": "Thông báo về việc chấm dứt hoạt động chi nhánh/văn phòng đại diện/địa điểm kinh doanh",
-      "content_review": "pending",
-      "questions": []
+      "content_review": "owner_delegated_2026-09-10",
+      "questions": [
+        {
+          "question_id": "q_i28_dn_ten_tieng_viet",
+          "group": "Về tên doanh nghiệp",
+          "text": "Tên doanh nghiệp (bạn ghi thường, app tự in hoa)?",
+          "type": "text",
+          "example": "Công ty TNHH An Phát",
+          "required": true,
+          "version": 1,
+          "data_key": "dn.ten_tieng_viet"
+        },
+        {
+          "question_id": "q_i28_dn_ma_so_dn",
+          "group": "Thông tin doanh nghiệp",
+          "text": "Mã số doanh nghiệp/mã số thuế của doanh nghiệp?",
+          "type": "text",
+          "example": "0312345678",
+          "required": true,
+          "version": 1,
+          "data_key": "dn.ma_so_dn"
+        },
+        {
+          "question_id": "q_i28_so_gcn_dkkd",
+          "group": "Giấy chứng nhận hiện có",
+          "text": "Số Giấy chứng nhận đăng ký kinh doanh (chỉ kê khai nếu chưa có mã số doanh nghiệp)?",
+          "type": "text",
+          "version": 1,
+          "data_key": "so_gcn_dkkd"
+        },
+        {
+          "question_id": "q_i28_ngay_cap",
+          "group": "Giấy tờ pháp lý đã cấp",
+          "text": "Giấy chứng nhận đăng ký kinh doanh được cấp ngày nào? (dd/mm/yyyy)",
+          "type": "date",
+          "version": 1,
+          "data_key": "ngay_cap"
+        },
+        {
+          "question_id": "q_i28_cn_ten_tieng_viet",
+          "group": "Về chi nhánh/văn phòng đại diện/địa điểm kinh doanh",
+          "text": "Tên chi nhánh/văn phòng đại diện/địa điểm kinh doanh? (ghi thường, app tự in hoa)",
+          "type": "text",
+          "example": "Chi nhánh Quận 1",
+          "required": true,
+          "version": 1,
+          "data_key": "cn.ten_tieng_viet"
+        },
+        {
+          "question_id": "q_i28_cn_ma_so",
+          "group": "Về chi nhánh/văn phòng đại diện/địa điểm kinh doanh",
+          "text": "Mã số chi nhánh/mã số thuế của chi nhánh (nếu đã cấp)?",
+          "type": "text",
+          "required": true,
+          "version": 1,
+          "data_key": "cn.ma_so"
+        },
+        {
+          "question_id": "q_i28_dia_chi_chi_tiet",
+          "group": "Về trụ sở chính",
+          "text": "Địa chỉ trụ sở chính ở đâu? (số nhà/phòng, ngách/hẻm, ngõ/kiệt, đường/phố, tổ/xóm/ấp/thôn)",
+          "type": "text",
+          "example": "25 Nguyễn Trãi, Phường Bến Thành",
+          "required": true,
+          "version": 1,
+          "data_key": "dia_chi_chi_tiet"
+        },
+        {
+          "question_id": "q_i28_xa_phuong",
+          "group": "Về trụ sở chính",
+          "text": "Trụ sở ở xã/phường/đặc khu nào?",
+          "type": "text",
+          "example": "Phường Bến Thành",
+          "required": true,
+          "version": 1,
+          "data_key": "xa_phuong"
+        },
+        {
+          "question_id": "q_i28_tinh_thanh",
+          "group": "Về trụ sở chính",
+          "text": "Trụ sở ở tỉnh/thành phố nào?",
+          "type": "text",
+          "example": "TP. Hồ Chí Minh",
+          "required": true,
+          "version": 1,
+          "data_key": "tinh_thanh"
+        },
+        {
+          "question_id": "q_i28_dien_thoai_lien_he",
+          "group": "Số liên hệ",
+          "text": "Số điện thoại liên hệ (nếu có)?",
+          "type": "tel",
+          "example": "0901234567",
+          "version": 1,
+          "data_key": "dien_thoai_lien_he"
+        },
+        {
+          "question_id": "q_i28_fax",
+          "group": "Số liên hệ",
+          "text": "Số fax (nếu có)?",
+          "type": "text",
+          "version": 1,
+          "data_key": "fax"
+        },
+        {
+          "question_id": "q_i28_email_tru_so",
+          "group": "Số liên hệ",
+          "text": "Email liên hệ (nếu có)?",
+          "type": "email",
+          "version": 1,
+          "data_key": "email_tru_so"
+        },
+        {
+          "question_id": "q_i28_website",
+          "group": "Số liên hệ",
+          "text": "Website (nếu có)?",
+          "type": "text",
+          "version": 1,
+          "data_key": "website"
+        },
+        {
+          "question_id": "q_i28_cn_dia_chi",
+          "group": "Về chi nhánh/văn phòng đại diện/địa điểm kinh doanh",
+          "text": "Địa chỉ chi nhánh?",
+          "type": "text",
+          "version": 1,
+          "data_key": "cn.dia_chi"
+        }
+      ]
     }
   ],
-  "manifest_hash": "e933624dc9638d549df0b9d2c9b93e868350a03792262576bd15e4c1233bf09a"
+  "manifest_hash": "10bf130110201e62f06d10f07f937c41123f3de94cc1c9d98b6e329adf59cc6b"
 }

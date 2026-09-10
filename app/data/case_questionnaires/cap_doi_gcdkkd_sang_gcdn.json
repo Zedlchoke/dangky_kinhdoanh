@@ -20,12 +20,72 @@
       "ten_mau": "Giấy đề nghị cấp đổi sang Giấy chứng nhận đăng ký doanh nghiệp đối với doanh nghiệp được cấp Giấy chứng nhận đăng ký kinh doanh hoặc Giấy chứng nhận đăng ký kinh doanh và đăng ký thuế",
       "bat_buoc": true,
       "ghi_chu": "Giấy đề nghị cấp đổi sang GCDN đối với DN được cấp GCN đăng ký kinh doanh",
-      "questionnaire_version": null,
-      "cluster": null,
+      "questionnaire_version": 1,
+      "cluster": "cap_doi_cn",
       "title": "Giấy đề nghị cấp đổi sang Giấy chứng nhận đăng ký doanh nghiệp đối với doanh nghiệp được cấp Giấy chứng nhận đăng ký kinh doanh hoặc Giấy chứng nhận đăng ký kinh doanh và đăng ký thuế",
-      "content_review": "pending",
-      "questions": []
+      "content_review": "owner_delegated_2026-09-10",
+      "questions": [
+        {
+          "question_id": "q_i21_dn_ten_tieng_viet",
+          "group": "Về tên doanh nghiệp",
+          "text": "Tên doanh nghiệp (bạn ghi thường, app tự in hoa)?",
+          "type": "text",
+          "example": "Công ty TNHH An Phát",
+          "required": true,
+          "version": 1,
+          "data_key": "dn.ten_tieng_viet"
+        },
+        {
+          "question_id": "q_i21_dn_ma_so_dn",
+          "group": "Thông tin doanh nghiệp",
+          "text": "Mã số doanh nghiệp/mã số thuế của doanh nghiệp?",
+          "type": "text",
+          "example": "0312345678",
+          "required": true,
+          "version": 1,
+          "data_key": "dn.ma_so_dn"
+        },
+        {
+          "question_id": "q_i21_ds_nganh_ten_nganh",
+          "group": "Ngành, nghề kinh doanh",
+          "text": "Tên ngành, nghề kinh doanh?",
+          "type": "text",
+          "repeatable": true,
+          "row_group": "ds_nganh",
+          "version": 1,
+          "data_key": "ds_nganh.ten_nganh",
+          "example": "Bán lẻ hàng điện tử",
+          "required": true
+        },
+        {
+          "question_id": "q_i21_ds_nganh_ma_nganh",
+          "group": "Ngành, nghề kinh doanh",
+          "text": "Mã ngành (app tra VSIC giúp — không cần điền)?",
+          "type": "text",
+          "repeatable": true,
+          "row_group": "ds_nganh",
+          "version": 1,
+          "data_key": "ds_nganh.ma_nganh",
+          "autofill": "vsic"
+        },
+        {
+          "question_id": "q_i21_ds_nganh_la_nganh_chinh",
+          "group": "Ngành, nghề kinh doanh",
+          "text": "Đây có phải ngành nghề chính không? (đánh X vào đúng một dòng)?",
+          "type": "mark",
+          "repeatable": true,
+          "row_group": "ds_nganh",
+          "version": 1,
+          "data_key": "ds_nganh.la_nganh_chinh",
+          "options": [
+            {
+              "value": "X",
+              "label": "X"
+            }
+          ]
+        }
+      ]
     }
   ],
-  "manifest_hash": "532c671d458dc4d138c3b630f5d32a98d67da735c3ae496721ec31957397af9e"
+  "manifest_hash": "fcfe29c7723362261d436cb158002972c21e1c15d75b31b5cb00319a5878fc58"
 }

@@ -1,0 +1,282 @@
+{
+  "doc_id": "PLI_M13",
+  "title": "Giấy đề nghị đăng ký thay đổi người đại diện theo pháp luật",
+  "questionnaire_version": 1,
+  "cluster": "dn_thay_doi",
+  "content_note": "Nội dung sinh bởi tools.build_form_questionnaires theo ủy quyền owner owner_delegated_2026-09-10 (owner_delegated_2026-09-10)",
+  "questions": [
+    {
+      "question_id": "q_i13_dn_ten_tieng_viet",
+      "group": "Về tên doanh nghiệp",
+      "text": "Tên doanh nghiệp (bạn ghi thường, app tự in hoa)?",
+      "type": "text",
+      "example": "Công ty TNHH An Phát",
+      "required": true,
+      "version": 1,
+      "data_key": "dn.ten_tieng_viet"
+    },
+    {
+      "question_id": "q_i13_dn_ma_so_dn",
+      "group": "Thông tin doanh nghiệp",
+      "text": "Mã số doanh nghiệp/mã số thuế của doanh nghiệp?",
+      "type": "text",
+      "example": "0312345678",
+      "required": true,
+      "version": 1,
+      "data_key": "dn.ma_so_dn"
+    },
+    {
+      "question_id": "q_i13_ndd_so_cccd",
+      "group": "Người đại diện theo pháp luật",
+      "text": "Số định danh cá nhân của người đại diện đang đăng ký?",
+      "type": "text",
+      "example": "079085001234",
+      "version": 1,
+      "data_key": "ndd.so_cccd"
+    },
+    {
+      "question_id": "q_i13_ndd_ho_ten",
+      "group": "Người đại diện theo pháp luật",
+      "text": "Người đại diện theo pháp luật MỚI là ai — họ và tên? (bạn ghi thường, app tự in hoa)",
+      "type": "text",
+      "example": "Nguyễn Văn C",
+      "required": true,
+      "version": 1,
+      "data_key": "ndd.ho_ten"
+    },
+    {
+      "question_id": "q_i13_ndd_gioi_tinh",
+      "group": "Người đại diện theo pháp luật",
+      "text": "Giới tính?",
+      "type": "select",
+      "options": [
+        {
+          "value": "Nam",
+          "label": "Nam"
+        },
+        {
+          "value": "Nữ",
+          "label": "Nữ"
+        }
+      ],
+      "version": 1,
+      "data_key": "ndd.gioi_tinh"
+    },
+    {
+      "question_id": "q_i13_ndd_chuc_vu",
+      "group": "Người đại diện theo pháp luật",
+      "text": "Chức danh của người đại diện (Chủ tịch HĐTV, Chủ tịch công ty…)?",
+      "type": "text",
+      "example": "Chủ tịch công ty",
+      "version": 1,
+      "data_key": "ndd.chuc_vu"
+    },
+    {
+      "question_id": "q_i13_dia_chi_chi_tiet",
+      "group": "Về trụ sở chính",
+      "text": "Địa chỉ trụ sở chính ở đâu? (số nhà/phòng, ngách/hẻm, ngõ/kiệt, đường/phố, tổ/xóm/ấp/thôn)",
+      "type": "text",
+      "example": "25 Nguyễn Trãi, Phường Bến Thành",
+      "required": true,
+      "version": 1,
+      "data_key": "dia_chi_chi_tiet"
+    },
+    {
+      "question_id": "q_i13_xa_phuong",
+      "group": "Về trụ sở chính",
+      "text": "Trụ sở ở xã/phường/đặc khu nào?",
+      "type": "text",
+      "example": "Phường Bến Thành",
+      "required": true,
+      "version": 1,
+      "data_key": "xa_phuong"
+    },
+    {
+      "question_id": "q_i13_tinh_thanh",
+      "group": "Về trụ sở chính",
+      "text": "Trụ sở ở tỉnh/thành phố nào?",
+      "type": "text",
+      "example": "TP. Hồ Chí Minh",
+      "required": true,
+      "version": 1,
+      "data_key": "tinh_thanh"
+    },
+    {
+      "question_id": "q_i13_quoc_gia",
+      "group": "Các khai báo khác",
+      "text": "Quốc gia (nếu khác Việt Nam)?",
+      "type": "text",
+      "version": 1,
+      "data_key": "quoc_gia"
+    },
+    {
+      "question_id": "q_i13_dien_thoai_lien_he",
+      "group": "Số liên hệ",
+      "text": "Số điện thoại liên hệ (nếu có)?",
+      "type": "tel",
+      "example": "0901234567",
+      "version": 1,
+      "data_key": "dien_thoai_lien_he"
+    },
+    {
+      "question_id": "q_i13_email_tru_so",
+      "group": "Số liên hệ",
+      "text": "Email liên hệ (nếu có)?",
+      "type": "email",
+      "version": 1,
+      "data_key": "email_tru_so"
+    },
+    {
+      "question_id": "q_i13_chu_hkd_dan_toc",
+      "group": "Về người khai hồ sơ",
+      "text": "Dân tộc của bạn?",
+      "type": "text",
+      "example": "Kinh",
+      "version": 1,
+      "data_key": "chu_hkd.dan_toc"
+    },
+    {
+      "question_id": "q_i13_chu_hkd_quoc_tich",
+      "group": "Về người khai hồ sơ",
+      "text": "Quốc tịch của bạn?",
+      "type": "text",
+      "example": "Việt Nam",
+      "version": 1,
+      "data_key": "chu_hkd.quoc_tich"
+    },
+    {
+      "question_id": "q_i13_chu_hkd_so_cccd",
+      "group": "Về người khai hồ sơ",
+      "text": "Số giấy tờ pháp lý của bạn (số định danh cá nhân / hộ chiếu)?",
+      "type": "text",
+      "example": "079085001234",
+      "version": 1,
+      "data_key": "chu_hkd.so_cccd"
+    },
+    {
+      "question_id": "q_i13_ngay_cap",
+      "group": "Giấy tờ pháp lý đã cấp",
+      "text": "Giấy tờ pháp lý của bạn được cấp ngày nào? (dd/mm/yyyy)",
+      "type": "date",
+      "example": "10/01/2021",
+      "version": 1,
+      "data_key": "ngay_cap"
+    },
+    {
+      "question_id": "q_i13_noi_cap",
+      "group": "Giấy tờ pháp lý đã cấp",
+      "text": "Giấy tờ pháp lý của bạn do nơi nào cấp?",
+      "type": "text",
+      "example": "Cục Trưởng Cục CSCĐ",
+      "version": 1,
+      "data_key": "noi_cap"
+    },
+    {
+      "question_id": "q_i13_ndd_ngay_sinh",
+      "group": "Người đại diện theo pháp luật",
+      "text": "Người đại diện theo pháp luật — ngày, tháng, năm sinh? (dd/mm/yyyy)",
+      "type": "date",
+      "example": "05/12/1985",
+      "version": 1,
+      "data_key": [
+        {
+          "key": "ndd.ngay_sinh",
+          "transform": "date_day"
+        },
+        {
+          "key": "ndd.thang_sinh",
+          "transform": "date_month"
+        },
+        {
+          "key": "ndd.nam_sinh",
+          "transform": "date_year"
+        }
+      ]
+    },
+    {
+      "question_id": "q_i13_ds_ndd_pl_sau_thay_doi_ho_ten",
+      "group": "Người đại diện theo pháp luật sau thay đổi",
+      "text": "Họ và tên?",
+      "type": "text",
+      "repeatable": true,
+      "row_group": "ds_ndd_pl_sau_thay_doi",
+      "version": 1,
+      "data_key": "ds_ndd_pl_sau_thay_doi.ho_ten",
+      "example": "Nguyễn Văn A",
+      "required": true
+    },
+    {
+      "question_id": "q_i13_ds_ndd_pl_sau_thay_doi_ngay_sinh",
+      "group": "Người đại diện theo pháp luật sau thay đổi",
+      "text": "Ngày, tháng, năm sinh? (dd/mm/yyyy)?",
+      "type": "date",
+      "repeatable": true,
+      "row_group": "ds_ndd_pl_sau_thay_doi",
+      "version": 1,
+      "data_key": "ds_ndd_pl_sau_thay_doi.ngay_sinh",
+      "example": "05/12/1985"
+    },
+    {
+      "question_id": "q_i13_ds_ndd_pl_sau_thay_doi_gioi_tinh",
+      "group": "Người đại diện theo pháp luật sau thay đổi",
+      "text": "Giới tính?",
+      "type": "select",
+      "repeatable": true,
+      "row_group": "ds_ndd_pl_sau_thay_doi",
+      "version": 1,
+      "data_key": "ds_ndd_pl_sau_thay_doi.gioi_tinh",
+      "options": [
+        {
+          "value": "Nam",
+          "label": "Nam"
+        },
+        {
+          "value": "Nữ",
+          "label": "Nữ"
+        }
+      ]
+    },
+    {
+      "question_id": "q_i13_ds_ndd_pl_sau_thay_doi_so_cccd",
+      "group": "Người đại diện theo pháp luật sau thay đổi",
+      "text": "Số định danh cá nhân/số giấy tờ pháp lý?",
+      "type": "text",
+      "repeatable": true,
+      "row_group": "ds_ndd_pl_sau_thay_doi",
+      "version": 1,
+      "data_key": "ds_ndd_pl_sau_thay_doi.so_cccd",
+      "example": "079085001234"
+    },
+    {
+      "question_id": "q_i13_ds_ndd_pl_sau_thay_doi_chuc_danh",
+      "group": "Người đại diện theo pháp luật sau thay đổi",
+      "text": "Chức danh?",
+      "type": "text",
+      "repeatable": true,
+      "row_group": "ds_ndd_pl_sau_thay_doi",
+      "version": 1,
+      "data_key": "ds_ndd_pl_sau_thay_doi.chuc_danh"
+    },
+    {
+      "question_id": "q_i13_ds_ndd_pl_sau_thay_doi_dia_chi",
+      "group": "Người đại diện theo pháp luật sau thay đổi",
+      "text": "Địa chỉ liên lạc?",
+      "type": "text",
+      "repeatable": true,
+      "row_group": "ds_ndd_pl_sau_thay_doi",
+      "version": 1,
+      "data_key": "ds_ndd_pl_sau_thay_doi.dia_chi",
+      "example": "25 Nguyễn Trãi"
+    },
+    {
+      "question_id": "q_i13_ds_ndd_pl_sau_thay_doi_quoc_gia",
+      "group": "Người đại diện theo pháp luật sau thay đổi",
+      "text": "Quốc gia (nếu khác Việt Nam)?",
+      "type": "text",
+      "repeatable": true,
+      "row_group": "ds_ndd_pl_sau_thay_doi",
+      "version": 1,
+      "data_key": "ds_ndd_pl_sau_thay_doi.quoc_gia"
+    }
+  ]
+}

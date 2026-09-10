@@ -21,6 +21,8 @@ KHÔNG data một phần, draft cũ không bị ghi đè
 [NGC15] gõ đè ô mirror (shared key)                         -> MIRROR_CELL
 [NGC16] file lớn: điền ĐỦ mọi ô điền của workbook (valid)   -> ok=True
 [NGC17] file không phải xlsx                                -> BAD_FILE
+[NGC18] chọn trường hợp oneOf sai (E4, gõ tay ngoài danh sách)
+                                                        -> BAD_SELECT
 
 Mọi case lỗi: `candidate is None` (nguyên tắc nguyên tử) và `errors[]` có
 {cell, question_id} để UI trỏ đúng ô.
@@ -444,9 +446,38 @@ def ngc17():
         assert _codes(res["errors"]) == [BAD_FILE], res["errors"]
 
 
+@check("[NGC18] chọn trường hợp oneOf SAI (gõ tay ngoài danh sách) "
+       "-> BAD_SELECT, candidate None")
+def ngc18():
+    with tempfile.TemporaryDirectory() as tmpd:
+        tmp = Path(tmpd)
+        manifest = _manifest("chuyen_doi_hkd_sang_dn")
+        out, wb = _export(tmp, manifest=manifest)
+        mp = wb[MAP_SHEET]
+        col = _map_col(mp)
+        questions = {q["question_id"]: q for f in manifest["forms"]
+                     for q in f["questions"]}
+        for r in range(4, mp.max_row + 1):
+            qid = mp.cell(r, col["question_id"]).value
+            if qid == "q_oneof_1" and \
+                    mp.cell(r, col["layout"]).value != "mirror":
+                wb[mp.cell(r, col["sheet"]).value][
+                    mp.cell(r, col["cell"]).value] = "mẫu 5 đi"
+                break
+        else:
+            raise AssertionError("không tìm thấy ô selector q_oneof_1")
+        assert "q_oneof_1" in questions  # thuộc case
+        res = import_case_workbook(_save(tmp, wb), manifest)
+        assert res["ok"] is False and res["candidate"] is None, res
+        codes = _codes(res["errors"])
+        assert "BAD_SELECT" in codes, codes
+        sel_err = next(e for e in res["errors"] if e["code"] == "BAD_SELECT")
+        assert sel_err.get("question_id") == "q_oneof_1", sel_err
+
+
 def main() -> int:
     fns = [ngc1, ngc2, ngc3, ngc4, ngc5, ngc6, ngc7, ngc8, ngc9, ngc10,
-           ngc11, ngc12, ngc13, ngc14, ngc15, ngc16, ngc17]
+           ngc11, ngc12, ngc13, ngc14, ngc15, ngc16, ngc17, ngc18]
     for fn in fns:
         fn()
     passed = sum(1 for ok, _ in _results if ok)

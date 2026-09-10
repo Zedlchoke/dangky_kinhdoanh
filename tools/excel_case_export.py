@@ -61,8 +61,10 @@ from tools.questionnaire.schema import DATE_NOTE, EXAMPLE_PREFIX, SELECT_NOTE
 __all__ = [
     "CASE_MAP_VERSION", "COMMON_SHEET", "CONTRACT", "DOCS_SHEET",
     "ExcelCaseExportError", "GUIDE_SHEET", "LISTS_SHEET", "MAP_COLUMNS",
-    "MAP_MARKER", "MAP_SHEET", "sheet_display_name", "workbook_stem",
-    "write_case_workbook",
+    "MAP_MARKER", "MAP_SHEET", "ONEOF_KEY_PREFIX",
+    "OPTIONAL_FORM_KEY_PREFIX", "REVIEW_APPROVED", "REVIEW_DELEGATED",
+    "REVIEW_PENDING", "sheet_display_name", "is_review_approved",
+    "is_selector_question", "workbook_stem", "write_case_workbook",
 ]
 
 # ---------------------------------------------------------------------------
@@ -77,6 +79,34 @@ COMMON_SHEET = "Thông_tin_chung"
 DOCS_SHEET = "Giấy_tờ_cần_gửi"
 MAP_SHEET = "__map"
 LISTS_SHEET = "__lists"
+
+# --- Wave E4: mức content review + câu SELECTOR pseudo-key ------------------
+# (hợp đồng với build_case_questionnaires / excel_case_import — đổi một bên
+# phải đồng bộ bên kia.)
+REVIEW_APPROVED = "approved"
+REVIEW_DELEGATED = "owner_delegated_2026-09-10"
+REVIEW_PENDING = "pending"
+APPROVED_EQUIV = (REVIEW_APPROVED, REVIEW_DELEGATED)
+
+ONEOF_KEY_PREFIX = "oneOf."              # chọn 1 mẫu trong nhóm forms_oneOf
+OPTIONAL_FORM_KEY_PREFIX = "optionalForm."   # tick "có làm mẫu này không?"
+
+
+def is_review_approved(review) -> bool:
+    """`approved` (X1) lẫn `owner_delegated_2026-09-10` (E4/E5) đều ok."""
+    return review in APPROVED_EQUIV
+
+
+def is_selector_question(item: dict) -> bool:
+    """Câu SELECTOR do builder nhúng (data_key `oneOf.*`/`optionalForm.*`):
+    render MỘT lần ở `Thông_tin_chung`, KHÔNG render trên sheet form."""
+    raw = item.get("data_key")
+    keys = [raw] if isinstance(raw, str) else \
+        [t.get("key") for t in raw or []]
+    return any(isinstance(k, str) and
+               (k.startswith(ONEOF_KEY_PREFIX) or
+                k.startswith(OPTIONAL_FORM_KEY_PREFIX))
+               for k in keys)
 
 TITLE_ROW = 1
 META_ROW = 2
@@ -189,22 +219,25 @@ def _validate_manifest(manifest: dict) -> dict:
                 raise ExcelCaseExportError(
                     "MISSING_FIELD", "%s: thiếu %r" % (form.get("form_id"), field))
         review = form["content_review"]
-        if review not in ("approved", "pending"):
+        # approved = owner duyệt nguyên văn (wave X1);
+        # owner_delegated_2026-09-10 = nội dung sinh theo ủy quyền của owner
+        # cùng ngày (wave E4/E5) — hai mức ĐỀU đủ điều kiện phát hành.
+        if review not in APPROVED_EQUIV and review != REVIEW_PENDING:
             raise ExcelCaseExportError(
                 "BAD_REVIEW", "%s: content_review lạ %r" % (form["form_id"], review))
         if not isinstance(form["questions"], list):
             raise ExcelCaseExportError(
                 "BAD_QUESTIONS", "%s: questions phải là list" % form["form_id"])
-        if review == "approved" and not form["questions"]:
+        if review in APPROVED_EQUIV and not form["questions"]:
             raise ExcelCaseExportError(
                 "EMPTY_APPROVED",
                 "%s: approved nhưng questions rỗng — manifest hỏng" % form["form_id"])
-        if review == "pending" and form["questions"]:
+        if review == REVIEW_PENDING and form["questions"]:
             raise ExcelCaseExportError(
                 "PENDING_WITH_QUESTIONS",
                 "%s: pending nhưng có questions — cấm tự sáng tác nội dung"
                 % form["form_id"])
-        if review == "approved":
+        if review in APPROVED_EQUIV:
             approved += 1
         for item in form["questions"]:
             qid = item.get("question_id")
@@ -456,8 +489,10 @@ class _SheetWriter:
                     items: list[dict], color_index: int,
                     canonical_of) -> tuple[list[dict], int]:
         """Bảng = header + REPEAT_ROWS hàng. `canonical_of(item, offset,
-        data_row)` trả địa chỉ canonical cho ô mirror, hoặc None nếu đây là
-        bảng canonical (khách điền tại đây)."""
+        data_row)` trả địa chỉ canonical cho ô mirror, hoặc None nếu ô ĐÓ là
+        canonical (khách điền tại đây) — quyết định theo TỪNG CỘT (wave E4:
+        bảng có thể nửa mirror nửa canonical, vd M02.ds_nganh chỉ 3/4 cột
+        dùng chung với M01–M04)."""
         entries: list[dict] = []
         first_data_row = row + 1
         last_data_row = row + REPEAT_ROWS
@@ -469,7 +504,8 @@ class _SheetWriter:
             head.fill = _fill(GROUP_PALETTE[color_index % len(GROUP_PALETTE)])
             head.alignment = _wrap()
             head.border = _border()
-            mirror = canonical_of is not None
+            mirror = canonical_of is not None and \
+                canonical_of(item, offset, first_data_row) is not None
             for data_row in range(first_data_row, last_data_row + 1):
                 cell = self.ws.cell(row=data_row, column=col)
                 canon = canonical_of(item, offset, data_row) \
@@ -567,7 +603,8 @@ def write_case_workbook(manifest: dict, out_path: "str | Path",
     """
     manifest = _validate_manifest(manifest)
     meta = _validate_meta(meta)
-    approved = [f for f in manifest["forms"] if f["content_review"] == "approved"]
+    approved = [f for f in manifest["forms"] if is_review_approved(
+        f.get("content_review"))]
     shared_q = _shared_analysis(approved)
 
     # ---- dropdown registry: qid select -> cột trên __lists -----------------
@@ -578,6 +615,15 @@ def write_case_workbook(manifest: dict, out_path: "str | Path",
             if item["type"] == "select":
                 lst_cols[item["question_id"]] = next_col
                 next_col += 1
+
+    # ---- câu SELECTOR (oneOf / form tùy chọn) — render 1 lần ở COMMON ------
+    # Lead chốt design E4: câu "Trường hợp hồ sơ của bạn là trường hợp nào?"
+    # (select BẮT BUỘC) đầu sheet Thông_tin_chung; câu mark "Có làm mẫu này
+    # không?" cho form bat_buoc=false ngoài oneOf cũng nằm ở COMMON. Trên
+    # sheet từng form các câu này bị BỎ (is_selector_question).
+    selector_rows: list[tuple[str, dict]] = [
+        (f["form_id"], item) for f in approved
+        for item in f["questions"] if is_selector_question(item)]
 
     wb = Workbook()
     ws_guide = wb.active
@@ -600,12 +646,31 @@ def write_case_workbook(manifest: dict, out_path: "str | Path",
         ws_common, "Thông tin dùng chung cho cả hồ sơ",
         meta_line + (" — Các ô dưới đây dùng chung cho nhiều mẫu, chỉ điền MỘT lần"
                      if any(shared_q.values()) else ""))
+    row = COMMON_BODY_ROW
+    color_index = 0
+
+    # ---- (E4) câu SELECTOR ở đầu Thông_tin_chung ---------------------------
+    if selector_rows:
+        current_group = None
+        for owner_fid, item in selector_rows:
+            if item["group"] != current_group:
+                current_group = item["group"]
+                writer._write_section(row, current_group, color_index,
+                                      COL_DATE_NOTE)
+                color_index += 1
+                row += 1
+            entries, row = writer.write_question(
+                owner_fid, COMMON_SHEET, row, item, None)
+            map_rows.extend(entries)
+            row += 1
+
     shared_questions: list[tuple[str, dict]] = []
     owner_of: dict[str, str] = {}          # question_id -> form chủ canonical
     owned_keys: set[str] = set()
     for form in approved:
         for item in form["questions"]:
-            if not shared_q.get((form["form_id"], item["question_id"])):
+            if not shared_q.get((form["form_id"], item["question_id"])) or \
+                    is_selector_question(item):
                 continue
             # CHỦ canonical = câu ĐẦU TIÊN (theo thứ tự manifest) tuyên bố
             # key shared; các câu sau (kể cả form khác) là mirror trỏ về ô
@@ -618,8 +683,6 @@ def write_case_workbook(manifest: dict, out_path: "str | Path",
     if shared_questions:
         blocks = _plan_blocks([q for _, q in shared_questions])
         common_entries: list[dict] = []
-        row = COMMON_BODY_ROW
-        color_index = 0
         for block in blocks:
             items = block["items"] if block["kind"] == "table" \
                 else [block["item"]]
@@ -660,12 +723,13 @@ def write_case_workbook(manifest: dict, out_path: "str | Path",
             row += 1
         map_rows.extend(common_entries)
     else:
-        note = ws_common.cell(row=COMMON_BODY_ROW, column=COL_LABEL,
-                              value="Case này không có trường dùng chung nào "
-                                    "giữa các mẫu — điền trực tiếp ở sheet "
-                                    "các mẫu bên dưới.")
-        note.font = Font(size=11, italic=True, color=META_FONT_HEX)
-        note.alignment = _wrap()
+        if not selector_rows:
+            note = ws_common.cell(
+                row=row, column=COL_LABEL,
+                value="Case này không có trường dùng chung nào giữa các mẫu "
+                      "— điền trực tiếp ở sheet các mẫu bên dưới.")
+            note.font = Font(size=11, italic=True, color=META_FONT_HEX)
+            note.alignment = _wrap()
     _protect(ws_common, freeze_at="A%d" % COMMON_BODY_ROW)
 
     # ---- Sheet từng form ----------------------------------------------------
@@ -675,7 +739,8 @@ def write_case_workbook(manifest: dict, out_path: "str | Path",
         _write_header_block(ws, str(form.get("title") or form["ten_mau"]),
                             meta_line)
         writer = _SheetWriter(ws, lst_cols)
-        blocks = _plan_blocks(form["questions"])
+        blocks = _plan_blocks([q for q in form["questions"]
+                               if not is_selector_question(q)])
         row = FIRST_BODY_ROW
         current_group = None
         color_index = 0
@@ -708,29 +773,30 @@ def write_case_workbook(manifest: dict, out_path: "str | Path",
                 entries, row_last = writer.write_question(
                     form["form_id"], sheet, row, item, canon)
             else:
-                if shared:
-                    def canonical_of_cell(item, offset, data_row):
-                        key0 = _targets(item)[0]["key"]
-                        c = canonical_of.get(key0)
-                        if not c or not (c.get("cells") or c.get("cell")):
-                            raise ExcelCaseExportError(
-                                "SHARED_MISSING_CANONICAL",
-                                "%s: bảng %s đánh dấu shared nhưng không có ô "
-                                "canonical ở %s" % (form["form_id"],
-                                                    item["question_id"],
-                                                    COMMON_SHEET))
-                        cells = c.get("cells") or []
-                        cell_addr = cells[data_row - (row + 1)] \
-                            if cells else c["cell"]
-                        return {"sheet": c["sheet"], "cell": cell_addr}
+                def canonical_of_cell(item, offset, data_row):
+                    # (E4) quyết định mirror THEO TỪNG CỘT: cột shared có ô
+                    # canonical ở COMMON -> mirror; cột riêng -> None (điền
+                    # tại đây). Cột shared mà thiếu canonical = khung hỏng.
+                    if not shared_q.get((form["form_id"],
+                                         item["question_id"]), False):
+                        return None
+                    key0 = _targets(item)[0]["key"]
+                    c = canonical_of.get(key0)
+                    if not c or not (c.get("cells") or c.get("cell")):
+                        raise ExcelCaseExportError(
+                            "SHARED_MISSING_CANONICAL",
+                            "%s: câu %s đánh dấu shared nhưng không có ô "
+                            "canonical ở %s" % (form["form_id"],
+                                                item["question_id"],
+                                                COMMON_SHEET))
+                    cells = c.get("cells") or []
+                    cell_addr = cells[data_row - (row + 1)] \
+                        if cells else c["cell"]
+                    return {"sheet": c["sheet"], "cell": cell_addr}
 
-                    entries, row_last = writer.write_table(
-                        form["form_id"], sheet, row, items, color_index - 1,
-                        canonical_of_cell)
-                else:
-                    entries, row_last = writer.write_table(
-                        form["form_id"], sheet, row, items, color_index - 1,
-                        None)
+                entries, row_last = writer.write_table(
+                    form["form_id"], sheet, row, items, color_index - 1,
+                    canonical_of_cell)
             row = row_last + 1
             map_rows.extend(entries)
             row += 1
@@ -756,56 +822,97 @@ def write_case_workbook(manifest: dict, out_path: "str | Path",
     return path
 
 
+DOCS_SOURCE_LINE = ("Nguồn: Nghị định 168/2025/NĐ-CP, TT 121/2026/TT-BTC — "
+                    "watermark pháp lý")
+
+DOCS_DO_NOT_EDIT = ("Sheet này chỉ là CHECKLIST để bạn đối chiếu — không "
+                    "phần nào của sheet này được app đọc lại khi nạp phiếu.")
+
+
 def _write_docs_sheet(ws, manifest: dict) -> None:
-    """Sheet giấy tờ — FAIL-SAFE: `ho_so_bao_gom` chưa DECIDED (P4 review gate)
-    nên KHÔNG BAO GIỜ in danh mục như đã duyệt: luôn watermark + nhãn
-    "chờ duyệt", kèm nguồn pháp lý để đối chiếu."""
-    big = ws.cell(row=1, column=1,
-                  value="⚠ DANH MỤC GIẤY TỜ CHỜ DUYỆT — CHƯA ĐƯỢC LEGAL/PRODUCT "
-                        "DUYỆT. KHÔNG dùng làm checklist chính thức.")
-    big.font = Font(bold=True, size=13, color="C00000")
-    big.alignment = _wrap("center")
+    """Sheet giấy tờ — wave E4 (owner chốt 2026-09-10): in DANH MỤC THẬT từ
+    manifest `giay_to_kem` thành checklist có ô tick X, cuối sheet in
+    `co_so_phap_ly` + dòng phiên bản nguồn pháp lý. Không còn khối
+    "CHỜ DUYỆT" (ho_so_bao_gom đã DECIDED — docs/p4_excel_review_gate.md
+    được gỡ gate bởi owner 2026-09-10)."""
+    big = ws.cell(row=1, column=1, value="GIẤY TỜ CẦN CHUẨN BỊ NỘP KÈM")
+    big.font = Font(bold=True, size=14, color="1F3864")
+    big.alignment = Alignment(vertical="center", horizontal="left")
     ws.merge_cells(start_row=1, start_column=1, end_row=1, end_column=6)
-    ws.row_dimensions[1].height = 34
-    for col in range(1, 7):
-        ws.cell(row=1, column=col).fill = _fill("FCE4D6")
+    ws.row_dimensions[1].height = 26
 
-    row = 3
-    cell = ws.cell(row=row, column=1,
-                   value="Phiếu này CHỈ thu thập thông tin. Danh mục giấy tờ "
-                         "nộp kèm sẽ được cập nhật sau khi chủ hồ sơ duyệt.")
-    cell.font = Font(size=11, italic=True, color=META_FONT_HEX)
+    cell = ws.cell(row=2, column=1, value=(
+        "Đánh dấu X vào ô thứ nhất cho từng giấy tờ BẠN ĐÃ CÓ SẴN. "
+        + DOCS_DO_NOT_EDIT))
+    cell.font = Font(size=10, italic=True, color=META_FONT_HEX)
     cell.alignment = _wrap()
-    ws.merge_cells(start_row=row, start_column=1, end_row=row, end_column=6)
-    row += 2
+    ws.merge_cells(start_row=2, start_column=1, end_row=2, end_column=6)
 
-    refs = manifest.get("co_so_phap_ly") or []
-    cell = ws.cell(row=row, column=1,
-                   value="Cơ sở pháp lý (bản hiện hành): " +
-                         ("; ".join(str(r) for r in refs) if refs
-                          else "(manifest không ghi)"))
-    cell.font = Font(size=10, color=GUIDE_FONT_HEX)
-    cell.alignment = _wrap()
-    ws.merge_cells(start_row=row, start_column=1, end_row=row, end_column=6)
-    row += 2
+    row = 4
+    head = ws.cell(row=row, column=1, value="Đã có?")
+    head.font = Font(bold=True, size=11, color="1F3864")
+    head.fill = _fill(GRAY_HEX)
+    head.border = _border()
+    head.alignment = _wrap()
+    label = ws.cell(row=row, column=2, value="Giấy tờ nộp kèm hồ sơ")
+    label.font = Font(bold=True, size=11, color="1F3864")
+    label.fill = _fill(GRAY_HEX)
+    label.border = _border()
+    label.alignment = _wrap()
+    ws.merge_cells(start_row=row, start_column=2, end_row=row, end_column=6)
+    row += 1
 
     items = manifest.get("giay_to_kem") or []
-    head = ws.cell(row=row, column=1,
-                   value="Danh mục giấy tờ (THAM KHẢO — CHƯA DUYỆT):")
-    head.font = Font(bold=True, size=11, color="C00000")
-    row += 1
     for item in items:
-        cell = ws.cell(row=row, column=1)
-        _set_text(cell, "[chưa duyệt] %s" % item)
-        cell.font = Font(size=10, italic=True, color=GUIDE_FONT_HEX)
-        cell.alignment = _wrap()
-        ws.merge_cells(start_row=row, start_column=1, end_row=row,
+        tick = ws.cell(row=row, column=1)
+        tick.fill = _fill(GOLD_HEX)
+        tick.border = _border()
+        tick.alignment = Alignment(horizontal="center", vertical="center")
+        tick.number_format = "@"
+        tick.protection = Protection(locked=False)
+        dv = DataValidation(type="list", formula1='"%s"' % MARK_VALUE,
+                            allow_blank=True, showErrorMessage=True)
+        ws.add_data_validation(dv)
+        dv.add(tick.coordinate)
+        text = ws.cell(row=row, column=2)
+        _set_text(text, str(item))
+        text.font = Font(size=11)
+        text.alignment = _wrap()
+        ws.merge_cells(start_row=row, start_column=2, end_row=row,
                        end_column=6)
         row += 1
     if not items:
         cell = ws.cell(row=row, column=1,
-                       value="(case này chưa khai danh mục giấy tờ)")
+                       value="(Hồ sơ này không khai danh mục giấy tờ nộp "
+                             "kèm riêng — xem Lưu ý ở sheet Hướng_dẫn.)")
+        cell.font = Font(size=11, italic=True, color=META_FONT_HEX)
+        cell.alignment = _wrap()
+        ws.merge_cells(start_row=row, start_column=1, end_row=row,
+                       end_column=6)
+        row += 2
+
+    row += 1
+    cell = ws.cell(row=row, column=1, value="Cơ sở pháp lý (bản hiện hành):")
+    cell.font = Font(bold=True, size=11, color="1F3864")
+    row += 1
+    for ref in manifest.get("co_so_phap_ly") or []:
+        cell = ws.cell(row=row, column=1)
+        _set_text(cell, "• %s" % ref)
+        cell.font = Font(size=10, color=GUIDE_FONT_HEX)
+        cell.alignment = _wrap()
+        ws.merge_cells(start_row=row, start_column=1, end_row=row,
+                       end_column=6)
+        row += 1
+    if not (manifest.get("co_so_phap_ly") or []):
+        cell = ws.cell(row=row, column=1,
+                       value="(manifest không ghi cơ sở pháp lý)")
         cell.font = Font(size=10, italic=True, color=META_FONT_HEX)
+        row += 1
+    row += 1
+    cell = ws.cell(row=row, column=1, value=DOCS_SOURCE_LINE)
+    cell.font = Font(size=10, italic=True, color=META_FONT_HEX)
+    cell.alignment = _wrap()
+    ws.merge_cells(start_row=row, start_column=1, end_row=row, end_column=6)
     for col_letter, width in COLUMN_WIDTHS.items():
         ws.column_dimensions[col_letter].width = width
     _protect(ws)
@@ -882,9 +989,12 @@ def _write_guide_sheet(ws, manifest: dict, meta: dict, hash8: str,
     cell.font = Font(bold=True, size=12, color="1F3864")
     row += 1
     for index, form in enumerate(manifest.get("forms") or [], start=1):
-        status = {"approved": "đã duyệt nội dung",
-                  "pending": "CHỜ duyệt nội dung (không có trong phiếu)"
-                  }.get(form.get("content_review"), form.get("content_review"))
+        status = {
+            REVIEW_APPROVED: "đã duyệt nội dung",
+            REVIEW_DELEGATED: "nội dung sinh theo ủy quyền owner "
+                              "(owner_delegated_2026-09-10)",
+            REVIEW_PENDING: "CHỜ duyệt nội dung (không có trong phiếu)",
+        }.get(form.get("content_review"), form.get("content_review"))
         name = sheet_display_name(index, form) \
             if form.get("content_review") == "approved" \
             else str(form.get("form_id"))

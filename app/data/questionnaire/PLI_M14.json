@@ -1,0 +1,213 @@
+{
+  "doc_id": "PLI_M14",
+  "title": "Giấy đề nghị đăng ký thay đổi chủ doanh nghiệp tư nhân",
+  "questionnaire_version": 1,
+  "cluster": "dn_thay_doi",
+  "content_note": "Nội dung sinh bởi tools.build_form_questionnaires theo ủy quyền owner owner_delegated_2026-09-10 (owner_delegated_2026-09-10)",
+  "questions": [
+    {
+      "question_id": "q_i14_dn_ten_tieng_viet",
+      "group": "Về tên doanh nghiệp",
+      "text": "Tên doanh nghiệp (bạn ghi thường, app tự in hoa)?",
+      "type": "text",
+      "example": "Công ty TNHH An Phát",
+      "required": true,
+      "version": 1,
+      "data_key": "dn.ten_tieng_viet"
+    },
+    {
+      "question_id": "q_i14_dn_ma_so_dn",
+      "group": "Thông tin doanh nghiệp",
+      "text": "Mã số doanh nghiệp/mã số thuế của doanh nghiệp?",
+      "type": "text",
+      "example": "0312345678",
+      "required": true,
+      "version": 1,
+      "data_key": "dn.ma_so_dn"
+    },
+    {
+      "question_id": "q_i14_ho_ten_in_hoa",
+      "group": "Các khai báo khác",
+      "text": "Họ và tên của bạn là gì? (bạn ghi thường, app tự in hoa)",
+      "type": "text",
+      "example": "Nguyễn Văn A",
+      "required": true,
+      "version": 1,
+      "data_key": "ho_ten_in_hoa"
+    },
+    {
+      "question_id": "q_i14_chu_hkd_gioi_tinh",
+      "group": "Về người khai hồ sơ",
+      "text": "Giới tính của bạn?",
+      "type": "select",
+      "options": [
+        {
+          "value": "Nam",
+          "label": "Nam"
+        },
+        {
+          "value": "Nữ",
+          "label": "Nữ"
+        }
+      ],
+      "version": 1,
+      "data_key": "chu_hkd.gioi_tinh"
+    },
+    {
+      "question_id": "q_i14_chu_hkd_so_cccd",
+      "group": "Về người khai hồ sơ",
+      "text": "Số giấy tờ pháp lý của bạn (số định danh cá nhân / hộ chiếu)?",
+      "type": "text",
+      "example": "079085001234",
+      "version": 1,
+      "data_key": "chu_hkd.so_cccd"
+    },
+    {
+      "question_id": "q_i14_dia_chi_chi_tiet",
+      "group": "Về trụ sở chính",
+      "text": "Địa chỉ trụ sở chính ở đâu? (số nhà/phòng, ngách/hẻm, ngõ/kiệt, đường/phố, tổ/xóm/ấp/thôn)",
+      "type": "text",
+      "example": "25 Nguyễn Trãi, Phường Bến Thành",
+      "required": true,
+      "version": 1,
+      "data_key": "dia_chi_chi_tiet"
+    },
+    {
+      "question_id": "q_i14_xa_phuong",
+      "group": "Về trụ sở chính",
+      "text": "Trụ sở ở xã/phường/đặc khu nào?",
+      "type": "text",
+      "example": "Phường Bến Thành",
+      "required": true,
+      "version": 1,
+      "data_key": "xa_phuong"
+    },
+    {
+      "question_id": "q_i14_tinh_thanh",
+      "group": "Về trụ sở chính",
+      "text": "Trụ sở ở tỉnh/thành phố nào?",
+      "type": "text",
+      "example": "TP. Hồ Chí Minh",
+      "required": true,
+      "version": 1,
+      "data_key": "tinh_thanh"
+    },
+    {
+      "question_id": "q_i14_dien_thoai_lien_he",
+      "group": "Số liên hệ",
+      "text": "Số điện thoại liên hệ (nếu có)?",
+      "type": "tel",
+      "example": "0901234567",
+      "version": 1,
+      "data_key": "dien_thoai_lien_he"
+    },
+    {
+      "question_id": "q_i14_email_tru_so",
+      "group": "Số liên hệ",
+      "text": "Email liên hệ (nếu có)?",
+      "type": "email",
+      "version": 1,
+      "data_key": "email_tru_so"
+    },
+    {
+      "question_id": "q_i14_chu_hkd_dan_toc",
+      "group": "Về người khai hồ sơ",
+      "text": "Dân tộc của bạn?",
+      "type": "text",
+      "example": "Kinh",
+      "version": 1,
+      "data_key": "chu_hkd.dan_toc"
+    },
+    {
+      "question_id": "q_i14_chu_hkd_quoc_tich",
+      "group": "Về người khai hồ sơ",
+      "text": "Quốc tịch của bạn?",
+      "type": "text",
+      "example": "Việt Nam",
+      "version": 1,
+      "data_key": "chu_hkd.quoc_tich"
+    },
+    {
+      "question_id": "q_i14_ngay_cap",
+      "group": "Giấy tờ pháp lý đã cấp",
+      "text": "Giấy tờ pháp lý của bạn được cấp ngày nào? (dd/mm/yyyy)",
+      "type": "date",
+      "example": "10/01/2021",
+      "version": 1,
+      "data_key": "ngay_cap"
+    },
+    {
+      "question_id": "q_i14_noi_cap",
+      "group": "Giấy tờ pháp lý đã cấp",
+      "text": "Giấy tờ pháp lý của bạn do nơi nào cấp?",
+      "type": "text",
+      "example": "Cục Trưởng Cục CSCĐ",
+      "version": 1,
+      "data_key": "noi_cap"
+    },
+    {
+      "question_id": "q_i14_chk_cd_dntn_tang",
+      "group": "Các khai báo khác",
+      "text": "Bạn có thuộc/không — đánh X vào ô: cd dntn tang?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "cd dntn tang"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_cd_dntn_tang"
+    },
+    {
+      "question_id": "q_i14_chk_cd_dntn_chu_chet",
+      "group": "Các khai báo khác",
+      "text": "Bạn có thuộc/không — đánh X vào ô: cd dntn chu chet?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "cd dntn chu chet"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_cd_dntn_chu_chet"
+    },
+    {
+      "question_id": "q_i14_chk_cd_dntn_ban",
+      "group": "Các khai báo khác",
+      "text": "Bạn có thuộc/không — đánh X vào ô: cd dntn ban?",
+      "type": "mark",
+      "options": [
+        {
+          "value": "X",
+          "label": "cd dntn ban"
+        }
+      ],
+      "version": 1,
+      "data_key": "chk_cd_dntn_ban"
+    },
+    {
+      "question_id": "q_i14_ngay_sinh",
+      "group": "Các khai báo khác",
+      "text": "Bạn — ngày, tháng, năm sinh? (dd/mm/yyyy)",
+      "type": "date",
+      "example": "05/12/1985",
+      "version": 1,
+      "data_key": [
+        {
+          "key": "ngay_sinh",
+          "transform": "date_day"
+        },
+        {
+          "key": "thang_sinh",
+          "transform": "date_month"
+        },
+        {
+          "key": "nam_sinh",
+          "transform": "date_year"
+        }
+      ]
+    }
+  ]
+}

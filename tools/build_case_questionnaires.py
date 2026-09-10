@@ -13,15 +13,24 @@ Sinh `app/data/case_questionnaires/<caseId>.json` TỪ ba nguồn đã có:
 
 Manifest có: `manifest_id`/`manifest_version`/`manifest_hash` (sha256 payload
 canonical không gồm hash), `schema_version` (schema câu hỏi = v1),
-`content_review: approved|pending` PER FORM:
+`content_review` PER FORM:
 
-- `approved`  — form CÓ questionnaire form-level: câu hỏi được nhúng nguyên
-  văn (không chỉnh sửa). Chỉ form approved được xuất câu hỏi vào workbook.
+- `approved`  — 7 form wave X1, owner duyệt nguyên văn (không chỉnh sửa).
+- `owner_delegated_2026-09-10` — wave E4/E5: questionnaire sinh bởi
+  `tools.build_form_questionnaires` theo ủy quyền "tôi duyệt và chốt hết"
+  của owner ngày 2026-09-10; được ĐỐI XỬ NHƯ approved ở mọi gate.
 - `pending`   — form CHƯA có questionnaire: manifest VẪN liệt kê form
   (bat_buoc/ghi_chu từ use case) nhưng `questions: []` — KHÔNG TỰ SÁNG TÁC
-  nội dung pháp lý (PLAN §2.3: content review là gate E5 của owner). Workbook
-  của case có form pending bị CHẶN phát hành (E4) nhưng vẫn sinh đủ manifest
-  để pilot nội bộ.
+  nội dung pháp lý. Workbook của case có form pending bị CHẶN phát hành
+  (E4) nhưng vẫn sinh đủ manifest để pilot nội bộ.
+
+Wave E4: builder còn NHÚNG vào manifest hai loại câu SELECTOR (pseudo-key,
+không thuộc form_maps — exporter/importer nhận diện theo prefix):
+- `oneOf.<n>`  — câu select bắt buộc "Trường hợp hồ sơ của bạn là trường hợp
+  nào?" cho mỗi nhóm `forms_oneOf` (chọn 1 trong các mẫu, vd M01–M04 khi
+  chuyển đổi HKD sang DN); value = form_id được chọn.
+- `optionalForm.<form_id>` — câu mark "Có làm mẫu này không?" cho form
+  bat_buoc=false NGOÀI nhóm oneOf; đánh X mới đưa form vào checkedForms.
 
 Migration read-only: builder KHÔNG đụng 7 questionnaire cũ lẫn API cũ
 (`tools.excel_export.write_questionnaire` /
@@ -59,6 +68,76 @@ OUT_DIR = ROOT / "app" / "data" / "case_questionnaires"
 
 MANIFEST_VERSION = 1
 INDEX_NAME = "_index.json"
+
+# --- Wave E4/E5 (owner ủy quyền nội dung 2026-09-10) ------------------------
+# Hai mức "đủ điều kiện phát hành": `approved` (7 questionnaire wave X1,
+# owner duyệt từng cụm) và `owner_delegated_2026-09-10` (nội dung sinh bởi
+# tools.build_form_questionnaires theo ủy quyền "tôi duyệt và chốt hết" của
+# owner ngày 2026-09-10) — cả hai đều được đối xử như approved ở mọi gate.
+REVIEW_APPROVED = "approved"
+REVIEW_DELEGATED = "owner_delegated_2026-09-10"
+REVIEW_PENDING = "pending"
+APPROVED_EQUIV = (REVIEW_APPROVED, REVIEW_DELEGATED)
+# 7 questionnaire wave X1 owner duyệt nguyên văn — giữ review "approved"
+LEGACY_APPROVED_FORMS = {
+    "PLII_M01", "PLII_M02", "PLII_M03", "PLII_M04",
+    "PLI_M12", "PLI_M27", "PLI_M72",
+}
+# prefix data_key của câu SELECTOR do builder NHÚNG (không thuộc form_maps):
+# `oneOf.<n>` = chọn một mẫu trong nhóm forms_oneOf[n];
+# `optionalForm.<form_id>` = tick "có làm mẫu tùy chọn này không".
+# (hợp đồng với excel_case_export/import — đổi một bên phải đồng bộ bên kia.)
+ONEOF_KEY_PREFIX = "oneOf."
+OPTIONAL_FORM_KEY_PREFIX = "optionalForm."
+ONEOF_GROUP_NAME = "Trường hợp hồ sơ"
+OPTIONAL_FORM_GROUP_NAME = "Các mẫu tùy chọn trong hồ sơ"
+
+
+def oneof_questions(case_id: str, groups: list, form_entries: dict) -> list:
+    """Câu select "Trường hợp hồ sơ của bạn là trường hợp nào?" cho MỖI nhóm
+    forms_oneOf — Lead chốt design E4: câu select bắt buộc đầu sheet
+    `Thông_tin_chung`; option label = ghi_chu (thân thiện) fallback ten_mau;
+    value = form_id (importer đọc value -> checkedForms)."""
+    out: list = []
+    for index, group in enumerate(groups or [], start=1):
+        ids = [str(fid) for fid in (group.get("ids") or [])]
+        if not ids:
+            continue
+        options = []
+        for fid in ids:
+            entry = form_entries.get(fid) or {}
+            label = str(entry.get("ghi_chu") or entry.get("ten_mau")
+                        or fid).strip()
+            options.append({"value": fid, "label": label})
+        out.append({
+            "question_id": "q_oneof_%d" % index,
+            "group": ONEOF_GROUP_NAME,
+            "text": "Trường hợp hồ sơ của bạn là trường hợp nào? "
+                    "(chọn MỘT dòng ▾)",
+            "type": "select",
+            "options": options,
+            "required": True,
+            "version": 1,
+            "data_key": "%s%d" % (ONEOF_KEY_PREFIX, index),
+        })
+    return out
+
+
+def optional_form_question(form_id: str, form_entries: dict) -> dict:
+    """Câu mark "Có làm mẫu này không?" cho form TÙY CHỌN NGOÀI oneOf
+    (bat_buoc=false) — đánh X mới đưa form vào checkedForms."""
+    entry = form_entries.get(form_id) or {}
+    name = str(entry.get("ghi_chu") or entry.get("ten_mau") or form_id)
+    return {
+        "question_id": "q_opt_%s" % form_id,
+        "group": OPTIONAL_FORM_GROUP_NAME,
+        "text": "Bạn có làm mẫu «%s» không? (đánh X nếu CÓ làm mẫu này)"
+                % name,
+        "type": "mark",
+        "options": [{"value": "X", "label": "Có"}],
+        "version": 1,
+        "data_key": "%s%s" % (OPTIONAL_FORM_KEY_PREFIX, form_id),
+    }
 
 
 class CaseManifestError(ValueError):
@@ -143,7 +222,7 @@ def build_manifest(case: dict, form_maps: dict) -> dict:
                 "questionnaire_version": None,
                 "cluster": None,
                 "title": entry.get("ten_mau") or fid,
-                "content_review": "pending",
+                "content_review": REVIEW_PENDING,
                 "questions": [],
             })
             continue
@@ -162,9 +241,38 @@ def build_manifest(case: dict, form_maps: dict) -> dict:
             "questionnaire_version": q.get("questionnaire_version"),
             "cluster": q.get("cluster"),
             "title": q.get("title") or entry.get("ten_mau") or fid,
-            "content_review": "approved",
-            "questions": q.get("questions", []),
+            "content_review": REVIEW_APPROVED if fid in LEGACY_APPROVED_FORMS
+            else REVIEW_DELEGATED,
+            "questions": list(q.get("questions", [])),
         })
+
+    # --- Wave E4: nhúng câu selector oneOf + câu mark form tùy chọn --------
+    # Câu pseudo-key (oneOf.*, optionalForm.*) KHÔNG thuộc form_maps — chỉ
+    # sinh tại đây (builder), exporter/importer nhận diện theo prefix.
+    groups = list(case.get("forms_oneOf") or [])
+    form_entries = {f["form_id"]: f for f in forms_out}
+    if groups:
+        for item in oneof_questions(case_id, groups, form_entries):
+            first_fid = (groups[int(item["data_key"].split(".")[1]) - 1]
+                         .get("ids") or [None])[0]
+            if item["question_id"] in seen_qids:
+                raise CaseManifestError(
+                    "DUP_ID", "%s: question_id %r trùng giữa các form"
+                    % (case_id, item["question_id"]))
+            seen_qids.add(item["question_id"])
+            if first_fid in form_entries:
+                form_entries[first_fid]["questions"].insert(0, dict(item))
+    oneof_ids = {fid for g in groups for fid in (g.get("ids") or [])}
+    for form in forms_out:
+        if form["bat_buoc"] or form["form_id"] in oneof_ids:
+            continue
+        item = optional_form_question(form["form_id"], form_entries)
+        if item["question_id"] in seen_qids:
+            raise CaseManifestError(
+                "DUP_ID", "%s: question_id %r trùng giữa các form"
+                % (case_id, item["question_id"]))
+        seen_qids.add(item["question_id"])
+        form["questions"].append(item)
 
     manifest = {
         "manifest_id": case_id,
@@ -206,9 +314,11 @@ def build_all(write: bool, only: str | None = None) -> list[dict]:
                 "DRIFT", "%s: artifact khác build hiện tại (chạy không --check)"
                 % manifest["case_id"])
         approved = [f["form_id"] for f in manifest["forms"]
-                    if f["content_review"] == "approved"]
+                    if f["content_review"] in APPROVED_EQUIV]
         pending = [f["form_id"] for f in manifest["forms"]
-                   if f["content_review"] == "pending"]
+                   if f["content_review"] == REVIEW_PENDING]
+        delegated = [f["form_id"] for f in manifest["forms"]
+                     if f["content_review"] == REVIEW_DELEGATED]
         index.append({
             "case_id": manifest["case_id"],
             "case_title": manifest["case_title"],
@@ -216,6 +326,7 @@ def build_all(write: bool, only: str | None = None) -> list[dict]:
             "n_forms": len(manifest["forms"]),
             "approved_forms": approved,
             "pending_forms": pending,
+            "delegated_forms": delegated,
             "all_approved": not pending,
         })
 
@@ -241,9 +352,10 @@ def main(argv: list[str] | None = None) -> int:
         return 1
     ready = sum(1 for e in index if e["all_approved"])
     action = "KIỂM" if args.check else "SINH"
-    print("%s OK %d manifest case (%d case đủ form approved, %d chờ content "
-          "review) -> %s" % (action, len(index), ready, len(index) - ready,
-                             OUT_DIR))
+    print("%s OK %d manifest case (%d case READY — approved hoặc delegated "
+          "%s, %d chờ content review) -> %s"
+          % (action, len(index), ready, REVIEW_DELEGATED,
+             len(index) - ready, OUT_DIR))
     for e in index:
         flag = "READY" if e["all_approved"] else "PENDING"
         print("  [%s] %s: %s" % (flag, e["case_id"],

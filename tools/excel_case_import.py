@@ -23,6 +23,12 @@ TRÌNH TỰ BẮT BUỘC (verify contract TRƯỚC khi đọc answers):
  10. giá trị ô theo type (select/mark/date/money/integer/text) -> BAD_*;
      ID/text bị Excel đổi số/scientific  -> BAD_ID_TEXT
  11. resolve `when`, dựng store, required trống -> MISSING_REQUIRED
+ 11b. checkedForms theo lựa chọn (wave E4): nhóm `forms_oneOf` -> form được
+     chọn; form tùy chọn ngoài oneOf -> mark `optionalForm.<fid>`=X;
+     nhóm không chọn / không còn form nào -> MISSING_REQUIRED; ô của form
+     KHÔNG được chọn mà có dữ liệu -> STRAY_CELL (kèm ô + câu hỏi).
+     Candidate vẫn nguyên tử; `activeDocId` = form bắt buộc đầu hoặc form
+     được chọn.
  12. bảng lặp 0/1/N hàng; hai hàng y hệt -> DUP_ROW
 
 CÓ MỘT lỗi bất kỳ -> `{"ok": False, "errors": [...], "candidate": None}` —
@@ -60,7 +66,8 @@ from openpyxl import load_workbook
 from tools.excel_case_export import (
     CASE_MAP_VERSION, COMMON_SHEET, CONTRACT, DOCS_SHEET, GUIDE_LINES,
     GUIDE_SHEET, LISTS_SHEET, MAP_COLUMNS, MAP_MARKER, MAP_SHEET,
-    ExcelCaseExportError,
+    ONEOF_KEY_PREFIX, OPTIONAL_FORM_KEY_PREFIX,
+    ExcelCaseExportError, is_review_approved, is_selector_question,
 )
 from tools.excel_case_export import (
     _canonical_json,   # cùng contract hash với exporter (một nguồn)
@@ -79,7 +86,8 @@ __all__ = [
     "BAD_FILE", "BAD_HEADER", "BAD_VERSION", "WRONG_CASE", "CHECKSUM",
     "UNKNOWN_CELL", "TOO_MANY_ROWS", "DUP_ROW", "FORMULA", "MIRROR_CELL",
     "MISSING_REQUIRED", "BAD_SELECT", "BAD_DATE", "BAD_NUMBER",
-    "BAD_ID_TEXT", "import_case_workbook", "manifest_has_select",
+    "BAD_ID_TEXT", "STRAY_CELL", "import_case_workbook",
+    "manifest_has_select",
 ]
 
 # Mã lỗi — contract với bridge/UI (toast + panel "còn thiếu")
@@ -98,6 +106,8 @@ BAD_SELECT = "BAD_SELECT"
 BAD_DATE = "BAD_DATE"
 BAD_NUMBER = "BAD_NUMBER"
 BAD_ID_TEXT = "BAD_ID_TEXT"
+# Wave E4 (oneOf/form tùy chọn): ô có dữ liệu nhưng mẫu đó KHÔNG được chọn
+STRAY_CELL = "STRAY_CELL"
 
 _INT_COLS = {"row_last"}            # cột map kiểu số nguyên khi hash
 _MAYBE_INT_COLS = {"version"}       # int hoặc "" (version câu hỏi)
@@ -564,6 +574,17 @@ def import_case_workbook(path: "str | Path", manifest: dict,
     if not entries:
         return _fail([_err(BAD_HEADER, "Sheet %r không khai báo ô điền nào"
                            % MAP_SHEET)], audit)
+    # [wave-compat 2026-09-10] Sheet_state: `visible` = khả năng cao file đã bị
+    # can thiệp cấu trúc -> chặn. `hidden` (LibreOffice Calc hạ veryHidden xuống
+    # khi khách re-save — đo được ở gate Calc, test_excel_calc_roundtrip) thì
+    # CHẤP NHẬN: mọi rào chống sửa trộm (checksum/presence/mirror) vẫn bắt buộc
+    # ở các bước sau, trạng thái ẩn chỉ là trình bày -> ghi audit để UI hiển thị.
+    _map_state = wb_raw[MAP_SHEET].sheet_state
+    if _map_state == "visible":
+        return _fail([_err(BAD_HEADER,
+                           "Sheet %r đang hiện (visible) — file không đúng "
+                           "định dạng phiếu (map phải ẩn)" % MAP_SHEET)], audit)
+    audit["map_sheet_state"] = _map_state
 
     # -- 2/3/4. Contract + case + hash ------------------------------------------
     if meta.get("contract") != CONTRACT or \
@@ -616,7 +637,7 @@ def import_case_workbook(path: "str | Path", manifest: dict,
     questions: dict[str, tuple[str, dict]] = {}   # qid -> (form_id, question)
     form_ids = {f["form_id"] for f in manifest.get("forms", [])}
     for form in manifest.get("forms", []):
-        if form.get("content_review") != "approved":
+        if not is_review_approved(form.get("content_review")):
             continue
         for q in form.get("questions", []):
             questions[q["question_id"]] = (form["form_id"], q)
@@ -803,8 +824,92 @@ def import_case_workbook(path: "str | Path", manifest: dict,
                     values[entry.key] = entry.value
         resolved_by_qid[qid] = kept
 
-    # -- 12. Required trống --------------------------------------------------------------
+    # -- 11b. oneOf + form tùy chọn -> checkedForms (wave E4) -----------------
+    # Design (Lead chốt E4, owner ủy quyền):
+    # - Mỗi nhóm `forms_oneOf` có MỘT câu select bắt buộc ở `Thông_tin_chung`
+    #   (data_key `oneOf.<n>`, value = form_id được chọn). checkedForms chỉ
+    #   chứa form ĐƯỢC CHỌN trong từng nhóm (+ các form bắt buộc ngoài nhóm).
+    # - Form bat_buoc=false NGOÀI oneOf vào checkedForms khi câu mark
+    #   `optionalForm.<form_id>` được đánh X.
+    # - Ô của form KHÔNG thuộc checkedForms mà CÓ dữ liệu -> STRAY_CELL
+    #   (kèm ô + câu hỏi); nhóm oneOf không chọn gì / không form nào còn lại
+    #   -> MISSING_REQUIRED. Candidate vẫn nguyên tử.
+    checked_set: set[str] = set()
+    checked: list[str] = []
+    approved_forms = [f for f in manifest.get("forms", [])
+                      if is_review_approved(f.get("content_review"))]
+    group_index_of: dict[str, int] = {}
+    for gi, group in enumerate(manifest.get("forms_oneOf") or [], start=1):
+        for fid in group.get("ids") or []:
+            group_index_of[str(fid)] = gi
+    selected_in_group: dict[int, str] = {}
+    for key, val in values.items():
+        if isinstance(key, str) and key.startswith(ONEOF_KEY_PREFIX):
+            try:
+                gi = int(key[len(ONEOF_KEY_PREFIX):].split(".")[0])
+            except ValueError:
+                continue
+            if isinstance(val, str):
+                selected_in_group.setdefault(gi, val)
+    for form in approved_forms:
+        fid = form["form_id"]
+        gi = group_index_of.get(fid)
+        if gi is not None:
+            if selected_in_group.get(gi) == fid:
+                checked.append(fid)
+        elif form.get("bat_buoc"):
+            checked.append(fid)
+        elif values.get("%s%s" % (OPTIONAL_FORM_KEY_PREFIX, fid)) == "X":
+            checked.append(fid)
+    checked_set = set(checked)
+    for gi in range(1, len(manifest.get("forms_oneOf") or []) + 1):
+        if not selected_in_group.get(gi):
+            errors.append(_err(
+                MISSING_REQUIRED,
+                "Chưa chọn trường hợp hồ sơ (câu «Trường hợp hồ sơ của bạn "
+                "là trường hợp nào?» ở sheet %s) — chọn MỘT dòng" % COMMON_SHEET,
+                sheet=COMMON_SHEET))
+    if not checked and not any(e["code"] == MISSING_REQUIRED
+                               for e in errors):
+        errors.append(_err(
+            MISSING_REQUIRED,
+            "Không xác định được mẫu nào trong hồ sơ — hãy chọn trường hợp/"
+            "đánh dấu ít nhất MỘT mẫu ở sheet %s" % COMMON_SHEET,
+            sheet=COMMON_SHEET))
+
+    # ô của form không được chọn mà có dữ liệu -> STRAY_CELL
+    for entry in read_entries:
+        if entry.form_id in checked_set or not entry.filled:
+            continue
+        _owner_fid, question = questions[entry.question_id]
+        if is_selector_question(question) or entry.sheet == COMMON_SHEET:
+            continue
+        errors.append(_err(
+            STRAY_CELL,
+            "Ô %s (%s) có dữ liệu nhưng mẫu %s KHÔNG thuộc trường hợp bạn "
+            "chọn — xóa dữ liệu ở ô này hoặc chọn lại trường hợp ở sheet %s"
+            % (entry.address, entry.question_id, entry.form_id, COMMON_SHEET),
+            cell=entry.address, question_id=entry.question_id,
+            form_id=entry.form_id, sheet=entry.sheet))
+
+    # -- 12. Required trống (đã scoping ở header trên) -----------------------------
+    # Scoping (E4): bắt buộc áp cho (a) câu của form thuộc checkedForms, và
+    # (b) câu canonical của form KHÁC nếu key đó được một form ĐƯỢC CHỌN yêu
+    # cầu bắt buộc (shared key: ô canonical nằm ở câu của chủ — ví dụ case
+    # chuyển đổi chọn M03 thì tên DN vẫn phải điền dù ô canonical thuộc câu
+    # của M01). Câu có `when` không khớp vẫn được bỏ qua như cũ.
+    keys_required_checked: set[str] = set()
+    for qid in questions:
+        form_id_q, question = questions[qid]
+        if form_id_q in checked_set and question.get("required"):
+            for t in _targets_of(question):
+                keys_required_checked.add(t["key"])
     for qid, (form_id, question) in questions.items():
+        if form_id not in checked_set and not (
+                question.get("required") and
+                any(t["key"] in keys_required_checked
+                    for t in _targets_of(question))):
+            continue  # form không được chọn và không key nào được chọn cần
         if not question.get("required"):
             continue
         kept = resolved_by_qid.get(qid, [])
@@ -868,11 +973,19 @@ def import_case_workbook(path: "str | Path", manifest: dict,
         return _fail(errors, audit)
 
     # -- 14. Candidate draft v2 nguyên tử + audit -------------------------------------------
-    approved = [f for f in manifest.get("forms", [])
-                if f.get("content_review") == "approved"]
-    checked = [f["form_id"] for f in approved]
-    mandatory = [f["form_id"] for f in approved if f.get("bat_buoc")]
-    active = (mandatory or checked or [None])[0]
+    # checkedForms theo lựa chọn oneOf / form tùy chọn (step 11b); các câu
+    # SELECTOR pseudo-key không rơi vào store (chỉ dùng lúc nạp).
+    mandatory_checked = [f["form_id"] for f in approved_forms
+                         if f.get("bat_buoc") and f["form_id"] in checked_set]
+    chosen = next((selected_in_group[gi]
+                   for gi in sorted(selected_in_group)
+                   if selected_in_group[gi] in checked_set), None)
+    active = mandatory_checked[0] if mandatory_checked else \
+        (chosen or (checked or [None])[0])
+    clean_values = {k: v for k, v in values.items()
+                    if not (isinstance(k, str) and (
+                        k.startswith(ONEOF_KEY_PREFIX) or
+                        k.startswith(OPTIONAL_FORM_KEY_PREFIX)))}
     candidate = {
         "v": 2,
         "caseId": manifest["case_id"],
@@ -881,7 +994,8 @@ def import_case_workbook(path: "str | Path", manifest: dict,
         "autoSum": False,
         "viewState": {},
         "savedAt": None,          # UI gắn thời điểm áp dụng
-        "store": {"values": values, "checks": checks, "loops": loop_out},
+        "store": {"values": clean_values, "checks": checks,
+                  "loops": loop_out},
         "source": {
             "kind": CONTRACT,
             "manifest_hash": manifest.get("manifest_hash"),
@@ -894,7 +1008,7 @@ def import_case_workbook(path: "str | Path", manifest: dict,
         "schema_version": manifest.get("schema_version"),
         "manifest_hash": manifest.get("manifest_hash"),
         "forms": checked,
-        "n_values": len(values),
+        "n_values": len(clean_values),
         "n_checks": len(checks),
         "n_loop_rows": sum(len(v) for v in loop_out.values()),
     })

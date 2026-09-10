@@ -1,0 +1,45 @@
+{
+  "doc_id": "PLI_M30",
+  "title": "Thông báo về việc giải thể doanh nghiệp",
+  "questionnaire_version": 1,
+  "cluster": "giai_the",
+  "content_note": "Nội dung sinh bởi tools.build_form_questionnaires theo ủy quyền owner owner_delegated_2026-09-10 (owner_delegated_2026-09-10)",
+  "questions": [
+    {
+      "question_id": "q_i30_dn_ten_tieng_viet",
+      "group": "Về tên doanh nghiệp",
+      "text": "Tên doanh nghiệp (bạn ghi thường, app tự in hoa)?",
+      "type": "text",
+      "example": "Công ty TNHH An Phát",
+      "required": true,
+      "version": 1,
+      "data_key": "dn.ten_tieng_viet"
+    },
+    {
+      "question_id": "q_i30_dn_ma_so_dn",
+      "group": "Thông tin doanh nghiệp",
+      "text": "Mã số doanh nghiệp/mã số thuế của doanh nghiệp?",
+      "type": "text",
+      "example": "0312345678",
+      "required": true,
+      "version": 1,
+      "data_key": "dn.ma_so_dn"
+    },
+    {
+      "question_id": "q_i30_so_gcn_dkkd",
+      "group": "Giấy chứng nhận hiện có",
+      "text": "Số Giấy chứng nhận đăng ký kinh doanh (chỉ kê khai nếu chưa có mã số doanh nghiệp)?",
+      "type": "text",
+      "version": 1,
+      "data_key": "so_gcn_dkkd"
+    },
+    {
+      "question_id": "q_i30_ngay_cap",
+      "group": "Giấy tờ pháp lý đã cấp",
+      "text": "Giấy chứng nhận đăng ký kinh doanh được cấp ngày nào? (dd/mm/yyyy)",
+      "type": "date",
+      "version": 1,
+      "data_key": "ngay_cap"
+    }
+  ]
+}

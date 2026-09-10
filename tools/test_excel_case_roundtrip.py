@@ -39,22 +39,15 @@ sys.path.insert(0, str(ROOT))
 import openpyxl  # noqa: E402
 
 from tools.excel_case_export import (  # noqa: E402
-    COMMON_SHEET, GUIDE_SHEET, LISTS_SHEET, MAP_COLUMNS, MAP_SHEET,
-    workbook_stem, write_case_workbook,
+    COMMON_SHEET, DOCS_SHEET, GUIDE_SHEET, LISTS_SHEET, MAP_COLUMNS,
+    MAP_SHEET, workbook_stem, write_case_workbook,
 )
 from tools.excel_case_import import import_case_workbook  # noqa: E402
 
-READY_CASES = [
-    "dang_ky_ho_kinh_doanh_lan_dau",
-    "thay_doi_ten_va_tru_so",
-    "thay_doi_nganh_nghe",
-    "thay_doi_von_dieu_le",
-    "thay_doi_noi_dung_dang_ky_hkd",
-    "tam_ngung_tiep_tuc_kinh_doanh_dn",
-    "tam_ngung_tiep_tuc_kinh_doanh_hkd",
-    "cham_dut_hoat_dong_hkd",
-    "bo_sung_cap_nhat_thong_tin_dkdn",
-]
+# Wave E4: MỌI case đều READY (28/28) — RTC7/RTC11 chạy trên list này
+ALL_CASES = sorted(p.stem for p in
+                   (ROOT / "app" / "data" / "case_questionnaires")
+                   .glob("*.json") if p.stem != "_index")
 
 FIXTURE_META = {"today": "01/01/2026", "exported_at": "01/01/2026 10:00"}
 
@@ -231,12 +224,23 @@ def _shared_manifest() -> dict:
         q2["question_id"] = q2["question_id"] + "_b"
         renamed.append(q2)
     form_b = {
-        "form_id": "FORM_B", "ten_mau": "Mẫu B", "bat_buoc": True,
+        "form_id": "FORM_B", "ten_mau": "Mẫu B", "bat_buoc": False,
         "ghi_chu": "form mirror", "questionnaire_version": 1,
         "cluster": "b", "title": "Mẫu B",
         "content_review": "approved",
         "questions": renamed,
     }
+    # Wave E4: form tùy chọn ngoài oneOf mang câu mark `optionalForm.*`
+    # (builder nhúng) — đánh X mới đưa form vào checkedForms.
+    form_b["questions"].append({
+        "question_id": "q_opt_FORM_B",
+        "group": "Các mẫu tùy chọn trong hồ sơ",
+        "text": "Bạn có làm mẫu «Mẫu B» không? (đánh X nếu CÓ làm mẫu này)",
+        "type": "mark",
+        "options": [{"value": "X", "label": "Có"}],
+        "version": 1,
+        "data_key": "optionalForm.FORM_B",
+    })
     manifest = {
         "manifest_id": "case_shared", "manifest_version": 1,
         "schema_version": 1, "case_id": "case_shared",
@@ -296,7 +300,7 @@ def rtc4():
     assert res["candidate"]["store"]["values"]["hkd_ma_so"] == "0312345678"
 
 
-@check("[RTC5] optional form (bat_buoc=false) vẫn có sheet + vào checkedForms")
+@check("[RTC5] optional form: sheet vẫn có; checkedForms theo câu opt-in E4")
 def rtc5():
     manifest = _shared_manifest()
     manifest["forms"][1]["bat_buoc"] = False
@@ -305,13 +309,24 @@ def rtc5():
                     if k != "manifest_hash"},
                    ensure_ascii=True, sort_keys=True,
                    separators=(",", ":")).encode("utf-8")).hexdigest()
+    # Không đánh X "Có làm mẫu này không?" -> form tùy chọn KHÔNG vào
+    # checkedForms (design E4); ô của nó trống -> không lỗi, import ok.
     res = fill_and_import(manifest, {"q_hkd_ten": "Hộ KD D",
                                      "q_hkd_ma_so": "0312345679"})
     assert res["ok"], res["errors"]
     c = res["candidate"]
-    assert c["checkedForms"] == ["FORM_A", "FORM_B"], c["checkedForms"]
-    assert c["activeDocId"] == "FORM_A"     # bat_buoc ưu tiên làm active
+    assert c["checkedForms"] == ["FORM_A"], c["checkedForms"]
+    assert c["activeDocId"] == "FORM_A"
     assert c["store"]["values"]["hkd_ma_so"] == "0312345679"
+    # Đánh X -> form tùy chọn vào checkedForms; activeDocId vẫn form bắt buộc
+    res2 = fill_and_import(manifest, {"q_hkd_ten": "Hộ KD D",
+                                      "q_hkd_ma_so": "0312345679",
+                                      "q_opt_FORM_B": "X"})
+    assert res2["ok"], res2["errors"]
+    c2 = res2["candidate"]
+    assert c2["checkedForms"] == ["FORM_A", "FORM_B"], c2["checkedForms"]
+    assert c2["activeDocId"] == "FORM_A"     # bat_buoc ưu tiên làm active
+    assert res2["audit"]["forms"] == ["FORM_A", "FORM_B"]
 
 
 @check("[RTC6] export ×2 same cell-content (so nội dung — zip có mtime)")
@@ -332,9 +347,10 @@ def rtc6():
                         "%s!%s" % (name, cell.coordinate)
 
 
-@check("[RTC7] cả 9 case READY: import phiếu TRẮNG chỉ ra MISSING_REQUIRED")
+@check("[RTC7] cả 28 case READY: import phiếu TRẮNG chỉ ra MISSING_REQUIRED")
 def rtc7():
-    for case_id in READY_CASES:
+    assert len(ALL_CASES) == 28, ALL_CASES
+    for case_id in ALL_CASES:
         manifest = _manifest(case_id)
         tmp = Path(tempfile.mkdtemp(prefix="rt_all_"))
         out = write_case_workbook(manifest, tmp / "wb.xlsx", meta=FIXTURE_META)
@@ -411,8 +427,206 @@ def rtc10():
                                    manifest["manifest_hash"][:8]), stem
 
 
+def _checked_forms_of(manifest: dict, wb=None) -> set:
+    """Bộ form filler coi là ĐƯỢC CHỌN (E4): chọn option ĐẦU của từng nhóm
+    oneOf; tick mọi câu optionalForm (form tùy chọn ngoài oneOf); form
+    bat_buoc luôn được chọn."""
+    checked: set = set()
+    for group in manifest.get("forms_oneOf") or []:
+        ids = group.get("ids") or []
+        if ids:
+            checked.add(ids[0])
+    for form in manifest["forms"]:
+        fid = form["form_id"]
+        if form.get("bat_buoc", True):
+            checked.add(fid)
+    for form in manifest["forms"]:
+        fid = form["form_id"]
+        if any(str(q.get("data_key", "")).startswith("optionalForm.")
+               for q in form["questions"]):
+            checked.add(fid)
+    return checked
+
+
+def fill_all_like_client(manifest: dict, tmp_prefix: str = "rt28_") -> dict:
+    """E4 — filler tự động data-type-aware từ __map cho CẢ case:
+    điền mọi ô của các form được chọn (text riêng từng ô; date/money/integer/
+    select/mark theo type; mark luôn 'X' để mọi `when` kích hoạt). Ô của form
+    KHÔNG được chọn và ô mirror không đụng tới. Trả kết quả import."""
+    tmp = Path(tempfile.mkdtemp(prefix=tmp_prefix))
+    out = write_case_workbook(manifest, tmp / "wb.xlsx", meta=FIXTURE_META)
+    wb = openpyxl.load_workbook(out)
+    mp = wb[MAP_SHEET]
+    col = {mp.cell(3, i + 1).value: i + 1 for i in range(len(MAP_COLUMNS))}
+    questions = {q["question_id"]: q for f in manifest["forms"]
+                 for q in f["questions"]}
+    checked = _checked_forms_of(manifest)
+    seq_by_qid: dict[str, int] = {}
+    for r in range(4, mp.max_row + 1):
+        layout = mp.cell(r, col["layout"]).value
+        if layout == "mirror":
+            continue
+        form_id = mp.cell(r, col["form_id"]).value
+        if form_id not in checked:
+            continue
+        qid = mp.cell(r, col["question_id"]).value
+        q = questions[qid]
+        sheet = mp.cell(r, col["sheet"]).value
+        cell = mp.cell(r, col["cell"]).value
+        seq = seq_by_qid.get(qid, 0)
+        t = q["type"]
+        if t == "select":
+            value = q["options"][0]["label"]
+        elif t == "mark":
+            value = "X"
+        elif t == "date":
+            value = "01/02/2026"
+        elif t == "money":
+            value = "1.000"
+        elif t == "integer":
+            value = "5"
+        else:
+            value = "Giá trị %d" % seq          # từng hàng bảng KHÁC nhau
+        wb[sheet][cell] = value
+        seq_by_qid[qid] = seq + 1
+    filled = tmp / "filled.xlsx"
+    wb.save(filled)
+    return import_case_workbook(filled, manifest,
+                                imported_at="2026-09-10T00:00:00")
+
+
+@check("[RTC11] round-trip ĐỦ 28 case: filler type-aware -> import ok")
+def rtc11():
+    assert len(ALL_CASES) == 28, ALL_CASES
+    for case_id in ALL_CASES:
+        manifest = _manifest(case_id)
+        res = fill_all_like_client(manifest, tmp_prefix="rt28_%s_" % case_id)
+        assert res["ok"], "%s: %s" % (
+            case_id, [(e["code"], e.get("cell"), e["message"])
+                      for e in res["errors"][:5]])
+        st = res["candidate"]["store"]
+        assert st["values"] or st["checks"] or st["loops"], case_id
+        assert not any(str(k).startswith(("oneOf.", "optionalForm."))
+                       for k in list(st["values"]) + list(st["checks"])), \
+            "%s: pseudo-key rò rỉ vào store" % case_id
+
+
+@check("[RTC12] case dài nhất mỗi cụm: điền có chọn lọc + assert giá trị cụ thể")
+def rtc12():
+    # case dài nhất (nhiều map row) của từng nhóm — điền CHỈ các câu bắt buộc
+    by_group: dict[str, list] = {}
+    for case_id in ALL_CASES:
+        m = _manifest(case_id)
+        by_group.setdefault(m.get("nhom") or "", []).append(m)
+    for nhom, manifests in by_group.items():
+
+        def n_rows(m):
+            return len(m["forms"]) + sum(len(f["questions"])
+                                         for f in m["forms"])
+        longest = max(manifests, key=n_rows)
+        checked = _checked_forms_of(longest)
+        tmp = Path(tempfile.mkdtemp(prefix="rt12_"))
+        out = write_case_workbook(longest, tmp / "wb.xlsx",
+                                  meta=FIXTURE_META)
+        wb = openpyxl.load_workbook(out)
+        mp = wb[MAP_SHEET]
+        col = {mp.cell(3, i + 1).value: i + 1
+               for i in range(len(MAP_COLUMNS))}
+        questions = {q["question_id"]: q for f in longest["forms"]
+                     for q in f["questions"]}
+        cursor: dict[str, int] = {}
+        for r in range(4, mp.max_row + 1):
+            if mp.cell(r, col["layout"]).value == "mirror":
+                continue
+            if mp.cell(r, col["form_id"]).value not in checked:
+                continue
+            qid = mp.cell(r, col["question_id"]).value
+            q = questions[qid]
+            sheet = mp.cell(r, col["sheet"]).value
+            cell = mp.cell(r, col["cell"]).value
+            layout = mp.cell(r, col["layout"]).value
+            if layout == "table":
+                if not q.get("required"):
+                    continue      # phiếu tối thiểu: chỉ hàng đầu bảng cần
+                idx = cursor.get(qid, 0)
+                if idx == 0:      # chỉ hàng đầu của bảng bắt buộc
+                    t = q["type"]
+                    wb[sheet][cell] = \
+                        q["options"][0]["label"] if t == "select" else \
+                        "X" if t == "mark" else "Bán lẻ hàng điện tử"
+                    cursor[qid] = 1
+                continue
+            if not q.get("required") and q.get("type") not in ("select",) \
+                    and not str(q.get("data_key", "")).startswith(
+                        ("oneOf.", "optionalForm.")):
+                continue          # phiếu tối thiểu: bắt buộc + selector
+            t = q["type"]
+            value = q["options"][0]["label"] if t == "select" else \
+                "X" if t == "mark" else "01/02/2026" if t == "date" else \
+                "1.000" if t == "money" else "5" if t == "integer" else \
+                "Dữ liệu %s" % qid
+            wb[sheet][cell] = value
+        res = import_case_workbook(_save(tmp, wb), longest)
+        assert res["ok"], "%s/%s: %s" % (
+            nhom, longest["case_id"], [(e["code"], e.get("cell"))
+                                       for e in res["errors"][:5]])
+        st = res["candidate"]["store"]
+        # giá trị cụ thể: có store thực và đúng hình dạng
+        assert st["values"] or st["checks"], longest["case_id"]
+        if "dn.ten_tieng_viet" in st["values"]:
+            assert st["values"]["dn.ten_tieng_viet"].startswith("Dữ liệu q_")
+        if "ds_nganh" in st["loops"]:
+            row0 = st["loops"]["ds_nganh"][0]
+            assert row0.get("ten_nganh") == "Bán lẻ hàng điện tử", row0
+
+
+def _save(tmp: Path, wb) -> Path:
+    filled = tmp / "filled.xlsx"
+    wb.save(filled)
+    return filled
+
+
+@check("[RTC13] sheet Giấy_tờ_cần_gửi: checklist thật + cơ sở pháp lý + nguồn")
+def rtc13():
+    for case_id in ("thanh_lap_tnhh_1tv",        # có giay_to_kem
+                    "lap_dia_diem_kinh_doanh",   # giay_to_kem rỗng
+                    ):
+        manifest = _manifest(case_id)
+        tmp = Path(tempfile.mkdtemp(prefix="rt13_"))
+        out = write_case_workbook(manifest, tmp / "wb.xlsx",
+                                  meta=FIXTURE_META)
+        wb = openpyxl.load_workbook(out, data_only=True)
+        ws = wb[DOCS_SHEET]
+        texts = []
+        for row in ws.iter_rows():
+            for cell in row:
+                if cell.value is not None:
+                    texts.append(str(cell.value))
+        joined = "\n".join(texts)
+        assert "CHỜ DUYỆT" not in joined and "chưa duyệt" not in joined, \
+            "%s: còn watermark" % case_id
+        assert "GIẤY TỜ CẦN CHUẨN BỊ NỘP KÈM" in joined
+        assert "Nguồn: Nghị định 168/2025/NĐ-CP, TT 121/2026/TT-BTC" in joined
+        for ref in manifest.get("co_so_phap_ly") or []:
+            assert str(ref) in joined, "%s: thiếu cơ sở pháp lý %r" % (
+                case_id, ref)
+        for item in manifest.get("giay_to_kem") or []:
+            assert str(item) in joined, "%s: thiếu giấy tờ %r" % (case_id,
+                                                                  item)
+        if not manifest.get("giay_to_kem"):
+            assert "không khai danh mục giấy tờ" in joined
+        else:
+            # ô tick là ô vàng mở khóa đầu mỗi dòng checklist
+            unlocked = [c for r in ws.iter_rows(min_col=1, max_col=1)
+                        for c in r
+                        if c.protection is not None
+                        and c.protection.locked is False]
+            assert len(unlocked) >= len(manifest["giay_to_kem"]), case_id
+
+
 def main() -> int:
-    for fn in (rtc1, rtc2, rtc3, rtc4, rtc5, rtc6, rtc7, rtc8, rtc9, rtc10):
+    for fn in (rtc1, rtc2, rtc3, rtc4, rtc5, rtc6, rtc7, rtc8, rtc9, rtc10,
+               rtc11, rtc12, rtc13):
         fn()
     passed = sum(1 for ok, _ in _results if ok)
     failed = len(_results) - passed

@@ -2522,7 +2522,10 @@
     $('#btn-export2').addEventListener('click', doExport);
     $('#btn-save-draft').addEventListener('click', saveDraftFile);
     $('#btn-open-draft').addEventListener('click', openDraftFile);
-    $('#btn-export-excel').addEventListener('click', exportQuestionnaire);
+    // X5: phiếu Excel v1 — NẠP giữ nguyên; XUẤT v1 đã ẨN khỏi index.html
+    // (E4 2026-09-10, owner chốt) nên wiring phải null-safe.
+    var btnExportExcelV1 = $('#btn-export-excel');
+    if (btnExportExcelV1) btnExportExcelV1.addEventListener('click', exportQuestionnaire);
     $('#btn-import-excel').addEventListener('click', importQuestionnaire);
     // E2: workbook Excel case-level
     $('#btn-export-case-excel').addEventListener('click', exportCaseWorkbook);

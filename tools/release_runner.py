@@ -106,6 +106,9 @@ SUITES: list[dict] = [
     #     underline, chu_hkd.ho_ten M01, LO normalize outdir tạm) ---
     {"name": "test_phase5_ui_fixes",      "type": "module", "target": "tools.test_phase5_ui_fixes",
      "requires": ["python-docx"]},
+    # Owner visual finding 2026-09-10: email label/value không được tách dòng.
+    {"name": "test_email_label_wrap",     "type": "module", "target": "tools.test_email_label_wrap",
+     "requires": ["python-docx"]},
     # --- Phase 5R0 (2026-09-03): gate visual — fixture semantic + detector
     #     hai chiều (bắt injected defect, qua nội dung hợp lệ). Suite synthetic
     #     này phải xanh tuyệt đối: nó là điều kiện tin gate corpus RED/GREEN.

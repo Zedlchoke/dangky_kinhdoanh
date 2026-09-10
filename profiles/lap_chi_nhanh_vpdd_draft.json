@@ -33,6 +33,9 @@
    "fax": "",
    "email_tru_so": "",
    "website": "",
+   "ds_nganh.ten_nganh": "",
+   "ds_nganh.ma_nganh": "",
+   "ds_nganh.la_nganh_chinh": "",
    "vppd_noi_dung": "",
    "ho_ten_in_hoa": "",
    "ngay_sinh": "",
@@ -106,5 +109,13 @@
    "chk_ctck": ""
   }
  },
- "tables": {}
+ "tables": {
+  "PLI_M17|ds_nganh": [
+   {
+    "ten_nganh": "",
+    "ma_nganh": "",
+    "la_nganh_chinh": ""
+   }
+  ]
+ }
 }

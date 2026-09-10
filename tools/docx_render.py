@@ -105,6 +105,62 @@ def _subst_vars(xml: str, data: dict) -> str:
 
 
 # ---------------------------------------------------------------------------
+# Contact label/value cohesion (owner review 2026-09-10)
+#
+# Một số mẫu đặt email/website cùng paragraph. Khi không còn chỗ, Word được
+# phép ngắt sau dấu ':', để nhãn ở cuối dòng trước còn giá trị rơi xuống dòng
+# sau. Dùng NBSP ngay sau dấu ':' để nhãn + giá trị cùng chuyển xuống dòng kế
+# tiếp. Nếu chính email/URL dài hơn bề rộng trang, Word vẫn có thể ngắt bên
+# trong giá trị để không tràn lề.
+# ---------------------------------------------------------------------------
+
+_PARAGRAPH_XML_RE = re.compile(r"<w:p(?:\s[^>]*)?>.*?</w:p>", re.S)
+_WORD_TEXT_XML_RE = re.compile(
+    r"(<w:t(?:\s[^>]*)?>)(.*?)(</w:t>)", re.S)
+
+
+_CONTACT_LABEL_VALUE_RE = re.compile(
+    r"(?:Thư điện tử|Website)\s*(?:\([^)]*\))?\s*:\x20", re.I)
+
+
+def _keep_contact_label_with_value(xml: str) -> str:
+    """Đổi khoảng trắng sau nhãn email/website thành NBSP.
+
+    Nhãn trong DOCX thường tách thành nhiều run (ví dụ ``(nếu có)`` in
+    nghiêng), nên ghép các ``w:t`` trong từng paragraph để định vị mọi nhãn.
+    Chỉ thay dấu cách ngay sau ``:`` của nhãn, không đụng nội dung email/URL.
+    """
+    def rewrite_paragraph(match: re.Match) -> str:
+        paragraph = match.group(0)
+        text_nodes = list(_WORD_TEXT_XML_RE.finditer(paragraph))
+        plain_text = "".join(node.group(2) for node in text_nodes)
+        keep_positions = {
+            match.end() - 1
+            for match in _CONTACT_LABEL_VALUE_RE.finditer(plain_text)
+        }
+        if not keep_positions:
+            return paragraph
+
+        out: list[str] = []
+        pos = 0
+        text_offset = 0
+        for text_match in text_nodes:
+            out.append(paragraph[pos:text_match.start()])
+            text = text_match.group(2)
+            chars = list(text)
+            for index in range(len(chars)):
+                if text_offset + index in keep_positions:
+                    chars[index] = "\u00a0"
+            out.append(text_match.group(1) + "".join(chars) + text_match.group(3))
+            text_offset += len(text)
+            pos = text_match.end()
+        out.append(paragraph[pos:])
+        return "".join(out)
+
+    return _PARAGRAPH_XML_RE.sub(rewrite_paragraph, xml)
+
+
+# ---------------------------------------------------------------------------
 # Phase 6V-V2 (C3, Q-V1 đã chốt 2026-09-04): tick checkbox = ô vuông VẼ
 # BẰNG VIỀN + X bên trong
 #
@@ -499,6 +555,7 @@ def render(template_path: str | os.PathLike, data: dict,
                     # (trước subst thường để tag bị tiêu thụ tại đây)
                     xml = _chk_glyph_boxes(xml, payload)
                     xml = _subst_vars(xml, payload)
+                    xml = _keep_contact_label_with_value(xml)
                     if name == "word/document.xml":
                         # Phase 5R1 (WLAY-001): loại marker source-indicator
                         # sau khi conditions/loops/subst đã chốt văn bản.

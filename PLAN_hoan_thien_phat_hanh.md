@@ -1,5 +1,58 @@
 # Kế hoạch hoàn thiện và phát hành — Word, Excel, Windows `.exe`, macOS `.app`
 
+> **CẬP NHẬT TRIỂN KHAI 2026-09-10 (sau wave W1 + E0–E3 + P0/P1-prep):**
+> Baseline kiểm tra lại tại `main@d7ec076` (đã pull origin, tree sạch): runner
+> **68 PASS / 1 FAIL** — FAIL duy nhất là H7.4 (4 file của `d7ec076` thiếu
+> entry manifest diff; đã đồng bộ trong wave W1). Số liệu "61/4 FAIL cần
+> soffice" ở bản plan gốc đã **stale**: LibreOffice 26.8.0.3 có sẵn tại
+> `/opt/homebrew/bin/soffice` — W0 ĐÓNG (manifest môi trường
+> `docs/audits/w0_env_manifest_2026-09-10.md`).
+>
+> **Đã xong (evidence thật, commit riêng từng wave trên main):**
+> - **W1 (commit `2c58a1d`)** — corpus v3 `phase10_contact` 450 record
+>   (90 render-unit × 5 fixture) từ HEAD sạch: HARD 0, candidate 7 đã
+>   adjudicate (D9 M10 ×5 pixel-OK; D5 M45 ×2 allowlist (i)), determinism ×2
+>   450/450, ZIP 37/37, PNG 1717==đĩa; sweep nhãn Email/Website **67/86 form,
+>   173 occurrence PASS** (NBSP sống sót LO normalize, 2 lớp kiểm chứng
+>   DOCX+PDF qua Bridge.export) —
+>   `docs/audits/phase10_contact_corpus_2026-09-10.md`; A-8 trim M45/M53
+>   registry-gated (M45 empty-paper 2→1 trang; M53 còn ~1–3pt chờ owner P1.2
+>   A4 geometry); F7-N3/N5 đóng. Human sign-off corpus v3 vẫn
+>   **NOT_REVIEWED** (O5).
+> - **Excel E0–E3 (commit `8c41da2`)** — workbook case-level: manifest
+>   `app/data/case_questionnaires/` 28 case (id/version/sha256, per-form
+>   `content_review`); exporter `Hướng_dẫn / Thông_tin_chung /
+>   01_<tên mẫu> / Giấy_tờ_cần_gửi (watermark CHỜ DUYỆT) + __map/__lists
+>   veryHidden` + CHECKSUM sha256 + shared-key mirror + escape `=,+,-,@`;
+>   importer verify contract/checksum TRƯỚC khi đọc, 14 mã lỗi fail-loud,
+>   tái tạo candidate draft v2 NGUYÊN TỬ (không merge vào draft; UI confirm
+>   = nút hủy duy nhất); bridge truyền `case_id` (sanitize đường dẫn); audit
+>   jsonl chỉ hash/đếm không PII; 33 test mới (6+10+17) + JS suites giữ xanh.
+>   **9 case READY, 19 case PENDING** (gate E4 CASE_NOT_READY — không phát
+>   hành file khuyết). Compat Excel Desktop/Calc thật + visual workbook còn
+>   **NOT RUN** (máy không có Excel).
+> - **P0/P1-prep (commit `1075b78`)** — macOS handoff kit
+>   `tools/macos_handoff/` + **build `.app` THẬT trên máy dev** (windowed
+>   onedir, 629 file, repro ×2 chỉ khác timestamp/ad-hoc signature); engine
+>   probe 11/11 trong bundle (DOCX PLI_M72 + PDF soffice + Excel round-trip
+>   48 ô); GUI launch ×2, rescue-copy, S-path Unicode+space PASS; **S2–S6
+>   visual / S7 offline thật / S8 clean-machine = NOT RUN** chờ người chạy
+>   điền verdict. Windows kit: +S6b Excel case-level, spec đủ
+>   hiddenimports/datas (phase5r_expectations, questionnaire, layout_roles,
+>   docx, excel_case_* điều kiện). Windows `.exe` S1–S8 vẫn **NOT RUN**
+>   (không có máy Windows) — đúng blocker plan gốc.
+> - **Integration (commit hiện tại)** — đăng ký 6 suite mới vào release
+>   runner (excel_case ×3, contact_label_corpus, a8_trailing_sig_trim,
+>   f7_notes → **75 suite**), manifest H7 đồng bộ, `open_dir` đa platform,
+>   `.gitignore` +`build/`,`dist/`.
+>
+> **Kết luận hiện tại: TECHNICALLY_READY-PARTIAL / RELEASE_NOT_DONE.** Còn
+> mở: human visual sign-off corpus v3 (O5); Excel compatibility thật + E5
+> content review 19 case (cần owner/legal duyệt questionnaire cho 21 form);
+> chính sách oneOf trên workbook (owner); Windows S1–S8 (O6 — cần máy
+> Windows); macOS S2–S8 manual verdict; M53/A4 geometry (owner). Không
+> tuyên bố `RELEASE_DONE` cho tới khi toàn bộ gate có bằng chứng PASS.
+
 > Lập ngày 10/09/2026, sau kiểm tra tại `main@3f4af84`.
 >
 > **Verdict đầu vào:** chưa phát hành. Release runner tại máy kiểm tra là

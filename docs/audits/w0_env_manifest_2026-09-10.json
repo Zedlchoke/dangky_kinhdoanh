@@ -1,0 +1,48 @@
+{
+  "lane": "W0-env-manifest",
+  "date": "2026-09-10",
+  "repo_head": "d7ec0765d11118d216973edbc91ea73ba399b7b9",
+  "branch": "main",
+  "scope": "manifest môi trường render; Word open chỉ ghi nhận evidence cũ, không ký PASS mới",
+  "core_runtime": {
+    "python3": {"cmd": "python3 --version", "out": "Python 3.13.14"},
+    "libreoffice": {"cmd": "soffice --version", "out": "LibreOffice 26.8.0.3 bce0998afefdbc355585ca324285661a2170ba77", "path": "/opt/homebrew/bin/soffice"},
+    "node": {"cmd": "node --version", "out": "v24.5.0"}
+  },
+  "pip_packages": {
+    "python-docx": {"version": "1.2.0", "pin_requirements_dev": "1.2.0", "match_pin": true},
+    "openpyxl": {"version": "3.1.5", "pin_requirements_dev": "3.1.5", "match_pin": true},
+    "PyMuPDF": {"version": "1.28.2", "pin_requirements_dev": "1.28.2", "match_pin": true},
+    "lxml": {"version": "6.1.1", "pin_requirements_dev": "6.1.1", "match_pin": true},
+    "pywebview": {"version": "6.2.1", "pin_requirements_dev": ">=5.0", "match_pin": true},
+    "playwright": {"version": "1.61.0", "pin_requirements_dev": null, "match_pin": null}
+  },
+  "microsoft_word": {
+    "app_present": true,
+    "path": "/Applications/Microsoft Word.app",
+    "cfbundle_short_version": "16.16.27",
+    "cfbundle_version": "16.16.20101200",
+    "old_evidence": {
+      "file": "generated_ho_so/_visual_layout/phase9_bandfix_v2/word_open/inventory.json",
+      "word_version": "16.16.27",
+      "generated": "2026-09-09T15:03:00",
+      "elapsed_s": 727.4,
+      "records": 90,
+      "pass_open_direct": 90,
+      "note": "evidence cũ phase9_bandfix_v2 — lane W0 không tự ký PASS mới"
+    }
+  },
+  "node_test_runtime": {"version": "v24.5.0", "used_by": ["app_web/test_docx_layout_ui.js", "app_web/test_dom.js", "app_web/test_full_sweep_inventory.js", "app_web/test_f3t_parity.js", "app_web/test_audit_wave_h_negative.js"]},
+  "browser_runtime": {
+    "playwright_chromium": {
+      "executable_path": "/Users/hoangminhlong/Library/Caches/ms-playwright/chromium-1228/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing",
+      "exists": true,
+      "cache_versions": ["chromium-1228", "chromium-1208", "chromium_headless_shell-1228", "ffmpeg-1011"]
+    }
+  },
+  "w0_verdict": {
+    "libreoffice_renderer_ready": true,
+    "suites_blocked_by_missing_env": [],
+    "notes": "Mọi pin requirements-dev.txt khớp env; renderer + Word + chromium đều có mặt."
+  }
+}

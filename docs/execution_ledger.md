@@ -677,3 +677,24 @@ corpus cuối. O5 human review và O6 Windows vẫn là evidence outstanding, kh
 | GUI launch ×2 (restart) sống 12s console sạch; đóng cửa sổ rc=0; rescue-copy marker vào ~/Documents/DangKyKinhDoanh/generated_ho_so PASS; bundle sạch (không profiles/generated_ho_so/99_muc_luc/docs/app_tk/evidence/draft-xlsx); probe từ đường dẫn Unicode+space ALL PASS; pyi-archive_viewer xác nhận module + webview.platforms.cocoa + tkinter.filedialog, 0 module test | lane-đóng-gói | (chưa commit) | assets bền qua restart; không PII trong bundle | `evidence_macos/macOS_pyz_inventory.txt`, `macOS_spctl.txt` |
 | S2–S5 visual (UI render, từng kind dữ liệu, dialog tkinter mở/lưu), S6 export qua UI + mở Word for Mac, S7 offline thật, S8 clean-machine máy khác: **NOT RUN** — cần người chạy nhìn màn hình | — | — | KHÔNG tự PASS phần visual | `tools/macos_handoff/README.md` bảng evidence |
 | App chỉ **ad-hoc sign** (0 codesign identity); `spctl` REJECTED dự kiến — không phải public-ready (PLAN §7.6) | lane-đóng-gói | — | unsigned nội bộ, kèm hash | `evidence_macos/macOS_codesign_status.txt` |
+
+## Wave hoàn-thiện-phát-hành — W1 + Excel case-level + Integration @ d7ec076→ (2026-09-10)
+
+> Điều phối: Lead + 4 lane song song (Excel E0–E3; Word corpus W1; đóng gói
+> P0/P1; audit release test + W0). Baseline đầu phiên: runner 68/1 (H7.4 —
+> 4 file `d7ec076` thiếu entry manifest, đã đồng bộ). Bốn commit: W1 Word →
+> Excel case → packaging → integration.
+
+| Task | Owner | Commit | Gate | Evidence |
+|---|---|---|---|---|
+| W0: manifest môi trường (LO 26.8.0.3 Homebrew, Python 3.13.14, Node 24.5.0, deps khớp pin requirements-dev 100%, Word 16.16.27 có sẵn) | lane-test | (integration) | renderer sẵn sàng — đóng blocker soffice của plan gốc | `docs/audits/w0_env_manifest_2026-09-10.{md,json}` |
+| W1: corpus v3 `phase10_contact` 450 record HARD 0, candidate 7 adjudicate đủ, determinism ×2 450/450, ZIP 37/37, PNG 1717==đĩa; F7-N3 (log --no-write) + F7-N5 (resolve_form_inventory) | lane-word | `2c58a1d` | `phase5_visual_gate` inventory động 90 unit | `docs/audits/phase10_contact_corpus_2026-09-10.md`; `generated_ho_so/_visual_layout/phase10_contact/` |
+| W1: sweep nhãn Email/Website 67/86 form, 173 occurrence — NBSP `:` sống sót LO normalize, 2 lớp DOCX XML + PDF hình học qua Bridge.export | lane-word | `2c58a1d` | `test_contact_label_corpus` 6/6 exit 0 | `_sweep/` 72 unit |
+| W1: A-8 P1.1(a) `_trim_trailing_sig_before` registry-gated M45/M53 — M45 empty-paper 2→1 trang (pagination delta đúng 1/450 record); M53 còn ~1–3pt chờ owner P1.2 A4 | lane-word | `2c58a1d` | `test_a8_trailing_sig_trim` 11/11; `test_f7_notes` 5/5; allowlist D5 prune 1 + add 2 (i) | allowlist changelog `[phase10]` |
+| Excel E0: `build_case_questionnaires` → `app/data/case_questionnaires/` 28 case (id/version/sha256, per-form content_review approved|pending; pending questions=[]) | lane-excel | `8c41da2` | `test_case_questionnaires` 6/0; `--check` exit 0 | builder CLI |
+| Excel E1: workbook case-level — Hướng_dẫn/Thông_tin_chung/01_<tên mẫu>/Giấy_tờ_cần_gửi (watermark) + __map/__lists veryHidden + CHECKSUM + shared-key mirror + escape formula | lane-excel | `8c41da2` | round-trip 10/0 | `tools/excel_case_export.py` |
+| Excel E2: importer verify trước-đọc, 14 mã lỗi fail-loud, candidate draft v2 NGUYÊN TỬ (không merge; UI confirm=hủy); bridge case_id sanitized; audit jsonl không PII; open_dir đa platform | lane-excel | `8c41da2` | negative 17/0; JS wiring/dom/p3 giữ xanh | `tools/excel_case_import.py` |
+| Excel rollout E4: 9 case READY / 19 PENDING → CASE_NOT_READY chặn phát hành file khuyết; compat Excel Desktop/Calc + visual workbook NOT RUN (không có Excel thật) | lane-excel | `8c41da2` | gate flag trong bridge | manifest per-case |
+| Packaging P1: build `.app` thật ×2 (629 file, nội dung GIỐNG 100%), engine probe 11/11 trong bundle, GUI launch ×2, rescue-copy, S-path Unicode PASS; S2–S6/S7/S8 manual NOT RUN; unsigned (0 identity) | lane-đóng-gói | `1075b78` | evidence ngoài git | `~/Documents/DangKyKinhDoanh/evidence_macos/` |
+| Packaging P0: Windows kit audit — +S6b Excel case, spec +phase5r_expectations/questionnaire/layout_roles/docx/excel_case-conditional, admin preflight, docs PLAN §6.4; **.exe S1–S8 vẫn NOT RUN (không có máy Windows)** | lane-đóng-gói | `1075b78` | docs/checklist đồng bộ | `tools/windows_handoff/README.md` |
+| Integration: runner +6 suite (=75), H7 manifest đồng bộ (d7ec076 backlog + mọi wave), .gitignore build/dist, PLAN progress | Lead | (integration) | runner full + H7 + compileall tại HEAD cuối | `/tmp` json |

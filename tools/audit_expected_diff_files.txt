@@ -705,7 +705,7 @@ docs/audits/phase9_bandfix_audit_2026-09-09.md
 KE_HOACH_TONG_HOP_2026-09-09.md
 
 # --- [d7ec076 2026-09-10] fix nhãn Email/Website (EML-001/WEB-001) + plan hoàn thiện phát hành ---
-PLAN_hoan_thien_pfat_hanh.md
+PLAN_hoan_thien_phat_hanh.md
 profiles/lap_chi_nhanh_vpdd_draft.json
 tools/build_review_batch.py
 tools/test_email_label_wrap.py
@@ -730,3 +730,7 @@ tools/macos_handoff/build_app.sh
 tools/macos_handoff/run_smoke_mac.sh
 tools/macos_handoff/entitlements.plist
 tools/macos_handoff/README.md
+
+# --- [integration 2026-09-10] W0 env manifest (renderer sẵn sàng — đóng blocker soffice plan gốc) ---
+docs/audits/w0_env_manifest_2026-09-10.md
+docs/audits/w0_env_manifest_2026-09-10.json

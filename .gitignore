@@ -4,3 +4,5 @@ generated_ho_so/
 .webview_deps/
 .DS_Store
 .v2c/
+build/
+dist/

@@ -83,6 +83,11 @@ SUITES: list[dict] = [
     # --- Excel X4 (2026-08-28): round-trip + negative ---
     {"name": "test_excel_roundtrip",      "type": "module", "target": "tools.test_excel_roundtrip"},
     {"name": "test_excel_negative",       "type": "module", "target": "tools.test_excel_negative"},
+    # --- Excel case-level E0-E3 (2026-09-10, PLAN_hoan_thien_pfat_hanh §5):
+    #     manifest 28 case + workbook case-level round-trip + negative ---
+    {"name": "test_case_questionnaires",  "type": "module", "target": "tools.test_case_questionnaires"},
+    {"name": "test_excel_case_roundtrip", "type": "module", "target": "tools.test_excel_case_roundtrip"},
+    {"name": "test_excel_case_negative",  "type": "module", "target": "tools.test_excel_case_negative"},
     # --- Python ---
     {"name": "p1_b_verify_m72",           "type": "module", "target": "tools.census.p1_b_verify_m72",
      "requires": ["python-docx"]},
@@ -109,6 +114,14 @@ SUITES: list[dict] = [
     # Owner visual finding 2026-09-10: email label/value không được tách dòng.
     {"name": "test_email_label_wrap",     "type": "module", "target": "tools.test_email_label_wrap",
      "requires": ["python-docx"]},
+    # --- W1 corpus (2026-09-10, PLAN_hoan_thien_pfat_hanh §4): sweep nhãn
+    #     Email/Website TOÀN template qua Bridge.export (cần soffice) + A-8
+    #     trim cụm ký cuối M45/M53 + pin F7-N3/N5 ---
+    {"name": "test_contact_label_corpus", "type": "module", "target": "tools.test_contact_label_corpus",
+     "requires": ["python-docx"]},
+    {"name": "test_a8_trailing_sig_trim", "type": "module", "target": "tools.test_a8_trailing_sig_trim",
+     "requires": ["python-docx"]},
+    {"name": "test_f7_notes",             "type": "module", "target": "tools.test_f7_notes"},
     # --- Phase 5R0 (2026-09-03): gate visual — fixture semantic + detector
     #     hai chiều (bắt injected defect, qua nội dung hợp lệ). Suite synthetic
     #     này phải xanh tuyệt đối: nó là điều kiện tin gate corpus RED/GREEN.

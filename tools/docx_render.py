@@ -590,6 +590,12 @@ def render(template_path: str | os.PathLike, data: dict,
                         # instruction — sau khi conditions/loops đã chốt
                         # cấu trúc.
                         xml = _ensure_signature_space(xml, form_id)
+                        # [A-8 P1.1(a)] zero w:before cụm ký CUỐI body (chỉ
+                        # form registry trailing_before_trim) — chạy SAU
+                        # _ensure_signature_space (pass (a) của pass đó đọc
+                        # w:before>=120 của title để quyết không chèn dòng
+                        # trống phía trên) và TRƯỚC _pin_table_quality.
+                        xml = _trim_trailing_sig_before(xml, form_id)
                         # Phase 5R Lane C (WLAY-008/C2): pin chất lượng
                         # bảng — tblHeader hàng header thật, cantSplit mọi
                         # hàng, tblW = tổng grid (pct giữ nguyên). Đặt CUỐI
@@ -1334,6 +1340,80 @@ def _trim_trailing_sig_gap(xml: str) -> str:
     new_sp = re.sub(r'w:before="\d+"', 'w:before="0"', sp.group(0), count=1)
     new_body = (body[:s_prev] + seg_sig[:sp.start()] + new_sp +
                 seg_sig[sp.end():] + body[e_sig:])
+    return xml[:bm.start(2)] + new_body + xml[bm.end(2):]
+
+
+# ---------------------------------------------------------------------------
+# [A-8 P1.1(a) — PLI_M45/M53: cụm ký mồ côi trang 2] Render-equivalent của
+# phương án (a) trong KE_HOACH §P1.1. Tail thực tế sau render (đã qua
+# _drop_trailing_empty_para): [..][para rỗng (before=120)][para nội dung
+# "Nơi nhận…" (before=120)][para tiêu đề cụm ký (before=120, keepLines)]
+# [sectPr] — cụm ký là khối keepLines, trang trước còn 25pt (M45) / 6.5pt
+# (M53) trong khi cụm cao 27.2pt → tràn sang trang 2 mồ côi (audit phase9
+# A-8, đo trên corpus v2 empty-paper). Điều trị whitespace-only CHO FORM
+# ĐĂNG KÝ TRONG REGISTRY (phase5r_expectations.signature.
+# trailing_before_trim = PLI_M45/M53; 35 form khác cùng shape tail KHÔNG
+# đụng để tránh churn phân trang toàn corpus):
+#   1) zero w:before của paragraph tiêu đề cụm ký cuối body;
+#   2) xoá paragraph rỗng kề TRƯỚC paragraph nội dung cuối ("nén para rỗng
+#      phía sau khối nội dung, trước cụm ký") — thu hồi ~1 dòng (20pt),
+#      đủ cho M45 (còn dư ~17pt); M53 còn thiếu ~1-3pt → cận biên đúng như
+#      audit P1.1(a) ghi, phần dư thuộc phương án (c) P1.2 (A4 geometry).
+# Chạy SAU _ensure_signature_space: pass (a) của pass đó đọc w:before >= 120
+# của title để quyết KHÔNG chèn dòng trống phía trên — zero trước là pass (a)
+# sẽ chèn ngược (~14pt), thủ tiêu công dụng. Idempotent: lần sau before=0
+# < 120 -> xml nguyên vẹn. Không khớp bất kỳ vế -> byte-identical.
+# ---------------------------------------------------------------------------
+
+def _trim_trailing_sig_before(xml: str, form_id: str | None) -> str:
+    """Zero w:before cụm ký cuối body + xoá para rỗng kề trước nội dung cuối
+    (registry-gated trailing_before_trim). Không khớp điều kiện -> nguyên."""
+    sig = ((_signature_expectations().get(form_id or "") or {})
+           .get("signature") or {})
+    if not sig.get("trailing_before_trim"):
+        return xml
+    bm = _BODY_RE.search(xml)
+    if not bm:
+        return xml
+    body = bm.group(2)
+    spans = _split_body_children(body)
+    if len(spans) < 4:
+        return xml
+    if not body[spans[-1][0]:spans[-1][1]].startswith("<w:sectPr"):
+        return xml  # sau cụm ký còn nội dung khác — không phải đuôi
+    s_sig, e_sig = spans[-2]
+    seg_sig = body[s_sig:e_sig]
+    if not seg_sig.startswith("<w:p"):
+        return xml
+    if not _SIG_TITLE_RE.search(_sig_para_text(seg_sig)):
+        return xml
+    sp = _SIG_SPACING_RE.search(seg_sig)
+    if not (sp and int(sp.group(1)) >= 120):
+        return xml  # đã trim (idempotent) hoặc before không đủ ngưỡng
+    s_prev, e_prev = spans[-3]
+    seg_prev = body[s_prev:e_prev]
+    if not seg_prev.startswith("<w:p"):
+        return xml
+    texts_prev = "".join(re.findall(r"<w:t[^>]*>([^<]*)</w:t>", seg_prev))
+    if not texts_prev.strip():
+        return xml  # para kề trên cụm rỗng -> vùng E4 (_trim_trailing_sig_gap)
+    # para rỗng đứng ngay TRƯỚC paragraph nội dung cuối -> xoá (thu hồi dòng)
+    s_empty = e_empty = None
+    if len(spans) >= 5:
+        s_e, e_e = spans[-4]
+        seg_e = body[s_e:e_e]
+        if seg_e.startswith("<w:p"):
+            texts_e = "".join(re.findall(r"<w:t[^>]*>([^<]*)</w:t>", seg_e))
+            if (not texts_e.strip()
+                    and not _TRAILING_EMPTY_HAS_CONTENT_RE.search(seg_e)):
+                s_empty, e_empty = s_e, e_e
+    new_sp = re.sub(r'w:before="\d+"', 'w:before="0"', sp.group(0), count=1)
+    seg_sig_new = seg_sig[:sp.start()] + new_sp + seg_sig[sp.end():]
+    if s_empty is None:
+        new_body = body[:s_sig] + seg_sig_new + body[e_sig:]
+    else:
+        new_body = (body[:s_empty] + body[e_empty:s_sig] +
+                    seg_sig_new + body[e_sig:])
     return xml[:bm.start(2)] + new_body + xml[bm.end(2):]
 
 

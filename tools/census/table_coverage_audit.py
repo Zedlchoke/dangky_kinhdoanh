@@ -1759,6 +1759,11 @@ def main(argv=None):
             json.dump(payload, f, ensure_ascii=False, indent=1)
         with open(OUT_MD, "w", encoding="utf-8") as f:
             f.write(build_md(rows, totals, drifts, head))
+    # [F7-N3] log trung thực: --no-write không ghi file thì không được in
+    # "wrote …" (gây nhầm là đã ghi đè docs khi git status sạch).
+    wrote_line = ("no-write: KHÔNG ghi %s / %s (chỉ verdict)" % (OUT_JSON, OUT_MD)
+                  if no_write else
+                  "wrote %s\nwrote %s" % (OUT_JSON, OUT_MD))
 
     print("sections: %d | forms: %d | head: %s" % (len(rows), len(forms), head))
     print("totals:", dict(totals))
@@ -1768,10 +1773,10 @@ def main(argv=None):
         for d in drifts:
             print("  [%s] %s / %s — %s"
                   % (d["gate"], d["form_id"], d["section_id"], d["detail"]))
-        print("\nwrote %s\nwrote %s" % (OUT_JSON, OUT_MD))
+        print("\n" + wrote_line)
         return 1
     print("\nGATE PASS — no drift")
-    print("wrote %s\nwrote %s" % (OUT_JSON, OUT_MD))
+    print(wrote_line)
     return 0
 
 

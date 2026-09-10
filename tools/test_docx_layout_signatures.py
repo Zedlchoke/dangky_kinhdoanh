@@ -69,6 +69,15 @@ from tools.docx_render import (  # noqa: E402
 SIG_MARK_RE = re.compile(r"\((?:Ký|Đã ký)")
 GLYPH = "\u25a1"  # □ — ô vuông checkbox trên bản giấy nguồn
 
+# [A-8 P1.1(a) 2026-09-10] form đăng ký trim cụm ký cuối body — đọc ĐỘNG từ
+# registry (test_a8_trailing_sig_trim pin exact-set PLI_M45/M53)
+_A8_EXPECT = json.loads(
+    (ROOT / "tools" / "phase5r_expectations.json").read_text(encoding="utf-8"))
+A8_TRAILING_TRIM = {
+    fid for fid, entry in _A8_EXPECT.items()
+    if isinstance(entry, dict)
+    and (entry.get("signature") or {}).get("trailing_before_trim")}
+
 # Pin BLOCKED_OWNER (Class 7, mức MẤT NỘI DUNG — ngoài ownership render):
 # title ký có trong nguồn giấy mà không có trong template/render. Mapping
 # blocks PLI_M09 không chứa 4 đoạn ký cuối mỗi section
@@ -259,6 +268,14 @@ def main() -> int:
         # T1: render phải thỏa chuẩn vùng trống trên title ký
         for cname, _i, t, sp, blanks in ren_rows:
             if blanks == 0 and sp < MIN_SPACING_BEFORE:
+                # [A-8 P1.1(a) 2026-09-10] ngoại lệ có chủ đích: form đăng ký
+                # trailing_before_trim (PLI_M45/M53) bị render pass
+                # _trim_trailing_sig_before zero w:before của cụm ký CUỐI body
+                # chống mồ côi trang 2 — sp==0 chỉ có thể sinh từ trim đó
+                # (render thường luôn giữ 120). Hợp đồng riêng của fix nằm ở
+                # tools/test_a8_trailing_sig_trim.py.
+                if fid in A8_TRAILING_TRIM and sp == 0:
+                    continue
                 render_std_fail.append("%s/%s sp=%d blanks=0 | %r"
                                        % (fid, cname, sp, norm(t)[:45]))
 

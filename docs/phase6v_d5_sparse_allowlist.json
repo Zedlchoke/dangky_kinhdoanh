@@ -1,12 +1,12 @@
 {
  "version": "1+v7.2",
- "date": "2026-09-09",
- "lane": "agent/f3-corpus-v2 (F3 corpus phase8g, HEAD b1bf058 sau F3T+F3H+render-fix)",
- "source_adjudication": "docs/audits/6v/v4-visual-audit.md — 72 hit D5_blank_sparse: 59 (i) + 7 (ii) + 6 (iii) đã fix ở việc 1; allowlist này liệt kê lại các hit (i)/(ii) đo trên corpus v4b_finalcheck (455 record, template+fixture sau V4b, 2026-09-05 tối) + 2 hit mới lớp (ii) do việc 7a (ngày đủ định dạng). | [f3 2026-09-07] +8 hit corpus phase8f_final (450 record sau fixture-fix + M11 loại catalog): 5 (ii) M12 p13 banner-section + 3 (i) M52 trang cuối dời trang. | [f3v2 2026-09-08] +3 hit corpus phase8g (450 record sau F3T _expand_loops max(K,N) + render-fix RFIX-1/2/4 — pagination M72/M26 dời): 3 (i) trang cuối/section cuối tự nhiên. | [f3v2-final 2026-09-08] +2 hit corpus phase8g_v2 (450 record sau N-only sync d70fe14 — pagination dời nữa, 1737 PNG): 1 (i) empty-paper/m72_dhdn M72 p2 mục '8. Nơi đăng ký' (cùng lớp entry valid-minimal/m72_dhdn p2) + 1 (ii) long-boundary/main/PLII_M01 p3 dòng mục '5.3. Tổng số lao động' đứng trang riêng (long-boundary đẩy section, nội dung nguyên vẹn, theo ngay sau p2).",
+ "date": "2026-09-10",
+ "lane": "agent/w1-corpus-word (W1 corpus phase10_contact, HEAD d7ec076 + lane render patch)",
+ "source_adjudication": "docs/audits/6v/v4-visual-audit.md — 72 hit D5_blank_sparse: 59 (i) + 7 (ii) + 6 (iii) đã fix ở việc 1; allowlist này liệt kê lại các hit (i)/(ii) đo trên corpus v4b_finalcheck (455 record, template+fixture sau V4b, 2026-09-05 tối) + 2 hit mới lớp (ii) do việc 7a (ngày đủ định dạng). | [f3 2026-09-07] +8 hit corpus phase8f_final (450 record sau fixture-fix + M11 loại catalog): 5 (ii) M12 p13 banner-section + 3 (i) M52 trang cuối dời trang. | [f3v2 2026-09-08] +3 hit corpus phase8g (450 record sau F3T _expand_loops max(K,N) + render-fix RFIX-1/2/4 — pagination M72/M26 dời): 3 (i) trang cuối/section cuối tự nhiên. | [f3v2-final 2026-09-08] +2 hit corpus phase8g_v2 (450 record sau N-only sync d70fe14 — pagination dời nữa, 1737 PNG): 1 (i) empty-paper/m72_dhdn M72 p2 mục '8. Nơi đăng ký' (cùng lớp entry valid-minimal/m72_dhdn p2) + 1 (ii) long-boundary/main/PLII_M01 p3 dòng mục '5.3. Tổng số lao động' đứng trang riêng (long-boundary đẩy section, nội dung nguyên vẹn, theo ngay sau p2). | [phase10 2026-09-10] corpus phase10_contact (450 record, HEAD d7ec076 + A-8 render fix): prune 1 entry stale empty-paper/main/PLI_M45 p2 (M45 empty-paper về 1 TRANG sau fix A-8) + 2 entry (i) mới valid-full/main/PLI_M45 p2 và choice-variants/main/PLI_M45 p2 (108 chars, chỉ cụm ký — nguyên nhân: fix A-8 kéo '- Lưu…' về p1); M45 valid-minimal p2 (38 chars) và M53 ×2 còn hit, entry giữ nguyên.",
  "mechanism": "gate nạp mặc định (tools/phase5_visual_gate.py --allowlist); hit SPARSE khớp (fixture, tag, form, page) — khóa vắng = wildcard — được ghi verdict vào record['d5_adjudicated'] thay vì candidate 'chưa adjudicate'.",
- "count": 55,
+ "count": 56,
  "by_class": {
-  "(i)": 62,
+  "(i)": 63,
   "(ii)": 15
  },
  "blank_pages": [],
@@ -138,14 +138,6 @@
    "page": 2,
    "adjudication": "(i)",
    "reason": "[f3v2] trang cuối tự nhiên: 'Nơi nhận:' (- Như trên; - ; - Lưu:) + khối chữ ký TRƯỞNG PHÒNG (Ký, ghi họ tên và đóng dấu) — cùng lớp entry M52/M17 cũ; pixel phase8g/empty-paper/main/PLII_M26/page-02.png"
-  },
-  {
-   "fixture": "empty-paper",
-   "tag": "main",
-   "form": "PLI_M45",
-   "page": 2,
-   "adjudication": "(i)",
-   "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
   },
   {
    "fixture": "empty-paper",
@@ -450,6 +442,22 @@
    "page": 3,
    "adjudication": "(i)",
    "reason": "trang cuối tự nhiên: khối chữ ký / Nơi nhận / '- Lưu:' / chỉ dẫn ký cuối hồ sơ — adjudicate auditor (i)"
+  },
+  {
+   "fixture": "valid-full",
+   "tag": "main",
+   "form": "PLI_M45",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "[phase10 2026-09-10] trang cuối tự nhiên lớp (i): fix A-8 P1.1(a) (_trim_trailing_sig_before — zero w:before + nén para rỗng trước 'Nơi nhận') kéo dòng '- Lưu:…' về p1, p2 chỉ còn cụm ký TRƯỜNG ĐƠN VỊ/(Ký, ghi họ tên và đóng dấu) 108 chars — cụm không bị TÁCH, đúng thông lệ in (adjudicate lớp (i) như các entry M45 trước đây)"
+  },
+  {
+   "fixture": "choice-variants",
+   "tag": "main",
+   "form": "PLI_M45",
+   "page": 2,
+   "adjudication": "(i)",
+   "reason": "[phase10 2026-09-10] trang cuối tự nhiên lớp (i): fix A-8 P1.1(a) (_trim_trailing_sig_before — zero w:before + nén para rỗng trước 'Nơi nhận') kéo dòng '- Lưu:…' về p1, p2 chỉ còn cụm ký TRƯỜNG ĐƠN VỊ/(Ký, ghi họ tên và đóng dấu) 108 chars — cụm không bị TÁCH, đúng thông lệ in (adjudicate lớp (i) như các entry M45 trước đây)"
   }
  ],
  "prune_note": "[phase9 v2 2026-09-09] prune 26 entry stale (mất hit sau wave2/wave3: E1 bảng ký M70 gọn trang, E3 nén run rỗng m72, B6 de-dup, C3/C4 nhãn Mẫu số, B1/B2 dữ liệu bảng) + thêm 4 entry (ii) đã Lead duyệt ảnh — evidence docs/audits/phase9_bandfix_audit_2026-09-09.md"

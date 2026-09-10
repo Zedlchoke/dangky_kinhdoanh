@@ -1270,6 +1270,23 @@ def assert_png_disk_matches_manifest(out_root: Path, records: list[dict],
             "ok": claimed == disk and not mismatches}
 
 
+def resolve_form_inventory(
+        maps: dict, forms_arg: str) -> tuple[list[str], list[tuple[str, str]]]:
+    """[F7-N5] Inventory form của gate từ tham số --forms.
+
+    'all' (mặc định) -> active_form_ids: lọc form mang marker
+    current_law_status inactive (vd PLI_M11 REMOVED_BY_CURRENT_LAW —
+    TT 121/2026 bãi bỏ Mẫu 11) ra KHỎI corpus; trước đây sorted(maps) đưa
+    cả form đã bãi bỏ vào render + manifest. Chuỗi id khác -> dùng nguyên
+    danh sách truyền tay (escape hatch cho re-shoot cục bộ).
+
+    Trả về (form_ids, skipped) — skipped chỉ có ý nghĩa khi 'all'.
+    """
+    if forms_arg == "all":
+        return active_form_ids(maps, log=print)
+    return [f.strip() for f in forms_arg.split(",") if f.strip()], []
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--fixtures", default=",".join(FIXTURES))
@@ -1287,15 +1304,7 @@ def main() -> int:
             print("fixture không hợp lệ: %r" % f)
             return 2
     maps = json.loads(MAPS_PATH.read_text(encoding="utf-8"))
-    skipped: list[tuple[str, str]] = []
-    if args.forms == "all":
-        # [wave2-B5] inventory ĐỘNG như phase5_export_corpus: form mang marker
-        # current_law_status inactive (vd PLI_M11 REMOVED_BY_CURRENT_LAW —
-        # TT 121/2026 bãi bỏ Mẫu 11) phải ra KHỎI corpus; trước đây
-        # sorted(maps) đưa cả form đã bãi bỏ vào render + manifest.
-        form_ids, skipped = active_form_ids(maps, log=print)
-    else:
-        form_ids = [f.strip() for f in args.forms.split(",") if f.strip()]
+    form_ids, skipped = resolve_form_inventory(maps, args.forms)
     # [wave2-B5] render-unit đếm ĐỘNG (không hard-code): batch 'main' =
     # mọi form active TRỪ PLI_M72; PLI_M72 (nếu active) render 1 DOCX riêng
     # cho MỖI variant trong M72_VARIANTS.

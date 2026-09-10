@@ -624,8 +624,9 @@
   "signature": {
    "signers": 1,
    "keep_together": true,
-   "evidence": "census 5R2 template: 1 cụm ký ((không nhãn)) với chỉ thị '(Ký, ghi họ tên và đóng dấu)' — ngoài ngữ pháp detector D6 nên không đo orientation được; keep_together vẫn áp ở render (B3).",
-   "min_write_gap_pt": 72
+   "evidence": "census 5R2 template: 1 cụm ký ((không nhãn)) với chỉ thị '(Ký, ghi họ tên và đóng dấu)' — ngoài ngữ pháp detector D6 nên không đo orientation được; keep_together vẫn áp ở render (B3). [A-8 2026-09-10] trailing_before_trim: cụm ký là paragraph NỘI DUNG CUỐI body (audit phase9 A-8 — cụm mồ côi trang 2, P1.1(a)); render zero w:before của paragraph tiêu đề cụm ký cuối, thu hồi 6pt chống tràn trang — whitespace-only, không đụng nội dung pháp lý.",
+   "min_write_gap_pt": 72,
+   "trailing_before_trim": true
   }
  },
  "PLI_M46": {
@@ -689,8 +690,9 @@
   "signature": {
    "signers": 1,
    "keep_together": true,
-   "evidence": "census 5R2 template: 1 cụm ký ((không nhãn)) với chỉ thị '(Ký, ghi họ tên và đóng dấu)' — ngoài ngữ pháp detector D6 nên không đo orientation được; keep_together vẫn áp ở render (B3).",
-   "min_write_gap_pt": 72
+   "evidence": "census 5R2 template: 1 cụm ký ((không nhãn)) với chỉ thị '(Ký, ghi họ tên và đóng dấu)' — ngoài ngữ pháp detector D6 nên không đo orientation được; keep_together vẫn áp ở render (B3). [A-8 2026-09-10] trailing_before_trim: cụm ký là paragraph NỘI DUNG CUỐI body (audit phase9 A-8 — cụm mồ côi trang 2, P1.1(a)); render zero w:before của paragraph tiêu đề cụm ký cuối, thu hồi 6pt chống tràn trang — whitespace-only, không đụng nội dung pháp lý.",
+   "min_write_gap_pt": 72,
+   "trailing_before_trim": true
   }
  },
  "PLI_M54": {

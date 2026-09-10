@@ -8,6 +8,8 @@
 # --- Excel X2: xuat phieu xlsx (protection/dropdown/mau) + pin openpyxl ---
 # --- Excel X3: nap phieu xlsx fail-loud, dich question_id -> data_key ---
 # --- Excel X4: round-trip + negative (gate PLAN 4.4) ---
+# --- Excel E0-E3: workbook case-level — manifest case sinh từ use_cases +
+#     questionnaire form-level; regen bang: python3 -X utf8 -m tools.build_case_questionnaires
 # --- Fix lớp lỗi checkbox dẹt thành text (lệnh owner 2026-08-28) ---
 # --- Handoff Lead kế tiếp (docs-only): Excel X6 + rollout bảng + header ---
 # --- lane cap-von (merge fc07c69): 3a nguồn vốn TT 121 + 3b thuế PLII_M02 ---
@@ -671,3 +673,14 @@ tools/test_wave3_paginate.py
 # --- [phase9 bandfix QA 2026-09-09] audit table + kế hoạch tổng hợp Lead ---
 docs/audits/phase9_bandfix_audit_2026-09-09.md
 KE_HOACH_TONG_HOP_2026-09-09.md
+
+# --- [d7ec076 2026-09-10] fix nhãn Email/Website (EML-001/WEB-001) + plan hoàn thiện phát hành ---
+PLAN_hoan_thien_pfat_hanh.md
+profiles/lap_chi_nhanh_vpdd_draft.json
+tools/build_review_batch.py
+tools/test_email_label_wrap.py
+# --- [phase10-contact 2026-09-10] corpus W1 từ HEAD sạch + sweep nhãn contact 67 form + A-8 trim + F7-N3/N5 ---
+docs/audits/phase10_contact_corpus_2026-09-10.md
+tools/test_a8_trailing_sig_trim.py
+tools/test_contact_label_corpus.py
+tools/test_f7_notes.py

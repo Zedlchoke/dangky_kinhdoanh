@@ -89,8 +89,9 @@ script in `[MANUAL]`:
 | S4 | Nút "Mở hồ sơ .json" → dialog tkinter mở, chọn file nạp đúng |
 | S5 | Lưu draft → mở lại bằng S4 ra đúng dữ liệu |
 | S6 | Export hồ sơ CÓ blocking error (phải bị chặn) rồi hồ sơ sạch; mở .docx bằng Word thật |
-| S7 | Ngắt mạng (rút cáp/tắt wifi), script launch lại, lặp nhanh S2–S6 |
-| S8 | Máy KHÔNG Python, chỉ `.exe`: `... run_smoke_s1_s8.ps1 -UseExe` |
+| S6b | Phiếu Excel case-level (PLAN F6.4 + wave X5): chọn thủ tục CÓ questionnaire (PLI_M12, PLI_M27, PLI_M72, PLII_M01–M04) → "Xuất phiếu Excel cho khách" → mở bằng Excel Desktop thật (ghi version) → điền đủ câu bắt buộc → "Nạp phiếu Excel" tái tạo đúng; xoá 1 câu bắt buộc → nạp phải báo `MISSING_REQUIRED` cụ thể; sửa sheet `__map`/đổi case → phải bị từ chối |
+| S7 | Ngắt mạng (rút cáp/tắt wifi), script launch lại, lặp nhanh S2–S6 (gồm S6b) |
+| S8 | Máy KHÔNG Python, chỉ `.exe`: `... run_smoke_s1_s8.ps1 -UseExe`; đặt `.exe` trong đường dẫn có dấu tiếng Việt/space và lặp lại ít nhất S1–S6b tại đó |
 
 Quy tắc (từ `docs/platform_smoke_checklist.md`): mỗi bước PASS/FAIL kèm
 lệnh + output thật; **FAIL ở bước nào dừng ở đó**, ghi nguyên nhân; không
@@ -124,7 +125,8 @@ Yêu cầu tái lập (PLAN F6.1, F6.3):
    `generated_ho_so/`, docs/evidence bên trong archive; phải có
    `app_web/ui`, `app/data/blocks` (87), `app/data/nganh_vsic.json`
    (VSIC đầy đủ, không phải mock mini), `app/data/questionnaire`,
-   `app/templates` (87 .docx).
+   `app/templates` (87 .docx) và `tools/phase5r_expectations.json`
+   (docx_render đọc lúc render — thiếu thì hành vi vùng ký lệch source).
 4. Kiểm import trễ (điểm rủi ro cao nhất): `tools/` là namespace package
    nên `pyi-archive_viewer -l dist\DangKyKinhDoanh.exe` phải thấy
    `tools/docx_render`, `tools/excel_export`, `tools/excel_import`; nếu S6

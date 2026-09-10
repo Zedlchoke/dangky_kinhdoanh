@@ -37,6 +37,8 @@ probe xong; không pin mù từ máy macOS).
 """
 import os
 
+from PyInstaller.utils.hooks import collect_data_files
+
 # SPECPATH = thư mục chứa spec (tools/windows_handoff); root repo 2 cấp trên.
 SPEC_DIR = SPECPATH
 TOOLS_DIR = os.path.dirname(SPEC_DIR)
@@ -53,10 +55,16 @@ datas = [
     (_repo("app_web", "ui"), "app_web/ui"),
     (_repo("app", "data"), "app/data"),
     (_repo("app", "templates"), "app/templates"),
+    # docx_render đọc tools/phase5r_expectations.json lúc render (ngưỡng vùng
+    # ký per-form, parent.parent/tools/… tính từ __file__ = _MEIPASS/tools/…);
+    # vắng mặt -> rơi về {} và hành vi lệch so với chạy từ source.
+    (_repo("tools", "phase5r_expectations.json"), "tools"),
 ]
 # pywebview vendored (nếu có) — bundle y nguyên để main.py tìm thấy ở đúng chỗ.
 if os.path.isdir(_repo(".webview_deps")):
     datas.append((_repo(".webview_deps"), ".webview_deps"))
+# pywebview cài từ pip: bundle kèm data (js/css resource của pywebview).
+datas += collect_data_files("webview")
 
 hiddenimports = [
     # Dialog mở/lưu draft + phiếu Excel trong app_web/main.py dùng tkinter.
@@ -79,7 +87,26 @@ hiddenimports = [
     "tools.docx_render",
     "tools.excel_export",
     "tools.excel_import",
+    # excel_export/excel_import import `tools.questionnaire.schema` ở đầu
+    # module (namespace package 2 tầng — liệt kê tường minh, đã kiểm chứng
+    # cần thiết trên build macOS thật cùng layout).
+    "tools.questionnaire",
+    "tools.questionnaire.schema",
+    # docx_render import có điều kiện tools.layout_roles + lazy `import docx`
+    # (python-docx) trong hàm merge-XML.
+    "tools.layout_roles",
+    "docx",
 ]
+
+# Wave E2 (Excel case-level, lane KHÁC sở hữu) đang thêm lazy import
+# `tools.excel_case_export` / `tools.excel_case_import` trong app_web/main.py
+# + manifests `app/data/case_questionnaires/` (đi theo bundle tự động nhờ
+# datas CẢ THƯ MỤC app/data). Thêm hiddenimport khi module đã tồn tại
+# (PyInstaller ERROR nếu hiddenimport thiếu) — sau khi lane E merge, dòng
+# điều kiện này tự kích hoạt; không cần sửa spec.
+for _mod in ("excel_case_export", "excel_case_import"):
+    if os.path.isfile(_repo("tools", _mod + ".py")):
+        hiddenimports.append("tools." + _mod)
 
 a = Analysis(
     [_repo("tools", "windows_handoff", "launch_app_web.py")],

@@ -24,8 +24,21 @@
 | S4 | Dialog mở hồ sơ (tkinter) | nút "Mở hồ sơ .json" | dialog tkinter mở được, chọn file trả đúng path vào app |
 | S5 | Dialog lưu hồ sơ | nút lưu draft | file .json ghi được, mở lại bằng S4 ra đúng dữ liệu |
 | S6 | Xuất DOCX/ZIP | nút export với hồ sơ có blocking error (phải bị chặn) rồi hồ sơ sạch | file sinh trong `generated_ho_so/`; mở bằng Word thật |
+| S6b | Phiếu Excel cho khách (wave X5) | chọn thủ tục CÓ questionnaire (PLI_M12, PLI_M27, PLI_M72, PLII_M01–M04) → "Xuất phiếu Excel cho khách" → điền bằng Excel Desktop/Calc → "Nạp phiếu Excel" | file .xlsx mở được, ô lock đúng; nạp lại tái tạo dữ liệu; thiếu câu bắt buộc → báo `MISSING_REQUIRED` cụ thể, draft cũ giữ nguyên; sửa `__map`/đổi case → bị từ chối |
 | S7 | Offline | ngắt mạng, lặp S2–S6 | mọi bước vẫn chạy (app không gọi mạng) |
 | S8 | Clean-machine | máy KHÔNG có Python (chỉ khi đã có `.exe` từ P6) | cài đặt/mở `.exe`, lặp S2–S6 |
+
+### Scenario bổ sung bắt buộc theo PLAN §6.4
+
+Ngoài S1–S8, wave P0/P1 phải chứng minh thêm 4 kịch bản này (ghi evidence
+riêng từng cái, không gộp ước lượng):
+
+| Scenario | Cách chạy | Evidence |
+|---|---|---|
+| Excel case-level | S6b ở trên — xuất → điền → nạp lại nguyên vòng, gồm cả nhánh fail-loud | log `*_S6b` + ảnh Excel Desktop mở file |
+| Đường dẫn có dấu/space | copy repo (Windows) hoặc `.app`/`.exe` (macOS) vào thư mục có dấu tiếng Việt + space, chạy lại S1–S6b tại đó | log session tại đường dẫn lạ |
+| User KHÔNG admin | toàn bộ launch + build + chạy `.exe`/`.app` trên user thường | preflight log ghi admin=yes/no; nếu chạy trên admin phải lặp lại trên user thường |
+| Offline | S7 ở trên (ngắt mạng thật, không chỉ tắt wifi icon) | log `*_S7` |
 
 ## Quy tắc verdict
 

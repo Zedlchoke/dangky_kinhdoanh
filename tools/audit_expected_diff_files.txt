@@ -722,3 +722,11 @@ tools/excel_case_import.py
 tools/test_case_questionnaires.py
 tools/test_excel_case_roundtrip.py
 tools/test_excel_case_negative.py
+
+# --- [wave-packaging 2026-09-10] P1 macOS handoff (build .app thật trên máy dev + smoke structural) + Windows kit audit S6b Excel case ---
+tools/macos_handoff/dangky_kinhdoanh_mac.spec
+tools/macos_handoff/launch_app_web.py
+tools/macos_handoff/build_app.sh
+tools/macos_handoff/run_smoke_mac.sh
+tools/macos_handoff/entitlements.plist
+tools/macos_handoff/README.md

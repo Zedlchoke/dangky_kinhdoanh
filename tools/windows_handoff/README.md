@@ -13,7 +13,7 @@
 
 | File | Vai trò |
 |---|---|
-| `run_smoke_s1_s8.ps1` | Chạy tuần tự S1–S7 (+S8 với `-UseExe`), ghi log `evidence/Windows_S<N>.log`, các bước cần nhìn màn hình in `[MANUAL]` và chờ người chạy nhập PASS/FAIL — script KHÔNG tự đánh PASS bước visual. |
+| `run_smoke_s1_s8.ps1` | Chạy tuần tự S1–S7 (+S6b phiếu Excel case-level theo PLAN F6.4; +S8 với `-UseExe`), ghi log `evidence/Windows_S<N>.log`, các bước cần nhìn màn hình in `[MANUAL]` và chờ người chạy nhập PASS/FAIL — script KHÔNG tự đánh PASS bước visual. |
 | `dangky_kinhdoanh.spec` | PyInstaller spec build `.exe` onefile tái lập được (bundle `app_web/ui`, `app/data`, `app/templates`, loại `profiles/`, `generated_ho_so/`, evidence). |
 | `launch_app_web.py` | Entry script cho spec — chạy lại `app_web/main.py` trong bundle với đúng `__file__` (main.py tính mọi đường dẫn từ `__file__`), kèm rescue-copy `generated_ho_so` khi chạy .exe. |
 
@@ -48,6 +48,11 @@
     cả hai chỗ).
 11. **Không commit** `generated_ho_so/`, `profiles/`, evidence chứa dữ liệu
     người thật vào git/artifact (PLAN F6.2).
+12. **Phiếu Excel case-level (PLAN F6.4, S6b)**: chọn thủ tục CÓ
+    questionnaire (PLI_M12, PLI_M27, PLI_M72, PLII_M01–M04), xuất phiếu,
+    điền bằng **Excel Desktop thật** (ghi version) rồi nạp lại trong app;
+    kiểm cả nhánh thiếu câu bắt buộc (phải báo `MISSING_REQUIRED` cụ thể)
+    và nhánh file bị sửa `__map`/đổi case (phải bị từ chối).
 
 ## Quy tắc verdict (bắt buộc)
 
@@ -73,6 +78,7 @@ Repo commit: `________` | Đường dẫn repo chứa dấu/space: `có/không`
 | S4 | Dialog mở hồ sơ .json | (trong script) | | `evidence/Windows_S4.log`, ảnh |
 | S5 | Dialog lưu hồ sơ | (trong script) | | `evidence/Windows_S5.log`, ảnh |
 | S6 | Xuất DOCX/ZIP (blocked + sạch) | (trong script) | | `evidence/Windows_S6.log`, ảnh Word mở file |
+| S6b | Phiếu Excel cho khách (xuất → điền → nạp) | (trong script) | | `evidence/Windows_S6b.log`, ảnh Excel Desktop mở file |
 | S7 | Offline (ngắt mạng, lặp S2–S6) | (trong script) | | `evidence/Windows_S7.log` |
 | S8 | Clean-machine .exe (không Python) | `... run_smoke_s1_s8.ps1 -UseExe` | | `evidence/Windows_S8.log`, SHA-256 exe |
 

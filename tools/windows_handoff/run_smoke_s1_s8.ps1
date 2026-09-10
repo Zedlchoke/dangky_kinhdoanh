@@ -1,11 +1,12 @@
 ﻿#Requires -Version 5.1
 <#
 .SYNOPSIS
-    Windows smoke S1-S7 (+S8 tuy y) cho "Tro ly ho so DKKD" theo
+    Windows smoke S1-S7 (+S6b Excel, +S8 tuy y) cho "Tro ly ho so DKKD" theo
     docs/platform_smoke_checklist.md — F6/O6 handoff.
 
 .DESCRIPTION
-    Chay TUAN TU S1->S7 (S8 chi khi co .exe, tham -UseExe):
+    Chay TUAN TU S1->S7 (S6b phieu Excel case-level sau S6; S8 chi khi co
+    .exe, tham -UseExe):
       S1 khoi chay app_web/main.py qua pywebview (python -X utf8)
       S2 UI render              (thao tac UI - MANUAL)
       S3 nhap du lieu tung kind (thao tac UI - MANUAL)
@@ -278,6 +279,18 @@ if ($soffice) {
     Write-Host "LibreOffice : khong thay 'soffice' trong PATH - S6 se khong co PDF/normalize." -ForegroundColor Yellow
 }
 
+# User admin hay khong - chi LOG khong chan (PLAN F6.4: phai co kich ban
+# user KHONG admin; neu may nay la admin, ghi ro vao evidence va lap lai
+# toan bo launch + build + exe tren user thuong).
+$isAdmin = ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+if ($isAdmin) {
+    $preflight += "user: ADMIN - PLAN F6.4 yeu cau kich ban user KHONG admin: lap lai quy tren user thuong"
+    Write-Host "User        : ADMIN - nho lap lai tren user KHONG admin (PLAN F6.4)." -ForegroundColor Yellow
+} else {
+    $preflight += "user: khong phai admin (dung kich ban PLAN F6.4)"
+    Write-Host "User        : khong phai admin - dung kich ban yeu cau." -ForegroundColor Green
+}
+
 Write-StepLog "0_PREFLIGHT" $preflight
 
 # ==================================================================== S1
@@ -339,6 +352,22 @@ if ($s6auto.Count -gt 0) {
 }
 if ($v6 -eq "F") { Confirm-ContinueOnFail "6" }
 
+# ==================================================================== S6b
+# Excel case-level (PLAN F6.4 + wave X5): UI co nut "Xuat phieu Excel cho
+# khach" / "Nap phieu Excel" (app_web/ui/index.html btn-export-excel /
+# btn-import-excel). Thu tuc co questionnaire: PLI_M12, PLI_M27, PLI_M72,
+# PLII_M01..M04 (app/data/questionnaire/, 7 file).
+$v6b = Get-ManualVerdict "6b" "Phieu Excel cho khach (xuat -> dien -> nap lai)" @(
+    "Chon thu tuc CO questionnaire (vd PLI_M72) -> nut 'Xuat phieu Excel cho khach' -> dialog tkinter -> file .xlsx",
+    "Mo file bang Excel Desktop THAT (ghi version) hoac LibreOffice Calc; khoa o vang nhap duoc, o xam lock",
+    "Dien du cau bat buoc, luu, quay lai app -> 'Nap phieu Excel' -> du lieu tai tao dung (select/chk/ngay/tien)",
+    "Xoa 1 cau bat buoc -> nap lai -> app bao THIEU cu the cau nao (fail-loud MISSING_REQUIRED), draft cu giu nguyen",
+    "File khac case/sua sheet __map -> nap lai PHAI bi tu choi (checksum/contract)" )
+if ($v6b -eq "F") { Confirm-ContinueOnFail "6b" }
+# Evidence MAY DO cho S6b: file .xlsx nguoi chay vua luu (ho vi tri khac)
+$xlsxHint = @("Nguoi chay tu ghi vao evidence: duong dan file .xlsx da xuat/nap, app+version da mo (Excel Desktop / LibreOffice Calc)")
+Write-StepLog "6b" $xlsxHint
+
 Stop-AppAndLogExit -Step "6"
 
 # ==================================================================== S7
@@ -352,6 +381,7 @@ if ($v7net -eq "Y") {
             "UI van render (S2), nhap du lieu van OK (S3)",
             "Mo/luu draft van OK (S4-S5)",
             "Export DOCX/ZIP van OK (S6)",
+            "Xuat phiếu Excel van OK (S6b - app khong goi mang nao)",
             "App KHONG can mang nao (hoat dong nhu khi online)" )
         if ($v7 -eq "F") { Confirm-ContinueOnFail "7" }
         Stop-AppAndLogExit -Step "7"
@@ -375,7 +405,8 @@ if ($UseExe) {
         if (Start-App -Step "8" -TargetPath $ExePath -IsExe) {
             $v8 = Get-ManualVerdict "8" "Clean-machine .exe: lap lai S2-S6" @(
                 "Exe mo duoc ma KHONG can Python trong may",
-                "Lap lai nhanh S2-S6 nhu tren",
+                "Lap lai nhanh S2-S6 nhu tren (gom S6b phieu Excel)",
+                "Neu dat .exe trong duong dan co dau tieng Viet/space: lap lai S1-S6b tai cho (PLAN F6.4)",
                 "Export trong .exe: MO thu muc export VA CHEP file ra ngoai ngay (thu muc extract tam bi xoa khi dong app; launcher co rescue-copy sang Documents\DangKyKinhDoanh\generated_ho_so - kiem tra cho nay neu quen)" )
             if ($v8 -eq "F") { Confirm-ContinueOnFail "8" }
             Stop-AppAndLogExit -Step "8"

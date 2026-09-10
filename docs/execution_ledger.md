@@ -698,3 +698,14 @@ corpus cuối. O5 human review và O6 Windows vẫn là evidence outstanding, kh
 | Packaging P1: build `.app` thật ×2 (629 file, nội dung GIỐNG 100%), engine probe 11/11 trong bundle, GUI launch ×2, rescue-copy, S-path Unicode PASS; S2–S6/S7/S8 manual NOT RUN; unsigned (0 identity) | lane-đóng-gói | `1075b78` | evidence ngoài git | `~/Documents/DangKyKinhDoanh/evidence_macos/` |
 | Packaging P0: Windows kit audit — +S6b Excel case, spec +phase5r_expectations/questionnaire/layout_roles/docx/excel_case-conditional, admin preflight, docs PLAN §6.4; **.exe S1–S8 vẫn NOT RUN (không có máy Windows)** | lane-đóng-gói | `1075b78` | docs/checklist đồng bộ | `tools/windows_handoff/README.md` |
 | Integration: runner +6 suite (=75), H7 manifest đồng bộ (d7ec076 backlog + mọi wave), .gitignore build/dist, PLAN progress | Lead | (integration) | runner full + H7 + compileall tại HEAD cuối | `/tmp` json |
+
+## Wave E4/E5 — Excel case-level hoàn thiện (owner ủy quyền) @ 47c1805→ (2026-09-10)
+
+| Task | Owner | Commit | Gate | Evidence |
+|---|---|---|---|---|
+| Owner ủy quyền nội dung E4/E5 ("duyệt và chốt hết") — ghi decision registry | Lead | (wave này) | — | `docs/decision_registry.md` mục 2026-09-10 |
+| Generator questionnaire deterministic cho 21 form (1.141 câu, phủ 100% key fillable, `--check` fail-loud) | lane-content | (wave này) | `test_questionnaire_coverage` 6/0 | `tools/build_form_questionnaires.py` + 21 file |
+| Manifest 28/28 READY (`owner_delegated_2026-09-10` ≡ approved) | lane-content | (wave này) | `test_case_questionnaires` 7/0; `build_case_questionnaires --check` exit 0 | `_index.json` |
+| oneOf + form tùy chọn + Giấy_tờ_cần_gửi thật + UI ẩn xuất v1 | lane-content | (wave này) | `test_excel_case_oneof` 7/0; roundtrip 13/0 (RTC11 28/28 case); negative 18/0 | exporter/importer diff |
+| Round-trip LibreOffice Calc 5/5 (checksum `__map` byte-identical; giá trị/format/DV/protection sống sót; rấtHidden→hidden chấp nhận có audit) | lane-compat | (wave này) | `test_excel_calc_roundtrip` 5/0 | suite + `_ADJUDICATION` docstring |
+| Visual workbook 28/28 case (PDF/PNG + contact sheet; WARN overflow + MANUAL NOT RUN trung thực) | lane-compat | (wave này) | `tools.excel_case_visual` exit 0 | `docs/audits/excel_case_visual_2026-09-10.md`; `generated_ho_so/_visual_layout/excel_case_20260910/` |

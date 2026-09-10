@@ -88,6 +88,12 @@ SUITES: list[dict] = [
     {"name": "test_case_questionnaires",  "type": "module", "target": "tools.test_case_questionnaires"},
     {"name": "test_excel_case_roundtrip", "type": "module", "target": "tools.test_excel_case_roundtrip"},
     {"name": "test_excel_case_negative",  "type": "module", "target": "tools.test_excel_case_negative"},
+    # --- E5 (2026-09-10, owner ủy quyền nội dung): phủ key questionnaire +
+    #     oneOf + tương thích LibreOffice Calc + gate visual workbook ---
+    {"name": "test_questionnaire_coverage", "type": "module", "target": "tools.test_questionnaire_coverage"},
+    {"name": "test_excel_case_oneof",     "type": "module", "target": "tools.test_excel_case_oneof"},
+    {"name": "test_excel_calc_roundtrip", "type": "module", "target": "tools.test_excel_calc_roundtrip"},
+    {"name": "excel_case_visual",         "type": "module", "target": "tools.excel_case_visual"},
     # --- Python ---
     {"name": "p1_b_verify_m72",           "type": "module", "target": "tools.census.p1_b_verify_m72",
      "requires": ["python-docx"]},

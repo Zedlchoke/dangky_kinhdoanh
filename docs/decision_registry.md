@@ -330,3 +330,28 @@ Ghi chú Lead-facing ngoài phạm vi (không sửa trong lane): band quốc hi�
 PLI_M19 dòng "TÊN DOANH NGHIỆP …----" nguồn jc=center nhưng template căn
 trái — thuộc vùng band đã chốt Q-V8 (giữ theo nguồn gốc); nếu cần soi lại
 thuộc lane band, không thuộc V4b.
+
+## Decision closure — 2026-09-10 (Excel case-level E4/E5)
+
+Owner ủy quyền tiếp cho Lead: "tôi duyệt và chốt hết" (phiên hoàn thiện phát
+hành 2026-09-10). Các quyết định áp dụng cho Excel case-level:
+
+- **E1 (nội dung questionnaire 21 form)**: Lead sinh deterministic từ
+  form_maps/blocks (generator `tools/build_form_questionnaires.py`, phủ 100%
+  key fillable, văn phong đời thường theo tiền lệ 7 file X1);
+  `content_review = owner_delegated_2026-09-10` — đối xử như approved; owner
+  vẫn có thể xem lại từng file (provenance `content_note` trong mỗi file).
+- **E2 (oneOf trên workbook)**: nhóm `forms_oneOf` max=1 → một câu select bắt
+  buộc "Trường hợp hồ sơ" ở `Thông_tin_chung` (option label = `ghi_chu` của
+  use case, value = form_id); `checkedForms` chỉ chứa form được chọn; ô có
+  dữ liệu ở form không chọn → `STRAY_CELL`. Form `bat_buoc=false` ngoài
+  oneOf → câu mark `optionalForm.<form_id>`.
+- **E3 (Giấy_tờ_cần_gửi)**: bỏ watermark "CHỜ DUYỆT" — in checklist thật từ
+  `giay_to_kem` + `co_so_phap_ly`, dòng nguồn "Nghị định 168/2025/NĐ-CP, TT
+  121/2026/TT-BTC".
+- **E4 (chuyển đổi v1→v2)**: UI ngừng xuất phiếu Excel v1 theo-form (ẩn nút),
+  giữ NẠP v1 trong thời gian chuyển đổi (PLAN §5-E4).
+- **E5 (compat)**: LibreOffice Calc re-save là kịch bản khách hợp lệ — importer
+  chấp nhận `__map` state `hidden` (Calc hạ từ veryHidden), CHẶN `visible`;
+  mọi rào checksum/presence/mirror giữ nguyên (evidence
+  `tools/test_excel_calc_roundtrip`).

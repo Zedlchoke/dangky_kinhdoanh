@@ -46,12 +46,30 @@
 >   f7_notes → **75 suite**), manifest H7 đồng bộ, `open_dir` đa platform,
 >   `.gitignore` +`build/`,`dist/`.
 >
+> **CẬP NHẬT E4/E5 (2026-09-10, owner "duyệt và chốt hết" — xem
+> `docs/decision_registry.md` mục 2026-09-10):**
+> - **E5 ĐÓNG mức kỹ thuật**: questionnaire sinh cho đủ 21 form còn thiếu
+>   (1.141 câu, phủ 100% key fillable — generator
+>   `tools/build_form_questionnaires.py`, provenance `content_note` trong từng
+>   file, `content_review=owner_delegated_2026-09-10`); **28/28 case READY**;
+>   oneOf hiện thực trên workbook (select "Trường hợp hồ sơ" → checkedForms,
+>   STRAY_CELL fail-loud); `Giấy_tờ_cần_gửi` in checklist thật + nguồn pháp
+>   lý; UI ngừng xuất Excel v1 (giữ nạp v1 chuyển đổi).
+> - **Tương thích LibreOffice Calc**: round-trip 5/5 case PASS — giá trị,
+>   number_format "@", named range, data validation, protection và CHECKSUM
+>   `__map` sống sót qua Calc re-save; rấtHidden→hidden được chấp nhận có ghi
+>   audit (chặn visible). Gate visual workbook: 28/28 case xuất PDF/PNG +
+>   contact sheet (`docs/audits/excel_case_visual_2026-09-10.md`); WARN page-
+>   overflow (sheet rộng hơn A4 dọc — đề xuất fitToWidth, chưa áp) và MANUAL
+>   NOT RUN cho phần cần nhìn mắt trên Excel thật (zoom 100%/125%, dropdown,
+>   màu, watermark).
+> - Excel Desktop Windows / Excel-for-Mac thật: vẫn **NOT RUN** (không có máy).
+>
 > **Kết luận hiện tại: TECHNICALLY_READY-PARTIAL / RELEASE_NOT_DONE.** Còn
-> mở: human visual sign-off corpus v3 (O5); Excel compatibility thật + E5
-> content review 19 case (cần owner/legal duyệt questionnaire cho 21 form);
-> chính sách oneOf trên workbook (owner); Windows S1–S8 (O6 — cần máy
-> Windows); macOS S2–S8 manual verdict; M53/A4 geometry (owner). Không
-> tuyên bố `RELEASE_DONE` cho tới khi toàn bộ gate có bằng chứng PASS.
+> mở: human visual sign-off corpus v3 (O5) + visual workbook phần MANUAL;
+> Windows S1–S8 (O6 — cần máy Windows); macOS S2–S8 manual verdict; Excel
+> Desktop/Mac thật; fitToWidth cho sheet rộng (đề xuất); M53/A4 geometry.
+> Không tuyên bố `RELEASE_DONE` cho tới khi toàn bộ gate có bằng chứng PASS.
 
 > Lập ngày 10/09/2026, sau kiểm tra tại `main@3f4af84`.
 >

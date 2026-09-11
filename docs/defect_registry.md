@@ -445,3 +445,24 @@ chiều ngược (template CÓ thêm so với nguồn); nguồn không đủ tá
 - **[GHI NHẬN phase10 2026-09-10] `test_docx_layout_signatures` T0 fail `PLI_M07/body sp=0 blanks=0`** là pre-existing tại `d7ec076` (suite NGOÀI runner; tái hiện trên worktree sạch trước mọi thay đổi wave W1) — không phải hệ quả A-8; PLI_M07 nguồn là stub 2 dòng, template tự dựng bảng+cột Chữ ký (census absence verdict đã ghi); cần adjudicate riêng nếu nâng suite này vào runner.
 - **[ĐÓNG phase9] Class 4 band dọc** — bandfix a01f433 + verify 23/23 ảnh empty-paper + valid-full (band 36/64 TNR 13pt bold top, không wrap quốc hiệu, không stale mirror).
 - **[ĐÓNG phase9] A-1..A-7, A-9..A-15** — xem bảng `docs/audits/phase9_bandfix_audit_2026-09-09.md` §2 (mỗi mục có fix + pin + verify).
+
+## Class MAC-TK-DIALOG-CRASH — bấm xuất Excel làm tắt app trên macOS [ĐÃ SỬA 2026-09-11]
+
+- **Owner evidence:** "bấm xuất excel là app tắt luôn" — app thoát ngay khi
+  bấm nút xuất/nạp Excel (3 crash report `DangKyKinhDoanh-2026-09-11-0902*.ips`).
+- **Root cause (crash report xác nhận):** `EXC_BREAKPOINT (SIGTRAP)` qua
+  `_dispatch_assert_queue_fail` với stack `Tk | TkpOpenDisplay → XKeysymToKeycode
+  → TSMGetInputSourceProperty` — `tk.Tk()` được dựng NGAY TRONG bridge method,
+  mà pywebview gọi js_api ở background thread; Tk mở display ngoài main thread
+  vi phạm main-queue assertion của macOS → process chết tại chỗ. 6 chỗ dính:
+  draft open/save, v1 export/import, case export/import (app_web/main.py).
+- **Fix:** helper `_ask_open_path`/`_ask_save_path` dùng native
+  `window.create_file_dialog` (FileDialog.SAVE/OPEN của pywebview 6.x, chạy
+  đúng GUI loop Cocoa/WinForms/GTK); tkinter chỉ fallback khi app chạy không
+  cửa sổ. `MAIN_WINDOW` được đăng ký trong `main()`.
+- **Verify live (computer-use, app chạy từ nguồn):** bấm "Xuất Excel cả hồ sơ
+  (case)" → app SỐNG, Save panel mở đúng tên mặc định `DKKD_*.xlsx` → Save ra
+  workbook 28KB trong ~/Downloads → app sống; "Nạp Excel cả hồ sơ" → Open
+  panel đúng filter "Phiếu Excel"; Escape hủy → app sống. Suites wiring/dom/
+  excel-case giữ xanh. Áp dụng cho cả app nguồn và bundle (launcher chạy lại
+  main.py nguyên văn).

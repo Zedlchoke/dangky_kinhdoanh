@@ -186,6 +186,79 @@ def _nest(data: dict) -> dict:
     return out
 
 
+# Cửa sổ chính của pywebview — set trong main(). Bridge method được pywebview
+# gọi ở BACKGROUND THREAD: trên macOS, dựng tk.Tk() ngoài main thread làm
+# CHẾT cả process (bug "bấm xuất Excel là app tắt" 2026-09-11). Mọi dialog
+# mở/lưu file phải đi qua create_file_dialog của pywebview (chạy đúng trên
+# GUI loop Cocoa/WinForms/GTK); tkinter chỉ là fallback khi chạy không cửa sổ.
+MAIN_WINDOW = None
+
+# pywebview 6.x đổi tên hằng (FileDialog.SAVE/OPEN) — hằng cũ còn hoạt động
+# nhưng in warning mỗi lần truy cập; chọn hằng mới nếu có.
+_FILE_DIALOG_SAVE = getattr(webview, "FileDialog", webview).SAVE \
+    if hasattr(getattr(webview, "FileDialog", None), "SAVE") \
+    else webview.SAVE_DIALOG
+_FILE_DIALOG_OPEN = getattr(webview, "FileDialog", webview).OPEN \
+    if hasattr(getattr(webview, "FileDialog", None), "OPEN") \
+    else webview.OPEN_DIALOG
+
+
+def _ask_open_path(title: str, filetypes: tuple):
+    """Trả path (str) hoặc None nếu hủy / không có cửa sổ."""
+    win = MAIN_WINDOW
+    if win is not None:
+        result = win.create_file_dialog(
+            _FILE_DIALOG_OPEN, allow_multiple=False, file_types=filetypes)
+        if not result:
+            return None
+        return result[0] if isinstance(result, (tuple, list)) else result
+    try:
+        import tkinter as tk
+        from tkinter import filedialog
+        root = tk.Tk()
+        root.withdraw()
+        root.attributes("-topmost", True)
+        path = filedialog.askopenfilename(
+            title=title, filetypes=[(t.split(" (")[0], t.split("(")[1].rstrip(")").replace(";", " "))
+                                    if "(" in t else (t, "*.*")
+                                    for t in filetypes],
+            parent=root,
+        )
+        root.destroy()
+        return path or None
+    except Exception:  # noqa: BLE001 — không có display/tkinter
+        return None
+
+
+def _ask_save_path(title: str, default_name: str, filetypes: tuple):
+    """Trả path (str) hoặc None nếu hủy / không có cửa sổ."""
+    win = MAIN_WINDOW
+    if win is not None:
+        result = win.create_file_dialog(
+            _FILE_DIALOG_SAVE, save_filename=default_name,
+            file_types=filetypes)
+        return result if isinstance(result, str) else (
+            result[0] if isinstance(result, (tuple, list)) and result else None)
+    try:
+        import tkinter as tk
+        from tkinter import filedialog
+        root = tk.Tk()
+        root.withdraw()
+        root.attributes("-topmost", True)
+        path = filedialog.asksaveasfilename(
+            title=title, defaultextension=os.path.splitext(default_name)[1],
+            initialfile=default_name,
+            filetypes=[(t.split(" (")[0], t.split("(")[1].rstrip(")").replace(";", " "))
+                       if "(" in t else (t, "*.*")
+                       for t in filetypes],
+            parent=root,
+        )
+        root.destroy()
+        return path or None
+    except Exception:  # noqa: BLE001
+        return None
+
+
 class Bridge:
     """Các method Python mà JS gọi qua window.pywebview.api."""
 
@@ -231,18 +304,9 @@ class Bridge:
 
     # ---------------------------------------------------------------- nháp
     def load_draft(self):
-        import tkinter as tk
-        from tkinter import filedialog
-
-        root = tk.Tk()
-        root.withdraw()
-        root.attributes("-topmost", True)
-        path = filedialog.askopenfilename(
-            title="Mở hồ sơ đã lưu",
-            filetypes=[("Hồ sơ JSON", "*.json"), ("Tất cả file", "*.*")],
-            parent=root,
-        )
-        root.destroy()
+        path = _ask_open_path(
+            "Mở hồ sơ đã lưu",
+            ("Hồ sơ JSON (*.json)", "Tất cả file (*.*)"))
         if not path:
             return {"ok": False, "cancelled": True}
         try:
@@ -253,20 +317,9 @@ class Bridge:
 
     def save_draft(self, payload):
         payload = _as_dict(payload)
-        import tkinter as tk
-        from tkinter import filedialog
-
-        root = tk.Tk()
-        root.withdraw()
-        root.attributes("-topmost", True)
-        path = filedialog.asksaveasfilename(
-            title="Lưu hồ sơ",
-            defaultextension=".json",
-            initialfile="ho_so_dkkd.json",
-            filetypes=[("Hồ sơ JSON", "*.json")],
-            parent=root,
-        )
-        root.destroy()
+        path = _ask_save_path(
+            "Lưu hồ sơ", "ho_so_dkkd.json",
+            ("Hồ sơ JSON (*.json)",))
         if not path:
             return {"ok": False, "cancelled": True}
         try:
@@ -490,21 +543,10 @@ class Bridge:
                     "message": "không đọc được phiếu câu hỏi (%s: %s)"
                                % (type(exc).__name__, _safe_error(exc))}]}
 
-        import tkinter as tk
-        from tkinter import filedialog
-
         case_id = _sanitize_name(str(payload.get("case_id") or ""), "phieu_excel", 80)
-        root = tk.Tk()
-        root.withdraw()
-        root.attributes("-topmost", True)
-        path = filedialog.asksaveasfilename(
-            title="Xuất phiếu Excel cho khách",
-            defaultextension=".xlsx",
-            initialfile="%s.xlsx" % case_id,
-            filetypes=[("Phiếu Excel", "*.xlsx"), ("Tất cả file", "*.*")],
-            parent=root,
-        )
-        root.destroy()
+        path = _ask_save_path(
+            "Xuất phiếu Excel cho khách", "%s.xlsx" % case_id,
+            ("Phiếu Excel (*.xlsx)", "Tất cả file (*.*)"))
         if not path:
             return {"ok": False, "cancelled": True}
         try:
@@ -544,18 +586,9 @@ class Bridge:
                     "message": "không đọc được phiếu câu hỏi (%s: %s)"
                                % (type(exc).__name__, _safe_error(exc))}]}
 
-        import tkinter as tk
-        from tkinter import filedialog
-
-        root = tk.Tk()
-        root.withdraw()
-        root.attributes("-topmost", True)
-        path = filedialog.askopenfilename(
-            title="Nạp phiếu Excel",
-            filetypes=[("Phiếu Excel", "*.xlsx"), ("Tất cả file", "*.*")],
-            parent=root,
-        )
-        root.destroy()
+        path = _ask_open_path(
+            "Nạp phiếu Excel",
+            ("Phiếu Excel (*.xlsx)", "Tất cả file (*.*)"))
         if not path:
             return {"ok": False, "cancelled": True}
         try:
@@ -618,17 +651,9 @@ class Bridge:
         except Exception:  # noqa: BLE001 — manifest sai khung vẫn cho chọn chỗ lưu
             stem = "DKKD_%s" % manifest.get("case_id", "case")
 
-        root = tk.Tk()
-        root.withdraw()
-        root.attributes("-topmost", True)
-        path = filedialog.asksaveasfilename(
-            title="Xuất Excel cả hồ sơ cho khách",
-            defaultextension=".xlsx",
-            initialfile="%s.xlsx" % stem,
-            filetypes=[("Phiếu Excel", "*.xlsx"), ("Tất cả file", "*.*")],
-            parent=root,
-        )
-        root.destroy()
+        path = _ask_save_path(
+            "Xuất Excel cả hồ sơ cho khách", "%s.xlsx" % stem,
+            ("Phiếu Excel (*.xlsx)", "Tất cả file (*.*)"))
         if not path:
             return {"ok": False, "cancelled": True}
         try:
@@ -659,18 +684,9 @@ class Bridge:
         if errors:
             return {"ok": False, "errors": errors}
 
-        import tkinter as tk
-        from tkinter import filedialog
-
-        root = tk.Tk()
-        root.withdraw()
-        root.attributes("-topmost", True)
-        path = filedialog.askopenfilename(
-            title="Nạp Excel cả hồ sơ",
-            filetypes=[("Phiếu Excel", "*.xlsx"), ("Tất cả file", "*.*")],
-            parent=root,
-        )
-        root.destroy()
+        path = _ask_open_path(
+            "Nạp Excel cả hồ sơ",
+            ("Phiếu Excel (*.xlsx)", "Tất cả file (*.*)"))
         if not path:
             return {"ok": False, "cancelled": True}
         try:
@@ -723,7 +739,8 @@ def main() -> int:
     if "--mock" in sys.argv[1:]:
         url += "?mock=1"
     bridge = Bridge()
-    webview.create_window(
+    global MAIN_WINDOW
+    MAIN_WINDOW = webview.create_window(
         "Trợ lý hồ sơ ĐKKD",
         url=url,
         js_api=bridge,

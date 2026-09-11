@@ -146,8 +146,15 @@ coll = COLLECT(
     name="DangKyKinhDoanh",
 )
 
+# [branding 2026-09-11 — owner chốt dùng ảnh chân dung] icon local-only
+# (tools/branding/local/ nằm trong .gitignore — PII, không commit). Không có
+# file thì build với icon mặc định PyInstaller, không vỡ.
+_branding_icon = _repo("tools", "branding", "local", "dangky_kinhdoanh.icns")
+_app_icon = _branding_icon if os.path.isfile(_branding_icon) else None
+
 app = BUNDLE(
     coll,
     name="DangKyKinhDoanh.app",
     bundle_identifier="vn.dkkd.trolyhoso",
+    icon=_app_icon,
 )

@@ -765,3 +765,6 @@ tools/test_excel_case_oneof.py
 docs/audits/excel_case_visual_2026-09-10.md
 tools/excel_case_visual.py
 tools/test_excel_calc_roundtrip.py
+
+# --- [branding 2026-09-11] icon app từ ảnh owner chốt — local-only (gitignore tools/branding/local/), spec 2 platform dùng điều kiện ---
+tools/branding/README.md

@@ -1,8 +1,8 @@
 # Audit bố cục trực quan — Excel case-level (2026-09-10)
 
-- HEAD: `e9bd9c4` — tool: `tools/excel_case_visual.py`
+- HEAD: `f2752a2` — tool: `tools/excel_case_visual.py`
 - LibreOffice: `LibreOffice 26.8.0.3 bce0998afefdbc355585ca324285661a2170ba77` — render: pymupdf 1.28.2 (PNG ~150dpi)
-- Meta xuất: `{"today": "11/09/2026", "exported_at": "11/09/2026 08:15"}`
+- Meta xuất: `{"today": "11/09/2026", "exported_at": "11/09/2026 08:34"}`
 - Bằng chứng: `generated_ho_so/_visual_layout/excel_case_20260910/<caseId>/` (`page-NN.png`, `contact-sheet.png`, `*.pdf`, `*.xlsx`)
 - Phạm vi: case READY đọc từ đĩa lúc chạy. Case PENDING (chưa có câu hỏi) = NOT RUN, chờ lane content bật.
 

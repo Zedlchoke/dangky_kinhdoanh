@@ -590,6 +590,26 @@ def _protect(ws, freeze_at: str | None = None) -> None:
 # API chính
 # ---------------------------------------------------------------------------
 
+def _setup_print(ws) -> None:
+    """[fitToWidth 2026-09-10 — owner chốt] In/PDF đủ bề ngang 1 trang.
+
+    Sheet nghiệp vụ rộng hơn khổ A4 dọc từng tràn cột phải (note ví dụ) sang
+    trang riêng khi in/PDF (WARN page_overflow của gate
+    `tools.excel_case_visual`). fitToWidth=1 + fitToHeight=0: Excel/LibreOffice
+    tự co tỉ lệ để MỌI cột nằm trong MỘT trang ngang, chiều dọc tự nhiên chia
+    trang. Gotcha openpyxl: `fitToWidth` CHỈ có hiệu lực khi
+    `sheet_properties.pageSetUpPr.fitToPage = True` — thiếu là thuộc tính được
+    ghi nhưng trình đọc in bỏ qua. Áp cho sheet công khai; `__map`/`__lists`
+    veryHidden không in nên không cần.
+    """
+    ws.page_setup.orientation = "portrait"
+    ws.page_setup.fitToWidth = 1
+    ws.page_setup.fitToHeight = 0  # 0 = không giới hạn số trang dọc
+    ws.sheet_properties.pageSetUpPr.fitToPage = True
+    ws.page_margins.left = ws.page_margins.right = 0.4
+    ws.page_margins.top = ws.page_margins.bottom = 0.5
+
+
 def write_case_workbook(manifest: dict, out_path: "str | Path",
                         meta: dict | None = None) -> Path:
     """Ghi workbook .xlsx cho TOÀN BỘ case và trả `Path` file đã ghi.
@@ -814,6 +834,11 @@ def write_case_workbook(manifest: dict, out_path: "str | Path",
 
     # ---- Hướng_dẫn (nội dung đầy đủ: phiên bản + trạng thái + lưu ý) -------
     _write_guide_sheet(ws_guide, manifest, meta, hash8, approved)
+
+    # [fitToWidth 2026-09-10] mọi sheet công khai in/PDF đủ 1 trang ngang
+    for ws in wb.worksheets:
+        if ws.title not in (MAP_SHEET, LISTS_SHEET):
+            _setup_print(ws)
 
     path = Path(out_path)
     if path.parent and not path.parent.exists():

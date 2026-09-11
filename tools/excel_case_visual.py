@@ -193,6 +193,23 @@ def _reconstruct_page_text(page) -> str:
     return "\n".join(lines_out)
 
 
+def _pdf_page_geometry(pdf_path) -> tuple[list[int], list[float], list[float]]:
+    """Số "word" + max_x + bề ngang của từng trang PDF (phục vụ dò dải mỏng)."""
+    doc = pymupdf.open(str(pdf_path))
+    try:
+        words: list[int] = []
+        max_xs: list[float] = []
+        widths: list[float] = []
+        for page in doc:
+            w = page.get_text("words")
+            words.append(len(w))
+            max_xs.append(max((t[2] for t in w), default=0.0))
+            widths.append(float(page.rect.width))
+        return words, max_xs, widths
+    finally:
+        doc.close()
+
+
 def _pdf_pages(pdf_path: Path) -> list[str]:
     """Text-layer từng trang (thứ tự) — đã tái lập thứ tự đọc + squash."""
     doc = pymupdf.open(str(pdf_path))
@@ -220,11 +237,13 @@ def _sheet_title_candidates(manifest: dict) -> dict[str, list[str]]:
         GUIDE_SHEET: [_squash(manifest["case_title"]),
                       _squash("Các mẫu trong phiếu này:")],
         COMMON_SHEET: [_squash("Thông tin dùng chung cho cả hồ sơ")],
-        DOCS_SHEET: [_squash("DANH MỤC GIẤY TỜ CHỜ DUYỆT")],
+        # [E4 2026-09-10] tiêu đề docs sheet đổi sau khi bỏ "CHỜ DUYỆT"
+        DOCS_SHEET: [_squash("GIẤY TỜ CẦN CHUẨN BỊ NỘP KÈM")],
     }
     idx = 0
+    from tools.excel_case_export import is_review_approved  # noqa: C0415
     for form in manifest.get("forms", []):
-        if form.get("content_review") != "approved":
+        if not is_review_approved(form.get("content_review")):
             continue
         idx += 1
         from tools.excel_case_export import sheet_display_name  # noqa: C0415
@@ -440,7 +459,13 @@ def run_case(case_id: str) -> dict:
     else:
         report["verdicts"]["column_clip"] = "FAIL"
 
-    # ---- tràn trang: trang đầu của từng sheet + độ dôi trang (spill)
+    # ---- tràn trang: trang đầu của từng sheet + dò "dải mỏng" (tràn NGANG)
+    # [fitToWidth 2026-09-10 — owner chốt] exporter đã ghi fitToWidth=1 +
+    # pageSetUpPr.fitToPage cho mọi sheet công khai, nên LibreOffice co MỌI
+    # cột vào một trang ngang (đo được: case hộ KD 11→5 trang, max_x <=94%).
+    # Số trang > số sheet giờ là chia trang DỌC hợp lệ (fitToHeight=0),
+    # KHÔNG còn là overflow. Dấu hiệu tràn ngang còn lại là trang "dải mỏng":
+    # rất ít chữ VÀ dùng dưới 45% bề ngang — triệu chứng cột phải rơi riêng.
     sheet_order = [s for s in wb.sheetnames
                    if s not in report["hidden_sheets"]]
     first_pages = _map_pages_to_sheets(page_texts,
@@ -448,18 +473,34 @@ def run_case(case_id: str) -> dict:
                                        sheet_order)
     report["pages_per_sheet"] = {k: v for k, v in first_pages.items()}
     unresolved = [s for s, p in first_pages.items() if p is None]
-    spill = len(page_texts) - len(sheet_order)
-    if unresolved or spill > 0:
+    page_words, page_max_x, page_w = _pdf_page_geometry(pdf_path)
+    # Trang words==0: LibreOffice không trích được text-layer (artifact font
+    # đã ghi ở vietnamese_font) — ghi note, KHÔNG coi là dải mỏng.
+    empty_pages = [i + 1 for i, n in enumerate(page_words) if n == 0]
+    thin_strips = [i + 1 for i in range(len(page_texts))
+                   if 0 < page_words[i] < 30
+                   and (page_max_x[i] / page_w[i] if page_w[i] else 0) < 0.45]
+    report["page_geometry"] = {
+        "words_per_page": page_words,
+        "width_usage": [round(x / w, 2) if w else 0
+                        for x, w in zip(page_max_x, page_w)]}
+    # [fitToWidth 2026-09-10] `unresolved` chỉ là THAM KHẢO: dò trang đầu sheet
+    # qua text-layer không đáng tin khi LibreOffice mất nét Việt (xem
+    # vietnamese_font + docstring _map_pages_to_sheets) — không phải evidence
+    # overflow. Verdict chỉ WARN khi có dải mỏng thật (nghi tràn ngang).
+    if unresolved:
+        report["notes"].append(
+            "tham khảo — không dò được trang đầu của sheet qua text-layer "
+            "(mất nét Việt của LibreOffice): %s" % unresolved)
+    if empty_pages:
+        report["notes"].append(
+            "trang không trích được text-layer (artifact LibreOffice): p%s"
+            % empty_pages)
+    if thin_strips:
         report["verdicts"]["page_overflow"] = "WARN"
-        if unresolved:
-            report["notes"].append("không dò được trang đầu của sheet: %s"
-                                   % unresolved)
-        if spill > 0:
-            report["notes"].append(
-                "%d trang PDF so với %d sheet in được — sheet RỘNG/DÀI hơn khổ "
-                "giấy, phần dôi tràn sang trang riêng (khách in sẽ mất cột/hàng "
-                "nếu không cấu hình fit-to-width)" % (len(page_texts),
-                                                      len(sheet_order)))
+        report["notes"].append(
+            "trang 'dải mỏng' p%s — nghi tràn cột ngang (rất ít chữ, "
+            "dùng <45%% bề ngang)" % thin_strips)
     else:
         report["verdicts"]["page_overflow"] = "PASS"
 

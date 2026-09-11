@@ -63,6 +63,12 @@
 >   overflow (sheet rộng hơn A4 dọc — đề xuất fitToWidth, chưa áp) và MANUAL
 >   NOT RUN cho phần cần nhìn mắt trên Excel thật (zoom 100%/125%, dropdown,
 >   màu, watermark).
+> - **fitToWidth (owner chốt 2026-09-10)** — ĐÃ ÁP: mọi sheet công khai in/
+>   PDF đủ 1 trang ngang (`_setup_print` + pageSetUpPr.fitToPage; RTC14 pin).
+>   Gate visual rerun: **page_overflow PASS 28/28** (case hộ KD 11→5 trang;
+>   heuristic verdict định nghĩa lại đúng ngữ nghĩa — tràn ngang = "dải mỏng"
+>   <45% bề ngang; chia trang dọc hợp lệ; text-layer LibreOffice mất nét Việt
+>   là artifact renderer đã ghi, chỉ là note tham khảo).
 > - Excel Desktop Windows / Excel-for-Mac thật: vẫn **NOT RUN** (không có máy).
 >
 > **Kết luận hiện tại: TECHNICALLY_READY-PARTIAL / RELEASE_NOT_DONE.** Còn

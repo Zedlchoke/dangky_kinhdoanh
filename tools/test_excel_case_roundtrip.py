@@ -624,9 +624,29 @@ def rtc13():
             assert len(unlocked) >= len(manifest["giay_to_kem"]), case_id
 
 
+@check("[RTC14] fitToWidth: mọi sheet công khai in/PDF đủ 1 trang ngang "
+       "(owner chốt 2026-09-10)")
+def rtc14():
+    manifest = _manifest("thanh_lap_tnhh_2tv")   # case nhiều bảng, sheet rộng
+    tmp = Path(tempfile.mkdtemp(prefix="rt14_"))
+    out = write_case_workbook(manifest, tmp / "wb.xlsx", meta=FIXTURE_META)
+    wb = openpyxl.load_workbook(out)
+    for ws in wb.worksheets:
+        pr = ws.sheet_properties.pageSetUpPr
+        if ws.title in (MAP_SHEET, LISTS_SHEET):
+            assert not getattr(pr, "fitToPage", False), \
+                "%s: sheet ẩn không cần print setup" % ws.title
+            continue
+        assert getattr(pr, "fitToPage", False), \
+            "%s: thiếu pageSetUpPr.fitToPage (fitToWidth sẽ bị bỏ qua)" % ws.title
+        assert ws.page_setup.fitToWidth == 1, "%s: fitToWidth != 1" % ws.title
+        assert ws.page_setup.fitToHeight == 0, \
+            "%s: fitToHeight phải 0 (chiều dọc tự nhiên)" % ws.title
+
+
 def main() -> int:
     for fn in (rtc1, rtc2, rtc3, rtc4, rtc5, rtc6, rtc7, rtc8, rtc9, rtc10,
-               rtc11, rtc12, rtc13):
+               rtc11, rtc12, rtc13, rtc14):
         fn()
     passed = sum(1 for ok, _ in _results if ok)
     failed = len(_results) - passed

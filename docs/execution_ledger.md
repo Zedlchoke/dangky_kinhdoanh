@@ -709,3 +709,10 @@ corpus cuối. O5 human review và O6 Windows vẫn là evidence outstanding, kh
 | oneOf + form tùy chọn + Giấy_tờ_cần_gửi thật + UI ẩn xuất v1 | lane-content | (wave này) | `test_excel_case_oneof` 7/0; roundtrip 13/0 (RTC11 28/28 case); negative 18/0 | exporter/importer diff |
 | Round-trip LibreOffice Calc 5/5 (checksum `__map` byte-identical; giá trị/format/DV/protection sống sót; rấtHidden→hidden chấp nhận có audit) | lane-compat | (wave này) | `test_excel_calc_roundtrip` 5/0 | suite + `_ADJUDICATION` docstring |
 | Visual workbook 28/28 case (PDF/PNG + contact sheet; WARN overflow + MANUAL NOT RUN trung thực) | lane-compat | (wave này) | `tools.excel_case_visual` exit 0 | `docs/audits/excel_case_visual_2026-09-10.md`; `generated_ho_so/_visual_layout/excel_case_20260910/` |
+
+## Wave fitToWidth — in/PDF đủ 1 trang ngang (owner chốt) @ 2f49711→ (2026-09-10)
+
+| Task | Owner | Commit | Gate | Evidence |
+|---|---|---|---|---|
+| `_setup_print` cho 4 sheet công khai (fitToWidth=1/fitToHeight=0 + pageSetUpPr.fitToPage — gotcha openpyxl đã ghi docstring) | Lead | (wave này) | RTC14 pin; roundtrip 14/0; Calc 5/0 | `tools/excel_case_export.py` |
+| Gate visual: verdict `page_overflow` định nghĩa lại (tràn ngang = dải mỏng <45% bề ngang; chia dọc hợp lệ; unresolved/title-map = note tham khảo do LO mất nét Việt); matcher nhận delegated + sửa chuỗi DOCS stale | Lead | (wave này) | **page_overflow PASS 28/28** | `docs/audits/excel_case_visual_2026-09-10.md` (regen) |

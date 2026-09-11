@@ -69,6 +69,11 @@
 >   heuristic verdict định nghĩa lại đúng ngữ nghĩa — tràn ngang = "dải mỏng"
 >   <45% bề ngang; chia trang dọc hợp lệ; text-layer LibreOffice mất nét Việt
 >   là artifact renderer đã ghi, chỉ là note tham khảo).
+> - **Branding (owner chốt 2026-09-11)**: icon app từ ảnh owner cung cấp —
+>   ảnh nguồn + icon derived `tools/branding/local/` **gitignored** (PII không
+>   commit); `.icns`/`.ico` đi vào bundle phát hành; 2 spec dùng icon điều
+>   kiện (thiếu asset → build icon mặc định, không vỡ). Quyết định + tham số
+>   tái lập: `tools/branding/README.md` + `docs/decision_registry.md`.
 > - Excel Desktop Windows / Excel-for-Mac thật: vẫn **NOT RUN** (không có máy).
 >
 > **Kết luận hiện tại: TECHNICALLY_READY-PARTIAL / RELEASE_NOT_DONE.** Còn

@@ -716,3 +716,11 @@ corpus cuối. O5 human review và O6 Windows vẫn là evidence outstanding, kh
 |---|---|---|---|---|
 | `_setup_print` cho 4 sheet công khai (fitToWidth=1/fitToHeight=0 + pageSetUpPr.fitToPage — gotcha openpyxl đã ghi docstring) | Lead | (wave này) | RTC14 pin; roundtrip 14/0; Calc 5/0 | `tools/excel_case_export.py` |
 | Gate visual: verdict `page_overflow` định nghĩa lại (tràn ngang = dải mỏng <45% bề ngang; chia dọc hợp lệ; unresolved/title-map = note tham khảo do LO mất nét Việt); matcher nhận delegated + sửa chuỗi DOCS stale | Lead | (wave này) | **page_overflow PASS 28/28** | `docs/audits/excel_case_visual_2026-09-10.md` (regen) |
+
+## Wave branding — icon app từ ảnh owner (2026-09-11)
+
+| Task | Owner | Commit | Gate | Evidence |
+|---|---|---|---|---|
+| Owner chọn "Vẫn dùng đúng ảnh này" (Lead hỏi lại về PII + chất lượng; owner xác nhận) | owner | — | — | hội thoại phiên 2026-09-11 |
+| Xử lý ảnh: EXIF-rotate, crop 1980px neo đáy, gamma 0.48, contrast/sharp, LANCZOS 1024 → iconset 10 size + .icns (iconutil) + .ico (Pillow 16→256) | Lead | (wave này) | preview 32/64px | `tools/branding/local/` (gitignored) |
+| Kỷ luật PII: local/ gitignore; README provenance + tham số tái lập; spec 2 platform icon điều kiện (fallback mặc định) | Lead | (wave này) | syntax OK cả 2 spec | `tools/branding/README.md` |

@@ -355,3 +355,12 @@ hành 2026-09-10). Các quyết định áp dụng cho Excel case-level:
   chấp nhận `__map` state `hidden` (Calc hạ từ veryHidden), CHẶN `visible`;
   mọi rào checksum/presence/mirror giữ nguyên (evidence
   `tools/test_excel_calc_roundtrip`).
+
+## Decision closure — 2026-09-11 (branding)
+
+- **Icon app = ảnh chân dung do owner cung cấp.** Lead hỏi lại về PII + chất
+  lượng icon (3 lựa chọn: logo chữ / chụp lại / dùng đúng ảnh); owner chọn
+  **"Vẫn dùng đúng ảnh này"** — chấp nhận khuôn mặt nằm trong icon bản phát
+  hành. Ảnh nguồn + icon derived giữ **local-only** (`tools/branding/local/`
+  gitignored — kỷ luật không commit PII vào git); `.icns`/`.ico` đi vào bundle
+  theo 2 spec với điều kiện tồn tại file (thiếu → icon mặc định, build không vỡ).

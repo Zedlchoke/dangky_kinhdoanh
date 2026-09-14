@@ -611,7 +611,8 @@ def _setup_print(ws) -> None:
 
 
 def write_case_workbook(manifest: dict, out_path: "str | Path",
-                        meta: dict | None = None) -> Path:
+                        meta: dict | None = None,
+                        include_authorization: bool = True) -> Path:
     """Ghi workbook .xlsx cho TOÀN BỘ case và trả `Path` file đã ghi.
 
     `manifest`: dict case-level (wave E0). `meta`: tùy chọn
@@ -834,6 +835,15 @@ def write_case_workbook(manifest: dict, out_path: "str | Path",
 
     # ---- Hướng_dẫn (nội dung đầy đủ: phiên bản + trạng thái + lưu ý) -------
     _write_guide_sheet(ws_guide, manifest, meta, hash8, approved)
+
+    # ---- AUTH_* (wave I5 — ủy quyền dịch vụ; không nằm __map) ---------------
+    if include_authorization:
+        try:
+            from tools.excel_authorization_sheets import append_auth_sheets  # noqa: WPS433
+
+            append_auth_sheets(wb, str(manifest["case_id"]), meta)
+        except Exception:  # noqa: BLE001 — thiếu kho auth không chặn xuất case
+            pass
 
     # [fitToWidth 2026-09-10] mọi sheet công khai in/PDF đủ 1 trang ngang
     for ws in wb.worksheets:

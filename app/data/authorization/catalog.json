@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "legal_basis": "Nghị định 168/2025/NĐ-CP Điều 12 (DN), Điều 93 (HKD)",
+  "templates": {
+    "AUTH-UQ-DN-01": {
+      "id": "AUTH-UQ-DN-01",
+      "label": "Giấy ủy quyền thực hiện thủ tục đăng ký doanh nghiệp (cá nhân)",
+      "subject": "doanh_nghiep",
+      "signer_role": "nguoi_co_tham_quyen_ky_de_nghi",
+      "notarization_required": false,
+      "docx_template": "authorization/AUTH-UQ-DN-01.docx",
+      "status": "layout_approved"
+    },
+    "AUTH-UQ-HKD-01": {
+      "id": "AUTH-UQ-HKD-01",
+      "label": "Giấy ủy quyền thực hiện thủ tục đăng ký hộ kinh doanh (cá nhân)",
+      "subject": "ho_kinh_doanh",
+      "signer_role": "chu_ho",
+      "notarization_required": false,
+      "docx_template": "authorization/AUTH-UQ-HKD-01.docx",
+      "status": "layout_approved"
+    },
+    "AUTH-CHECKLIST-01": {
+      "id": "AUTH-CHECKLIST-01",
+      "label": "Phiếu kiểm kê hồ sơ ủy quyền (nội bộ dịch vụ)",
+      "subject": "internal",
+      "signer_role": null,
+      "notarization_required": false,
+      "docx_template": null,
+      "status": "internal"
+    }
+  },
+  "scope_texts": {
+    "thanh_lap": "thành lập doanh nghiệp, nộp hồ sơ, bổ sung hồ sơ, nhận kết quả và thực hiện các công việc liên quan",
+    "thay_doi_dn": "thay đổi nội dung đăng ký doanh nghiệp, nộp hồ sơ, bổ sung, nhận kết quả",
+    "hkd": "thủ tục đăng ký hộ kinh doanh, nộp hồ sơ, bổ sung, nhận kết quả",
+    "chi_nhanh": "đăng ký hoạt động chi nhánh, văn phòng đại diện, địa điểm kinh doanh",
+    "tam_ngung": "thông báo tạm ngừng hoặc tiếp tục kinh doanh",
+    "giai_the": "thủ tục giải thể hoặc hủy nghị quyết giải thể doanh nghiệp",
+    "cong_bo_cap_lai": "công bố, cấp lại, cấp đổi hoặc cập nhật thông tin đăng ký doanh nghiệp",
+    "chuyen_doi": "chuyển đổi hộ kinh doanh thành doanh nghiệp"
+  },
+  "cases": {
+    "thanh_lap_dntn": {"template_ids": ["AUTH-UQ-DN-01", "AUTH-CHECKLIST-01"], "scope_key": "thanh_lap"},
+    "thanh_lap_tnhh_1tv": {"template_ids": ["AUTH-UQ-DN-01", "AUTH-CHECKLIST-01"], "scope_key": "thanh_lap"},
+    "thanh_lap_tnhh_2tv": {"template_ids": ["AUTH-UQ-DN-01", "AUTH-CHECKLIST-01"], "scope_key": "thanh_lap"},
+    "thanh_lap_ctcp": {"template_ids": ["AUTH-UQ-DN-01", "AUTH-CHECKLIST-01"], "scope_key": "thanh_lap"},
+    "thanh_lap_hop_danh": {"template_ids": ["AUTH-UQ-DN-01", "AUTH-CHECKLIST-01"], "scope_key": "thanh_lap"},
+    "dang_ky_ho_kinh_doanh_lan_dau": {"template_ids": ["AUTH-UQ-HKD-01", "AUTH-CHECKLIST-01"], "scope_key": "hkd"},
+    "chuyen_doi_hkd_sang_dn": {"template_ids": ["AUTH-UQ-DN-01", "AUTH-CHECKLIST-01"], "scope_key": "chuyen_doi"},
+    "thay_doi_ten_va_tru_so": {"template_ids": ["AUTH-UQ-DN-01", "AUTH-CHECKLIST-01"], "scope_key": "thay_doi_dn"},
+    "thay_doi_nganh_nghe": {"template_ids": ["AUTH-UQ-DN-01", "AUTH-CHECKLIST-01"], "scope_key": "thay_doi_dn"},
+    "thay_doi_von_dieu_le": {"template_ids": ["AUTH-UQ-DN-01", "AUTH-CHECKLIST-01"], "scope_key": "thay_doi_dn"},
+    "thay_doi_nguoi_dai_dien_pl": {"template_ids": ["AUTH-UQ-DN-01", "AUTH-CHECKLIST-01"], "scope_key": "thay_doi_dn"},
+    "thay_doi_chusohuu_chudn": {"template_ids": ["AUTH-UQ-DN-01", "AUTH-CHECKLIST-01"], "scope_key": "thay_doi_dn"},
+    "thay_doi_noi_dung_dang_ky_hkd": {"template_ids": ["AUTH-UQ-HKD-01", "AUTH-CHECKLIST-01"], "scope_key": "hkd"},
+    "lap_chi_nhanh_vpdd": {"template_ids": ["AUTH-UQ-DN-01", "AUTH-CHECKLIST-01"], "scope_key": "chi_nhanh"},
+    "lap_dia_diem_kinh_doanh": {"template_ids": ["AUTH-UQ-DN-01", "AUTH-CHECKLIST-01"], "scope_key": "chi_nhanh"},
+    "thay_doi_noi_dung_hoat_dong_cn_vpdd": {"template_ids": ["AUTH-UQ-DN-01", "AUTH-CHECKLIST-01"], "scope_key": "chi_nhanh"},
+    "cham_dut_hoat_dong_cn_vpdd_ddkd": {"template_ids": ["AUTH-UQ-DN-01", "AUTH-CHECKLIST-01"], "scope_key": "chi_nhanh"},
+    "tam_ngung_tiep_tuc_kinh_doanh_dn": {"template_ids": ["AUTH-UQ-DN-01", "AUTH-CHECKLIST-01"], "scope_key": "tam_ngung"},
+    "tam_ngung_tiep_tuc_kinh_doanh_hkd": {"template_ids": ["AUTH-UQ-HKD-01", "AUTH-CHECKLIST-01"], "scope_key": "hkd"},
+    "cham_dut_hoat_dong_hkd": {"template_ids": ["AUTH-UQ-HKD-01", "AUTH-CHECKLIST-01"], "scope_key": "hkd"},
+    "giai_the_doanh_nghiep": {"template_ids": ["AUTH-UQ-DN-01", "AUTH-CHECKLIST-01"], "scope_key": "giai_the"},
+    "huy_quyet_dinh_giai_the": {"template_ids": ["AUTH-UQ-DN-01", "AUTH-CHECKLIST-01"], "scope_key": "giai_the"},
+    "cong_bo_noi_dung_dkdn": {"template_ids": ["AUTH-UQ-DN-01", "AUTH-CHECKLIST-01"], "scope_key": "cong_bo_cap_lai"},
+    "cap_lai_gcdn_va_giay_pham_dkkd": {"template_ids": ["AUTH-UQ-DN-01", "AUTH-CHECKLIST-01"], "scope_key": "cong_bo_cap_lai"},
+    "cap_doi_gcdkkd_sang_gcdn": {"template_ids": ["AUTH-UQ-DN-01", "AUTH-CHECKLIST-01"], "scope_key": "cong_bo_cap_lai"},
+    "bo_sung_cap_nhat_thong_tin_dkdn": {"template_ids": ["AUTH-UQ-DN-01", "AUTH-CHECKLIST-01"], "scope_key": "cong_bo_cap_lai"}
+  }
+}

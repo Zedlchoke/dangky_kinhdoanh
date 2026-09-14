@@ -69,6 +69,7 @@ from tools.excel_case_export import (
     ONEOF_KEY_PREFIX, OPTIONAL_FORM_KEY_PREFIX,
     ExcelCaseExportError, is_review_approved, is_selector_question,
 )
+from tools.excel_authorization_sheets import AUTH_SHEETS
 from tools.excel_case_export import (
     _canonical_json,   # cùng contract hash với exporter (một nguồn)
     _validate_manifest,
@@ -119,7 +120,7 @@ _COMMON_SHARED_NOTE = (" — Các ô dưới đây dùng chung cho nhiều mẫu
                        "MỘT lần")
 
 # Các sheet cấu trúc của workbook — không có ô map nhưng LUÔN được phép tồn tại
-_STRUCTURAL_SHEETS = (GUIDE_SHEET, COMMON_SHEET, DOCS_SHEET)
+_STRUCTURAL_SHEETS = (GUIDE_SHEET, COMMON_SHEET, DOCS_SHEET) + tuple(AUTH_SHEETS)
 
 
 def _err(code: str, message: str, cell: str | None = None,
@@ -1012,4 +1013,25 @@ def import_case_workbook(path: "str | Path", manifest: dict,
         "n_checks": len(checks),
         "n_loop_rows": sum(len(v) for v in loop_out.values()),
     })
-    return {"ok": True, "errors": [], "candidate": candidate, "audit": audit}
+    auth_result: dict = {"ok": True, "present": False, "bundle": None, "errors": []}
+    try:
+        from tools.excel_authorization_sheets import read_auth_bundle  # noqa: WPS433
+
+        auth_result = read_auth_bundle(wb_raw, str(manifest["case_id"]))
+    except Exception as exc:  # noqa: BLE001
+        auth_result = {
+            "ok": False,
+            "present": True,
+            "bundle": None,
+            "errors": [{
+                "code": "AUTH_READ_FAILED",
+                "message": "%s: %s" % (type(exc).__name__, exc),
+            }],
+        }
+    return {
+        "ok": True,
+        "errors": [],
+        "candidate": candidate,
+        "audit": audit,
+        "authorization": auth_result,
+    }

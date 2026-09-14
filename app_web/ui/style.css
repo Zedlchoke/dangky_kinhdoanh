@@ -538,6 +538,28 @@ tr.row-sel-multi td.stt { box-shadow: inset 3px 0 0 #c62828; }
 .err-item.warning { border-color: #e4d29b; background: #fffbea; color: #6b5310; }
 .err-empty { color: #1e6b34; font-size: 12px; margin-top: 6px; }
 
+/* panel ủy quyền dịch vụ (rightbar) */
+.auth-panel { font-size: 12px; }
+.auth-panel .lbl { margin-top: 4px; }
+.auth-muted { color: #5a6a7e; font-size: 11px; }
+.auth-field { display: block; margin: 6px 0; }
+.auth-field > span { display: block; font-size: 11px; color: #33415c; margin-bottom: 2px; }
+.auth-field input, .auth-field select, #auth-agent-select {
+  width: 100%; box-sizing: border-box; font-size: 12px;
+  border: 1px solid #b9c6d6; border-radius: 3px; padding: 4px 6px;
+}
+.auth-btn-row { display: flex; gap: 6px; flex-wrap: wrap; margin: 6px 0; }
+.auth-panel .btn-sm { font-size: 11px; padding: 3px 8px; }
+.auth-editor {
+  background: #fff; border: 1px solid #c9d2de; border-radius: 4px;
+  padding: 8px; margin: 6px 0;
+}
+.auth-tpl-list { margin: 4px 0; padding-left: 16px; }
+.auth-tpl-list li { margin-bottom: 4px; }
+.auth-result { font-size: 11px; color: #1f4e79; margin-top: 4px; }
+.auth-warn { color: #8c5a00; }
+.auth-backup-row { border-top: 1px dashed #c9d2de; padding-top: 6px; margin-top: 8px; }
+
 /* ------------------------------------------------ tabbar kiểu sheet */
 #tabbar {
   position: fixed;

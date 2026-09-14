@@ -74,6 +74,53 @@
         <div id="err-panel">
           <div id="err-list" role="list" aria-label="Danh sách lỗi"></div>
         </div>
+
+        <div class="sep"></div>
+        <div id="auth-panel" class="auth-panel" aria-label="Hồ sơ ủy quyền dịch vụ">
+          <div class="panel-head">
+            <div class="lbl">Ủy quyền dịch vụ</div>
+            <span id="auth-store-info" class="auth-muted"></span>
+          </div>
+          <label class="auth-field">
+            <span>Người làm thủ tục</span>
+            <select id="auth-agent-select"></select>
+          </label>
+          <div class="auth-btn-row">
+            <button type="button" id="auth-btn-new-profile" class="btn btn-sm">Thêm</button>
+            <button type="button" id="auth-btn-edit-profile" class="btn btn-sm">Sửa</button>
+          </div>
+          <div id="auth-profile-editor" class="auth-editor" hidden>
+            <input type="hidden" id="auth-agent-id" name="agent_id">
+            <label class="auth-field"><span>Họ tên *</span><input name="ho_ten" required></label>
+            <label class="auth-field"><span>Số CCCD *</span><input name="so_cccd" required></label>
+            <label class="auth-field"><span>Ngày sinh</span><input name="ngay_sinh" placeholder="dd/mm/yyyy"></label>
+            <label class="auth-field"><span>Ngày cấp CCCD</span><input name="ngay_cap"></label>
+            <label class="auth-field"><span>Nơi cấp</span><input name="noi_cap"></label>
+            <label class="auth-field"><span>Địa chỉ liên hệ</span><input name="dia_chi_lien_he"></label>
+            <label class="auth-field"><span>Điện thoại</span><input name="dien_thoai"></label>
+            <label class="auth-field"><span>Email</span><input name="email"></label>
+            <label class="auth-field"><span>Đơn vị dịch vụ</span><input name="don_vi_dich_vu"></label>
+            <div class="auth-btn-row">
+              <button type="button" id="auth-btn-save-profile" class="btn btn-sm btn-primary">Lưu profile</button>
+              <button type="button" id="auth-btn-cancel-profile" class="btn btn-sm">Hủy</button>
+            </div>
+          </div>
+          <div class="lbl" style="margin-top:8px">Mẫu theo thủ tục</div>
+          <div id="auth-template-list"></div>
+          <label class="auth-field"><span>Cơ quan tiếp nhận</span>
+            <input id="auth-co-quan" placeholder="VD: Phòng ĐKKD – Sở Tài chính"></label>
+          <label class="auth-field"><span>Thời hạn ủy quyền</span>
+            <input id="auth-thoi-han" placeholder="VD: 30 ngày kể từ ngày ký"></label>
+          <div class="auth-btn-row">
+            <button type="button" id="auth-btn-generate" class="btn btn-primary">Sinh hồ sơ</button>
+            <button type="button" id="auth-btn-open-dir" class="btn">Mở thư mục</button>
+          </div>
+          <div id="auth-last-result" class="auth-result"></div>
+          <div class="auth-btn-row auth-backup-row">
+            <button type="button" id="auth-btn-backup" class="btn btn-sm">Sao lưu profile</button>
+            <button type="button" id="auth-btn-restore" class="btn btn-sm">Khôi phục</button>
+          </div>
+        </div>
       </div>
     </section>
   </div>
@@ -133,6 +180,7 @@
 
   <script src="form-domain.js"></script>
   <script src="render.js"></script>
+  <script src="authorization-panel.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

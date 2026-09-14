@@ -22,6 +22,17 @@ Bridge (window.pywebview.api trong JS):
                                   draft v2 nguyên tử (tools/excel_case_import):
                                   {ok,candidate,audit,errors,file_path} —
                                   KHÔNG merge vào draft; UI quyết định thay
+- list_authorized_agent_profiles(filter) -> danh sách profile người làm thủ tục
+- save_authorized_agent_profile(payload) -> tạo/cập nhật profile (SQLite local)
+- lock_authorized_agent_profile(agent_id) -> khóa profile
+- get_authorization_templates(payload)   -> mẫu ủy quyền theo case_id
+- create_authorization_draft(payload)    -> nháp hồ sơ ủy quyền
+- get_authorization_store_info()         -> thông tin kho (không PII)
+- export_authorization_backup()            -> xuất .zip chuyển máy
+- import_authorization_backup()            -> nhập .zip backup
+- generate_authorization_package(payload)  -> sinh DOCX/ZIP ủy quyền
+- get_authorization_draft(authorization_id) -> nháp/snapshot ủy quyền
+- apply_authorization_excel_bundle(payload) -> nạp AUTH_* từ workbook case
 - open_dir(path)                -> mở thư mục bằng Explorer
 
 Không đụng tools/*, app_tk/*, app/data/* (chỉ đọc).
@@ -713,6 +724,150 @@ class Bridge:
                 f.write(json.dumps(audit, ensure_ascii=False) + "\n")
         except Exception:  # noqa: BLE001 — log là phụ, không chặn nạp
             pass
+
+    # ----------------------------- module ủy quyền dịch vụ (I1)
+    def list_authorized_agent_profiles(self, filter_json=None):
+        try:
+            from tools.authorization_store import list_agent_profiles  # noqa: E402
+
+            filt = _as_dict(filter_json) if filter_json is not None else {}
+            return list_agent_profiles(filt)
+        except Exception as exc:  # noqa: BLE001
+            return {"ok": False, "error": _safe_error(exc)}
+
+    def save_authorized_agent_profile(self, payload):
+        try:
+            from tools.authorization_store import save_agent_profile  # noqa: E402
+
+            return save_agent_profile(_as_dict(payload))
+        except Exception as exc:  # noqa: BLE001
+            return {"ok": False, "errors": [{"code": "SAVE_FAILED",
+                    "message": _safe_error(exc)}]}
+
+    def lock_authorized_agent_profile(self, agent_id):
+        try:
+            from tools.authorization_store import lock_agent_profile  # noqa: E402
+
+            return lock_agent_profile(str(agent_id or "").strip())
+        except Exception as exc:  # noqa: BLE001
+            return {"ok": False, "error": _safe_error(exc)}
+
+    def get_authorization_templates(self, payload):
+        try:
+            from tools.authorization_store import templates_for_case  # noqa: E402
+
+            data = _as_dict(payload) or {}
+            case_id = _sanitize_name(str(data.get("case_id") or ""), "case", 120)
+            return templates_for_case(case_id)
+        except Exception as exc:  # noqa: BLE001
+            return {"ok": False, "error": _safe_error(exc)}
+
+    def create_authorization_draft(self, payload):
+        try:
+            from tools.authorization_store import create_authorization_draft  # noqa: E402
+
+            data = _as_dict(payload) or {}
+            case_id = _sanitize_name(str(data.get("case_id") or ""), "case", 120)
+            agent_id = str(data.get("agent_id") or "").strip()
+            if not case_id or not agent_id:
+                return {"ok": False, "errors": [{"code": "MISSING_REQUIRED",
+                        "message": "Thiếu case_id hoặc agent_id."}]}
+            return create_authorization_draft(case_id, agent_id, data)
+        except Exception as exc:  # noqa: BLE001
+            return {"ok": False, "errors": [{"code": "DRAFT_FAILED",
+                    "message": _safe_error(exc)}]}
+
+    def get_authorization_store_info(self):
+        try:
+            from tools.authorization_store import store_info  # noqa: E402
+
+            return store_info()
+        except Exception as exc:  # noqa: BLE001
+            return {"ok": False, "error": _safe_error(exc)}
+
+    def export_authorization_backup(self):
+        path = _ask_save_path(
+            "Sao lưu profile người làm thủ tục",
+            "DKKD_authorization_backup.zip",
+            ("Backup ZIP (*.zip)", "Tất cả file (*.*)"))
+        if not path:
+            return {"ok": False, "cancelled": True}
+        try:
+            from tools.authorization_store import export_backup  # noqa: E402
+
+            return export_backup(path)
+        except Exception as exc:  # noqa: BLE001
+            return {"ok": False, "error": _safe_error(exc)}
+
+    def import_authorization_backup(self):
+        path = _ask_open_path(
+            "Khôi phục profile từ backup",
+            ("Backup ZIP (*.zip)", "Tất cả file (*.*)"))
+        if not path:
+            return {"ok": False, "cancelled": True}
+        try:
+            from tools.authorization_store import import_backup  # noqa: E402
+
+            return import_backup(path)
+        except Exception as exc:  # noqa: BLE001
+            return {"ok": False, "error": _safe_error(exc)}
+
+    def generate_authorization_package(self, payload):
+        try:
+            from tools.authorization_render import generate_package  # noqa: E402
+
+            data = _as_dict(payload) or {}
+            case_id = _sanitize_name(str(data.get("case_id") or ""), "case", 120)
+            agent_id = str(data.get("agent_id") or "").strip()
+            if not case_id or not agent_id:
+                return {"ok": False, "errors": [{"code": "MISSING_REQUIRED",
+                        "message": "Thiếu case_id hoặc agent_id."}]}
+            values = data.get("values")
+            if not isinstance(values, dict):
+                values = {}
+            return generate_package(
+                case_id,
+                str(data.get("case_ten") or case_id),
+                agent_id,
+                values,
+                authorization_id=str(data.get("authorization_id") or "").strip() or None,
+                co_quan_tiep_nhan=str(data.get("co_quan_tiep_nhan") or ""),
+                thoi_han_den=str(data.get("thoi_han_den") or ""),
+                export_format=str(data.get("export_format") or "both"),
+            )
+        except Exception as exc:  # noqa: BLE001
+            return {"ok": False, "errors": [{"code": "GENERATE_FAILED",
+                    "message": _safe_error(exc)}]}
+
+    def get_authorization_draft(self, authorization_id):
+        try:
+            from tools.authorization_store import get_authorization_draft  # noqa: E402
+
+            aid = str(authorization_id or "").strip()
+            if not aid:
+                return {"ok": False, "error": "MISSING_ID"}
+            return get_authorization_draft(aid)
+        except Exception as exc:  # noqa: BLE001
+            return {"ok": False, "error": _safe_error(exc)}
+
+    def apply_authorization_excel_bundle(self, payload):
+        try:
+            from tools.authorization_store import apply_excel_bundle  # noqa: E402
+
+            data = _as_dict(payload) or {}
+            bundle = data.get("bundle")
+            case_id = _sanitize_name(str(data.get("case_id") or ""), "case", 120)
+            if not isinstance(bundle, dict) or not case_id:
+                return {"ok": False, "errors": [{
+                    "code": "MISSING_REQUIRED",
+                    "message": "Thiếu case_id hoặc bundle.",
+                }]}
+            return apply_excel_bundle(bundle, case_id=case_id)
+        except Exception as exc:  # noqa: BLE001
+            return {"ok": False, "errors": [{
+                "code": "APPLY_FAILED",
+                "message": _safe_error(exc),
+            }]}
 
     def open_dir(self, path):
         # Theo platform: Windows Explorer / macOS Finder / Linux xdg-open

@@ -862,6 +862,9 @@
     var seq = RequestToken.next();
     var cs = currentCase();
     renderCaseInfo(cs);
+    if (window.AuthorizationPanel && window.AuthorizationPanel.onCaseChanged) {
+      window.AuthorizationPanel.onCaseChanged();
+    }
     updateDocTitle();
     var wanted = formIds(cs);
     getBlocks(wanted).then(function (results) {
@@ -2308,6 +2311,33 @@
       runCheck(true);
       openRightPanel();
       toast('Đã nạp workbook cả hồ sơ. Kiểm tra panel "còn thiếu".', 'ok');
+      var auth = res.authorization;
+      if (auth && auth.present && auth.ok && auth.bundle && a &&
+          typeof a.apply_authorization_excel_bundle === 'function') {
+        var nAgents = (auth.bundle.agents || []).length;
+        var nSets = (auth.bundle.sets || []).length;
+        if (nAgents || nSets) {
+          var authMsg = 'File có dữ liệu ủy quyền: ' + nAgents +
+            ' profile, ' + nSets + ' hồ sơ ủy quyền.\nNạp vào kho profile local?';
+          if (confirm(authMsg)) {
+            Promise.resolve(a.apply_authorization_excel_bundle(
+              JSON.stringify({ case_id: state.caseId, bundle: auth.bundle })
+            )).then(function (ar) {
+              if (typeof ar === 'string') ar = JSON.parse(ar);
+              if (ar.ok) {
+                toast('Đã nạp profile/hồ sơ ủy quyền từ Excel.', 'ok');
+                if (window.AuthorizationPanel) window.AuthorizationPanel.refresh();
+              } else {
+                toast('Không nạp ủy quyền: ' +
+                  esc(bridgeErrorsText(ar.errors || ar)), 'err', true);
+              }
+            });
+          }
+        }
+      } else if (auth && auth.present && !auth.ok) {
+        toast('Sheet ủy quyền (AUTH_*) có lỗi — hồ sơ ĐKKD vẫn đã nạp.<br>' +
+          esc(bridgeErrorsText(auth.errors)), 'err', true);
+      }
     }).catch(function (e) {
       toast('Lỗi nạp Excel cả hồ sơ: ' + esc(String(e)), 'err', true);
     });
@@ -2540,6 +2570,19 @@
   // ------------------------------------------------------------- khởi động
   function init() {
     wireEvents();
+    if (window.AuthorizationPanel) {
+      window.AuthorizationPanel.init({
+        api: api,
+        esc: esc,
+        toast: toast,
+        getCaseId: function () { return state.caseId; },
+        getCaseTen: function () {
+          var cs = currentCase();
+          return cs ? cs.ten : '';
+        },
+        getStoreValues: function () { return buildExportData(); }
+      });
+    }
     loadCases();
 
     // [Phase 5] danh mục VSIC: Bridge-first (xem comment ở loadVsicList).

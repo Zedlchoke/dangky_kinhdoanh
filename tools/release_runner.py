@@ -94,6 +94,11 @@ SUITES: list[dict] = [
     {"name": "test_excel_case_oneof",     "type": "module", "target": "tools.test_excel_case_oneof"},
     {"name": "test_excel_calc_roundtrip", "type": "module", "target": "tools.test_excel_calc_roundtrip"},
     {"name": "excel_case_visual",         "type": "module", "target": "tools.excel_case_visual"},
+    # --- Authorization I1 (2026-09-14): SQLite profile store + backup ---
+    {"name": "test_authorization_store",  "type": "module", "target": "tools.test_authorization_store"},
+    {"name": "test_authorization_render", "type": "module", "target": "tools.test_authorization_render"},
+    {"name": "test_excel_authorization_sheets", "type": "module",
+     "target": "tools.test_excel_authorization_sheets"},
     # --- Python ---
     {"name": "p1_b_verify_m72",           "type": "module", "target": "tools.census.p1_b_verify_m72",
      "requires": ["python-docx"]},

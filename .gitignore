@@ -6,4 +6,5 @@ generated_ho_so/
 .v2c/
 build/
 dist/
+build_windows_exe/
 tools/branding/local/

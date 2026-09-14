@@ -1,17 +1,14 @@
 # Branding — logo/icon app "Trợ lý hồ sơ ĐKKD"
 
-> **QUYẾT ĐỊNH OWNER 2026-09-11:** dùng ảnh chân dung cá nhân do owner cung
-> cấp làm icon app (đã nâng sáng gamma 0.48 + crop vuông neo đáy 1980px từ
-> gốc 2316×3088, EXIF-rotated). Owner xác nhận chấp nhận khuôn mặt xuất hiện
-> trong icon bản phát hành.
+> **QUYẾT ĐỊNH OWNER 2026-09-11:** dùng hình minh họa owner cung cấp làm icon
+> app. Icon Windows tái lập được nằm tại `dangky_kinhdoanh.ico`; asset local
+> chỉ giữ bản master/nguồn để chỉnh sửa tiếp.
 
 ## Kỷ luật riêng tư (bắt buộc)
 
-- **Ảnh gốc và mọi icon derived KHÔNG được commit vào git** — thư mục
-  `local/` nằm trong `.gitignore` (PII: khuôn mặt người thật — kỷ luật
-  PLAN.md F6.2/§6.5 và mandate "không commit profile thật/PII").
-- Icon derived (`.icns`/`.ico`) chỉ sống local trên máy build và đi vào
-  **bundle phát hành** (.app/.exe) — đúng phạm vi owner đã chấp nhận.
+- Ảnh gốc và master local nằm trong `local/` và không commit.
+- Icon `.ico` phát hành đã được owner chốt và commit để build từ clone mới
+  luôn có cùng logo; `.icns` macOS vẫn có thể sinh local trên runner macOS.
 
 ## Bố cục local (tự dựng, không commit)
 
@@ -21,6 +18,8 @@ tools/branding/local/
 ├── icon.iconset/          10 kích thước chuẩn Apple
 ├── dangky_kinhdoanh.icns  macOS (iconutil -c icns)
 └── dangky_kinhdoanh.ico   Windows (Pillow, 16→256px)
+
+tools/branding/dangky_kinhdoanh.ico  # asset Windows tracked cho PyInstaller
 ```
 
 ## Tái lập

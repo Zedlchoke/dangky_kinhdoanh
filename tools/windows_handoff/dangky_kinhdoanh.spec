@@ -133,9 +133,12 @@ pyz = PYZ(a.pure)
 # thoát => generated_ho_so ghi trong phiên sẽ mất nếu quên chép ra;
 # launch_app_web.py có bước rescue-copy sang Documents\DangKyKinhDoanh\
 # làm lưới an toàn. Người chạy phải mở thư mục export NGAY trong phiên (S6).
-# [branding 2026-09-11] icon riêng (local-only, không commit — PII):
-_WIN_ICON = os.path.join(SPEC_DIR, 'branding', 'local',
-                         'dangky_kinhdoanh.ico')
+# [branding 2026-09-11] icon owner chốt — bản phát hành tái lập được.
+# Ưu tiên asset tracked; local/ chỉ là fallback cho máy build cũ.
+_WIN_ICON = os.path.join(TOOLS_DIR, 'branding', 'dangky_kinhdoanh.ico')
+if not os.path.isfile(_WIN_ICON):
+    _WIN_ICON = os.path.join(SPEC_DIR, 'branding', 'local',
+                             'dangky_kinhdoanh.ico')
 
 exe = EXE(
     pyz,
@@ -151,8 +154,6 @@ exe = EXE(
     upx_exclude=[],
     runtime_tmpdir=None,
     console=True,  # S1 yêu cầu đọc được traceback console nếu launch lỗi
-    # [branding 2026-09-11 — owner chốt dùng ảnh chân dung] icon local-only
-    # (tools/branding/local/ nằm trong .gitignore — PII, không commit).
     # Không có file -> icon mặc định PyInstaller, build không vỡ.
     icon=(_WIN_ICON if os.path.isfile(_WIN_ICON) else None),
 )

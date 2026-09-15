@@ -786,6 +786,18 @@ def import_case_workbook(path: "str | Path", manifest: dict,
             if entry.filled:
                 answers[entry.key] = entry.value
 
+    # wizard_sets: select wizard -> virtual mark/check keys (customer export)
+    try:
+        from tools.excel_case_export import expand_wizard_answers  # noqa: WPS433
+        all_qs = []
+        for form in manifest.get("forms") or []:
+            all_qs.extend(form.get("questions") or [])
+        for key, value in expand_wizard_answers(all_qs, answers).items():
+            if key not in answers:
+                answers[key] = value
+    except Exception:  # noqa: BLE001
+        pass
+
     # -- 11. Resolve `when` + dựng store -----------------------------------------------
     values: dict[str, object] = {}
     checks: dict[str, bool] = {}

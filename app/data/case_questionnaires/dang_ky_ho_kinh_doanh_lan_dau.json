@@ -32,6 +32,31 @@
       "content_review": "approved",
       "questions": [
         {
+          "question_id": "wiz_loai_chu_ho",
+          "group": "Xác định loại hình hộ kinh doanh",
+          "text": "Hộ kinh doanh của bạn thuộc trường hợp nào?",
+          "type": "select",
+          "required": true,
+          "wizard": true,
+          "audience": "customer",
+          "tier": "wizard",
+          "options": [
+            {
+              "value": "ca_nhan",
+              "label": "Một cá nhân làm chủ hộ"
+            },
+            {
+              "value": "ho_gia_dinh",
+              "label": "Các thành viên hộ gia đình ủy quyền",
+              "wizard_sets": {
+                "chk_ct_ho_gia_dinh": "X"
+              }
+            }
+          ],
+          "version": 1,
+          "data_key": "wiz_loai_chu_ho"
+        },
+        {
           "question_id": "q_ho_ten",
           "group": "Về bạn (chủ hộ kinh doanh)",
           "text": "Họ và tên của bạn là gì? (bạn ghi thường, app tự in hoa)",
@@ -39,7 +64,9 @@
           "example": "Nguyễn Văn A",
           "required": true,
           "version": 1,
-          "data_key": "chu_hkd.ho_ten"
+          "data_key": "chu_hkd.ho_ten",
+          "tier": "core",
+          "audience": "customer"
         },
         {
           "question_id": "q_ngay_sinh",
@@ -61,7 +88,8 @@
               "key": "nam_sinh",
               "transform": "date_year"
             }
-          ]
+          ],
+          "tier": "conditional"
         },
         {
           "question_id": "q_gioi_tinh",
@@ -79,7 +107,8 @@
             }
           ],
           "version": 1,
-          "data_key": "chu_hkd.gioi_tinh"
+          "data_key": "chu_hkd.gioi_tinh",
+          "tier": "conditional"
         },
         {
           "question_id": "q_so_cccd",
@@ -89,7 +118,9 @@
           "example": "079085001234",
           "required": true,
           "version": 1,
-          "data_key": "chu_hkd.so_cccd"
+          "data_key": "chu_hkd.so_cccd",
+          "tier": "core",
+          "audience": "customer"
         },
         {
           "question_id": "q_dan_toc",
@@ -98,7 +129,8 @@
           "type": "text",
           "example": "Kinh",
           "version": 1,
-          "data_key": "chu_hkd.dan_toc"
+          "data_key": "chu_hkd.dan_toc",
+          "tier": "conditional"
         },
         {
           "question_id": "q_quoc_tich",
@@ -107,7 +139,8 @@
           "type": "text",
           "example": "Việt Nam",
           "version": 1,
-          "data_key": "chu_hkd.quoc_tich"
+          "data_key": "chu_hkd.quoc_tich",
+          "tier": "conditional"
         },
         {
           "question_id": "q_dien_thoai",
@@ -116,7 +149,8 @@
           "type": "tel",
           "example": "0901234567",
           "version": 1,
-          "data_key": "dien_thoai_lien_he"
+          "data_key": "dien_thoai_lien_he",
+          "tier": "conditional"
         },
         {
           "question_id": "q_email",
@@ -124,7 +158,8 @@
           "text": "Email liên hệ (nếu có)?",
           "type": "email",
           "version": 1,
-          "data_key": "email_tru_so"
+          "data_key": "email_tru_so",
+          "tier": "conditional"
         },
         {
           "question_id": "q_dia_chi_chi_tiet",
@@ -134,7 +169,9 @@
           "example": "25 Nguyễn Trãi, Phường Bến Thành",
           "required": true,
           "version": 1,
-          "data_key": "dia_chi_chi_tiet"
+          "data_key": "dia_chi_chi_tiet",
+          "tier": "core",
+          "audience": "customer"
         },
         {
           "question_id": "q_xa_phuong",
@@ -144,7 +181,9 @@
           "example": "Phường Bến Thành",
           "required": true,
           "version": 1,
-          "data_key": "xa_phuong"
+          "data_key": "xa_phuong",
+          "tier": "core",
+          "audience": "customer"
         },
         {
           "question_id": "q_tinh_thanh",
@@ -154,7 +193,9 @@
           "example": "TP. Hồ Chí Minh",
           "required": true,
           "version": 1,
-          "data_key": "tinh_thanh"
+          "data_key": "tinh_thanh",
+          "tier": "core",
+          "audience": "customer"
         },
         {
           "question_id": "q_khong_kd_tai_tru_so",
@@ -168,7 +209,8 @@
             }
           ],
           "version": 1,
-          "data_key": "chk_khong_kd_tai_tru_so"
+          "data_key": "chk_khong_kd_tai_tru_so",
+          "tier": "conditional"
         },
         {
           "question_id": "q_ten_hkd",
@@ -178,7 +220,9 @@
           "example": "Hộ kinh doanh bánh ngọt Hải Phòng",
           "required": true,
           "version": 1,
-          "data_key": "hkd_ten_tieng_viet"
+          "data_key": "hkd_ten_tieng_viet",
+          "tier": "core",
+          "audience": "customer"
         },
         {
           "question_id": "q_ten_hkd_nuoc_ngoai",
@@ -186,7 +230,8 @@
           "text": "Có tên tiếng nước ngoài không? (bỏ trống nếu không có)",
           "type": "text",
           "version": 1,
-          "data_key": "hkd_ten_tieng_nuoc"
+          "data_key": "hkd_ten_tieng_nuoc",
+          "tier": "conditional"
         },
         {
           "question_id": "q_ten_hkd_viet_tat",
@@ -194,7 +239,8 @@
           "text": "Cần tên viết tắt không? (bỏ trống nếu không có)",
           "type": "text",
           "version": 1,
-          "data_key": "hkd_ten_viet_tat"
+          "data_key": "hkd_ten_viet_tat",
+          "tier": "conditional"
         },
         {
           "question_id": "q_dien_thoai_hkd",
@@ -202,7 +248,8 @@
           "text": "Số điện thoại của hộ kinh doanh?",
           "type": "tel",
           "version": 1,
-          "data_key": "dien_thoai_khac"
+          "data_key": "dien_thoai_khac",
+          "tier": "conditional"
         },
         {
           "question_id": "q_fax",
@@ -210,7 +257,8 @@
           "text": "Số fax (nếu có)?",
           "type": "text",
           "version": 1,
-          "data_key": "fax"
+          "data_key": "fax",
+          "tier": "conditional"
         },
         {
           "question_id": "q_website",
@@ -218,7 +266,8 @@
           "text": "Website (nếu có)?",
           "type": "text",
           "version": 1,
-          "data_key": "website"
+          "data_key": "website",
+          "tier": "conditional"
         },
         {
           "question_id": "q_nganh_ten",
@@ -230,7 +279,9 @@
           "repeatable": true,
           "row_group": "nganh",
           "version": 1,
-          "data_key": "ds_nganh.ten_nganh"
+          "data_key": "ds_nganh.ten_nganh",
+          "tier": "core",
+          "audience": "customer"
         },
         {
           "question_id": "q_nganh_ma",
@@ -241,7 +292,8 @@
           "repeatable": true,
           "row_group": "nganh",
           "version": 1,
-          "data_key": "ds_nganh.ma_nganh"
+          "data_key": "ds_nganh.ma_nganh",
+          "tier": "conditional"
         },
         {
           "question_id": "q_nganh_chinh",
@@ -257,7 +309,8 @@
           "repeatable": true,
           "row_group": "nganh",
           "version": 1,
-          "data_key": "ds_nganh.la_nganh_chinh"
+          "data_key": "ds_nganh.la_nganh_chinh",
+          "tier": "conditional"
         },
         {
           "question_id": "q_von",
@@ -266,7 +319,8 @@
           "type": "money",
           "example": "50000000",
           "version": 1,
-          "data_key": "von_kinh_doanh"
+          "data_key": "von_kinh_doanh",
+          "tier": "conditional"
         },
         {
           "question_id": "q_ngay_bd",
@@ -288,7 +342,8 @@
               "key": "nam_bd",
               "transform": "date_year"
             }
-          ]
+          ],
+          "tier": "conditional"
         },
         {
           "question_id": "q_so_lao_dong",
@@ -297,7 +352,8 @@
           "type": "integer",
           "example": "2",
           "version": 1,
-          "data_key": "so_lao_dong"
+          "data_key": "so_lao_dong",
+          "tier": "conditional"
         },
         {
           "question_id": "q_tv_hgd_ho_ten",
@@ -307,7 +363,13 @@
           "repeatable": true,
           "row_group": "tv_hgd",
           "version": 1,
-          "data_key": "ds_tv_ho_gia_dinh.ho_ten"
+          "data_key": "ds_tv_ho_gia_dinh.ho_ten",
+          "tier": "conditional",
+          "customer_branch": {
+            "chk_ct_ho_gia_dinh": [
+              "X"
+            ]
+          }
         },
         {
           "question_id": "q_tv_hgd_ngay_sinh",
@@ -317,7 +379,13 @@
           "repeatable": true,
           "row_group": "tv_hgd",
           "version": 1,
-          "data_key": "ds_tv_ho_gia_dinh.ngay_sinh"
+          "data_key": "ds_tv_ho_gia_dinh.ngay_sinh",
+          "tier": "conditional",
+          "customer_branch": {
+            "chk_ct_ho_gia_dinh": [
+              "X"
+            ]
+          }
         },
         {
           "question_id": "q_tv_hgd_so_cccd",
@@ -328,7 +396,13 @@
           "repeatable": true,
           "row_group": "tv_hgd",
           "version": 1,
-          "data_key": "ds_tv_ho_gia_dinh.so_cccd"
+          "data_key": "ds_tv_ho_gia_dinh.so_cccd",
+          "tier": "conditional",
+          "customer_branch": {
+            "chk_ct_ho_gia_dinh": [
+              "X"
+            ]
+          }
         },
         {
           "question_id": "q_tv_hgd_gioi_tinh",
@@ -348,7 +422,13 @@
           "repeatable": true,
           "row_group": "tv_hgd",
           "version": 1,
-          "data_key": "ds_tv_ho_gia_dinh.gioi_tinh"
+          "data_key": "ds_tv_ho_gia_dinh.gioi_tinh",
+          "tier": "conditional",
+          "customer_branch": {
+            "chk_ct_ho_gia_dinh": [
+              "X"
+            ]
+          }
         },
         {
           "question_id": "q_tv_hgd_noi_o",
@@ -358,7 +438,13 @@
           "repeatable": true,
           "row_group": "tv_hgd",
           "version": 1,
-          "data_key": "ds_tv_ho_gia_dinh.noi_o_hien_tai"
+          "data_key": "ds_tv_ho_gia_dinh.noi_o_hien_tai",
+          "tier": "conditional",
+          "customer_branch": {
+            "chk_ct_ho_gia_dinh": [
+              "X"
+            ]
+          }
         },
         {
           "question_id": "q_chu_ho_la_ca_nhan",
@@ -372,7 +458,8 @@
             }
           ],
           "version": 1,
-          "data_key": "chk_ct_ca_nhan"
+          "data_key": "chk_ct_ca_nhan",
+          "audience": "staff"
         },
         {
           "question_id": "q_chu_ho_la_ho_gia_dinh",
@@ -386,7 +473,8 @@
             }
           ],
           "version": 1,
-          "data_key": "chk_ct_ho_gia_dinh"
+          "data_key": "chk_ct_ho_gia_dinh",
+          "audience": "staff"
         },
         {
           "question_id": "q_pp_ke_khai",
@@ -400,7 +488,8 @@
             }
           ],
           "version": 1,
-          "data_key": "chk_pp_ke_khai"
+          "data_key": "chk_pp_ke_khai",
+          "tier": "conditional"
         },
         {
           "question_id": "q_pp_khoan",
@@ -414,7 +503,8 @@
             }
           ],
           "version": 1,
-          "data_key": "chk_pp_khoan"
+          "data_key": "chk_pp_khoan",
+          "tier": "conditional"
         }
       ]
     }

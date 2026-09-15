@@ -31,6 +31,67 @@
       "content_review": "owner_delegated_2026-09-10",
       "questions": [
         {
+          "question_id": "wiz_tt_loai",
+          "group": "Xác định trường hợp thành lập",
+          "text": "Trường hợp thành lập doanh nghiệp của bạn?",
+          "type": "select",
+          "required": true,
+          "wizard": true,
+          "audience": "customer",
+          "tier": "wizard",
+          "options": [
+            {
+              "value": "moi",
+              "label": "Thành lập mới"
+            },
+            {
+              "value": "tu_hkd",
+              "label": "Chuyển đổi từ hộ kinh doanh",
+              "wizard_sets": {
+                "chk_tt_chuyen_doi_tu_hkd": "X"
+              }
+            },
+            {
+              "value": "tu_csbt",
+              "label": "Chuyển đổi từ cơ sở bảo trợ xã hội/quỹ",
+              "wizard_sets": {
+                "chk_tt_chuyen_doi_tu_csbt": "X"
+              }
+            },
+            {
+              "value": "chuyen_doi_loai_hinh",
+              "label": "Chuyển đổi loại hình doanh nghiệp",
+              "wizard_sets": {
+                "chk_tt_chuyen_doi_loai_hinh": "X"
+              }
+            }
+          ],
+          "version": 1,
+          "data_key": "wiz_tt_loai"
+        },
+        {
+          "question_id": "wiz_chu_so_huu",
+          "group": "Xác định trường hợp thành lập",
+          "text": "Chủ sở hữu công ty là?",
+          "type": "select",
+          "required": true,
+          "wizard": true,
+          "audience": "customer",
+          "tier": "wizard",
+          "options": [
+            {
+              "value": "ca_nhan",
+              "label": "Cá nhân"
+            },
+            {
+              "value": "to_chuc",
+              "label": "Tổ chức"
+            }
+          ],
+          "version": 1,
+          "data_key": "wiz_chu_so_huu"
+        },
+        {
           "question_id": "q_i02_chu_hkd_ho_ten",
           "group": "Về người khai hồ sơ",
           "text": "Họ và tên của bạn là gì? (bạn ghi thường, app tự in hoa)",
@@ -38,7 +99,9 @@
           "example": "Nguyễn Văn A",
           "required": true,
           "version": 1,
-          "data_key": "chu_hkd.ho_ten"
+          "data_key": "chu_hkd.ho_ten",
+          "tier": "core",
+          "audience": "customer"
         },
         {
           "question_id": "q_i02_chu_hkd_gioi_tinh",
@@ -56,7 +119,8 @@
             }
           ],
           "version": 1,
-          "data_key": "chu_hkd.gioi_tinh"
+          "data_key": "chu_hkd.gioi_tinh",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_chu_hkd_so_cccd",
@@ -65,7 +129,8 @@
           "type": "text",
           "example": "079085001234",
           "version": 1,
-          "data_key": "chu_hkd.so_cccd"
+          "data_key": "chu_hkd.so_cccd",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_dia_chi_chi_tiet",
@@ -75,7 +140,9 @@
           "example": "25 Nguyễn Trãi, Phường Bến Thành",
           "required": true,
           "version": 1,
-          "data_key": "dia_chi_chi_tiet"
+          "data_key": "dia_chi_chi_tiet",
+          "tier": "core",
+          "audience": "customer"
         },
         {
           "question_id": "q_i02_xa_phuong",
@@ -85,7 +152,9 @@
           "example": "Phường Bến Thành",
           "required": true,
           "version": 1,
-          "data_key": "xa_phuong"
+          "data_key": "xa_phuong",
+          "tier": "core",
+          "audience": "customer"
         },
         {
           "question_id": "q_i02_tinh_thanh",
@@ -95,7 +164,9 @@
           "example": "TP. Hồ Chí Minh",
           "required": true,
           "version": 1,
-          "data_key": "tinh_thanh"
+          "data_key": "tinh_thanh",
+          "tier": "core",
+          "audience": "customer"
         },
         {
           "question_id": "q_i02_ndd_quoc_gia",
@@ -103,7 +174,8 @@
           "text": "Người đại diện mang quốc gia nào (nếu khác Việt Nam)?",
           "type": "text",
           "version": 1,
-          "data_key": "ndd.quoc_gia"
+          "data_key": "ndd.quoc_gia",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_ndd_dien_thoai",
@@ -112,7 +184,8 @@
           "type": "tel",
           "example": "0901234567",
           "version": 1,
-          "data_key": "ndd.dien_thoai"
+          "data_key": "ndd.dien_thoai",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_ndd_email",
@@ -120,7 +193,8 @@
           "text": "Email của người đại diện (nếu có)?",
           "type": "email",
           "version": 1,
-          "data_key": "ndd.email"
+          "data_key": "ndd.email",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_chu_hkd_dan_toc",
@@ -129,7 +203,8 @@
           "type": "text",
           "example": "Kinh",
           "version": 1,
-          "data_key": "chu_hkd.dan_toc"
+          "data_key": "chu_hkd.dan_toc",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_chu_hkd_quoc_tich",
@@ -138,7 +213,8 @@
           "type": "text",
           "example": "Việt Nam",
           "version": 1,
-          "data_key": "chu_hkd.quoc_tich"
+          "data_key": "chu_hkd.quoc_tich",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_ngay_cap",
@@ -147,7 +223,8 @@
           "type": "date",
           "example": "10/01/2021",
           "version": 1,
-          "data_key": "ngay_cap"
+          "data_key": "ngay_cap",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_noi_cap",
@@ -156,7 +233,8 @@
           "type": "text",
           "example": "Cục Trưởng Cục CSCĐ",
           "version": 1,
-          "data_key": "noi_cap"
+          "data_key": "noi_cap",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_quoc_gia",
@@ -164,7 +242,8 @@
           "text": "Quốc gia (nếu khác Việt Nam)?",
           "type": "text",
           "version": 1,
-          "data_key": "quoc_gia"
+          "data_key": "quoc_gia",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_dn_goc_ten_doanh_nghiep",
@@ -172,7 +251,8 @@
           "text": "Tên doanh nghiệp gốc (trường hợp tách/chia/hợp nhất/chuyển đổi — nếu có)?",
           "type": "text",
           "version": 1,
-          "data_key": "dn_goc.ten_doanh_nghiep"
+          "data_key": "dn_goc.ten_doanh_nghiep",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_dn_goc_ma_so_dn",
@@ -180,7 +260,8 @@
           "text": "Mã số doanh nghiệp/mã số thuế của doanh nghiệp gốc (nếu có)?",
           "type": "text",
           "version": 1,
-          "data_key": "dn_goc.ma_so_dn"
+          "data_key": "dn_goc.ma_so_dn",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_hkd_cd_ten_hkd",
@@ -194,7 +275,8 @@
               "X"
             ]
           },
-          "data_key": "hkd_cd.ten_hkd"
+          "data_key": "hkd_cd.ten_hkd",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_hkd_ma_so",
@@ -203,7 +285,8 @@
           "type": "text",
           "example": "0312345678",
           "version": 1,
-          "data_key": "hkd_ma_so"
+          "data_key": "hkd_ma_so",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_hkd_cd_dia_chi",
@@ -217,7 +300,8 @@
               "X"
             ]
           },
-          "data_key": "hkd_cd.dia_chi"
+          "data_key": "hkd_cd.dia_chi",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_hkd_cd_ten_chu_ho",
@@ -231,7 +315,8 @@
               "X"
             ]
           },
-          "data_key": "hkd_cd.ten_chu_ho"
+          "data_key": "hkd_cd.ten_chu_ho",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_so_giay_to_ca_nhan",
@@ -239,7 +324,8 @@
           "text": "Số giấy tờ pháp lý của cá nhân theo Giấy chứng nhận đã cấp (nếu có)?",
           "type": "text",
           "version": 1,
-          "data_key": "so_giay_to_ca_nhan"
+          "data_key": "so_giay_to_ca_nhan",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_ngay_het_han",
@@ -247,7 +333,8 @@
           "text": "Giấy tờ pháp lý có ngày hết hạn không? (dd/mm/yyyy, bỏ trống nếu không có)",
           "type": "date",
           "version": 1,
-          "data_key": "ngay_het_han"
+          "data_key": "ngay_het_han",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_csbt_ten",
@@ -260,7 +347,8 @@
               "X"
             ]
           },
-          "data_key": "csbt.ten"
+          "data_key": "csbt.ten",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_csbt_so_gcn",
@@ -273,7 +361,8 @@
               "X"
             ]
           },
-          "data_key": "csbt.so_gcn"
+          "data_key": "csbt.so_gcn",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_csbt_ngay_cap",
@@ -286,7 +375,8 @@
               "X"
             ]
           },
-          "data_key": "csbt.ngay_cap"
+          "data_key": "csbt.ngay_cap",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_csbt_ma_so_thue",
@@ -299,7 +389,8 @@
               "X"
             ]
           },
-          "data_key": "csbt.ma_so_thue"
+          "data_key": "csbt.ma_so_thue",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_csbt_dia_chi",
@@ -312,7 +403,8 @@
               "X"
             ]
           },
-          "data_key": "csbt.dia_chi"
+          "data_key": "csbt.dia_chi",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_csbt_ten_nguoi_dai_dien",
@@ -325,7 +417,8 @@
               "X"
             ]
           },
-          "data_key": "csbt.ten_nguoi_dai_dien"
+          "data_key": "csbt.ten_nguoi_dai_dien",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_gp_ucsn_so",
@@ -338,7 +431,8 @@
               "X"
             ]
           },
-          "data_key": "gp_ucsn_so"
+          "data_key": "gp_ucsn_so",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_dn_ten_tieng_viet",
@@ -348,7 +442,9 @@
           "example": "Công ty TNHH An Phát",
           "required": true,
           "version": 1,
-          "data_key": "dn.ten_tieng_viet"
+          "data_key": "dn.ten_tieng_viet",
+          "tier": "core",
+          "audience": "customer"
         },
         {
           "question_id": "q_i02_dn_ten_nuoc_ngoai",
@@ -356,7 +452,8 @@
           "text": "Tên doanh nghiệp viết bằng tiếng nước ngoài (nếu có)?",
           "type": "text",
           "version": 1,
-          "data_key": "dn.ten_nuoc_ngoai"
+          "data_key": "dn.ten_nuoc_ngoai",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_dn_ten_viet_tat",
@@ -364,7 +461,8 @@
           "text": "Tên doanh nghiệp viết tắt (nếu có)?",
           "type": "text",
           "version": 1,
-          "data_key": "dn.ten_viet_tat"
+          "data_key": "dn.ten_viet_tat",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_dien_thoai_khac",
@@ -372,7 +470,8 @@
           "text": "Số điện thoại khác (nếu có)?",
           "type": "tel",
           "version": 1,
-          "data_key": "dien_thoai_khac"
+          "data_key": "dien_thoai_khac",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_fax",
@@ -380,7 +479,8 @@
           "text": "Số fax (nếu có)?",
           "type": "text",
           "version": 1,
-          "data_key": "fax"
+          "data_key": "fax",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_email_tru_so",
@@ -388,7 +488,8 @@
           "text": "Email liên hệ (nếu có)?",
           "type": "email",
           "version": 1,
-          "data_key": "email_tru_so"
+          "data_key": "email_tru_so",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_website",
@@ -396,7 +497,8 @@
           "text": "Website (nếu có)?",
           "type": "text",
           "version": 1,
-          "data_key": "website"
+          "data_key": "website",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_ho_ten_in_hoa",
@@ -406,7 +508,9 @@
           "example": "Nguyễn Văn A",
           "required": true,
           "version": 1,
-          "data_key": "ho_ten_in_hoa"
+          "data_key": "ho_ten_in_hoa",
+          "tier": "core",
+          "audience": "customer"
         },
         {
           "question_id": "q_i02_dien_thoai_lien_he",
@@ -415,7 +519,8 @@
           "type": "tel",
           "example": "0901234567",
           "version": 1,
-          "data_key": "dien_thoai_lien_he"
+          "data_key": "dien_thoai_lien_he",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_ma_so_du_an",
@@ -423,7 +528,8 @@
           "text": "Mã số dự án đầu tư (nếu có)?",
           "type": "text",
           "version": 1,
-          "data_key": "ma_so_du_an"
+          "data_key": "ma_so_du_an",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_co_quan_cap",
@@ -431,7 +537,8 @@
           "text": "Mã số dự án do cơ quan nào cấp?",
           "type": "text",
           "version": 1,
-          "data_key": "co_quan_cap"
+          "data_key": "co_quan_cap",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_to_chuc_ten",
@@ -440,7 +547,8 @@
           "type": "text",
           "example": "Công ty CP Đầu tư ABC",
           "version": 1,
-          "data_key": "to_chuc.ten"
+          "data_key": "to_chuc.ten",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_dn_ma_so_dn",
@@ -449,7 +557,8 @@
           "type": "text",
           "example": "0312345678",
           "version": 1,
-          "data_key": "dn.ma_so_dn"
+          "data_key": "dn.ma_so_dn",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_von_dieu_le",
@@ -458,7 +567,8 @@
           "type": "money",
           "example": "5.000.000.000",
           "version": 1,
-          "data_key": "von_dieu_le"
+          "data_key": "von_dieu_le",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_von_dieu_le_chu",
@@ -467,7 +577,8 @@
           "type": "text",
           "example": "Năm tỷ đồng",
           "version": 1,
-          "data_key": "von_dieu_le_chu"
+          "data_key": "von_dieu_le_chu",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_nguon_von_dieu_le_von_khac_so_tien_vnd_va_tuong_duong",
@@ -475,7 +586,8 @@
           "text": "Vốn khác — số tiền (VNĐ, nếu có)?",
           "type": "money",
           "version": 1,
-          "data_key": "nguon_von_dieu_le.von_khac.so_tien_vnd_va_tuong_duong"
+          "data_key": "nguon_von_dieu_le.von_khac.so_tien_vnd_va_tuong_duong",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_nguon_von_dieu_le_von_ngan_sach_nha_nuoc_so_tien_vnd_va_tuon",
@@ -483,7 +595,8 @@
           "text": "Vốn ngân sách nhà nước — số tiền (VNĐ, nếu có)?",
           "type": "money",
           "version": 1,
-          "data_key": "nguon_von_dieu_le.von_ngan_sach_nha_nuoc.so_tien_vnd_va_tuong_duong"
+          "data_key": "nguon_von_dieu_le.von_ngan_sach_nha_nuoc.so_tien_vnd_va_tuong_duong",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_nguon_von_dieu_le_von_nuoc_ngoai_so_tien_vnd_va_tuong_duong",
@@ -491,7 +604,8 @@
           "text": "Vốn đầu tư nước ngoài — số tiền (VNĐ, nếu có)?",
           "type": "money",
           "version": 1,
-          "data_key": "nguon_von_dieu_le.von_nuoc_ngoai.so_tien_vnd_va_tuong_duong"
+          "data_key": "nguon_von_dieu_le.von_nuoc_ngoai.so_tien_vnd_va_tuong_duong",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_nguon_von_dieu_le_von_tu_nhan_so_tien_vnd_va_tuong_duong",
@@ -499,7 +613,8 @@
           "text": "Vốn tư nhân trong nước — số tiền (VNĐ, nếu có)?",
           "type": "money",
           "version": 1,
-          "data_key": "nguon_von_dieu_le.von_tu_nhan.so_tien_vnd_va_tuong_duong"
+          "data_key": "nguon_von_dieu_le.von_tu_nhan.so_tien_vnd_va_tuong_duong",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_nguon_von_dieu_le_von_khac_ty_le",
@@ -507,7 +622,8 @@
           "text": "Vốn khác — chiếm tỷ lệ (%)?",
           "type": "text",
           "version": 1,
-          "data_key": "nguon_von_dieu_le.von_khac.ty_le"
+          "data_key": "nguon_von_dieu_le.von_khac.ty_le",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_nguon_von_dieu_le_von_ngan_sach_nha_nuoc_ty_le",
@@ -515,7 +631,8 @@
           "text": "Vốn ngân sách nhà nước — chiếm tỷ lệ (%)?",
           "type": "text",
           "version": 1,
-          "data_key": "nguon_von_dieu_le.von_ngan_sach_nha_nuoc.ty_le"
+          "data_key": "nguon_von_dieu_le.von_ngan_sach_nha_nuoc.ty_le",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_nguon_von_dieu_le_von_nuoc_ngoai_ty_le",
@@ -523,7 +640,8 @@
           "text": "Vốn đầu tư nước ngoài — chiếm tỷ lệ (%)?",
           "type": "text",
           "version": 1,
-          "data_key": "nguon_von_dieu_le.von_nuoc_ngoai.ty_le"
+          "data_key": "nguon_von_dieu_le.von_nuoc_ngoai.ty_le",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_nguon_von_dieu_le_von_tu_nhan_ty_le",
@@ -531,7 +649,8 @@
           "text": "Vốn tư nhân trong nước — chiếm tỷ lệ (%)?",
           "type": "text",
           "version": 1,
-          "data_key": "nguon_von_dieu_le.von_tu_nhan.ty_le"
+          "data_key": "nguon_von_dieu_le.von_tu_nhan.ty_le",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_co_cau_tai_san_gop_von_dieu_le_dong_viet_nam_chi_tiet_ngoai_",
@@ -539,7 +658,8 @@
           "text": "Tiền Việt Nam — chi tiết bằng ngoại tệ (loại ngoại tệ, nếu có)?",
           "type": "text",
           "version": 1,
-          "data_key": "co_cau_tai_san_gop_von_dieu_le.dong_viet_nam.chi_tiet_ngoai_te_tai_san_khac"
+          "data_key": "co_cau_tai_san_gop_von_dieu_le.dong_viet_nam.chi_tiet_ngoai_te_tai_san_khac",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_co_cau_tai_san_gop_von_dieu_le_ngoai_te_tu_do_chuyen_doi_chi",
@@ -547,7 +667,8 @@
           "text": "Ngoại tệ tự do chuyển đổi — chi tiết bằng ngoại tệ (loại ngoại tệ, nếu có)?",
           "type": "text",
           "version": 1,
-          "data_key": "co_cau_tai_san_gop_von_dieu_le.ngoai_te_tu_do_chuyen_doi.chi_tiet_ngoai_te_tai_san_khac"
+          "data_key": "co_cau_tai_san_gop_von_dieu_le.ngoai_te_tu_do_chuyen_doi.chi_tiet_ngoai_te_tai_san_khac",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_co_cau_tai_san_gop_von_dieu_le_quyen_so_huu_tri_tue_chi_tiet",
@@ -555,7 +676,8 @@
           "text": "Quyền sở hữu trí tuệ — chi tiết bằng ngoại tệ (loại ngoại tệ, nếu có)?",
           "type": "text",
           "version": 1,
-          "data_key": "co_cau_tai_san_gop_von_dieu_le.quyen_so_huu_tri_tue.chi_tiet_ngoai_te_tai_san_khac"
+          "data_key": "co_cau_tai_san_gop_von_dieu_le.quyen_so_huu_tri_tue.chi_tiet_ngoai_te_tai_san_khac",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_co_cau_tai_san_gop_von_dieu_le_quyen_su_dung_dat_chi_tiet_ng",
@@ -563,7 +685,8 @@
           "text": "Quyền sử dụng đất — chi tiết bằng ngoại tệ (loại ngoại tệ, nếu có)?",
           "type": "text",
           "version": 1,
-          "data_key": "co_cau_tai_san_gop_von_dieu_le.quyen_su_dung_dat.chi_tiet_ngoai_te_tai_san_khac"
+          "data_key": "co_cau_tai_san_gop_von_dieu_le.quyen_su_dung_dat.chi_tiet_ngoai_te_tai_san_khac",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_co_cau_tai_san_gop_von_dieu_le_tai_san_khac_chi_tiet_ngoai_t",
@@ -571,7 +694,8 @@
           "text": "Tài sản khác — chi tiết bằng ngoại tệ (loại ngoại tệ, nếu có)?",
           "type": "text",
           "version": 1,
-          "data_key": "co_cau_tai_san_gop_von_dieu_le.tai_san_khac.chi_tiet_ngoai_te_tai_san_khac"
+          "data_key": "co_cau_tai_san_gop_von_dieu_le.tai_san_khac.chi_tiet_ngoai_te_tai_san_khac",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_co_cau_tai_san_gop_von_dieu_le_vang_chi_tiet_ngoai_te_tai_sa",
@@ -579,7 +703,8 @@
           "text": "Vàng — chi tiết bằng ngoại tệ (loại ngoại tệ, nếu có)?",
           "type": "text",
           "version": 1,
-          "data_key": "co_cau_tai_san_gop_von_dieu_le.vang.chi_tiet_ngoai_te_tai_san_khac"
+          "data_key": "co_cau_tai_san_gop_von_dieu_le.vang.chi_tiet_ngoai_te_tai_san_khac",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_co_cau_tai_san_gop_von_dieu_le_dong_viet_nam_gia_tri_vnd",
@@ -587,7 +712,8 @@
           "text": "Tiền Việt Nam — giá trị bao nhiêu (VNĐ, nếu có)?",
           "type": "money",
           "version": 1,
-          "data_key": "co_cau_tai_san_gop_von_dieu_le.dong_viet_nam.gia_tri_vnd"
+          "data_key": "co_cau_tai_san_gop_von_dieu_le.dong_viet_nam.gia_tri_vnd",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_co_cau_tai_san_gop_von_dieu_le_ngoai_te_tu_do_chuyen_doi_gia",
@@ -595,7 +721,8 @@
           "text": "Ngoại tệ tự do chuyển đổi — giá trị bao nhiêu (VNĐ, nếu có)?",
           "type": "money",
           "version": 1,
-          "data_key": "co_cau_tai_san_gop_von_dieu_le.ngoai_te_tu_do_chuyen_doi.gia_tri_vnd"
+          "data_key": "co_cau_tai_san_gop_von_dieu_le.ngoai_te_tu_do_chuyen_doi.gia_tri_vnd",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_co_cau_tai_san_gop_von_dieu_le_quyen_so_huu_tri_tue_gia_tri_",
@@ -603,7 +730,8 @@
           "text": "Quyền sở hữu trí tuệ — giá trị bao nhiêu (VNĐ, nếu có)?",
           "type": "money",
           "version": 1,
-          "data_key": "co_cau_tai_san_gop_von_dieu_le.quyen_so_huu_tri_tue.gia_tri_vnd"
+          "data_key": "co_cau_tai_san_gop_von_dieu_le.quyen_so_huu_tri_tue.gia_tri_vnd",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_co_cau_tai_san_gop_von_dieu_le_quyen_su_dung_dat_gia_tri_vnd",
@@ -611,7 +739,8 @@
           "text": "Quyền sử dụng đất — giá trị bao nhiêu (VNĐ, nếu có)?",
           "type": "money",
           "version": 1,
-          "data_key": "co_cau_tai_san_gop_von_dieu_le.quyen_su_dung_dat.gia_tri_vnd"
+          "data_key": "co_cau_tai_san_gop_von_dieu_le.quyen_su_dung_dat.gia_tri_vnd",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_co_cau_tai_san_gop_von_dieu_le_tai_san_khac_gia_tri_vnd",
@@ -619,7 +748,8 @@
           "text": "Tài sản khác — giá trị bao nhiêu (VNĐ, nếu có)?",
           "type": "money",
           "version": 1,
-          "data_key": "co_cau_tai_san_gop_von_dieu_le.tai_san_khac.gia_tri_vnd"
+          "data_key": "co_cau_tai_san_gop_von_dieu_le.tai_san_khac.gia_tri_vnd",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_co_cau_tai_san_gop_von_dieu_le_vang_gia_tri_vnd",
@@ -627,7 +757,8 @@
           "text": "Vàng — giá trị bao nhiêu (VNĐ, nếu có)?",
           "type": "money",
           "version": 1,
-          "data_key": "co_cau_tai_san_gop_von_dieu_le.vang.gia_tri_vnd"
+          "data_key": "co_cau_tai_san_gop_von_dieu_le.vang.gia_tri_vnd",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_co_cau_tai_san_gop_von_dieu_le_dong_viet_nam_ty_le",
@@ -635,7 +766,8 @@
           "text": "Tiền Việt Nam — chiếm tỷ lệ (%)?",
           "type": "text",
           "version": 1,
-          "data_key": "co_cau_tai_san_gop_von_dieu_le.dong_viet_nam.ty_le"
+          "data_key": "co_cau_tai_san_gop_von_dieu_le.dong_viet_nam.ty_le",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_co_cau_tai_san_gop_von_dieu_le_ngoai_te_tu_do_chuyen_doi_ty_",
@@ -643,7 +775,8 @@
           "text": "Ngoại tệ tự do chuyển đổi — chiếm tỷ lệ (%)?",
           "type": "text",
           "version": 1,
-          "data_key": "co_cau_tai_san_gop_von_dieu_le.ngoai_te_tu_do_chuyen_doi.ty_le"
+          "data_key": "co_cau_tai_san_gop_von_dieu_le.ngoai_te_tu_do_chuyen_doi.ty_le",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_co_cau_tai_san_gop_von_dieu_le_quyen_so_huu_tri_tue_ty_le",
@@ -651,7 +784,8 @@
           "text": "Quyền sở hữu trí tuệ — chiếm tỷ lệ (%)?",
           "type": "text",
           "version": 1,
-          "data_key": "co_cau_tai_san_gop_von_dieu_le.quyen_so_huu_tri_tue.ty_le"
+          "data_key": "co_cau_tai_san_gop_von_dieu_le.quyen_so_huu_tri_tue.ty_le",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_co_cau_tai_san_gop_von_dieu_le_quyen_su_dung_dat_ty_le",
@@ -659,7 +793,8 @@
           "text": "Quyền sử dụng đất — chiếm tỷ lệ (%)?",
           "type": "text",
           "version": 1,
-          "data_key": "co_cau_tai_san_gop_von_dieu_le.quyen_su_dung_dat.ty_le"
+          "data_key": "co_cau_tai_san_gop_von_dieu_le.quyen_su_dung_dat.ty_le",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_co_cau_tai_san_gop_von_dieu_le_tai_san_khac_ty_le",
@@ -667,7 +802,8 @@
           "text": "Tài sản khác — chiếm tỷ lệ (%)?",
           "type": "text",
           "version": 1,
-          "data_key": "co_cau_tai_san_gop_von_dieu_le.tai_san_khac.ty_le"
+          "data_key": "co_cau_tai_san_gop_von_dieu_le.tai_san_khac.ty_le",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_co_cau_tai_san_gop_von_dieu_le_vang_ty_le",
@@ -675,7 +811,8 @@
           "text": "Vàng — chiếm tỷ lệ (%)?",
           "type": "text",
           "version": 1,
-          "data_key": "co_cau_tai_san_gop_von_dieu_le.vang.ty_le"
+          "data_key": "co_cau_tai_san_gop_von_dieu_le.vang.ty_le",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_ndd_ho_ten",
@@ -684,7 +821,8 @@
           "type": "text",
           "example": "Nguyễn Văn C",
           "version": 1,
-          "data_key": "ndd.ho_ten"
+          "data_key": "ndd.ho_ten",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_ndd_gioi_tinh",
@@ -702,7 +840,8 @@
             }
           ],
           "version": 1,
-          "data_key": "ndd.gioi_tinh"
+          "data_key": "ndd.gioi_tinh",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_ndd_so_cccd",
@@ -711,7 +850,8 @@
           "type": "text",
           "example": "079085001234",
           "version": 1,
-          "data_key": "ndd.so_cccd"
+          "data_key": "ndd.so_cccd",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_ndd_chuc_vu",
@@ -720,7 +860,8 @@
           "type": "text",
           "example": "Chủ tịch công ty",
           "version": 1,
-          "data_key": "ndd.chuc_vu"
+          "data_key": "ndd.chuc_vu",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_gd_ho_ten",
@@ -729,7 +870,8 @@
           "type": "text",
           "example": "Nguyễn Văn D",
           "version": 1,
-          "data_key": "gd.ho_ten"
+          "data_key": "gd.ho_ten",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_gd_gioi_tinh",
@@ -747,7 +889,8 @@
             }
           ],
           "version": 1,
-          "data_key": "gd.gioi_tinh"
+          "data_key": "gd.gioi_tinh",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_gd_so_cccd",
@@ -756,7 +899,8 @@
           "type": "text",
           "example": "079085009999",
           "version": 1,
-          "data_key": "gd.so_cccd"
+          "data_key": "gd.so_cccd",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_gd_dien_thoai",
@@ -765,7 +909,8 @@
           "type": "tel",
           "example": "0901234567",
           "version": 1,
-          "data_key": "gd.dien_thoai"
+          "data_key": "gd.dien_thoai",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_kt_ho_ten",
@@ -773,7 +918,8 @@
           "text": "Kế toán trưởng/người phụ trách kế toán — họ và tên? (nếu chưa có, bỏ trống)",
           "type": "text",
           "version": 1,
-          "data_key": "kt.ho_ten"
+          "data_key": "kt.ho_ten",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_kt_gioi_tinh",
@@ -791,7 +937,8 @@
             }
           ],
           "version": 1,
-          "data_key": "kt.gioi_tinh"
+          "data_key": "kt.gioi_tinh",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_kt_so_cccd",
@@ -799,7 +946,8 @@
           "text": "Kế toán trưởng — số định danh cá nhân?",
           "type": "text",
           "version": 1,
-          "data_key": "kt.so_cccd"
+          "data_key": "kt.so_cccd",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_kt_dien_thoai",
@@ -807,7 +955,8 @@
           "text": "Kế toán trưởng — số điện thoại (nếu có)?",
           "type": "tel",
           "version": 1,
-          "data_key": "kt.dien_thoai"
+          "data_key": "kt.dien_thoai",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_ap_dung_tu",
@@ -815,7 +964,8 @@
           "text": "Mức đóng bảo hiểm xã hội áp dụng từ ngày nào? (dd/mm/yyyy, nếu có)",
           "type": "date",
           "version": 1,
-          "data_key": "ap_dung_tu"
+          "data_key": "ap_dung_tu",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_so_lao_dong",
@@ -824,7 +974,8 @@
           "type": "integer",
           "example": "10",
           "version": 1,
-          "data_key": "so_lao_dong"
+          "data_key": "so_lao_dong",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_chk_tt_thanh_lap_moi",
@@ -838,7 +989,8 @@
             }
           ],
           "version": 1,
-          "data_key": "chk_tt_thanh_lap_moi"
+          "data_key": "chk_tt_thanh_lap_moi",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_chk_tt_tach_dn",
@@ -852,7 +1004,8 @@
             }
           ],
           "version": 1,
-          "data_key": "chk_tt_tach_dn"
+          "data_key": "chk_tt_tach_dn",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_chk_tt_chia_dn",
@@ -866,7 +1019,8 @@
             }
           ],
           "version": 1,
-          "data_key": "chk_tt_chia_dn"
+          "data_key": "chk_tt_chia_dn",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_chk_tt_hop_nhat_dn",
@@ -880,7 +1034,8 @@
             }
           ],
           "version": 1,
-          "data_key": "chk_tt_hop_nhat_dn"
+          "data_key": "chk_tt_hop_nhat_dn",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_chk_tt_chuyen_doi_loai_hinh",
@@ -894,7 +1049,8 @@
             }
           ],
           "version": 1,
-          "data_key": "chk_tt_chuyen_doi_loai_hinh"
+          "data_key": "chk_tt_chuyen_doi_loai_hinh",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_chk_tt_chuyen_doi_tu_hkd",
@@ -908,7 +1064,8 @@
             }
           ],
           "version": 1,
-          "data_key": "chk_tt_chuyen_doi_tu_hkd"
+          "data_key": "chk_tt_chuyen_doi_tu_hkd",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_chk_tt_chuyen_doi_tu_csbt",
@@ -922,7 +1079,8 @@
             }
           ],
           "version": 1,
-          "data_key": "chk_tt_chuyen_doi_tu_csbt"
+          "data_key": "chk_tt_chuyen_doi_tu_csbt",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_chk_gt_cmnd",
@@ -936,7 +1094,8 @@
             }
           ],
           "version": 1,
-          "data_key": "chk_gt_cmnd"
+          "data_key": "chk_gt_cmnd",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_chk_gt_cccd",
@@ -950,7 +1109,8 @@
             }
           ],
           "version": 1,
-          "data_key": "chk_gt_cccd"
+          "data_key": "chk_gt_cccd",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_chk_gt_ho_chieu",
@@ -964,7 +1124,8 @@
             }
           ],
           "version": 1,
-          "data_key": "chk_gt_ho_chieu"
+          "data_key": "chk_gt_ho_chieu",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_chk_gt_loai_khac",
@@ -978,7 +1139,8 @@
             }
           ],
           "version": 1,
-          "data_key": "chk_gt_loai_khac"
+          "data_key": "chk_gt_loai_khac",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_chk_dau_tu_dac_biet",
@@ -992,7 +1154,8 @@
             }
           ],
           "version": 1,
-          "data_key": "chk_dau_tu_dac_biet"
+          "data_key": "chk_dau_tu_dac_biet",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_chk_dn_xa_hoi",
@@ -1006,7 +1169,8 @@
             }
           ],
           "version": 1,
-          "data_key": "chk_dn_xa_hoi"
+          "data_key": "chk_dn_xa_hoi",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_chk_ctck",
@@ -1020,7 +1184,8 @@
             }
           ],
           "version": 1,
-          "data_key": "chk_ctck"
+          "data_key": "chk_ctck",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_chk_khu_cong_nghiep",
@@ -1034,7 +1199,8 @@
             }
           ],
           "version": 1,
-          "data_key": "chk_khu_cong_nghiep"
+          "data_key": "chk_khu_cong_nghiep",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_chk_khu_che_xuat",
@@ -1048,7 +1214,8 @@
             }
           ],
           "version": 1,
-          "data_key": "chk_khu_che_xuat"
+          "data_key": "chk_khu_che_xuat",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_chk_khu_kinh_te",
@@ -1062,7 +1229,8 @@
             }
           ],
           "version": 1,
-          "data_key": "chk_khu_kinh_te"
+          "data_key": "chk_khu_kinh_te",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_chk_khu_cong_nghe_cao",
@@ -1076,7 +1244,8 @@
             }
           ],
           "version": 1,
-          "data_key": "chk_khu_cong_nghe_cao"
+          "data_key": "chk_khu_cong_nghe_cao",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_chk_auto_co",
@@ -1090,7 +1259,8 @@
             }
           ],
           "version": 1,
-          "data_key": "chk_auto_co"
+          "data_key": "chk_auto_co",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_chk_auto_khong",
@@ -1104,7 +1274,8 @@
             }
           ],
           "version": 1,
-          "data_key": "chk_auto_khong"
+          "data_key": "chk_auto_khong",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_chk_auto_hoi_dong_thanh_vien_giam_doc_hoac_tong_g",
@@ -1118,7 +1289,8 @@
             }
           ],
           "version": 1,
-          "data_key": "chk_auto_hoi_dong_thanh_vien_giam_doc_hoac_tong_g"
+          "data_key": "chk_auto_hoi_dong_thanh_vien_giam_doc_hoac_tong_g",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_chk_auto_chu_tich_cong_ty_giam_doc_hoac_tong_giam",
@@ -1132,7 +1304,8 @@
             }
           ],
           "version": 1,
-          "data_key": "chk_auto_chu_tich_cong_ty_giam_doc_hoac_tong_giam"
+          "data_key": "chk_auto_chu_tich_cong_ty_giam_doc_hoac_tong_giam",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_chk_auto_co_2",
@@ -1146,7 +1319,8 @@
             }
           ],
           "version": 1,
-          "data_key": "chk_auto_co_2"
+          "data_key": "chk_auto_co_2",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_chk_auto_khong_2",
@@ -1160,7 +1334,8 @@
             }
           ],
           "version": 1,
-          "data_key": "chk_auto_khong_2"
+          "data_key": "chk_auto_khong_2",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_chk_ht_doc_lap",
@@ -1174,7 +1349,8 @@
             }
           ],
           "version": 1,
-          "data_key": "chk_ht_doc_lap"
+          "data_key": "chk_ht_doc_lap",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_chk_ht_hop_nhat",
@@ -1188,7 +1364,8 @@
             }
           ],
           "version": 1,
-          "data_key": "chk_ht_hop_nhat"
+          "data_key": "chk_ht_hop_nhat",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_chk_ht_phu_thuoc",
@@ -1202,7 +1379,8 @@
             }
           ],
           "version": 1,
-          "data_key": "chk_ht_phu_thuoc"
+          "data_key": "chk_ht_phu_thuoc",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_chk_co",
@@ -1216,7 +1394,8 @@
             }
           ],
           "version": 1,
-          "data_key": "chk_co"
+          "data_key": "chk_co",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_chk_khong",
@@ -1230,7 +1409,8 @@
             }
           ],
           "version": 1,
-          "data_key": "chk_khong"
+          "data_key": "chk_khong",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_chk_gtgt_khoan_tru",
@@ -1244,7 +1424,8 @@
             }
           ],
           "version": 1,
-          "data_key": "chk_gtgt_khoan_tru"
+          "data_key": "chk_gtgt_khoan_tru",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_chk_gtgt_truc_tiep_tren_gtgt",
@@ -1258,7 +1439,8 @@
             }
           ],
           "version": 1,
-          "data_key": "chk_gtgt_truc_tiep_tren_gtgt"
+          "data_key": "chk_gtgt_truc_tiep_tren_gtgt",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_chk_gtgt_truc_tiep_doanh_so",
@@ -1272,7 +1454,8 @@
             }
           ],
           "version": 1,
-          "data_key": "chk_gtgt_truc_tiep_doanh_so"
+          "data_key": "chk_gtgt_truc_tiep_doanh_so",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_chk_gtgt_khong_phai_nop",
@@ -1286,7 +1469,8 @@
             }
           ],
           "version": 1,
-          "data_key": "chk_gtgt_khong_phai_nop"
+          "data_key": "chk_gtgt_khong_phai_nop",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_chk_bc_hang_thang",
@@ -1300,7 +1484,8 @@
             }
           ],
           "version": 1,
-          "data_key": "chk_bc_hang_thang"
+          "data_key": "chk_bc_hang_thang",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_chk_bc_03_thang",
@@ -1314,7 +1499,8 @@
             }
           ],
           "version": 1,
-          "data_key": "chk_bc_03_thang"
+          "data_key": "chk_bc_03_thang",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_chk_bc_06_thang",
@@ -1328,7 +1514,8 @@
             }
           ],
           "version": 1,
-          "data_key": "chk_bc_06_thang"
+          "data_key": "chk_bc_06_thang",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_ngay_sinh",
@@ -1350,7 +1537,8 @@
               "key": "nam_sinh",
               "transform": "date_year"
             }
-          ]
+          ],
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_ngay_bd",
@@ -1372,7 +1560,8 @@
               "key": "nam_bd",
               "transform": "date_year"
             }
-          ]
+          ],
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_gd_ngay_sinh",
@@ -1394,7 +1583,8 @@
               "key": "gd.nam_sinh",
               "transform": "date_year"
             }
-          ]
+          ],
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_kt_ngay_sinh",
@@ -1416,7 +1606,8 @@
               "key": "kt.nam_sinh",
               "transform": "date_year"
             }
-          ]
+          ],
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_ndd_ngay_sinh",
@@ -1438,7 +1629,8 @@
               "key": "ndd.nam_sinh",
               "transform": "date_year"
             }
-          ]
+          ],
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_ds_nganh_ma_nganh",
@@ -1449,7 +1641,8 @@
           "row_group": "ds_nganh",
           "version": 1,
           "data_key": "ds_nganh.ma_nganh",
-          "autofill": "vsic"
+          "autofill": "vsic",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_ds_nganh_ten_nganh",
@@ -1461,7 +1654,9 @@
           "version": 1,
           "data_key": "ds_nganh.ten_nganh",
           "example": "Bán lẻ hàng điện tử",
-          "required": true
+          "required": true,
+          "tier": "core",
+          "audience": "customer"
         },
         {
           "question_id": "q_i02_ds_nganh_chi_tiet",
@@ -1471,7 +1666,8 @@
           "repeatable": true,
           "row_group": "ds_nganh",
           "version": 1,
-          "data_key": "ds_nganh.chi_tiet"
+          "data_key": "ds_nganh.chi_tiet",
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_ds_nganh_la_nganh_chinh",
@@ -1487,7 +1683,8 @@
               "value": "X",
               "label": "X"
             }
-          ]
+          ],
+          "tier": "conditional"
         },
         {
           "question_id": "q_i02_ds_nddpl_uy_quyen_chu_so_huu_ten_nguoi_dai_dien",
@@ -1497,7 +1694,8 @@
           "repeatable": true,
           "row_group": "ds_nddpl_uy_quyen_chu_so_huu",
           "version": 1,
-          "data_key": "ds_nddpl_uy_quyen_chu_so_huu.ten_nguoi_dai_dien"
+          "data_key": "ds_nddpl_uy_quyen_chu_so_huu.ten_nguoi_dai_dien",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_ds_nddpl_uy_quyen_chu_so_huu_ngay_sinh",
@@ -1508,7 +1706,8 @@
           "row_group": "ds_nddpl_uy_quyen_chu_so_huu",
           "version": 1,
           "data_key": "ds_nddpl_uy_quyen_chu_so_huu.ngay_sinh",
-          "example": "05/12/1985"
+          "example": "05/12/1985",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_ds_nddpl_uy_quyen_chu_so_huu_gioi_tinh",
@@ -1528,7 +1727,8 @@
               "value": "Nữ",
               "label": "Nữ"
             }
-          ]
+          ],
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_ds_nddpl_uy_quyen_chu_so_huu_giay_to_so",
@@ -1538,7 +1738,8 @@
           "repeatable": true,
           "row_group": "ds_nddpl_uy_quyen_chu_so_huu",
           "version": 1,
-          "data_key": "ds_nddpl_uy_quyen_chu_so_huu.giay_to_so"
+          "data_key": "ds_nddpl_uy_quyen_chu_so_huu.giay_to_so",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_ds_nddpl_uy_quyen_chu_so_huu_giay_to_ngay",
@@ -1548,7 +1749,8 @@
           "repeatable": true,
           "row_group": "ds_nddpl_uy_quyen_chu_so_huu",
           "version": 1,
-          "data_key": "ds_nddpl_uy_quyen_chu_so_huu.giay_to_ngay"
+          "data_key": "ds_nddpl_uy_quyen_chu_so_huu.giay_to_ngay",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_ds_nddpl_uy_quyen_chu_so_huu_giay_to_co_quan",
@@ -1558,7 +1760,8 @@
           "repeatable": true,
           "row_group": "ds_nddpl_uy_quyen_chu_so_huu",
           "version": 1,
-          "data_key": "ds_nddpl_uy_quyen_chu_so_huu.giay_to_co_quan"
+          "data_key": "ds_nddpl_uy_quyen_chu_so_huu.giay_to_co_quan",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_ds_nddpl_uy_quyen_chu_so_huu_quoc_tich",
@@ -1569,7 +1772,8 @@
           "row_group": "ds_nddpl_uy_quyen_chu_so_huu",
           "version": 1,
           "data_key": "ds_nddpl_uy_quyen_chu_so_huu.quoc_tich",
-          "example": "Việt Nam"
+          "example": "Việt Nam",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_ds_nddpl_uy_quyen_chu_so_huu_dan_toc",
@@ -1580,7 +1784,8 @@
           "row_group": "ds_nddpl_uy_quyen_chu_so_huu",
           "version": 1,
           "data_key": "ds_nddpl_uy_quyen_chu_so_huu.dan_toc",
-          "example": "Kinh"
+          "example": "Kinh",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_ds_nddpl_uy_quyen_chu_so_huu_dia_chi",
@@ -1591,7 +1796,8 @@
           "row_group": "ds_nddpl_uy_quyen_chu_so_huu",
           "version": 1,
           "data_key": "ds_nddpl_uy_quyen_chu_so_huu.dia_chi",
-          "example": "25 Nguyễn Trãi"
+          "example": "25 Nguyễn Trãi",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_ds_nddpl_uy_quyen_chu_so_huu_von_duoc_uy_quyen_vnd",
@@ -1601,7 +1807,8 @@
           "repeatable": true,
           "row_group": "ds_nddpl_uy_quyen_chu_so_huu",
           "version": 1,
-          "data_key": "ds_nddpl_uy_quyen_chu_so_huu.von_duoc_uy_quyen_vnd"
+          "data_key": "ds_nddpl_uy_quyen_chu_so_huu.von_duoc_uy_quyen_vnd",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_ds_nddpl_uy_quyen_chu_so_huu_ty_le",
@@ -1612,7 +1819,8 @@
           "row_group": "ds_nddpl_uy_quyen_chu_so_huu",
           "version": 1,
           "data_key": "ds_nddpl_uy_quyen_chu_so_huu.ty_le",
-          "example": "40"
+          "example": "40",
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_ds_nddpl_uy_quyen_chu_so_huu_ghi_chu",
@@ -1622,7 +1830,8 @@
           "repeatable": true,
           "row_group": "ds_nddpl_uy_quyen_chu_so_huu",
           "version": 1,
-          "data_key": "ds_nddpl_uy_quyen_chu_so_huu.ghi_chu"
+          "data_key": "ds_nddpl_uy_quyen_chu_so_huu.ghi_chu",
+          "audience": "staff"
         }
       ]
     }

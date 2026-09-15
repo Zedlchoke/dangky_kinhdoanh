@@ -149,3 +149,17 @@ nạp bằng openpyxl; họ sơ cần chuẩn bị (`ho_so_bao_gom`) cho cụm �
 
 **Lệnh cần owner:** `Bắt đầu Excel` (chạy X1→X6 theo wave, mỗi wave commit
 sạch) **hoặc** `Để sau` (Excel không chặn `CORE_APP_DONE`, ghi backlog).
+
+## 6. Customer export mode (owner chốt 2026-09-15, wave P0)
+
+Hai chế độ xuất workbook case-level qua `export_mode`:
+
+| Mode | Đối tượng | AUTH_* | Nội dung |
+|---|---|---|---|
+| `full` (mặc định) | Nội bộ | Có | Toàn bộ câu như hiện tại |
+| `customer` | Khách | Không | Wizard đầu `Thông_tin_chung` + `tier=core` + conditional đã bật; sheet `Phiếu_khách`; form mẫu veryHidden |
+
+Metadata câu hỏi tùy chọn: `audience` (`customer`|`staff`), `tier`
+(`core`|`conditional`|`rare`|`wizard`), `wizard: true`, `wizard_sets` trên
+option select. Pilot: `thanh_lap_tnhh_1tv`, `dang_ky_ho_kinh_doanh_lan_dau`.
+Contract `__map`/checksum giữ nguyên — mọi ô vàng xuất ra vẫn có dòng map.

@@ -56,15 +56,18 @@ from tools.excel_export import (
     BORDER_HEX, COLUMN_WIDTHS, GOLD_HEX, GRAY_HEX, GROUP_PALETTE,
     GUIDE_FONT_HEX, MARK_VALUE, META_FONT_HEX, NOTE_FONT_HEX, REPEAT_ROWS,
 )
+from tools.excel_import import _when_match
 from tools.questionnaire.schema import DATE_NOTE, EXAMPLE_PREFIX, SELECT_NOTE
 
 __all__ = [
-    "CASE_MAP_VERSION", "COMMON_SHEET", "CONTRACT", "DOCS_SHEET",
+    "CASE_MAP_VERSION", "COMMON_SHEET", "CONTRACT", "CUSTOMER_SHEET",
+    "DOCS_SHEET", "EXPORT_MODE_CUSTOMER", "EXPORT_MODE_FULL",
     "ExcelCaseExportError", "GUIDE_SHEET", "LISTS_SHEET", "MAP_COLUMNS",
     "MAP_MARKER", "MAP_SHEET", "ONEOF_KEY_PREFIX",
     "OPTIONAL_FORM_KEY_PREFIX", "REVIEW_APPROVED", "REVIEW_DELEGATED",
-    "REVIEW_PENDING", "sheet_display_name", "is_review_approved",
-    "is_selector_question", "workbook_stem", "write_case_workbook",
+    "REVIEW_PENDING", "expand_wizard_answers", "sheet_display_name",
+    "is_review_approved", "is_selector_question", "workbook_stem",
+    "write_case_workbook",
 ]
 
 # ---------------------------------------------------------------------------
@@ -76,9 +79,14 @@ MAP_MARKER = "__EXCEL_CASE_MAP_V2__"
 
 GUIDE_SHEET = "Hướng_dẫn"
 COMMON_SHEET = "Thông_tin_chung"
+CUSTOMER_SHEET = "Phiếu_khách"
 DOCS_SHEET = "Giấy_tờ_cần_gửi"
 MAP_SHEET = "__map"
 LISTS_SHEET = "__lists"
+
+EXPORT_MODE_FULL = "full"
+EXPORT_MODE_CUSTOMER = "customer"
+_EXPORT_MODES = (EXPORT_MODE_FULL, EXPORT_MODE_CUSTOMER)
 
 # --- Wave E4: mức content review + câu SELECTOR pseudo-key ------------------
 # (hợp đồng với build_case_questionnaires / excel_case_import — đổi một bên
@@ -151,6 +159,13 @@ GUIDE_LINES = (
     "chưa có thông tin, sẽ được nhắc lại lúc nạp phiếu.",
     "Trả lại đúng file .xlsx này cho người gửi. Không đổi tên sheet, không "
     "xóa sheet ẩn.",
+)
+
+CUSTOMER_GUIDE_LINES = (
+    "Đây là phiếu thu thập thông tin rút gọn — không phải biểu mẫu pháp lý.",
+    "Ô NỀN VÀNG là phần bạn điền. CHỈ điền vào ô vàng; không sửa khung sheet.",
+    "Ô có mũi tên ▾: bấm và CHỌN một dòng trong danh sách, không gõ tay.",
+    "Trả lại đúng file .xlsx này cho người gửi.",
 )
 
 
@@ -272,9 +287,137 @@ def _validate_meta(meta: dict | None) -> dict:
 def _targets(item: dict) -> list[dict]:
     """`data_key` (string | list target) -> list target {key, when, transform}."""
     raw = item["data_key"]
+    q_when = item.get("when")
     if isinstance(raw, str):
-        return [{"key": raw}]
+        target = {"key": raw}
+        if q_when:
+            target["when"] = q_when
+        return [target]
     return list(raw)
+
+
+def _question_when(item: dict) -> dict:
+    """Điều kiện `when` cấp câu hỏi (string hoặc target đầu list)."""
+    when = item.get("when")
+    if when:
+        return when
+    raw = item.get("data_key")
+    if isinstance(raw, list):
+        for target in raw:
+            if isinstance(target, dict) and target.get("when"):
+                return target["when"]
+    return {}
+
+
+def _customer_branch(item: dict) -> dict:
+    """Nhánh bật câu ở export customer — không ghi vào __map/import."""
+    branch = item.get("customer_branch")
+    return branch if isinstance(branch, dict) else {}
+
+
+def _customer_gate(item: dict, virtual_answers: dict[str, str]) -> bool:
+    """True nếu mọi điều kiện customer (when + customer_branch) thỏa."""
+    for cond in (_question_when(item), _customer_branch(item)):
+        if cond and not _when_match(cond, virtual_answers):
+            return False
+    return True
+
+
+def _effective_tier(item: dict) -> str:
+    if item.get("wizard"):
+        return "wizard"
+    tier = item.get("tier")
+    if tier:
+        return tier
+    if _question_when(item):
+        return "conditional"
+    if not item.get("required"):
+        return "conditional"
+    return "core"
+
+
+def _wizard_sets_for_value(item: dict, value) -> dict[str, str]:
+    if item.get("type") != "select" or value is None:
+        return {}
+    for opt in item.get("options") or []:
+        if not isinstance(opt, dict):
+            continue
+        if opt.get("value") == value or opt.get("label") == value:
+            sets = opt.get("wizard_sets") or {}
+            if isinstance(sets, dict):
+                return {str(k): str(v) for k, v in sets.items()}
+    return {}
+
+
+def expand_wizard_answers(questions: list[dict],
+                            wizard_answers: dict | None) -> dict[str, str]:
+    """Gom wizard_answers (theo data_key) + wizard_sets từ option đã chọn."""
+    base = dict(wizard_answers or {})
+    out: dict[str, str] = {}
+    q_by_key: dict[str, dict] = {}
+    for item in questions:
+        for target in _targets(item):
+            q_by_key[target["key"]] = item
+    for key, value in base.items():
+        if value is None:
+            continue
+        out[key] = str(value)
+        item = q_by_key.get(key)
+        if item:
+            out.update(_wizard_sets_for_value(item, value))
+    return out
+
+
+def _customer_includes_question(item: dict,
+                                virtual_answers: dict[str, str]) -> bool:
+    """Lọc câu cho export_mode=customer theo audience/tier/wizard."""
+    if item.get("audience") == "staff":
+        return False
+    tier = _effective_tier(item)
+    if tier == "wizard":
+        return True
+    branch = _question_when(item) or _customer_branch(item)
+    if tier == "rare":
+        return bool(branch) and _customer_gate(item, virtual_answers)
+    if tier == "conditional":
+        if branch:
+            return _customer_gate(item, virtual_answers)
+        return False
+    if tier == "core" and not _customer_gate(item, virtual_answers):
+        return False
+    return True
+
+
+def _filter_questions(questions: list[dict], export_mode: str,
+                      virtual_answers: dict[str, str],
+                      *, exclude_wizard: bool = False) -> list[dict]:
+    if export_mode == EXPORT_MODE_FULL:
+        return [q for q in questions if not q.get("wizard")]
+    out: list[dict] = []
+    for item in questions:
+        if exclude_wizard and item.get("wizard"):
+            continue
+        if _customer_includes_question(item, virtual_answers):
+            out.append(item)
+    return out
+
+
+def _all_questions(forms: list[dict]) -> list[dict]:
+    qs: list[dict] = []
+    for form in forms:
+        qs.extend(form.get("questions") or [])
+    return qs
+
+
+def _wizard_rows(approved: list[dict], export_mode: str) -> list[tuple[str, dict]]:
+    if export_mode != EXPORT_MODE_CUSTOMER:
+        return []
+    rows: list[tuple[str, dict]] = []
+    for form in approved:
+        for item in form.get("questions") or []:
+            if item.get("wizard"):
+                rows.append((form["form_id"], item))
+    return rows
 
 
 def _shared_analysis(forms: list[dict]) -> dict:
@@ -612,39 +755,64 @@ def _setup_print(ws) -> None:
 
 def write_case_workbook(manifest: dict, out_path: "str | Path",
                         meta: dict | None = None,
-                        include_authorization: bool = True) -> Path:
+                        include_authorization: bool | None = None,
+                        export_mode: str = EXPORT_MODE_FULL,
+                        wizard_answers: dict | None = None) -> Path:
     """Ghi workbook .xlsx cho TOÀN BỘ case và trả `Path` file đã ghi.
 
     `manifest`: dict case-level (wave E0). `meta`: tùy chọn
     `{"today": "dd/mm/yyyy", "exported_at": "dd/mm/yyyy HH:MM"}` — in lên
     dòng hồ sơ và metadata __map (nên truyền để file tái lập được).
 
+    `export_mode`: ``"full"`` (mặc định, nội bộ đầy đủ) hoặc ``"customer"``
+    (phiếu rút gọn: wizard + core, không AUTH_*, không mirror form).
+
+    `wizard_answers`: dict tùy chọn {data_key: value} — lọc nhánh conditional
+    lúc xuất customer (UI có thể truyền sau dialog wizard).
+
     Raises `ExcelCaseExportError` (có `code`) khi manifest sai khung hoặc case
     chưa có form approved nào (CASE_NOT_READY — gate E4 chặn phát hành).
     """
     manifest = _validate_manifest(manifest)
     meta = _validate_meta(meta)
+    if export_mode not in _EXPORT_MODES:
+        raise ExcelCaseExportError(
+            "BAD_EXPORT_MODE",
+            "export_mode phải là %r hoặc %r" % _EXPORT_MODES)
+    if include_authorization is None:
+        include_authorization = export_mode == EXPORT_MODE_FULL
     approved = [f for f in manifest["forms"] if is_review_approved(
         f.get("content_review"))]
-    shared_q = _shared_analysis(approved)
+    all_qs = _all_questions(approved)
+    virtual_answers = expand_wizard_answers(all_qs, wizard_answers)
+    customer = export_mode == EXPORT_MODE_CUSTOMER
+    approved_filtered = []
+    for form in approved:
+        fq = _filter_questions(form["questions"], export_mode, virtual_answers,
+                               exclude_wizard=True)
+        approved_filtered.append({**form, "questions": fq})
+    shared_q = _shared_analysis(approved_filtered)
+    form_iter = approved_filtered
 
     # ---- dropdown registry: qid select -> cột trên __lists -----------------
     lst_cols: dict[str, int] = {}
     next_col = 1
-    for form in approved:
+    q_source = form_iter
+    for form in q_source:
         for item in form["questions"]:
             if item["type"] == "select":
                 lst_cols[item["question_id"]] = next_col
                 next_col += 1
+    for owner_fid, item in _wizard_rows(approved, export_mode):
+        if item["type"] == "select":
+            lst_cols[item["question_id"]] = next_col
+            next_col += 1
 
     # ---- câu SELECTOR (oneOf / form tùy chọn) — render 1 lần ở COMMON ------
-    # Lead chốt design E4: câu "Trường hợp hồ sơ của bạn là trường hợp nào?"
-    # (select BẮT BUỘC) đầu sheet Thông_tin_chung; câu mark "Có làm mẫu này
-    # không?" cho form bat_buoc=false ngoài oneOf cũng nằm ở COMMON. Trên
-    # sheet từng form các câu này bị BỎ (is_selector_question).
     selector_rows: list[tuple[str, dict]] = [
-        (f["form_id"], item) for f in approved
+        (f["form_id"], item) for f in form_iter
         for item in f["questions"] if is_selector_question(item)]
+    wizard_rows = _wizard_rows(approved, export_mode)
 
     wb = Workbook()
     ws_guide = wb.active
@@ -670,6 +838,21 @@ def write_case_workbook(manifest: dict, out_path: "str | Path",
     row = COMMON_BODY_ROW
     color_index = 0
 
+    # ---- (customer) wizard SELECTOR đầu Thông_tin_chung --------------------
+    if wizard_rows:
+        current_group = None
+        for owner_fid, item in wizard_rows:
+            if item["group"] != current_group:
+                current_group = item["group"]
+                writer._write_section(row, current_group, color_index,
+                                      COL_DATE_NOTE)
+                color_index += 1
+                row += 1
+            entries, row = writer.write_question(
+                owner_fid, COMMON_SHEET, row, item, None)
+            map_rows.extend(entries)
+            row += 1
+
     # ---- (E4) câu SELECTOR ở đầu Thông_tin_chung ---------------------------
     if selector_rows:
         current_group = None
@@ -688,7 +871,7 @@ def write_case_workbook(manifest: dict, out_path: "str | Path",
     shared_questions: list[tuple[str, dict]] = []
     owner_of: dict[str, str] = {}          # question_id -> form chủ canonical
     owned_keys: set[str] = set()
-    for form in approved:
+    for form in form_iter:
         for item in form["questions"]:
             if not shared_q.get((form["form_id"], item["question_id"])) or \
                     is_selector_question(item):
@@ -744,7 +927,7 @@ def write_case_workbook(manifest: dict, out_path: "str | Path",
             row += 1
         map_rows.extend(common_entries)
     else:
-        if not selector_rows:
+        if not selector_rows and not wizard_rows:
             note = ws_common.cell(
                 row=row, column=COL_LABEL,
                 value="Case này không có trường dùng chung nào giữa các mẫu "
@@ -753,88 +936,130 @@ def write_case_workbook(manifest: dict, out_path: "str | Path",
             note.alignment = _wrap()
     _protect(ws_common, freeze_at="A%d" % COMMON_BODY_ROW)
 
-    # ---- Sheet từng form ----------------------------------------------------
-    for index, form in enumerate(approved, start=1):
-        sheet = sheet_display_name(index, form)
-        ws = wb.create_sheet(sheet)
-        _write_header_block(ws, str(form.get("title") or form["ten_mau"]),
-                            meta_line)
-        writer = _SheetWriter(ws, lst_cols)
-        blocks = _plan_blocks([q for q in form["questions"]
-                               if not is_selector_question(q)])
+    # ---- Sheet từng form (full) / Phiếu_khách (customer) -------------------
+    if customer:
+        ws_customer = wb.create_sheet(CUSTOMER_SHEET)
+        _write_header_block(
+            ws_customer, "Phiếu thu thập thông tin (rút gọn)",
+            meta_line + " — Điền các ô vàng bên dưới và ở sheet "
+                        + COMMON_SHEET)
+        cust_writer = _SheetWriter(ws_customer, lst_cols)
+        cust_questions: list[tuple[str, dict]] = []
+        for form in form_iter:
+            for item in form["questions"]:
+                if is_selector_question(item) or item.get("wizard"):
+                    continue
+                if shared_q.get((form["form_id"], item["question_id"])):
+                    continue
+                cust_questions.append((form["form_id"], item))
         row = FIRST_BODY_ROW
         current_group = None
         color_index = 0
-        for block in blocks:
+        for block in _plan_blocks([q for _, q in cust_questions]):
             items = block["items"] if block["kind"] == "table" \
                 else [block["item"]]
-            shared = shared_q.get((form["form_id"], items[0]["question_id"]),
-                                  False)
+            fid = next(f for f, q in cust_questions
+                       if q["question_id"] == items[0]["question_id"])
             span = COL_DATE_NOTE if block["kind"] == "question" \
                 else COL_FILL + len(items) - 1
             if block["group"] != current_group:
                 current_group = block["group"]
-                writer._write_section(row, current_group, color_index, span)
+                cust_writer._write_section(row, block["group"], color_index,
+                                           span)
                 color_index += 1
                 row += 1
             if block["kind"] == "question":
                 item = block["item"]
-                canon = None
-                if shared:
-                    target0 = _targets(item)[0]
-                    c = canonical_of.get(target0["key"])
-                    if not c or not c.get("cell"):
-                        raise ExcelCaseExportError(
-                            "SHARED_MISSING_CANONICAL",
-                            "%s: câu %s đánh dấu shared nhưng không có ô "
-                            "canonical ở %s" % (form["form_id"],
-                                                item["question_id"],
-                                                COMMON_SHEET))
-                    canon = {"sheet": c["sheet"], "cell": c["cell"]}
-                entries, row_last = writer.write_question(
-                    form["form_id"], sheet, row, item, canon)
+                entries, row_last = cust_writer.write_question(
+                    fid, CUSTOMER_SHEET, row, item, None)
             else:
-                def canonical_of_cell(item, offset, data_row):
-                    # (E4) quyết định mirror THEO TỪNG CỘT: cột shared có ô
-                    # canonical ở COMMON -> mirror; cột riêng -> None (điền
-                    # tại đây). Cột shared mà thiếu canonical = khung hỏng.
-                    if not shared_q.get((form["form_id"],
-                                         item["question_id"]), False):
-                        return None
-                    key0 = _targets(item)[0]["key"]
-                    c = canonical_of.get(key0)
-                    if not c or not (c.get("cells") or c.get("cell")):
-                        raise ExcelCaseExportError(
-                            "SHARED_MISSING_CANONICAL",
-                            "%s: câu %s đánh dấu shared nhưng không có ô "
-                            "canonical ở %s" % (form["form_id"],
-                                                item["question_id"],
-                                                COMMON_SHEET))
-                    cells = c.get("cells") or []
-                    cell_addr = cells[data_row - (row + 1)] \
-                        if cells else c["cell"]
-                    return {"sheet": c["sheet"], "cell": cell_addr}
-
-                entries, row_last = writer.write_table(
-                    form["form_id"], sheet, row, items, color_index - 1,
-                    canonical_of_cell)
-            row = row_last + 1
+                entries, row_last = cust_writer.write_table(
+                    fid, CUSTOMER_SHEET, row, items, color_index - 1, None)
             map_rows.extend(entries)
-            row += 1
-        _protect(ws, freeze_at="A%d" % FIRST_BODY_ROW)
+            row = row_last + 2
+        _protect(ws_customer, freeze_at="A%d" % FIRST_BODY_ROW)
+    else:
+        for index, form in enumerate(form_iter, start=1):
+            sheet = sheet_display_name(index, form)
+            ws = wb.create_sheet(sheet)
+            _write_header_block(ws, str(form.get("title") or form["ten_mau"]),
+                                meta_line)
+            writer = _SheetWriter(ws, lst_cols)
+            blocks = _plan_blocks([q for q in form["questions"]
+                                   if not is_selector_question(q)])
+            row = FIRST_BODY_ROW
+            current_group = None
+            color_index = 0
+            for block in blocks:
+                items = block["items"] if block["kind"] == "table" \
+                    else [block["item"]]
+                shared = shared_q.get((form["form_id"], items[0]["question_id"]),
+                                      False)
+                span = COL_DATE_NOTE if block["kind"] == "question" \
+                    else COL_FILL + len(items) - 1
+                if block["group"] != current_group:
+                    current_group = block["group"]
+                    writer._write_section(row, current_group, color_index, span)
+                    color_index += 1
+                    row += 1
+                if block["kind"] == "question":
+                    item = block["item"]
+                    canon = None
+                    if shared:
+                        target0 = _targets(item)[0]
+                        c = canonical_of.get(target0["key"])
+                        if not c or not c.get("cell"):
+                            raise ExcelCaseExportError(
+                                "SHARED_MISSING_CANONICAL",
+                                "%s: câu %s đánh dấu shared nhưng không có ô "
+                                "canonical ở %s" % (form["form_id"],
+                                                    item["question_id"],
+                                                    COMMON_SHEET))
+                        canon = {"sheet": c["sheet"], "cell": c["cell"]}
+                    entries, row_last = writer.write_question(
+                        form["form_id"], sheet, row, item, canon)
+                else:
+                    def canonical_of_cell(item, offset, data_row):
+                        if not shared_q.get((form["form_id"],
+                                             item["question_id"]), False):
+                            return None
+                        key0 = _targets(item)[0]["key"]
+                        c = canonical_of.get(key0)
+                        if not c or not (c.get("cells") or c.get("cell")):
+                            raise ExcelCaseExportError(
+                                "SHARED_MISSING_CANONICAL",
+                                "%s: câu %s đánh dấu shared nhưng không có ô "
+                                "canonical ở %s" % (form["form_id"],
+                                                    item["question_id"],
+                                                    COMMON_SHEET))
+                        cells = c.get("cells") or []
+                        cell_addr = cells[data_row - (row + 1)] \
+                            if cells else c["cell"]
+                        return {"sheet": c["sheet"], "cell": cell_addr}
+
+                    entries, row_last = writer.write_table(
+                        form["form_id"], sheet, row, items, color_index - 1,
+                        canonical_of_cell)
+                row = row_last + 1
+                map_rows.extend(entries)
+                row += 1
+            _protect(ws, freeze_at="A%d" % FIRST_BODY_ROW)
 
     # ---- Giấy_tờ_cần_gửi (fail-safe: chưa DECIDED -> watermark) ------------
     _write_docs_sheet(wb.create_sheet(DOCS_SHEET), manifest)
 
     # ---- __lists + named ranges --------------------------------------------
     if lst_cols:
-        _write_lists_sheet(wb.create_sheet(LISTS_SHEET), wb, approved, lst_cols)
+        _write_lists_sheet(wb.create_sheet(LISTS_SHEET), wb,
+                           q_source, lst_cols, wizard_rows)
 
     # ---- __map --------------------------------------------------------------
-    _write_map_sheet(wb.create_sheet(MAP_SHEET), manifest, meta, map_rows)
+    _write_map_sheet(wb.create_sheet(MAP_SHEET), manifest, meta, map_rows,
+                     export_mode=export_mode)
 
     # ---- Hướng_dẫn (nội dung đầy đủ: phiên bản + trạng thái + lưu ý) -------
-    _write_guide_sheet(ws_guide, manifest, meta, hash8, approved)
+    _write_guide_sheet(ws_guide, manifest, meta, hash8, form_iter,
+                       export_mode=export_mode)
 
     # ---- AUTH_* (wave I5 — ủy quyền dịch vụ; không nằm __map) ---------------
     if include_authorization:
@@ -954,24 +1179,32 @@ def _write_docs_sheet(ws, manifest: dict) -> None:
 
 
 def _write_lists_sheet(ws, wb, approved: list[dict],
-                       lst_cols: dict[str, int]) -> None:
+                       lst_cols: dict[str, int],
+                       wizard_rows: list[tuple[str, dict]] | None = None) -> None:
     """__lists: mỗi câu select một cột (header = question_id, giá trị options).
 
     Dropdown tham chiếu qua named range `LST_nnnn` (không nhúng danh sách vào
     vùng khách điền — PLAN §2.1). Sheet veryHidden + khóa.
     """
     qid_of_col = {v: k for k, v in lst_cols.items()}
+    wizard_qids = {item["question_id"] for _, item in (wizard_rows or [])}
     for col in sorted(qid_of_col):
         qid = qid_of_col[col]
         ws.cell(row=1, column=col, value=qid).font = Font(bold=True, size=10)
         options: list[str] = []
-        for form in approved:
-            for item in form["questions"]:
-                if item["question_id"] == qid and item["type"] == "select":
+        if qid in wizard_qids:
+            for _, item in wizard_rows or []:
+                if item["question_id"] == qid:
                     options = _dropdown_labels(item)
                     break
-            if options:
-                break
+        else:
+            for form in approved:
+                for item in form["questions"]:
+                    if item["question_id"] == qid and item["type"] == "select":
+                        options = _dropdown_labels(item)
+                        break
+                if options:
+                    break
         for offset, label in enumerate(options):
             ws.cell(row=2 + offset, column=col, value=label)
         letter = get_column_letter(col)
@@ -1000,7 +1233,9 @@ def _dropdown_labels(item: dict) -> list[str]:
 
 
 def _write_guide_sheet(ws, manifest: dict, meta: dict, hash8: str,
-                       approved: list[dict]) -> None:
+                       approved: list[dict],
+                       export_mode: str = EXPORT_MODE_FULL) -> None:
+    customer = export_mode == EXPORT_MODE_CUSTOMER
     row = 1
     cell = ws.cell(row=row, column=1, value=manifest["case_title"])
     cell.font = Font(bold=True, size=16, color="1F3864")
@@ -1012,35 +1247,47 @@ def _write_guide_sheet(ws, manifest: dict, meta: dict, hash8: str,
                             meta.get("today") or ""))
     cell.font = Font(size=10, italic=True, color=META_FONT_HEX)
     row += 2
-    for line in GUIDE_LINES:
+    guide_lines = CUSTOMER_GUIDE_LINES if customer else GUIDE_LINES
+    for line in guide_lines:
         cell = ws.cell(row=row, column=1, value="• " + line)
         cell.font = Font(size=11, color=GUIDE_FONT_HEX)
         cell.alignment = _wrap()
         ws.merge_cells(start_row=row, start_column=1, end_row=row,
                        end_column=6)
         row += 1
-    row += 1
-    cell = ws.cell(row=row, column=1, value="Các mẫu trong phiếu này:")
-    cell.font = Font(bold=True, size=12, color="1F3864")
-    row += 1
-    for index, form in enumerate(manifest.get("forms") or [], start=1):
-        status = {
-            REVIEW_APPROVED: "đã duyệt nội dung",
-            REVIEW_DELEGATED: "nội dung sinh theo ủy quyền owner "
-                              "(owner_delegated_2026-09-10)",
-            REVIEW_PENDING: "CHỜ duyệt nội dung (không có trong phiếu)",
-        }.get(form.get("content_review"), form.get("content_review"))
-        name = sheet_display_name(index, form) \
-            if form.get("content_review") == "approved" \
-            else str(form.get("form_id"))
-        cell = ws.cell(row=row, column=1)
-        _set_text(cell, "%s — %s (%s)" % (name, form.get("ghi_chu") or
-                                          form.get("ten_mau") or "", status))
-        cell.font = Font(size=11)
+    if customer:
+        row += 1
+        cell = ws.cell(row=row, column=1,
+                       value="Phiếu rút gọn cho khách — điền sheet %s và "
+                             "%s." % (CUSTOMER_SHEET, COMMON_SHEET))
+        cell.font = Font(size=10, italic=True, color=META_FONT_HEX)
         cell.alignment = _wrap()
         ws.merge_cells(start_row=row, start_column=1, end_row=row,
                        end_column=6)
         row += 1
+    else:
+        row += 1
+        cell = ws.cell(row=row, column=1, value="Các mẫu trong phiếu này:")
+        cell.font = Font(bold=True, size=12, color="1F3864")
+        row += 1
+        for index, form in enumerate(manifest.get("forms") or [], start=1):
+            status = {
+                REVIEW_APPROVED: "đã duyệt nội dung",
+                REVIEW_DELEGATED: "nội dung sinh theo ủy quyền owner "
+                                  "(owner_delegated_2026-09-10)",
+                REVIEW_PENDING: "CHỜ duyệt nội dung (không có trong phiếu)",
+            }.get(form.get("content_review"), form.get("content_review"))
+            name = sheet_display_name(index, form) \
+                if form.get("content_review") == "approved" \
+                else str(form.get("form_id"))
+            cell = ws.cell(row=row, column=1)
+            _set_text(cell, "%s — %s (%s)" % (name, form.get("ghi_chu") or
+                                              form.get("ten_mau") or "", status))
+            cell.font = Font(size=11)
+            cell.alignment = _wrap()
+            ws.merge_cells(start_row=row, start_column=1, end_row=row,
+                           end_column=6)
+            row += 1
     row += 1
     notes = manifest.get("luu_y") or []
     if notes:
@@ -1060,7 +1307,8 @@ def _write_guide_sheet(ws, manifest: dict, meta: dict, hash8: str,
     _protect(ws)
 
 
-def _write_map_sheet(ws, manifest: dict, meta: dict, rows: list[dict]) -> None:
+def _write_map_sheet(ws, manifest: dict, meta: dict, rows: list[dict],
+                     export_mode: str = EXPORT_MODE_FULL) -> None:
     """__map veryHidden: metadata `key=value` + bảng map + CHECKSUM sha256.
 
     Checksum tính trên payload canonical gồm metadata (trừ chính checksum) và
@@ -1076,6 +1324,7 @@ def _write_map_sheet(ws, manifest: dict, meta: dict, rows: list[dict]) -> None:
         ("manifest_hash", str(manifest["manifest_hash"])),
         ("case_id", str(manifest["case_id"])),
         ("case_title", str(manifest["case_title"])),
+        ("export_mode", export_mode),
         ("forms", ",".join(f["form_id"] for f in manifest["forms"]
                            if f["content_review"] == "approved")),
         ("today", str(meta.get("today") or "")),

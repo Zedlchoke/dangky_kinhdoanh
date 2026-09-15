@@ -99,6 +99,8 @@ SUITES: list[dict] = [
     {"name": "test_authorization_render", "type": "module", "target": "tools.test_authorization_render"},
     {"name": "test_excel_authorization_sheets", "type": "module",
      "target": "tools.test_excel_authorization_sheets"},
+    {"name": "test_excel_customer_export", "type": "module",
+     "target": "tools.test_excel_customer_export"},
     # --- Python ---
     {"name": "p1_b_verify_m72",           "type": "module", "target": "tools.census.p1_b_verify_m72",
      "requires": ["python-docx"]},

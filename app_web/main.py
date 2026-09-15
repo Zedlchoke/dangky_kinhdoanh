@@ -644,26 +644,37 @@ class Bridge:
     def export_case_workbook(self, payload):
         """Xuất workbook Excel CASE-LEVEL cho cả hồ sơ (wave E2 bridge).
 
-        payload: {case_id} — KHÔNG lấy activeDocId (quyết định E0: truyền
-        case_id). Hỏi chỗ lưu rồi gọi tools/excel_case_export.
-        write_case_workbook. Case có form pending content review bị exporter
-        từ chối (CASE_NOT_READY — gate E4: không phát hành file khuyết).
+        payload: {case_id, export_mode?, wizard_answers?} — KHÔNG lấy
+        activeDocId (quyết định E0: truyền case_id). `export_mode`:
+        ``"full"`` (mặc định, nội bộ) hoặc ``"customer"`` (phiếu rút gọn).
         """
         manifest, errors = self._case_manifest(payload)
         if errors:
             return {"ok": False, "errors": errors}
 
+        export_mode = (payload or {}).get("export_mode") or "full"
+        wizard_answers = (payload or {}).get("wizard_answers")
+
         import tkinter as tk
         from tkinter import filedialog
 
         try:
-            from tools.excel_case_export import workbook_stem  # noqa: E402
+            from tools.excel_case_export import (  # noqa: E402
+                EXPORT_MODE_CUSTOMER, workbook_stem,
+            )
             stem = workbook_stem(manifest)
-        except Exception:  # noqa: BLE001 — manifest sai khung vẫn cho chọn chỗ lưu
+            if export_mode == EXPORT_MODE_CUSTOMER:
+                stem = stem + "_khach"
+        except Exception:  # noqa: BLE001
             stem = "DKKD_%s" % manifest.get("case_id", "case")
+            if export_mode == "customer":
+                stem = stem + "_khach"
 
+        title = ("Xuất phiếu Excel rút gọn cho khách"
+                 if export_mode == "customer"
+                 else "Xuất Excel cả hồ sơ (nội bộ)")
         path = _ask_save_path(
-            "Xuất Excel cả hồ sơ cho khách", "%s.xlsx" % stem,
+            title, "%s.xlsx" % stem,
             ("Phiếu Excel (*.xlsx)", "Tất cả file (*.*)"))
         if not path:
             return {"ok": False, "cancelled": True}
@@ -673,7 +684,7 @@ class Bridge:
             write_case_workbook(manifest, path, meta={
                 "today": time.strftime("%d/%m/%Y"),
                 "exported_at": time.strftime("%d/%m/%Y %H:%M"),
-            })
+            }, export_mode=export_mode, wizard_answers=wizard_answers)
             return {"ok": True, "path": str(path)}
         except Exception as exc:  # noqa: BLE001
             code = getattr(exc, "code", "EXPORT_FAILED")

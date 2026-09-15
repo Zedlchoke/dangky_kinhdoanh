@@ -16,6 +16,10 @@ Nguyên tắc bất biến:
 - `when` trên target = điều kiện bật câu theo câu trả lời khác trong cùng
   phiếu (ví dụ theo loại hình `dn.loai_hinh`) — cùng idiom activeWhen runtime
   (valueOf/equals), so sau trim, phân biệt hoa/thường.
+- Case-level manifest (wave P0 customer export): tùy chọn `audience`
+  (`customer`|`staff`), `tier` (`core`|`conditional`|`rare`|`wizard`),
+  `wizard: true`, `wizard_sets` trên option select, `customer_branch` (lọc
+  customer-only, không ghi __map).
 """
 from __future__ import annotations
 

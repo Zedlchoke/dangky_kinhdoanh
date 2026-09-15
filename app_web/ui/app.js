@@ -2240,28 +2240,31 @@
     else { box.hidden = true; box.innerHTML = ''; }
   }
 
-  function exportCaseWorkbook() {
+  function exportCaseWorkbook(exportMode) {
     var a = api();
     if (!a) {
       toast('Cần chạy trong app desktop (python app_web/main.py) để xuất Excel cả hồ sơ.', 'err');
       return;
     }
     if (!state.caseId) { toast('Chưa chọn thủ tục/case nào.', 'err'); return; }
-    var box = toast('Đang tạo workbook Excel cho cả hồ sơ…', '', true);
+    var customer = exportMode === 'customer';
+    var box = toast(customer
+      ? 'Đang tạo phiếu Excel rút gọn cho khách…'
+      : 'Đang tạo workbook Excel đầy đủ (nội bộ)…', '', true);
     Promise.resolve(a.export_case_workbook(
-      JSON.stringify({ case_id: state.caseId })
+      JSON.stringify({ case_id: state.caseId, export_mode: exportMode || 'full' })
     )).then(function (res) {
       if (typeof res === 'string') res = JSON.parse(res);
       box.remove();
       if (res.ok) {
-        toast('<b>Đã xuất Excel cả hồ sơ!</b><br>' + esc(res.path || ''), 'ok', true);
+        toast('<b>Đã xuất Excel!</b><br>' + esc(res.path || ''), 'ok', true);
       } else if (!res.cancelled) {
-        toast('<b>Không xuất được Excel cả hồ sơ</b><br>' +
+        toast('<b>Không xuất được Excel</b><br>' +
           esc(bridgeErrorsText(res.errors)), 'err', true);
       }
     }).catch(function (e) {
       box.remove();
-      toast('Lỗi xuất Excel cả hồ sơ: ' + esc(String(e)), 'err', true);
+      toast('Lỗi xuất Excel: ' + esc(String(e)), 'err', true);
     });
   }
 
@@ -2558,7 +2561,15 @@
     if (btnExportExcelV1) btnExportExcelV1.addEventListener('click', exportQuestionnaire);
     $('#btn-import-excel').addEventListener('click', importQuestionnaire);
     // E2: workbook Excel case-level
-    $('#btn-export-case-excel').addEventListener('click', exportCaseWorkbook);
+    $('#btn-export-case-excel').addEventListener('click', function () {
+      exportCaseWorkbook('full');
+    });
+    var btnCust = $('#btn-export-case-excel-customer');
+    if (btnCust) {
+      btnCust.addEventListener('click', function () {
+        exportCaseWorkbook('customer');
+      });
+    }
     $('#btn-import-case-excel').addEventListener('click', importCaseWorkbook);
 
     $('#btn-toggle-right').addEventListener('click', function () { toggleRightPanel(); });

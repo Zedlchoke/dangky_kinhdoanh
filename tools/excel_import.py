@@ -355,11 +355,13 @@ def _read_map(wb) -> tuple[dict[str, str], list[_MapEntry], list[dict]]:
 def _targets_of(question: dict) -> list[dict]:
     """data_key (string | list target) -> list {key, when, transform}."""
     raw = question.get("data_key")
+    q_when = question.get("when")
     items = [raw] if isinstance(raw, str) else list(raw or [])
     out: list[dict] = []
     for item in items:
         if isinstance(item, str):
-            out.append({"key": item, "when": None, "transform": None})
+            target = {"key": item, "when": q_when or None, "transform": None}
+            out.append(target)
         elif isinstance(item, dict) and isinstance(item.get("key"), str):
             out.append({"key": item["key"], "when": item.get("when") or None,
                         "transform": item.get("transform")})

@@ -84,6 +84,34 @@ from tools.excel_import import (
 )
 from tools.questionnaire.schema import DATE_NOTE, EXAMPLE_PREFIX, SELECT_NOTE
 
+_VSIC_BY_MA: dict[str, str] | None = None
+
+
+def _vsic_by_ma() -> dict[str, str]:
+    global _VSIC_BY_MA
+    if _VSIC_BY_MA is None:
+        vsic_path = Path(__file__).resolve().parent.parent / "app" / "data" / \
+            "nganh_vsic.json"
+        data = json.loads(vsic_path.read_text(encoding="utf-8"))
+        _VSIC_BY_MA = {
+            str(row["ma"]): str(row["ten"])
+            for row in data.get("nganh") or [] if row.get("ma")
+        }
+    return _VSIC_BY_MA
+
+
+def _autofill_loop_ten_nganh(loops: dict[str, list[dict]]) -> None:
+    """Customer Excel chỉ ghi ma_nganh — tra VSIC điền ten_nganh lúc nạp."""
+    vsic = _vsic_by_ma()
+    for rows in loops.values():
+        for row in rows:
+            ma = str(row.get("ma_nganh") or "").strip()
+            if not ma or str(row.get("ten_nganh") or "").strip():
+                continue
+            ten = vsic.get(ma)
+            if ten:
+                row["ten_nganh"] = ten
+
 __all__ = [
     "BAD_FILE", "BAD_HEADER", "BAD_VERSION", "WRONG_CASE", "CHECKSUM",
     "UNKNOWN_CELL", "TOO_MANY_ROWS", "DUP_ROW", "FORMULA", "MIRROR_CELL",
@@ -138,10 +166,18 @@ def _err(code: str, message: str, cell: str | None = None,
     }
 
 
-def _fail(errors: list[dict], audit: dict | None = None) -> dict:
+_SOFT_VALUE_CODES = frozenset({BAD_SELECT, BAD_DATE, BAD_NUMBER})
+
+
+def _question_required(entry: _Entry, question: dict) -> bool:
+    return bool(entry.required or question.get("required"))
+
+
+def _fail(errors: list[dict], audit: dict | None = None,
+          warnings: list[dict] | None = None) -> dict:
     """Kết quả lỗi: candidate luôn None (nguyên tắc nguyên tử)."""
-    return {"ok": False, "errors": errors, "candidate": None,
-            "audit": audit or {}}
+    return {"ok": False, "errors": errors, "warnings": warnings or [],
+            "candidate": None, "audit": audit or {}}
 
 
 @dataclass
@@ -393,6 +429,7 @@ def _static_texts(manifest: dict, meta_line: str) -> set[str]:
                         if opt.get(name):
                             out.add(_norm_label(str(opt[name])))
     out.discard("")
+    out.add(_norm_label("Mã ngành VSIC cấp 4?"))
     return out
 
 
@@ -771,16 +808,28 @@ def import_case_workbook(path: "str | Path", manifest: dict,
         return _fail(errors, audit)
 
     # -- 10. Đọc + chuẩn hoá giá trị (gom đủ lỗi, không dừng sớm) ----------------------
+    warnings: list[dict] = []
     for qid, q_entries in by_qid.items():
+        question = questions[qid][1]
         for entry in q_entries:
             if entry.value_error:
                 continue  # ô formula đã lỗi — không đọc nữa
             entry.value, issue = _normalize_value(
-                questions[qid][1], entry,
+                question, entry,
                 wb_vals[entry.sheet].cell(row=entry.row,
                                           column=entry.col).value)
             entry.filled = entry.value is not None
             if issue:
+                if (issue.get("code") in _SOFT_VALUE_CODES and
+                        not _question_required(entry, question)):
+                    soft = dict(issue)
+                    soft["code"] = "WARN_" + str(issue["code"])[4:]
+                    soft["message"] = "%s — đã bỏ qua (ô không bắt buộc)" % (
+                        issue["message"])
+                    warnings.append(soft)
+                    entry.filled = False
+                    entry.value = None
+                    continue
                 entry.value_error = True
                 errors.append(issue)
 
@@ -989,6 +1038,7 @@ def import_case_workbook(path: "str | Path", manifest: dict,
             else:
                 seen_rows[fingerprint] = row_no
         loop_out[loop_name] = [rows_map[r] for r in sorted(rows_map)]
+    _autofill_loop_ten_nganh(loop_out)
     if errors:
         return _fail(errors, audit)
 
@@ -1050,6 +1100,7 @@ def import_case_workbook(path: "str | Path", manifest: dict,
     return {
         "ok": True,
         "errors": [],
+        "warnings": warnings,
         "candidate": candidate,
         "audit": audit,
         "authorization": auth_result,

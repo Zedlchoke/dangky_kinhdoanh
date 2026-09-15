@@ -290,6 +290,32 @@ def lock_agent_profile(agent_id: str) -> dict[str, Any]:
     return {"ok": True}
 
 
+def delete_agent_profile(agent_id: str) -> dict[str, Any]:
+    """Xóa profile người làm thủ tục và các hồ sơ ủy quyền gắn agent đó."""
+    aid = str(agent_id or "").strip()
+    if not aid:
+        return {"ok": False, "error": "MISSING_AGENT_ID"}
+    ensure_store()
+    with connect() as conn:
+        row = conn.execute(
+            "SELECT ho_ten FROM authorized_agent_profiles WHERE agent_id = ?",
+            (aid,),
+        ).fetchone()
+        if not row:
+            return {"ok": False, "error": "NOT_FOUND"}
+        conn.execute(
+            "DELETE FROM authorization_cases WHERE agent_id = ?",
+            (aid,),
+        )
+        conn.execute(
+            "DELETE FROM authorized_agent_profiles WHERE agent_id = ?",
+            (aid,),
+        )
+        _audit(conn, "profile.delete", aid,
+               "name=%s" % mask_pii(str(row["ho_ten"] or "")))
+    return {"ok": True, "agent_id": aid}
+
+
 def _audit(
     conn: sqlite3.Connection,
     event_type: str,

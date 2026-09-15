@@ -764,6 +764,14 @@ class Bridge:
         except Exception as exc:  # noqa: BLE001
             return {"ok": False, "error": _safe_error(exc)}
 
+    def delete_authorized_agent_profile(self, agent_id):
+        try:
+            from tools.authorization_store import delete_agent_profile  # noqa: E402
+
+            return delete_agent_profile(str(agent_id or "").strip())
+        except Exception as exc:  # noqa: BLE001
+            return {"ok": False, "error": _safe_error(exc)}
+
     def get_authorization_templates(self, payload):
         try:
             from tools.authorization_store import templates_for_case  # noqa: E402

@@ -638,17 +638,42 @@ tr.row-sel-multi td.stt { box-shadow: inset 3px 0 0 #c62828; }
   gap: 8px;
 }
 .toast {
+  position: relative;
   background: #223;
   color: #fff;
   border-radius: 5px;
-  padding: 10px 14px;
+  padding: 10px 32px 10px 14px;
   max-width: 420px;
   box-shadow: 0 4px 16px rgba(0,0,0,.35);
   font-size: 12.5px;
 }
 .toast.ok { background: #1e6b34; }
 .toast.err { background: #8c2020; }
-.toast button { margin-top: 6px; }
+.toast-body button { margin-top: 6px; }
+.toast-close {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: none;
+  border-radius: 3px;
+  background: rgba(255,255,255,.15);
+  color: #fff;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity .15s ease;
+}
+.toast:hover .toast-close,
+.toast-close:focus {
+  opacity: 1;
+}
+.toast-close:hover {
+  background: rgba(255,255,255,.35);
+}
 
 /* ------------------------------------------------ màn hình nhỏ:
    sidebar/rightbar thành drawer, bảng cuộn ngang, không reflow bảng pháp lý */

@@ -149,6 +149,33 @@
     loadTemplatesForCase();
   }
 
+  function deleteProfile() {
+    if (!selectedAgentId) {
+      ctx.toast('Chọn người làm thủ tục cần xóa.', 'err');
+      return;
+    }
+    var p = profiles.filter(function (x) { return x.agent_id === selectedAgentId; })[0];
+    var label = p ? p.ho_ten : selectedAgentId;
+    if (!confirm('Xóa profile «' + label + '»?\nHành động này không thể hoàn tác.')) {
+      return;
+    }
+    bridge('delete_authorized_agent_profile', selectedAgentId)
+      .then(function (res) {
+        if (!res.ok) {
+          ctx.toast(bridgeErrorsText(res), 'err', true);
+          return;
+        }
+        selectedAgentId = '';
+        editingAgent = null;
+        $('#auth-profile-editor').hidden = true;
+        ctx.toast('Đã xóa profile.', 'ok');
+        return refresh();
+      })
+      .catch(function (e) {
+        ctx.toast('Xóa profile: ' + ctx.esc(String(e)), 'err');
+      });
+  }
+
   function saveProfile() {
     var data = readProfileForm();
     if (!data.ho_ten || !data.so_cccd) {
@@ -268,6 +295,7 @@
     });
 
     $('#auth-btn-save-profile').addEventListener('click', saveProfile);
+    $('#auth-btn-delete-profile').addEventListener('click', deleteProfile);
 
     $('#auth-btn-generate').addEventListener('click', generatePackage);
     $('#auth-btn-open-dir').addEventListener('click', openOutputDir);

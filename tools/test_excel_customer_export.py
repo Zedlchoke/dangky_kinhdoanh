@@ -4,9 +4,10 @@
 [CEX1] TNHH 1TV customer: đủ câu khách (~≥55% full, trừ mark nội bộ staff).
 [CEX2] Wizard thành lập mới: không có q_i02_chk_tt_chuyen_doi_tu_hkd.
 [CEX3] Customer: không AUTH_META; chỉ Phiếu_khách visible (+ __map/__lists ẩn).
-[CEX4] Body bắt đầu hàng 2 (không khối hướng dẫn hàng 2–8).
+[CEX4] Body bắt đầu hàng 7 (khối hướng dẫn hàng 2–6).
 [CEX5] Round-trip customer TNHH: wizard + core -> import OK.
 [CEX6] Full export backward compat vẫn có nhiều sheet.
+[CEX7] Customer ngành: chỉ ma_nganh + la_nganh_chinh (không ten_nganh).
 
 Chạy: python -X utf8 -m tools.test_excel_customer_export
 """
@@ -107,18 +108,15 @@ def cex3():
     wb.close()
 
 
-@check("[CEX4] Phiếu_khách: body từ hàng 2, không khối guide hàng 3–8")
+@check("[CEX4] Phiếu_khách: body từ hàng 7, có khối hướng dẫn hàng 2–6")
 def cex4():
     manifest = _manifest(CASE_TNHH)
     out = _export(manifest, EXPORT_MODE_CUSTOMER)
     wb = openpyxl.load_workbook(out, read_only=True, data_only=True)
     ws = wb[CUSTOMER_SHEET]
     assert ws.cell(1, 1).value  # tiêu đề
-    assert ws.cell(2, 1).value  # nhóm/câu đầu ngay hàng 2
-    for r in range(3, 9):
-        merged_guide = all(
-            not ws.cell(r, c).value for c in range(1, 5))
-        assert not merged_guide or r > 2
+    assert "• " in str(ws.cell(2, 1).value or "")  # hướng dẫn
+    assert ws.cell(7, 1).value  # nhóm/câu đầu body
     wb.close()
 
 
@@ -138,7 +136,7 @@ def cex5():
         "q_i02_tinh_thanh": "TP. Hồ Chí Minh",
         "q_i02_dn_ten_tieng_viet": "Công ty TNHH An Phát",
         "q_i02_ho_ten_in_hoa": "Nguyễn Văn A",
-        "q_i02_ds_nganh_ten_nganh": ["Bán lẻ"],
+        "q_i02_ds_nganh_ma_nganh": ["6201"],
         "q_i02_ds_nganh_la_nganh_chinh": ["X"],
     }
     for r in range(4, mp.max_row + 1):
@@ -167,6 +165,24 @@ def cex5():
     res = import_case_workbook(filled, manifest,
                                imported_at="2026-09-15T00:00:00")
     assert res["ok"], res.get("errors")
+    loops = res["candidate"]["store"]["loops"].get("ds_nganh") or []
+    assert loops and loops[0].get("ma_nganh") == "6201"
+    assert loops[0].get("ten_nganh")
+
+
+@check("[CEX7] customer ngành: chỉ cột ma_nganh + la_nganh_chinh")
+def cex7():
+    manifest = _manifest(CASE_TNHH)
+    out = _export(manifest, EXPORT_MODE_CUSTOMER)
+    qids = _map_question_ids(out)
+    assert "q_i02_ds_nganh_ten_nganh" not in qids
+    assert "q_i02_ds_nganh_ma_nganh" in qids
+    wb = openpyxl.load_workbook(out, read_only=True, data_only=True)
+    ws = wb[CUSTOMER_SHEET]
+    headers = [ws.cell(r, c).value for r in range(1, ws.max_row + 1)
+               for c in (2, 3) if ws.cell(r, c).value]
+    assert any("VSIC" in str(h) for h in headers)
+    wb.close()
 
 
 @check("[CEX6] full export vẫn có sheet form + Hướng_dẫn")
@@ -181,7 +197,7 @@ def cex6():
 
 
 def main() -> int:
-    for fn in (cex1, cex2, cex3, cex4, cex5, cex6):
+    for fn in (cex1, cex2, cex3, cex4, cex5, cex6, cex7):
         fn()
     fails = [name for ok, name in _results if not ok]
     print("\n%d/%d PASS" % (len(_results) - len(fails), len(_results)))

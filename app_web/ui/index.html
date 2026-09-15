@@ -33,19 +33,8 @@
       <button id="btn-export" class="btn btn-primary">Xuất hồ sơ (.docx)</button>
 
       <div class="sep"></div>
-      <button id="btn-save-draft" class="btn">Lưu hồ sơ (.json)</button>
-      <button id="btn-open-draft" class="btn">Mở hồ sơ (.json)</button>
-      <!-- X5: phiếu Excel thu thập thông tin khách (PLAN.md mục 4.4).
-           [E4 2026-09-10, owner chốt] ẨN nút "Xuất phiếu Excel cho khách"
-           (v1 theo-form) — chỉ giữ NẠP v1 (thời gian chuyển đổi, PLAN §5-E4);
-           luồng phát hành khách dùng workbook case-level bên dưới. -->
-      <!-- <button id="btn-export-excel" class="btn">Xuất phiếu Excel cho khách</button> -->
-      <button id="btn-import-excel" class="btn">Nạp phiếu Excel</button>
-      <!-- E2: workbook Excel CASE-LEVEL — một file cho cả hồ sơ
-           (PLAN_hoan_thien_pfat_hanh §2.1/§5-E2) -->
-      <button id="btn-export-case-excel" class="btn">Xuất phiếu đầy đủ (nội bộ)</button>
-      <button id="btn-export-case-excel-customer" class="btn">Xuất phiếu cho khách (rút gọn)</button>
-      <button id="btn-import-case-excel" class="btn">Nạp Excel cả hồ sơ (case)</button>
+      <button id="btn-export-case-excel" class="btn">Xuất phiếu Excel</button>
+      <button id="btn-import-case-excel" class="btn">Nạp phiếu Excel</button>
       <div id="case-excel-info" class="lbl" hidden></div>
       <button id="btn-reset" class="btn btn-danger">Nhập lại</button>
 
@@ -89,6 +78,7 @@
           <div class="auth-btn-row">
             <button type="button" id="auth-btn-new-profile" class="btn btn-sm">Thêm</button>
             <button type="button" id="auth-btn-edit-profile" class="btn btn-sm">Sửa</button>
+            <button type="button" id="auth-btn-delete-profile" class="btn btn-sm btn-danger">Xóa</button>
           </div>
           <div id="auth-profile-editor" class="auth-editor" hidden>
             <input type="hidden" id="auth-agent-id" name="agent_id">

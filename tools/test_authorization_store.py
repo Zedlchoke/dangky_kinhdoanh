@@ -100,6 +100,20 @@ def t_missing_required():
     assert "MISSING_REQUIRED" in codes
 
 
+@check("AUTH-05b: delete profile")
+def t_delete():
+    store, _tmp = _with_temp_store()
+    agent_id = str(uuid.uuid4())
+    store.save_agent_profile({
+        "agent_id": agent_id,
+        "ho_ten": "Nguyễn Xóa",
+        "so_cccd": "004444444444",
+    })
+    res = store.delete_agent_profile(agent_id)
+    assert res["ok"] is True
+    assert store.get_agent_profile(agent_id)["ok"] is False
+
+
 @check("AUTH-05: lock profile")
 def t_lock():
     store, _tmp = _with_temp_store()
@@ -192,7 +206,7 @@ def t_audit_mask():
 
 def main() -> int:
     tests = [
-        t_fresh, t_save_list, t_update_cccd, t_missing_required, t_lock,
+        t_fresh, t_save_list, t_update_cccd, t_missing_required, t_delete, t_lock,
         t_backup_restore, t_catalog, t_draft_merge, t_audit_mask,
     ]
     for fn in tests:

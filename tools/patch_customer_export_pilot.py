@@ -56,6 +56,68 @@ TNHH_WIZARD = [
     },
 ]
 
+DNTN_WIZARD = [
+    {
+        "question_id": "wiz_tt_loai",
+        "group": "Xác định trường hợp thành lập",
+        "text": "Trường hợp thành lập doanh nghiệp của bạn?",
+        "type": "select",
+        "required": True,
+        "wizard": True,
+        "audience": "customer",
+        "tier": "wizard",
+        "options": [
+            {"value": "moi", "label": "Thành lập mới"},
+            {
+                "value": "tu_hkd",
+                "label": "Chuyển đổi từ hộ kinh doanh",
+                "wizard_sets": {"chk_tt_chuyen_doi_tu_hkd": "X"},
+            },
+            {
+                "value": "tu_csbt",
+                "label": "Chuyển đổi từ cơ sở bảo trợ xã hội/quỹ",
+                "wizard_sets": {"chk_tt_chuyen_doi_tu_csbt": "X"},
+            },
+        ],
+        "version": 1,
+        "data_key": "wiz_tt_loai",
+    },
+    {
+        "question_id": "wiz_gt_loai",
+        "group": "Giấy tờ pháp lý của bạn",
+        "text": "Bạn đang dùng loại giấy tờ pháp lý nào?",
+        "type": "select",
+        "required": True,
+        "wizard": True,
+        "audience": "customer",
+        "tier": "wizard",
+        "options": [
+            {
+                "value": "cccd",
+                "label": "Căn cước công dân / CMND gắn chip",
+                "wizard_sets": {"chk_gt_cccd": "X"},
+            },
+            {
+                "value": "cmnd",
+                "label": "Chứng minh nhân dân (9 số)",
+                "wizard_sets": {"chk_gt_cmnd": "X"},
+            },
+            {
+                "value": "ho_chieu",
+                "label": "Hộ chiếu",
+                "wizard_sets": {"chk_gt_ho_chieu": "X"},
+            },
+            {
+                "value": "khac",
+                "label": "Giấy tờ khác",
+                "wizard_sets": {"chk_gt_loai_khac": "X"},
+            },
+        ],
+        "version": 1,
+        "data_key": "wiz_gt_loai",
+    },
+]
+
 HKD_WIZARD = [
     {
         "question_id": "wiz_loai_chu_ho",
@@ -100,6 +162,14 @@ def _tag_tnhh(questions: list[dict]) -> None:
             item["audience"] = "staff"
         elif item.get("group") in staff_groups:
             item["audience"] = "staff"
+        elif _is_ten_nganh_question(item):
+            item["audience"] = "staff"
+        elif isinstance(item.get("data_key"), str) and \
+                item["data_key"].endswith(".ma_nganh"):
+            item.pop("autofill", None)
+            item["text"] = "Mã ngành VSIC cấp 4?"
+            item["example"] = "6201"
+            item["required"] = True
         elif item.get("when"):
             item.setdefault("tier", "conditional")
         elif not item.get("required"):
@@ -107,6 +177,50 @@ def _tag_tnhh(questions: list[dict]) -> None:
         elif item.get("required"):
             item.setdefault("tier", "core")
             item.setdefault("audience", "customer")
+
+
+def _tag_dntn(questions: list[dict]) -> None:
+    staff_prefixes = ("q_i01_chk_",)
+    staff_groups = (
+        "Chuyển đổi từ hộ kinh doanh (nếu có)",
+        "Chuyển đổi từ cơ sở bảo trợ xã hội/quỹ (nếu có)",
+        "Trường hợp thành lập doanh nghiệp",
+        "Loại giấy tờ pháp lý của cá nhân",
+        "Vị trí đặt trụ sở/địa điểm",
+        "Chế độ kế toán và báo cáo tài chính",
+        "Thuế giá trị gia tăng",
+        "Bảo hiểm xã hội (phương thức đóng)",
+    )
+    for item in questions:
+        qid = item.get("question_id") or ""
+        if qid.startswith(staff_prefixes):
+            item["audience"] = "staff"
+        elif item.get("group") in staff_groups:
+            item["audience"] = "staff"
+        elif _is_ten_nganh_question(item):
+            item["audience"] = "staff"
+        elif item.get("data_key") == "ds_nganh.ma_nganh":
+            item.pop("autofill", None)
+            item["text"] = "Mã ngành VSIC cấp 4?"
+            item["example"] = "6201"
+            item["required"] = True
+        elif item.get("when"):
+            item.setdefault("tier", "conditional")
+        elif not item.get("required"):
+            item.setdefault("tier", "conditional")
+        elif item.get("required"):
+            item.setdefault("tier", "core")
+            item.setdefault("audience", "customer")
+
+
+def _is_ten_nganh_question(item: dict) -> bool:
+    key = item.get("data_key")
+    if isinstance(key, str):
+        return key.endswith(".ten_nganh") or key == "ten_nganh"
+    if isinstance(key, list):
+        return any(isinstance(k, dict) and str(k.get("key", "")).endswith(
+            ".ten_nganh") for k in key)
+    return False
 
 
 def _tag_hkd(questions: list[dict]) -> None:
@@ -126,11 +240,16 @@ def _tag_hkd(questions: list[dict]) -> None:
 
 
 def patch(path: Path, wizard: list[dict], tag_fn) -> None:
+    from tools.build_case_questionnaires import manifest_hash
+
     data = json.loads(path.read_text(encoding="utf-8"))
     for form in data.get("forms") or []:
         qs = form.get("questions") or []
         tag_fn(qs)
-        form["questions"] = wizard + qs
+        have = {q.get("question_id") for q in qs if q.get("wizard")}
+        prepend = [w for w in wizard if w["question_id"] not in have]
+        form["questions"] = prepend + qs
+    data["manifest_hash"] = manifest_hash(data)
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n",
                     encoding="utf-8")
     print("patched", path.name)
@@ -140,6 +259,7 @@ def main() -> None:
     base = ROOT / "app" / "data" / "case_questionnaires"
     patch(base / "thanh_lap_tnhh_1tv.json", TNHH_WIZARD, _tag_tnhh)
     patch(base / "dang_ky_ho_kinh_doanh_lan_dau.json", HKD_WIZARD, _tag_hkd)
+    patch(base / "thanh_lap_dntn.json", DNTN_WIZARD, _tag_dntn)
 
 
 if __name__ == "__main__":

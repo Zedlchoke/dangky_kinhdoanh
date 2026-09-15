@@ -1635,14 +1635,15 @@
         {
           "question_id": "q_i02_ds_nganh_ma_nganh",
           "group": "Ngành, nghề kinh doanh",
-          "text": "Mã ngành (app tra VSIC giúp — không cần điền)?",
+          "text": "Mã ngành VSIC cấp 4?",
           "type": "text",
           "repeatable": true,
           "row_group": "ds_nganh",
           "version": 1,
           "data_key": "ds_nganh.ma_nganh",
-          "autofill": "vsic",
-          "tier": "conditional"
+          "tier": "conditional",
+          "example": "6201",
+          "required": true
         },
         {
           "question_id": "q_i02_ds_nganh_ten_nganh",
@@ -1656,7 +1657,7 @@
           "example": "Bán lẻ hàng điện tử",
           "required": true,
           "tier": "core",
-          "audience": "customer"
+          "audience": "staff"
         },
         {
           "question_id": "q_i02_ds_nganh_chi_tiet",
@@ -1836,5 +1837,5 @@
       ]
     }
   ],
-  "manifest_hash": "1ab297c8373361e9795006af26b0f00ed73958ec65b353f72d54737d68532b7e"
+  "manifest_hash": "23a549a198d267d21c231e295e485fae48c2348fbd994067af80cbb03fc93fef"
 }

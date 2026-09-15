@@ -125,7 +125,7 @@ FIRST_BODY_ROW = 9                   # giống lane X2: hàng 8 là đệm
 # body cũng phải bắt đầu SAU hàng 8 — bắt đầu sớm hơn sẽ ghi đè vùng merge.
 COMMON_BODY_ROW = FIRST_BODY_ROW
 
-CUSTOMER_BODY_ROW = 2   # customer: hàng 1 tiêu đề, body từ hàng 2 (không khối 2–8)
+CUSTOMER_BODY_ROW = 7   # customer: hàng 1 tiêu đề, 2–6 hướng dẫn, body từ hàng 7
 
 COL_LABEL = 1
 COL_FILL = 2
@@ -165,9 +165,12 @@ GUIDE_LINES = (
 
 CUSTOMER_GUIDE_LINES = (
     "Đây là phiếu thu thập thông tin rút gọn — không phải biểu mẫu pháp lý.",
+    "Điền các câu ở đầu phiếu (trường hợp thành lập, loại giấy tờ…) TRƯỚC "
+    "khi điền các mục «(nếu có)» bên dưới.",
     "Ô NỀN VÀNG là phần bạn điền. CHỈ điền vào ô vàng; không sửa khung sheet.",
     "Ô có mũi tên ▾: bấm và CHỌN một dòng trong danh sách, không gõ tay.",
-    "Trả lại đúng file .xlsx này cho người gửi.",
+    "Ngày ghi dd/mm/yyyy (ví dụ 05/12/1985). Ngành nghề: chỉ ghi MÃ VSIC cấp 4 "
+    "(ví dụ 6201) — app tự tra tên ngành.",
 )
 
 
@@ -743,23 +746,60 @@ def _setup_print(ws) -> None:
 
 
 def _write_customer_sheet_header(ws, title: str) -> None:
-    """Phiếu_khách: chỉ hàng 1 tiêu đề — không khối hướng dẫn hàng 2–8."""
+    """Phiếu_khách: hàng 1 tiêu đề + hàng 2–6 hướng dẫn ngắn."""
     cell = ws.cell(row=1, column=COL_LABEL, value=title)
     cell.font = Font(bold=True, size=14, color="1F3864")
     cell.alignment = Alignment(vertical="center", horizontal="left")
     ws.merge_cells(start_row=1, start_column=COL_LABEL,
                    end_row=1, end_column=COL_DATE_NOTE)
     ws.row_dimensions[1].height = 24
+    row = 2
+    for line in CUSTOMER_GUIDE_LINES:
+        gcell = ws.cell(row=row, column=COL_LABEL, value="• " + line)
+        gcell.font = Font(size=10, italic=True, color=GUIDE_FONT_HEX)
+        gcell.alignment = _wrap()
+        ws.merge_cells(start_row=row, start_column=COL_LABEL,
+                       end_row=row, end_column=COL_DATE_NOTE)
+        row += 1
     for col_letter, width in COLUMN_WIDTHS.items():
         ws.column_dimensions[col_letter].width = width
+
+
+def _is_ten_nganh_question(item: dict) -> bool:
+    for target in _targets(item):
+        key = target["key"]
+        if key.endswith(".ten_nganh") or key == "ten_nganh":
+            return True
+    return False
+
+
+def _customer_normalize_question(item: dict) -> dict | None:
+    """Customer: ẩn cột tên ngành; mã VSIC do khách gõ (không khóa autofill)."""
+    if _is_ten_nganh_question(item):
+        return None
+    out = dict(item)
+    for target in _targets(out):
+        key = target["key"]
+        if key.endswith(".ma_nganh") or key == "ma_nganh":
+            out.pop("autofill", None)
+            out["text"] = "Mã ngành VSIC cấp 4?"
+            out["example"] = out.get("example") or "6201"
+            out["required"] = True
+            break
+    return out
 
 
 def _customer_form_questions(approved: list[dict]) -> list[dict]:
     """Form đã bỏ wizard + audience staff — giữ optional/conditional/when."""
     out: list[dict] = []
     for form in approved:
-        fq = [q for q in form.get("questions") or []
-              if q.get("audience") != "staff" and not q.get("wizard")]
+        fq: list[dict] = []
+        for q in form.get("questions") or []:
+            if q.get("audience") == "staff" or q.get("wizard"):
+                continue
+            norm = _customer_normalize_question(q)
+            if norm:
+                fq.append(norm)
         out.append({**form, "questions": fq})
     return out
 

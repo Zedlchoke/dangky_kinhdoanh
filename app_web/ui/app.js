@@ -699,8 +699,25 @@
   function toast(html, kind, sticky) {
     var box = document.createElement('div');
     box.className = 'toast' + (kind ? ' ' + kind : '');
-    box.innerHTML = html;
-    if (!sticky) setTimeout(function () { box.remove(); }, kind === 'err' ? 8000 : 4000);
+    var body = document.createElement('div');
+    body.className = 'toast-body';
+    body.innerHTML = html;
+    var close = document.createElement('button');
+    close.type = 'button';
+    close.className = 'toast-close';
+    close.setAttribute('aria-label', 'Đóng thông báo');
+    close.textContent = '\u00d7';
+    close.addEventListener('click', function (e) {
+      e.stopPropagation();
+      box.remove();
+    });
+    box.appendChild(body);
+    box.appendChild(close);
+    if (!sticky) {
+      setTimeout(function () {
+        if (box.parentNode) box.remove();
+      }, kind === 'err' ? 8000 : 4000);
+    }
     $('#toasts').appendChild(box);
     return box;
   }
@@ -2310,6 +2327,11 @@
         esc(String(src.manifest_hash || '').slice(0, 8)) + '</b> đã nạp lúc ' +
         esc(src.imported_at || '') + ' (' + nItems + ' giá trị, ' + nRows +
         ' hàng bảng)');
+      var warnText = bridgeErrorsText(res.warnings);
+      if (warnText && warnText !== 'lỗi không rõ') {
+        toast('<b>Đã nạp — có ô tùy chọn bị bỏ qua</b><br>' +
+          esc(warnText), 'err', true);
+      }
       // Panel "còn thiếu" theo field/mẫu: chạy lại validator toàn hồ sơ
       runCheck(true);
       openRightPanel();
@@ -2553,24 +2575,16 @@
     $('#btn-reset').addEventListener('click', resetDossier);
     $('#btn-export').addEventListener('click', doExport);
     $('#btn-export2').addEventListener('click', doExport);
-    $('#btn-save-draft').addEventListener('click', saveDraftFile);
-    $('#btn-open-draft').addEventListener('click', openDraftFile);
-    // X5: phiếu Excel v1 — NẠP giữ nguyên; XUẤT v1 đã ẨN khỏi index.html
-    // (E4 2026-09-10, owner chốt) nên wiring phải null-safe.
-    var btnExportExcelV1 = $('#btn-export-excel');
-    if (btnExportExcelV1) btnExportExcelV1.addEventListener('click', exportQuestionnaire);
-    $('#btn-import-excel').addEventListener('click', importQuestionnaire);
-    // E2: workbook Excel case-level
-    $('#btn-export-case-excel').addEventListener('click', function () {
-      exportCaseWorkbook('full');
-    });
-    var btnCust = $('#btn-export-case-excel-customer');
-    if (btnCust) {
-      btnCust.addEventListener('click', function () {
+    var btnExportCaseExcel = $('#btn-export-case-excel');
+    if (btnExportCaseExcel) {
+      btnExportCaseExcel.addEventListener('click', function () {
         exportCaseWorkbook('customer');
       });
     }
-    $('#btn-import-case-excel').addEventListener('click', importCaseWorkbook);
+    var btnImportCaseExcel = $('#btn-import-case-excel');
+    if (btnImportCaseExcel) {
+      btnImportCaseExcel.addEventListener('click', importCaseWorkbook);
+    }
 
     $('#btn-toggle-right').addEventListener('click', function () { toggleRightPanel(); });
     $('#btn-toggle-side').addEventListener('click', function () {

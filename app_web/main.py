@@ -652,8 +652,9 @@ class Bridge:
         if errors:
             return {"ok": False, "errors": errors}
 
-        export_mode = (payload or {}).get("export_mode") or "full"
-        wizard_answers = (payload or {}).get("wizard_answers")
+        payload = _as_dict(payload) or {}
+        export_mode = payload.get("export_mode") or "full"
+        wizard_answers = payload.get("wizard_answers")
 
         import tkinter as tk
         from tkinter import filedialog

@@ -157,7 +157,7 @@ Hai chế độ xuất workbook case-level qua `export_mode`:
 | Mode | Đối tượng | AUTH_* | Nội dung |
 |---|---|---|---|
 | `full` (mặc định) | Nội bộ | Có | Toàn bộ câu như hiện tại |
-| `customer` | Khách | Không | Wizard đầu `Thông_tin_chung` + `tier=core` + conditional đã bật; sheet `Phiếu_khách`; form mẫu veryHidden |
+| `customer` | Khách | Không | Một sheet ``Phiếu_khách`` (hàng 1 tiêu đề, câu hỏi từ hàng 2); đủ câu khách trừ ``audience=staff``; wizard select thay mark nội bộ; ``__map``/``__lists`` veryHidden |
 
 Metadata câu hỏi tùy chọn: `audience` (`customer`|`staff`), `tier`
 (`core`|`conditional`|`rare`|`wizard`), `wizard: true`, `wizard_sets` trên

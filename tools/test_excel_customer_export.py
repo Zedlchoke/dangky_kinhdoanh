@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
-"""Customer export mode — phiếu rút gọn vs full (wave P0).
+"""Customer export mode — phiếu khách một sheet (wave P0).
 
-[CEX1] TNHH 1TV customer: số câu map < 50% so với full.
-[CEX2] Wizard thành lập mới: không có chk_tt_chuyen_doi_tu_hkd trong map.
-[CEX3] Customer export: không sheet AUTH_META.
-[CEX4] Round-trip customer TNHH: wizard + core -> import OK.
-[CEX5] Full export backward compat: default export_mode vẫn có AUTH (nếu store ok).
+[CEX1] TNHH 1TV customer: đủ câu khách (~≥55% full, trừ mark nội bộ staff).
+[CEX2] Wizard thành lập mới: không có q_i02_chk_tt_chuyen_doi_tu_hkd.
+[CEX3] Customer: không AUTH_META; chỉ Phiếu_khách visible (+ __map/__lists ẩn).
+[CEX4] Body bắt đầu hàng 2 (không khối hướng dẫn hàng 2–8).
+[CEX5] Round-trip customer TNHH: wizard + core -> import OK.
+[CEX6] Full export backward compat vẫn có nhiều sheet.
 
 Chạy: python -X utf8 -m tools.test_excel_customer_export
 """
@@ -22,8 +23,8 @@ sys.path.insert(0, str(ROOT))
 import openpyxl  # noqa: E402
 
 from tools.excel_case_export import (  # noqa: E402
-    EXPORT_MODE_CUSTOMER, EXPORT_MODE_FULL, MAP_COLUMNS, MAP_SHEET,
-    write_case_workbook,
+    CUSTOMER_SHEET, EXPORT_MODE_CUSTOMER, EXPORT_MODE_FULL, MAP_COLUMNS,
+    MAP_SHEET, write_case_workbook,
 )
 from tools.excel_case_import import import_case_workbook  # noqa: E402
 
@@ -76,13 +77,13 @@ def _export(manifest: dict, mode: str, wizard_answers=None) -> Path:
     return out
 
 
-@check("[CEX1] TNHH 1TV customer map qids < 50% full")
+@check("[CEX1] TNHH customer đủ câu (~≥55% full, < full)")
 def cex1():
     manifest = _manifest(CASE_TNHH)
     full = _map_question_ids(_export(manifest, EXPORT_MODE_FULL))
     cust = _map_question_ids(_export(manifest, EXPORT_MODE_CUSTOMER))
-    assert len(cust) < len(full) * 0.5, (len(cust), len(full))
-    assert len(cust) >= 5
+    assert len(cust) >= len(full) * 0.55, (len(cust), len(full))
+    assert len(cust) < len(full)
 
 
 @check("[CEX2] wizard=moi: không có q_i02_chk_tt_chuyen_doi_tu_hkd")
@@ -94,17 +95,35 @@ def cex2():
     assert "q_i02_chk_tt_chuyen_doi_tu_hkd" not in qids
 
 
-@check("[CEX3] customer: không sheet AUTH_META")
+@check("[CEX3] customer: một sheet Phiếu_khách, không AUTH")
 def cex3():
     manifest = _manifest(CASE_TNHH)
     out = _export(manifest, EXPORT_MODE_CUSTOMER)
     wb = openpyxl.load_workbook(out, read_only=True)
+    visible = [n for n in wb.sheetnames
+               if wb[n].sheet_state in (None, "visible", "Visible")]
+    assert visible == [CUSTOMER_SHEET], visible
     assert "AUTH_META" not in wb.sheetnames
     wb.close()
 
 
-@check("[CEX4] round-trip customer TNHH wizard + core")
+@check("[CEX4] Phiếu_khách: body từ hàng 2, không khối guide hàng 3–8")
 def cex4():
+    manifest = _manifest(CASE_TNHH)
+    out = _export(manifest, EXPORT_MODE_CUSTOMER)
+    wb = openpyxl.load_workbook(out, read_only=True, data_only=True)
+    ws = wb[CUSTOMER_SHEET]
+    assert ws.cell(1, 1).value  # tiêu đề
+    assert ws.cell(2, 1).value  # nhóm/câu đầu ngay hàng 2
+    for r in range(3, 9):
+        merged_guide = all(
+            not ws.cell(r, c).value for c in range(1, 5))
+        assert not merged_guide or r > 2
+    wb.close()
+
+
+@check("[CEX5] round-trip customer TNHH wizard + core")
+def cex5():
     manifest = _manifest(CASE_TNHH)
     out = _export(manifest, EXPORT_MODE_CUSTOMER)
     wb = openpyxl.load_workbook(out)
@@ -150,17 +169,19 @@ def cex4():
     assert res["ok"], res.get("errors")
 
 
-@check("[CEX5] full default vẫn xuất được (không export_mode)")
-def cex5():
+@check("[CEX6] full export vẫn có sheet form + Hướng_dẫn")
+def cex6():
     manifest = _manifest(CASE_TNHH)
-    tmp = Path(tempfile.mkdtemp(prefix="cex5_"))
+    tmp = Path(tempfile.mkdtemp(prefix="cex6_"))
     write_case_workbook(manifest, tmp / "full.xlsx", meta=FIXTURE_META)
-    qids = _map_question_ids(tmp / "full.xlsx")
-    assert len(qids) > 50
+    wb = openpyxl.load_workbook(tmp / "full.xlsx", read_only=True)
+    assert "Hướng_dẫn" in wb.sheetnames
+    assert len(wb.sheetnames) > 3
+    wb.close()
 
 
 def main() -> int:
-    for fn in (cex1, cex2, cex3, cex4, cex5):
+    for fn in (cex1, cex2, cex3, cex4, cex5, cex6):
         fn()
     fails = [name for ok, name in _results if not ok]
     print("\n%d/%d PASS" % (len(_results) - len(fails), len(_results)))

@@ -64,7 +64,8 @@ from pathlib import Path
 from openpyxl import load_workbook
 
 from tools.excel_case_export import (
-    CASE_MAP_VERSION, COMMON_SHEET, CONTRACT, DOCS_SHEET, GUIDE_LINES,
+    CASE_MAP_VERSION, COMMON_SHEET, CONTRACT, CUSTOMER_SHEET, DOCS_SHEET,
+    EXPORT_MODE_CUSTOMER, GUIDE_LINES,
     GUIDE_SHEET, LISTS_SHEET, MAP_COLUMNS, MAP_MARKER, MAP_SHEET,
     ONEOF_KEY_PREFIX, OPTIONAL_FORM_KEY_PREFIX,
     ExcelCaseExportError, is_review_approved, is_selector_question,
@@ -374,6 +375,8 @@ def _static_texts(manifest: dict, meta_line: str) -> set[str]:
         [meta_line, meta_line + _COMMON_SHARED_NOTE, SELECT_NOTE, DATE_NOTE,
          _MIRROR_NOTE, _COMMON_EMPTY_NOTE, "Thông tin dùng chung cho cả hồ sơ"]
         + list(GUIDE_LINES))}
+    if manifest.get("case_title"):
+        out.add(_norm_label(str(manifest["case_title"])))
     for form in manifest.get("forms", []):
         for name in ("title", "ten_mau"):
             if form.get(name):
@@ -621,8 +624,12 @@ def import_case_workbook(path: "str | Path", manifest: dict,
 
     # -- 6. Sheet declared tồn tại + không có sheet lạ ----------------------------
     declared_sheets = sorted({e.sheet for e in entries})
-    allowed = set(declared_sheets) | set(_STRUCTURAL_SHEETS) | \
-        {MAP_SHEET, LISTS_SHEET}
+    export_mode = str(meta.get("export_mode") or "full")
+    if export_mode == EXPORT_MODE_CUSTOMER:
+        allowed = set(declared_sheets) | {MAP_SHEET, LISTS_SHEET, CUSTOMER_SHEET}
+    else:
+        allowed = set(declared_sheets) | set(_STRUCTURAL_SHEETS) | \
+            {MAP_SHEET, LISTS_SHEET}
     for name in declared_sheets:
         if name not in wb_raw.sheetnames:
             return _fail([_err(

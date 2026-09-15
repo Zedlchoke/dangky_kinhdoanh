@@ -35,7 +35,8 @@ Write-Host "Building from $repoRoot"
     --distpath $outDir --workpath $workDir $specPath
 if ($LASTEXITCODE -ne 0) { throw "PyInstaller failed with exit code $LASTEXITCODE" }
 
-$exePath = Join-Path $outDir "DangKyKinhDoanh.exe"
+$appDir = Join-Path $outDir "DangKyKinhDoanh"
+$exePath = Join-Path $appDir "DangKyKinhDoanh.exe"
 if (-not (Test-Path -LiteralPath $exePath)) { throw "Không tạo được $exePath" }
 
 $commit = (& git -C $repoRoot rev-parse --short HEAD 2>$null)
@@ -50,8 +51,8 @@ Tệp chạy: DangKyKinhDoanh.exe
 Commit: $commit
 Build: $buildDate
 
-Cách dùng: giải nén ZIP, giữ nguyên các tệp trong cùng thư mục rồi chạy
-DangKyKinhDoanh.exe.
+Cách dùng: giải nén ZIP, mở thư mục DangKyKinhDoanh\ rồi chạy
+DangKyKinhDoanh.exe (không tách file ra khỏi thư mục _internal).
 
 Yêu cầu máy khách: Windows 10/11 64-bit và Microsoft Edge WebView2 Runtime.
 LibreOffice 26.8+ cần thiết nếu muốn xuất PDF/chuẩn hóa DOCX tự động.
@@ -65,7 +66,7 @@ $hash = (Get-FileHash -LiteralPath $exePath -Algorithm SHA256).Hash.ToLowerInvar
 "$hash  DangKyKinhDoanh.exe" | Set-Content -LiteralPath $hashPath -Encoding ASCII
 
 $zipPath = Join-Path $outDir "DangKyKinhDoanh_windows_latest.zip"
-Compress-Archive -LiteralPath @($exePath, $readmePath, $hashPath) `
+Compress-Archive -LiteralPath @($appDir, $readmePath, $hashPath) `
     -DestinationPath $zipPath -Force
 if (-not (Test-Path -LiteralPath $zipPath)) { throw "Không tạo được $zipPath" }
 
@@ -74,6 +75,7 @@ Remove-ExactDirectory $workDir
 
 Write-Host ""
 Write-Host "BUILD OK" -ForegroundColor Green
+Write-Host "APP : $appDir"
 Write-Host "EXE : $exePath"
 Write-Host "ZIP : $zipPath"
 Write-Host "SHA : $hash"

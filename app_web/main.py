@@ -777,7 +777,7 @@ class Bridge:
             return {"ok": False, "errors": [{"code": "DRAFT_FAILED",
                     "message": _safe_error(exc)}]}
 
-    def get_authorization_store_info(self):
+    def get_authorization_store_info(self, _unused=None):
         try:
             from tools.authorization_store import store_info  # noqa: E402
 
@@ -785,7 +785,7 @@ class Bridge:
         except Exception as exc:  # noqa: BLE001
             return {"ok": False, "error": _safe_error(exc)}
 
-    def export_authorization_backup(self):
+    def export_authorization_backup(self, _unused=None):
         path = _ask_save_path(
             "Sao lưu profile người làm thủ tục",
             "DKKD_authorization_backup.zip",
@@ -799,7 +799,7 @@ class Bridge:
         except Exception as exc:  # noqa: BLE001
             return {"ok": False, "error": _safe_error(exc)}
 
-    def import_authorization_backup(self):
+    def import_authorization_backup(self, _unused=None):
         path = _ask_open_path(
             "Khôi phục profile từ backup",
             ("Backup ZIP (*.zip)", "Tất cả file (*.*)"))

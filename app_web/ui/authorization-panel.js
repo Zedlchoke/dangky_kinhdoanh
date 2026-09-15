@@ -19,7 +19,9 @@
     if (!a || typeof a[fn] !== 'function') {
       return Promise.reject(new Error('Cần chạy app desktop (pywebview).'));
     }
-    return Promise.resolve(a[fn](arg)).then(function (res) {
+    /* pywebview gọi API với 0 hoặc 1 đối số — không truyền undefined. */
+    var call = (arg === undefined) ? a[fn]() : a[fn](arg);
+    return Promise.resolve(call).then(function (res) {
       if (typeof res === 'string') return JSON.parse(res);
       return res;
     });
@@ -276,7 +278,8 @@
   function init(options) {
     ctx = options;
     wirePanel();
-    refresh();
+    /* Chờ pywebviewready — gọi sớm sẽ báo lỗi giả "cần desktop". */
+    if (ctx.api()) refresh();
     window.addEventListener('pywebviewready', function () { refresh(); }, { once: true });
   }
 

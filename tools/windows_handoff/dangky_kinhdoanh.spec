@@ -104,7 +104,11 @@ hiddenimports = [
 # datas CẢ THƯ MỤC app/data). Thêm hiddenimport khi module đã tồn tại
 # (PyInstaller ERROR nếu hiddenimport thiếu) — sau khi lane E merge, dòng
 # điều kiện này tự kích hoạt; không cần sửa spec.
-for _mod in ("excel_case_export", "excel_case_import"):
+for _mod in (
+    "excel_case_export", "excel_case_import",
+    "authorization_store", "authorization_render",
+    "authorization_template_contract", "excel_authorization_sheets",
+):
     if os.path.isfile(_repo("tools", _mod + ".py")):
         hiddenimports.append("tools." + _mod)
 
@@ -128,11 +132,8 @@ a = Analysis(
 
 pyz = PYZ(a.pure)
 
-# KHÔNG có COLLECT() => onefile.
-# runtime_tmpdir=None: extract vào %TEMP%\_MEIxxxx mỗi lần chạy và bị XOÁ khi
-# thoát => generated_ho_so ghi trong phiên sẽ mất nếu quên chép ra;
-# launch_app_web.py có bước rescue-copy sang Documents\DangKyKinhDoanh\
-# làm lưới an toàn. Người chạy phải mở thư mục export NGAY trong phiên (S6).
+# onedir (COLLECT): khởi động nhanh hơn onefile vì không giải nén ~50MB mỗi lần.
+# launch_app_web.py vẫn rescue-copy generated_ho_so khi cần (S6).
 # [branding 2026-09-11] icon owner chốt — bản phát hành tái lập được.
 # Ưu tiên asset tracked; local/ chỉ là fallback cho máy build cũ.
 _WIN_ICON = os.path.join(TOOLS_DIR, 'branding', 'dangky_kinhdoanh.ico')
@@ -143,17 +144,24 @@ if not os.path.isfile(_WIN_ICON):
 exe = EXE(
     pyz,
     a.scripts,
-    a.binaries,
-    a.datas,
     [],
+    exclude_binaries=True,
     name="DangKyKinhDoanh",
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
-    upx=False,  # tắt UPX: giảm nguy cơ antivirus xoá nhầm exe chưa ký
+    upx=False,
     upx_exclude=[],
-    runtime_tmpdir=None,
-    console=True,  # S1 yêu cầu đọc được traceback console nếu launch lỗi
-    # Không có file -> icon mặc định PyInstaller, build không vỡ.
+    console=False,
     icon=(_WIN_ICON if os.path.isfile(_WIN_ICON) else None),
+)
+
+coll = COLLECT(
+    exe,
+    a.binaries,
+    a.datas,
+    strip=False,
+    upx=False,
+    upx_exclude=[],
+    name="DangKyKinhDoanh",
 )
